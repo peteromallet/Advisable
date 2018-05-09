@@ -3,9 +3,7 @@ import { Container, Title, SubTitle } from './styles';
 import Candidate from '../Candidate'
 
 export default () => (
-  <Container>
-    <Title>Virtuo, Conversion Optimisation</Title>
-    <SubTitle>Applied - 6 Candidates</SubTitle>
+  <React.Fragment>
     <Candidate />
     <Candidate />
     <Candidate />
@@ -13,5 +11,5 @@ export default () => (
     <Candidate />
     <Candidate />
     <Candidate />
-  </Container>
+  </React.Fragment>
 )
