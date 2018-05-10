@@ -1,26 +1,22 @@
 import React from 'react';
 import logo from './logo.svg';
-import Icon from '../Icon';
+import Icon from 'src/components/Icon';
 import { Nav, StatusList } from './styles';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
-const Navigation = ( ) => (
+const Navigation = ({ match }) => (
   <Nav>
     <img src={logo} />
     <StatusList>
-      <NavLink to={`/1`}>
+      <NavLink to={`${match.url}/applied`}>
         <Icon icon='inbox' />
         Applied
       </NavLink>
-      <NavLink to={`/2`}>
+      <NavLink to={`${match.url}/introduced`}>
         <Icon icon='message-circle' />
         Introduced
       </NavLink>
-      <NavLink to={`/3`}>
-        <Icon icon='user-check' />
-        Offered
-      </NavLink>
-      <NavLink to={`/4`}>
+      <NavLink to={`${match.url}/rejected`}>
         <Icon icon='trash-2' />
         Rejected
       </NavLink>
@@ -28,4 +24,4 @@ const Navigation = ( ) => (
   </Nav>
 )
 
-export default Navigation
+export default withRouter(Navigation);

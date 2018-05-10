@@ -1,7 +1,7 @@
 import React from "react";
-import Text from "../Text";
-import Avatar from "../Avatar";
-import Button from "../Button";
+import Text from "src/components/Text";
+import Avatar from "src/components/Avatar";
+import Button from "src/components/Button";
 import Questions from "./Questions";
 import CandidateAttribute from "./CandidateAttribute";
 import {
@@ -21,36 +21,46 @@ class Candidate extends React.Component {
   state = { expanded: false };
 
   render() {
+    const { application } = this.props;
     return (
       <Card>
         <CandidateContent>
           <CandidateHeader>
             <Avatar initials="TC" />
             <NameAndLocation>
-              <Name>Thomas Cullen</Name>
-              <Location>Dublin, Ireland</Location>
+              <Name>{application.specialist.name}</Name>
+              <Location>
+                {application.specialist.city}, {application.specialist.country}
+              </Location>
             </NameAndLocation>
           </CandidateHeader>
           <CandidateAttributes>
-            <CandidateAttribute label="Hourly rate" value="€120" />
+            <CandidateAttribute label="Hourly rate" value={application.rate} />
             <CandidateAttribute
               label="Available to start"
-              value="Immediately"
+              value={application.availability}
             />
             <CandidateAttribute
               label="Ability to travel"
-              value="Local or remote"
+              value={application.specialist.travel}
             />
-            <CandidateAttribute label="Linkedin" value="View profile" />
+            <CandidateAttribute
+              label="Linkedin"
+              value={
+                <a target="_blank" href={application.specialist.linkedin}>
+                  View Profile
+                </a>
+              }
+            />
           </CandidateAttributes>
           <Description>
             <Text>
-              A simple short introduction paragraph. Donec facilisis tortor ut
-              augue lacinia, at viverra est semper. Sed sapien metus, scelerisque
-              nec pharetra id, tempor a tortor. Pellentesque non dignissim neque.
+              {application.introduction}
             </Text>
           </Description>
-          <Questions />
+          <Questions questions={application.questions} />
+          <Text>Skills</Text>
+          {application.specialist.skills.join(', ')}
         </CandidateContent>
         <CandidateFooter>
           <Button primary>Request Intro</Button>

@@ -1,49 +1,38 @@
 import React from "react";
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
-import View from "../../components/View";
-import Candidate from "../../components/Candidate";
-import Navigation from "../../components/Navigation";
-import { Container, Title } from "./styles";
-
-const query = gql`
-  query project($id: ID!) {
-    project(id: $id) {
-      id
-      name
-      applications {
-        id
-        specialist {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
+import { Switch, Route, Redirect } from "react-router-dom";
+import View from "src/components/View";
+import { Container } from "./styles";
+import Applicants from "./containers/Applicants";
+import Navigation from "./components/Navigation";
 
 const Project = ({ match }) => {
   return (
-    <Query query={query} variables={{ id: match.params.projectID }}>
-      {({ loading, data, error }) => {
-        if (loading) return <span>loading...</span>;
-        if (error) return <span>{error.message}</span>;
-
-        return (
-          <React.Fragment>
-            <Navigation />
-            <View>
-              <Container>
-                <Title>{data.project.name}</Title>
-                {data.project.applications.map(application => (
-                  <Candidate key={application.id} />
-                ))}
-              </Container>
-            </View>
-          </React.Fragment>
-        );
-      }}
-    </Query>
+    <React.Fragment>
+      <Navigation />
+      <View>
+        <Container>
+          <Switch>
+            <Route
+              path={`${match.path}/applied`}
+              render={props => <Applicants status="Applied" {...props} />}
+            />
+            <Route
+              path={`${match.path}/introduced`}
+              render={props => (
+                <Applicants status="Application Accepted" {...props} />
+              )}
+            />
+            <Route
+              path={`${match.path}/rejected`}
+              render={props => (
+                <Applicants status="Application Rejected" {...props} />
+              )}
+            />
+            <Redirect to={`${match.url}/applied`} />
+          </Switch>
+        </Container>
+      </View>
+    </React.Fragment>
   );
 };
 

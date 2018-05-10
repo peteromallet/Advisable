@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Avatar from '../Avatar';
-import Button from '../Button';
+import Avatar from 'src/components/Avatar';
+import Button from 'src/components/Button';
 
 export const Name = styled.h3`
   color: #26234B;

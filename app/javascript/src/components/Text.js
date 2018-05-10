@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const weights = {
-  strong: 500,
+  strong: 600,
 }
 
 const colours = {
@@ -10,7 +10,7 @@ const colours = {
 
 export default styled.p`
   font-size: 16px;
-  line-height: 24px;
+  line-height: 23px;
   font-weight: ${props => weights[props.variation] || 400};
   color: ${props => colours[props.variation] || '#576471'};
 `
