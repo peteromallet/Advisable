@@ -6,6 +6,19 @@ export const Nav = styled.nav`
   padding: 30px;
   background: #0570E6;
   box-sizing: border-box;
+
+  @media screen and (max-width: 1000px) {
+    width: 200px;
+  }
+
+  @media screen and (max-width: 920px) {
+    width: 80px;
+    padding: 20px;
+  }
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 `
 
 export const StatusList = styled.div`

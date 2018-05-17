@@ -1,0 +1,6 @@
+mutation updateApplicationStatus($id: ID!, $status: String!, $rejectionReason: String) {
+  updateApplicationStatus(id: $id, status: $status, rejectionReason: $rejectionReason) {
+    id
+    status
+  }
+}

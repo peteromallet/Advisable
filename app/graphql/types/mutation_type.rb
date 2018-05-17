@@ -1,11 +1,16 @@
 Types::MutationType = GraphQL::ObjectType.define do
   name "Mutation"
 
-  # TODO: Remove me
-  field :testField, types.String do
-    description "An example field added by the generator"
+  field :updateApplicationStatus, Types::ApplicationType do
+    argument :id, !types.ID
+    argument :status, !types.String
+    argument :rejectionReason, types.String
     resolve ->(obj, args, ctx) {
-      "Hello World!"
+      application = Application.find(args[:id])
+      application["Application Status"] = args[:status]
+      application["Rejection Reason"] = args[:rejectionReason] if args[:rejectionReason]
+      application.save
+      application
     }
   end
 end

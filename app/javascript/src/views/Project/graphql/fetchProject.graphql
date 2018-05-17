@@ -1,0 +1,26 @@
+query project($id: ID!, $status: String!) {
+  project(id: $id) {
+    id
+    name
+    applications(status: $status) {
+      id
+      rate
+      status
+      availability
+      introduction
+      questions {
+        question
+        answer
+      }
+      specialist {
+        id
+        name
+        city
+        country
+        travel
+        linkedin
+        skills
+      }
+    }
+  }
+}
