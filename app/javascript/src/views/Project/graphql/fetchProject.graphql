@@ -1,8 +1,8 @@
-query project($id: ID!, $status: String!) {
+query project($id: ID!) {
   project(id: $id) {
     id
     name
-    applications(status: $status) {
+    applications {
       id
       rate
       status

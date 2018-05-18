@@ -10,7 +10,10 @@ Types::MutationType = GraphQL::ObjectType.define do
       application["Application Status"] = args[:status]
       application["Rejection Reason"] = args[:rejectionReason] if args[:rejectionReason]
       application.save
-      application
+      # There is currently a bug with airrecord when updating records.
+      # https://github.com/sirupsen/airrecord/pull/21
+      # For now we can solve by refetching
+      Application.find(args[:id])
     }
   end
 end

@@ -1,4 +1,5 @@
 import React from "react";
+import { Spring } from "react-spring";
 import Text from "src/components/Text";
 import Avatar from "src/components/Avatar";
 import Button from "src/components/Button";
@@ -11,6 +12,8 @@ import {
   Name,
   Location,
   Description,
+  Preview,
+  MoreInfo,
   CandidateWrapper,
   CandidateHeader,
   CandidateAvatar,
@@ -25,6 +28,14 @@ class Candidate extends React.Component {
     expanded: false,
     modal: null
   };
+
+  clickToExpand = () => {
+    // Prevent expanding or collapsing if the user is selecting text.
+    const selection = window.getSelection();
+    if(selection.toString().length === 0) {
+      this.setState({ expanded: !this.state.expanded })
+    }
+  }
 
   render() {
     const { application } = this.props;
@@ -46,7 +57,9 @@ class Candidate extends React.Component {
               this.setState({ modal: null });
             }}
           />
-          <CandidateContent>
+          <CandidateContent
+            onClick={this.clickToExpand}
+          >
             <CandidateHeader>
               <Avatar name={application.specialist.name} />
               <NameAndLocation>
@@ -79,13 +92,32 @@ class Candidate extends React.Component {
                 }
               />
             </CandidateAttributes>
-            <Description>
-              <Text>{application.introduction}</Text>
-            </Description>
-            <Questions questions={application.questions} />
-            <Text>Skills</Text>
-            {application.specialist.skills.join(", ")}
+
+            <Preview expanded={this.state.expanded}>
+              <Description>
+                <Text>{application.introduction}</Text>
+              </Description>
+            </Preview>
+
+            <Spring
+              from={{ height: 0, opacity:0 }}
+              to={{
+                height: this.state.expanded ? "auto" : 0,
+                opacity: this.state.expanded ? 1 : 0,
+              }}
+            >
+              {styles => (
+                <MoreInfo style={styles}>
+                  <Questions questions={application.questions} />
+                  <div style={{width: '100%'}}>
+                    <Text>Skills</Text>
+                    {application.specialist.skills.join(", ")}
+                  </div>
+                </MoreInfo>
+              )}
+            </Spring>
           </CandidateContent>
+
           {application.status === "Applied" && (
             <CandidateFooter>
               <Button

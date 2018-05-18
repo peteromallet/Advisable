@@ -17,3 +17,11 @@ If you are working on the frontend, you will want to run webpack in a separate p
 ```
 $ ./bin/webpack-dev-server
 ```
+
+## Frontend Structure
+The frontend codebase is follows a certain folder structure.
+
+- `/components`: This is all global components are defined. Global components are components that are used in mulitple places throughout the application. A component can be defined as a single file, or as a folder with an `index.js` file inside that exports the entire component.
+- `/views`: All of the various views in the application are defined here. A view folder can contain multiple sub folders:
+  - `/components`: Any components that are specific to the parent view.
+  - `/containers`: Components that are used to fetch and send data for the given view.

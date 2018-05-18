@@ -22,11 +22,11 @@ class RejectModal extends React.Component {
                 reason: ""
               }}
               validate={values => {
-                let errors = {}
+                let errors = {};
                 if (values.reason === "") {
-                  errors.reason = "Please select a reason for rejection"
+                  errors.reason = "Please select a reason for rejection";
                 }
-                return errors
+                return errors;
               }}
               onSubmit={values =>
                 mutate({
@@ -34,27 +34,6 @@ class RejectModal extends React.Component {
                     id: application.id,
                     status: "Application Rejected",
                     rejectionReason: values.reason
-                  },
-                  update: (store, { data: { updateApplicationStatus } }) => {
-                    const variables = {
-                      id: "reciRKA92VmIGuruG",
-                      status: "Applied"
-                    };
-
-                    const data = store.readQuery({
-                      query: FETCH_PROJECT,
-                      variables
-                    });
-
-                    remove(data.project.applications, {
-                      id: application.id
-                    });
-
-                    store.writeQuery({
-                      query: FETCH_PROJECT,
-                      variables,
-                      data
-                    });
                   }
                 })
               }

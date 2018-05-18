@@ -1,12 +1,12 @@
 import React from "react";
 import remove from "lodash/remove";
 import { Mutation } from "react-apollo";
-import Text from 'src/components/Text';
+import Text from "src/components/Text";
 import Modal from "src/components/Modal";
-import Avatar from 'src/components/Avatar';
-import Button from 'src/components/Button';
-import Spacing from 'src/components/Spacing';
-import { Container } from './styles.js';
+import Avatar from "src/components/Avatar";
+import Button from "src/components/Button";
+import Spacing from "src/components/Spacing";
+import { Container } from "./styles.js";
 
 import UPDATE_STATUS from "../../graphql/updateApplicationStatus.graphql";
 import FETCH_PROJECT from "../../graphql/fetchProject.graphql";
@@ -21,13 +21,16 @@ class RequestIntroductionModal extends React.Component {
         <Mutation mutation={UPDATE_STATUS}>
           {mutate => (
             <Container>
-              <Spacing bottom='m'>
+              <Spacing bottom="m">
                 <Avatar name={application.specialist.name} />
               </Spacing>
-              <Spacing bottom='m'>
-                <Text>Are you sure you want to request introduction to {specialist.name}?</Text>
+              <Spacing bottom="m">
+                <Text>
+                  Are you sure you want to request introduction to{" "}
+                  {specialist.name}?
+                </Text>
               </Spacing>
-              <Spacing right='xs' inline>
+              <Spacing right="xs" inline>
                 <Button
                   primary
                   onClick={() => {
@@ -44,35 +47,16 @@ class RequestIntroductionModal extends React.Component {
                           __typename: "Application",
                           status: "Application Accepted"
                         }
-                      },
-                      update: (store, { data: { updateApplicationStatus } }) => {
-                        const variables = {
-                          id: "reciRKA92VmIGuruG",
-                          status: "Applied"
-                        };
-
-                        const data = store.readQuery({
-                          query: FETCH_PROJECT,
-                          variables
-                        });
-
-                        remove(data.project.applications, {
-                          id: application.id
-                        });
-
-                        store.writeQuery({
-                          query: FETCH_PROJECT,
-                          variables,
-                          data
-                        });
                       }
-                    });
+                    }).then(r => {
+                      console.log(r)
+                    })
                   }}
                 >
                   Yes
                 </Button>
               </Spacing>
-              <Spacing left='xs' inline>
+              <Spacing left="xs" inline>
                 <Button onClick={this.props.onClose}>Cancel</Button>
               </Spacing>
             </Container>

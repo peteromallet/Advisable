@@ -5,14 +5,10 @@ Types::ProjectType = GraphQL::ObjectType.define do
   field :name, !types.String, hash_key: :project
 
   field :applications, types[Types::ApplicationType] do
-    argument :status, !types.String
     resolve ->(obj, args, ctx) {
       ids = obj.fields["Candidacies"]
       Application.all(filter: "
-        AND(
-          FIND(RECORD_ID(), ARRAYJOIN('#{ids}')),
-          {Application Status} = '#{args[:status]}'
-        )
+        FIND(RECORD_ID(), ARRAYJOIN('#{ids}'))
       ", sort: { Score: "desc" })
     }
   end

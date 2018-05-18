@@ -3,12 +3,16 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { BrowserRouter, Route } from "react-router-dom";
 import "./reset.css.js";
 import Project from "./views/Project";
 import ApplicationContainer from './components/ApplicationContainer';
 
+const cache = new InMemoryCache();
+
 const client = new ApolloClient({
+  cache,
   uri: "/graphql",
   fetchOptions: {
     credentials: "same-origin"

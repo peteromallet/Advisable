@@ -5,7 +5,7 @@ import Button from "src/components/Button";
 export const Name = styled.h3`
   color: #26234b;
   line-height: 1;
-  font-size: 25px;
+  font-size: 24px;
   font-weight: 600;
   margin-bottom: 3px;
   letter-spacing: -0.05em;
@@ -19,7 +19,31 @@ export const Location = styled.span`
 `;
 
 export const CandidateContent = styled.div`
-  padding: 20px;
+  padding: 20px 20px 0 20px;
+  cursor: pointer;
+`;
+
+export const Preview = styled.div`
+  position: relative;
+
+  ${props =>
+    !props.expanded &&
+    `
+    &::before {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      content: '';
+      background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+      position: absolute;
+    }
+  `};
+`;
+
+export const MoreInfo = styled.div`
+  overflow-y: hidden;
+  width: 100%;
 `;
 
 export const CandidateHeader = styled.div`
@@ -71,6 +95,11 @@ export const Card = styled.div`
   border-radius: 10px;
   background: #ffffff;
   box-shadow: 0 15px 40px -15px rgba(55, 69, 120, 0.2);
+  transition: box-shadow 300ms ease-out;
+
+  &:hover {
+    box-shadow: 0 30px 100px -30px rgba(55, 69, 120, 0.38);
+  }
 `;
 
 export const CandidateFooter = styled.div`
@@ -86,9 +115,12 @@ export const Description = styled.div`
 `;
 
 export const Question = styled.div`
-  margin-bottom: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 30px;
 `;
 
 export const QuestionTitle = styled.h5`
+  width: 100%;
   margin-bottom: 10px;
 `;

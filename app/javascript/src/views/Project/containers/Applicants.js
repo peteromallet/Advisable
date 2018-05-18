@@ -1,47 +1,33 @@
 import React from "react";
 import gql from "graphql-tag";
-import { Query } from "react-apollo";
+import filter from 'lodash/filter';
 import { Transition } from "react-spring";
 import Candidate from "../components/Candidate";
 import { Title } from "../styles";
-import FETCH_PROJECT from "../graphql/fetchProject.graphql";
+import NoApplicants from '../components/NoCandidates';
 
-const Project = ({ status, match }) => {
+const Project = ({ data, status, emptyStateText }) => {
+  const applications = filter(data.project.applications, { status });
+
   return (
-    <Query
-      query={FETCH_PROJECT}
-      fetchPolicy="network-only"
-      variables={{
-        id: match.params.projectID,
-        status: status
-      }}
-    >
-      {({ loading, data, error }) => {
-        if (loading) return <span>loading...</span>;
-        if (error) return <span>{error.message}</span>;
+    <React.Fragment>
+      <Title>{data.project.name}</Title>
 
-        return (
-          <React.Fragment>
-            <Title>{data.project.name}</Title>
-
-            {data.project.applications.length > 0 ? (
-              <Transition
-                keys={data.project.applications.map(a => a.id)}
-                from={{ opacity: 0 }}
-                enter={{ opacity: 1, height: 'auto', marginBottom: 20 }}
-                leave={{ opacity: 0, height: 0, marginBottom: 0 }}
-              >
-                {data.project.applications.map(application => styles => (
-                  <Candidate application={application} style={styles} />
-                ))}
-              </Transition>
-            ) : (
-              <div>No applications</div>
-            )}
-          </React.Fragment>
-        );
-      }}
-    </Query>
+      {applications.length > 0 ? (
+        <Transition
+          keys={applications.map(a => a.id)}
+          from={{ opacity: 0, marginBottom: 0 }}
+          enter={{ opacity: 1, height: 'auto', marginBottom: 20 }}
+          leave={{ opacity: 0, height: 0, marginBottom: 0 }}
+        >
+          {applications.map(application => styles => (
+            <Candidate application={application} style={styles} />
+          ))}
+        </Transition>
+      ) : (
+        <NoApplicants text={emptyStateText} />
+      )}
+    </React.Fragment>
   );
 };
 

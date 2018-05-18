@@ -2,5 +2,20 @@ mutation updateApplicationStatus($id: ID!, $status: String!, $rejectionReason: S
   updateApplicationStatus(id: $id, status: $status, rejectionReason: $rejectionReason) {
     id
     status
+    availability
+    introduction
+    questions {
+      question
+      answer
+    }
+    specialist {
+      id
+      name
+      city
+      country
+      travel
+      linkedin
+      skills
+    }
   }
 }

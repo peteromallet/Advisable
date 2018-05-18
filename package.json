@@ -4,6 +4,7 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "apollo-boost": "^0.1.6",
+    "apollo-cache-inmemory": "^1.2.1",
     "babel-preset-react": "^6.24.1",
     "feather-icons": "^4.7.0",
     "formik": "^0.11.11",
