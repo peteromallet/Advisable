@@ -1,16 +1,17 @@
 import styled, { keyframes } from 'styled-components';
 
-const load = keyframes`
-  0% { opacity: 1 }
-  50% { opacity: 0.4 }
-  99% { opacity: 1 }
+const spin = keyframes`
+  from { transform: rotate(0) }
+  to { transform: rotate(359deg) }
 `;
 
-export const Title = styled.div`
-  height: 25px;
-  border-radius: 4px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  background-color: #D9E4F3;
-  animation: ${load} 2s linear infinite;
+export const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    animation: ${spin} 600ms linear infinite;
+  }
 `

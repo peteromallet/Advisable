@@ -14,4 +14,5 @@ export default styled.div`
   padding-bottom: ${props => sizes[props.bottom]}px;
   padding-left: ${props => sizes[props.left]}px;
   display: ${props => props.inline ? 'inline-block' : 'block'};
+  width: ${props => props.inline ? 'auto' : '100%'};
 `

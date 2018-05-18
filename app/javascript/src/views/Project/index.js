@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import View from "src/components/View";
 import { Container } from "./styles";
-import Applicants from "./containers/Applicants";
+import Applicants from "./components/Applicants";
 import Navigation from "./components/Navigation";
 import LoadingCandidates from './components/LoadingCandidates';
 import FETCH_PROJECT from "./graphql/fetchProject.graphql";

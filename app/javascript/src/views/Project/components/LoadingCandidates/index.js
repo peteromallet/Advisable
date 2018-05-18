@@ -1,11 +1,11 @@
 import React from 'react';
-import { Title } from './styles';
+import { Wrapper } from './styles';
+import loading from './loading.svg';
 
 const Loading = () => (
-  <React.Fragment>
-    <Title />
-    <Title style={{ width: '60%' }}/>
-  </React.Fragment>
+  <Wrapper>
+    <img src={loading} />
+  </Wrapper>
 )
 
 export default Loading

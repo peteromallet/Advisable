@@ -78,6 +78,12 @@ export const AttributeValue = styled.span`
   display: block;
   font-size: 16px;
   font-weight: 500;
+
+  a {
+    color: #0570E6;
+    text-decoration: none;
+    &:hover { color: #004A9B; }
+  }
 `;
 
 export const CandidateWrapper = styled.div.attrs({
@@ -94,6 +100,7 @@ export const Card = styled.div`
   overflow: hidden;
   border-radius: 10px;
   background: #ffffff;
+  margin-bottom: 20px;
   box-shadow: 0 15px 40px -15px rgba(55, 69, 120, 0.2);
   transition: box-shadow 300ms ease-out;
 

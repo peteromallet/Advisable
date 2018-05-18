@@ -1,5 +1,5 @@
 import React from "react";
-import { Select } from "./styles.js";
+import { Select, Wrapper, Arrows } from "./styles.js";
 
 export default ({ name, options, value, placeholder, onChange, onFocus, onBlur }) => {
   // Placeholder value is an empty string
@@ -7,7 +7,7 @@ export default ({ name, options, value, placeholder, onChange, onFocus, onBlur }
 
   const isPlaceholder = Boolean(!value && placeholder);
   const placeholderMarkup = isPlaceholder && (
-    <option value={PLACEHOLDER_VALUE} disabled hidden>
+    <option value={PLACEHOLDER_VALUE} disabled selected>
       {placeholder}
     </option>
   );
@@ -38,16 +38,19 @@ export default ({ name, options, value, placeholder, onChange, onFocus, onBlur }
   const finalValue = onChange ? value || PLACEHOLDER_VALUE : undefined;
 
   return (
-    <Select
-      name={name}
-      value={finalValue}
-      defaultValue={defaultValue}
-      onChange={onChange}
-      onFocus={onFocus}
-      onBlur={onBlur}
-    >
-      {placeholderMarkup}
-      {optionsMarkup}
-    </Select>
+    <Wrapper>
+      <Select
+        name={name}
+        value={finalValue}
+        defaultValue={defaultValue}
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      >
+        {placeholderMarkup}
+        {optionsMarkup}
+      </Select>
+      <Arrows />
+    </Wrapper>
   );
 };

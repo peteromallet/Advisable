@@ -29,7 +29,9 @@ class Candidate extends React.Component {
     modal: null
   };
 
-  clickToExpand = () => {
+  clickToExpand = e => {
+    // Prevent expanding if the user clicked a link.
+    if (e.target.tagName === 'A') return
     // Prevent expanding or collapsing if the user is selecting text.
     const selection = window.getSelection();
     if(selection.toString().length === 0) {

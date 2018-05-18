@@ -1,18 +1,30 @@
 import styled from 'styled-components';
 
+const heights = {
+  m: '34px',
+  l: '40px'
+}
+
+const fontSizes = {
+  m: '15px',
+  l: '16px',
+}
+
 const Button = styled.button`
-  height: 34px;
+  height: ${props => heights[props.size] || heights['m']}
   color: white;
   border: none;
   outline: none;
-  font-size: 15px;
+  font-size: ${props => fontSizes[props.size] || fontSizes['m']};
   padding: 0 20px;
   cursor: pointer;
   font-weight: 600;
   border-radius: 8px;
   background: #4C496A;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.05em;
   -webkit-appearance: none;
+  width: ${props => props.block ? '100%' : 'auto'};
+  display: ${props => props.block ? 'block' : 'inline-block'};
   transition: box-shadow 0.2s, background 0.2s;
 
   &:hover {

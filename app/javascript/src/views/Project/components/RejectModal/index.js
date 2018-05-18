@@ -3,8 +3,14 @@ import remove from "lodash/remove";
 import { Mutation } from "react-apollo";
 import { Formik, Field } from "formik";
 import Modal from "src/components/Modal";
+import Flex from "src/components/Flex";
+import Heading from "src/components/Heading";
+import Avatar from "src/components/Avatar";
 import Select from "src/components/Select";
+import Button from "src/components/Button";
+import Spacing from "src/components/Spacing";
 
+import { Container, Text } from "./styles";
 import UPDATE_STATUS from "../../graphql/updateApplicationStatus.graphql";
 import FETCH_PROJECT from "../../graphql/fetchProject.graphql";
 
@@ -34,25 +40,70 @@ class RejectModal extends React.Component {
                     id: application.id,
                     status: "Application Rejected",
                     rejectionReason: values.reason
+                  },
+                  optimisticResponse: {
+                    __typename: "Mutation",
+                    updateApplicationStatus: {
+                      id: application.id,
+                      __typename: "Application",
+                      status: "Application Rejected"
+                    }
                   }
                 })
               }
             >
               {formik => (
                 <form onSubmit={formik.handleSubmit}>
-                  Are you sure you want to reject {specialist.name}
-                  <Select
-                    name="reason"
-                    value={formik.values.reason}
-                    onChange={formik.handleChange}
-                    placeholder="Select reason for rejection"
-                    options={["Not Qualified", "Another Option"]}
-                  />
-                  {formik.errors.reason && <div>{formik.errors.reason}</div>}
-                  <button type="submit" disabled={formik.isSubmitting}>
-                    Yup
-                  </button>
-                  <button onClick={this.props.onClose}>Nope</button>
+                  <Container>
+                    <Spacing bottom="l">
+                      <Avatar name={specialist.name} />
+                    </Spacing>
+                    <Spacing bottom="xs">
+                      <Heading>
+                        Reject {specialist.name}
+                      </Heading>
+                    </Spacing>
+                    <Spacing bottom="xl">
+                      <Text size='l'>
+                        Please provide feedback by selecting a reason for rejection
+                      </Text>
+                    </Spacing>
+                    <Spacing bottom="l">
+                      <Select
+                        name="reason"
+                        value={formik.values.reason}
+                        onChange={formik.handleChange}
+                        placeholder="Select reason for rejection"
+                        options={[
+                          "Too Expensive",
+                          "Not Enough Experience",
+                          "Experience Isn’t Suitable",
+                          "Availability Is Wrong",
+                          "Didn’t Like Answers",
+                          "Inadequate Answers",
+                          "Lacking Required Skills",
+                          "Bad Cultural Fit",
+                        ]}
+                      />
+                    </Spacing>
+                    {formik.errors.reason && <div>{formik.errors.reason}</div>}
+                    <Flex>
+                      <Spacing right="s">
+                        <Button
+                          primary
+                          block
+                          size='l'
+                          type="submit"
+                          disabled={formik.isSubmitting}
+                        >
+                          Reject
+                        </Button>
+                      </Spacing>
+                      <Spacing left="s">
+                        <Button size='l' block onClick={this.props.onClose}>Cancel</Button>
+                      </Spacing>
+                    </Flex>
+                  </Container>
                 </form>
               )}
             </Formik>

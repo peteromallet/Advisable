@@ -14,16 +14,9 @@ const Project = ({ data, status, emptyStateText }) => {
       <Title>{data.project.name}</Title>
 
       {applications.length > 0 ? (
-        <Transition
-          keys={applications.map(a => a.id)}
-          from={{ opacity: 0, marginBottom: 0 }}
-          enter={{ opacity: 1, height: 'auto', marginBottom: 20 }}
-          leave={{ opacity: 0, height: 0, marginBottom: 0 }}
-        >
-          {applications.map(application => styles => (
-            <Candidate application={application} style={styles} />
-          ))}
-        </Transition>
+        applications.map(application => (
+          <Candidate application={application} key={application.id} />
+        ))
       ) : (
         <NoApplicants text={emptyStateText} />
       )}

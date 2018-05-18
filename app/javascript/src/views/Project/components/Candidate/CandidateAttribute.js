@@ -1,13 +1,14 @@
 import React from 'react';
 import {
   Attribute,
-  AttributeLabel
+  AttributeLabel,
+  AttributeValue
 } from './styles';
 
 const CandidateAttribute = ({icon, label, value}) => (
   <Attribute>
     <AttributeLabel>{label}</AttributeLabel>
-    {value}
+    <AttributeValue>{value}</AttributeValue>
   </Attribute>
 )
 
