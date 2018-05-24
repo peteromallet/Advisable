@@ -8,6 +8,7 @@ import Questions from "./Questions";
 import CandidateAttribute from "./CandidateAttribute";
 import RejectModal from "../RejectModal";
 import RequestIntroductionModal from "../RequestIntroductionModal";
+import currency from "src/utilities/currency";
 import {
   Card,
   Name,
@@ -74,14 +75,17 @@ class Candidate extends React.Component {
                 <Name>{application.specialist.name}</Name>
                 <Location>
                   {application.specialist.city},{" "}
-                  {application.specialist.country}
+                  {application.specialist.country.name}
                 </Location>
               </NameAndLocation>
             </CandidateHeader>
             <CandidateAttributes>
               <CandidateAttribute
                 label="Hourly rate"
-                value={application.rate}
+                value={currency(
+                  application.rate,
+                  application.specialist.country.currency
+                )}
               />
               <CandidateAttribute
                 label="Available to start"
@@ -116,7 +120,7 @@ class Candidate extends React.Component {
               {styles => (
                 <MoreInfo innerRef={c => (this.moreInfo = c)} style={styles}>
                   <Questions questions={application.questions} />
-                  <Spacing bottom='xl'>
+                  <Spacing bottom="xl">
                     <Text>Skills</Text>
                     {application.specialist.skills.map((skill, i) => (
                       <Skill key={i}>{skill}</Skill>

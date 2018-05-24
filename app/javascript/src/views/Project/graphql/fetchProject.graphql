@@ -16,7 +16,11 @@ query project($id: ID!) {
         id
         name
         city
-        country
+        country {
+          id
+          name
+          currency
+        }
         travel
         linkedin
         skills
