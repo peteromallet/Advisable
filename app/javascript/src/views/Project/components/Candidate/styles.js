@@ -132,3 +132,16 @@ export const QuestionTitle = styled.h5`
   width: 100%;
   margin-bottom: 10px;
 `;
+
+export const Skill = styled.div`
+  height: 30px;
+  color: #243D59;
+  font-size: 15px;
+  padding: 0 20px;
+  line-height: 32px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  background: #E8F2FC;
+  display: inline-block;
+`

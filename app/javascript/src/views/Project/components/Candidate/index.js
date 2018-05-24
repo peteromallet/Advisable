@@ -11,6 +11,7 @@ import RequestIntroductionModal from "../RequestIntroductionModal";
 import {
   Card,
   Name,
+  Skill,
   Location,
   Description,
   Preview,
@@ -117,7 +118,9 @@ class Candidate extends React.Component {
                   <Questions questions={application.questions} />
                   <Spacing bottom='xl'>
                     <Text>Skills</Text>
-                    {application.specialist.skills.join(", ")}
+                    {application.specialist.skills.map((skill, i) => (
+                      <Skill key={i}>{skill}</Skill>
+                    ))}
                   </Spacing>
                 </MoreInfo>
               )}
