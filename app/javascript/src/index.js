@@ -4,10 +4,8 @@ import PropTypes from "prop-types";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { BrowserRouter, Route } from "react-router-dom";
+import App from './App';
 import "./reset.css.js";
-import Project from "./views/Project";
-import ApplicationContainer from './components/ApplicationContainer';
 
 const cache = new InMemoryCache();
 
@@ -30,11 +28,7 @@ const client = new ApolloClient({
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
     <ApolloProvider client={client}>
-      <BrowserRouter>
-        <ApplicationContainer>
-          <Route path="/projects/:projectID" component={Project} />
-        </ApplicationContainer>
-      </BrowserRouter>
+      <App />
     </ApolloProvider>,
     document.body.appendChild(document.createElement("div"))
   );

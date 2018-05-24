@@ -60,7 +60,7 @@ class RequestIntroductionModal extends React.Component {
                       })
                     }}
                   >
-                    Yes
+                    Request Intro
                   </Button>
                 </Spacing>
                 <Spacing left="s">

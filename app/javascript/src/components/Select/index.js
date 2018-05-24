@@ -7,7 +7,7 @@ export default ({ name, options, value, placeholder, onChange, onFocus, onBlur }
 
   const isPlaceholder = Boolean(!value && placeholder);
   const placeholderMarkup = isPlaceholder && (
-    <option value={PLACEHOLDER_VALUE} disabled selected>
+    <option value={PLACEHOLDER_VALUE} disabled>
       {placeholder}
     </option>
   );

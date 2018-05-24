@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   post "/graphql", to: "graphql#execute"
 
   # match every other route to the frontend codebase
+  root 'application#frontend'
   get '*path', to: 'application#frontend'
 end

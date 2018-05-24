@@ -80,9 +80,11 @@ export const AttributeValue = styled.span`
   font-weight: 500;
 
   a {
-    color: #0570E6;
+    color: #0570e6;
     text-decoration: none;
-    &:hover { color: #004A9B; }
+    &:hover {
+      color: #004a9b;
+    }
   }
 `;
 
@@ -101,12 +103,11 @@ export const Card = styled.div`
   border-radius: 10px;
   background: #ffffff;
   margin-bottom: 20px;
-  box-shadow: 0 15px 40px -15px rgba(55, 69, 120, 0.2);
   transition: box-shadow 300ms ease-out;
-
-  &:hover {
-    box-shadow: 0 30px 100px -30px rgba(55, 69, 120, 0.38);
-  }
+  box-shadow: ${props =>
+    props.expanded
+      ? `0 50px 200px -50px rgba(55, 69, 120, 0.45)`
+      : `0 15px 40px -15px rgba(55, 69, 120, 0.2)`};
 `;
 
 export const CandidateFooter = styled.div`

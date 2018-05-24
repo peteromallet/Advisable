@@ -2,6 +2,7 @@ import React from "react";
 import { Spring } from "react-spring";
 import Text from "src/components/Text";
 import Avatar from "src/components/Avatar";
+import Spacing from "src/components/Spacing";
 import Button from "src/components/Button";
 import Questions from "./Questions";
 import CandidateAttribute from "./CandidateAttribute";
@@ -31,12 +32,18 @@ class Candidate extends React.Component {
 
   clickToExpand = e => {
     // Prevent expanding if the user clicked a link.
-    if (e.target.tagName === 'A') return
+    if (e.target.tagName === "A") return;
     // Prevent expanding or collapsing if the user is selecting text.
     const selection = window.getSelection();
-    if(selection.toString().length === 0) {
-      this.setState({ expanded: !this.state.expanded })
+    if (this.state.expanded && selection.toString().length > 0) {
+      return;
     }
+
+    this.setState({ expanded: !this.state.expanded });
+  };
+
+  get moreInfoHeight() {
+    return this.moreInfo ? this.moreInfo.scrollHeight : 0;
   }
 
   render() {
@@ -44,7 +51,7 @@ class Candidate extends React.Component {
 
     return (
       <div style={this.props.style}>
-        <Card>
+        <Card expanded={this.state.expanded}>
           <RequestIntroductionModal
             isOpen={this.state.modal === "introduction"}
             application={application}
@@ -59,9 +66,7 @@ class Candidate extends React.Component {
               this.setState({ modal: null });
             }}
           />
-          <CandidateContent
-            onClick={this.clickToExpand}
-          >
+          <CandidateContent onClick={this.clickToExpand}>
             <CandidateHeader>
               <Avatar name={application.specialist.name} />
               <NameAndLocation>
@@ -102,19 +107,18 @@ class Candidate extends React.Component {
             </Preview>
 
             <Spring
-              from={{ height: 0, opacity:0 }}
+              from={{ height: 0, opacity: 0 }}
               to={{
-                height: this.state.expanded ? "auto" : 0,
-                opacity: this.state.expanded ? 1 : 0,
-              }}
-            >
+                height: this.state.expanded ? this.moreInfoHeight : 0,
+                opacity: this.state.expanded ? 1 : 0
+              }}>
               {styles => (
-                <MoreInfo style={styles}>
+                <MoreInfo innerRef={c => (this.moreInfo = c)} style={styles}>
                   <Questions questions={application.questions} />
-                  <div style={{width: '100%'}}>
+                  <Spacing bottom='xl'>
                     <Text>Skills</Text>
                     {application.specialist.skills.join(", ")}
-                  </div>
+                  </Spacing>
                 </MoreInfo>
               )}
             </Spring>
@@ -124,8 +128,7 @@ class Candidate extends React.Component {
             <CandidateFooter>
               <Button
                 onClick={() => this.setState({ modal: "introduction" })}
-                primary
-              >
+                primary>
                 Request Intro
               </Button>
               <Button onClick={() => this.setState({ modal: "reject" })}>
