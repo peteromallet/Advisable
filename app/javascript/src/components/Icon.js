@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import feather from "feather-icons";
 
-const Icon = styled.span`
+export const Icon = styled.span`
   svg {
     vertical-align: middle;
   }
