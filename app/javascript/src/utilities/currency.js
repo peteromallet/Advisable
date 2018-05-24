@@ -7,6 +7,10 @@ const symbols = {
 }
 
 export default (amount, currency) => {
-  const symbol = symbols[currency] || currency;
-  return `${symbol}${amount}`
+  const symbol = symbols[currency];
+  if (symbol) {
+    return `${symbol}${amount}`
+  } else {
+    return `${amount} ${currency}`
+  }
 }

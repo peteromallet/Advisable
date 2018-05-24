@@ -39,6 +39,8 @@ injectGlobal`
   }
 
   body {
+    width: 100vw;
+    overflow-x: hidden;
     line-height: 1;
   }
 

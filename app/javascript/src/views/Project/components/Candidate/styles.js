@@ -58,12 +58,23 @@ export const NameAndLocation = styled.div`
 
 export const CandidateAttributes = styled.div`
   display: flex;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
   padding-right: 10px;
   justify-content: space-between;
 `;
 
-export const Attribute = styled.div``;
+export const Attribute = styled.div`
+  margin-bottom: 15px;
+
+  @media screen and (max-width: 1000px) {
+    width: 50%;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
+`;
 
 export const AttributeLabel = styled.span`
   color: #92a1b1;
