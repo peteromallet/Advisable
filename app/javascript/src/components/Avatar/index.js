@@ -2,14 +2,18 @@ import React from 'react';
 import reduce from 'lodash/reduce';
 import { Wrapper } from './styles';
 
-const Avatar = ({ name }) => {
+const Avatar = ({ name, url }) => {
   const initials = reduce(name.split(' '), (sum, name) => {
     return `${sum}${name[0]}`
   }, "")
 
+  const style = {
+    backgroundImage: `url(${url})`,
+  }
+
   return (
-    <Wrapper>
-      {initials}
+    <Wrapper style={url && style}>
+      {!url && initials}
     </Wrapper>
   )
 }

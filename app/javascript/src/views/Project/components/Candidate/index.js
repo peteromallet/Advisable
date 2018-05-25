@@ -50,6 +50,7 @@ class Candidate extends React.Component {
 
   render() {
     const { application } = this.props;
+    const image = application.specialist.image
 
     return (
       <div style={this.props.style}>
@@ -70,7 +71,10 @@ class Candidate extends React.Component {
           />
           <CandidateContent onClick={this.clickToExpand}>
             <CandidateHeader>
-              <Avatar name={application.specialist.name} />
+              <Avatar
+                name={application.specialist.name}
+                url={image ? image.url : null}
+              />
               <NameAndLocation>
                 <Name>{application.specialist.name}</Name>
                 <Location>

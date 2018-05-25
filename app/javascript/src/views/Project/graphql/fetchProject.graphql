@@ -16,6 +16,9 @@ query project($id: ID!) {
         id
         name
         city
+        image {
+          url
+        }
         country {
           id
           name

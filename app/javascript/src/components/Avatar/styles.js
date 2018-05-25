@@ -9,6 +9,8 @@ export const Wrapper = styled.div`
   line-height: 65px;
   border-radius: 50%;
   text-align: center;
-  background: #C9E0FF;
   display: inline-block;
+  background-size: cover;
+  background-color: #C9E0FF;
+  background-position: center;
 `
