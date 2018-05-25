@@ -1,6 +1,4 @@
-class Application < Airrecord::Table
-  self.base_key = ENV["AIRTABLE_DATABASE_KEY"]
-  self.table_name = "Applications"
-
-  belongs_to :specialist, class: 'Specialist', column: "Expert"
+class Application < ApplicationRecord
+  belongs_to :specialist
+  belongs_to :project
 end

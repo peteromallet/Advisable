@@ -1,4 +1,4 @@
-class Skill < Airrecord::Table
-  self.base_key = ENV["AIRTABLE_DATABASE_KEY"]
-  self.table_name = "Skills"
+class Skill < ApplicationRecord
+  has_many :specialist_skills
+  has_many :specialists, through: :specialist_skills
 end

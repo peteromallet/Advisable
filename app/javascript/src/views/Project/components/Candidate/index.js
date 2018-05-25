@@ -97,7 +97,7 @@ class Candidate extends React.Component {
               />
               <CandidateAttribute
                 label="Ability to travel"
-                value={application.specialist.travel}
+                value={application.specialist.travel_availability}
               />
               <CandidateAttribute
                 label="Linkedin"

@@ -2,20 +2,20 @@ Types::SpecialistType = GraphQL::ObjectType.define do
   name 'Specialist'
 
   field :id, !types.ID
-  field :name, types.String, hash_key: :name
-  field :city, types.String, hash_key: :city
-  field :country, Types::CountryType, hash_key: :country
-  field :travel, types.String, hash_key: :can_travel
-  field :linkedin, types.String, hash_key: :linkedin_url
-  field :image, Types::AttachmentType do
+  field :name, types.String do
     resolve ->(obj, args, ctx) {
-      obj[:image].try(:first)
+      "#{obj.first_name} #{obj.last_name}"
     }
   end
+  field :city, types.String
+  field :country, Types::CountryType
+  field :travel_availability, types.String
+  field :linkedin, types.String
+  field :image, Types::AttachmentType
 
   field :skills, types[types.String] do
     resolve ->(obj, args, ctx) {
-      obj[:expertise].map { |s| s[:name] }
+      obj.skills.map(&:name)
     }
   end
 end

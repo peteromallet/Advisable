@@ -24,7 +24,7 @@ query project($id: ID!) {
           name
           currency
         }
-        travel
+        travel_availability
         linkedin
         skills
       }

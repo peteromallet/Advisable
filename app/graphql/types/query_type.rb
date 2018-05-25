@@ -7,7 +7,7 @@ Types::QueryType = GraphQL::ObjectType.define do
     description "Find a Project by ID"
     resolve ->(obj, args, ctx) {
       begin
-        Job.find(args["id"])
+        Project.find_by_airtable_id(args["id"])
       rescue Airrecord::Error => er
         GraphQL::ExecutionError.new("Could not find project #{args['id']}")
       end
