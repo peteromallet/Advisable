@@ -6,6 +6,7 @@ class CreateApplications < ActiveRecord::Migration[5.2]
       t.string :status
       t.text :introduction
       t.jsonb :questions
+      t.decimal :score
       t.belongs_to :specialist, foreign_key: true
       t.belongs_to :project, foreign_key: true
       t.string :airtable_id

@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2018_05_25_132313) do
     t.string "status"
     t.text "introduction"
     t.jsonb "questions"
+    t.decimal "score"
     t.bigint "specialist_id"
     t.bigint "project_id"
     t.string "airtable_id"

@@ -5,6 +5,7 @@ class Airtable::Application < Airtable::Base
   belongs_to :specialist, class: 'Specialist', column: "Expert"
 
   sync_with ::Application
+  sync_columns :score
   sync_column :application_status, to: :status
   sync_column :hourly_rate_for_project, to: :rate
   sync_column :available_to_start, to: :availability
