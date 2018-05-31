@@ -1,22 +1,29 @@
 import React from "react";
 import gql from "graphql-tag";
-import filter from 'lodash/filter';
+import filter from "lodash/filter";
 import { Transition } from "react-spring";
 import Candidate from "../components/Candidate";
-import { Title } from "../styles";
-import NoApplicants from '../components/NoCandidates';
+import { Title, Count } from "../styles";
+import NoApplicants from "../components/NoCandidates";
 
-const Project = ({ data, status, emptyStateText }) => {
+const Applicants = ({ data, status, emptyStateText, countLabel }) => {
   const applications = filter(data.project.applications, { status });
+  const count =
+    applications.length === 1
+      ? "1 Applicant"
+      : `${applications.length} Applicants`;
 
   return (
     <React.Fragment>
       <Title>{data.project.name}</Title>
+      <Count>{countLabel || status} - {count}</Count>
 
       {applications.length > 0 ? (
-        applications.map(application => (
-          <Candidate application={application} key={application.id} />
-        ))
+        <div>
+          {applications.map(application => (
+            <Candidate application={application} key={application.id} />
+          ))}
+        </div>
       ) : (
         <NoApplicants text={emptyStateText} />
       )}
@@ -24,4 +31,4 @@ const Project = ({ data, status, emptyStateText }) => {
   );
 };
 
-export default Project;
+export default Applicants;

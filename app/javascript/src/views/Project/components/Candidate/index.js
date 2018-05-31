@@ -50,105 +50,105 @@ class Candidate extends React.Component {
 
   render() {
     const { application } = this.props;
-    const image = application.specialist.image
+    const image = application.specialist.image;
 
     return (
-      <div style={this.props.style}>
-        <Card expanded={this.state.expanded}>
-          <RequestIntroductionModal
-            isOpen={this.state.modal === "introduction"}
-            application={application}
-            onClose={() => {
-              this.setState({ modal: null });
-            }}
-          />
-          <RejectModal
-            isOpen={this.state.modal === "reject"}
-            application={application}
-            onClose={() => {
-              this.setState({ modal: null });
-            }}
-          />
-          <CandidateContent onClick={this.clickToExpand}>
-            <CandidateHeader>
-              <Avatar
-                name={application.specialist.name}
-                url={image ? image.url : null}
-              />
-              <NameAndLocation>
-                <Name>{application.specialist.name}</Name>
-                <Location>
-                  {application.specialist.city},{" "}
-                  {application.specialist.country.name}
-                </Location>
-              </NameAndLocation>
-            </CandidateHeader>
-            <CandidateAttributes>
-              <CandidateAttribute
-                label="Hourly rate"
-                value={currency(
-                  application.rate,
-                  application.specialist.country.currency
-                )}
-              />
-              <CandidateAttribute
-                label="Available to start"
-                value={application.availability}
-              />
-              <CandidateAttribute
-                label="Ability to travel"
-                value={application.specialist.travel_availability}
-              />
-              <CandidateAttribute
-                label="Linkedin"
-                value={
-                  <a target="_blank" href={application.specialist.linkedin}>
-                    View Profile
-                  </a>
-                }
-              />
-            </CandidateAttributes>
+      <Card expanded={this.state.expanded}>
+        <RequestIntroductionModal
+          isOpen={this.state.modal === "introduction"}
+          application={application}
+          onClose={() => {
+            this.setState({ modal: null });
+          }}
+        />
+        <RejectModal
+          isOpen={this.state.modal === "reject"}
+          application={application}
+          onClose={() => {
+            this.setState({ modal: null });
+          }}
+        />
+        <CandidateContent onClick={this.clickToExpand}>
+          <CandidateHeader>
+            <Avatar
+              name={application.specialist.name}
+              url={image ? image.url : null}
+            />
+            <NameAndLocation>
+              <Name>{application.specialist.name}</Name>
+              <Location>
+                {application.specialist.city},{" "}
+                {application.specialist.country.name}
+              </Location>
+            </NameAndLocation>
+          </CandidateHeader>
+          <CandidateAttributes>
+            <CandidateAttribute
+              label="Hourly rate"
+              value={currency(
+                application.rate,
+                application.specialist.country.currency
+              )}
+            />
+            <CandidateAttribute
+              label="Available to start"
+              value={application.availability}
+            />
+            <CandidateAttribute
+              label="Ability to travel"
+              value={application.specialist.travel_availability}
+            />
+            <CandidateAttribute
+              label="Linkedin"
+              value={
+                <a target="_blank" href={application.specialist.linkedin}>
+                  View Profile
+                </a>
+              }
+            />
+          </CandidateAttributes>
 
-            <Preview expanded={this.state.expanded}>
-              <Description>
-                <Text>{application.introduction}</Text>
-              </Description>
-            </Preview>
+          <Preview expanded={this.state.expanded}>
+            <Description>
+              <Text>{application.introduction}</Text>
+            </Description>
+          </Preview>
 
-            <Spring
-              from={{ height: 0, opacity: 0 }}
-              to={{
-                height: this.state.expanded ? this.moreInfoHeight : 0,
-                opacity: this.state.expanded ? 1 : 0
-              }}>
-              {styles => (
-                <MoreInfo innerRef={c => (this.moreInfo = c)} style={styles}>
-                  <Questions questions={application.questions} />
+          <Spring
+            from={{ height: 0, opacity: 0 }}
+            to={{
+              height: this.state.expanded ? this.moreInfoHeight : 0,
+              opacity: this.state.expanded ? 1 : 0
+            }}>
+            {styles => (
+              <MoreInfo innerRef={c => (this.moreInfo = c)} style={styles}>
+                <Questions questions={application.questions} />
+                {application.specialist.skills.length > 0 && (
                   <Spacing bottom="xl">
                     <Text>Skills</Text>
                     {application.specialist.skills.map((skill, i) => (
                       <Skill key={i}>{skill}</Skill>
                     ))}
                   </Spacing>
-                </MoreInfo>
-              )}
-            </Spring>
-          </CandidateContent>
+                )}
+              </MoreInfo>
+            )}
+          </Spring>
+        </CandidateContent>
 
-          {application.status === "Applied" && (
-            <CandidateFooter>
-              <Button
-                onClick={() => this.setState({ modal: "introduction" })}
-                primary>
-                Request Intro
-              </Button>
-              <Button onClick={() => this.setState({ modal: "reject" })}>
-                Reject
-              </Button>
-            </CandidateFooter>
-          )}
-        </Card>
-      </div>
+        {application.status === "Applied" && (
+          <CandidateFooter>
+            <Button
+              onClick={() => this.setState({ modal: "introduction" })}
+              primary>
+              Request Intro
+            </Button>
+            <Button onClick={() => this.setState({ modal: "reject" })}>
+              Reject
+            </Button>
+          </CandidateFooter>
+        )}
+      </Card>
     );
   }
 }

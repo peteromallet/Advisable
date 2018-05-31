@@ -10,7 +10,7 @@ import Select from "src/components/Select";
 import Button from "src/components/Button";
 import Spacing from "src/components/Spacing";
 
-import { Container, Text } from "./styles";
+import { Container, Text, Error } from "./styles";
 import UPDATE_STATUS from "../../graphql/updateApplicationStatus.graphql";
 import FETCH_PROJECT from "../../graphql/fetchProject.graphql";
 
@@ -50,8 +50,7 @@ class RejectModal extends React.Component {
                     }
                   }
                 })
-              }
-            >
+              }>
               {formik => (
                 <form onSubmit={formik.handleSubmit}>
                   <Container>
@@ -59,48 +58,52 @@ class RejectModal extends React.Component {
                       <Avatar name={specialist.name} />
                     </Spacing>
                     <Spacing bottom="xs">
-                      <Heading>
-                        Reject {specialist.name}
-                      </Heading>
+                      <Heading>Reject {specialist.name}</Heading>
                     </Spacing>
                     <Spacing bottom="xl">
-                      <Text size='l'>
-                        Please provide feedback by selecting a reason for rejection
+                      <Text size="l">
+                        Please provide feedback by selecting a reason for
+                        rejection
                       </Text>
                     </Spacing>
                     <Spacing bottom="l">
-                      <Select
-                        name="reason"
-                        value={formik.values.reason}
-                        onChange={formik.handleChange}
-                        placeholder="Select reason for rejection"
-                        options={[
-                          "Too Expensive",
-                          "Not Enough Experience",
-                          "Experience Isn’t Suitable",
-                          "Availability Is Wrong",
-                          "Didn’t Like Answers",
-                          "Inadequate Answers",
-                          "Lacking Required Skills",
-                          "Bad Cultural Fit",
-                        ]}
-                      />
+                      <React.Fragment>
+                        <Select
+                          name="reason"
+                          value={formik.values.reason}
+                          onChange={formik.handleChange}
+                          placeholder="Select reason for rejection"
+                          options={[
+                            "Too Expensive",
+                            "Not Enough Experience",
+                            "Experience Isn’t Suitable",
+                            "Availability Is Wrong",
+                            "Didn’t Like Answers",
+                            "Inadequate Answers",
+                            "Lacking Required Skills",
+                            "Bad Cultural Fit"
+                          ]}
+                        />
+                        {formik.errors.reason && (
+                          <Error>{formik.errors.reason}</Error>
+                        )}
+                      </React.Fragment>
                     </Spacing>
-                    {formik.errors.reason && <div>{formik.errors.reason}</div>}
                     <Flex>
                       <Spacing right="s">
                         <Button
                           primary
                           block
-                          size='l'
+                          size="l"
                           type="submit"
-                          disabled={formik.isSubmitting}
-                        >
+                          disabled={formik.isSubmitting}>
                           Reject
                         </Button>
                       </Spacing>
                       <Spacing left="s">
-                        <Button size='l' block onClick={this.props.onClose}>Cancel</Button>
+                        <Button size="l" block onClick={this.props.onClose}>
+                          Cancel
+                        </Button>
                       </Spacing>
                     </Flex>
                   </Container>

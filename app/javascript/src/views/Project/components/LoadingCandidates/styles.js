@@ -8,6 +8,7 @@ const spin = keyframes`
 export const Wrapper = styled.div`
   width: 100%;
   display: flex;
+  padding-top: 100px;
   align-items: center;
   justify-content: center;
 

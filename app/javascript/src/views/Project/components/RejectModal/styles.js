@@ -10,3 +10,11 @@ export const Text = styled.p`
   font-size: 18px;
   line-height: 24px;
 `
+
+export const Error = styled.div`
+  color: #DD2056;
+  font-size: 15px;
+  padding-top: 8px;
+  text-align: left;
+  line-height: 18px;
+`
