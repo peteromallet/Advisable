@@ -22,10 +22,16 @@ class Airtable::Specialist < Airtable::Base
 
     specialist.image = self[:image].try(:first)
 
-    fields["Expertise"].each do |skill_airtable_id|
+    skills.each do |skill_airtable_id|
       skill = ::Skill.find_by_airtable_id(skill_airtable_id)
       skill = Airtable::Skill.find(skill_airtable_id).sync if skill.nil?
       specialist.specialist_skills.find_or_initialize_by(skill: skill)
     end
+  end
+
+  private
+
+  def skills
+    fields["Expertise"] || []
   end
 end
