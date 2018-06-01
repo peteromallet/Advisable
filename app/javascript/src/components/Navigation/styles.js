@@ -6,6 +6,17 @@ const load = keyframes`
   99% { opacity: 1 }
 `;
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`
+
 export const Nav = styled.nav`
   width: 100%;
 `;
@@ -36,6 +47,7 @@ export const Count = styled.div`
 
 export const StatusList = styled.div`
   a {
+    opacity: 0;
     width: 100%;
     height: 36px;
     color: #b4d3f5;
@@ -50,6 +62,11 @@ export const StatusList = styled.div`
     margin-bottom: 10px;
     align-items: center;
     text-decoration: none;
+    animation: ${fadeIn} 300ms forwards;
+
+    &:nth-child(2) { animation-delay: 50ms }
+    &:nth-child(3) { animation-delay: 100ms }
+    &:nth-child(3) { animation-delay: 150ms }
 
     .Icon {
       top: 50%;

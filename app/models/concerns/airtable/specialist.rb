@@ -1,5 +1,4 @@
 class Airtable::Specialist < Airtable::Base
-  self.base_key = ENV["AIRTABLE_DATABASE_KEY"]
   self.table_name = "Specialists"
 
   has_many :skills, class: 'Skill', column: "Expertise"

@@ -1,20 +1,27 @@
 # Classes that inherit from Airtable::Base are used to sync a table from aitable
 # to a local database table. The Airtable::Base class is backed by the airrecord
 # gem. This means that each subclass of Airtable::Base must define its
-# table_name and base_key.
+# table_name.
 # see app/models/concerns/airtable/application.rb for a detailed example class.
 # Each ActiveRecord model that is synced with an airtable database table is
 # expected to have an airtable_id column.
 class Airtable::Base < Airrecord::Table
   class << self
     attr_accessor :sync_model, :sync_block
-    attr_reader :columns_hash
+
+    def base_key
+      ENV["AIRTABLE_DATABASE_KEY"]
+    end
+
+    def columns_hash
+      @columns_hash || {}
+    end
 
     # Sync can be called on any class that inherits from Airtable::Base
     # to sync all records from airtable
     def sync
       records = all
-      puts "Syncing #{sync_model.to_s.underscore.pluralize} (#{records.length})"
+      Rails.logger.info "Syncing #{sync_model.to_s.underscore.pluralize} (#{records.length})"
       records.each(&:sync)
     end
 
@@ -54,22 +61,29 @@ class Airtable::Base < Airrecord::Table
     end
   end
 
+  # You can call sync on an instance of any class that inherits from
+  # Airtable::Base to sync that individual record.
+  # => Airtable::Project.find("rec_123").sync
   def sync
     ActiveRecord::Base.transaction do
-      puts "Syncing #{self.class.sync_model.to_s.underscore} #{id}"
-      record = self.class.sync_model.find_or_initialize_by(airtable_id: id)
+      Rails.logger.info "Syncing #{self.class.sync_model.to_s.underscore} #{id}"
 
-      columns = self.class.columns_hash || {}
-      columns.each do |column, attr|
-        record.send("#{attr}=", self[column.to_sym])
+      self.class.columns_hash.each do |column, attr|
+        model.send("#{attr}=", self[column.to_sym])
       end
 
-      instance_exec(record, &self.class.sync_block) if self.class.sync_block
-      unless record.save
-        puts "Failed to sync #{self.class.sync_model.to_s.underscore} #{id}"
-        puts record.errors.full_messages
+      instance_exec(model, &self.class.sync_block) if self.class.sync_block
+
+      unless model.save
+        Rails.logger.info "Failed to sync #{self.class.sync_model.to_s.underscore} #{id}"
+        Rails.logger.info model.errors.full_messages
       end
-      record
+      model
     end
+  end
+
+  # returns the active record model to sync data to
+  def model
+    @model ||= self.class.sync_model.find_or_initialize_by(airtable_id: id)
   end
 end
