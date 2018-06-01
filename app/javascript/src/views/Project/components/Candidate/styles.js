@@ -99,10 +99,6 @@ export const CandidateAttributes = styled.div`
 export const Attribute = styled.div`
   margin-bottom: 15px;
 
-  @media screen and (max-width: 1000px) {
-    width: 50%;
-  }
-
   @media screen and (max-width: 500px) {
     width: 100%;
   }

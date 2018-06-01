@@ -96,12 +96,13 @@ class Candidate extends React.Component {
             />
             <CandidateAttribute
               label="Available to start"
-              value={application.availability || "-"}
+              value="Yes"
+              // value={application.availability || "-"}
             />
-            <CandidateAttribute
+            {/* <CandidateAttribute
               label="Ability to travel"
               value={application.specialist.travel_availability || "-"}
-            />
+            /> */}
             <CandidateAttribute
               label="Linkedin"
               value={
