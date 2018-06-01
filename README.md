@@ -41,3 +41,12 @@ The frontend codebase follows a certain folder structure.
 - `/views`: All of the various views in the application are defined here. A view folder can contain multiple sub folders:
   - `/components`: Any components that are specific to the parent view.
   - `/containers`: Components that are used to fetch and send data for the given view.
+
+## Environment variables
+Environment variables can be set in development by creating a `.env` file
+in the root directory.
+
+- `ADMIN_PASSWORD`: Sets the password for the admin dashboard
+- `ADMIN_USERNAME`: Sets the username for the admin dashboard
+- `AIRTABLE_API_KEY`: The API key for the Airtable database.
+- `AIRTABLE_DATABASE_KEY`: The database key for the Airtable database.
