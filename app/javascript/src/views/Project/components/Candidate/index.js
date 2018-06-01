@@ -85,14 +85,18 @@ class Candidate extends React.Component {
           <CandidateAttributes>
             <CandidateAttribute
               label="Hourly rate"
-              value={currency(
-                application.rate,
-                application.specialist.country.currency
-              )}
+              value={
+                application.rate
+                  ? currency(
+                      application.rate,
+                      application.specialist.country.currency
+                    )
+                  : "-"
+              }
             />
             <CandidateAttribute
               label="Available to start"
-              value={application.availability || '-'}
+              value={application.availability || "-"}
             />
             <CandidateAttribute
               label="Ability to travel"

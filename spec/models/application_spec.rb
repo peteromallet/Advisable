@@ -5,7 +5,6 @@ describe Application do
   it { should belong_to(:project) }
   it { should belong_to(:specialist) }
   it { should belong_to(:rejection_reason) }
-  it { should validate_presence_of(:rate) }
 
   describe "#questions" do
     context "when nil" do
