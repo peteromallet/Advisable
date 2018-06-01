@@ -18,6 +18,13 @@ class Airtable::Application < Airtable::Base
       application.specialist = specialist
     end
 
+    rejected_reason_id = fields["Rejected Reason"].try(:first)
+    if rejected_reason_id
+      rejection_reason = ::RejectionReason.find_by_airtable_id(rejected_reason_id)
+      rejection_reason = Airtable::RejectedReason.find(rejected_reason_id).sync if rejection_reason.nil?
+      application.rejection_reason = rejection_reason
+    end
+
     project_id = fields["Client Project"].try(:first)
     if project_id
       project = ::Project.find_by_airtable_id(project_id)

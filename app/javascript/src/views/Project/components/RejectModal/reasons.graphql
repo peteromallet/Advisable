@@ -1,0 +1,6 @@
+query {
+  reasons:rejectionReasons {
+    value:id
+    label:reason
+  }
+}

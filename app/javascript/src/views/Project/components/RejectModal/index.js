@@ -1,6 +1,6 @@
 import React from "react";
 import remove from "lodash/remove";
-import { Mutation } from "react-apollo";
+import { Query, Mutation } from "react-apollo";
 import { Formik, Field } from "formik";
 import Modal from "src/components/Modal";
 import Flex from "src/components/Flex";
@@ -11,8 +11,8 @@ import Button from "src/components/Button";
 import Spacing from "src/components/Spacing";
 
 import { Container, Text, Error } from "./styles";
+import FETCH_REASONS from "./reasons.graphql";
 import UPDATE_STATUS from "../../graphql/updateApplicationStatus.graphql";
-import FETCH_PROJECT from "../../graphql/fetchProject.graphql";
 
 class RejectModal extends React.Component {
   render() {
@@ -68,22 +68,17 @@ class RejectModal extends React.Component {
                     </Spacing>
                     <Spacing bottom="l">
                       <React.Fragment>
-                        <Select
-                          name="reason"
-                          value={formik.values.reason}
-                          onChange={formik.handleChange}
-                          placeholder="Select reason for rejection"
-                          options={[
-                            "Too Expensive",
-                            "Not Enough Experience",
-                            "Experience Isn’t Suitable",
-                            "Availability Is Wrong",
-                            "Didn’t Like Answers",
-                            "Inadequate Answers",
-                            "Lacking Required Skills",
-                            "Bad Cultural Fit"
-                          ]}
-                        />
+                        <Query query={FETCH_REASONS}>
+                          {query => (
+                            <Select
+                              name="reason"
+                              value={formik.values.reason}
+                              onChange={formik.handleChange}
+                              placeholder="Select reason for rejection"
+                              options={query.data.reasons}
+                            />
+                          )}
+                        </Query>
                         {formik.errors.reason && (
                           <Error>{formik.errors.reason}</Error>
                         )}

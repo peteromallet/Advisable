@@ -30,4 +30,8 @@ query project($id: ID!) {
       }
     }
   }
+  rejectionReasons {
+    id
+    reason
+  }
 }

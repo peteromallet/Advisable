@@ -13,4 +13,11 @@ Types::QueryType = GraphQL::ObjectType.define do
       end
     }
   end
+
+  field :rejectionReasons do
+    type types[Types::RejectionReasonType]
+    resolve ->(obj, args, ctx) {
+      RejectionReason.all
+    }
+  end
 end

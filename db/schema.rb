@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_25_132313) do
+ActiveRecord::Schema.define(version: 2018_06_01_122857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,9 @@ ActiveRecord::Schema.define(version: 2018_05_25_132313) do
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "rejection_reason_id"
     t.index ["project_id"], name: "index_applications_on_project_id"
+    t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
   end
 
@@ -44,6 +46,14 @@ ActiveRecord::Schema.define(version: 2018_05_25_132313) do
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "rejection_reasons", force: :cascade do |t|
+    t.string "reason"
+    t.string "airtable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["airtable_id"], name: "index_rejection_reasons_on_airtable_id"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -77,6 +87,7 @@ ActiveRecord::Schema.define(version: 2018_05_25_132313) do
   end
 
   add_foreign_key "applications", "projects"
+  add_foreign_key "applications", "rejection_reasons"
   add_foreign_key "applications", "specialists"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"

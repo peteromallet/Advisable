@@ -4,6 +4,7 @@ describe Application do
   include_examples "airtable syncing"
   it { should belong_to(:project) }
   it { should belong_to(:specialist) }
+  it { should belong_to(:rejected_reason) }
   it { should validate_presence_of(:rate) }
 
   describe "#questions" do

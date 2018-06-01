@@ -78,6 +78,7 @@ class Airtable::Base < Airrecord::Table
         Rails.logger.info "Failed to sync #{self.class.sync_model.to_s.underscore} #{id}"
         Rails.logger.info model.errors.full_messages
       end
+
       model
     end
   end
