@@ -15,7 +15,7 @@ Types::SpecialistType = GraphQL::ObjectType.define do
 
   field :skills, types[types.String] do
     resolve ->(obj, args, ctx) {
-      []
+      obj.skills.map(&:name)
     }
   end
 end
