@@ -49,4 +49,5 @@ in the root directory.
 - `ADMIN_PASSWORD`: Sets the password for the admin dashboard
 - `ADMIN_USERNAME`: Sets the username for the admin dashboard
 - `AIRTABLE_API_KEY`: The API key for the Airtable database.
+
 - `AIRTABLE_DATABASE_KEY`: The database key for the Airtable database.
