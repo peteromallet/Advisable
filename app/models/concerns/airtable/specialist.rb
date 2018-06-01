@@ -13,7 +13,7 @@ class Airtable::Specialist < Airtable::Base
   sync_data do |specialist|
     # to prevent making more requests than we need, first check if there is
     # an existing country record
-    country_airtable_id = fields["Country"][0]
+    country_airtable_id = fields["Country"].try(:first)
     if country_airtable_id
       country = ::Country.find_by_airtable_id(country_airtable_id)
       country = Airtable::Country.find(country_airtable_id).sync if country.nil?
