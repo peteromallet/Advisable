@@ -6,19 +6,14 @@ Types::MutationType = GraphQL::ObjectType.define do
     argument :status, !types.String
     argument :rejectionReason, types.String
     resolve ->(obj, args, ctx) {
-      application = ::Application.find_by_airtable_id(args[:id])
-      application.status = args[:status]
+      update = Applications::UpdateStatus.call(
+        id: args[:id],
+        status: args[:status],
+        rejection_reason: args[:rejectionReason]
+      )
 
-      unless application.valid?
-        return GraphQL::ExecutionError.new(application.errors.full_messages[0])
-      end
-
-      airtable = Airtable::Application.find(args[:id])
-      airtable["Application Status"] = args[:status]
-      airtable["Rejection Reason"] = args[:rejectionReason] if args[:rejectionReason]
-
-      application.save if airtable.save
-      application
+      return update.data if update.ok?
+      GraphQL::ExecutionError.new(update.error.message)
     }
   end
 end

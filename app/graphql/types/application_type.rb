@@ -7,12 +7,7 @@ end
 Types::ApplicationType = GraphQL::ObjectType.define do
   name 'Application'
 
-  field :id, !types.ID do
-    resolve ->(obj, args, ctx) {
-      obj.airtable_id
-    }
-  end
-
+  field :id, !types.ID
   field :rate, types.String
   field :availability, types.String
   field :specialist, Types::SpecialistType
