@@ -3,7 +3,7 @@ import reduce from 'lodash/reduce';
 import { Wrapper } from './styles';
 
 const Avatar = ({ name, url }) => {
-  const initials = reduce(name.split(/\s+/), (sum, name) => {
+  const initials = reduce(name.trim().split(/\s+/), (sum, name) => {
     return `${sum}${name[0]}`
   }, "")
 

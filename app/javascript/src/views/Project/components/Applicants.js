@@ -5,6 +5,7 @@ import { Transition } from "react-spring";
 import Candidate from "../components/Candidate";
 import { Title, Count } from "../styles";
 import NoApplicants from "../components/NoCandidates";
+import SimpleErrorBoundary from 'src/components/SimpleErrorBoundary';
 
 const Applicants = ({ data, status, emptyStateText, countLabel }) => {
   const applications = filter(data.project.applications, { status });
@@ -21,7 +22,9 @@ const Applicants = ({ data, status, emptyStateText, countLabel }) => {
       {applications.length > 0 ? (
         <div>
           {applications.map(application => (
-            <Candidate application={application} key={application.id} />
+            <SimpleErrorBoundary key={application.id}>
+              <Candidate application={application} />
+            </SimpleErrorBoundary>
           ))}
         </div>
       ) : (
