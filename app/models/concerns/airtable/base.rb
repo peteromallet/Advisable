@@ -79,6 +79,8 @@ class Airtable::Base < Airrecord::Table
         Rails.logger.info model.errors.full_messages
       end
 
+      Webhook.process(model)
+
       model
     end
   end

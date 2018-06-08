@@ -30,7 +30,7 @@ class ApplicationContainer extends React.Component {
           drawerOpen={this.state.drawer}
           onOpenNavigation={this.toggleDrawer}
         />
-        <View drawerOpen={this.state.drawer}>
+        <View id="view" drawerOpen={this.state.drawer}>
           {this.props.children}
         </View>
       </Container>

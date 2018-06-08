@@ -13,5 +13,11 @@ module Admin
     # def records_per_page
     #   params[:per_page] || 20
     # end
+    before_action :default_params
+
+    def default_params
+      params[:order] ||= "created_at"
+      params[:direction] ||= "desc"
+    end
   end
 end
