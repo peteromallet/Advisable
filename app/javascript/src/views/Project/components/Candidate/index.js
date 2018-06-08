@@ -29,7 +29,7 @@ import {
 class Candidate extends React.Component {
   state = {
     expanded: false,
-    modal: null
+    modal: null,
   };
 
   clickToExpand = e => {
