@@ -1,0 +1,20 @@
+<div class="field-unit__label">
+  <%= f.label field.attribute %>
+</div>
+<div class="field-unit__field">
+  When status changes to
+  <% field.data.each do |c| %>
+    <%=
+      hidden_field_tag 'webhook_configuration[criteria[][attribute]]',
+      "status"
+    %>
+    <%=
+      hidden_field_tag 'webhook_configuration[criteria[][operator]]',
+      "changes_to"
+    %>
+    <%=
+      select_tag 'webhook_configuration[criteria[][value]]',
+      options_for_select(["Application Accepted", "Application Rejected"], c["value"])
+    %>
+  <% end %>
+</div>

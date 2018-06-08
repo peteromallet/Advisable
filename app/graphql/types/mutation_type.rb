@@ -11,7 +11,7 @@ Types::MutationType = GraphQL::ObjectType.define do
         status: args[:status],
         rejection_reason_id: args[:rejectionReason]
       )
-
+      
       return update.data if update.ok?
       GraphQL::ExecutionError.new(update.error.message)
     }

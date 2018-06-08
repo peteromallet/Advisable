@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_01_163025) do
+ActiveRecord::Schema.define(version: 2018_06_08_114213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,15 @@ ActiveRecord::Schema.define(version: 2018_06_01_163025) do
     t.string "url"
     t.string "type"
     t.jsonb "criteria"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "webhooks", force: :cascade do |t|
+    t.string "url"
+    t.string "status"
+    t.jsonb "data"
+    t.text "response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
