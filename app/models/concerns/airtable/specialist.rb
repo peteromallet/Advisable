@@ -1,7 +1,7 @@
 class Airtable::Specialist < Airtable::Base
   self.table_name = "Specialists"
 
-  has_many :skills, class: 'Skill', column: "Expertise"
+  has_many :specialist_skills, class: 'SpecialistSkill', column: "Specialist Skills"
   belongs_to :country, class: "Airtable::Country", column: "Country"
 
   # Tells which active record model to sync data with.
@@ -22,16 +22,24 @@ class Airtable::Specialist < Airtable::Base
 
     specialist.image = self[:image].try(:first)
 
-    skills.each do |skill_airtable_id|
-      skill = ::Skill.find_by_airtable_id(skill_airtable_id)
-      skill = Airtable::Skill.find(skill_airtable_id).sync if skill.nil?
+    # iterate through each associated specialist id from airtable
+    specialist_skills.each do |specialist_skill_id|
+      # fetch the specialist skill airtable record
+      specialist_skill = Airtable::SpecialistSkill.find(specialist_skill_id)
+      # get the associated skill record
+      skill_id = specialist_skill[:skill][0]
+      # check if we already have a synced record of that skill.
+      skill = ::Skill.find_by_airtable_id(skill_id)
+      # if not then sync it
+      skill = Airtable::Skill.find(skill_id).sync if skill.nil?
+      # find or initialize an association.
       specialist.specialist_skills.find_or_initialize_by(skill: skill)
     end
   end
 
   private
 
-  def skills
-    fields["Expertise"] || []
+  def specialist_skills
+    fields["Specialist Skills"] || []
   end
 end
