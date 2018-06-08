@@ -3,39 +3,43 @@ class WebhookConfiguration < ApplicationRecord
   validates :type, presence: true
   validates :name, presence: true
   validate :valid_criteria
+  serialize :criteria, Array
 
   OPERATORS = [
     :equals,
     :dose_not_equal
   ]
 
-  class << self
-    attr_reader :webhook_attributes
-
-    def webhook_attribute(attr, operators: OPERATORS)
-      @webhook_attributes ||= {}
-      @webhook_attributes[attr] = { operators: operators }
-    end
-  end
-
-  def criteria
-    self[:criteria] || []
+  def self.model_name
+    return super if self == WebhookConfiguration
+    WebhookConfiguration.model_name
   end
 
   def process(entity)
     matched_criteria = criteria.select do |c|
-      send(c["operator"], entity.send(c["attribute"]), c["value"])
+      send(c["operator"], entity, c["attribute"], c["value"])
     end
     return unless matched_criteria.length == criteria.length
-    puts "EMIT WEBHOOK"
+    webhook = Webhook.create(url: url, data: data(entity))
+    WebhookJob.perform_later(webhook.id)
+    webhook
   end
 
-  def equals(data, value)
-    data =~ Regexp.new(value)
+  def changes_to(entity, attribute, value)
+    return false unless entity.send("saved_change_to_#{attribute}?")
+    entity[attribute] =~ Regexp.new(value)
   end
 
-  def does_not_equal(data, value)
-    !(data =~ Regexp.new(value))
+  def equals(entity, attribute, value)
+    entity[attribute] =~ Regexp.new(value)
+  end
+
+  def does_not_equal(entity, attribute, value)
+    !(entity[attribute] =~ Regexp.new(value))
+  end
+
+  def data
+    raise NotImplemented
   end
 
   private
@@ -48,9 +52,6 @@ class WebhookConfiguration < ApplicationRecord
       break errors.add(:criteria, "block must have an operator") unless config["operator"]
       break errors.add(:criteria, "#{config["operator"]} is not a supported operator") unless config["operator"]
       break errors.add(:criteria, "block must have a value") unless config["value"]
-      unless self.class.webhook_attributes.keys.include?(config["attribute"])
-        errors.add(:criteria, "Webhooks can not be configured for #{config["attribute"]}")
-      end
     end
   end
 end
