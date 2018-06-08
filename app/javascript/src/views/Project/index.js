@@ -9,12 +9,6 @@ import LoadingCandidates from "./components/LoadingCandidates";
 import FETCH_PROJECT from "./graphql/fetchProject.graphql";
 
 class Project extends React.Component {
-  componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
-      window.scrollTo(0, 0);
-    }
-  }
-
   render() {
     const { match, loading, data } = this.props;
     if (data.loading) return <LoadingCandidates />;
