@@ -11,7 +11,7 @@ class WebhookConfigurationDashboard < Administrate::BaseDashboard
     id: Field::Number,
     name: Field::String,
     url: Field::String,
-    type: Field::Select.with_options(collection: ["WebhookConfiguration::Application"]),
+    type: WebhookTypeField,
     criteria: WebhookCriteriaField
   }.freeze
 
