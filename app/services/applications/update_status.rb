@@ -16,6 +16,7 @@ class Applications::UpdateStatus < Service
     application.status = status
     application.rejection_reason = rejection_reason if rejection_reason_id
     application.save
+    Webhook.process(application)
     application
   end
 
