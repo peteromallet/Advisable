@@ -19,7 +19,7 @@ class WebhookConfiguration < ApplicationRecord
   # process a given entity and emit a webhook if it mactches the criteria.
   def process(entity)
     matched_criteria = criteria.select do |c|
-      config.symbolize_keys
+      c.symbolize_keys
       send(c[:operator], entity, c[:attribute], c[:value])
     end
     return unless matched_criteria.length == criteria.length
