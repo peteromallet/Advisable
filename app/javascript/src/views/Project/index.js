@@ -3,6 +3,7 @@ import { graphql } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Container } from "./styles";
 import NotFound from "src/views/NotFound";
+import Offer from "./views/Offer";
 import Applicants from "./components/Applicants";
 import Navigation from "src/components/Navigation";
 import LoadingCandidates from "./components/LoadingCandidates";
@@ -56,6 +57,7 @@ class Project extends React.Component {
                 />
               )}
             />
+            <Route path={`${match.path}/offer/:applicationID`} component={Offer} passd="arstarst" />
             <Redirect to={`${match.url}/applied`} />
           </Switch>
         )}
