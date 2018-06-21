@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 const heights = {
   m: '34px',
-  l: '40px'
+  l: '38px'
 }
 
 const fontSizes = {
   m: '15px',
-  l: '16px',
+  l: '17px',
 }
 
 const Button = styled.button`
@@ -16,7 +16,7 @@ const Button = styled.button`
   border: none;
   outline: none;
   font-size: ${props => fontSizes[props.size] || fontSizes['m']};
-  padding: 0 20px;
+  padding: 0 25px;
   cursor: pointer;
   font-weight: 600;
   border-radius: 8px;
@@ -37,14 +37,15 @@ const Button = styled.button`
   }
 
   ${props => props.primary && `
-    background: #0076F7;
+    background: #1A5FFF;
+    box-shadow: 0 2px 4px 0 rgba(24,71,180,0.10);
 
     &:hover {
-      background: #238BFF;
+      background: #3270FF;
     }
 
     &:active {
-      background: #0066D6;
+      background: #0C4EE4;
       transition: none;
     }
   `}

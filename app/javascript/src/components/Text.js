@@ -27,6 +27,6 @@ export default styled.p`
   font-size: ${props => sizes[props.size] || sizes["m"]};
   line-height: ${props => lineHeights[props.size] || lineHeights["m"]};
   font-weight: ${props => weights[props.variation] || 400};
-  color: ${props => colours[props.variation] || "#576471"};
+  color: ${props => colours[props.variation] || "#4B5D78"};
   letter-spacing: ${props => kerning[props.size] || kerning['m']};
 `;

@@ -37,12 +37,12 @@ export const Count = styled.div`
   color: #9dc4ef;
   padding: 0 15px;
   font-size: 12px;
-  font-weight: 600;
-  line-height: 22px;
+  font-weight: bold;
+  line-height: 20px;
   position: absolute;
   border-radius: 10px;
   transform: translateY(-50%);
-  background-color: rgba(255, 255, 255, 0.15);
+  background: rgba(1,34,86,0.15);
 `;
 
 export const StatusList = styled.div`
@@ -50,28 +50,30 @@ export const StatusList = styled.div`
     opacity: 0;
     width: 100%;
     height: 36px;
-    color: #b4d3f5;
+    color: #A8CAFF;
     display: block;
-    line-height: 38px;
+    line-height: 34px;
     font-size: 16px;
     padding: 0 10px;
     font-weight: 600;
     position: relative;
-    border-radius: 5px;
+    border-radius: 8px;
     padding-left: 40px;
     margin-bottom: 10px;
     align-items: center;
     text-decoration: none;
+    letter-spacing: -1px;
     animation: ${fadeIn} 300ms forwards;
 
     &:nth-child(2) { animation-delay: 50ms }
     &:nth-child(3) { animation-delay: 100ms }
     &:nth-child(3) { animation-delay: 150ms }
+    &:nth-child(4) { animation-delay: 200ms }
 
     .Icon {
       top: 50%;
       left: 8px;
-      color: white;
+      color: #5F9EFF;
       position: absolute;
       transform: translateY(-50%);
     }
@@ -82,10 +84,13 @@ export const StatusList = styled.div`
 
     &.active {
       color: white;
-      background-color: rgba(255, 255, 255, 0.15);
+      background-color: #3081FF;
+
+      .Icon { color: white }
 
       ${Count} {
         color: white;
+        background: rgba(1,34,86,0.25);
       }
     }
   }
