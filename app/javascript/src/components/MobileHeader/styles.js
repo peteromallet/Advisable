@@ -8,7 +8,7 @@ export const Header = styled.div`
   width: 100%;
   height: 60px;
   position: fixed;
-  background: #0570e6;
+  background: #0064FF;
   box-shadow: 0 1px 4px 0 rgba(0, 113, 233, 0.22);
 
   display: none;

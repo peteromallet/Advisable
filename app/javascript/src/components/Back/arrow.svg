@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Triangle</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Offer-Form" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="full-form-copy-3" transform="translate(-388.000000, -49.000000)" stroke="#0064FF" stroke-width="2">
+            <g id="Group-4" transform="translate(390.000000, 48.000000)">
+                <polyline id="Triangle" transform="translate(2.500000, 7.000000) rotate(-90.000000) translate(-2.500000, -7.000000) " points="-2.5 9.5 2.5 4.5 2.5 4.5 7.5 9.5"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

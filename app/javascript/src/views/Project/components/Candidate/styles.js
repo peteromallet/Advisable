@@ -119,10 +119,10 @@ export const AttributeValue = styled.span`
   font-weight: 500;
 
   a {
-    color: #0570e6;
+    color: #0064FF;
     text-decoration: none;
     &:hover {
-      color: #004a9b;
+      color: #004EC7;
     }
   }
 `;
@@ -165,7 +165,7 @@ export const Skill = styled.div`
   color: #243D59;
   font-size: 15px;
   padding: 0 20px;
-  line-height: 32px;
+  line-height: 29px;
   margin-right: 10px;
   margin-bottom: 10px;
   border-radius: 15px;

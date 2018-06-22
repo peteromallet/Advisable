@@ -2,8 +2,10 @@ import React from "react";
 import gql from "graphql-tag";
 import filter from "lodash/filter";
 import { Transition } from "react-spring";
+import Text from "src/components/Text";
+import Heading from "src/components/Heading";
+import Spacing from "src/components/Spacing";
 import Candidate from "../components/Candidate";
-import { Title, Count } from "../styles";
 import NoApplicants from "../components/NoCandidates";
 import SimpleErrorBoundary from 'src/components/SimpleErrorBoundary';
 
@@ -24,8 +26,15 @@ class Applicants extends React.Component {
 
     return (
       <React.Fragment>
-        <Title>{data.project.name}</Title>
-        <Count>{countLabel || status} - {count}</Count>
+        <Spacing bottom="s">
+          <Heading size="l">{data.project.name}</Heading>
+        </Spacing>
+
+        <Spacing bottom="xl">
+          <Text size="l">
+            {countLabel || status} - {count}
+          </Text>
+        </Spacing>
 
         {applications.length > 0 ? (
           <div>

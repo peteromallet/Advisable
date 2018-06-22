@@ -62,7 +62,7 @@ export const StatusList = styled.div`
     margin-bottom: 10px;
     align-items: center;
     text-decoration: none;
-    letter-spacing: -1px;
+    letter-spacing: -0.03em;
     animation: ${fadeIn} 300ms forwards;
 
     &:nth-child(2) { animation-delay: 50ms }

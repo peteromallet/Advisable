@@ -6,7 +6,7 @@ const heights = {
 }
 
 const fontSizes = {
-  m: '15px',
+  m: '16px',
   l: '17px',
 }
 
@@ -35,6 +35,23 @@ const Button = styled.button`
     background: #161526;
     transition: none;
   }
+
+  ${props => props.blank && `
+    color: #7D8DB0;
+    background: white;
+    border: 1px solid #E8EDF9;
+
+    &:hover {
+      color: #63749A;
+      background: white;
+      border-color: #C6CFE4;
+    }
+
+    &:active {
+      color: #3E4B68;
+      background: white;
+    }
+  `}
 
   ${props => props.primary && `
     background: #1A5FFF;
