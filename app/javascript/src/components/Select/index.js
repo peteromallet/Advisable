@@ -1,9 +1,24 @@
 import React from "react";
-import { Select, Wrapper, Arrows } from "./styles.js";
+import uniqueID from "lodash/uniqueId";
+import { Select, Wrapper, SelectWrapper, Arrows } from "./styles.js";
+import InputLabel from "src/components/InputLabel";
 
-export default ({ name, options, value, placeholder, onChange, onFocus, onBlur }) => {
+export default ({
+  name,
+  options,
+  id,
+  block,
+  label,
+  value,
+  placeholder,
+  onChange,
+  onFocus,
+  onBlur
+}) => {
+  const fieldID = id || uniqueID("TextField");
+
   // Placeholder value is an empty string
-  const PLACEHOLDER_VALUE = ''
+  const PLACEHOLDER_VALUE = "";
 
   const isPlaceholder = Boolean(!value && placeholder);
   const placeholderMarkup = isPlaceholder && (
@@ -24,8 +39,7 @@ export default ({ name, options, value, placeholder, onChange, onFocus, onBlur }
         <option
           key={option.value}
           value={option.value}
-          disabled={option.disabled}
-        >
+          disabled={option.disabled}>
           {option.label}
         </option>
       );
@@ -38,19 +52,21 @@ export default ({ name, options, value, placeholder, onChange, onFocus, onBlur }
   const finalValue = onChange ? value || PLACEHOLDER_VALUE : undefined;
 
   return (
-    <Wrapper>
-      <Select
-        name={name}
-        value={finalValue}
-        defaultValue={defaultValue}
-        onChange={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      >
-        {placeholderMarkup}
-        {optionsMarkup}
-      </Select>
-      <Arrows />
+    <Wrapper block={block}>
+      {label && <InputLabel htmlFor={fieldID}>{label}</InputLabel>}
+      <SelectWrapper block={block}>
+        <Select
+          name={name}
+          value={finalValue}
+          defaultValue={defaultValue}
+          onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}>
+          {placeholderMarkup}
+          {optionsMarkup}
+        </Select>
+        <Arrows />
+      </SelectWrapper>
     </Wrapper>
   );
 };

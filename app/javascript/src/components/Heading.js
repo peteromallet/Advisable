@@ -7,6 +7,7 @@ const sizes = {
 
 const lineHeighs = {
   m: '28px',
+  l: '34px'
 }
 
 const weights = {

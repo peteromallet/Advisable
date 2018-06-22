@@ -10,6 +10,17 @@ const DeliverableInput = styled.div`
   border-radius: 10px;
   margin-bottom: 10px;
 
+  &.slide-enter {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  &.slide-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+  }
+
   &::before {
     top: 50%;
     left: 20px;
@@ -50,38 +61,64 @@ const DeliverableInput = styled.div`
 `;
 
 class Deliverables extends React.Component {
-  handleKeyUp = (fieldArray, index) => e => {
-    const content = e.target.value;
-    const deliverables = fieldArray.form.values.deliverables;
-    const lastItem = deliverables[deliverables.length - 1];
+  handleChange = index => e => {
+    const value = e.target.value;
+    const deliverables = this.props.deliverables.map((deliverable, i) => {
+      if (index === i) return value
+      return deliverable
+    })
 
-    if (content.length > 0 && lastItem.length !== 0) {
-      fieldArray.push("");
+    const isLast = (this.props.deliverables.length - 1) === index;
+    const isEmpty = deliverables[index].length === 0;
+
+    // If we are editing the last item in the array, and there is at least
+    // one character in the array then add a blank item to the end of the list.
+    if (isLast && value.length > 0) {
+      deliverables.push("")
     }
+
+    if (!isLast && isEmpty) {
+      deliverables.splice(index, 1);
+    }
+
+    this.props.onChange(deliverables)
+  }
+
+  handleKeyUp = (index) => e => {
+    // const content = e.target.value;
+    // const deliverables = fieldArray.form.values.deliverables;
+    // const lastItem = deliverables[deliverables.length - 1];
+    //
+    // if (content.length > 0 && lastItem.length !== 0) {
+    //   fieldArray.push("");
+    // }
   };
 
-  handleKeyDown = (fieldArray, index) => e => {
-    const deliverables = fieldArray.form.values.deliverables;
-    const isBackspace = e.keyCode === 8;
-    const isEmpty = deliverables[index].length === 0;
-    const isLastItem = deliverables.length - 1 === index;
-    if (isBackspace && !isLastItem && deliverables.length > 1 && isEmpty) {
-      fieldArray.remove(index);
-    }
-
-    const isReturn = e.keyCode === 13;
-    if (isReturn) {
-      e.preventDefault();
-    }
+  handleKeyDown = (index) => e => {
+    // const deliverables = this.props.deliverables;
+    // const isBackspace = e.keyCode === 8;
+    // const isEmpty = deliverables[index].length === 0;
+    // const isLastItem = deliverables.length - 1 === index;
+    // if (isBackspace && !isLastItem && deliverables.length > 1 && isEmpty) {
+    //   console.log('delete')
+    //   deliverables.splice(index, 1);
+    // }
+    //
+    // this.props.onChange(deliverables)
+    //
+    // const isReturn = e.keyCode === 13;
+    // if (isReturn) {
+    //   e.preventDefault();
+    // }
   };
 
-  handleBlur = (fieldArray, index) => e => {
-    const deliverables = fieldArray.form.values.deliverables;
-    const isEmpty = deliverables[index].length === 0;
-    const isLastItem = deliverables.length - 1 === index;
-    if (isEmpty && !isLastItem) {
-      fieldArray.remove(index);
-    }
+  handleBlur = (index) => e => {
+    // const deliverables = fieldArray.form.values.deliverables;
+    // const isEmpty = deliverables[index].length === 0;
+    // const isLastItem = deliverables.length - 1 === index;
+    // if (isEmpty && !isLastItem) {
+    //   fieldArray.remove(index);
+    // }
   };
 
   render() {
@@ -90,20 +127,16 @@ class Deliverables extends React.Component {
         name="deliverables"
         render={fieldArray => (
           <TransitionGroup>
-            {fieldArray.form.values.deliverables.map((deliverable, i) => (
-              <CSSTransition timeout={500} classNames="Deliverable" key={i}>
+            {this.props.deliverables.map((deliverable, i) => (
+              <CSSTransition timeout={500} classNames="slide" key={i}>
                 <DeliverableInput>
-                  <Field
-                    name={`deliverables.${i}`}
-                    render={({ field }) => (
-                      <Textarea
-                        {...field}
-                        placeholder="Add a deliverable..."
-                        onBlur={this.handleBlur(fieldArray, i)}
-                        onKeyUp={this.handleKeyUp(fieldArray, i)}
-                        onKeyDown={this.handleKeyDown(fieldArray, i)}
-                      />
-                    )}
+                  <Textarea
+                    value={deliverable}
+                    placeholder="Add a deliverable..."
+                    onBlur={this.handleBlur(i)}
+                    onKeyUp={this.handleKeyUp(i)}
+                    onChange={this.handleChange(i)}
+                    onKeyDown={this.handleKeyDown(i)}
                   />
                 </DeliverableInput>
               </CSSTransition>
