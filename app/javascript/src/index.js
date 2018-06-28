@@ -3,9 +3,18 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import App from './App';
+import { InMemoryCache } from "apollo-cache-inmemory";
+import App from "./App";
 import "./reset.css.js";
+import { IntlProvider } from "react-intl";
+
+// Define user's language. Different browsers have the user locale defined
+// on different fields on the `navigator` object, so we make sure to account
+// for these different by checking all of them
+const language =
+  (navigator.languages && navigator.languages[0]) ||
+  navigator.language ||
+  navigator.userLanguage;
 
 const cache = new InMemoryCache();
 
@@ -28,7 +37,11 @@ const client = new ApolloClient({
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
     <ApolloProvider client={client}>
-      <App />
+      <IntlProvider locale={language}>
+        <React.Fragment>
+          <App />
+        </React.Fragment>
+      </IntlProvider>
     </ApolloProvider>,
     document.body.appendChild(document.createElement("div"))
   );

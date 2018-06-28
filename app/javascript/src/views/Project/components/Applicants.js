@@ -31,7 +31,7 @@ class Applicants extends React.Component {
           <div>
             {applications.map(application => (
               <SimpleErrorBoundary key={application.id}>
-                <Candidate application={application} />
+                <Candidate project={data.project} application={application} />
               </SimpleErrorBoundary>
             ))}
           </div>

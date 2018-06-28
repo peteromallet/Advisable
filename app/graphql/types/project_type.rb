@@ -3,6 +3,7 @@ Types::ProjectType = GraphQL::ObjectType.define do
 
   field :id, !types.ID
   field :name, !types.String
+  field :currency, types.String
   field :applications, types[Types::ApplicationType] do
     resolve ->(obj, args, ctx) {
       obj.applications.order(score: :desc)

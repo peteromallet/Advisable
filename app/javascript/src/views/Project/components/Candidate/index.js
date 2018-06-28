@@ -29,7 +29,7 @@ import {
 class Candidate extends React.Component {
   state = {
     expanded: false,
-    modal: null,
+    modal: null
   };
 
   clickToExpand = e => {
@@ -49,7 +49,7 @@ class Candidate extends React.Component {
   }
 
   render() {
-    const { application } = this.props;
+    const { application, project } = this.props;
     const image = application.specialist.image;
 
     return (
@@ -89,7 +89,7 @@ class Candidate extends React.Component {
                 application.rate
                   ? currency(
                       application.rate,
-                      application.specialist.country.currency
+                      project.currency || "EUR",
                     )
                   : "-"
               }

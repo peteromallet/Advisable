@@ -2,6 +2,7 @@ query project($id: ID!) {
   project(id: $id) {
     id
     name
+    currency
     applications {
       id
       rate
@@ -22,7 +23,6 @@ query project($id: ID!) {
         country {
           id
           name
-          currency
         }
         travel_availability
         linkedin
