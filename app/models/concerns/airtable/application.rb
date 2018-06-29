@@ -4,13 +4,16 @@ class Airtable::Application < Airtable::Base
   belongs_to :specialist, class: 'Specialist', column: "Expert"
 
   sync_with ::Application
-  sync_columns :score
+  sync_columns :score, :accepts_fee, :accepts_terms
   sync_column :application_status, to: :status
   sync_column :hourly_rate_for_project, to: :rate
   sync_column :available_to_start, to: :availability
   sync_column :one_line_overview, to: :introduction
 
   sync_data do |application|
+    application.accepts_fee = fields['Accepts Fee'] == 'Yes'
+    application.accepts_terms = fields['Accepts Terms'] == 'Yes'
+
     specialist_id = fields["Expert"].try(:first)
     if specialist_id
       specialist = ::Specialist.find_by_airtable_id(specialist_id)

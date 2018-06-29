@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_28_102525) do
+ActiveRecord::Schema.define(version: 2018_06_29_073628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 2018_06_28_102525) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "rejection_reason_id"
+    t.boolean "accepts_fee"
+    t.boolean "accepts_terms"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
