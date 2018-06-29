@@ -38,9 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
     <ApolloProvider client={client}>
       <IntlProvider locale={language}>
-        <React.Fragment>
-          <App />
-        </React.Fragment>
+        <App />
       </IntlProvider>
     </ApolloProvider>,
     document.body.appendChild(document.createElement("div"))

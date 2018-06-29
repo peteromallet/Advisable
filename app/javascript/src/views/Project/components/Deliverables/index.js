@@ -84,43 +84,6 @@ class Deliverables extends React.Component {
     this.props.onChange(deliverables)
   }
 
-  handleKeyUp = (index) => e => {
-    // const content = e.target.value;
-    // const deliverables = fieldArray.form.values.deliverables;
-    // const lastItem = deliverables[deliverables.length - 1];
-    //
-    // if (content.length > 0 && lastItem.length !== 0) {
-    //   fieldArray.push("");
-    // }
-  };
-
-  handleKeyDown = (index) => e => {
-    // const deliverables = this.props.deliverables;
-    // const isBackspace = e.keyCode === 8;
-    // const isEmpty = deliverables[index].length === 0;
-    // const isLastItem = deliverables.length - 1 === index;
-    // if (isBackspace && !isLastItem && deliverables.length > 1 && isEmpty) {
-    //   console.log('delete')
-    //   deliverables.splice(index, 1);
-    // }
-    //
-    // this.props.onChange(deliverables)
-    //
-    // const isReturn = e.keyCode === 13;
-    // if (isReturn) {
-    //   e.preventDefault();
-    // }
-  };
-
-  handleBlur = (index) => e => {
-    // const deliverables = fieldArray.form.values.deliverables;
-    // const isEmpty = deliverables[index].length === 0;
-    // const isLastItem = deliverables.length - 1 === index;
-    // if (isEmpty && !isLastItem) {
-    //   fieldArray.remove(index);
-    // }
-  };
-
   render() {
     return (
       <FieldArray
@@ -133,10 +96,7 @@ class Deliverables extends React.Component {
                   <Textarea
                     value={deliverable}
                     placeholder="Add a deliverable..."
-                    onBlur={this.handleBlur(i)}
-                    onKeyUp={this.handleKeyUp(i)}
                     onChange={this.handleChange(i)}
-                    onKeyDown={this.handleKeyDown(i)}
                   />
                 </DeliverableInput>
               </CSSTransition>

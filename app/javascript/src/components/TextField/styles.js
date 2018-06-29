@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import MaskedInput from 'react-text-mask'
 
 export const Wrapper = styled.div`
-
+  width: ${props => props.block ? "100%" : "auto"};
 `
 
 export const Input = styled(MaskedInput)`
-  max-width: 100%;
+  width: 100%;
   height: 36px;
   border: none;
   outline: none;
