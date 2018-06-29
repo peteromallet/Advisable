@@ -6,7 +6,7 @@ Types::ProjectType = GraphQL::ObjectType.define do
   field :currency, types.String
   field :applications, types[Types::ApplicationType] do
     resolve ->(obj, args, ctx) {
-      obj.applications.order(score: :desc)
+      obj.applications.accepted_fees.accepted_terms.order(score: :desc)
     }
   end
 end
