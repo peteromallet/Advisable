@@ -1,0 +1,10 @@
+mutation createOffer($input: CreateOfferInput!) {
+  createOffer(input: $input) {
+    booking {
+      application {
+        id
+        status
+      }
+    }
+  }
+}

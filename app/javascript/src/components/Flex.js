@@ -14,9 +14,15 @@ const spacing = {
   xl: "15px"
 };
 
+const align = {
+  center: "center",
+  detault: "stretch"
+};
+
 const Flex = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: ${props => align[props.align || "default"]};
 `;
 
 const FlexItem = styled.div`
@@ -36,7 +42,7 @@ const FlexItem = styled.div`
 export default ({ children, ...props }) => (
   <Flex {...props}>
     {children.map((child, i) => {
-      if (child === null) return null
+      if (child === null) return null;
       return (
         <FlexItem key={i} className="item" {...props}>
           {child}

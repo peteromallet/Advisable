@@ -1,0 +1,8 @@
+mutation declineBooking($id: ID!, $reason: String!) {
+  declineBooking(id: $id, reason: $reason) {
+    booking {
+      id
+      status
+    }
+  }
+}

@@ -44,6 +44,7 @@ gem 'airrecord'
 
 # For graphQL endpoint
 gem 'graphql'
+gem 'parser'
 
 # For geneating test coverage reports
 gem 'simplecov', require: false, group: :test

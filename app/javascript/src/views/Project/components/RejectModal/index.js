@@ -44,9 +44,11 @@ class RejectModal extends React.Component {
                   optimisticResponse: {
                     __typename: "Mutation",
                     updateApplicationStatus: {
-                      id: application.id,
-                      __typename: "Application",
-                      status: "Application Rejected"
+                      application: {
+                        id: application.id,
+                        __typename: "Application",
+                        status: "Application Rejected"
+                      }
                     }
                   }
                 })
@@ -66,11 +68,12 @@ class RejectModal extends React.Component {
                         rejection
                       </Text>
                     </Spacing>
-                    <Spacing bottom="l">
+                    <Spacing bottom="xl">
                       <React.Fragment>
                         <Query query={FETCH_REASONS}>
                           {query => (
                             <Select
+                              block
                               name="reason"
                               value={formik.values.reason}
                               onChange={formik.handleChange}
@@ -84,7 +87,7 @@ class RejectModal extends React.Component {
                         )}
                       </React.Fragment>
                     </Spacing>
-                    <Flex>
+                    <Flex distribute='fillEvenly'>
                       <Spacing right="s">
                         <Button
                           primary
@@ -96,7 +99,7 @@ class RejectModal extends React.Component {
                         </Button>
                       </Spacing>
                       <Spacing left="s">
-                        <Button size="l" block onClick={this.props.onClose}>
+                        <Button size="l" type='button' block onClick={this.props.onClose}>
                           Cancel
                         </Button>
                       </Spacing>

@@ -12,13 +12,13 @@ export default () => (
           <input
             {...field}
             type="radio"
-            id="fixed"
-            value="fixed"
-            checked={field.value === "fixed"}
+            id="Fixed"
+            value="Fixed"
+            checked={field.value === "Fixed"}
           />
         )}
       />
-      <label htmlFor="fixed">
+      <label htmlFor="Fixed">
         <strong>Fixed</strong>
         <small>Based on a set of deliverables</small>
       </label>
@@ -31,13 +31,13 @@ export default () => (
           <input
             {...field}
             type="radio"
-            id="recurring"
-            value="recurring"
-            checked={field.value === "recurring"}
+            id="Recurring"
+            value="Recurring"
+            checked={field.value === "Recurring"}
           />
         )}
       />
-      <label htmlFor="recurring">
+      <label htmlFor="Recurring">
         <strong>Recurring</strong>
         <small>Extends over a number of months</small>
       </label>

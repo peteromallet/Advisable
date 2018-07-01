@@ -3,7 +3,7 @@ import { graphql } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Container } from "./styles";
 import NotFound from "src/views/NotFound";
-import Offer from "./views/Offer";
+import CreateOffer from "./views/CreateOffer";
 import Applicants from "./components/Applicants";
 import Navigation from "src/components/Navigation";
 import View from "src/components/View";
@@ -48,6 +48,18 @@ class Project extends React.Component {
                 )}
               />
               <Route
+                path={`${match.path}/offered`}
+                render={props => (
+                  <Applicants
+                    data={data}
+                    status="Offered"
+                    countLabel="Offered"
+                    emptyStateText="You have not sent any offers yet"
+                    {...props}
+                  />
+                )}
+              />
+              <Route
                 path={`${match.path}/rejected`}
                 render={props => (
                   <Applicants
@@ -60,10 +72,10 @@ class Project extends React.Component {
                 )}
               />
               <Route
-                path={`${match.path}/offer/:applicationID`}
-                component={Offer}
+                path={`${match.path}/applications/:applicationID/offer`}
+                component={CreateOffer}
               />
-              <Redirect to={`${match.url}/applied`} />
+              <Redirect to={`${match.url}/introduced`} />
             </Switch>
           )}
         </Container>
