@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { Container } from "./styles";
 import NotFound from "src/views/NotFound";
 import CreateOffer from "./views/CreateOffer";
+import CounterOffer from "./views/CounterOffer";
 import Applicants from "./components/Applicants";
 import Navigation from "src/components/Navigation";
 import View from "src/components/View";
@@ -74,6 +75,10 @@ class Project extends React.Component {
               <Route
                 path={`${match.path}/applications/:applicationID/offer`}
                 component={CreateOffer}
+              />
+              <Route
+                path={`${match.path}/offers/:bookingID`}
+                component={CounterOffer}
               />
               <Redirect to={`${match.url}/introduced`} />
             </Switch>

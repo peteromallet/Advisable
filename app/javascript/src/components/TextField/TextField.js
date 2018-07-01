@@ -8,6 +8,7 @@ const TextField = ({
   type = "text",
   id,
   name,
+  value,
   block = false,
   onChange,
   onBlur,
@@ -26,6 +27,7 @@ const TextField = ({
         mask={mask}
         id={fieldID}
         name={name}
+        value={value}
         onChange={onChange}
         onBlur={onBlur}
         autoComplete="off"

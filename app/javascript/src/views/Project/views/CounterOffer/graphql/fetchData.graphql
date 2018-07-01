@@ -1,0 +1,23 @@
+query project($bookingID: ID!) {
+  booking(id: $bookingID) {
+    id
+    type
+    rate
+    rateType
+    rateLimit
+    duration
+    deliverables
+    application {
+      id
+      project {
+        id
+        name
+        currency
+      }
+      specialist {
+        id
+        name
+      }
+    }
+  }
+}

@@ -11,8 +11,8 @@ import Spacing from "src/components/Spacing";
 import InputLabel from "src/components/InputLabel";
 import TextField from "src/components/TextField";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
-import Deliverables from "../../../components/Deliverables";
-import OfferType from "../../../components/OfferType";
+import Deliverables from "./Deliverables";
+import OfferType from "./OfferType";
 import { required } from "src/utilities/validators";
 
 const amountLabel = form => {
@@ -93,7 +93,7 @@ export default ({ onSubmit, onCancel, currency = '€', initialValues }) => (
                 <TextField
                   type="tel"
                   name="rateLimit"
-                  value={form.values.rate_limit}
+                  value={form.values.rateLimit}
                   onChange={form.handleChange}
                   label="Monthly Budget"
                   placeholder={`${currency}0.00`}
