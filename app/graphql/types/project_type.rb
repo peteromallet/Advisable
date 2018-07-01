@@ -1,12 +1,19 @@
-Types::ProjectType = GraphQL::ObjectType.define do
-  name 'Project'
+class Types::ProjectType < Types::BaseType
 
-  field :id, !types.ID
-  field :name, !types.String
-  field :currency, types.String
-  field :applications, types[Types::ApplicationType] do
-    resolve ->(obj, args, ctx) {
-      obj.applications.accepted_fees.accepted_terms.order(score: :desc)
-    }
+  field :id, ID, null: false
+  field :name, String, null: false
+  field :currency, String, null: true
+  field :applications, [Types::ApplicationType, null: true], null: true
+
+  field :application, Types::ApplicationType, null: true do
+    argument :id, ID, required: true
+  end
+
+  def applications
+    object.applications.order(score: :desc)
+  end
+
+  def application(**args)
+    object.applications.find(args[:id])
   end
 end

@@ -1,17 +1,10 @@
-Types::ApplicationQuestion = GraphQL::ObjectType.define do
-  name 'ApplicationQuestion'
-  field :question, types.String, hash_key: "question"
-  field :answer, types.String, hash_key: "answer"
-end
-
-Types::ApplicationType = GraphQL::ObjectType.define do
-  name 'Application'
-
-  field :id, !types.ID
-  field :rate, types.String
-  field :availability, types.String
-  field :specialist, Types::SpecialistType
-  field :status, types.String
-  field :introduction, types.String
-  field :questions, types[Types::ApplicationQuestion]
+class Types::ApplicationType < Types::BaseType
+  field :id, ID, null: false
+  field :rate, String, null: true
+  field :availability, String, null: true
+  field :specialist, Types::SpecialistType, null: true
+  field :status, String, null: true
+  field :introduction, String, null: true
+  field :questions, [Types::ApplicationQuestionType, null: true], null: true
+  field :project, Types::ProjectType, null: false
 end

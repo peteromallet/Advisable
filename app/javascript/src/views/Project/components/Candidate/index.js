@@ -100,10 +100,6 @@ class Candidate extends React.Component {
               value="Yes"
               // value={application.availability || "-"}
             />
-            {/* <CandidateAttribute
-              label="Ability to travel"
-              value={application.specialist.travel_availability || "-"}
-            /> */}
             <CandidateAttribute
               label="Linkedin"
               value={
@@ -144,11 +140,16 @@ class Candidate extends React.Component {
 
         {application.status === "Application Accepted" && (
           <CandidateFooter>
-            <Button
-              onClick={() => this.props.history.push(`offer/${application.id}`)}
-              primary>
-              Send Offer
-            </Button>
+            <React.Fragment>
+              <Button
+                onClick={() => this.props.history.push(`applications/${application.id}/offer`)}
+                primary>
+                Send Offer
+              </Button>
+              <Button onClick={() => this.setState({ modal: "reject" })}>
+                Reject
+              </Button>
+            </React.Fragment>
           </CandidateFooter>
         )}
 

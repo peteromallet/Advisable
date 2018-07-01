@@ -24,7 +24,6 @@ query project($id: ID!) {
           id
           name
         }
-        travel_availability
         linkedin
         skills
       }

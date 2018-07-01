@@ -17,7 +17,7 @@ const slideUp = keyframes`
 export const Card = styled.div`
   opacity: 0;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 3px;
   background: #ffffff;
   margin-bottom: 20px;
   transition: box-shadow 300ms ease-out;
@@ -51,7 +51,7 @@ export const Location = styled.span`
 `;
 
 export const CandidateContent = styled.div`
-  padding: 20px 20px 0 20px;
+  padding: 30px 30px 0 30px;
   cursor: pointer;
 `;
 
@@ -81,7 +81,7 @@ export const MoreInfo = styled.div`
 export const CandidateHeader = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 export const NameAndLocation = styled.div`
@@ -138,7 +138,7 @@ export const CandidateWrapper = styled.div.attrs({
 `;
 
 export const CandidateFooter = styled.div`
-  padding: 20px;
+  padding: 30px;
   border-top: 1px solid #f2f2f2;
 
   ${Button} {

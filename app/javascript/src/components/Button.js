@@ -17,6 +17,7 @@ const Button = styled.button`
   outline: none;
   font-size: ${props => fontSizes[props.size] || fontSizes['m']};
   padding: 0 25px;
+  opacity: ${props => props.disabled ? '0.5' : '1'};
   cursor: pointer;
   font-weight: 600;
   border-radius: 8px;

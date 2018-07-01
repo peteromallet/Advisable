@@ -1,5 +1,4 @@
-Types::RejectionReasonType = GraphQL::ObjectType.define do
-  name 'RejectionReason'
-  field :id, !types.ID
-  field :reason, types.String
+class Types::RejectionReasonType < Types::BaseType
+  field :id, ID, null: false
+  field :reason, String, null: true
 end

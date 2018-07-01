@@ -8,7 +8,7 @@ import NotFound from "./views/NotFound";
 const Root = () => (
   <Switch>
     <Route path="/projects/:projectID" component={Project} />
-    <Route path="/offers/:offerID" component={ViewOffer} />
+    <Route path="/offers/:bookingID" component={ViewOffer} />
     <Route component={NotFound} />
   </Switch>
 )

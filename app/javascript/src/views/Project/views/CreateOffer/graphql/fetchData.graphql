@@ -1,0 +1,14 @@
+query project($projectID: ID!, $applicationID: ID!) {
+  project(id: $projectID) {
+    id
+    name
+    currency
+    application(id: $applicationID) {
+      id
+      specialist {
+        id
+        name
+      }
+    }
+  }
+}

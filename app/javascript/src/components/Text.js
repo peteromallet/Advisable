@@ -9,6 +9,7 @@ const colours = {
 };
 
 const sizes = {
+  s: "14px",
   m: "16px",
   l: "18px"
 };
