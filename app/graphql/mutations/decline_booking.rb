@@ -10,6 +10,8 @@ class Mutations::DeclineBooking < GraphQL::Schema::Mutation
     update_airtable_record(booking.airtable_id, args[:reason])
     booking.update_attributes(status: 'Declined', decline_reason: args[:reason])
 
+    Webhook.process(booking)
+
     return {
       booking: booking,
       errors: booking.errors.full_messages
