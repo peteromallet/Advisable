@@ -8,13 +8,14 @@ import Text from "src/components/Text";
 import Divider from "src/components/Divider";
 import Spacing from "src/components/Spacing";
 import Heading from "src/components/Heading";
+import { withNotifications } from "src/components/Notifications";
 import OfferForm from "../../components/OfferForm";
-import { currencySymbol } from 'src/utilities/currency';
+import { currencySymbol } from "src/utilities/currency";
 import LoadingCandidates from "../../components/LoadingCandidates";
 import FETCH_DATA from "./graphql/fetchData.graphql";
 import CREATE_OFFER from "../../graphql/createOffer.graphql";
 
-const Offer = ({ match, history, loading, data }) => {
+const Offer = ({ match, history, loading, notifications, data }) => {
   if (data.loading) return <LoadingCandidates />;
   if (data.error) return null;
 
@@ -51,7 +52,14 @@ const Offer = ({ match, history, loading, data }) => {
                     applicationId: data.project.application.id
                   }
                 }
-              }).then(goBack);
+              }).then(() => {
+                notifications.notify(
+                  `An offer has been sent to ${
+                    data.project.application.specialist.name
+                  }`
+                );
+                goBack();
+              });
             }}
             initialValues={{
               type: "Fixed",
@@ -65,6 +73,8 @@ const Offer = ({ match, history, loading, data }) => {
   );
 };
 
+const WithNotifications = withNotifications(Offer);
+
 export default graphql(FETCH_DATA, {
   options: ({ match }) => ({
     variables: {
@@ -72,4 +82,4 @@ export default graphql(FETCH_DATA, {
       applicationID: match.params.applicationID
     }
   })
-})(Offer);
+})(WithNotifications);

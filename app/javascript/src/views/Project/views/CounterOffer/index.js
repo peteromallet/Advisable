@@ -9,6 +9,7 @@ import Divider from "src/components/Divider";
 import Spacing from "src/components/Spacing";
 import Heading from "src/components/Heading";
 import OfferForm from "../../components/OfferForm";
+import { withNotifications } from "src/components/Notifications";
 import currency, { currencySymbol } from "src/utilities/currency";
 import LoadingCandidates from "../../components/LoadingCandidates";
 import FETCH_DATA from "./graphql/fetchData.graphql";
@@ -51,7 +52,14 @@ const Offer = ({ match, history, loading, data }) => {
                     applicationId: data.booking.application.id
                   }
                 }
-              }).then(goBack);
+              }).then(() => {
+                notifications.notify(
+                  `An offer has been sent to ${
+                    data.project.application.specialist.name
+                  }`
+                );
+                goBack();
+              });
             }}
             initialValues={{
               type: data.booking.type,
@@ -68,10 +76,12 @@ const Offer = ({ match, history, loading, data }) => {
   );
 };
 
+const WithNotifications = withNotifications(Offer);
+
 export default graphql(FETCH_DATA, {
   options: ({ match }) => ({
     variables: {
       bookingID: match.params.bookingID
     }
   })
-})(Offer);
+})(WithNotifications);
