@@ -13,8 +13,7 @@
       "changes_to"
     %>
     <%=
-      select_tag 'webhook_configuration[criteria[][value]]',
-      options_for_select(["Application Accepted", "Application Rejected"], c["value"])
+      text_field_tag 'webhook_configuration[criteria[][value]]', c["value"]
     %>
   <% end %>
 </div>

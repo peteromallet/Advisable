@@ -8,6 +8,7 @@ class Mutations::AcceptBooking < GraphQL::Schema::Mutation
     booking = Booking.find(args[:id])
     update_airtable_record(booking.airtable_id)
     booking.update_attributes(status: 'Accepted')
+    Webhook.process(booking)
 
     return {
       booking: booking,

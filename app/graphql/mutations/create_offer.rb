@@ -19,6 +19,8 @@ class Mutations::CreateOffer < Mutations::BaseMutation
       airtable_id: airtable_record.id
     }))
 
+    Webhook.process(booking)
+
     return {
       booking: booking,
       errors: booking.errors.full_messages
