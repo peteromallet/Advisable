@@ -1,5 +1,5 @@
-mutation declineBooking($id: ID!, $reason: String!) {
-  declineBooking(id: $id, reason: $reason) {
+mutation declineBooking($id: ID!, $reason: String!, $declineComment: String) {
+  declineBooking(id: $id, reason: $reason, declineComment: $declineComment) {
     booking {
       id
       status

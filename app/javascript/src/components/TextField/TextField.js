@@ -1,6 +1,6 @@
 import React from "react";
 import uniqueID from "lodash/uniqueId";
-import { Wrapper, Input } from "./styles";
+import { Wrapper, Input, Textarea } from "./styles";
 import InputError from "src/components/InputError";
 import InputLabel from "src/components/InputLabel";
 
@@ -9,6 +9,7 @@ const TextField = ({
   id,
   name,
   value,
+  multiline,
   block = false,
   onChange,
   onBlur,
@@ -19,18 +20,20 @@ const TextField = ({
 }) => {
   const fieldID = id || uniqueID("TextField");
 
+  const Component = multiline ? Textarea : Input;
+
   return (
     <Wrapper block={block}>
       {label && <InputLabel htmlFor={fieldID}>{label}</InputLabel>}
-      <Input
+      <Component
         type={type}
         mask={mask}
         id={fieldID}
         name={name}
         value={value}
-        onChange={onChange}
         onBlur={onBlur}
         autoComplete="off"
+        onChange={onChange}
         placeholder={placeholder}
       />
       {error && <InputError>{error}</InputError>}

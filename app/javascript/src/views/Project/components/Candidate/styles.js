@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import Avatar from "src/components/Avatar";
-import Button from "src/components/Button";
+import { ButtonStyling } from "src/components/Button";
 
 const slideUp = keyframes`
   from {
@@ -141,7 +141,7 @@ export const CandidateFooter = styled.div`
   padding: 30px;
   border-top: 1px solid #f2f2f2;
 
-  ${Button} {
+  ${ButtonStyling} {
     margin-right: 15px;
   }
 `;
