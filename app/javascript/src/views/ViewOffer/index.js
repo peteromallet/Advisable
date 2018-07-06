@@ -84,7 +84,7 @@ class ViewOffer extends React.Component {
             })}
 
             <Spacing top="m">
-              {data.booking.status === "Offered" && (
+              {data.booking.status === "offered" && (
                 <React.Fragment>
                   <Spacing right="s" inline>
                     <AcceptModal
@@ -109,11 +109,11 @@ class ViewOffer extends React.Component {
                 </React.Fragment>
               )}
 
-              {data.booking.status === "Accepted" && (
+              {data.booking.status === "accepted" && (
                 <Text>You have accepted this offer</Text>
               )}
 
-              {data.booking.status === "Declined" && (
+              {data.booking.status === "declined" && (
                 <Text>You have declined this offer</Text>
               )}
             </Spacing>

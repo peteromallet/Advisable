@@ -125,7 +125,7 @@ export default ({ onSubmit, onCancel, currency = '€', initialValues }) => (
           <Divider />
           <Spacing size="xl">
             <Spacing right="m" inline>
-              <Button primary disabled={form.isSubmitting}>Send Offer</Button>
+              <Button primary loading={form.isSubmitting}>Send Offer</Button>
             </Spacing>
             <Button blank type="button" onClick={onCancel}>
               Cancel
