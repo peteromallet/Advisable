@@ -1,4 +1,4 @@
-AdvisableSchema = GraphQL::Schema.define do
-  mutation(Types::MutationType)
-  query(Types::QueryType)
+class AdvisableSchema < GraphQL::Schema
+  query Types::QueryType
+  mutation Types::MutationType
 end

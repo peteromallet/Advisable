@@ -6,7 +6,6 @@ class SimpleErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, info) {
-    console.log("called")
     this.setState({ hasError: true })
   }
 

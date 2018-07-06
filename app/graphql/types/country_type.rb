@@ -1,7 +1,6 @@
-Types::CountryType = GraphQL::ObjectType.define do
-  name 'Country'
+class Types::CountryType < Types::BaseType
 
-  field :id, !types.ID
-  field :name, types.String
-  field :currency, types.String
+  field :id, ID, null: false
+  field :name, String, null: true
+  field :currency, String, null: true
 end

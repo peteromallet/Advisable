@@ -2,6 +2,7 @@ class Application < ApplicationRecord
   belongs_to :specialist
   belongs_to :project
   belongs_to :rejection_reason, required: false
+  has_many :bookings
   validates :airtable_id, presence: true
 
   scope :accepted_fees, -> { where(accepts_fee: true) }

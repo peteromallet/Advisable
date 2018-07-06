@@ -1,5 +1,6 @@
 import React from "react";
 import { Spring } from "react-spring";
+import { withRouter } from 'react-router-dom';
 import Text from "src/components/Text";
 import Avatar from "src/components/Avatar";
 import Spacing from "src/components/Spacing";
@@ -99,10 +100,6 @@ class Candidate extends React.Component {
               value="Yes"
               // value={application.availability || "-"}
             />
-            {/* <CandidateAttribute
-              label="Ability to travel"
-              value={application.specialist.travel_availability || "-"}
-            /> */}
             <CandidateAttribute
               label="Linkedin"
               value={
@@ -141,6 +138,21 @@ class Candidate extends React.Component {
           </Spring>
         </CandidateContent>
 
+        {application.status === "Application Accepted" && (
+          <CandidateFooter>
+            <React.Fragment>
+              <Button
+                onClick={() => this.props.history.push(`applications/${application.id}/offer`)}
+                primary>
+                Send Offer
+              </Button>
+              <Button onClick={() => this.setState({ modal: "reject" })}>
+                Reject
+              </Button>
+            </React.Fragment>
+          </CandidateFooter>
+        )}
+
         {application.status === "Applied" && (
           <CandidateFooter>
             <Button
@@ -158,4 +170,4 @@ class Candidate extends React.Component {
   }
 }
 
-export default Candidate;
+export default withRouter(Candidate);

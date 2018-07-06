@@ -5,6 +5,7 @@ injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Hind:400,500,600,700');
 
   * {
+    box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -29,7 +30,7 @@ injectGlobal`
     font: inherit;
     box-sizing: border-box;
     vertical-align: baseline;
-    font-family: 'Hind', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
 
   /* HTML5 display-role reset for older browsers */
@@ -64,6 +65,6 @@ injectGlobal`
   }
 
   body {
-    background-color: #EBF2FB;
+    background-color: #F2F5FB;
   }
 `;

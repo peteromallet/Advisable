@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import Avatar from "src/components/Avatar";
-import Button from "src/components/Button";
+import { ButtonStyling } from "src/components/Button";
 
 const slideUp = keyframes`
   from {
@@ -17,7 +17,7 @@ const slideUp = keyframes`
 export const Card = styled.div`
   opacity: 0;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 3px;
   background: #ffffff;
   margin-bottom: 20px;
   transition: box-shadow 300ms ease-out;
@@ -51,7 +51,7 @@ export const Location = styled.span`
 `;
 
 export const CandidateContent = styled.div`
-  padding: 20px 20px 0 20px;
+  padding: 30px 30px 0 30px;
   cursor: pointer;
 `;
 
@@ -81,7 +81,7 @@ export const MoreInfo = styled.div`
 export const CandidateHeader = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 export const NameAndLocation = styled.div`
@@ -119,10 +119,10 @@ export const AttributeValue = styled.span`
   font-weight: 500;
 
   a {
-    color: #0570e6;
+    color: #0064FF;
     text-decoration: none;
     &:hover {
-      color: #004a9b;
+      color: #004EC7;
     }
   }
 `;
@@ -138,10 +138,10 @@ export const CandidateWrapper = styled.div.attrs({
 `;
 
 export const CandidateFooter = styled.div`
-  padding: 20px;
+  padding: 30px;
   border-top: 1px solid #f2f2f2;
 
-  ${Button} {
+  ${ButtonStyling} {
     margin-right: 15px;
   }
 `;
@@ -165,7 +165,7 @@ export const Skill = styled.div`
   color: #243D59;
   font-size: 15px;
   padding: 0 20px;
-  line-height: 32px;
+  line-height: 29px;
   margin-right: 10px;
   margin-bottom: 10px;
   border-radius: 15px;

@@ -4,7 +4,7 @@ export const Sidebar = styled.div`
   width: 280px;
   height: 100vh;
   padding: 30px;
-  background: #0570e6;
+  background: #0064FF;
   box-sizing: border-box;
 
   @media screen and (max-width: 1000px) {

@@ -1,5 +1,7 @@
+export const currencySymbol = currency => symbols[currency] || currency
+
 export default (amount, currency) => {
-  const symbol = symbols[currency]
+  const symbol = currencySymbol(currency)
   if (symbol != null) {
     return `${symbol}${amount}`;
   } else {
