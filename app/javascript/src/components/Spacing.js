@@ -9,10 +9,10 @@ const sizes = {
 }
 
 export default styled.div`
-  padding-top: ${props => sizes[props.top]}px;
-  padding-right: ${props => sizes[props.right]}px;
-  padding-bottom: ${props => sizes[props.bottom]}px;
-  padding-left: ${props => sizes[props.left]}px;
+  padding-top: ${props => sizes[props.top || props.size]}px;
+  padding-right: ${props => sizes[props.right || props.size]}px;
+  padding-bottom: ${props => sizes[props.bottom || props.size]}px;
+  padding-left: ${props => sizes[props.left || props.size]}px;
   display: ${props => props.inline ? 'inline-block' : 'block'};
   width: ${props => props.inline ? 'auto' : '100%'};
 `

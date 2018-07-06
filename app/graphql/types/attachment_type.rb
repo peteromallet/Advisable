@@ -1,9 +1,8 @@
-Types::AttachmentType = GraphQL::ObjectType.define do
-  name 'Attachment'
+class Types::AttachmentType < Types::BaseType
 
-  field :id, !types.ID, hash_key: "id"
-  field :url, types.String, hash_key: "url"
-  field :filename, types.String, hash_key: "filename"
-  field :size, types.String, hash_key: "size"
-  field :type, types.String, hash_key: "type"
+  field :id, ID, null: false
+  field :url, String, null: true
+  field :filename, String, null: true
+  field :size, String, null: true
+  field :type, String, null: true
 end

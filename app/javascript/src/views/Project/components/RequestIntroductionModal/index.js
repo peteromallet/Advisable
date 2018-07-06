@@ -20,7 +20,7 @@ class RequestIntroductionModal extends React.Component {
     return (
       <Modal isOpen={this.props.isOpen} onClose={this.props.onClose}>
         <Mutation mutation={UPDATE_STATUS}>
-          {mutate => (
+          {(mutate, data) => (
             <Container>
               <Spacing bottom="l">
                 <Avatar name={application.specialist.name} />
@@ -36,28 +36,21 @@ class RequestIntroductionModal extends React.Component {
                   {specialist.name}?
                 </Text>
               </Spacing>
-              <Flex>
+              <Flex distribute='fillEvenly'>
                 <Spacing right="s">
                   <Button
                     primary
                     block
                     size='l'
-                    onClick={() => {
-                      this.props.onClose();
-                      mutate({
+                    loading={data.loading}
+                    onClick={async () => {
+                      await mutate({
                         variables: {
                           id: application.id,
                           status: "Application Accepted"
-                        },
-                        optimisticResponse: {
-                          __typename: "Mutation",
-                          updateApplicationStatus: {
-                            id: application.id,
-                            __typename: "Application",
-                            status: "Application Accepted"
-                          }
                         }
                       })
+                      this.props.onClose();
                     }}
                   >
                     Request Intro

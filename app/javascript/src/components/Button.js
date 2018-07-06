@@ -1,22 +1,25 @@
-import styled from 'styled-components';
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
 
 const heights = {
   m: '34px',
-  l: '40px'
+  l: '38px'
 }
 
 const fontSizes = {
-  m: '15px',
-  l: '16px',
+  m: '16px',
+  l: '17px',
 }
 
-const Button = styled.button`
+export const ButtonStyling = styled.button`
+  position: relative;
   height: ${props => heights[props.size] || heights['m']}
   color: white;
   border: none;
   outline: none;
   font-size: ${props => fontSizes[props.size] || fontSizes['m']};
-  padding: 0 20px;
+  padding: 0 25px;
+  opacity: ${props => props.disabled ? '0.5' : '1'};
   cursor: pointer;
   font-weight: 600;
   border-radius: 8px;
@@ -36,18 +39,94 @@ const Button = styled.button`
     transition: none;
   }
 
-  ${props => props.primary && `
-    background: #0076F7;
+  ${props => props.blank && `
+    color: #7D8DB0;
+    background: white;
+    border: 1px solid #E8EDF9;
 
     &:hover {
-      background: #238BFF;
+      color: #63749A;
+      background: white;
+      border-color: #C6CFE4;
     }
 
     &:active {
-      background: #0066D6;
+      color: #3E4B68;
+      background: white;
+    }
+  `}
+
+  ${props => props.primary && `
+    background: #1A5FFF;
+    box-shadow: 0 2px 4px 0 rgba(24,71,180,0.10);
+
+    &:hover {
+      background: #3270FF;
+    }
+
+    &:active {
+      background: #0C4EE4;
       transition: none;
     }
   `}
+
+  ${props => props.loading && `
+    color: transparent !important;
+  `}
 `
 
-export default Button;
+const ButtonLoading = styled.div`
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+`
+
+const loadingDot = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+`
+
+const ButtonLoadingDot = styled.div`
+  opacity: 0;
+  width: 6px;
+  height: 6px;
+  margin: 0 4px;
+  background: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: ${loadingDot} 1s infinite;
+
+  &:nth-child(2) { animation-delay: 100ms }
+  &:nth-child(3) { animation-delay: 200ms }
+`
+
+const Loading = () => (
+  <ButtonLoading>
+    <ButtonLoadingDot />
+    <ButtonLoadingDot />
+    <ButtonLoadingDot />
+  </ButtonLoading>
+)
+
+export default ({ loading, children, ...props }) => (
+  <ButtonStyling loading={loading} {...props}>
+    {loading && <Loading />}
+    {children}
+  </ButtonStyling>
+);

@@ -2,11 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import ApolloClient from "apollo-boost";
+import { IntlProvider } from "react-intl";
 import { ApolloProvider } from "react-apollo";
 import { InMemoryCache } from "apollo-cache-inmemory";
+
 import App from "./App";
+import { NotificationsProvider } from "./components/Notifications";
 import "./reset.css.js";
-import { IntlProvider } from "react-intl";
 
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account
@@ -38,9 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
     <ApolloProvider client={client}>
       <IntlProvider locale={language}>
-        <React.Fragment>
+        <NotificationsProvider>
           <App />
-        </React.Fragment>
+        </NotificationsProvider>
       </IntlProvider>
     </ApolloProvider>,
     document.body.appendChild(document.createElement("div"))

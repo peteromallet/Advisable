@@ -3,5 +3,8 @@
 </div>
 <div class="field-unit__field">
   Which record type does this webhook apply to?
-  <%= f.select field.attribute, [["Application", "WebhookConfiguration::Application"]] %>
+  <%= f.select field.attribute, [
+    ["Application", "WebhookConfiguration::Application"],
+    ["Booking", "WebhookConfiguration::Booking"]
+    ] %>
 </div>

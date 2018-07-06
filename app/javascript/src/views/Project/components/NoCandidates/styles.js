@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Spacing from 'src/components/Spacing';
 
 export const Card = styled.div`
   padding: 50px;
