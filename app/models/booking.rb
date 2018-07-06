@@ -1,4 +1,6 @@
 class Booking < ApplicationRecord
+  validates :airtable_id, presence: true
+  
   # disable STI
   self.inheritance_column = :_type_disabled
 
