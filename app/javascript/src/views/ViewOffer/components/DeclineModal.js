@@ -3,6 +3,7 @@ import { Mutation } from "react-apollo";
 import { Formik } from "formik";
 import Text from "src/components/Text";
 import Select from "src/components/Select";
+import TextField from "src/components/TextField";
 import Heading from "src/components/Heading";
 import Modal from "src/components/Modal";
 import Spacing from "src/components/Spacing";
@@ -16,11 +17,12 @@ export default ({ isOpen, booking, onClose }) => (
       {declineBooking => (
         <Formik
           initialValues={{ reason: 'Rate is too low' }}
-          onSubmit={values => {
-            declineBooking({
+          onSubmit={async values => {
+            await declineBooking({
               variables: {
                 id: booking.id,
-                reason: values.reason
+                reason: values.reason,
+                declineComment: values.declineComment
               }
             });
             onClose();
@@ -32,19 +34,37 @@ export default ({ isOpen, booking, onClose }) => (
                   <Heading>Decline Offer</Heading>
                   <Text>What is your reason for declining this offer?</Text>
                 </Spacing>
-                <Spacing bottom='l'>
+                <Spacing bottom='s'>
                   <Select
                     block
                     name='reason'
+                    value={form.values.reason}
+                    onChange={form.handleChange}
                     options={[
-                      "Rate is too low",
-                      "Availability Doesn't Suit"
+                      "Project Not Good Fit",
+                      "Client Not Good Fit",
+                      "Not Available",
+                      "Rate Too Low",
+                      "Deliverables Not Acceptable",
+                      "Not Willing To Travel",
+                      "Personal Reasons",
+                      "Other"
                     ]}
+                  />
+                </Spacing>
+                <Spacing bottom='l'>
+                  <TextField
+                    block
+                    multiline
+                    name='declineComment'
+                    placeholder='Optional comment'
+                    value={form.values.declineComment}
+                    onChange={form.handleChange}
                   />
                 </Spacing>
                 <Flex distribute="fillEvenly">
                   <Spacing right="s">
-                    <Button block>
+                    <Button block loading={form.isSubmitting}>
                       Decline Offer
                     </Button>
                   </Spacing>

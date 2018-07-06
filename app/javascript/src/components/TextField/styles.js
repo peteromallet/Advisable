@@ -40,3 +40,10 @@ export const Input = styled(MaskedInput)`
     color: #a4add1;
   }
 `
+
+export const Textarea = Input.withComponent('textarea').extend`
+  resize: none;
+  min-height: 80px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+`

@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
 
 const heights = {
   m: '34px',
@@ -10,7 +11,8 @@ const fontSizes = {
   l: '17px',
 }
 
-const Button = styled.button`
+export const ButtonStyling = styled.button`
+  position: relative;
   height: ${props => heights[props.size] || heights['m']}
   color: white;
   border: none;
@@ -67,6 +69,64 @@ const Button = styled.button`
       transition: none;
     }
   `}
+
+  ${props => props.loading && `
+    color: transparent !important;
+  `}
 `
 
-export default Button;
+const ButtonLoading = styled.div`
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+`
+
+const loadingDot = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+`
+
+const ButtonLoadingDot = styled.div`
+  opacity: 0;
+  width: 6px;
+  height: 6px;
+  margin: 0 4px;
+  background: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: ${loadingDot} 1s infinite;
+
+  &:nth-child(2) { animation-delay: 100ms }
+  &:nth-child(3) { animation-delay: 200ms }
+`
+
+const Loading = () => (
+  <ButtonLoading>
+    <ButtonLoadingDot />
+    <ButtonLoadingDot />
+    <ButtonLoadingDot />
+  </ButtonLoading>
+)
+
+export default ({ loading, children, ...props }) => (
+  <ButtonStyling loading={loading} {...props}>
+    {loading && <Loading />}
+    {children}
+  </ButtonStyling>
+);

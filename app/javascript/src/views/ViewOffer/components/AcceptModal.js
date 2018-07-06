@@ -8,34 +8,51 @@ import Button from "src/components/Button";
 import Flex from "src/components/Flex";
 import ACCEPT_OFFER from "../graphql/acceptOffer.graphql";
 
-export default ({ isOpen, booking, onClose }) => (
-  <Modal isOpen={isOpen} onClose={onClose}>
-    <Mutation mutation={ACCEPT_OFFER}>
-      {acceptOffer => (
-        <Spacing size="xl">
-          <Spacing bottom="l">
-            <Heading>Accept Offer</Heading>
-            <Text>Are you sure you want to accept this offer?</Text>
-          </Spacing>
-          <Flex distribute='fillEvenly'>
-            <Spacing right="s">
-              <Button block primary onClick={() => {
-                acceptOffer({
-                  variables: { id: booking.id }
-                });
-                onClose();
-              }}>
-                Accept Offer
-              </Button>
+class AcceptModal extends React.Component {
+  state = {
+    loading: false
+  };
+
+  handleAccept = acceptOffer => async () => {
+    this.setState({ loading: true });
+    await acceptOffer({ variables: { id: this.props.booking.id } });
+    onClose();
+    this.setState({ loading: false });
+  };
+
+  render() {
+    const { isOpen, booking, onClose } = this.props;
+    return (
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <Mutation mutation={ACCEPT_OFFER}>
+          {acceptOffer => (
+            <Spacing size="xl">
+              <Spacing bottom="l">
+                <Heading>Accept Offer</Heading>
+                <Text>Are you sure you want to accept this offer?</Text>
+              </Spacing>
+              <Flex distribute="fillEvenly">
+                <Spacing right="s">
+                  <Button
+                    block
+                    primary
+                    loading={this.state.loading}
+                    onClick={this.handleAccept(acceptOffer)}>
+                    Accept Offer
+                  </Button>
+                </Spacing>
+                <Spacing left="s">
+                  <Button blank block onClick={onClose}>
+                    Cancel
+                  </Button>
+                </Spacing>
+              </Flex>
             </Spacing>
-            <Spacing left='s'>
-              <Button blank block onClick={onClose}>
-                Cancel
-              </Button>
-            </Spacing>
-          </Flex>
-        </Spacing>
-      )}
-    </Mutation>
-  </Modal>
-);
+          )}
+        </Mutation>
+      </Modal>
+    );
+  }
+}
+
+export default AcceptModal
