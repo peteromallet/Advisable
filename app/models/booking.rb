@@ -6,6 +6,7 @@ class Booking < ApplicationRecord
   self.inheritance_column = :_type_disabled
 
   belongs_to :application
+  belongs_to :rejection_reason, required: false, class_name: "BookingRejectionReason"
   after_initialize :set_status, if: :new_record?
 
   serialize :deliverables, Array
