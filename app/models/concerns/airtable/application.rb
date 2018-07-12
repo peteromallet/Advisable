@@ -23,8 +23,8 @@ class Airtable::Application < Airtable::Base
 
     rejected_reason_id = fields["Rejected Reason"].try(:first)
     if rejected_reason_id
-      rejection_reason = ::RejectionReason.find_by_airtable_id(rejected_reason_id)
-      rejection_reason = Airtable::RejectedReason.find(rejected_reason_id).sync if rejection_reason.nil?
+      rejection_reason = ::ApplicationRejectionReason.find_by_airtable_id(rejected_reason_id)
+      rejection_reason = Airtable::ApplicationRejectedReason.find(rejected_reason_id).sync if rejection_reason.nil?
       application.rejection_reason = rejection_reason
     end
 

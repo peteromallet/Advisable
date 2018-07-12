@@ -1,4 +1,4 @@
-class Types::RejectionReasonType < Types::BaseType
+class Types::ApplicationRejectionReasonType < Types::BaseType
   field :id, ID, null: false
   field :reason, String, null: true
 end

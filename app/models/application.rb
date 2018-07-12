@@ -1,7 +1,7 @@
 class Application < ApplicationRecord
   belongs_to :specialist
   belongs_to :project
-  belongs_to :rejection_reason, required: false
+  belongs_to :rejection_reason, required: false, class_name: "ApplicationRejectionReason"
   has_many :bookings
   validates :airtable_id, presence: true
 
