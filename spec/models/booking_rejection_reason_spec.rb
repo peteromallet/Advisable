@@ -1,5 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe BookingRejectionReason, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  include_examples "airtable syncing"
+  it { should have_many(:bookings) }
+  it { should validate_presence_of(:name) }
 end
