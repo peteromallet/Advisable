@@ -1,0 +1,2 @@
+class BookingRejectionReason < ApplicationRecord
+end
