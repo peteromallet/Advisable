@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe RejectionReason, type: :model do
+RSpec.describe ApplicationRejectionReason, type: :model do
   include_examples "airtable syncing"
   it { should have_many(:applications) }
   it { should validate_presence_of(:reason) }
