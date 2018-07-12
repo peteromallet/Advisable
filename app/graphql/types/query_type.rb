@@ -12,10 +12,10 @@ class Types::QueryType < GraphQL::Schema::Object
     end
   end
 
-  field :rejection_reasons, [Types::RejectionReasonType, null: true], null: true
+  field :application_rejection_reasons, [Types::ApplicationRejectionReasonType, null: true], null: true
 
-  def rejection_reasons
-    RejectionReason.all
+  def application_rejection_reasons
+    ApplicationRejectionReason.all
   end
 
   field :booking, Types::Booking, description: "Find a booking by ID", null: false do

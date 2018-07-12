@@ -6,7 +6,7 @@ class Airtable::Booking < Airtable::Base
                :duration, :decline_reason
 
   sync_data do |booking|
-    booking.deliverables = JSON.parse(fields['Deliverables'])
+    booking.deliverables = JSON.parse(fields['Deliverables']) if fields['Deliverables']
 
     application_id = fields["Application"].try(:first)
     if application_id

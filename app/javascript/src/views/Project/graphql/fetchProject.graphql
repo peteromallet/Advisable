@@ -29,7 +29,7 @@ query project($id: ID!) {
       }
     }
   }
-  rejectionReasons {
+  applicationRejectionReasons {
     id
     reason
   }

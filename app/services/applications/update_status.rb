@@ -27,7 +27,7 @@ class Applications::UpdateStatus < Service
   end
 
   def rejection_reason
-    @rejection_reason ||= RejectionReason.find(rejection_reason_id)
+    @rejection_reason ||= ApplicationRejectionReason.find(rejection_reason_id)
   end
 
   def airtable_record
