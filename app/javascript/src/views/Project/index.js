@@ -80,7 +80,7 @@ class Project extends React.Component {
                 path={`${match.path}/offers/:bookingID`}
                 component={CounterOffer}
               />
-              <Redirect to={`${match.url}/introduced`} />
+              <Redirect to={`${match.url}/applied`} />
             </Switch>
           )}
         </Container>
