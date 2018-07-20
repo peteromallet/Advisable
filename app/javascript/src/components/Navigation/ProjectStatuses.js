@@ -23,6 +23,11 @@ const ProjectStatuses = ({ match, data, loading, onNavigate }) => {
         </React.Fragment>
       ) : (
         <React.Fragment>
+          <NavLink to={`/projects/${projectID}/applied`} onClick={onNavigate}>
+            <Icon icon="inbox" />
+            Applied
+            <Count>{counts["Applied"] || 0}</Count>
+          </NavLink>
           <NavLink to={`/projects/${projectID}/introduced`} onClick={onNavigate}>
             <Icon icon="message-circle" />
             Introduced
@@ -32,11 +37,6 @@ const ProjectStatuses = ({ match, data, loading, onNavigate }) => {
             <Icon icon="user-check" />
             Offered
             <Count>{counts["Offered"] || 0}</Count>
-          </NavLink>
-          <NavLink to={`/projects/${projectID}/applied`} onClick={onNavigate}>
-            <Icon icon="inbox" />
-            Applied
-            <Count>{counts["Applied"] || 0}</Count>
           </NavLink>
           <NavLink to={`/projects/${projectID}/rejected`} onClick={onNavigate}>
             <Icon icon="trash-2" />
