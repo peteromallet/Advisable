@@ -5,12 +5,12 @@ class Airtable::Application < Airtable::Base
 
   sync_with ::Application
   sync_columns :score, :accepts_fee, :accepts_terms
-  sync_column :application_status, to: :status
   sync_column :hourly_rate_for_project, to: :rate
   sync_column :available_to_start, to: :availability
   sync_column :one_line_overview, to: :introduction
 
   sync_data do |application|
+    application.status = status_to_sync
     application.accepts_fee = fields['Accepts Fee'] == 'Yes'
     application.accepts_terms = fields['Accepts Terms'] == 'Yes'
 
@@ -49,5 +49,16 @@ class Airtable::Application < Airtable::Base
       end
       questions
     end
+  end
+
+  def status_to_sync
+    status = fields['Application Status']
+    # candidates that have a scheduled or complete interview status should still
+    # be considered 'Application Accepted' so that they should up in the
+    # "Introduced" view.
+    if ["Interview Scheduled", "Interview Completed"].include?(status)
+      return 'Application Accepted'
+    end
+    status
   end
 end
