@@ -1,0 +1,19 @@
+query application($id: ID!) {
+  application(id: $id) {
+    id
+    specialist {
+      id
+      name
+      city
+      image {
+        url
+      }
+      country {
+        id
+        name
+      }
+      linkedin
+      skills
+    }
+  }
+}

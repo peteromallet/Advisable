@@ -2,7 +2,7 @@
 import { injectGlobal } from "styled-components";
 
 injectGlobal`
-  @import url('https://fonts.googleapis.com/css?family=Hind:400,500,600,700');
+  @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
 
   * {
     box-sizing: border-box;
@@ -30,7 +30,7 @@ injectGlobal`
     font: inherit;
     box-sizing: border-box;
     vertical-align: baseline;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
   }
 
   /* HTML5 display-role reset for older browsers */
