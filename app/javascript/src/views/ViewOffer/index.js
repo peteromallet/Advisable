@@ -18,21 +18,22 @@ import FETCH_BOOKING from "./graphql/fetchBooking.graphql";
 
 const description = booking => {};
 
-const duration = booking => {
-  if (booking.type === "recurring") {
-    return booking.duration;
+const bookingType = booking => {
+  if (booking.type === "Recurring") {
+    return "Recurring Monthly";
   }
   return "Fixed project";
 };
 
 const payment = booking => {
-  const rate = currency(booking.rate, booking.application.project.currency)
-  if (booking.type === "recurring" && booking.rateType === "fixed") {
-    return `${rate} per month`;
+  const rate = currency(booking.rate, booking.application.project.currency);
+
+  if (booking.type === "Recurring" && booking.rateType === "Fixed") {
+    return `${rate}/Mo`;
   }
 
-  if (booking.type === "recurring") {
-    return `${rate} per hour`;
+  if (booking.type === "Recurring") {
+    return `${rate}/Hr`;
   }
 
   return rate;
@@ -58,12 +59,12 @@ class ViewOffer extends React.Component {
                 {data.booking.application.project.name}
               </Heading>
             </Spacing>
-            <Spacing bottom="l">
+            <Spacing bottom="m">
               <Flex distribute="fillEvenly">
                 <div>
                   <Text size="s">Project Type</Text>
                   <Text size="l" variation="strong">
-                    {duration(data.booking)}
+                    {bookingType(data.booking)}
                   </Text>
                 </div>
 
@@ -75,7 +76,26 @@ class ViewOffer extends React.Component {
                 </div>
               </Flex>
             </Spacing>
-            <Spacing bottom="s">
+            {data.booking.type === "Recurring" && (
+              <Spacing bottom="m">
+                <Flex distribute="fillEvenly">
+                  <div>
+                    <Text size="s">Duration</Text>
+                    <Text size="l" variation="strong">
+                      {data.booking.duration}
+                    </Text>
+                  </div>
+
+                  <div>
+                    <Text size="s">Monthly Limit</Text>
+                    <Text size="l" variation="strong">
+                      {currency(data.booking.rateLimit, data.booking.application.project.currency)}
+                    </Text>
+                  </div>
+                </Flex>
+              </Spacing>
+            )}
+            <Spacing top="s" bottom="s">
               <Text>Deliverables</Text>
             </Spacing>
             {data.booking.deliverables.map((deliverable, index) => {
@@ -94,7 +114,8 @@ class ViewOffer extends React.Component {
                     />
                     <Button
                       primary
-                      onClick={() => this.setState({ acceptModal: true })}>
+                      onClick={() => this.setState({ acceptModal: true })}
+                    >
                       Accept Offer
                     </Button>
                   </Spacing>
