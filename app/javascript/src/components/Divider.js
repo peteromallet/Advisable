@@ -1,7 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import { withSpacing } from "./Spacing";
 
-export default styled.div`
+const Divider = styled.div`
   width: 100%;
   height: 1px;
-  background: #F1F4FB;
-`
+  background: rgba(18, 35, 63, 0.15);
+`;
+
+export default withSpacing(Divider);
