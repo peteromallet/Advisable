@@ -1,19 +1,49 @@
-query application($id: ID!) {
-  application(id: $id) {
+query project($projectID: ID!, $applicationID: ID!) {
+  project(id: $projectID) {
     id
-    specialist {
+    name
+    currency
+    airtableId
+    application(id: $applicationID) {
       id
-      name
-      city
-      image {
-        url
+      rate
+      status
+      availability
+      introduction
+      questions {
+        question
+        answer
       }
-      country {
+      specialist {
         id
         name
+        city
+        image {
+          url
+        }
+        country {
+          id
+          name
+        }
+        linkedin
+        skills
       }
-      linkedin
-      skills
+    }
+    applications(status: ["Applied"]) {
+      id
+      airtableId
+      specialist {
+        id
+        name
+        city
+        image {
+          url
+        }
+        country {
+          id
+          name
+        }
+      }
     }
   }
 }

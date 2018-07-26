@@ -1,22 +1,24 @@
 import styled from "styled-components";
+import { withSpacing } from 'src/components/Spacing';
 
 const sizes = {
   s: "30px",
-  m: "60px",
-  l: "100px"
+  m: "50px",
+  l: "90px"
 };
 
-export const Wrapper = styled.div`
+export const Wrapper = withSpacing(styled.div`
   width: ${props => sizes[props.size || "m"]};
   height: ${props => sizes[props.size || "m"]};
   color: #0064FF;
   font-size: 20px;
   font-weight: 500;
-  line-height: 60px;
   border-radius: 50%;
   text-align: center;
-  display: inline-block;
+  align-items: center;
+  display: inline-flex;
   background-size: cover;
+  justify-content: center;
   background-position: center;
   background-color: rgba(0,100,255,0.10);
-`;
+`);

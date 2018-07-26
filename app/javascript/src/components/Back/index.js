@@ -1,33 +1,36 @@
 import React from "react";
-import styled from 'styled-components';
-import arrow from './arrow.svg';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { withSpacing } from "src/components/Spacing";
+import arrow from "./arrow.svg";
 
-const Back = styled.div`
-  color: #0064FF;
+const Back = withSpacing(styled(Link)`
+  color: #0064ff;
   cursor: pointer;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
   position: relative;
-  padding-left: 12px;
+  display: inline-block;
+  text-decoration: none;
   text-transform: uppercase;
 
-  &:hover { color: #0041A5; }
-`
+  &:hover {
+    color: #0041a5;
+  }
+`);
 
 const Arrow = styled.div`
-  left: 0;
-  top: 50%;
   width: 5px;
   height: 10px;
-  position: absolute;
+  margin-right: 8px;
+  display: inline-block;
   background-size: cover;
-  transform: translateY(-50%);
   background-image: url(${arrow});
-`
+`;
 
-export default ({ children }) => (
-  <Back>
+export default ({ children, ...props }) => (
+  <Back {...props}>
     <Arrow />
     {children || "Back"}
   </Back>
-)
+);

@@ -7,11 +7,11 @@ const Questions = ({ questions = [] }) => (
     {questions.map((data, i) => (
       <Question key={i}>
         <QuestionTitle>
-          <Text variation="strong">
+          <Text size='s' variation="strong">
             {data.question}
           </Text>
         </QuestionTitle>
-        <Text>
+        <Text size='s' >
           {data.answer}
         </Text>
       </Question>

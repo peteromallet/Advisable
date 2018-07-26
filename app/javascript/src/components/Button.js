@@ -8,12 +8,13 @@ const heights = {
 }
 
 const fontSizes = {
-  m: '13px',
+  m: '12px',
   l: '14px',
 }
 
 export const ButtonStyling = styled.button`
   position: relative;
+  margin: 0;
   height: ${props => heights[props.size] || heights['m']}
   color: white;
   border: none;
@@ -22,10 +23,10 @@ export const ButtonStyling = styled.button`
   padding: 0 25px;
   opacity: ${props => props.disabled ? '0.5' : '1'};
   cursor: pointer;
-  font-weight: 700;
-  border-radius: 4px;
+  font-weight: 600;
+  border-radius: 5px;
   background: #4C496A;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
   -webkit-appearance: none;
   text-transform: uppercase;
   width: ${props => props.block ? '100%' : 'auto'};
@@ -60,7 +61,6 @@ export const ButtonStyling = styled.button`
 
   ${props => props.primary && `
     background: #1A5FFF;
-    box-shadow: 0 2px 4px 0 rgba(24,71,180,0.10);
 
     &:hover {
       background: #3270FF;

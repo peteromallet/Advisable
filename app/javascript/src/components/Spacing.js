@@ -15,10 +15,10 @@ const Spacing = styled.div`
 `
 
 export const withSpacing = Component => Component.extend`
-  padding-top: ${props => sizes[props.paddingTop || props.padding || props.top || props.size]};
-  padding-right: ${props => sizes[props.paddingRight || props.padding || props.right || props.size]};
-  padding-bottom: ${props => sizes[props.paddingBottom || props.padding || props.bottom || props.size]};
-  padding-left: ${props => sizes[props.paddingLeft || props.padding || props.left || props.size]};
+  padding-top: ${props => sizes[props.paddingTop || props.padding]};
+  padding-right: ${props => sizes[props.paddingRight || props.padding]};
+  padding-bottom: ${props => sizes[props.paddingBottom || props.padding]};
+  padding-left: ${props => sizes[props.paddingLeft || props.padding]};
   margin-top: ${props => sizes[props.marginTop || props.margin]};
   margin-right: ${props => sizes[props.marginRight || props.margin]};
   margin-bottom: ${props => sizes[props.marginBottom || props.margin]};

@@ -2,13 +2,15 @@ import React from "react";
 import { Spring } from "react-spring";
 import { withRouter } from 'react-router-dom';
 import Text from "src/components/Text";
+import Flex from "src/components/Flex";
 import Avatar from "src/components/Avatar";
 import Spacing from "src/components/Spacing";
+import Heading from "src/components/Heading";
 import Button from "src/components/Button";
 import Questions from "./Questions";
 import CandidateAttribute from "./CandidateAttribute";
-import RejectModal from "../RejectModal";
-import RequestIntroductionModal from "../RequestIntroductionModal";
+import RejectModal from "src/components/RejectModal";
+import RequestIntroduction from "src/components/RequestIntroduction";
 import currency from "src/utilities/currency";
 import {
   Card,
@@ -55,7 +57,7 @@ class Candidate extends React.Component {
 
     return (
       <Card expanded={this.state.expanded}>
-        <RequestIntroductionModal
+        <RequestIntroduction
           isOpen={this.state.modal === "introduction"}
           application={application}
           onClose={() => {
@@ -112,7 +114,7 @@ class Candidate extends React.Component {
 
           <Preview expanded={this.state.expanded}>
             <Description>
-              <Text>{application.introduction}</Text>
+              <Text size='s'>{application.introduction}</Text>
             </Description>
           </Preview>
 
@@ -142,6 +144,7 @@ class Candidate extends React.Component {
           <CandidateFooter>
             <React.Fragment>
               <Button
+                marginRight='m'
                 onClick={() => this.props.history.push(`applications/${application.id}/offer`)}
                 primary>
                 Send Offer
@@ -156,6 +159,7 @@ class Candidate extends React.Component {
         {application.status === "Applied" && (
           <CandidateFooter>
             <Button
+              marginRight='m'
               onClick={() => this.setState({ modal: "introduction" })}
               primary>
               Request Intro

@@ -54,12 +54,10 @@ class ViewOffer extends React.Component {
       <Container>
         <Card>
           <Card.Section>
-            <Spacing bottom="m">
-              <Heading size="l">
-                {data.booking.application.project.name}
-              </Heading>
-            </Spacing>
-            <Spacing bottom="m">
+            <Heading marginBottom="m" size="l">
+              {data.booking.application.project.name}
+            </Heading>
+            <Spacing paddingBottom="m">
               <Flex distribute="fillEvenly">
                 <div>
                   <Text size="s">Project Type</Text>
@@ -77,7 +75,7 @@ class ViewOffer extends React.Component {
               </Flex>
             </Spacing>
             {data.booking.type === "Recurring" && (
-              <Spacing bottom="m">
+              <Spacing paddingBottom="m">
                 <Flex distribute="fillEvenly">
                   <div>
                     <Text size="s">Duration</Text>
@@ -89,36 +87,37 @@ class ViewOffer extends React.Component {
                   <div>
                     <Text size="s">Monthly Limit</Text>
                     <Text size="l" variation="strong">
-                      {currency(data.booking.rateLimit, data.booking.application.project.currency)}
+                      {currency(
+                        data.booking.rateLimit,
+                        data.booking.application.project.currency
+                      )}
                     </Text>
                   </div>
                 </Flex>
               </Spacing>
             )}
-            <Spacing top="s" bottom="s">
-              <Text>Deliverables</Text>
-            </Spacing>
+            <Text marginTop="s" marginBottom="s">
+              Deliverables
+            </Text>
             {data.booking.deliverables.map((deliverable, index) => {
               if (deliverable.length === 0) return null;
               return <Deliverable key={index}>{deliverable}</Deliverable>;
             })}
 
-            <Spacing top="m">
+            <Spacing paddingTop="m">
               {data.booking.status === "Offered" && (
                 <React.Fragment>
-                  <Spacing right="s" inline>
-                    <AcceptModal
-                      booking={data.booking}
-                      isOpen={this.state.acceptModal}
-                      onClose={() => this.setState({ acceptModal: false })}
-                    />
-                    <Button
-                      primary
-                      onClick={() => this.setState({ acceptModal: true })}
-                    >
-                      Accept Offer
-                    </Button>
-                  </Spacing>
+                  <AcceptModal
+                    booking={data.booking}
+                    isOpen={this.state.acceptModal}
+                    onClose={() => this.setState({ acceptModal: false })}
+                  />
+                  <Button
+                    primary
+                    marginRight="s"
+                    onClick={() => this.setState({ acceptModal: true })}>
+                    Accept Offer
+                  </Button>
                   <DeclineModal
                     booking={data.booking}
                     isOpen={this.state.declineModal}
