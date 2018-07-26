@@ -13,7 +13,8 @@ const Skill = styled.div`
   background: #D9E7FF;
   border-radius: 15px;
   display: inline-flex;
-  letter-spacing: -0.03em;
+  margin-bottom: 10px;
+  letter-spacing: -0.015em;
 `;
 
 export default ({ skills, ...props }) => {

@@ -12,12 +12,13 @@ const colours = {
 };
 
 const sizes = {
-  s: "14px",
+  s: "15px",
   m: "16px",
   l: "18px"
 };
 
 const lineHeights = {
+  s: '21px',
   m: "23px",
   l: "28px"
 };

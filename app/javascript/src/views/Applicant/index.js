@@ -1,125 +1,221 @@
 import React from "react";
 import get from "lodash/get";
+import filter from "lodash/filter";
+import { Query } from "react-apollo";
+import Back from "src/components/Back";
 import Card from "src/components/Card";
 import Flex from "src/components/Flex";
 import Text from "src/components/Text";
+import Link from "src/components/Link";
 import Skills from "src/components/Skills";
 import Button from "src/components/Button";
 import Avatar from "src/components/Avatar";
 import Spacing from "src/components/Spacing";
 import Loading from "src/components/Loading";
 import Divider from "src/components/Divider";
-import { Query } from "react-apollo";
+import Heading from "src/components/Heading";
+import linkedin from "src/images/linkedin.svg";
+import currency from "src/utilities/currency";
+import RejectModal from "src/components/RejectModal";
+import RequestIntroduction from "src/components/RequestIntroduction";
 import AdvisableMessage from "./components/AdvisableMessage";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 
-const Applicant = ({ match }) => {
-  return (
-    <Query
-      query={FETCH_APPLICATION}
-      variables={{
-        id: match.params.applicationID
-      }}>
-      {({ data, loading }) => {
-        if (loading) return <Loading />;
+class Applicant extends React.Component {
+  state = {
+    modal: null
+  };
 
-        return (
-          <React.Fragment>
-            <Avatar
-              size="l"
-              name={data.application.specialist.name}
-              url={get(data.application.specialist.image, "url")}
-            />
-            <Divider marginTop="xl" marginBottom="xl" />
-            <Flex distribute="equalSpacing">
-              <div>
-                <Text marginRight="m" inline>
-                  Hourly Rate
-                </Text>
-                <Text weight="bold" colour="dark" inline>
-                  €250
-                </Text>
-              </div>
-              <div>
-                <Text marginRight="m" inline>
-                  Availability
-                </Text>
-                <Text weight="bold" colour="dark" inline>
-                  1 - 2 Weeks
-                </Text>
-              </div>
-              <div>
-                <Text inline>View on Linkedin</Text>
-              </div>
-            </Flex>
-            <Divider marginTop="xl" marginBottom="xl" />
-            <Text marginBottom="xl">
-              Senior level marketing automation specialist with 20 years of
-              experience in data-driven digital marketing.
-            </Text>
-            <AdvisableMessage>
-              This is a placeholder comment from the advisable team. Looks like
-              a great hire due to his previous experience in project research.
-            </AdvisableMessage>
-            <Card padding="xl" marginBottom="l">
-              <Text marginBottom="m" weight="strong" colour="dark">
-                Give an example of your campaign management experience marketing
-                to a diverse client base in the IT Services Industry (please
-                mention any success metrics).
+  componentDidMount() {
+    document.getElementById("view").scrollTo(0, 0);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      document.getElementById("view").scrollTo(0, 0);
+    }
+  }
+
+  render() {
+    const { match, history } = this.props;
+    return (
+      <Query
+        query={FETCH_APPLICATION}
+        variables={{
+          projectID: match.params.projectID,
+          applicationID: match.params.applicationID
+        }}>
+        {({ data, loading }) => {
+          if (loading) return <Loading />;
+          const project = data.project;
+          const application = project.application;
+          const specialist = application.specialist;
+          const otherApplicants = filter(project.applications, ap => {
+            return ap.id !== application.id;
+          });
+
+          return (
+            <React.Fragment>
+              <RequestIntroduction
+                isOpen={this.state.modal === "introduction"}
+                application={application}
+                onClose={() => {
+                  this.setState({ modal: null });
+                }}
+              />
+
+              <RejectModal
+                isOpen={this.state.modal === "reject"}
+                application={application}
+                onClose={() => {
+                  this.setState({ modal: null });
+                }}
+              />
+
+              <Back to={`/projects/${project.airtableId}`} paddingBottom="s">
+                All Candidates
+              </Back>
+              <Text marginBottom="xl" size="l">
+                {project.name}
               </Text>
-              <Text>
-                I have developed integrated marketing campaigns utilizing
-                everything from social media to television. My expertise lies in
-                digital marketing and specifically in marketing automation
-                platforms for email campaigns. The budgets and projects have
-                varied from minimal to as high as 6 million per campaign.
-                Success metrics include both qualitative and quantitative values
-                that range from brand perception to increasing sales pipeline
-                velocity. In terms of IT services, I have worked with
-                telecommunications providers along with many other B2B sectors.
-              </Text>
-            </Card>
-            <Card padding="xl" marginBottom="l">
-              <Text marginBottom="m" weight="strong" colour="dark">
-                Give a short outline of your views on best practice campaign
-                management in the IT Services Industry and, given this, how you
-                would approach this project for Elca.
-              </Text>
-              <Text>
-                To use the term, campaign, is too narrow. From a strategic POV,
-                best practice dictates that a comprehensive Campaign Framework
-                should be designed. From this, a structure of programs and
-                tactics are developed. Each with a focus on driving the message
-                along one of the core strategies. A campaign, as such, is
-                actually a program designed to achieve a specific objective of
-                the overall campaign. From that point, the structure needs to
-                take into account everything from the target audience and
-                message to the tactics to reach and communicate with the
-                audience. The structure also needs to contain specific
-                qualitative and quantitative KPIs along with a delivery
-                timeline. When leveraging technology such as MAP, DMP, SRM,
-                etc., the best practice is to start simple, keep it easy to
-                manage and maintain, and then let data guide the way.
-              </Text>
-            </Card>
-            <Skills
-              marginTop="xxl"
-              marginBottom="xxl"
-              skills={[
-                "Sales Compensation",
-                "Software As A Service (SaaS) Marketing"
-              ]}
-            />
-            <Button marginRight="m" primary>
-              Request Introduction
-            </Button>
-            <Button>Decline</Button>
-            <Divider marginTop="xxl" />
-          </React.Fragment>
-        );
-      }}
-    </Query>
-  );
-};
+              <Flex align="center">
+                <Avatar
+                  size="l"
+                  marginRight="l"
+                  name={specialist.name}
+                  url={get(specialist.image, "url")}
+                />
+                <Flex.Item>
+                  <Heading size="l">{specialist.name}</Heading>
+                  <Text size="l">
+                    {specialist.city}, {specialist.country.name}
+                  </Text>
+                </Flex.Item>
+              </Flex>
+              <Divider marginTop="xl" marginBottom="xl" />
+              <Flex distribute="equalSpacing">
+                <div>
+                  <Text marginRight="m" inline>
+                    Hourly Rate
+                  </Text>
+                  <Text weight="bold" colour="dark" inline>
+                    {currency(application.rate, project.currency || "EUR")}
+                  </Text>
+                </div>
+                <div>
+                  <Text marginRight="m" inline>
+                    Availability
+                  </Text>
+                  <Text weight="bold" colour="dark" inline>
+                    {project.availability}
+                  </Text>
+                </div>
+                <div>
+                  <Link href={specialist.linkedin} target="_blank">
+                    <img src={linkedin} />
+                    View on Linkedin
+                  </Link>
+                </div>
+              </Flex>
+              <Divider marginTop="xl" marginBottom="xl" />
+              <Text marginBottom="xl">{application.introduction}</Text>
+              {/* <AdvisableMessage>
+                This is a placeholder comment from the advisable team. Looks like
+                a great hire due to his previous experience in project research.
+              </AdvisableMessage> */}
+              {application.questions.map((question, i) => (
+                <Card key={i} padding="xl" marginBottom="l">
+                  <Text marginBottom="m" weight="strong" colour="dark">
+                    {question.question}
+                  </Text>
+                  <Text>{question.answer}</Text>
+                </Card>
+              ))}
+
+              <Skills
+                marginTop="xxl"
+                marginBottom="xxl"
+                skills={specialist.skills}
+              />
+
+              {application.status === "Applied" && (
+                <Button
+                  marginRight="m"
+                  onClick={() => this.setState({ modal: "introduction" })}
+                  primary>
+                  Request Introduction
+                </Button>
+              )}
+
+              {application.status === "Application Accepted" && (
+                <Button
+                  marginRight="m"
+                  onClick={() =>
+                    this.props.history.push(
+                      `/projects/${project.airtableId}/applications/${
+                        application.id
+                      }/offer`
+                    )
+                  }
+                  primary>
+                  Send Offer
+                </Button>
+              )}
+
+              {["Applied", "Application Accepted"].indexOf(application.status) >
+                -1 && (
+                <Button onClick={() => this.setState({ modal: "reject" })}>
+                  Decline
+                </Button>
+              )}
+
+              {otherApplicants.length > 0 && (
+                <React.Fragment>
+                  <Divider marginTop="xxl" marginBottom="xxl" />
+
+                  <Flex align="baseline">
+                    <Flex.Item distribute="fill">
+                      <Heading size="s" marginBottom="l">
+                        More candidates like {specialist.name}
+                      </Heading>
+                    </Flex.Item>
+                    <Link to={`/projects/${project.airtableId}`}>
+                      View all candidates
+                    </Link>
+                  </Flex>
+
+                  {otherApplicants.map(applicant => (
+                    <Card
+                      key={applicant.id}
+                      onClick={() => history.push(applicant.airtableId)}
+                      padding="l"
+                      marginBottom="m">
+                      <Flex align="center">
+                        <Avatar
+                          name={applicant.specialist.name}
+                          url={get(applicant.specialist.image, "url")}
+                          marginRight="l"
+                        />
+                        <Flex.Item>
+                          <Heading size="s">
+                            {applicant.specialist.name}
+                          </Heading>
+                          <Text>
+                            {applicant.specialist.city},{" "}
+                            {applicant.specialist.country.name}
+                          </Text>
+                        </Flex.Item>
+                      </Flex>
+                    </Card>
+                  ))}
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          );
+        }}
+      </Query>
+    );
+  }
+}
 
 export default Applicant;

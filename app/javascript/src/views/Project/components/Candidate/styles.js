@@ -37,17 +37,18 @@ export const Card = styled.div`
 export const Name = styled.h3`
   color: #26234b;
   line-height: 1;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
-  margin-bottom: 3px;
-  letter-spacing: -0.05em;
+  margin-bottom: 4px;
+  letter-spacing: -0.03em;
 `;
 
 export const Location = styled.span`
-  color: #736f9a;
+  color: #7A779F;
   line-height: 1;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 400;
+  letter-spacing: -0.03em;
 `;
 
 export const CandidateContent = styled.div`
@@ -57,20 +58,6 @@ export const CandidateContent = styled.div`
 
 export const Preview = styled.div`
   position: relative;
-
-  ${props =>
-    !props.expanded &&
-    `
-    &::before {
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      content: '';
-      background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-      position: absolute;
-    }
-  `};
 `;
 
 export const MoreInfo = styled.div`
@@ -138,12 +125,8 @@ export const CandidateWrapper = styled.div.attrs({
 `;
 
 export const CandidateFooter = styled.div`
-  padding: 30px;
+  padding: 25px 30px;
   border-top: 1px solid #f2f2f2;
-
-  ${ButtonStyling} {
-    margin-right: 15px;
-  }
 `;
 export const Description = styled.div`
   margin-bottom: 30px;

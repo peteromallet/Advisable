@@ -7,9 +7,13 @@ import Heading from "src/components/Heading";
 import Spacing from "src/components/Spacing";
 import Candidate from "../components/Candidate";
 import NoApplicants from "../components/NoCandidates";
-import SimpleErrorBoundary from 'src/components/SimpleErrorBoundary';
+import SimpleErrorBoundary from "src/components/SimpleErrorBoundary";
 
 class Applicants extends React.Component {
+  componentDidMount() {
+    document.getElementById("view").scrollTo(0, 0);
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       document.getElementById("view").scrollTo(0, 0);
@@ -26,15 +30,13 @@ class Applicants extends React.Component {
 
     return (
       <React.Fragment>
-        <Spacing bottom="s">
-          <Heading size="l">{data.project.name}</Heading>
-        </Spacing>
+        <Heading marginBottom="xs" size="l">
+          {data.project.name}
+        </Heading>
 
-        <Spacing bottom="xl">
-          <Text size="l">
-            {countLabel || status} - {count}
-          </Text>
-        </Spacing>
+        <Text size="l" marginBottom="xl">
+          {countLabel || status} - {count}
+        </Text>
 
         {applications.length > 0 ? (
           <div>

@@ -74,12 +74,12 @@ class Project extends React.Component {
                 )}
               />
               <Route
-                path={`${match.path}/applications/:applicationID`}
-                component={Applicant}
-              />
-              <Route
                 path={`${match.path}/applications/:applicationID/offer`}
                 component={CreateOffer}
+              />
+              <Route
+                path={`${match.path}/applications/:applicationID`}
+                component={Applicant}
               />
               <Route
                 path={`${match.path}/offers/:bookingID`}

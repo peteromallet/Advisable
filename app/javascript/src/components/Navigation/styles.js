@@ -37,7 +37,7 @@ export const Count = styled.div`
   color: #9dc4ef;
   padding: 0 15px;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 500;
   line-height: 20px;
   position: absolute;
   border-radius: 10px;
@@ -51,18 +51,17 @@ export const StatusList = styled.div`
     width: 100%;
     height: 36px;
     color: #A8CAFF;
-    display: block;
-    line-height: 34px;
-    font-size: 16px;
+    display: flex;
+    font-size: 15px;
     padding: 0 10px;
-    font-weight: 600;
+    font-weight: 500;
     position: relative;
     border-radius: 8px;
     padding-left: 40px;
     margin-bottom: 10px;
     align-items: center;
     text-decoration: none;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.005em;
     animation: ${fadeIn} 300ms forwards;
 
     &:nth-child(2) { animation-delay: 50ms }

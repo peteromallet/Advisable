@@ -36,14 +36,14 @@ export default ({ isOpen, booking, onClose }) => (
                 }}
                 render={form => (
                   <form onSubmit={form.handleSubmit}>
-                    <Spacing size="xl">
-                      <Spacing bottom="m">
+                    <Spacing padding="xl">
+                      <Spacing paddingBottom="m">
                         <Heading>Decline Offer</Heading>
                         <Text>
                           What is your reason for declining this offer?
                         </Text>
                       </Spacing>
-                      <Spacing bottom="s">
+                      <Spacing paddingBottom="s">
                         <Select
                           block
                           name="reason"
@@ -52,7 +52,7 @@ export default ({ isOpen, booking, onClose }) => (
                           options={query.data.reasons}
                         />
                       </Spacing>
-                      <Spacing bottom="l">
+                      <Spacing paddingBottom="l">
                         <TextField
                           block
                           multiline
@@ -63,16 +63,20 @@ export default ({ isOpen, booking, onClose }) => (
                         />
                       </Spacing>
                       <Flex distribute="fillEvenly">
-                        <Spacing right="s">
-                          <Button block loading={form.isSubmitting}>
-                            Decline Offer
-                          </Button>
-                        </Spacing>
-                        <Spacing left="s">
-                          <Button blank block type="button" onClick={onClose}>
-                            Cancel
-                          </Button>
-                        </Spacing>
+                        <Button
+                          marginRight="s"
+                          block
+                          loading={form.isSubmitting}>
+                          Decline Offer
+                        </Button>
+                        <Button
+                          blank
+                          block
+                          marginLeft="s"
+                          type="button"
+                          onClick={onClose}>
+                          Cancel
+                        </Button>
                       </Flex>
                     </Spacing>
                   </form>
