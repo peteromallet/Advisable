@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import { withSpacing } from "./Spacing";
 
 const heights = {
   m: '34px',
@@ -7,8 +8,8 @@ const heights = {
 }
 
 const fontSizes = {
-  m: '16px',
-  l: '17px',
+  m: '13px',
+  l: '14px',
 }
 
 export const ButtonStyling = styled.button`
@@ -21,11 +22,12 @@ export const ButtonStyling = styled.button`
   padding: 0 25px;
   opacity: ${props => props.disabled ? '0.5' : '1'};
   cursor: pointer;
-  font-weight: 600;
-  border-radius: 8px;
+  font-weight: 700;
+  border-radius: 4px;
   background: #4C496A;
   letter-spacing: -0.05em;
   -webkit-appearance: none;
+  text-transform: uppercase;
   width: ${props => props.block ? '100%' : 'auto'};
   display: ${props => props.block ? 'block' : 'inline-block'};
   transition: box-shadow 0.2s, background 0.2s;
@@ -124,9 +126,11 @@ const Loading = () => (
   </ButtonLoading>
 )
 
+const ButtonWithSpacing = withSpacing(ButtonStyling)
+
 export default ({ loading, children, ...props }) => (
-  <ButtonStyling loading={loading} {...props}>
+  <ButtonWithSpacing loading={loading} {...props}>
     {loading && <Loading />}
     {children}
-  </ButtonStyling>
+  </ButtonWithSpacing>
 );

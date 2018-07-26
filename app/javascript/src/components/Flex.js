@@ -3,8 +3,12 @@ import styled from "styled-components";
 
 const flex = {
   default: "0 0 auto",
-  fillEvenly: "1 0 0%"
+  fillEvenly: "1 0 0%",
 };
+
+const justifyContent = {
+  equalSpacing: "space-between",
+}
 
 const spacing = {
   xs: "2px",
@@ -23,11 +27,12 @@ const Flex = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: ${props => align[props.align || "default"]};
+  justify-content: ${props => justifyContent[props.distribute] };
 `;
 
 const FlexItem = styled.div`
   min-width: 0;
-  flex: ${props => flex[props.distribute || "default"]};
+  flex: ${props => flex[props.distribute] };
   margin-left: ${props => spacing[props.spacing] || 0};
   margin-right: ${props => spacing[props.spacing] || 0};
 

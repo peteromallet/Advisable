@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { withSpacing } from "./Spacing";
 
 const Card = styled.div`
   background: #FFFFFF;
@@ -10,4 +11,4 @@ Card.Section = styled.div`
   padding: 25px;
 `
 
-export default Card
+export default withSpacing(Card)
