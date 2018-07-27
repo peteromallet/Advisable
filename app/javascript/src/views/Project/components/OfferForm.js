@@ -60,48 +60,54 @@ export default ({ onSubmit, onCancel, currency = "€", initialValues }) => (
           )}
           <Divider />
           <Spacing padding="xl" paddingTop="l" paddingBottom="l">
-            <Flex distribute="fillEvenly" spacing="m">
-              <Field
-                name="rate"
-                validate={required("Amount is required")}
-                render={({ field, form }) => (
+            <Flex distribute="fillEvenly">
+              <Flex.Item paddingRight="s">
+                <Field
+                  name="rate"
+                  validate={required("Amount is required")}
+                  render={({ field, form }) => (
+                    <TextField
+                      block
+                      {...field}
+                      label={amountLabel(form)}
+                      error={form.touched.rate && form.errors.rate}
+                      placeholder={`${currency}0.00`}
+                      mask={createNumberMask({
+                        prefix: currency,
+                        allowDecimal: true
+                      })}
+                    />
+                  )}
+                />
+              </Flex.Item>
+              <Flex.Item paddingLeft="s">
+                <Select
+                  block
+                  label="Type"
+                  name="rateType"
+                  value={form.values.rateType}
+                  onChange={form.handleChange}
+                  options={[
+                    { label: "Fixed Price", value: "Fixed" },
+                    { label: "Hourly Rate", value: "Per Hour" }
+                  ]}
+                />
+              </Flex.Item>
+              {form.values.rateType === "Per Hour" ? (
+                <Flex.Item paddingLeft="l">
                   <TextField
-                    block
-                    {...field}
-                    label={amountLabel(form)}
-                    error={form.touched.rate && form.errors.rate}
+                    type="tel"
+                    name="rateLimit"
+                    value={form.values.rateLimit}
+                    onChange={form.handleChange}
+                    label="Monthly Budget"
                     placeholder={`${currency}0.00`}
                     mask={createNumberMask({
                       prefix: currency,
                       allowDecimal: true
                     })}
                   />
-                )}
-              />
-              <Select
-                block
-                label="Type"
-                name="rateType"
-                value={form.values.rateType}
-                onChange={form.handleChange}
-                options={[
-                  { label: "Fixed Price", value: "Fixed" },
-                  { label: "Hourly Rate", value: "Per Hour" }
-                ]}
-              />
-              {form.values.rateType === "Per Hour" ? (
-                <TextField
-                  type="tel"
-                  name="rateLimit"
-                  value={form.values.rateLimit}
-                  onChange={form.handleChange}
-                  label="Monthly Budget"
-                  placeholder={`${currency}0.00`}
-                  mask={createNumberMask({
-                    prefix: currency,
-                    allowDecimal: true
-                  })}
-                />
+                </Flex.Item>
               ) : null}
             </Flex>
           </Spacing>

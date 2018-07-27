@@ -5,32 +5,35 @@ import { withSpacing } from "src/components/Spacing";
 import arrow from "./arrow.svg";
 
 const Back = withSpacing(styled(Link)`
-  color: #0064ff;
+  fill: #5c6782;
+  color: #5c6782;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
   position: relative;
-  display: inline-block;
+  align-items: center;
+  display: inline-flex;
   text-decoration: none;
-  text-transform: uppercase;
+
+  svg {
+    margin-right: 10px;
+  }
+
+  span {
+    transform: translateY(1px);
+  }
 
   &:hover {
-    color: #0041a5;
+    fill: #0064ff;
+    color: #0064ff;
   }
 `);
 
-const Arrow = styled.div`
-  width: 5px;
-  height: 10px;
-  margin-right: 8px;
-  display: inline-block;
-  background-size: cover;
-  background-image: url(${arrow});
-`;
-
 export default ({ children, ...props }) => (
   <Back {...props}>
-    <Arrow />
-    {children || "Back"}
+    <svg width={17} height={15}>
+      <path d="M4.828 9l4.086 4.086A1 1 0 0 1 7.5 14.5L.793 7.793 7.5 1.086A1 1 0 1 1 8.914 2.5L4.414 7H16a1 1 0 0 1 0 2H4.828z" />
+    </svg>
+    <span>{children || "Back"}</span>
   </Back>
 );

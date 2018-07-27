@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const CandidateAttributes = styled.div`
   display: flex;
   margin: 30px 0;
-  padding: 30px 0;
+  padding: ${props => props.compact ? '20px 0' : '30px 0'};
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid ${rgba("#0A2248", 0.1)};
@@ -20,6 +20,10 @@ export const CandidateAttribute = styled.div`
   align-items: center;
   display: inline-flex;
 
+  @media (max-width: 900px) {
+    display: inline-block;
+  }
+
   @media (max-width: 768px) {
     display: flex;
     margin-bottom: 15px;
@@ -32,12 +36,20 @@ export const CandidateAttributeLabel = styled.div`
   color: #7c89a8;
   margin-right: 15px;
   display: inline-block;
+
+  @media (max-width: 900px) {
+    display: block;
+  }
 `;
 
 export const CandidateAttributeValue = styled.div`
   color: #0b1426;
   font-weight: 500;
   display: inline-block;
+
+  @media (max-width: 900px) {
+    display: block;
+  }
 `;
 
 export const Linkedin = styled.a`

@@ -3,13 +3,21 @@ import styled, { keyframes } from 'styled-components';
 import { withSpacing } from "./Spacing";
 
 const heights = {
+  s: '30px',
   m: '34px',
   l: '38px'
 }
 
 const fontSizes = {
+  s: '12px',
   m: '12px',
   l: '14px',
+}
+
+const padding = {
+  s: '0 15px',
+  m: '0 20px',
+  l: '0 25px',
 }
 
 export const ButtonStyling = styled.button`
@@ -20,7 +28,7 @@ export const ButtonStyling = styled.button`
   border: none;
   outline: none;
   font-size: ${props => fontSizes[props.size] || fontSizes['m']};
-  padding: 0 25px;
+  padding: ${props => padding[props.size] || padding['m']};
   opacity: ${props => props.disabled ? '0.5' : '1'};
   cursor: pointer;
   font-weight: 600;
@@ -29,9 +37,14 @@ export const ButtonStyling = styled.button`
   letter-spacing: -0.02em;
   -webkit-appearance: none;
   text-transform: uppercase;
+  align-items: center;
   width: ${props => props.block ? '100%' : 'auto'};
-  display: ${props => props.block ? 'block' : 'inline-block'};
+  display: ${props => props.block ? 'flex' : 'inline-flex'};
   transition: box-shadow 0.2s, background 0.2s;
+
+  svg {
+    margin-right: 8px;
+  }
 
   &:hover {
     background: #373453;
