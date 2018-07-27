@@ -29,9 +29,12 @@ class Modal extends React.Component {
           to={{
             opacity: this.props.isOpen ? 1 : 0,
             translateY: this.props.isOpen ? 0 : 100
-          }}
-        >
-          {styles => <Window styles={styles}>{this.props.children}</Window>}
+          }}>
+          {styles => (
+            <Window className="ModalWindow" styles={styles}>
+              {this.props.children}
+            </Window>
+          )}
         </Spring>
         <Backdrop onClick={this.props.onClose} />
       </ModalContainer>,

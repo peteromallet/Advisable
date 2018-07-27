@@ -38,6 +38,7 @@ export const ButtonStyling = styled.button`
   -webkit-appearance: none;
   text-transform: uppercase;
   align-items: center;
+  justify-content: center;
   width: ${props => props.block ? '100%' : 'auto'};
   display: ${props => props.block ? 'flex' : 'inline-flex'};
   transition: box-shadow 0.2s, background 0.2s;

@@ -12,11 +12,13 @@ jobs: # a collection of steps
           PGHOST: 127.0.0.1
           PGUSER: advisable
           RAILS_ENV: test
+          SELENIUM_DRIVER_URL: http://localhost:4444/wd/hub
       - image: circleci/postgres:9.5-alpine # database image
         environment: # environment variables for database
           POSTGRES_USER: advisable
           POSTGRES_DB: advisable_test
           POSTGRES_PASSWORD: ""
+      - image: selenium/standalone-chrome:3.5.3
     steps: # a collection of executable commands
       - checkout # special step to check out source code to working directory
 
