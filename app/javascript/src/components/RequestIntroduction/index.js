@@ -42,7 +42,7 @@ class RequestIntroductionModal extends React.Component {
                       });
                       this.props.onClose();
                     }}>
-                    Request Intro
+                    Request
                   </Button>
                 </Flex.Item>
                 <Flex.Item paddingLeft='s'>

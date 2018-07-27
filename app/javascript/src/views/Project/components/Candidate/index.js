@@ -158,7 +158,7 @@ class Candidate extends React.Component {
               marginRight="m"
               onClick={() => this.setState({ modal: "introduction" })}
               primary>
-              Request Intro
+              Request Introduction
             </Button>
             <Button onClick={() => this.setState({ modal: "reject" })}>
               Reject
