@@ -14,12 +14,19 @@ import Spacing from "src/components/Spacing";
 import Loading from "src/components/Loading";
 import Divider from "src/components/Divider";
 import Heading from "src/components/Heading";
-import linkedin from "src/images/linkedin.svg";
+import CandidateAttributes from 'src/components/CandidateAttributes';
 import currency from "src/utilities/currency";
 import RejectModal from "src/components/RejectModal";
 import RequestIntroduction from "src/components/RequestIntroduction";
 import AdvisableMessage from "./components/AdvisableMessage";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
+import {
+  ApplicantHeader,
+  ApplicantAvatar,
+  ApplicantName,
+  ApplicantLocation,
+  AppliedTo
+} from "./styles";
 
 class Applicant extends React.Component {
   state = {
@@ -44,7 +51,8 @@ class Applicant extends React.Component {
         variables={{
           projectID: match.params.projectID,
           applicationID: match.params.applicationID
-        }}>
+        }}
+      >
         {({ data, loading }) => {
           if (loading) return <Loading />;
           const project = data.project;
@@ -75,49 +83,22 @@ class Applicant extends React.Component {
               <Back to={`/projects/${project.airtableId}`} paddingBottom="s">
                 All Candidates
               </Back>
-              <Text marginBottom="xl" size="l">
-                {project.name}
-              </Text>
-              <Flex align="center">
-                <Avatar
-                  size="l"
-                  marginRight="l"
+              <ApplicantHeader>
+                <ApplicantAvatar
                   name={specialist.name}
                   url={get(specialist.image, "url")}
                 />
-                <Flex.Item>
-                  <Heading size="l">{specialist.name}</Heading>
-                  <Text size="l">
-                    {specialist.city}, {specialist.country.name}
-                  </Text>
-                </Flex.Item>
-              </Flex>
-              <Divider marginTop="xl" marginBottom="xl" />
-              <Flex distribute="equalSpacing">
-                <div>
-                  <Text marginRight="m" inline>
-                    Hourly Rate
-                  </Text>
-                  <Text weight="bold" colour="dark" inline>
-                    {currency(application.rate, project.currency || "EUR")}
-                  </Text>
-                </div>
-                <div>
-                  <Text marginRight="m" inline>
-                    Availability
-                  </Text>
-                  <Text weight="bold" colour="dark" inline>
-                    {project.availability}
-                  </Text>
-                </div>
-                <div>
-                  <Link href={specialist.linkedin} target="_blank">
-                    <img src={linkedin} />
-                    View on Linkedin
-                  </Link>
-                </div>
-              </Flex>
-              <Divider marginTop="xl" marginBottom="xl" />
+                <ApplicantName>{specialist.name}</ApplicantName>
+                <ApplicantLocation>
+                  {specialist.city}, {specialist.country.name}
+                </ApplicantLocation>
+                <AppliedTo>Applied to {project.name}</AppliedTo>
+              </ApplicantHeader>
+              <CandidateAttributes
+                rate={currency(application.rate, project.currency)}
+                availability={application.availability}
+                linkedin={specialist.linkedin}
+              />
               <Text marginBottom="xl">{application.introduction}</Text>
               {/* <AdvisableMessage>
                 This is a placeholder comment from the advisable team. Looks like
@@ -142,7 +123,8 @@ class Applicant extends React.Component {
                 <Button
                   marginRight="m"
                   onClick={() => this.setState({ modal: "introduction" })}
-                  primary>
+                  primary
+                >
                   Request Introduction
                 </Button>
               )}
@@ -157,7 +139,8 @@ class Applicant extends React.Component {
                       }/offer`
                     )
                   }
-                  primary>
+                  primary
+                >
                   Send Offer
                 </Button>
               )}
@@ -173,23 +156,26 @@ class Applicant extends React.Component {
                 <React.Fragment>
                   <Divider marginTop="xxl" marginBottom="xxl" />
 
-                  <Flex align="baseline">
-                    <Flex.Item distribute="fill">
-                      <Heading size="s" marginBottom="l">
-                        More candidates like {specialist.name}
-                      </Heading>
-                    </Flex.Item>
-                    <Link to={`/projects/${project.airtableId}`}>
-                      View all candidates
-                    </Link>
-                  </Flex>
+                  <Spacing marginBottom="l">
+                    <Flex align="baseline">
+                      <Flex.Item distribute="fill">
+                        <Heading size="s" marginBottom="xs">
+                          More candidates like {specialist.name}
+                        </Heading>
+                      </Flex.Item>
+                      <Link to={`/projects/${project.airtableId}`}>
+                        View all candidates
+                      </Link>
+                    </Flex>
+                  </Spacing>
 
                   {otherApplicants.map(applicant => (
                     <Card
                       key={applicant.id}
                       onClick={() => history.push(applicant.airtableId)}
                       padding="l"
-                      marginBottom="m">
+                      marginBottom="m"
+                    >
                       <Flex align="center">
                         <Avatar
                           name={applicant.specialist.name}

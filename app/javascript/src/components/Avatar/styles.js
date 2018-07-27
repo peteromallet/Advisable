@@ -7,7 +7,7 @@ const sizes = {
   l: "90px"
 };
 
-export const Wrapper = withSpacing(styled.div`
+export const Avatar = withSpacing(styled.div`
   width: ${props => sizes[props.size || "m"]};
   height: ${props => sizes[props.size || "m"]};
   color: #0064FF;

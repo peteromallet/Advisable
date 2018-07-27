@@ -3,9 +3,8 @@ import Spacing from "../Spacing";
 import styled from "styled-components";
 
 const Skill = styled.div`
-  height: 30px;
   color: #0f3776;
-  padding: 0 20px;
+  padding: 8px 20px;
   font-size: 15px;
   font-weight: 500;
   margin-right: 10px;
