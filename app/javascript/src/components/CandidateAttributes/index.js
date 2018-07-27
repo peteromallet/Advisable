@@ -7,15 +7,15 @@ import {
   Linkedin
 } from "./styles";
 
-export default ({ rate, availability, linkedin }) => (
-  <CandidateAttributes>
+export default ({ rate, availability, linkedin, compact }) => (
+  <CandidateAttributes compact={compact}>
     <CandidateAttribute>
       <CandidateAttributeLabel>Hourly rate</CandidateAttributeLabel>
-      <CandidateAttributeValue>{rate}</CandidateAttributeValue>
+      <CandidateAttributeValue>{rate || '-'}</CandidateAttributeValue>
     </CandidateAttribute>
     <CandidateAttribute>
-      <CandidateAttributeLabel>Availability</CandidateAttributeLabel>
-      <CandidateAttributeValue>{availability}</CandidateAttributeValue>
+      <CandidateAttributeLabel>Availabile to start</CandidateAttributeLabel>
+      <CandidateAttributeValue>Yes</CandidateAttributeValue>
     </CandidateAttribute>
     <CandidateAttribute>
       <Linkedin href={linkedin} target="_blank">

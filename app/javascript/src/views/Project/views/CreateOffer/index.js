@@ -23,7 +23,7 @@ const Offer = ({ match, history, loading, notifications, data }) => {
 
   return (
     <div>
-      <Back marginBottom='xs' to={`/projects/${match.params.projectID}/introduced`} />
+      <Back marginBottom='l' to={`/projects/${match.params.projectID}/introduced`} />
         <Heading marginBottom='xs' size="l">
           Offer for {data.project.application.specialist.name}
         </Heading>

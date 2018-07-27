@@ -7,11 +7,17 @@ const sizes = {
   l: "90px"
 };
 
+const fontSizes = {
+  s: '16px',
+  m: '17px',
+  l: '20px',
+}
+
 export const Avatar = withSpacing(styled.div`
   width: ${props => sizes[props.size || "m"]};
   height: ${props => sizes[props.size || "m"]};
   color: #0064FF;
-  font-size: 20px;
+  font-size: ${props => fontSizes[props.size || "m"]};;
   font-weight: 500;
   border-radius: 50%;
   text-align: center;
