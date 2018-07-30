@@ -1,8 +1,8 @@
 import React from 'react';
 import reduce from 'lodash/reduce';
-import { Wrapper } from './styles';
+import { Avatar } from './styles';
 
-const Avatar = ({ name, url }) => {
+const Component = ({ name, url, size, ...props }) => {
   const initials = reduce(name.trim().split(/\s+/), (sum, name) => {
     return `${sum}${name[0]}`
   }, "")
@@ -12,10 +12,10 @@ const Avatar = ({ name, url }) => {
   }
 
   return (
-    <Wrapper style={url && style}>
+    <Avatar style={url && style} size={size} {...props}>
       {!url && initials}
-    </Wrapper>
+    </Avatar>
   )
 }
 
-export default Avatar
+export default Component

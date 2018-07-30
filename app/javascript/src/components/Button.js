@@ -1,34 +1,51 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import { withSpacing } from "./Spacing";
 
 const heights = {
+  s: '30px',
   m: '34px',
   l: '38px'
 }
 
 const fontSizes = {
-  m: '16px',
-  l: '17px',
+  s: '12px',
+  m: '12px',
+  l: '14px',
+}
+
+const padding = {
+  s: '0 15px',
+  m: '0 20px',
+  l: '0 25px',
 }
 
 export const ButtonStyling = styled.button`
   position: relative;
+  margin: 0;
   height: ${props => heights[props.size] || heights['m']}
   color: white;
   border: none;
   outline: none;
   font-size: ${props => fontSizes[props.size] || fontSizes['m']};
-  padding: 0 25px;
+  padding: ${props => padding[props.size] || padding['m']};
   opacity: ${props => props.disabled ? '0.5' : '1'};
   cursor: pointer;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 5px;
   background: #4C496A;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
   -webkit-appearance: none;
+  text-transform: uppercase;
+  align-items: center;
+  justify-content: center;
   width: ${props => props.block ? '100%' : 'auto'};
-  display: ${props => props.block ? 'block' : 'inline-block'};
+  display: ${props => props.block ? 'flex' : 'inline-flex'};
   transition: box-shadow 0.2s, background 0.2s;
+
+  svg {
+    margin-right: 8px;
+  }
 
   &:hover {
     background: #373453;
@@ -58,7 +75,6 @@ export const ButtonStyling = styled.button`
 
   ${props => props.primary && `
     background: #1A5FFF;
-    box-shadow: 0 2px 4px 0 rgba(24,71,180,0.10);
 
     &:hover {
       background: #3270FF;
@@ -124,9 +140,11 @@ const Loading = () => (
   </ButtonLoading>
 )
 
+const ButtonWithSpacing = withSpacing(ButtonStyling)
+
 export default ({ loading, children, ...props }) => (
-  <ButtonStyling loading={loading} {...props}>
+  <ButtonWithSpacing loading={loading} {...props}>
     {loading && <Loading />}
     {children}
-  </ButtonStyling>
+  </ButtonWithSpacing>
 );

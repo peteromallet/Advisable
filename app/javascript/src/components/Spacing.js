@@ -1,18 +1,28 @@
 import styled from 'styled-components';
 
 const sizes = {
-  xs: 5,
-  s: 10,
-  m: 15,
-  l: 20,
-  xl: 30,
+  xs: '5px',
+  s: '10px',
+  m: '15px',
+  l: '20px',
+  xl: '30px',
+  xxl: '50px',
 }
 
-export default styled.div`
-  padding-top: ${props => sizes[props.top || props.size]}px;
-  padding-right: ${props => sizes[props.right || props.size]}px;
-  padding-bottom: ${props => sizes[props.bottom || props.size]}px;
-  padding-left: ${props => sizes[props.left || props.size]}px;
+const Spacing = styled.div`
   display: ${props => props.inline ? 'inline-block' : 'block'};
   width: ${props => props.inline ? 'auto' : '100%'};
 `
+
+export const withSpacing = Component => Component.extend`
+  padding-top: ${props => sizes[props.paddingTop || props.padding]};
+  padding-right: ${props => sizes[props.paddingRight || props.padding]};
+  padding-bottom: ${props => sizes[props.paddingBottom || props.padding]};
+  padding-left: ${props => sizes[props.paddingLeft || props.padding]};
+  margin-top: ${props => sizes[props.marginTop || props.margin]};
+  margin-right: ${props => sizes[props.marginRight || props.margin]};
+  margin-bottom: ${props => sizes[props.marginBottom || props.margin]};
+  margin-left: ${props => sizes[props.marginLeft || props.margin]};
+`
+
+export default withSpacing(Spacing);

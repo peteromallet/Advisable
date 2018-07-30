@@ -4,7 +4,7 @@ jobs: # a collection of steps
     parallelism: 1 # run three instances of this job in parallel
     working_directory: ~/circleci-ruby-rails # directory where steps will run
     docker: # run the steps with Docker
-      - image: circleci/ruby:2.5-node # ...with this image as the primary container; this is where all `steps` will run
+      - image: circleci/ruby:2.5.1-node-browsers # ...with this image as the primary container; this is where all `steps` will run
         environment: # environment variables for primary container
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -12,6 +12,7 @@ jobs: # a collection of steps
           PGHOST: 127.0.0.1
           PGUSER: advisable
           RAILS_ENV: test
+          SELENIUM_DRIVER_URL: http://localhost:4444/wd/hub
       - image: circleci/postgres:9.5-alpine # database image
         environment: # environment variables for database
           POSTGRES_USER: advisable

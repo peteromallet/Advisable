@@ -1,33 +1,39 @@
 import React from "react";
-import styled from 'styled-components';
-import arrow from './arrow.svg';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { withSpacing } from "src/components/Spacing";
+import arrow from "./arrow.svg";
 
-const Back = styled.div`
-  color: #0064FF;
+const Back = withSpacing(styled(Link)`
+  fill: #5c6782;
+  color: #5c6782;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 500;
   position: relative;
-  padding-left: 12px;
-  text-transform: uppercase;
+  align-items: center;
+  display: inline-flex;
+  text-decoration: none;
 
-  &:hover { color: #0041A5; }
-`
+  svg {
+    margin-right: 10px;
+  }
 
-const Arrow = styled.div`
-  left: 0;
-  top: 50%;
-  width: 5px;
-  height: 10px;
-  position: absolute;
-  background-size: cover;
-  transform: translateY(-50%);
-  background-image: url(${arrow});
-`
+  span {
+    transform: translateY(1px);
+  }
 
-export default ({ children }) => (
-  <Back>
-    <Arrow />
-    {children || "Back"}
+  &:hover {
+    fill: #0064ff;
+    color: #0064ff;
+  }
+`);
+
+export default ({ children, ...props }) => (
+  <Back {...props}>
+    <svg width={17} height={15}>
+      <path d="M4.828 9l4.086 4.086A1 1 0 0 1 7.5 14.5L.793 7.793 7.5 1.086A1 1 0 1 1 8.914 2.5L4.414 7H16a1 1 0 0 1 0 2H4.828z" />
+    </svg>
+    <span>{children || "Back"}</span>
   </Back>
-)
+);

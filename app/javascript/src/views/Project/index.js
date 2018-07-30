@@ -2,6 +2,7 @@ import React from "react";
 import { graphql } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Container } from "./styles";
+import Applicant from "../Applicant";
 import NotFound from "src/views/NotFound";
 import CreateOffer from "./views/CreateOffer";
 import CounterOffer from "./views/CounterOffer";
@@ -75,6 +76,10 @@ class Project extends React.Component {
               <Route
                 path={`${match.path}/applications/:applicationID/offer`}
                 component={CreateOffer}
+              />
+              <Route
+                path={`${match.path}/applications/:applicationID`}
+                component={Applicant}
               />
               <Route
                 path={`${match.path}/offers/:bookingID`}
