@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { withSpacing } from "src/components/Spacing";
 
-const flex = {
-  default: "0 0 auto",
-  fillEvenly: "1 0 0%"
+const justifyContent = {
+  equalSpacing: "space-between"
 };
 
 const spacing = {
@@ -16,38 +16,51 @@ const spacing = {
 
 const align = {
   center: "center",
-  detault: "stretch"
+  detault: "stretch",
+  baseline: "baseline"
 };
 
-const Flex = styled.div`
+const FlexWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: ${props => align[props.align || "default"]};
+  justify-content: ${props => justifyContent[props.distribute]};
 `;
 
-const FlexItem = styled.div`
+const flex = {
+  default: "0 0 auto",
+  fillEvenly: "1 0 0%",
+  fill: "1 1 auto"
+};
+
+const FlexItem = withSpacing(styled.div`
   min-width: 0;
-  flex: ${props => flex[props.distribute || "default"]};
-  margin-left: ${props => spacing[props.spacing] || 0};
-  margin-right: ${props => spacing[props.spacing] || 0};
+  flex: ${props => flex[props.distribute]};
+`);
 
-  &:first-child {
-    margin-left: 0;
-  }
-  &:last-child {
-    margin-right: 0;
-  }
-`;
+FlexItem.displayName = "FlexItem";
 
-export default ({ children, ...props }) => (
-  <Flex {...props}>
-    {children.map((child, i) => {
-      if (child === null) return null;
-      return (
-        <FlexItem key={i} className="item" {...props}>
-          {child}
-        </FlexItem>
-      );
-    })}
-  </Flex>
-);
+const Flex = ({ children, ...props }) => {
+  return (
+    <FlexWrapper {...props}>
+      {React.Children.map(children, (child, i) => {
+        // If the child is null then return null
+        if (child === null) return null;
+        // if the child is a FlexItem then return the child
+        if (child.type.displayName === "FlexItem") {
+          return React.cloneElement(child, props);
+        }
+        // For everything else wrap it with a FlexItem component
+        return (
+          <FlexItem key={i} className="item" {...props}>
+            {child}
+          </FlexItem>
+        );
+      })}
+    </FlexWrapper>
+  );
+};
+
+Flex.Item = FlexItem;
+
+export default Flex;

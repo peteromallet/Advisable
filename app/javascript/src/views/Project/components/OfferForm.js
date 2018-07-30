@@ -27,20 +27,20 @@ const amountLabel = form => {
   return "Amount";
 };
 
-export default ({ onSubmit, onCancel, currency = '€', initialValues }) => (
+export default ({ onSubmit, onCancel, currency = "€", initialValues }) => (
   <Formik
     onSubmit={onSubmit}
     initialValues={initialValues}
     render={form => (
       <form onSubmit={form.handleSubmit}>
         <Card>
-          <Spacing size="xl">
+          <Spacing padding="xl">
             <OfferType />
           </Spacing>
           {form.values.type === "Recurring" && (
             <React.Fragment>
               <Divider />
-              <Spacing size="xl" top="l" bottom="l">
+              <Spacing padding="xl" paddingTop="l" paddingBottom="l">
                 <Select
                   name="duration"
                   value={form.values.duration}
@@ -59,54 +59,60 @@ export default ({ onSubmit, onCancel, currency = '€', initialValues }) => (
             </React.Fragment>
           )}
           <Divider />
-          <Spacing size="xl" top="l" bottom="l">
-            <Flex distribute="fillEvenly" spacing="m">
-              <Field
-                name="rate"
-                validate={required("Amount is required")}
-                render={({ field, form }) => (
+          <Spacing padding="xl" paddingTop="l" paddingBottom="l">
+            <Flex distribute="fillEvenly">
+              <Flex.Item paddingRight="s">
+                <Field
+                  name="rate"
+                  validate={required("Amount is required")}
+                  render={({ field, form }) => (
+                    <TextField
+                      block
+                      {...field}
+                      label={amountLabel(form)}
+                      error={form.touched.rate && form.errors.rate}
+                      placeholder={`${currency}0.00`}
+                      mask={createNumberMask({
+                        prefix: currency,
+                        allowDecimal: true
+                      })}
+                    />
+                  )}
+                />
+              </Flex.Item>
+              <Flex.Item paddingLeft="s">
+                <Select
+                  block
+                  label="Type"
+                  name="rateType"
+                  value={form.values.rateType}
+                  onChange={form.handleChange}
+                  options={[
+                    { label: "Fixed Price", value: "Fixed" },
+                    { label: "Hourly Rate", value: "Per Hour" }
+                  ]}
+                />
+              </Flex.Item>
+              {form.values.rateType === "Per Hour" ? (
+                <Flex.Item paddingLeft="l">
                   <TextField
-                    block
-                    {...field}
-                    label={amountLabel(form)}
-                    error={form.touched.rate && form.errors.rate}
+                    type="tel"
+                    name="rateLimit"
+                    value={form.values.rateLimit}
+                    onChange={form.handleChange}
+                    label="Monthly Budget"
                     placeholder={`${currency}0.00`}
                     mask={createNumberMask({
                       prefix: currency,
                       allowDecimal: true
                     })}
                   />
-                )}
-              />
-              <Select
-                block
-                label="Type"
-                name="rateType"
-                value={form.values.rateType}
-                onChange={form.handleChange}
-                options={[
-                  { label: "Fixed Price", value: "Fixed" },
-                  { label: "Hourly Rate", value: "Per Hour" }
-                ]}
-              />
-              {form.values.rateType === "Per Hour" ? (
-                <TextField
-                  type="tel"
-                  name="rateLimit"
-                  value={form.values.rateLimit}
-                  onChange={form.handleChange}
-                  label="Monthly Budget"
-                  placeholder={`${currency}0.00`}
-                  mask={createNumberMask({
-                    prefix: currency,
-                    allowDecimal: true
-                  })}
-                />
+                </Flex.Item>
               ) : null}
             </Flex>
           </Spacing>
           <Divider />
-          <Spacing size="xl" top="l" bottom="m">
+          <Spacing padding="xl" paddingTop="l" paddingBottom="m">
             <Field
               name="deliverables"
               render={({ field, form }) => (
@@ -123,10 +129,10 @@ export default ({ onSubmit, onCancel, currency = '€', initialValues }) => (
             />
           </Spacing>
           <Divider />
-          <Spacing size="xl">
-            <Spacing right="m" inline>
-              <Button primary loading={form.isSubmitting}>Send Offer</Button>
-            </Spacing>
+          <Spacing padding="xl">
+            <Button primary marginRight="m" loading={form.isSubmitting}>
+              Send Offer
+            </Button>
             <Button blank type="button" onClick={onCancel}>
               Cancel
             </Button>

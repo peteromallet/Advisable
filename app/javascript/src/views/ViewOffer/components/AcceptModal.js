@@ -26,26 +26,23 @@ class AcceptModal extends React.Component {
       <Modal isOpen={isOpen} onClose={onClose}>
         <Mutation mutation={ACCEPT_OFFER}>
           {acceptOffer => (
-            <Spacing size="xl">
-              <Spacing bottom="l">
+            <Spacing padding="xl">
+              <Spacing paddingBottom="l">
                 <Heading>Accept Offer</Heading>
                 <Text>Are you sure you want to accept this offer?</Text>
               </Spacing>
               <Flex distribute="fillEvenly">
-                <Spacing right="s">
-                  <Button
-                    block
-                    primary
-                    loading={this.state.loading}
-                    onClick={this.handleAccept(acceptOffer)}>
-                    Accept Offer
-                  </Button>
-                </Spacing>
-                <Spacing left="s">
-                  <Button blank block onClick={onClose}>
-                    Cancel
-                  </Button>
-                </Spacing>
+                <Button
+                  block
+                  primary
+                  marginRight="s"
+                  loading={this.state.loading}
+                  onClick={this.handleAccept(acceptOffer)}>
+                  Accept Offer
+                </Button>
+                <Button blank block marginLeft="s" onClick={onClose}>
+                  Cancel
+                </Button>
               </Flex>
             </Spacing>
           )}
@@ -55,4 +52,4 @@ class AcceptModal extends React.Component {
   }
 }
 
-export default AcceptModal
+export default AcceptModal;

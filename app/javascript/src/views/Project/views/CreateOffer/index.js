@@ -1,7 +1,6 @@
 import React from "react";
 import { graphql, Mutation } from "react-apollo";
 import { Formik, Field } from "formik";
-import { Link } from "react-router-dom";
 import Back from "src/components/Back";
 import Card from "src/components/Card";
 import Text from "src/components/Text";
@@ -24,17 +23,11 @@ const Offer = ({ match, history, loading, notifications, data }) => {
 
   return (
     <div>
-      <Spacing bottom="xs" onClick={goBack}>
-        <Back />
-      </Spacing>
-      <Spacing bottom="xs">
-        <Heading size="l">
+      <Back marginBottom='l' to={`/projects/${match.params.projectID}/introduced`} />
+        <Heading marginBottom='xs' size="l">
           Offer for {data.project.application.specialist.name}
         </Heading>
-      </Spacing>
-      <Spacing bottom="xl">
-        <Text size="l">{data.project.name}</Text>
-      </Spacing>
+      <Text marginBottom='xl' size="l">{data.project.name}</Text>
       <Mutation mutation={CREATE_OFFER}>
         {createOffer => (
           <OfferForm

@@ -1,30 +1,29 @@
 import React from "react";
 import { Spring } from "react-spring";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 import Text from "src/components/Text";
+import Flex from "src/components/Flex";
 import Avatar from "src/components/Avatar";
+import Divider from "src/components/Divider";
 import Spacing from "src/components/Spacing";
+import Heading from "src/components/Heading";
 import Button from "src/components/Button";
 import Questions from "./Questions";
-import CandidateAttribute from "./CandidateAttribute";
-import RejectModal from "../RejectModal";
-import RequestIntroductionModal from "../RequestIntroductionModal";
+import RejectModal from "src/components/RejectModal";
+import Skills from "src/components/Skills";
+import CandidateAttributes from "src/components/CandidateAttributes";
+import RequestIntroduction from "src/components/RequestIntroduction";
 import currency from "src/utilities/currency";
 import {
   Card,
   Name,
   Skill,
   Location,
-  Description,
-  Preview,
   MoreInfo,
   CandidateWrapper,
   CandidateHeader,
   CandidateAvatar,
-  CandidateContent,
-  NameAndLocation,
-  CandidateFooter,
-  CandidateAttributes
+  NameAndLocation
 } from "./styles";
 
 class Candidate extends React.Component {
@@ -54,8 +53,8 @@ class Candidate extends React.Component {
     const image = application.specialist.image;
 
     return (
-      <Card expanded={this.state.expanded}>
-        <RequestIntroductionModal
+      <Card padding="xl" expanded={this.state.expanded}>
+        <RequestIntroduction
           isOpen={this.state.modal === "introduction"}
           application={application}
           onClose={() => {
@@ -69,101 +68,102 @@ class Candidate extends React.Component {
             this.setState({ modal: null });
           }}
         />
-        <CandidateContent onClick={this.clickToExpand}>
-          <CandidateHeader>
-            <Avatar
-              name={application.specialist.name}
-              url={image ? image.url : null}
-            />
-            <NameAndLocation>
-              <Name>{application.specialist.name}</Name>
-              <Location>
-                {application.specialist.city},{" "}
-                {application.specialist.country.name}
-              </Location>
-            </NameAndLocation>
-          </CandidateHeader>
-          <CandidateAttributes>
-            <CandidateAttribute
-              label="Hourly rate"
-              value={
-                application.rate
-                  ? currency(
-                      application.rate,
-                      project.currency || "EUR",
-                    )
-                  : "-"
-              }
-            />
-            <CandidateAttribute
-              label="Available to start"
-              value="Yes"
-              // value={application.availability || "-"}
-            />
-            <CandidateAttribute
-              label="Linkedin"
-              value={
-                <a target="_blank" href={application.specialist.linkedin}>
-                  View Profile
-                </a>
-              }
-            />
-          </CandidateAttributes>
 
-          <Preview expanded={this.state.expanded}>
-            <Description>
-              <Text>{application.introduction}</Text>
-            </Description>
-          </Preview>
+        <Flex align="center">
+          <Avatar
+            marginRight="m"
+            name={application.specialist.name}
+            url={image ? image.url : null}
+          />
+          <Flex.Item fill>
+            <Name>{application.specialist.name}</Name>
+            <Location>
+              {application.specialist.city},{" "}
+              {application.specialist.country.name}
+            </Location>
+          </Flex.Item>
+        </Flex>
+        <CandidateAttributes
+          compact
+          rate={currency(application.rate, project.currency)}
+          availability="Yes"
+          linkedin={application.specialist.linkedin}
+        />
 
-          <Spring
-            from={{ height: 0, opacity: 0 }}
-            to={{
-              height: this.state.expanded ? this.moreInfoHeight : 0,
-              opacity: this.state.expanded ? 1 : 0
-            }}>
-            {styles => (
-              <MoreInfo innerRef={c => (this.moreInfo = c)} style={styles}>
-                <Questions questions={application.questions} />
-                {application.specialist.skills.length > 0 && (
-                  <Spacing bottom="xl">
-                    <Text>Skills</Text>
-                    {application.specialist.skills.map((skill, i) => (
-                      <Skill key={i}>{skill}</Skill>
-                    ))}
-                  </Spacing>
-                )}
-              </MoreInfo>
-            )}
-          </Spring>
-        </CandidateContent>
+        <Text size="s" marginBottom="l">
+          {application.introduction}
+        </Text>
+
+        <Button blank marginBottom="xl" onClick={this.clickToExpand}>
+          {this.state.expanded ? (
+            <svg width={13} height={6}>
+              <path
+                d="M1.314 6l-.668-.6 6-5.4 6 5.4-.667.6-5.333-4.798z"
+                fill="#76859A"
+                fillRule="nonzero"
+              />
+            </svg>
+          ) : (
+            <svg width={13} height={7}>
+              <path
+                d="M1.314.293l-.668.6 6 5.4 6-5.4-.667-.6L6.646 5.09z"
+                fill="#76859A"
+                fillRule="nonzero"
+              />
+            </svg>
+          )}
+          {this.state.expanded ? "View Less" : "View More"}
+        </Button>
+
+        <Spring
+          from={{ height: 0, opacity: 0 }}
+          to={{
+            height: this.state.expanded ? this.moreInfoHeight : 0,
+            opacity: this.state.expanded ? 1 : 0
+          }}>
+          {styles => (
+            <MoreInfo innerRef={c => (this.moreInfo = c)} style={styles}>
+              <Questions questions={application.questions} />
+              {application.specialist.skills.length > 0 && (
+                <Spacing marginBottom="l">
+                  <Text>Skills</Text>
+                  <Skills skills={application.specialist.skills} />
+                </Spacing>
+              )}
+            </MoreInfo>
+          )}
+        </Spring>
 
         {application.status === "Application Accepted" && (
-          <CandidateFooter>
-            <React.Fragment>
-              <Button
-                onClick={() => this.props.history.push(`applications/${application.id}/offer`)}
-                primary>
-                Send Offer
-              </Button>
-              <Button onClick={() => this.setState({ modal: "reject" })}>
-                Reject
-              </Button>
-            </React.Fragment>
-          </CandidateFooter>
-        )}
-
-        {application.status === "Applied" && (
-          <CandidateFooter>
+          <React.Fragment>
+            <Divider marginBottom="xl" />
             <Button
-              onClick={() => this.setState({ modal: "introduction" })}
+              marginRight="m"
+              onClick={() =>
+                this.props.history.push(`applications/${application.id}/offer`)
+              }
               primary>
-              Request Intro
+              Send Offer
             </Button>
             <Button onClick={() => this.setState({ modal: "reject" })}>
               Reject
             </Button>
-          </CandidateFooter>
+          </React.Fragment>
+        )}
+
+        {application.status === "Applied" && (
+          <React.Fragment>
+            <Divider marginBottom="xl" />
+            <Button
+              marginRight="m"
+              onClick={() => this.setState({ modal: "introduction" })}
+              primary>
+              Request Introduction
+            </Button>
+            <Button onClick={() => this.setState({ modal: "reject" })}>
+              Reject
+            </Button>
+          </React.Fragment>
         )}
       </Card>
     );

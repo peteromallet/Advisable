@@ -27,9 +27,9 @@ const client = new ApolloClient({
     credentials: "same-origin"
   },
   request: operation => {
-    const csrfToken = document
-      .querySelector("meta[name=csrf-token]")
-      .getAttribute("content");
+    const csrfElement = document.querySelector("meta[name=csrf-token]")
+    if (!csrfElement) return
+    const csrfToken = csrfElement.getAttribute("content");
     operation.setContext({
       headers: { "X-CSRF-Token": csrfToken }
     });

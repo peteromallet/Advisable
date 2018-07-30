@@ -1,0 +1,8 @@
+mutation requestIntroduction($id: ID!) {
+  updateApplicationStatus(input: { id: $id, status: "Application Accepted" }) {
+    application {
+      id
+      status
+    }
+  }
+}
