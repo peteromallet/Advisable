@@ -14,8 +14,9 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.div`
-  color: #FFB500;
+  color: #EAA600;
   font-weight: 500;
+  margin-bottom: 4px;
   letter-spacing: -0.04em;
 `
 

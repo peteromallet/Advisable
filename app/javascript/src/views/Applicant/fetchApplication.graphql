@@ -8,6 +8,8 @@ query project($projectID: ID!, $applicationID: ID!) {
       id
       rate
       status
+      featured
+      comment
       availability
       introduction
       questions {
@@ -31,6 +33,7 @@ query project($projectID: ID!, $applicationID: ID!) {
     }
     applications(status: ["Applied"]) {
       id
+      featured
       airtableId
       specialist {
         id

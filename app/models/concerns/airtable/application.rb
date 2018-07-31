@@ -8,11 +8,13 @@ class Airtable::Application < Airtable::Base
   sync_column :hourly_rate_for_project, to: :rate
   sync_column :available_to_start, to: :availability
   sync_column :one_line_overview, to: :introduction
+  sync_column :advisable_comment, to: :comment
 
   sync_data do |application|
     application.status = status_to_sync
     application.accepts_fee = fields['Accepts Fee'] == 'Yes'
     application.accepts_terms = fields['Accepts Terms'] == 'Yes'
+    application.featured = fields['Featured Candidate'] == 'Yes'
 
     specialist_id = fields["Expert"].try(:first)
     if specialist_id

@@ -14,6 +14,7 @@ import Spacing from "src/components/Spacing";
 import Loading from "src/components/Loading";
 import Divider from "src/components/Divider";
 import Heading from "src/components/Heading";
+import FeaturedBadge from "src/components/FeaturedBadge";
 import CandidateAttributes from 'src/components/CandidateAttributes';
 import currency from "src/utilities/currency";
 import RejectModal from "src/components/RejectModal";
@@ -25,7 +26,8 @@ import {
   ApplicantAvatar,
   ApplicantName,
   ApplicantLocation,
-  AppliedTo
+  AppliedTo,
+  AdvisableComment
 } from "./styles";
 
 class Applicant extends React.Component {
@@ -84,10 +86,17 @@ class Applicant extends React.Component {
                 All Candidates
               </Back>
               <ApplicantHeader>
-                <ApplicantAvatar
-                  name={specialist.name}
-                  url={get(specialist.image, "url")}
-                />
+                <Flex align="center">
+                  <Flex.Item distribute="fill">
+                    <ApplicantAvatar
+                      name={specialist.name}
+                      url={get(specialist.image, "url")}
+                    />
+                  </Flex.Item>
+                  <Flex.Item>
+                    {application.featured && <FeaturedBadge />}
+                  </Flex.Item>
+                </Flex>
                 <ApplicantName>{specialist.name}</ApplicantName>
                 <ApplicantLocation>
                   {specialist.city}, {specialist.country.name}
@@ -100,10 +109,11 @@ class Applicant extends React.Component {
                 linkedin={specialist.linkedin}
               />
               <Text marginBottom="xl">{application.introduction}</Text>
-              {/* <AdvisableMessage>
-                This is a placeholder comment from the advisable team. Looks like
-                a great hire due to his previous experience in project research.
-              </AdvisableMessage> */}
+              {application.comment && (
+                <AdvisableMessage>
+                  {application.comment}
+                </AdvisableMessage>
+              )}
               {application.questions.map((question, i) => (
                 <Card key={i} padding="xl" marginBottom="l">
                   <Text marginBottom="m" weight="strong" colour="dark">
@@ -182,7 +192,7 @@ class Applicant extends React.Component {
                           url={get(applicant.specialist.image, "url")}
                           marginRight="l"
                         />
-                        <Flex.Item>
+                        <Flex.Item distribute="fill">
                           <Heading size="s">
                             {applicant.specialist.name}
                           </Heading>
@@ -191,6 +201,7 @@ class Applicant extends React.Component {
                             {applicant.specialist.country.name}
                           </Text>
                         </Flex.Item>
+                        {applicant.featured && <FeaturedBadge />}
                       </Flex>
                     </Card>
                   ))}
