@@ -1,7 +1,9 @@
 import styled, { keyframes } from "styled-components";
 import {default as BaseCard} from "src/components/Card";
-import Avatar from "src/components/Avatar";
+import {Avatar} from "src/components/Avatar/styles";
+import { AdvisableComment } from '../AdvisableComment';
 import { ButtonStyling } from "src/components/Button";
+import { FeaturedBadge } from 'src/components/FeaturedBadge';
 
 const slideUp = keyframes`
   from {
@@ -17,7 +19,6 @@ const slideUp = keyframes`
 
 export const Card = styled(BaseCard)`
   opacity: 0;
-  overflow: hidden;
   margin-bottom: 20px;
   transition: box-shadow 300ms ease-out;
   animation: ${slideUp} 700ms cubic-bezier(0.3, 0, 0, 1) forwards;
@@ -31,6 +32,17 @@ export const Card = styled(BaseCard)`
   &:nth-child(4) { animation-delay: 300ms }
   &:nth-child(5) { animation-delay: 400ms }
   &:nth-child(6) { animation-delay: 500ms }
+
+  .ViewMore {
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+`;
+
+export const NameAndLocation = styled.div`
+  margin-left: 15px;
+  flex: "1 1 auto";
 `;
 
 export const Name = styled.h3`
@@ -50,19 +62,50 @@ export const Location = styled.span`
   letter-spacing: -0.03em;
 `;
 
-export const MoreInfo = styled.div`
-  overflow-y: hidden;
-  width: 100%;
-`;
+export const CandidateHeaderActions = styled.div`
+  top: 5px;
+  right: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    top: 15px;
+  }
+
+  ${AdvisableComment} {
+    margin-left: 15px;
+  }
+`
 
 export const CandidateHeader = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    display: block;
+
+    ${Avatar} {
+      width: 70px;
+      height: 70px;
+    }
+
+    ${NameAndLocation} {
+      margin-left: 0;
+      margin-top: 15px;
+    }
+
+    ${FeaturedBadge} span {
+      display: none;
+    }
+  }
 `;
 
-export const NameAndLocation = styled.div`
-  margin-left: 15px;
+export const MoreInfo = styled.div`
+  overflow-y: hidden;
+  width: 100%;
 `;
 
 export const CandidateWrapper = styled.div.attrs({
@@ -77,24 +120,11 @@ export const CandidateWrapper = styled.div.attrs({
 
 export const Question = styled.div`
   width: 100%;
+  padding-top: 30px;
   box-sizing: border-box;
-  padding-bottom: 30px;
 `;
 
 export const QuestionTitle = styled.h5`
   width: 100%;
   margin-bottom: 10px;
 `;
-
-export const Skill = styled.div`
-  height: 30px;
-  color: #243D59;
-  font-size: 15px;
-  padding: 0 20px;
-  line-height: 29px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  border-radius: 15px;
-  background: #E8F2FC;
-  display: inline-block;
-`

@@ -8,10 +8,16 @@ const heights = {
   l: '38px'
 }
 
+const mobileHeights = {
+  s: '38px',
+  m: '42px',
+  l: '48px'
+}
+
 const fontSizes = {
-  s: '12px',
-  m: '12px',
-  l: '14px',
+  s: '14px',
+  m: '15px',
+  l: '16px',
 }
 
 const padding = {
@@ -31,17 +37,20 @@ export const ButtonStyling = styled.button`
   padding: ${props => padding[props.size] || padding['m']};
   opacity: ${props => props.disabled ? '0.5' : '1'};
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
   border-radius: 5px;
   background: #4C496A;
   letter-spacing: -0.02em;
   -webkit-appearance: none;
-  text-transform: uppercase;
   align-items: center;
   justify-content: center;
   width: ${props => props.block ? '100%' : 'auto'};
   display: ${props => props.block ? 'flex' : 'inline-flex'};
   transition: box-shadow 0.2s, background 0.2s;
+
+  @media (max-width: 768px) {
+    height: ${props => mobileHeights[props.size] || mobileHeights['m']};
+  }
 
   svg {
     margin-right: 8px;
@@ -59,12 +68,12 @@ export const ButtonStyling = styled.button`
   ${props => props.blank && `
     color: #7D8DB0;
     background: white;
-    border: 1px solid #E8EDF9;
+    border: 1px solid #D1D7E0;
 
     &:hover {
       color: #63749A;
       background: white;
-      border-color: #C6CFE4;
+      border-color: #B3BDCA;
     }
 
     &:active {
