@@ -8,12 +8,14 @@ import Divider from "src/components/Divider";
 import Spacing from "src/components/Spacing";
 import Heading from "src/components/Heading";
 import Button from "src/components/Button";
+import FeaturedBadge from "src/components/FeaturedBadge";
 import Questions from "./Questions";
 import RejectModal from "src/components/RejectModal";
 import Skills from "src/components/Skills";
 import CandidateAttributes from "src/components/CandidateAttributes";
 import RequestIntroduction from "src/components/RequestIntroduction";
 import currency from "src/utilities/currency";
+import AdvisableComment from "../AdvisableComment";
 import {
   Card,
   Name,
@@ -23,7 +25,8 @@ import {
   CandidateWrapper,
   CandidateHeader,
   CandidateAvatar,
-  NameAndLocation
+  NameAndLocation,
+  CandidateHeaderActions
 } from "./styles";
 
 class Candidate extends React.Component {
@@ -69,20 +72,23 @@ class Candidate extends React.Component {
           }}
         />
 
-        <Flex align="center">
+        <CandidateHeader>
           <Avatar
-            marginRight="m"
             name={application.specialist.name}
             url={image ? image.url : null}
           />
-          <Flex.Item fill>
+          <NameAndLocation>
             <Name>{application.specialist.name}</Name>
             <Location>
               {application.specialist.city},{" "}
               {application.specialist.country.name}
             </Location>
-          </Flex.Item>
-        </Flex>
+          </NameAndLocation>
+          <CandidateHeaderActions>
+            {application.featured && <FeaturedBadge />}
+            <AdvisableComment comment={application.comment} />
+          </CandidateHeaderActions>
+        </CandidateHeader>
         <CandidateAttributes
           compact
           rate={currency(application.rate, project.currency)}
@@ -94,7 +100,7 @@ class Candidate extends React.Component {
           {application.introduction}
         </Text>
 
-        <Button blank marginBottom="xl" onClick={this.clickToExpand}>
+        <Button blank className='ViewMore' onClick={this.clickToExpand}>
           {this.state.expanded ? (
             <svg width={13} height={6}>
               <path
@@ -125,8 +131,7 @@ class Candidate extends React.Component {
             <MoreInfo innerRef={c => (this.moreInfo = c)} style={styles}>
               <Questions questions={application.questions} />
               {application.specialist.skills.length > 0 && (
-                <Spacing marginBottom="l">
-                  <Text>Skills</Text>
+                <Spacing marginTop="xl">
                   <Skills skills={application.specialist.skills} />
                 </Spacing>
               )}
@@ -136,7 +141,7 @@ class Candidate extends React.Component {
 
         {application.status === "Application Accepted" && (
           <React.Fragment>
-            <Divider marginBottom="xl" />
+            <Divider marginTop="xl" marginBottom="xl" />
             <Button
               marginRight="m"
               onClick={() =>
@@ -153,7 +158,7 @@ class Candidate extends React.Component {
 
         {application.status === "Applied" && (
           <React.Fragment>
-            <Divider marginBottom="xl" />
+            <Divider marginTop="xl" marginBottom="xl" />
             <Button
               marginRight="m"
               onClick={() => this.setState({ modal: "introduction" })}

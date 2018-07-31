@@ -7,6 +7,8 @@ query project($id: ID!) {
       id
       rate
       status
+      featured
+      comment
       availability
       introduction
       questions {
