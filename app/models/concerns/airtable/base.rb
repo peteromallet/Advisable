@@ -75,10 +75,9 @@ class Airtable::Base < Airrecord::Table
       instance_exec(model, &self.class.sync_block) if self.class.sync_block
 
       unless model.save
-        Rollbar.warning("
-          Failed to sync #{self.class.sync_model.to_s.underscore} #{id} \n
-          #{model.errors.full_messages}
-        ")
+        message = "Failed to sync #{self.class.sync_model.to_s.underscore} #{id} \n#{model.errors.full_messages}"
+        Rails.logger.warn(message)
+        Rollbar.warning(message)
       end
 
       Webhook.process(model)
