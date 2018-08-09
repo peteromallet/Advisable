@@ -58,7 +58,6 @@ class SpecialistDashboard < Administrate::BaseDashboard
     :skills,
     :first_name,
     :last_name,
-    :image,
     :linkedin,
     :travel_availability,
     :city,
