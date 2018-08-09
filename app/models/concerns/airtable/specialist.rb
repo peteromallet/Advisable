@@ -26,6 +26,8 @@ class Airtable::Specialist < Airtable::Base
     specialist_skills.each do |specialist_skill_id|
       # fetch the specialist skill airtable record
       specialist_skill = Airtable::SpecialistSkill.find(specialist_skill_id)
+      # Go to the next record if their is no associated skill.
+      next if specialist_skill[:skill].nil?
       # get the associated skill record
       skill_id = specialist_skill[:skill][0]
       # check if we already have a synced record of that skill.
