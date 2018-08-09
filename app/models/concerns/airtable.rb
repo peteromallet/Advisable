@@ -11,7 +11,7 @@ module Airtable
       report.failures.each do |failure|
         output += "#{failure[:type]} #{failure[:id]}: #{failure[:errors]}\n"
       end
-      Rollbar.warn(output)
+      Rollbar.scope({:fingerprint => "airtablesync"}).warn(output)
       puts output
     end
   end
