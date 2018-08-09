@@ -19,10 +19,12 @@ class Airtable::Base < Airrecord::Table
 
     # Sync can be called on any class that inherits from Airtable::Base
     # to sync all records from airtable
-    def sync
+    def sync(report = nil)
       records = all
       Rails.logger.info "Syncing #{sync_model.to_s.underscore.pluralize} (#{records.length})"
-      records.each(&:sync)
+      records.each do |r|
+        r.sync(report)
+      end
     end
 
     # The sync_with method tells the class which ActiveRecord model to sync
@@ -63,10 +65,13 @@ class Airtable::Base < Airrecord::Table
 
   # You can call sync on an instance of any class that inherits from
   # Airtable::Base to sync that individual record.
+  # You can pass an instance of Airtable::SyncReport to capture any
+  # errors that prevented the record from being synced
   # => Airtable::Project.find("rec_123").sync
-  def sync
+  def sync(report = nil)
     ActiveRecord::Base.transaction do
-      Rails.logger.info "Syncing #{self.class.sync_model.to_s.underscore} #{id}"
+      record_type = self.class.sync_model.to_s.underscore
+      Rails.logger.info "Syncing #{record_type} #{id}"
 
       self.class.columns_hash.each do |column, attr|
         model.send("#{attr}=", self[column.to_sym])
@@ -75,9 +80,9 @@ class Airtable::Base < Airrecord::Table
       instance_exec(model, &self.class.sync_block) if self.class.sync_block
 
       unless model.save
-        message = "Failed to sync #{self.class.sync_model.to_s.underscore} #{id} \n#{model.errors.full_messages}"
+        message = "Failed to sync #{record_type} #{id} \n#{model.errors.full_messages}"
         Rails.logger.warn(message)
-        Rollbar.warning(message)
+        report.failed(id, record_type, model.errors.full_messages) if report
       end
 
       Webhook.process(model)
