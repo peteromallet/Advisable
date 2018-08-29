@@ -119,7 +119,12 @@ class Applicant extends React.Component {
                   <Text marginBottom="m" weight="strong" colour="dark">
                     {question.question}
                   </Text>
-                  <Text>{question.answer}</Text>
+                  <Text>
+                    {/* Render line breaks in answers */}
+                    {question.answer.split('\n').map((item, key) => {
+                      return <React.Fragment key={key}>{item}<br/></React.Fragment>
+                    })}
+                  </Text>
                 </Card>
               ))}
 
@@ -179,7 +184,7 @@ class Applicant extends React.Component {
                     </Flex>
                   </Spacing>
 
-                  {otherApplicants.map(applicant => (
+                  {otherApplicants.map(applicant => applicant.specialist ? (
                     <Card
                       key={applicant.id}
                       onClick={() => history.push(applicant.airtableId)}
@@ -204,7 +209,7 @@ class Applicant extends React.Component {
                         {applicant.featured && <FeaturedBadge />}
                       </Flex>
                     </Card>
-                  ))}
+                  ) : null)}
                 </React.Fragment>
               )}
             </React.Fragment>
