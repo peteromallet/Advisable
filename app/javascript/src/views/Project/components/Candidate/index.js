@@ -53,7 +53,6 @@ class Candidate extends React.Component {
 
   render() {
     const { application, project } = this.props;
-    const image = application.specialist.image;
 
     return (
       <Card padding="xl" expanded={this.state.expanded}>
@@ -75,7 +74,7 @@ class Candidate extends React.Component {
         <CandidateHeader>
           <Avatar
             name={application.specialist.name}
-            url={image ? image.url : null}
+            url={application.specialist.image ? application.specialist.image.url : null}
           />
           <NameAndLocation>
             <Name>{application.specialist.name}</Name>
