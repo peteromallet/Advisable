@@ -121,7 +121,7 @@ class Applicant extends React.Component {
                   </Text>
                   <Text>
                     {/* Render line breaks in answers */}
-                    {question.answer.split('\n').map((item, key) => {
+                    {question.answer.replace(/<br\s\/>/g, "\n").split('\n').map((item, key) => {
                       return <React.Fragment key={key}>{item}<br/></React.Fragment>
                     })}
                   </Text>
