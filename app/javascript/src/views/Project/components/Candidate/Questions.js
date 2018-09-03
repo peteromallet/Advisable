@@ -13,7 +13,7 @@ const Questions = ({ questions = [] }) => (
         </QuestionTitle>
         <Text size='s' >
           {/* Render line breaks in answers */}
-          {data.answer.split('\n').map((item, key) => {
+          {data.answer.replace(/<br\s\/>/g, "\n").split('\n').map((item, key) => {
             return <React.Fragment key={key}>{item}<br/></React.Fragment>
           })}
         </Text>
