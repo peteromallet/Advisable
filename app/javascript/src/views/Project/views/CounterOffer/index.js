@@ -1,8 +1,6 @@
 import React from "react";
 import { graphql, Mutation } from "react-apollo";
 import { Formik, Field } from "formik";
-import { Link } from "react-router-dom";
-import Back from "src/components/Back";
 import Card from "src/components/Card";
 import Text from "src/components/Text";
 import Divider from "src/components/Divider";
@@ -24,15 +22,12 @@ const Offer = ({ match, history, loading, data }) => {
 
   return (
     <div>
-      <Spacing bottom="xs" onClick={goBack}>
-        <Back />
-      </Spacing>
       <Spacing bottom="xs">
         <Heading size="l">
           Counter-offer for {data.booking.application.specialist.name}
         </Heading>
       </Spacing>
-      <Spacing bottom="xl">
+      <Spacing marginBottom="xl">
         <Text size="l">{data.booking.application.project.name}</Text>
       </Spacing>
       <Mutation mutation={CREATE_OFFER}>
