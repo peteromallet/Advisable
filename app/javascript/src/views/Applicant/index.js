@@ -99,7 +99,10 @@ class Applicant extends React.Component {
                 </Flex>
                 <ApplicantName>{specialist.name}</ApplicantName>
                 <ApplicantLocation>
-                  {specialist.city}, {specialist.country.name}
+                  {specialist.city}
+                  {specialist.country && (
+                    `, ${specialist.country.name}`
+                  )}
                 </ApplicantLocation>
                 <AppliedTo>Applied to {project.name}</AppliedTo>
               </ApplicantHeader>
