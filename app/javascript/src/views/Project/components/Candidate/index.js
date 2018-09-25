@@ -79,8 +79,10 @@ class Candidate extends React.Component {
           <NameAndLocation>
             <Name>{application.specialist.name}</Name>
             <Location>
-              {application.specialist.city},{" "}
-              {application.specialist.country.name}
+              {application.specialist.city}
+              {application.specialist.country && (
+                `, ${application.specialist.country.name}`
+              )}
             </Location>
           </NameAndLocation>
           <CandidateHeaderActions>
