@@ -1,5 +1,5 @@
 class Specialist < ApplicationRecord
-  belongs_to :country
+  belongs_to :country, required: false
   has_many :applications
   has_many :specialist_skills
   has_many :skills, through: :specialist_skills
