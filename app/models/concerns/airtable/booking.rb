@@ -8,6 +8,11 @@ class Airtable::Booking < Airtable::Base
   sync_data do |booking|
     booking.deliverables = JSON.parse(fields['Deliverables']) if fields['Deliverables']
 
+    start_date = fields['Est. Project Start Date']
+    booking.start_date = Date.parse(start_date) if start_date
+    end_date = fields['Est. Project End Date']
+    booking.end_date = Date.parse(end_date) if end_date
+
     application_id = fields["Application"].try(:first)
     if application_id
       application = ::Application.find_by_airtable_id(application_id)
