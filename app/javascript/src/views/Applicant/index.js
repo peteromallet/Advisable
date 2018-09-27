@@ -205,8 +205,10 @@ class Applicant extends React.Component {
                             {applicant.specialist.name}
                           </Heading>
                           <Text>
-                            {applicant.specialist.city},{" "}
-                            {applicant.specialist.country.name}
+                            {applicant.specialist.city}
+                            {applicant.specialist.country && (
+                              `, ${applicant.specialist.country.name}`
+                            )}
                           </Text>
                         </Flex.Item>
                         {applicant.featured && <FeaturedBadge />}
