@@ -1,0 +1,7 @@
+mutation SendOffer($input: SendOfferInput!) {
+  sendOffer(input: $input) {
+    booking {
+      id
+    }
+  }
+}

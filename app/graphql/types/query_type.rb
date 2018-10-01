@@ -24,7 +24,7 @@ class Types::QueryType < GraphQL::Schema::Object
     ::BookingRejectionReason.all
   end
 
-  field :booking, Types::Booking, description: "Find a booking by ID", null: false do
+  field :booking, Types::Booking, description: "Find a booking by ID", null: true do
     argument :id, ID, required: true
   end
 

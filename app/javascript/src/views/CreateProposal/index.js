@@ -2,6 +2,7 @@ import React from "react";
 import { Query, Mutation } from "react-apollo";
 import Card from "src/components/Card";
 import NotFound from "src/views/NotFound";
+import Loading from "src/components/Loading";
 import Heading from 'src/components/Heading';
 import Text from 'src/components/Text';
 import ProposalForm from "./components/ProposalForm";
@@ -25,7 +26,7 @@ class CreateProposal extends React.Component {
       >
         {query => {
           if (query.error) return null;
-          if (query.loading) return "Loading...";
+          if (query.loading) return <Loading />;
           if (!query.data.application) return <NotFound />;
 
           const { project } = query.data.application;
@@ -67,6 +68,7 @@ class CreateProposal extends React.Component {
                                 }
                               }
                             });
+                            console.log(response)
                             await sendProposal({
                               variables: {
                                 id: response.data.createBooking.booking.id
