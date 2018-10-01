@@ -29,7 +29,7 @@ const padding = {
 export const ButtonStyling = styled.button`
   position: relative;
   margin: 0;
-  height: ${props => heights[props.size] || heights['m']}
+  height: ${props => heights[props.size] || heights['m']};
   color: white;
   border: none;
   outline: none;

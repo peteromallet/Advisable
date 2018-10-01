@@ -1,4 +1,4 @@
-class Mutations::CreateBooking < GraphQL::Schema::Mutation
+class Mutations::CreateBooking < Mutations::BaseMutation
   argument :type, String, required: true
   argument :duration, String, required: false
   argument :rate, Float, required: true

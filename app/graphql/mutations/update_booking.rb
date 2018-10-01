@@ -1,4 +1,4 @@
-class Mutations::UpdateBooking < GraphQL::Schema::Mutation
+class Mutations::UpdateBooking <Mutations::BaseMutation
   argument :id, ID, required: true
   argument :type, String, required: false
   argument :duration, String, required: false

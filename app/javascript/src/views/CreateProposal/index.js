@@ -1,0 +1,91 @@
+import React from "react";
+import { Query, Mutation } from "react-apollo";
+import Card from "src/components/Card";
+import NotFound from "src/views/NotFound";
+import Heading from 'src/components/Heading';
+import Text from 'src/components/Text';
+import ProposalForm from "./components/ProposalForm";
+import FETCH_DATA from "./fetchApplication.graphql";
+import CREATE_BOOKING from "./createBooking.graphql";
+import SEND_PROPOSAL from "./sendProposal.graphql";
+import ProposalSent from './components/ProposalSent';
+import { currencySymbol } from "src/utilities/currency";
+import { Container } from "./styles";
+
+class CreateProposal extends React.Component {
+  state = {
+    sent: false
+  };
+
+  render = () => {
+    return (
+      <Query
+        query={FETCH_DATA}
+        variables={{ id: this.props.match.params.applicationID }}
+      >
+        {query => {
+          if (query.error) return null;
+          if (query.loading) return "Loading...";
+          if (!query.data.application) return <NotFound />;
+
+          const { project } = query.data.application;
+          const { client } = project;
+
+          if (this.state.sent) {
+            return (
+              <ProposalSent client={client} />
+            )
+          }
+
+          return (
+            <Container>
+              <Card padding='xl'>
+                <Heading marginBottom='xs' size='l'>Proposal for {client.name}</Heading>
+                <Text marginBottom='xl' size='l'>Send a proposal project to {client.name}</Text>
+                <Mutation mutation={CREATE_BOOKING}>
+                  {createBooking => (
+                    <Mutation mutation={SEND_PROPOSAL}>
+                      {sendProposal => (
+                        <ProposalForm
+                          currency={currencySymbol(project.currency)}
+                          initialValues={{ type: "Fixed", rateType: "Fixed" }}
+                          onSubmit={async values => {
+                            let response = await createBooking({
+                              variables: {
+                                input: {
+                                  rate: Number(
+                                    values.rate.replace(/[^0-9\.-]+/g, "")
+                                  ),
+                                  type: values.type,
+                                  rateType: values.rateType,
+                                  startDate: values.startDate,
+                                  endDate: values.endDate,
+                                  duration: values.duration,
+                                  deliverables: values.deliverables,
+                                  applicationId: this.props.match.params
+                                    .applicationID
+                                }
+                              }
+                            });
+                            await sendProposal({
+                              variables: {
+                                id: response.data.createBooking.booking.id
+                              }
+                            });
+                            this.setState({ sent: true });
+                          }}
+                        />
+                      )}
+                    </Mutation>
+                  )}
+                </Mutation>
+              </Card>
+            </Container>
+          );
+        }}
+      </Query>
+    );
+  };
+}
+
+export default CreateProposal;

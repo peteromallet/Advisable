@@ -1,0 +1,11 @@
+query FetchApplication($id: ID!) {
+  application(id: $id) {
+    project {
+      name
+      currency
+      client {
+        name
+      }
+    }
+  }
+}
