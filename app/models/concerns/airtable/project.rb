@@ -9,5 +9,12 @@ class Airtable::Project < Airtable::Base
 
   sync_data do |project|
     project.currency = fields['Currency'].try(:first)
+
+    client_id = fields["Client"].try(:first)
+    if client_id
+      client = ::Client.find_by_airtable_id(client_id)
+      client = Airtable::Specialist.find(client_id).sync if client.nil?
+      project.client = client
+    end
   end
 end

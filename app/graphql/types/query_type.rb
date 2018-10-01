@@ -35,4 +35,16 @@ class Types::QueryType < GraphQL::Schema::Object
       GraphQL::ExecutionError.new("Could not find booking #{id}")
     end
   end
+
+  field :application, Types::ApplicationType, description: "Get an application record by its airtable ID", null: true do
+    argument :id, ID, required: true
+  end
+
+  def application(id: )
+    begin
+      ::Application.find_by_airtable_id(id)
+    rescue Airrecord::Error => er
+      GraphQL::ExecutionError.new("Could not find booking #{id}")
+    end
+  end
 end

@@ -1,4 +1,4 @@
-class Mutations::SendProposal < GraphQL::Schema::Mutation
+class Mutations::SendProposal < Mutations::BaseMutation
   argument :id, ID, required: true
 
   field :booking, Types::Booking, null: true
