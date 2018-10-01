@@ -30,6 +30,8 @@
     "text-mask-addons": "^3.7.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-flow": "^6.23.0",
     "prettier": "^1.12.1",
     "webpack-dev-server": "2.11.2"
   }

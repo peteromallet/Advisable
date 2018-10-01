@@ -50,6 +50,10 @@ class ViewOffer extends React.Component {
     if (data.loading) return <Loading />;
     if (data.error) return <NotFound />;
 
+    if (data.booking.status === 'Proposed') {
+      return <NotFound />
+    }
+
     return (
       <Container>
         <Card>

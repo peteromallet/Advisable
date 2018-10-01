@@ -1,4 +1,4 @@
-class Mutations::UpdateBooking <Mutations::BaseMutation
+class Mutations::UpdateBooking < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :type, String, required: false
   argument :duration, String, required: false
@@ -15,7 +15,7 @@ class Mutations::UpdateBooking <Mutations::BaseMutation
   def resolve(**args)
     args[:deliverables] = args[:deliverables].reject(&:empty?) if args[:deliverables]
     booking = find_booking(args[:id])
-    booking.assign_attributes(args)
+    booking.assign_attributes(args.slice(:type, :duration, :rate, :rate_type, :rate_limit, :deliverables, :start_date, :end_date))
     booking.calculate_end_date
 
     update_airtable_record(booking)
@@ -31,15 +31,15 @@ class Mutations::UpdateBooking <Mutations::BaseMutation
   private
 
   def find_booking(id)
-    @booking ||= Booking.find_by("id = ? OR airtable_id = ?", id.to_i, id.to_s)
+    @booking ||= Booking.find_by_airtable_id(id)
   end
 
   def update_airtable_record(booking)
     record = Airtable::Booking.find(booking.airtable_id)
     record['Type'] = booking.type
-    record['Rate'] = booking.rate
+    record['Rate'] = booking.rate.to_f
     record['Rate Type'] = booking.rate_type
-    record['Rate Limit'] = booking.rate_limit
+    record['Rate Limit'] = booking.rate_limit.to_f
     record['Duration'] = booking.duration
     record['Est. Project Start Date'] = booking.start_date
     record['Est. Project End Date'] = booking.end_date

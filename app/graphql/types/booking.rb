@@ -10,4 +10,8 @@ class Types::Booking < Types::BaseType
   field :start_date, Types::Date, null: true
   field :end_date, Types::Date, null: true
   field :application, Types::ApplicationType, null: false
+
+  def id
+    object.airtable_id
+  end
 end

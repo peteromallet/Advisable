@@ -1,11 +1,12 @@
-query project($bookingID: ID!) {
-  booking(id: $bookingID) {
+query booking($id: ID!) {
+  booking(id: $id) {
     id
     type
     rate
     rateType
     rateLimit
     duration
+    status
     startDate
     endDate
     deliverables

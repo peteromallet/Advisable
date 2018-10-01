@@ -7,7 +7,7 @@ class Mutations::SendOffer < Mutations::BaseMutation
   def resolve(**args)
     booking = find_booking(args[:id])
 
-    unless booking.status.empty? || booking.status == "Proposed"
+    unless booking.status.blank? || booking.status == "Proposed"
       raise GraphQL::ExecutionError, "Can't send offer, booking record already has a status of #{booking.status}"
     end
 
@@ -23,7 +23,7 @@ class Mutations::SendOffer < Mutations::BaseMutation
   private
 
   def find_booking(id)
-    @booking ||= Booking.find_by("id = ? OR airtable_id = ?", id.to_i, id.to_s)
+    @booking ||= Booking.find_by_airtable_id(id)
   end
 
   def update_airtable_record(booking)

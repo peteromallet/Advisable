@@ -41,7 +41,7 @@ class Mutations::CreateBooking < Mutations::BaseMutation
       "Type" => booking.type,
       "Rate" => booking.rate.to_f,
       "Rate Type" => booking.rate_type,
-      "Rate Limit" => booking.rate_limit,
+      "Rate Limit" => booking.rate_limit.to_f,
       "Duration" => booking.duration,
       "Deliverables" => booking.deliverables.to_json,
       "Application" => [booking.application.airtable_id],
