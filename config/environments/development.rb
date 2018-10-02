@@ -1,3 +1,5 @@
+Dotenv::Railtie.load
+
 Rails.application.configure do
   config.web_console.whiny_requests = false
   # Verifies that versions and hashed value of the package contents in the project's package.json
