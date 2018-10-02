@@ -22,6 +22,8 @@ class Mutations::UpdateBooking < Mutations::BaseMutation
 
     booking.save
 
+    Webhook.process(booking)
+
     return {
       booking: booking,
       errors: booking.errors.full_messages

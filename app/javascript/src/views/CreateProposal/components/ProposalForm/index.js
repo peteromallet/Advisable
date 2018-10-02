@@ -1,3 +1,7 @@
+// @flow
+//
+// Renders the form for a proposal. A proposal is a booking with a status
+// of Proposed.
 import React from "react";
 import { Formik, Field } from "formik";
 import Flex from "src/components/Flex";
@@ -20,11 +24,16 @@ export default ({ onSubmit, currency = "€", initialValues }) => (
         <Spacing marginBottom="xl">
           <Field
             name="type"
-            validate={required("Amount is required")}
+            validate={required("Type is required")}
             render={({ field }) => (
               <Choices
                 {...field}
                 error={form.submitCount > 0 && form.errors.type}
+                onChange={e => {
+                  form.setFieldValue("duration", null);
+                  form.setFieldValue("endDate", null);
+                  form.handleChange(e);
+                }}
                 choices={[
                   {
                     value: "Fixed",
@@ -49,16 +58,13 @@ export default ({ onSubmit, currency = "€", initialValues }) => (
                 render={({ field }) => (
                   <DatePicker
                     {...field}
-                    onChange={(dates, dateString) => {
-                      form.setFieldValue("startDate", dateString);
+                    onChange={date => {
+                      form.setFieldValue("startDate", date);
                     }}
                     label="Estimated start date"
                     placeholder="Start date"
                     options={{
-                      altInput: true,
-                      altFormat: "j F Y",
-                      dateFormat: "Y-m-d",
-                      minDate: "today"
+                      disabledDays: { before: new Date() }
                     }}
                   />
                 )}
@@ -71,16 +77,17 @@ export default ({ onSubmit, currency = "€", initialValues }) => (
                   render={({ field }) => (
                     <DatePicker
                       value={field.value}
-                      onChange={(dates, dateString) => {
-                        form.setFieldValue("endDate", dateString);
+                      onChange={date => {
+                        form.setFieldValue("endDate", date);
                       }}
                       label="Estimated end date"
                       placeholder="End date"
                       options={{
-                        altInput: true,
-                        altFormat: "j F Y",
-                        dateFormat: "Y-m-d",
-                        minDate: form.values.startDate
+                        initialMonth:
+                          form.values.startDate && new Date(form.values.startDate),
+                        disabledDays: {
+                          before: new Date(form.values.startDate) || new Date()
+                        }
                       }}
                     />
                   )}

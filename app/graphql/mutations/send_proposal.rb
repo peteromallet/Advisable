@@ -14,6 +14,8 @@ class Mutations::SendProposal < Mutations::BaseMutation
     update_airtable_record(booking)
     booking.update_attributes(status: "Proposed")
 
+    Webhook.process(booking)
+
     return {
       booking: booking,
       errors: booking.errors.full_messages

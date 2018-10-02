@@ -14,6 +14,8 @@ class Mutations::SendOffer < Mutations::BaseMutation
     update_airtable_record(booking)
     booking.update_attributes(status: "Offered")
 
+    Webhook.process(booking)
+
     return {
       booking: booking,
       errors: booking.errors.full_messages
