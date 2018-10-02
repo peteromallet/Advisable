@@ -20,7 +20,7 @@ import TextField from "src/components/TextField";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import ListInput from "src/components/ListInput";
 import Choices from "src/components/Choices";
-import { required } from "src/utilities/validators";
+import validationSchema from "./validationSchema";
 
 // Determins the label for the amount field based on the other
 // fields in the form
@@ -59,13 +59,13 @@ export default ({
   return (
     <Formik
       onSubmit={onSubmit}
+      validationSchema={validationSchema}
       initialValues={initialValues}
       render={form => (
         <form onSubmit={form.handleSubmit}>
           <Spacing paddingBottom="xl">
             <Field
               name="type"
-              validate={required("Type is required")}
               render={({ field }) => (
                 <Choices
                   {...field}
@@ -74,7 +74,6 @@ export default ({
                     form.setFieldValue("endDate", null);
                     form.handleChange(e);
                   }}
-                  error={form.submitCount > 0 && form.errors.type}
                   choices={[
                     {
                       value: "Fixed",
@@ -100,6 +99,7 @@ export default ({
                   onChange={date => form.setFieldValue("startDate", date)}
                   label="Estimated start date"
                   placeholder="Start date"
+                  error={form.touched.startDate && form.errors.startDate}
                   options={{
                     disabledDays: { before: new Date() }
                   }}
@@ -114,6 +114,7 @@ export default ({
                     }}
                     label="Estimated end date"
                     placeholder="End date"
+                    error={form.touched.endDare && form.errors.endDate}
                     options={{
                       initialMonth:
                         form.values.startDate && new Date(form.values.startDate),
@@ -146,22 +147,22 @@ export default ({
           <Spacing paddingTop="l" paddingBottom="l">
             <Flex distribute="fillEvenly">
               <Flex.Item paddingRight="s">
-                <Field
+                <TextField
+                  block
                   name="rate"
-                  validate={required("Amount is required")}
-                  render={({ field, form }) => (
-                    <TextField
-                      block
-                      {...field}
-                      label={amountLabel(form)}
-                      error={form.touched.rate && form.errors.rate}
-                      placeholder={`${currency}0.00`}
-                      mask={createNumberMask({
-                        prefix: currency,
-                        allowDecimal: true
-                      })}
-                    />
-                  )}
+                  value={form.values.rate}
+                  onChange={({ target }) => {
+                    const val = Number(target.value.replace(/[^0-9\.-]+/g, ""))
+                    form.setFieldValue('rate', val)
+                  }}
+                  onBlur={form.handleBlur}
+                  label={amountLabel(form)}
+                  error={form.touched.rate && form.errors.rate}
+                  placeholder={`${currency}0.00`}
+                  mask={createNumberMask({
+                    prefix: currency,
+                    allowDecimal: true
+                  })}
                 />
               </Flex.Item>
               <Flex.Item paddingLeft="s">
@@ -186,7 +187,10 @@ export default ({
                     type="tel"
                     name="rateLimit"
                     value={form.values.rateLimit}
-                    onChange={form.handleChange}
+                    onChange={({ target }) => {
+                      const val = Number(target.value.replace(/[^0-9\.-]+/g, ""))
+                      form.setFieldValue('rate', val)
+                    }}
                     label="Monthly Budget"
                     placeholder={`${currency}0.00`}
                     mask={createNumberMask({
@@ -200,18 +204,14 @@ export default ({
           </Spacing>
           <Divider />
           <Spacing paddingTop="l" paddingBottom="m">
-            <Field
-              name="deliverables"
-              render={({ field, form }) => (
-                <ListInput
-                  label="Deliverables"
-                  value={field.value}
-                  placeholder="Add a deliverable"
-                  onChange={deliverables => {
-                    form.setFieldValue("deliverables", deliverables);
-                  }}
-                />
-              )}
+            <ListInput
+              label="Deliverables"
+              value={form.values.deliverables}
+              placeholder="Add a deliverable"
+              error={form.touched.deliverables && form.errors.deliverables}
+              onChange={deliverables => {
+                form.setFieldValue("deliverables", deliverables);
+              }}
             />
           </Spacing>
           <Divider />

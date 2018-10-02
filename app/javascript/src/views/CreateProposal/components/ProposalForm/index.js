@@ -13,84 +13,83 @@ import ListInput from "src/components/ListInput";
 import TextField from "src/components/TextField";
 import Choices from "src/components/Choices";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
-import { required } from "src/utilities/validators";
+import validationSchema from "./validationSchema";
+
+// Determins the label for the amount field based on the other
+// fields in the form
+const amountLabel = form => {
+  if (form.values.type === "Recurring") {
+    if (form.values.rateType === "Fixed") {
+      return "Amount per month";
+    }
+  }
+  if (form.values.rateType === "Per Hour") {
+    return "Amount per hour";
+  }
+  return "Amount";
+};
 
 export default ({ onSubmit, currency = "€", initialValues }) => (
   <Formik
     onSubmit={onSubmit}
     initialValues={initialValues}
+    validationSchema={validationSchema}
     render={form => (
       <form onSubmit={form.handleSubmit}>
+        {console.log(form)}
         <Spacing marginBottom="xl">
-          <Field
+          <Choices
             name="type"
-            validate={required("Type is required")}
-            render={({ field }) => (
-              <Choices
-                {...field}
-                error={form.submitCount > 0 && form.errors.type}
-                onChange={e => {
-                  form.setFieldValue("duration", null);
-                  form.setFieldValue("endDate", null);
-                  form.handleChange(e);
-                }}
-                choices={[
-                  {
-                    value: "Fixed",
-                    name: "Fixed",
-                    description: "Based on a set of deliverables"
-                  },
-                  {
-                    value: "Recurring",
-                    name: "Recurring",
-                    description: "Extends over a number of months"
-                  }
-                ]}
-              />
-            )}
+            value={form.values.type}
+            onChange={form.handleChange}
+            onChange={e => {
+              form.setFieldValue("duration", null);
+              form.setFieldValue("endDate", null);
+              form.handleChange(e);
+            }}
+            choices={[
+              {
+                value: "Fixed",
+                name: "Fixed",
+                description: "Based on a set of deliverables"
+              },
+              {
+                value: "Recurring",
+                name: "Recurring",
+                description: "Extends over a number of months"
+              }
+            ]}
           />
         </Spacing>
         <Spacing marginBottom="xl">
           <Flex distribute="fillEvenly">
             <Flex.Item paddingRight="s">
-              <Field
-                name="startDate"
-                render={({ field }) => (
-                  <DatePicker
-                    {...field}
-                    onChange={date => {
-                      form.setFieldValue("startDate", date);
-                    }}
-                    label="Estimated start date"
-                    placeholder="Start date"
-                    options={{
-                      disabledDays: { before: new Date() }
-                    }}
-                  />
-                )}
+              <DatePicker
+                value={form.values.startDate}
+                onChange={date => form.setFieldValue("startDate", date)}
+                label="Estimated start date"
+                placeholder="Start date"
+                error={form.submitCount > 0 && form.errors.startDate}
+                options={{
+                  disabledDays: { before: new Date() }
+                }}
               />
             </Flex.Item>
             <Flex.Item paddingLeft="s">
               {form.values.type === "Fixed" ? (
-                <Field
-                  name="endDate"
-                  render={({ field }) => (
-                    <DatePicker
-                      value={field.value}
-                      onChange={date => {
-                        form.setFieldValue("endDate", date);
-                      }}
-                      label="Estimated end date"
-                      placeholder="End date"
-                      options={{
-                        initialMonth:
-                          form.values.startDate && new Date(form.values.startDate),
-                        disabledDays: {
-                          before: new Date(form.values.startDate) || new Date()
-                        }
-                      }}
-                    />
-                  )}
+                <DatePicker
+                  value={form.values.endDate}
+                  onChange={date => form.setFieldValue("endDate", date)}
+                  label="Estimated end date"
+                  placeholder="End date"
+                  error={form.submitCount > 0 && form.errors.endDate}
+                  options={{
+                    initialMonth:
+                      form.values.startDate && new Date(form.values.startDate),
+                    disabledDays: {
+                      before: new Date(form.values.startDate) || new Date()
+                    }
+                  }}
                 />
               ) : (
                 <Select
@@ -115,25 +114,22 @@ export default ({ onSubmit, currency = "€", initialValues }) => (
         <Spacing marginBottom="xl">
           <Flex distribute="fillEvenly">
             <Flex.Item paddingRight="s">
-              <Field
+              <TextField
+                block
                 name="rate"
-                validate={required("Amount is required")}
-                render={({ field, form }) => (
-                  <TextField
-                    block
-                    {...field}
-                    label="Amount"
-                    error={
-                      (form.touched.rate || form.submitCount > 0) &&
-                      form.errors.rate
-                    }
-                    placeholder={`${currency}0.00`}
-                    mask={createNumberMask({
-                      prefix: currency,
-                      allowDecimal: true
-                    })}
-                  />
-                )}
+                value={form.values.rate}
+                onChange={({ target }) => {
+                  const val = Number(target.value.replace(/[^0-9\.-]+/g, ""))
+                  form.setFieldValue('rate', val)
+                }}
+                onBlur={form.handleBlur}
+                label={amountLabel(form)}
+                error={(form.submitCount > 0 || form.touched.rate) && form.errors.rate}
+                placeholder={`${currency}0.00`}
+                mask={createNumberMask({
+                  prefix: currency,
+                  allowDecimal: true
+                })}
               />
             </Flex.Item>
             <Flex.Item paddingLeft="s">
@@ -152,18 +148,14 @@ export default ({ onSubmit, currency = "€", initialValues }) => (
           </Flex>
         </Spacing>
         <Spacing marginBottom="xl">
-          <Field
-            name="deliverables"
-            render={({ field, form }) => (
-              <ListInput
-                label="Deliverables"
-                value={field.value}
-                placeholder="Add a deliverable"
-                onChange={deliverables => {
-                  form.setFieldValue("deliverables", deliverables);
-                }}
-              />
-            )}
+          <ListInput
+            label="Deliverables"
+            value={form.values.deliverables}
+            placeholder="Add a deliverable"
+            error={form.submitCount > 0 && form.errors.deliverables}
+            onChange={deliverables => {
+              form.setFieldValue("deliverables", deliverables);
+            }}
           />
         </Spacing>
         <Button

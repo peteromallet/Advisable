@@ -54,9 +54,7 @@ class CreateProposal extends React.Component {
                             let response = await createBooking({
                               variables: {
                                 input: {
-                                  rate: Number(
-                                    values.rate.replace(/[^0-9\.-]+/g, "")
-                                  ),
+                                  rate: values.rate,
                                   type: values.type,
                                   rateType: values.rateType,
                                   startDate: values.startDate,
