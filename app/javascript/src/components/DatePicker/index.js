@@ -1,6 +1,5 @@
 import React from "react";
 import { DateTime } from "luxon";
-import flatpickr from 'flatpickr';
 import { DateUtils  } from 'react-day-picker';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import isEqual from 'lodash/isEqual';
