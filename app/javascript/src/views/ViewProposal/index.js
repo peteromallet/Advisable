@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router";
 import { Query, Mutation } from "react-apollo";
+import Back from "src/components/Back";
 import Card from "src/components/Card";
 import Text from "src/components/Text";
 import NotFound from "src/views/NotFound";
@@ -16,8 +17,8 @@ import SEND_OFFER from "./sendOffer.graphql";
 
 // Renders the view for a client viewing a specialists proposal.
 const ViewProposal = ({ match, history, notifications }) => {
-  const redirectURL = `/projects/${match.params.projectID}/introduced`;
-  const goBack = () => history.push(redirectURL);
+  const backURL = `/projects/${match.params.projectID}/introduced`;
+  const goBack = () => history.push(backURL);
 
   return (
     <Query query={FETCH_BOOKING} variables={{ id: match.params.bookingID }}>
@@ -30,10 +31,11 @@ const ViewProposal = ({ match, history, notifications }) => {
         const { application } = booking;
         const { project, specialist } = application;
 
-        if (booking.status !== "Proposed") return <Redirect to={redirectURL} />;
+        if (booking.status !== "Proposed") return <NotFound />;
 
         return (
           <React.Fragment>
+            <Back marginBottom="l" to={backURL}>Candidates</Back>
             <Heading size="l">New proposal from {specialist.name}</Heading>
             <Text>Review the details of this proposal below</Text>
             <Card marginTop="xl" padding="xl">
@@ -59,9 +61,11 @@ const ViewProposal = ({ match, history, notifications }) => {
                             rate: Number(
                               values.rate.replace(/[^0-9\.-]+/g, "")
                             ),
-                            rateLimit: values.rateLimit && Number(
-                              values.rateLimit.replace(/[^0-9\.-]+/g, "")
-                            )
+                            rateLimit:
+                              values.rateLimit &&
+                              Number(
+                                values.rateLimit.replace(/[^0-9\.-]+/g, "")
+                              )
                           };
 
                           await updateBooking({

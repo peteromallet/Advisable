@@ -1,55 +1,67 @@
 import React from "react";
+import { DateTime } from "luxon";
 import flatpickr from 'flatpickr';
+import { DateUtils  } from 'react-day-picker';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
 import isEqual from 'lodash/isEqual';
 import forEach from 'lodash/forEach';
 import uniqueID from "lodash/uniqueId";
 import InputError from "src/components/InputError";
 import InputLabel from "src/components/InputLabel";
-import { Input } from './styles';
-import 'flatpickr/dist/themes/light.css'
+import { Wrapper, Input } from './styles';
+import NavBar from './NavBar';
+import 'react-day-picker/lib/style.css';
 
+// Renders a date picker input. Values will be passed as ISO strings
 class DatePicker extends React.Component {
   componentWillMount() {
     this.id = this.props.id || uniqueID("TextField");
   }
 
-  componentDidMount() {
-    this.flatpickr = flatpickr(this.node, {
-      onChange: this.props.onChange,
-      ...this.props.options,
-    });
+  handleDayClick = day => {
+    this.props.onChange(day.toISOString())
   }
 
-  componentWillReceiveProps(props) {
-    if (!isEqual(props.options, this.props.options)) {
-      forEach(props.options, (value, option) => {
-        this.flatpickr.set(option, value);
-      })
+  formatDate = (date, format, locale) => {
+    return DateTime.fromJSDate(date).setLocale(locale).toFormat(format)
+  }
+
+  parseDate = (string, format, locale) => {
+    const parsed= DateTime.fromFormat(string, format, { locale }).toISO()
+    if (DateUtils.isDate(parsed)) {
+          return parsed;
     }
-  }
-
-  componentWillUnmount() {
-    this.flatpickr.destroy()
+    return undefined
   }
 
   render() {
+    const valueAsDate = new Date(this.props.value);
+
     return (
-      <React.Fragment>
+      <Wrapper>
         {this.props.label && (
           <InputLabel htmlFor={this.id}>{this.props.label}</InputLabel>
         )}
-        <Input
-          id={this.id}
-          innerRef={c => this.node = c}
-          name={this.props.name}
-          value={this.props.value || ''}
-          onBlur={this.props.onBlur}
-          autoComplete="off"
-          readOnly
+        <DayPickerInput
+          component={Input}
+          value={this.props.value ? valueAsDate : ''}
+          format={this.props.format || "dd LLLL yyyy"}
+          formatDate={this.formatDate}
           placeholder={this.props.placeholder}
+          parseDate={this.parseDate}
+          onDayChange={this.handleDayClick}
+          inputProps={{
+            readOnly: true
+          }}
+          dayPickerProps={{
+            showOutsideDays: true,
+            selectedDays: valueAsDate,
+            navbarElement: NavBar,
+            ...this.props.options
+          }}
         />
         {this.props.error && <InputError>{this.props.error}</InputError>}
-      </React.Fragment>
+      </Wrapper>
     );
   }
 }

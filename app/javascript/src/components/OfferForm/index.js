@@ -55,185 +55,178 @@ export default ({
   onCancel,
   currency = "€",
   initialValues
-}: Props) => (
-  <Formik
-    onSubmit={onSubmit}
-    initialValues={initialValues}
-    render={form => (
-      <form onSubmit={form.handleSubmit}>
-        <Spacing paddingBottom="xl">
-          <Field
-            name="type"
-            validate={required("Type is required")}
-            render={({ field }) => (
-              <Choices
-                {...field}
-                onChange={e => {
-                  form.setFieldValue('endDate', null)
-                  form.handleChange(e)
-                }}
-                error={form.submitCount > 0 && form.errors.type}
-                choices={[
-                  {
-                    value: "Fixed",
-                    name: "Fixed",
-                    description: "Based on a set of deliverables"
-                  },
-                  {
-                    value: "Recurring",
-                    name: "Recurring",
-                    description: "Extends over a number of months"
-                  }
-                ]}
-              />
-            )}
-          />
-        </Spacing>
-        <Spacing marginBottom="xl">
-          <Flex distribute="fillEvenly">
-            <Flex.Item paddingRight="s">
-              <Field
-                name="startDate"
-                render={({ field }) => (
-                  <DatePicker
-                    {...field}
-                    onChange={(dates, dateString) => {
-                      form.setFieldValue("startDate", dateString);
-                    }}
-                    label="Estimated start date"
-                    placeholder="Start date"
-                    options={{
-                      altInput: true,
-                      altFormat: "j F Y",
-                      dateFormat: "Y-m-d",
-                      minDate: "today"
-                    }}
-                  />
-                )}
-              />
-            </Flex.Item>
-            <Flex.Item paddingLeft="s">
-              {form.values.type === "Fixed" ? (
-                <Field
-                  name="endDate"
-                  render={({ field }) => (
-                    <DatePicker
-                      value={field.value}
-                      onChange={(dates, dateString) => {
-                        form.setFieldValue("endDate", dateString);
-                      }}
-                      label="Estimated end date"
-                      placeholder="End date"
-                      options={{
-                        altInput: true,
-                        altFormat: "j F Y",
-                        dateFormat: "Y-m-d",
-                        minDate: form.values.startDate
-                      }}
-                    />
-                  )}
-                />
-              ) : (
-                <Select
-                  block
-                  name="duration"
-                  value={form.values.duration}
-                  onChange={form.handleChange}
-                  label="Duration"
-                  options={[
-                    "2 Months",
-                    "3 Months",
-                    "4 Months",
-                    "5 Months",
-                    "6 Months",
-                    "Until Cancellation"
+}: Props) => {
+  return (
+    <Formik
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+      render={form => (
+        <form onSubmit={form.handleSubmit}>
+          <Spacing paddingBottom="xl">
+            <Field
+              name="type"
+              validate={required("Type is required")}
+              render={({ field }) => (
+                <Choices
+                  {...field}
+                  onChange={e => {
+                    form.setFieldValue("duration", null);
+                    form.setFieldValue("endDate", null);
+                    form.handleChange(e);
+                  }}
+                  error={form.submitCount > 0 && form.errors.type}
+                  choices={[
+                    {
+                      value: "Fixed",
+                      name: "Fixed",
+                      description: "Based on a set of deliverables"
+                    },
+                    {
+                      value: "Recurring",
+                      name: "Recurring",
+                      description: "Extends over a number of months"
+                    }
                   ]}
                 />
               )}
-            </Flex.Item>
-          </Flex>
-        </Spacing>
-        <Divider />
-        <Spacing paddingTop="l" paddingBottom="l">
-          <Flex distribute="fillEvenly">
-            <Flex.Item paddingRight="s">
-              <Field
-                name="rate"
-                validate={required("Amount is required")}
-                render={({ field, form }) => (
-                  <TextField
+            />
+          </Spacing>
+          <Divider />
+          <Spacing marginTop="xl" marginBottom="xl">
+            <Flex distribute="fillEvenly">
+              <Flex.Item paddingRight="s">
+                <DatePicker
+                  value={form.values.startDate}
+                  onChange={date => form.setFieldValue("startDate", date)}
+                  label="Estimated start date"
+                  placeholder="Start date"
+                  options={{
+                    disabledDays: { before: new Date() }
+                  }}
+                />
+              </Flex.Item>
+              <Flex.Item paddingLeft="s">
+                {form.values.type === "Fixed" ? (
+                  <DatePicker
+                    value={form.values.endDate}
+                    onChange={date => {
+                      form.setFieldValue("endDate", date);
+                    }}
+                    label="Estimated end date"
+                    placeholder="End date"
+                    options={{
+                      initialMonth:
+                        form.values.startDate && new Date(form.values.startDate),
+                      disabledDays: {
+                        before: new Date(form.values.startDate)
+                      }
+                    }}
+                  />
+                ) : (
+                  <Select
                     block
-                    {...field}
-                    label={amountLabel(form)}
-                    error={form.touched.rate && form.errors.rate}
+                    name="duration"
+                    value={form.values.duration}
+                    onChange={form.handleChange}
+                    label="Duration"
+                    options={[
+                      "2 Months",
+                      "3 Months",
+                      "4 Months",
+                      "5 Months",
+                      "6 Months",
+                      "Until Cancellation"
+                    ]}
+                  />
+                )}
+              </Flex.Item>
+            </Flex>
+          </Spacing>
+          <Divider />
+          <Spacing paddingTop="l" paddingBottom="l">
+            <Flex distribute="fillEvenly">
+              <Flex.Item paddingRight="s">
+                <Field
+                  name="rate"
+                  validate={required("Amount is required")}
+                  render={({ field, form }) => (
+                    <TextField
+                      block
+                      {...field}
+                      label={amountLabel(form)}
+                      error={form.touched.rate && form.errors.rate}
+                      placeholder={`${currency}0.00`}
+                      mask={createNumberMask({
+                        prefix: currency,
+                        allowDecimal: true
+                      })}
+                    />
+                  )}
+                />
+              </Flex.Item>
+              <Flex.Item paddingLeft="s">
+                <Select
+                  block
+                  label="Type"
+                  name="rateType"
+                  value={form.values.rateType}
+                  onChange={e => {
+                    form.setFieldValue("rateLimit", null);
+                    form.handleChange(e);
+                  }}
+                  options={[
+                    { label: "Fixed Price", value: "Fixed" },
+                    { label: "Hourly Rate", value: "Per Hour" }
+                  ]}
+                />
+              </Flex.Item>
+              {form.values.rateType === "Per Hour" ? (
+                <Flex.Item paddingLeft="l">
+                  <TextField
+                    type="tel"
+                    name="rateLimit"
+                    value={form.values.rateLimit}
+                    onChange={form.handleChange}
+                    label="Monthly Budget"
                     placeholder={`${currency}0.00`}
                     mask={createNumberMask({
                       prefix: currency,
                       allowDecimal: true
                     })}
                   />
-                )}
-              />
-            </Flex.Item>
-            <Flex.Item paddingLeft="s">
-              <Select
-                block
-                label="Type"
-                name="rateType"
-                value={form.values.rateType}
-                onChange={form.handleChange}
-                options={[
-                  { label: "Fixed Price", value: "Fixed" },
-                  { label: "Hourly Rate", value: "Per Hour" }
-                ]}
-              />
-            </Flex.Item>
-            {form.values.rateType === "Per Hour" ? (
-              <Flex.Item paddingLeft="l">
-                <TextField
-                  type="tel"
-                  name="rateLimit"
-                  value={form.values.rateLimit}
-                  onChange={form.handleChange}
-                  label="Monthly Budget"
-                  placeholder={`${currency}0.00`}
-                  mask={createNumberMask({
-                    prefix: currency,
-                    allowDecimal: true
-                  })}
+                </Flex.Item>
+              ) : null}
+            </Flex>
+          </Spacing>
+          <Divider />
+          <Spacing paddingTop="l" paddingBottom="m">
+            <Field
+              name="deliverables"
+              render={({ field, form }) => (
+                <ListInput
+                  label="Deliverables"
+                  value={field.value}
+                  placeholder="Add a deliverable"
+                  onChange={deliverables => {
+                    form.setFieldValue("deliverables", deliverables);
+                  }}
                 />
-              </Flex.Item>
-            ) : null}
-          </Flex>
-        </Spacing>
-        <Divider />
-        <Spacing paddingTop="l" paddingBottom="m">
-          <Field
-            name="deliverables"
-            render={({ field, form }) => (
-              <ListInput
-                label="Deliverables"
-                value={field.value}
-                placeholder="Add a deliverable"
-                onChange={deliverables => {
-                  form.setFieldValue("deliverables", deliverables);
-                }}
-              />
-            )}
-          />
-        </Spacing>
-        <Divider />
-        <Spacing paddingTop="xl">
-          <Button primary marginRight="m" loading={form.isSubmitting}>
-            Send Offer
-          </Button>
-          {onCancel && (
-            <Button blank type="button" onClick={onCancel}>
-              Cancel
+              )}
+            />
+          </Spacing>
+          <Divider />
+          <Spacing paddingTop="xl">
+            <Button primary marginRight="m" loading={form.isSubmitting}>
+              Send Offer
             </Button>
-          )}
-        </Spacing>
-      </form>
-    )}
-  />
-);
+            {onCancel && (
+              <Button blank type="button" onClick={onCancel}>
+                Cancel
+              </Button>
+            )}
+          </Spacing>
+        </form>
+      )}
+    />
+  );
+};

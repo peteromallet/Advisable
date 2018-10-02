@@ -5,7 +5,7 @@ class Mutations::AcceptBooking < GraphQL::Schema::Mutation
   field :errors, [String], null: false
 
   def resolve(**args)
-    booking = Booking.find(args[:id])
+    booking = Booking.find_by_airtable_id(args[:id])
     update_airtable_record(booking.airtable_id)
     booking.update_attributes(status: 'Accepted')
     Webhook.process(booking)

@@ -68,7 +68,6 @@ class CreateProposal extends React.Component {
                                 }
                               }
                             });
-                            console.log(response)
                             await sendProposal({
                               variables: {
                                 id: response.data.createBooking.booking.id

@@ -24,6 +24,8 @@ class Mutations::CreateBooking < Mutations::BaseMutation
     booking.airtable_id = airtable_record.id
     booking.save
 
+    Webhook.process(booking)
+
     return {
       booking: booking,
       errors: booking.errors.full_messages
