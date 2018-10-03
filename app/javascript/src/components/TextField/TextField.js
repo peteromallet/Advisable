@@ -19,10 +19,13 @@ class TextField extends React.Component {
       block = false,
       onChange,
       onBlur,
+      onFocus,
       label,
       error,
       placeholder,
-      mask
+      mask,
+      readOnly,
+      disabled
     } = this.props;
 
     const Component = multiline ? Textarea : Input;
@@ -37,10 +40,13 @@ class TextField extends React.Component {
           name={name}
           value={value}
           onBlur={onBlur}
+          onFocus={onFocus}
           autoComplete="off"
           onChange={onChange}
           placeholder={placeholder}
           innerRef={c => this.input = c}
+          readOnly={readOnly}
+          disabled={disabled}
         />
         {error && <InputError>{error}</InputError>}
       </Wrapper>

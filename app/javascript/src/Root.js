@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Project from "./views/Project";
 import NotFound from "./views/NotFound";
 import ViewOffer from "./views/ViewOffer";
+import EditProposal from './views/EditProposal';
 import CreateProposal from './views/CreateProposal';
 
 const Root = () => (
@@ -12,6 +13,7 @@ const Root = () => (
     <Route path="/projects/:projectID" component={Project} />
     <Route path="/offers/:bookingID" component={ViewOffer} />
     <Route path="/applications/:applicationID/proposal" component={CreateProposal} />
+    <Route path="/applications/:applicationID/proposals/:proposalID" component={EditProposal} />
     <Route component={NotFound} />
   </Switch>
 )

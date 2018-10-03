@@ -16,6 +16,8 @@ describe 'Sending an offer' do
     expect(airtable_booking).to receive(:create)
 
     visit "/projects/#{project.airtable_id}/applications/#{application.airtable_id}/offer"
+    fill_in 'startDate', with: 10.days.from_now.strftime("%d %B %Y")
+    fill_in 'endDate', with: 40.days.from_now.strftime("%d %B %Y")
     fill_in 'rate', with: '100'
     select 'Hourly Rate', from: 'rateType'
     fill_in 'rateLimit', with: '2500'

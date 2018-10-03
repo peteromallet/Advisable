@@ -29,14 +29,13 @@ const amountLabel = form => {
   return "Amount";
 };
 
-export default ({ onSubmit, currency = "€", initialValues }) => (
+export default ({ onSubmit, submitLabel = 'Send Proposal', currency = "€", initialValues }) => (
   <Formik
     onSubmit={onSubmit}
     initialValues={initialValues}
     validationSchema={validationSchema}
     render={form => (
       <form onSubmit={form.handleSubmit}>
-        {console.log(form)}
         <Spacing marginBottom="xl">
           <Choices
             name="type"
@@ -165,7 +164,7 @@ export default ({ onSubmit, currency = "€", initialValues }) => (
           disabled={form.isSubmitting}
           loading={form.isSubmitting}
         >
-          Send Proposal
+          {submitLabel}
         </Button>
       </form>
     )}
