@@ -48,7 +48,10 @@ const ViewProposal = ({ match, history, notifications }) => {
               <Heading size="l">Proposal from {specialist.name}</Heading>
               <Text marginBottom='l'>Review the details of this proposal below</Text>
               {booking.proposalComment && (
-                <ProposalComment>{booking.proposalComment}</ProposalComment>
+                <ProposalComment>
+                  <h4>{specialist.name}</h4>
+                  {booking.proposalComment}
+                </ProposalComment>
               )}
               <Mutation mutation={UPDATE_BOOKING}>
                 {updateBooking => (
