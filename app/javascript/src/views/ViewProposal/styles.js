@@ -8,4 +8,12 @@ export const ProposalComment = styled.div`
   margin-bottom: 30px;
   border: 1px solid #01239C;
   background: rgba(1, 35, 156, 0.04);
+
+  h4 {
+    color: #01239C;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
 `
+
