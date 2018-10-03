@@ -3,7 +3,7 @@ class Airtable::Booking < Airtable::Base
 
   sync_with ::Booking
   sync_columns :type, :rate, :rate_type, :rate_limit, :status,
-               :duration, :decline_comment
+               :duration, :decline_comment, :proposal_comment
 
   sync_data do |booking|
     booking.deliverables = JSON.parse(fields['Deliverables']) if fields['Deliverables']

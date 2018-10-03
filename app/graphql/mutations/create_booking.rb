@@ -4,6 +4,7 @@ class Mutations::CreateBooking < Mutations::BaseMutation
   argument :rate, Float, required: true
   argument :rate_type, String, required: true
   argument :rate_limit, Float, required: false
+  argument :proposal_comment, String, required: false
   argument :deliverables, [String], required: true
   argument :application_id, ID, required: true
   argument :start_date, Types::Date, required: false
@@ -48,7 +49,8 @@ class Mutations::CreateBooking < Mutations::BaseMutation
       "Deliverables" => booking.deliverables.to_json,
       "Application" => [booking.application.airtable_id],
       "Est. Project Start Date" => booking.start_date,
-      "Est. Project End Date" => booking.end_date
+      "Est. Project End Date" => booking.end_date,
+      "Proposal Comment" => booking.proposal_comment
     )
     record.create
     record

@@ -157,6 +157,18 @@ export default ({ onSubmit, submitLabel = 'Send Proposal', currency = "€", ini
             }}
           />
         </Spacing>
+        <Spacing marginBottom="xl">
+          <TextField
+            multiline
+            name="proposalComment"
+            style={{ height: 140 }}
+            label="Message"
+            value={form.values.proposalComment}
+            placeholder="Include a message"
+            error={form.submitCount > 0 && form.errors.proposalComment}
+            onChange={form.handleChange}
+          />
+        </Spacing>
         <Button
           type="submit"
           primary
