@@ -20,7 +20,7 @@ const EditProposal = ({ match, notifications }) => {
       {query => {
         if (query.loading) return <Loading />;
         const booking = query.data.booking;
-        if (!booking) return <NotFound />;
+        if (!booking || booking.status !== 'Proposed') return <NotFound />;
         const client = booking.application.project.client;
 
         return (
