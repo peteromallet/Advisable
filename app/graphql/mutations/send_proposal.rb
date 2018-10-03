@@ -12,6 +12,7 @@ class Mutations::SendProposal < Mutations::BaseMutation
     end
 
     update_airtable_record(booking)
+    update_application_status(booking.application)
     booking.update_attributes(status: "Proposed")
 
     Webhook.process(booking)
@@ -26,6 +27,13 @@ class Mutations::SendProposal < Mutations::BaseMutation
 
   def find_booking(id)
     @booking ||= Booking.find_by("id = ? OR airtable_id = ?", id.to_i, id.to_s)
+  end
+
+  def update_application_status(application)
+    airtable_record = Airtable::Application.find(application.airtable_id)
+    airtable_record["Application Status"] = 'Proposed'
+    airtable_record.save
+    application.update_attributes(status: 'Proposed')
   end
 
   def update_airtable_record(booking)
