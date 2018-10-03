@@ -2,6 +2,11 @@ mutation SendProposal($id: ID!) {
   sendProposal(input: { id: $id }) {
     booking {
       id
+      status
+      application {
+        id
+        status
+      }
     }
   }
 }

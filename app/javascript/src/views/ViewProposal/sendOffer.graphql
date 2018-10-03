@@ -2,6 +2,11 @@ mutation SendOffer($input: SendOfferInput!) {
   sendOffer(input: $input) {
     booking {
       id
+      status
+      application {
+        id
+        status
+      }
     }
   }
 }
