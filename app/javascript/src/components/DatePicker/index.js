@@ -18,7 +18,9 @@ class DatePicker extends React.Component {
   }
 
   handleDayClick = day => {
-    this.props.onChange(day.toISOString())
+    if (day) {
+      this.props.onChange(day.toISOString())
+    }
   }
 
   formatDate = (date, format, locale) => {
@@ -26,9 +28,9 @@ class DatePicker extends React.Component {
   }
 
   parseDate = (string, format, locale) => {
-    const parsed= DateTime.fromFormat(string, format, { locale }).toISO()
-    if (DateUtils.isDate(parsed)) {
-          return parsed;
+    const parsed= DateTime.fromFormat(string, format, { locale })
+    if (parsed.isValid) {
+          return parsed.toJSDate();
     }
     return undefined
   }
@@ -46,11 +48,11 @@ class DatePicker extends React.Component {
           value={this.props.value ? valueAsDate : ''}
           format={this.props.format || "dd LLLL yyyy"}
           formatDate={this.formatDate}
-          placeholder={this.props.placeholder}
           parseDate={this.parseDate}
+          placeholder={this.props.placeholder}
           onDayChange={this.handleDayClick}
           inputProps={{
-            readOnly: true
+            name: this.props.name
           }}
           dayPickerProps={{
             showOutsideDays: true,

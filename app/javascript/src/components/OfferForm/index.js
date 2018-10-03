@@ -95,6 +95,7 @@ export default ({
             <Flex distribute="fillEvenly">
               <Flex.Item paddingRight="s">
                 <DatePicker
+                  name="startDate"
                   value={form.values.startDate}
                   onChange={date => form.setFieldValue("startDate", date)}
                   label="Estimated start date"
@@ -108,16 +109,16 @@ export default ({
               <Flex.Item paddingLeft="s">
                 {form.values.type === "Fixed" ? (
                   <DatePicker
+                    name="endDate"
                     value={form.values.endDate}
-                    onChange={date => {
-                      form.setFieldValue("endDate", date);
-                    }}
+                    onChange={date => form.setFieldValue("endDate", date)}
                     label="Estimated end date"
                     placeholder="End date"
                     error={form.touched.endDare && form.errors.endDate}
                     options={{
                       initialMonth:
-                        form.values.startDate && new Date(form.values.startDate),
+                        form.values.startDate &&
+                        new Date(form.values.startDate),
                       disabledDays: {
                         before: new Date(form.values.startDate)
                       }
@@ -152,8 +153,8 @@ export default ({
                   name="rate"
                   value={form.values.rate}
                   onChange={({ target }) => {
-                    const val = Number(target.value.replace(/[^0-9\.-]+/g, ""))
-                    form.setFieldValue('rate', val)
+                    const val = Number(target.value.replace(/[^0-9\.-]+/g, ""));
+                    form.setFieldValue("rate", val);
                   }}
                   onBlur={form.handleBlur}
                   label={amountLabel(form)}
@@ -188,8 +189,10 @@ export default ({
                     name="rateLimit"
                     value={form.values.rateLimit}
                     onChange={({ target }) => {
-                      const val = Number(target.value.replace(/[^0-9\.-]+/g, ""))
-                      form.setFieldValue('rate', val)
+                      const val = Number(
+                        target.value.replace(/[^0-9\.-]+/g, "")
+                      );
+                      form.setFieldValue("rate", val);
                     }}
                     label="Monthly Budget"
                     placeholder={`${currency}0.00`}
