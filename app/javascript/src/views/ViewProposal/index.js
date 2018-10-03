@@ -36,7 +36,7 @@ const ViewProposal = ({ match, history, notifications }) => {
         return (
           <React.Fragment>
             <Back marginBottom="l" to={backURL}>Candidates</Back>
-            <Heading size="l">New proposal from {specialist.name}</Heading>
+            <Heading size="l">Proposal from {specialist.name}</Heading>
             <Text>Review the details of this proposal below</Text>
             <Card marginTop="xl" padding="xl">
               <Mutation mutation={UPDATE_BOOKING}>
@@ -58,14 +58,6 @@ const ViewProposal = ({ match, history, notifications }) => {
                           const input = {
                             ...values,
                             id: booking.id,
-                            rate: Number(
-                              values.rate.replace(/[^0-9\.-]+/g, "")
-                            ),
-                            rateLimit:
-                              values.rateLimit &&
-                              Number(
-                                values.rateLimit.replace(/[^0-9\.-]+/g, "")
-                              )
                           };
 
                           await updateBooking({

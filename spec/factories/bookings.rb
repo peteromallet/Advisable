@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :booking do
-    rate 1
-    rate_type "MyString"
-    rate_limit 1
-    status "MyString"
-    deliverables ""
-    specialist nil
-    project nil
+    rate 100
+    airtable_id 'rec_1234'
+    rate_type "Fixed"
+    rate_limit 5_000
+    status "Offered"
+    deliverables []
+    application
   end
 end

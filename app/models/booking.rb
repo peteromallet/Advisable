@@ -2,6 +2,8 @@ class Booking < ApplicationRecord
   validates :airtable_id, presence: true
   validates :status, inclusion: { in: %w(Proposed Offered Accepted Declined Complete) }, allow_nil: true
 
+  validate :valid_proposal, on: :create
+
   # disable STI
   self.inheritance_column = :_type_disabled
 
@@ -9,6 +11,8 @@ class Booking < ApplicationRecord
   belongs_to :rejection_reason, required: false, class_name: "BookingRejectionReason"
 
   serialize :deliverables, Array
+
+  scope :proposals, -> { where(status: 'Proposed') }
 
   # Wether or not the booking is recurring
   def recurring?
@@ -30,5 +34,14 @@ class Booking < ApplicationRecord
     else
       self.end_date = start_date >> number_of_months
     end
+  end
+
+  private
+
+  # Validates that a proposal does not already exist for the application record
+  def valid_proposal
+    return if application.nil?
+    return if application.bookings.proposals.empty?
+    errors.add(:application, 'This application already has a proposal')
   end
 end

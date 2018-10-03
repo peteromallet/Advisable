@@ -47,12 +47,6 @@ const Offer = ({ match, history, loading, data, notifications }) => {
                       variables: {
                         input: {
                           ...values,
-                          rate: Number(values.rate.replace(/[^0-9\.-]+/g, "")),
-                          rateLimit: values.rateLimit
-                            ? Number(
-                                values.rateLimit.replace(/[^0-9\.-]+/g, "")
-                              )
-                            : null,
                           applicationId: data.booking.application.id
                         }
                       }
