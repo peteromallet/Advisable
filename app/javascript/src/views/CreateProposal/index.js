@@ -55,13 +55,7 @@ class CreateProposal extends React.Component {
                             let response = await createBooking({
                               variables: {
                                 input: {
-                                  rate: values.rate,
-                                  type: values.type,
-                                  rateType: values.rateType,
-                                  startDate: values.startDate,
-                                  endDate: values.endDate,
-                                  duration: values.duration,
-                                  deliverables: values.deliverables,
+                                  ...values,
                                   applicationId: this.props.match.params
                                     .applicationID
                                 }
