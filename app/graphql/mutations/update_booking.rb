@@ -20,7 +20,7 @@ class Mutations::UpdateBooking < Mutations::BaseMutation
 
     update_airtable_record(booking)
 
-    booking.save
+    booking.save!
 
     Webhook.process(booking)
 

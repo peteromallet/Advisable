@@ -7,5 +7,8 @@ query FetchApplication($id: ID!) {
         name
       }
     }
+    proposal {
+      id
+    }
   }
 }
