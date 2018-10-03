@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_26_092419) do
+ActiveRecord::Schema.define(version: 2018_10_03_134419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2018_09_26_092419) do
     t.bigint "rejection_reason_id"
     t.date "start_date"
     t.date "end_date"
+    t.string "proposal_comment"
     t.index ["airtable_id"], name: "index_bookings_on_airtable_id"
     t.index ["application_id"], name: "index_bookings_on_application_id"
     t.index ["rejection_reason_id"], name: "index_bookings_on_rejection_reason_id"

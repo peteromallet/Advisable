@@ -44,7 +44,8 @@ const EditProposal = ({ match, notifications }) => {
                       duration: booking.duration,
                       rate: booking.rate,
                       rateType: booking.rateType,
-                      deliverables: booking.deliverables
+                      deliverables: booking.deliverables,
+                      proposalComment: booking.proposalComment
                     }}
                     onSubmit={async (values, { setSubmitting }) => {
                       const input = {

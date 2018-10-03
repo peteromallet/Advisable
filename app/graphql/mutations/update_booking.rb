@@ -4,6 +4,7 @@ class Mutations::UpdateBooking < Mutations::BaseMutation
   argument :duration, String, required: false
   argument :rate, Float, required: false
   argument :rate_type, String, required: false
+  argument :proposal_comment, String, required: false
   argument :rate_limit, Float, required: false
   argument :deliverables, [String], required: false
   argument :start_date, Types::Date, required: false
@@ -15,7 +16,7 @@ class Mutations::UpdateBooking < Mutations::BaseMutation
   def resolve(**args)
     args[:deliverables] = args[:deliverables].reject(&:empty?) if args[:deliverables]
     booking = find_booking(args[:id])
-    booking.assign_attributes(args.slice(:type, :duration, :rate, :rate_type, :rate_limit, :deliverables, :start_date, :end_date))
+    booking.assign_attributes(args.slice(:type, :duration, :rate, :rate_type, :rate_limit, :deliverables, :start_date, :end_date, :proposal_comment))
     booking.calculate_end_date
 
     update_airtable_record(booking)
@@ -46,6 +47,7 @@ class Mutations::UpdateBooking < Mutations::BaseMutation
     record['Est. Project Start Date'] = booking.start_date
     record['Est. Project End Date'] = booking.end_date
     record['Deliverables'] = booking.deliverables.to_json
+    record['Proposal Comment'] = booking.proposal_comment
     record.save
   end
 end

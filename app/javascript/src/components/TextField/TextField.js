@@ -25,7 +25,8 @@ class TextField extends React.Component {
       placeholder,
       mask,
       readOnly,
-      disabled
+      disabled,
+      style
     } = this.props;
 
     const Component = multiline ? Textarea : Input;
@@ -38,6 +39,7 @@ class TextField extends React.Component {
           mask={mask}
           id={this.id}
           name={name}
+          style={style}
           value={value}
           onBlur={onBlur}
           onFocus={onFocus}

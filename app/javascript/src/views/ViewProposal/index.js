@@ -11,6 +11,7 @@ import OfferForm from "src/components/OfferForm";
 import { currencySymbol } from "src/utilities/currency";
 import { withNotifications } from "src/components/Notifications";
 
+import { ProposalComment } from "./styles";
 import FETCH_BOOKING from "./fetchBooking.graphql";
 import UPDATE_BOOKING from "./updateBooking.graphql";
 import SEND_OFFER from "./sendOffer.graphql";
@@ -21,11 +22,11 @@ const ViewProposal = ({ match, history, notifications }) => {
 
   const goBack = () => {
     if (history.length > 0) {
-      history.goBack()
+      history.goBack();
     } else {
       history.push(backURL);
     }
-  }
+  };
 
   return (
     <Query query={FETCH_BOOKING} variables={{ id: match.params.bookingID }}>
@@ -42,10 +43,13 @@ const ViewProposal = ({ match, history, notifications }) => {
 
         return (
           <React.Fragment>
-            <Back marginBottom="l" onClick={goBack}>Candidates</Back>
-            <Heading size="l">Proposal from {specialist.name}</Heading>
-            <Text>Review the details of this proposal below</Text>
+            <Back onClick={goBack}>Candidates</Back>
             <Card marginTop="xl" padding="xl">
+              <Heading size="l">Proposal from {specialist.name}</Heading>
+              <Text marginBottom='l'>Review the details of this proposal below</Text>
+              {booking.proposalComment && (
+                <ProposalComment>{booking.proposalComment}</ProposalComment>
+              )}
               <Mutation mutation={UPDATE_BOOKING}>
                 {updateBooking => (
                   <Mutation mutation={SEND_OFFER}>
@@ -64,7 +68,7 @@ const ViewProposal = ({ match, history, notifications }) => {
                         onSubmit={async values => {
                           const input = {
                             ...values,
-                            id: booking.id,
+                            id: booking.id
                           };
 
                           await updateBooking({
