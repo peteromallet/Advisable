@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { withSpacing } from "src/components/Spacing";
 import arrow from "./arrow.svg";
 
-const Back = withSpacing(styled(Link)`
+let Back = styled.a`
   fill: #5c6782;
   color: #5c6782;
   cursor: pointer;
@@ -27,13 +27,20 @@ const Back = withSpacing(styled(Link)`
     fill: #0064ff;
     color: #0064ff;
   }
-`);
+`;
 
-export default ({ children, ...props }) => (
-  <Back {...props}>
-    <svg width={17} height={15}>
-      <path d="M4.828 9l4.086 4.086A1 1 0 0 1 7.5 14.5L.793 7.793 7.5 1.086A1 1 0 1 1 8.914 2.5L4.414 7H16a1 1 0 0 1 0 2H4.828z" />
-    </svg>
-    <span>{children || "Back"}</span>
-  </Back>
-);
+Back = withSpacing(Back);
+
+const ReactRouterBack = Back.withComponent(Link);
+
+export default ({ children, ...props }) => {
+  const Component = props.to ? ReactRouterBack : Back;
+  return (
+    <Component {...props}>
+      <svg width={17} height={15}>
+        <path d="M4.828 9l4.086 4.086A1 1 0 0 1 7.5 14.5L.793 7.793 7.5 1.086A1 1 0 1 1 8.914 2.5L4.414 7H16a1 1 0 0 1 0 2H4.828z" />
+      </svg>
+      <span>{children || "Back"}</span>
+    </Component>
+  );
+};

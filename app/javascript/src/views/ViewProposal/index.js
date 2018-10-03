@@ -17,8 +17,15 @@ import SEND_OFFER from "./sendOffer.graphql";
 
 // Renders the view for a client viewing a specialists proposal.
 const ViewProposal = ({ match, history, notifications }) => {
-  const backURL = `/projects/${match.params.projectID}/introduced`;
-  const goBack = () => history.push(backURL);
+  const backURL = `/projects/${match.params.projectID}/proposed`;
+
+  const goBack = () => {
+    if (history.length > 0) {
+      history.goBack()
+    } else {
+      history.push(backURL);
+    }
+  }
 
   return (
     <Query query={FETCH_BOOKING} variables={{ id: match.params.bookingID }}>
@@ -35,7 +42,7 @@ const ViewProposal = ({ match, history, notifications }) => {
 
         return (
           <React.Fragment>
-            <Back marginBottom="l" to={backURL}>Candidates</Back>
+            <Back marginBottom="l" onClick={goBack}>Candidates</Back>
             <Heading size="l">Proposal from {specialist.name}</Heading>
             <Text>Review the details of this proposal below</Text>
             <Card marginTop="xl" padding="xl">

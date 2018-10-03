@@ -51,6 +51,18 @@ class Project extends React.Component {
                 )}
               />
               <Route
+                path={`${match.path}/proposed`}
+                render={props => (
+                  <Applicants
+                    data={data}
+                    status="Proposed"
+                    countLabel="Proposed"
+                    emptyStateText="No candidates have made a propsal"
+                    {...props}
+                  />
+                )}
+              />
+              <Route
                 path={`${match.path}/offered`}
                 render={props => (
                   <Applicants

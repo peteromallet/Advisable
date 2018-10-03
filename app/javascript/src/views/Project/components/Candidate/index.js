@@ -53,6 +53,7 @@ class Candidate extends React.Component {
 
   render() {
     const { application, project } = this.props;
+    const { proposal } = application;
 
     return (
       <Card padding="xl" expanded={this.state.expanded}>
@@ -74,15 +75,18 @@ class Candidate extends React.Component {
         <CandidateHeader>
           <Avatar
             name={application.specialist.name}
-            url={application.specialist.image ? application.specialist.image.url : null}
+            url={
+              application.specialist.image
+                ? application.specialist.image.url
+                : null
+            }
           />
           <NameAndLocation>
             <Name>{application.specialist.name}</Name>
             <Location>
               {application.specialist.city}
-              {application.specialist.country && (
-                `, ${application.specialist.country.name}`
-              )}
+              {application.specialist.country &&
+                `, ${application.specialist.country.name}`}
             </Location>
           </NameAndLocation>
           <CandidateHeaderActions>
@@ -101,7 +105,7 @@ class Candidate extends React.Component {
           {application.introduction}
         </Text>
 
-        <Button blank className='ViewMore' onClick={this.clickToExpand}>
+        <Button blank className="ViewMore" onClick={this.clickToExpand}>
           {this.state.expanded ? (
             <svg width={13} height={6}>
               <path
@@ -127,7 +131,8 @@ class Candidate extends React.Component {
           to={{
             height: this.state.expanded ? this.moreInfoHeight : 0,
             opacity: this.state.expanded ? 1 : 0
-          }}>
+          }}
+        >
           {styles => (
             <MoreInfo innerRef={c => (this.moreInfo = c)} style={styles}>
               <Questions questions={application.questions} />
@@ -140,6 +145,22 @@ class Candidate extends React.Component {
           )}
         </Spring>
 
+        {application.status === "Proposed" &&
+          proposal && (
+            <React.Fragment>
+              <Divider marginTop="xl" marginBottom="xl" />
+              <Button
+                marginRight="m"
+                onClick={() =>
+                  this.props.history.push(`proposals/${proposal.id}`)
+                }
+                primary
+              >
+                View Proposal
+              </Button>
+            </React.Fragment>
+          )}
+
         {application.status === "Application Accepted" && (
           <React.Fragment>
             <Divider marginTop="xl" marginBottom="xl" />
@@ -148,7 +169,8 @@ class Candidate extends React.Component {
               onClick={() =>
                 this.props.history.push(`applications/${application.id}/offer`)
               }
-              primary>
+              primary
+            >
               Send Offer
             </Button>
             <Button onClick={() => this.setState({ modal: "reject" })}>
@@ -163,7 +185,8 @@ class Candidate extends React.Component {
             <Button
               marginRight="m"
               onClick={() => this.setState({ modal: "introduction" })}
-              primary>
+              primary
+            >
               Request Introduction
             </Button>
             <Button onClick={() => this.setState({ modal: "reject" })}>
