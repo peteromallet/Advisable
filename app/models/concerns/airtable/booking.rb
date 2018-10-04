@@ -3,10 +3,15 @@ class Airtable::Booking < Airtable::Base
 
   sync_with ::Booking
   sync_columns :type, :rate, :rate_type, :rate_limit, :status,
-               :duration, :decline_comment
+               :duration, :decline_comment, :proposal_comment
 
   sync_data do |booking|
     booking.deliverables = JSON.parse(fields['Deliverables']) if fields['Deliverables']
+
+    start_date = fields['Est. Project Start Date']
+    booking.start_date = Date.parse(start_date) if start_date
+    end_date = fields['Est. Project End Date']
+    booking.end_date = Date.parse(end_date) if end_date
 
     application_id = fields["Application"].try(:first)
     if application_id

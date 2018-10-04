@@ -1,0 +1,7 @@
+mutation UpdateProposal($input: UpdateProposalInput!) {
+  updateProposal(input: $input) {
+    booking {
+      id
+    }
+  }
+}

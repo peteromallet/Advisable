@@ -68,6 +68,7 @@ export const StatusList = styled.div`
     &:nth-child(3) { animation-delay: 100ms }
     &:nth-child(3) { animation-delay: 150ms }
     &:nth-child(4) { animation-delay: 200ms }
+    &:nth-child(5) { animation-delay: 250ms }
 
     .Icon {
       top: 50%;
