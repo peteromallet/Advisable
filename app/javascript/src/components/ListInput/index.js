@@ -1,10 +1,12 @@
 import React from "react";
+import uniqueID from "lodash/uniqueId";
 import styled from "styled-components";
-import { FieldArray, Field } from "formik";
 import Textarea from "react-textarea-autosize";
+import InputError from "src/components/InputError";
+import InputLabel from "src/components/InputLabel";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-const DeliverableInput = styled.div`
+const ListInputItem = styled.div`
   position: relative;
   background: #f4f7fc;
   border-radius: 10px;
@@ -60,52 +62,62 @@ const DeliverableInput = styled.div`
   }
 `;
 
-class Deliverables extends React.Component {
+class ListInput extends React.Component {
+  static defaultProps = {
+    value: [""]
+  };
+
+  componentWillMount() {
+    this.id = this.props.id || uniqueID("input");
+  }
+
   handleChange = index => e => {
     const value = e.target.value;
-    const deliverables = this.props.deliverables.map((deliverable, i) => {
-      if (index === i) return value
-      return deliverable
-    })
+    const listItems = this.props.value.map((v, i) => {
+      if (index === i) return value;
+      return v;
+    });
 
-    const isLast = (this.props.deliverables.length - 1) === index;
-    const isEmpty = deliverables[index].length === 0;
+    const isLast = this.props.value.length - 1 === index;
+    const isEmpty = listItems[index].length === 0;
 
     // If we are editing the last item in the array, and there is at least
     // one character in the array then add a blank item to the end of the list.
     if (isLast && value.length > 0) {
-      deliverables.push("")
+      listItems.push("");
     }
 
     if (!isLast && isEmpty) {
-      deliverables.splice(index, 1);
+      listItems.splice(index, 1);
     }
 
-    this.props.onChange(deliverables)
-  }
+    this.props.onChange(listItems);
+  };
 
   render() {
+    const { label, error, placeholder } = this.props;
+
     return (
-      <FieldArray
-        name="deliverables"
-        render={fieldArray => (
-          <TransitionGroup>
-            {this.props.deliverables.map((deliverable, i) => (
-              <CSSTransition timeout={500} classNames="slide" key={i}>
-                <DeliverableInput>
-                  <Textarea
-                    value={deliverable}
-                    placeholder="Add a deliverable..."
-                    onChange={this.handleChange(i)}
-                  />
-                </DeliverableInput>
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
-        )}
-      />
+      <React.Fragment>
+        {label && <InputLabel htmlFor={this.id}>{label}</InputLabel>}
+        <TransitionGroup>
+          {this.props.value.map((v, i) => (
+            <CSSTransition timeout={500} classNames="slide" key={i}>
+              <ListInputItem>
+                <Textarea
+                  value={v}
+                  name={`${this.props.name}[${i}]`}
+                  placeholder={this.props.placeholder}
+                  onChange={this.handleChange(i)}
+                />
+              </ListInputItem>
+            </CSSTransition>
+          ))}
+        </TransitionGroup>
+        {error && <InputError>{error}</InputError>}
+      </React.Fragment>
     );
   }
 }
 
-export default Deliverables;
+export default ListInput;

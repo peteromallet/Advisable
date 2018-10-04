@@ -1,0 +1,11 @@
+mutation CreateProposal($input: CreateProposalInput!) {
+  createProposal(input: $input) {
+    booking {
+      id
+      application {
+        id
+        status
+      }
+    }
+  }
+}

@@ -1,7 +1,29 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-export const Type = styled.div`
-  width: 100%;
+export const Choices = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: 500px) {
+    display: block;
+  }
+`;
+
+export const Choice = styled.div`
+  flex: 1 0 0%;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  &:first-child { margin-left: 0; }
+  &:last-child { margin-right: 0; }
+
+  @media screen and (max-width: 500px) {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 10px;
+
+    &:last-child { margin-bottom: 0 }
+  }
 
   input {
     width: 0;
@@ -17,20 +39,20 @@ export const Type = styled.div`
     cursor: pointer;
     border-radius: 8px;
     position: relative;
-    background: #FFFFFF;
-    border: 1px solid #E4E9F5;
+    background: #ffffff;
+    border: 1px solid #e4e9f5;
     padding: 14px 15px 16px 50px;
   }
 
   label::before {
     top: 50%;
     left: 15px;
-    content: '';
+    content: "";
     width: 18px;
     height: 18px;
     position: absolute;
     border-radius: 100%;
-    background: #E7EDF7;
+    background: #e7edf7;
     transform: translateY(-50%);
     transition: background 400ms;
   }
@@ -41,7 +63,7 @@ export const Type = styled.div`
     width: 8px;
     opacity: 0;
     height: 8px;
-    content: '';
+    content: "";
     background: white;
     position: absolute;
     border-radius: 100%;
@@ -50,7 +72,7 @@ export const Type = styled.div`
   }
 
   input:checked + label::before {
-    background-color: #0064FF;
+    background-color: #0064ff;
   }
 
   input:checked + label::after {
@@ -60,7 +82,7 @@ export const Type = styled.div`
 
   strong {
     display: block;
-    color: #0A2248;
+    color: #0a2248;
     font-size: 16px;
     font-weight: 600;
     line-height: 16px;
@@ -70,7 +92,7 @@ export const Type = styled.div`
 
   small {
     display: block;
-    color: #5F7290;
+    color: #5f7290;
     font-size: 14px;
     line-height: 14px;
     letter-spacing: -0.03em;
@@ -78,7 +100,7 @@ export const Type = styled.div`
 
   input:checked + label {
     color: red;
-    border-color: #F4F7FC;
-    background-color: #F4F7FC;
+    border-color: #f4f7fc;
+    background-color: #f4f7fc;
   }
-`
+`;

@@ -11,12 +11,14 @@
         "useBuiltIns": true
       }
     ],
-    "react"
+    "react",
+    "flow"
   ],
   "plugins": [
     "syntax-dynamic-import",
     "react-hot-loader/babel",
     "transform-object-rest-spread",
+    "babel-plugin-styled-components",
     [
       "transform-class-properties",
       {

@@ -48,7 +48,10 @@ class ViewOffer extends React.Component {
   render() {
     const { match, loading, data } = this.props;
     if (data.loading) return <Loading />;
-    if (data.error) return <NotFound />;
+    if (!data.booking) return <NotFound />;
+    if (data.booking.status === 'Proposed') {
+      return <NotFound />
+    }
 
     return (
       <Container>

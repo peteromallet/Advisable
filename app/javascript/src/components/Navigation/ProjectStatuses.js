@@ -33,6 +33,11 @@ const ProjectStatuses = ({ match, data, loading, onNavigate }) => {
             Introduced
             <Count>{counts["Application Accepted"] || 0}</Count>
           </NavLink>
+          <NavLink to={`/projects/${projectID}/proposed`} onClick={onNavigate}>
+            <Icon icon="file-text" />
+            Proposed
+            <Count>{counts["Proposed"] || 0}</Count>
+          </NavLink>
           <NavLink to={`/projects/${projectID}/offered`} onClick={onNavigate}>
             <Icon icon="user-check" />
             Offered
