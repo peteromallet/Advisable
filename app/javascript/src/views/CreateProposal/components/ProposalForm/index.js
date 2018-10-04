@@ -65,6 +65,7 @@ export default ({ onSubmit, submitLabel = 'Send Proposal', currency = "€", ini
             <Flex.Item paddingRight="s">
               <DatePicker
                 value={form.values.startDate}
+                name="startDate"
                 onChange={date => form.setFieldValue("startDate", date)}
                 label="Estimated start date"
                 placeholder="Start date"
@@ -78,6 +79,7 @@ export default ({ onSubmit, submitLabel = 'Send Proposal', currency = "€", ini
               {form.values.type === "Fixed" ? (
                 <DatePicker
                   value={form.values.endDate}
+                  name="endDate"
                   onChange={date => form.setFieldValue("endDate", date)}
                   label="Estimated end date"
                   placeholder="End date"

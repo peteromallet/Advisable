@@ -7,5 +7,7 @@ mutation CreateOffer($input: CreateOfferInput!) {
         status
       }
     }
+
+    errors
   }
 }

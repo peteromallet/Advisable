@@ -54,6 +54,7 @@ const Offer = ({ match, history, loading, notifications, data }) => {
                     data.project.application.specialist.name
                   }`
                 );
+
                 goBack();
               }}
               initialValues={{

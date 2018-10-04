@@ -192,7 +192,7 @@ export default ({
                       const val = Number(
                         target.value.replace(/[^0-9\.-]+/g, "")
                       );
-                      form.setFieldValue("rate", val);
+                      form.setFieldValue("rateLimit", val);
                     }}
                     label="Monthly Budget"
                     placeholder={`${currency}0.00`}

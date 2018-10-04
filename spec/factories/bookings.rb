@@ -7,5 +7,7 @@ FactoryBot.define do
     status "Offered"
     deliverables []
     application
+    start_date 10.days.from_now
+    end_date 60.days.from_now
   end
 end
