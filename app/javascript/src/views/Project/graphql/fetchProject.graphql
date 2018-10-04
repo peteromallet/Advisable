@@ -11,6 +11,9 @@ query project($id: ID!) {
       comment
       availability
       introduction
+      proposal {
+        id
+      }
       questions {
         question
         answer

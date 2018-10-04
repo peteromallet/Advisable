@@ -35,6 +35,7 @@ const Text = styled.p`
   font-weight: ${props => weights[props.weight || props.variation] || 400};
   color: ${props => colours[props.colour || props.variation] || "#4B5D78"};
   letter-spacing: ${props => kerning[props.size] || kerning["m"]};
+  text-align: ${props => props.center ? 'center' : 'inherit'};
 `;
 
 export default withSpacing(Text);

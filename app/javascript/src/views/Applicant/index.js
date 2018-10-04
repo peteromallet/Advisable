@@ -15,7 +15,7 @@ import Loading from "src/components/Loading";
 import Divider from "src/components/Divider";
 import Heading from "src/components/Heading";
 import FeaturedBadge from "src/components/FeaturedBadge";
-import CandidateAttributes from 'src/components/CandidateAttributes';
+import CandidateAttributes from "src/components/CandidateAttributes";
 import currency from "src/utilities/currency";
 import RejectModal from "src/components/RejectModal";
 import RequestIntroduction from "src/components/RequestIntroduction";
@@ -59,6 +59,7 @@ class Applicant extends React.Component {
           if (loading) return <Loading />;
           const project = data.project;
           const application = project.application;
+          const proposal = application.proposal;
           const specialist = application.specialist;
           const otherApplicants = filter(project.applications, ap => {
             return ap.id !== application.id;
@@ -100,9 +101,7 @@ class Applicant extends React.Component {
                 <ApplicantName>{specialist.name}</ApplicantName>
                 <ApplicantLocation>
                   {specialist.city}
-                  {specialist.country && (
-                    `, ${specialist.country.name}`
-                  )}
+                  {specialist.country && `, ${specialist.country.name}`}
                 </ApplicantLocation>
                 <AppliedTo>Applied to {project.name}</AppliedTo>
               </ApplicantHeader>
@@ -113,9 +112,7 @@ class Applicant extends React.Component {
               />
               <Text marginBottom="xl">{application.introduction}</Text>
               {application.comment && (
-                <AdvisableMessage>
-                  {application.comment}
-                </AdvisableMessage>
+                <AdvisableMessage>{application.comment}</AdvisableMessage>
               )}
               {application.questions.map((question, i) => (
                 <Card key={i} padding="xl" marginBottom="l">
@@ -124,9 +121,17 @@ class Applicant extends React.Component {
                   </Text>
                   <Text>
                     {/* Render line breaks in answers */}
-                    {question.answer.replace(/<br\s\/>/g, "\n").split('\n').map((item, key) => {
-                      return <React.Fragment key={key}>{item}<br/></React.Fragment>
-                    })}
+                    {question.answer
+                      .replace(/<br\s\/>/g, "\n")
+                      .split("\n")
+                      .map((item, key) => {
+                        return (
+                          <React.Fragment key={key}>
+                            {item}
+                            <br />
+                          </React.Fragment>
+                        );
+                      })}
                   </Text>
                 </Card>
               ))}
@@ -136,6 +141,23 @@ class Applicant extends React.Component {
                 marginBottom="xxl"
                 skills={specialist.skills}
               />
+
+              {application.status === "Proposed" &&
+                proposal && (
+                  <Button
+                    marginRight="m"
+                    onClick={() =>
+                      this.props.history.push(
+                        `/projects/${project.airtableId}/proposals/${
+                          proposal.id
+                        }`
+                      )
+                    }
+                    primary
+                  >
+                    View Proposal
+                  </Button>
+                )}
 
               {application.status === "Applied" && (
                 <Button
@@ -187,34 +209,36 @@ class Applicant extends React.Component {
                     </Flex>
                   </Spacing>
 
-                  {otherApplicants.map(applicant => applicant.specialist ? (
-                    <Card
-                      key={applicant.id}
-                      onClick={() => history.push(applicant.airtableId)}
-                      padding="l"
-                      marginBottom="m"
-                    >
-                      <Flex align="center">
-                        <Avatar
-                          name={applicant.specialist.name}
-                          url={get(applicant.specialist.image, "url")}
-                          marginRight="l"
-                        />
-                        <Flex.Item distribute="fill">
-                          <Heading size="s">
-                            {applicant.specialist.name}
-                          </Heading>
-                          <Text>
-                            {applicant.specialist.city}
-                            {applicant.specialist.country && (
-                              `, ${applicant.specialist.country.name}`
-                            )}
-                          </Text>
-                        </Flex.Item>
-                        {applicant.featured && <FeaturedBadge />}
-                      </Flex>
-                    </Card>
-                  ) : null)}
+                  {otherApplicants.map(
+                    applicant =>
+                      applicant.specialist ? (
+                        <Card
+                          key={applicant.id}
+                          onClick={() => history.push(applicant.airtableId)}
+                          padding="l"
+                          marginBottom="m"
+                        >
+                          <Flex align="center">
+                            <Avatar
+                              name={applicant.specialist.name}
+                              url={get(applicant.specialist.image, "url")}
+                              marginRight="l"
+                            />
+                            <Flex.Item distribute="fill">
+                              <Heading size="s">
+                                {applicant.specialist.name}
+                              </Heading>
+                              <Text>
+                                {applicant.specialist.city}
+                                {applicant.specialist.country &&
+                                  `, ${applicant.specialist.country.name}`}
+                              </Text>
+                            </Flex.Item>
+                            {applicant.featured && <FeaturedBadge />}
+                          </Flex>
+                        </Card>
+                      ) : null
+                  )}
                 </React.Fragment>
               )}
             </React.Fragment>

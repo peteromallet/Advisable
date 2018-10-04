@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_31_075710) do
+ActiveRecord::Schema.define(version: 2018_10_03_134419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,9 +67,20 @@ ActiveRecord::Schema.define(version: 2018_07_31_075710) do
     t.datetime "updated_at", null: false
     t.string "decline_comment"
     t.bigint "rejection_reason_id"
+    t.date "start_date"
+    t.date "end_date"
+    t.string "proposal_comment"
     t.index ["airtable_id"], name: "index_bookings_on_airtable_id"
     t.index ["application_id"], name: "index_bookings_on_application_id"
     t.index ["rejection_reason_id"], name: "index_bookings_on_rejection_reason_id"
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.string "name"
+    t.string "airtable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["airtable_id"], name: "index_clients_on_airtable_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -86,6 +97,8 @@ ActiveRecord::Schema.define(version: 2018_07_31_075710) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "currency"
+    t.bigint "client_id"
+    t.index ["client_id"], name: "index_projects_on_client_id"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -140,6 +153,7 @@ ActiveRecord::Schema.define(version: 2018_07_31_075710) do
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
   add_foreign_key "bookings", "applications"
+  add_foreign_key "projects", "clients"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "countries"

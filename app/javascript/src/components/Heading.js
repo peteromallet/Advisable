@@ -30,4 +30,6 @@ export default withSpacing(styled.h3`
   font-weight: ${props => weights[props.size] || weights['m']};;
   line-height: ${props => lineHeighs[props.size] || lineHeighs['m']};
   letter-spacing: ${props => letterSpacing[props.size] || letterSpacing['m']};
+  display: ${props => props.block ? 'block' : 'auto'};
+  text-align: ${props => props.center ? 'center' : 'inherit'};
 `)
