@@ -34,9 +34,12 @@ export const NotificationWrapper = styled(NotificationPose)`
 
 export const NotificationCard = styled.div`
   width: 100%;
-  padding: 15px;
-  border-radius: 2px;
-  background: white;
+  padding: 20px;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 4px;
+  background: #173FCD;
   box-shadow: 0 5px 10px -5px rgba(6, 24, 51, 0.15),
     0 0 50px 0 rgba(6, 24, 51, 0.15);
 `;

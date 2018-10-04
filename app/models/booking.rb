@@ -1,5 +1,4 @@
 class Booking < ApplicationRecord
-  validates :airtable_id, presence: true
   validates :status, inclusion: { in: %w(Proposed Offered Accepted Declined Complete) }, allow_nil: true
 
   validate :valid_proposal, on: :create

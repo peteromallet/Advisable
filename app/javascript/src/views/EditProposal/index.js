@@ -12,7 +12,7 @@ import { withNotifications } from "src/components/Notifications";
 
 import ProposalForm from "../CreateProposal/components/ProposalForm";
 import FETCH_PROPOSAL from "./fetchProposal.graphql";
-import UPDATE_BOOKING from "./updateBooking.graphql";
+import UPDATE_PROPOSAL from "src/graphql/updateProposal.graphql";
 
 const EditProposal = ({ match, notifications }) => {
   return (
@@ -29,9 +29,9 @@ const EditProposal = ({ match, notifications }) => {
               <Heading marginBottom="xs" size="l">
                 Proposal for {client.name}
               </Heading>
-              <Text marginBottom='xl' size='l'>Send a proposal project to {client.name}</Text>
-              <Mutation mutation={UPDATE_BOOKING}>
-                {updateBooking => (
+              <Text marginBottom='xl' size='l'>Send a proposal to {client.name}</Text>
+              <Mutation mutation={UPDATE_PROPOSAL}>
+                {updateProposal => (
                   <ProposalForm
                     submitLabel="Update Proposal"
                     currency={currencySymbol(
@@ -53,7 +53,7 @@ const EditProposal = ({ match, notifications }) => {
                         id: booking.id
                       };
 
-                      await updateBooking({
+                      await updateProposal({
                         variables: { input }
                       });
 

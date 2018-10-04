@@ -106,6 +106,7 @@ class ListInput extends React.Component {
               <ListInputItem>
                 <Textarea
                   value={v}
+                  name={`${this.props.name}[${i}]`}
                   placeholder={this.props.placeholder}
                   onChange={this.handleChange(i)}
                 />

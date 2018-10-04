@@ -5,25 +5,29 @@ import { withSpacing } from "./Spacing";
 const heights = {
   s: '30px',
   m: '34px',
-  l: '38px'
+  l: '38px',
+  xl: '44px',
 }
 
 const mobileHeights = {
   s: '38px',
   m: '42px',
-  l: '48px'
+  l: '48px',
+  xl: '54px',
 }
 
 const fontSizes = {
   s: '14px',
   m: '15px',
   l: '16px',
+  xl: '16px',
 }
 
 const padding = {
   s: '0 15px',
   m: '0 20px',
   l: '0 25px',
+  xl: '0 30px',
 }
 
 export const ButtonStyling = styled.button`

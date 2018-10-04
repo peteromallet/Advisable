@@ -1,8 +1,0 @@
-mutation CreateBooking($input: CreateBookingInput!) {
-  createBooking(input: $input) {
-    booking {
-      id
-      status
-    }
-  }
-}

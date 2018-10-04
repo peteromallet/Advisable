@@ -12,8 +12,7 @@ import currency, { currencySymbol } from "src/utilities/currency";
 import LoadingCandidates from "../../components/LoadingCandidates";
 import FETCH_DATA from "./graphql/fetchData.graphql";
 
-import CREATE_BOOKING from "src/graphql/createBooking.graphql";
-import SEND_OFFER from "src/graphql/sendOffer.graphql";
+import CREATE_OFFER from "src/graphql/createOffer.graphql";
 
 const Offer = ({ match, history, loading, data, notifications }) => {
   if (data.loading) return <LoadingCandidates />;
@@ -32,54 +31,44 @@ const Offer = ({ match, history, loading, data, notifications }) => {
       <Spacing marginBottom="xl">
         <Text size="l">{data.booking.application.project.name}</Text>
       </Spacing>
-      <Mutation mutation={CREATE_BOOKING}>
+      <Mutation mutation={CREATE_OFFER}>
         {createOffer => (
-          <Mutation mutation={SEND_OFFER}>
-            {sendOffer => (
-              <Card padding="xl">
-                <OfferForm
-                  onCancel={goBack}
-                  currency={currencySymbol(
-                    data.booking.application.project.currency
-                  )}
-                  onSubmit={async values => {
-                    const response = await createOffer({
-                      variables: {
-                        input: {
-                          ...values,
-                          applicationId: data.booking.application.id
-                        }
-                      }
-                    });
+          <Card padding="xl">
+            <OfferForm
+              onCancel={goBack}
+              currency={currencySymbol(
+                data.booking.application.project.currency
+              )}
+              onSubmit={async values => {
+                const response = await createOffer({
+                  variables: {
+                    input: {
+                      ...values,
+                      applicationId: data.booking.application.id
+                    }
+                  }
+                });
 
-                    await sendOffer({
-                      variables: {
-                        input: { id: response.data.createBooking.booking.id }
-                      }
-                    });
+                notifications.notify(
+                  `An offer has been sent to ${
+                    data.booking.application.specialist.name
+                  }`
+                );
 
-                    notifications.notify(
-                      `An offer has been sent to ${
-                        data.booking.application.specialist.name
-                      }`
-                    );
-
-                    goBack();
-                  }}
-                  initialValues={{
-                    type: data.booking.type,
-                    rate: data.booking.rate,
-                    startDate: data.booking.startDate,
-                    endDate: data.booking.endDate,
-                    rateType: data.booking.rateType,
-                    rateLimit: data.booking.rateLimit,
-                    duration: data.booking.duration,
-                    deliverables: data.booking.deliverables
-                  }}
-                />
-              </Card>
-            )}
-          </Mutation>
+                goBack();
+              }}
+              initialValues={{
+                type: data.booking.type,
+                rate: data.booking.rate,
+                startDate: data.booking.startDate,
+                endDate: data.booking.endDate,
+                rateType: data.booking.rateType,
+                rateLimit: data.booking.rateLimit,
+                duration: data.booking.duration,
+                deliverables: data.booking.deliverables
+              }}
+            />
+          </Card>
         )}
       </Mutation>
     </div>
