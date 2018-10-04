@@ -8,6 +8,7 @@ import Flex from "src/components/Flex";
 import Select from "src/components/Select";
 import Button from "src/components/Button";
 import Spacing from "src/components/Spacing";
+import FieldRow from "src/components/FieldRow";
 import DatePicker from "src/components/DatePicker";
 import ListInput from "src/components/ListInput";
 import TextField from "src/components/TextField";
@@ -29,7 +30,12 @@ const amountLabel = form => {
   return "Amount";
 };
 
-export default ({ onSubmit, submitLabel = 'Send Proposal', currency = "€", initialValues }) => (
+export default ({
+  onSubmit,
+  submitLabel = "Send Proposal",
+  currency = "€",
+  initialValues
+}) => (
   <Formik
     onSubmit={onSubmit}
     initialValues={initialValues}
@@ -60,93 +66,87 @@ export default ({ onSubmit, submitLabel = 'Send Proposal', currency = "€", ini
             ]}
           />
         </Spacing>
-        <Spacing marginBottom="xl">
-          <Flex distribute="fillEvenly">
-            <Flex.Item paddingRight="s">
+        <Spacing marginBottom="s">
+          <FieldRow>
+            <DatePicker
+              value={form.values.startDate}
+              name="startDate"
+              onChange={date => form.setFieldValue("startDate", date)}
+              label="Estimated start date"
+              placeholder="Start date"
+              error={form.submitCount > 0 && form.errors.startDate}
+              options={{
+                disabledDays: { before: new Date() }
+              }}
+            />
+            {form.values.type === "Fixed" ? (
               <DatePicker
-                value={form.values.startDate}
-                name="startDate"
-                onChange={date => form.setFieldValue("startDate", date)}
-                label="Estimated start date"
-                placeholder="Start date"
-                error={form.submitCount > 0 && form.errors.startDate}
+                value={form.values.endDate}
+                name="endDate"
+                onChange={date => form.setFieldValue("endDate", date)}
+                label="Estimated end date"
+                placeholder="End date"
+                error={form.submitCount > 0 && form.errors.endDate}
                 options={{
-                  disabledDays: { before: new Date() }
+                  initialMonth:
+                    form.values.startDate && new Date(form.values.startDate),
+                  disabledDays: {
+                    before: new Date(form.values.startDate) || new Date()
+                  }
                 }}
               />
-            </Flex.Item>
-            <Flex.Item paddingLeft="s">
-              {form.values.type === "Fixed" ? (
-                <DatePicker
-                  value={form.values.endDate}
-                  name="endDate"
-                  onChange={date => form.setFieldValue("endDate", date)}
-                  label="Estimated end date"
-                  placeholder="End date"
-                  error={form.submitCount > 0 && form.errors.endDate}
-                  options={{
-                    initialMonth:
-                      form.values.startDate && new Date(form.values.startDate),
-                    disabledDays: {
-                      before: new Date(form.values.startDate) || new Date()
-                    }
-                  }}
-                />
-              ) : (
-                <Select
-                  block
-                  name="duration"
-                  value={form.values.duration}
-                  onChange={form.handleChange}
-                  label="Duration"
-                  options={[
-                    "2 Months",
-                    "3 Months",
-                    "4 Months",
-                    "5 Months",
-                    "6 Months",
-                    "Until Cancellation"
-                  ]}
-                />
-              )}
-            </Flex.Item>
-          </Flex>
-        </Spacing>
-        <Spacing marginBottom="xl">
-          <Flex distribute="fillEvenly">
-            <Flex.Item paddingRight="s">
-              <TextField
-                block
-                name="rate"
-                value={form.values.rate}
-                onChange={({ target }) => {
-                  const val = Number(target.value.replace(/[^0-9\.-]+/g, ""))
-                  form.setFieldValue('rate', val)
-                }}
-                onBlur={form.handleBlur}
-                label={amountLabel(form)}
-                error={(form.submitCount > 0 || form.touched.rate) && form.errors.rate}
-                placeholder={`${currency}0.00`}
-                mask={createNumberMask({
-                  prefix: currency,
-                  allowDecimal: true
-                })}
-              />
-            </Flex.Item>
-            <Flex.Item paddingLeft="s">
+            ) : (
               <Select
                 block
-                label="Type"
-                name="rateType"
-                value={form.values.rateType}
+                name="duration"
+                value={form.values.duration}
                 onChange={form.handleChange}
+                label="Duration"
                 options={[
-                  { label: "Fixed Price", value: "Fixed" },
-                  { label: "Hourly Rate", value: "Per Hour" }
+                  "2 Months",
+                  "3 Months",
+                  "4 Months",
+                  "5 Months",
+                  "6 Months",
+                  "Until Cancellation"
                 ]}
               />
-            </Flex.Item>
-          </Flex>
+            )}
+          </FieldRow>
+        </Spacing>
+        <Spacing marginBottom="s">
+          <FieldRow>
+            <TextField
+              block
+              name="rate"
+              value={form.values.rate}
+              onChange={({ target }) => {
+                const val = Number(target.value.replace(/[^0-9\.-]+/g, ""));
+                form.setFieldValue("rate", val);
+              }}
+              onBlur={form.handleBlur}
+              label={amountLabel(form)}
+              error={
+                (form.submitCount > 0 || form.touched.rate) && form.errors.rate
+              }
+              placeholder={`${currency}0.00`}
+              mask={createNumberMask({
+                prefix: currency,
+                allowDecimal: true
+              })}
+            />
+            <Select
+              block
+              label="Type"
+              name="rateType"
+              value={form.values.rateType}
+              onChange={form.handleChange}
+              options={[
+                { label: "Fixed Price", value: "Fixed" },
+                { label: "Hourly Rate", value: "Per Hour" }
+              ]}
+            />
+          </FieldRow>
         </Spacing>
         <Spacing marginBottom="xl">
           <ListInput
@@ -175,7 +175,7 @@ export default ({ onSubmit, submitLabel = 'Send Proposal', currency = "€", ini
         <Button
           type="submit"
           primary
-          size='xl'
+          size="xl"
           marginRight="m"
           disabled={form.isSubmitting}
           loading={form.isSubmitting}

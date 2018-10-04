@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const Choices = styled.div`
   display: flex;
   flex-wrap: wrap;
+
+  @media screen and (max-width: 500px) {
+    display: block;
+  }
 `;
 
 export const Choice = styled.div`
@@ -12,6 +16,14 @@ export const Choice = styled.div`
 
   &:first-child { margin-left: 0; }
   &:last-child { margin-right: 0; }
+
+  @media screen and (max-width: 500px) {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 10px;
+
+    &:last-child { margin-bottom: 0 }
+  }
 
   input {
     width: 0;
