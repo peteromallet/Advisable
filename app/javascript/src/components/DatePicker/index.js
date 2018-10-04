@@ -28,9 +28,9 @@ class DatePicker extends React.Component {
   }
 
   parseDate = (string, format, locale) => {
-    const parsed= DateTime.fromFormat(string, format, { locale })
+    const parsed= DateTime.fromFormat(string, format, { zone: 'utc' })
     if (parsed.isValid) {
-          return parsed.toJSDate();
+      return parsed.toJSDate();
     }
     return undefined
   }
