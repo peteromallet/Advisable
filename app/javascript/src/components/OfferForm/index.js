@@ -20,6 +20,7 @@ import TextField from "src/components/TextField";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import ListInput from "src/components/ListInput";
 import Choices from "src/components/Choices";
+import FieldRow from "src/components/FieldRow";
 import validationSchema from "./validationSchema";
 
 // Determins the label for the amount field based on the other
@@ -91,119 +92,106 @@ export default ({
             />
           </Spacing>
           <Divider />
-          <Spacing marginTop="xl" marginBottom="xl">
-            <Flex distribute="fillEvenly">
-              <Flex.Item paddingRight="s">
+          <Spacing marginTop="xl" marginBottom="s">
+            <FieldRow>
+              <DatePicker
+                name="startDate"
+                value={form.values.startDate}
+                onChange={date => form.setFieldValue("startDate", date)}
+                label="Estimated start date"
+                placeholder="Start date"
+                error={form.touched.startDate && form.errors.startDate}
+                options={{
+                  disabledDays: { before: new Date() }
+                }}
+              />
+              {form.values.type === "Fixed" ? (
                 <DatePicker
-                  name="startDate"
-                  value={form.values.startDate}
-                  onChange={date => form.setFieldValue("startDate", date)}
-                  label="Estimated start date"
-                  placeholder="Start date"
-                  error={form.touched.startDate && form.errors.startDate}
+                  name="endDate"
+                  value={form.values.endDate}
+                  onChange={date => form.setFieldValue("endDate", date)}
+                  label="Estimated end date"
+                  placeholder="End date"
+                  error={form.touched.endDare && form.errors.endDate}
                   options={{
-                    disabledDays: { before: new Date() }
+                    initialMonth:
+                      form.values.startDate && new Date(form.values.startDate),
+                    disabledDays: {
+                      before: new Date(form.values.startDate)
+                    }
                   }}
                 />
-              </Flex.Item>
-              <Flex.Item paddingLeft="s">
-                {form.values.type === "Fixed" ? (
-                  <DatePicker
-                    name="endDate"
-                    value={form.values.endDate}
-                    onChange={date => form.setFieldValue("endDate", date)}
-                    label="Estimated end date"
-                    placeholder="End date"
-                    error={form.touched.endDare && form.errors.endDate}
-                    options={{
-                      initialMonth:
-                        form.values.startDate &&
-                        new Date(form.values.startDate),
-                      disabledDays: {
-                        before: new Date(form.values.startDate)
-                      }
-                    }}
-                  />
-                ) : (
-                  <Select
-                    block
-                    name="duration"
-                    value={form.values.duration}
-                    onChange={form.handleChange}
-                    label="Duration"
-                    options={[
-                      "2 Months",
-                      "3 Months",
-                      "4 Months",
-                      "5 Months",
-                      "6 Months",
-                      "Until Cancellation"
-                    ]}
-                  />
-                )}
-              </Flex.Item>
-            </Flex>
+              ) : (
+                <Select
+                  block
+                  name="duration"
+                  value={form.values.duration}
+                  onChange={form.handleChange}
+                  label="Duration"
+                  options={[
+                    "2 Months",
+                    "3 Months",
+                    "4 Months",
+                    "5 Months",
+                    "6 Months",
+                    "Until Cancellation"
+                  ]}
+                />
+              )}
+            </FieldRow>
           </Spacing>
           <Divider />
-          <Spacing paddingTop="l" paddingBottom="l">
-            <Flex distribute="fillEvenly">
-              <Flex.Item paddingRight="s">
+          <Spacing paddingTop="l" paddingBottom="s">
+            <FieldRow>
+              <TextField
+                block
+                name="rate"
+                value={form.values.rate}
+                onChange={({ target }) => {
+                  const val = Number(target.value.replace(/[^0-9\.-]+/g, ""));
+                  form.setFieldValue("rate", val);
+                }}
+                onBlur={form.handleBlur}
+                label={amountLabel(form)}
+                error={form.touched.rate && form.errors.rate}
+                placeholder={`${currency}0.00`}
+                mask={createNumberMask({
+                  prefix: currency,
+                  allowDecimal: true
+                })}
+              />
+              <Select
+                block
+                label="Type"
+                name="rateType"
+                value={form.values.rateType}
+                onChange={e => {
+                  form.setFieldValue("rateLimit", null);
+                  form.handleChange(e);
+                }}
+                options={[
+                  { label: "Fixed Price", value: "Fixed" },
+                  { label: "Hourly Rate", value: "Per Hour" }
+                ]}
+              />
+              {form.values.rateType === "Per Hour" && (
                 <TextField
-                  block
-                  name="rate"
-                  value={form.values.rate}
+                  type="tel"
+                  name="rateLimit"
+                  value={form.values.rateLimit}
                   onChange={({ target }) => {
                     const val = Number(target.value.replace(/[^0-9\.-]+/g, ""));
-                    form.setFieldValue("rate", val);
+                    form.setFieldValue("rateLimit", val);
                   }}
-                  onBlur={form.handleBlur}
-                  label={amountLabel(form)}
-                  error={form.touched.rate && form.errors.rate}
+                  label="Monthly Budget"
                   placeholder={`${currency}0.00`}
                   mask={createNumberMask({
                     prefix: currency,
                     allowDecimal: true
                   })}
                 />
-              </Flex.Item>
-              <Flex.Item paddingLeft="s">
-                <Select
-                  block
-                  label="Type"
-                  name="rateType"
-                  value={form.values.rateType}
-                  onChange={e => {
-                    form.setFieldValue("rateLimit", null);
-                    form.handleChange(e);
-                  }}
-                  options={[
-                    { label: "Fixed Price", value: "Fixed" },
-                    { label: "Hourly Rate", value: "Per Hour" }
-                  ]}
-                />
-              </Flex.Item>
-              {form.values.rateType === "Per Hour" ? (
-                <Flex.Item paddingLeft="l">
-                  <TextField
-                    type="tel"
-                    name="rateLimit"
-                    value={form.values.rateLimit}
-                    onChange={({ target }) => {
-                      const val = Number(
-                        target.value.replace(/[^0-9\.-]+/g, "")
-                      );
-                      form.setFieldValue("rateLimit", val);
-                    }}
-                    label="Monthly Budget"
-                    placeholder={`${currency}0.00`}
-                    mask={createNumberMask({
-                      prefix: currency,
-                      allowDecimal: true
-                    })}
-                  />
-                </Flex.Item>
-              ) : null}
-            </Flex>
+              )}
+            </FieldRow>
           </Spacing>
           <Divider />
           <Spacing paddingTop="l" paddingBottom="m">

@@ -10,7 +10,7 @@ const calendarIn = keyframes`
     opacity: 1;
     transform: translateY(0);
   }
-`
+`;
 
 export const Wrapper = styled.div`
   .DayPickerInput {
@@ -18,6 +18,10 @@ export const Wrapper = styled.div`
   }
 
   .DayPickerInput-Overlay {
+    left: 0;
+    width: 100%;
+    min-width: 260px;
+    max-width: 320px;
     border-radius: 5px;
     box-shadow: 0px 5px 50px rgba(30, 26, 72, 0.25);
     animation: ${calendarIn} 300ms cubic-bezier(0.2, 0, 0, 1);
@@ -29,7 +33,6 @@ export const Wrapper = styled.div`
   }
 
   .DayPicker-NavBar {
-
     button {
       width: 30px;
       height: 30px;
@@ -75,7 +78,7 @@ export const Wrapper = styled.div`
     padding: 0;
     width: 40px;
     height: 40px;
-    color: #1E1A48;
+    color: #1e1a48;
     font-size: 14px;
     font-weight: 500;
   }
