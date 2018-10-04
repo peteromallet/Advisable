@@ -209,6 +209,7 @@ export default ({
           <Spacing paddingTop="l" paddingBottom="m">
             <ListInput
               label="Deliverables"
+              name="deliverables"
               value={form.values.deliverables}
               placeholder="Add a deliverable"
               error={form.touched.deliverables && form.errors.deliverables}

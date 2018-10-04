@@ -1,7 +1,0 @@
-mutation UpdateBooking($input: UpdateBookingInput!) {
-  updateBooking(input: $input) {
-    booking {
-      id
-    }
-  }
-}

@@ -1,8 +1,7 @@
-mutation SendProposal($id: ID!) {
-  sendProposal(input: { id: $id }) {
+mutation CreateOffer($input: CreateOfferInput!) {
+  createOffer(input: $input) {
     booking {
       id
-      status
       application {
         id
         status

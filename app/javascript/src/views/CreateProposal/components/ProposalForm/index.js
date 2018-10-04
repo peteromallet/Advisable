@@ -149,6 +149,7 @@ export default ({ onSubmit, submitLabel = 'Send Proposal', currency = "€", ini
         <Spacing marginBottom="xl">
           <ListInput
             label="Deliverables"
+            name="deliverables"
             value={form.values.deliverables}
             placeholder="Add a deliverable"
             error={form.submitCount > 0 && form.errors.deliverables}
@@ -172,6 +173,7 @@ export default ({ onSubmit, submitLabel = 'Send Proposal', currency = "€", ini
         <Button
           type="submit"
           primary
+          size='xl'
           marginRight="m"
           disabled={form.isSubmitting}
           loading={form.isSubmitting}

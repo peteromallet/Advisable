@@ -13,8 +13,7 @@ import { withNotifications } from "src/components/Notifications";
 
 import { ProposalComment } from "./styles";
 import FETCH_BOOKING from "./fetchBooking.graphql";
-import UPDATE_BOOKING from "./updateBooking.graphql";
-import SEND_OFFER from "./sendOffer.graphql";
+import CREATE_OFFER from "src/graphql/createOffer.graphql";
 
 // Renders the view for a client viewing a specialists proposal.
 const ViewProposal = ({ match, history, notifications }) => {
@@ -38,6 +37,7 @@ const ViewProposal = ({ match, history, notifications }) => {
         const { booking } = query.data;
         const { application } = booking;
         const { project, specialist } = application;
+        console.log(application)
 
         if (booking.status !== "Proposed") return <NotFound />;
 
@@ -53,10 +53,8 @@ const ViewProposal = ({ match, history, notifications }) => {
                   {booking.proposalComment}
                 </ProposalComment>
               )}
-              <Mutation mutation={UPDATE_BOOKING}>
-                {updateBooking => (
-                  <Mutation mutation={SEND_OFFER}>
-                    {sendOffer => (
+              <Mutation mutation={CREATE_OFFER}>
+                {createOffer => (
                       <OfferForm
                         currency={currencySymbol(project.currency)}
                         initialValues={{
@@ -71,28 +69,21 @@ const ViewProposal = ({ match, history, notifications }) => {
                         onSubmit={async values => {
                           const input = {
                             ...values,
-                            id: booking.id
+                            applicationId: application.id,
+                            proposalId: booking.id
                           };
 
-                          await updateBooking({
+                          await createOffer({
                             variables: { input }
-                          });
-
-                          await sendOffer({
-                            variables: {
-                              input: { id: booking.id }
-                            }
                           });
 
                           notifications.notify(
                             `An offer has been sent to ${specialist.name}`
                           );
 
-                          goBack();
+                          history.replace(backURL)
                         }}
                       />
-                    )}
-                  </Mutation>
                 )}
               </Mutation>
             </Card>
