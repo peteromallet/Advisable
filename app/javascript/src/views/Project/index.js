@@ -11,6 +11,7 @@ import Navigation from "src/components/Navigation";
 import View from "src/components/View";
 import LoadingCandidates from "./components/LoadingCandidates";
 import FETCH_PROJECT from "./graphql/fetchProject.graphql";
+import ViewProposal from "src/views/ViewProposal";
 
 class Project extends React.Component {
   render() {
@@ -50,6 +51,18 @@ class Project extends React.Component {
                 )}
               />
               <Route
+                path={`${match.path}/proposed`}
+                render={props => (
+                  <Applicants
+                    data={data}
+                    status="Proposed"
+                    countLabel="Proposed"
+                    emptyStateText="No candidates have made a propsal"
+                    {...props}
+                  />
+                )}
+              />
+              <Route
                 path={`${match.path}/offered`}
                 render={props => (
                   <Applicants
@@ -80,6 +93,10 @@ class Project extends React.Component {
               <Route
                 path={`${match.path}/applications/:applicationID`}
                 component={Applicant}
+              />
+              <Route
+                path={`${match.path}/proposals/:bookingID`}
+                component={ViewProposal}
               />
               <Route
                 path={`${match.path}/offers/:bookingID`}

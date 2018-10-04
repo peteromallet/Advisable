@@ -7,7 +7,7 @@ class Mutations::DeclineBooking < GraphQL::Schema::Mutation
   field :errors, [String], null: false
 
   def resolve(**args)
-    booking = Booking.find(args[:id])
+    booking = Booking.find_by_airtable_id(args[:id])
     update_airtable_record(booking.airtable_id, args)
     booking.update_attributes(status: 'Declined', rejection_reason: rejected_reason(args), decline_comment: args[:decline_comment])
 

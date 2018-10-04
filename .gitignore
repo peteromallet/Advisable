@@ -32,3 +32,4 @@ yarn-debug.log*
 coverage
 dump.rdb
 credentials.yml.enc
+/.env
