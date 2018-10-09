@@ -1,4 +1,5 @@
 import React from "react";
+import { DateTime } from "luxon";
 import { graphql } from "react-apollo";
 import Card from "src/components/Card";
 import Text from "src/components/Text";
@@ -49,8 +50,8 @@ class ViewOffer extends React.Component {
     const { match, loading, data } = this.props;
     if (data.loading) return <Loading />;
     if (!data.booking) return <NotFound />;
-    if (data.booking.status === 'Proposed') {
-      return <NotFound />
+    if (data.booking.status === "Proposed") {
+      return <NotFound />;
     }
 
     return (
@@ -99,6 +100,30 @@ class ViewOffer extends React.Component {
                 </Flex>
               </Spacing>
             )}
+            {data.booking.startDate &&
+              data.booking.endDate && (
+                <Spacing paddingBottom="m">
+                  <Flex distribute="fillEvenly">
+                    <div>
+                      <Text size="s">Estimated Start Date</Text>
+                      <Text size="l" variation="strong">
+                        {DateTime.fromISO(data.booking.startDate).toFormat(
+                          "d LLLL yyyy"
+                        )}
+                      </Text>
+                    </div>
+
+                    <div>
+                      <Text size="s">Estimated End Date</Text>
+                      <Text size="l" variation="strong">
+                        {DateTime.fromISO(data.booking.endDate).toFormat(
+                          "d LLLL yyyy"
+                        )}
+                      </Text>
+                    </div>
+                  </Flex>
+                </Spacing>
+              )}
             <Text marginTop="s" marginBottom="s">
               Deliverables
             </Text>
@@ -118,7 +143,8 @@ class ViewOffer extends React.Component {
                   <Button
                     primary
                     marginRight="s"
-                    onClick={() => this.setState({ acceptModal: true })}>
+                    onClick={() => this.setState({ acceptModal: true })}
+                  >
                     Accept Offer
                   </Button>
                   <DeclineModal
