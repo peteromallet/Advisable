@@ -51,6 +51,7 @@ class Mutations::CreateProposal < Mutations::BaseMutation
     airtable_record["Application Status"] = 'Proposed'
     airtable_record.save
     application.update_attributes(status: 'Proposed')
+    Webhook.process(application)
   end
 
   def sync_airtable_record(booking)

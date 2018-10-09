@@ -10,10 +10,10 @@ const Navbar = ({
 }) => {
   return (
     <div className={className}>
-      <button onClick={() => onPreviousClick()}>
+      <button type='button' onClick={() => onPreviousClick()}>
         ←
       </button>
-      <button onClick={() => onNextClick()}>
+      <button type='button' onClick={() => onNextClick()}>
         →
       </button>
     </div>
