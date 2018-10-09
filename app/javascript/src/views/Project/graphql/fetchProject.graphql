@@ -21,6 +21,7 @@ query project($id: ID!) {
       specialist {
         id
         name
+        firstName
         city
         image {
           url

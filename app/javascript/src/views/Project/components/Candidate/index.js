@@ -11,6 +11,7 @@ import Button from "src/components/Button";
 import FeaturedBadge from "src/components/FeaturedBadge";
 import Questions from "./Questions";
 import RejectModal from "src/components/RejectModal";
+import RejectProposalModal from "src/components/RejectProposalModal";
 import Skills from "src/components/Skills";
 import CandidateAttributes from "src/components/CandidateAttributes";
 import RequestIntroduction from "src/components/RequestIntroduction";
@@ -29,10 +30,12 @@ import {
   CandidateHeaderActions
 } from "./styles";
 
+const REJECT_PROPOSAL_MODAL = 'REJECT_PROPOSAL_MODAL';
+
 class Candidate extends React.Component {
   state = {
     expanded: false,
-    modal: null
+    modal: null,
   };
 
   clickToExpand = e => {
@@ -158,6 +161,17 @@ class Candidate extends React.Component {
               >
                 View Proposal
               </Button>
+
+              <Button type='button' onClick={() => this.setState({ modal: REJECT_PROPOSAL_MODAL})}>
+                Reject
+              </Button>
+
+              <RejectProposalModal
+                booking={proposal}
+                specialist={application.specialist}
+                isOpen={this.state.modal === REJECT_PROPOSAL_MODAL}
+                onClose={() => this.setState({ modal: null })}
+              />
             </React.Fragment>
           )}
 
