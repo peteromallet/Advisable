@@ -70,7 +70,7 @@ class ViewProposal extends React.Component {
                 {booking.proposalComment && (
                   <ProposalComment>
                     <h4>Comment from {specialist.name}</h4>
-                    {booking.proposalComment}
+                    <FormattedText>{booking.proposalComment}</FormattedText>
                   </ProposalComment>
                 )}
                 <Mutation mutation={CREATE_OFFER}>
