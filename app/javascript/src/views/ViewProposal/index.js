@@ -8,6 +8,7 @@ import NotFound from "src/views/NotFound";
 import Loading from "src/components/Loading";
 import Heading from "src/components/Heading";
 import OfferForm from "src/components/OfferForm";
+import FormattedText from "src/components/FormattedText";
 import { currencySymbol } from "src/utilities/currency";
 import { withNotifications } from "src/components/Notifications";
 
@@ -50,7 +51,7 @@ const ViewProposal = ({ match, history, notifications }) => {
               {booking.proposalComment && (
                 <ProposalComment>
                   <h4>Comment from {specialist.name}</h4>
-                  {booking.proposalComment}
+                  <FormattedText>{booking.proposalComment}</FormattedText>
                 </ProposalComment>
               )}
               <Mutation mutation={CREATE_OFFER}>
