@@ -23,6 +23,7 @@ query project($projectID: ID!, $applicationID: ID!) {
         id
         name
         city
+        firstName
         image {
           url
         }

@@ -16,7 +16,7 @@ import { withNotifications } from "src/components/Notifications";
 import { ProposalComment } from "./styles";
 import FETCH_BOOKING from "./fetchBooking.graphql";
 import CREATE_OFFER from "src/graphql/createOffer.graphql";
-import RejectProposalModal from "./components/RejectProposalModal";
+import RejectProposalModal from "src/components/RejectProposalModal";
 
 class ViewProposal extends React.Component {
   state = {
