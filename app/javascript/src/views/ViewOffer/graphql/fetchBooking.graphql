@@ -7,6 +7,8 @@ query booking($id: ID!) {
     rateLimit
     duration
     status
+    startDate
+    endDate
     deliverables
     application {
       id
