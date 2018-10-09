@@ -54,6 +54,7 @@ type Props = {
 export default ({
   onSubmit,
   onCancel,
+  secondaryAction,
   currency = "€",
   initialValues
 }: Props) => {
@@ -216,6 +217,7 @@ export default ({
                 Cancel
               </Button>
             )}
+            {secondaryAction && secondaryAction(form)}
           </Spacing>
         </form>
       )}
