@@ -30,6 +30,26 @@ const padding = {
   xl: '0 30px',
 }
 
+const THEMES = {
+  danger: {
+    base: {
+      color: 'white',
+      background: '#F41F52',
+    },
+    hover: {
+      background: '#F9446F',
+    },
+    active: {
+      background: '#CE264E'
+    }
+  }
+}
+
+const applyTheme = (name, state = 'base') => {
+  const theme = THEMES[name];
+  return theme ? theme[state] : {};
+}
+
 export const ButtonStyling = styled.button`
   position: relative;
   margin: 0;
@@ -102,6 +122,16 @@ export const ButtonStyling = styled.button`
   ${props => props.loading && `
     color: transparent !important;
   `}
+
+  ${props => applyTheme(props.theme)}
+
+  &:hover {
+    ${props => applyTheme(props.theme, 'hover')}
+  }
+
+  &:active {
+    ${props => applyTheme(props.theme, 'active')}
+  }
 `
 
 const ButtonLoading = styled.div`

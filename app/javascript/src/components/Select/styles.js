@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import arrows from './arrows.svg';
+import { withSpacing } from 'src/components/Spacing';
 
-export const Wrapper = styled.div`
+export const Wrapper = withSpacing(styled.div`
   width: ${props => props.block ? "100%" : "auto"};
   max-width: 100%;
-`
+`)
 
 export const SelectWrapper = styled.div`
   width: ${props => props.block ? "100%" : "auto"};
