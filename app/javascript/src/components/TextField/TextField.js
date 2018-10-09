@@ -3,6 +3,7 @@ import uniqueID from "lodash/uniqueId";
 import { Wrapper, Input, Textarea } from "./styles";
 import InputError from "src/components/InputError";
 import InputLabel from "src/components/InputLabel";
+import { extractSpacingProps } from 'src/components/Spacing';
 
 class TextField extends React.Component {
   componentWillMount() {
@@ -26,13 +27,14 @@ class TextField extends React.Component {
       mask,
       readOnly,
       disabled,
-      style
+      style,
+      ...props
     } = this.props;
 
     const Component = multiline ? Textarea : Input;
 
     return (
-      <Wrapper block={block}>
+      <Wrapper block={block} {...extractSpacingProps(props)}>
         {label && <InputLabel htmlFor={this.id}>{label}</InputLabel>}
         <Component
           type={type}

@@ -45,7 +45,7 @@ class Mutations::CreateOffer < Mutations::BaseMutation
   end
 
   def initialize_booking(args)
-    return Booking.new unless (args[:proposal_id]) 
+    return Booking.new unless (args[:proposal_id])
     Booking.find_by_airtable_id(args[:proposal_id])
   end
 
@@ -54,6 +54,7 @@ class Mutations::CreateOffer < Mutations::BaseMutation
     airtable_record["Application Status"] = 'Offered'
     airtable_record.save
     application.update_attributes(status: 'Offered')
+    Webhook.process(application)
   end
 
   def sync_airtable_record(booking)

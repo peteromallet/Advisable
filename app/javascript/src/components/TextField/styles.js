@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import MaskedInput from 'react-text-mask'
+import { withSpacing } from 'src/components/Spacing';
 
-export const Wrapper = styled.div`
+export let Wrapper = styled.div`
   width: ${props => props.block ? "100%" : "auto"};
 `
+
+Wrapper = withSpacing(Wrapper)
 
 export const Input = styled(MaskedInput)`
   width: 100%;
