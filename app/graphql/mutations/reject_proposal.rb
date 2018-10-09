@@ -19,12 +19,13 @@ class Mutations::RejectProposal < Mutations::BaseMutation
 
   def resolve(**args)
     booking = Booking.find_by_airtable_id(args[:id])
+    reason = ApplicationRejectionReason.find(args[:reason])
     booking.assign_attributes(client_decline_comment: args[:comment], status: 'Declined')
 
     if booking.valid?
       sync_with_airtable(booking)
       booking.save
-      update_application_status(booking.application)
+      update_application_status(booking.application, reason)
       Webhook.process(booking)
       return { booking: booking, errors: [] }
     end
@@ -36,11 +37,15 @@ class Mutations::RejectProposal < Mutations::BaseMutation
 
   private
 
-  def update_application_status(application)
+  def update_application_status(application, reason)
     airtable_record = Airtable::Application.find(application.airtable_id)
     airtable_record["Application Status"] = 'Application Rejected'
+    airtable_record["Rejected Reason"] = [reason.airtable_id]
     airtable_record.save
-    application.update_attributes(status: 'Application Rejected')
+    application.update_attributes(
+      status: 'Application Rejected',
+      rejection_reason: reason,
+    )
     Webhook.process(application)
   end
 

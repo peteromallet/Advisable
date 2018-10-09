@@ -18,6 +18,7 @@ import FeaturedBadge from "src/components/FeaturedBadge";
 import CandidateAttributes from "src/components/CandidateAttributes";
 import currency from "src/utilities/currency";
 import RejectModal from "src/components/RejectModal";
+import RejectProposalModal from "src/components/RejectProposalModal";
 import RequestIntroduction from "src/components/RequestIntroduction";
 import AdvisableMessage from "./components/AdvisableMessage";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
@@ -29,6 +30,8 @@ import {
   AppliedTo,
   AdvisableComment
 } from "./styles";
+
+const REJECT_PROPOSAL_MODAL = 'REJECT_PROPOSAL_MODAL';
 
 class Applicant extends React.Component {
   state = {
@@ -144,19 +147,32 @@ class Applicant extends React.Component {
 
               {application.status === "Proposed" &&
                 proposal && (
-                  <Button
-                    marginRight="m"
-                    onClick={() =>
-                      this.props.history.push(
-                        `/projects/${project.airtableId}/proposals/${
-                          proposal.id
-                        }`
-                      )
-                    }
-                    primary
-                  >
-                    View Proposal
-                  </Button>
+                  <React.Fragment>
+                    <Button
+                      marginRight="m"
+                      onClick={() =>
+                        this.props.history.push(
+                          `/projects/${project.airtableId}/proposals/${
+                            proposal.id
+                          }`
+                        )
+                      }
+                      primary
+                    >
+                      View Proposal
+                    </Button>
+
+                    <Button type='button' onClick={() => this.setState({ modal: REJECT_PROPOSAL_MODAL})}>
+                      Reject
+                    </Button>
+
+                    <RejectProposalModal
+                      booking={proposal}
+                      specialist={application.specialist}
+                      isOpen={this.state.modal === REJECT_PROPOSAL_MODAL}
+                      onClose={() => this.setState({ modal: null })}
+                    />
+                  </React.Fragment>
                 )}
 
               {application.status === "Applied" && (
