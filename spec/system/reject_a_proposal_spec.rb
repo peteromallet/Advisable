@@ -7,6 +7,7 @@ describe 'Rejecting an application' do
   it "sets the applicaton status to Application Rejected" do
     airtableApplication = double("Airtable::Application")
     expect(airtableApplication).to receive(:[]=).with("Application Status", "Application Rejected")
+    expect(airtableApplication).to receive(:[]=).with("Rejected Reason", [reason.airtable_id])
     expect(airtableApplication).to receive(:save)
     expect(Airtable::Application).to receive(:find).with(proposal.application.airtable_id)
       .and_return(airtableApplication)
