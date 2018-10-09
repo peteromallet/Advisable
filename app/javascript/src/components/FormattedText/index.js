@@ -1,6 +1,7 @@
 import React from "react";
 
 const FormattedText = ({ children }) => {
+  if (!children) return null
   return children
     .replace(/<br\s\/>/g, "\n")
     .split("\n")
