@@ -49,7 +49,7 @@ const ViewProposal = ({ match, history, notifications }) => {
               <Text marginBottom='l'>Review the details of this proposal below</Text>
               {booking.proposalComment && (
                 <ProposalComment>
-                  <h4>{specialist.name}</h4>
+                  <h4>Comment from {specialist.name}</h4>
                   {booking.proposalComment}
                 </ProposalComment>
               )}
