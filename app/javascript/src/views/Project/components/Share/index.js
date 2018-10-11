@@ -3,7 +3,7 @@ import React from "react";
 import queryString from "query-string";
 import { Helmet } from "react-helmet";
 import URL from "./URL";
-import slack from "./slack.svg";
+import CopyButton from './CopyButton';
 import { ShareWrapper, ShareIcon, Divider, ShareButton } from "./styles";
 
 class Share extends React.Component {
@@ -102,15 +102,7 @@ class Share extends React.Component {
         <URL>{this.url()}</URL>
         <Divider>or</Divider>
         <h4>Ask colleagues to share</h4>
-        <ShareButton
-          className="addthis_share_button"
-          data-service="slack"
-          ata-url={this.url("slack")}
-          data-title={this.colleagueShareMessage}
-        >
-          <img src={slack} alt="" />
-          Share on Slack
-        </ShareButton>
+        <CopyButton url={this.url()} />
         <ShareButton
           href={`mailto:?subject=${this.subject}&body=${this.colleagueEmailBody}`}>
           Share via email
