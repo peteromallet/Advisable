@@ -20,7 +20,13 @@ class Applicants extends React.Component {
   }
 
   render() {
-    const { data, status, emptyStateText, countLabel } = this.props;
+    const {
+      data,
+      status,
+      emptyStateText,
+      emptyStateSubText,
+      countLabel
+    } = this.props;
     const applications = filter(data.project.applications, { status });
 
     return (
@@ -34,7 +40,7 @@ class Applicants extends React.Component {
             ))}
           </div>
         ) : (
-          <NoApplicants text={emptyStateText} />
+          <NoApplicants text={emptyStateText} subText={emptyStateSubText} />
         )}
       </React.Fragment>
     );

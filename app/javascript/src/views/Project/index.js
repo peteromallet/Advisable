@@ -61,6 +61,7 @@ class Project extends React.Component {
                       data={data}
                       status="Applied"
                       emptyStateText="You have no more applications to review"
+                      emptyStateSubText="We're busy finding applicants for you. We'll be in touch when we've found some great people for you."
                       {...props}
                     />
                   )}
