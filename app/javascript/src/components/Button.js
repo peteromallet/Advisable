@@ -89,7 +89,7 @@ export const ButtonStyling = styled.button`
   }
 
   svg {
-    margin-right: 8px;
+    margin-right: 6px !important;
   }
 
   ${props =>

@@ -16,6 +16,7 @@
     "luxon": "^1.4.2",
     "polished": "^1.9.2",
     "prop-types": "^15.6.1",
+    "query-string": "^6.2.0",
     "react": "^16.3.2",
     "react-apollo": "^2.1.4",
     "react-day-picker": "^7.2.4",

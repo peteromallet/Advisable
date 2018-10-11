@@ -27,7 +27,7 @@ const iconPositons = {
   email: "-114px 0"
 };
 
-export const ShareIcon = styled.div`
+export const ShareIcon = styled.a`
   width: 38px;
   height: 38px;
   margin: 0 5px;
@@ -180,7 +180,7 @@ export const Divider = styled.div`
   }
 `;
 
-export const ShareButton = styled.button`
+export const ShareButton = styled.a`
   height: 32px;
   margin: 0 5px;
   color: #50506D;
@@ -195,6 +195,7 @@ export const ShareButton = styled.button`
   display: inline-block;
   letter-spacing: -0.01em;
   border: 1px solid #c9c8db;
+  text-decoration: none;
 
   img {
     transform: translateY(25%);

@@ -1,5 +1,6 @@
 // Displays the controls for sharing a project
 import React from "react";
+import queryString from "query-string";
 import { Helmet } from "react-helmet";
 import URL from "./URL";
 import slack from "./slack.svg";
@@ -12,6 +13,11 @@ class Share extends React.Component {
   // it does, then call the share method to enable the sharing functionality.
   // https://www.addthis.com/academy/addthis-core-share-follow-api
   componentDidMount() {
+    window.addthis_config = window.addthis_config || {};
+    window.addthis_config.data_track_clickback = false;
+    window.addthis_config.data_track_addressbar = false;
+    window.addthis_config.ui_email_note = "Check this out!";
+
     this.loader = setInterval(() => {
       if (window.addthis) {
         window.addthis.shareButton();
@@ -22,9 +28,41 @@ class Share extends React.Component {
 
   url(source = null) {
     if (source) {
-      return `${this.props.url}&utm_source=${source}`
+      const parsed = queryString.parseUrl(this.props.url)
+      const params = {
+        ...parsed.query || {},
+        utm_source: source
+      }
+      return `${parsed.url}?${queryString.stringify(params)}`;
     }
     return this.props.url;
+  }
+
+  get skill() {
+    const params = queryString.parse(this.props.url);
+    return params.skill;
+  }
+
+  get subject() {
+    return `${this.skill} freelancer`;
+  }
+
+  get emailBody() {
+    return encodeURIComponent(`${this.shareMessage}\n\n${this.url("email")}`);
+  }
+
+  get shareMessage() {
+    return `I’m currently looking for a ${
+      this.skill
+    } freelancer for a project. Feel free to tag anyone you know who might be relevant.`;
+  }
+
+  get colleagueShareMessage() {
+    return `Hi guys, I’m looking for a ${this.skill} freelancer for a project. If you know someone suitable, please share this link with them`;
+  }
+
+  get colleagueEmailBody() {
+    return encodeURIComponent(`${this.colleagueShareMessage}\n\n${this.url("email")}`);
   }
 
   render() {
@@ -41,46 +79,40 @@ class Share extends React.Component {
           <ShareIcon
             className="addthis_share_button"
             data-service="linkedin"
-            data-url={this.url('linkedin')}
-            data-title="AddThis - Get more likes, shares and follows with smart website tools"
+            data-url={this.url("linkedin")}
+            data-title={this.shareMessage}
+            data-description={this.shareMessage}
           />
           <ShareIcon
             className="addthis_share_button"
             data-service="facebook"
-            data-url={this.url('facebook')}
-            data-title="AddThis - Get more likes, shares and follows with smart website tools"
+            data-url={this.url("facebook")}
           />
           <ShareIcon
             className="addthis_share_button"
             data-service="twitter"
-            data-url={this.url('twitter')}
-            data-title="AddThis - Get more likes, shares and follows with smart website tools"
+            data-url={this.url("twitter")}
+            data-title={this.shareMessage}
           />
           <ShareIcon
-            className="addthis_share_button"
+            href={`mailto:?subject=${this.subject}&body=${this.emailBody}`}
             data-service="email"
-            data-url={this.url('email')}
-            data-title="AddThis - Get more likes, shares and follows with smart website tools"
           />
         </div>
-        <URL>{this.url('twitter')}</URL>
+        <URL>{this.url()}</URL>
         <Divider>or</Divider>
         <h4>Ask colleagues to share</h4>
         <ShareButton
           className="addthis_share_button"
           data-service="slack"
-          ata-url={this.url('slack')}
-          data-title="AddThis - Get more likes, shares and follows with smart website tools"
+          ata-url={this.url("slack")}
+          data-title={this.colleagueShareMessage}
         >
           <img src={slack} alt="" />
           Share on Slack
         </ShareButton>
         <ShareButton
-          className="addthis_share_button"
-          data-service="email"
-          ata-url={this.url('email')}
-          data-title="AddThis - Get more likes, shares and follows with smart website tools"
-        >
+          href={`mailto:?subject=${this.subject}&body=${this.colleagueEmailBody}`}>
           Share via email
         </ShareButton>
       </ShareWrapper>
