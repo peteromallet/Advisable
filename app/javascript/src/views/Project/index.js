@@ -33,26 +33,30 @@ class Project extends React.Component {
             <React.Fragment>
               <Spacing marginBottom="xl">
                 <Heading size="l">{data.project.name}</Heading>
+                {data.project.clientReferralUrl && (
+                  <Route
+                    path={`${match.path}/applied`}
+                    render={props => (
+                      <ShareAction
+                        projectID={data.project.id}
+                        url={data.project.clientReferralUrl}
+                      />
+                    )}
+                  />
+                )}
+              </Spacing>
+              {data.project.clientReferralUrl && (
                 <Route
                   path={`${match.path}/applied`}
                   render={props => (
-                    <ShareAction
+                    <SharePrompt
                       projectID={data.project.id}
                       url={data.project.clientReferralUrl}
+                      onDismiss={() => this.forceUpdate()}
                     />
                   )}
                 />
-              </Spacing>
-              <Route
-                path={`${match.path}/applied`}
-                render={props => (
-                  <SharePrompt
-                    projectID={data.project.id}
-                    url={data.project.clientReferralUrl}
-                    onDismiss={() => this.forceUpdate()}
-                  />
-                )}
-              />
+              )}
               <Switch>
                 <Route
                   path={`${match.path}/applied`}
