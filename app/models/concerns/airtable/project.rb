@@ -5,7 +5,7 @@ class Airtable::Project < Airtable::Base
   # We store the project name in a "Project" column on the "Projects" table
   # in airtable.
   sync_column :project, to: :name
-  sync_columns :currency
+  sync_columns :currency, :client_referral_url
 
   sync_data do |project|
     project.currency = fields['Currency'].try(:first)
