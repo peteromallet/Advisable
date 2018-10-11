@@ -20,6 +20,22 @@ class Modal extends React.Component {
     modalRoot.removeChild(this.el);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.isOpen === false && this.props.isOpen) {
+      window.addEventListener('keydown', this.handleKeyDown)
+    }
+
+    if (prevProps.isOpen && this.props.isOpen === false) {
+      window.removeEventListener('keydown', this.handleKeyDown)
+    }
+  }
+
+  handleKeyDown = e => {
+    if (e.keyCode === 27) {
+      this.props.onClose()
+    }
+  }
+
   render() {
     if (!this.props.isOpen) return null;
 

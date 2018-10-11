@@ -1,5 +1,5 @@
 import React from "react";
-import Icon from "src/components/Icon";
+import illustration from './illustration';
 import Text from "src/components/Text";
 import Spacing from "src/components/Spacing";
 import { Card } from "./styles";
@@ -7,8 +7,8 @@ import { Card } from "./styles";
 export default ({ text }) => (
   <Card>
     <Spacing bottom="xl">
-      <Icon icon="users" width={44} height={44} color="#DBE2EB" />
+      <img src={illustration} width={300} alt='' />
     </Spacing>
-    <Text>{text}</Text>
+    <Text weight="semibold" colour='dark'>{text}</Text>
   </Card>
 );
