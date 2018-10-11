@@ -39,8 +39,8 @@ class Share extends React.Component {
   }
 
   get skill() {
-    const params = queryString.parse(this.props.url);
-    return params.skill;
+    const params = queryString.parseUrl(this.props.url);
+    return params.query.skill;
   }
 
   get subject() {
