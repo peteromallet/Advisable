@@ -28,6 +28,7 @@ export const Window = styled.div.attrs({
   z-index: 500;
   background: white;
   border-radius: 8px;
+  position: relative;
   box-shadow: 0 15px 50px -15px #233951;
 `
 
@@ -49,4 +50,19 @@ export const Backdrop = styled.div`
   position: absolute;
   animation: ${fadeIn} 500ms ease-out;
   background: ${rgba('#24384E', 0.85)};
+`
+
+export const CloseModal = styled.button`
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  border-radius: 50%;
+  background: #F1F3FD;
 `

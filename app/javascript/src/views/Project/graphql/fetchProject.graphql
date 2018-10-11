@@ -3,6 +3,7 @@ query project($id: ID!) {
     id
     name
     currency
+    clientReferralUrl
     applications {
       id
       rate
