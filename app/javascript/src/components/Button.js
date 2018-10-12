@@ -1,112 +1,119 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import React from "react";
+import { rgba } from "polished";
+import styled, { keyframes, css } from "styled-components";
 import { withSpacing } from "./Spacing";
 
 const heights = {
-  s: '30px',
-  m: '34px',
-  l: '38px',
-  xl: '44px',
-}
+  s: "30px",
+  m: "34px",
+  l: "38px",
+  xl: "44px"
+};
 
 const mobileHeights = {
-  s: '38px',
-  m: '42px',
-  l: '48px',
-  xl: '54px',
-}
+  s: "38px",
+  m: "42px",
+  l: "48px",
+  xl: "54px"
+};
 
 const fontSizes = {
-  s: '14px',
-  m: '15px',
-  l: '16px',
-  xl: '16px',
-}
+  s: "14px",
+  m: "15px",
+  l: "16px",
+  xl: "16px"
+};
 
 const padding = {
-  s: '0 15px',
-  m: '0 20px',
-  l: '0 25px',
-  xl: '0 30px',
-}
+  s: "0 15px",
+  m: "0 16px",
+  l: "0 25px",
+  xl: "0 30px"
+};
 
-const THEMES = {
-  danger: {
-    base: {
-      color: 'white',
-      background: '#F41F52',
-    },
-    hover: {
-      background: '#F9446F',
-    },
-    active: {
-      background: '#CE264E'
+// STYLES defines the various styles for buttons. The style for a button can be
+// selected with the 'styling' prop.
+// <Button styling='outlined'>Click me</Button>
+const STYLES = {
+  default: css`
+    color: white;
+    background: #4c496a;
+  `,
+  outlined: css`
+    color: #4c576a;
+    background: transparent;
+    border: 1px solid #c8cee3;
+
+    svg {
+      stroke: #8d93b6;
     }
-  }
-}
 
-const applyTheme = (name, state = 'base') => {
-  const theme = THEMES[name];
-  return theme ? theme[state] : {};
-}
+    &:hover {
+      border-color: #b0b7cf;
+    }
+
+    &:active {
+      border-color: #d7ddf3;
+    }
+  `,
+  danger: css`
+    color: white;
+    background: #f41f52;
+  `
+};
 
 export const ButtonStyling = styled.button`
   position: relative;
   margin: 0;
-  height: ${props => heights[props.size] || heights['m']};
-  color: white;
+  height: ${props => heights[props.size] || heights["m"]};
   border: none;
   outline: none;
-  font-size: ${props => fontSizes[props.size] || fontSizes['m']};
-  padding: ${props => padding[props.size] || padding['m']};
-  opacity: ${props => props.disabled ? '0.5' : '1'};
+  font-size: ${props => fontSizes[props.size] || fontSizes["m"]};
+  padding: ${props => padding[props.size] || padding["m"]};
+  opacity: ${props => (props.disabled ? "0.5" : "1")};
   cursor: pointer;
   font-weight: 500;
   border-radius: 5px;
-  background: #4C496A;
   letter-spacing: -0.02em;
   -webkit-appearance: none;
   align-items: center;
   justify-content: center;
-  width: ${props => props.block ? '100%' : 'auto'};
-  display: ${props => props.block ? 'flex' : 'inline-flex'};
+  width: ${props => (props.block ? "100%" : "auto")};
+  display: ${props => (props.block ? "flex" : "inline-flex")};
   transition: box-shadow 0.2s, background 0.2s;
 
+  ${props => STYLES[props.styling || "default"]}
+
   @media (max-width: 768px) {
-    height: ${props => mobileHeights[props.size] || mobileHeights['m']};
+    height: ${props => mobileHeights[props.size] || mobileHeights["m"]};
   }
 
   svg {
-    margin-right: 8px;
+    margin-right: 6px !important;
   }
 
-  &:hover {
-    background: #373453;
-  }
-
-  &:active {
-    background: #161526;
-    transition: none;
-  }
-
-  ${props => props.blank && `
-    color: #7D8DB0;
-    background: white;
-    border: 1px solid #D1D7E0;
-
-    &:hover {
-      color: #63749A;
+  ${props =>
+    props.blank &&
+    css`
+      color: #7d8db0;
       background: white;
-      border-color: #B3BDCA;
-    }
+      border: 1px solid #d1d7e0;
 
-    &:active {
-      color: #3E4B68;
-      background: white;
-    }
-  `}
+      &:hover {
+        color: #63749a;
+        background: white;
+        border-color: #b3bdca;
+      }
 
-  ${props => props.primary && `
+      &:active {
+        color: #3e4b68;
+        background: white;
+      }
+    `}
+
+  ${props =>
+    props.primary &&
+    `
     background: #1A5FFF;
 
     &:hover {
@@ -119,20 +126,12 @@ export const ButtonStyling = styled.button`
     }
   `}
 
-  ${props => props.loading && `
-    color: transparent !important;
-  `}
-
-  ${props => applyTheme(props.theme)}
-
-  &:hover {
-    ${props => applyTheme(props.theme, 'hover')}
-  }
-
-  &:active {
-    ${props => applyTheme(props.theme, 'active')}
-  }
-`
+  ${props =>
+    props.loading &&
+    css`
+      color: transparent !important;
+    `}
+`;
 
 const ButtonLoading = styled.div`
   top: 0;
@@ -144,7 +143,7 @@ const ButtonLoading = styled.div`
   position: absolute;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const loadingDot = keyframes`
   0% {
@@ -159,7 +158,13 @@ const loadingDot = keyframes`
     opacity: 0;
     transform: scale(0.5);
   }
-`
+`;
+
+const ButtonInner = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const ButtonLoadingDot = styled.div`
   opacity: 0;
@@ -171,9 +176,13 @@ const ButtonLoadingDot = styled.div`
   display: inline-block;
   animation: ${loadingDot} 1s infinite;
 
-  &:nth-child(2) { animation-delay: 100ms }
-  &:nth-child(3) { animation-delay: 200ms }
-`
+  &:nth-child(2) {
+    animation-delay: 100ms;
+  }
+  &:nth-child(3) {
+    animation-delay: 200ms;
+  }
+`;
 
 const Loading = () => (
   <ButtonLoading>
@@ -181,13 +190,13 @@ const Loading = () => (
     <ButtonLoadingDot />
     <ButtonLoadingDot />
   </ButtonLoading>
-)
+);
 
-const ButtonWithSpacing = withSpacing(ButtonStyling)
+const ButtonWithSpacing = withSpacing(ButtonStyling);
 
 export default ({ loading, children, ...props }) => (
   <ButtonWithSpacing loading={loading} {...props}>
     {loading && <Loading />}
-    {children}
+    <ButtonInner>{children}</ButtonInner>
   </ButtonWithSpacing>
 );

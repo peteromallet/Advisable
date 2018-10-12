@@ -4,6 +4,7 @@ class Types::ProjectType < Types::BaseType
   field :airtable_id, String, null: false
   field :name, String, null: false
   field :currency, String, null: true
+  field :clientReferralUrl, String, null: true
   field :client, Types::Client, null: false
 
   field :applications, [Types::ApplicationType, null: true], null: true do
