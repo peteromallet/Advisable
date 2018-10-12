@@ -3,12 +3,13 @@ import { withSpacing } from "./Spacing";
 
 const weights = {
   strong: 600,
-  bold: 600
+  bold: 600,
+  semibold: 500,
 };
 
 const colours = {
   strong: "#1B2A3A",
-  dark: "#1B2A3A",
+  dark: "#00114D",
 };
 
 const sizes = {
@@ -24,7 +25,7 @@ const lineHeights = {
 };
 
 const kerning = {
-  m: "-0.005em",
+  m: "-0.016em",
   l: "-0.02em"
 };
 
