@@ -3,7 +3,6 @@ import gql from "graphql-tag";
 import filter from "lodash/filter";
 import { Transition } from "react-spring";
 import Text from "src/components/Text";
-import Heading from "src/components/Heading";
 import Spacing from "src/components/Spacing";
 import Candidate from "../components/Candidate";
 import NoApplicants from "../components/NoCandidates";
@@ -21,23 +20,17 @@ class Applicants extends React.Component {
   }
 
   render() {
-    const { data, status, emptyStateText, countLabel } = this.props;
+    const {
+      data,
+      status,
+      emptyStateText,
+      emptyStateSubText,
+      countLabel
+    } = this.props;
     const applications = filter(data.project.applications, { status });
-    const count =
-      applications.length === 1
-        ? "1 Applicant"
-        : `${applications.length} Applicants`;
 
     return (
       <React.Fragment>
-        <Heading marginBottom="xs" size="l">
-          {data.project.name}
-        </Heading>
-
-        <Text size="l" marginBottom="xl">
-          {countLabel || status} - {count}
-        </Text>
-
         {applications.length > 0 ? (
           <div>
             {applications.map(application => (
@@ -47,7 +40,7 @@ class Applicants extends React.Component {
             ))}
           </div>
         ) : (
-          <NoApplicants text={emptyStateText} />
+          <NoApplicants text={emptyStateText} subText={emptyStateSubText} />
         )}
       </React.Fragment>
     );
