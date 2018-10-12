@@ -1,14 +1,15 @@
 import React from "react";
-import Icon from "src/components/Icon";
+import illustration from './illustration';
 import Text from "src/components/Text";
 import Spacing from "src/components/Spacing";
 import { Card } from "./styles";
 
-export default ({ text }) => (
+export default ({ text, subText }) => (
   <Card>
     <Spacing bottom="xl">
-      <Icon icon="users" width={44} height={44} color="#DBE2EB" />
+      <img src={illustration} width={300} alt='' />
     </Spacing>
-    <Text>{text}</Text>
+    <Text marginBottom="m" weight="semibold" colour='dark'>{text}</Text>
+    {subText && <Text>{subText}</Text>}
   </Card>
 );
