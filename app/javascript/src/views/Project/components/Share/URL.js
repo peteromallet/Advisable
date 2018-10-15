@@ -1,24 +1,22 @@
 import React from "react";
 import { URL } from "./styles";
+import clipboard from "clipboard-polyfill"
 
 class URLComponent extends React.Component {
   state = {
     copied: false
-  }
+  };
 
   handleTextClick = () => {
     this.url.select();
   };
 
   handleCopy = e => {
-    this.url.select();
-    document.execCommand("copy");
-    window.getSelection().removeAllRanges();
-
+    clipboard.writeText(this.props.children);
     this.setState({ copied: true });
 
     setTimeout(() => {
-      this.setState({ copied: false })
+      this.setState({ copied: false });
     }, 2000);
   };
 
@@ -32,7 +30,7 @@ class URLComponent extends React.Component {
           readOnly
         />
         {this.state.copied && (
-          <span className='copiedToClipboard'>Copied to clipboard</span>
+          <span className="copiedToClipboard">Copied to clipboard</span>
         )}
         <button type="button" onClick={this.handleCopy}>
           Copy

@@ -1,4 +1,5 @@
 import React from 'react';
+import clipboard from "clipboard-polyfill"
 import { ShareButton } from './styles';
 
 class CopyButton extends React.Component {
@@ -7,15 +8,7 @@ class CopyButton extends React.Component {
   }
 
   handleClick = e => {
-    const el = document.createElement('textarea');
-    el.value = this.props.url;
-    el.setAttribute('readonly', '');
-    el.style.position = 'absolute';
-    el.style.left = '-9999px';
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
+    clipboard.writeText(this.props.url);
 
     this.setState({ copied: true })
     setTimeout(() => {

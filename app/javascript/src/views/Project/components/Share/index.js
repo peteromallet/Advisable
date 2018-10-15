@@ -35,13 +35,19 @@ class Share extends React.Component {
   }
 
   get emailBody() {
-    return encodeURIComponent(`${this.shareMessage}\n\n${this.url("email")}`);
+    return encodeURIComponent(`${this.emailShareMessage}\n\n${this.url("email")}`);
   }
 
   get shareMessage() {
     return `I’m currently looking for a ${
       this.skill
     } freelancer for a project. Feel free to tag anyone you know who might be relevant.`;
+  }
+
+  get emailShareMessage() {
+    return `I’m currently looking for a ${
+      this.skill
+    } freelancer for a project. Feel free to share this with anyone you know who might be relevant.`;
   }
 
   get colleagueShareMessage() {
@@ -80,6 +86,7 @@ class Share extends React.Component {
             data-title={this.shareMessage}
           />
           <ShareIcon
+            target="_blank"
             href={`mailto:?subject=${this.subject}&body=${this.emailBody}`}
             data-service="email"
           />
@@ -89,6 +96,7 @@ class Share extends React.Component {
         <h4>Ask colleagues to share</h4>
         <CopyButton url={this.url()} />
         <ShareButton
+          target="_blank"
           href={`mailto:?subject=${this.subject}&body=${
             this.colleagueEmailBody
           }`}
