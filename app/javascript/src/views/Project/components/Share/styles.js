@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import icons from "./icons.svg";
+import icons from "./icons.png";
 
 export const ShareWrapper = styled.div`
   text-align: center;
@@ -57,6 +57,7 @@ export const ShareIcon = styled.a`
     height: 100%;
     position: absolute;
     background-image: url(${icons});
+    background-size: 152px 38px;
     background-position: ${props => iconPositons[props["data-service"]]};
   }
 
