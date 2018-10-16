@@ -77,7 +77,7 @@ class Project extends React.Component {
                       data={data}
                       status="Application Accepted"
                       countLabel="Accepted"
-                      emptyStateText="You have not requested introduction to any applicants"
+                      emptyStateText="You have not requested introductions to any applicants"
                       {...props}
                     />
                   )}
@@ -89,7 +89,7 @@ class Project extends React.Component {
                       data={data}
                       status="Proposed"
                       countLabel="Proposed"
-                      emptyStateText="No candidates have made a propsal"
+                      emptyStateText="No candidates have made a proposal"
                       {...props}
                     />
                   )}
