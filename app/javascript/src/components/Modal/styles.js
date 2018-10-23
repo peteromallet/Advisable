@@ -18,18 +18,23 @@ export const ModalContainer = styled.div`
   }
 `
 
+const windowWidths = {
+  m: "500px",
+  l: "700px",
+}
+
 export const Window = styled.div.attrs({
   style: ({ styles }) => ({
     opacity: styles.opacity,
     transform: `translatey(${styles.translateY}px)`
   })
 })`
-  width: 500px;
   z-index: 500;
   background: white;
   border-radius: 8px;
   position: relative;
   box-shadow: 0 15px 50px -15px #233951;
+  width: ${props => windowWidths[props.size || 'm']};
 `
 
 const fadeIn = keyframes`
