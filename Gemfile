@@ -46,6 +46,7 @@ gem 'airrecord'
 gem 'graphql'
 gem 'parser'
 gem 'rollbar'
+gem "attr_encrypted", "~> 3.0.0"
 
 # For geneating test coverage reports
 gem 'simplecov', require: false, group: :test

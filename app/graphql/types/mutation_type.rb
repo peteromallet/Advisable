@@ -6,6 +6,8 @@ class Types::MutationType < GraphQL::Schema::Object
   field :accept_booking, mutation: Mutations::AcceptBooking
   field :decline_booking, mutation: Mutations::DeclineBooking
   field :update_application_status, mutation: Mutations::UpdateApplicationStatus
+  field :request_introduction, mutation: Mutations::RequestIntroduction
+  field :accept_interview_request, mutation: Mutations::AcceptInterviewRequest
 
   field :reject_proposal, mutation: Mutations::RejectProposal
 end

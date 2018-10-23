@@ -22,19 +22,19 @@ class Modal extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.isOpen === false && this.props.isOpen) {
-      window.addEventListener('keydown', this.handleKeyDown)
+      window.addEventListener("keydown", this.handleKeyDown);
     }
 
     if (prevProps.isOpen && this.props.isOpen === false) {
-      window.removeEventListener('keydown', this.handleKeyDown)
+      window.removeEventListener("keydown", this.handleKeyDown);
     }
   }
 
   handleKeyDown = e => {
     if (e.keyCode === 27) {
-      this.props.onClose()
+      this.props.onClose();
     }
-  }
+  };
 
   render() {
     if (!this.props.isOpen) return null;
@@ -49,7 +49,11 @@ class Modal extends React.Component {
           }}
         >
           {styles => (
-            <Window className="ModalWindow" styles={styles}>
+            <Window
+              className="ModalWindow"
+              size={this.props.size}
+              styles={styles}
+            >
               <CloseModal onClick={this.props.onClose}>
                 <svg width={13} height={12} fill="none">
                   <path

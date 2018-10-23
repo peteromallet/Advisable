@@ -1,13 +1,16 @@
-import React from "react";
+import React, { Fragment } from "react";
 import remove from "lodash/remove";
+import { Formik } from "formik";
+import moment from 'moment-timezone';
 import { Mutation } from "react-apollo";
 import Modal from "src/components/Modal";
-import Flex from "src/components/Flex";
 import Text from "src/components/Text";
+import Spacing from "src/components/Spacing";
 import Heading from "src/components/Heading";
-import Avatar from "src/components/Avatar";
 import Button from "src/components/Button";
-import { Container } from "./styles.js";
+import TimeZoneSelect from "src/components/TimeZoneSelect";
+import ButtonGroup from "src/components/ButtonGroup";
+import Availability from "./Availability";
 
 import REQUEST_INTRO from "./requestIntroduction.graphql";
 
@@ -17,44 +20,59 @@ class RequestIntroductionModal extends React.Component {
     const specialist = application.specialist;
 
     return (
-      <Modal isOpen={this.props.isOpen} onClose={this.props.onClose}>
+      <Modal size="l" isOpen={this.props.isOpen} onClose={this.props.onClose}>
         <Mutation mutation={REQUEST_INTRO}>
           {(mutate, data) => (
-            <Container>
-              <Avatar marginBottom="l" name={application.specialist.name} />
-              <Heading marginBottom="xs">Request Introduction</Heading>
-              <Text marginBottom="xl" block>
-                Are you sure you want to request introduction to{" "}
-                {specialist.name}?
-              </Text>
-              <Flex distribute="fillEvenly">
-                <Flex.Item paddingRight='s'>
-                  <Button
-                    primary
-                    block
-                    size="l"
-                    loading={data.loading}
-                    onClick={async () => {
-                      await mutate({
-                        variables: {
-                          id: application.id
-                        }
-                      });
-                      this.props.onClose();
-                    }}>
-                    Request
-                  </Button>
-                </Flex.Item>
-                <Flex.Item paddingLeft='s'>
-                  <Button
-                    size="l"
-                    block
-                    onClick={this.props.onClose}>
-                    Cancel
-                  </Button>
-                </Flex.Item>
-              </Flex>
-            </Container>
+            <Fragment>
+              <Spacing padding="xl">
+                <Heading marginBottom="xs">Request Introduction</Heading>
+                <Text block>
+                  Select at least 3 times over the next 5 working days when you
+                  will be available for a call with {specialist.name}
+                </Text>
+              </Spacing>
+              <Formik
+                initialValues={{
+                  availability: [],
+                  timeZone: moment.tz.guess(),
+                }}
+                onSubmit={values => {
+                  console.log(values);
+                }}
+                render={formik => (
+                  <form onSubmit={formik.handleSubmit}>
+                    <TimeZoneSelect
+                      value={formik.values.timeZone}
+                      onChange={zone => {
+                        formik.setFieldValue("timeZone", zone);
+                      }}
+                    />
+                    <Availability
+                      timeZone={formik.values.timeZone}
+                      selected={formik.values.availability}
+                      onSelect={times => {
+                        formik.setFieldValue("availability", times);
+                      }}
+                    />
+                    <Spacing padding="xl">
+                      <ButtonGroup>
+                        <Button
+                          primary
+                          size="l"
+                          type="submit"
+                          loading={data.loading}
+                        >
+                          Request
+                        </Button>
+                        <Button size="l" onClick={this.props.onClose}>
+                          Cancel
+                        </Button>
+                      </ButtonGroup>
+                    </Spacing>
+                  </form>
+                )}
+              />
+            </Fragment>
           )}
         </Mutation>
       </Modal>

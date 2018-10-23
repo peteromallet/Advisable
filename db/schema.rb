@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_11_071153) do
+ActiveRecord::Schema.define(version: 2018_10_22_134317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,19 @@ ActiveRecord::Schema.define(version: 2018_10_11_071153) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "interviews", force: :cascade do |t|
+    t.bigint "application_id"
+    t.datetime "starts_at"
+    t.text "availability"
+    t.string "status"
+    t.string "time_zone"
+    t.string "airtable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["airtable_id"], name: "index_interviews_on_airtable_id"
+    t.index ["application_id"], name: "index_interviews_on_application_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.string "airtable_id"
@@ -130,6 +143,8 @@ ActiveRecord::Schema.define(version: 2018_10_11_071153) do
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "encrypted_phone_number"
+    t.string "encrypted_phone_number_iv"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
@@ -155,6 +170,7 @@ ActiveRecord::Schema.define(version: 2018_10_11_071153) do
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
   add_foreign_key "bookings", "applications"
+  add_foreign_key "interviews", "applications"
   add_foreign_key "projects", "clients"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
