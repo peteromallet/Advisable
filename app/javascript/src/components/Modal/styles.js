@@ -39,7 +39,7 @@ export const Window = styled.div.attrs({
   ${props =>
     props.expandOnMobile &&
     css`
-      @media (max-width: 760px) {
+      @media (max-width: 800px) {
         width: 100%;
         height: 100%;
         border-radius: 0px;

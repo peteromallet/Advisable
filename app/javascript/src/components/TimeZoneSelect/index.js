@@ -13,7 +13,7 @@ class TimeZoneSelect extends Component {
 
   render() {
     return (
-      <select value={this.props.value} onChange={this.handleChange}>
+      <select style={{fontSize: 16}} value={this.props.value} onChange={this.handleChange}>
         {ZONES.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}

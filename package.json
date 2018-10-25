@@ -41,11 +41,20 @@
     "yup": "^0.26.6"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.11",
+    "@storybook/addon-links": "^3.4.11",
+    "@storybook/addons": "^3.4.11",
+    "@storybook/react": "^3.4.11",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-flow": "^6.23.0",
     "babel-runtime": "^6.26.0",
     "prettier": "^1.12.1",
+    "react-responsive": "^5.0.0",
     "webpack-dev-server": "2.11.2"
+  },
+  "scripts": {
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   }
 }

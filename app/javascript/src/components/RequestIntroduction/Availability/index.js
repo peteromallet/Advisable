@@ -71,7 +71,23 @@ class Availability extends Component {
   };
 
   handleMouseUp = () => {
-    if (!this.state.highlight) return;
+    if (this.state.highlight) {
+      this.processHighlight()
+    }
+  }
+
+  handleTap = cell => {
+    const isSelected = this.isSelected(cell);
+    const highlight = {
+      from: cell,
+      to: cell,
+      action: isSelected ? REMOVE : ADD
+    };
+
+    this.setState({ highlight }, this.processHighlight);
+  }
+
+  processHighlight = () => {
     const { highlight, times } = this.state;
     const { from, to } = highlight;
     let lower = from;
@@ -168,6 +184,7 @@ class Availability extends Component {
                   cell={[d, i]}
                   isSelected={this.isSelected([d, i])}
                   isHighlighted={this.isHighlighted([d, i])}
+                  onTap={this.handleTap}
                   onMouseDown={this.handleMouseDown}
                   onMouseOver={this.handleMouseOver}
                 />

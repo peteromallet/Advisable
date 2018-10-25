@@ -2,9 +2,15 @@ import styled, { css } from "styled-components";
 import disabled from "./disabled.svg";
 
 const DESKTOP_CELL_HEIGHT = 40;
+const MOBILE_CELL_HEIGHT = 50;
+const BREAKPOINT = 800;
 
 export const Wrapper = styled.div`
   width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+  flex-direction: column;
 `;
 
 export const Header = styled.div`
@@ -19,7 +25,6 @@ export const HeaderCell = styled.div`
   flex: 1 0 0%;
   padding: 8px 15px;
   border-left: 1px solid #eff0f6;
-  opacity: ${props => (props.isSunday || props.isSaturday ? 0.4 : 1)};
 
   &:last-child {
     border-right: 1px solid #eff0f6;
@@ -37,10 +42,18 @@ export const HeaderCell = styled.div`
     font-weight: 500;
   }
 
-  @media screen and (max-width: 600px) {
+  ${props =>
+    (props.isSunday || props.isSaturday) &&
+    css`
+      h4,
+      span {
+        opacity: 0.5;
+      }
+    `} @media screen and (max-width: ${BREAKPOINT}px) {
     padding-left: 0;
     padding-right: 0;
     text-align: center;
+
     h4 {
       font-size: 13px;
     }
@@ -53,26 +66,29 @@ export const HeaderCell = styled.div`
       css`
         display: none;
       `} ${props =>
-      props.isSaturday &&
-      css`
-        h4,
-        span {
-          display: none;
-        }
-      `};
+  props.isSaturday &&
+  css`
+    width: 30px;
+    flex: none;
+
+    h4,
+    span {
+      display: none;
+    }
+  `};
   }
 `;
 
 export const Times = styled.div`
+  height: 0;
   display: flex;
-  max-height: 40vh;
+  flex: 1 1 auto;
   overflow-y: scroll;
   padding-left: 50px;
-  position: relative;
   padding-right: 20px;
-  background: white;
-   -webkit-overflow-scrolling: touch;
-  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.06);
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.08);
 `;
 
 export const Hours = styled.div`
@@ -91,57 +107,35 @@ export const Hour = styled.span`
   padding-right: 10px;
   height: ${DESKTOP_CELL_HEIGHT}px;
 
+  @media screen and (max-width: ${BREAKPOINT}px) {
+    height: ${MOBILE_CELL_HEIGHT}px;
+  }
+
   &:last-child {
     height: auto;
-  }
-`;
-
-export const Day = styled.div`
-  flex: 1 0 0%;
-  height: 100%;
-  padding-top: 15px;
-  position: relative;
-  padding-bottom: 15px;
-  border-left: 1px solid #dfe2ec;
-
-  @media screen and (max-width: 600px) {
-    ${props =>
-      props.isSunday &&
-      css`
-        display: none;
-      `};
-  }
-
-  &:last-child {
-    border-right: 1px solid #dfe2ec;
-  }
-
-  &::before {
-    top: 0;
-    left: 0;
-    content: "";
-    width: 100%;
-    height: 14px;
-    position: absolute;
-    border-bottom: 1px solid #dfe2ec;
-  }
-
-  &::after {
-    left: 0;
-    bottom: 0;
-    content: "";
-    width: 100%;
-    height: 15px;
-    position: absolute;
-    border-top: 1px solid #dfe2ec;
   }
 `;
 
 export const TimeCell = styled.div`
   padding: 2px;
   position: relative;
+  touch-action: none;
   height: ${DESKTOP_CELL_HEIGHT}px;
   border-bottom: 1px solid #DFE2EC;
+  border-left: 1px solid #dfe2ec;
+
+@media screen and (min-width: ${BREAKPOINT}px) {
+  &:first-child {
+    border-top: 1px solid #dfe2ec;
+  }
+}
+
+  @media screen and (max-width: ${BREAKPOINT}px) {
+    padding: 2px;
+    border-left: none;
+    border-bottom: none;
+    height: ${MOBILE_CELL_HEIGHT}px;
+  }
 
   div {
     width: 100%;
@@ -152,13 +146,18 @@ export const TimeCell = styled.div`
     border-radius: 4px;
     background: transparent;
     svg { opacity: 0; }
+
+    @media screen and (max-width: ${BREAKPOINT}px) {
+      border-radius: 6px;
+      background: #EFF0F5;
+    }
   }
 
-  @media screen and (min-width: 600px) {
-  &:hover div {
-    background: #EFF0F5;
+  @media screen and (min-width: ${BREAKPOINT}px) {
+    &:hover div {
+      background: #EFF0F5;
+    }
   }
-}
 
   ${props =>
     props.isSelected &&
@@ -194,26 +193,37 @@ export const TimeCell = styled.div`
       background-image: url(${disabled});
     `}
 
-  input {
-    width: 0;
-    height: 0;
-    opacity: 0;
-    appearance: none;
-    position: absolute;
-  }
+`;
 
-  input + label {
-    width: 100%;
-    height: 100%;
-    display: block;
-    border-radius: 8px;
+export const Day = styled.div`
+  flex: 1 0 0%;
+  height: 100%;
+  padding-top: 15px;
+  position: relative;
+  padding-bottom: 15px;
 
-    &:hover {
-      background: #eff0f5;
+  @media screen and (min-width: ${BREAKPOINT}px) {
+    &:last-child ${TimeCell} {
+      border-right: 1px solid #dfe2ec;
     }
   }
 
-  input:checked + label {
-    background: #42e3bd;
+  @media screen and (max-width: ${BREAKPOINT}px) {
+    ${props =>
+      props.isSunday &&
+      css`
+        display: none;
+      `};
+
+    ${props =>
+      props.isSaturday &&
+      css`
+        width: 30px;
+        flex: none;
+
+        @media screen and (max-width: ${BREAKPOINT}px) {
+          margin: 2px;
+        }
+      `};
   }
 `;
