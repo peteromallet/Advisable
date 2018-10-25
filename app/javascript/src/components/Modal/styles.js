@@ -1,5 +1,5 @@
-import styled, { keyframes } from 'styled-components';
-import { rgba } from 'polished'
+import styled, { keyframes, css } from "styled-components";
+import { rgba } from "polished";
 
 export const ModalContainer = styled.div`
   top: 0;
@@ -7,7 +7,7 @@ export const ModalContainer = styled.div`
   right: 0;
   bottom: 0;
   z-index: 400;
-  padding: 20px;
+  padding: ${props => props.expandOnMobile ? 0 : '20px'};
   display: flex;
   position: fixed;
   align-items: center;
@@ -16,12 +16,12 @@ export const ModalContainer = styled.div`
   @media screen and (max-width: 500px) {
     align-items: flex-end;
   }
-`
+`;
 
 const windowWidths = {
   m: "500px",
-  l: "700px",
-}
+  l: "700px"
+};
 
 export const Window = styled.div.attrs({
   style: ({ styles }) => ({
@@ -34,8 +34,18 @@ export const Window = styled.div.attrs({
   border-radius: 8px;
   position: relative;
   box-shadow: 0 15px 50px -15px #233951;
-  width: ${props => windowWidths[props.size || 'm']};
-`
+  width: ${props => windowWidths[props.size || "m"]};
+
+  ${props =>
+    props.expandOnMobile &&
+    css`
+      @media (max-width: 760px) {
+        width: 100%;
+        height: 100%;
+        border-radius: 0px;
+      }
+    `};
+`;
 
 const fadeIn = keyframes`
   from {
@@ -45,7 +55,7 @@ const fadeIn = keyframes`
   to {
     opacity: 1;
   }
-`
+`;
 
 export const Backdrop = styled.div`
   top: 0;
@@ -54,8 +64,8 @@ export const Backdrop = styled.div`
   bottom: 0;
   position: absolute;
   animation: ${fadeIn} 500ms ease-out;
-  background: ${rgba('#24384E', 0.85)};
-`
+  background: ${rgba("#24384E", 0.85)};
+`;
 
 export const CloseModal = styled.button`
   top: 15px;
@@ -69,5 +79,5 @@ export const CloseModal = styled.button`
   justify-content: center;
   position: absolute;
   border-radius: 50%;
-  background: #F1F3FD;
-`
+  background: #f1f3fd;
+`;

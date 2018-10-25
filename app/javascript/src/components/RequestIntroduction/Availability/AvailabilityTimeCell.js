@@ -3,33 +3,57 @@ import React, { Component } from "react";
 import { TimeCell } from "./styles";
 
 class AvailabilityTimeCell extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.id = uniqueId("time");
-    this.value = [
-      this.props.time.toISOString(),
-      this.props.time.add(30, 'minutes').toISOString()
-    ];
   }
 
-  handleChange = e => {
-    this.props.onSelect(this.value);
+  shouldComponentUpdate({ isHighlighted, isSelected }) {
+    if (isSelected !== this.props.isSelected) return true;
+    if (isHighlighted !== this.props.isHighlighted) return true;
+    return false;
+  }
+
+  handleMouseOver = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (this.disabled) return;
+    this.props.onMouseOver(this.props.cell);
   };
 
-  render() {
-    const { disabled } = this.props;
+  handleMouseDown = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (this.disabled) return;
+    this.props.onMouseDown(this.props.cell);
+  };
 
+  get disabled() {
+    const day = this.props.time.day();
+    const isWeekend = day === 6 || day === 0; // 6 = Saturday, 0 = Sunday
+    return isWeekend;
+  }
+
+  render() {
     return (
-      <TimeCell disabled={disabled}>
-        {!disabled && (
-          <React.Fragment>
-            <input
-              type="checkbox"
-              id={this.id}
-              checked={this.props.checked}
-              onChange={this.handleChange}
-            />
-            <label htmlFor={this.id} />
-          </React.Fragment>
+      <TimeCell
+        disabled={this.disabled}
+        onMouseDown={this.handleMouseDown}
+        onMouseOver={this.handleMouseOver}
+        isSelected={this.props.isSelected}
+        isHighlighted={this.props.isHighlighted}
+        innerRef={c => this.cell = c}
+      >
+        {!this.disabled && (
+          <div>
+            <svg width={21} height={21} fill="none">
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M10.5 21C16.299 21 21 16.299 21 10.5S16.299 0 10.5 0 0 4.701 0 10.5 4.701 21 10.5 21zm5.196-12.282a1 1 0 1 0-1.392-1.436l-5.492 5.325-2.116-2.052a1 1 0 0 0-1.392 1.436l2.812 2.727a1 1 0 0 0 1.393 0l6.187-6z"
+                fill="#fff"
+              />
+            </svg>
+          </div>
         )}
       </TimeCell>
     );

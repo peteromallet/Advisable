@@ -20,9 +20,9 @@ class RequestIntroductionModal extends React.Component {
     const specialist = application.specialist;
 
     return (
-      <Modal size="l" isOpen={this.props.isOpen} onClose={this.props.onClose}>
+      <Modal size="l" isOpen={this.props.isOpen} onClose={this.props.onClose} expandOnMobile>
         <Mutation mutation={REQUEST_INTRO}>
-          {(mutate, data) => (
+          {requestIntroduction => (
             <Fragment>
               <Spacing padding="xl">
                 <Heading marginBottom="xs">Request Introduction</Heading>
@@ -36,8 +36,15 @@ class RequestIntroductionModal extends React.Component {
                   availability: [],
                   timeZone: moment.tz.guess(),
                 }}
-                onSubmit={values => {
-                  console.log(values);
+                onSubmit={async values => {
+                  await requestIntroduction({
+                    variables: {
+                      input: {
+                        applicationId: application.airtableId,
+                        ...values
+                      }
+                    }
+                  })
                 }}
                 render={formik => (
                   <form onSubmit={formik.handleSubmit}>
@@ -60,7 +67,8 @@ class RequestIntroductionModal extends React.Component {
                           primary
                           size="l"
                           type="submit"
-                          loading={data.loading}
+                          loading={formik.isSubmitting}
+                          disabled={formik.isSubmitting}
                         >
                           Request
                         </Button>
