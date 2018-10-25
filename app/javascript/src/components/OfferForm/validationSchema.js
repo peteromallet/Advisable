@@ -3,7 +3,8 @@ import * as Yup from "yup";
 const validationSchema = Yup.object().shape({
   type: Yup.string(),
   startDate: Yup.date().required("Please enter a start date"),
-  endDate: Yup.date().nullable()
+  endDate: Yup.date()
+    .nullable()
     .when("type", {
       is: "Fixed",
       then: Yup.date().required("Please enter an end date")
@@ -16,6 +17,13 @@ const validationSchema = Yup.object().shape({
       )
     }),
   rate: Yup.number().required("Please enter an amount"),
+  rateType: Yup.string(),
+  rateLimit: Yup.number()
+    .nullable()
+    .when("rateType", {
+      is: "Per Hour",
+      then: Yup.number().required("Please enter a rate limit")
+    })
 });
 
 export default validationSchema;

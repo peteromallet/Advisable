@@ -59,7 +59,7 @@ const Offer = ({ match, history, loading, notifications, data }) => {
               }}
               initialValues={{
                 type: "Fixed",
-                rateType: "Fixed"
+                rateType: "Fixed",
               }}
             />
           </Card>
