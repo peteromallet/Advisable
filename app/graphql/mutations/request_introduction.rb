@@ -24,7 +24,7 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
     end
 
     return {
-      errors: application.errors.full_messages
+      errors: interview.errors.full_messages
     }
   end
 

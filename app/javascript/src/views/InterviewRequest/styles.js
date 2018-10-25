@@ -9,7 +9,7 @@ export const Container = styled.div`
   background: #ffffff;
   border-radius: 3px;
   position: relative;
-  margin: 80px auto 0 auto;
+  margin: 80px auto 80px auto;
   box-shadow: 0 4px 10px 0 rgba(208, 217, 233, 0.38);
 
   @media (max-width: 650px) {

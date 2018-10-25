@@ -1,8 +1,13 @@
-mutation requestIntroduction($id: ID!) {
-  updateApplicationStatus(input: { id: $id, status: "Application Accepted" }) {
-    application {
+mutation RequestIntroduction($input: RequestIntroductionInput!) {
+  requestIntroduction(input: $input) {
+    interview {
       id
       status
+      application {
+        id
+        status
+      }
     }
+    errors
   }
 }

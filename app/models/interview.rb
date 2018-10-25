@@ -6,7 +6,7 @@ class Interview < ApplicationRecord
   private
 
   def starts_at_available?
-    return if availability.include?(starts_at)
+    return if !starts_at || availability.include?(starts_at)
     errors.add(:starts_at, "#{starts_at} is not available")
   end
 end

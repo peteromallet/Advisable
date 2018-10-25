@@ -40,7 +40,7 @@ class Modal extends React.Component {
     if (!this.props.isOpen) return null;
 
     return ReactDOM.createPortal(
-      <ModalContainer>
+      <ModalContainer expandOnMobile={this.props.expandOnMobile}>
         <Spring
           from={{ opacity: 0, translateY: 100 }}
           to={{
@@ -53,6 +53,7 @@ class Modal extends React.Component {
               className="ModalWindow"
               size={this.props.size}
               styles={styles}
+              expandOnMobile={this.props.expandOnMobile}
             >
               <CloseModal onClick={this.props.onClose}>
                 <svg width={13} height={12} fill="none">
