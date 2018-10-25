@@ -52,7 +52,9 @@ class DatePicker extends React.Component {
           placeholder={this.props.placeholder}
           onDayChange={this.handleDayClick}
           inputProps={{
-            name: this.props.name
+            name: this.props.name,
+            onBlur: this.props.onBlur,
+            autoComplete: "off"
           }}
           dayPickerProps={{
             showOutsideDays: true,
