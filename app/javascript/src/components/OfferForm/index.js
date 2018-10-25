@@ -66,6 +66,7 @@ export default ({
         endDate: undefined,
         rate: undefined,
         rateLimit: undefined,
+        deliverables: [],
         ...initialValues
       }}
       validationSchema={validationSchema}
@@ -214,14 +215,13 @@ export default ({
               placeholder="Add a deliverable"
               error={form.touched.deliverables && form.errors.deliverables}
               onChange={deliverables => {
-                console.log(deliverables)
                 form.setFieldValue("deliverables", deliverables);
               }}
             />
           </Spacing>
           <Divider />
           <Spacing paddingTop="xl">
-            <Button primary marginRight="m" loading={form.isSubmitting}>
+            <Button type="submit" primary marginRight="m" disbaled={form.isSubmitting} loading={form.isSubmitting}>
               Send Offer
             </Button>
             {onCancel && (

@@ -23,7 +23,8 @@ const validationSchema = Yup.object().shape({
     .when("rateType", {
       is: "Per Hour",
       then: Yup.number().required("Please enter a rate limit")
-    })
+    }),
+  deliverables: Yup.array().of(Yup.string()).min(1, "Please add at least one deliverable")
 });
 
 export default validationSchema;

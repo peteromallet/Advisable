@@ -64,8 +64,15 @@ const ListInputItem = styled.div`
 
 class ListInput extends React.Component {
   static defaultProps = {
-    value: [""]
+    value: []
   };
+
+  state = {
+    items: [
+      ...this.props.value,
+      ""
+    ]
+  }
 
   componentWillMount() {
     this.id = this.props.id || uniqueID("input");
@@ -73,25 +80,26 @@ class ListInput extends React.Component {
 
   handleChange = index => e => {
     const value = e.target.value;
-    const listItems = this.props.value.map((v, i) => {
+    const items = this.state.items.map((v, i) => {
       if (index === i) return value;
       return v;
     });
 
-    const isLast = this.props.value.length - 1 === index;
-    const isEmpty = listItems[index].length === 0;
+    const isLast = this.state.items.length - 1 === index;
+    const isEmpty = items[index].length === 0;
 
     // If we are editing the last item in the array, and there is at least
     // one character in the array then add a blank item to the end of the list.
     if (isLast && value.length > 0) {
-      listItems.push("");
+      items.push("");
     }
 
     if (!isLast && isEmpty) {
-      listItems.splice(index, 1);
+      items.splice(index, 1);
     }
 
-    this.props.onChange(listItems);
+    this.setState({ items })
+    this.props.onChange(items.filter(Boolean));
   };
 
   render() {
@@ -101,7 +109,7 @@ class ListInput extends React.Component {
       <React.Fragment>
         {label && <InputLabel htmlFor={this.id}>{label}</InputLabel>}
         <TransitionGroup>
-          {this.props.value.map((v, i) => (
+          {this.state.items.map((v, i) => (
             <CSSTransition timeout={500} classNames="slide" key={i}>
               <ListInputItem>
                 <Textarea
