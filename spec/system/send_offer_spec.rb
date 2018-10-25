@@ -18,7 +18,7 @@ describe 'Sending an offer' do
         'Status' => 'Offered',
         'Est. Project Start Date' => start_date.strftime('%Y-%m-%d'),
         'Est. Project End Date' => end_date.strftime('%Y-%m-%d'),
-        'Deliverables' => '["Testing 123",""]',
+        'Deliverables' => '["Testing 123"]',
         'Application' => [application.airtable_id]
       }
     }
