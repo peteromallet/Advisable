@@ -18,7 +18,7 @@ const validationSchema = Yup.object().shape({
   rate: Yup.number().required("Please enter an amount"),
   deliverables: Yup.array()
     .of(Yup.string())
-    .required("Please define at least on deliverable")
+    .min(1, "Please define at least on deliverable")
 });
 
 export default validationSchema;
