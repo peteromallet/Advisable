@@ -61,8 +61,14 @@ export default ({
   return (
     <Formik
       onSubmit={onSubmit}
+      initialValues={{
+        startDate: undefined,
+        endDate: undefined,
+        rate: undefined,
+        rateLimit: undefined,
+        ...initialValues
+      }}
       validationSchema={validationSchema}
-      initialValues={initialValues}
       render={form => (
         <form onSubmit={form.handleSubmit}>
           <Spacing paddingBottom="xl">
@@ -99,6 +105,7 @@ export default ({
                 name="startDate"
                 value={form.values.startDate}
                 onChange={date => form.setFieldValue("startDate", date)}
+                onBlur={form.handleBlur}
                 label="Estimated start date"
                 placeholder="Start date"
                 error={form.touched.startDate && form.errors.startDate}
@@ -111,9 +118,10 @@ export default ({
                   name="endDate"
                   value={form.values.endDate}
                   onChange={date => form.setFieldValue("endDate", date)}
+                  onBlur={form.handleBlur}
                   label="Estimated end date"
                   placeholder="End date"
-                  error={form.touched.endDare && form.errors.endDate}
+                  error={form.touched.endDate && form.errors.endDate}
                   options={{
                     initialMonth:
                       form.values.startDate && new Date(form.values.startDate),
@@ -180,12 +188,15 @@ export default ({
                   type="tel"
                   name="rateLimit"
                   value={form.values.rateLimit}
-                  onChange={({ target }) => {
-                    const val = Number(target.value.replace(/[^0-9\.-]+/g, ""));
-                    form.setFieldValue("rateLimit", val);
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const parsed = Number(value.replace(/[^0-9\.-]+/g, ""));
+                    form.setFieldValue("rateLimit", value ? parsed : undefined);
                   }}
                   label="Monthly Budget"
                   placeholder={`${currency}0.00`}
+                  onBlur={form.handleBlur}
+                  error={form.touched.rateLimit && form.errors.rateLimit}
                   mask={createNumberMask({
                     prefix: currency,
                     allowDecimal: true
@@ -203,6 +214,7 @@ export default ({
               placeholder="Add a deliverable"
               error={form.touched.deliverables && form.errors.deliverables}
               onChange={deliverables => {
+                console.log(deliverables)
                 form.setFieldValue("deliverables", deliverables);
               }}
             />
