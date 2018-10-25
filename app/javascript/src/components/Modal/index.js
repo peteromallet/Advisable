@@ -22,10 +22,12 @@ class Modal extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.isOpen === false && this.props.isOpen) {
+      document.body.style.overflow = 'hidden';
       window.addEventListener("keydown", this.handleKeyDown);
     }
 
     if (prevProps.isOpen && this.props.isOpen === false) {
+      document.body.style.overflow = 'scroll';
       window.removeEventListener("keydown", this.handleKeyDown);
     }
   }
