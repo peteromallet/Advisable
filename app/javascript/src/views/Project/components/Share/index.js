@@ -68,11 +68,9 @@ class Share extends React.Component {
         <h4>Invite people from your network</h4>
         <div className="addthis_share">
           <ShareIcon
-            className="addthis_share_button"
-            data-service="linkedin"
-            data-url={this.url("linkedin")}
-            data-title={this.shareMessage}
-            data-description={this.shareMessage}
+            target="_blank"
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(this.url('linkedin'))}`}
+            data-service='linkedin'
           />
           <ShareIcon
             className="addthis_share_button"
