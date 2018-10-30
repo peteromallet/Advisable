@@ -11,6 +11,12 @@ export const Wrapper = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 `;
 
 export const Header = styled.div`

@@ -1,26 +1,29 @@
 import React, { Component } from "react";
+import Select from "react-select";
 import moment from "moment-timezone";
+import find from 'lodash/find';
+import reduce from 'lodash/reduce';
+import ZONES from './zones';
 
-const ZONES = moment.tz.names().map(zone => ({
-  value: zone,
-  label: zone
-}));
+const OPTIONS = ZONES.map(z => ({ label: z, value: z }))
 
 class TimeZoneSelect extends Component {
-  handleChange = e => {
-    this.props.onChange(e.target.value)
+  handleChange = option => {
+    this.props.onChange(option.value);
+  };
+
+  get selected() {
+
   }
 
   render() {
     return (
-      <select style={{fontSize: 16}} value={this.props.value} onChange={this.handleChange}>
-        {ZONES.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    )
+      <Select
+        options={OPTIONS}
+        value={{ value: this.props.value, label: `Timezone: ${this.props.value}` }}
+        onChange={this.handleChange}
+      />
+    );
   }
 }
 

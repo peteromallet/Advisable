@@ -18,7 +18,7 @@ class Mutations::AcceptInterviewRequest < Mutations::BaseMutation
     end
 
     return {
-      errors: application.errors.full_messages
+      errors: interview.errors.full_messages
     }
   end
 

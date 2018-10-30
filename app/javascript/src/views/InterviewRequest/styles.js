@@ -69,6 +69,7 @@ export const Times = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-left: -15px;
+  margin-top: 30px;
 `;
 
 export const Time = styled(Link)`
