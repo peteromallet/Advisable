@@ -14,6 +14,7 @@ class Mutations::AcceptInterviewRequest < Mutations::BaseMutation
     if interview.valid?
       sync_with_airtable(interview)
       interview.save
+      Webhook.process(interview)
       return { interview: interview, errors: [] }
     end
 

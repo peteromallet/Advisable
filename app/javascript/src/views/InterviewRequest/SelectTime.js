@@ -1,3 +1,4 @@
+import sortBy from 'lodash/sortBy';
 import filter from "lodash/filter";
 import moment from "moment-timezone";
 import { Link } from "react-router-dom";
@@ -16,7 +17,10 @@ class SelectTime extends Component {
   render() {
     const { availability, timeZone, match, clientName } = this.props;
     const date = moment.tz(match.params.date, timeZone);
-    const times = filter(availability, d => date.isSame(d, "day"));
+    const times = sortBy(
+      filter(availability, d => date.isSame(d, "day")),
+      time => moment(time).format("HHmm")
+    )
 
     return (
       <Fragment>
