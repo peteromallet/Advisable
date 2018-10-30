@@ -181,7 +181,7 @@ class Applicant extends React.Component {
                   onClick={() => this.setState({ modal: "introduction" })}
                   primary
                 >
-                  Request Introduction
+                  Request call
                 </Button>
               )}
 

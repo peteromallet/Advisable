@@ -201,7 +201,7 @@ class Candidate extends React.Component {
               onClick={() => this.setState({ modal: "introduction" })}
               primary
             >
-              Request Introduction
+              Request call
             </Button>
             <Button onClick={() => this.setState({ modal: "reject" })}>
               Reject

@@ -72,7 +72,7 @@ class RequestIntroductionModal extends React.Component {
                     >
                       <Header>
                         <Heading marginBottom="xs">
-                          Request Introduction
+                          Request call
                         </Heading>
                         <Text marginBottom="xl" block>
                           Select at least 3 times over the next 5 working days
