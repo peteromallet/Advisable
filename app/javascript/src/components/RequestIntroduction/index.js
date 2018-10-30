@@ -44,7 +44,7 @@ class RequestIntroductionModal extends React.Component {
                         return moment(time).isAfter(moment().add(1, 'day').startOf('day'));
                       }
                     ),
-                    timeZone: moment.tz.guess()
+                    timeZone: moment.tz.guess() || "Europe/Dublin"
                   }}
                   onSubmit={async values => {
                     await requestIntroduction({
@@ -109,7 +109,7 @@ class RequestIntroductionModal extends React.Component {
                               loading={formik.isSubmitting}
                               disabled={formik.isSubmitting}
                             >
-                              Request
+                              Request Call
                             </Button>
                             <Button size="l" onClick={this.props.onClose}>
                               Cancel

@@ -1,7 +1,7 @@
 class Interview < ApplicationRecord
   belongs_to :application
   attribute :availability, :datetime, default: [], array: true
-  validate :starts_at_available?
+  validate :starts_at_available?, unless: -> { status == 'Call Requested' }
 
   private
 

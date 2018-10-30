@@ -39,7 +39,7 @@ const SelectDay = ({ clientName, availability, timeZone, match }) => {
         );
       })}
       <Text size="s" marginTop='xl'>None of these dates work for you?</Text>
-      <ContactUS href='mailto:hello@advisable.com'>Contact us</ContactUS>
+      <ContactUS href='mailto:schedule@advisable.com'>Contact us</ContactUS>
     </Fragment>
   );
 };
