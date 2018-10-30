@@ -40,7 +40,7 @@ class SelectTime extends Component {
           {times.map(time => {
             const parsed = moment.tz(time, this.state.timeZone);
             return (
-              <Time key={time} to={parsed.format("YYYY-MM-DDTHH:mm")}>
+              <Time key={time} to={parsed.toISOString(true)}>
                 {parsed.format("hh:mma")}
                 {" - "}
                 {parsed.add(30, "minutes").format("hh:mma")}

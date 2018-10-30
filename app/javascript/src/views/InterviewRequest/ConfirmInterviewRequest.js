@@ -12,7 +12,7 @@ import ACCEPT_INTERVIEW_REQUEST from "./acceptInterviewRequest.graphql";
 import { Event } from "./styles";
 
 export default ({ match, timeZone, phoneNumber, clientName }) => {
-  const parsed = moment.tz(match.params.datetime, timeZone);
+  const parsed = moment.parseZone(match.params.datetime);
   return (
     <Fragment>
       <Back

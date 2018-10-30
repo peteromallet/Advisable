@@ -10,15 +10,18 @@ import Flex from "src/components/Flex";
 import Spacing from "src/components/Spacing";
 import Heading from "src/components/Heading";
 import Button from "src/components/Button";
+import { withNotifications } from "src/components/Notifications";
 import { Mobile } from "src/components/Breakpoint";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
 import ButtonGroup from "src/components/ButtonGroup";
 import Availability from "./Availability";
+import { Header, Body, Footer } from "./styles";
 
 import REQUEST_INTRO from "./requestIntroduction.graphql";
 
 class RequestIntroductionModal extends React.Component {
   render() {
+    const notifications = this.props.notifications;
     const application = this.props.application;
     const specialist = application.specialist;
 
@@ -38,7 +41,7 @@ class RequestIntroductionModal extends React.Component {
                     availability: filter(
                       JSON.parse(localStorage.getItem("availability")) || [],
                       time => {
-                        return moment(time).isAfter(moment());
+                        return moment(time).isAfter(moment().add(1, 'day').startOf('day'));
                       }
                     ),
                     timeZone: moment.tz.guess()
@@ -52,63 +55,68 @@ class RequestIntroductionModal extends React.Component {
                         }
                       }
                     });
+
+                    notifications.notify(
+                      `An interview request has been sent to ${
+                        specialist.name
+                      }`
+                    );
                   }}
                   render={formik => (
                     <form
-                      style={{ height: isMobile ? '100%' : 600, maxHeight: "100%" }}
+                      style={{
+                        height: isMobile ? "100%" : 600,
+                        maxHeight: "100%"
+                      }}
                       onSubmit={formik.handleSubmit}
                     >
-                      <Flex vertical>
-                        <Flex.Item>
-                          <Spacing padding={isMobile ? "l" : "xl"}>
-                            <Heading marginBottom="xs">
-                              Request Introduction
-                            </Heading>
-                            <Text block>
-                              Select at least 3 times over the next 5 working
-                              days when you will be available for a call with{" "}
-                              {specialist.name}
-                            </Text>
-                          </Spacing>
-                          <TimeZoneSelect
-                            value={formik.values.timeZone}
-                            onChange={zone => {
-                              formik.setFieldValue("timeZone", zone);
-                            }}
-                          />
-                        </Flex.Item>
-                        <Flex.Item distribute="fill">
-                          <Availability
-                            timeZone={formik.values.timeZone}
-                            selected={formik.values.availability}
-                            onSelect={times => {
-                              localStorage.setItem(
-                                "availability",
-                                JSON.stringify(times)
-                              );
-                              formik.setFieldValue("availability", times);
-                            }}
-                          />
-                        </Flex.Item>
-                        <Flex.Item>
-                          <Spacing padding={isMobile ? 'l' : 'xl'}>
-                            <ButtonGroup fullWidth={isMobile}>
-                              <Button
-                                primary
-                                size="l"
-                                type="submit"
-                                loading={formik.isSubmitting}
-                                disabled={formik.isSubmitting}
-                              >
-                                Request
-                              </Button>
-                              <Button size="l" onClick={this.props.onClose}>
-                                Cancel
-                              </Button>
-                            </ButtonGroup>
-                          </Spacing>
-                        </Flex.Item>
-                      </Flex>
+                      <Header>
+                        <Heading marginBottom="xs">
+                          Request Introduction
+                        </Heading>
+                        <Text marginBottom="xl" block>
+                          Select at least 3 times over the next 5 working days
+                          when you will be available for a call with{" "}
+                          {specialist.name}
+                        </Text>
+                        <TimeZoneSelect
+                          value={formik.values.timeZone}
+                          onChange={zone => {
+                            formik.setFieldValue("timeZone", zone);
+                          }}
+                        />
+                      </Header>
+                      <Body>
+                        <Availability
+                          timeZone={formik.values.timeZone}
+                          selected={formik.values.availability}
+                          onSelect={times => {
+                            localStorage.setItem(
+                              "availability",
+                              JSON.stringify(times)
+                            );
+                            formik.setFieldValue("availability", times);
+                          }}
+                        />
+                      </Body>
+                      <Footer>
+                        <Spacing padding="xl">
+                          <ButtonGroup fullWidth={isMobile}>
+                            <Button
+                              primary
+                              size="l"
+                              type="submit"
+                              loading={formik.isSubmitting}
+                              disabled={formik.isSubmitting}
+                            >
+                              Request
+                            </Button>
+                            <Button size="l" onClick={this.props.onClose}>
+                              Cancel
+                            </Button>
+                          </ButtonGroup>
+                        </Spacing>
+                      </Footer>
                     </form>
                   )}
                 />
@@ -121,4 +129,4 @@ class RequestIntroductionModal extends React.Component {
   }
 }
 
-export default RequestIntroductionModal;
+export default withNotifications(RequestIntroductionModal);

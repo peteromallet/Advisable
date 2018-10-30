@@ -12,7 +12,7 @@ import FETCH_INTERVIEW from "./fetchInterview.graphql";
 import { Container } from "./styles";
 
 const SELECT_TIME_PATH = ":date([0-9]{4}-[0-9]{2}-[0-9]{2})";
-const CONFIRM_PATH = ":datetime([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2})";
+const CONFIRM_PATH = ":datetime([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}\\+[0-9]{2}:[0-9]{2})";
 
 class InterviewRequest extends Component {
   render() {
