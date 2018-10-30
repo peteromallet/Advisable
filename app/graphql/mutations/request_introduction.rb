@@ -19,6 +19,7 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
       airtable_record = create_airtable_record(interview, application)
       interview.airtable_id = airtable_record.id
       interview.save
+      Webhook.process(interview)
       update_application_status(application)
       return { interview: interview, errors: [] }
     end
