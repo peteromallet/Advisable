@@ -8,7 +8,7 @@ export let Wrapper = styled.div`
 
 Wrapper = withSpacing(Wrapper)
 
-export const Input = styled(MaskedInput)`
+export const Input = styled.input`
   width: 100%;
   height: 36px;
   border: none;
@@ -43,6 +43,8 @@ export const Input = styled(MaskedInput)`
     color: #a4add1;
   }
 `
+
+export const InputMask = Input.withComponent(MaskedInput);
 
 export const Textarea = Input.withComponent('textarea').extend`
   resize: none;

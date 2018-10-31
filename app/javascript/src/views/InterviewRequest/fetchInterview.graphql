@@ -1,0 +1,23 @@
+query interview($id: ID!) {
+  interview(id: $id) {
+    id
+    status
+    availability
+    timeZone
+    startsAt
+    application {
+      id
+      specialist {
+        id
+        phoneNumber
+      }
+      project {
+        id
+        client {
+          id
+          name
+        }
+      }
+    }
+  }
+}

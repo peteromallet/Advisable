@@ -23,19 +23,27 @@ const align = {
 const FlexWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  height: ${props => props.vertical ? '100%' : 'auto'};
   align-items: ${props => align[props.align || "default"]};
   justify-content: ${props => justifyContent[props.distribute]};
+  flex-direction: ${props => props.vertical ? 'column' : 'row'};
 `;
 
 const flex = {
   default: "0 0 auto",
   fillEvenly: "1 0 0%",
-  fill: "1 1 auto"
+  fill: "1"
 };
+
+const flexItemWidth = {
+  default: "auto",
+  fill: "100%",
+}
 
 const FlexItem = withSpacing(styled.div`
   min-width: 0;
-  flex: ${props => flex[props.distribute]};
+  flex: ${props => flex[props.distribute || 'default']};
+  width: ${props => flexItemWidth[props.distribute] || 'default'};
 `);
 
 FlexItem.displayName = "FlexItem";
