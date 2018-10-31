@@ -4,10 +4,14 @@ import styled from "styled-components";
 export const Container = styled.div`
   top: 0;
   right: 0;
-  z-index: 2;
+  z-index: 10;
   width: 350px;
   padding: 20px;
   position: fixed;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 const NotificationPose = posed.div({
