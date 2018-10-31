@@ -1,65 +1,132 @@
-import React from "react";
+import React, { Fragment } from "react";
+import filter from "lodash/filter";
 import remove from "lodash/remove";
+import { Formik } from "formik";
+import moment from "moment-timezone";
 import { Mutation } from "react-apollo";
 import Modal from "src/components/Modal";
-import Flex from "src/components/Flex";
 import Text from "src/components/Text";
+import Flex from "src/components/Flex";
+import Spacing from "src/components/Spacing";
 import Heading from "src/components/Heading";
-import Avatar from "src/components/Avatar";
 import Button from "src/components/Button";
-import { Container } from "./styles.js";
+import { withNotifications } from "src/components/Notifications";
+import { Mobile } from "src/components/Breakpoint";
+import TimeZoneSelect from "src/components/TimeZoneSelect";
+import ButtonGroup from "src/components/ButtonGroup";
+import Availability from "./Availability";
+import { Header, Body, Footer } from "./styles";
 
 import REQUEST_INTRO from "./requestIntroduction.graphql";
 
 class RequestIntroductionModal extends React.Component {
   render() {
+    const notifications = this.props.notifications;
     const application = this.props.application;
     const specialist = application.specialist;
 
     return (
-      <Modal isOpen={this.props.isOpen} onClose={this.props.onClose}>
-        <Mutation mutation={REQUEST_INTRO}>
-          {(mutate, data) => (
-            <Container>
-              <Avatar marginBottom="l" name={application.specialist.name} />
-              <Heading marginBottom="xs">Request Introduction</Heading>
-              <Text marginBottom="xl" block>
-                Are you sure you want to request introduction to{" "}
-                {specialist.name}?
-              </Text>
-              <Flex distribute="fillEvenly">
-                <Flex.Item paddingRight='s'>
-                  <Button
-                    primary
-                    block
-                    size="l"
-                    loading={data.loading}
-                    onClick={async () => {
-                      await mutate({
-                        variables: {
-                          id: application.id
+      <Modal
+        size="l"
+        isOpen={this.props.isOpen}
+        onClose={this.props.onClose}
+        expandOnMobile
+      >
+        <Mobile>
+          {isMobile => (
+            <Mutation mutation={REQUEST_INTRO}>
+              {requestIntroduction => (
+                <Formik
+                  initialValues={{
+                    availability: filter(
+                      JSON.parse(localStorage.getItem("availability")) || [],
+                      time => {
+                        return moment(time).isAfter(moment().add(1, 'day').startOf('day'));
+                      }
+                    ),
+                    timeZone: moment.tz.guess() || "Europe/Dublin"
+                  }}
+                  onSubmit={async values => {
+                    await requestIntroduction({
+                      variables: {
+                        input: {
+                          applicationId: application.airtableId,
+                          ...values
                         }
-                      });
-                      this.props.onClose();
-                    }}>
-                    Request
-                  </Button>
-                </Flex.Item>
-                <Flex.Item paddingLeft='s'>
-                  <Button
-                    size="l"
-                    block
-                    onClick={this.props.onClose}>
-                    Cancel
-                  </Button>
-                </Flex.Item>
-              </Flex>
-            </Container>
+                      }
+                    });
+
+                    notifications.notify(
+                      `An interview request has been sent to ${
+                        specialist.name
+                      }`
+                    );
+                  }}
+                  render={formik => (
+                    <form
+                      style={{
+                        height: isMobile ? "100%" : 600,
+                        maxHeight: "100%"
+                      }}
+                      onSubmit={formik.handleSubmit}
+                    >
+                      <Header>
+                        <Heading marginBottom="xs">
+                          Request Call
+                        </Heading>
+                        <Text marginBottom="xl" block>
+                          Select at least 3 times over the next 5 working days
+                          when you will be available for a call with{" "}
+                          {specialist.name}
+                        </Text>
+                        <TimeZoneSelect
+                          value={formik.values.timeZone}
+                          onChange={zone => {
+                            formik.setFieldValue("timeZone", zone);
+                          }}
+                        />
+                      </Header>
+                      <Body>
+                        <Availability
+                          timeZone={formik.values.timeZone}
+                          selected={formik.values.availability}
+                          onSelect={times => {
+                            localStorage.setItem(
+                              "availability",
+                              JSON.stringify(times)
+                            );
+                            formik.setFieldValue("availability", times);
+                          }}
+                        />
+                      </Body>
+                      <Footer>
+                        <Spacing padding="xl">
+                          <ButtonGroup fullWidth={isMobile}>
+                            <Button
+                              primary
+                              size="l"
+                              type="submit"
+                              loading={formik.isSubmitting}
+                              disabled={formik.isSubmitting}
+                            >
+                              Request Call
+                            </Button>
+                            <Button size="l" onClick={this.props.onClose}>
+                              Cancel
+                            </Button>
+                          </ButtonGroup>
+                        </Spacing>
+                      </Footer>
+                    </form>
+                  )}
+                />
+              )}
+            </Mutation>
           )}
-        </Mutation>
+        </Mobile>
       </Modal>
     );
   }
 }
 
-export default RequestIntroductionModal;
+export default withNotifications(RequestIntroductionModal);

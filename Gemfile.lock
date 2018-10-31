@@ -62,6 +62,8 @@ GEM
       io-like (~> 0.3.0)
     arel (9.0.0)
     ast (2.4.0)
+    attr_encrypted (3.0.3)
+      encryptor (~> 3.0.0)
     autoprefixer-rails (8.5.1)
       execjs
     bindex (0.5.0)
@@ -101,6 +103,7 @@ GEM
     dotenv-rails (2.4.0)
       dotenv (= 2.4.0)
       railties (>= 3.2, < 6.0)
+    encryptor (3.0.0)
     erubi (1.7.1)
     execjs (2.7.0)
     factory_bot (4.10.0)
@@ -116,7 +119,7 @@ GEM
     graphiql-rails (1.4.10)
       railties
       sprockets-rails
-    graphql (1.8.4)
+    graphql (1.8.11)
     hashdiff (0.3.7)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
@@ -302,6 +305,7 @@ PLATFORMS
 DEPENDENCIES
   administrate
   airrecord
+  attr_encrypted (~> 3.0.0)
   bootsnap (>= 1.1.0)
   byebug
   capybara (>= 2.15, < 4.0)

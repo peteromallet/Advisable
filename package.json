@@ -7,6 +7,7 @@
     "apollo-cache-inmemory": "^1.2.1",
     "babel-plugin-styled-components": "^1.7.1",
     "babel-preset-react": "^6.24.1",
+    "body-scroll-lock": "^2.5.10",
     "clipboard": "^2.0.1",
     "clipboard-polyfill": "^2.5.4",
     "feather-icons": "^4.7.0",
@@ -16,6 +17,8 @@
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.10",
     "luxon": "^1.4.2",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.21",
     "polished": "^1.9.2",
     "prop-types": "^15.6.1",
     "query-string": "^6.2.0",
@@ -26,8 +29,11 @@
     "react-helmet": "^5.2.0",
     "react-hot-loader": "^4.2.0",
     "react-intl": "^2.4.0",
+    "react-loadable": "^5.5.0",
     "react-pose": "^2.1.2",
+    "react-responsive": "^5.0.0",
     "react-router-dom": "^4.3.1",
+    "react-select": "^2.1.0",
     "react-spring": "^5.1.10",
     "react-text-mask": "^5.4.2",
     "react-textarea-autosize": "^6.1.0",
@@ -37,9 +43,19 @@
     "yup": "^0.26.6"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.11",
+    "@storybook/addon-links": "^3.4.11",
+    "@storybook/addons": "^3.4.11",
+    "@storybook/react": "^3.4.11",
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-preset-flow": "^6.23.0",
+    "babel-runtime": "^6.26.0",
     "prettier": "^1.12.1",
     "webpack-dev-server": "2.11.2"
+  },
+  "scripts": {
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   }
 }
