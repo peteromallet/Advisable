@@ -44,7 +44,8 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
       "Application" => [application.airtable_id],
       "Interview Time" => interview.starts_at,
       "Call Status" => interview.status,
-      "Creation Time" => DateTime.now.utc
+      "Creation Time" => DateTime.now.utc,
+      "Email Post Meeting" => "Yes"
     )
     record.create
     record
