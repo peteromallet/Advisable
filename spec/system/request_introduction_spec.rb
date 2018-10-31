@@ -16,10 +16,12 @@ describe 'Request Introduction' do
     expect(Airtable::Application).to receive(:find).and_return(airtable_application_reocrd)
 
     visit "/projects/#{project.airtable_id}/applied"
-    click_on 'Request Introduction'
+    click_on 'Request Call'
     page.all("div[class^=styles__TimeCell]")[10].click
     page.all("div[class^=styles__TimeCell]")[34].click
-    click_on "Request Call"
+    within '.ModalWindow' do
+      click_on "Request Call"
+    end
 
     expect(page).to have_content("An interview request has been sent")
   end

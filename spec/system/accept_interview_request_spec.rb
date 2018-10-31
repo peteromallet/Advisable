@@ -26,7 +26,7 @@ describe 'Accept interview request' do
     expect(Airtable::Interview).to receive(:find).with(interview.airtable_id).and_return(interview_airtable_record)
 
     visit "/interview_request/#{interview.airtable_id}"
-    click_on "Thursday"
+    click_on interview.availability[0].strftime("%A")
     click_on "10:00am - 10:30am"
     fill_in "phoneNumber", with: "0861234567"
     click_on "Confirm Call"
