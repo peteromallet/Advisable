@@ -3,6 +3,7 @@ class Application < ApplicationRecord
   belongs_to :project
   belongs_to :rejection_reason, required: false, class_name: "ApplicationRejectionReason"
   has_many :bookings
+  has_many :interviews
   has_one :proposal, -> { where(status: "Proposed") }, class_name: "Booking"
   validates :airtable_id, presence: true
 
