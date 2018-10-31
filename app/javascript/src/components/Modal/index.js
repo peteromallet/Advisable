@@ -7,6 +7,10 @@ import { ModalContainer, Backdrop, Window, CloseModal } from "./styles";
 const modalRoot = document.getElementById("js-modal-root");
 
 class Modal extends React.Component {
+  state = {
+    scrollPosition: null
+  }
+
   constructor(props) {
     super(props);
     this.el = document.createElement("div");
@@ -22,25 +26,34 @@ class Modal extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.isOpen === false && this.props.isOpen) {
-      window.addEventListener('keydown', this.handleKeyDown)
+      const scrollPosition = (window.pageYOffset || document.documentElement.scrollTop) - (document.documentElement.clientTop || 0);
+      this.setState({ scrollPosition })
+      document.body.style.overflow = 'hidden';
+      document.body.style.top = `-${scrollPosition}px`;
+      document.body.style.position = 'fixed';
+      window.addEventListener("keydown", this.handleKeyDown);
     }
 
     if (prevProps.isOpen && this.props.isOpen === false) {
-      window.removeEventListener('keydown', this.handleKeyDown)
+      document.body.style.overflow = 'scroll';
+      document.body.style.top = '0px';
+      document.body.style.position = 'static';
+      window.scrollTo(0, this.state.scrollPosition)
+      window.removeEventListener("keydown", this.handleKeyDown);
     }
   }
 
   handleKeyDown = e => {
     if (e.keyCode === 27) {
-      this.props.onClose()
+      this.props.onClose();
     }
-  }
+  };
 
   render() {
     if (!this.props.isOpen) return null;
 
     return ReactDOM.createPortal(
-      <ModalContainer>
+      <ModalContainer innerRef={c => this.modalContainer = c} expandOnMobile={this.props.expandOnMobile}>
         <Spring
           from={{ opacity: 0, translateY: 100 }}
           to={{
@@ -49,7 +62,12 @@ class Modal extends React.Component {
           }}
         >
           {styles => (
-            <Window className="ModalWindow" styles={styles}>
+            <Window
+              className="ModalWindow"
+              size={this.props.size}
+              styles={styles}
+              expandOnMobile={this.props.expandOnMobile}
+            >
               <CloseModal onClick={this.props.onClose}>
                 <svg width={13} height={12} fill="none">
                   <path

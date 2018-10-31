@@ -1,0 +1,10 @@
+mutation AcceptInterviewRequest($input: AcceptInterviewRequestInput!) {
+  acceptInterviewRequest(input: $input) {
+    interview {
+      id
+      status
+      startsAt
+    }
+    errors
+  }
+}
