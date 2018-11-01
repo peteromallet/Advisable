@@ -9,6 +9,10 @@ class Types::Client < Types::BaseType
     argument :gt, String, required: false
   end
 
+  def availability
+    object.availability || []
+  end
+
   def interviews(status: "Call Scheduled", gt:)
     interviews = object.interviews.where(status: status)
     interviews = interviews.where("starts_at > ?", DateTime.parse(gt)) if gt
