@@ -15,7 +15,7 @@ import { withNotifications } from "src/components/Notifications";
 import { Mobile } from "src/components/Breakpoint";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
 import ButtonGroup from "src/components/ButtonGroup";
-import Availability from "./Availability";
+import Availability from "src/components/Availability";
 import { Form, Header, Body, Footer } from "./styles";
 import validationSchema from "./validationSchema";
 

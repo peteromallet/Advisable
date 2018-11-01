@@ -1,4 +1,4 @@
-import sortBy from 'lodash/sortBy';
+import sortBy from "lodash/sortBy";
 import filter from "lodash/filter";
 import moment from "moment-timezone";
 import { Link } from "react-router-dom";
@@ -9,18 +9,28 @@ import Heading from "src/components/Heading";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
 import { Times, Time } from "./styles";
 
+const ISO_FORMAT = "YYYY-MM-DDTHH:mm:ss[Z]";
+
 class SelectTime extends Component {
   state = {
     timeZone: this.props.timeZone
   };
 
   render() {
-    const { availability, timeZone, match, clientName } = this.props;
+    const {
+      availability,
+      unavailable,
+      timeZone,
+      match,
+      clientName
+    } = this.props;
     const date = moment.tz(match.params.date, timeZone);
     const times = sortBy(
-      filter(availability, d => date.isSame(d, "day")),
+      filter(availability, t => {
+        return date.isSame(t, "day") && unavailable.indexOf(t) === -1;
+      }),
       time => moment(time).format("HHmm")
-    )
+    );
 
     return (
       <Fragment>

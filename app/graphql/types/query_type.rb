@@ -59,4 +59,16 @@ class Types::QueryType < GraphQL::Schema::Object
       GraphQL::ExecutionError.new("Could not find interview #{id}")
     end
   end
+
+  field :client, Types::Client, description: "Fetch a client record by its airtable ID", null: true do
+    argument :id, ID, required: true
+  end
+
+  def client(id: )
+    begin
+      ::Client.find_by_airtable_id(id)
+    rescue Airrecord::Error => er
+      GraphQL::ExecutionError.new("Could not find client #{id}")
+    end
+  end
 end

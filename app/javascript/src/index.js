@@ -27,8 +27,8 @@ const client = new ApolloClient({
     credentials: "same-origin"
   },
   request: operation => {
-    const csrfElement = document.querySelector("meta[name=csrf-token]")
-    if (!csrfElement) return
+    const csrfElement = document.querySelector("meta[name=csrf-token]");
+    if (!csrfElement) return;
     const csrfToken = csrfElement.getAttribute("content");
     operation.setContext({
       headers: { "X-CSRF-Token": csrfToken }
@@ -37,6 +37,10 @@ const client = new ApolloClient({
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  const root = document.createElement("div");
+  root.style.height = "100%";
+  document.body.appendChild(root);
+
   ReactDOM.render(
     <ApolloProvider client={client}>
       <IntlProvider locale={language}>
@@ -45,6 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
         </NotificationsProvider>
       </IntlProvider>
     </ApolloProvider>,
-    document.body.appendChild(document.createElement("div"))
+    root
   );
 });

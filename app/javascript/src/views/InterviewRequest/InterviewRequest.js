@@ -41,6 +41,9 @@ class InterviewRequest extends Component {
                         availability={
                           interview.application.project.client.availability
                         }
+                        unavailable={interview.application.project.client.interviews.map(
+                          i => i.startsAt
+                        )}
                         clientName={interview.application.project.client.name}
                       />
                     )}

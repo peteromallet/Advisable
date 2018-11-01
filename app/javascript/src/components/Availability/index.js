@@ -12,6 +12,10 @@ const REMOVE = "REMOVE";
 const ISO_FORMAT = "YYYY-MM-DDTHH:mm:ss[Z]";
 
 class Availability extends Component {
+  static defaultProps = {
+    selected: []
+  };
+
   constructor(props) {
     super(props);
 
