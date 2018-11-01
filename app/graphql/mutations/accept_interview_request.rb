@@ -14,6 +14,7 @@ class Mutations::AcceptInterviewRequest < Mutations::BaseMutation
     if interview.valid?
       sync_with_airtable(interview)
       interview.save
+      update_client_availability(interview)
       Webhook.process(interview)
       return { interview: interview, errors: [] }
     end
@@ -24,6 +25,12 @@ class Mutations::AcceptInterviewRequest < Mutations::BaseMutation
   end
 
   private
+
+  def update_client_availability(interview)
+    client = interview.application.project.client
+    availability = client.availability - [interview.starts_at]
+    client.update_attributes(availability: availability)
+  end
 
   def update_specialist_number(specialist, number)
     return if specialist.phone_number === number
