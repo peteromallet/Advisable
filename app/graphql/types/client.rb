@@ -13,7 +13,7 @@ class Types::Client < Types::BaseType
     object.availability || []
   end
 
-  def interviews(status: "Call Scheduled", gt:)
+  def interviews(status: "Call Scheduled", gt: nil)
     interviews = object.interviews.where(status: status)
     interviews = interviews.where("starts_at > ?", DateTime.parse(gt)) if gt
     interviews
