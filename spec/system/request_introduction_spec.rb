@@ -19,6 +19,9 @@ describe 'Request Introduction' do
     click_on 'Request Call'
     page.all("div[class^=styles__TimeCell]")[10].click
     page.all("div[class^=styles__TimeCell]")[34].click
+    page.all("div[class^=styles__TimeCell]")[58].click
+    page.all("div[class^=styles__TimeCell]")[82].click
+    page.all("div[class^=styles__TimeCell]")[94].click
     within '.ModalWindow' do
       click_on "Request Call"
     end
