@@ -12,6 +12,7 @@ class Client < ApplicationRecord
   # Called before the client record is saved to clean up any availability
   # in the past.
   def remove_past_availabililty
+    return if availability.nil?
     self.availability = availability.select do |time|
       time > DateTime.now.utc
     end
