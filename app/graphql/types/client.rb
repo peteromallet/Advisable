@@ -6,10 +6,12 @@ class Types::Client < Types::BaseType
   field :availability, [GraphQL::Types::ISO8601DateTime], null: false
   field :interviews, [Types::Interview], null: false do
     argument :status, String, required: false
+    argument :gt, String, required: false
   end
 
-  def interviews(status: "Call Scheduled")
+  def interviews(status: "Call Scheduled", gt:)
     interviews = object.interviews.where(status: status)
+    interviews = interviews.where("starts_at > ?", DateTime.parse(gt)) if gt
     interviews
   end
 end

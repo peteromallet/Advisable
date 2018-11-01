@@ -1,4 +1,5 @@
 import { Query } from "react-apollo";
+import moment from "moment-timezone";
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Card from "src/components/Card";
@@ -22,7 +23,10 @@ class InterviewRequest extends Component {
     return (
       <Query
         query={FETCH_INTERVIEW}
-        variables={{ id: match.params.interviewID }}
+        variables={{
+          id: match.params.interviewID,
+          today: moment().toISOString()
+        }}
       >
         {query => {
           if (query.loading) return <Loading />;
