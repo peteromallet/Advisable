@@ -9,12 +9,15 @@ import AvailabilityCalendarHeader from "./AvailabilityCalendarHeader";
 
 const ADD = "ADD";
 const REMOVE = "REMOVE";
+const ISO_FORMAT = "YYYY-MM-DDTHH:mm:ss[Z]";
 
 class Availability extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      times: this.calculateTimes(),
+      weekOffset: 0,
+      times: this.calculateTimes(0),
       highlight: null
     };
   }
@@ -23,33 +26,62 @@ class Availability extends Component {
     // Auto scroll the view so that the times start at 9am
     this.view.scrollTop = 360;
 
-    document.addEventListener('mouseup', this.handleMouseUp)
+    document.addEventListener("mouseup", this.handleMouseUp);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mouseup', this.handleMouseUp)
+    document.removeEventListener("mouseup", this.handleMouseUp);
   }
 
   componentDidUpdate(prevProps) {
     // If the timezone changes then we need to recalculate the times.
     if (prevProps.timeZone !== this.props.timeZone) {
-      this.setState({ times: this.calculateTimes() });
+      this.setState({
+        times: this.calculateTimes(this.state.weekOffset)
+      });
     }
+  }
+
+  get previousDisabled() {
+    const baseDate = moment
+      .tz(this.props.timeZone)
+      .add(this.state.weekOffset, "weeks")
+      .startOf("day");
+
+    return baseDate.isSameOrBefore(moment());
   }
 
   // Returns a matrix of available times over the next 7 days.
   // This will be an array repesenting the next 7 days, with each item being an
   // array of available times. The first item in the array represents tomorrow.
   // e.g [[...], [...], [...], [....], [....], [....], [...]]
-  calculateTimes = () => {
-    const baseDate = moment.tz(this.props.timeZone).startOf("day");
+  calculateTimes = weekOffset => {
+    const baseDate = moment
+      .tz(this.props.timeZone)
+      .add(1, "day")
+      .add(weekOffset, "weeks")
+      .startOf("day");
 
     return times(7, day => {
       return times(24, hour => {
         return moment(baseDate)
-          .add(day + 1, "days")
+          .add(day, "days")
           .set("hour", hour);
       });
+    });
+  };
+
+  nextWeek = () => {
+    this.setState({
+      weekOffset: this.state.weekOffset + 1,
+      times: this.calculateTimes(this.state.weekOffset + 1)
+    });
+  };
+
+  previousWeek = () => {
+    this.setState({
+      weekOffset: this.state.weekOffset - 1,
+      times: this.calculateTimes(this.state.weekOffset - 1)
     });
   };
 
@@ -72,9 +104,9 @@ class Availability extends Component {
 
   handleMouseUp = () => {
     if (this.state.highlight) {
-      this.processHighlight()
+      this.processHighlight();
     }
-  }
+  };
 
   handleTap = cell => {
     const isSelected = this.isSelected(cell);
@@ -85,7 +117,7 @@ class Availability extends Component {
     };
 
     this.setState({ highlight }, this.processHighlight);
-  }
+  };
 
   processHighlight = () => {
     const { highlight, times } = this.state;
@@ -94,8 +126,8 @@ class Availability extends Component {
     let higher = to;
 
     if (lower[0] > higher[0] || lower[1] > higher[1]) {
-      lower = to
-      higher = from
+      lower = to;
+      higher = from;
     }
 
     const selection = [];
@@ -105,11 +137,12 @@ class Availability extends Component {
         const day = time.day();
         const isWeekend = day === 6 || day === 0; // 6 = Saturday, 0 = Sunday
         if (!isWeekend) {
-          selection.push(time.toISOString());
+          selection.push(time.utc().format(ISO_FORMAT));
           selection.push(
             moment(time)
               .add(30, "minutes")
-              .toISOString()
+              .utc()
+              .format(ISO_FORMAT)
           );
         }
       }
@@ -129,9 +162,9 @@ class Availability extends Component {
           return collection;
         } else {
           if (index > -1) {
-            return collection
+            return collection;
           } else {
-          return [...collection, time];
+            return [...collection, time];
           }
         }
       },
@@ -144,7 +177,7 @@ class Availability extends Component {
 
   isSelected = cell => {
     const time = this.state.times[cell[0]][cell[1]];
-    return this.props.selected.indexOf(time.toISOString()) > -1;
+    return this.props.selected.indexOf(time.utc().format(ISO_FORMAT)) > -1;
   };
 
   isHighlighted = cell => {
@@ -172,11 +205,22 @@ class Availability extends Component {
   render() {
     return (
       <Wrapper>
-        <AvailabilityCalendarHeader dates={this.state.times.map(t => t[0])} />
+        <AvailabilityCalendarHeader
+          onPrevious={this.previousWeek}
+          onNext={this.nextWeek}
+          previousDisabled={this.previousDisabled}
+          dates={this.state.times.map(t =>
+            moment.tz(t[0], this.props.timeZone)
+          )}
+        />
         <Times innerRef={c => (this.view = c)}>
           <AvailabilityHours />
           {this.state.times.map((times, d) => (
-            <Day key={d} isSaturday={times[0].day() === 6} isSunday={times[0].day() === 0}>
+            <Day
+              key={d}
+              isSaturday={moment.tz(times[0], this.props.timeZone).day() === 6}
+              isSunday={moment.tz(times[0], this.props.timeZone).day() === 0}
+            >
               {times.map((time, i) => (
                 <AvailabilityTimeCell
                   key={i}

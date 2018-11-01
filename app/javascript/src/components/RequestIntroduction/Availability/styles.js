@@ -12,28 +12,30 @@ export const Wrapper = styled.div`
   position: relative;
   flex-direction: column;
   -webkit-touch-callout: none;
-    -webkit-user-select: none;
-     -khtml-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 export const Header = styled.div`
   display: flex;
-  padding-left: 50px;
-  padding-right: 20px;
+  position: relative;
+  padding-left: 40px;
+  padding-right: 40px;
   border-top: 1px solid #eff0f6;
   border-bottom: 1px solid #eff0f6;
 `;
 
 export const HeaderCell = styled.div`
   flex: 1 0 0%;
+  height: 45px;
   padding: 8px 15px;
   border-left: 1px solid #eff0f6;
 
   &:last-child {
-    border-right: 1px solid #eff0f6;
+    box-shadow: inset -1px 0 0 0 #eff0f6;
   }
 
   h4 {
@@ -74,7 +76,7 @@ export const HeaderCell = styled.div`
       `} ${props =>
   props.isSaturday &&
   css`
-    width: 30px;
+    width: 10px;
     flex: none;
 
     h4,
@@ -85,13 +87,39 @@ export const HeaderCell = styled.div`
   }
 `;
 
+export const NavButton = styled.button`
+  top: 0;
+  padding: 0;
+  width: 40px;
+  height: 45px;
+  border: none;
+  outline: none;
+  appearance: none;
+  border-radius: 4px;
+  position: absolute;
+
+  &:disabled {
+    opacity: 0.25;
+  }
+
+  ${props =>
+    props.previous &&
+    css`
+      left: 0px;
+    `} ${props =>
+    props.next &&
+    css`
+      right: 0px;
+    `};
+`;
+
 export const Times = styled.div`
   height: 0;
   display: flex;
   flex: 1 1 auto;
   overflow-y: scroll;
-  padding-left: 50px;
-  padding-right: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
   position: relative;
   -webkit-overflow-scrolling: touch;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.08);
@@ -99,7 +127,7 @@ export const Times = styled.div`
 
 export const Hours = styled.div`
   left: 0;
-  width: 50px;
+  width: 40px;
   padding-top: 9px;
   position: absolute;
 `;
@@ -108,9 +136,9 @@ export const Hour = styled.span`
   width: 100%;
   display: block;
   color: #48506e;
-  font-size: 11px;
+  font-size: 10px;
   text-align: right;
-  padding-right: 10px;
+  padding-right: 5px;
   height: ${DESKTOP_CELL_HEIGHT}px;
 
   @media screen and (max-width: ${BREAKPOINT}px) {
@@ -224,7 +252,7 @@ export const Day = styled.div`
     ${props =>
       props.isSaturday &&
       css`
-        width: 30px;
+        width: 10px;
         flex: none;
 
         @media screen and (max-width: ${BREAKPOINT}px) {

@@ -7,6 +7,7 @@ RSpec.describe Interview, type: :model do
   end
 
   it "is invalid if starts_at is not an available time" do
+    client = create(:client, availability: [2.days.from_now.change({ hour: 12, min: 0, sec: 0 })])
     interview = build(:interview)
     interview.starts_at = 10.days.from_now
     expect(interview).to_not be_valid

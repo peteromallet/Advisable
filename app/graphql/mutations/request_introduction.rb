@@ -9,8 +9,9 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
 
   def resolve(**args)
     application = Application.find_by_airtable_id(args[:application_id])
+    application.project.client.update_attributes(availability: args[:availability])
+
     interview = application.interviews.new(
-      availability: args[:availability],
       time_zone: args[:time_zone],
       status: "Call Requested"
     )
