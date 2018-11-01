@@ -1,4 +1,4 @@
-query interview($id: ID!) {
+query interview($id: ID!, $today: String) {
   interview(id: $id) {
     id
     status
@@ -15,7 +15,7 @@ query interview($id: ID!) {
           id
           name
           availability
-          interviews(status: "Call Scheduled") {
+          interviews(status: "Call Scheduled", gt: $today) {
             id
             startsAt
           }

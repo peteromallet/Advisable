@@ -3,5 +3,9 @@ query client($id: ID!) {
     id
     airtableId
     availability
+    interviews(status: "Call Scheduled") {
+      id
+      startsAt
+    }
   }
 }
