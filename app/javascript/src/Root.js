@@ -14,7 +14,7 @@ const Root = () => (
   <Switch>
     <Route path="/projects/:projectID" component={Project} />
     <Route path="/offers/:bookingID" component={ViewOffer} />
-    <Route path="/clients/:clientID/availability" component={Availability} />
+    <Route path="/clients/:userID/availability" component={Availability} />
     <Route
       path="/interview_request/:interviewID"
       component={InterviewRequest}

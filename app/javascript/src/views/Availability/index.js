@@ -27,7 +27,7 @@ class AvailabilityView extends Component {
       <Container>
         <Query
           query={FETCH_AVAILABILITY}
-          variables={{ id: match.params.clientID }}
+          variables={{ id: match.params.userID }}
         >
           {query => {
             if (query.loading) return <Loading />;
@@ -40,7 +40,7 @@ class AvailabilityView extends Component {
                       await updateAvailability({
                         variables: {
                           input: {
-                            id: query.data.client.airtableId,
+                            id: query.data.user.airtableId,
                             ...values
                           }
                         }
@@ -51,7 +51,7 @@ class AvailabilityView extends Component {
                       );
                     }}
                     initialValues={{
-                      availability: query.data.client.availability
+                      availability: query.data.user.availability
                     }}
                   >
                     {formik => (
