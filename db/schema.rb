@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_05_083128) do
+ActiveRecord::Schema.define(version: 2018_11_05_090830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,8 +111,10 @@ ActiveRecord::Schema.define(version: 2018_11_05_083128) do
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["airtable_id"], name: "index_interviews_on_airtable_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
+    t.index ["user_id"], name: "index_interviews_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -193,6 +195,7 @@ ActiveRecord::Schema.define(version: 2018_11_05_083128) do
   add_foreign_key "client_users", "clients"
   add_foreign_key "client_users", "users"
   add_foreign_key "interviews", "applications"
+  add_foreign_key "interviews", "users"
   add_foreign_key "projects", "clients"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"

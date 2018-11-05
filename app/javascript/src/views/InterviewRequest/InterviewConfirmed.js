@@ -17,7 +17,7 @@ export default ({ clientName, startsAt, timeZone }) => {
         Your call with {clientName} has been scheduled!
       </Text>
       <Event>
-        <Icon icon='calendar' />
+        <Icon icon="calendar" />
         <h4>{date.format("dddd, DD MMMM")}</h4>
         <span>
           {date.format("hh:mma")} -{" "}

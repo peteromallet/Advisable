@@ -23,10 +23,7 @@ class InterviewRequest extends Component {
     return (
       <Query
         query={FETCH_INTERVIEW}
-        variables={{
-          id: match.params.interviewID,
-          today: moment().toISOString()
-        }}
+        variables={{ id: match.params.interviewID }}
       >
         {query => {
           if (query.loading) return <Loading />;
@@ -42,12 +39,7 @@ class InterviewRequest extends Component {
                       <SelectTime
                         {...route}
                         timeZone={interview.timeZone}
-                        availability={
-                          interview.application.project.client.availability
-                        }
-                        unavailable={interview.application.project.client.interviews.map(
-                          i => i.startsAt
-                        )}
+                        availability={interview.user.availability}
                         clientName={interview.application.project.client.name}
                       />
                     )}
@@ -72,9 +64,7 @@ class InterviewRequest extends Component {
                       <SelectDay
                         {...route}
                         timeZone={interview.timeZone}
-                        availability={
-                          interview.application.project.client.availability
-                        }
+                        availability={interview.user.availability}
                         clientName={interview.application.project.client.name}
                       />
                     )}
