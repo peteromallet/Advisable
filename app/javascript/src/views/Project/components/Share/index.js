@@ -6,13 +6,6 @@ import CopyButton from "./CopyButton";
 import { ShareWrapper, ShareIcon, Divider, ShareButton } from "./styles";
 
 class Share extends React.Component {
-  componentDidMount() {
-    window.addthis_config = window.addthis_config || {};
-    window.addthis_config.data_track_clickback = false;
-    window.addthis_config.data_track_addressbar = false;
-    window.addthis.shareButton();
-  }
-
   url(source = null) {
     if (source) {
       const parsed = queryString.parseUrl(this.props.url);
@@ -35,7 +28,9 @@ class Share extends React.Component {
   }
 
   get emailBody() {
-    return encodeURIComponent(`${this.emailShareMessage}\n\n${this.url("email")}`);
+    return encodeURIComponent(
+      `${this.emailShareMessage}\n\n${this.url("email")}`
+    );
   }
 
   get shareMessage() {
@@ -69,19 +64,24 @@ class Share extends React.Component {
         <div className="addthis_share">
           <ShareIcon
             target="_blank"
-            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(this.url('linkedin'))}`}
-            data-service='linkedin'
+            href={`https://www.linkedin.com/shareArticle/?url=${encodeURIComponent(
+              this.url("linkedin")
+            )}&mini=true&summary=${this.shareMessage}`}
+            data-service="linkedin"
           />
           <ShareIcon
-            className="addthis_share_button"
+            target="_blank"
             data-service="facebook"
-            data-url={this.url("facebook")}
+            href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+              this.url("facebook")
+            )}`}
           />
           <ShareIcon
-            className="addthis_share_button"
+            target="_blank"
             data-service="twitter"
-            data-url={this.url("twitter")}
-            data-title={this.shareMessage}
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+              this.shareMessage
+            )}&url=${encodeURIComponent(this.url("twitter"))}`}
           />
           <ShareIcon
             target="_blank"
