@@ -1,21 +1,27 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+  height: 100%;
+  width: 100%;
+  background: white;
+`;
+
 export const Form = styled.form`
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 `;
 
 export const Header = styled.div`
-  /* height: 200px; */
   padding: 30px;
 `;
 
 export const Body = styled.div`
-  overflow-y: scroll;
   flex: 1% 1 0;
-  /* height: calc(100% - 300px); */
+  overflow-y: scroll;
 `;
 
 export const Footer = styled.div`
-  /* height: 100px; */
+  padding: 25px;
 `;

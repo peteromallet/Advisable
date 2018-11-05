@@ -1,4 +1,4 @@
-import posed from 'react-pose';
+import posed from "react-pose";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -18,7 +18,7 @@ const NotificationPose = posed.div({
   initial: {
     x: 100,
     y: 0,
-    opacity: 0,
+    opacity: 0
   },
   enter: {
     x: 0,
@@ -28,22 +28,22 @@ const NotificationPose = posed.div({
   exit: {
     x: 0,
     y: -20,
-    opacity: 0,
-  },
-})
+    opacity: 0
+  }
+});
 
 export const NotificationWrapper = styled(NotificationPose)`
   margin-bottom: 15px;
-`
+`;
 
 export const NotificationCard = styled.div`
   width: 100%;
   padding: 20px;
   color: white;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   border-radius: 4px;
-  background: #173FCD;
+  background: #173fcd;
   box-shadow: 0 5px 10px -5px rgba(6, 24, 51, 0.15),
     0 0 50px 0 rgba(6, 24, 51, 0.15);
 `;

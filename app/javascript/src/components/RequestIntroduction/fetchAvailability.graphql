@@ -1,0 +1,12 @@
+query application($id: ID!) {
+  application(id: $id) {
+    id
+    project {
+      id
+      client {
+        id
+        availability
+      }
+    }
+  }
+}

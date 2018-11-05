@@ -2,9 +2,12 @@ query interview($id: ID!) {
   interview(id: $id) {
     id
     status
-    availability
-    timeZone
     startsAt
+    timeZone
+    user {
+      id
+      availability(excludeConflicts: true)
+    }
     application {
       id
       specialist {
