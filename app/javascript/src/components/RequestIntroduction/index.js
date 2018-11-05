@@ -74,6 +74,8 @@ class RequestIntroductionModal extends React.Component {
                               specialist.name
                             }`
                           );
+
+                          this.props.onClose()
                         }}
                         render={formik => (
                           <Form
