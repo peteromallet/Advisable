@@ -1,6 +1,6 @@
 mutation UpdateAvailability($input: UpdateAvailabilityInput!) {
   updateAvailability(input: $input) {
-    client {
+    user {
       id
       availability
     }

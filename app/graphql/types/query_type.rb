@@ -60,15 +60,15 @@ class Types::QueryType < GraphQL::Schema::Object
     end
   end
 
-  field :client, Types::Client, description: "Fetch a client record by its airtable ID", null: true do
+  field :user, Types::User, description: "Fetch a user record by its airtable ID", null: true do
     argument :id, ID, required: true
   end
 
-  def client(id: )
+  def user(id: )
     begin
-      ::Client.find_by_airtable_id(id)
+      ::User.find_by_airtable_id(id)
     rescue Airrecord::Error => er
-      GraphQL::ExecutionError.new("Could not find client #{id}")
+      GraphQL::ExecutionError.new("Could not find user #{id}")
     end
   end
 end
