@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_22_134317) do
+ActiveRecord::Schema.define(version: 2018_11_05_090830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,11 +76,21 @@ ActiveRecord::Schema.define(version: 2018_10_22_134317) do
     t.index ["rejection_reason_id"], name: "index_bookings_on_rejection_reason_id"
   end
 
+  create_table "client_users", force: :cascade do |t|
+    t.bigint "client_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_users_on_client_id"
+    t.index ["user_id"], name: "index_client_users_on_user_id"
+  end
+
   create_table "clients", force: :cascade do |t|
     t.string "name"
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "availability"
     t.index ["airtable_id"], name: "index_clients_on_airtable_id"
   end
 
@@ -101,8 +111,10 @@ ActiveRecord::Schema.define(version: 2018_10_22_134317) do
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["airtable_id"], name: "index_interviews_on_airtable_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
+    t.index ["user_id"], name: "index_interviews_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -148,6 +160,16 @@ ActiveRecord::Schema.define(version: 2018_10_22_134317) do
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "airtable_id"
+    t.text "availability"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["airtable_id"], name: "index_users_on_airtable_id"
+  end
+
   create_table "webhook_configurations", force: :cascade do |t|
     t.string "name"
     t.string "url"
@@ -170,7 +192,10 @@ ActiveRecord::Schema.define(version: 2018_10_22_134317) do
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
   add_foreign_key "bookings", "applications"
+  add_foreign_key "client_users", "clients"
+  add_foreign_key "client_users", "users"
   add_foreign_key "interviews", "applications"
+  add_foreign_key "interviews", "users"
   add_foreign_key "projects", "clients"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"

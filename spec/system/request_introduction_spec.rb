@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe 'Request Introduction' do
-  let(:application) { create(:application, status: "Applied") }
-
   it 'Creates an interview request' do
-    project = application.project
+    client = create(:client)
+    project = create(:project, client: client)
+    application = create(:application, status: "Applied", project: project)
 
     airtable_interview_record = double('Airtable::Interview', id: 'interview_1')
     expect(Airtable::Interview).to receive(:new).and_return(airtable_interview_record)
@@ -19,6 +19,9 @@ describe 'Request Introduction' do
     click_on 'Request Call'
     page.all("div[class^=styles__TimeCell]")[10].click
     page.all("div[class^=styles__TimeCell]")[34].click
+    page.all("div[class^=styles__TimeCell]")[58].click
+    page.all("div[class^=styles__TimeCell]")[82].click
+    page.all("div[class^=styles__TimeCell]")[94].click
     within '.ModalWindow' do
       click_on "Request Call"
     end

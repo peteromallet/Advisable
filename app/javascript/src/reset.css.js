@@ -45,6 +45,10 @@ injectGlobal`
     line-height: 1;
   }
 
+  body, html {
+    height: 100%;
+  }
+
   ol, ul {
     list-style: none;
   }

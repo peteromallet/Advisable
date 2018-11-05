@@ -9,8 +9,13 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
 
   def resolve(**args)
     application = Application.find_by_airtable_id(args[:application_id])
+    # Becuase we currently dont have client logins, we explicilty set the
+    # availability of the primary_user. This should be replaced with setting
+    # the authentciated users availability once auth is in place.
+    application.project.client.primary_user.update_attributes(availability: args[:availability])
+
     interview = application.interviews.new(
-      availability: args[:availability],
+      user: application.project.client.primary_user,
       time_zone: args[:time_zone],
       status: "Call Requested"
     )
