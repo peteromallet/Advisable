@@ -39,6 +39,7 @@ const client = new ApolloClient({
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.createElement("div");
   root.style.height = "100%";
+  root.style.overflow = "auto";
   document.body.appendChild(root);
 
   ReactDOM.render(

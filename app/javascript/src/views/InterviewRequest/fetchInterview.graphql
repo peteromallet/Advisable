@@ -1,8 +1,13 @@
-query interview($id: ID!, $today: String) {
+query interview($id: ID!) {
   interview(id: $id) {
     id
     status
+    startsAt
     timeZone
+    user {
+      id
+      availability
+    }
     application {
       id
       specialist {
@@ -14,11 +19,6 @@ query interview($id: ID!, $today: String) {
         client {
           id
           name
-          availability
-          interviews(status: "Call Scheduled", gt: $today) {
-            id
-            startsAt
-          }
         }
       }
     }

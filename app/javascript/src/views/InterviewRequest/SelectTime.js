@@ -17,17 +17,11 @@ class SelectTime extends Component {
   };
 
   render() {
-    const {
-      availability,
-      unavailable,
-      timeZone,
-      match,
-      clientName
-    } = this.props;
+    const { availability, timeZone, match, clientName } = this.props;
     const date = moment.tz(match.params.date, timeZone);
     const times = sortBy(
       filter(availability, t => {
-        return date.isSame(t, "day") && unavailable.indexOf(t) === -1;
+        return date.isSame(t, "day");
       }),
       time => moment(time).format("HHmm")
     );
