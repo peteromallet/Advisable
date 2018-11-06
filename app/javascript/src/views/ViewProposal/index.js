@@ -111,7 +111,7 @@ class ViewProposal extends React.Component {
                           `An offer has been sent to ${specialist.name}`
                         );
 
-                        history.replace(backURL);
+                        history.replace(this.backURL);
                       }}
                     />
                   )}

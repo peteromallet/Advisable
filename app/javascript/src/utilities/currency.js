@@ -1,4 +1,4 @@
-export const currencySymbol = currency => symbols[currency] || currency
+export const currencySymbol = currency => symbols[currency] || currency || "€"
 
 export default (amount, currency = "EUR") => {
   const symbol = currencySymbol(currency)
