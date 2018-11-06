@@ -23,6 +23,10 @@ import REQUEST_INTRO from "./requestIntroduction.graphql";
 import FETCH_AVAILABILITY from "./fetchAvailability.graphql";
 
 class RequestIntroductionModal extends React.Component {
+  state = {
+    submitted: false
+  }
+
   render() {
     const notifications = this.props.notifications;
     const application = this.props.application;
@@ -75,7 +79,7 @@ class RequestIntroductionModal extends React.Component {
                             }`
                           );
 
-                          this.props.onClose()
+                          this.props.onClose();
                         }}
                         render={formik => (
                           <Form
@@ -88,12 +92,14 @@ class RequestIntroductionModal extends React.Component {
                             <Header>
                               <Heading marginBottom="xs">Request Call</Heading>
                               <Text
-                                size={isMobile ? "s" : "m"}
+                                size={"s"}
                                 marginBottom="l"
                                 block
                               >
-                                Select at least 3 times when you will be
-                                available for a call with {specialist.name}
+                                Select the times you will be available for a
+                                call with {specialist.name}. The more times you
+                                select, the easier it’ll be for us to find a
+                                time that suits them.
                               </Text>
                               <TimeZoneSelect
                                 value={formik.values.timeZone}
@@ -105,7 +111,9 @@ class RequestIntroductionModal extends React.Component {
                             <Body>
                               <Availability
                                 timeZone={formik.values.timeZone}
-                                selected={formik.values.availability}
+                                selected={filter(formik.values.availability, t => {
+                                  return moment(t).isAfter(moment(), 'day')
+                                })}
                                 onSelect={times => {
                                   formik.setFieldValue("availability", times);
                                 }}
@@ -117,6 +125,12 @@ class RequestIntroductionModal extends React.Component {
                                 paddingTop="l"
                                 paddingBottom="l"
                               >
+                                  {this.state.submitted && !isMobile && formik.errors.availability && (
+                                    <Text size="s" marginBottom="s">
+                                      {formik.errors.availability}
+                                    </Text>
+                                  )}
+
                                 {!(isMobile && !formik.isValid) && (
                                   <Button
                                     primary
@@ -124,9 +138,7 @@ class RequestIntroductionModal extends React.Component {
                                     type="submit"
                                     block={isMobile}
                                     loading={formik.isSubmitting}
-                                    disabled={
-                                      !formik.isValid || formik.isSubmitting
-                                    }
+                                    onClick={() => this.setState({ submitted: true })}
                                   >
                                     Request Call
                                   </Button>
@@ -138,6 +150,7 @@ class RequestIntroductionModal extends React.Component {
                                       Select at least 3 available times
                                     </Text>
                                   )}
+
                               </Spacing>
                             </Footer>
                           </Form>
