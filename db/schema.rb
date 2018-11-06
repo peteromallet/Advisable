@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_05_090830) do
+ActiveRecord::Schema.define(version: 2018_11_06_090229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,7 +90,6 @@ ActiveRecord::Schema.define(version: 2018_11_05_090830) do
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "availability"
     t.index ["airtable_id"], name: "index_clients_on_airtable_id"
   end
 
@@ -105,7 +104,6 @@ ActiveRecord::Schema.define(version: 2018_11_05_090830) do
   create_table "interviews", force: :cascade do |t|
     t.bigint "application_id"
     t.datetime "starts_at"
-    t.text "availability"
     t.string "status"
     t.string "time_zone"
     t.string "airtable_id"
