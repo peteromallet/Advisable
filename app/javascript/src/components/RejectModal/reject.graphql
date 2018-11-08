@@ -1,11 +1,5 @@
-mutation rejec($id: ID!, $rejectionReason: ID) {
-  updateApplicationStatus(
-    input: {
-      id: $id
-      status: "Application Rejected"
-      rejectionReason: $rejectionReason
-    }
-  ) {
+mutation rejectApplication($input: RejectApplicationInput!) {
+  rejectApplication(input: $input) {
     application {
       id
       status

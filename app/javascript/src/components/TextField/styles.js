@@ -31,16 +31,16 @@ export const Input = styled.input`
   }
 
   &::-webkit-input-placeholder {
-    color: #a4add1;
+    color: #8C92AE;
   }
   &::-moz-placeholder {
-    color: #a4add1;
+    color: #8C92AE;
   }
   &:-ms-input-placeholder {
-    color: #a4add1;
+    color: #8C92AE;
   }
   &:-moz-placeholder {
-    color: #a4add1;
+    color: #8C92AE;
   }
 `
 
