@@ -23,7 +23,6 @@ export default ({ isOpen, booking, onClose }) => (
           <Mutation mutation={DECLINE_BOOKING}>
             {declineBooking => (
               <Formik
-                initialValues={{ reason: "Rate is too low" }}
                 onSubmit={async values => {
                   await declineBooking({
                     variables: {
