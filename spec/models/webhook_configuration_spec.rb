@@ -59,4 +59,52 @@ RSpec.describe WebhookConfiguration, type: :model do
       expect(error).to match(/value/)
     end
   end
+
+  describe "#process" do
+    context "when criteria matches" do
+      it "creates and schedules a webhook record" do
+        booking = create(:booking, status: 'Accepted');
+
+        config = WebhookConfiguration::Booking.new(criteria: [{
+          attribute: 'status',
+          operator: 'changes_to',
+          value: 'Accepted'
+        }])
+
+        expect(WebhookJob).to receive(:perform_later)
+
+        expect {
+          config.process(booking)
+        }.to change { Webhook.count }.by(1)
+      end
+    end
+
+    context "when criteria does not match" do
+      it "does not create a webhook record" do
+        booking = create(:booking, status: 'Declined');
+
+        config = WebhookConfiguration::Booking.new(criteria: [{
+          attribute: 'status',
+          operator: 'changes_to',
+          value: 'Accepted'
+        }])
+
+        expect(WebhookJob).to_not receive(:perform_later)
+
+        expect {
+          config.process(booking)
+        }.to_not change { Webhook.count }
+      end
+    end
+  end
+
+  describe "#data" do
+    context "when instance is base WebhookConfiguration" do
+      it "raises NotImplemented" do
+        config = WebhookConfiguration.new
+        booking = Booking.new
+        expect { config.data(booking) }.to raise_error(NotImplementedError)
+      end
+    end
+  end
 end
