@@ -28,8 +28,8 @@ class WebhookConfiguration < ApplicationRecord
     webhook
   end
 
-  def data
-    raise NotImplemented
+  def data(entity)
+    raise NotImplementedError
   end
 
   private
