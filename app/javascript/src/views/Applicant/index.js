@@ -204,7 +204,7 @@ class Applicant extends React.Component {
               {["Applied", "Application Accepted"].indexOf(application.status) >
                 -1 && (
                 <Button onClick={() => this.setState({ modal: "reject" })}>
-                  Decline
+                  Request Another Candidate
                 </Button>
               )}
 

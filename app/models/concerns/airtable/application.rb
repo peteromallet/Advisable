@@ -9,6 +9,8 @@ class Airtable::Application < Airtable::Base
   sync_column :available_to_start, to: :availability
   sync_column :one_line_overview, to: :introduction
   sync_column :advisable_comment, to: :comment
+  sync_column :rejected_reason, to: :rejection_reason
+  sync_column :rejected_reason_comment, to: :rejection_reason_comment
 
   sync_data do |application|
     application.status = status_to_sync
@@ -21,13 +23,6 @@ class Airtable::Application < Airtable::Base
       specialist = ::Specialist.find_by_airtable_id(specialist_id)
       specialist = Airtable::Specialist.find(specialist_id).sync if specialist.nil?
       application.specialist = specialist
-    end
-
-    rejected_reason_id = fields["Rejected Reason"].try(:first)
-    if rejected_reason_id
-      rejection_reason = ::ApplicationRejectionReason.find_by_airtable_id(rejected_reason_id)
-      rejection_reason = Airtable::ApplicationRejectedReason.find(rejected_reason_id).sync if rejection_reason.nil?
-      application.rejection_reason = rejection_reason
     end
 
     project_id = fields["Client Project"].try(:first)
