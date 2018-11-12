@@ -2,11 +2,9 @@ import React from "react";
 import { Spring } from "react-spring";
 import { withRouter } from "react-router-dom";
 import Text from "src/components/Text";
-import Flex from "src/components/Flex";
 import Avatar from "src/components/Avatar";
 import Divider from "src/components/Divider";
 import Spacing from "src/components/Spacing";
-import Heading from "src/components/Heading";
 import Button from "src/components/Button";
 import FeaturedBadge from "src/components/FeaturedBadge";
 import Questions from "./Questions";
@@ -20,12 +18,9 @@ import AdvisableComment from "../AdvisableComment";
 import {
   Card,
   Name,
-  Skill,
   Location,
   MoreInfo,
-  CandidateWrapper,
   CandidateHeader,
-  CandidateAvatar,
   NameAndLocation,
   CandidateHeaderActions
 } from "./styles";
@@ -69,6 +64,7 @@ class Candidate extends React.Component {
         />
         <RejectModal
           isOpen={this.state.modal === "reject"}
+          onRequestCall={() => this.setState({ modal: "introduction" })}
           application={application}
           onClose={() => {
             this.setState({ modal: null });
@@ -188,7 +184,7 @@ class Candidate extends React.Component {
               Send Offer
             </Button>
             <Button onClick={() => this.setState({ modal: "reject" })}>
-              Reject
+              Provide Feedback
             </Button>
           </React.Fragment>
         )}
@@ -204,7 +200,7 @@ class Candidate extends React.Component {
               Request Call
             </Button>
             <Button onClick={() => this.setState({ modal: "reject" })}>
-              Reject
+              Provide Feedback
             </Button>
           </React.Fragment>
         )}
