@@ -8,6 +8,8 @@ class Types::ApplicationType < Types::BaseType
   field :status, String, null: true
   field :comment, String, null: true
   field :introduction, String, null: true
+  field :rejection_reason, String, null: true
+  field :rejection_reason_comment, String, null: true
   field :questions, [Types::ApplicationQuestionType, null: true], null: true
   field :project, Types::ProjectType, null: false
   field :proposal, Types::Booking, null: true
