@@ -2,11 +2,9 @@ import React from "react";
 import { Formik, Field } from "formik";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
-import Heading from "src/components/Heading";
 import FieldRow from "src/components/FieldRow";
 import TextField from "src/components/TextField";
 import ButtonGroup from "src/components/ButtonGroup";
-import Progress from "../../Progress";
 import validationSchema from "./validationSchema";
 
 export default ({ match, history }) => {
@@ -15,9 +13,6 @@ export default ({ match, history }) => {
 
   return (
     <div>
-      <Heading>Step 8 of 9</Heading>
-      <Heading>Terms & Conditions</Heading>
-      <Progress amount={8 / 0.09} />
       <Formik
         onSubmit={async values => {
           const id = match.params.projectID;
@@ -108,10 +103,10 @@ export default ({ match, history }) => {
               />
             </FieldRow>
             <ButtonGroup>
-              <Button type="button" size="l" onClick={goBack}>
+              <Button type="button" size="l" styling="outlined" onClick={goBack}>
                 Back
               </Button>
-              <Button type="submit" size="l" primary>
+              <Button type="submit" size="l" styling="primary">
                 Continue
               </Button>
             </ButtonGroup>

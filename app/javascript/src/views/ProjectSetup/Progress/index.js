@@ -1,4 +1,5 @@
 import React from 'react';
+import { Spring } from "react-spring";
 import styled from 'styled-components';
 
 const Bar = styled.div`
@@ -8,16 +9,23 @@ const Bar = styled.div`
   background: rgba(183, 189, 213, 0.34);
 `
 
-const Inner = styled.div`
+const Inner = styled.div.attrs({
+  style: (props) => {
+    return { width: `${props.width}%` }
+  }
+})`
   height: 100%;
   background: #17CDA1;
-  width: ${props => `${props.amount}%`};
 `
 
 export default ({ amount }) => {
   return (
-    <Bar>
-      <Inner amount={amount} />
-    </Bar>
+    <Spring from={{ width: 0 }} to={{ width: amount }}>
+      {styles => (
+        <Bar>
+          <Inner {...styles} />
+        </Bar>
+      )}
+    </Spring>
   )
 }

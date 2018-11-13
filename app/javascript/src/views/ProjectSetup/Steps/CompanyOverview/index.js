@@ -1,18 +1,15 @@
 import React from "react";
 import { Formik } from "formik";
 import Text from "src/components/Text";
+import { Mobile } from "src/components/Breakpoint";
 import Button from "src/components/Button";
+import ButtonGroup from "src/components/ButtonGroup";
 import TextField from "src/components/TextField";
-import Progress from "../../Progress";
-import { Step, StepHeading } from '../../styles';
 import validationSchema from "./validationSchema";
 
-export default ({ match, history, position }) => {
+export default ({ match, history, position, opacity }) => {
   return (
-    <div style={{ position }}>
-      <Step>Step 1 of 9</Step>
-      <StepHeading>Company Overview</StepHeading>
-      <Progress amount={1 / 0.1} />
+    <div style={{ position, opacity }}>
       <Text marginBottom="l">
         Feel free to remove any identifying information if you'd rather the
         consultant doesn't know who you are.
@@ -28,6 +25,7 @@ export default ({ match, history, position }) => {
           <form onSubmit={formik.handleSubmit}>
             <TextField
               multiline
+              autoHeight
               name="companyOverview"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -35,9 +33,15 @@ export default ({ match, history, position }) => {
               marginBottom="xl"
               error={formik.submitCount > 0 && formik.errors.companyOverview}
             />
-            <Button type="submit" size="l" primary>
-              Continue
-            </Button>
+            <Mobile>
+              {isMobile => (
+                <ButtonGroup fullWidth={isMobile}>
+                  <Button type="submit" size="l" styling="primary">
+                    Continue
+                  </Button>
+                </ButtonGroup>
+              )}
+            </Mobile>
           </form>
         )}
       </Formik>

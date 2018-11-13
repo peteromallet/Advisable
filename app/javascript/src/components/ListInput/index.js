@@ -2,65 +2,19 @@ import React from "react";
 import uniqueID from "lodash/uniqueId";
 import styled from "styled-components";
 import Textarea from "react-textarea-autosize";
+import TextField from "src/components/TextField";
 import InputError from "src/components/InputError";
 import InputLabel from "src/components/InputLabel";
+import { withSpacing, extractSpacingProps } from 'src/components/Spacing';
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-const ListInputItem = styled.div`
-  position: relative;
-  background: #f4f7fc;
-  border-radius: 10px;
-  margin-bottom: 10px;
+const Wrapper = withSpacing(styled.div``)
 
-  &.slide-enter {
-    opacity: 0;
-    transform: translateY(10px);
-  }
+const ListItem = styled.div`
+  margin-bottom: 8px;
 
-  &.slide-enter-active {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 300ms, transform 300ms;
-  }
-
-  &::before {
-    top: 50%;
-    left: 20px;
-    content: "";
-    width: 8px;
-    height: 8px;
-    position: absolute;
-    background: #becce3;
-    border-radius: 100%;
-    transform: translateY(-50%);
-  }
-
-  textarea {
-    width: 100%;
-    resize: none;
-    border: none;
-    outline: none;
-    color: #31395d;
-    font-size: 15px;
-    font-weight: 500;
-    background: transparent;
-    padding: 12px 15px 12px 45px;
-    letter-spacing: -0.02em;
-  }
-
-  textarea::-webkit-input-placeholder {
-    color: #a4add1;
-  }
-  textarea::-moz-placeholder {
-    color: #a4add1;
-  }
-  textarea:-ms-input-placeholder {
-    color: #a4add1;
-  }
-  textarea:-moz-placeholder {
-    color: #a4add1;
-  }
-`;
+  &:last-child { margin-bottom: 0 }
+`
 
 class ListInput extends React.Component {
   static defaultProps = {
@@ -106,24 +60,23 @@ class ListInput extends React.Component {
     const { label, error, placeholder } = this.props;
 
     return (
-      <React.Fragment>
+      <Wrapper {...extractSpacingProps(this.props)}>
         {label && <InputLabel htmlFor={this.id}>{label}</InputLabel>}
-        <TransitionGroup>
           {this.state.items.map((v, i) => (
-            <CSSTransition timeout={500} classNames="slide" key={i}>
-              <ListInputItem>
-                <Textarea
-                  value={v}
-                  name={`${this.props.name}[${i}]`}
-                  placeholder={this.props.placeholder}
-                  onChange={this.handleChange(i)}
-                />
-              </ListInputItem>
-            </CSSTransition>
+            <ListItem key={i}>
+              <TextField
+                multiline
+                value={v}
+                minRows={1}
+                autoHeight
+                name={`${this.props.name}[${i}]`}
+                placeholder={this.props.placeholder}
+                onChange={this.handleChange(i)}
+              />
+            </ListItem>
           ))}
-        </TransitionGroup>
         {error && <InputError>{error}</InputError>}
-      </React.Fragment>
+      </Wrapper>
     );
   }
 }
