@@ -2,10 +2,8 @@ import React from "react";
 import { Formik } from "formik";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
-import Heading from "src/components/Heading";
 import ListInput from "src/components/ListInput";
 import ButtonGroup from "src/components/ButtonGroup";
-import Progress from "../../Progress";
 import validationSchema from "./validationSchema";
 
 export default ({ match, history }) => {
@@ -14,9 +12,6 @@ export default ({ match, history }) => {
 
   return (
     <div>
-      <Heading>Step 6 of 9</Heading>
-      <Heading>Nice-to-have characteristic's</Heading>
-      <Progress amount={5 / 0.09} />
       <Text marginBottom="l">
       These are characteristics that it'd be nice for your specialist to have, but not essential.
       </Text>
@@ -31,9 +26,10 @@ export default ({ match, history }) => {
         {formik => (
           <form onSubmit={formik.handleSubmit}>
             <ListInput
+              marginBottom="xl"
               name="niceToHaveCharacteristics"
               value={formik.values.niceToHaveCharacteristics}
-              placeholder="Add a characteristic"
+              placeholder="+ Add a characteristic"
               error={
                 formik.submitCount > 0 && formik.errors.niceToHaveCharacteristics
               }
@@ -42,10 +38,10 @@ export default ({ match, history }) => {
               }
             />
             <ButtonGroup>
-              <Button type="button" size="l" onClick={goBack}>
+              <Button type="button" size="l" styling="outlined" onClick={goBack}>
                 Back
               </Button>
-              <Button type="submit" size="l" primary>
+              <Button type="submit" size="l" styling="primary">
                 Continue
               </Button>
             </ButtonGroup>

@@ -3,10 +3,18 @@ import styled from 'styled-components';
 export const Container = styled.div`
   padding: 40px;
   max-width: 700px;
+  position: relative;
   border-radius: 4px;
   background: #FFFFFF;
   margin: 60px auto 40px auto;
   box-shadow: 0px 15px 50px rgba(20, 41, 116, 0.09);
+
+  @media (max-width: 700px) {
+    margin: 0;
+    padding: 20px;
+    box-shadow: none;
+    min-height: calc(100% - 62px);
+  }
 `
 
 export const Step = styled.p`

@@ -15,10 +15,12 @@ export const Input = styled.input`
   outline: none;
   padding: 0 12px;
   font-size: 16px;
-  font-weight: 600;
+  box-shadow: none;
+  appearance: none;
+  font-weight: 500;
   border-radius: 8px;
   background: #F4F7FC;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.015em;
   transition: background 300ms;
 
   &::-webkit-inner-spin-button {
@@ -48,7 +50,14 @@ export const InputMask = Input.withComponent(MaskedInput);
 
 export const Textarea = Input.withComponent('textarea').extend`
   resize: none;
-  min-height: 80px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  height: auto;
+  padding: 10px;
+  overflow: auto;
+  line-height: 18px;
+  border: 2px solid transparent;
+  transition: border-color 200ms;
+
+  &:focus {
+    border-color: #3360FF;
+  }
 `

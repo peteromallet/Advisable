@@ -34,7 +34,7 @@ const Text = styled.p`
   font-size: ${props => sizes[props.size] || sizes["m"]};
   line-height: ${props => lineHeights[props.size] || lineHeights["m"]};
   font-weight: ${props => weights[props.weight || props.variation] || 400};
-  color: ${props => colours[props.colour || props.variation] || "#4B5D78"};
+  color: ${props => colours[props.colour || props.variation] || "#353E5C"};
   letter-spacing: ${props => kerning[props.size] || kerning["m"]};
   text-align: ${props => props.center ? 'center' : 'inherit'};
 `;

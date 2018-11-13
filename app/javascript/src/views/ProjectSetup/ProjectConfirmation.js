@@ -1,6 +1,6 @@
 // Renders the confirmation steps for an existing project.
 import React from "react";
-import { Transition } from "react-spring";
+import find from 'lodash/find';
 import { Route, Switch, Redirect } from "react-router-dom";
 import ProjectGoals from "./Steps/ProjectGoals";
 import CompanyOverview from "./Steps/CompanyOverview";
@@ -11,49 +11,82 @@ import NiceToHaveCharacteristics from "./Steps/NiceToHaveCharacteristics";
 import Questions from "./Steps/Questions";
 import Terms from "./Steps/Terms";
 import Deposit from "./Steps/Deposit";
+import Progress from './Progress';
+import { Step, StepHeading } from "./styles";
+
+// For the project confirmation flow each step is definied as a route in the arrow below.
+// We use a route config to make animating betweent the steps easier.
+const routes = [
+  {
+    title: "Company Overview",
+    path: "/company_overview",
+    component: CompanyOverview,
+  },
+  {
+    title: "Project Overview",
+    path: "/project_overview",
+    component: ProjectOverview,
+  },
+  {
+    title: "Project Goals",
+    path: "/goals",
+    component: ProjectGoals,
+  },
+  {
+    title: "Specialist Overview",
+    path: "/specialist_overview",
+    component: SpecialistOverview,
+  },
+  {
+    title: "Must-have Characteristics",
+    path: "/must_have",
+    component: MustHaveCharacteristics,
+  },
+  {
+    title: "Nice-to-have Characteristics",
+    path: "/nice_to_have",
+    component: NiceToHaveCharacteristics,
+  },
+  {
+    title: "Qualification Questions",
+    path: "/questions",
+    component: Questions,
+  },
+  {
+    title: "Terms & Conditions",
+    path: "/terms",
+    component: Terms,
+  },
+  {
+    title: "Recruitement Deposit",
+    path: "/deposit",
+    component: Deposit,
+  }
+]
+
+// Returns the route config for the current step based on the current URL
+const currentRoute = () => {
+  const path = window.location.pathname
+  return find(routes, route => {
+    return path.indexOf(route.path) > -1
+  })
+}
 
 export default ({ match }) => {
+  const route = currentRoute() || {};
+  const number = routes.indexOf(route) + 1
+
   return (
-    <Route
-      render={({ location }) => (
-        <Transition
-          from={{ opacity: 0 }}
-          enter={{ opacity: 1 }}
-          leave={{ opacity: 0, position: 'absolute' }}
-          keys={location => location.pathname}
-          items={location}
-        >
-          {location => styles => (
-            <Switch location={location}>
-              <Route
-                path={`${match.path}/company_overview`}
-                render={route => <CompanyOverview {...styles} {...route} />}
-              />
-              <Route
-                path={`${match.path}/project_overview`}
-                component={route => <ProjectOverview {...styles} {...route} />}
-              />
-              <Route path={`${match.path}/goals`} component={ProjectGoals} />
-              <Route
-                path={`${match.path}/specialist_overview`}
-                component={SpecialistOverview}
-              />
-              <Route
-                path={`${match.path}/must_have`}
-                component={MustHaveCharacteristics}
-              />
-              <Route
-                path={`${match.path}/nice_to_have`}
-                component={NiceToHaveCharacteristics}
-              />
-              <Route path={`${match.path}/questions`} component={Questions} />
-              <Route path={`${match.path}/terms`} component={Terms} />
-              <Route path={`${match.path}/deposit`} component={Deposit} />
-              <Redirect to={`${match.url}/company_overview`} />
-            </Switch>
-          )}
-        </Transition>
-      )}
-    />
-  );
-};
+    <div>
+      <Step>Step {number} of 9</Step>
+      <StepHeading>{route.title}</StepHeading>
+      <Progress amount={(number / (routes.length + 1)) * 100} />
+      <Switch>
+        {routes.map(route => (
+          <Route key={route.path} path={`${match.path}${route.path}`} component={route.component} />
+        ))}
+        <Redirect to={`${match.path}/deposit`} />
+      </Switch>
+    </div>
+  )
+}
