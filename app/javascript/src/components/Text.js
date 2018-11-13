@@ -25,7 +25,7 @@ const lineHeights = {
 };
 
 const kerning = {
-  m: "-0.016em",
+  m: "-0.008em",
   l: "-0.02em"
 };
 

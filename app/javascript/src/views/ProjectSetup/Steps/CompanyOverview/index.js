@@ -24,6 +24,7 @@ export default ({ match, history, position, opacity }) => {
         {formik => (
           <form onSubmit={formik.handleSubmit}>
             <TextField
+              autoFocus
               multiline
               autoHeight
               name="companyOverview"

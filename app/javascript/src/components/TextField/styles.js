@@ -22,14 +22,17 @@ export const Input = styled.input`
   background: #F4F7FC;
   letter-spacing: -0.015em;
   transition: background 300ms;
+  border: 2px solid transparent;
+  transition: border-color 200ms;
+
+  &:focus {
+    background: #ECF1FA;
+    border-color: #3360FF;
+  }
 
   &::-webkit-inner-spin-button {
     opacity: 0;
     -webkit-appearance: none;
-  }
-
-  &:focus {
-    background: #ECF1FA;
   }
 
   &::-webkit-input-placeholder {
@@ -54,10 +57,4 @@ export const Textarea = Input.withComponent('textarea').extend`
   padding: 10px;
   overflow: auto;
   line-height: 18px;
-  border: 2px solid transparent;
-  transition: border-color 200ms;
-
-  &:focus {
-    border-color: #3360FF;
-  }
 `

@@ -26,6 +26,7 @@ export default ({ match, history }) => {
           <form onSubmit={formik.handleSubmit}>
             <TextField
               multiline
+              autoFocus
               autoHeight
               name="specialistOverview"
               onChange={formik.handleChange}
