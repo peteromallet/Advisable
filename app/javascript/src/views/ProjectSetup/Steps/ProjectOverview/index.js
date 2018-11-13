@@ -28,6 +28,7 @@ export default ({ match, history, position, opacity }) => {
             <TextField
               multiline
               autoHeight
+              autoFocus
               name="projectOverview"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

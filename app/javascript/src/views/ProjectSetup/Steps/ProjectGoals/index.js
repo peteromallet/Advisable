@@ -26,6 +26,7 @@ export default ({ match, history, position, opacity }) => {
           <form onSubmit={formik.handleSubmit}>
             <ListInput
               name="goals"
+              autoFocus
               marginBottom="xl"
               value={formik.values.goals}
               placeholder="+ Add a project goal"
