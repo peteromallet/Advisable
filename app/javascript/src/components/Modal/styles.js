@@ -12,10 +12,6 @@ export const ModalContainer = styled.div`
   position: fixed;
   align-items: center;
   justify-content: center;
-
-  @media screen and (max-width: 500px) {
-    align-items: flex-end;
-  }
 `;
 
 const windowWidths = {
