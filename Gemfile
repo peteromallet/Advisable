@@ -46,10 +46,13 @@ gem 'airrecord'
 gem 'graphql'
 gem 'parser'
 gem 'rollbar'
+gem 'stripe'
 gem "attr_encrypted", "~> 3.0.0"
 
 # For geneating test coverage reports
 gem 'simplecov', require: false, group: :test
+
+gem 'nanoid'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

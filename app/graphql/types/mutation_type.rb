@@ -13,4 +13,6 @@ class Types::MutationType < GraphQL::Schema::Object
   field :reject_application, mutation: Mutations::RejectApplication
 
   field :update_availability, mutation: Mutations::UpdateAvailability
+
+  field :create_payment, mutation: Mutations::CreatePayment
 end

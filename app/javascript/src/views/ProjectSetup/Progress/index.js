@@ -20,7 +20,7 @@ const Inner = styled.div.attrs({
 
 export default ({ amount }) => {
   return (
-    <Spring from={{ width: 0 }} to={{ width: amount }}>
+    <Spring from={{ width: amount }} to={{ width: amount }}>
       {styles => (
         <Bar>
           <Inner {...styles} />
