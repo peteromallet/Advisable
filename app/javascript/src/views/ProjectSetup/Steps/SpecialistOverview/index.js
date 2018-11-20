@@ -26,7 +26,7 @@ export default ({ project, match, history }) => {
             engagement with a specialist.
           </Text>
           <Formik
-            initialValues={{ specialistDescription: project.specialistDescription }}
+            initialValues={{ specialistDescription: project.specialistDescription || '' }}
             validationSchema={validationSchema}
             onSubmit={async values => {
               const id = match.params.projectID;

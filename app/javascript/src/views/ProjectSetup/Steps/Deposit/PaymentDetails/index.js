@@ -5,8 +5,9 @@ import Button from "src/components/Button";
 import ButtonGroup from "src/components/ButtonGroup";
 import CardInput from "./CardInput";
 import { Total, Label, Amount } from "./styles";
+import currency from 'src/utilities/currency';
 
-const PaymentDetails = ({ match, history, stripe }) => {
+const PaymentDetails = ({ project, match, history, stripe }) => {
   const [submitting, setSubmitting] = useState(false);
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/terms`);
@@ -27,7 +28,7 @@ const PaymentDetails = ({ match, history, stripe }) => {
     if (source.card.three_d_secure === "required") {
       const three_d_secure = await stripe.createSource({
         type: "three_d_secure",
-        amount: 1000,
+        amount: project.depositOwed,
         currency: "usd",
         three_d_secure: { card: source.id },
         redirect: {
@@ -51,7 +52,9 @@ const PaymentDetails = ({ match, history, stripe }) => {
         freelancer if you do go ahead with it.
       </Text>
       <Total>
-        <Amount>€100</Amount>
+        <Amount>
+          {currency(project.depositOwed / 100.0, "usd")}
+        </Amount>
         <Label>Total</Label>
       </Total>
       <form onSubmit={handleSubmit}>

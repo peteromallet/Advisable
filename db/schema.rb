@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2018_11_20_083808) do
-=======
-ActiveRecord::Schema.define(version: 2018_11_19_082552) do
->>>>>>> Add data to confirmation flow
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,7 +121,7 @@ ActiveRecord::Schema.define(version: 2018_11_19_082552) do
     t.string "uid"
     t.string "source_id"
     t.string "charge_id"
-    t.string "amount"
+    t.integer "amount"
     t.string "currency"
     t.string "status"
     t.string "error_code"

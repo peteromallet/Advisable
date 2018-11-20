@@ -212,7 +212,7 @@ const Loading = () => (
 const ButtonWithSpacing = withSpacing(ButtonStyling);
 
 export default ({ loading, children, ...props }) => (
-  <ButtonWithSpacing loading={loading} {...props}>
+  <ButtonWithSpacing loading={loading} disabled={loading || props.disabled} {...props}>
     {loading && <Loading />}
     <ButtonInner>{children}</ButtonInner>
   </ButtonWithSpacing>

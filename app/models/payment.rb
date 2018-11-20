@@ -5,6 +5,8 @@ class Payment < ApplicationRecord
   after_initialize :set_currency
   after_initialize :set_status, on: :create
 
+  scope :captured, -> { where(status: "captured") }
+
   def pending?
     status == "pending"
   end

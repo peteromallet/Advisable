@@ -3,6 +3,7 @@ class Types::ProjectType < Types::BaseType
   field :airtable_id, String, null: false
   field :name, String, null: false
   field :currency, String, null: true
+  field :status, String, null: true
   field :clientReferralUrl, String, null: true
   field :client, Types::Client, null: false
   field :goals, [String], null: true
@@ -49,10 +50,5 @@ class Types::ProjectType < Types::BaseType
 
   def questions
     object.questions || []
-  end
-
-  def deposit_owed
-    return 0 unless object.deposit?
-    object.deposit
   end
 end
