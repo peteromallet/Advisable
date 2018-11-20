@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_08_143822) do
+ActiveRecord::Schema.define(version: 2018_11_20_083808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,23 @@ ActiveRecord::Schema.define(version: 2018_11_08_143822) do
     t.index ["user_id"], name: "index_interviews_on_user_id"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.string "uid"
+    t.string "source_id"
+    t.string "charge_id"
+    t.string "amount"
+    t.string "currency"
+    t.string "status"
+    t.string "error_code"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["charge_id"], name: "index_payments_on_charge_id"
+    t.index ["project_id"], name: "index_payments_on_project_id"
+    t.index ["source_id"], name: "index_payments_on_source_id"
+    t.index ["uid"], name: "index_payments_on_uid"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.string "airtable_id"
@@ -125,6 +142,16 @@ ActiveRecord::Schema.define(version: 2018_11_08_143822) do
     t.string "currency"
     t.bigint "client_id"
     t.string "client_referral_url"
+    t.text "company_description"
+    t.text "description"
+    t.text "specialist_description"
+    t.text "goals", default: [], array: true
+    t.text "questions", default: [], array: true
+    t.text "required_characteristics", default: [], array: true
+    t.text "optional_characteristics", default: [], array: true
+    t.datetime "accepted_terms_at"
+    t.integer "deposit"
+    t.string "status"
     t.index ["client_id"], name: "index_projects_on_client_id"
   end
 
@@ -196,6 +223,7 @@ ActiveRecord::Schema.define(version: 2018_11_08_143822) do
   add_foreign_key "client_users", "users"
   add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "users"
+  add_foreign_key "payments", "projects"
   add_foreign_key "projects", "clients"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
