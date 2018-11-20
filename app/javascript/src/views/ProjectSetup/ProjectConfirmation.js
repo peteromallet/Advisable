@@ -1,6 +1,8 @@
 // Renders the confirmation steps for an existing project.
-import React from "react";
+import React, { Fragment } from "react";
 import find from "lodash/find";
+import { Query } from "react-apollo";
+import Loading from "src/components/Loading";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Progress from "./Progress";
 import Terms from "./Steps/Terms";
@@ -14,6 +16,7 @@ import SubmitConfirmation from "./Steps/SubmitConfirmation";
 import MustHaveCharacteristics from "./Steps/MustHaveCharacteristics";
 import NiceToHaveCharacteristics from "./Steps/NiceToHaveCharacteristics";
 import { Step, StepHeading } from "./styles";
+import FETCH_PROJECT from "./fetchProject.graphql";
 
 // For the project confirmation flow each step is definied as a route in the arrow below.
 // We use a route config to make animating betweent the steps easier.
@@ -79,25 +82,38 @@ export default ({ match }) => {
   const isStep = routes.indexOf(route) > -1;
 
   return (
-    <div>
-      {isStep && (
-        <React.Fragment>
-          <Step>Step {number} of 9</Step>
-          <StepHeading>{route.title}</StepHeading>
-          <Progress amount={(number / (routes.length + 1)) * 100} />
-        </React.Fragment>
-      )}
-      <Switch>
-        {routes.map(route => (
-          <Route
-            key={route.path}
-            path={`${match.path}${route.path}`}
-            component={route.component}
-          />
-        ))}
-        <Route path={`${match.path}/confirm`} component={SubmitConfirmation} />
-        <Redirect to={`${match.path}/deposit`} />
-      </Switch>
-    </div>
+    <Query query={FETCH_PROJECT} variables={{ id: match.params.projectID }}>
+      {query => {
+        if (query.loading) return <Loading />;
+        return (
+          <Fragment>
+            {isStep && (
+              <React.Fragment>
+                <Step>Step {number} of 9</Step>
+                <StepHeading>{route.title}</StepHeading>
+                <Progress amount={(number / (routes.length + 1)) * 100} />
+              </React.Fragment>
+            )}
+            <Switch>
+              {routes.map(route => {
+                const Component = route.component;
+                return (
+                  <Route
+                    key={route.path}
+                    path={`${match.path}${route.path}`}
+                    render={route => <Component {...route} project={query.data.project} />}
+                  />
+                );
+              })}
+              <Route
+                path={`${match.path}/confirm`}
+                component={SubmitConfirmation}
+              />
+              <Redirect to={`${match.path}/deposit`} />
+            </Switch>
+          </Fragment>
+        );
+      }}
+    </Query>
   );
 };

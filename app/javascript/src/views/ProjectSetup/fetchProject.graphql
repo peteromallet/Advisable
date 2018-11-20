@@ -1,0 +1,15 @@
+query project($id: ID!) {
+  project(id: $id) {
+    id
+    goals
+    status
+    questions
+    description
+    depositOwed
+    acceptedTerms
+    companyDescription
+    specialistDescription
+    requiredCharacteristics
+    optionalCharacteristics
+  }
+}

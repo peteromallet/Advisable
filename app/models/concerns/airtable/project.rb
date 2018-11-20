@@ -6,6 +6,9 @@ class Airtable::Project < Airtable::Base
   # in airtable.
   sync_column :project, to: :name
   sync_column :project_stage, to: :status
+  sync_column :company_description, to: :company_description
+  sync_column :project_description, to: :description
+  sync_column :specialist_requirement_description, to: :specialist_description
   sync_columns :currency, :client_referral_url
 
   sync_data do |project|
@@ -17,5 +20,19 @@ class Airtable::Project < Airtable::Base
       client = Airtable::Client.find(client_id).sync if client.nil?
       project.client = client
     end
+
+    sync_arrays(project)
+
+    project.accepted_terms = fields["Accepted Terms"]
+    project.deposit = (fields["Deposit Amount Required"].to_f * 100).to_i
+  end
+
+  private
+
+  def sync_arrays(project)
+    project.goals = JSON.parse(fields["Goals"]) if fields["Goals"]
+    project.required_characteristics = JSON.parse(fields["Required Characteristics"]) if fields["Required Characteristics"]
+    project.optional_characteristics = JSON.parse(fields["Optional Characteristics"]) if fields["Optional Characteristics"]
+  rescue JSON::ParserError
   end
 end
