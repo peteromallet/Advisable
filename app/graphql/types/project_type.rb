@@ -2,7 +2,6 @@ class Types::ProjectType < Types::BaseType
   field :id, ID, null: false
   field :airtable_id, String, null: false
   field :name, String, null: false
-  field :status, String, null: true
   field :currency, String, null: true
   field :clientReferralUrl, String, null: true
   field :client, Types::Client, null: false

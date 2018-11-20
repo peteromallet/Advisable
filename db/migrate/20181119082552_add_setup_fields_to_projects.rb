@@ -1,6 +1,5 @@
 class AddSetupFieldsToProjects < ActiveRecord::Migration[5.2]
   def change
-    add_column :projects, :status, :string
     add_column :projects, :company_description, :text
     add_column :projects, :description, :text
     add_column :projects, :specialist_description, :text
