@@ -10,6 +10,10 @@ class Projects::Confirm < ApplicationService
       raise Service::Error.new("Project is not pending approval")
     end
 
+    if project.deposit_owed > 0
+      raise Service::Error.new("Project deposit has not been paid")
+    end
+
     if project.update_attributes(status: "Project Confirmed")
       sync_with_airtable
       return project
