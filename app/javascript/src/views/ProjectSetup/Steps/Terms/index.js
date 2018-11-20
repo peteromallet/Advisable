@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
 import Checkbox from "src/components/Checkbox";
+import InputError from "src/components/InputError";
 import ButtonGroup from "src/components/ButtonGroup";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
@@ -16,6 +17,8 @@ export default ({ project, match, history }) => {
   if (project.questions.length === 0) {
     return <Redirect to="questions" />;
   }
+
+  const isLastStep = project.depositOwed === 0;
 
   return (
     <Mutation mutation={UPDATE_PROJECT}>
@@ -30,8 +33,13 @@ export default ({ project, match, history }) => {
                 variables: {
                   input: { id, ...values }
                 }
-              })
-              history.push(`/project_setup/${id}/deposit`);
+              });
+
+              if (isLastStep) {
+                history.push(`/project_setup/${id}/confirm`);
+              } else {
+                history.push(`/project_setup/${id}/deposit`);
+              }
             }}
           >
             {formik => (
@@ -93,9 +101,14 @@ export default ({ project, match, history }) => {
                   marginBottom="xl"
                   name="acceptedTerms"
                   label="I accept these terms"
+                  onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.acceptedTerms}
                 />
+
+                {formik.errors.acceptedTerms && (
+                  <InputError>{formik.errors.acceptedTerms}</InputError>
+                )}
 
                 <ButtonGroup>
                   <Button
@@ -106,8 +119,13 @@ export default ({ project, match, history }) => {
                   >
                     Back
                   </Button>
-                  <Button type="submit" size="l" styling="primary" loading={formik.isSubmitting}>
-                    Continue
+                  <Button
+                    type="submit"
+                    size="l"
+                    styling="primary"
+                    loading={formik.isSubmitting}
+                  >
+                    {isLastStep ? "Complete Setup" : "Continue"}
                   </Button>
                 </ButtonGroup>
               </form>

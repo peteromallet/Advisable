@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
+import Loading from 'src/components/Loading';
 import graphqlClient from "src/graphqlClient";
 import CREATE_PAYMENT from "./createPayment.graphql";
 import FETCH_PAYMENT from "./fetchPayment.graphql";
 
-const PaymentPending = ({ source, mutate, match, history }) => {
+const PaymentPending = ({ source, project, match, history }) => {
   let pollingTimer;
   const { projectID } = match.params;
 
@@ -27,7 +28,7 @@ const PaymentPending = ({ source, mutate, match, history }) => {
         input: {
           source: source,
           projectId: projectID,
-          amount: 1000
+          amount: project.depositOwed
         }
       }
     });
@@ -53,7 +54,11 @@ const PaymentPending = ({ source, mutate, match, history }) => {
     }
   }, []);
 
-  return <div>Processing payment...</div>;
+  return (
+    <Fragment>
+      <Loading />
+    </Fragment>
+  )
 };
 
 export default PaymentPending;

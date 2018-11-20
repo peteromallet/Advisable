@@ -20,7 +20,7 @@ export default ({ project, match, history }) => {
           </Text>
           <Formik
             validationSchema={validationSchema}
-            initialValues={{ companyDescription: project.companyDescription }}
+            initialValues={{ companyDescription: project.companyDescription || ""}}
             onSubmit={async values => {
               const id = match.params.projectID;
               await mutate({

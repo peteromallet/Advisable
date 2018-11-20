@@ -17,4 +17,5 @@ class Types::MutationType < GraphQL::Schema::Object
   field :create_payment, mutation: Mutations::CreatePayment
 
   field :update_project, mutation: Mutations::UpdateProject
+  field :confirm_project, mutation: Mutations::ConfirmProject
 end

@@ -19,7 +19,7 @@ class Projects::Update < ApplicationService
       return project
     end
 
-    raise Service::Errors.new(project.errors.full_messages)
+    raise Service::Error.new(project.errors.full_messages.first)
   end
   
   private

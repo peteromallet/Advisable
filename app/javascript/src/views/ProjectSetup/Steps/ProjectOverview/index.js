@@ -26,7 +26,7 @@ export default ({ project, match, history, position, opacity }) => {
             Give a brief one line overview of the project
           </Text>
           <Formik
-            initialValues={{ description: project.description }}
+            initialValues={{ description: project.description || ""}}
             validationSchema={validationSchema}
             onSubmit={async values => {
               const id = match.params.projectID;

@@ -4,7 +4,7 @@ class CreatePayments < ActiveRecord::Migration[5.2]
       t.string :uid, index: true
       t.string :source_id, index: true
       t.string :charge_id, index: true
-      t.string :amount
+      t.integer :amount
       t.string :currency
       t.string :status
       t.string :error_code

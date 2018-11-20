@@ -3,7 +3,7 @@ import uniqueId from 'lodash/uniqueId';
 import { extractSpacingProps } from 'src/components/Spacing';
 import { Wrapper, Input, Label, Box } from './styles';
 
-const Checkbox = ({ id, name, label, onChange, value, ...props }) => {
+const Checkbox = ({ id, name, label, onChange, onBlur, value, ...props }) => {
   return (
     <Wrapper {...extractSpacingProps(props)}>
       <Input
@@ -11,6 +11,7 @@ const Checkbox = ({ id, name, label, onChange, value, ...props }) => {
         name={name}
         type="checkbox"
         onChange={onChange}
+        onBlur={onBlur}
         checked={value}
       />
       <Label htmlFor={id}>
