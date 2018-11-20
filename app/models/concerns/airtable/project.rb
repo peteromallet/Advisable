@@ -5,6 +5,7 @@ class Airtable::Project < Airtable::Base
   # We store the project name in a "Project" column on the "Projects" table
   # in airtable.
   sync_column :project, to: :name
+  sync_column :project_stage, to: :status
   sync_columns :currency, :client_referral_url
 
   sync_data do |project|
