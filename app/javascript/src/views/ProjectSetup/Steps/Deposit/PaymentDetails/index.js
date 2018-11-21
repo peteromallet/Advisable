@@ -63,7 +63,7 @@ const PaymentDetails = ({ project, match, history, stripe, error }) => {
             Back
           </Button>
           <Button type="submit" size="l" styling="primary" loading={submitting}>
-            Continue
+            Complete Setup
           </Button>
         </ButtonGroup>
       </form>
