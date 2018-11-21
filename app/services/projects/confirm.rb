@@ -7,11 +7,11 @@ class Projects::Confirm < ApplicationService
 
   def call
     if project.status != 'Project Pending Approval'
-      raise Service::Error.new("Project is not pending approval")
+      raise Service::Error.new("project.not_pending_approval")
     end
 
     if project.deposit_owed > 0
-      raise Service::Error.new("Project deposit has not been paid")
+      raise Service::Error.new("project.deposit_not_paid")
     end
 
     if project.update_attributes(status: "Project Confirmed")

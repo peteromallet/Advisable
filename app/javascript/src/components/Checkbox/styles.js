@@ -41,3 +41,11 @@ export const Input = styled.input`
     border-color: #173FCD;
   }
 `
+
+export const Error = styled.span`
+  display: block;
+  color: #FF0073;
+  font-size: 14px;
+  padding-top: 6px;
+  padding-left: 28px;
+`

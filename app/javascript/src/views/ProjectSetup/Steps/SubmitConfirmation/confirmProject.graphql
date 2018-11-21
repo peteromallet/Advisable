@@ -4,6 +4,8 @@ mutation ConfirmProject($input: ConfirmProjectInput!) {
       id
       status
     }
-    error
+    errors { 
+      code
+    }
   }
 }

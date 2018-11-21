@@ -128,7 +128,9 @@ export default ({ match }) => {
               })}
               <Route
                 path={`${match.path}/confirm`}
-                component={SubmitConfirmation}
+                render={route => (
+                  <SubmitConfirmation project={query.data.project} {...route} />
+                )}
               />
               <Redirect to={`${match.path}${routes[routes.length - 1].path}`} />
             </Switch>

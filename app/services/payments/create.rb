@@ -20,7 +20,7 @@ class Payments::Create < ApplicationService
     when "chargeable"
       Payments::Charge.call(payment)
     when "canceled", "failed", "consumed"
-      Payments::Failed.call(payment, "source_not_chargeable")
+      raise Service::Error.new("source_not_chargeable")
     end
 
     payment

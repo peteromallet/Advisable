@@ -104,11 +104,8 @@ export default ({ project, match, history }) => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.acceptedTerms}
+                  error={formik.errors.acceptedTerms}
                 />
-
-                {formik.errors.acceptedTerms && (
-                  <InputError>{formik.errors.acceptedTerms}</InputError>
-                )}
 
                 <ButtonGroup>
                   <Button
