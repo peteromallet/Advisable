@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
 import ListInput from "src/components/ListInput";
+import { Mobile } from "src/components/Breakpoint";
 import ButtonGroup from "src/components/ButtonGroup";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
@@ -50,19 +51,28 @@ export default ({ project, match, history }) => {
                     formik.setFieldValue("questions", questions)
                   }
                 />
-                <ButtonGroup>
-                  <Button
-                    type="button"
-                    size="l"
-                    styling="outlined"
-                    onClick={goBack}
-                  >
-                    Back
-                  </Button>
-                  <Button type="submit" size="l" styling="primary" loading={formik.isSubmitting}>
-                    Continue
-                  </Button>
-                </ButtonGroup>
+                <Mobile>
+                  {isMobile => (
+                    <ButtonGroup fullWidth={isMobile}>
+                      <Button
+                        type="button"
+                        size="l"
+                        styling="outlined"
+                        onClick={goBack}
+                      >
+                        Back
+                      </Button>
+                      <Button
+                        type="submit"
+                        size="l"
+                        styling="primary"
+                        loading={formik.isSubmitting}
+                      >
+                        Continue
+                      </Button>
+                    </ButtonGroup>
+                  )}
+                </Mobile>
               </form>
             )}
           </Formik>

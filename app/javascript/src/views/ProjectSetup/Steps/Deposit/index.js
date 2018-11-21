@@ -32,7 +32,7 @@ function Deposit(props) {
         {source ? (
           <PaymentPending setError={setError} source={source} {...props} />
         ) : (
-          <PaymentDetails error={error} {...props} />
+          <PaymentDetails setError={setError} error={error} {...props} />
         )}
       </Elements>
     </StripeProvider>

@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 import { Formik } from "formik";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
+import { Mobile } from "src/components/Breakpoint";
 import ButtonGroup from "src/components/ButtonGroup";
 import TextField from "src/components/TextField";
 import validationSchema from "./validationSchema";
@@ -26,7 +27,9 @@ export default ({ project, match, history }) => {
             engagement with a specialist.
           </Text>
           <Formik
-            initialValues={{ specialistDescription: project.specialistDescription || '' }}
+            initialValues={{
+              specialistDescription: project.specialistDescription || ""
+            }}
             validationSchema={validationSchema}
             onSubmit={async values => {
               const id = match.params.projectID;
@@ -37,7 +40,7 @@ export default ({ project, match, history }) => {
                     ...values
                   }
                 }
-              })
+              });
               history.push(`/project_setup/${id}/must_have`);
             }}
           >
@@ -54,22 +57,32 @@ export default ({ project, match, history }) => {
                   placeholder="Specialist overview.."
                   marginBottom="xl"
                   error={
-                    formik.submitCount > 0 && formik.errors.specialistDescription
+                    formik.submitCount > 0 &&
+                    formik.errors.specialistDescription
                   }
                 />
-                <ButtonGroup>
-                  <Button
-                    type="button"
-                    size="l"
-                    styling="outlined"
-                    onClick={goBack}
-                  >
-                    Back
-                  </Button>
-                  <Button type="submit" size="l" styling="primary" loading={formik.isSubmitting}>
-                    Continue
-                  </Button>
-                </ButtonGroup>
+                <Mobile>
+                  {isMobile => (
+                    <ButtonGroup fullWidth={isMobile}>
+                      <Button
+                        type="button"
+                        size="l"
+                        styling="outlined"
+                        onClick={goBack}
+                      >
+                        Back
+                      </Button>
+                      <Button
+                        type="submit"
+                        size="l"
+                        styling="primary"
+                        loading={formik.isSubmitting}
+                      >
+                        Continue
+                      </Button>
+                    </ButtonGroup>
+                  )}
+                </Mobile>
               </form>
             )}
           </Formik>
