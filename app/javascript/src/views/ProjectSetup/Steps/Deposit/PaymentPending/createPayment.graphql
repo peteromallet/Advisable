@@ -3,7 +3,13 @@ mutation createPayment($input: CreatePaymentInput!) {
     payment {
       id
       status
+      project {
+        id
+        depositOwed
+      }
     }
-    error
+    errors {
+      code
+    }
   }
 }

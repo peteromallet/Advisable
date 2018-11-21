@@ -47,7 +47,7 @@ export default ({ project, match, history }) => {
                   placeholder="Company overview.."
                   marginBottom="xl"
                   error={
-                    formik.submitCount > 0 && formik.errors.companyOverview
+                    formik.submitCount > 0 && formik.errors.companyDescription
                   }
                 />
                 <Mobile>

@@ -4,10 +4,10 @@ import Text from "src/components/Text";
 import Button from "src/components/Button";
 import ButtonGroup from "src/components/ButtonGroup";
 import CardInput from "./CardInput";
-import { Total, Label, Amount } from "./styles";
-import currency from 'src/utilities/currency';
+import { Error, Total, Label, Amount } from "./styles";
+import currency from "src/utilities/currency";
 
-const PaymentDetails = ({ project, match, history, stripe }) => {
+const PaymentDetails = ({ project, match, history, stripe, error }) => {
   const [submitting, setSubmitting] = useState(false);
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/terms`);
@@ -36,7 +36,7 @@ const PaymentDetails = ({ project, match, history, stripe }) => {
         }
       });
 
-      window.location = three_d_secure.source.redirect.url
+      window.location = three_d_secure.source.redirect.url;
       return;
     }
 
@@ -52,13 +52,12 @@ const PaymentDetails = ({ project, match, history, stripe }) => {
         freelancer if you do go ahead with it.
       </Text>
       <Total>
-        <Amount>
-          {currency(project.depositOwed / 100.0, "usd")}
-        </Amount>
+        <Amount>{currency(project.depositOwed / 100.0, "usd")}</Amount>
         <Label>Total</Label>
       </Total>
       <form onSubmit={handleSubmit}>
         <CardInput />
+        {error && <Error>We had some difficulties processing your payment. Please try again.</Error>}
         <ButtonGroup>
           <Button type="button" styling="outlined" size="l" onClick={goBack}>
             Back

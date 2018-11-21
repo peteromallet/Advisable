@@ -1,9 +1,9 @@
 import React from 'react';
 import uniqueId from 'lodash/uniqueId';
 import { extractSpacingProps } from 'src/components/Spacing';
-import { Wrapper, Input, Label, Box } from './styles';
+import { Wrapper, Error, Input, Label, Box } from './styles';
 
-const Checkbox = ({ id, name, label, onChange, onBlur, value, ...props }) => {
+const Checkbox = ({ id, error, name, label, onChange, onBlur, value, ...props }) => {
   return (
     <Wrapper {...extractSpacingProps(props)}>
       <Input
@@ -18,6 +18,7 @@ const Checkbox = ({ id, name, label, onChange, onBlur, value, ...props }) => {
         <Box />
         {label}
       </Label>
+      {error && <Error>{error}</Error>}
     </Wrapper>
   )
 }

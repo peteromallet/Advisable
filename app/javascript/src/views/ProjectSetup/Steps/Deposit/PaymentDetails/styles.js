@@ -29,3 +29,13 @@ export const Label = styled.p`
   font-weight: 600;
   text-transform: uppercase;
 `;
+
+export const Error = styled.div`
+  padding: 20px;
+  color: #CD1743;
+  font-size: 16px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  border: 1px solid #CD1743;
+  background: rgba(205, 23, 67, 0.1);
+`

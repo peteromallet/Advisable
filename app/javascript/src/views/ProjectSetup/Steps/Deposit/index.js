@@ -7,6 +7,7 @@ import PaymentPending from "./PaymentPending";
 
 function Deposit(props) {
   const [stripe, setStripe] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (window.Stripe) {
@@ -29,9 +30,9 @@ function Deposit(props) {
     <StripeProvider stripe={stripe}>
       <Elements>
         {source ? (
-          <PaymentPending source={source} {...props} />
+          <PaymentPending setError={setError} source={source} {...props} />
         ) : (
-          <PaymentDetails {...props} />
+          <PaymentDetails error={error} {...props} />
         )}
       </Elements>
     </StripeProvider>

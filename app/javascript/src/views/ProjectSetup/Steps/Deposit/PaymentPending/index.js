@@ -4,7 +4,7 @@ import graphqlClient from "src/graphqlClient";
 import CREATE_PAYMENT from "./createPayment.graphql";
 import FETCH_PAYMENT from "./fetchPayment.graphql";
 
-const PaymentPending = ({ source, project, match, history }) => {
+const PaymentPending = ({ source, project, match, history, setError }) => {
   let pollingTimer;
   const { projectID } = match.params;
 
@@ -33,10 +33,11 @@ const PaymentPending = ({ source, project, match, history }) => {
       }
     });
 
-    const { payment, error } = response.data.createPayment;
+    const { payment, errors } = response.data.createPayment;
 
-    if (error) {
-      history.replace(`/project_setup/${projectID}/deposit`);
+    if (errors) {
+      setError(errors[0].code)
+      return history.replace(`/project_setup/${projectID}/deposit`);
     }
 
     checkPayment(payment);

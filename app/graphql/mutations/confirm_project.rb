@@ -2,7 +2,7 @@ class Mutations::ConfirmProject < Mutations::BaseMutation
   argument :id, ID, required: true
 
   field :project, Types::ProjectType, null: true
-  field :error, String, null: true
+  field :errors, [Types::Error], null: true
 
   def resolve(**args)
     {
@@ -12,6 +12,6 @@ class Mutations::ConfirmProject < Mutations::BaseMutation
     }
 
     rescue Service::Error => e
-      return { error: e.message }
+      return { errors: [e] }
   end
 end

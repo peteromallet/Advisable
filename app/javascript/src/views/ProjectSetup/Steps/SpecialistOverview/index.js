@@ -54,7 +54,7 @@ export default ({ project, match, history }) => {
                   placeholder="Specialist overview.."
                   marginBottom="xl"
                   error={
-                    formik.submitCount > 0 && formik.errors.specialistOverview
+                    formik.submitCount > 0 && formik.errors.specialistDescription
                   }
                 />
                 <ButtonGroup>
