@@ -22,29 +22,32 @@ describe Payments::Create do
   end
 
   context "when the source is canceled" do
-    it "calls the Payments::Failed service" do
+    it "raises an error" do
       source = double(Stripe::Source, status: "canceled")
       expect(Stripe::Source).to receive(:retrieve).with("src_123").and_return(source)
-      expect(Payments::Failed).to receive(:call)
-      Payments::Create.call(project: project, amount: 100_00, source_id: "src_123")
+      expect {
+        Payments::Create.call(project: project, amount: 100_00, source_id: "src_123")
+      }.to raise_error(Service::Error)
     end
   end
 
   context "when the source is failed" do
-    it "calls the Payments::Failed service" do
+    it "raises an error" do
       source = double(Stripe::Source, status: "failed")
       expect(Stripe::Source).to receive(:retrieve).with("src_123").and_return(source)
-      expect(Payments::Failed).to receive(:call)
-      Payments::Create.call(project: project, amount: 100_00, source_id: "src_123")
+      expect {
+        Payments::Create.call(project: project, amount: 100_00, source_id: "src_123")
+      }.to raise_error(Service::Error)
     end
   end
 
   context "when the source is consumed" do
-    it "calls the Payments::Failed service" do
+    it "raises an error" do
       source = double(Stripe::Source, status: "consumed")
       allow(Stripe::Source).to receive(:retrieve).with("src_123").and_return(source)
-      expect(Payments::Failed).to receive(:call)
-      Payments::Create.call(project: project, amount: 100_00, source_id: "src_123")
+      expect {
+        Payments::Create.call(project: project, amount: 100_00, source_id: "src_123")
+      }.to raise_error(Service::Error)
     end
   end
 

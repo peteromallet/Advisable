@@ -39,7 +39,7 @@ describe Projects::Confirm do
     it "throws a service error" do
       expect {
         Projects::Confirm.call(project: project)
-      }.to raise_error(Service::Error, /not pending approval/)
+      }.to raise_error(Service::Error)
     end
   end
 
@@ -49,7 +49,7 @@ describe Projects::Confirm do
     it "throws a service error" do
       expect {
         Projects::Confirm.call(project: project)
-      }.to raise_error(Service::Error, /deposit has not been paid/)
+      }.to raise_error(Service::Error)
     end
   end
 end
