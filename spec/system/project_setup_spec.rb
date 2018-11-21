@@ -147,7 +147,7 @@ describe "Project setup flow" do
         project.update_attributes(deposit: 0)
         visit "/project_setup/#{project.airtable_id}/terms"
         check "acceptedTerms"
-        click_button "Complete Setup"
+        click_button "Complete"
         expect(page).to have_content("Setting up")
       end
     end
@@ -182,7 +182,7 @@ describe "Project setup flow" do
           find_field('postal').send_keys('19335')
         end
       }
-      click_button "Complete Setup"
+      click_button "Complete"
       expect(page).to have_content("Setting up")
     end
 
