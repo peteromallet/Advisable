@@ -3,11 +3,13 @@ import { Mutation } from "react-apollo";
 import React, { Fragment, useEffect } from "react";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
-import ListInput from "src/components/ListInput";
+import TextField from "src/components/TextField";
+import InputError from "src/components/InputError";
 import { Mobile } from "src/components/Breakpoint";
 import ButtonGroup from "src/components/ButtonGroup";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
+import { Input } from "glamorous";
 
 export default ({ project, match, history }) => {
   const id = match.params.projectID;
@@ -28,7 +30,7 @@ export default ({ project, match, history }) => {
             their suitability for this project.
           </Text>
           <Formik
-            initialValues={{ questions: project.questions }}
+            initialValues={{ questions: project.questions || [] }}
             validationSchema={validationSchema}
             onSubmit={async values => {
               const id = match.params.projectID;
@@ -42,16 +44,29 @@ export default ({ project, match, history }) => {
           >
             {formik => (
               <form onSubmit={formik.handleSubmit}>
-                <ListInput
-                  name="questions"
-                  marginBottom="xl"
-                  value={formik.values.questions}
-                  placeholder="+ Add a question"
-                  error={formik.submitCount > 0 && formik.errors.questions}
-                  onChange={questions =>
-                    formik.setFieldValue("questions", questions)
-                  }
+                <TextField
+                  multiline
+                  label="Question 1"
+                  name="questions[0]"
+                  marginBottom="l"
+                  value={formik.values.questions[0]}
+                  placeholder="Question"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
                 />
+                <TextField
+                  multiline
+                  label="Question 2"
+                  name="questions[1]"
+                  marginBottom="l"
+                  value={formik.values.questions[1]}
+                  placeholder="Question"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                />
+                {formik.submitCount > 0 && formik.errors.questions && (
+                  <InputError marginBottom="l">{formik.errors.questions}</InputError>
+                )}
                 <Mobile>
                   {isMobile => (
                     <ButtonGroup fullWidth={isMobile}>
