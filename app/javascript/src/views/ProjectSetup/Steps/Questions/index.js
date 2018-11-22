@@ -9,7 +9,6 @@ import { Mobile } from "src/components/Breakpoint";
 import ButtonGroup from "src/components/ButtonGroup";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
-import { Input } from "glamorous";
 
 export default ({ project, match, history }) => {
   const id = match.params.projectID;
