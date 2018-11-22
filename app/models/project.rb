@@ -18,8 +18,12 @@ class Project < ApplicationRecord
     self[:deposit] || 0
   end
 
+  def deposit_paid
+    self[:deposit_paid] || 0
+  end
+
   # returns the amount of the deposit that is left to be paid
   def deposit_owed
-    [deposit - payments.captured.sum(:amount), 0].max
+    [deposit - deposit_paid, 0].max
   end
 end
