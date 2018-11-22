@@ -26,6 +26,7 @@ class Airtable::Project < Airtable::Base
 
     project.accepted_terms = fields["Accepted Terms"]
     project.deposit = (fields["Deposit Amount Required"].to_f * 100).to_i
+    project.deposit_paid = (fields["Deposit Amount Paid"].to_f * 100).to_i
   end
 
   private

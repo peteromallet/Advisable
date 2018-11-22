@@ -17,11 +17,23 @@ class Payments::Charge < ApplicationService
     })
 
     payment.update_attributes(charge_id: charge.id, status: 'captured')
+    update_project_deposit_paid(payment)
 
     rescue Stripe::StripeError => e
       payment.update_attributes(status: 'failed', error_code: e.code)
     end
 
     payment
+  end
+
+  private
+
+  def update_project_deposit_paid(payment)
+    project = payment.project
+    paid = [project.deposit_paid + payment.amount, project.deposit].max
+    project.update_columns(deposit_paid: paid)
+    airtable_record = Airtable::Project.find(project.airtable_id)
+    airtable_record['Deposit Amount Paid'] = paid / 100.0
+    airtable_record.save
   end
 end
