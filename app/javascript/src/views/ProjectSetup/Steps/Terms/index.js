@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import React, { useEffect } from "react";
+import { animated } from "react-spring";
 import { Mutation } from "react-apollo";
 import { Redirect } from "react-router";
 import { Formik } from "formik";
@@ -10,20 +11,22 @@ import ButtonGroup from "src/components/ButtonGroup";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history }) => {
+export default ({ project, match, history, transform, opacity, position }) => {
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/questions`);
 
-  if (project.questions.length === 0) {
-    return <Redirect to="questions" />;
-  }
+  useEffect(() => {
+    if (project.questions.length === 0) {
+      history.replace("questions")
+    }
+  }, [])
 
   const isLastStep = project.depositOwed === 0;
 
   return (
     <Mutation mutation={UPDATE_PROJECT}>
       {mutate => (
-        <Fragment>
+        <animated.div style={{ transform, opacity, position }}>
           <Formik
             initialValues={{ acceptedTerms: project.acceptedTerms }}
             validationSchema={validationSchema}
@@ -131,7 +134,7 @@ export default ({ project, match, history }) => {
               </form>
             )}
           </Formik>
-        </Fragment>
+        </animated.div>
       )}
     </Mutation>
   );

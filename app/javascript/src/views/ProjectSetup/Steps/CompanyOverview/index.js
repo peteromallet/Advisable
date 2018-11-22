@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import React from "react";
+import { animated } from "react-spring";
 import { Mutation } from "react-apollo";
 import { Formik } from "formik";
 import Text from "src/components/Text";
@@ -9,11 +10,11 @@ import TextField from "src/components/TextField";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history }) => {
+export default ({ project, match, history, opacity, transform, position }) => {
   return (
     <Mutation mutation={UPDATE_PROJECT}>
       {mutate => (
-        <Fragment>
+        <animated.div style={{ opacity, transform, position }}>
           <Text marginBottom="l">
             Feel free to remove any identifying information if you'd rather the
             consultant doesn't know who you are.
@@ -37,7 +38,6 @@ export default ({ project, match, history }) => {
             {formik => (
               <form onSubmit={formik.handleSubmit}>
                 <TextField
-                  autoFocus
                   multiline
                   autoHeight
                   name="companyDescription"
@@ -62,7 +62,7 @@ export default ({ project, match, history }) => {
               </form>
             )}
           </Formik>
-        </Fragment>
+        </animated.div>
       )}
     </Mutation>
   );

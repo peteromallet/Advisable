@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 
-export const Container = styled.div.attrs({
-  style: props => ({
-    height: `${props.height}px`
-  })
-})`
+export const Container = styled.div`
   padding: 40px;
+  overflow: hidden;
   max-width: 700px;
   position: relative;
   border-radius: 4px;

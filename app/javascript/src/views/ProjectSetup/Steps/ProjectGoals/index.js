@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
+import React, { useEffect } from "react";
+import { animated } from "react-spring";
 import { Mutation } from "react-apollo";
-import { Redirect } from "react-router";
 import { Formik } from "formik";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
@@ -10,18 +10,20 @@ import ButtonGroup from "src/components/ButtonGroup";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history, position, opacity }) => {
+export default ({ project, match, history, transform, position, opacity }) => {
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/project_overview`);
 
-  if (!project.description) {
-    return <Redirect to="project_overview" />;
-  }
+  useEffect(() => {
+    if (!project.description) {
+      history.replace("project_overview");
+    }
+  }, []);
 
   return (
     <Mutation mutation={UPDATE_PROJECT}>
       {mutate => (
-        <Fragment>
+        <animated.div style={{ transform, position, opacity }}>
           <Text marginBottom="l">
             What goal’s do you have for this project?
           </Text>
@@ -35,7 +37,7 @@ export default ({ project, match, history, position, opacity }) => {
                     ...values
                   }
                 }
-              })
+              });
 
               history.push(`/project_setup/${id}/specialist_overview`);
             }}
@@ -64,7 +66,12 @@ export default ({ project, match, history, position, opacity }) => {
                       >
                         Back
                       </Button>
-                      <Button type="submit" size="l" styling="primary" loading={formik.isSubmitting}>
+                      <Button
+                        type="submit"
+                        size="l"
+                        styling="primary"
+                        loading={formik.isSubmitting}
+                      >
                         Continue
                       </Button>
                     </ButtonGroup>
@@ -73,7 +80,7 @@ export default ({ project, match, history, position, opacity }) => {
               </form>
             )}
           </Formik>
-        </Fragment>
+        </animated.div>
       )}
     </Mutation>
   );
