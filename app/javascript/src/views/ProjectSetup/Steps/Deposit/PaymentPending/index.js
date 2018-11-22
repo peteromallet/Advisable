@@ -35,7 +35,7 @@ const PaymentPending = ({ source, project, match, history, setError }) => {
 
     const { payment, errors } = response.data.createPayment;
 
-    if (errors) {
+    if (errors || payment.status === 'failed') {
       setError("We had some difficulties processing your payment. Please try again.")
       return history.replace(`/project_setup/${projectID}/deposit`);
     }

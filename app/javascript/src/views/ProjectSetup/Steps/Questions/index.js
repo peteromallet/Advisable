@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import { animated } from "react-spring";
-import { Mutation } from "react-apollo";
 import { Formik } from "formik";
+import { Mutation } from "react-apollo";
+import React, { Fragment, useEffect } from "react";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
 import ListInput from "src/components/ListInput";
@@ -10,7 +9,7 @@ import ButtonGroup from "src/components/ButtonGroup";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history, transform, position, opacity }) => {
+export default ({ project, match, history }) => {
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/nice_to_have`);
 
@@ -23,7 +22,7 @@ export default ({ project, match, history, transform, position, opacity }) => {
   return (
     <Mutation mutation={UPDATE_PROJECT}>
       {mutate => (
-        <animated.div style={{ transform, position, opacity }}>
+        <Fragment>
           <Text marginBottom="l">
             We'll get the specialist to answer these question in order to assess
             their suitability for this project.
@@ -78,7 +77,7 @@ export default ({ project, match, history, transform, position, opacity }) => {
               </form>
             )}
           </Formik>
-        </animated.div>
+        </Fragment>
       )}
     </Mutation>
   );

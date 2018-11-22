@@ -15,7 +15,7 @@ setConfig({ pureSFC: true })
 
 const Root = () => (
   <Switch>
-    <Route path="/project_setup" component={ProjectSetup} />
+    <Route path="/project_setup/:projectID" component={ProjectSetup} />
     <Route path="/projects/:projectID" component={Project} />
     <Route path="/offers/:bookingID" component={ViewOffer} />
     <Route path="/clients/:userID/availability" component={Availability} />

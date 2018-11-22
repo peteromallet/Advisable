@@ -11,9 +11,9 @@ injectGlobal`
   }
 
   #AppRoot {
+    z-index: 2;
     height: 100%;
     overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
   }
 
   html, body, div, span, applet, object, iframe,

@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { animated } from "react-spring";
+import React, { Fragment, useEffect } from "react";
 import { Mutation } from "react-apollo";
 import { Formik } from "formik";
 import Text from "src/components/Text";
@@ -10,7 +9,7 @@ import TextField from "src/components/TextField";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history, position, transform, opacity }) => {
+export default ({ project, match, history }) => {
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/goals`);
 
@@ -23,7 +22,7 @@ export default ({ project, match, history, position, transform, opacity }) => {
   return (
     <Mutation mutation={UPDATE_PROJECT}>
       {mutate => (
-        <animated.div style={{ position, transform, opacity }}>
+        <Fragment>
           <Text marginBottom="l">
             Give a brief one sentence overview of what you want to get out of an
             engagement with a specialist.
@@ -87,7 +86,7 @@ export default ({ project, match, history, position, transform, opacity }) => {
               </form>
             )}
           </Formik>
-        </animated.div>
+        </Fragment>
       )}
     </Mutation>
   );

@@ -5,6 +5,7 @@ mutation UpdateProject($input: UpdateProjectInput!) {
       goals
       status
       questions
+      description
       depositOwed
       acceptedTerms
       companyDescription

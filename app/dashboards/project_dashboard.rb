@@ -11,6 +11,8 @@ class ProjectDashboard < Administrate::BaseDashboard
     applications: Field::HasMany,
     id: Field::Number,
     name: Field::String,
+    status: Field::String,
+    deposit: Field::Number,
     airtable_id: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -41,6 +43,8 @@ class ProjectDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :name,
+    :status,
+    :deposit,
     :airtable_id,
   ].freeze
 

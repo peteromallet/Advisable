@@ -1,12 +1,11 @@
-import React from "react";
-import { animated } from "react-spring";
-import { Mutation } from "react-apollo";
+import React, { Fragment } from "react";
 import { Formik } from "formik";
+import { Mutation } from "react-apollo";
 import Text from "src/components/Text";
-import { Mobile } from "src/components/Breakpoint";
 import Button from "src/components/Button";
-import ButtonGroup from "src/components/ButtonGroup";
 import TextField from "src/components/TextField";
+import { Mobile } from "src/components/Breakpoint";
+import ButtonGroup from "src/components/ButtonGroup";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
@@ -14,24 +13,26 @@ export default ({ project, match, history, opacity, transform, position }) => {
   return (
     <Mutation mutation={UPDATE_PROJECT}>
       {mutate => (
-        <animated.div style={{ opacity, transform, position }}>
+        <Fragment>
           <Text marginBottom="l">
             Feel free to remove any identifying information if you'd rather the
             consultant doesn't know who you are.
           </Text>
           <Formik
             validationSchema={validationSchema}
-            initialValues={{ companyDescription: project.companyDescription || ""}}
+            initialValues={{
+              companyDescription: project.companyDescription || ""
+            }}
             onSubmit={async values => {
               const id = match.params.projectID;
               await mutate({
                 variables: {
                   input: {
                     id,
-                    ...values,
+                    ...values
                   }
                 }
-              })
+              });
               history.push(`/project_setup/${id}/project_overview`);
             }}
           >
@@ -53,7 +54,12 @@ export default ({ project, match, history, opacity, transform, position }) => {
                 <Mobile>
                   {isMobile => (
                     <ButtonGroup fullWidth={isMobile}>
-                      <Button type="submit" size="l" loading={formik.isSubmitting} styling="primary">
+                      <Button
+                        size="l"
+                        type="submit"
+                        styling="primary"
+                        loading={formik.isSubmitting}
+                      >
                         Continue
                       </Button>
                     </ButtonGroup>
@@ -62,7 +68,7 @@ export default ({ project, match, history, opacity, transform, position }) => {
               </form>
             )}
           </Formik>
-        </animated.div>
+        </Fragment>
       )}
     </Mutation>
   );

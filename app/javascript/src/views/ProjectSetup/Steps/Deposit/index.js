@@ -1,11 +1,10 @@
 import queryString from "query-string";
-import { animated } from "react-spring";
-import React, { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { StripeProvider, Elements } from "react-stripe-elements";
 import PaymentDetails from "./PaymentDetails";
 import PaymentPending from "./PaymentPending";
 
-function Deposit({ transform, opacity, position, ...props }) {
+function Deposit(props) {
   const [stripe, setStripe] = useState(null);
   const [error, setError] = useState(null);
 
@@ -27,7 +26,7 @@ function Deposit({ transform, opacity, position, ...props }) {
   const source = queryString.parse(props.location.search).source;
 
   return (
-    <animated.div style={{ transform, opacity, position }}>
+    <Fragment>
       <StripeProvider stripe={stripe}>
         <Elements>
           {source ? (
@@ -37,7 +36,7 @@ function Deposit({ transform, opacity, position, ...props }) {
           )}
         </Elements>
       </StripeProvider>
-    </animated.div>
+    </Fragment>
   );
 }
 

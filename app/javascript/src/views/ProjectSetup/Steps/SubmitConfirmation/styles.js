@@ -6,7 +6,6 @@ export const Wrapper = styled.div`
   img {
     max-width: 400px;
     margin-bottom: 10px;
-    transform: translateX(10px);
   }
 
   h4 {
