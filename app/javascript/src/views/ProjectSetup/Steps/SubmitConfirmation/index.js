@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
 import graphqlClient from "src/graphqlClient";
 import CONFIRM_PROJECT from "./confirmProject.graphql";
@@ -10,10 +10,7 @@ let progressTimer;
 const SubmitConfirmation = ({
   project,
   match,
-  history,
-  transform,
-  position,
-  opacity
+  history
 }) => {
   const [progress, setProgres] = useState(50);
   const [props] = useSpring({ width: `${progress}%`, from: { width: "0%" } });
@@ -55,7 +52,7 @@ const SubmitConfirmation = ({
   }, []);
 
   return (
-    <animated.div style={{ opacity, transform, position }}>
+    <Fragment>
       <Wrapper>
         <img src={illustration} alt="" />
         <h4>Setting up your project...</h4>
@@ -63,7 +60,7 @@ const SubmitConfirmation = ({
           <animated.div style={props} />
         </Progress>
       </Wrapper>
-    </animated.div>
+    </Fragment>
   );
 };
 

@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { animated } from "react-spring";
+import React, { Fragment, useEffect } from "react";
 import { Mutation } from "react-apollo";
 import { Formik } from "formik";
 import Text from "src/components/Text";
@@ -10,7 +9,7 @@ import ButtonGroup from "src/components/ButtonGroup";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history, transform, opacity, position }) => {
+export default ({ project, match, history }) => {
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/must_have`);
 
@@ -23,7 +22,7 @@ export default ({ project, match, history, transform, opacity, position }) => {
   return (
     <Mutation mutation={UPDATE_PROJECT}>
       {mutate => (
-        <animated.div style={{ transform, opacity, position }}>
+        <Fragment>
           <Text marginBottom="l">
             These are characteristics that it'd be nice for your specialist to
             have, but not essential.
@@ -89,7 +88,7 @@ export default ({ project, match, history, transform, opacity, position }) => {
               </form>
             )}
           </Formik>
-        </animated.div>
+        </Fragment>
       )}
     </Mutation>
   );

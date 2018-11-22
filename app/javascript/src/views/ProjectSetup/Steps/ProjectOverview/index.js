@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { animated } from "react-spring";
+import React, { Fragment, useEffect } from "react";
 import { Mutation } from "react-apollo";
 import { Formik } from "formik";
 import Text from "src/components/Text";
@@ -23,7 +22,7 @@ export default ({ project, match, history, transform, position, opacity }) => {
   return (
     <Mutation mutation={UPDATE_PROJECT}>
       {mutate => (
-        <animated.div style={{ opacity, transform, position }}>
+        <Fragment>
           <Text marginBottom="l">
             Give a brief one line overview of the project
           </Text>
@@ -83,7 +82,7 @@ export default ({ project, match, history, transform, position, opacity }) => {
               </form>
             )}
           </Formik>
-        </animated.div>
+        </Fragment>
       )}
     </Mutation>
   );
