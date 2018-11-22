@@ -6,7 +6,7 @@ import client from './graphqlClient'
 
 import App from "./App";
 import { NotificationsProvider } from "./components/Notifications";
-import "./reset.css.js";
+import "./baseStyling.css.js";
 
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account
@@ -18,8 +18,7 @@ const language =
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.createElement("div");
-  root.style.height = "100%";
-  root.style.overflow = "auto";
+  root.id = 'AppRoot'
   document.body.appendChild(root);
 
   ReactDOM.render(

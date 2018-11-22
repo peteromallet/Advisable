@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
+import React, { useEffect } from "react";
+import { animated } from "react-spring";
 import { Mutation } from "react-apollo";
-import { Redirect } from "react-router";
 import { Formik } from "formik";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
@@ -10,18 +10,20 @@ import TextField from "src/components/TextField";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history }) => {
+export default ({ project, match, history, position, transform, opacity }) => {
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/goals`);
 
-  if (project.goals.length === 0) {
-    return <Redirect to="goals" />;
-  }
+  useEffect(() => {
+    if (project.goals.length === 0) {
+      history.replace("goals");
+    }
+  }, []);
 
   return (
     <Mutation mutation={UPDATE_PROJECT}>
       {mutate => (
-        <Fragment>
+        <animated.div style={{ position, transform, opacity }}>
           <Text marginBottom="l">
             Give a brief one sentence overview of what you want to get out of an
             engagement with a specialist.
@@ -48,7 +50,6 @@ export default ({ project, match, history }) => {
               <form onSubmit={formik.handleSubmit}>
                 <TextField
                   multiline
-                  autoFocus
                   autoHeight
                   name="specialistDescription"
                   value={formik.values.specialistDescription}
@@ -86,7 +87,7 @@ export default ({ project, match, history }) => {
               </form>
             )}
           </Formik>
-        </Fragment>
+        </animated.div>
       )}
     </Mutation>
   );

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from 'react-router';
 import { useSpring, animated } from "react-spring";
 import graphqlClient from "src/graphqlClient";
 import CONFIRM_PROJECT from "./confirmProject.graphql";
@@ -8,17 +7,26 @@ import illustration from "./illustration.png";
 
 let progressTimer;
 
-const SubmitConfirmation = ({ project, match, history }) => {
+const SubmitConfirmation = ({
+  project,
+  match,
+  history,
+  transform,
+  position,
+  opacity
+}) => {
   const [progress, setProgres] = useState(50);
   const [props] = useSpring({ width: `${progress}%`, from: { width: "0%" } });
 
-  if (project.depositOwed !== 0) {
-    return <Redirect to="deposit" />
-  }
+  useEffect(() => {
+    if (project.depositOwed !== 0) {
+      history.replace("deposit");
+    }
 
-  if (project.acceptedTerms === false) {
-    return <Redirect to="terms" />
-  }
+    if (project.acceptedTerms === false) {
+      history.replace("terms");
+    }
+  }, []);
 
   clearInterval(progressTimer);
   progressTimer = setInterval(() => {
@@ -47,13 +55,15 @@ const SubmitConfirmation = ({ project, match, history }) => {
   }, []);
 
   return (
-    <Wrapper>
-      <img src={illustration} alt="" />
-      <h4>Setting up your project...</h4>
-      <Progress>
-        <animated.div style={props} />
-      </Progress>
-    </Wrapper>
+    <animated.div style={{ opacity, transform, position }}>
+      <Wrapper>
+        <img src={illustration} alt="" />
+        <h4>Setting up your project...</h4>
+        <Progress>
+          <animated.div style={props} />
+        </Progress>
+      </Wrapper>
+    </animated.div>
   );
 };
 
