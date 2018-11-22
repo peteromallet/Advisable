@@ -12,7 +12,7 @@ function Deposit({ transform, opacity, position, ...props }) {
   useEffect(() => {
     // Redirect back to the terms step if the terms have not been accepted
     if (props.project.acceptedTerms === false) {
-      return history.replaceState("terms");
+      return props.history.replace("terms");
     }
 
     if (window.Stripe) {
