@@ -1,30 +1,21 @@
 module Admin
-  class ProjectsController < Admin::ApplicationController
+  class ClientsController < Admin::ApplicationController
     # To customize the behavior of this controller,
     # you can overwrite any of the RESTful actions. For example:
     #
     # def index
     #   super
-    #   @resources = Project.
+    #   @resources = Client.
     #     page(params[:page]).
     #     per(10)
     # end
 
     # Define a custom finder by overriding the `find_resource` method:
     # def find_resource(param)
-    #   Project.find_by!(slug: param)
+    #   Client.find_by!(slug: param)
     # end
 
     # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
     # for more information
-
-    def resource_params
-      params.require(:project).permit(*dashboard.permitted_attributes,
-        goals: [],
-        questions: [],
-        required_characteristics: [],
-        optional_characteristics: []
-      )
-    end
   end
 end

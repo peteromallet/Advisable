@@ -7,7 +7,7 @@
 # expected to have an airtable_id column.
 class Airtable::Base < Airrecord::Table
   class << self
-    attr_accessor :sync_model, :sync_block
+    attr_accessor :sync_model, :sync_block, :push_block
 
     def base_key
       ENV["AIRTABLE_DATABASE_KEY"]
@@ -61,6 +61,10 @@ class Airtable::Base < Airrecord::Table
     def sync_data(&block)
       @sync_block = block
     end
+
+    def push_data(&block)
+      @push_block = block
+    end
   end
 
   # You can call sync on an instance of any class that inherits from
@@ -88,6 +92,24 @@ class Airtable::Base < Airrecord::Table
       Webhook.process(model)
 
       model
+    end
+  end
+
+  # The push method describes how data should be pushed to airtable. This is
+  # not the only place where data is pushed to airtable, we also push data
+  # in graphql mutations and service classes.
+  def push(record)
+    if id && id != record.try(:airtable_id)
+      raise "Airtable ID does not match"
+    end
+
+    ActiveRecord::Base.transaction do
+      instance_exec(record, &self.class.push_block) if self.class.push_block
+      id ? save : create
+
+      if record.airtable_id.blank?
+        record.update_attributes(airtable_id: id)
+      end
     end
   end
 
