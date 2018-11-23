@@ -30,18 +30,18 @@ class Airtable::Project < Airtable::Base
   end
 
   push_data do |project|
-    self['Project'] = project.name
-    self['Project Stage'] = project.status unless project.status.blank?
-    self['Deposit Amount Required'] = project.deposit / 100.0
-    self['Company Description'] = project.company_description
-    self['Project Description'] = project.description
-    self['Specialist Requirement Description'] = project.specialist_description
-    self['Goals'] = project.goals.to_json
-    self['Required Characteristics'] = project.required_characteristics.to_json
-    self['Optional Characteristics'] = project.optional_characteristics.to_json
-    self['Qualification Question 1'] = project.questions.try(:[], 0)
-    self['Qualification Question 2'] = project.questions.try(:[], 1)
-    self['Accepted Terms'] = project.accepted_terms
+    self['Project'] = project.name if project.saved_change_to_name?
+    self['Project Stage'] = project.status if !project.status.blank? && project.saved_change_to_status?
+    self['Deposit Amount Required'] = project.deposit / 100.0 if project.saved_change_to_deposit?
+    self['Company Description'] = project.company_description if project.saved_change_to_company_description?
+    self['Project Description'] = project.description if project.saved_change_to_description?
+    self['Specialist Requirement Description'] = project.specialist_description if project.saved_change_to_specialist_description?
+    self['Goals'] = project.goals.to_json if project.saved_change_to_goals?
+    self['Required Characteristics'] = project.required_characteristics.to_json if project.saved_change_to_required_characteristics?
+    self['Optional Characteristics'] = project.optional_characteristics.to_json if project.saved_change_to_optional_characteristics?
+    self['Qualification Question 1'] = project.questions.try(:[], 0) if project.saved_change_to_questions?
+    self['Qualification Question 2'] = project.questions.try(:[], 1) if project.saved_change_to_questions?
+    self['Accepted Terms'] = project.accepted_terms if project.saved_change_to_accepted_terms_at?
   end
 
   private
