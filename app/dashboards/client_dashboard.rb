@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class ProjectDashboard < Administrate::BaseDashboard
+class ClientDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -8,21 +8,14 @@ class ProjectDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
+    projects: Field::HasMany,
     applications: Field::HasMany,
+    interviews: Field::HasMany,
+    client_users: Field::HasMany,
+    users: Field::HasMany,
     id: Field::Number,
     name: Field::String,
-    status: Field::String,
-    description: Field::Text,
-    goals: TextArrayField,
-    questions: TextArrayField,
-    required_characteristics: TextArrayField,
-    optional_characteristics: TextArrayField,
-    company_description: Field::Text,
-    specialist_description: Field::Text,
-    deposit: Field::Number,
-    client: Field::BelongsTo,
     airtable_id: Field::String,
-    sync_changes_to_airtable: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -33,47 +26,44 @@ class ProjectDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :name,
+    :projects,
+    :applications,
+    :interviews,
+    :client_users,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
+    :projects,
+    :applications,
+    :interviews,
+    :client_users,
+    :users,
     :id,
     :name,
-    :status,
-    :deposit,
-    :description,
-    :specialist_description,
-    :company_description,
     :airtable_id,
     :created_at,
     :updated_at,
-    :applications,
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
+    :projects,
+    :applications,
+    :interviews,
+    :client_users,
+    :users,
     :name,
-    :client,
-    :status,
-    :company_description,
-    :description,
-    :specialist_description,
-    :goals,
-    :questions,
-    :required_characteristics,
-    :optional_characteristics,
-    :deposit,
-    :sync_changes_to_airtable
+    :airtable_id,
   ].freeze
 
-  # Overwrite this method to customize how projects are displayed
+  # Overwrite this method to customize how clients are displayed
   # across all pages of the admin dashboard.
   #
-  def display_resource(project)
-    project.name
+  def display_resource(client)
+    client.name
   end
 end

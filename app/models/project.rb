@@ -1,9 +1,9 @@
 class Project < ApplicationRecord
+  include Airtable::Syncable
   has_many :applications
   has_many :payments
   belongs_to :client
   validates :name, presence: true
-  validates :airtable_id, presence: true
 
   def accepted_terms=(accepted)
     self.accepted_terms_at = DateTime.now.utc if !accepted_terms && accepted

@@ -29,6 +29,21 @@ class Airtable::Project < Airtable::Base
     project.deposit_paid = (fields["Deposit Amount Paid"].to_f * 100).to_i
   end
 
+  push_data do |project|
+    self['Project'] = project.name
+    self['Project Stage'] = project.status unless project.status.blank?
+    self['Deposit Amount Required'] = project.deposit / 100.0
+    self['Company Description'] = project.company_description
+    self['Project Description'] = project.description
+    self['Specialist Requirement Description'] = project.specialist_description
+    self['Goals'] = project.goals.to_json
+    self['Required Characteristics'] = project.required_characteristics.to_json
+    self['Optional Characteristics'] = project.optional_characteristics.to_json
+    self['Qualification Question 1'] = project.questions.try(:[], 0)
+    self['Qualification Question 2'] = project.questions.try(:[], 1)
+    self['Accepted Terms'] = project.accepted_terms
+  end
+
   private
 
   def sync_arrays(project)
