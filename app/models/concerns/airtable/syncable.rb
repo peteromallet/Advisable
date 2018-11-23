@@ -20,10 +20,11 @@ module Airtable::Syncable
 
     # Updates or creates an airtable record for the instance
     def sync_to_airtable
+      airtable_class = "Airtable::#{self.class}".constantize
       airtable_record = if airtable_id.present?
-        Airtable::Project.find(airtable_id)
+        airtable_class.find(airtable_id)
       else
-        Airtable::Project.new({})
+        airtable_class.new({})
       end
 
       airtable_record.push(self)
