@@ -1,3 +1,4 @@
+# DEPRECATED in favour of ApplicationService class
 # All service classes should inherit from this Service class. It provides a
 # pattern for handeling service objects.
 # Every service object should have a #call instance method which contains the

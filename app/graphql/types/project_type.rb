@@ -1,11 +1,20 @@
 class Types::ProjectType < Types::BaseType
-
   field :id, ID, null: false
   field :airtable_id, String, null: false
   field :name, String, null: false
   field :currency, String, null: true
+  field :status, String, null: true
   field :clientReferralUrl, String, null: true
   field :client, Types::Client, null: false
+  field :goals, [String], null: true
+  field :description, String, null: true
+  field :company_description, String, null: true
+  field :specialist_description, String, null: true
+  field :questions, [String], null: true
+  field :required_characteristics, [String], null: true
+  field :optional_characteristics, [String], null: true
+  field :accepted_terms, Boolean, null: false
+  field :deposit_owed, Int, null: true
 
   field :applications, [Types::ApplicationType, null: true], null: true do
     argument :status, [String], required: false
@@ -25,5 +34,21 @@ class Types::ProjectType < Types::BaseType
     by_airtable = object.applications.find_by_airtable_id(args[:id])
     return by_airtable if by_airtable
     object.applications.find(args[:id])
+  end
+
+  def goals
+    object.goals || []
+  end
+
+  def required_characteristics
+    object.required_characteristics || []
+  end
+
+  def optional_characteristics
+    object.optional_characteristics || []
+  end
+
+  def questions
+    object.questions || []
   end
 end

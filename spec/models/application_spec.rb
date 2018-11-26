@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Application do
-  include_examples "airtable syncing"
   it { should belong_to(:project) }
   it { should belong_to(:specialist) }
 

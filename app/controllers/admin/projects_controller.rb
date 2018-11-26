@@ -17,5 +17,14 @@ module Admin
 
     # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
     # for more information
+
+    def resource_params
+      params.require(:project).permit(*dashboard.permitted_attributes,
+        goals: [],
+        questions: [],
+        required_characteristics: [],
+        optional_characteristics: []
+      )
+    end
   end
 end
