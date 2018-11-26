@@ -6,7 +6,7 @@ import { withSpacing } from "./Spacing";
 const heights = {
   s: "30px",
   m: "34px",
-  l: "38px",
+  l: "44px",
   xl: "44px"
 };
 
@@ -59,6 +59,19 @@ const STYLES = {
   danger: css`
     color: white;
     background: #f41f52;
+  `,
+  primary: css`
+    color: white;
+    font-weight: 600;
+    background: #173FCD;
+
+    &:hover {
+      background-color: #204CE7;
+    }
+
+    &:active {
+      background-color: #0C2EA9;
+    }
   `
 };
 
@@ -74,13 +87,17 @@ export const ButtonStyling = styled.button`
   cursor: pointer;
   font-weight: 500;
   border-radius: 5px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   -webkit-appearance: none;
   align-items: center;
   justify-content: center;
   width: ${props => (props.block ? "100%" : "auto")};
   display: ${props => (props.block ? "flex" : "inline-flex")};
   transition: box-shadow 0.2s, background 0.2s;
+
+  &:focus-visible {
+    outline: 2px solid #173FCD;
+  }
 
   ${props => STYLES[props.styling || "default"]}
 
@@ -195,7 +212,7 @@ const Loading = () => (
 const ButtonWithSpacing = withSpacing(ButtonStyling);
 
 export default ({ loading, children, ...props }) => (
-  <ButtonWithSpacing loading={loading} {...props}>
+  <ButtonWithSpacing loading={loading} disabled={loading || props.disabled} {...props}>
     {loading && <Loading />}
     <ButtonInner>{children}</ButtonInner>
   </ButtonWithSpacing>

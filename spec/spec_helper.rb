@@ -5,6 +5,7 @@ require 'webmock/rspec'
 SimpleCov.start 'rails' do
   add_filter "app/dashboards"
   add_filter "controllers/admin"
+  add_filter "app/fields"
   add_group "GraphQL", "app/graphql"
   add_group "Services", "app/services"
 end

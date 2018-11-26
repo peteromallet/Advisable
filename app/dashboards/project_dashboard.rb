@@ -11,7 +11,18 @@ class ProjectDashboard < Administrate::BaseDashboard
     applications: Field::HasMany,
     id: Field::Number,
     name: Field::String,
+    status: Field::String,
+    description: Field::Text,
+    goals: TextArrayField,
+    questions: TextArrayField,
+    required_characteristics: TextArrayField,
+    optional_characteristics: TextArrayField,
+    company_description: Field::Text,
+    specialist_description: Field::Text,
+    deposit: Field::Number,
+    client: Field::BelongsTo,
     airtable_id: Field::String,
+    sync_changes_to_airtable: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -30,6 +41,11 @@ class ProjectDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :id,
     :name,
+    :status,
+    :deposit,
+    :description,
+    :specialist_description,
+    :company_description,
     :airtable_id,
     :created_at,
     :updated_at,
@@ -41,7 +57,17 @@ class ProjectDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :name,
-    :airtable_id,
+    :client,
+    :status,
+    :company_description,
+    :description,
+    :specialist_description,
+    :goals,
+    :questions,
+    :required_characteristics,
+    :optional_characteristics,
+    :deposit,
+    :sync_changes_to_airtable
   ].freeze
 
   # Overwrite this method to customize how projects are displayed
