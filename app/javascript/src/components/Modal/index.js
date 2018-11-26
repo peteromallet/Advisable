@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Spring } from "react-spring";
-import Icon from "src/components/Icon";
+import { extractSpacingProps } from '../Spacing';
 import { ModalContainer, Backdrop, Window, CloseModal } from "./styles";
 
 const modalRoot = document.getElementById("js-modal-root");
@@ -63,9 +63,10 @@ class Modal extends React.Component {
         >
           {styles => (
             <Window
+              styles={styles}
               className="ModalWindow"
               size={this.props.size}
-              styles={styles}
+              {...extractSpacingProps(this.props)}
               expandOnMobile={this.props.expandOnMobile}
             >
               <CloseModal onClick={this.props.onClose}>

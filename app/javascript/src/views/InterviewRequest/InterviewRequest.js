@@ -1,13 +1,11 @@
 import { Query } from "react-apollo";
-import moment from "moment-timezone";
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Card from "src/components/Card";
-import Heading from "src/components/Heading";
 import Loading from "src/components/Loading";
 import SelectDay from "./SelectDay";
 import SelectTime from "./SelectTime";
 import InterviewConfirmed from "./InterviewConfirmed";
+import MoreTimesRequested from "./MoreTimesRequested";
 import ConfirmInterviewRequest from "./ConfirmInterviewRequest";
 import FETCH_INTERVIEW from "./fetchInterview.graphql";
 import { Container } from "./styles";
@@ -72,7 +70,7 @@ class InterviewRequest extends Component {
                   <Redirect to={match.path} />
                 </Switch>
               )}
-              {interview.status !== "Call Requested" && (
+              {interview.status === "Call Scheduled" && (
                 <Route
                   path={match.path}
                   render={route => (
@@ -80,6 +78,17 @@ class InterviewRequest extends Component {
                       {...route}
                       startsAt={interview.startsAt}
                       timeZone={interview.timeZone}
+                      clientName={interview.application.project.client.name}
+                    />
+                  )}
+                />
+              )}
+              {interview.status === "More Times Requested" && (
+                <Route
+                  path={match.path}
+                  render={route => (
+                    <MoreTimesRequested
+                      {...route}
                       clientName={interview.application.project.client.name}
                     />
                   )}
