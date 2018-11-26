@@ -1,7 +1,7 @@
 export const currencySymbol = currency => symbols[currency] || currency || "€"
 
 export default (amount, currency = "EUR") => {
-  const symbol = currencySymbol(currency)
+  const symbol = currencySymbol(currency.toUpperCase())
   if (symbol != null) {
     return `${symbol}${amount}`;
   } else {

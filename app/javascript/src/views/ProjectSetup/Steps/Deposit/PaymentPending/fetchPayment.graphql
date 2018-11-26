@@ -1,0 +1,6 @@
+query payment($id: ID!) {
+  payment(id: $id) {
+    id
+    status
+  }
+}
