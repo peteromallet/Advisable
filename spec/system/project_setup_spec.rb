@@ -171,8 +171,8 @@ describe "Project setup flow" do
 
     it "progresses to /confirm" do
       visit "/project_setup/#{project.airtable_id}/deposit"
-      using_wait_time(15) {
-        frame = find('iframe[src*="stripe"]')
+      using_wait_time(20) {
+        frame = find('iframe')
         within_frame(frame) do
           "4242424242424242".chars.each do |char|
             find_field('cardnumber').send_keys(char)
