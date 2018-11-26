@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 
   post "/graphql", to: "graphql#execute"
 
+  post '/stripe_events', to: 'stripe_events#create'
+
   # match every other route to the frontend codebase
   root 'application#frontend'
   get '*path', to: 'application#frontend'

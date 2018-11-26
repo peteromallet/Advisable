@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Specialist do
-  include_examples "airtable syncing"
   it { should have_many(:applications) }
   it { should have_many(:skills).through(:specialist_skills) }
   it { should validate_presence_of(:first_name) }
