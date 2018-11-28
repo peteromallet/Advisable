@@ -79,4 +79,9 @@ class Types::QueryType < GraphQL::Schema::Object
   def payment(id: )
     Payment.find_by_uid(id)
   end
+
+  fied :viewer, Types::User, "Get the current user", null: true
+
+  def viewer
+  end
 end

@@ -29,6 +29,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'faraday'
 gem 'sidekiq'
 
+gem 'bcrypt', '~> 3.1.7'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
@@ -48,6 +50,8 @@ gem 'parser'
 gem 'rollbar'
 gem 'stripe'
 gem "attr_encrypted", "~> 3.0.0"
+
+gem 'jwt'
 
 # For geneating test coverage reports
 gem 'simplecov', require: false, group: :test

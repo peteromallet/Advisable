@@ -1,5 +1,7 @@
 class User < ApplicationRecord
+  include UID
   has_many :projects
+  has_secure_password validations: false
   # Users have access to client data through the client_users table
   has_many :client_users
   has_many :clients, through: :client_users
@@ -10,6 +12,8 @@ class User < ApplicationRecord
   has_many :interviews
 
   before_save :remove_past_availabililty
+
+  validates :email, uniqueness: true, allow_blank: true
 
   attribute :availability, :datetime, default: [], array: true
 
