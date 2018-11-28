@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from "styled-components";
+import { withSpacing } from '../Spacing';
 import { rgba } from "polished";
 
 export const ModalContainer = styled.div`
@@ -19,7 +20,7 @@ const windowWidths = {
   l: "700px"
 };
 
-export const Window = styled.div.attrs({
+export const Window = withSpacing(styled.div.attrs({
   style: ({ styles }) => ({
     opacity: styles.opacity,
     transform: `translatey(${styles.translateY}px)`
@@ -41,7 +42,7 @@ export const Window = styled.div.attrs({
         border-radius: 0px;
       }
     `};
-`;
+`);
 
 const fadeIn = keyframes`
   from {

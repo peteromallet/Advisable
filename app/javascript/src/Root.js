@@ -11,6 +11,7 @@ import Availability from "./views/Availability";
 import EditProposal from "./views/EditProposal";
 import CreateProposal from "./views/CreateProposal";
 import InterviewRequest from "./views/InterviewRequest";
+import InterviewAvailability from "./views/InterviewAvailability";
 
 setConfig({ pureSFC: true });
 
@@ -18,6 +19,10 @@ const Root = () => (
   <NotFoundBoundary>
     <Switch>
       <Route path="/project_setup/:projectID" component={ProjectSetup} />
+      <Route
+        path="/projects/:projectID/interviews/:interviewID/availability"
+        component={InterviewAvailability}
+      />
       <Route path="/projects/:projectID" component={Project} />
       <Route path="/offers/:bookingID" component={ViewOffer} />
       <Route path="/clients/:userID/availability" component={Availability} />
