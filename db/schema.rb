@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_17_111603) do
+ActiveRecord::Schema.define(version: 2018_11_27_153841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -198,6 +198,11 @@ ActiveRecord::Schema.define(version: 2018_12_17_111603) do
     t.text "availability"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
+    t.string "email"
+    t.datetime "confirmed_at"
+    t.string "confirmation_token"
+    t.bigint "country_id"
     t.string "company_name"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
   end
