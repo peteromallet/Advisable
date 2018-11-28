@@ -9,7 +9,6 @@ import Heading from "src/components/Heading";
 import CreateOffer from "./views/CreateOffer";
 import CounterOffer from "./views/CounterOffer";
 import Applicants from "./components/Applicants";
-import Navigation from "src/components/Navigation";
 import View from "src/components/View";
 import ShareAction from "./components/ShareAction";
 import SharePrompt from "./components/SharePrompt";

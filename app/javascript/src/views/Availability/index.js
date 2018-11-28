@@ -2,7 +2,6 @@ import { Formik } from "formik";
 import { Query, Mutation } from "react-apollo";
 import moment from "moment-timezone";
 import React, { Component } from "react";
-import Card from "src/components/Card";
 import Button from "src/components/Button";
 import Heading from "src/components/Heading";
 import Loading from "src/components/Loading";

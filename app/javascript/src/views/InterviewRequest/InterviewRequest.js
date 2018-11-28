@@ -1,15 +1,14 @@
 import { Query } from "react-apollo";
-import moment from "moment-timezone";
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Card from "src/components/Card";
-import Heading from "src/components/Heading";
 import Loading from "src/components/Loading";
 import SelectDay from "./SelectDay";
 import SelectTime from "./SelectTime";
 import InterviewConfirmed from "./InterviewConfirmed";
+import MoreTimesRequested from "./MoreTimesRequested";
 import ConfirmInterviewRequest from "./ConfirmInterviewRequest";
 import FETCH_INTERVIEW from "./fetchInterview.graphql";
+import NotFoundError from 'src/views/NotFound/error';
 import { Container } from "./styles";
 
 const SELECT_TIME_PATH = ":date([0-9]{4}-[0-9]{2}-[0-9]{2})";
@@ -28,6 +27,10 @@ class InterviewRequest extends Component {
         {query => {
           if (query.loading) return <Loading />;
           const { interview } = query.data;
+
+          if (!interview) {
+            throw new NotFoundError()
+          }
 
           return (
             <Container>
@@ -72,7 +75,7 @@ class InterviewRequest extends Component {
                   <Redirect to={match.path} />
                 </Switch>
               )}
-              {interview.status !== "Call Requested" && (
+              {interview.status === "Call Scheduled" && (
                 <Route
                   path={match.path}
                   render={route => (
@@ -80,6 +83,17 @@ class InterviewRequest extends Component {
                       {...route}
                       startsAt={interview.startsAt}
                       timeZone={interview.timeZone}
+                      clientName={interview.application.project.client.name}
+                    />
+                  )}
+                />
+              )}
+              {interview.status === "Need More Time Options" && (
+                <Route
+                  path={match.path}
+                  render={route => (
+                    <MoreTimesRequested
+                      {...route}
                       clientName={interview.application.project.client.name}
                     />
                   )}
