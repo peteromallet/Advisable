@@ -6,7 +6,7 @@ class Projects::Confirm < ApplicationService
   end
 
   def call
-    if project.status != 'Project Pending Approval'
+    if project.status != 'Brief Pending Confirmation'
       raise Service::Error.new("project.not_pending_approval")
     end
 
@@ -14,7 +14,7 @@ class Projects::Confirm < ApplicationService
       raise Service::Error.new("project.deposit_not_paid")
     end
 
-    if project.update_attributes(status: "Project Confirmed")
+    if project.update_attributes(status: "Brief Confirmed")
       sync_with_airtable
       return project
     end
@@ -26,7 +26,7 @@ class Projects::Confirm < ApplicationService
 
   def sync_with_airtable
     record = Airtable::Project.find(project.airtable_id)
-    record['Project Stage'] = "Project Confirmed"
+    record['Project Stage'] = "Brief Confirmed"
     record.save
   end
 end
