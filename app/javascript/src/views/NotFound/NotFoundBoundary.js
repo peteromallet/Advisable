@@ -9,13 +9,16 @@ class ErrorBoundary extends React.Component {
 
   static getDerivedStateFromError(error) {
     if (error.name === "NotFoundError") {
-      return { hasError: true };
+      return {
+        hasError: true,
+        message: error.message
+      };
     }
   }
 
   render() {
     if (this.state.hasError) {
-      return <NotFound />
+      return <NotFound>{this.state.message}</ NotFound>
     }
 
     return this.props.children; 

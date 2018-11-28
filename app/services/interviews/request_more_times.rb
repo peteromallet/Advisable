@@ -10,7 +10,7 @@ class Interviews::RequestMoreTimes < ApplicationService
       raise Service::Error.new("interview.not_requested")
     end
 
-    if interview.update_attributes(status: "More Times Requested")
+    if interview.update_attributes(status: "Need More Time Options")
       update_airtable
     end
 
@@ -24,7 +24,7 @@ class Interviews::RequestMoreTimes < ApplicationService
   end
 
   def update_airtable
-    airtable_record["Call Status"] = "More Times Requested"
+    airtable_record["Call Status"] = "Need More Time Options"
     airtable_record.save
   end
 end
