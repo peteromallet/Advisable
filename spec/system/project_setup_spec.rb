@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "Project setup flow" do
   let(:project) { create(:project, {
-    status: "Project Pending Approval",
+    status: "Brief Pending Confirmation",
     company_description: "company overview",
     description: "project description",
     goals: ["goal"],

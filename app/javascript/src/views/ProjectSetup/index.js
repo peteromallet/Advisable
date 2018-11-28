@@ -19,7 +19,7 @@ const ProjectSetup = ({ data, match }) => {
   }
 
   // Redirect to the project dashboard if the status is not pending approval
-  if (data.project && data.project.status !== "Project Pending Approval") {
+  if (data.project && data.project.status !== "Brief Pending Confirmation") {
     return <Redirect to={`/projects/${match.params.projectID}`} />;
   }
 
