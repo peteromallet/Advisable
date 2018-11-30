@@ -4,13 +4,13 @@ import Text from "src/components/Text";
 import Icon from "src/components/Icon";
 import Heading from "src/components/Heading";
 import illustration from "./illustration";
-import { Complete, Event } from "./styles";
+import { Centered, Event } from "./styles";
 
 export default ({ clientName, startsAt, timeZone }) => {
   const date = moment.tz(startsAt, timeZone);
 
   return (
-    <Complete>
+    <Centered>
       <img width={250} src={illustration} alt="" />
       <Heading marginBottom="xs">Call Scheduled</Heading>
       <Text marginBottom="xl">
@@ -26,6 +26,6 @@ export default ({ clientName, startsAt, timeZone }) => {
             .format("hh:mma")}
         </span>
       </Event>
-    </Complete>
+    </Centered>
   );
 };

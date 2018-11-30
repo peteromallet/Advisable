@@ -56,10 +56,11 @@ export const Day = styled(Link)`
   }
 `;
 
-export const ContactUS = styled.a`
+export const RequestMore = styled.a`
   color: #202a4e;
   font-size: 15px;
   font-weight: 500;
+  cursor: pointer;
   text-decoration: none;
   letter-spacing: -0.04em;
   &:hover { color: #173FCD; }
@@ -125,6 +126,6 @@ export const Event = styled.div`
   }
 `;
 
-export const Complete = styled.div`
+export const Centered = styled.div`
   text-align: center;
 `;

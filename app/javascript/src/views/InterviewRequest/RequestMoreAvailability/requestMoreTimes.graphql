@@ -1,0 +1,11 @@
+mutation RequestMoreInterviewTimes($input: RequestMoreInterviewTimesInput!) {
+  requestMoreInterviewTimes(input: $input) {
+    interview {
+      id
+      status
+    }
+    errors {
+      code
+    }
+  }
+}

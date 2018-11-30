@@ -1,12 +1,12 @@
 import React from 'react';
 import EmptyState from 'src/components/EmptyState';
 
-export default () => (
+export default ({ children }) => (
   <div>
     <EmptyState
       icon='compass'
       heading="404"
-      text="Page not found"
+      text={ children || "Page not found" }
     />
   </div>
 )

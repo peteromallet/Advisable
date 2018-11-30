@@ -1,0 +1,10 @@
+mutation ResendInterviewRequest($input: ResendInterviewRequestInput!) {
+  resendInterviewRequest(input: $input) {
+    interview {
+      user {
+        id
+        availability
+      }
+    }
+  }
+}
