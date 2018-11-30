@@ -1,0 +1,18 @@
+query data($id: ID!) {
+  interview(id: $id) {
+    id
+    timeZone
+    user {
+      id
+      airtableId
+      availability
+    }
+    application {
+      id
+      specialist {
+        id
+        name
+      }
+    }
+  }
+}

@@ -41,9 +41,10 @@ export const NotificationCard = styled.div`
   padding: 20px;
   color: white;
   font-size: 15px;
+  line-height: 20px;
   font-weight: 500;
   border-radius: 4px;
-  background: #173fcd;
+  background: #00104B;
   box-shadow: 0 5px 10px -5px rgba(6, 24, 51, 0.15),
     0 0 50px 0 rgba(6, 24, 51, 0.15);
 `;

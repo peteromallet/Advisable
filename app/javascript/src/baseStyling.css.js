@@ -14,6 +14,7 @@ injectGlobal`
     z-index: 2;
     height: 100%;
     overflow-y: visible;
+    overflow: auto;
   }
 
   html, body, div, span, applet, object, iframe,
