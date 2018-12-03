@@ -5,6 +5,7 @@
     "@rails/webpacker": "3.5.5",
     "apollo-boost": "^0.1.6",
     "apollo-cache-inmemory": "^1.2.1",
+    "axios": "^0.18.0",
     "babel-plugin-styled-components": "^1.7.1",
     "babel-preset-react": "^6.24.1",
     "body-scroll-lock": "^2.5.10",

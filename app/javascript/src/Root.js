@@ -2,10 +2,13 @@ import React from "react";
 import { hot, setConfig } from "react-hot-loader";
 import { Route, Switch } from "react-router-dom";
 
+import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Project from "./views/Project";
 import NotFoundBoundary from "./views/NotFound/NotFoundBoundary";
 import NotFoundError from "./views/NotFound/error";
 import ViewOffer from "./views/ViewOffer";
+import Login from "./views/Login";
+import Projects from "./views/Projects";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
 import EditProposal from "./views/EditProposal";
@@ -18,12 +21,14 @@ setConfig({ pureSFC: true });
 const Root = () => (
   <NotFoundBoundary>
     <Switch>
+      <AuthenticatedRoute path="/" exact component={Projects} />
+      <Route path="/login" component={Login} />
       <Route path="/project_setup/:projectID" component={ProjectSetup} />
       <Route
         path="/projects/:projectID/interviews/:interviewID/availability"
         component={InterviewAvailability}
       />
-      <Route path="/projects/:projectID" component={Project} />
+      <AuthenticatedRoute path="/projects/:projectID" component={Project} />
       <Route path="/offers/:bookingID" component={ViewOffer} />
       <Route path="/clients/:userID/availability" component={Availability} />
       <Route

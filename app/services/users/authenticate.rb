@@ -1,7 +1,8 @@
+# Authenticates a given JWT and returns the user record.
 class Users::Authenticate < ApplicationService
   attr_reader :token
 
-  def initialize(token: )
+  def initialize(token:)
     @token = token
   end
 

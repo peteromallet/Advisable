@@ -8,10 +8,7 @@ class Users::Login < ApplicationService
 
   def call
     begin
-      if user && user.password_digest? && user.authenticate(password)
-        return token
-      end
-
+      return token if valid_credentials?
       raise Service::Error.new("authentication.failed")
 
     rescue JWT::ExpiredSignature
@@ -21,8 +18,12 @@ class Users::Login < ApplicationService
 
   private
 
+  def valid_credentials?
+    user && user.password_digest? && user.authenticate(password)
+  end
+
   def token
-    JWT.encode token_payload, ENV["JWT_SECRET"], 'HS256'
+    @token ||= JWT.encode token_payload, ENV["JWT_SECRET"], 'HS256'
   end
 
   def token_payload

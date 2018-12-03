@@ -1,0 +1,18 @@
+query {
+  viewer {
+    id
+    client {
+      id
+      projects {
+        id
+        airtableId
+        name
+        status
+        description
+        applications {
+          id
+        }
+      }
+    }
+  }
+}

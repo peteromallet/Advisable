@@ -1,0 +1,10 @@
+query {
+  viewer {
+    id
+    firstName
+    client {
+      id
+      name
+    }
+  }
+}

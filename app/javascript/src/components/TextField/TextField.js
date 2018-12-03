@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import uniqueID from "lodash/uniqueId";
 import { Wrapper, Input, InputMask, Textarea } from "./styles";
 import InputError from "src/components/InputError";
@@ -21,12 +21,12 @@ const TextField = ({
   readOnly,
   disabled,
   style,
-  id,
   autoFocus,
   ...props
 }) => {
   const input = useRef(null);
   const [rows, setRows] = useState(props.minRows);
+  const [id, _] = useState(props.id || uniqueID("TextField"))
 
   let Component = Input;
 
@@ -80,7 +80,6 @@ const TextField = ({
 };
 
 TextField.defaultProps = {
-  id: uniqueID("TextField"),
   type: "text",
   minRows: 3,
   block: false,
