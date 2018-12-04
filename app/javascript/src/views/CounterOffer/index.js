@@ -1,28 +1,27 @@
 import React from "react";
 import { graphql, Mutation } from "react-apollo";
-import { Formik, Field } from "formik";
 import Card from "src/components/Card";
 import Text from "src/components/Text";
-import Divider from "src/components/Divider";
+import View from "src/components/View";
 import Spacing from "src/components/Spacing";
 import Heading from "src/components/Heading";
+import Loading from "src/components/Loading";
 import OfferForm from "src/components/OfferForm";
 import { withNotifications } from "src/components/Notifications";
-import currency, { currencySymbol } from "src/utilities/currency";
-import LoadingCandidates from "../../components/LoadingCandidates";
+import { currencySymbol } from "src/utilities/currency";
 import FETCH_DATA from "./graphql/fetchData.graphql";
 
 import CREATE_OFFER from "src/graphql/createOffer.graphql";
 
 const Offer = ({ match, history, loading, data, notifications }) => {
-  if (data.loading) return <LoadingCandidates />;
+  if (data.loading) return <Loading />;
   if (data.error) return null;
 
   const goBack = () =>
     history.push(`/projects/${match.params.projectID}/introduced`);
 
   return (
-    <div>
+    <View>
       <Spacing bottom="xs">
         <Heading size="l">
           Counter-offer for {data.booking.application.specialist.name}
@@ -71,7 +70,7 @@ const Offer = ({ match, history, loading, data, notifications }) => {
           </Card>
         )}
       </Mutation>
-    </div>
+    </View>
   );
 };
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Spacer = styled.div`
   width: 100%;
@@ -19,7 +20,7 @@ export const Header = styled.header`
   box-shadow: 0px 2px 3px rgba(0, 25, 116, 0.14);
 `;
 
-export const Logo = styled.a``;
+export const Logo = styled(Link)``;
 
 export const CurrentUserWrapper = styled.div`
   right: 25px;

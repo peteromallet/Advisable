@@ -6,10 +6,13 @@ import Header from "../../components/Header";
 import Heading from "../../components/Heading";
 import Loading from "../../components/Loading";
 import Divider from "../../components/Divider";
+import useScrollRestore from "../../utilities/useScrollRestore";
 import { Container, Projects } from "./styles";
 import ProjectsList from "./ProjectsList";
 
 export default () => {
+  useScrollRestore();
+
   return (
     <React.Fragment>
       <Header />
