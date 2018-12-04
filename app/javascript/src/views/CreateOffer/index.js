@@ -1,28 +1,26 @@
 import React from "react";
 import { graphql, Mutation } from "react-apollo";
-import { Formik, Field } from "formik";
 import Back from "src/components/Back";
 import Card from "src/components/Card";
 import Text from "src/components/Text";
-import Divider from "src/components/Divider";
-import Spacing from "src/components/Spacing";
+import View from "src/components/View";
+import Loading from "src/components/Loading";
 import Heading from "src/components/Heading";
 import OfferForm from "src/components/OfferForm";
 import { withNotifications } from "src/components/Notifications";
 import { currencySymbol } from "src/utilities/currency";
-import LoadingCandidates from "../../components/LoadingCandidates";
 import FETCH_DATA from "./graphql/fetchData.graphql";
 import CREATE_OFFER from "src/graphql/createOffer.graphql";
 
-const Offer = ({ match, history, loading, notifications, data }) => {
-  if (data.loading) return <LoadingCandidates />;
+const Offer = ({ match, history, notifications, data }) => {
+  if (data.loading) return <Loading />;
   if (data.error) return null;
 
   const goBack = () =>
     history.push(`/projects/${match.params.projectID}/introduced`);
 
   return (
-    <div>
+    <View>
       <Back
         marginBottom="l"
         to={`/projects/${match.params.projectID}/introduced`}
@@ -65,7 +63,7 @@ const Offer = ({ match, history, loading, notifications, data }) => {
           </Card>
         )}
       </Mutation>
-    </div>
+    </View>
   );
 };
 

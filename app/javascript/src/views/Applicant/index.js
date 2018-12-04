@@ -7,6 +7,7 @@ import Card from "src/components/Card";
 import Flex from "src/components/Flex";
 import Text from "src/components/Text";
 import Link from "src/components/Link";
+import View from "src/components/View";
 import Skills from "src/components/Skills";
 import Button from "src/components/Button";
 import Avatar from "src/components/Avatar";
@@ -28,8 +29,7 @@ import {
   ApplicantAvatar,
   ApplicantName,
   ApplicantLocation,
-  AppliedTo,
-  AdvisableComment
+  AppliedTo
 } from "./styles";
 
 const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
@@ -41,52 +41,53 @@ class Applicant extends React.Component {
   };
 
   componentDidMount() {
-    document.getElementById("view").scrollTo(0, 0);
+    document.getElementById("AppRoot").scrollTo(0, 0);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
-      document.getElementById("view").scrollTo(0, 0);
+      document.getElementById("AppRoot").scrollTo(0, 0);
     }
   }
 
   render() {
     const { match, history } = this.props;
     return (
-      <Query
-        query={FETCH_APPLICATION}
-        variables={{
-          projectID: match.params.projectID,
-          applicationID: match.params.applicationID
-        }}
-      >
-        {({ data, loading }) => {
-          if (loading) return <Loading />;
-          const project = data.project;
-          const application = project.application;
-          const proposal = application.proposal;
-          const specialist = application.specialist;
-          const otherApplicants = filter(project.applications, ap => {
-            return ap.id !== application.id;
-          });
+      <View>
+        <Query
+          query={FETCH_APPLICATION}
+          variables={{
+            projectID: match.params.projectID,
+            applicationID: match.params.applicationID
+          }}
+        >
+          {({ data, loading }) => {
+            if (loading) return <Loading />;
+            const project = data.project;
+            const application = project.application;
+            const proposal = application.proposal;
+            const specialist = application.specialist;
+            const otherApplicants = filter(project.applications, ap => {
+              return ap.id !== application.id;
+            });
 
-          return (
-            <React.Fragment>
-              <RequestIntroduction
-                isOpen={this.state.modal === "introduction"}
-                application={application}
-                onClose={() => {
-                  this.setState({ modal: null });
-                }}
-              />
+            return (
+              <React.Fragment>
+                <RequestIntroduction
+                  isOpen={this.state.modal === "introduction"}
+                  application={application}
+                  onClose={() => {
+                    this.setState({ modal: null });
+                  }}
+                />
 
-              <RejectModal
-                isOpen={this.state.modal === "reject"}
-                application={application}
-                onClose={() => {
-                  this.setState({ modal: null });
-                }}
-              />
+                <RejectModal
+                  isOpen={this.state.modal === "reject"}
+                  application={application}
+                  onClose={() => {
+                    this.setState({ modal: null });
+                  }}
+                />
 
 
               <Back to={`/projects/${project.airtableId}`} paddingBottom="s">
@@ -142,28 +143,28 @@ class Applicant extends React.Component {
                 </Card>
               ))}
 
-              <Skills
-                marginTop="xxl"
-                marginBottom="xxl"
-                skills={specialist.skills}
-              />
+                <Skills
+                  marginTop="xxl"
+                  marginBottom="xxl"
+                  skills={specialist.skills}
+                />
 
-              {application.status === "Proposed" &&
-                proposal && (
-                  <React.Fragment>
-                    <Button
-                      marginRight="m"
-                      onClick={() =>
-                        this.props.history.push(
-                          `/projects/${project.airtableId}/proposals/${
-                            proposal.id
-                          }`
-                        )
-                      }
-                      primary
-                    >
-                      View Proposal
-                    </Button>
+                {application.status === "Proposed" &&
+                  proposal && (
+                    <React.Fragment>
+                      <Button
+                        marginRight="m"
+                        onClick={() =>
+                          this.props.history.push(
+                            `/projects/${project.airtableId}/proposals/${
+                              proposal.id
+                            }`
+                          )
+                        }
+                        primary
+                      >
+                        View Proposal
+                      </Button>
 
                     <Button
                       type="button"
@@ -174,47 +175,48 @@ class Applicant extends React.Component {
                       Reject
                     </Button>
 
-                    <RejectProposalModal
-                      booking={proposal}
-                      specialist={application.specialist}
-                      isOpen={this.state.modal === REJECT_PROPOSAL_MODAL}
-                      onClose={() => this.setState({ modal: null })}
-                    />
-                  </React.Fragment>
+                      <RejectProposalModal
+                        booking={proposal}
+                        specialist={application.specialist}
+                        isOpen={this.state.modal === REJECT_PROPOSAL_MODAL}
+                        onClose={() => this.setState({ modal: null })}
+                      />
+                    </React.Fragment>
+                  )}
+
+                {application.status === "Applied" && (
+                  <Button
+                    marginRight="m"
+                    onClick={() => this.setState({ modal: "introduction" })}
+                    primary
+                  >
+                    Request Call
+                  </Button>
                 )}
 
-              {application.status === "Applied" && (
-                <Button
-                  marginRight="m"
-                  onClick={() => this.setState({ modal: "introduction" })}
-                  primary
-                >
-                  Request Call
-                </Button>
-              )}
+                {application.status === "Application Accepted" && (
+                  <Button
+                    marginRight="m"
+                    onClick={() =>
+                      this.props.history.push(
+                        `/projects/${project.airtableId}/applications/${
+                          application.id
+                        }/offer`
+                      )
+                    }
+                    primary
+                  >
+                    Send Offer
+                  </Button>
+                )}
 
-              {application.status === "Application Accepted" && (
-                <Button
-                  marginRight="m"
-                  onClick={() =>
-                    this.props.history.push(
-                      `/projects/${project.airtableId}/applications/${
-                        application.id
-                      }/offer`
-                    )
-                  }
-                  primary
-                >
-                  Send Offer
-                </Button>
-              )}
-
-              {["Applied", "Application Accepted"].indexOf(application.status) >
-                -1 && (
-                <Button onClick={() => this.setState({ modal: "reject" })}>
-                  Request Another Candidate
-                </Button>
-              )}
+                {["Applied", "Application Accepted"].indexOf(
+                  application.status
+                ) > -1 && (
+                  <Button onClick={() => this.setState({ modal: "reject" })}>
+                    Request Another Candidate
+                  </Button>
+                )}
 
               <RequestReferences
                 application={application}
@@ -240,55 +242,56 @@ class Applicant extends React.Component {
                 <React.Fragment>
                   <Divider marginTop="xxl" marginBottom="xxl" />
 
-                  <Spacing marginBottom="l">
-                    <Flex align="baseline">
-                      <Flex.Item distribute="fill">
-                        <Heading size="s" marginBottom="xs">
-                          More candidates like {specialist.name}
-                        </Heading>
-                      </Flex.Item>
-                      <Link to={`/projects/${project.airtableId}`}>
-                        View all candidates
-                      </Link>
-                    </Flex>
-                  </Spacing>
+                    <Spacing marginBottom="l">
+                      <Flex align="baseline">
+                        <Flex.Item distribute="fill">
+                          <Heading size="s" marginBottom="xs">
+                            More candidates like {specialist.name}
+                          </Heading>
+                        </Flex.Item>
+                        <Link to={`/projects/${project.airtableId}`}>
+                          View all candidates
+                        </Link>
+                      </Flex>
+                    </Spacing>
 
-                  {otherApplicants.map(
-                    applicant =>
-                      applicant.specialist ? (
-                        <Card
-                          key={applicant.id}
-                          onClick={() => history.push(applicant.airtableId)}
-                          padding="l"
-                          marginBottom="m"
-                        >
-                          <Flex align="center">
-                            <Avatar
-                              name={applicant.specialist.name}
-                              url={get(applicant.specialist.image, "url")}
-                              marginRight="l"
-                            />
-                            <Flex.Item distribute="fill">
-                              <Heading size="s">
-                                {applicant.specialist.name}
-                              </Heading>
-                              <Text>
-                                {applicant.specialist.city}
-                                {applicant.specialist.country &&
-                                  `, ${applicant.specialist.country.name}`}
-                              </Text>
-                            </Flex.Item>
-                            {applicant.featured && <FeaturedBadge />}
-                          </Flex>
-                        </Card>
-                      ) : null
-                  )}
-                </React.Fragment>
-              )}
-            </React.Fragment>
-          );
-        }}
-      </Query>
+                    {otherApplicants.map(
+                      applicant =>
+                        applicant.specialist ? (
+                          <Card
+                            key={applicant.id}
+                            onClick={() => history.push(applicant.airtableId)}
+                            padding="l"
+                            marginBottom="m"
+                          >
+                            <Flex align="center">
+                              <Avatar
+                                name={applicant.specialist.name}
+                                url={get(applicant.specialist.image, "url")}
+                                marginRight="l"
+                              />
+                              <Flex.Item distribute="fill">
+                                <Heading size="s">
+                                  {applicant.specialist.name}
+                                </Heading>
+                                <Text>
+                                  {applicant.specialist.city}
+                                  {applicant.specialist.country &&
+                                    `, ${applicant.specialist.country.name}`}
+                                </Text>
+                              </Flex.Item>
+                              {applicant.featured && <FeaturedBadge />}
+                            </Flex>
+                          </Card>
+                        ) : null
+                    )}
+                  </React.Fragment>
+                )}
+              </React.Fragment>
+            );
+          }}
+        </Query>
+      </View>
     );
   }
 }

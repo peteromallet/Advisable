@@ -9,7 +9,7 @@ export default () => {
     <Fragment>
       <Spacer />
       <Header>
-        <Logo>
+        <Logo to="/">
           <img src={logo} alt="" />
         </Logo>
         <CurrentUser />
