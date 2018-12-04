@@ -14,8 +14,12 @@ const client = new ApolloClient({
     const csrfElement = document.querySelector("meta[name=csrf-token]");
     if (!csrfElement) return;
     const csrfToken = csrfElement.getAttribute("content");
+    const authToken = localStorage.getItem("authToken");
     operation.setContext({
-      headers: { "X-CSRF-Token": csrfToken }
+      headers: {
+        "X-CSRF-Token": csrfToken,
+        "Authorization": authToken ? `Bearer ${authToken}` : ""
+      }
     });
   }
 });

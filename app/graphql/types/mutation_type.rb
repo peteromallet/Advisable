@@ -22,4 +22,7 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :update_project, mutation: Mutations::UpdateProject
   field :confirm_project, mutation: Mutations::ConfirmProject
+
+  field :login, mutation: Mutations::Login
+  field :signup, mutation: Mutations::Signup
 end

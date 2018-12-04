@@ -27,11 +27,6 @@ Rails.application.routes.draw do
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
 
-  scope 'api/v1' do
-    post 'login', to: 'user_sessions#create'
-    delete 'logout', to: 'user_sessions#destroy'
-  end
-
   post "/graphql", to: "graphql#execute"
 
   post '/stripe_events', to: 'stripe_events#create'
