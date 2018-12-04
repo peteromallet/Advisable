@@ -23,13 +23,6 @@ class Users::Login < ApplicationService
   end
 
   def token
-    @token ||= JWT.encode token_payload, ENV["JWT_SECRET"], 'HS256'
-  end
-
-  def token_payload
-    {
-      sub: user.uid,
-      exp: (Time.now + 30.days).to_i
-    }
+    Users::CreateToken.call(user: user)
   end
 end

@@ -5,6 +5,7 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Project from "./views/Project";
 import Login from "./views/Login";
+import Signup from "./views/Signup";
 import Projects from "./views/Projects";
 import Applicant from "./views/Applicant";
 import ViewOffer from "./views/ViewOffer";
@@ -26,6 +27,7 @@ const Root = () => (
   <NotFoundBoundary>
     <Switch>
       <Route path="/login" component={Login} />
+      <Route path="/signup" component={Signup} />
       <Route path="/" exact render={() => <Redirect to="/projects" />} />
       <Route path="/project_setup/:projectID" component={ProjectSetup} />
       <Route

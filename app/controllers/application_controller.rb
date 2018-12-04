@@ -6,10 +6,7 @@ class ApplicationController < ActionController::Base
   end
 
   def auth_token
-    # If the token was passed in the header then use that token
     header = request.headers['Authorization']
-    return header.gsub("Bearer ", "") if header
-    # Otherwise check if there is a token in session storage
-    session[:auth_token]
+    header.gsub("Bearer ", "") unless header.blank?
   end
 end

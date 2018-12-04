@@ -14,11 +14,17 @@ class User < ApplicationRecord
   before_save :remove_past_availabililty
 
   validates :email, uniqueness: true, allow_blank: true
+  validates_confirmation_of :password
 
   attribute :availability, :datetime, default: [], array: true
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  # Always lowercase the email
+  def email=(address)
+    self[:email] = address.downcase
   end
 
   private

@@ -1,5 +1,6 @@
 // Renders the login page
 import React, { useState } from "react";
+import queryString from 'query-string';
 import { Formik } from "formik";
 import { Query, Mutation } from "react-apollo";
 import { Redirect } from "react-router-dom";
@@ -10,10 +11,11 @@ import TextField from "src/components/TextField";
 import VIEWER from "../../components/AuthenticatedRoute/viewer.graphql";
 import validationSchema from "./validationSchema";
 import { Container, Card, Error } from "./styles";
-import LOGIN from "./login.graphql";
+import SIGNUP from "./signup.graphql";
 
-const Login = ({ location }) => {
+const Signup = ({ location }) => {
   const [error, setError] = useState(null);
+  const queryParams = queryString.parse(location.search)
 
   return (
     <Query query={VIEWER}>
@@ -36,30 +38,26 @@ const Login = ({ location }) => {
             </svg>
             <Card>
               <Heading center marginBottom="xl">
-                Login to your account
+                Create your Account
               </Heading>
-              <Mutation mutation={LOGIN}>
-                {login => (
+              <Mutation mutation={SIGNUP}>
+                {signup => (
                   <Formik
                     validationSchema={validationSchema}
-                    initialValues={{ email: "", password: "" }}
+                    initialValues={{ email: queryParams.email || "", password: "", passwordConfirmation: "" }}
                     onSubmit={async (values, formikBag) => {
-                      const { data } = await login({
+                      const { data } = await signup({
                         variables: {
                           input: values
                         }
                       });
 
-                      if (data.login.token) {
-                        localStorage.setItem("authToken", data.login.token);
-                        let { from } = location.state || {
-                          from: { pathname: "/" }
-                        };
-                        window.location = from.pathname;
+                      if (data.signup.token) {
+                        localStorage.setItem("authToken", data.signup.token);
+                        window.location = "/";
                         return;
                       }
 
-                      setError("Invalid credentials. Please try again.");
                       formikBag.setSubmitting(false);
                     }}
                     render={formik => (
@@ -78,13 +76,26 @@ const Login = ({ location }) => {
                           type="password"
                           name="password"
                           label="Password"
-                          marginBottom="xl"
+                          marginBottom="l"
                           placeholder="Password"
                           value={formik.values.password}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           error={
                             formik.touched.password && formik.errors.password
+                          }
+                        />
+                        <TextField
+                          type="password"
+                          name="passwordConfirmation"
+                          label="Password Confirmation"
+                          marginBottom="xl"
+                          placeholder="Password Confirmation"
+                          value={formik.values.passwordConfirmation}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          error={
+                            formik.touched.passwordConfirmation && formik.errors.passwordConfirmation
                           }
                         />
                         <Button
@@ -94,7 +105,7 @@ const Login = ({ location }) => {
                           block
                           styling="primary"
                         >
-                          Login
+                          Signup
                         </Button>
                         {error && <Error>{error}</Error>}
                       </form>
@@ -110,4 +121,4 @@ const Login = ({ location }) => {
   );
 };
 
-export default Login;
+export default Signup;

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Query } from "react-apollo";
 import VIEWER from "../AuthenticatedRoute/viewer.graphql";
 import {
@@ -10,23 +9,11 @@ import {
 
 const CurrentUser = () => {
   const [open, setOpen] = useState(false);
-  const handleLogout = apolloClient => {
-    apolloClient.writeData({
-      data: {
-        viewer: null
-      }
-    });
 
-    const csrf = document.querySelector('meta[name="csrf-token"]').content;
-
-    axios({
-      method: "delete",
-      url: "/api/v1/logout",
-      headers: {
-        "X-CSRF-Token": csrf
-      }
-    });
-  };
+  const handleLogout = (apolloClient) => {
+    localStorage.removeItem("authToken")
+    apolloClient.resetStore()
+  }
 
   const handleBlur = () => setOpen(false);
   const handleFocus = () => setOpen(true);
