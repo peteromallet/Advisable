@@ -32,6 +32,8 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => (
             if (query.loading) return <Loading />;
             if (query.data.viewer) return <Component {...props} />;
 
+            window.localStorage.removeItem("authToken")
+
             return (
               <Redirect
                 to={{

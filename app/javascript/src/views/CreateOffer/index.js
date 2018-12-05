@@ -6,6 +6,7 @@ import Text from "src/components/Text";
 import View from "src/components/View";
 import Loading from "src/components/Loading";
 import Heading from "src/components/Heading";
+import Container from "src/components/Container";
 import OfferForm from "src/components/OfferForm";
 import { withNotifications } from "src/components/Notifications";
 import { currencySymbol } from "src/utilities/currency";
@@ -21,48 +22,50 @@ const Offer = ({ match, history, notifications, data }) => {
 
   return (
     <View>
-      <Back
-        marginBottom="l"
-        to={`/projects/${match.params.projectID}/introduced`}
-      />
-      <Heading marginBottom="xs" size="l">
-        Offer for {data.project.application.specialist.name}
-      </Heading>
-      <Text marginBottom="xl" size="l">
-        {data.project.name}
-      </Text>
-      <Mutation mutation={CREATE_OFFER}>
-        {createOffer => (
-          <Card padding="xl">
-            <OfferForm
-              onCancel={goBack}
-              currency={currencySymbol(data.project.currency)}
-              onSubmit={async values => {
-                const response = await createOffer({
-                  variables: {
-                    input: {
-                      ...values,
-                      applicationId: data.project.application.id
+      <Container size="m">
+        <Back
+          marginBottom="l"
+          to={`/projects/${match.params.projectID}/introduced`}
+        />
+        <Heading marginBottom="xs" size="l">
+          Offer for {data.project.application.specialist.name}
+        </Heading>
+        <Text marginBottom="xl" size="l">
+          {data.project.name}
+        </Text>
+        <Mutation mutation={CREATE_OFFER}>
+          {createOffer => (
+            <Card padding="xl">
+              <OfferForm
+                onCancel={goBack}
+                currency={currencySymbol(data.project.currency)}
+                onSubmit={async values => {
+                  const response = await createOffer({
+                    variables: {
+                      input: {
+                        ...values,
+                        applicationId: data.project.application.id
+                      }
                     }
-                  }
-                });
+                  });
 
-                notifications.notify(
-                  `An offer has been sent to ${
-                    data.project.application.specialist.name
-                  }`
-                );
+                  notifications.notify(
+                    `An offer has been sent to ${
+                      data.project.application.specialist.name
+                    }`
+                  );
 
-                goBack();
-              }}
-              initialValues={{
-                type: "Fixed",
-                rateType: "Fixed",
-              }}
-            />
-          </Card>
-        )}
-      </Mutation>
+                  goBack();
+                }}
+                initialValues={{
+                  type: "Fixed",
+                  rateType: "Fixed"
+                }}
+              />
+            </Card>
+          )}
+        </Mutation>
+      </Container>
     </View>
   );
 };
