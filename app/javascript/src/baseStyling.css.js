@@ -10,12 +10,6 @@ injectGlobal`
     -moz-osx-font-smoothing: grayscale;
   }
 
-  #AppRoot {
-    z-index: 2;
-    overflow: auto;
-    min-height: 100%;
-    overflow-y: visible;
-  }
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -46,14 +40,18 @@ injectGlobal`
     display: block;
   }
 
-  body {
-    width: 100vw;
-    overflow-x: hidden;
-    line-height: 1;
+  html {
+    height: 100%;
   }
 
-  body, html {
-    min-height: 100%;
+  body {
+    height: 100%;
+    width: 100vw;
+    line-height: 1;
+    overflow-x: hidden;
+  }
+
+  #AppRoot {
   }
 
   ol, ul {

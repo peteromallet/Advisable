@@ -2,7 +2,7 @@ class Users::Login < ApplicationService
   attr_reader :user, :password
   
   def initialize(email:, password:)
-    @user = User.find_by_email(email)
+    @user = User.find_by_email(email.downcase)
     @password = password
   end
 

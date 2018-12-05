@@ -9,6 +9,8 @@ class Users::Authenticate < ApplicationService
   def call
     return nil unless token.present?
     User.find_by_uid(payload["sub"])
+  rescue JWT::VerificationError => e
+    return nil
   end
 
   private

@@ -24,7 +24,7 @@ const EditProposal = ({ match, notifications }) => {
         const client = booking.application.project.client;
 
         return (
-          <Container>
+          <Container size="m">
             <Card padding="xl">
               <Heading marginBottom="xs" size="l">
                 Proposal for {client.name}
