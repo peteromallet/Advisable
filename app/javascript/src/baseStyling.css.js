@@ -52,6 +52,7 @@ injectGlobal`
   }
 
   #AppRoot {
+    overflow:auto;
   }
 
   ol, ul {
