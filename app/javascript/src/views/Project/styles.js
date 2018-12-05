@@ -1,20 +1,22 @@
-import styled, { keyframes } from 'styled-components';
-import Heading from "src/components/Heading";
-
-const slideUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`
+import styled from "styled-components";
 
 export const Container = styled.div`
+  display: flex;
   margin: 0 auto;
-  max-width: 700px;
-  padding: 50px 0;
-`
+  max-width: 1110px;
+  padding: 50px 20px;
+
+  @media screen and (max-width: 800px) {
+    padding-top: 30px;
+  }
+
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+`;
+
+export const ApplicantsContainer = styled.div`
+  flex: 1% 1 0;
+`;

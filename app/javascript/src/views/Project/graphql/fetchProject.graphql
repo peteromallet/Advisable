@@ -3,6 +3,7 @@ query project($id: ID!) {
     id
     name
     currency
+    primarySkill
     clientReferralUrl
     applications {
       id

@@ -125,7 +125,6 @@ export const ProjectTitle = styled.h4`
   color: #030f37;
   font-size: 18px;
   font-weight: 600;
-  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   letter-spacing: -0.02em;

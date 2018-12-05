@@ -35,9 +35,9 @@ const CurrentUser = () => {
                 <span>{query.data.viewer.client.name}</span>
               </CurrentUserToggle>
               <CurrentUserDropdown open={open}>
-                <button onClick={() => handleLogout(query.client)}>
+                <a href="#" onClick={() => handleLogout(query.client)}>
                   Logout
-                </button>
+                </a>
               </CurrentUserDropdown>
             </CurrentUserWrapper>
           );

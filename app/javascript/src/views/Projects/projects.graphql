@@ -6,7 +6,7 @@ query {
       projects {
         id
         airtableId
-        name
+        primarySkill
         status
         description
         applications {

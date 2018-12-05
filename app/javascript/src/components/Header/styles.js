@@ -70,7 +70,7 @@ export const CurrentUserDropdown = styled.div`
   right: 0;
   top: 45px;
   width: 200px;
-  padding: 10px;
+  padding: 8px 0;
   background: white;
   position: absolute;
   border-radius: 8px;
@@ -82,4 +82,17 @@ export const CurrentUserDropdown = styled.div`
   opacity: ${props => props.open ? "1" : "0"};
   pointer-events: ${props => props.open ? "all" : "none"};
   transform: ${props => props.open ? "scale(1)" : "scale(0.7)"};
+
+  a {
+    color: #4D5880;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    text-decoration: none;
+
+    &:hover {
+      background-color: #F4F5FB;
+    }
+  }
 `;

@@ -34,7 +34,7 @@ export default ({ projects }) => {
         {project => styles => (
           <Tile key={project.id} {...styles}>
             <ProjectCard to={`/projects/${project.airtableId}`}>
-              <ProjectTitle>{project.name}</ProjectTitle>
+              <ProjectTitle>{project.primarySkill}</ProjectTitle>
               <Text size="s" marginBottom="l">
                 {pluralize(
                   project.applications.length,
