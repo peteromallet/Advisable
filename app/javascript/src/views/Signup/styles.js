@@ -4,6 +4,7 @@ export const Container = styled.div`
   width: 96%;
   margin: 0 auto;
   max-width: 500px;
+  padding-bottom: 40px;
 
   .Logo {
     width: 120px;
