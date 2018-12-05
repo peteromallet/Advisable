@@ -4,7 +4,6 @@
 
 import React from 'react';
 import Cookies from 'js-cookie';
-import Icon from 'src/components/Icon';
 import Card from 'src/components/Card';
 import Share from '../Share';
 import { DismissButton } from './styles';

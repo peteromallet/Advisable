@@ -6,6 +6,7 @@ class Airtable::Project < Airtable::Base
   # in airtable.
   sync_column :project, to: :name
   sync_column :project_stage, to: :status
+  sync_column :primary_skill_required, to: :primary_skill
   sync_column :company_description, to: :company_description
   sync_column :project_description, to: :description
   sync_column :specialist_requirement_description, to: :specialist_description

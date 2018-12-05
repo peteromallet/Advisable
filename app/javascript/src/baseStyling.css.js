@@ -12,9 +12,9 @@ injectGlobal`
 
   #AppRoot {
     z-index: 2;
-    height: 100%;
-    overflow-y: visible;
     overflow: auto;
+    min-height: 100%;
+    overflow-y: visible;
   }
 
   html, body, div, span, applet, object, iframe,
@@ -53,7 +53,7 @@ injectGlobal`
   }
 
   body, html {
-    height: 100%;
+    min-height: 100%;
   }
 
   ol, ul {
@@ -76,6 +76,6 @@ injectGlobal`
   }
 
   body {
-    background-color: #F2F5FB;
+    background-color: #E9ECF6;
   }
 `;
