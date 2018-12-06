@@ -1,6 +1,6 @@
 // Renders the login page
 import React, { useState } from "react";
-import queryString from 'query-string';
+import queryString from "query-string";
 import { Formik } from "formik";
 import { Query, Mutation } from "react-apollo";
 import { Redirect } from "react-router-dom";
@@ -15,7 +15,7 @@ import SIGNUP from "./signup.graphql";
 
 const Signup = ({ location }) => {
   const [error, setError] = useState(null);
-  const queryParams = queryString.parse(location.search)
+  const queryParams = queryString.parse(location.search);
 
   return (
     <Query query={VIEWER}>
@@ -44,7 +44,11 @@ const Signup = ({ location }) => {
                 {signup => (
                   <Formik
                     validationSchema={validationSchema}
-                    initialValues={{ email: queryParams.email || "", password: "", passwordConfirmation: "" }}
+                    initialValues={{
+                      email: queryParams.email || "",
+                      password: "",
+                      passwordConfirmation: ""
+                    }}
                     onSubmit={async (values, formikBag) => {
                       const { data } = await signup({
                         variables: {
@@ -95,7 +99,8 @@ const Signup = ({ location }) => {
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           error={
-                            formik.touched.passwordConfirmation && formik.errors.passwordConfirmation
+                            formik.touched.passwordConfirmation &&
+                            formik.errors.passwordConfirmation
                           }
                         />
                         <Button

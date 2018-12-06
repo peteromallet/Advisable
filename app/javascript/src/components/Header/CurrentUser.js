@@ -10,10 +10,10 @@ import {
 const CurrentUser = () => {
   const [open, setOpen] = useState(false);
 
-  const handleLogout = (apolloClient) => {
-    localStorage.removeItem("authToken")
-    apolloClient.resetStore()
-  }
+  const handleLogout = apolloClient => {
+    localStorage.removeItem("authToken");
+    apolloClient.resetStore();
+  };
 
   const handleBlur = () => setOpen(false);
   const handleFocus = () => setOpen(true);
@@ -32,7 +32,9 @@ const CurrentUser = () => {
             >
               <CurrentUserToggle>
                 <strong>{query.data.viewer.firstName}</strong>
-                <span>{query.data.viewer.client.name}</span>
+                {query.data.viewer.client && (
+                  <span>{query.data.viewer.client.name}</span>
+                )}
               </CurrentUserToggle>
               <CurrentUserDropdown open={open}>
                 <a href="#" onClick={() => handleLogout(query.client)}>

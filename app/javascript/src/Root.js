@@ -5,7 +5,9 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Project from "./views/Project";
 import Login from "./views/Login";
+import Setup from "./views/Setup";
 import Signup from "./views/Signup";
+import RootPath from "./views/RootPath";
 import Projects from "./views/Projects";
 import Applicant from "./views/Applicant";
 import ViewOffer from "./views/ViewOffer";
@@ -29,8 +31,9 @@ const Root = () => (
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
+      <AuthenticatedRoute path="/setup" component={Setup} />
+      <AuthenticatedRoute exact path="/" component={RootPath} />
       <Route path="/confirm_account" component={ConfirmAccount} />
-      <Route path="/" exact render={() => <Redirect to="/projects" />} />
       <Route path="/project_setup/:projectID" component={ProjectSetup} />
       <Route
         path="/projects/:projectID/applications/:applicationID/offer"

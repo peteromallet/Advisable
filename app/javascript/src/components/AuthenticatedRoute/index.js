@@ -9,7 +9,7 @@ import Loading from "../Loading";
 import VIEWER from "./viewer.graphql";
 import PendingConfirmation from "./PendingConfirmation";
 
-const AuthenticatedRoute = ({ component: Component, ...rest }) => (
+const AuthenticatedRoute = ({ render, component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props => {
@@ -36,7 +36,9 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => (
               return <PendingConfirmation viewer={viewer} />;
             }
 
-            if (viewer && viewer.confirmed) return <Component {...props} />;
+            if (viewer && viewer.confirmed) {
+              return Component ? <Component {...props} /> : render(props)
+            }
 
             window.localStorage.removeItem("authToken");
 

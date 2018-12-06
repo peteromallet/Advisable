@@ -85,4 +85,10 @@ class Types::QueryType < GraphQL::Schema::Object
   def viewer
     context[:current_user]
   end
+
+  field :countries, [Types::CountryType], "Return the list of countries", null: false
+
+  def countries
+    Country.all
+  end
 end
