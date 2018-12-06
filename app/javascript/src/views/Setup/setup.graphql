@@ -1,0 +1,16 @@
+mutation Setup($input: SetupInput!) {
+  setup(input: $input) {
+    user {
+      id
+      firstName
+      lastName
+      client {
+        id
+        name
+      }
+    }
+    errors {
+      code
+    }
+  }
+}

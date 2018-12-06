@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_one :primary_client_user, -> { order created_at: :asc }, class_name: "ClientUser", foreign_key: "user_id"
   has_one :client, through: :primary_client_user
   has_many :interviews
+  belongs_to :country, required: false
 
   before_save :remove_past_availabililty
 

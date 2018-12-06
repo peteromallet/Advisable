@@ -14,6 +14,7 @@ class Users::Signup < ApplicationService
     )
 
     if user.save
+      user.send_confirmation_email
       user
     else
       raise Service::Error.new(user.errors.full_messages.first)
