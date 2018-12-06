@@ -22,6 +22,13 @@ This command should be setup to run regularly to keep the data up to date.
 ### Syncing an airtable database table.
 Each table in airtable is synced by defining a class which inherits from [Airtable::Base](https://github.com/thomascullen/Advisable/tree/master/app/models/concerns/airtable/base.rb). These classes are defined in [app/models/concerns/airtable](https://github.com/thomascullen/Advisable/tree/master/app/models/concerns/airtable).
 
+# Setup
+You will need to install ruby, postgres and redis.
+
+```
+$ bundle
+$ rails db:setup
+```
 
 # Development
 The advisable application is built on ruby on rails. The frontend is built in
@@ -37,6 +44,16 @@ or
 ```
 $ foreman
 $ ./bin/webpacker-dev-server
+```
+
+## Background Jobs
+Background jobs are stored in a redis queue and processed by sidekiq. You can
+run both of these processes by running the following commands in two separate
+terminal windows.
+
+```
+$ redis-server
+$ bundle exec sidekiq
 ```
 
 ## Frontend Structure

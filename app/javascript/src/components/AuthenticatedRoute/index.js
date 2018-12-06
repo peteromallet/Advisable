@@ -7,12 +7,12 @@ import { Query } from "react-apollo";
 import { Route, Redirect } from "react-router-dom";
 import Loading from "../Loading";
 import VIEWER from "./viewer.graphql";
+import PendingConfirmation from "./PendingConfirmation";
 
 const AuthenticatedRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props => {
-
       // If there is no authToken in storage then redirect immediately
       if (!localStorage.getItem("authToken")) {
         return (
@@ -30,9 +30,15 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => (
         <Query query={VIEWER}>
           {query => {
             if (query.loading) return <Loading />;
-            if (query.data.viewer) return <Component {...props} />;
+            const viewer = query.data.viewer;
 
-            window.localStorage.removeItem("authToken")
+            if (viewer && !viewer.confirmed) {
+              return <PendingConfirmation viewer={viewer} />;
+            }
+
+            if (viewer && viewer.confirmed) return <Component {...props} />;
+
+            window.localStorage.removeItem("authToken");
 
             return (
               <Redirect

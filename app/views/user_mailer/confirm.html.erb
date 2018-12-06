@@ -1,0 +1,5 @@
+Welcome <%= @user.first_name %>,
+<br />
+Please confirm your account using the link below.
+<br />
+<a href="<%= "#{root_url}confirm_account?t=#{@user.confirmation_token}" %>">Confirm</a>

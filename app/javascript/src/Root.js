@@ -17,6 +17,7 @@ import Availability from "./views/Availability";
 import EditProposal from "./views/EditProposal";
 import NotFoundError from "./views/NotFound/error";
 import CreateProposal from "./views/CreateProposal";
+import ConfirmAccount from "./views/ConfirmAccount";
 import InterviewRequest from "./views/InterviewRequest";
 import NotFoundBoundary from "./views/NotFound/NotFoundBoundary";
 import InterviewAvailability from "./views/InterviewAvailability";
@@ -28,6 +29,7 @@ const Root = () => (
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
+      <Route path="/confirm_account" component={ConfirmAccount} />
       <Route path="/" exact render={() => <Redirect to="/projects" />} />
       <Route path="/project_setup/:projectID" component={ProjectSetup} />
       <Route

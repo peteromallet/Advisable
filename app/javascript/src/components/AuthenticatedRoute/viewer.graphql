@@ -1,7 +1,9 @@
 query {
   viewer {
     id
+    email
     firstName
+    confirmed
     client {
       id
       name

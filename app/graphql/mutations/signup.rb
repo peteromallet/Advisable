@@ -14,10 +14,4 @@ class Mutations::Signup < Mutations::BaseMutation
     rescue Service::Error => e
       return { errors: [e] }
   end
-
-  private
-
-  def session
-    context[:session]
-  end
 end

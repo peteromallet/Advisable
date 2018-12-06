@@ -18,13 +18,24 @@ class User < ApplicationRecord
 
   attribute :availability, :datetime, default: [], array: true
 
+<<<<<<< HEAD
   def name
     "#{first_name} #{last_name}"
+=======
+  def confirmed
+    confirmed_at.present?
+>>>>>>> Add account confirmation flow
   end
 
   # Always lowercase the email
   def email=(address)
     self[:email] = address.downcase
+  end
+
+  def send_confirmation_email
+    self.confirmation_token = SecureRandom.urlsafe_base64.to_s
+    save(validate: false)
+    UserMailer.confirm(id: id).deliver_later
   end
 
   private
