@@ -4,8 +4,11 @@ import queryString from "query-string";
 import { Formik } from "formik";
 import { Query, Mutation } from "react-apollo";
 import { Redirect } from "react-router-dom";
-import Loading from "src/components/Loading";
+import Text from "src/components/Text";
+import Link from "src/components/Link";
 import Button from "src/components/Button";
+import Loading from "src/components/Loading";
+import FieldRow from "src/components/FieldRow";
 import Heading from "src/components/Heading";
 import TextField from "src/components/TextField";
 import VIEWER from "../../components/AuthenticatedRoute/viewer.graphql";
@@ -66,49 +69,53 @@ const Signup = ({ location }) => {
                     }}
                     render={formik => (
                       <form onSubmit={formik.handleSubmit}>
-                        <TextField
-                          name="email"
-                          label="Email"
-                          marginBottom="l"
-                          placeholder="Email"
-                          value={formik.values.email}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          error={formik.touched.email && formik.errors.email}
-                        />
-                        <TextField
-                          type="password"
-                          name="password"
-                          label="Password"
-                          marginBottom="l"
-                          placeholder="Password"
-                          value={formik.values.password}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          error={
-                            formik.touched.password && formik.errors.password
-                          }
-                        />
-                        <TextField
-                          type="password"
-                          name="passwordConfirmation"
-                          label="Password Confirmation"
-                          marginBottom="xl"
-                          placeholder="Password Confirmation"
-                          value={formik.values.passwordConfirmation}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          error={
-                            formik.touched.passwordConfirmation &&
-                            formik.errors.passwordConfirmation
-                          }
-                        />
+                        <FieldRow>
+                          <TextField
+                            name="email"
+                            label="Email"
+                            placeholder="Email"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.email && formik.errors.email}
+                          />
+                        </FieldRow>
+                        <FieldRow>
+                          <TextField
+                            type="password"
+                            name="password"
+                            label="Password"
+                            placeholder="Password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={
+                              formik.touched.password && formik.errors.password
+                            }
+                          />
+                        </FieldRow>
+                        <FieldRow>
+                          <TextField
+                            type="password"
+                            name="passwordConfirmation"
+                            label="Confirm Password"
+                            placeholder="Password"
+                            value={formik.values.passwordConfirmation}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={
+                              formik.touched.passwordConfirmation &&
+                              formik.errors.passwordConfirmation
+                            }
+                          />
+                        </FieldRow>
                         <Button
                           loading={formik.isSubmitting}
                           type="submit"
                           size="l"
                           block
                           styling="primary"
+                          marginTop="s"
                         >
                           Signup
                         </Button>
@@ -119,6 +126,10 @@ const Signup = ({ location }) => {
                 )}
               </Mutation>
             </Card>
+
+            <Text size="s" center paddingTop="xl">
+              Already have an account? <Link to="/login">Login</Link>
+            </Text>
           </Container>
         );
       }}

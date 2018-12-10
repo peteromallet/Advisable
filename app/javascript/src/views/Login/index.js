@@ -4,8 +4,11 @@ import { Formik } from "formik";
 import { Query, Mutation } from "react-apollo";
 import { Redirect } from "react-router-dom";
 import Loading from "src/components/Loading";
+import Link from "src/components/Link";
+import Text from "src/components/Text";
 import Button from "src/components/Button";
 import Heading from "src/components/Heading";
+import FieldRow from "src/components/FieldRow";
 import TextField from "src/components/TextField";
 import VIEWER from "../../components/AuthenticatedRoute/viewer.graphql";
 import validationSchema from "./validationSchema";
@@ -35,9 +38,12 @@ const Login = ({ location }) => {
               />
             </svg>
             <Card>
-              <Heading center marginBottom="xl">
-                Login to your account
+              <Heading center marginBottom="xs">
+                Welcome back!
               </Heading>
+              <Text center marginBottom="xl">
+                Please sign in to your account
+              </Text>
               <Mutation mutation={LOGIN}>
                 {login => (
                   <Formik
@@ -64,45 +70,59 @@ const Login = ({ location }) => {
                     }}
                     render={formik => (
                       <form onSubmit={formik.handleSubmit}>
-                        <TextField
-                          name="email"
-                          label="Email"
-                          marginBottom="l"
-                          placeholder="Email"
-                          value={formik.values.email}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          error={formik.touched.email && formik.errors.email}
-                        />
-                        <TextField
-                          type="password"
-                          name="password"
-                          label="Password"
-                          marginBottom="xl"
-                          placeholder="Password"
-                          value={formik.values.password}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          error={
-                            formik.touched.password && formik.errors.password
-                          }
-                        />
+                        <FieldRow>
+                          <TextField
+                            name="email"
+                            label="Email"
+                            placeholder="Email"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.email && formik.errors.email}
+                          />
+                        </FieldRow>
+                        <FieldRow>
+                          <TextField
+                            type="password"
+                            name="password"
+                            label="Password"
+                            placeholder="Password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={
+                              formik.touched.password && formik.errors.password
+                            }
+                          />
+                        </FieldRow>
                         <Button
                           loading={formik.isSubmitting}
                           type="submit"
                           size="l"
                           block
                           styling="primary"
+                          marginTop="s"
                         >
                           Login
                         </Button>
                         {error && <Error>{error}</Error>}
+
+                        <Text size="s" marginTop="l" center>
+                          <Link styling="subtle" to="/reset_password">
+                            Forgot your password?
+                          </Link>
+                        </Text>
                       </form>
                     )}
                   />
                 )}
               </Mutation>
             </Card>
+
+            <Text size="s" center paddingTop="xl">
+              Don't have an account?{" "}
+              <Link to="/signup">Sign up</Link>
+            </Text>
           </Container>
         );
       }}
