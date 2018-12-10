@@ -17,6 +17,7 @@ import ViewProposal from "./views/ViewProposal";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
 import EditProposal from "./views/EditProposal";
+import ResetPassword from "./views/ResetPassword";
 import NotFoundError from "./views/NotFound/error";
 import CreateProposal from "./views/CreateProposal";
 import ConfirmAccount from "./views/ConfirmAccount";
@@ -31,6 +32,7 @@ const Root = () => (
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
+      <Route path="/reset_password" component={ResetPassword} />
       <AuthenticatedRoute path="/setup" component={Setup} />
       <AuthenticatedRoute exact path="/" component={RootPath} />
       <Route path="/confirm_account" component={ConfirmAccount} />

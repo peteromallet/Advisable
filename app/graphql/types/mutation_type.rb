@@ -28,4 +28,6 @@ class Types::MutationType < GraphQL::Schema::Object
   field :signup, mutation: Mutations::Signup
   field :confirm_account, mutation: Mutations::ConfirmAccount
   field :resend_confirmation_email, mutation: Mutations::ResendConfirmationEmail
+  field :request_password_reset, mutation: Mutations::RequestPasswordReset
+  field :reset_password, mutation: Mutations::ResetPassword
 end
