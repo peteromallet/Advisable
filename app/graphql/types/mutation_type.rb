@@ -11,6 +11,7 @@ class Types::MutationType < GraphQL::Schema::Object
   field :accept_interview_request, mutation: Mutations::AcceptInterviewRequest
   field :request_more_interview_times, mutation: Mutations::RequestMoreInterviewTimes
   field :resend_interview_request, mutation: Mutations::ResendInterviewRequest
+  field :request_references, mutation: Mutations::RequestReferences
 
   field :reject_proposal, mutation: Mutations::RejectProposal
   field :reject_application, mutation: Mutations::RejectApplication

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_22_215654) do
+ActiveRecord::Schema.define(version: 2018_12_10_084729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2018_11_22_215654) do
     t.string "comment"
     t.text "rejection_reason"
     t.text "rejection_reason_comment"
+    t.boolean "references_requested"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
@@ -153,6 +154,7 @@ ActiveRecord::Schema.define(version: 2018_11_22_215654) do
     t.integer "deposit"
     t.string "status"
     t.integer "deposit_paid"
+    t.string "primary_skill"
     t.index ["client_id"], name: "index_projects_on_client_id"
   end
 
@@ -195,7 +197,14 @@ ActiveRecord::Schema.define(version: 2018_11_22_215654) do
     t.text "availability"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
+    t.string "email"
+    t.string "uid"
+    t.datetime "confirmed_at"
+    t.string "confirmation_token"
+    t.bigint "country_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
+    t.index ["country_id"], name: "index_users_on_country_id"
   end
 
   create_table "webhook_configurations", force: :cascade do |t|
@@ -229,4 +238,5 @@ ActiveRecord::Schema.define(version: 2018_11_22_215654) do
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "countries"
+  add_foreign_key "users", "countries"
 end
