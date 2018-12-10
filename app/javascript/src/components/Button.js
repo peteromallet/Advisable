@@ -38,6 +38,14 @@ const STYLES = {
   default: css`
     color: #4c496a;
     background-color: ${rgba("#4c496a", 0.15)};
+
+    &:hover {
+      background-color: ${rgba("#4c496a", 0.1)};
+    }
+
+    &:active {
+      background-color: ${rgba("#4c496a", 0.2)};
+    }
   `,
   outlined: css`
     color: #4c576a;
