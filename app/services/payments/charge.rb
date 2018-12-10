@@ -11,7 +11,12 @@ class Payments::Charge < ApplicationService
     charge = Stripe::Charge.create({
       amount: payment.amount,
       currency: payment.currency,
-      source: payment.source_id
+      source: payment.source_id,
+      receipt_email: payment.project.client.users.first.email,
+      metadata: {
+        name: payment.project.client.users.first.name,
+        project_airtable_id: payment.project.airtable_id
+      }
     }, {
       idempotency_key: payment.uid
     })
