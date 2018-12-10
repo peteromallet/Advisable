@@ -13,6 +13,7 @@ query project($id: ID!) {
       airtableId
       availability
       introduction
+      referencesRequested
       proposal {
         id
       }
