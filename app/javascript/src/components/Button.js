@@ -36,8 +36,8 @@ const padding = {
 // <Button styling='outlined'>Click me</Button>
 const STYLES = {
   default: css`
-    color: white;
-    background: #4c496a;
+    color: #4c496a;
+    background-color: ${rgba("#4c496a", 0.15)};
   `,
   outlined: css`
     color: #4c576a;
@@ -131,6 +131,7 @@ export const ButtonStyling = styled.button`
   ${props =>
     props.primary &&
     `
+    color: white;
     background: #1A5FFF;
 
     &:hover {

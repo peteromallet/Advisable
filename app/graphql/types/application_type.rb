@@ -3,6 +3,7 @@ class Types::ApplicationType < Types::BaseType
   field :rate, String, null: true
   field :airtable_id, String, null: false
   field :featured, Boolean, null: true
+  field :references_requested, Boolean, null: true
   field :availability, String, null: true
   field :specialist, Types::SpecialistType, null: true
   field :status, String, null: true

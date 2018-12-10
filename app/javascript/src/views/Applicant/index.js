@@ -20,6 +20,7 @@ import currency from "src/utilities/currency";
 import RejectModal from "src/components/RejectModal";
 import RejectProposalModal from "src/components/RejectProposalModal";
 import RequestIntroduction from "src/components/RequestIntroduction";
+import RequestReferences from "src/components/RequestReferences";
 import AdvisableMessage from "./components/AdvisableMessage";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 import {
@@ -31,7 +32,8 @@ import {
   AdvisableComment
 } from "./styles";
 
-const REJECT_PROPOSAL_MODAL = 'REJECT_PROPOSAL_MODAL';
+const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
+const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
 
 class Applicant extends React.Component {
   state = {
@@ -85,6 +87,7 @@ class Applicant extends React.Component {
                   this.setState({ modal: null });
                 }}
               />
+
 
               <Back to={`/projects/${project.airtableId}`} paddingBottom="s">
                 All Candidates
@@ -162,7 +165,12 @@ class Applicant extends React.Component {
                       View Proposal
                     </Button>
 
-                    <Button type='button' onClick={() => this.setState({ modal: REJECT_PROPOSAL_MODAL})}>
+                    <Button
+                      type="button"
+                      onClick={() =>
+                        this.setState({ modal: REJECT_PROPOSAL_MODAL })
+                      }
+                    >
                       Reject
                     </Button>
 
@@ -207,6 +215,26 @@ class Applicant extends React.Component {
                   Request Another Candidate
                 </Button>
               )}
+
+              <RequestReferences
+                application={application}
+                isOpen={this.state.modal === REQUEST_REFERENCES_MODAL}
+                onClose={() => this.setState({ modal: null })}
+              />
+
+              {["Application Accepted", "Proposed"].indexOf(
+                application.status
+              ) > -1 &&
+                !application.referencesRequested && (
+                  <Button
+                    marginLeft="m"
+                    onClick={() =>
+                      this.setState({ modal: REQUEST_REFERENCES_MODAL })
+                    }
+                  >
+                    Request References
+                  </Button>
+                )}
 
               {otherApplicants.length > 0 && (
                 <React.Fragment>
