@@ -12,6 +12,10 @@ class User < ApplicationRecord
 
   attribute :availability, :datetime, default: [], array: true
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   private
 
   # Called before the client record is saved to clean up any availability
