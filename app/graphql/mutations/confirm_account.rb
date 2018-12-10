@@ -1,4 +1,5 @@
 class Mutations::ConfirmAccount < Mutations::BaseMutation
+  argument :email, String, required: true
   argument :token, String, required: true
 
   field :user, Types::User, null: true
@@ -6,7 +7,10 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
 
   def resolve(**args)
     {
-      user: Users::Confirm.call(args)
+      user: Users::Confirm.call({
+        user: User.find_by_email!(args[:email]),
+        token: args[:token]
+      })
     }
 
     rescue Service::Error => e

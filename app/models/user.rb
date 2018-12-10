@@ -34,9 +34,10 @@ class User < ApplicationRecord
   end
 
   def send_confirmation_email
-    self.confirmation_token = SecureRandom.urlsafe_base64.to_s
+    token = Token.new
+    self.confirmation_digest = Token.digest(token)
     save(validate: false)
-    UserMailer.confirm(id: id).deliver_later
+    UserMailer.confirm(id: id, token: token).deliver_later
   end
 
   private

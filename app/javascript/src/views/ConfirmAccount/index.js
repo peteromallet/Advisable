@@ -6,23 +6,29 @@ import Loading from "src/components/Loading";
 import { withNotifications } from "src/components/Notifications";
 import CONFIRM_ACCOUNT from "./confirmAccount.graphql";
 
-const ConfirmAccount = ({ location, history, mutate, notifications }) => {
+const ConfirmAccount = ({
+  match,
+  location,
+  history,
+  mutate,
+  notifications
+}) => {
   const parsed = queryString.parse(location.search);
 
-  if (!parsed.t) {
+  if (!parsed.email) {
     return <Redirect to="/" />;
   }
 
   useEffect(async () => {
     const { data } = await mutate({
-      variables: { input: { token: parsed.t } }
+      variables: { input: { token: match.params.token, email: parsed.email } }
     });
     const user = data.confirmAccount.user || {};
 
     if (user.confirmed) {
-      notifications.notify("Your account has been confirmed")
+      notifications.notify("Your account has been confirmed");
     } else {
-      notifications.notify("Failed to confirm your account")
+      notifications.notify("Failed to confirm your account");
     }
 
     return history.replace("/");

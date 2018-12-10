@@ -20,12 +20,12 @@ import Availability from "./views/Availability";
 import EditProposal from "./views/EditProposal";
 import NotFoundError from "./views/NotFound/error";
 import CreateProposal from "./views/CreateProposal";
-import ConfirmAccount from "./views/ConfirmAccount";
 import InterviewRequest from "./views/InterviewRequest";
 import NotFoundBoundary from "./views/NotFound/NotFoundBoundary";
 import InterviewAvailability from "./views/InterviewAvailability";
 
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
+const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 
 setConfig({ pureSFC: true });
 
@@ -38,7 +38,7 @@ const Root = () => (
         <Route path="/reset_password" component={ResetPassword} />
         <AuthenticatedRoute path="/setup" component={Setup} />
         <AuthenticatedRoute exact path="/" component={RootPath} />
-        <Route path="/confirm_account" component={ConfirmAccount} />
+        <Route path="/confirm_account/:token" component={ConfirmAccount} />
         <Route path="/project_setup/:projectID" component={ProjectSetup} />
         <Route
           path="/projects/:projectID/applications/:applicationID/offer"
