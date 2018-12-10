@@ -11,6 +11,7 @@ import Questions from "./Questions";
 import RejectModal from "src/components/RejectModal";
 import RejectProposalModal from "src/components/RejectProposalModal";
 import Skills from "src/components/Skills";
+import RequestReferences from "src/components/RequestReferences";
 import CandidateAttributes from "src/components/CandidateAttributes";
 import RequestIntroduction from "src/components/RequestIntroduction";
 import currency from "src/utilities/currency";
@@ -25,12 +26,13 @@ import {
   CandidateHeaderActions
 } from "./styles";
 
-const REJECT_PROPOSAL_MODAL = 'REJECT_PROPOSAL_MODAL';
+const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
+const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
 
 class Candidate extends React.Component {
   state = {
     expanded: false,
-    modal: null,
+    modal: null
   };
 
   clickToExpand = e => {
@@ -69,6 +71,11 @@ class Candidate extends React.Component {
           onClose={() => {
             this.setState({ modal: null });
           }}
+        />
+        <RequestReferences
+          application={application}
+          isOpen={this.state.modal === REQUEST_REFERENCES_MODAL}
+          onClose={() => this.setState({ modal: null })}
         />
 
         <CandidateHeader>
@@ -158,7 +165,10 @@ class Candidate extends React.Component {
                 View Proposal
               </Button>
 
-              <Button type='button' onClick={() => this.setState({ modal: REJECT_PROPOSAL_MODAL})}>
+              <Button
+                type="button"
+                onClick={() => this.setState({ modal: REJECT_PROPOSAL_MODAL })}
+              >
                 Reject
               </Button>
 
@@ -203,6 +213,16 @@ class Candidate extends React.Component {
               Provide Feedback
             </Button>
           </React.Fragment>
+        )}
+
+        {["Application Accepted", "Proposed"].indexOf(application.status) >
+          -1 && !application.referencesRequested && (
+          <Button
+            marginLeft="m"
+            onClick={() => this.setState({ modal: REQUEST_REFERENCES_MODAL })}
+          >
+            Request References
+          </Button>
         )}
       </Card>
     );

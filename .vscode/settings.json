@@ -1,0 +1,9 @@
+{
+  "vim.visualModeKeyBindings": [{
+    "before": ["ctrl+k"],
+    "commands": ["editor.action.moveLinesUpAction"]
+  }, {
+    "before": ["ctrl+j"],
+    "commands": ["editor.action.moveLinesDownAction"]
+  }]
+}

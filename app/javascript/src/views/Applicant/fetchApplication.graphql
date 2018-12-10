@@ -12,6 +12,7 @@ query project($projectID: ID!, $applicationID: ID!) {
       featured
       comment
       availability
+      referencesRequested
       introduction
       proposal {
         id
