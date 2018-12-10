@@ -11,7 +11,17 @@ class SelectComponent extends React.Component {
   }
 
   componentDidMount() {
-    // If there is no placeholder or vlaue we manually fire a change event
+    this.setFirstOption()
+  }
+
+  componentDidUpdate({ options }) {
+    if (options.length !== this.props.options.length) {
+      this.setFirstOption()
+    }
+  }
+
+  setFirstOption() {
+    // If there is no placeholder or value we manually fire a change event
     // so that the first option is set
     if (!this.props.placeholder && !this.props.value) {
       const event = new Event('change', { bubbles: true  });

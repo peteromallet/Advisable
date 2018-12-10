@@ -29,10 +29,10 @@ const CreateClient = ({ history, data }) => {
             {setup => (
               <Formik
                 initialValues={{
-                  firstName: get(data, "viewer.firstName", ""),
-                  lastName: get(data, "viewer.lastName", ""),
-                  companyName: get(data, "viewer.client.name", ""),
-                  countryName: get(data, "viewer.country.name", "")
+                  firstName: get(data, "viewer.firstName") || "",
+                  lastName: get(data, "viewer.lastName") || "",
+                  companyName: get(data, "viewer.client.name") || "",
+                  countryName: get(data, "viewer.country.name") || ""
                 }}
                 onSubmit={async values => {
                   const r = await setup({ variables: { input: values } });
