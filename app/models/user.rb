@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :projects
   has_secure_password validations: false
   # Users have access to client data through the client_users table
-  has_many :client_users
+  has_many :client_users, dependent: :destroy
   has_many :clients, through: :client_users
   # Currently a user can only have a single client. The model is setup to
   # allow multiple, but for now we just use the first relationship.

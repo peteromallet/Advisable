@@ -19,6 +19,9 @@ class Users::Setup < ApplicationService
     )
 
     client.users << user
+
+    sync_to_airtable
+
     user
   end
 
@@ -30,5 +33,30 @@ class Users::Setup < ApplicationService
 
   def country
     @country ||= Country.find_by_name!(country_name)
+  end
+
+  def sync_to_airtable
+    sync_client_to_airtable
+    sync_user_to_airtable
+  end
+
+  def sync_user_to_airtable
+    record = if user.airtable_id
+      Airtable::ClientContact.find(user.airtable_id)
+    else
+      Airtable::ClientContact.new({})
+    end
+
+    record.push(user)
+  end
+
+  def sync_client_to_airtable
+    record = if client.airtable_id 
+      Airtable::Client.find(client.airtable_id)
+    else
+      Airtable::Client.new({})
+    end
+
+    record.push(client)
   end
 end

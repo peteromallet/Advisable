@@ -3,4 +3,8 @@ class Airtable::Client < Airtable::Base
 
   sync_with ::Client
   sync_column :client_name, to: :name
+
+  push_data do |client|
+    self['Client Name'] = client.name
+  end
 end
