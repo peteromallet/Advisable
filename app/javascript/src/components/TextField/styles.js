@@ -10,7 +10,7 @@ Wrapper = withSpacing(Wrapper)
 
 export const Input = styled.input`
   width: 100%;
-  height: 36px;
+  height: 40px;
   border: none;
   outline: none;
   padding: 0 12px;

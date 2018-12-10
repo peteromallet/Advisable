@@ -85,8 +85,10 @@ export default ({ match, data }) => {
                 </NavMenuItem>
               ))}
             </NavMenu>
-
-            <ShareAction url={data.project.clientReferralUrl} />
+            
+            {data.project.clientReferralUrl && (
+              <ShareAction url={data.project.clientReferralUrl} />
+            )}
           </Sticky>
         </ProjectNavigation>
       )}
