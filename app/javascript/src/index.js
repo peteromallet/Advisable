@@ -2,8 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { IntlProvider } from "react-intl";
 import { ApolloProvider } from "react-apollo";
-import client from './graphqlClient'
+import client from "./graphqlClient";
 
+import './i18n';
 import App from "./App";
 import { NotificationsProvider } from "./components/Notifications";
 import "./baseStyling.css.js";
@@ -18,15 +19,15 @@ const language =
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.createElement("div");
-  root.id = 'AppRoot'
+  root.id = "AppRoot";
   document.body.appendChild(root);
 
   ReactDOM.render(
     <ApolloProvider client={client}>
       <IntlProvider locale={language}>
-        <NotificationsProvider>
-          <App />
-        </NotificationsProvider>
+          <NotificationsProvider>
+            <App />
+          </NotificationsProvider>
       </IntlProvider>
     </ApolloProvider>,
     root

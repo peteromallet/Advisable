@@ -1,0 +1,10 @@
+{
+  "errors": {
+    "authentication": {
+      "failed": "Invalid login credentials, please try again."
+    },
+    "users": {
+      "email_taken": "This email address is associated with an existing account."
+    }
+  }
+}

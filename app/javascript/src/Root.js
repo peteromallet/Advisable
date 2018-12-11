@@ -31,7 +31,7 @@ setConfig({ pureSFC: true });
 
 const Root = () => (
   <NotFoundBoundary>
-    <Suspense fallback={Loading}>
+    <Suspense fallback={<Loading />}>
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
