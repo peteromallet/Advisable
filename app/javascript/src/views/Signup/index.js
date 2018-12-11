@@ -1,9 +1,10 @@
 // Renders the login page
-import React, { useState } from "react";
-import queryString from "query-string";
+import React from "react";
 import { Formik } from "formik";
-import { Query, Mutation } from "react-apollo";
+import queryString from "query-string";
 import { Redirect } from "react-router-dom";
+import { Query, Mutation } from "react-apollo";
+import { useTranslation } from "react-i18next/hooks";
 import Text from "src/components/Text";
 import Link from "src/components/Link";
 import Button from "src/components/Button";
@@ -17,7 +18,7 @@ import { Container, Card, Error } from "./styles";
 import SIGNUP from "./signup.graphql";
 
 const Signup = ({ location }) => {
-  const [error, setError] = useState(null);
+  const [t] = useTranslation();
   const queryParams = queryString.parse(location.search);
 
   return (
@@ -63,6 +64,10 @@ const Signup = ({ location }) => {
                         localStorage.setItem("authToken", data.signup.token);
                         window.location = "/";
                         return;
+                      }
+
+                      if (data.signup.errors) {
+                        formikBag.setError(data.signup.errors[0].code);
                       }
 
                       formikBag.setSubmitting(false);
@@ -119,7 +124,9 @@ const Signup = ({ location }) => {
                         >
                           Signup
                         </Button>
-                        {error && <Error>{error}</Error>}
+                        {formik.error && (
+                          <Error>{t(`errors.${formik.error}`)}</Error>
+                        )}
                       </form>
                     )}
                   />

@@ -1,8 +1,9 @@
 // Renders the login page
-import React, { useState } from "react";
 import { Formik } from "formik";
-import { Query, Mutation } from "react-apollo";
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+import { Query, Mutation } from "react-apollo";
+import { useTranslation } from 'react-i18next/hooks';
 import Loading from "src/components/Loading";
 import Link from "src/components/Link";
 import Text from "src/components/Text";
@@ -16,6 +17,7 @@ import { Container, Card, Error } from "./styles";
 import LOGIN from "./login.graphql";
 
 const Login = ({ location }) => {
+  const [t] = useTranslation();
   const [error, setError] = useState(null);
 
   return (
@@ -65,7 +67,7 @@ const Login = ({ location }) => {
                         return;
                       }
 
-                      setError("Invalid credentials. Please try again.");
+                      setError(data.login.errors[0].code);
                       formikBag.setSubmitting(false);
                     }}
                     render={formik => (
@@ -76,7 +78,10 @@ const Login = ({ location }) => {
                             label="Email"
                             placeholder="Email"
                             value={formik.values.email}
-                            onChange={formik.handleChange}
+                            onChange={e => {
+                              setError(null)
+                              formik.handleChange(e)
+                            }}
                             onBlur={formik.handleBlur}
                             error={formik.touched.email && formik.errors.email}
                           />
@@ -88,7 +93,10 @@ const Login = ({ location }) => {
                             label="Password"
                             placeholder="Password"
                             value={formik.values.password}
-                            onChange={formik.handleChange}
+                            onChange={e => {
+                              setError(null)
+                              formik.handleChange(e)
+                            }}
                             onBlur={formik.handleBlur}
                             error={
                               formik.touched.password && formik.errors.password
@@ -105,7 +113,7 @@ const Login = ({ location }) => {
                         >
                           Login
                         </Button>
-                        {error && <Error>{error}</Error>}
+                        {error && <Error>{t(`errors.${error}`)}</Error>}
 
                         <Text size="s" marginTop="l" center>
                           <Link styling="subtle" to="/reset_password">
@@ -120,8 +128,7 @@ const Login = ({ location }) => {
             </Card>
 
             <Text size="s" center paddingTop="xl">
-              Don't have an account?{" "}
-              <Link to="/signup">Sign up</Link>
+              Don't have an account? <Link to="/signup">Sign up</Link>
             </Text>
           </Container>
         );

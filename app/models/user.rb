@@ -14,8 +14,10 @@ class User < ApplicationRecord
 
   before_save :remove_past_availabililty
 
-  validates :email, uniqueness: true, allow_blank: true
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, uniqueness: true, allow_blank: true, format: { with: VALID_EMAIL_REGEX }
   validates_confirmation_of :password
+  validates :password, length: { minimum: 8 }, allow_blank: true
 
   attribute :availability, :datetime, default: [], array: true
 
