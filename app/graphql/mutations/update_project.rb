@@ -1,12 +1,11 @@
 class Mutations::UpdateProject < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :goals, [String], required: false
-  argument :skills, [String], required: true
+  argument :primary_skill, String, required: false
   argument :description, String, required: false
   argument :company_description, String, required: false
   argument :specialist_description, String, required: false
   argument :questions, [String], required: false
-  argument :skills, [String], required: false
   argument :required_characteristics, [String], required: false
   argument :optional_characteristics, [String], required: false
   argument :accepted_terms, Boolean, required: false

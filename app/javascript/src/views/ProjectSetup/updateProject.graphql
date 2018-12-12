@@ -13,10 +13,6 @@ mutation UpdateProject($input: UpdateProjectInput!) {
       specialistDescription
       requiredCharacteristics
       optionalCharacteristics
-      skills {
-        id
-        name
-      }
     }
   }
 }

@@ -8,14 +8,10 @@ query project($id: ID!) {
     description
     depositOwed
     acceptedTerms
+    primarySkill
     companyDescription
     specialistDescription
     requiredCharacteristics
     optionalCharacteristics
-
-    skills {
-      id
-      name
-    }
   }
 }

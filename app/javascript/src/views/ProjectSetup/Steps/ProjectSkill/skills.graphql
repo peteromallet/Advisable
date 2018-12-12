@@ -1,6 +1,7 @@
 query {
   skills(category: "Marketing", profile: true) {
-    value:id
-    label:name
+    id
+    value: name
+    label: name
   }
 }

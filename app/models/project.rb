@@ -3,8 +3,6 @@ class Project < ApplicationRecord
   has_many :applications
   has_many :bookings, through: :applications
   has_many :payments
-  has_many :project_skills, dependent: :destroy
-  has_many :skills, through: :project_skills
   belongs_to :client
   belongs_to :user, required: false
   validates :name, presence: true

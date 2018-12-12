@@ -2,9 +2,15 @@ class Airtable::Booking < Airtable::Base
   self.table_name = "Bookings"
 
   sync_with ::Booking
-  sync_columns :type, :rate, :rate_type, :rate_limit, :status,
-               :duration, :decline_comment, :proposal_comment,
-               :client_decline_comment
+  sync_column 'Type', to: :type
+  sync_column 'Rate', to: :rate
+  sync_column 'Rate Type', to: :rate_type
+  sync_column 'Rate Limit', to: :rate_limit
+  sync_column 'Status', to: :status
+  sync_column 'Duration', to: :duration
+  sync_column 'Decline Comment', to: :decline_comment
+  sync_column 'Proposal Comment', to: :proposal_comment
+  sync_column 'Client Decline Comment', to: :client_decline_comment
 
   sync_data do |booking|
     booking.deliverables = JSON.parse(fields['Deliverables']) if fields['Deliverables']
