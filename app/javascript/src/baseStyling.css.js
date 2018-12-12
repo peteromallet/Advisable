@@ -53,6 +53,7 @@ injectGlobal`
 
   #AppRoot {
     overflow:auto;
+    min-height: 100vh;
   }
 
   ol, ul {

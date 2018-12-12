@@ -30,6 +30,10 @@ class User < ApplicationRecord
 >>>>>>> Add account confirmation flow
   end
 
+  def has_account?
+    password_digest.present?
+  end
+
   # Always lowercase the email
   def email=(address)
     self[:email] = address.downcase

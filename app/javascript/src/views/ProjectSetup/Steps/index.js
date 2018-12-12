@@ -4,6 +4,7 @@ import { matchPath } from 'react-router-dom'
 import Terms from "./Terms";
 import Deposit from "./Deposit";
 import Questions from "./Questions";
+import ProjectSkill from './ProjectSkill';
 import ProjectGoals from "./ProjectGoals";
 import CompanyOverview from "./CompanyOverview";
 import ProjectOverview from "./ProjectOverview";
@@ -25,6 +26,20 @@ import NiceToHaveCharacteristics from "./NiceToHaveCharacteristics";
 // the project as a paramter and returns true or false. If returns false then
 // the step will be exluded from the setup flow.
 const STEPS = [
+  {
+    exact: true,
+    title: "What skill are you looking for?",
+    path: "/project_setup",
+    component: ProjectSkill,
+    enabled: project => !project
+  },
+  {
+    title: "What skill are you looking for?",
+    exact: true,
+    path: "/project_setup/:projectID",
+    component: ProjectSkill,
+    enabled: project => project
+  },
   {
     title: "Company Overview",
     path: "/project_setup/:projectID/company_overview",
@@ -69,7 +84,7 @@ const STEPS = [
     title: "Recruitement Deposit",
     path: "/project_setup/:projectID/deposit",
     component: Deposit,
-    enabled: project => project.depositOwed > 0
+    enabled: project => project && project.depositOwed > 0
   },
   {
     path: "/project_setup/:projectID/confirm",
@@ -92,7 +107,8 @@ export const stepsForProject = project => {
 export const currentStep = () => {
   return find(STEPS, route => {
     return matchPath(window.location.pathname, {
-      path: route.path
+      path: route.path,
+      exact: route.exact,
     })
   });
 };

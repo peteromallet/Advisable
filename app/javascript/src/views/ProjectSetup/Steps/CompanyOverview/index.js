@@ -9,7 +9,10 @@ import ButtonGroup from "src/components/ButtonGroup";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history, opacity, transform, position }) => {
+export default ({ project, match, history }) => {
+  const id  = match.params.projectID
+  const goBack = () => history.push(`/project_setup/${id}`);
+
   return (
     <Mutation mutation={UPDATE_PROJECT}>
       {mutate => (
@@ -55,8 +58,16 @@ export default ({ project, match, history, opacity, transform, position }) => {
                   {isMobile => (
                     <ButtonGroup fullWidth={isMobile}>
                       <Button
+                        type="button"
                         size="l"
+                        styling="outlined"
+                        onClick={goBack}
+                      >
+                        Back
+                      </Button>
+                      <Button
                         type="submit"
+                        size="l"
                         styling="primary"
                         loading={formik.isSubmitting}
                       >

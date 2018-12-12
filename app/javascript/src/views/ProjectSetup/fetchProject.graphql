@@ -1,6 +1,7 @@
 query project($id: ID!) {
   project(id: $id) {
     id
+    airtableId
     goals
     status
     questions
@@ -11,5 +12,10 @@ query project($id: ID!) {
     specialistDescription
     requiredCharacteristics
     optionalCharacteristics
+
+    skills {
+      id
+      name
+    }
   }
 }

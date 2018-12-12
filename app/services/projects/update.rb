@@ -12,7 +12,13 @@ class Projects::Update < ApplicationService
   end
 
   def call
-    project.assign_attributes(attributes)
+    project.assign_attributes(attributes.except(:skills))
+
+    if attributes[:skills]
+      skills = Skill.where(uid: attributes[:skills])
+      project.skills = skills
+      project.primary_skill = skills.first.try(:name)
+    end
 
     if project.save
       sync_with_airtable
@@ -26,6 +32,8 @@ class Projects::Update < ApplicationService
 
   def sync_with_airtable
     record = Airtable::Project.find(project.airtable_id)
+    record['Skills Required'] = project.skills.map(&:airtable_id)
+    record['Primary Skill Required'] = project.skills.first.try(:name)
     record['Company Description'] = project.company_description
     record['Project Description'] = project.description
     record['Specialist Requirement Description'] = project.specialist_description
