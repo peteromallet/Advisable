@@ -1,10 +1,10 @@
-mutation UpdateProject($input: UpdateProjectInput!) {
-  updateProject(input: $input) {
+mutation CreateProject($input: CreateProjectInput!) {
+  createProject(input: $input) {
     project {
       id
+      airtableId
       goals
       status
-      primarySkill
       questions
       description
       depositOwed
@@ -13,10 +13,9 @@ mutation UpdateProject($input: UpdateProjectInput!) {
       specialistDescription
       requiredCharacteristics
       optionalCharacteristics
-      skills {
-        id
-        name
-      }
+    }
+    errors {
+      code
     }
   }
 }

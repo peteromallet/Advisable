@@ -1,10 +1,12 @@
 class Mutations::UpdateProject < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :goals, [String], required: false
+  argument :skills, [String], required: true
   argument :description, String, required: false
   argument :company_description, String, required: false
   argument :specialist_description, String, required: false
   argument :questions, [String], required: false
+  argument :skills, [String], required: false
   argument :required_characteristics, [String], required: false
   argument :optional_characteristics, [String], required: false
   argument :accepted_terms, Boolean, required: false
@@ -16,7 +18,7 @@ class Mutations::UpdateProject < Mutations::BaseMutation
     {
       project: Projects::Update.call(
         project: Project.find_by_airtable_id(args[:id]),
-        attributes: args.except(:id, :client_mutation_id)
+        attributes: args.except(:id, :client_mutation_id),
       )
     }
 

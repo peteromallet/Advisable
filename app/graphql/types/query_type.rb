@@ -6,8 +6,8 @@ class Types::QueryType < GraphQL::Schema::Object
 
   def project(**args)
     begin
-      Project.find_by_airtable_id(args[:id])
-    rescue Airrecord::Error => er
+      Project.find_by_airtable_id!(args[:id])
+    rescue ActiveRecord::RecordNotFound => er
       GraphQL::ExecutionError.new("Could not find project #{args[:id]}")
     end
   end
@@ -90,5 +90,17 @@ class Types::QueryType < GraphQL::Schema::Object
 
   def countries
     Country.all
+  end
+
+  field :skills, [Types::Skill], "Returns a list of skills", null: false do
+    argument :category, String, required: false
+    argument :profile, Boolean, required: false
+  end
+ 
+  def skills(**args)
+    skills = ::Skill.all
+    skills = skills.where(category: args[:category]) if args[:category]
+    skills = skills.where(profile: args[:profile]) if args[:profile]
+    skills
   end
 end

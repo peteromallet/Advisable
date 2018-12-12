@@ -31,6 +31,7 @@ class Airtable::Project < Airtable::Base
 
     sync_arrays(project)
     sync_questions(project)
+    sync_skills(project)
 
     project.accepted_terms = fields["Accepted Terms"]
     project.deposit = (fields["Deposit Amount Required"].to_f * 100).to_i
@@ -70,6 +71,20 @@ class Airtable::Project < Airtable::Base
         questions << val
       end
       questions
+    end
+  end
+
+  def sync_skills(project)
+    skills = fields['Skills Required'] || []
+
+    # iterate through each associated specialist id from airtable
+    skills.each do |skill_id|
+      # check if we already have a synced record of that skill.
+      skill = ::Skill.find_by_airtable_id(skill_id)
+      # if not then sync it
+      skill = Airtable::Skill.find(skill_id).sync if skill.nil?
+      # find or initialize an association.
+      project.project_skills.find_or_initialize_by(skill: skill)
     end
   end
 end
