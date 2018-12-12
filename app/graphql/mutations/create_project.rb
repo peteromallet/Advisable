@@ -1,5 +1,5 @@
 class Mutations::CreateProject < Mutations::BaseMutation
-  argument :skills, [String], required: true
+  argument :primary_skill, String, required: true
 
   field :project, Types::ProjectType, null: true
   field :errors, [Types::Error], null: true
@@ -16,7 +16,7 @@ class Mutations::CreateProject < Mutations::BaseMutation
     {
       project: Projects::Create.call(
         client: context[:current_user].client,
-        skills: Skill.where(uid: args[:skills])
+        attributes: args.except(:id, :client_mutation_id),
       )
     }
 

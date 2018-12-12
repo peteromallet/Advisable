@@ -8,7 +8,6 @@ class Types::ProjectType < Types::BaseType
   field :clientReferralUrl, String, null: true
   field :client, Types::Client, null: false
   field :goals, [String], null: true
-  field :skills, [Types::Skill], null: false
   field :description, String, null: true
   field :company_description, String, null: true
   field :specialist_description, String, null: true

@@ -21,9 +21,8 @@ export const Input = styled.input`
   border-radius: 8px;
   background: #F4F7FC;
   letter-spacing: -0.015em;
-  transition: background 300ms;
   border: 2px solid transparent;
-  transition: border-color 200ms;
+  transition: border-color 200ms, background-color 300ms;
 
   &:focus {
     background: #ECF1FA;

@@ -3,8 +3,9 @@ class Airtable::ClientContact < Airtable::Base
   self.table_name = 'Client Contacts'
 
   sync_with ::User
-  sync_columns :first_name, :last_name
-  sync_column :email_address, to: :email
+  sync_column 'Email Address', to: :email
+  sync_column 'First Name', to: :first_name
+  sync_column 'Last Name', to: :last_name
 
   sync_data do |user|
     # currently the company name is a lookup type in airtable which

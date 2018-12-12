@@ -9,6 +9,7 @@ mutation CreateProject($input: CreateProjectInput!) {
       description
       depositOwed
       acceptedTerms
+      primarySkill
       companyDescription
       specialistDescription
       requiredCharacteristics
