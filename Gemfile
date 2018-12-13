@@ -55,7 +55,7 @@ gem 'jwt'
 
 # For geneating test coverage reports
 gem 'simplecov', require: false, group: :test
-
+gem "pundit"
 gem 'nanoid'
 
 group :development, :test do

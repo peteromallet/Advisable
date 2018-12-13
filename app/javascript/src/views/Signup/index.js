@@ -1,5 +1,6 @@
 // Renders the login page
 import React from "react";
+import get from "lodash/get";
 import { Formik } from "formik";
 import queryString from "query-string";
 import { Redirect } from "react-router-dom";
@@ -20,6 +21,7 @@ import SIGNUP from "./signup.graphql";
 const Signup = ({ location }) => {
   const [t] = useTranslation();
   const queryParams = queryString.parse(location.search);
+  const notice = get(location, "state.notice");
 
   return (
     <Query query={VIEWER}>
@@ -41,9 +43,12 @@ const Signup = ({ location }) => {
               />
             </svg>
             <Card>
-              <Heading center marginBottom="xl">
+              <Heading center marginBottom="xs">
                 Create your Account
               </Heading>
+              <Text size="s" marginBottom="xl" center>
+                {notice && t(notice)}
+              </Text>
               <Mutation mutation={SIGNUP}>
                 {signup => (
                   <Formik
@@ -79,6 +84,7 @@ const Signup = ({ location }) => {
                             name="email"
                             label="Email"
                             placeholder="Email"
+                            disabled={queryParams.email}
                             value={formik.values.email}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}

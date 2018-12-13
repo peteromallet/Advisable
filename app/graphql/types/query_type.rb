@@ -1,6 +1,34 @@
-class Types::QueryType < GraphQL::Schema::Object
+class Types::QueryType < Types::BaseType
 
   field :project, Types::ProjectType, description: "Find a Project by ID", null: true do
+    # querying for a specific project requires a special case where the user
+    # will face one of three scenrios:
+    # 1. The user is not logged in and the client associated to the project
+    # has not yet created an account. In this case we want to return an error
+    # code of signupRequired. The user email will be included in this error
+    # as an extension.
+    # 2. The user is not logged in and the client has an account. In this case
+    # we need to inform the user to redirect to the login page with an error
+    # code of notAuthenticated
+    # 3. The user is logged in but does not have access to the project. In this
+    # case we want to return an error code of notAuthorized where the frontend
+    # should display a 404 page.
+    # The corresponding frontend code for these cases can be found in
+    # /views/Project/index.js
+    authorize :client, error: ->(record, ctx) {
+      code = "notAuthorized"
+      extensions = {}
+      current_user = ctx[:current_user]
+      user = record.client.users.first
+      has_account = user.present? && user.has_account?
+      if !current_user && !has_account
+        code = "signupRequired"
+        extensions[:email] = user.try(:email) if !has_account
+      end
+
+      code = "authenticationRequired" if !current_user && has_account
+      raise GraphQL::ExecutionError.new(code, extensions: extensions)
+    }
     argument :id, ID, required: true
   end
 
