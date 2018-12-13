@@ -19,6 +19,7 @@ describe 'Rejecting an application' do
     expect(Airtable::Booking).to receive(:find).with(proposal.airtable_id)
       .and_return(airtableBooking)
 
+    authenticate_as proposal.application.project.client.users.first
     visit "/projects/#{proposal.application.project.airtable_id}/proposals/#{proposal.airtable_id}"
     click_on 'Reject Applicant'
     select 'Too Expensive', from: "reason"

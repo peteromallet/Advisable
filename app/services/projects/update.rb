@@ -41,6 +41,7 @@ class Projects::Update < ApplicationService
   end
 
   def skill_airtable_ids
+    return [] if project.primary_skill.blank? 
     [Skill.find_by_name(project.primary_skill).airtable_id]
   end
 end

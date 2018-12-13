@@ -23,6 +23,7 @@ describe "Project setup flow" do
 
   describe "company overview step" do
     it "progresses to the next step" do
+      authenticate_as project.client.users.first
       visit "/project_setup/#{project.airtable_id}/company_overview"
       content = "This is the company description"
       fill_in "companyDescription", with: content
@@ -33,6 +34,7 @@ describe "Project setup flow" do
 
   describe "project overview step" do
     it "progresses to the next step" do
+      authenticate_as project.client.users.first
       visit "/project_setup/#{project.airtable_id}/project_overview"
       content = "This is the project description"
       fill_in "description", with: content
@@ -43,6 +45,7 @@ describe "Project setup flow" do
     context "when there is no company description" do
       it "redirects to the company overview step" do
         project.update_attributes(company_description: nil)
+        authenticate_as project.client.users.first
         visit "/project_setup/#{project.airtable_id}/project_overview"
         expect(page).to have_content("Company Overview")
       end
@@ -51,6 +54,7 @@ describe "Project setup flow" do
 
   describe "project goals steps" do
     it "progresses to the next step" do
+      authenticate_as project.client.users.first
       visit "/project_setup/#{project.airtable_id}/goals"
       fill_in "goals[0]", with: "This is a project goal"
       click_button "Continue"
@@ -60,6 +64,7 @@ describe "Project setup flow" do
     context "when there is no description" do
       it "redirects to the project overview step" do
         project.update_attributes(description: nil)
+        authenticate_as project.client.users.first
         visit "/project_setup/#{project.airtable_id}/goals"
         expect(page).to have_content("Project Overview")
       end
@@ -68,6 +73,7 @@ describe "Project setup flow" do
 
   describe "specialist overview step" do
     it "progresses to the next step" do
+      authenticate_as project.client.users.first
       visit "/project_setup/#{project.airtable_id}/specialist_overview"
       fill_in "specialistDescription", with: "This is the specialist description"
       click_button "Continue"
@@ -77,6 +83,7 @@ describe "Project setup flow" do
     context "when there are no goals" do
       it "redirects to the goals step" do
         project.update_attributes(goals: [])
+        authenticate_as project.client.users.first
         visit "/project_setup/#{project.airtable_id}/specialist_overview"
         expect(page).to have_content("Goals")
       end
@@ -85,6 +92,7 @@ describe "Project setup flow" do
 
   describe "must have characteristics step" do
     it "progresses to the next step" do
+      authenticate_as project.client.users.first
       visit "/project_setup/#{project.airtable_id}/must_have"
       fill_in "requiredCharacteristics[0]", with: "characteristic"
       click_button "Continue"
@@ -94,6 +102,7 @@ describe "Project setup flow" do
     context "when there is no specialist overview" do
       it "redirects to the specialist overview step" do
         project.update_attributes(specialist_description: nil)
+        authenticate_as project.client.users.first
         visit "/project_setup/#{project.airtable_id}/must_have"
         expect(page).to have_content("Specialist Overview")
       end
@@ -102,6 +111,7 @@ describe "Project setup flow" do
 
   describe "nice-to-have characteristics step" do
     it "progresses to the next step" do
+      authenticate_as project.client.users.first
       visit "/project_setup/#{project.airtable_id}/nice_to_have"
       fill_in "optionalCharacteristics[0]", with: "characteristic"
       click_button "Continue"
@@ -111,6 +121,7 @@ describe "Project setup flow" do
     context "when there are no required characteristics" do
       it "redirects to the specialist overview step" do
         project.update_attributes(required_characteristics: [])
+        authenticate_as project.client.users.first
         visit "/project_setup/#{project.airtable_id}/nice_to_have"
         expect(page).to have_content("Must-have Characteristics")
       end
@@ -119,6 +130,7 @@ describe "Project setup flow" do
 
   describe "questions step" do
     it "progresses to the next step" do
+      authenticate_as project.client.users.first
       visit "/project_setup/#{project.airtable_id}/questions"
       fill_in "questions[0]", with: "This is a question?"
       click_button "Continue"
@@ -128,6 +140,7 @@ describe "Project setup flow" do
     context "when there are no required characteristics" do
       it "redirects to the specialist overview step" do
         project.update_attributes(required_characteristics: [])
+        authenticate_as project.client.users.first
         visit "/project_setup/#{project.airtable_id}/nice_to_have"
         expect(page).to have_content("Must-have Characteristics")
       end
@@ -136,6 +149,7 @@ describe "Project setup flow" do
 
   describe "terms and conditions step" do
     it "progresses to the deposit step" do
+      authenticate_as project.client.users.first
       visit "/project_setup/#{project.airtable_id}/terms"
       check "acceptedTerms"
       click_button "Continue"
@@ -145,6 +159,7 @@ describe "Project setup flow" do
     context "when the proejct does not require a deposit" do
       it "progresses to the confirm step" do
         project.update_attributes(deposit: 0)
+        authenticate_as project.client.users.first
         visit "/project_setup/#{project.airtable_id}/terms"
         check "acceptedTerms"
         click_button "Complete"
@@ -155,6 +170,7 @@ describe "Project setup flow" do
     context "when there are no questions" do
       it "redirects to the questions step" do
         project.update_attributes(questions: [])
+        authenticate_as project.client.users.first
         visit "/project_setup/#{project.airtable_id}/terms"
         expect(page).to have_content("Questions")
       end
@@ -189,6 +205,7 @@ describe "Project setup flow" do
     context "when terms have not been accepted" do
       it "redirects to the terms" do
         project.update_attributes(accepted_terms: false)
+        authenticate_as project.client.users.first
         visit "/project_setup/#{project.airtable_id}/deposit"
         expect(page).to have_content("Terms")
       end
