@@ -8,6 +8,6 @@
     }
   },
   "projects": {
-    "signupRequired": "We have introduced logins to our system. Please create a password for your account."
+    "signupRequired": "We have introduced logins to our system. Please create a password for your account below."
   }
 }
