@@ -11,23 +11,28 @@ class Types::QueryType < Types::BaseType
     # we need to inform the user to redirect to the login page with an error
     # code of notAuthenticated
     # 3. The user is logged in but does not have access to the project. In this
-    # case we want to return an error code of notAuthorized where the frontend
-    # should display a 404 page.
+    # case we dont need to return any error. The autorization logic will return
+    # nil for the project.
     # The corresponding frontend code for these cases can be found in
     # /views/Project/index.js
     authorize :client, error: ->(record, ctx) {
-      code = "notAuthorized"
-      extensions = {}
       current_user = ctx[:current_user]
-      user = record.client.users.first
-      has_account = user.present? && user.has_account?
-      if !current_user && !has_account
-        code = "signupRequired"
-        extensions[:email] = user.try(:email) if !has_account
-      end
+      if !current_user
+        extensions = {}
+        user = record.client.users.first
+        has_account = user.present? && user.has_account?
 
-      code = "authenticationRequired" if !current_user && has_account
-      raise GraphQL::ExecutionError.new(code, extensions: extensions)
+        if !has_account
+          code = "signupRequired"
+          extensions[:email] = user.try(:email) if !has_account
+        end
+
+        if has_account
+          code = "authenticationRequired" 
+        end
+
+        raise GraphQL::ExecutionError.new(code, extensions: extensions)
+      end
     }
     argument :id, ID, required: true
   end

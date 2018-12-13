@@ -5,6 +5,16 @@ class BaseField < GraphQL::Schema::Field
 
   # We can pass authorize as a param to a field to require authorization in
   # order for that field to be accessed
+  #
+  # @example
+  # The following will call the ProjectPolicy "is_user?" method to
+  # determin wether or not the email can be accessed. If authorization fails
+  # null willl be returned for the email.
+  #
+  #   class Types::Project < Types::BaseType
+  #     field :email, String, null: true, authorize: :is_user
+  #   end
+  #
   def initialize(*args, authorize: nil, **kwargs, &block)
     @authorize_method = authorize
     # Pass on the default args:
@@ -20,8 +30,8 @@ class BaseField < GraphQL::Schema::Field
   # Allows authorization to be configured inside the field block rather
   # than using a param.
   # Using this method we can provide an 'error' proc which will be called when
-  # the authorization fails. This allows for more control over what error is
-  # raised.
+  # the authorization fails. This allows you to throw an error if authorization
+  # fails. This proc will be passed the field value and the context.
   def authorize(method, error: nil)
     @authorize_method = method
     @authorization_error_proc = error
@@ -40,25 +50,25 @@ class BaseField < GraphQL::Schema::Field
   
   # returns a proc wrapping the original resolver that handles authorization
   # logic. If the field does not have a parent then the result of the resolve
-  # function will be used as the record to test authorization against. Thi
+  # function will be used as the value to test authorization against. This
   # usually only applies to fields on the root QueryType.
   def authorization_proc(field)
     original_resolve_proc = field.resolve_proc
 
     ->(obj, args, ctx) {
       resolved = original_resolve_proc.call(obj, args, ctx)
-      record = obj.object || resolved
+      value = obj.object || resolved
 
-      policy = Pundit.policy!(ctx[:current_user], record)
+      policy = Pundit.policy!(ctx[:current_user], value)
 
-      unless policy.send("#{authorize_method}?")
-        if authorization_error_proc
-          authorization_error_proc.call(record, ctx)
-        end
-        raise GraphQL::ExecutionError, code
+      authorized = policy.send("#{authorize_method}?")
+      return resolved if authorized
+
+      if authorization_error_proc
+        authorization_error_proc.call(value, ctx)
       end
 
-      resolved
+      return nil
     }
   end
 end
