@@ -2,6 +2,8 @@ FactoryBot.define do
   factory :user do
     first_name "MyString"
     last_name "MyString"
+    password "testing123"
+    sequence(:email) { |n| "user#{n}@test.com" }
     sequence(:airtable_id) { |n| "rec_#{n}" }
 
     availability [

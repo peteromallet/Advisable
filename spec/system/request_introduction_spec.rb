@@ -15,6 +15,7 @@ describe 'Request Introduction' do
     expect(airtable_application_reocrd).to receive(:save)
     expect(Airtable::Application).to receive(:find).and_return(airtable_application_reocrd)
 
+    authenticate_as project.client.users.first
     visit "/projects/#{project.airtable_id}/applied"
     click_on 'Request Call'
     page.all("div[class^=styles__TimeCell]")[10].click
