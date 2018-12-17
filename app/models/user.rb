@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :projects
   # Users have access to client data through the client_users table
   has_many :client_users
   has_many :clients, through: :client_users
