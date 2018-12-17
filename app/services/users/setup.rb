@@ -15,10 +15,9 @@ class Users::Setup < ApplicationService
     user.update_attributes(
       first_name: first_name,
       last_name: last_name,
-      country: country
+      country: country,
+      company_name: company_name
     )
-
-    client.users << user
 
     sync_to_airtable
 
@@ -27,16 +26,11 @@ class Users::Setup < ApplicationService
 
   private
 
-  def client
-    @client ||= Client.find_or_create_by(name: company_name)
-  end
-
   def country
     @country ||= Country.find_by_name!(country_name)
   end
 
   def sync_to_airtable
-    sync_client_to_airtable
     sync_user_to_airtable
   end
 
@@ -48,15 +42,5 @@ class Users::Setup < ApplicationService
     end
 
     record.push(user)
-  end
-
-  def sync_client_to_airtable
-    record = if client.airtable_id 
-      Airtable::Client.find(client.airtable_id)
-    else
-      Airtable::Client.new({})
-    end
-
-    record.push(client)
   end
 end

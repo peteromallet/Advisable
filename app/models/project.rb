@@ -3,7 +3,6 @@ class Project < ApplicationRecord
   has_many :applications
   has_many :bookings, through: :applications
   has_many :payments
-  belongs_to :client
   belongs_to :user, required: false
   validates :name, presence: true
 

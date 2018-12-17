@@ -5,11 +5,8 @@ query {
     firstName
     lastName
     confirmed
+    companyName
     country {
-      name
-    }
-    client {
-      id
       name
     }
   }

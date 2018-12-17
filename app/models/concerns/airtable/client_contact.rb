@@ -16,17 +16,6 @@ class Airtable::ClientContact < Airtable::Base
     else
       user.company_name = company_name
     end
-
-    # Sync the client contact to client relationship
-    client_id = fields['Client'].try(:first)
-    if client_id
-      client = ::Client.find_by_airtable_id(client_id)
-      client = Airtable::Client.find(client_id).sync if client.nil?
-
-      unless user.clients.include?(client)
-        user.clients << client
-      end
-    end
   end
 
   push_data do |user|
@@ -34,6 +23,6 @@ class Airtable::ClientContact < Airtable::Base
     self['First Name'] = user.first_name
     self['Last Name'] = user.last_name
     self['Country'] = [user.country.airtable_id] if user.country.present?
-    self['Client'] = [user.clients.first.airtable_id] if user.clients.any?
+    self['Company Name'] = user.company_name
   end
 end

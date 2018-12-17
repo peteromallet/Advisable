@@ -15,11 +15,11 @@ class Types::QueryType < Types::BaseType
     # nil for the project.
     # The corresponding frontend code for these cases can be found in
     # /views/Project/index.js
-    authorize :client, error: ->(record, ctx) {
+    authorize :is_user, error: ->(record, ctx) {
       current_user = ctx[:current_user]
       if !current_user
         extensions = {}
-        user = record.client.users.first
+        user = record.user
         has_account = user.present? && user.has_account?
 
         if !has_account

@@ -5,8 +5,9 @@ class Types::User < Types::BaseType
   field :email, String, null: false
   field :first_name, String, null: true
   field :last_name, String, null: true
-  field :client, Types::Client, null: true
+  field :companyName, String, null: true
   field :country, Types::CountryType, null: true
+  field :projects, [Types::ProjectType], null: true
   field :confirmed, Boolean, null: false
   field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
     argument :exclude_conflicts, Boolean, required: false, description: 'Exclude any times that conflict with scheduled interviews'

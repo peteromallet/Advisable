@@ -27,7 +27,7 @@ export default () => {
             if (query.loading) return <Loading />;
 
             return (
-              <ProjectsList projects={query.data.viewer.client.projects} />
+              <ProjectsList projects={query.data.viewer.projects} />
             );
           }}
         </Query>

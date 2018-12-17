@@ -50,7 +50,7 @@ class RequestIntroductionModal extends React.Component {
 
                 const initialValues = {
                   availability:
-                    query.data.application.project.client.availability,
+                    query.data.application.project.user.availability,
                   timeZone: moment.tz.guess() || "Europe/Dublin"
                 };
 

@@ -32,8 +32,8 @@ const CurrentUser = () => {
             >
               <CurrentUserToggle>
                 <strong>{query.data.viewer.firstName}</strong>
-                {query.data.viewer.client && (
-                  <span>{query.data.viewer.client.name}</span>
+                {query.data.viewer.companyName && (
+                  <span>{query.data.viewer.companyName}</span>
                 )}
               </CurrentUserToggle>
               <CurrentUserDropdown open={open}>

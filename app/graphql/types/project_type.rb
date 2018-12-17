@@ -6,7 +6,7 @@ class Types::ProjectType < Types::BaseType
   field :currency, String, null: true
   field :status, String, null: true
   field :clientReferralUrl, String, null: true
-  field :client, Types::Client, null: false
+  field :user, Types::User, null: true
   field :goals, [String], null: true
   field :description, String, null: true
   field :company_description, String, null: true

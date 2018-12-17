@@ -1,5 +1,5 @@
 class ProjectPolicy < ApplicationPolicy
-  def client?
-    record.client.users.include?(user)
+  def is_user?
+    record.user == user
   end
 end
