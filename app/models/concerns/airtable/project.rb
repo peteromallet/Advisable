@@ -16,13 +16,6 @@ class Airtable::Project < Airtable::Base
   sync_data do |project|
     project.currency = fields['Currency'].try(:first)
 
-    client_id = fields["Client"].try(:first)
-    if client_id
-      client = ::Client.find_by_airtable_id(client_id)
-      client = Airtable::Client.find(client_id).sync if client.nil?
-      project.client = client
-    end
-
     user_id = fields['Client Contacts'].try(:first)
     if user_id
       user = ::User.find_by_airtable_id(user_id)
@@ -40,6 +33,7 @@ class Airtable::Project < Airtable::Base
 
   push_data do |project|
     self['Project'] = project.name if project.saved_change_to_name?
+    self['Client Contacts'] = [project.user.airtable_id]
     self['Project Stage'] = project.status if !project.status.blank? && project.saved_change_to_status?
     self['Deposit Amount Required'] = project.deposit / 100.0 if project.saved_change_to_deposit?
     self['Company Description'] = project.company_description if project.saved_change_to_company_description?
