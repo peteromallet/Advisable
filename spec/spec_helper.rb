@@ -10,6 +10,10 @@ SimpleCov.start 'rails' do
   add_group "Services", "app/services"
 end
 
+# put sidekiq in test mode
+require 'sidekiq/testing' 
+Sidekiq::Testing.fake!
+
 # require all support files
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 

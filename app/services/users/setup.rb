@@ -28,7 +28,7 @@ class Users::Setup < ApplicationService
   private
 
   def client
-    @client ||= user.client || Client.create(name: company_name)
+    @client ||= Client.find_or_create_by(name: company_name)
   end
 
   def country
