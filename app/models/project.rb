@@ -3,6 +3,7 @@ class Project < ApplicationRecord
   has_many :applications
   has_many :payments
   belongs_to :client
+  belongs_to :user
   validates :name, presence: true
 
   def accepted_terms=(accepted)

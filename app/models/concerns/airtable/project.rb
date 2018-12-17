@@ -21,6 +21,13 @@ class Airtable::Project < Airtable::Base
       project.client = client
     end
 
+    user_id = fields['Client Contacts'].try(:first)
+    if user_id
+      user = ::User.find_by_airtable_id(user_id)
+      user = Airtable::ClientContact.find(user_id).sync if user.nil?
+      project.user = user
+    end
+
     sync_arrays(project)
     sync_questions(project)
 
