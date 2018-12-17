@@ -1,6 +1,7 @@
 // Renders the login page
 import { Formik } from "formik";
 import React, { useState } from "react";
+import queryString from "query-string";
 import { Redirect } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { useTranslation } from 'react-i18next/hooks';
@@ -19,6 +20,7 @@ import LOGIN from "./login.graphql";
 const Login = ({ location }) => {
   const [t] = useTranslation();
   const [error, setError] = useState(null);
+  const queryParams = queryString.parse(location.search);
 
   return (
     <Query query={VIEWER}>
@@ -50,7 +52,7 @@ const Login = ({ location }) => {
                 {login => (
                   <Formik
                     validationSchema={validationSchema}
-                    initialValues={{ email: "", password: "" }}
+                    initialValues={{ email: queryParams.email || "", password: "" }}
                     onSubmit={async (values, formikBag) => {
                       const { data } = await login({
                         variables: {
