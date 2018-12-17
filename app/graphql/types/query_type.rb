@@ -18,18 +18,10 @@ class Types::QueryType < Types::BaseType
     authorize :is_user, error: ->(record, ctx) {
       current_user = ctx[:current_user]
       if !current_user
-        extensions = {}
         user = record.user
-        has_account = user.present? && user.has_account?
-
-        if !has_account
-          code = "signupRequired"
-          extensions[:email] = user.try(:email) if !has_account
-        end
-
-        if has_account
-          code = "authenticationRequired" 
-        end
+        code = "authenticationRequired" 
+        extensions = { email: user.try(:email) }
+        code = "signupRequired" unless user.try(:has_account?)
 
         raise GraphQL::ExecutionError.new(code, extensions: extensions)
       end

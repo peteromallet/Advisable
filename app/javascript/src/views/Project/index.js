@@ -29,6 +29,7 @@ const redirectError = (error, location) => {
   if (error.message === 'authenticationRequired') {
     redirect = {
       pathname: "/login",
+      search: `?email=${error.extensions.email}`,
       state: {
         from: location
       }

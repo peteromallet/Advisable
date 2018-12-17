@@ -33,7 +33,7 @@ class Airtable::Project < Airtable::Base
 
   push_data do |project|
     self['Project'] = project.name if project.saved_change_to_name?
-    self['Client Contacts'] = [project.user.airtable_id]
+    self['Client Contacts'] = [project.user.airtable_id] if saved_change_to_user_id?
     self['Project Stage'] = project.status if !project.status.blank? && project.saved_change_to_status?
     self['Deposit Amount Required'] = project.deposit / 100.0 if project.saved_change_to_deposit?
     self['Company Description'] = project.company_description if project.saved_change_to_company_description?
