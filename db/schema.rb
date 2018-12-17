@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_10_084729) do
+ActiveRecord::Schema.define(version: 2018_12_17_111603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,7 +155,9 @@ ActiveRecord::Schema.define(version: 2018_12_10_084729) do
     t.string "status"
     t.integer "deposit_paid"
     t.string "primary_skill"
+    t.bigint "user_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -203,6 +205,7 @@ ActiveRecord::Schema.define(version: 2018_12_10_084729) do
     t.datetime "confirmed_at"
     t.string "confirmation_token"
     t.bigint "country_id"
+    t.string "company_name"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
   end
@@ -235,6 +238,7 @@ ActiveRecord::Schema.define(version: 2018_12_10_084729) do
   add_foreign_key "interviews", "users"
   add_foreign_key "payments", "projects"
   add_foreign_key "projects", "clients"
+  add_foreign_key "projects", "users"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "countries"
