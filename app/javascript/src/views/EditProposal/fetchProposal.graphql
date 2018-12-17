@@ -16,8 +16,8 @@ query booking($id: ID!) {
         id
         name
         currency
-        client {
-          name
+        user {
+          companyName
         }
       }
     }

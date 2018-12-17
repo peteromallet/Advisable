@@ -15,15 +15,17 @@ describe Users::ResetPassword do
   end
 
   context "when the token is invalid" do
-    digest = Token.digest("testing123")
-    user = create(:user, reset_digest: digest, reset_sent_at: 30.seconds.ago)
-    expect {
-      Users::ResetPassword.call(
-        user: user,
-        token: "wrongtoken",
-        password: "passwordchanged",
-        password_confirmation: "passwordchanged"
-      )
-      }.to raise_error(Service::Error, "Invalid token")
+    it 'raises an error' do
+      digest = Token.digest("testing123")
+      user = create(:user, reset_digest: digest, reset_sent_at: 30.seconds.ago)
+      expect {
+        Users::ResetPassword.call(
+          user: user,
+          token: "wrongtoken",
+          password: "passwordchanged",
+          password_confirmation: "passwordchanged"
+        )
+        }.to raise_error(Service::Error, "Invalid token")
+    end
   end
 end

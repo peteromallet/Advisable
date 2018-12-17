@@ -1,17 +1,14 @@
 query {
   viewer {
     id
-    client {
+    projects {
       id
-      projects {
+      airtableId
+      primarySkill
+      status
+      description
+      applications {
         id
-        airtableId
-        primarySkill
-        status
-        description
-        applications {
-          id
-        }
       }
     }
   }

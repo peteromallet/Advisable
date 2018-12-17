@@ -1,7 +1,6 @@
 require "rails_helper"
 
 describe Users::Setup do
-  let(:client) { create(:client, name: "Acme Corp") }
   let(:country) { create(:country, name: "Ireland") }
   let(:user) { create(:user, first_name: nil, last_name: nil, country: nil) }
 
@@ -22,7 +21,7 @@ describe Users::Setup do
       first_name: "Jane",
       last_name: "Doe",
       country_name: country.name,
-      company_name: client.name,
+      company_name: 'Test Company',
       user: user
     )
 
@@ -34,35 +33,23 @@ describe Users::Setup do
       first_name: "Jane",
       last_name: "Doe",
       country_name: country.name,
-      company_name: client.name,
+      company_name: 'Test Company',
       user: user
     )
 
     expect(user.last_name).to eq('Doe')
   end
 
-  it "adds the user to the client" do
+  it "sets the users company name" do
     Users::Setup.call(
       first_name: "Jane",
       last_name: "Doe",
       country_name: country.name,
-      company_name: client.name,
+      company_name: "Test Company",
       user: user
     )
 
-    expect(user.reload.clients).to include(client)
-  end
-
-  it "creates a new client if there isn't one with that name" do
-    expect {
-      Users::Setup.call(
-        first_name: "Jane",
-        last_name: "Doe",
-        country_name: country.name,
-        company_name: "Testing New",
-        user: user
-      )
-    }.to change { Client.count }.by(1)
+    expect(user.company_name).to eq('Test Company')
   end
 
   it "sets the users country" do

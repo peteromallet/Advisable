@@ -31,7 +31,7 @@ const CreateClient = ({ history, data }) => {
                 initialValues={{
                   firstName: get(data, "viewer.firstName") || "",
                   lastName: get(data, "viewer.lastName") || "",
-                  companyName: get(data, "viewer.client.name") || "",
+                  companyName: get(data, "viewer.companyName") || "",
                   countryName: get(data, "viewer.country.name") || ""
                 }}
                 onSubmit={async values => {

@@ -23,7 +23,6 @@ const CreateProposal = ({ match, history, notifications }) => {
 
         const { project } = query.data.application;
         const { proposal } = query.data.application;
-        const { client } = project;
 
         const proposalURL = id => {
           return `/applications/${match.params.applicationID}/proposals/${id}`;
@@ -37,10 +36,10 @@ const CreateProposal = ({ match, history, notifications }) => {
           <Container size="m">
             <Card padding="xl">
               <Heading marginBottom="xs" size="l">
-                Proposal for {client.name}
+                Proposal for {project.user.companyName}
               </Heading>
               <Text marginBottom="xl" size="l">
-                Send a proposal to {client.name}
+                Send a proposal to {project.user.companyName}
               </Text>
               <Mutation mutation={CREATE_PROPOSAL}>
                 {createProposal => (
@@ -60,7 +59,7 @@ const CreateProposal = ({ match, history, notifications }) => {
                       const bookingID = response.data.createProposal.booking.id;
 
                       notifications.notify(`
-                              Your proposal has been sent to ${client.name}
+                              Your proposal has been sent to ${project.user.companyName}
                             `);
 
                       history.replace(proposalURL(bookingID));
