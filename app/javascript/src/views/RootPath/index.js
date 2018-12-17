@@ -7,7 +7,7 @@ export default () => {
   return (
     <Query query={VIEWER}>
       {({ data }) => {
-        if (data.viewer && !data.viewer.client) {
+        if (data.viewer && !data.viewer.confirmed) {
           return <Redirect to="/setup" />;
         }
 
