@@ -1,15 +1,15 @@
 class Projects::Create < ApplicationService
-  attr_reader :client, :project
+  attr_reader :user, :project
 
-  def initialize(client:, attributes:)
-    @client = client
-    @project = client.projects.new(attributes)
+  def initialize(user:, attributes:)
+    @user = user
+    @project = user.projects.new(attributes)
   end
 
   def call
     raise Service::Error.new("Invalid skill") unless skill.present?
     project.status = "Brief Pending Confirmation"
-    project.name = "#{client.name} - #{project.primary_skill}"
+    project.name = "#{user.company_name} - #{project.primary_skill}"
     sync_with_airtable if project.save
     project
   end
@@ -22,7 +22,7 @@ class Projects::Create < ApplicationService
 
   def sync_with_airtable
     record = Airtable::Project.new(
-      "Client" => [client.airtable_id],
+      "Client Contacts" => [user.airtable_id],
       "Skills Required" => [skill.airtable_id],
       "Project Stage" => "Brief Pending Confirmation",
       "Primary Skill Required" => project.primary_skill

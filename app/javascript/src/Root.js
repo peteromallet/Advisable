@@ -31,9 +31,9 @@ const Root = () => (
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/reset_password" component={ResetPassword} />
-        <AuthenticatedRoute path="/setup" component={Setup} />
-        <AuthenticatedRoute exact path="/" component={RootPath} />
         <Route path="/confirm_account/:token" component={ConfirmAccount} />
+        <AuthenticatedRoute exact path="/" component={RootPath} />
+        <AuthenticatedRoute path="/setup" component={Setup} />
         <Route path="/project_setup/:projectID?" component={ProjectSetup} />
         <Route path="/projects/:projectID" component={Project} />
         <AuthenticatedRoute path="/projects" component={Projects} />

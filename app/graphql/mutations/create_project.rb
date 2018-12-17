@@ -15,7 +15,7 @@ class Mutations::CreateProject < Mutations::BaseMutation
 
     {
       project: Projects::Create.call(
-        client: context[:current_user].client,
+        user: context[:current_user],
         attributes: args.except(:id, :client_mutation_id),
       )
     }
