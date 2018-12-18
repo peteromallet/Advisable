@@ -14,6 +14,7 @@ const ConfirmAccount = ({
   notifications
 }) => {
   const parsed = queryString.parse(location.search);
+  console.log(parsed);
 
   if (!parsed.email) {
     return <Redirect to="/" />;
