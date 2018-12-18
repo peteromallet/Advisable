@@ -1,6 +1,7 @@
 class ProjectPolicy < ApplicationPolicy
-  def pending_setup_or_is_user?
+  def can_fetch_project?
     return true if record.status == "Brief Pending Confirmation"
+    return true if user.try(:has_permission?, "projects:all")
     record.user == user
   end
 end

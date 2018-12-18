@@ -15,7 +15,7 @@ class Types::QueryType < Types::BaseType
     # nil for the project.
     # The corresponding frontend code for these cases can be found in
     # /views/Project/index.js
-    authorize :pending_setup_or_is_user, error: ->(record, ctx) {
+    authorize :can_fetch_project, error: ->(record, ctx) {
       current_user = ctx[:current_user]
       if !current_user
         user = record.user

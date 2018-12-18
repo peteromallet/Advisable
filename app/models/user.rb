@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include UID
+  include Permissions
   has_many :projects
   has_secure_password validations: false
   has_many :interviews
