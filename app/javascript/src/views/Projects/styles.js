@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 import plus from "./plus.svg";
 
@@ -128,6 +128,13 @@ export const ProjectTitle = styled.h4`
   letter-spacing: -0.02em;
 `;
 
+const statusStyling = {
+  "Brief Pending Confirmation": css`
+    color: #684A00;
+    background: #FFF1CE;
+  `
+}
+
 export const ProjectStatus = styled.div`
   height: 28px;
   color: #066f56;
@@ -140,6 +147,8 @@ export const ProjectStatus = styled.div`
   margin-bottom: 20px;
   display: inline-block;
   letter-spacing: -0.03em;
+
+  ${props => statusStyling[props.children]}
 `;
 
 export const ProjectDescription = styled.p`

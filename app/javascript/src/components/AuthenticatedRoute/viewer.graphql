@@ -5,6 +5,7 @@ query {
     firstName
     lastName
     confirmed
+    setupRequired
     companyName
     country {
       name

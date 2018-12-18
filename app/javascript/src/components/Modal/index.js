@@ -21,6 +21,7 @@ class Modal extends React.Component {
   }
 
   componentWillUnmount() {
+    this.restore()
     modalRoot.removeChild(this.el);
   }
 
@@ -35,12 +36,16 @@ class Modal extends React.Component {
     }
 
     if (prevProps.isOpen && this.props.isOpen === false) {
-      document.body.style.overflow = 'scroll';
-      document.body.style.top = '0px';
-      document.body.style.position = 'static';
-      window.scrollTo(0, this.state.scrollPosition)
-      window.removeEventListener("keydown", this.handleKeyDown);
+      this.restore()
     }
+  }
+
+  restore() {
+    document.body.style.overflow = 'scroll';
+    document.body.style.top = '0px';
+    document.body.style.position = 'static';
+    window.scrollTo(0, this.state.scrollPosition)
+    window.removeEventListener("keydown", this.handleKeyDown);
   }
 
   handleKeyDown = e => {

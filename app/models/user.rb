@@ -22,6 +22,10 @@ class User < ApplicationRecord
     confirmed_at.present?
   end
 
+  def setup_required
+    !airtable_id
+  end
+
   def has_account?
     password_digest.present?
   end
