@@ -11,6 +11,7 @@ import SuggestedSelect from "src/components/SuggestedSelect";
 import SKILLS from "./skills.graphql";
 import CREATE_PROJECT from "./createProject.graphql";
 import UPDATE_PROJECT from "../../updateProject.graphql";
+import FETCH_PROJECTS from "src/views/Projects/projects.graphql";
 
 export default ({ history, match, project }) => {
   let initialValues = {
@@ -32,7 +33,10 @@ export default ({ history, match, project }) => {
       {query => {
         if (query.loading) return <Loading />;
         return (
-          <Mutation mutation={project ? UPDATE_PROJECT : CREATE_PROJECT}>
+          <Mutation
+            mutation={project ? UPDATE_PROJECT : CREATE_PROJECT}
+            refetchQueries={project ? [] : [{ query: FETCH_PROJECTS }]}
+          >
             {mutate => (
               <Fragment>
                 <Text marginBottom="l">

@@ -41,19 +41,19 @@ injectGlobal`
   }
 
   html {
-    height: 100%;
+    min-height: 100%;
   }
 
   body {
-    height: 100%;
     width: 100vw;
     line-height: 1;
+    min-height: 100%;
     overflow-x: hidden;
   }
 
   #AppRoot {
-    overflow:auto;
-    min-height: 100vh;
+    overflow: auto;
+    /* min-height: 100vh; */
   }
 
   ol, ul {

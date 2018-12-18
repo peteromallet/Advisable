@@ -12,12 +12,14 @@ import Button from "src/components/Button";
 import Heading from "src/components/Heading";
 import FieldRow from "src/components/FieldRow";
 import TextField from "src/components/TextField";
+import useScrollRestore from 'src/utilities/useScrollRestore';
 import VIEWER from "../../components/AuthenticatedRoute/viewer.graphql";
 import validationSchema from "./validationSchema";
 import { Container, Card, Error } from "./styles";
 import LOGIN from "./login.graphql";
 
 const Login = ({ location }) => {
+  useScrollRestore()
   const [t] = useTranslation();
   const [error, setError] = useState(null);
   const queryParams = queryString.parse(location.search);

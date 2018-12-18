@@ -3,19 +3,15 @@ import { Spring } from "react-spring";
 import { withRouter } from "react-router-dom";
 import Text from "src/components/Text";
 import Avatar from "src/components/Avatar";
-import Divider from "src/components/Divider";
 import Spacing from "src/components/Spacing";
 import Button from "src/components/Button";
 import FeaturedBadge from "src/components/FeaturedBadge";
 import Questions from "./Questions";
-import RejectModal from "src/components/RejectModal";
-import RejectProposalModal from "src/components/RejectProposalModal";
 import Skills from "src/components/Skills";
-import RequestReferences from "src/components/RequestReferences";
 import CandidateAttributes from "src/components/CandidateAttributes";
-import RequestIntroduction from "src/components/RequestIntroduction";
 import currency from "src/utilities/currency";
 import AdvisableComment from "../AdvisableComment";
+import CandidateActions from "../../../../components/CandidateActions";
 import {
   Card,
   Name,
@@ -25,9 +21,6 @@ import {
   NameAndLocation,
   CandidateHeaderActions
 } from "./styles";
-
-const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
-const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
 
 class Candidate extends React.Component {
   state = {
@@ -53,31 +46,9 @@ class Candidate extends React.Component {
 
   render() {
     const { application, project } = this.props;
-    const { proposal } = application;
 
     return (
       <Card padding="xl" expanded={this.state.expanded}>
-        <RequestIntroduction
-          isOpen={this.state.modal === "introduction"}
-          application={application}
-          onClose={() => {
-            this.setState({ modal: null });
-          }}
-        />
-        <RejectModal
-          isOpen={this.state.modal === "reject"}
-          onRequestCall={() => this.setState({ modal: "introduction" })}
-          application={application}
-          onClose={() => {
-            this.setState({ modal: null });
-          }}
-        />
-        <RequestReferences
-          application={application}
-          isOpen={this.state.modal === REQUEST_REFERENCES_MODAL}
-          onClose={() => this.setState({ modal: null })}
-        />
-
         <CandidateHeader>
           <Avatar
             name={application.specialist.name}
@@ -151,79 +122,10 @@ class Candidate extends React.Component {
           )}
         </Spring>
 
-        {application.status === "Proposed" &&
-          proposal && (
-            <React.Fragment>
-              <Divider marginTop="xl" marginBottom="xl" />
-              <Button
-                marginRight="m"
-                onClick={() =>
-                  this.props.history.push(`proposals/${proposal.id}`)
-                }
-                primary
-              >
-                View Proposal
-              </Button>
-
-              <Button
-                type="button"
-                onClick={() => this.setState({ modal: REJECT_PROPOSAL_MODAL })}
-              >
-                Reject
-              </Button>
-
-              <RejectProposalModal
-                booking={proposal}
-                specialist={application.specialist}
-                isOpen={this.state.modal === REJECT_PROPOSAL_MODAL}
-                onClose={() => this.setState({ modal: null })}
-              />
-            </React.Fragment>
-          )}
-
-        {application.status === "Application Accepted" && (
-          <React.Fragment>
-            <Divider marginTop="xl" marginBottom="xl" />
-            <Button
-              marginRight="m"
-              onClick={() =>
-                this.props.history.push(`applications/${application.id}/offer`)
-              }
-              primary
-            >
-              Send Offer
-            </Button>
-            <Button onClick={() => this.setState({ modal: "reject" })}>
-              Provide Feedback
-            </Button>
-          </React.Fragment>
-        )}
-
-        {application.status === "Applied" && (
-          <React.Fragment>
-            <Divider marginTop="xl" marginBottom="xl" />
-            <Button
-              marginRight="m"
-              onClick={() => this.setState({ modal: "introduction" })}
-              primary
-            >
-              Request Call
-            </Button>
-            <Button onClick={() => this.setState({ modal: "reject" })}>
-              Provide Feedback
-            </Button>
-          </React.Fragment>
-        )}
-
-        {["Application Accepted", "Proposed"].indexOf(application.status) >
-          -1 && !application.referencesRequested && (
-          <Button
-            marginLeft="m"
-            onClick={() => this.setState({ modal: REQUEST_REFERENCES_MODAL })}
-          >
-            Request References
-          </Button>
-        )}
+        <CandidateActions
+          history={this.props.history}
+          application={application}
+        />
       </Card>
     );
   }

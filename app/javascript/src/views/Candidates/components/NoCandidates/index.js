@@ -7,7 +7,7 @@ import { Card } from "./styles";
 export default ({ text, subText }) => (
   <Card>
     <Spacing bottom="xl">
-      <img src={illustration} width={300} alt='' />
+      <img src={illustration} style={{ width: "100%", maxWidth: "300px" }} alt='' />
     </Spacing>
     <Text marginBottom="m" weight="semibold" colour='dark'>{text}</Text>
     {subText && <Text>{subText}</Text>}

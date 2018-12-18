@@ -15,7 +15,7 @@ const sizes = {
 };
 
 const Container = styled.div`
-  width: 100%;
+  width: 92%;
   margin: 50px auto;
 
   ${props => sizes[props.size || 'l']}

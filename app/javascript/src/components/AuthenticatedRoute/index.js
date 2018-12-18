@@ -32,6 +32,10 @@ const AuthenticatedRoute = ({ render, component: Component, ...rest }) => (
             if (query.loading) return <Loading />;
             const viewer = query.data.viewer;
 
+            if (rest.path !== '/setup' && viewer && viewer.setupRequired) {
+              return <Redirect to="/setup" />
+            }
+
             if (viewer && !viewer.confirmed) {
               return <PendingConfirmation viewer={viewer} />;
             }

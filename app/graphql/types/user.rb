@@ -6,6 +6,7 @@ class Types::User < Types::BaseType
   field :first_name, String, null: true
   field :last_name, String, null: true
   field :companyName, String, null: true
+  field :setup_required, Boolean, null: false
   field :country, Types::CountryType, null: true
   field :projects, [Types::ProjectType], null: true
   field :confirmed, Boolean, null: false
