@@ -3,10 +3,8 @@ import filter from "lodash/filter";
 import Candidate from "../components/Candidate";
 import NoApplicants from "../components/NoCandidates";
 import SimpleErrorBoundary from "src/components/SimpleErrorBoundary";
-import useScrollRestore from '../../../utilities/useScrollRestore';
 
 const Applicants = ({ data, status, emptyStateText, emptyStateSubText }) => {
-  useScrollRestore()
   const applications = filter(data.project.applications, { status });
 
   return (

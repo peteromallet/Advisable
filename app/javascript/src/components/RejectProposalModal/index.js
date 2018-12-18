@@ -78,6 +78,7 @@ const RejectProposalModal = ({
                           size="l"
                           type="submit"
                           theme="danger"
+                          styling="primary"
                           loading={formik.isSubmitting}
                           disabled={formik.isSubmitting}
                         >

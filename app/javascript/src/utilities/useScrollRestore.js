@@ -2,8 +2,13 @@
 // component mounts.
 import { useEffect} from 'react';
 
-export default () => {
+export default (selector) => {
   useEffect(() => {
-    document.getElementById("AppRoot").scrollTo(0, 0)
+    if (selector) {
+      const el = document.querySelector(selector)
+      el.scrollTo(0, 0)
+    } else {
+      window.scrollTo(0,0); 
+    }
   }, [])
 }

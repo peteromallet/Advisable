@@ -40,12 +40,13 @@ const STATUSES = {
   }
 };
 
-const Project = ({ match, history, data }) => {
+const Project = ({ match, data }) => {
+  window.scrollTo(0, 0)
   const isMobile = useMobile();
   const slug = match.params.status;
 
   if (slug && !STATUSES[slug]) {
-    history.replace(`/projects/${match.params.projectID}/applied`);
+    return <Redirect to={`/projects/${match.params.projectID}/applied`} />
   }
 
   if (!isMobile && !slug) {

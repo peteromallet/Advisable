@@ -57,6 +57,7 @@ export default ({ history, match, project }) => {
                     <form onSubmit={formik.handleSubmit}>
                       <FieldRow>
                         <SuggestedSelect
+                          name="skills"
                           options={query.data.skills}
                           value={getSelectedOption(
                             query.data.skills,

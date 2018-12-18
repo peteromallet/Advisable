@@ -8,6 +8,7 @@ import Container from "src/components/Container";
 import Heading from "src/components/Heading";
 import Text from "src/components/Text";
 import { currencySymbol } from "src/utilities/currency";
+import useScrollRestore from 'src/utilities/useScrollRestore';
 import { withNotifications } from "src/components/Notifications";
 
 import ProposalForm from "../CreateProposal/components/ProposalForm";
@@ -15,6 +16,8 @@ import FETCH_PROPOSAL from "./fetchProposal.graphql";
 import UPDATE_PROPOSAL from "src/graphql/updateProposal.graphql";
 
 const EditProposal = ({ match, notifications }) => {
+  useScrollRestore()
+
   return (
     <Query query={FETCH_PROPOSAL} variables={{ id: match.params.proposalID }}>
       {query => {
