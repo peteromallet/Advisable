@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :projects
     resources :skills
     resources :specialists
+    resources :users
     resources :webhook_configurations
     resources :webhooks, only: [:index, :show]
 

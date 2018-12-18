@@ -12,6 +12,7 @@ const CurrentUser = () => {
 
   const handleLogout = apolloClient => {
     localStorage.removeItem("authToken");
+    sessionStorage.removeItem("authToken");
     apolloClient.resetStore();
   };
 
