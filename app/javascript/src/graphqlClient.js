@@ -10,7 +10,7 @@ const client = new ApolloClient({
     credentials: "same-origin"
   },
   request: operation => {
-    const authToken = localStorage.getItem("authToken");
+    const authToken = sessionStorage.getItem("authToken") || localStorage.getItem("authToken");
     const headers = {
       Authorization: authToken ? `Bearer ${authToken}` : ""
     };

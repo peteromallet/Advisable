@@ -13,8 +13,11 @@ const AuthenticatedRoute = ({ render, component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props => {
+      const token =
+        sessionStorage.getItem("authToken") ||
+        localStorage.getItem("authToken");
       // If there is no authToken in storage then redirect immediately
-      if (!localStorage.getItem("authToken")) {
+      if (!token) {
         return (
           <Redirect
             to={{
@@ -32,8 +35,8 @@ const AuthenticatedRoute = ({ render, component: Component, ...rest }) => (
             if (query.loading) return <Loading />;
             const viewer = query.data.viewer;
 
-            if (rest.path !== '/setup' && viewer && viewer.setupRequired) {
-              return <Redirect to="/setup" />
+            if (rest.path !== "/setup" && viewer && viewer.setupRequired) {
+              return <Redirect to="/setup" />;
             }
 
             if (viewer && !viewer.confirmed) {
@@ -41,9 +44,10 @@ const AuthenticatedRoute = ({ render, component: Component, ...rest }) => (
             }
 
             if (viewer && viewer.confirmed) {
-              return Component ? <Component {...props} /> : render(props)
+              return Component ? <Component {...props} /> : render(props);
             }
 
+            window.sessionStorage.removeItem("authToken");
             window.localStorage.removeItem("authToken");
 
             return (
