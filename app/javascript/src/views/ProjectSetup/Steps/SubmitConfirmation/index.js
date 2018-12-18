@@ -40,14 +40,17 @@ const SubmitConfirmation = ({
           input: {
             id: match.params.projectID
           }
-        }
+        },
       });
 
       clearInterval(progressTimer);
       const { errors } = response.data.confirmProject;
       if (errors) {
         console.log(errors);
+        return
       }
+
+      window.location = `/projects/${match.params.projectID}`
     }, 1000);
   }, []);
 
