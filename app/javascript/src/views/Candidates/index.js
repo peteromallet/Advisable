@@ -9,6 +9,7 @@ import FETCH_PROJECT from "./graphql/fetchProject.graphql";
 import ProjectNavigation from "./ProjectNavigation";
 import View from "src/components/View";
 import useMobile from "src/utilities/useMobile";
+import useScrollRestore from 'src/utilities/useScrollRestore';
 import { ApplicantsContainer } from "./styles";
 
 const STATUSES = {
@@ -41,7 +42,7 @@ const STATUSES = {
 };
 
 const Project = ({ match, data }) => {
-  window.scrollTo(0, 0)
+  useScrollRestore();
   const isMobile = useMobile();
   const slug = match.params.status;
 

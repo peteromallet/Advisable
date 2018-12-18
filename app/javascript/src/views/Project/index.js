@@ -11,6 +11,7 @@ import ViewProposal from "../ViewProposal";
 import NotFoundError from "../NotFound/error";
 import InterviewAvailability from "../InterviewAvailability";
 import FETCH_PROJECT from "./fetchProject.graphql";
+import ClipboardPolyfill from "clipboard-polyfill";
 
 const redirectError = (error, location) => {
   let redirect
