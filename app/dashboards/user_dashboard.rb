@@ -15,6 +15,7 @@ class UserDashboard < Administrate::BaseDashboard
     email: Field::String,
     country: Field::BelongsTo,
     projects: Field::HasMany,
+    permissions: PermissionsField,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -39,6 +40,7 @@ class UserDashboard < Administrate::BaseDashboard
     :last_name,
     :email,
     :country,
+    :permissions,
     :projects,
     :created_at,
     :updated_at,
@@ -52,6 +54,7 @@ class UserDashboard < Administrate::BaseDashboard
     :last_name,
     :email,
     :country,
+    :permissions,
   ].freeze
 
   # Overwrite this method to customize how clients are displayed
