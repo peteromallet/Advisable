@@ -25,6 +25,10 @@ class ViewProposal extends React.Component {
     rejectionModal: false
   };
 
+  componentDidMount() {
+    window.scrollTo(0, 0)
+  }
+
   get backURL() {
     return `/projects/${this.props.match.params.projectID}/proposed`;
   }

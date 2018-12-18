@@ -5,6 +5,7 @@ import countBy from "lodash/countBy";
 import Sticky from "react-stickynode";
 import Icon from "src/components/Icon";
 import pluralize from "src/utilities/pluralize";
+import useScrollRestore from 'src/utilities/useScrollRestore';
 import { Mobile } from "src/components/Breakpoint";
 import ShareAction from "../components/ShareAction";
 import {
@@ -51,6 +52,7 @@ const navigation = [
 ];
 
 export default ({ match, data }) => {
+  useScrollRestore()
   const applications = get(data, "project.applications", []);
   const counts = countBy(applications, "status");
 
