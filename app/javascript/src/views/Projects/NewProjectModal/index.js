@@ -11,6 +11,7 @@ import SuggestedSelect from "src/components/SuggestedSelect";
 import { NewProjectChoice } from "./styles";
 import fetchSkills from "./skills.graphql";
 import createProject from "./createProject.graphql";
+import fetchProjects from '../projects.graphql';
 
 const getSelectedOption = (skills, id) => {
   if (!id) return null;
@@ -117,5 +118,11 @@ const NewProjectModal = ({ isOpen, onClose, data, mutate }) => {
 
 export default compose(
   graphql(fetchSkills),
-  graphql(createProject)
+  graphql(createProject, {
+    options: props => ({
+      refetchQueries: [{
+        query: fetchProjects,
+      }]
+    })
+  })
 )(NewProjectModal);
