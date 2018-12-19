@@ -1,5 +1,6 @@
 class Mutations::CreateProject < Mutations::BaseMutation
   argument :primary_skill, String, required: true
+  argument :service_type, String, required: true
 
   field :project, Types::ProjectType, null: true
   field :errors, [Types::Error], null: true

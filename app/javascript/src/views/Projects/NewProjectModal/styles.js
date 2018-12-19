@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
-export const NewProjectChoice = styled(Link)`
+export const NewProjectChoice = styled.div`
   display: block;
+  cursor: pointer;
   position: relative;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   text-decoration: none;
   padding: 20px 40px 20px 20px;
   border: 1px solid rgba(77, 88, 128, 0.25);

@@ -32,6 +32,8 @@ class Projects::Update < ApplicationService
     record['Project Description'] = project.description
     record['Specialist Requirement Description'] = project.specialist_description
     record['Goals'] = project.goals.to_json
+    record['Project Stage'] = project.status
+    record['Service Type'] = project.service_type
     record['Required Characteristics'] = project.required_characteristics.to_json
     record['Optional Characteristics'] = project.optional_characteristics.to_json
     record['Qualification Question 1'] = project.questions.try(:[], 0)

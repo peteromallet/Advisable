@@ -5,6 +5,7 @@ class Types::ProjectType < Types::BaseType
   field :primary_skill, String, null: true
   field :currency, String, null: true
   field :status, String, null: true
+  field :service_type, String, null: true
   field :clientReferralUrl, String, null: true
   field :user, Types::User, null: true
   field :goals, [String], null: true

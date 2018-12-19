@@ -11,7 +11,7 @@ import ViewProposal from "../ViewProposal";
 import NotFoundError from "../NotFound/error";
 import InterviewAvailability from "../InterviewAvailability";
 import FETCH_PROJECT from "./fetchProject.graphql";
-import ClipboardPolyfill from "clipboard-polyfill";
+import ScheduleSetupCall from './ScheduleSetupCall';
 
 const redirectError = (error, location) => {
   let redirect
@@ -62,6 +62,10 @@ const Project = ({ location, match: { path, params } }) => {
 
         if (!project) {
           throw new NotFoundError()
+        }
+
+        if (project && project.status === "Project Created") {
+          return <ScheduleSetupCall project={project} />
         }
 
         if (project && project.status === "Brief Pending Confirmation") {
