@@ -4,6 +4,7 @@ FactoryBot.define do
     last_name "MyString"
     password "testing123"
     company_name "Test Company"
+    confirmed_at 2.weeks.ago
     sequence(:email) { |n| "user#{n}@test.com" }
     sequence(:airtable_id) { |n| "rec_#{n}" }
 
