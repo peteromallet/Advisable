@@ -10,12 +10,13 @@ describe "Creating a project" do
     user = create(:user)
     create(:skill, name: "Testing", profile: true, category: "Marketing")
     authenticate_as user
-    visit '/project_setup'
+    visit '/projects'
+    find("div[class^='styles__NewProject']").click
     find('.SuggestedSelect__control').click
     input = find('.SuggestedSelect__control input')
     input.send_keys("Test")
     input.send_keys(:return)
-    click_on 'Continue'
+    find('h4', text: "Self-Service").click
     expect(page).to have_content("Company Overview")
   end
 end

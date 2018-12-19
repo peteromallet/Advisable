@@ -97,7 +97,7 @@ const NewProjectModal = ({ isOpen, onClose, data, mutate }) => {
                       formik.submitForm();
                     }}
                   >
-                    <h4>Self-serve</h4>
+                    <h4>Self-Service</h4>
                     <p>
                       Setup the project yourself without speaking to a member of
                       the Advisable team.
