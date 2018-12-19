@@ -15,6 +15,10 @@ mutation CreateProject($input: CreateProjectInput!) {
       specialistDescription
       requiredCharacteristics
       optionalCharacteristics
+      user {
+        name
+        email
+      }
     }
     errors {
       code

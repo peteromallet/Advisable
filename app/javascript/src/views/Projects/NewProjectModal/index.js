@@ -12,18 +12,21 @@ import { NewProjectChoice } from "./styles";
 import fetchSkills from "./skills.graphql";
 import createProject from "./createProject.graphql";
 import fetchProjects from '../projects.graphql';
+import calendly from 'src/utilities/calendly';
 
 const getSelectedOption = (skills, id) => {
   if (!id) return null;
   return find(skills, { value: id });
 };
 
-const openCalendly = () => {
-  Calendly.showPopupWidget(
-    "https://calendly.com/advisable-marketing/briefing/"
-  );
-  return false;
-};
+const openCalendly = (project) => {
+  calendly(
+  "https://calendly.com/advisable-marketing/advisable-briefing-call-app/12-19-2018", {
+    full_name: project.user.name,
+    email: project.user.email,
+    a2: project.airtableId
+  })
+}
 
 const NewProjectModal = ({ isOpen, onClose, data, mutate }) => {
   return (
@@ -44,7 +47,7 @@ const NewProjectModal = ({ isOpen, onClose, data, mutate }) => {
 
           const { project } = response.data.createProject;
           if (project.serviceType === "Assisted") {
-            openCalendly();
+            openCalendly(project);
             onClose();
             return
           }
