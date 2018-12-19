@@ -8,20 +8,23 @@ import Divider from "src/components/Divider";
 import Heading from "src/components/Heading";
 import Container from "src/components/Container";
 import { Action } from "./styles";
+import calendly from 'src/utilities/calendly';
 import convertToSelfService from "./convertToSelfService.graphql";
-
-const openCalendly = () => {
-  Calendly.showPopupWidget(
-    "https://calendly.com/advisable-marketing/briefing/"
-  );
-  return false;
-};
 
 const ScheduleSetupCall = ({ project, mutate }) => {
   const [loading, setLoading] = useState(false);
 
   if (loading) {
     return <Loading />;
+  }
+
+  const openCalendly = () => {
+    calendly(
+    "https://calendly.com/advisable-marketing/advisable-briefing-call-app/12-19-2018", {
+      full_name: project.user.name,
+      email: project.user.email,
+      a2: project.airtableId
+    })
   }
 
   const convertToSelfService = async () => {
