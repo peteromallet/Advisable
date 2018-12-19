@@ -8,6 +8,10 @@ class Payments::Failed < ApplicationService
   end
 
   def call
+    if payment.status != 'pending'
+      raise Service::Error.new("Payment is not pending")
+    end
+
     payment.update_attributes(status: 'failed', error_code: error_code)
     payment
   end
