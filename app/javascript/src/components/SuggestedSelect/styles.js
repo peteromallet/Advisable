@@ -28,4 +28,8 @@ export const Select = styled(ReactSelect)`
   .SuggestedSelect__placeholder {
     color: #8C92AE;
   }
+
+  .SuggestedSelect__menu {
+    z-index: 100;
+  }
 `;

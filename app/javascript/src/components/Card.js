@@ -7,6 +7,10 @@ const Card = styled.div`
   position: relative;
   box-shadow: 0 4px 10px 0 rgba(208, 217, 233, 0.38);
 
+  ${props => props.center && css`
+    text-align: center;
+  `}
+
   ${props =>
     props.onClick &&
     css`

@@ -132,6 +132,10 @@ const statusStyling = {
   "Brief Pending Confirmation": css`
     color: #684A00;
     background: #FFF1CE;
+  `,
+  "Project Created": css`
+    color: #684A00;
+    background: #FFF1CE;
   `
 }
 

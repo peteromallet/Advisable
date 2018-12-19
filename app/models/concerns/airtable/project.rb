@@ -40,6 +40,7 @@ class Airtable::Project < Airtable::Base
     self['Project Description'] = project.description if project.saved_change_to_description?
     self['Specialist Requirement Description'] = project.specialist_description if project.saved_change_to_specialist_description?
     self['Goals'] = project.goals.to_json if project.saved_change_to_goals?
+    self['Service Type'] = project.service_type if project.saved_change_to_service_type?
     self['Required Characteristics'] = project.required_characteristics.to_json if project.saved_change_to_required_characteristics?
     self['Optional Characteristics'] = project.optional_characteristics.to_json if project.saved_change_to_optional_characteristics?
     self['Qualification Question 1'] = project.questions.try(:[], 0) if project.saved_change_to_questions?
