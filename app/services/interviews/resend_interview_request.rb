@@ -1,7 +1,7 @@
 class Interviews::ResendInterviewRequest < ApplicationService
   attr_reader :interview, :availability, :time_zone
   
-  def initialize(interview:, availability:, time_zone: )
+  def initialize(interview:, availability:, time_zone:)
     @interview = interview
     @availability = availability
     @time_zone = time_zone
@@ -9,11 +9,14 @@ class Interviews::ResendInterviewRequest < ApplicationService
 
   def call
     interview.user.update_attributes(availability: availability)
-    if interview.update_attributes(time_zone: time_zone, status: "Call Requested")
+    interview.assign_attributes(time_zone: time_zone, status: "More Time Options Added")
+
+    if interview.save
       update_airtable
+      return interview
     end
 
-    interview
+    raise Service::Error.new(interview.errors.full_messages.first)
   end
 
   private
@@ -23,7 +26,7 @@ class Interviews::ResendInterviewRequest < ApplicationService
   end
 
   def update_airtable
-    airtable_record["Call Status"] = "Call Requested"
+    airtable_record["Call Status"] = interview.status
     airtable_record.save
   end
 end
