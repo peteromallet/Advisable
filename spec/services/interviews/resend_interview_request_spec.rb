@@ -11,7 +11,7 @@ describe Interviews::ResendInterviewRequest do
   end
 
   it "updates the users availability" do
-    time = 1.day.from_now
+    time = 1.day.from_now.to_s
     expect(interview.user.reload.availability).to_not include(time)
     Interviews::ResendInterviewRequest.call(
       interview: interview,
