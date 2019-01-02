@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import moment from "moment-timezone";
-import find from 'lodash/find';
-import reduce from 'lodash/reduce';
 import ZONES from './zones';
 
 const OPTIONS = ZONES.map(z => ({ label: z, value: z }))

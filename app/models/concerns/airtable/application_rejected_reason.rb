@@ -8,5 +8,5 @@ class Airtable::ApplicationRejectedReason < Airtable::Base
 
   # Tells which active record model to sync data with.
   sync_with ::ApplicationRejectionReason
-  sync_columns :reason
+  sync_column 'Reason', to: :reason
 end

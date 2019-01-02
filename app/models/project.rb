@@ -1,8 +1,9 @@
 class Project < ApplicationRecord
   include Airtable::Syncable
   has_many :applications
+  has_many :bookings, through: :applications
   has_many :payments
-  belongs_to :client
+  validates :service_type, inclusion: { in: %w(Assisted Self-Service) }, allow_nil: true
   belongs_to :user, required: false
   validates :name, presence: true
 

@@ -11,6 +11,7 @@ describe 'Rejecting an application' do
     expect(Airtable::Application).to receive(:find).with(application.airtable_id)
       .and_return(airtableApplication)
 
+    authenticate_as project.user
     visit "/projects/#{project.airtable_id}"
     click_on 'Provide Feedback'
     within '.ModalWindow' do

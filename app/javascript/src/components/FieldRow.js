@@ -1,4 +1,5 @@
 import React from "react";
+import isArray from "lodash/isArray";
 import styled from "styled-components";
 
 const FieldRowField = styled.div`
@@ -15,13 +16,17 @@ const FieldRow = styled.div`
 `;
 
 export default ({ children }) => {
-  const fields = children.map((child, i) => {
-    if (child) {
-      return <FieldRowField key={i}>{child}</FieldRowField>
-    }
-  });
+  let fields;
 
-  return (
-    <FieldRow>{fields}</FieldRow>
-  );
+  if (isArray(children)) {
+    fields = children.map((child, i) => {
+      if (child) {
+        return <FieldRowField key={i}>{child}</FieldRowField>;
+      }
+    });
+  } else {
+    fields = <FieldRowField>{children}</FieldRowField>;
+  }
+
+  return <FieldRow>{fields}</FieldRow>;
 };

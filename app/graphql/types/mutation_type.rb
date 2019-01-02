@@ -20,6 +20,16 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :create_payment, mutation: Mutations::CreatePayment
 
+  field :create_project, mutation: Mutations::CreateProject
   field :update_project, mutation: Mutations::UpdateProject
   field :confirm_project, mutation: Mutations::ConfirmProject
+  field :convert_to_self_service, mutation: Mutations::ConvertToSelfService
+
+  field :login, mutation: Mutations::Login
+  field :setup, mutation: Mutations::Setup
+  field :signup, mutation: Mutations::Signup
+  field :confirm_account, mutation: Mutations::ConfirmAccount
+  field :resend_confirmation_email, mutation: Mutations::ResendConfirmationEmail
+  field :request_password_reset, mutation: Mutations::RequestPasswordReset
+  field :reset_password, mutation: Mutations::ResetPassword
 end

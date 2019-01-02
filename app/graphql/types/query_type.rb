@@ -1,13 +1,38 @@
-class Types::QueryType < GraphQL::Schema::Object
+class Types::QueryType < Types::BaseType
 
   field :project, Types::ProjectType, description: "Find a Project by ID", null: true do
+    # querying for a specific project requires a special case where the user
+    # will face one of three scenrios:
+    # 1. The user is not logged in and the client associated to the project
+    # has not yet created an account. In this case we want to return an error
+    # code of signupRequired. The user email will be included in this error
+    # as an extension.
+    # 2. The user is not logged in and the client has an account. In this case
+    # we need to inform the user to redirect to the login page with an error
+    # code of notAuthenticated
+    # 3. The user is logged in but does not have access to the project. In this
+    # case we dont need to return any error. The autorization logic will return
+    # nil for the project.
+    # The corresponding frontend code for these cases can be found in
+    # /views/Project/index.js
+    authorize :can_fetch_project, error: ->(record, ctx) {
+      current_user = ctx[:current_user]
+      if !current_user
+        user = record.user
+        code = "authenticationRequired" 
+        extensions = { email: user.try(:email) }
+        code = "signupRequired" unless user.try(:has_account?)
+
+        raise GraphQL::ExecutionError.new(code, extensions: extensions)
+      end
+    }
     argument :id, ID, required: true
   end
 
   def project(**args)
     begin
-      Project.find_by_airtable_id(args[:id])
-    rescue Airrecord::Error => er
+      Project.find_by_airtable_id!(args[:id])
+    rescue ActiveRecord::RecordNotFound => er
       GraphQL::ExecutionError.new("Could not find project #{args[:id]}")
     end
   end
@@ -78,5 +103,29 @@ class Types::QueryType < GraphQL::Schema::Object
 
   def payment(id: )
     Payment.find_by_uid(id)
+  end
+
+  field :viewer, Types::User, "Get the current user", null: true
+
+  def viewer
+    context[:current_user]
+  end
+
+  field :countries, [Types::CountryType], "Return the list of countries", null: false
+
+  def countries
+    Country.all
+  end
+
+  field :skills, [Types::Skill], "Returns a list of skills", null: false do
+    argument :category, String, required: false
+    argument :profile, Boolean, required: false
+  end
+ 
+  def skills(**args)
+    skills = ::Skill.all
+    skills = skills.where(category: args[:category]) if args[:category]
+    skills = skills.where(profile: args[:profile]) if args[:profile]
+    skills
   end
 end

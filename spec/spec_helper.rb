@@ -10,6 +10,10 @@ SimpleCov.start 'rails' do
   add_group "Services", "app/services"
 end
 
+# put sidekiq in test mode
+require 'sidekiq/testing' 
+Sidekiq::Testing.fake!
+
 # require all support files
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
@@ -32,6 +36,7 @@ WebMock.disable_net_connect!(allow_localhost: true)
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.include AuthenticationHelper
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

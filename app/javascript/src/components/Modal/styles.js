@@ -1,6 +1,5 @@
 import styled, { keyframes, css } from "styled-components";
 import { withSpacing } from '../Spacing';
-import { rgba } from "polished";
 
 export const ModalContainer = styled.div`
   top: 0;
@@ -8,11 +7,11 @@ export const ModalContainer = styled.div`
   right: 0;
   bottom: 0;
   z-index: 400;
-  padding: ${props => props.expandOnMobile ? 0 : '20px'};
   display: flex;
   position: fixed;
   align-items: center;
   justify-content: center;
+  padding: ${props => props.expandOnMobile ? 0 : '20px'};
 `;
 
 const windowWidths = {
@@ -30,8 +29,8 @@ export const Window = withSpacing(styled.div.attrs({
   background: white;
   border-radius: 8px;
   position: relative;
-  box-shadow: 0 15px 50px -15px #233951;
   width: ${props => windowWidths[props.size || "m"]};
+  box-shadow: 0px 10px 50px rgba(14, 29, 78, 0.3);
 
   ${props =>
     props.expandOnMobile &&
@@ -60,8 +59,8 @@ export const Backdrop = styled.div`
   right: 0;
   bottom: 0;
   position: absolute;
+  background: rgba(76, 87, 126, 0.7);
   animation: ${fadeIn} 500ms ease-out;
-  background: ${rgba("#24384E", 0.85)};
 `;
 
 export const CloseModal = styled.button`

@@ -1,0 +1,11 @@
+mutation ConfirmAccount($input: ConfirmAccountInput!) {
+  confirmAccount(input: $input) {
+    user {
+      id
+      confirmed
+    }
+    errors {
+      code
+    }
+  }
+}

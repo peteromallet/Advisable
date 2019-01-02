@@ -17,6 +17,7 @@ const weights = {
   s: 500,
   m: 600,
   l: 'bold',
+  semibold: 600,
 }
 
 const letterSpacing = {
@@ -27,7 +28,7 @@ const letterSpacing = {
 export default withSpacing(styled.h3`
   color: #1E1A48;
   font-size: ${props => sizes[props.size] || sizes['m']};
-  font-weight: ${props => weights[props.size] || weights['m']};;
+  font-weight: ${props => weights[props.weight || props.size] || weights['m']};;
   line-height: ${props => lineHeighs[props.size] || lineHeighs['m']};
   letter-spacing: ${props => letterSpacing[props.size] || letterSpacing['m']};
   display: ${props => props.block ? 'block' : 'auto'};
