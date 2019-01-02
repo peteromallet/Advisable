@@ -48,7 +48,7 @@ class Airtable::Base < Airrecord::Table
     # the ActiveRecord model. e.g if the airtable record has an application_status
     # which we want to sync with the ActiveRecord model's 'status' attribute, we
     # can use.
-    # => sync_column :application_status, to: :status
+    # => sync_column 'Application Status', to: :status
     def sync_column(column, options = {})
       @columns_hash ||= {}
       @columns_hash[column] = options[:to]
@@ -78,7 +78,7 @@ class Airtable::Base < Airrecord::Table
       Rails.logger.info "Syncing #{record_type} #{id}"
 
       self.class.columns_hash.each do |column, attr|
-        model.send("#{attr}=", self[column.to_sym])
+        model.send("#{attr}=", self[column])
       end
 
       instance_exec(model, &self.class.sync_block) if self.class.sync_block

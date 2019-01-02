@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   padding: 40px;
-  overflow: hidden;
   max-width: 700px;
+  overflow: hidden;
   position: relative;
   border-radius: 4px;
   background: #FFFFFF;

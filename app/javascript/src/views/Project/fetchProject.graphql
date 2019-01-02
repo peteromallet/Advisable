@@ -1,0 +1,11 @@
+query project($id: ID!) {
+  project(id: $id) {
+    id
+    airtableId
+    status
+    user {
+      name
+      email
+    }
+  }
+}

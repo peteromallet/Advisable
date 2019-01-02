@@ -44,6 +44,7 @@ describe 'Sending an offer' do
       }
     }.to_json)
 
+    authenticate_as project.user
     visit "/projects/#{project.airtable_id}/applications/#{application.airtable_id}/offer"
     fill_in 'startDate', with: start_date.strftime('%d %B %Y')
     fill_in 'endDate', with: end_date.strftime('%d %B %Y')

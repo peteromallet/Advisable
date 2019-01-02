@@ -10,7 +10,7 @@ Wrapper = withSpacing(Wrapper)
 
 export const Input = styled.input`
   width: 100%;
-  height: 36px;
+  height: 40px;
   border: none;
   outline: none;
   padding: 0 12px;
@@ -21,9 +21,8 @@ export const Input = styled.input`
   border-radius: 8px;
   background: #F4F7FC;
   letter-spacing: -0.015em;
-  transition: background 300ms;
   border: 2px solid transparent;
-  transition: border-color 200ms;
+  transition: border-color 200ms, background-color 300ms;
 
   &:focus {
     background: #ECF1FA;

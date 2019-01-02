@@ -1,0 +1,15 @@
+query {
+  viewer {
+    id
+    projects {
+      id
+      airtableId
+      primarySkill
+      status
+      description
+      applications {
+        id
+      }
+    }
+  }
+}

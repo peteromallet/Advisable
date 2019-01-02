@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'Request Introduction' do
   it 'Creates an interview request' do
-    client = create(:client)
-    project = create(:project, client: client)
+    user = create(:user)
+    project = create(:project, user: user)
     application = create(:application, status: "Applied", project: project)
 
     airtable_interview_record = double('Airtable::Interview', id: 'interview_1')
@@ -15,6 +15,7 @@ describe 'Request Introduction' do
     expect(airtable_application_reocrd).to receive(:save)
     expect(Airtable::Application).to receive(:find).and_return(airtable_application_reocrd)
 
+    authenticate_as project.user
     visit "/projects/#{project.airtable_id}/applied"
     click_on 'Request Call'
     page.all("div[class^=styles__TimeCell]")[10].click

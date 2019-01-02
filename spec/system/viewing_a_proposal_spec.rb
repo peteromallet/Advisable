@@ -17,6 +17,7 @@ describe 'Viewing a proposal' do
 
     project = proposal.application.project
 
+    authenticate_as project.user
     visit "/projects/#{project.airtable_id}/proposals/#{proposal.airtable_id}"
 
     fill_in 'rate', with: ''

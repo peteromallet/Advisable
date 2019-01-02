@@ -10,8 +10,11 @@ import TimeZoneSelect from "src/components/TimeZoneSelect";
 import { withNotifications } from "src/components/Notifications";
 import { Form, Header, Body, Footer } from "./styles";
 import RESEND_INTERVIEW_REQUEST from './resendInterviewRequest.graphql';
+import useWindowSize from 'src/utilities/useWindowSize';
 
 const AvailabilityForInterview = ({ interview, notifications }) => {
+  const windowSize = useWindowSize()
+
   return (
     <Mutation mutation={RESEND_INTERVIEW_REQUEST}>
       {resendInterviewRequest => (
@@ -34,7 +37,7 @@ const AvailabilityForInterview = ({ interview, notifications }) => {
           }}
         >
           {formik => (
-            <Form onSubmit={formik.handleSubmit}>
+            <Form onSubmit={formik.handleSubmit} height={windowSize.height}>
               <Header>
                 <Heading>
                   {interview.application.specialist.name} has requested more availability.

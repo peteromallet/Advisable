@@ -22,10 +22,19 @@ This command should be setup to run regularly to keep the data up to date.
 ### Syncing an airtable database table.
 Each table in airtable is synced by defining a class which inherits from [Airtable::Base](https://github.com/thomascullen/Advisable/tree/master/app/models/concerns/airtable/base.rb). These classes are defined in [app/models/concerns/airtable](https://github.com/thomascullen/Advisable/tree/master/app/models/concerns/airtable).
 
+# Setup
+You will need to install ruby, postgres and redis.
+
+```
+$ bundle
+$ rails db:setup
+```
 
 # Development
 The advisable application is built on ruby on rails. The frontend is built in
-React which is delivered by the rails app using the [webpacker](https://github.com/rails/webpacker) gem. The source code for the frontend codebase can be found in [/app/javascript/src](https://github.com/thomascullen/Advisable/tree/master/app/javascript/src). The frontend codebase communicates with the backend via a GraphQL API which can be found in [/app/graphql](https://github.com/thomascullen/Advisable/tree/master/app/graphql).
+React which is delivered by the rails app using the [webpacker](https://github.com/rails/webpacker) gem. The source code for the frontend codebase can be found in [/app/javascript/src](app/javascript/src). The frontend codebase communicates with the backend via a GraphQL API which can be found in [/app/graphql](app/graphql).
+
+See the [API documentation](docs/api.md) for more details on the graphql API.
 
 You can run the app locally using the heroku toolbelt or the [foreman gem](https://github.com/ddollar/foreman). You will also need to run webpack in a separate process to compile the frontend assets.
 
@@ -37,6 +46,16 @@ or
 ```
 $ foreman
 $ ./bin/webpacker-dev-server
+```
+
+## Background Jobs
+Background jobs are stored in a redis queue and processed by sidekiq. You can
+run both of these processes by running the following commands in two separate
+terminal windows.
+
+```
+$ redis-server
+$ bundle exec sidekiq
 ```
 
 ## Frontend Structure
@@ -54,5 +73,4 @@ in the root directory.
 - `ADMIN_PASSWORD`: Sets the password for the admin dashboard
 - `ADMIN_USERNAME`: Sets the username for the admin dashboard
 - `AIRTABLE_API_KEY`: The API key for the Airtable database.
-
 - `AIRTABLE_DATABASE_KEY`: The database key for the Airtable database.

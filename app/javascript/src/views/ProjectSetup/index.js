@@ -11,11 +11,11 @@ import FETCH_PROJECT from "./fetchProject.graphql";
 import { stepsForProject, currentStep } from "./Steps";
 import { Container, Step, StepHeading } from "./styles";
 
-const ProjectSetup = ({ data, match }) => {
+const ProjectSetup = ({ data = {}, match }) => {
   if (data.loading) return <Loading />;
 
-  if (!data.project) {
-    throw new NotFoundError()
+  if (match.params.projectID && !data.project) {
+    throw new NotFoundError();
   }
 
   // Redirect to the project dashboard if the status is not pending approval
@@ -32,14 +32,6 @@ const ProjectSetup = ({ data, match }) => {
   const lastStepRef = useRef(currentStepNumber);
   useEffect(() => (lastStepRef.current = currentStepNumber));
   const previousStep = lastStepRef.current;
-
-  // If the router match is an exact match then the user has gone to
-  // /project_setup/:id and we need to redirect to the first step. We do this
-  // hear instead of inside the Switch component below so that it does not
-  // effect the animations between steps.
-  if (match.isExact) {
-    return <Redirect to={`${match.url}/company_overview`} />;
-  }
 
   return (
     <Fragment>
@@ -91,6 +83,7 @@ const ProjectSetup = ({ data, match }) => {
                       <Route
                         key={route.path}
                         path={route.path}
+                        exact={route.exact}
                         render={route => (
                           <animated.div style={transition}>
                             <Component {...route} project={data.project} />
@@ -115,5 +108,8 @@ export default graphql(FETCH_PROJECT, {
     variables: {
       id: props.match.params.projectID
     }
-  })
+  }),
+  // We also need to handle the case when the user is at /project_setup and
+  // there is no projectID in the url. In these cases we simply skip the query
+  skip: props => props.match.params.projectID === undefined
 })(ProjectSetup);

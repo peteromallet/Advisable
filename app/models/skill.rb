@@ -1,4 +1,5 @@
 class Skill < ApplicationRecord
+  include UID
   has_many :specialist_skills
   has_many :specialists, through: :specialist_skills
   validates :name, presence: true

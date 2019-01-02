@@ -1,10 +1,15 @@
 class Types::User < Types::BaseType
   field :id, ID, null: false
   field :airtable_id, String, null: false
-  field :name, String, null: false
-  field :first_name, String, null: false
-  field :last_name, String, null: false
-  field :client, Types::Client, null: false
+  field :name, String, null: true
+  field :email, String, null: false
+  field :first_name, String, null: true
+  field :last_name, String, null: true
+  field :companyName, String, null: true
+  field :setup_required, Boolean, null: false
+  field :country, Types::CountryType, null: true
+  field :projects, [Types::ProjectType], null: true
+  field :confirmed, Boolean, null: false
   field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
     argument :exclude_conflicts, Boolean, required: false, description: 'Exclude any times that conflict with scheduled interviews'
   end

@@ -11,7 +11,6 @@ import FETCH_DATA from "./fetchData.graphql";
 const InterviewAvailability = ({ match, history }) => {
   return (
     <React.Fragment>
-      <Header />
       <Query query={FETCH_DATA} variables={{ id: match.params.interviewID }}>
         {query => {
           if (query.loading) return <Loading />;
