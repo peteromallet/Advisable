@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_091915) do
     t.string "status"
     t.integer "deposit_paid"
     t.bigint "user_id"
+    t.string "primary_skill"
     t.string "service_type"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
@@ -202,6 +203,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_091915) do
     t.text "availability"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "company_name"
     t.string "password_digest"
     t.string "email"
     t.string "uid"
@@ -210,7 +212,6 @@ ActiveRecord::Schema.define(version: 2018_12_19_091915) do
     t.bigint "country_id"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
-    t.string "company_name"
     t.text "permissions", default: [], array: true
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
   end
