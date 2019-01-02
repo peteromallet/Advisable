@@ -7,5 +7,5 @@ class Airtable::BookingRejectedReason < Airtable::Base
   self.table_name = "Bookings - Rejected Reason"
 
   sync_with ::BookingRejectionReason
-  sync_columns :name
+  sync_column 'Name', to: :name
 end

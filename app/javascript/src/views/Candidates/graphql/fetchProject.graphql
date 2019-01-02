@@ -1,0 +1,46 @@
+query project($id: ID!) {
+  project(id: $id) {
+    id
+    name
+    currency
+    primarySkill
+    clientReferralUrl
+    applications {
+      id
+      rate
+      status
+      featured
+      comment
+      airtableId
+      availability
+      introduction
+      referencesRequested
+      proposal {
+        id
+      }
+      questions {
+        question
+        answer
+      }
+      specialist {
+        id
+        name
+        firstName
+        city
+        image {
+          url
+        }
+        country {
+          id
+          name
+        }
+        linkedin
+        skills
+      }
+    }
+  }
+  applicationRejectionReasons {
+    id
+    reason
+  }
+}

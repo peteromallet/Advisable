@@ -1,12 +1,22 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { withSpacing } from "src/components/Spacing";
 import { Link } from "react-router-dom";
 
+const STYLES = {
+  subtle: css`
+    color: #4D5880;
+
+    &:hover {
+      color: #0064ff;
+    }
+  `
+}
+
 let RouterLink = styled(Link)`
   color: #0064ff;
-  display: flex;
   align-items: center;
+  display: inline-flex;
   text-decoration: none;
 
   img {
@@ -17,6 +27,8 @@ let RouterLink = styled(Link)`
   &:hover {
     color: #003890;
   }
+
+  ${props => STYLES[props.styling]}
 `;
 
 RouterLink = withSpacing(RouterLink);

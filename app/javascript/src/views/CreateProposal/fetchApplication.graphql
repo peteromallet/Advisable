@@ -3,8 +3,8 @@ query FetchApplication($id: ID!) {
     project {
       name
       currency
-      client {
-        name
+      user {
+        companyName
       }
     }
     proposal {

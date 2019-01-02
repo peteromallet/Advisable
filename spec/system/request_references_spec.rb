@@ -13,6 +13,7 @@ describe 'Requesting references' do
 
   context "from applicants view" do
     it 'confirms request with a notification' do
+      authenticate_as project.user
       visit "/projects/#{project.airtable_id}/introduced"
       click_on 'Request References'
       within '.ModalWindow' do
@@ -25,6 +26,7 @@ describe 'Requesting references' do
 
   context "from applicant detail view" do
     it 'confirms request with a notification' do
+      authenticate_as project.user
       visit "/projects/#{project.airtable_id}/applications/#{application.airtable_id}"
       click_on 'Request References'
       within '.ModalWindow' do

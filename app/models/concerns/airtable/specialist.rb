@@ -6,9 +6,12 @@ class Airtable::Specialist < Airtable::Base
 
   # Tells which active record model to sync data with.
   sync_with ::Specialist
-  sync_columns :first_name, :last_name, :city, :phone_number
-  sync_column :linkedin_url, to: :linkedin
-  sync_column :can_travel, to: :travel_availability
+  sync_column 'First Name', to: :first_name
+  sync_column 'Last Name', to: :last_name
+  sync_column 'Phone Number', to: :phone_number
+  sync_column 'Can Travel', to: :travel_availability
+  sync_column 'City', to: :city
+  sync_column 'Linkedin URL', to: :linkedin
 
   sync_data do |specialist|
     # to prevent making more requests than we need, first check if there is
@@ -20,16 +23,16 @@ class Airtable::Specialist < Airtable::Base
       specialist.country = country
     end
 
-    specialist.image = self[:image].try(:first)
+    specialist.image = self['Image'].try(:first)
 
     # iterate through each associated specialist id from airtable
     specialist_skills.each do |specialist_skill_id|
       # fetch the specialist skill airtable record
       specialist_skill = Airtable::SpecialistSkill.find(specialist_skill_id)
       # Go to the next record if their is no associated skill.
-      next if specialist_skill[:skill].nil?
+      next if specialist_skill['Skill'].nil?
       # get the associated skill record
-      skill_id = specialist_skill[:skill][0]
+      skill_id = specialist_skill['Skill'][0]
       # check if we already have a synced record of that skill.
       skill = ::Skill.find_by_airtable_id(skill_id)
       # if not then sync it

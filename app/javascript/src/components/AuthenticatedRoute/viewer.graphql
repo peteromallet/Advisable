@@ -1,0 +1,14 @@
+query {
+  viewer {
+    id
+    email
+    firstName
+    lastName
+    confirmed
+    setupRequired
+    companyName
+    country {
+      name
+    }
+  }
+}

@@ -8,6 +8,7 @@ import Container from "src/components/Container";
 import Heading from "src/components/Heading";
 import Text from "src/components/Text";
 import { currencySymbol } from "src/utilities/currency";
+import useScrollRestore from 'src/utilities/useScrollRestore';
 import { withNotifications } from "src/components/Notifications";
 
 import ProposalForm from "../CreateProposal/components/ProposalForm";
@@ -15,21 +16,23 @@ import FETCH_PROPOSAL from "./fetchProposal.graphql";
 import UPDATE_PROPOSAL from "src/graphql/updateProposal.graphql";
 
 const EditProposal = ({ match, notifications }) => {
+  useScrollRestore()
+
   return (
     <Query query={FETCH_PROPOSAL} variables={{ id: match.params.proposalID }}>
       {query => {
         if (query.loading) return <Loading />;
         const booking = query.data.booking;
         if (!booking || booking.status !== 'Proposed') return <NotFound />;
-        const client = booking.application.project.client;
+        const user = booking.application.project.user;
 
         return (
-          <Container>
+          <Container size="m">
             <Card padding="xl">
               <Heading marginBottom="xs" size="l">
-                Proposal for {client.name}
+                Proposal for {user.companyName}
               </Heading>
-              <Text marginBottom='xl' size='l'>Send a proposal to {client.name}</Text>
+              <Text marginBottom='xl' size='l'>Send a proposal to {user.companyName}</Text>
               <Mutation mutation={UPDATE_PROPOSAL}>
                 {updateProposal => (
                   <ProposalForm
