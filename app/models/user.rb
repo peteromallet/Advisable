@@ -33,7 +33,7 @@ class User < ApplicationRecord
 
   # Always lowercase the email
   def email=(address)
-    self[:email] = address.downcase
+    self[:email] = address.try(:downcase)
   end
 
   def send_confirmation_email
