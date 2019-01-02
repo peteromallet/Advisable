@@ -3,7 +3,7 @@ class AddUidToSkills < ActiveRecord::Migration[5.2]
     add_column :skills, :uid, :string, index: true
 
     Skill.all.each do |s|
-      s.generate_uid
+      s.send(:generate_uid)
       s.save
     end
   end
