@@ -43,7 +43,7 @@ class InterviewRequest extends Component {
                         {...route}
                         timeZone={interview.timeZone}
                         availability={interview.user.availability}
-                        clientName={interview.application.project.client.name}
+                        clientName={interview.user.companyName}
                       />
                     )}
                   />
@@ -56,7 +56,7 @@ class InterviewRequest extends Component {
                           interview.application.specialist.phoneNumber
                         }
                         timeZone={interview.timeZone}
-                        clientName={interview.application.project.client.name}
+                        clientName={interview.user.companyName}
                       />
                     )}
                   />
@@ -68,7 +68,7 @@ class InterviewRequest extends Component {
                         {...route}
                         timeZone={interview.timeZone}
                         availability={interview.user.availability}
-                        clientName={interview.application.project.client.name}
+                        clientName={interview.user.companyName}
                       />
                     )}
                   />
@@ -83,7 +83,7 @@ class InterviewRequest extends Component {
                       {...route}
                       startsAt={interview.startsAt}
                       timeZone={interview.timeZone}
-                      clientName={interview.application.project.client.name}
+                      clientName={interview.user.companyName}
                     />
                   )}
                 />
@@ -94,7 +94,7 @@ class InterviewRequest extends Component {
                   render={route => (
                     <MoreTimesRequested
                       {...route}
-                      clientName={interview.application.project.client.name}
+                      clientName={interview.user.companyName}
                     />
                   )}
                 />

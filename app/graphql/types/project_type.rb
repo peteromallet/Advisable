@@ -2,10 +2,12 @@ class Types::ProjectType < Types::BaseType
   field :id, ID, null: false
   field :airtable_id, String, null: false
   field :name, String, null: false
+  field :primary_skill, String, null: true
   field :currency, String, null: true
   field :status, String, null: true
+  field :service_type, String, null: true
   field :clientReferralUrl, String, null: true
-  field :client, Types::Client, null: false
+  field :user, Types::User, null: true
   field :goals, [String], null: true
   field :description, String, null: true
   field :company_description, String, null: true

@@ -1,0 +1,13 @@
+{
+  "errors": {
+    "authentication": {
+      "failed": "Invalid login credentials, please try again."
+    },
+    "users": {
+      "email_taken": "This email address is associated with an existing account."
+    }
+  },
+  "projects": {
+    "signupRequired": "We have introduced logins to our system. Please create a password for your account below."
+  }
+}

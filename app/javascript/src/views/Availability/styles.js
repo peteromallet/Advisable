@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  height: 100%;
+export const Container = styled.div.attrs({
+  style: props => ({
+    height: `${props.height}px`
+  })
+})`
   width: 100%;
+  height: 100%;
   background: white;
 `;
 

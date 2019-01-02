@@ -1,41 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import Sidebar from "src/components/Sidebar";
-import MobileHeader from "src/components/MobileHeader";
-import MobileDrawer from "src/components/MobileDrawer";
-import { Container, View } from './styles'
+// The View component provides a base layout for a page. It takes care of
+// rendering the application header and simply renders its children below.
+import React, { Fragment } from "react";
+import Header from "src/components/Header";
 
-class ApplicationContainer extends React.Component {
-  state = {
-    drawer: false
-  };
-
-  toggleDrawer = () => {
-    this.setState({ drawer: !this.state.drawer });
-  };
-
-  componentDidCatch(error, info) {
-    console.log(error);
-  }
-
-  render() {
-    return (
-      <Container>
-        <Sidebar />
-        <MobileDrawer
-          open={this.state.drawer}
-          toggleDrawer={this.toggleDrawer}
-        />
-        <MobileHeader
-          drawerOpen={this.state.drawer}
-          onOpenNavigation={this.toggleDrawer}
-        />
-        <View id="view" drawerOpen={this.state.drawer}>
-          {this.props.children}
-        </View>
-      </Container>
-    );
-  }
+export default ({ children }) => {
+  return (
+    <Fragment>
+      <Header />
+      {children}
+    </Fragment>
+  )
 }
-
-export default ApplicationContainer;

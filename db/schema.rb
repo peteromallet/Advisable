@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_17_111603) do
+ActiveRecord::Schema.define(version: 2018_12_19_091915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,8 +154,9 @@ ActiveRecord::Schema.define(version: 2018_12_17_111603) do
     t.integer "deposit"
     t.string "status"
     t.integer "deposit_paid"
-    t.string "primary_skill"
     t.bigint "user_id"
+    t.string "primary_skill"
+    t.string "service_type"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -165,6 +166,9 @@ ActiveRecord::Schema.define(version: 2018_12_17_111603) do
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "category"
+    t.boolean "profile"
+    t.string "uid"
   end
 
   create_table "specialist_skills", force: :cascade do |t|
@@ -199,15 +203,17 @@ ActiveRecord::Schema.define(version: 2018_12_17_111603) do
     t.text "availability"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "company_name"
     t.string "password_digest"
     t.string "email"
     t.string "uid"
     t.datetime "confirmed_at"
-    t.string "confirmation_token"
+    t.string "confirmation_digest"
     t.bigint "country_id"
-    t.string "company_name"
+    t.string "reset_digest"
+    t.datetime "reset_sent_at"
+    t.text "permissions", default: [], array: true
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
-    t.index ["country_id"], name: "index_users_on_country_id"
   end
 
   create_table "webhook_configurations", force: :cascade do |t|
@@ -242,5 +248,4 @@ ActiveRecord::Schema.define(version: 2018_12_17_111603) do
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "countries"
-  add_foreign_key "users", "countries"
 end

@@ -15,6 +15,7 @@ describe 'Create counter offer' do
 
     project = offer.application.project
 
+    authenticate_as project.user
     visit "/projects/#{project.airtable_id}/offers/#{offer.airtable_id}"
 
     fill_in 'rate', with: ''

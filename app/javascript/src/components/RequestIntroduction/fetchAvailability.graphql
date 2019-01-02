@@ -3,7 +3,7 @@ query application($id: ID!) {
     id
     project {
       id
-      client {
+      user {
         id
         availability
       }

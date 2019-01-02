@@ -13,18 +13,21 @@ const colours = {
 };
 
 const sizes = {
+  xs: "14px",
   s: "15px",
   m: "16px",
   l: "18px"
 };
 
 const lineHeights = {
+  xs: "19px",
   s: '21px',
   m: "23px",
   l: "28px"
 };
 
 const kerning = {
+  xs: "0",
   m: "-0.008em",
   l: "-0.02em"
 };

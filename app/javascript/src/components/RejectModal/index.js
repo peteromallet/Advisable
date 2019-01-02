@@ -56,7 +56,7 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
         <React.Fragment>
           <Text size="s" marginBottom="m" marginTop="m">
             We encourage you to talk to relevant candidates as they come in.
-            This ensures that that they’re still available and lets us calibrate
+            This ensures that they’re still available and lets us calibrate
             the search ASAP.
           </Text>
           <Button onClick={onRequestCall} size="l" type="button" primary>

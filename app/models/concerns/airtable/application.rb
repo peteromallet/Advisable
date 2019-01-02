@@ -4,13 +4,15 @@ class Airtable::Application < Airtable::Base
   belongs_to :specialist, class: 'Specialist', column: "Expert"
 
   sync_with ::Application
-  sync_columns :score, :accepts_fee, :accepts_terms
-  sync_column :hourly_rate_for_project, to: :rate
-  sync_column :available_to_start, to: :availability
-  sync_column :one_line_overview, to: :introduction
-  sync_column :advisable_comment, to: :comment
-  sync_column :rejected_reason, to: :rejection_reason
-  sync_column :rejected_reason_comment, to: :rejection_reason_comment
+  sync_column 'Score', to: :score
+  sync_column 'Accepts Fee', to: :accepts_fee
+  sync_column 'Accepts terms', to: :accepts_terms
+  sync_column 'Hourly Rate For Project', to: :rate
+  sync_column 'Available To Start', to: :availability
+  sync_column 'One Line Overview', to: :introduction
+  sync_column 'Advisable Comment', to: :comment
+  sync_column 'Rejected Reason', to: :rejection_reason
+  sync_column 'Rejected Reason Comment', to: :rejection_reason_comment
 
   sync_data do |application|
     application.status = status_to_sync

@@ -10,12 +10,6 @@ injectGlobal`
     -moz-osx-font-smoothing: grayscale;
   }
 
-  #AppRoot {
-    z-index: 2;
-    height: 100%;
-    overflow-y: visible;
-    overflow: auto;
-  }
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -46,14 +40,20 @@ injectGlobal`
     display: block;
   }
 
-  body {
-    width: 100vw;
-    overflow-x: hidden;
-    line-height: 1;
+  html {
+    min-height: 100%;
   }
 
-  body, html {
-    height: 100%;
+  body {
+    width: 100vw;
+    line-height: 1;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  #AppRoot {
+    overflow: auto;
+    /* min-height: 100vh; */
   }
 
   ol, ul {
@@ -76,6 +76,6 @@ injectGlobal`
   }
 
   body {
-    background-color: #F2F5FB;
+    background-color: #E9ECF6;
   }
 `;

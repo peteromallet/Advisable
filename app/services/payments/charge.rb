@@ -12,9 +12,9 @@ class Payments::Charge < ApplicationService
       amount: payment.amount,
       currency: payment.currency,
       source: payment.source_id,
-      receipt_email: payment.project.client.users.first.email,
+      receipt_email: payment.project.user.email,
       metadata: {
-        name: payment.project.client.users.first.name,
+        name: payment.project.user.name,
         project_airtable_id: payment.project.airtable_id
       }
     }, {

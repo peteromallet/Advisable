@@ -4,6 +4,7 @@ mutation UpdateProject($input: UpdateProjectInput!) {
       id
       goals
       status
+      primarySkill
       questions
       description
       depositOwed
