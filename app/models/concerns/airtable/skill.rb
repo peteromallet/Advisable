@@ -4,9 +4,9 @@ class Airtable::Skill < Airtable::Base
   # Tells which active record model to sync data with.
   sync_with ::Skill
   sync_column 'Name', to: :name
-  sync_column 'Category', to: :category
 
   sync_data do |skill|
+    skill.category = fields['Category'].try(:first)
     skill.profile = fields['Profile Skill'] == 'Yes'
   end
 end

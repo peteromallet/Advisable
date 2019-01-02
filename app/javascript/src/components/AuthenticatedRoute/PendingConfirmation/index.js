@@ -20,7 +20,7 @@ const PendingConfirmation = ({ mutate, notifications }) => {
         Please confirm your account
       </Text>
       <Text marginBottom="xl" center>
-        Please check your inbox for a confirmation email to verify your account
+        Please check your inbox for a confirmation email to verify your account. If you do not receive the confirmation message within a few minutes of signing up, please check your Spam folder.
       </Text>
 
       {!resent && (
