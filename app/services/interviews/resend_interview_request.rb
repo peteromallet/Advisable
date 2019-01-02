@@ -11,7 +11,8 @@ class Interviews::ResendInterviewRequest < ApplicationService
     interview.user.update_attributes(availability: availability)
     interview.assign_attributes(time_zone: time_zone, status: "More Time Options Added")
 
-    if interview.save
+    # Don't both validating anything as we want to force these updates
+    if interview.save(validate: false)
       update_airtable
       return interview
     end
