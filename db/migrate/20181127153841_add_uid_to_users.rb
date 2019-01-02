@@ -3,7 +3,7 @@ class AddUidToUsers < ActiveRecord::Migration[5.2]
     add_column :users, :uid, :string, index: true
 
     User.all.each do |u|
-      u.generate_uid
+      u.send(:generate_uid)
       u.save
     end
   end
