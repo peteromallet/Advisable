@@ -114,7 +114,7 @@ class Types::QueryType < Types::BaseType
   field :countries, [Types::CountryType], "Return the list of countries", null: false
 
   def countries
-    Country.all
+    Country.all.order(name: :asc)
   end
 
   field :skills, [Types::Skill], "Returns a list of skills", null: false do
@@ -126,6 +126,6 @@ class Types::QueryType < Types::BaseType
     skills = ::Skill.all
     skills = skills.where(category: args[:category]) if args[:category]
     skills = skills.where(profile: args[:profile]) if args[:profile]
-    skills
+    skills.order(name: :asc)
   end
 end
