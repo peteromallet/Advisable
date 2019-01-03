@@ -31,6 +31,7 @@ class Projects::Create < ApplicationService
       "Skills Required" => [skill.airtable_id],
       "Project Stage" => project.status,
       "Service Type" => project.service_type,
+      "Project Status" => "Open",
       "Primary Skill Required" => project.primary_skill
     )
     record.create
