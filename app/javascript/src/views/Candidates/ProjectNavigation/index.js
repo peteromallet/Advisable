@@ -1,6 +1,7 @@
 // Renders the navigation for the project candidates view
 import React from "react";
 import get from "lodash/get";
+import reject from "lodash/reject";
 import countBy from "lodash/countBy";
 import Sticky from "react-stickynode";
 import Icon from "src/components/Icon";
@@ -51,10 +52,17 @@ const navigation = [
   }
 ];
 
+
 export default ({ match, data }) => {
   useScrollRestore()
   const applications = get(data, "project.applications", []);
   const counts = countBy(applications, "status");
+
+  // A list of statuses to exclude from the total applications count.
+  const TOTAL_COUNT_EXCLUDE = ["Invited To Apply"]
+  const totalCount = reject(applications, application => {
+    return TOTAL_COUNT_EXCLUDE.indexOf(application.status) > -1;
+  }).length
 
   return (
     <Mobile>
@@ -64,7 +72,7 @@ export default ({ match, data }) => {
             <ProjectTitle>{data.project.primarySkill}</ProjectTitle>
             <TotalApplicants>
               {pluralize(
-                data.project.applications.length,
+                totalCount,
                 "Applicant",
                 "Applicants"
               )}
