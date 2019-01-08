@@ -5,6 +5,7 @@ query project($id: ID!) {
     currency
     primarySkill
     clientReferralUrl
+    applicationCount
     applications {
       id
       rate

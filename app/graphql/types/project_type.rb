@@ -17,6 +17,7 @@ class Types::ProjectType < Types::BaseType
   field :optional_characteristics, [String], null: true
   field :accepted_terms, Boolean, null: false
   field :deposit_owed, Int, null: true
+  field :application_count, Int, null: false
 
   field :applications, [Types::ApplicationType, null: true], null: true do
     argument :status, [String], required: false

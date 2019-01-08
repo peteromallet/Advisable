@@ -15,7 +15,7 @@ export default ({ rate, availability, linkedin, compact }) => (
     </CandidateAttribute>
     <CandidateAttribute>
       <CandidateAttributeLabel>Availabile to start</CandidateAttributeLabel>
-      <CandidateAttributeValue>Yes</CandidateAttributeValue>
+      <CandidateAttributeValue>{availability || '-'}</CandidateAttributeValue>
     </CandidateAttribute>
     <CandidateAttribute>
       {linkedin && (
