@@ -37,7 +37,7 @@ export default ({ projects }) => {
               <ProjectTitle>{project.primarySkill}</ProjectTitle>
               <Text size="s" marginBottom="l">
                 {pluralize(
-                  project.applications.length,
+                  project.applicationCount,
                   "Candidate",
                   "Candidates"
                 )}
