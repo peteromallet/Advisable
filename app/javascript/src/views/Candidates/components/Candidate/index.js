@@ -74,7 +74,7 @@ class Candidate extends React.Component {
         <CandidateAttributes
           compact
           rate={currency(application.rate, project.currency)}
-          availability="Yes"
+          availability={application.availability}
           linkedin={application.specialist.linkedin}
         />
 
