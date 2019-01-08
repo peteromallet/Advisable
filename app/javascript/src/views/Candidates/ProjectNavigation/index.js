@@ -58,12 +58,6 @@ export default ({ match, data }) => {
   const applications = get(data, "project.applications", []);
   const counts = countBy(applications, "status");
 
-  // A list of statuses to exclude from the total applications count.
-  const TOTAL_COUNT_EXCLUDE = ["Invited To Apply"]
-  const totalCount = reject(applications, application => {
-    return TOTAL_COUNT_EXCLUDE.indexOf(application.status) > -1;
-  }).length
-
   return (
     <Mobile>
       {isMobile => (
@@ -72,7 +66,7 @@ export default ({ match, data }) => {
             <ProjectTitle>{data.project.primarySkill}</ProjectTitle>
             <TotalApplicants>
               {pluralize(
-                totalCount,
+                data.project.applicationCount,
                 "Applicant",
                 "Applicants"
               )}
