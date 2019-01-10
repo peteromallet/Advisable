@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_19_091915) do
+ActiveRecord::Schema.define(version: 2019_01_10_104945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,27 @@ ActiveRecord::Schema.define(version: 2018_12_19_091915) do
     t.index ["user_id"], name: "index_interviews_on_user_id"
   end
 
+  create_table "off_platform_projects", force: :cascade do |t|
+    t.string "airtable_id"
+    t.bigint "specialist_id"
+    t.string "industry"
+    t.string "contact_first_name"
+    t.string "contact_last_name"
+    t.string "contact_job_title"
+    t.string "client_name"
+    t.text "client_description"
+    t.text "description"
+    t.text "requirements"
+    t.text "results"
+    t.string "primary_skill"
+    t.boolean "confidential", default: false
+    t.boolean "validated", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
+    t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
+  end
+
   create_table "payments", force: :cascade do |t|
     t.string "uid"
     t.string "source_id"
@@ -161,6 +182,24 @@ ActiveRecord::Schema.define(version: 2018_12_19_091915) do
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.string "airtable_id"
+    t.string "type"
+    t.bigint "specialist_id"
+    t.string "project_type"
+    t.bigint "project_id"
+    t.string "reviewable_type"
+    t.bigint "reviewable_id"
+    t.text "comment"
+    t.jsonb "ratings"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["airtable_id"], name: "index_reviews_on_airtable_id"
+    t.index ["project_type", "project_id"], name: "index_reviews_on_project_type_and_project_id"
+    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id"
+    t.index ["specialist_id"], name: "index_reviews_on_specialist_id"
+  end
+
   create_table "skills", force: :cascade do |t|
     t.string "name"
     t.string "airtable_id"
@@ -193,6 +232,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_091915) do
     t.datetime "updated_at", null: false
     t.string "encrypted_phone_number"
     t.string "encrypted_phone_number_iv"
+    t.jsonb "ratings", default: {}
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
@@ -213,7 +253,9 @@ ActiveRecord::Schema.define(version: 2018_12_19_091915) do
     t.string "reset_digest"
     t.datetime "reset_sent_at"
     t.text "permissions", default: [], array: true
+    t.string "title"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
+    t.index ["country_id"], name: "index_users_on_country_id"
   end
 
   create_table "webhook_configurations", force: :cascade do |t|
@@ -242,10 +284,13 @@ ActiveRecord::Schema.define(version: 2018_12_19_091915) do
   add_foreign_key "client_users", "users"
   add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "users"
+  add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "users"
+  add_foreign_key "reviews", "specialists"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "countries"
+  add_foreign_key "users", "countries"
 end
