@@ -128,4 +128,14 @@ class Types::QueryType < Types::BaseType
     skills = skills.where(profile: args[:profile]) if args[:profile]
     skills.order(name: :asc)
   end
+
+  field :specialist, Types::SpecialistType, "Returns a specialist", null: false do
+    argument :id, ID, required: true
+  end
+
+  def specialist(id:)
+      ::Specialist.find_by_airtable_id!(id)
+    rescue ActiveRecord::RecordNotFound => er
+      GraphQL::ExecutionError.new("Could not find specialist #{id}")
+  end
 end

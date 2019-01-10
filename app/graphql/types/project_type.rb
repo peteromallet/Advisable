@@ -19,6 +19,11 @@ class Types::ProjectType < Types::BaseType
   field :deposit_owed, Int, null: true
   field :application_count, Int, null: false
 
+  field :reviews, [Types::Review], null: false do
+    argument :type, [String], required: true
+    argument :specialist, ID, required: false
+  end
+
   field :applications, [Types::ApplicationType, null: true], null: true do
     argument :status, [String], required: false
   end
@@ -53,5 +58,17 @@ class Types::ProjectType < Types::BaseType
 
   def questions
     object.questions || []
+  end
+
+  # An on-platform project can have various types of reviews. e.g it could be a
+  # review related to an interview. Most of the time we want to show reviews of
+  # a specific type and so when querying for a projects reviews you must pass
+  # an array of review types you want to fetch.
+  # We can also search for reviews for a specific specialist by passing the
+  # specialists ID in the specialist param.
+  def reviews(type:, specialist: nil)
+    reviews = object.reviews.where(type: type)
+    reviews = reviews.joins(:specialist).where(specialists: { airtable_id: specialist }) if specialist
+    reviews
   end
 end
