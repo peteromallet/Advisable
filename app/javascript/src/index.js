@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import { IntlProvider } from "react-intl";
 import { ApolloProvider } from "react-apollo";
 import client from "./graphqlClient";
+import BaseStyling from './BaseStyling';
 
 import './i18n';
 import App from "./App";
 import { NotificationsProvider } from "./components/Notifications";
-import "./baseStyling.css.js";
 
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account
@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <IntlProvider locale={language}>
           <NotificationsProvider>
             <App />
+            <BaseStyling />
           </NotificationsProvider>
       </IntlProvider>
     </ApolloProvider>,

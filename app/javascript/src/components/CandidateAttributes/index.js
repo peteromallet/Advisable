@@ -1,4 +1,5 @@
 import React from "react";
+import Rating from './Rating';
 import {
   CandidateAttributes,
   CandidateAttribute,
@@ -7,8 +8,11 @@ import {
   Linkedin
 } from "./styles";
 
-export default ({ rate, availability, linkedin, compact }) => (
+export default ({ rate, reviewsCount, rating, availability, linkedin, compact }) => (
   <CandidateAttributes compact={compact}>
+    {rating && (
+      <Rating rating={rating} count={reviewsCount} />
+    )}
     <CandidateAttribute>
       <CandidateAttributeLabel>Hourly rate</CandidateAttributeLabel>
       <CandidateAttributeValue>{rate || '-'}</CandidateAttributeValue>
