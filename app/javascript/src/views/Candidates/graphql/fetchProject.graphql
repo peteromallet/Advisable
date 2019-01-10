@@ -28,6 +28,10 @@ query project($id: ID!) {
         name
         firstName
         city
+        reviewsCount
+        ratings {
+          overall
+        }
         image {
           url
         }

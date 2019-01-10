@@ -73,6 +73,8 @@ class Candidate extends React.Component {
         </CandidateHeader>
         <CandidateAttributes
           compact
+          reviewsCount={application.specialist.reviewsCount}
+          rating={application.specialist.ratings.overall}
           rate={currency(application.rate, project.currency)}
           availability={application.availability}
           linkedin={application.specialist.linkedin}
@@ -111,7 +113,7 @@ class Candidate extends React.Component {
           }}
         >
           {styles => (
-            <MoreInfo innerRef={c => (this.moreInfo = c)} style={styles}>
+            <MoreInfo ref={c => (this.moreInfo = c)} style={styles}>
               <Questions questions={application.questions} />
               {application.specialist.skills.length > 0 && (
                 <Spacing marginTop="xl">

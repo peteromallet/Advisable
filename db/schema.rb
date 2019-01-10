@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_10_104945) do
+ActiveRecord::Schema.define(version: 2019_01_10_111934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -233,6 +233,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_104945) do
     t.string "encrypted_phone_number"
     t.string "encrypted_phone_number_iv"
     t.jsonb "ratings", default: {}
+    t.integer "reviews_count"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 

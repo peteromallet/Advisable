@@ -13,6 +13,8 @@ class Types::SpecialistType < Types::BaseType
   field :skills, [String, null: true], null: true
   field :ratings, Types::Ratings, null: false
   field :previous_projects, [Types::PreviousProject], null: true
+  field :reviews, [Types::Review], null: false
+  field :reviewsCount, Integer, null: true
 
   def name
     "#{object.first_name} #{object.last_name}"

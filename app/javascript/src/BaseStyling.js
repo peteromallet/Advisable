@@ -1,7 +1,7 @@
 // This file defines the base styling for the application
-import { injectGlobal } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
-injectGlobal`
+export default createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
 
   * {

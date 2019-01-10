@@ -58,7 +58,7 @@ class Modal extends React.Component {
     if (!this.props.isOpen) return null;
 
     return ReactDOM.createPortal(
-      <ModalContainer innerRef={c => this.modalContainer = c} expandOnMobile={this.props.expandOnMobile}>
+      <ModalContainer ref={c => this.modalContainer = c} expandOnMobile={this.props.expandOnMobile}>
         <Spring
           from={{ opacity: 0, translateY: 100 }}
           to={{

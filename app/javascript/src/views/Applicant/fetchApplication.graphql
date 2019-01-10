@@ -26,6 +26,10 @@ query project($projectID: ID!, $applicationID: ID!) {
         name
         city
         firstName
+        reviewsCount
+        ratings {
+          overall
+        }
         image {
           url
         }
