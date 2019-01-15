@@ -4,13 +4,13 @@ import { StarRating, Star, Number } from "./styles";
 const SIZES = {
   m: {
     width: 18,
-    height: 16,
+    height: 16
   },
   l: {
     width: 20,
     height: 18
   }
-}
+};
 
 const Icon = ({ filled, size }) => {
   if (filled) {
@@ -36,10 +36,10 @@ const Icon = ({ filled, size }) => {
   );
 };
 
-export default ({ rating, size }) => {
+const StarRatingComponent = ({ rating, size, showNumber }) => {
   return (
     <StarRating>
-      <Number>{rating.toFixed(1)}</Number>
+      {showNumber && <Number>{rating.toFixed(1)}</Number>}
       <Star>
         <Icon size={size} filled={rating >= 1} />
       </Star>
@@ -58,3 +58,9 @@ export default ({ rating, size }) => {
     </StarRating>
   );
 };
+
+StarRatingComponent.defaultProps = {
+  showNumber: true
+};
+
+export default StarRatingComponent;

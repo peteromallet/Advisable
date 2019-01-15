@@ -1,5 +1,4 @@
 class Types::QueryType < Types::BaseType
-
   field :project, Types::ProjectType, description: "Find a Project by ID", null: true do
     # querying for a specific project requires a special case where the user
     # will face one of three scenrios:
@@ -137,5 +136,18 @@ class Types::QueryType < Types::BaseType
       ::Specialist.find_by_airtable_id!(id)
     rescue ActiveRecord::RecordNotFound => er
       GraphQL::ExecutionError.new("Could not find specialist #{id}")
+  end
+
+  field :previous_project, Types::PreviousProject, null: false do
+    argument :id, ID, required: true
+    argument :type, Types::PreviousProjectTypeAttribute, required: true
+    argument :specialist_id, ID, required: true
+  end
+
+  def previous_project(id:, type:, specialist_id:)
+    ::PreviousProject.find(id: id, type: type, specialist_id: specialist_id)
+
+    rescue ActiveRecord::RecordNotFound => er
+      GraphQL::ExecutionError.new("Could not find project #{id} with type #{type}")
   end
 end

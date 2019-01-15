@@ -1,0 +1,20 @@
+query PreviousProjects($specialistId: ID!) {
+  specialist(id: $specialistId) {
+    previousProjects {
+      id
+      type
+      title
+      description
+      companyName
+      specialist {
+        airtableId
+      }
+      reviews {
+        id
+        ratings {
+        	overall
+        }
+      }
+    }
+  }
+}

@@ -14,4 +14,9 @@ class Types::ApplicationType < Types::BaseType
   field :questions, [Types::ApplicationQuestionType, null: true], null: true
   field :project, Types::ProjectType, null: false
   field :proposal, Types::Booking, null: true
+  field :previous_projects, [Types::PreviousProject], null: false
+
+  def previous_projects
+    ::PreviousProject.for_application(application: object)
+  end
 end

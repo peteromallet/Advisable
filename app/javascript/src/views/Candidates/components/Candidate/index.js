@@ -12,6 +12,7 @@ import CandidateAttributes from "src/components/CandidateAttributes";
 import currency from "src/utilities/currency";
 import AdvisableComment from "../AdvisableComment";
 import CandidateActions from "../../../../components/CandidateActions";
+import PreviousProjects from "../PreviousProjects";
 import {
   Card,
   Name,
@@ -105,6 +106,7 @@ class Candidate extends React.Component {
           {this.state.expanded ? "View Less" : "View More"}
         </Button>
 
+
         <Spring
           from={{ height: 0, opacity: 0 }}
           to={{
@@ -120,9 +122,14 @@ class Candidate extends React.Component {
                   <Skills skills={application.specialist.skills} />
                 </Spacing>
               )}
+
             </MoreInfo>
           )}
         </Spring>
+
+        <Spacing paddingTop="l">
+          <PreviousProjects specialistId={application.specialist.airtableId} />
+        </Spacing>
 
         <CandidateActions
           history={this.props.history}
