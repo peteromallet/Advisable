@@ -104,7 +104,6 @@ export const CandidateHeader = styled.div`
 `;
 
 export const MoreInfo = styled.div`
-  overflow-y: hidden;
   width: 100%;
 `;
 
