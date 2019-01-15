@@ -20,6 +20,7 @@ import CandidateAttributes from "src/components/CandidateAttributes";
 import currency from "src/utilities/currency";
 import CandidateActions from "src/components/CandidateActions";
 import AdvisableMessage from "./components/AdvisableMessage";
+import PreviousProjects from "./components/PreviousProjects";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 import {
   ApplicantHeader,
@@ -103,7 +104,9 @@ class Applicant extends React.Component {
                   {application.comment && (
                     <AdvisableMessage>{application.comment}</AdvisableMessage>
                   )}
-                  <Heading level="6">Questions</Heading>
+                  <Heading level="6" marginBottom="s">
+                    Application Questions
+                  </Heading>
                   {application.questions.map((question, i) => (
                     <Card key={i} padding="xl" marginBottom="l">
                       <Text marginBottom="m" weight="strong" colour="dark">
@@ -125,6 +128,10 @@ class Applicant extends React.Component {
                       </Text>
                     </Card>
                   ))}
+
+                  <PreviousProjects
+                    projects={application.previousProjects || []}
+                  />
 
                   <Skills
                     marginTop="xxl"

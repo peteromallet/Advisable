@@ -8,9 +8,6 @@ class Application < ApplicationRecord
 
   scope :accepted_fees, -> { where(accepts_fee: true) }
   scope :accepted_terms, -> { where(accepts_terms: true) }
-  scope :successful, -> {
-    joins(:bookings).where(bookings: { status: ["Complete", "Accepted"] })
-  }
 
   def questions
     self[:questions] || []

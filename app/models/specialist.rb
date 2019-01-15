@@ -2,7 +2,12 @@ class Specialist < ApplicationRecord
   belongs_to :country, required: false
   has_many :reviews
   has_many :applications
+  has_many :successful_applications, -> {
+    joins(:bookings).where(bookings: { status: ["Complete", "Accepted"] })
+  }, class_name: "Application"
+
   has_many :projects, through: :applications
+  has_many :successful_projects, through: :successful_applications, source: :project
 
   has_many :specialist_skills
   has_many :off_platform_projects

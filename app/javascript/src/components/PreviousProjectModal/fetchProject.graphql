@@ -1,0 +1,30 @@
+query PreviousProject(
+  $id: ID!
+  $type: PreviousProjectTypeAttribute!
+  $specialistId: ID!
+) {
+  previousProject(id: $id, type: $type, specialistId: $specialistId) {
+    id
+    type
+    title
+    description
+    companyName
+    clientDescription
+    requirements
+    results
+    reviews {
+      id
+      name
+      role
+      comment
+      ratings {
+        overall
+        skills
+        qualityOfWork
+        adherenceToSchedule
+        availability
+        communication
+      }
+    }
+  }
+}

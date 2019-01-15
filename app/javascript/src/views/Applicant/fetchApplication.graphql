@@ -17,6 +17,30 @@ query project($projectID: ID!, $applicationID: ID!) {
       proposal {
         id
       }
+      previousProjects {
+        id
+        type
+        title
+        description
+        companyName
+        specialist {
+          airtableId
+        }
+        reviews {
+          id
+          name
+          role
+          comment
+          ratings {
+            overall
+            skills
+            qualityOfWork
+            adherenceToSchedule
+            availability
+            communication
+          }
+        }
+      }
       questions {
         question
         answer

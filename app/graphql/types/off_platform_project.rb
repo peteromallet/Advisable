@@ -12,7 +12,6 @@ class Types::OffPlatformProject < Types::BaseType
   field :results, String, null: true
   field :primary_skill, String, null: true
   field :confidential, Boolean, null: true
-  field :reviews, [Types::Review], null: false
 
   def client_name
     return nil if object.confidential

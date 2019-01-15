@@ -24,22 +24,7 @@ class Types::SpecialistType < Types::BaseType
     object.skills.map(&:name)
   end
 
-  # The specialists previous projects is a collection of their off-platform
-  # projects and the projects that they were successfully hired onto.
   def previous_projects
-    off_platform_projects + platform_projects
-  end
-
-  def off_platform_projects
-    object.off_platform_projects.validated
-  end
-
-  # Returns the projects that specialist where their application has been
-  # successful and has an associated booking with a status of either Complete
-  # or Accepted
-  def platform_projects
-    object
-      .projects.joins(applications: :bookings)
-      .where(applications: { bookings: { status: ["Complete", "Accepted"] } })
+    ::PreviousProject.for_specialist(specialist: object)
   end
 end
