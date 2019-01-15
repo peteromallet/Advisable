@@ -1,15 +1,21 @@
 // Fetches a specialists previous projects.
 
-import React from "react";
+import React, { useRef, useLayoutEffect } from "react";
 import { graphql } from "react-apollo";
 import Heading from "src/components/Heading";
-import PreviousProject from './PreviousProject';
+import PreviousProject from "./PreviousProject";
 import FETCH_PROJECTS from "./fetchProjects.graphql";
 
-const PreviousProjects = ({ data }) => {
+const PreviousProjects = ({ data, recalculateHeight }) => {
+  useLayoutEffect(() => {
+    recalculateHeight()
+  })
+
   return (
     <React.Fragment>
-      <Heading level="6" marginBottom="s">Previous Projects</Heading>
+      <Heading level="6" marginBottom="s">
+        Previous Projects
+      </Heading>
 
       {data.loading ? (
         <div>loading...</div>
@@ -29,7 +35,7 @@ const SpecialistProjects = ({ previousProjects }) => {
     ));
   }
 
-  return null
+  return null;
 };
 
 export default graphql(FETCH_PROJECTS, {
