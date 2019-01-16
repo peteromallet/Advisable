@@ -19,5 +19,11 @@ module Admin
       params[:order] ||= "created_at"
       params[:direction] ||= "desc"
     end
+
+    def resync
+      return unless ENV["STAGING"]
+      Airtable.sync
+      redirect_to "/admin", notice: "Airtable has been synced"
+    end
   end
 end
