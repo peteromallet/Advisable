@@ -33,6 +33,11 @@ class Modal extends React.Component {
 
   componentWillUnmount() {
     this.restore();
+
+    if (this.props.isOpen) {
+      window.scrollTo(0, this.state.scrollPosition);
+    }
+
     modalRoot.removeChild(this.el);
   }
 

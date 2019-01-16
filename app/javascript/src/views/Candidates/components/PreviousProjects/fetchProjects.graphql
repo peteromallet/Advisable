@@ -1,5 +1,6 @@
 query PreviousProjects($applicationId: ID!) {
   application(id: $applicationId) {
+    id
     airtableId
     referencesRequested
     specialist {
