@@ -1,9 +1,9 @@
 query PreviousProject(
   $id: ID!
   $type: PreviousProjectTypeAttribute!
-  $specialistId: ID!
+  $applicationId: ID!
 ) {
-  previousProject(id: $id, type: $type, specialistId: $specialistId) {
+  previousProject(id: $id, type: $type, applicationId: $applicationId) {
     id
     type
     title

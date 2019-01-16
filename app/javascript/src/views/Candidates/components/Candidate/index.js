@@ -115,11 +115,8 @@ const Candidate = ({ application, project, history }) => {
 
               <Spacing paddingTop="l">
                 <PreviousProjects
-                  name={application.specialist.name}
                   recalculateHeight={recalculateHeight}
                   applicationId={application.airtableId}
-                  specialistId={application.specialist.airtableId}
-                  referencesRequested={application.referencesRequested}
                 />
               </Spacing>
             </React.Fragment>

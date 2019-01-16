@@ -6,10 +6,10 @@ import Loading from "src/components/Loading";
 import ProjectDetails from "./ProjectDetails";
 import FETCH_PROJECT from "./fetchProject.graphql";
 
-const PreviousProjectModal = ({ isOpen, onClose, id, type, specialistId }) => {
+const PreviousProjectModal = ({ isOpen, onClose, id, type, applicationId }) => {
   return (
     <Modal size="l" isOpen={isOpen} onClose={onClose} expandOnMobile>
-      <Query query={FETCH_PROJECT} variables={{ id, type, specialistId }}>
+      <Query query={FETCH_PROJECT} variables={{ id, type, applicationId }}>
         {query => {
           if (query.loading) return <Loading />;
 

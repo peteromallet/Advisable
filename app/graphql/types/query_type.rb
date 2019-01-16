@@ -128,24 +128,14 @@ class Types::QueryType < Types::BaseType
     skills.order(name: :asc)
   end
 
-  field :specialist, Types::SpecialistType, "Returns a specialist", null: false do
-    argument :id, ID, required: true
-  end
-
-  def specialist(id:)
-      ::Specialist.find_by_airtable_id!(id)
-    rescue ActiveRecord::RecordNotFound => er
-      GraphQL::ExecutionError.new("Could not find specialist #{id}")
-  end
-
   field :previous_project, Types::PreviousProject, null: false do
     argument :id, ID, required: true
     argument :type, Types::PreviousProjectTypeAttribute, required: true
-    argument :specialist_id, ID, required: true
+    argument :application_id, ID, required: true
   end
 
-  def previous_project(id:, type:, specialist_id:)
-    ::PreviousProject.find(id: id, type: type, specialist_id: specialist_id)
+  def previous_project(id:, type:, application_id:)
+    ::PreviousProject.find(id: id, type: type, application_id: application_id)
 
     rescue ActiveRecord::RecordNotFound => er
       GraphQL::ExecutionError.new("Could not find project #{id} with type #{type}")

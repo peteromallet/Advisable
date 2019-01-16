@@ -1,5 +1,4 @@
 // Fetches a specialists previous projects.
-
 import React, { useLayoutEffect } from "react";
 import { graphql } from "react-apollo";
 import Heading from "src/components/Heading";
@@ -12,9 +11,6 @@ import { EmptyStateContainer } from "./styles";
 const PreviousProjects = ({
   data,
   recalculateHeight,
-  applicationId,
-  name,
-  referencesRequested
 }) => {
   useLayoutEffect(() => {
     recalculateHeight();
@@ -32,35 +28,31 @@ const PreviousProjects = ({
           <ProjectSkeleton />
         </React.Fragment>
       ) : (
-        <SpecialistProjects
-          name={name}
-          applicationId={applicationId}
-          referencesRequested={referencesRequested}
-          previousProjects={data.specialist.previousProjects}
-        />
+        <SpecialistProjects data={data} />
       )}
     </React.Fragment>
   );
 };
 
 const SpecialistProjects = ({
-  applicationId,
-  name,
-  previousProjects,
-  referencesRequested
+  data
 }) => {
-  if (previousProjects.length > 0) {
-    return previousProjects.map(project => (
-      <PreviousProject key={project.id} project={project} />
+  if (data.application.previousProjects.length > 0) {
+    return data.application.previousProjects.map(project => (
+      <PreviousProject
+        key={project.id}
+        project={project}
+        applicationId={data.application.airtableId}
+      />
     ));
   }
 
   return (
     <EmptyStateContainer>
       <PreviousProjectsEmptyState
-        applicationId={applicationId}
-        name={name}
-        referencesRequested={referencesRequested}
+        name={data.application.specialist.name}
+        applicationId={data.application.airtableId}
+        referencesRequested={data.application.referencesRequested}
       />
     </EmptyStateContainer>
   );
@@ -69,7 +61,7 @@ const SpecialistProjects = ({
 export default graphql(FETCH_PROJECTS, {
   options: props => ({
     variables: {
-      specialistId: props.specialistId
+      applicationId: props.applicationId
     }
   })
 })(PreviousProjects);

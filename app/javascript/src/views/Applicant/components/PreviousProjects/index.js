@@ -6,7 +6,6 @@ import PreviousProject from "./PreviousProject";
 
 export default ({
   projects,
-  specialistId,
   name,
   applicationId,
   referencesRequested
@@ -20,7 +19,7 @@ export default ({
         <PreviousProject
           key={project.id}
           project={project}
-          specialistId={specialistId}
+          applicationId={applicationId}
         />
       ))}
 

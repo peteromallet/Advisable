@@ -23,9 +23,6 @@ query project($projectID: ID!, $applicationID: ID!) {
         title
         description
         companyName
-        specialist {
-          airtableId
-        }
         reviews {
           id
           name

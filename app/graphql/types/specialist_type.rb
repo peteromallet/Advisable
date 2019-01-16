@@ -12,7 +12,6 @@ class Types::SpecialistType < Types::BaseType
   field :image, Types::AttachmentType, null: true
   field :skills, [String, null: true], null: true
   field :ratings, Types::Ratings, null: false
-  field :previous_projects, [Types::PreviousProject], null: true
   field :reviews, [Types::Review], null: false
   field :reviewsCount, Integer, null: true
 

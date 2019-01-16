@@ -7,7 +7,7 @@ import Heading from "src/components/Heading";
 import PreviousProjectModal from "src/components/PreviousProjectModal";
 import { PreviousProject, ProjectTitle } from "./styles";
 
-export default ({ project }) => {
+export default ({ project, applicationId }) => {
   const [isOpen, setOpen] = useState(false);
 
   const openProject = e => {
@@ -22,7 +22,7 @@ export default ({ project }) => {
         onClose={() => setOpen(false)}
         id={project.id}
         type={project.type}
-        specialistId={project.specialist.airtableId}
+        applicationId={applicationId}
       />
       <PreviousProject>
         <Heading marginBottom="xs" level={4}>

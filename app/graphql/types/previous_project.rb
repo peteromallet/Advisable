@@ -1,4 +1,3 @@
-
 class Types::PreviousProject < Types::BaseType
   field :id, ID, null: false
   field :type, PreviousProjectTypeAttribute, null: false
@@ -9,7 +8,7 @@ class Types::PreviousProject < Types::BaseType
   field :requirements, String, null: true
   field :results, String, null: true
   field :project, Types::ProjectType, null: false
-  field :specialist, Types::SpecialistType, null: false
+  field :application, Types::ApplicationType, null: false
   field :reviews, [Types::Review], null: false
 
   def id
