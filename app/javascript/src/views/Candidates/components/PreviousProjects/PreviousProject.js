@@ -21,7 +21,9 @@ export default ({ applicationId, project }) => {
           {project.title} at {project.companyName}
         </ProjectTitle>
         <ProjectDescription>{project.description}</ProjectDescription>
-        <StarRating rating={4} />
+        {project.reviews.length > 0 && (
+          <StarRating rating={project.reviews[0].ratings.overall} />
+        )}
       </PreviousProject>
     </React.Fragment>
   );
