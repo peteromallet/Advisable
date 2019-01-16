@@ -1,11 +1,11 @@
-# Represents a previous project for a specialist. The project must be an
-# instance of either Project or OffPlatformProject
+# Represents a specialists previous project. Previous projects are only viewed
+# within the context of an application.
 class PreviousProject
-  attr_reader :project, :specialist
+  attr_reader :project, :application
 
-  def initialize(project:, specialist:)
+  def initialize(project:, application:)
     @project = project
-    @specialist = specialist
+    @application = application
   end
 
   def title
@@ -44,31 +44,30 @@ class PreviousProject
     )
   end
 
+  def specialist
+    application.specialist
+  end
+
   class << self
-    # Finds a specific previous project for a given specialist id.
-    def find(id:, type:, specialist_id:)
-      specialist = Specialist.find_by_airtable_id!(specialist_id)
+    # Finds a specific previous project for a given appication_id.
+    def find(id:, type:, application_id:)
+      application = Application.find_by_airtable_id!(application_id)
+      specialist = application.specialist
       project = if type == "OffPlatformProject"
         specialist.off_platform_projects.find_by_airtable_id!(id)
       else
         specialist_platform_projects(specialist: specialist)
           .find_by_airtable_id!(id)
       end
-      new(specialist: specialist, project: project)
-    end
-
-    # Returns an array of previous projects for a specialist. This contains
-    # both off-platform an on-platform projects
-    def for_specialist(specialist:)
-      off_platform = specialist_off_platform_projects(specialist: specialist)
-      platform_projects = specialist_platform_projects(specialist: specialist)
-      (off_platform + platform_projects).map do |project|
-        new(specialist: specialist, project: project)
-      end
+      new(application: application, project: project)
     end
 
     def for_application(application:)
-      for_specialist(specialist: application.specialist)
+      off_platform = specialist_off_platform_projects(specialist: application.specialist)
+      platform_projects = specialist_platform_projects(specialist: application.specialist)
+      (off_platform + platform_projects).map do |project|
+        new(application: application, project: project)
+      end
     end
 
     private

@@ -3,7 +3,7 @@ import StarRating from "src/components/StarRating";
 import PreviousProjectModal from "src/components/PreviousProjectModal";
 import { PreviousProject, ProjectTitle, ProjectDescription } from "./styles";
 
-export default ({ project }) => {
+export default ({ applicationId, project }) => {
   const [isOpen, setOpen] = useState(false);
 
   return (
@@ -13,7 +13,7 @@ export default ({ project }) => {
         onClose={() => setOpen(false)}
         id={project.id}
         type={project.type}
-        specialistId={project.specialist.airtableId}
+        applicationId={applicationId}
       />
 
       <PreviousProject onClick={() => setOpen(true)}>

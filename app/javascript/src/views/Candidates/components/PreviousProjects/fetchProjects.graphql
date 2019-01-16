@@ -1,14 +1,17 @@
-query PreviousProjects($specialistId: ID!) {
-  specialist(id: $specialistId) {
+query PreviousProjects($applicationId: ID!) {
+  application(id: $applicationId) {
+    airtableId
+    referencesRequested
+    specialist {
+      id
+      name
+    }
     previousProjects {
       id
       type
       title
       description
       companyName
-      specialist {
-        airtableId
-      }
       reviews {
         id
         ratings {

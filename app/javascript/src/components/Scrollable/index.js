@@ -14,8 +14,10 @@ export default ({ children, height, ...props }) => {
   };
 
   const handleScroll = e => {
-    setShadows(e.target);
-  };
+    window.requestAnimationFrame(() => {
+      setShadows(e.target);
+    });
+  }
 
   useEffect(
     () => {
