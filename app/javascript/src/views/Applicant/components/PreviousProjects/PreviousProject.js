@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
 import Review from "src/components/Review";
+import Spacing from "src/components/Spacing";
 import Heading from "src/components/Heading";
 import PreviousProjectModal from "src/components/PreviousProjectModal";
 import { PreviousProject, ProjectTitle } from "./styles";
@@ -11,8 +12,8 @@ export default ({ project }) => {
 
   const openProject = e => {
     e.preventDefault();
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   return (
     <React.Fragment>
@@ -32,14 +33,18 @@ export default ({ project }) => {
         <Text marginBottom="l" size="s">
           {project.description}
         </Text>
-        {project.reviews.map(review => (
-          <Review
-            key={review.id}
-            review={review}
-            companyName={project.companyName}
-          />
-        ))}
-        <Button styling="outlined" marginTop="xl" onClick={openProject}>
+        {project.reviews.length > 0 && (
+          <Spacing paddingBottom="xl">
+            {project.reviews.map(review => (
+              <Review
+                key={review.id}
+                review={review}
+                companyName={project.companyName}
+              />
+            ))}
+          </Spacing>
+        )}
+        <Button styling="outlined" onClick={openProject}>
           View project details
         </Button>
       </PreviousProject>

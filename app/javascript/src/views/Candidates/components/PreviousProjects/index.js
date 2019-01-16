@@ -1,16 +1,24 @@
 // Fetches a specialists previous projects.
 
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { graphql } from "react-apollo";
 import Heading from "src/components/Heading";
+import PreviousProjectsEmptyState from "src/components/PreviousProjectsEmptyState";
 import PreviousProject from "./PreviousProject";
 import ProjectSkeleton from "./ProjectSkeleton";
 import FETCH_PROJECTS from "./fetchProjects.graphql";
+import { EmptyStateContainer } from "./styles";
 
-const PreviousProjects = ({ data, recalculateHeight }) => {
+const PreviousProjects = ({
+  data,
+  recalculateHeight,
+  applicationId,
+  name,
+  referencesRequested
+}) => {
   useLayoutEffect(() => {
-    recalculateHeight()
-  })
+    recalculateHeight();
+  });
 
   return (
     <React.Fragment>
@@ -25,6 +33,9 @@ const PreviousProjects = ({ data, recalculateHeight }) => {
         </React.Fragment>
       ) : (
         <SpecialistProjects
+          name={name}
+          applicationId={applicationId}
+          referencesRequested={referencesRequested}
           previousProjects={data.specialist.previousProjects}
         />
       )}
@@ -32,14 +43,27 @@ const PreviousProjects = ({ data, recalculateHeight }) => {
   );
 };
 
-const SpecialistProjects = ({ previousProjects }) => {
+const SpecialistProjects = ({
+  applicationId,
+  name,
+  previousProjects,
+  referencesRequested
+}) => {
   if (previousProjects.length > 0) {
     return previousProjects.map(project => (
       <PreviousProject key={project.id} project={project} />
     ));
   }
 
-  return null;
+  return (
+    <EmptyStateContainer>
+      <PreviousProjectsEmptyState
+        applicationId={applicationId}
+        name={name}
+        referencesRequested={referencesRequested}
+      />
+    </EmptyStateContainer>
+  );
 };
 
 export default graphql(FETCH_PROJECTS, {

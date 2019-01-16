@@ -1,11 +1,19 @@
 import React from "react";
+import Card from "src/components/Card";
 import Heading from "src/components/Heading";
+import PreviousProjectsEmptyState from "src/components/PreviousProjectsEmptyState";
 import PreviousProject from "./PreviousProject";
 
-export default ({ projects, specialistId }) => {
+export default ({
+  projects,
+  specialistId,
+  name,
+  applicationId,
+  referencesRequested
+}) => {
   return (
     <React.Fragment>
-      <Heading level="6" marginBottom="s">
+      <Heading level="6" paddingTop="l" marginBottom="s">
         Previous Projects
       </Heading>
       {projects.map(project => (
@@ -15,6 +23,16 @@ export default ({ projects, specialistId }) => {
           specialistId={specialistId}
         />
       ))}
+
+      {projects.length === 0 && (
+        <Card>
+          <PreviousProjectsEmptyState
+            name={name}
+            applicationId={applicationId}
+            referencesRequested={referencesRequested}
+          />
+        </Card>
+      )}
     </React.Fragment>
   );
 };
