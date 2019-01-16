@@ -12,20 +12,20 @@ import REQUEST_REFERENCES from "./requestReferences.graphql";
 const RequestReferences = ({
   isOpen,
   onClose,
-  application,
+  name,
+  applicationId,
   notifications,
   requestReferences
 }) => {
   const isMobile = useMobile();
   const [isLoading, setLoading] = useState(false);
-  const name = application.specialist.name;
 
   const handleSubmit = async () => {
     setLoading(true);
     await requestReferences({
       variables: {
         input: {
-          id: application.airtableId
+          id: applicationId
         }
       }
     });

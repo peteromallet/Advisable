@@ -36,3 +36,9 @@ export const ProjectDescription = styled.p`
   font-weight: normal;
   margin-bottom: 8px;
 `;
+
+export const EmptyStateContainer = styled.div`
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e3e5ee;
+`

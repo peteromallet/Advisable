@@ -130,6 +130,9 @@ class Applicant extends React.Component {
                   ))}
 
                   <PreviousProjects
+                    applicationId={application.airtableId}
+                    name={application.specialist.name}
+                    referencesRequested={application.referencesRequested}
                     projects={application.previousProjects || []}
                   />
 

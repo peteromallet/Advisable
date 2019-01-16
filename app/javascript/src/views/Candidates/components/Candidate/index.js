@@ -27,22 +27,22 @@ const Candidate = ({ application, project, history }) => {
   const moreInfo = useRef(null);
   const [heightAnimation, setHeightAnimation] = useSpring(() => ({
     height: 0,
-    opacity: 0,
-  }))
+    opacity: 0
+  }));
 
   const recalculateHeight = () => {
     const height = moreInfo.current ? moreInfo.current.offsetHeight : 0;
-    setHeightAnimation({ height })
-  }
+    setHeightAnimation({ height });
+  };
 
   useLayoutEffect(() => {
     recalculateHeight();
-  })
+  });
 
   const handleExpand = () => {
     setExpanded(!expanded);
-    setHeightAnimation({ opacity: expanded ? 0 : 1 })
-  }
+    setHeightAnimation({ opacity: expanded ? 0 : 1 });
+  };
 
   return (
     <Card padding="xl" expanded={expanded}>
@@ -102,7 +102,7 @@ const Candidate = ({ application, project, history }) => {
         {expanded ? "View Less" : "View More"}
       </Button>
 
-      <animated.div style={{ overflowY: 'hidden', ...heightAnimation }}>
+      <animated.div style={{ overflowY: "hidden", ...heightAnimation }}>
         <div ref={moreInfo}>
           {expanded && (
             <React.Fragment>
@@ -115,8 +115,11 @@ const Candidate = ({ application, project, history }) => {
 
               <Spacing paddingTop="l">
                 <PreviousProjects
+                  name={application.specialist.name}
                   recalculateHeight={recalculateHeight}
+                  applicationId={application.airtableId}
                   specialistId={application.specialist.airtableId}
+                  referencesRequested={application.referencesRequested}
                 />
               </Spacing>
             </React.Fragment>
