@@ -4,6 +4,7 @@ import React, { useRef, useLayoutEffect } from "react";
 import { graphql } from "react-apollo";
 import Heading from "src/components/Heading";
 import PreviousProject from "./PreviousProject";
+import ProjectSkeleton from "./ProjectSkeleton";
 import FETCH_PROJECTS from "./fetchProjects.graphql";
 
 const PreviousProjects = ({ data, recalculateHeight }) => {
@@ -18,7 +19,10 @@ const PreviousProjects = ({ data, recalculateHeight }) => {
       </Heading>
 
       {data.loading ? (
-        <div>loading...</div>
+        <React.Fragment>
+          <ProjectSkeleton />
+          <ProjectSkeleton />
+        </React.Fragment>
       ) : (
         <SpecialistProjects
           previousProjects={data.specialist.previousProjects}
