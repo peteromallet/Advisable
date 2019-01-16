@@ -21,11 +21,6 @@ const windowWidths = {
 export const ModalBody = styled.div`
   flex-grow: 1;
   display: flex;
-
-  > div {
-    padding: 30px;
-    overflow-y: auto;
-  }
 `
 
 export const ModalHeader = styled.div`
