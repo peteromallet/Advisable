@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
-import Heading from "src/components/Heading";
 import RequestReferences from "src/components/RequestReferences";
 import { Container } from "./styles";
 
@@ -20,9 +19,6 @@ export default ({ applicationId, name, referencesRequested }) => {
 
   return (
     <Container>
-      <Heading marginBottom="xs" level={5}>
-        No previous projects
-      </Heading>
       <Text marginBottom="m" size="s">
         {name} has not listed any previous projects yet. We can reach out to
         their previous clients and request references for you.

@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
 import Text from "src/components/Text";
+import Modal from "src/components/Modal";
 import Review from "src/components/Review";
 import Heading from "src/components/Heading";
 import Spacing from "src/components/Spacing";
-import Modal from "src/components/Modal";
 
 export default ({ project }) => {
   return (
