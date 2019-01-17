@@ -18,7 +18,7 @@ export default ({ applicationId, project }) => {
 
       <PreviousProject onClick={() => setOpen(true)}>
         <ProjectTitle>
-          {project.title} at {project.companyName}
+          {project.title} at {project.clientName}
         </ProjectTitle>
         <ProjectDescription>{project.description}</ProjectDescription>
         {project.reviews.length > 0 && (

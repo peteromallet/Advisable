@@ -10,7 +10,7 @@ export default ({ project }) => {
     <React.Fragment>
       <Modal.Header>
         <Heading level={2}>{project.title}</Heading>
-        <Text>{project.companyName}</Text>
+        <Text>{project.clientName}</Text>
       </Modal.Header>
       <Modal.Body>
         <Spacing paddingBottom="s">
@@ -43,7 +43,7 @@ export default ({ project }) => {
           <Review
             key={review.id}
             review={review}
-            companyName={project.companyName}
+            companyName={project.clientName}
           />
         ))}
       </Modal.Body>

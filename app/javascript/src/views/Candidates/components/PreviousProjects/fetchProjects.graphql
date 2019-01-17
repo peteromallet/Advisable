@@ -12,7 +12,7 @@ query PreviousProjects($applicationId: ID!) {
       type
       title
       description
-      companyName
+      clientName
       reviews {
         id
         ratings {
