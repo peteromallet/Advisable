@@ -1,7 +1,7 @@
 # PreviousProject represents a specialists relationship with a particular
 # project. e.g A way to see all of the project reviews related specifically
 # to that specialist.
-# The project in a PreviousProject can be an instance of Project or
+# The project in a PreviousProject must be an instance of Project or
 # OffPlatformProject.
 class PreviousProject
   attr_reader :project, :specialist

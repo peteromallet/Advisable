@@ -1,102 +1,136 @@
 require "rails_helper"
 
 describe PreviousProject do
-  it "has a title" do
-    project = build(:project, primary_skill: "Marketing")
-    application = build(:application)
-    previous_project = PreviousProject.new(
-      project: project,
-      application: application
-    )
-    expect(previous_project.title).to eq(project.primary_skill)
-  end
+  describe ".find" do
+    context "when type is OffPlatformProject" do
+      it "returns a PreviousProject" do
+        specialist = create(:specialist)
+        project = create(:off_platform_project, specialist: specialist)
 
-  it "has a description" do
-    project = build(:project, description: "Testing")
-    application = build(:application)
-    previous_project = PreviousProject.new(
-      project: project,
-      application: application
-    )
-    expect(previous_project.description).to eq(project.description)
-  end
-
-  describe "#client_name" do
-    context "when the project is a Project" do
-      it "returns the users company_name" do
-        project = build(:project, description: "Testing")
-        application = build(:application)
-        previous_project = PreviousProject.new(
-          project: project,
-          application: application
+        previous_project = PreviousProject.find(
+          id: project.airtable_id,
+          type: "OffPlatformProject",
+          specialist_id: specialist.airtable_id
         )
-        expect(previous_project.client_name).to eq(project.user.company_name)
-      end
-    end
 
-    context "when the project is an OffPlatformProject" do
-      context "and confidential is true" do
-        it "hides the company name" do
-          project = build(:off_platform_project, industry: "Testing", confidential: true)
-          application = build(:application)
-          previous_project = PreviousProject.new(project: project, application: application)
-          expect(previous_project.client_name).to eq("Testing Company")
-        end
+        expect(previous_project).to be_a(PreviousProject)
+        expect(previous_project.project).to eq(project)
+        expect(previous_project.specialist).to eq(specialist)
       end
 
-      context "and confidential is false" do
-        it "returns the company name" do
-          project = build(:off_platform_project, client_name: "Testing", confidential: false)
-          application = build(:application)
-          previous_project = PreviousProject.new(project: project, application: application)
-          expect(previous_project.client_name).to eq("Testing")
+      context "the project doesnt belong to the specialist" do
+        it "raises an error" do
+          specialist = create(:specialist)
+          project = create(:off_platform_project)
+          expect {
+            previous_project = PreviousProject.find(
+              id: project.airtable_id,
+              type: "OffPlatformProject",
+              specialist_id: specialist.airtable_id
+            )
+          }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
     end
+
+    context "when the type is Project" do
+      it "returns a PreviousProject" do
+        specialist = create(:specialist)
+        project = create(:project)
+        application = create(:application, project: project, specialist: specialist)
+        create(:booking, status: "Complete", application: application)
+
+        previous_project = PreviousProject.find(
+          id: project.airtable_id,
+          type: "Project",
+          specialist_id: specialist.airtable_id
+        )
+
+        expect(previous_project).to be_a(PreviousProject)
+        expect(previous_project.project).to eq(project)
+        expect(previous_project.specialist).to eq(specialist)
+      end
+
+      context "when the user has no compelte booking for the project" do
+        it "raises NotFound" do
+          specialist = create(:specialist)
+          project = create(:project)
+          application = create(:application, project: project, specialist: specialist)
+
+          expect {
+            previous_project = PreviousProject.find(
+              id: project.airtable_id,
+              type: "Project",
+              specialist_id: specialist.airtable_id
+            )
+          }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
   end
 
-  describe "#client_description" do
-    context "when the project is a Project" do
-      it "returns the company_description" do
-        project = build(:project, company_description: "Testing")
-        application = build(:application)
-        previous_project = PreviousProject.new(
-          project: project,
-          application: application
-        )
-        expect(previous_project.client_description).to eq("Testing")
+  describe ".for_specialist" do
+    context "when the user has an off platform project" do
+      it "includes that project" do
+        specialist = create(:specialist)
+        project = create(:off_platform_project, specialist: specialist, validated: true)
+        projects = PreviousProject.for_specialist(specialist)
+        expect(projects).to_not be_empty
+        expect(projects.first.project).to eq(project)
       end
     end
 
-    context "when the project is an OffPlatformProject" do
-      it "returns the client description" do
-        project = build(:off_platform_project, client_description: "Testing")
-        application = build(:application)
-        previous_project = PreviousProject.new(project: project, application: application)
-        expect(previous_project.client_description).to eq("Testing")
-      end
-    end
-  end
-
-  describe "#requirements" do
-    context "when the project is a Project" do
-      it "returns the projects specialist_description" do
-        project = build(:project, specialist_description: "Testing")
-        application = build(:application)
-        previous_project = PreviousProject.new(
-          project: project,
-          application: application
-        )
-        expect(previous_project.requirements).to eq("Testing")
+    context "when the user has an off platform project that has not been validated" do
+      it "does not include that project" do
+        specialist = create(:specialist)
+        project = create(:off_platform_project, specialist: specialist, validated: false)
+        projects = PreviousProject.for_specialist(specialist)
+        expect(projects).to be_empty
       end
     end
 
-    context "when the project is an OffPlatformProject" do
-      it "returns the requirements" do
-        project = build(:off_platform_project, requirements: "Testing")
-        application = build(:application)
-        previous_project = PreviousProject.new(project: project, application: application)
-        expect(previous_project.requirements).to eq("Testing")
+    context "when the user has a completed booking for a project" do
+      it "includes that project" do
+        specialist = create(:specialist)
+        project = create(:project)
+        application = create(:application, project: project, specialist: specialist)
+        create(:booking, status: "Complete", application: application)
+        projects = PreviousProject.for_specialist(specialist)
+        expect(projects).to_not be_empty
+        expect(projects.first.project).to eq(project)
+      end
+    end
+
+    context "when the user has an accepted booking for a project" do
+      it "includes that project" do
+        specialist = create(:specialist)
+        project = create(:project)
+        application = create(:application, project: project, specialist: specialist)
+        create(:booking, status: "Accepted", application: application)
+        projects = PreviousProject.for_specialist(specialist)
+        expect(projects).to_not be_empty
+        expect(projects.first.project).to eq(project)
+      end
+    end
+
+    context "when the user has no booking for a project" do
+      it "does not include the project" do
+        specialist = create(:specialist)
+        project = create(:project)
+        application = create(:application, project: project, specialist: specialist)
+        projects = PreviousProject.for_specialist(specialist)
+        expect(projects).to be_empty
+      end
+    end
+
+    context "when the user has a proposed booking for a project" do
+      it "does not include the project" do
+        specialist = create(:specialist)
+        project = create(:project)
+        application = create(:application, project: project, specialist: specialist)
+        create(:booking, status: "Proposed", application: application)
+        projects = PreviousProject.for_specialist(specialist)
+        expect(projects).to be_empty
       end
     end
   end
