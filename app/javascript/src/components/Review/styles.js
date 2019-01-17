@@ -42,7 +42,7 @@ export const TotalRating = styled.div`
 `;
 
 export const Ratings = styled.div`
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 
   &::after {
     content: "";
@@ -55,7 +55,7 @@ export const Rating = styled.div`
   width: 50%;
   float: left;
   display: flex;
-  margin-bottom: 10px;
+  flex-wrap: wrap;
   align-items: center;
 
   &:nth-child(odd) {
@@ -71,6 +71,8 @@ export const Rating = styled.div`
     font-size: 14px;
     color: #0a1745;
     font-weight: 500;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 
   @media screen and (max-width: 750px) {

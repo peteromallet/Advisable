@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const StarRating = styled.div`
-  padding-left: 26px;
   position: relative;
   display: inline-block;
+  padding-left: ${props => props.showNumber && "26px"};
 `
 
 export const Star = styled.div`
