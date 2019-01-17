@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :off_platform_project do
-    specialist nil
+    specialist
+    sequence(:airtable_id) { |id| "airtable_#{id}" }
     industry "Web Development"
     contact_first_name "Thomas"
     contact_last_name "Cullen"
