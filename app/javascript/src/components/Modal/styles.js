@@ -11,6 +11,7 @@ export const ModalContainer = styled.div`
   position: fixed;
   flex-direction: column;
   justify-content: center;
+  padding: ${props => !props.expandOnMobile && "15px"};
 `;
 
 const windowWidths = {
@@ -34,6 +35,7 @@ export const Window = withSpacing(styled.div.attrs(({ styles }) => ({
     transform: `translatey(${styles.translateY}px)`
   }
 }))`
+  width: 100%;
   z-index: 500;
   display: flex;
   margin: 0 auto;
@@ -43,7 +45,7 @@ export const Window = withSpacing(styled.div.attrs(({ styles }) => ({
   position: relative;
   flex-direction: column;
   max-height: calc(100vh - 60px);
-  width: ${props => windowWidths[props.size || "m"]};
+  max-width: ${props => windowWidths[props.size || "m"]};
   box-shadow: 0px 10px 50px rgba(14, 29, 78, 0.3);
 
   ${props =>

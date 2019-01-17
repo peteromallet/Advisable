@@ -38,7 +38,7 @@ const Icon = ({ filled, size }) => {
 
 const StarRatingComponent = ({ rating, size, showNumber }) => {
   return (
-    <StarRating>
+    <StarRating showNumber={showNumber}>
       {showNumber && <Number>{rating.toFixed(1)}</Number>}
       <Star>
         <Icon size={size} filled={rating >= 1} />

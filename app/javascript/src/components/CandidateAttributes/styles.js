@@ -54,6 +54,14 @@ export const CandidateAttributeValue = styled.div`
   }
 `;
 
+export const CandidateRating = styled.div`
+  @media (max-width: 900px) {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid ${rgba("#0A2248", 0.1)};
+  }
+`
+
 export const ReviewsCount = styled.span`
   color: #8c93ae;
   font-size: 14px;

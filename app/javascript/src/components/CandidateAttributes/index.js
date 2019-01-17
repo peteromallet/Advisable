@@ -5,13 +5,16 @@ import {
   CandidateAttribute,
   CandidateAttributeLabel,
   CandidateAttributeValue,
+  CandidateRating,
   Linkedin
 } from "./styles";
 
 export default ({ rate, reviewsCount, rating, availability, linkedin, compact }) => (
   <CandidateAttributes compact={compact}>
     {rating && (
-      <Rating rating={rating} count={reviewsCount} />
+      <CandidateRating>
+        <Rating rating={rating} count={reviewsCount} />
+      </CandidateRating>
     )}
     <CandidateAttribute>
       <CandidateAttributeLabel>Hourly rate</CandidateAttributeLabel>
