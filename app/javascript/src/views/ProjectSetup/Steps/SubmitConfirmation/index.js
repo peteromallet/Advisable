@@ -13,7 +13,7 @@ const SubmitConfirmation = ({
   history
 }) => {
   const [progress, setProgres] = useState(50);
-  const [props] = useSpring({ width: `${progress}%`, from: { width: "0%" } });
+  const props = useSpring({ width: `${progress}%`, from: { width: "0%" } });
 
   useEffect(() => {
     if (project.depositOwed !== 0) {
