@@ -7,8 +7,16 @@ import Heading from "src/components/Heading";
 import PreviousProjectModal from "src/components/PreviousProjectModal";
 import { PreviousProject, ProjectTitle } from "./styles";
 
-export default ({ project, applicationId }) => {
+const companyName = project => {
+  if (project.__typename === "Project") return project.user.companyName
+  if (project.confidential) return `${project.industsry} Company`
+  return project.clientName
+}
+
+export default ({ previousProject, specialistId }) => {
   const [isOpen, setOpen] = useState(false);
+
+  const { project, reviews } = previousProject;
 
   const openProject = e => {
     e.preventDefault();
@@ -20,26 +28,26 @@ export default ({ project, applicationId }) => {
       <PreviousProjectModal
         isOpen={isOpen}
         onClose={() => setOpen(false)}
-        id={project.id}
-        type={project.type}
-        applicationId={applicationId}
+        id={project.airtableId}
+        type={project.__typename}
+        specialistId={specialistId}
       />
       <PreviousProject>
         <Heading marginBottom="xs" level={4}>
           <ProjectTitle href="#" onClick={openProject}>
-            {project.title} at {project.clientName}
+            {project.primarySkill} at {companyName(project)}
           </ProjectTitle>
         </Heading>
         <Text marginBottom="l" size="s">
           {project.description}
         </Text>
-        {project.reviews.length > 0 && (
+        {reviews.length > 0 && (
           <Spacing paddingBottom="xl">
-            {project.reviews.map(review => (
+            {reviews.map(review => (
               <Review
                 key={review.id}
                 review={review}
-                companyName={project.clientName}
+                companyName={companyName(project)}
               />
             ))}
           </Spacing>

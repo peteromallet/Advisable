@@ -37,12 +37,12 @@ const PreviousProjects = ({
 const SpecialistProjects = ({
   data
 }) => {
-  if (data.application.previousProjects.length > 0) {
-    return data.application.previousProjects.map(project => (
+  if (data.application.specialist.previousProjects.length > 0) {
+    return data.application.specialist.previousProjects.map(previousProject => (
       <PreviousProject
-        key={project.id}
-        project={project}
-        applicationId={data.application.airtableId}
+        key={previousProject.project.id}
+        previousProject={previousProject}
+        specialistId={data.application.specialist.airtableId}
       />
     ));
   }
@@ -52,6 +52,7 @@ const SpecialistProjects = ({
       <PreviousProjectsEmptyState
         name={data.application.specialist.name}
         applicationId={data.application.airtableId}
+        specialistId={data.application.specialist.airtableId}
         referencesRequested={data.application.referencesRequested}
       />
     </EmptyStateContainer>

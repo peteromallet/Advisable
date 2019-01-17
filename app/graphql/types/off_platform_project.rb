@@ -1,5 +1,6 @@
 class Types::OffPlatformProject < Types::BaseType
   field :id, ID, null: false
+  field :airtable_id, String, null: false
   field :specialist, Types::SpecialistType, null: false
   field :industry, String, null: false
   field :contact_first_name, String, null: true
@@ -12,6 +13,11 @@ class Types::OffPlatformProject < Types::BaseType
   field :results, String, null: true
   field :primary_skill, String, null: true
   field :confidential, Boolean, null: true
+  field :reviews, [Types::Review], null: false
+
+  def id
+    object.airtable_id
+  end
 
   def client_name
     return nil if object.confidential

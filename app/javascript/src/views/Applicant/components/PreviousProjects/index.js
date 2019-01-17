@@ -5,9 +5,10 @@ import PreviousProjectsEmptyState from "src/components/PreviousProjectsEmptyStat
 import PreviousProject from "./PreviousProject";
 
 export default ({
-  projects,
+  previousProjects,
   name,
   applicationId,
+  specialistId,
   referencesRequested
 }) => {
   return (
@@ -15,15 +16,15 @@ export default ({
       <Heading level="6" paddingTop="l" marginBottom="s">
         Previous Projects
       </Heading>
-      {projects.map(project => (
+      {previousProjects.map(previousProject => (
         <PreviousProject
-          key={project.id}
-          project={project}
-          applicationId={applicationId}
+          key={previousProject.project.id}
+          previousProject={previousProject}
+          specialistId={specialistId}
         />
       ))}
 
-      {projects.length === 0 && (
+      {previousProjects.length === 0 && (
         <Card>
           <PreviousProjectsEmptyState
             name={name}
