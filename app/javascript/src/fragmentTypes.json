@@ -1,0 +1,14 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "UNION",
+        "name": "PreviousProjectUnion",
+        "possibleTypes": [
+          { "name": "Project" },
+          { "name": "OffPlatformProject" }
+        ]
+      }
+    ]
+  }
+}

@@ -5,23 +5,41 @@ import Review from "src/components/Review";
 import Heading from "src/components/Heading";
 import Spacing from "src/components/Spacing";
 
-export default ({ project }) => {
+const companyName = project => {
+  if (project.__typename === "Project") return project.user.companyName
+  if (project.confidential) return `${project.industsry} Company`
+  return project.clientName
+}
+
+const clientDescription = project => {
+  if (project.__typename === "Project") return project.companyDescription
+  return project.clientDescription
+}
+
+const requirements = project => {
+  if (project.__typename === "Project") return project.specialistDescription
+  return project.requirements
+}
+
+export default ({ previousProject }) => {
+  const { project, reviews } = previousProject
+
   return (
     <React.Fragment>
       <Modal.Header>
-        <Heading level={2}>{project.title}</Heading>
-        <Text>{project.clientName}</Text>
+        <Heading level={2}>{project.primarySkill}</Heading>
+        <Text>{companyName(project)}</Text>
       </Modal.Header>
       <Modal.Body>
         <Spacing paddingBottom="s">
           <Heading level={6}>Client Description</Heading>
           <Text size="s" marginBottom="l">
-            {project.clientDescription}
+            {clientDescription(project)}
           </Text>
 
           <Heading level={6}>Requirements</Heading>
           <Text size="s" marginBottom="l">
-            {project.requirements}
+            {requirements(project)}
           </Text>
 
           <Heading level={6}>Project Description</Heading>
@@ -39,11 +57,11 @@ export default ({ project }) => {
           )}
         </Spacing>
 
-        {project.reviews.map(review => (
+        {reviews.map(review => (
           <Review
             key={review.id}
             review={review}
-            companyName={project.clientName}
+            companyName={companyName(project)}
           />
         ))}
       </Modal.Body>

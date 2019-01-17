@@ -1,17 +1,31 @@
 query PreviousProject(
   $id: ID!
   $type: PreviousProjectTypeAttribute!
-  $applicationId: ID!
+  $specialistId: ID!
 ) {
-  previousProject(id: $id, type: $type, applicationId: $applicationId) {
-    id
-    type
-    title
-    description
-    clientName
-    clientDescription
-    requirements
-    results
+  previousProject(id: $id, type: $type, specialistId: $specialistId) {
+    project {
+      ... on Project {
+        id
+        primarySkill
+        description
+        user {
+          companyName
+        }
+        companyDescription
+        specialistDescription
+      }
+      ... on OffPlatformProject {
+        id
+        primarySkill
+        description
+        clientName
+        confidential
+        clientDescription
+        requirements
+        results
+      }
+    }
     reviews {
       id
       name

@@ -1,49 +1,17 @@
-# Represents a specialists previous project. Previous projects are only viewed
-# within the context of an application to another project. This is designed this
-# way as we plan to allow specialists to specific the projects they want to
-# include when they apply to projects.
-# 
-# The project must be an instance of either Project or OffPlatformProject
+# PreviousProject represents a specialists relationship with a particular
+# project. e.g A way to see all of the project reviews related specifically
+# to that specialist.
+# The project in a PreviousProject can be an instance of Project or
+# OffPlatformProject.
 class PreviousProject
-  attr_reader :project, :application
+  attr_reader :project, :specialist
 
-  def initialize(project:, application:)
+  def initialize(project:, specialist:)
     @project = project
-    @application = application
+    @specialist = specialist
   end
 
-  def title
-    project.primary_skill
-  end
-
-  def description
-    project.description
-  end
-
-  # If the project is an instance of Project. Then the users company_name will
-  # be returned. If the project is an OffPlatformProject and is a confidential
-  # project then the industry will be return suffixed with " Company".
-  def client_name
-    return project.user.company_name if project.is_a?(Project)
-    return "#{project.industry} Company" if project.confidential
-    project.client_name
-  end
-
-  def client_description
-    return project.company_description if project.is_a?(Project)
-    project.client_description
-  end
-
-  def requirements
-    return project.specialist_description if project.is_a?(Project)
-    project.requirements
-  end
-
-  def results
-    return nil if project.is_a?(Project)
-    project.results
-  end
-
+  # We only want to show reviews that are related to the specialist
   def reviews
     @reviews ||= project.reviews.where(
       type: ["On-Platform Job Review", "Off-Platform Project Review"],
@@ -51,42 +19,33 @@ class PreviousProject
     )
   end
 
-  def specialist
-    application.specialist
-  end
-
   class << self
-    # Finds a specific previous project for a given appication_id.
-    def find(id:, type:, application_id:)
-      application = Application.find_by_airtable_id!(application_id)
-      specialist = application.specialist
+    def find(id:, type:, specialist_id:)
+      specialist = Specialist.find_by_airtable_id!(specialist_id)
       project = if type == "OffPlatformProject"
         specialist.off_platform_projects.find_by_airtable_id!(id)
       else
-        specialist_platform_projects(specialist: specialist)
+        specialist_platform_projects(specialist)
           .find_by_airtable_id!(id)
       end
-      new(application: application, project: project)
+      new(specialist: specialist, project: project)
     end
 
-    def for_application(application:)
-      off_platform = specialist_off_platform_projects(specialist: application.specialist)
-      platform_projects = specialist_platform_projects(specialist: application.specialist)
-      (off_platform + platform_projects).map do |project|
-        new(application: application, project: project)
+    # Returns an array of PreviousProject instances for a given specialist
+    def for_specialist(specialist)
+      off_platform = specialist.off_platform_projects.validated
+      on_platform = specialist_platform_projects(specialist)
+      (off_platform + on_platform).map do |project|
+        new(project: project, specialist: specialist)
       end
     end
 
     private
 
-    def specialist_off_platform_projects(specialist:)
-      specialist.off_platform_projects.validated
-    end
-
     # Returns the projects that specialist where their application has been
     # successful and has an associated booking with a status of either Complete
     # or Accepted
-    def specialist_platform_projects(specialist:)
+    def specialist_platform_projects(specialist)
       Project.joins(applications: [:specialist, :bookings])
         .where(
           specialists: { id: specialist.id },

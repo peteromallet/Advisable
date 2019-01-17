@@ -5,18 +5,34 @@ query PreviousProjects($applicationId: ID!) {
     referencesRequested
     specialist {
       id
+      airtableId
       name
-    }
-    previousProjects {
-      id
-      type
-      title
-      description
-      clientName
-      reviews {
-        id
-        ratings {
-        	overall
+      previousProjects {
+        project {
+          ... on Project {
+            id
+            airtableId
+            description
+            primarySkill
+            user {
+              companyName
+            }
+          }
+          ... on OffPlatformProject {
+            id
+            airtableId
+            industry
+            clientName
+            description
+            primarySkill
+            confidential
+          }
+        }
+        reviews {
+          id
+          ratings {
+            overall
+          }
         }
       }
     }
