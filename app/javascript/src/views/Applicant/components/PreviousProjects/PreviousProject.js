@@ -27,7 +27,7 @@ export default ({ project, applicationId }) => {
       <PreviousProject>
         <Heading marginBottom="xs" level={4}>
           <ProjectTitle href="#" onClick={openProject}>
-            {project.title} at {project.companyName}
+            {project.title} at {project.clientName}
           </ProjectTitle>
         </Heading>
         <Text marginBottom="l" size="s">
@@ -39,7 +39,7 @@ export default ({ project, applicationId }) => {
               <Review
                 key={review.id}
                 review={review}
-                companyName={project.companyName}
+                companyName={project.clientName}
               />
             ))}
           </Spacing>

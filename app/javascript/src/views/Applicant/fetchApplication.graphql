@@ -22,7 +22,7 @@ query project($projectID: ID!, $applicationID: ID!) {
         type
         title
         description
-        companyName
+        clientName
         reviews {
           id
           name

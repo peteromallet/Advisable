@@ -1,16 +1,16 @@
 FactoryBot.define do
   factory :off_platform_project do
     specialist nil
-    industry "MyString"
-    contact_first_name "MyString"
-    contact_last_name "MyString"
-    contact_job_title "MyString"
-    client_name "MyString"
-    client_description "MyString"
-    description "MyString"
-    requirements "MyString"
-    results "MyText"
-    primary_skill "MyString"
+    industry "Web Development"
+    contact_first_name "Thomas"
+    contact_last_name "Cullen"
+    contact_job_title "Developer"
+    client_name "Acme Corp"
+    client_description "A description"
+    description "A description"
+    requirements "Requirements"
+    results "Results"
+    primary_skill "Ruby on Rails"
     confidential false
   end
 end

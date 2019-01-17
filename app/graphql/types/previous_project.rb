@@ -3,7 +3,7 @@ class Types::PreviousProject < Types::BaseType
   field :type, PreviousProjectTypeAttribute, null: false
   field :title, String, null: true
   field :description, String, null: true
-  field :company_name, String, null: true
+  field :client_name, String, null: true
   field :client_description, String, null: true
   field :requirements, String, null: true
   field :results, String, null: true

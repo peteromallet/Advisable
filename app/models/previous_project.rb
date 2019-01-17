@@ -1,5 +1,9 @@
 # Represents a specialists previous project. Previous projects are only viewed
-# within the context of an application.
+# within the context of an application to another project. This is designed this
+# way as we plan to allow specialists to specific the projects they want to
+# include when they apply to projects.
+# 
+# The project must be an instance of either Project or OffPlatformProject
 class PreviousProject
   attr_reader :project, :application
 
@@ -16,7 +20,10 @@ class PreviousProject
     project.description
   end
 
-  def company_name
+  # If the project is an instance of Project. Then the users company_name will
+  # be returned. If the project is an OffPlatformProject and is a confidential
+  # project then the industry will be return suffixed with " Company".
+  def client_name
     return project.user.company_name if project.is_a?(Project)
     return "#{project.industry} Company" if project.confidential
     project.client_name

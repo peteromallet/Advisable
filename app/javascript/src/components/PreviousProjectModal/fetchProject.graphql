@@ -8,7 +8,7 @@ query PreviousProject(
     type
     title
     description
-    companyName
+    clientName
     clientDescription
     requirements
     results
