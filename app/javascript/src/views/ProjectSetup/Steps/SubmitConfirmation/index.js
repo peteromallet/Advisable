@@ -5,8 +5,6 @@ import CONFIRM_PROJECT from "./confirmProject.graphql";
 import { Wrapper, Progress } from "./styles";
 import illustration from "./illustration.png";
 
-let progressTimer;
-
 const SubmitConfirmation = ({
   project,
   match,
