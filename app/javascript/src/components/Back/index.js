@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { withSpacing } from "src/components/Spacing";
-import arrow from "./arrow.svg";
+import { withSpacing, extractSpacingProps } from "src/components/Spacing";
 
-let Back = styled.a`
+let Back = styled.a.attrs(props => ({
+  as: props.to ? Link : "a"
+}))`
   fill: #5c6782;
   color: #5c6782;
   cursor: pointer;
@@ -31,16 +32,13 @@ let Back = styled.a`
 
 Back = withSpacing(Back);
 
-const ReactRouterBack = Back.withComponent(Link);
-
 export default ({ children, ...props }) => {
-  const Component = props.to ? ReactRouterBack : Back;
   return (
-    <Component {...props}>
+    <Back {...props}>
       <svg width={17} height={15}>
         <path d="M4.828 9l4.086 4.086A1 1 0 0 1 7.5 14.5L.793 7.793 7.5 1.086A1 1 0 1 1 8.914 2.5L4.414 7H16a1 1 0 0 1 0 2H4.828z" />
       </svg>
       <span>{children || "Back"}</span>
-    </Component>
+    </Back>
   );
 };

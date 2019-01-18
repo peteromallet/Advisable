@@ -61,7 +61,8 @@ const statusActions = {
           onClose={() => setModal(null)}
         />
         <RequestReferences
-          application={application}
+          name={application.specialist.name}
+          applicationId={application.airtableId}
           isOpen={modal === REQUEST_REFERENCES_MODAL}
           onClose={() => setModal(null)}
         />

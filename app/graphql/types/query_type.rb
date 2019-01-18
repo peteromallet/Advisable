@@ -1,5 +1,4 @@
 class Types::QueryType < Types::BaseType
-
   field :project, Types::ProjectType, description: "Find a Project by ID", null: true do
     # querying for a specific project requires a special case where the user
     # will face one of three scenrios:
@@ -127,5 +126,18 @@ class Types::QueryType < Types::BaseType
     skills = skills.where(category: args[:category]) if args[:category]
     skills = skills.where(profile: args[:profile]) if args[:profile]
     skills.order(name: :asc)
+  end
+
+  field :previous_project, Types::PreviousProject, null: false do
+    argument :id, ID, required: true
+    argument :type, Types::PreviousProjectTypeAttribute, required: true
+    argument :specialist_id, ID, required: true
+  end
+
+  def previous_project(id:, type:, specialist_id:)
+    ::PreviousProject.find(id: id, type: type, specialist_id: specialist_id)
+
+    rescue ActiveRecord::RecordNotFound => er
+      GraphQL::ExecutionError.new("Could not find project #{id} with type #{type}")
   end
 end
