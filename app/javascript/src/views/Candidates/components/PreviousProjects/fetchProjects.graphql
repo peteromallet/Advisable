@@ -1,0 +1,40 @@
+query PreviousProjects($applicationId: ID!) {
+  application(id: $applicationId) {
+    id
+    airtableId
+    referencesRequested
+    specialist {
+      id
+      airtableId
+      name
+      previousProjects {
+        project {
+          ... on Project {
+            id
+            airtableId
+            description
+            primarySkill
+            user {
+              companyName
+            }
+          }
+          ... on OffPlatformProject {
+            id
+            airtableId
+            industry
+            clientName
+            description
+            primarySkill
+            confidential
+          }
+        }
+        reviews {
+          id
+          ratings {
+            overall
+          }
+        }
+      }
+    }
+  }
+}

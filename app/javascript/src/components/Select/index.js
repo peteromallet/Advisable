@@ -85,7 +85,7 @@ class SelectComponent extends React.Component {
           <Select
             name={name}
             value={finalValue}
-            innerRef={c => this.select = c}
+            ref={c => this.select = c}
             defaultValue={defaultValue}
             onChange={onChange}
             onFocus={onFocus}

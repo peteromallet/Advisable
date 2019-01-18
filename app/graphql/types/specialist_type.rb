@@ -1,5 +1,6 @@
 class Types::SpecialistType < Types::BaseType
   field :id, ID, null: false
+  field :airtable_id, String, null: false
   field :first_name, String, null: true
   field :last_name, String, null: true
   field :name, String, null: true
@@ -10,6 +11,10 @@ class Types::SpecialistType < Types::BaseType
   field :phone_number, String, null: true
   field :image, Types::AttachmentType, null: true
   field :skills, [String, null: true], null: true
+  field :ratings, Types::Ratings, null: false
+  field :reviews, [Types::Review], null: false
+  field :reviewsCount, Integer, null: true
+  field :previous_projects, [Types::PreviousProject], null: false
 
   def name
     "#{object.first_name} #{object.last_name}"
@@ -17,5 +22,9 @@ class Types::SpecialistType < Types::BaseType
 
   def skills
     object.skills.map(&:name)
+  end
+
+  def previous_projects
+    ::PreviousProject.for_specialist(object)
   end
 end

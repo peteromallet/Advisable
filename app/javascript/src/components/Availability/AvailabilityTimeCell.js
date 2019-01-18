@@ -79,7 +79,7 @@ class AvailabilityTimeCell extends Component {
         onTouchMove={this.handleTouchMove}
         isSelected={this.props.isSelected}
         isHighlighted={this.props.isHighlighted}
-        innerRef={c => this.cell = c}
+        ref={c => this.cell = c}
       >
         {!this.disabled && (
           <div>

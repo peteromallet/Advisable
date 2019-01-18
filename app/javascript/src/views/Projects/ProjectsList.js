@@ -1,4 +1,3 @@
-import { Trail } from "react-spring";
 import React, { Fragment, useState } from "react";
 import Text from "../../components/Text";
 import pluralize from "../../utilities/pluralize";
@@ -25,29 +24,18 @@ export default ({ projects }) => {
           Start a new project
         </NewProject>
       </Tile>
-      <Trail
-        items={projects}
-        keys={project => project.id}
-        from={{ opacity: 0 }}
-        to={{ opacity: 1 }}
-      >
-        {project => styles => (
-          <Tile key={project.id} {...styles}>
-            <ProjectCard to={`/projects/${project.airtableId}`}>
-              <ProjectTitle>{project.primarySkill}</ProjectTitle>
-              <Text size="s" marginBottom="l">
-                {pluralize(
-                  project.applicationCount,
-                  "Candidate",
-                  "Candidates"
-                )}
-              </Text>
-              <ProjectStatus>{project.status}</ProjectStatus>
-              <ProjectDescription>{project.description}</ProjectDescription>
-            </ProjectCard>
-          </Tile>
-        )}
-      </Trail>
+      {projects.map(project => (
+        <Tile key={project.id}>
+          <ProjectCard to={`/projects/${project.airtableId}`}>
+            <ProjectTitle>{project.primarySkill}</ProjectTitle>
+            <Text size="s" marginBottom="l">
+              {pluralize(project.applicationCount, "Candidate", "Candidates")}
+            </Text>
+            <ProjectStatus>{project.status}</ProjectStatus>
+            <ProjectDescription>{project.description}</ProjectDescription>
+          </ProjectCard>
+        </Tile>
+      ))}
     </Fragment>
   );
 };
