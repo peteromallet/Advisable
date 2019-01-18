@@ -15,7 +15,7 @@ const Spacing = styled.div`
   width: ${props => (props.inline ? "auto" : "100%")};
 `;
 
-export const withSpacing = Component => Component.extend`
+export const withSpacing = Component => styled(Component)`
   padding-top: ${props => sizes[props.paddingTop || props.padding]};
   padding-right: ${props => sizes[props.paddingRight || props.padding]};
   padding-bottom: ${props => sizes[props.paddingBottom || props.padding]};

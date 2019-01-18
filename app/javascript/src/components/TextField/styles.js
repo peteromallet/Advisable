@@ -50,7 +50,8 @@ export const Input = styled.input`
 
 export const InputMask = Input.withComponent(MaskedInput);
 
-export const Textarea = Input.withComponent('textarea').extend`
+export let Textarea = Input.withComponent("textarea")
+Textarea = styled(Textarea)`
   resize: none;
   height: auto;
   padding: 10px;

@@ -217,7 +217,7 @@ class Availability extends Component {
             moment.tz(t[0], this.props.timeZone)
           )}
         />
-        <Times innerRef={c => (this.view = c)}>
+        <Times ref={c => (this.view = c)}>
           <AvailabilityHours />
           {this.state.times.map((times, d) => (
             <Day

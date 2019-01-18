@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { withSpacing } from "./Spacing";
 
-const Card = styled.div`
+export const Card = styled.div`
   background: #ffffff;
   border-radius: 3px;
   position: relative;

@@ -6,6 +6,7 @@ class Airtable::ClientContact < Airtable::Base
   sync_column 'Email Address', to: :email
   sync_column 'First Name', to: :first_name
   sync_column 'Last Name', to: :last_name
+  sync_column 'Title', to: :title
 
   sync_data do |user|
     # currently the company name is a lookup type in airtable which

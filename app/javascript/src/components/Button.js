@@ -1,5 +1,5 @@
 import React from "react";
-import { rgba } from "polished";
+import { rgba, darken } from "polished";
 import styled, { keyframes, css } from "styled-components";
 import { withSpacing } from "./Spacing";
 
@@ -79,6 +79,22 @@ const STYLES = {
 
     &:active {
       background-color: #0C2EA9;
+    }
+  `,
+  plain: css`
+    height: auto;
+    color: #173FCD;
+    padding: 2px 8px;
+    margin: -2px -8px;
+    background: transparent;
+    transition: background-color 300ms;
+
+    &:hover {
+      color: ${darken(0.1, "#173FCD")};
+    }
+
+    &:active {
+      background-color: ${rgba("#0A1745", 0.05)};
     }
   `
 };

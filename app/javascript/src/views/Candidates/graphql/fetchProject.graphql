@@ -26,8 +26,13 @@ query project($id: ID!) {
       specialist {
         id
         name
+        airtableId
         firstName
         city
+        reviewsCount
+        ratings {
+          overall
+        }
         image {
           url
         }
