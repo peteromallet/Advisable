@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     resources :webhook_configurations
     resources :webhooks, only: [:index, :show]
 
+    post "resync", to: "application#resync", as: :resync if ENV["STAGING"]
+
     root to: "applications#index"
   end
 

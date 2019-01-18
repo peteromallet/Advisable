@@ -26,19 +26,12 @@ const lineHeights = {
   l: "28px"
 };
 
-const kerning = {
-  xs: "0",
-  m: "-0.008em",
-  l: "-0.02em"
-};
-
 const Text = styled.p`
   display: ${props => props.inline && 'inline'};
   font-size: ${props => sizes[props.size] || sizes["m"]};
   line-height: ${props => lineHeights[props.size] || lineHeights["m"]};
   font-weight: ${props => weights[props.weight || props.variation] || 400};
   color: ${props => colours[props.colour || props.variation] || "#353E5C"};
-  letter-spacing: ${props => kerning[props.size] || kerning["m"]};
   text-align: ${props => props.center ? 'center' : 'inherit'};
 `;
 

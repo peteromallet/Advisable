@@ -20,6 +20,7 @@ import CandidateAttributes from "src/components/CandidateAttributes";
 import currency from "src/utilities/currency";
 import CandidateActions from "src/components/CandidateActions";
 import AdvisableMessage from "./components/AdvisableMessage";
+import PreviousProjects from "./components/PreviousProjects";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 import {
   ApplicantHeader,
@@ -93,6 +94,8 @@ class Applicant extends React.Component {
                     <AppliedTo>Applied to {project.name}</AppliedTo>
                   </ApplicantHeader>
                   <CandidateAttributes
+                    reviewsCount={application.specialist.reviewsCount}
+                    rating={application.specialist.ratings.overall}
                     rate={currency(application.rate, project.currency)}
                     availability={application.availability}
                     linkedin={specialist.linkedin}
@@ -101,6 +104,9 @@ class Applicant extends React.Component {
                   {application.comment && (
                     <AdvisableMessage>{application.comment}</AdvisableMessage>
                   )}
+                  <Heading level="6" marginBottom="s">
+                    Application Questions
+                  </Heading>
                   {application.questions.map((question, i) => (
                     <Card key={i} padding="xl" marginBottom="l">
                       <Text marginBottom="m" weight="strong" colour="dark">
@@ -122,6 +128,14 @@ class Applicant extends React.Component {
                       </Text>
                     </Card>
                   ))}
+
+                  <PreviousProjects
+                    applicationId={application.airtableId}
+                    name={application.specialist.name}
+                    specialistId={application.specialist.airtableId}
+                    referencesRequested={application.referencesRequested}
+                    previousProjects={application.specialist.previousProjects || []}
+                  />
 
                   <Skills
                     marginTop="xxl"
