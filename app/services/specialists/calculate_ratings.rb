@@ -40,7 +40,7 @@ class Specialists::CalculateRatings < ApplicationService
   # Iterate through the collection of ratings and calculate the averages
   def calculate_averages
     ratings.each do |name, collected|
-      rating = (collected.sum / ratings.length).to_f
+      rating = (collected.sum / collected.length).to_f
       specialist.ratings[name] = rating
     end
   end
