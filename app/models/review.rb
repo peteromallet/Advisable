@@ -20,7 +20,8 @@ class Review < ApplicationRecord
   belongs_to :reviewable, polymorphic: true, required: false
 
   # After the record is saved we want to update the specialists average ratings
-  after_save :update_specialist_ratings
+  after_save :update_specialist_ratings, if: :saved_change_to_ratings?
+  after_destroy :update_specialist_ratings
 
   after_save :update_specialist_reviews_count
   after_destroy :update_specialist_reviews_count
@@ -32,10 +33,11 @@ class Review < ApplicationRecord
       specialist: specialist,
       type: ["On-Platform Job Review", "Off-Platform Project Review"],
     ).count
+    specialist.save(validate: false)
   end
 
   def update_specialist_ratings
-    return unless specialist.present? && saved_change_to_ratings?
+    return unless specialist.present?
     Specialists::CalculateRatings.call(specialist: specialist)
   end
 end
