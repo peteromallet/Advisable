@@ -15,10 +15,16 @@ class Specialists::CalculateRatings < ApplicationService
 
   private
 
+  def reviews
+    @review ||= specialist.reviews.where(
+      type: ["On-Platform Job Review", "Off-Platform Project Review"],
+    )
+  end
+
   # Iterate through each review and add each rating from the reviews ratings
   # hash to the @ratings variable
   def collect_ratings
-    specialist.reviews.each do |review|
+    reviews.each do |review|
       review.ratings.each do |name, rating|
         add_rating(name, rating)
       end
