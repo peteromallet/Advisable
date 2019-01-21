@@ -41,19 +41,19 @@ const StarRatingComponent = ({ rating, size, showNumber }) => {
     <StarRating showNumber={showNumber}>
       {showNumber && <Number>{rating.toFixed(1)}</Number>}
       <Star>
-        <Icon size={size} filled={rating >= 1} />
+        <Icon size={size} filled={rating >= 0.5} />
       </Star>
       <Star>
-        <Icon size={size} filled={rating >= 2} />
+        <Icon size={size} filled={rating >= 1.5} />
       </Star>
       <Star>
-        <Icon size={size} filled={rating >= 3} />
+        <Icon size={size} filled={rating >= 2.5} />
       </Star>
       <Star>
-        <Icon size={size} filled={rating >= 4} />
+        <Icon size={size} filled={rating >= 3.5} />
       </Star>
       <Star>
-        <Icon size={size} filled={rating >= 5} />
+        <Icon size={size} filled={rating >= 4.5} />
       </Star>
     </StarRating>
   );

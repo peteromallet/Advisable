@@ -22,26 +22,48 @@ export default ({ review, companyName }) => {
         </Text>
       </ReviewHeader>
       <Ratings>
-        <Rating>
-          <strong>Skills</strong>
-          <StarRating showNumber={false} rating={review.ratings.skills} />
-        </Rating>
-        <Rating>
-          <strong>Quality of work</strong>
-          <StarRating showNumber={false} rating={review.ratings.qualityOfWork} />
-        </Rating>
-        <Rating>
-          <strong>Schedule adherence</strong>
-          <StarRating showNumber={false} rating={review.ratings.adherenceToSchedule} />
-        </Rating>
-        <Rating>
-          <strong>Availability</strong>
-          <StarRating showNumber={false} rating={review.ratings.availability} />
-        </Rating>
-        <Rating>
-          <strong>Communication</strong>
-          <StarRating showNumber={false} rating={review.ratings.communication} />
-        </Rating>
+        {review.ratings.skills && (
+          <Rating>
+            <strong>Skills</strong>
+            <StarRating showNumber={false} rating={review.ratings.skills} />
+          </Rating>
+        )}
+        {review.ratings.qualityOfWork && (
+          <Rating>
+            <strong>Quality of work</strong>
+            <StarRating
+              showNumber={false}
+              rating={review.ratings.qualityOfWork}
+            />
+          </Rating>
+        )}
+        {review.ratings.adherenceToSchedule && (
+          <Rating>
+            <strong>Schedule adherence</strong>
+            <StarRating
+              showNumber={false}
+              rating={review.ratings.adherenceToSchedule}
+            />
+          </Rating>
+        )}
+        {review.ratings.availability && (
+          <Rating>
+            <strong>Availability</strong>
+            <StarRating
+              showNumber={false}
+              rating={review.ratings.availability}
+            />
+          </Rating>
+        )}
+        {review.ratings.communication && (
+          <Rating>
+            <strong>Communication</strong>
+            <StarRating
+              showNumber={false}
+              rating={review.ratings.communication}
+            />
+          </Rating>
+        )}
       </Ratings>
       {review.comment && <ReviewComment>"{review.comment}"</ReviewComment>}
     </Review>
