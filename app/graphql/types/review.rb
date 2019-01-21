@@ -1,6 +1,6 @@
 class Types::Review < Types::BaseType
   field :id, ID, null: false
-  field :comment, String, null: false
+  field :comment, String, null: true
   field :type, String, null: true
   field :ratings, Types::Ratings, null: false
   field :name, String, null: true

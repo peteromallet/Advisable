@@ -28,13 +28,13 @@ class Specialists::CalculateRatings < ApplicationService
   # Adds a rating to the @ratings collection
   def add_rating(name, rating)
     ratings[name] ||= []
-    ratings[name] << rating
+    ratings[name] << rating unless rating.nil?
   end
 
   # Iterate through the collection of ratings and calculate the averages
   def calculate_averages
-    ratings.each do |name, ratings|
-      rating = (ratings.sum / ratings.length).to_f
+    ratings.each do |name, collected|
+      rating = (collected.sum / ratings.length).to_f
       specialist.ratings[name] = rating
     end
   end
