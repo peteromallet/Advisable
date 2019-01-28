@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { Route, Switch } from "react-router-dom";
 import { hot, setConfig } from "react-hot-loader";
 
-import Loading from 'src/components/Loading';
+import Loading from "src/components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Project from "./views/Project";
 import Login from "./views/Login";
@@ -11,6 +11,7 @@ import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
 import Projects from "./views/Projects";
 import ViewOffer from "./views/ViewOffer";
+import References from "./views/References";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
 import EditProposal from "./views/EditProposal";
@@ -39,6 +40,10 @@ const Root = () => (
         <AuthenticatedRoute path="/projects" component={Projects} />
         <Route path="/offers/:bookingID" component={ViewOffer} />
         <Route path="/clients/:userID/availability" component={Availability} />
+        <Route
+          path="/specialists/:specialistID/references"
+          component={References}
+        />
         <Route
           path="/interview_request/:interviewID"
           component={InterviewRequest}
