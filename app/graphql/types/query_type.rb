@@ -138,4 +138,16 @@ class Types::QueryType < Types::BaseType
     rescue ActiveRecord::RecordNotFound => er
       GraphQL::ExecutionError.new("Could not find project #{id} with type #{type}")
   end
+
+  field :specialist, Types::SpecialistType, null: true do
+    argument :id, ID, required: true
+  end
+
+  def specialist(id: )
+    begin
+      Specialist.find_by_airtable_id!(id)
+    rescue ActiveRecord::RecordNotFound => er
+      GraphQL::ExecutionError.new("Could not find specialist #{id}")
+    end
+  end
 end
