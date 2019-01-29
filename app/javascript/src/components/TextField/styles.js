@@ -1,12 +1,13 @@
-import styled from 'styled-components';
-import MaskedInput from 'react-text-mask'
-import { withSpacing } from 'src/components/Spacing';
+import styled, { css } from "styled-components";
+import MaskedInput from "react-text-mask";
+import { withSpacing } from "src/components/Spacing";
 
 export let Wrapper = styled.div`
-  width: ${props => props.block ? "100%" : "auto"};
-`
+  position: relative;
+  width: ${props => (props.block ? "100%" : "auto")};
+`;
 
-Wrapper = withSpacing(Wrapper)
+Wrapper = withSpacing(Wrapper);
 
 export const Input = styled.input`
   width: 100%;
@@ -24,8 +25,8 @@ export const Input = styled.input`
   transition: border-color 200ms, background-color 300ms;
 
   &:focus {
-    background: #ECF1FA;
-    border-color: #3360FF;
+    background: #ecf1fa;
+    border-color: #3360ff;
   }
 
   &::-webkit-inner-spin-button {
@@ -34,26 +35,44 @@ export const Input = styled.input`
   }
 
   &::-webkit-input-placeholder {
-    color: #8C92AE;
+    color: #8c92ae;
   }
   &::-moz-placeholder {
-    color: #8C92AE;
+    color: #8c92ae;
   }
   &:-ms-input-placeholder {
-    color: #8C92AE;
+    color: #8c92ae;
   }
   &:-moz-placeholder {
-    color: #8C92AE;
+    color: #8c92ae;
   }
+`;
+
+export const InputContainer = styled.div`
+  position: relative;
 `
+
+export const CharCount = styled.span`
+  left: 14px;
+  bottom: 15px;
+  position: absolute;
+  color: #6e7796;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+`;
 
 export const InputMask = Input.withComponent(MaskedInput);
 
-export let Textarea = Input.withComponent("textarea")
+export let Textarea = Input.withComponent("textarea");
 Textarea = styled(Textarea)`
   resize: none;
   height: auto;
   padding: 10px;
   overflow: auto;
   line-height: 18px;
-`
+
+  ${props => props.maxLength && css`
+    padding-bottom: 30px;
+  `}
+`;

@@ -8,17 +8,29 @@ import FieldRow from "src/components/FieldRow";
 import StepDots from "src/components/StepDots";
 import Checkbox from "src/components/Checkbox";
 import TextField from "src/components/TextField";
+import validationSchema from "./validationSchema";
 
-const ClientDetails = ({ setValues, gotoNextStep, gotoPreviousStep }) => {
-  const handleSubmit = values => {
+const ClientDetails = ({ setValues, values, gotoNextStep }) => {
+  const onSubmit = values => {
     setValues(values);
     gotoNextStep();
   };
 
   return (
-    <Formik onSubmit={handleSubmit}>
-      {formik => (
-        <form onSubmit={formik.handleSubmit}>
+    <Formik
+      onSubmit={onSubmit}
+      initialValues={values}
+      validationSchema={validationSchema}
+    >
+      {({
+        values,
+        handleSubmit,
+        handleChange,
+        handleBlur,
+        touched,
+        errors
+      }) => (
+        <form onSubmit={handleSubmit}>
           <Modal.Header>
             <Heading size="s">Client Details</Heading>
           </Modal.Header>
@@ -29,18 +41,19 @@ const ClientDetails = ({ setValues, gotoNextStep, gotoPreviousStep }) => {
                 name="clientName"
                 placeholder="e.g Apple Inc."
                 label="What was the client’s name?"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.clientName}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.clientName}
+                error={touched.clientName && errors.clientName}
               />
             </FieldRow>
             <FieldRow>
               <Checkbox
                 name="confidential"
                 label="This client is confidential"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.confidential}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.confidential}
                 description="If checked the client’s name will be hidden and the industry will be named instead. e.g Financial Services Company"
               />
             </FieldRow>
@@ -49,22 +62,24 @@ const ClientDetails = ({ setValues, gotoNextStep, gotoPreviousStep }) => {
                 name="industry"
                 placeholder="e.g Financial Services"
                 label="What industry/category is this company in?"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.industry}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.industry}
+                error={touched.industry && errors.industry}
               />
             </FieldRow>
             <FieldRow>
               <TextField
                 multiline
                 minRows={6}
+                maxLength={300}
                 name="clientDescription"
                 placeholder="The client is..."
                 label="Give a short overview of this company"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.clientDescription}
+                onChange={handleChange}
+                value={values.clientDescription}
                 description="This should start with &quot;The client/company is...&quot;."
+                error={touched.clientDescription && errors.clientDescription}
               />
             </FieldRow>
           </Modal.Body>
