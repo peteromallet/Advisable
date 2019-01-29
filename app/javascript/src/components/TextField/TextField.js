@@ -24,6 +24,7 @@ const TextField = ({
   style,
   description,
   autoFocus,
+  description,
   ...props
 }) => {
   const input = useRef(null);

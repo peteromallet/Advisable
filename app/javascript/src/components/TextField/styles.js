@@ -13,15 +13,14 @@ export const Input = styled.input`
   height: 40px;
   border: none;
   outline: none;
-  padding: 0 12px;
+  padding: 0 14px;
   font-size: 16px;
   box-shadow: none;
   appearance: none;
   font-weight: 500;
   border-radius: 8px;
-  background: #F4F7FC;
-  letter-spacing: -0.015em;
   border: 2px solid transparent;
+  background: rgba(29, 39, 75, 0.06);
   transition: border-color 200ms, background-color 300ms;
 
   &:focus {
