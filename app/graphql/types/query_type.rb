@@ -116,16 +116,14 @@ class Types::QueryType < Types::BaseType
     Country.all.order(name: :asc)
   end
 
-  field :skills, [Types::Skill], "Returns a list of skills", null: false do
-    argument :category, String, required: false
-    argument :profile, Boolean, required: false
-  end
+  field :skills, [Types::Skill], "Returns a list of skills", null: false
  
-  def skills(**args)
-    skills = ::Skill.all
-    skills = skills.where(category: args[:category]) if args[:category]
-    skills = skills.where(profile: args[:profile]) if args[:profile]
-    skills.order(name: :asc)
+  def skills
+    Rails.cache.fetch("airtable_active_skills", expires_in: 2.minutes) do
+      Airtable::Skill.active.map do |s|
+        OpenStruct.new(airtable_id: s.id, name: s.fields["Name"])
+      end
+    end
   end
 
   field :previous_project, Types::PreviousProject, null: false do
