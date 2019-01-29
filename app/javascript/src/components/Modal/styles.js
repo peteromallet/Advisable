@@ -29,6 +29,11 @@ export const ModalHeader = styled.div`
   border-bottom: 1px solid #E4E5EB;
 `
 
+export const ModalFooter = styled.div`
+  padding: 25px 30px;
+  border-top: 1px solid #E4E5EB;
+`
+
 export const Window = withSpacing(styled.div.attrs(({ styles }) => ({
   style: {
     opacity: styles.opacity,

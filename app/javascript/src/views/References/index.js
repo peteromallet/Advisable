@@ -1,12 +1,19 @@
 // Renders the view that allows specialists to manage their references.
-import React from "react";
+import React, { useState } from "react";
 import Text from "../../components/Text";
 import Header from "../../components/Header";
+import Button from "../../components/Button";
 import Heading from "../../components/Heading";
 import Container from "../../components/Container";
+import AddPreviousProjectModal from "../../components/AddPreviousProjectModal";
 import PreviousProjects from "./PreviousProjects";
 
-const References = ({ match }) => {
+const References = ({ match, history }) => {
+  const { specialistID } = match.params;
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const handleAddProject = () => setModalOpen(true)
+
   return (
     <React.Fragment>
       <Header />
@@ -20,6 +27,14 @@ const References = ({ match }) => {
           are so important and why specialists should care about adding as many
           as they can.
         </Text>
+
+        <Button marginBottom="xl" size="l" styling="primary" onClick={handleAddProject}>
+          Add a previous project
+        </Button>
+        <AddPreviousProjectModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+        />
 
         <Heading level="6" paddingTop="l" marginBottom="s">
           Previous Projects

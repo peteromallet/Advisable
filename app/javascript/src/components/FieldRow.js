@@ -6,13 +6,15 @@ const FieldRowField = styled.div`
   flex: 1 1 200px;
   min-width: 200px;
   margin-left: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 `;
 
 const FieldRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-left: -20px;
+
+  &:last-child ${FieldRowField} { margin-bottom: 0 }
 `;
 
 export default ({ children }) => {
