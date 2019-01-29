@@ -81,7 +81,7 @@ const STEPS = [
     component: Terms
   },
   {
-    title: "Recruitement Deposit",
+    title: "Recruitment Deposit",
     path: "/project_setup/:projectID/deposit",
     component: Deposit,
     enabled: project => project && project.depositOwed > 0
