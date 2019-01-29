@@ -17,7 +17,13 @@ class Projects::Create < ApplicationService
   private
 
   def skill
-    Skill.find_by_name(project.primary_skill)
+    @skill ||= Skill.find_by_name(project.primary_skill) || sync_skill_from_airtable
+  end
+
+  def sync_skill_from_airtable
+    s = ::Airtable::Skill.find_by_name(project.primary_skill)
+    return nil if s.nil?
+    s.sync
   end
 
   def project_status
