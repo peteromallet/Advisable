@@ -1,9 +1,8 @@
 class Types::Skill < Types::BaseType
   field :id, ID, null: false
   field :name, String, null: false
-  field :category, String, null: false
 
   def id
-    object.uid
+    object.airtable_id
   end
 end
