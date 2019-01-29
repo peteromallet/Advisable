@@ -11,22 +11,24 @@ import SuggestedSelect from "src/components/SuggestedSelect";
 import { NewProjectChoice } from "./styles";
 import fetchSkills from "./skills.graphql";
 import createProject from "./createProject.graphql";
-import fetchProjects from '../projects.graphql';
-import calendly from 'src/utilities/calendly';
+import fetchProjects from "../projects.graphql";
+import calendly from "src/utilities/calendly";
 
 const getSelectedOption = (skills, id) => {
   if (!id) return null;
   return find(skills, { value: id });
 };
 
-const openCalendly = (project) => {
+const openCalendly = project => {
   calendly(
-  "https://calendly.com/advisable-marketing/advisable-briefing-call-app/12-19-2018", {
-    full_name: project.user.name,
-    email: project.user.email,
-    a2: project.airtableId
-  })
-}
+    "https://calendly.com/advisable-marketing/advisable-briefing-call-app/12-19-2018",
+    {
+      full_name: project.user.name,
+      email: project.user.email,
+      a2: project.airtableId
+    }
+  );
+};
 
 const NewProjectModal = ({ isOpen, onClose, data, mutate }) => {
   return (
@@ -49,31 +51,37 @@ const NewProjectModal = ({ isOpen, onClose, data, mutate }) => {
           if (project.serviceType === "Assisted") {
             openCalendly(project);
             onClose();
-            return
+            return;
           }
 
-          window.location = `/project_setup/${project.airtableId}/company_overview`
+          window.location = `/project_setup/${
+            project.airtableId
+          }/company_overview`;
         }}
         render={formik => {
           if (formik.isSubmitting) {
-            return <Loading />
+            return <Loading />;
           }
 
           return (
             <form onSubmit={formik.handleSubmit}>
               <FieldRow>
-                <SuggestedSelect
-                  name="skills"
-                  options={data.skills}
-                  value={getSelectedOption(
-                    data.skills,
-                    formik.values.primarySkill
-                  )}
-                  onBlur={formik.handleBlur}
-                  onChange={skill =>
-                    formik.setFieldValue("primarySkill", skill)
-                  }
-                />
+                {data.loading ? (
+                  <Loading />
+                ) : (
+                  <SuggestedSelect
+                    name="skills"
+                    options={data.skills}
+                    value={getSelectedOption(
+                      data.skills,
+                      formik.values.primarySkill
+                    )}
+                    onBlur={formik.handleBlur}
+                    onChange={skill =>
+                      formik.setFieldValue("primarySkill", skill)
+                    }
+                  />
+                )}
               </FieldRow>
 
               {formik.values.primarySkill && (
@@ -123,9 +131,11 @@ export default compose(
   graphql(fetchSkills),
   graphql(createProject, {
     options: props => ({
-      refetchQueries: [{
-        query: fetchProjects,
-      }]
+      refetchQueries: [
+        {
+          query: fetchProjects
+        }
+      ]
     })
   })
 )(NewProjectModal);
