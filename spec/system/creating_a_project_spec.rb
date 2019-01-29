@@ -6,9 +6,14 @@ describe "Creating a project" do
     allow(Airtable::Project).to receive(:new).and_return(airtable)
     allow(airtable).to receive(:create)
     allow(airtable).to receive(:id).and_return('rec_1234')
+    create(:skill, name: "Testing")
+    allow(Airtable::Skill).to receive(:active).and_return([
+      OpenStruct.new(id: "rec_1234", fields: {
+        "Name" => "Testing"
+      })
+    ])
 
     user = create(:user)
-    create(:skill, name: "Testing", profile: true, category: "Marketing")
     authenticate_as user
     visit '/projects'
     find("div[class^='styles__NewProject']").click
