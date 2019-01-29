@@ -44,6 +44,8 @@ class Projects::Update < ApplicationService
 
   def skill_airtable_ids
     return [] if project.primary_skill.blank? 
-    [Skill.find_by_name(project.primary_skill).airtable_id]
+    skill = Skill.find_by_name(project.primary_skill)
+    skill = ::Airtable::Skill.find_by_name(project.primary_skill).sync if skill.nil?
+    [skill.airtable_id]
   end
 end
