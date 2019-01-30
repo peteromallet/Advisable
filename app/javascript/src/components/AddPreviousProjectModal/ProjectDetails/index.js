@@ -7,9 +7,11 @@ import Heading from "src/components/Heading";
 import FieldRow from "src/components/FieldRow";
 import StepDots from "src/components/StepDots";
 import TextField from "src/components/TextField";
+import SuggestedSelect from "src/components/SuggestedSelect";
 import validationSchema from "./validationSchema";
 
 const ProjectDetails = ({
+  skills,
   setValues,
   values,
   gotoNextStep,
@@ -34,15 +36,19 @@ const ProjectDetails = ({
           <Modal.Body>
             <form onSubmit={formik.handleSubmit}>
               <FieldRow>
-                <TextField
-                  autoFocus
+                <SuggestedSelect
                   name="skills"
+                  isMulti={true}
+                  openMenuOnClick={false}
                   placeholder="e.g Facebook Marketing"
                   label="What skills did you use for this project?"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.skills}
                   error={formik.touched.skills && formik.errors.skills}
+                  options={skills}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.skills}
+                  onChange={skill => {
+                    formik.setFieldValue("skills", skill);
+                  }}
                 />
               </FieldRow>
               <FieldRow>
@@ -95,7 +101,12 @@ const ProjectDetails = ({
                 <StepDots current={2} total={4} />
               </Flex.Item>
               <Flex.Item style={{ width: "120px" }}>
-                <Button block onClick={formik.submitForm} size="l" styling="green">
+                <Button
+                  block
+                  onClick={formik.submitForm}
+                  size="l"
+                  styling="green"
+                >
                   Next
                 </Button>
               </Flex.Item>
