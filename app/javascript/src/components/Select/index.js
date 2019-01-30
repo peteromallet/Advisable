@@ -3,6 +3,7 @@ import uniqueID from "lodash/uniqueId";
 import { Select, Wrapper, SelectWrapper, Arrows } from "./styles.js";
 import InputLabel from "src/components/InputLabel";
 import InputError from "src/components/InputError";
+import InputDescription from "src/components/InputDescription";
 import { extractSpacingProps } from 'src/components/Spacing';
 
 class SelectComponent extends React.Component {
@@ -40,7 +41,8 @@ class SelectComponent extends React.Component {
       onChange,
       onFocus,
       onBlur,
-      error
+      error,
+      description
     } = this.props;
 
     // Placeholder value is an empty string
@@ -97,6 +99,7 @@ class SelectComponent extends React.Component {
           <Arrows />
         </SelectWrapper>
         {error && <InputError>{error}</InputError>}
+        {description && <InputDescription>{description}</InputDescription>}
       </Wrapper>
     );
   }
