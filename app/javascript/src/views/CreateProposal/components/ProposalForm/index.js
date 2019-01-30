@@ -4,7 +4,6 @@
 // of Proposed.
 import React from "react";
 import { Formik, Field } from "formik";
-import Flex from "src/components/Flex";
 import Select from "src/components/Select";
 import Button from "src/components/Button";
 import Spacing from "src/components/Spacing";
@@ -66,7 +65,6 @@ export default ({
             ]}
           />
         </Spacing>
-        <Spacing marginBottom="s">
           <FieldRow>
             <DatePicker
               value={form.values.startDate}
@@ -113,12 +111,11 @@ export default ({
               />
             )}
           </FieldRow>
-        </Spacing>
-        <Spacing marginBottom="s">
           <FieldRow>
             <TextField
               block
               name="rate"
+              description="Advisable charge a fee of 20% of the price you propose. Please remember to account for this."
               value={form.values.rate}
               onChange={({ target }) => {
                 const val = Number(target.value.replace(/[^0-9\.-]+/g, ""));
@@ -147,7 +144,6 @@ export default ({
               ]}
             />
           </FieldRow>
-        </Spacing>
         <Spacing marginBottom="xl">
           <ListInput
             label="Deliverables"

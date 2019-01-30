@@ -15,7 +15,7 @@ export const SelectWrapper = styled.div`
 
 export const Select = styled.select`
   width: 100%;
-  height: 36px;
+  height: 40px;
   border: none;
   outline: none;
   color: #103461;
