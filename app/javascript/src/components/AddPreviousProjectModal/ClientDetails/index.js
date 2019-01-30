@@ -28,60 +28,63 @@ const ClientDetails = ({ setValues, values, gotoNextStep }) => {
         handleChange,
         handleBlur,
         touched,
-        errors
+        errors,
+        submitForm
       }) => (
-        <form onSubmit={handleSubmit}>
+        <React.Fragment>
           <Modal.Header>
             <Heading size="s">Client Details</Heading>
           </Modal.Header>
           <Modal.Body>
-            <FieldRow>
-              <TextField
-                autoFocus
-                name="clientName"
-                placeholder="e.g Apple Inc."
-                label="What was the client’s name?"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.clientName}
-                error={touched.clientName && errors.clientName}
-              />
-            </FieldRow>
-            <FieldRow>
-              <Checkbox
-                name="confidential"
-                label="This client is confidential"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.confidential}
-                description="If checked the client’s name will be hidden and the industry will be named instead. e.g Financial Services Company"
-              />
-            </FieldRow>
-            <FieldRow>
-              <TextField
-                name="industry"
-                placeholder="e.g Financial Services"
-                label="What industry/category is this company in?"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.industry}
-                error={touched.industry && errors.industry}
-              />
-            </FieldRow>
-            <FieldRow>
-              <TextField
-                multiline
-                minRows={6}
-                maxLength={300}
-                name="clientDescription"
-                placeholder="The client is..."
-                label="Give a short overview of this company"
-                onChange={handleChange}
-                value={values.clientDescription}
-                description="This should start with &quot;The client/company is...&quot;."
-                error={touched.clientDescription && errors.clientDescription}
-              />
-            </FieldRow>
+            <form onSubmit={handleSubmit}>
+              <FieldRow>
+                <TextField
+                  autoFocus
+                  name="clientName"
+                  placeholder="e.g Apple Inc."
+                  label="What was the client’s name?"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.clientName}
+                  error={touched.clientName && errors.clientName}
+                />
+              </FieldRow>
+              <FieldRow>
+                <Checkbox
+                  name="confidential"
+                  label="This client is confidential"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.confidential}
+                  description="If checked the client’s name will be hidden and the industry will be named instead. e.g Financial Services Company"
+                />
+              </FieldRow>
+              <FieldRow>
+                <TextField
+                  name="industry"
+                  placeholder="e.g Financial Services"
+                  label="What industry/category is this company in?"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.industry}
+                  error={touched.industry && errors.industry}
+                />
+              </FieldRow>
+              <FieldRow>
+                <TextField
+                  multiline
+                  minRows={6}
+                  maxLength={300}
+                  name="clientDescription"
+                  placeholder="The client is..."
+                  label="Give a short overview of this company"
+                  onChange={handleChange}
+                  value={values.clientDescription}
+                  description="This should start with &quot;The client/company is...&quot;."
+                  error={touched.clientDescription && errors.clientDescription}
+                />
+              </FieldRow>
+            </form>
           </Modal.Body>
           <Modal.Footer>
             <Flex align="center">
@@ -90,13 +93,13 @@ const ClientDetails = ({ setValues, values, gotoNextStep }) => {
                 <StepDots current={1} total={4} />
               </Flex.Item>
               <Flex.Item style={{ width: "120px" }}>
-                <Button block type="submit" size="l" styling="green">
+                <Button block onClick={submitForm} size="l" styling="green">
                   Next
                 </Button>
               </Flex.Item>
             </Flex>
           </Modal.Footer>
-        </form>
+        </React.Fragment>
       )}
     </Formik>
   );
