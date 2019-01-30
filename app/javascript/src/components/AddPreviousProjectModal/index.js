@@ -23,7 +23,7 @@ const AddPreviousProjectModal = ({ isOpen, onClose, data }) => {
     results: "",
     contactName: "",
     contactEmail: "",
-    canContactClient: true,
+    canContact: true,
     contactRole: "",
     contactJobTitle: ""
   });
