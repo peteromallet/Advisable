@@ -3,6 +3,7 @@ import uniqueID from "lodash/uniqueId";
 import { Wrapper, Input, InputMask, Textarea } from "./styles";
 import InputError from "src/components/InputError";
 import InputLabel from "src/components/InputLabel";
+import InputDescription from "src/components/InputDescription";
 import { extractSpacingProps } from "src/components/Spacing";
 
 const TextField = ({
@@ -21,6 +22,7 @@ const TextField = ({
   readOnly,
   disabled,
   style,
+  description,
   autoFocus,
   ...props
 }) => {
@@ -75,6 +77,7 @@ const TextField = ({
         rows={rows}
       />
       {error && <InputError>{error}</InputError>}
+      {description && <InputDescription>{description}</InputDescription>}
     </Wrapper>
   );
 };
