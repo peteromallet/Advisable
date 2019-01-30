@@ -1,16 +1,17 @@
+import { graphql } from "react-apollo";
 import React, { useState } from "react";
 import Modal from "src/components/Modal";
+import Loading from "src/components/Loading";
 import ClientDetails from "./ClientDetails";
 import ProjectDetails from "./ProjectDetails";
 import Results from "./Results";
 import Reference from "./Reference";
+import SKILLS from "./skills.graphql";
 
 const STEPS = [ClientDetails, ProjectDetails, Results, Reference];
 
-const AddPreviousProjectModal = ({ isOpen, onClose }) => {
+const AddPreviousProjectModal = ({ isOpen, onClose, data }) => {
   const [stepIndex, setStepIndex] = useState(0);
-  const Step = STEPS[stepIndex];
-
   const [values, setValues] = useState({
     clientName: "",
     confidential: false,
@@ -28,22 +29,30 @@ const AddPreviousProjectModal = ({ isOpen, onClose }) => {
   });
 
   const updateValues = newValues => {
+    console.log("adding valus", newValues);
     setValues({
+      ...values,
       ...newValues,
-      ...values
-    })
-  }
+    });
+  };
+
+  const Step = STEPS[stepIndex];
 
   return (
     <Modal size="l" isOpen={isOpen} onClose={onClose} expandOnMobile>
-      <Step
-        values={values}
-        setValues={updateValues}
-        gotoNextStep={_ => setStepIndex(stepIndex + 1)}
-        gotoPreviousStep={_ => setStepIndex(stepIndex - 1)}
-      />
+      {data.loading ? (
+        <Loading />
+      ) : (
+        <Step
+          values={values}
+          skills={data.skills}
+          setValues={updateValues}
+          gotoNextStep={_ => setStepIndex(stepIndex + 1)}
+          gotoPreviousStep={_ => setStepIndex(stepIndex - 1)}
+        />
+      )}
     </Modal>
   );
 };
 
-export default AddPreviousProjectModal;
+export default graphql(SKILLS)(AddPreviousProjectModal);
