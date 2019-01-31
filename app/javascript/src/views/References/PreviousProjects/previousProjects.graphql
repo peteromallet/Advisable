@@ -19,6 +19,7 @@ query specialist($id: ID!) {
           primarySkill
           clientName
           skills
+          validationStatus
         }
       }
       reviews {

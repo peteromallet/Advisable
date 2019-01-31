@@ -59,6 +59,8 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
                 const value = e.target.value === "true";
                 if (value) {
                   formik.setFieldValue("validationMethod", "Client");
+                } else {
+                  formik.setFieldValue("validationMethod", "URL");
                 }
                 formik.setFieldValue("canContact", value);
               }}
@@ -117,6 +119,7 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.validationUrl}
+                    error={formik.touched.validationUrl && formik.errors.validationUrl}
                     placeholder="https://"
                   />
                 </FieldRow>
