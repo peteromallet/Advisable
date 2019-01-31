@@ -19,6 +19,24 @@ class Airtable::OffPlatformProject < Airtable::Base
     off_platform_project.validated = fields['Validated By Client'] == 'Yes'
   end
 
+  push_data do |project|
+    fields["Client Industry"] = project.industry
+    fields["Client Contact First Name"] = project.contact_first_name
+    fields["Client Contact Job Title"] = project.contact_job_title
+    fields["Client Name"] = project.client_name
+    fields["Client Description"] = project.client_description
+    fields["Project Description"] = project.description
+    fields["Results Description"] = project.results
+    fields["Specialist Requirement Description"] = project.requirements
+    fields["Client Contact Email Address"] = project.contact_email
+    fields["Validation Method"] = project.validation_method
+    fields["Validation URL"] = project.validation_url
+    fields["Okay with naming client"] = project.confidential ? "No" : "Yes"
+    fields["Okay To Contact"] = project.can_contact ? "Yes" : "No"
+    fields["Specialist"] = [project.specialist.airtable_id]
+    fields["Skills Required"] = project.skills.map { |s| s.airtable_id }
+  end
+
   private
   
   # Setup the specialist relationship for the off_platform_project

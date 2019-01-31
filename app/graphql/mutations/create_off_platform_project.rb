@@ -10,16 +10,27 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
   argument :contact_name, String, required: true
   argument :contact_job_title, String, required: true
   argument :contact_email, String, required: true
-  argument :can_contact_client, Boolean, required: false
-  argument :contact_role, String, required: true
+  argument :can_contact, Boolean, required: false
+  argument :description, String, required: true
+  argument :validation_method, String, required: true
+  argument :validation_url, String, required: true
 
-  field project:, Types::OffPlatformProject, null: true
+  field :previous_project, Types::PreviousProject, null: true
   field :errors, [Types::Error], null: true
 
   def resolve(**args)
     begin
-      project = OffPlatformProjects::Create.call(args)
-      return { project: project }
+      specialist = Specialist.find_by_airtable_id!(args[:specialist_id])
+      project = OffPlatformProjects::Create.call(
+        specialist: specialist,
+        attributes: args.except(:specialist_id),
+      )
+      return {
+        previous_project: PreviousProject.new(
+          specialist: project.specialist,
+          project: project
+        )
+      }
     rescue Service::Error => e
       return { errors: [e] }
     end
