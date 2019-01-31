@@ -16,7 +16,7 @@ class Airtable::OffPlatformProject < Airtable::Base
   sync_data do |off_platform_project|
     pull_specialist(off_platform_project)
     off_platform_project.confidential = fields['Okay with naming client'] != 'Yes'
-    off_platform_project.validated = fields['Validated By Client'] == 'Yes'
+    off_platform_project.validated = (fields['Validated By Client'] == 'Yes') || fields['Validated'] || false
   end
 
   push_data do |project|
