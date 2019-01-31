@@ -4,11 +4,11 @@ import ReactSelect from "react-select";
 
 export const Select = styled(ReactSelect)`
   .SuggestedSelect__control {
-    height: 40px;
     border: none;
-    padding: 0 6px;
+    padding: 2px 6px;
     font-size: 16px;
     font-weight: 500;
+    min-height: 40px;
     border-radius: 8px;
     border: 2px solid transparent;
     background: rgba(29, 39, 75, 0.06);
