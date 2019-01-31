@@ -6,9 +6,12 @@ import Heading from "src/components/Heading";
 import FieldRow from "src/components/FieldRow";
 import StepDots from "src/components/StepDots";
 import TextField from "src/components/TextField";
+import { useMobile } from "src/components/Breakpoint";
 import validationSchema from "./validationSchema";
 
 const ProjectDetails = ({ formik, gotoPreviousStep }) => {
+  let isMobile = useMobile();
+
   return (
     <React.Fragment>
       <Modal.Header>
@@ -34,9 +37,10 @@ const ProjectDetails = ({ formik, gotoPreviousStep }) => {
       </Modal.Body>
       <Modal.Footer>
         <Flex align="center">
-          <Flex.Item style={{ width: "120px" }}>
+          <Flex.Item style={{ width: isMobile ? "50%" : "120px" }}>
             <Button
               block
+              marginRight="m"
               onClick={gotoPreviousStep}
               styling="outlined"
               size="l"
@@ -44,11 +48,19 @@ const ProjectDetails = ({ formik, gotoPreviousStep }) => {
               Back
             </Button>
           </Flex.Item>
-          <Flex.Item distribute="fill">
-            <StepDots current={3} total={4} />
-          </Flex.Item>
-          <Flex.Item style={{ width: "120px" }}>
-            <Button block onClick={formik.submitForm} size="l" styling="green">
+          {isMobile && (
+            <Flex.Item distribute="fill">
+              <StepDots current={3} total={4} />
+            </Flex.Item>
+          )}
+          <Flex.Item style={{ width: isMobile ? "50%" : "120px" }}>
+            <Button
+              block
+              marginLeft="m"
+              onClick={formik.submitForm}
+              size="l"
+              styling="green"
+            >
               Next
             </Button>
           </Flex.Item>
@@ -58,6 +70,6 @@ const ProjectDetails = ({ formik, gotoPreviousStep }) => {
   );
 };
 
-ProjectDetails.validationSchema = validationSchema
+ProjectDetails.validationSchema = validationSchema;
 
 export default ProjectDetails;

@@ -8,9 +8,12 @@ import ChoiceList from "src/components/ChoiceList";
 import FieldRow from "src/components/FieldRow";
 import StepDots from "src/components/StepDots";
 import TextField from "src/components/TextField";
+import { useMobile } from "src/components/Breakpoint";
 import validationSchema from "./validationSchema";
 
 const ProjectReference = ({ formik, gotoPreviousStep }) => {
+  let isMobile = useMobile();
+
   return (
     <React.Fragment>
       <Modal.Header>
@@ -53,9 +56,9 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
                 { value: false, label: "No" }
               ]}
               onChange={e => {
-                const value = e.target.value === "true"
+                const value = e.target.value === "true";
                 if (value) {
-                  formik.setFieldValue("validationMethod", "Via Client")
+                  formik.setFieldValue("validationMethod", "Via Client");
                 }
                 formik.setFieldValue("canContact", value);
               }}
@@ -124,9 +127,10 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
       </Modal.Body>
       <Modal.Footer>
         <Flex align="center">
-          <Flex.Item style={{ width: "120px" }}>
+          <Flex.Item style={{ width: isMobile ? "50%" : "120px" }}>
             <Button
               block
+              margin-right="m"
               onClick={gotoPreviousStep}
               styling="outlined"
               size="l"
@@ -134,11 +138,20 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
               Back
             </Button>
           </Flex.Item>
-          <Flex.Item distribute="fill">
-            <StepDots current={4} total={4} />
-          </Flex.Item>
-          <Flex.Item style={{ width: "120px" }}>
-            <Button block loading={formik.isSubmitting} onClick={formik.submitForm} size="l" styling="green">
+          {!isMobile && (
+            <Flex.Item distribute="fill">
+              <StepDots current={4} total={4} />
+            </Flex.Item>
+          )}
+          <Flex.Item style={{ width: isMobile ? "50%" : "120px" }}>
+            <Button
+              block
+              loading={formik.isSubmitting}
+              marginLeft="m"
+              onClick={formik.submitForm}
+              size="l"
+              styling="green"
+            >
               Complete
             </Button>
           </Flex.Item>
@@ -148,6 +161,6 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
   );
 };
 
-ProjectReference.validationSchema = validationSchema
+ProjectReference.validationSchema = validationSchema;
 
 export default ProjectReference;

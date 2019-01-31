@@ -6,10 +6,12 @@ import Heading from "src/components/Heading";
 import FieldRow from "src/components/FieldRow";
 import StepDots from "src/components/StepDots";
 import TextField from "src/components/TextField";
+import { useMobile } from "src/components/Breakpoint";
 import SuggestedSelect from "src/components/SuggestedSelect";
 import validationSchema from "./validationSchema";
 
 const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
+  const isMobile = useMobile();
   return (
     <React.Fragment>
       <Modal.Header>
@@ -65,9 +67,10 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
       </Modal.Body>
       <Modal.Footer>
         <Flex align="center">
-          <Flex.Item style={{ width: "120px" }}>
+          <Flex.Item style={{ width: isMobile ? "50%" : "120px" }}>
             <Button
               block
+              margin-right="m"
               onClick={gotoPreviousStep}
               styling="outlined"
               size="l"
@@ -75,11 +78,19 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
               Back
             </Button>
           </Flex.Item>
-          <Flex.Item distribute="fill">
-            <StepDots current={2} total={4} />
-          </Flex.Item>
-          <Flex.Item style={{ width: "120px" }}>
-            <Button block onClick={formik.submitForm} size="l" styling="green">
+          {isMobile && (
+            <Flex.Item distribute="fill">
+              <StepDots current={2} total={4} />
+            </Flex.Item>
+          )}
+          <Flex.Item style={{ width: isMobile ? "50%" : "120px" }}>
+            <Button
+              block
+              onClick={formik.submitForm}
+              marginLeft="m"
+              size="l"
+              styling="green"
+            >
               Next
             </Button>
           </Flex.Item>
@@ -89,6 +100,6 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
   );
 };
 
-ProjectDetails.validationSchema = validationSchema
+ProjectDetails.validationSchema = validationSchema;
 
 export default ProjectDetails;

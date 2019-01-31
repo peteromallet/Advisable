@@ -7,9 +7,12 @@ import FieldRow from "src/components/FieldRow";
 import StepDots from "src/components/StepDots";
 import Checkbox from "src/components/Checkbox";
 import TextField from "src/components/TextField";
+import { useMobile } from "src/components/Breakpoint";
 import validationSchema from "./validationSchema";
 
 const ClientDetails = ({ formik }) => {
+  let isMobile = useMobile();
+
   return (
     <React.Fragment>
       <Modal.Header>
@@ -61,18 +64,23 @@ const ClientDetails = ({ formik }) => {
               onChange={formik.handleChange}
               value={formik.values.clientDescription}
               description="This should start with &quot;The client/company is...&quot;."
-              error={formik.touched.clientDescription && formik.errors.clientDescription}
+              error={
+                formik.touched.clientDescription &&
+                formik.errors.clientDescription
+              }
             />
           </FieldRow>
         </form>
       </Modal.Body>
       <Modal.Footer>
         <Flex align="center">
-          <Flex.Item style={{ width: "120px" }} />
-          <Flex.Item distribute="fill">
-            <StepDots current={1} total={4} />
-          </Flex.Item>
-          <Flex.Item style={{ width: "120px" }}>
+          {!isMobile && <Flex.Item style={{ width: "120px" }} />}
+          {!isMobile && (
+            <Flex.Item distribute="fill">
+              <StepDots current={1} total={4} />
+            </Flex.Item>
+          )}
+          <Flex.Item style={{ width: isMobile ? "100%" : "120px" }}>
             <Button block onClick={formik.submitForm} size="l" styling="green">
               Next
             </Button>
