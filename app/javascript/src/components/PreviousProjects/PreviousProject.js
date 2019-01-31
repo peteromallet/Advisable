@@ -14,7 +14,7 @@ const companyName = project => {
 }
 
 const title = project => {
-  if (project.skills) {
+  if (project.skills && project.skills.length > 0) {
     const skills = project.skills.join(', ')
     return `${skills} at ${companyName(project)}`
   }
