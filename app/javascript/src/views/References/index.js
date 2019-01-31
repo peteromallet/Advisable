@@ -23,10 +23,11 @@ const References = ({ match, history }) => {
           Previous Projects
         </Heading>
         <Text marginBottom="l">
-          References are one of the most effective ways to get hired for any
-          role. This is some placeholder text that explains a bit way references
-          are so important and why specialists should care about adding as many
-          as they can.
+          Previous projects are one of the most effective ways to validate your
+          skills and experience. Advisable uses them to decide who to invite to
+          our platform, which projects to invite them to and gives you the
+          opportunity to share them with clients when you’re applying for
+          projects.
         </Text>
 
         <Button
@@ -46,7 +47,8 @@ const References = ({ match, history }) => {
               query: PREVIOUS_PROJECTS,
               variables: { id: specialistID }
             });
-            const project = response.data.createOffPlatformProject.previousProject;
+            const project =
+              response.data.createOffPlatformProject.previousProject;
             data.specialist.previousProjects.unshift(project);
             proxy.writeQuery({ query: PREVIOUS_PROJECTS, data });
           }}

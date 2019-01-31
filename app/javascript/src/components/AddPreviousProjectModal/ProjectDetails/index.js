@@ -23,7 +23,6 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
             <SuggestedSelect
               name="skills"
               isMulti={true}
-              openMenuOnClick={false}
               placeholder="e.g Facebook Marketing"
               label="What skills did you use for this project?"
               error={formik.touched.skills && formik.errors.skills}
