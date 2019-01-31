@@ -1,5 +1,4 @@
 import React from "react";
-import { Formik } from "formik";
 import Flex from "src/components/Flex";
 import Modal from "src/components/Modal";
 import Button from "src/components/Button";
@@ -10,99 +9,80 @@ import Checkbox from "src/components/Checkbox";
 import TextField from "src/components/TextField";
 import validationSchema from "./validationSchema";
 
-const ClientDetails = ({ setValues, values, gotoNextStep }) => {
-  const onSubmit = values => {
-    setValues(values);
-    gotoNextStep();
-  };
-
+const ClientDetails = ({ formik }) => {
   return (
-    <Formik
-      onSubmit={onSubmit}
-      initialValues={values}
-      validationSchema={validationSchema}
-    >
-      {({
-        values,
-        handleSubmit,
-        handleChange,
-        handleBlur,
-        touched,
-        errors,
-        submitForm
-      }) => (
-        <React.Fragment>
-          <Modal.Header>
-            <Heading size="s">Client Details</Heading>
-          </Modal.Header>
-          <Modal.Body>
-            <form onSubmit={handleSubmit}>
-              <FieldRow>
-                <TextField
-                  autoFocus
-                  name="clientName"
-                  placeholder="e.g Apple Inc."
-                  label="What was the client’s name?"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.clientName}
-                  error={touched.clientName && errors.clientName}
-                />
-              </FieldRow>
-              <FieldRow>
-                <Checkbox
-                  name="confidential"
-                  label="This client is confidential"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.confidential}
-                  description="If checked the client’s name will be hidden and the industry will be named instead. e.g Financial Services Company"
-                />
-              </FieldRow>
-              <FieldRow>
-                <TextField
-                  name="industry"
-                  placeholder="e.g Financial Services"
-                  label="What industry/category is this company in?"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.industry}
-                  error={touched.industry && errors.industry}
-                />
-              </FieldRow>
-              <FieldRow>
-                <TextField
-                  multiline
-                  minRows={6}
-                  maxLength={300}
-                  name="clientDescription"
-                  placeholder="The client is..."
-                  label="Give a short overview of this company"
-                  onChange={handleChange}
-                  value={values.clientDescription}
-                  description="This should start with &quot;The client/company is...&quot;."
-                  error={touched.clientDescription && errors.clientDescription}
-                />
-              </FieldRow>
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Flex align="center">
-              <Flex.Item style={{ width: "120px" }} />
-              <Flex.Item distribute="fill">
-                <StepDots current={1} total={4} />
-              </Flex.Item>
-              <Flex.Item style={{ width: "120px" }}>
-                <Button block onClick={submitForm} size="l" styling="green">
-                  Next
-                </Button>
-              </Flex.Item>
-            </Flex>
-          </Modal.Footer>
-        </React.Fragment>
-      )}
-    </Formik>
+    <React.Fragment>
+      <Modal.Header>
+        <Heading size="s">Client Details</Heading>
+      </Modal.Header>
+      <Modal.Body>
+        <form onSubmit={formik.handleSubmit}>
+          <FieldRow>
+            <TextField
+              autoFocus
+              name="clientName"
+              placeholder="e.g Apple Inc."
+              label="What was the client’s name?"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.clientName}
+              error={formik.touched.clientName && formik.errors.clientName}
+            />
+          </FieldRow>
+          <FieldRow>
+            <Checkbox
+              name="confidential"
+              label="This client is confidential"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.confidential}
+              description="If checked the client’s name will be hidden and the industry will be named instead. e.g Financial Services Company"
+            />
+          </FieldRow>
+          <FieldRow>
+            <TextField
+              name="industry"
+              placeholder="e.g Financial Services"
+              label="What industry/category is this company in?"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.industry}
+              error={formik.touched.industry && formik.errors.industry}
+            />
+          </FieldRow>
+          <FieldRow>
+            <TextField
+              multiline
+              minRows={6}
+              maxLength={300}
+              name="clientDescription"
+              placeholder="The client is..."
+              label="Give a short overview of this company"
+              onChange={formik.handleChange}
+              value={formik.values.clientDescription}
+              description="This should start with &quot;The client/company is...&quot;."
+              error={formik.touched.clientDescription && formik.errors.clientDescription}
+            />
+          </FieldRow>
+        </form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Flex align="center">
+          <Flex.Item style={{ width: "120px" }} />
+          <Flex.Item distribute="fill">
+            <StepDots current={1} total={4} />
+          </Flex.Item>
+          <Flex.Item style={{ width: "120px" }}>
+            <Button block onClick={formik.submitForm} size="l" styling="green">
+              Next
+            </Button>
+          </Flex.Item>
+        </Flex>
+      </Modal.Footer>
+    </React.Fragment>
   );
 };
+
+ClientDetails.validationSchema = validationSchema;
 
 export default ClientDetails;

@@ -7,12 +7,13 @@ import Heading from "../../components/Heading";
 import Container from "../../components/Container";
 import AddPreviousProjectModal from "../../components/AddPreviousProjectModal";
 import PreviousProjects from "./PreviousProjects";
+import PREVIOUS_PROJECTS from "./PreviousProjects/previousProjects.graphql";
 
 const References = ({ match, history }) => {
   const { specialistID } = match.params;
-  const [modalOpen, setModalOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const handleAddProject = () => setModalOpen(true)
+  const handleAddProject = () => setModalOpen(true);
 
   return (
     <React.Fragment>
@@ -28,12 +29,27 @@ const References = ({ match, history }) => {
           as they can.
         </Text>
 
-        <Button marginBottom="xl" size="l" styling="primary" onClick={handleAddProject}>
+        <Button
+          marginBottom="xl"
+          size="l"
+          styling="primary"
+          onClick={handleAddProject}
+        >
           Add a previous project
         </Button>
         <AddPreviousProjectModal
           isOpen={modalOpen}
+          specialistId={specialistID}
           onClose={() => setModalOpen(false)}
+          mutationUpdate={(proxy, response) => {
+            const data = proxy.readQuery({
+              query: PREVIOUS_PROJECTS,
+              variables: { id: specialistID }
+            });
+            const project = response.data.createOffPlatformProject.previousProject;
+            data.specialist.previousProjects.unshift(project);
+            proxy.writeQuery({ query: PREVIOUS_PROJECTS, data });
+          }}
         />
 
         <Heading level="6" paddingTop="l" marginBottom="s">
