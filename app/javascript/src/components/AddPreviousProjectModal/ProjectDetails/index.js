@@ -78,7 +78,7 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
               Back
             </Button>
           </Flex.Item>
-          {isMobile && (
+          {!isMobile && (
             <Flex.Item distribute="fill">
               <StepDots current={2} total={4} />
             </Flex.Item>
