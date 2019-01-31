@@ -15,6 +15,15 @@ const companyName = project => {
   return project.clientName
 }
 
+const title = project => {
+  if (project.skills && project.skills.length > 0) {
+    const skills = project.skills.join(', ')
+    return `${skills} at ${companyName(project)}`
+  }
+
+  return `${project.primarySkill} at ${companyName(project)}`
+}
+
 export default ({ specialistId, previousProject }) => {
   const [isOpen, setOpen] = useState(false);
 
@@ -32,7 +41,7 @@ export default ({ specialistId, previousProject }) => {
 
       <PreviousProject onClick={() => setOpen(true)}>
         <ProjectTitle>
-          {project.primarySkill} at {companyName(project)}
+          {title(project)}
         </ProjectTitle>
         <ProjectDescription>{project.description}</ProjectDescription>
         {reviews.length > 0 && (
