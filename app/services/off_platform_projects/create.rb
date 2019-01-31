@@ -8,6 +8,7 @@ class OffPlatformProjects::Create < ApplicationService
 
   def call
     self.project = specialist.off_platform_projects.new(attributes.except(:skills))
+    set_validation_status
     associate_skills
     if project.save
       record = Airtable::OffPlatformProject.new({})
@@ -18,6 +19,18 @@ class OffPlatformProjects::Create < ApplicationService
   end
 
   private
+
+  def set_validation_status
+    if project.validation_method != "Client"
+      project.validated_by_client = true
+    end
+
+    if project.validation_method == "None"
+      project.validation_status = "Validation Failed"
+    else
+      project.validation_status = "Pending"
+    end
+  end
 
   def associate_skills
     attributes[:skills].each do |skill|

@@ -58,7 +58,7 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
               onChange={e => {
                 const value = e.target.value === "true";
                 if (value) {
-                  formik.setFieldValue("validationMethod", "Via Client");
+                  formik.setFieldValue("validationMethod", "Client");
                 }
                 formik.setFieldValue("canContact", value);
               }}
@@ -92,24 +92,24 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
                   value={formik.values.validationMethod}
                   label="How can we validate that this project happened?"
                   description={
-                    formik.values.validationMethod === "Not Possible" &&
+                    formik.values.validationMethod === "None" &&
                     "If you can't validate a project, we can use the data to figure out which projects to invite you to but we can't display it on your profile or use it as validation"
                   }
                   options={[
-                    { value: "Linkedin", label: "Linkedin Reference" },
+                    { value: "URL", label: "Linkedin Reference" },
                     {
-                      value: "External Site",
+                      value: "URL",
                       label: "External Site Reference"
                     },
-                    { value: "Portfolio", label: "Link to Portfolio" },
+                    { value: "URL", label: "Link to Portfolio" },
                     {
-                      value: "Not Possible",
+                      value: "None",
                       label: "Validation not possible"
                     }
                   ]}
                 />
               </FieldRow>
-              {formik.values.validationMethod !== "Not Possible" && (
+              {formik.values.validationMethod !== "None" && (
                 <FieldRow>
                   <TextField
                     name="validationUrl"

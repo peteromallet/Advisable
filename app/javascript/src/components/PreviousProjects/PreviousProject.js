@@ -9,7 +9,7 @@ import { PreviousProject, ProjectTitle } from "./styles";
 
 const companyName = project => {
   if (project.__typename === "Project") return project.user.companyName
-  if (project.confidential) return `${project.industsry} Company`
+  if (project.confidential) return `${project.industry} Company`
   return project.clientName
 }
 

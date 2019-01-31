@@ -31,6 +31,7 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
               onBlur={formik.handleBlur}
               value={formik.values.skills}
               onChange={skill => {
+                formik.setFieldTouched('skills', true)
                 formik.setFieldValue("skills", skill);
               }}
             />

@@ -12,11 +12,13 @@ class Airtable::OffPlatformProject < Airtable::Base
   sync_column 'Project Description', to: :description
   sync_column 'Results Description', to: :results
   sync_column 'Primary Skill Required', to: :primary_skill
+  sync_column 'Advisable Validation Status', to: :validation_status
+  sync_column 'Validation Method', to: :validation_method
+  sync_column 'Validated By Client', to: :validated_by_client
 
   sync_data do |off_platform_project|
     pull_specialist(off_platform_project)
     off_platform_project.confidential = fields['Okay with naming client'] != 'Yes'
-    off_platform_project.validated = (fields['Validated By Client'] == 'Yes') || fields['Validated'] || false
   end
 
   push_data do |project|
@@ -34,7 +36,9 @@ class Airtable::OffPlatformProject < Airtable::Base
     fields["Okay with naming client"] = project.confidential ? "No" : "Yes"
     fields["Okay To Contact"] = project.can_contact ? "Yes" : "No"
     fields["Specialist"] = [project.specialist.airtable_id]
-    fields["Skills Required"] = project.skills.map { |s| s.airtable_id }
+    fields["Skills Required"] = project.skills.map(&:airtable_id)
+    fields["Advisable Validation Status"] = project.validation_status
+    fields["Validated By Client"] = project.validated_by_client ? "Yes" : 'No'
   end
 
   private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_30_145130) do
+ActiveRecord::Schema.define(version: 2019_01_31_144228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,8 @@ ActiveRecord::Schema.define(version: 2019_01_30_145130) do
     t.string "validation_url"
     t.string "contact_email"
     t.string "validation_method"
+    t.string "validation_status"
+    t.boolean "validated_by_client"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
   end
