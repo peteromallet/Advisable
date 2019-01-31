@@ -4,7 +4,7 @@ class OffPlatformProject < ApplicationRecord
   has_many :project_skills, as: :project
   has_many :skills, through: :project_skills
 
-  scope :validated, -> { where(validated: true )}
+  scope :validated, -> { where(validation_status: "Validated" )}
 
   def contact_name
     "#{contact_first_name} #{contact_last_name}"

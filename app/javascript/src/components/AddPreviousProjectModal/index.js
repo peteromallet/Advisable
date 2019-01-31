@@ -25,7 +25,7 @@ const blankProject = {
   contactEmail: "",
   canContact: true,
   contactJobTitle: "",
-  validationMethod: "",
+  validationMethod: "Client",
   validationUrl: "",
 };
 
