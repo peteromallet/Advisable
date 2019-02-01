@@ -1,6 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import uniqueID from "lodash/uniqueId";
-import { Wrapper, Input, InputMask, Textarea } from "./styles";
+import {
+  Wrapper,
+  InputContainer,
+  Input,
+  InputMask,
+  Textarea,
+  CharCount
+} from "./styles";
 import InputError from "src/components/InputError";
 import InputLabel from "src/components/InputLabel";
 import InputDescription from "src/components/InputDescription";
@@ -9,7 +16,7 @@ import { extractSpacingProps } from "src/components/Spacing";
 const TextField = ({
   type,
   name,
-  value,
+  value = "",
   multiline,
   block,
   onChange,
@@ -22,13 +29,16 @@ const TextField = ({
   readOnly,
   disabled,
   style,
-  description,
+  maxLength,
   autoFocus,
+  description,
   ...props
 }) => {
   const input = useRef(null);
   const [rows, setRows] = useState(props.minRows);
-  const [id, _] = useState(props.id || uniqueID("TextField"))
+  const [id, _] = useState(props.id || uniqueID("TextField"));
+
+  const charCount = maxLength && (maxLength || 0) - value.length;
 
   let Component = Input;
 
@@ -58,24 +68,28 @@ const TextField = ({
   return (
     <Wrapper block={block} {...extractSpacingProps(props)}>
       {label && <InputLabel htmlFor={id}>{label}</InputLabel>}
-      <Component
-        autoFocus={autoFocus}
-        type={type}
-        mask={mask}
-        id={id}
-        name={name}
-        style={style}
-        value={value}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        autoComplete="off"
-        onChange={handleChange}
-        placeholder={placeholder}
-        ref={input}
-        readOnly={readOnly}
-        disabled={disabled}
-        rows={rows}
-      />
+      <InputContainer>
+        <Component
+          autoFocus={autoFocus}
+          type={type}
+          mask={mask}
+          id={id}
+          name={name}
+          style={style}
+          value={value}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          autoComplete="off"
+          onChange={handleChange}
+          placeholder={placeholder}
+          ref={input}
+          readOnly={readOnly}
+          disabled={disabled}
+          rows={rows}
+          maxLength={maxLength}
+        />
+        {maxLength && <CharCount>{charCount}</CharCount>}
+      </InputContainer>
       {error && <InputError>{error}</InputError>}
       {description && <InputDescription>{description}</InputDescription>}
     </Wrapper>
@@ -87,7 +101,7 @@ TextField.defaultProps = {
   minRows: 3,
   block: false,
   multiline: false,
-  autoHeight: false,
-}
+  autoHeight: false
+};
 
 export default TextField;

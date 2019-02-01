@@ -16,11 +16,12 @@ import Divider from "src/components/Divider";
 import Heading from "src/components/Heading";
 import Container from "src/components/Container";
 import FeaturedBadge from "src/components/FeaturedBadge";
+import PreviousProjects from "src/components/PreviousProjects";
+import PreviousProjectsEmptyState from "src/components/PreviousProjectsEmptyState";
 import CandidateAttributes from "src/components/CandidateAttributes";
 import currency from "src/utilities/currency";
 import CandidateActions from "src/components/CandidateActions";
 import AdvisableMessage from "./components/AdvisableMessage";
-import PreviousProjects from "./components/PreviousProjects";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 import {
   ApplicantHeader,
@@ -129,13 +130,25 @@ class Applicant extends React.Component {
                     </Card>
                   ))}
 
-                  <PreviousProjects
-                    applicationId={application.airtableId}
-                    name={application.specialist.name}
-                    specialistId={application.specialist.airtableId}
-                    referencesRequested={application.referencesRequested}
-                    previousProjects={application.specialist.previousProjects || []}
-                  />
+                  <Heading level="6" paddingTop="l" marginBottom="s">
+                    Previous Projects
+                  </Heading>
+                  {application.specialist.previousProjects.length > 0 ? (
+                    <PreviousProjects
+                      name={application.specialist.name}
+                      specialistId={application.specialist.airtableId}
+                      previousProjects={
+                        application.specialist.previousProjects || []
+                      }
+                    />
+                  ) : (
+                    <PreviousProjectsEmptyState
+                      name={application.specialist.name}
+                      applicationId={application.airtableId}
+                      specialistId={application.specialist.airtableId}
+                      referencesRequested={application.referencesRequested}
+                    />
+                  )}
 
                   <Skills
                     marginTop="xxl"

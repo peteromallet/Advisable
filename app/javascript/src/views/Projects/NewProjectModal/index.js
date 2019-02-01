@@ -89,7 +89,7 @@ const NewProjectModal = ({ isOpen, onClose, data, mutate }) => {
                   <Text marginBottom="s">How would you like to proceed?</Text>
                   <NewProjectChoice
                     onClick={() => {
-                      formik.setFieldValue("serviceType", "Assisted");
+                      formik.setFieldValue("serviceType", "Assisted", false);
                       formik.submitForm();
                     }}
                   >
@@ -104,7 +104,7 @@ const NewProjectModal = ({ isOpen, onClose, data, mutate }) => {
                   </NewProjectChoice>
                   <NewProjectChoice
                     onClick={() => {
-                      formik.setFieldValue("serviceType", "Self-Service");
+                      formik.setFieldValue("serviceType", "Self-Service", false);
                       formik.submitForm();
                     }}
                   >

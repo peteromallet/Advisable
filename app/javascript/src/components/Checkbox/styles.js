@@ -1,26 +1,30 @@
 import styled from 'styled-components';
+import InputLabel from "src/components/InputLabel";
+import InputDescription from "src/components/InputDescription";
 import { withSpacing } from 'src/components/Spacing';
 import tick from './tick.svg'
 
-export const Wrapper = withSpacing(styled.div``)
+export const Wrapper = withSpacing(styled.div`
+  ${InputLabel} {
+    user-select: none;
+    position: relative;
+    padding-left: 28px;
+    padding-bottom: 0;
+  }
 
-export const Label = styled.label`
-  color: #00104B;
-  font-size: 16px;
-  font-weight: 500;
-  position: relative;
-  padding-left: 28px;
-  user-select: none;
-`
+  ${InputDescription} {
+    padding-top: 5px;
+  }
+`)
 
 export const Box = styled.span`
   left: 0;
+  top: -1px;
   width: 18px;
   height: 18px;
   display: block;
-  border-radius: 4px;
+  border-radius: 6px;
   position: absolute;
-  top: calc(50% - 10px);
   border: 2px solid #B7BDD5;
   transition: border-color 200ms;
 `
@@ -32,12 +36,12 @@ export const Input = styled.input`
   position: absolute;
   clip: rect(1px,1px,1px,1px);
 
-  &:checked + ${Label} ${Box} {
+  &:checked + ${InputLabel} ${Box} {
     border-color: #173FCD;
     background: url(${tick}) no-repeat center;
   }
 
-  &:focus + ${Label} ${Box} {
+  &:focus + ${InputLabel} ${Box} {
     border-color: #173FCD;
   }
 `
