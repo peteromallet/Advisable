@@ -38,7 +38,7 @@ const TextField = ({
   const [rows, setRows] = useState(props.minRows);
   const [id, _] = useState(props.id || uniqueID("TextField"));
 
-  const charCount = (maxLength || 0) - value.length;
+  const charCount = maxLength && (maxLength || 0) - value.length;
 
   let Component = Input;
 
