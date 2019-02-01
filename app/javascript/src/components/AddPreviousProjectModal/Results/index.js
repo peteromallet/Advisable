@@ -15,7 +15,7 @@ const ProjectDetails = ({ formik, gotoPreviousStep }) => {
   return (
     <React.Fragment>
       <Modal.Header>
-        <Heading size="s">Project Details</Heading>
+        <Heading size="s">Results</Heading>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={formik.handleSubmit}>
@@ -25,8 +25,8 @@ const ProjectDetails = ({ formik, gotoPreviousStep }) => {
               multiline
               minRows={10}
               name="results"
-              placeholder="What were the results of your work during this project... "
-              label="What were the results of your work during this project"
+              placeholder="We achieved..."
+              label="What were the results of your work during this project?"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value={formik.values.results}

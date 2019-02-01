@@ -54,7 +54,7 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
               multiline
               maxLength={200}
               name="description"
-              placeholder="They were looking for..."
+              placeholder="The project..."
               description="This should start with &quot;The project...&quot;."
               label="Give a short overview of the project"
               onBlur={formik.handleBlur}
