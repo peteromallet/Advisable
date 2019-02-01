@@ -38,6 +38,7 @@ const bottomShadow = active => {
 };
 
 export const ScrollableContainer = styled.div`
+  width: 100%;
   display: flex;
   position: relative;
   align-items: stretch;
@@ -50,6 +51,7 @@ let ScrollInner = styled.div.attrs(props => ({
     height: props.height ? `${props.height}px` : "auto"
   }
 }))`
+  width: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 `;

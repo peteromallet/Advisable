@@ -14,6 +14,8 @@ class Types::OffPlatformProject < Types::BaseType
   field :primary_skill, String, null: true
   field :confidential, Boolean, null: true
   field :reviews, [Types::Review], null: false
+  field :skills, [String], null: false
+  field :validation_status, String, null: true
 
   def id
     object.airtable_id
@@ -22,5 +24,9 @@ class Types::OffPlatformProject < Types::BaseType
   def client_name
     return nil if object.confidential
     object.client_name
+  end
+
+  def skills
+    object.skills.map(&:name)
   end
 end

@@ -71,19 +71,31 @@ const STYLES = {
   primary: css`
     color: white;
     font-weight: 600;
-    background: #173FCD;
+    background: #173fcd;
 
     &:hover {
-      background-color: #204CE7;
+      background-color: #204ce7;
     }
 
     &:active {
-      background-color: #0C2EA9;
+      background-color: #0c2ea9;
+    }
+  `,
+  green: css`
+    color: white;
+    background: #00cdb4;
+
+    &:hover {
+      background: ${darken(0.05, "#00CDB4")};
+    }
+
+    &:active {
+      background: ${darken(0.1, "#00CDB4")};
     }
   `,
   plain: css`
     height: auto;
-    color: #173FCD;
+    color: #173fcd;
     padding: 2px 8px;
     margin: -2px -8px;
     background: transparent;
@@ -237,7 +249,11 @@ const Loading = () => (
 const ButtonWithSpacing = withSpacing(ButtonStyling);
 
 export default ({ loading, children, ...props }) => (
-  <ButtonWithSpacing loading={loading} disabled={loading || props.disabled} {...props}>
+  <ButtonWithSpacing
+    loading={loading}
+    disabled={loading || props.disabled}
+    {...props}
+  >
     {loading && <Loading />}
     <ButtonInner>{children}</ButtonInner>
   </ButtonWithSpacing>

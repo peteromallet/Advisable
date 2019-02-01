@@ -11,12 +11,14 @@ import {
 
 import ModalHeader from "./ModalHeader";
 import ModalBody from "./ModalBody";
+import ModalFooter from "./ModalFooter";
 
 const modalRoot = document.getElementById("js-modal-root");
 
 class Modal extends React.Component {
   static Header = ModalHeader
   static Body = ModalBody
+  static Footer = ModalFooter
 
   state = {
     scrollPosition: null

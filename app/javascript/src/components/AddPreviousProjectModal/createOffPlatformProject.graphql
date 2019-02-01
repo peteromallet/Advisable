@@ -1,0 +1,18 @@
+mutation CreateOffPlatformProject($input: CreateOffPlatformProjectInput!) {
+  createOffPlatformProject(input: $input) {
+    previousProject {
+      project {
+        ... on OffPlatformProject {
+          id
+          airtableId
+          description
+          primarySkill
+          clientName
+        }
+      }
+      reviews {
+        id
+      }
+    }
+  }
+}

@@ -37,6 +37,13 @@ const letterSpacing = {
 };
 
 const levels = {
+  1: css`
+    color: #0A1745;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 32px;
+    letter-spacing: -0.03em;
+  `,
   2: css`
     color: #0A1745;
     font-size: 22px;

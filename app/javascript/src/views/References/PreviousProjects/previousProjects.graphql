@@ -1,0 +1,41 @@
+query specialist($id: ID!) {
+  specialist(id: $id) {
+    id
+    previousProjects(onlyValidated: false) {
+      project {
+        ... on Project {
+          id
+          airtableId
+          description
+          primarySkill
+          user {
+            companyName
+          }
+        }
+        ... on OffPlatformProject {
+          id
+          airtableId
+          description
+          primarySkill
+          clientName
+          skills
+          validationStatus
+        }
+      }
+      reviews {
+        id
+        name
+        role
+        comment
+        ratings {
+          overall
+          skills
+          qualityOfWork
+          adherenceToSchedule
+          availability
+          communication
+        }
+      }
+    }
+  }
+}
