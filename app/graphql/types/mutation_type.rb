@@ -24,6 +24,7 @@ class Types::MutationType < GraphQL::Schema::Object
   field :update_project, mutation: Mutations::UpdateProject
   field :confirm_project, mutation: Mutations::ConfirmProject
   field :convert_to_self_service, mutation: Mutations::ConvertToSelfService
+  field :create_off_platform_project, mutation: Mutations::CreateOffPlatformProject
 
   field :login, mutation: Mutations::Login
   field :setup, mutation: Mutations::Setup

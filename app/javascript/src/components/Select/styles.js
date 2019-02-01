@@ -1,17 +1,17 @@
 import styled from "styled-components";
-import arrows from './arrows.svg';
-import { withSpacing } from 'src/components/Spacing';
+import arrows from "./arrows.svg";
+import { withSpacing } from "src/components/Spacing";
 
 export const Wrapper = withSpacing(styled.div`
-  width: ${props => props.block ? "100%" : "auto"};
+  width: ${props => (props.block ? "100%" : "auto")};
   max-width: 100%;
-`)
+`);
 
 export const SelectWrapper = styled.div`
-  width: ${props => props.block ? "100%" : "auto"};
+  width: 100%;
   position: relative;
   display: inline-block;
-`
+`;
 
 export const Select = styled.select`
   width: 100%;
@@ -23,14 +23,13 @@ export const Select = styled.select`
   font-size: 16px;
   font-weight: 600;
   appearance: none;
-  background: #F4F7FC;
   border-radius: 8px;
   padding: 0 35px 0 12px;
   box-sizing: border-box;
-  letter-spacing: -0.03em;
+  background: rgba(29, 39, 75, 0.06);
 
   &:hover {
-    border-color: #AABCD4;
+    border-color: #aabcd4;
   }
 `;
 
@@ -44,4 +43,4 @@ export const Arrows = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${arrows});
-`
+`;

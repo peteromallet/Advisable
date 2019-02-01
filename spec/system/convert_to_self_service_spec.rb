@@ -7,6 +7,12 @@ describe "Converting an assisted project to a self serving one" do
     allow(airtable).to receive(:[]=)
     allow(airtable).to receive(:save)
     allow(Airtable::Project).to receive(:find).and_return(airtable)
+
+    allow(Airtable::Skill).to receive(:active).and_return([
+      OpenStruct.new(id: "rec_1234", fields: {
+        "Name" => "Testing"
+      })
+    ])
   end
   
   it 'directs the user to the project setup flow' do
