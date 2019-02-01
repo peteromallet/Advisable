@@ -29,6 +29,16 @@ const blankProject = {
   validationUrl: "",
 };
 
+const validationMethodValue = selected => {
+  const values = {
+    "Linkedin": "URL",
+    "Portfolio": "URL",
+    "External Site": "URL"
+  }
+
+  return values[selected] || selected;
+}
+
 const AddPreviousProjectModal = ({ specialistId, isOpen, onClose, data, mutate }) => {
   const [values, setValues] = useState(blankProject);
   const [stepIndex, setStepIndex] = useState(0);
@@ -41,8 +51,9 @@ const AddPreviousProjectModal = ({ specialistId, isOpen, onClose, data, mutate }
       await mutate({
         variables: {
           input: {
+            ...values,
+            validationMethod: validationMethodValue(values.validationMethod),
             specialistId,
-            ...values
           }
         }
       })

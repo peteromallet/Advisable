@@ -98,12 +98,12 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
                     "If you can't validate a project, we can use the data to figure out which projects to invite you to but we can't display it on your profile or use it as validation"
                   }
                   options={[
-                    { value: "URL", label: "Linkedin Reference" },
+                    { value: "Linkedin", label: "Linkedin Reference" },
                     {
-                      value: "URL",
+                      value: "External Site",
                       label: "External Site Reference"
                     },
-                    { value: "URL", label: "Link to Portfolio" },
+                    { value: "Portfolio", label: "Link to Portfolio" },
                     {
                       value: "None",
                       label: "Validation not possible"
