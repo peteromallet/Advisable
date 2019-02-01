@@ -6,12 +6,8 @@ import PreviousProjectsEmptyState from "src/components/PreviousProjectsEmptyStat
 import PreviousProject from "./PreviousProject";
 import ProjectSkeleton from "./ProjectSkeleton";
 import FETCH_PROJECTS from "./fetchProjects.graphql";
-import { EmptyStateContainer } from "./styles";
 
-const PreviousProjects = ({
-  data,
-  recalculateHeight,
-}) => {
+const PreviousProjects = ({ data, recalculateHeight }) => {
   useLayoutEffect(() => {
     recalculateHeight();
   });
@@ -34,9 +30,7 @@ const PreviousProjects = ({
   );
 };
 
-const SpecialistProjects = ({
-  data
-}) => {
+const SpecialistProjects = ({ data }) => {
   if (data.application.specialist.previousProjects.length > 0) {
     return data.application.specialist.previousProjects.map(previousProject => (
       <PreviousProject
@@ -48,14 +42,12 @@ const SpecialistProjects = ({
   }
 
   return (
-    <EmptyStateContainer>
-      <PreviousProjectsEmptyState
-        name={data.application.specialist.name}
-        applicationId={data.application.airtableId}
-        specialistId={data.application.specialist.airtableId}
-        referencesRequested={data.application.referencesRequested}
-      />
-    </EmptyStateContainer>
+    <PreviousProjectsEmptyState
+      name={data.application.specialist.name}
+      applicationId={data.application.airtableId}
+      specialistId={data.application.specialist.airtableId}
+      referencesRequested={data.application.referencesRequested}
+    />
   );
 };
 

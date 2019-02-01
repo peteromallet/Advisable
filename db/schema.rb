@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_10_111934) do
+ActiveRecord::Schema.define(version: 2019_01_31_144228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,12 @@ ActiveRecord::Schema.define(version: 2019_01_10_111934) do
     t.boolean "validated", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "can_contact"
+    t.string "validation_url"
+    t.string "contact_email"
+    t.string "validation_method"
+    t.string "validation_status"
+    t.boolean "validated_by_client"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
   end
@@ -154,6 +160,16 @@ ActiveRecord::Schema.define(version: 2019_01_10_111934) do
     t.index ["project_id"], name: "index_payments_on_project_id"
     t.index ["source_id"], name: "index_payments_on_source_id"
     t.index ["uid"], name: "index_payments_on_uid"
+  end
+
+  create_table "project_skills", force: :cascade do |t|
+    t.bigint "skill_id"
+    t.string "project_type"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_type", "project_id"], name: "index_project_skills_on_project_type_and_project_id"
+    t.index ["skill_id"], name: "index_project_skills_on_skill_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -287,6 +303,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_111934) do
   add_foreign_key "interviews", "users"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
+  add_foreign_key "project_skills", "skills"
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "users"
   add_foreign_key "reviews", "specialists"
