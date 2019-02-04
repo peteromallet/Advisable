@@ -18,7 +18,9 @@ query specialist($id: ID!) {
           description
           primarySkill
           clientName
+          confidential
           skills
+          industry
           validationStatus
         }
       }
