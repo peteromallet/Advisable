@@ -10,6 +10,7 @@ import PreviousProjectModal from "src/components/PreviousProjectModal";
 import { PreviousProject, ProjectTitle } from "./styles";
 
 const companyName = project => {
+  console.log(project)
   if (project.__typename === "Project") return project.user.companyName;
   if (project.confidential) return `${project.industry} Company`;
   return project.clientName;
