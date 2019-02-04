@@ -1,0 +1,20 @@
+query Project($id: ID!) {
+  project(id: $id) {
+    id
+    airtableId
+    name
+    primarySkill
+    companyDescription
+    goals
+    requiredCharacteristics
+    optionalCharacteristics
+    estimatedBudget
+    remote
+    user {
+      companyName
+      country {
+        name
+      }
+    }
+  }
+}

@@ -11,6 +11,7 @@ import RootPath from "./views/RootPath";
 import Projects from "./views/Projects";
 import ViewOffer from "./views/ViewOffer";
 import References from "./views/References";
+import JobListing from "./views/JobListing";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
 import EditProposal from "./views/EditProposal";
@@ -57,6 +58,10 @@ const Routes = () => {
           <Route
             path="/applications/:applicationID/proposal"
             component={CreateProposal}
+          />
+          <Route
+            path="/specialists/:specialistId/invites/:projectId"
+            component={JobListing}
           />
           <Route
             path="/applications/:applicationID/proposals/:proposalID"
