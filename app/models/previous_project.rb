@@ -32,9 +32,8 @@ class PreviousProject
     end
 
     # Returns an array of PreviousProject instances for a given specialist
-    def for_specialist(specialist, only_validated: true)
+    def for_specialist(specialist)
       off_platform = specialist.off_platform_projects
-      off_platform = off_platform.validated if only_validated
 
       on_platform = specialist_platform_projects(specialist)
       results = (off_platform + on_platform).map do |project|

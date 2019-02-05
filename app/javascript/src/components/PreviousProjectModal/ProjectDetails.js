@@ -4,31 +4,41 @@ import Modal from "src/components/Modal";
 import Review from "src/components/Review";
 import Heading from "src/components/Heading";
 import Spacing from "src/components/Spacing";
+import ProjectValidationStatus from "src/components/ProjectValidationStatus";
 
 const companyName = project => {
-  if (project.__typename === "Project") return project.user.companyName
-  if (project.confidential) return `${project.industsry} Company`
-  return project.clientName
-}
+  if (project.__typename === "Project") return project.user.companyName;
+  if (project.confidential) return `${project.industsry} Company`;
+  return project.clientName;
+};
+
+const title = project => {
+  if (project.skills && project.skills.length > 0) {
+    const skills = project.skills.join(", ");
+    return `${skills} at ${companyName(project)}`;
+  }
+
+  return `${project.primarySkill} at ${companyName(project)}`;
+};
 
 const clientDescription = project => {
-  if (project.__typename === "Project") return project.companyDescription
-  return project.clientDescription
-}
+  if (project.__typename === "Project") return project.companyDescription;
+  return project.clientDescription;
+};
 
 const requirements = project => {
-  if (project.__typename === "Project") return project.specialistDescription
-  return project.requirements
-}
+  if (project.__typename === "Project") return project.specialistDescription;
+  return project.requirements;
+};
 
 export default ({ previousProject }) => {
-  const { project, reviews } = previousProject
+  const { project, reviews } = previousProject;
 
   return (
     <React.Fragment>
       <Modal.Header>
-        <Heading level={2}>{project.primarySkill}</Heading>
-        <Text>{companyName(project)}</Text>
+        <Heading paddingBottom="xs" level={2}>{title(project)}</Heading>
+        <ProjectValidationStatus status={project.validationStatus} />
       </Modal.Header>
       <Modal.Body>
         <Spacing paddingBottom="s">
