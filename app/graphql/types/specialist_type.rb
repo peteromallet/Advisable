@@ -14,9 +14,7 @@ class Types::SpecialistType < Types::BaseType
   field :ratings, Types::Ratings, null: false
   field :reviews, [Types::Review], null: false
   field :reviewsCount, Integer, null: true
-  field :previous_projects, [Types::PreviousProject], null: false do
-    argument :only_validated, Boolean, required: false
-  end
+  field :previous_projects, [Types::PreviousProject], null: false
 
   def name
     "#{object.first_name} #{object.last_name}"
@@ -26,7 +24,7 @@ class Types::SpecialistType < Types::BaseType
     object.skills.map(&:name)
   end
 
-  def previous_projects(only_validated: true)
-    ::PreviousProject.for_specialist(object, only_validated: only_validated)
+  def previous_projects
+    ::PreviousProject.for_specialist(object)
   end
 end
