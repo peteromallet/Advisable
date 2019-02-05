@@ -12,6 +12,7 @@ class Airtable::Project < Airtable::Base
   sync_column 'Specialist Requirement Description', to: :specialist_description
   sync_column 'Currency', to: :currency
   sync_column 'Client Referray URL', to: :client_referral_url
+  sync_column 'Project Status', to: :sales_status
 
   sync_data do |project|
     project.currency = fields['Currency'].try(:first)
