@@ -4,4 +4,8 @@ query {
     value: name
     label: name
   }
+  industries {
+    value: name
+    label: name
+  }
 }
