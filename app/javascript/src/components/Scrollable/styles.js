@@ -42,6 +42,7 @@ export const ScrollableContainer = styled.div`
   display: flex;
   position: relative;
   align-items: stretch;
+  flex-direction: column;
   ${props => topShadow(props.topShadow)};
   ${props => bottomShadow(props.bottomShadow)};
 `;
@@ -51,6 +52,7 @@ let ScrollInner = styled.div.attrs(props => ({
     height: props.height ? `${props.height}px` : "auto"
   }
 }))`
+  flex: 1;
   width: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;

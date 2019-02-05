@@ -26,6 +26,7 @@ query PreviousProjects($applicationId: ID!) {
             description
             primarySkill
             confidential
+            validationStatus
           }
         }
         reviews {

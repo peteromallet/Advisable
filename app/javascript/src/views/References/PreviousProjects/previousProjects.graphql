@@ -1,7 +1,7 @@
 query specialist($id: ID!) {
   specialist(id: $id) {
     id
-    previousProjects(onlyValidated: false) {
+    previousProjects {
       project {
         ... on Project {
           id

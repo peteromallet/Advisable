@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { rgba } from "polished";
 import { Link } from "react-router-dom";
-import { Icon } from "src/components/Icon";
+import { Icon } from "src/components/Icon/styles";
 
 export const Container = styled.div`
   padding: 30px;

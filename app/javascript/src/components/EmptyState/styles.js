@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Icon } from 'src/components/Icon';
+import { Icon } from 'src/components/Icon/styles';
 
 export const Wrapper = styled.div`
   text-align: center;
