@@ -1,4 +1,5 @@
 const { environment } = require('@rails/webpacker')
+const typescript =  require('./loaders/typescript')
 const webpack = require('webpack')
 const dotenv = require('dotenv')
 
@@ -20,4 +21,5 @@ environment.loaders.append('bundle', {
   loader: 'bundle-loader',
 })
 
+environment.loaders.append('typescript', typescript)
 module.exports = environment

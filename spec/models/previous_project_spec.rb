@@ -73,19 +73,10 @@ describe PreviousProject do
     context "when the user has an off platform project" do
       it "includes that project" do
         specialist = create(:specialist)
-        project = create(:off_platform_project, specialist: specialist, validation_status: "Validated")
+        project = create(:off_platform_project, specialist: specialist)
         projects = PreviousProject.for_specialist(specialist)
         expect(projects).to_not be_empty
         expect(projects.first.project).to eq(project)
-      end
-    end
-
-    context "when the user has an off platform project that has not been validated" do
-      it "does not include that project" do
-        specialist = create(:specialist)
-        project = create(:off_platform_project, specialist: specialist, validation_status: "Pending")
-        projects = PreviousProject.for_specialist(specialist)
-        expect(projects).to be_empty
       end
     end
 

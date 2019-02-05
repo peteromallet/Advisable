@@ -1,32 +1,36 @@
 import React, { useState } from "react";
+import Flex from "src/components/Flex";
+import Spacing from "src/components/Spacing";
 import StarRating from "src/components/StarRating";
+import ProjectValidationStatus from "src/components/ProjectValidationStatus";
 import PreviousProjectModal from "src/components/PreviousProjectModal";
+import { useMobile } from "src/components/Breakpoint";
 import { PreviousProject, ProjectTitle, ProjectDescription } from "./styles";
 
 const companyName = project => {
   if (project.__typename === "Project") {
-    return project.user.companyName
+    return project.user.companyName;
   }
 
   if (project.confidential) {
-    return `${project.industsry} Company`
+    return `${project.industsry} Company`;
   }
 
-  return project.clientName
-}
+  return project.clientName;
+};
 
 const title = project => {
   if (project.skills && project.skills.length > 0) {
-    const skills = project.skills.join(', ')
-    return `${skills} at ${companyName(project)}`
+    const skills = project.skills.join(", ");
+    return `${skills} at ${companyName(project)}`;
   }
 
-  return `${project.primarySkill} at ${companyName(project)}`
-}
+  return `${project.primarySkill} at ${companyName(project)}`;
+};
 
 export default ({ specialistId, previousProject }) => {
   const [isOpen, setOpen] = useState(false);
-
+  const isMobile = useMobile();
   const { project, reviews } = previousProject;
 
   return (
@@ -40,13 +44,18 @@ export default ({ specialistId, previousProject }) => {
       />
 
       <PreviousProject onClick={() => setOpen(true)}>
-        <ProjectTitle>
-          {title(project)}
-        </ProjectTitle>
+        <ProjectTitle>{title(project)}</ProjectTitle>
         <ProjectDescription>{project.description}</ProjectDescription>
-        {reviews.length > 0 && (
-          <StarRating rating={reviews[0].ratings.overall} />
-        )}
+        <Flex align="center">
+          {!isMobile && (
+            <Spacing paddingRight="s">
+              <ProjectValidationStatus status={project.validationStatus} />
+            </Spacing>
+          )}
+          {reviews.length > 0 && (
+            <StarRating rating={reviews[0].ratings.overall} />
+          )}
+        </Flex>
       </PreviousProject>
     </React.Fragment>
   );

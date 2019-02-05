@@ -57,6 +57,7 @@ query project($projectID: ID!, $applicationID: ID!) {
               description
               primarySkill
               clientName
+              validationStatus
             }
           }
           reviews {

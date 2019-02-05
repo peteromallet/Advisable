@@ -22,6 +22,7 @@ const windowWidths = {
 export const ModalBody = styled.div`
   flex-grow: 1;
   display: flex;
+  overflow-y: hidden;
 `
 
 export const ModalHeader = styled.div`
@@ -52,7 +53,6 @@ export const Window = withSpacing(styled.div.attrs(({ styles }) => ({
   max-height: calc(100vh - 60px);
   max-width: ${props => windowWidths[props.size || "m"]};
   box-shadow: 0px 10px 50px rgba(14, 29, 78, 0.3);
-
   ${props =>
     props.expandOnMobile &&
     css`
@@ -69,7 +69,6 @@ const fadeIn = keyframes`
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
@@ -96,7 +95,6 @@ export const CloseModal = styled.button`
   position: absolute;
   border-radius: 50%;
   background: #f1f3fd;
-
   svg {
     top: 50%;
     left: 50%;

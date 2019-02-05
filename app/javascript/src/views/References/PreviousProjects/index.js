@@ -7,7 +7,6 @@ import PREVIOUS_PROJECTS from "./previousProjects.graphql";
 const Projects = ({ data, specialistId }) => {
   return (
     <PreviousProjects
-      showValidationStatus
       specialistId={specialistId}
       previousProjects={get(data, "specialist.previousProjects")}
       loading={data.loading}

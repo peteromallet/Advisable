@@ -24,6 +24,8 @@ query PreviousProject(
         clientDescription
         requirements
         results
+        validationStatus
+        skills
       }
     }
     reviews {
