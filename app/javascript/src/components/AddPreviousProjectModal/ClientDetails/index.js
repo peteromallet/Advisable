@@ -8,9 +8,10 @@ import StepDots from "src/components/StepDots";
 import Checkbox from "src/components/Checkbox";
 import TextField from "src/components/TextField";
 import { useMobile } from "src/components/Breakpoint";
+import SuggestedSelect from "src/components/SuggestedSelect";
 import validationSchema from "./validationSchema";
 
-const ClientDetails = ({ formik }) => {
+const ClientDetails = ({ formik, industries }) => {
   let isMobile = useMobile();
 
   return (
@@ -43,14 +44,18 @@ const ClientDetails = ({ formik }) => {
             />
           </FieldRow>
           <FieldRow>
-            <TextField
+            <SuggestedSelect
               name="industry"
               placeholder="e.g Financial Services"
               label="What industry/category is this company in?"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.industry}
               error={formik.touched.industry && formik.errors.industry}
+              options={industries}
+              onBlur={formik.handleBlur}
+              value={formik.values.industry}
+              onChange={industry => {
+                formik.setFieldTouched('industry', true)
+                formik.setFieldValue("industry", industry);
+              }}
             />
           </FieldRow>
           <FieldRow>

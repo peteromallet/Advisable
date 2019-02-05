@@ -15,6 +15,14 @@ class Types::User < Types::BaseType
     argument :exclude_conflicts, Boolean, required: false, description: 'Exclude any times that conflict with scheduled interviews'
   end
 
+  # Exclude any projects where the sales status is 'Lost'. We need to use an
+  # or statement here otherwise SQL will also exclude records where sales_status
+  # is null.
+  def projects
+    object.projects.where.not(sales_status: "Lost")
+      .or(object.projects.where(sales_status: nil))
+  end
+
   def availability(exclude_conflicts: false)
     times = object.availability || []
     if exclude_conflicts
