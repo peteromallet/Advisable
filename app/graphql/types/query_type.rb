@@ -150,4 +150,10 @@ class Types::QueryType < Types::BaseType
       GraphQL::ExecutionError.new("Could not find specialist #{id}")
     end
   end
+
+  field :industries, [Types::IndustryType], null: false
+
+  def industries
+    Industry.all.order(name: :asc)
+  end
 end

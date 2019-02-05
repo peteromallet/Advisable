@@ -7,7 +7,7 @@ import ClientDetails from "./ClientDetails";
 import ProjectDetails from "./ProjectDetails";
 import Results from "./Results";
 import Reference from "./Reference";
-import SKILLS from "./skills.graphql";
+import FETCH_DATA from "./fetchData.graphql";
 import CREATE_OFF_PLATFORM_PROJECT from "./createOffPlatformProject.graphql";
 
 const STEPS = [ClientDetails, ProjectDetails, Results, Reference];
@@ -84,6 +84,7 @@ const AddPreviousProjectModal = ({ specialistId, isOpen, onClose, data, mutate }
             <Step
               formik={formik}
               skills={data.skills}
+              industries={data.industries}
               gotoNextStep={_ => setStepIndex(stepIndex + 1)}
               gotoPreviousStep={_ => setStepIndex(stepIndex - 1)}
             />
@@ -95,7 +96,7 @@ const AddPreviousProjectModal = ({ specialistId, isOpen, onClose, data, mutate }
 };
 
 export default compose(
-  graphql(SKILLS),
+  graphql(FETCH_DATA),
   graphql(CREATE_OFF_PLATFORM_PROJECT, {
     options: props => ({
       update: props.mutationUpdate

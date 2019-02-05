@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_31_144228) do
+ActiveRecord::Schema.define(version: 2019_02_05_092352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,14 @@ ActiveRecord::Schema.define(version: 2019_01_31_144228) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "industries", force: :cascade do |t|
+    t.string "name"
+    t.string "uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid"], name: "index_industries_on_uid"
+  end
+
   create_table "interviews", force: :cascade do |t|
     t.bigint "application_id"
     t.datetime "starts_at"
@@ -194,6 +202,9 @@ ActiveRecord::Schema.define(version: 2019_01_31_144228) do
     t.bigint "user_id"
     t.string "primary_skill"
     t.string "service_type"
+    t.string "estimated_budget"
+    t.boolean "remote"
+    t.string "sales_status"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
