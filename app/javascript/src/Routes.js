@@ -56,11 +56,15 @@ const Routes = () => {
             component={InterviewRequest}
           />
           <Route
+            path="/applications/:applicationID/proposals/:proposalID"
+            component={EditProposal}
+          />
+          <Route
             path="/applications/:applicationID/proposal"
             component={CreateProposal}
           />
           <Route
-            path="/specialists/:specialistId/invites/:projectId"
+            path="/invites/:applicationId"
             component={JobListing}
           />
           <Route

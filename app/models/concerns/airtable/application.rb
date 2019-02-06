@@ -13,6 +13,8 @@ class Airtable::Application < Airtable::Base
   sync_column 'Advisable Comment', to: :comment
   sync_column 'Rejected Reason', to: :rejection_reason
   sync_column 'Rejected Reason Comment', to: :rejection_reason_comment
+  sync_column 'Invitation Rejected Reason', to: :invitation_rejection_reason
+  sync_column 'Referral URL', to: :referral_url
 
   sync_data do |application|
     application.status = status_to_sync
@@ -60,5 +62,10 @@ class Airtable::Application < Airtable::Base
       return 'Application Accepted'
     end
     status
+  end
+
+  push_data do |application|
+    self['Application Status'] = application.status
+    self['Invitation Rejected Reason'] = application.invitation_rejection_reason
   end
 end

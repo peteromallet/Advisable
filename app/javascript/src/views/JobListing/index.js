@@ -9,13 +9,13 @@ let JobListingContainer = ({ match }) => {
   return (
     <React.Fragment>
       <Header />
-      <Query query={FETCH_PROJECT} variables={{ id: match.params.projectId }}>
+      <Query query={FETCH_PROJECT} variables={{ id: match.params.applicationId }}>
         {query => {
           if (query.loading) return <Loading />
 
           return (
             <JobListing
-              project={query.data.project}
+              application={query.data.application}
             />
           )
         }}

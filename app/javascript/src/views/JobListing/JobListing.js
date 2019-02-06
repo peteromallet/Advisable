@@ -5,19 +5,17 @@ import {
   Card,
   List,
   Layout,
-  Button,
   Heading,
   Padding,
   BottomBar,
-  ButtonGroup
 } from "src/components";
 import { useScreenSize } from "src/utilities/screenSizes";
 import ProjectAttributes from "./ProjectAttributes";
-import RejectModal from "./RejectModal";
+import Actions from "./Actions";
 
-let JobListing = ({ project }) => {
-  const [rejectModal, setRejectModal] = useState(false);
+let JobListing = ({ application }) => {
   const isMobile = useScreenSize("small");
+  const { project } = application;
 
   return (
     <Layout>
@@ -38,20 +36,11 @@ let JobListing = ({ project }) => {
             <Padding bottom="xl">
               <ProjectAttributes project={project} />
             </Padding>
-            <Button styling="green" size="l" marginBottom="s" block>
-              Apply
-            </Button>
-            <Button styling="outlined" size="l" onClick={() => setRejectModal(true)} block>
-              Reject Invitation
-            </Button>
+            <Actions stack={true} application={application} />
           </Sticky>
         </Layout.Sidebar>
       )}
       <Layout.Main>
-        <RejectModal
-          isOpen={rejectModal}
-          onClose={() => setRejectModal(false)}
-        />
         <Card>
           <Padding size="xl">
             <Heading level={2}>{project.primarySkill}</Heading>
@@ -85,14 +74,7 @@ let JobListing = ({ project }) => {
 
         {isMobile && (
           <BottomBar>
-            <ButtonGroup fullWidth>
-              <Button styling="green" size="l">
-                Apply
-              </Button>
-              <Button styling="outlined" size="l" onClick={() => setRejectModal(true)}>
-                Reject Invite
-              </Button>
-            </ButtonGroup>
+            <Actions fullWidth={true} application={application} />
           </BottomBar>
         )}
       </Layout.Main>

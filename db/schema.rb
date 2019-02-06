@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_05_092352) do
+ActiveRecord::Schema.define(version: 2019_02_06_113446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 2019_02_05_092352) do
     t.text "rejection_reason"
     t.text "rejection_reason_comment"
     t.boolean "references_requested"
+    t.string "invitation_rejection_reason"
+    t.string "referral_url"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"

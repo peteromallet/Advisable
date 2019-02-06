@@ -7,8 +7,5 @@ query project($id: ID!) {
       name
       email
     }
-    applications {
-      id
-    }
   }
 }

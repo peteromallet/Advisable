@@ -1,19 +1,25 @@
-query Project($id: ID!) {
-  project(id: $id) {
+query Application($id: ID!) {
+  application(id: $id) {
     id
+    status
+    referralUrl
     airtableId
-    name
-    primarySkill
-    companyDescription
-    goals
-    requiredCharacteristics
-    optionalCharacteristics
-    estimatedBudget
-    remote
-    user {
-      companyName
-      country {
-        name
+    project {
+      id
+      airtableId
+      name
+      primarySkill
+      companyDescription
+      goals
+      requiredCharacteristics
+      optionalCharacteristics
+      estimatedBudget
+      remote
+      user {
+        companyName
+        country {
+          name
+        }
       }
     }
   }
