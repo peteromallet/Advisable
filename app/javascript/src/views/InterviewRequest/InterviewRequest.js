@@ -8,12 +8,11 @@ import InterviewConfirmed from "./InterviewConfirmed";
 import MoreTimesRequested from "./MoreTimesRequested";
 import ConfirmInterviewRequest from "./ConfirmInterviewRequest";
 import FETCH_INTERVIEW from "./fetchInterview.graphql";
-import NotFoundError from 'src/views/NotFound/error';
+import NotFoundError from "src/views/NotFound/error";
 import { Container } from "./styles";
 
 const SELECT_TIME_PATH = ":date([0-9]{4}-[0-9]{2}-[0-9]{2})";
-const CONFIRM_PATH =
-  ":datetime([0-9]{4}-[0-9]{2}-[0-9]{2}T.*)";
+const CONFIRM_PATH = ":datetime([0-9]{4}-[0-9]{2}-[0-9]{2}T.*)";
 
 class InterviewRequest extends Component {
   render() {
@@ -29,12 +28,14 @@ class InterviewRequest extends Component {
           const { interview } = query.data;
 
           if (!interview) {
-            throw new NotFoundError()
+            throw new NotFoundError();
           }
 
           return (
             <Container>
-              {interview.status === "Call Requested" && (
+              {["Call Requested", "More Time Options Added"].indexOf(
+                interview.status
+              ) > -1 && (
                 <Switch>
                   <Route
                     path={`${match.path}/${SELECT_TIME_PATH}`}

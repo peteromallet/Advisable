@@ -4,6 +4,8 @@ import { IntlProvider } from "react-intl";
 import { ApolloProvider } from "react-apollo";
 import client from "./graphqlClient";
 import BaseStyling from './BaseStyling';
+import { BrowserRouter, Route } from "react-router-dom";
+import Root from './Root';
 
 import './i18n';
 import App from "./App";
@@ -26,8 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
     <ApolloProvider client={client}>
       <IntlProvider locale={language}>
           <NotificationsProvider>
-            <App />
             <BaseStyling />
+            <BrowserRouter>
+              <Route component={Root} />
+            </BrowserRouter>
           </NotificationsProvider>
       </IntlProvider>
     </ApolloProvider>,
