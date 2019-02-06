@@ -56,19 +56,24 @@ class BaseField < GraphQL::Schema::Field
     original_resolve_proc = field.resolve_proc
 
     ->(obj, args, ctx) {
-      resolved = original_resolve_proc.call(obj, args, ctx)
-      value = obj.object || resolved
+      begin
+        resolved = original_resolve_proc.call(obj, args, ctx)
+        value = obj.object || resolved
 
-      policy = Pundit.policy!(ctx[:current_user], value)
+        policy = Pundit.policy!(ctx[:current_user], value)
 
-      authorized = policy.send("#{authorize_method}?")
-      return resolved if authorized
+        authorized = policy.send("#{authorize_method}?")
+        return resolved if authorized
 
-      if authorization_error_proc
-        authorization_error_proc.call(value, ctx)
+        if authorization_error_proc
+          authorization_error_proc.call(value, ctx)
+        end
+
+        return nil
+
+      rescue Pundit::NotDefinedError => e
+        return nil
       end
-
-      return nil
     }
   end
 end
