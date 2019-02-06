@@ -26,7 +26,6 @@ const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 setConfig({ pureSFC: true });
 
 const Root = ({ location, history }) => {
-
   return (
     <NotFoundBoundary>
       <Suspense fallback={<Loading />}>
