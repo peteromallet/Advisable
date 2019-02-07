@@ -8,6 +8,10 @@ mutation CreateOffPlatformProject($input: CreateOffPlatformProjectInput!) {
           description
           primarySkill
           clientName
+          confidential
+          skills
+          industry
+          validationStatus
         }
       }
       reviews {
