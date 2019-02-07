@@ -8,7 +8,7 @@ import Candidates from "../Candidates";
 import CreateOffer from "../CreateOffer";
 import CounterOffer from "../CounterOffer";
 import ViewProposal from "../ViewProposal";
-import NotFoundError from "../NotFound/error";
+import NotFound from "../NotFound";
 import InterviewAvailability from "../InterviewAvailability";
 import FETCH_PROJECT from "./fetchProject.graphql";
 import ScheduleSetupCall from './ScheduleSetupCall';
@@ -50,7 +50,7 @@ const Project = ({ location, match: { path, params } }) => {
         // instructions. This is a rare case where we want to redirect users
         // to either signup or login based on wether the project client has
         // an account
-        if (query.error) {
+        if (query.error && query.error.graphQLErrors.length > 0) {
           let error = query.error.graphQLErrors[0]
           let redirect = redirectError(error)
           if (redirect) {
@@ -58,12 +58,11 @@ const Project = ({ location, match: { path, params } }) => {
           }
         }
 
-        const project = query.data.project;
-
-        if (!project) {
-          throw new NotFoundError()
+        if (!query.data.project) {
+          return <NotFound />
         }
 
+        const project = query.data.project;
         if (project && project.status === "Project Created") {
           return <ScheduleSetupCall project={project} />
         }
@@ -95,11 +94,6 @@ const Project = ({ location, match: { path, params } }) => {
               component={InterviewAvailability}
             />
             <Route path={`${path}/:status?`} component={Candidates} />
-            <Route
-              render={() => {
-                throw new NotFoundError();
-              }}
-            />
           </Switch>
         );
       }}
