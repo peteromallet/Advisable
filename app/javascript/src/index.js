@@ -3,12 +3,11 @@ import ReactDOM from "react-dom";
 import { IntlProvider } from "react-intl";
 import { ApolloProvider } from "react-apollo";
 import client from "./graphqlClient";
-import BaseStyling from './BaseStyling';
-import { BrowserRouter, Route } from "react-router-dom";
-import Root from './Root';
+import BaseStyling from "./BaseStyling";
+import Routes from "./Routes";
+import RootErrorBoundary from "./views/RootErrorBoundary";
 
-import './i18n';
-import App from "./App";
+import "./i18n";
 import { NotificationsProvider } from "./components/Notifications";
 
 // Define user's language. Different browsers have the user locale defined
@@ -25,16 +24,18 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.appendChild(root);
 
   ReactDOM.render(
-    <ApolloProvider client={client}>
-      <IntlProvider locale={language}>
-          <NotificationsProvider>
-            <BaseStyling />
-            <BrowserRouter>
-              <Route component={Root} />
-            </BrowserRouter>
-          </NotificationsProvider>
-      </IntlProvider>
-    </ApolloProvider>,
+    <React.Fragment>
+      <BaseStyling />
+      <RootErrorBoundary>
+        <IntlProvider locale={language}>
+          <ApolloProvider client={client}>
+            <NotificationsProvider>
+              <Routes />
+            </NotificationsProvider>
+          </ApolloProvider>
+        </IntlProvider>
+      </RootErrorBoundary>
+    </React.Fragment>,
     root
   );
 });

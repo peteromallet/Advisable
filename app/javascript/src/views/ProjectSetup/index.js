@@ -3,7 +3,7 @@ import { graphql } from "react-apollo";
 import { Transition, animated } from "react-spring";
 import { Route, Switch, Redirect } from "react-router";
 import React, { Fragment, useEffect, useRef } from "react";
-import NotFoundError from "src/views/NotFound/error";
+import NotFound from "src/views/NotFound";
 import Header from "src/components/Header";
 import Loading from "src/components/Loading";
 import Progress from "./Progress";
@@ -15,7 +15,7 @@ const ProjectSetup = ({ data = {}, match }) => {
   if (data.loading) return <Loading />;
 
   if (match.params.projectID && !data.project) {
-    throw new NotFoundError();
+    return <NotFound />
   }
 
   // Redirect to the project dashboard if the status is not pending approval
