@@ -1,5 +1,4 @@
-import { Route, Switch } from "react-router-dom";
-import { hot, setConfig } from "react-hot-loader";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
 
 import Loading from "src/components/Loading";
@@ -15,25 +14,28 @@ import References from "./views/References";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
 import EditProposal from "./views/EditProposal";
-import NotFoundError from "./views/NotFound/error";
 import CreateProposal from "./views/CreateProposal";
 import InterviewRequest from "./views/InterviewRequest";
-import NotFoundBoundary from "./views/NotFound/NotFoundBoundary";
+import NotFound from "./views/NotFound";
 
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 
-setConfig({ pureSFC: true });
-
-const Root = ({ location, history }) => {
+const Routes = () => {
   return (
-    <NotFoundBoundary>
-      <Suspense fallback={<Loading />}>
+    <Suspense fallback={<Loading />}>
+      <BrowserRouter>
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route path="/reset_password" component={ResetPassword} />
-          <Route path="/confirm_account/:token" component={ConfirmAccount} />
+          <Route
+            path="/reset_password"
+            render={props => <ResetPassword {...props} />}
+          />
+          <Route
+            path="/confirm_account/:token"
+            render={props => <ConfirmAccount {...props} />}
+          />
           <AuthenticatedRoute exact path="/" component={RootPath} />
           <AuthenticatedRoute path="/setup" component={Setup} />
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
@@ -60,15 +62,11 @@ const Root = ({ location, history }) => {
             path="/applications/:applicationID/proposals/:proposalID"
             component={EditProposal}
           />
-          <Route
-            render={() => {
-              throw new NotFoundError();
-            }}
-          />
+          <Route component={NotFound} />
         </Switch>
-      </Suspense>
-    </NotFoundBoundary>
+      </BrowserRouter>
+    </Suspense>
   );
 };
 
-export default hot(module)(Root);
+export default Routes;
