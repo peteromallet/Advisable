@@ -23,7 +23,7 @@ const Dot = styled.div`
 
 export default ({ total, current }) => {
   const dots = times(total, i => {
-    return <Dot active={current === i + 1} />
+    return <Dot key={i} active={current === i + 1} />
   });
 
   return <Container>{dots}</Container>

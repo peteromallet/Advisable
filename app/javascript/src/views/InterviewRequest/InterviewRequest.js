@@ -8,7 +8,7 @@ import InterviewConfirmed from "./InterviewConfirmed";
 import MoreTimesRequested from "./MoreTimesRequested";
 import ConfirmInterviewRequest from "./ConfirmInterviewRequest";
 import FETCH_INTERVIEW from "./fetchInterview.graphql";
-import NotFoundError from "src/views/NotFound/error";
+import NotFound from "src/views/NotFound";
 import { Container } from "./styles";
 
 const SELECT_TIME_PATH = ":date([0-9]{4}-[0-9]{2}-[0-9]{2})";
@@ -28,7 +28,7 @@ class InterviewRequest extends Component {
           const { interview } = query.data;
 
           if (!interview) {
-            throw new NotFoundError();
+            return <NotFound />
           }
 
           return (

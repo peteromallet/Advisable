@@ -17,14 +17,6 @@ const client = new ApolloClient({
   fetchOptions: {
     credentials: "same-origin"
   },
-  onError: err => {
-    // Throw an error for graphql network errors to prevent looping requests
-    // from being made
-    if (err.networkError) {
-      throw new Error("GraphQL network error")
-    }
-    console.log(err)
-  },
   request: operation => {
     const authToken = sessionStorage.getItem("authToken") || localStorage.getItem("authToken");
     const headers = {
