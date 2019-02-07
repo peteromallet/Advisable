@@ -29,7 +29,6 @@ class Airtable::Project < Airtable::Base
 
     project.accepted_terms = fields["Accepted Terms"]
     project.deposit = (fields["Deposit Amount Required"].to_f * 100).to_i
-    project.deposit_paid = (fields["Deposit Amount Paid"].to_f * 100).to_i
   end
 
   push_data do |project|
@@ -37,6 +36,7 @@ class Airtable::Project < Airtable::Base
     self['Client Contacts'] = [project.user.airtable_id] if project.saved_change_to_user_id?
     self['Project Stage'] = project.status if !project.status.blank? && project.saved_change_to_status?
     self['Deposit Amount Required'] = project.deposit / 100.0 if project.saved_change_to_deposit?
+    self['Deposit Amount Paid'] = project.deposit_paid / 100.0 if project.saved_change_to_deposit_paid?
     self['Company Description'] = project.company_description if project.saved_change_to_company_description?
     self['Project Description'] = project.description if project.saved_change_to_description?
     self['Specialist Requirement Description'] = project.specialist_description if project.saved_change_to_specialist_description?
