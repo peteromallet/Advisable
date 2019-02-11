@@ -26,6 +26,11 @@ class Projects::Confirm < ApplicationService
 
   def sync_with_airtable
     record = Airtable::Project.find(project.airtable_id)
+    # Set the Deposit amount paid again. Due to the fact that the confirm call
+    # is called immediately after the payment step, there is a chance that
+    # airtable wont have updated the deposit amount paid that was set in the
+    # payment step, meaning it would be overwritten by doing this update.
+    record['Deposit Amount Paid'] = project.deposit_paid / 100.0
     record['Project Stage'] = "Brief Confirmed"
     record.save
   end
