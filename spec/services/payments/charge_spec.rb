@@ -9,9 +9,8 @@ describe Payments::Charge do
     charge = double(Stripe::Charge, id: "ch_1234")
     allow(Stripe::Charge).to receive(:create).and_return(charge)
 
-    allow(airtable_record).to receive(:[]=)
-    allow(airtable_record).to receive(:save)
     allow(Airtable::Project).to receive(:find).and_return(airtable_record)
+    allow(airtable_record).to receive(:push)
   end
 
   it "creates a stripe charge" do
@@ -49,8 +48,7 @@ describe Payments::Charge do
   end
 
   it "updates the deposit paid amount in airtable" do
-    expect(airtable_record).to receive(:[]=).with("Deposit Amount Paid", 100.0)
-    expect(airtable_record).to receive(:save)
+    expect(airtable_record).to receive(:push)
     Payments::Charge.call(payment)
   end
 end
