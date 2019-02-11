@@ -8,6 +8,7 @@ describe Projects::Confirm do
       airtable_record = double("Airtable::Project")
       allow(Airtable::Project).to receive(:find).with(project.airtable_id).and_return(airtable_record)
       allow(airtable_record).to receive(:[]=).with("Project Stage", "Brief Confirmed")
+      allow(airtable_record).to receive(:[]=).with("Deposit Amount Paid", project.deposit_paid)
       allow(airtable_record).to receive(:save)
     end
 
@@ -28,6 +29,7 @@ describe Projects::Confirm do
       airtable_record = double("Airtable::Project")
       expect(Airtable::Project).to receive(:find).with(project.airtable_id).and_return(airtable_record)
       expect(airtable_record).to receive(:[]=).with("Project Stage", "Brief Confirmed")
+      expect(airtable_record).to receive(:[]=).with("Deposit Amount Paid", project.deposit_paid)
       expect(airtable_record).to receive(:save)
       Projects::Confirm.call(project: project)
     end

@@ -6,6 +6,7 @@ class Payments::Charge < ApplicationService
     @payment = payment
   end
 
+
   def call
     begin
     charge = Stripe::Charge.create({
@@ -35,10 +36,10 @@ class Payments::Charge < ApplicationService
 
   def update_project_deposit_paid(payment)
     project = payment.project
-    paid = [project.deposit_paid + payment.amount, project.deposit].max
-    project.update_columns(deposit_paid: paid)
+    paid = project.deposit_paid + payment.amount
+    project.deposit_paid = paid
+    project.save(validate: false)
     airtable_record = Airtable::Project.find(project.airtable_id)
-    airtable_record['Deposit Amount Paid'] = paid / 100.0
-    airtable_record.save
+    airtable_record.push(project)
   end
 end

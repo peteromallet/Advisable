@@ -120,7 +120,7 @@ GEM
     graphiql-rails (1.4.10)
       railties
       sprockets-rails
-    graphql (1.8.11)
+    graphql (1.8.13)
     hashdiff (0.3.7)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
