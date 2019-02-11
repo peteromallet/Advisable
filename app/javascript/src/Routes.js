@@ -16,6 +16,7 @@ import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
 import EditProposal from "./views/EditProposal";
 import CreateProposal from "./views/CreateProposal";
+import ApplicationFlow from "./views/ApplicationFlow";
 import InterviewRequest from "./views/InterviewRequest";
 import NotFound from "./views/NotFound";
 
@@ -64,8 +65,13 @@ const Routes = () => {
             component={CreateProposal}
           />
           <Route
+            exact
             path="/invites/:applicationId"
             component={JobListing}
+          />
+          <Route
+            path="/invites/:applicationId/apply"
+            component={ApplicationFlow}
           />
           <Route
             path="/applications/:applicationID/proposals/:proposalID"

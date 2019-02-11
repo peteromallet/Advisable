@@ -1,25 +1,26 @@
 import React from "react";
+import { isObject } from "lodash";
 import InputLabel from "../InputLabel";
 import { Choices, Choice, Circle, Label } from "./styles";
 
-const ChoiceList = ({ name, label, value, options, onChange }) => {
+const ChoiceList = ({ name, label, value, options = [], onChange, fullWidth, optionsPerRow }) => {
   return (
     <React.Fragment>
       {label && <InputLabel>{label}</InputLabel>}
-      <Choices>
+      <Choices fullWidth={fullWidth} optionsPerRow={optionsPerRow}>
         {options.map(option => (
-          <Choice key={option.value}>
+          <Choice key={isObject(option) ? option.value : option}>
             <input
               name={name}
               type="radio"
-              id={option.value.toString()}
+              id={isObject(option) ? option.value.toString() : option.toString()}
               onChange={onChange}
-              value={option.value}
-              checked={value === option.value}
+              value={isObject(option) ? option.value : option}
+              checked={value === (isObject(option) ? option.value : option)}
             />
-            <label htmlFor={option.value.toString()}>
+            <label htmlFor={(isObject(option) ? option.value : option).toString()}>
               <Circle />
-              <Label>{option.label}</Label>
+              <Label>{isObject(option) ? option.label : option}</Label>
             </label>
           </Choice>
         ))}
