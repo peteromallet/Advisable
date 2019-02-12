@@ -33,6 +33,7 @@ class OffPlatformProjects::Create < ApplicationService
   end
 
   def associate_skills
+    project.primary_skill = attributes[:skills].first
     attributes[:skills].each do |skill|
       record = Skill.find_by_name(skill)
       record = Airtable::Skill.find_by_name(skill).sync if record.nil?

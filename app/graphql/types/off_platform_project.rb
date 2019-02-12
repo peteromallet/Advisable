@@ -22,8 +22,12 @@ class Types::OffPlatformProject < Types::BaseType
   end
 
   def client_name
-    return nil if object.confidential
+    return "#{object.industry} Company" if object.confidential
     object.client_name
+  end
+
+  def primary_skill
+    object.primary_skill || skills.first
   end
 
   def skills
