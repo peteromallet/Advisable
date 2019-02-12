@@ -15,4 +15,5 @@ class Types::ApplicationType < Types::BaseType
   field :project, Types::ProjectType, null: false
   field :proposal, Types::Booking, null: true
   field :referral_url, String, null: true
+  field :references, [Types::ApplicationReferenceType], null: false
 end

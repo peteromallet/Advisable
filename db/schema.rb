@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_06_113446) do
+ActiveRecord::Schema.define(version: 2019_02_12_081813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "application_references", force: :cascade do |t|
+    t.string "uid"
+    t.bigint "application_id"
+    t.string "project_type"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_id"], name: "index_application_references_on_application_id"
+    t.index ["project_type", "project_id"], name: "index_application_references_on_project_type_and_project_id"
+    t.index ["uid"], name: "index_application_references_on_uid"
+  end
 
   create_table "application_rejection_reasons", force: :cascade do |t|
     t.string "reason"
@@ -306,6 +318,7 @@ ActiveRecord::Schema.define(version: 2019_02_06_113446) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "application_references", "applications"
   add_foreign_key "applications", "application_rejection_reasons", column: "rejection_reason_id"
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
