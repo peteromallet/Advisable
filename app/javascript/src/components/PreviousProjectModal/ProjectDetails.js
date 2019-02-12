@@ -8,16 +8,10 @@ import ProjectValidationStatus from "src/components/ProjectValidationStatus";
 
 const companyName = project => {
   if (project.__typename === "Project") return project.user.companyName;
-  if (project.confidential) return `${project.industsry} Company`;
   return project.clientName;
 };
 
 const title = project => {
-  if (project.skills && project.skills.length > 0) {
-    const skills = project.skills.join(", ");
-    return `${skills} at ${companyName(project)}`;
-  }
-
   return `${project.primarySkill} at ${companyName(project)}`;
 };
 
