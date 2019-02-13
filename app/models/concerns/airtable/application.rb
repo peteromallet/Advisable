@@ -65,7 +65,25 @@ class Airtable::Application < Airtable::Base
   end
 
   push_data do |application|
-    self['Application Status'] = application.status
-    self['Invitation Rejected Reason'] = application.invitation_rejection_reason
+    self['Application Status'] = application.status if application.saved_change_to_status?
+    self['One Line Overview'] = application.introduction if application.saved_change_to_introduction?
+    self['Available To Start'] = application.availability if application.saved_change_to_availability?
+    self['Invitation Rejected Reason'] = application.invitation_rejection_reason if application.saved_change_to_invitation_rejection_reason?
+    self['Answer 1'] = application.questions.try(:first).try(:[], "answer") if application.saved_change_to_questions?
+    self['Answer 2'] = application.questions.try(:second).try(:[], "answer") if application.saved_change_to_questions?
+
+    references_project_ids = application.references.where(project_type: "Project").map do |r|
+      r.project.airtable_id
+    end
+    self['References - Projects'] = references_project_ids
+
+    references_off_platform_project_ids = application.references.where(project_type: "OffPlatformProject").map do |r|
+      r.project.airtable_id
+    end
+    self['References - Off Platform Projects'] = references_off_platform_project_ids
+
+    self['Hourly Rate For Project'] = application.rate if application.saved_change_to_rate?
+    self['Accepts Terms'] = application.accepts_terms ? "Yes" : "No"
+    self['Accepts Fee'] = application.accepts_fee ? "Yes" : "No"
   end
 end

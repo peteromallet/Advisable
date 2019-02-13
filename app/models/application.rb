@@ -1,4 +1,5 @@
 class Application < ApplicationRecord
+  include Airtable::Syncable
   belongs_to :specialist
   belongs_to :project
   has_many :bookings

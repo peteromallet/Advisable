@@ -9,7 +9,7 @@ class Applications::Submit < ApplicationService
   def call
     is_submittable?
     application.status = 'Applied'
-    application.save
+    application.sync_to_airtable if application.save
     application
   end
 

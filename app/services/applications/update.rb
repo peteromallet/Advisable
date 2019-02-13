@@ -12,7 +12,7 @@ class Applications::Update < ApplicationService
     application.assign_attributes(permitted_attributes)
     apply_question_answers
     create_references
-    application.save
+    application.sync_to_airtable if application.save
     application
   end
 
