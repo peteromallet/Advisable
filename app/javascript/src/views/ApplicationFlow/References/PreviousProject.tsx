@@ -73,10 +73,10 @@ const Input = styled.input`
   }
 `
 
-const PreviousProject = ({ project }) => {
+const PreviousProject = ({ project, onChange, checked }) => {
   return (
     <Wrapper>
-      <Input type="checkbox" id={project.id} />
+      <Input type="checkbox" id={project.id} onChange={onChange} checked={checked} />
       <Label htmlFor={project.id}>
         <Checkbox />
         <Title>{title(project)}</Title>

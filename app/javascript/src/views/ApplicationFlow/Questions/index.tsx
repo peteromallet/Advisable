@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Redirect } from "react-router-dom";
-import { Formik, Form, FormikProps } from "formik";
+import { Mutation } from "react-apollo";
+import { Formik, Form } from "formik";
 import {
   Flex,
   Button,
@@ -14,88 +15,127 @@ import {
 } from "../../../components";
 import StepDots from "../../../components/StepDots";
 import { useScreenSize } from "../../../utilities/screenSizes";
+import UPDATE_APPLICATION from "../updateApplication.graphql";
 
 const Questions = ({ application, match, history, steps, currentStep }) => {
   const isMobile = useScreenSize("small");
   const { applicationId } = match.params;
-  const questions = application.questions.map(q => q.question);
-  const number = match.params.number;
-  const question = questions[number - 1];
+  const number = parseInt(match.params.number);
+  const applicationQuestion = application.questions[number - 1];
 
   if (!match.params.number) {
     return <Redirect to={`/invites/${applicationId}/apply/questions/1`} />;
   }
 
   const goBack = () => {
-    let url = `/invites/${applicationId}/apply`
+    let url = `/invites/${applicationId}/apply`;
     history.replace(url);
-  }
+  };
 
-  const handleSubmit = () => {};
+  const handleSubmit = updateApplication => {
+    return async (values, formikBag) => {
+      await updateApplication({
+        variables: {
+          input: {
+            id: applicationId,
+            questions: [{
+              question: applicationQuestion.question,
+              answer: values.answer
+            }]
+          }
+        }
+      });
+
+      formikBag.resetForm()
+      const nextQuestion = application.questions[number] || {}
+      formikBag.setFieldValue('answer', nextQuestion.answer || '')
+
+      if (number === application.questions.length) {
+        history.push(`/invites/${applicationId}/apply/references`);
+      } else {
+        history.push(`/invites/${applicationId}/apply/questions/${number + 1}`);
+      }
+    };
+  };
 
   return (
-    <Formik
-      onSubmit={handleSubmit}
-      initialValues={{
-        questions: application.questions
-      }}
-    >
-      {formik => (
-        <Form>
-          <Padding size="xl">
-            <Padding bottom="s">
-              <Heading level={1}>Application Questions</Heading>
-            </Padding>
-            <Padding bottom="l">
-              <Heading level={6}>
-                Question {number} of {questions.length}
-              </Heading>
-            </Padding>
-            <FieldRow>
-              <TextField
-                multiline
-                name="introduction"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                minRows={8}
-                maxLength={400}
-                label={question}
-                placeholder={question}
-              />
-            </FieldRow>
-          </Padding>
-
-          {!isMobile && (
-            <React.Fragment>
-              <Divider />
+    <Mutation mutation={UPDATE_APPLICATION}>
+      {updateApplication => (
+        <Formik
+          onSubmit={handleSubmit(updateApplication)}
+          initialValues={{ answer: applicationQuestion.answer || '' }}
+        >
+          {formik => (
+            <Form>
               <Padding size="xl">
-                <Button styling="green" size="l">
-                  Next
-                </Button>
+                <Padding bottom="s">
+                  <Heading level={1}>Application Questions</Heading>
+                </Padding>
+                <Padding bottom="l">
+                  <Heading level={6}>
+                    Question {number} of {application.questions.length}
+                  </Heading>
+                </Padding>
+                <FieldRow>
+                  <TextField
+                    multiline
+                    minRows={8}
+                    name="answer"
+                    maxLength={400}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.answer}
+                    onChange={formik.handleChange}
+                    label={applicationQuestion.question}
+                    placeholder={applicationQuestion.question}
+                  />
+                </FieldRow>
               </Padding>
-            </React.Fragment>
-          )}
 
-          {isMobile && (
-            <BottomBar>
-              <Padding bottom="m">
-                <Flex align="center" distribute="center">
-                  <StepDots total={steps.length} current={currentStep + 1} />
-                </Flex>
-              </Padding>
-              <ButtonGroup fullWidth>
-                <Button onClick={goBack} size="l" type="button" styling="outlined">
-                  Back
-                </Button>
-                <Button size="l" type="submit" styling="green">
-                  Next
-                </Button>
-              </ButtonGroup>
-            </BottomBar>
+              {!isMobile && (
+                <React.Fragment>
+                  <Divider />
+                  <Padding size="xl">
+                    <Button
+                      loading={formik.isSubmitting}
+                      styling="green"
+                      size="l"
+                    >
+                      Next
+                    </Button>
+                  </Padding>
+                </React.Fragment>
+              )}
+
+              {isMobile && (
+                <BottomBar>
+                  <Padding bottom="m">
+                    <Flex align="center" distribute="center">
+                      <StepDots
+                        total={steps.length}
+                        current={currentStep + 1}
+                      />
+                    </Flex>
+                  </Padding>
+                  <ButtonGroup fullWidth>
+                    <Button
+                      onClick={goBack}
+                      size="l"
+                      type="button"
+                      styling="outlined"
+                    >
+                      Back
+                    </Button>
+                    <Button size="l" type="submit" styling="green">
+                      Next
+                    </Button>
+                  </ButtonGroup>
+                </BottomBar>
+              )}
+            </Form>
           )}
-        </Form>
+        </Formik>
       )}
-    </Formik>
+    </Mutation>
   );
 };
 

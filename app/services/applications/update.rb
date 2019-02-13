@@ -19,7 +19,9 @@ class Applications::Update < ApplicationService
   private
 
   def permitted_attributes
-    attributes.slice(:introduction, :availability, :rate, :accepts_fee, :accepts_terms)
+    attributes.slice(
+      :introduction, :availability, :rate, :accepts_fee, :accepts_terms
+    )
   end
 
   def specialist
@@ -30,26 +32,30 @@ class Applications::Update < ApplicationService
   # of the question.
   def apply_question_answers
     return unless attributes[:questions]
-    application_questions = application.questions.map { |q| q["question"] }
+    application_questions = application.questions.map { |q| q['question'] }
     attributes[:questions].each do |question|
-      index = application.questions.find_index do |q|
-        q["question"] == question[:question]
-      end
+      index =
+        application.questions.find_index do |q|
+          q['question'] == question[:question]
+        end
 
       raise Service::Error.new(:invalid_question) if index.nil?
-      application.questions[index]["answer"] = question[:answer]
+      application.questions[index]['answer'] = question[:answer]
     end
   end
 
   def reference_projects
-    @reference_projects ||= begin
-      attributes[:references].map do |id|
-        project = specialist.projects.find_by_airtable_id(id)
-        project = specialist.off_platform_projects.find_by_airtable_id(id) if project.blank?
-        raise Service::Error.new(:invalid_reference) if project.blank?
-        project
+    @reference_projects ||=
+      begin
+        attributes[:references].map do |id|
+          project = specialist.projects.find_by_airtable_id(id)
+          if project.blank?
+            project = specialist.off_platform_projects.find_by_airtable_id(id)
+          end
+          raise Service::Error.new(:invalid_reference) if project.blank?
+          project
+        end
       end
-    end
   end
 
   # iterate through the attributes[:references] array and create relationships

@@ -32,7 +32,7 @@
     "prop-types": "^15.6.1",
     "query-string": "^6.2.0",
     "react": "^16.7.0-alpha.0",
-    "react-apollo": "^2.3.2",
+    "react-apollo": "^2.4.1",
     "react-day-picker": "^7.2.4",
     "react-dom": "^16.7.0-alpha.0",
     "react-helmet": "^5.2.0",
@@ -58,6 +58,7 @@
     "yup": "^0.26.6"
   },
   "devDependencies": {
+    "@prettier/plugin-ruby": "^0.4.0",
     "@storybook/addon-actions": "^3.4.11",
     "@storybook/addon-links": "^3.4.11",
     "@storybook/addons": "^3.4.11",
@@ -66,7 +67,7 @@
     "babel-core": "^6.26.3",
     "babel-preset-flow": "^6.23.0",
     "babel-runtime": "^6.26.0",
-    "prettier": "^1.12.1",
+    "prettier": "^1.14.0",
     "webpack-dev-server": "2.11.2"
   },
   "scripts": {

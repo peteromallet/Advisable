@@ -1,0 +1,18 @@
+mutation UpdateApplication($input: UpdateApplicationInput!) {
+  updateApplication(input: $input) {
+    application {
+      id
+      introduction
+      availability
+      questions {
+        question
+        answer
+      }
+      rate
+      references {
+        id
+      }
+    }
+    errors
+  }
+}

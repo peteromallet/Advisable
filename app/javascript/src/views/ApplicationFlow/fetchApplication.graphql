@@ -2,11 +2,26 @@ query Application($id: ID!) {
   application(id: $id) {
     id
     status
+    rate
+    acceptsFee
+    acceptsTerms
     airtableId
     introduction
     availability
     questions {
+      answer
       question
+    }
+    references {
+      id
+      project {
+        ... on Project {
+          airtableId
+        }
+        ... on OffPlatformProject {
+          airtableId
+        }
+      }
     }
     specialist {
       airtableId

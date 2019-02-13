@@ -36,7 +36,7 @@ class Mutations::UpdateApplication < Mutations::BaseMutation
 
   def attributes(args)
     args.except(:id, :questions).merge({
-      questions: args[:questions].map do |question|
+      questions: (args[:questions] || []).map do |question|
         {
           question: question.question,
           answer: question.answer

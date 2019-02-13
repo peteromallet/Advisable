@@ -1,8 +1,10 @@
 import * as React from "react";
+import { Mutation, compose } from "react-apollo";
 import { Heading, Text, Button, Padding } from "../../../components";
 import AddPreviousProjectModal from "../../../components/AddPreviousProjectModal";
 import PreviousProjects from "./PreviousProjects";
 import FETCH_APPLICATION from "../fetchApplication.graphql";
+import UPDATE_APPLICATION from "../updateApplication.graphql";
 
 interface Values {
   rate: string;
@@ -10,55 +12,77 @@ interface Values {
   acceptsTerms: boolean;
 }
 
-const References = ({ application, match, steps, currentStep }) => {
+const References = ({ application, match, history }) => {
   const { applicationId } = match.params;
   const [modal, setModal] = React.useState(false);
   const { previousProjects } = application.specialist;
-  console.log(previousProjects);
+
+  const handleSubmit = updateApplication => {
+    return async values => {
+      await updateApplication({
+        variables: {
+          input: {
+            ...values,
+            id: applicationId
+          }
+        }
+      });
+
+      history.push(`/invites/${applicationId}/apply/terms`)
+    };
+  };
 
   return (
-    <React.Fragment>
-      <AddPreviousProjectModal
-        isOpen={modal}
-        onClose={() => setModal(false)}
-        specialistId={application.specialist.airtableId}
-        mutationUpdate={(proxy, response) => {
-          const data = proxy.readQuery({
-            query: FETCH_APPLICATION,
-            variables: { id: applicationId }
-          });
-          const project =
-            response.data.createOffPlatformProject.previousProject;
-          data.application.specialist.previousProjects.push(project);
-          proxy.writeQuery({ query: FETCH_APPLICATION, data });
-        }}
-      />
+    <Mutation mutation={UPDATE_APPLICATION}>
+      {updateApplication => (
+        <React.Fragment>
+          <AddPreviousProjectModal
+            isOpen={modal}
+            onClose={() => setModal(false)}
+            specialistId={application.specialist.airtableId}
+            mutationUpdate={(proxy, response) => {
+              const data = proxy.readQuery({
+                query: FETCH_APPLICATION,
+                variables: { id: applicationId }
+              });
+              const project =
+                response.data.createOffPlatformProject.previousProject;
+              data.application.specialist.previousProjects.push(project);
+              proxy.writeQuery({ query: FETCH_APPLICATION, data });
+            }}
+          />
 
-      {previousProjects.length > 0 ? (
-        <PreviousProjects
-          previousProjects={previousProjects}
-          onAdd={() => setModal(true)}
-        />
-      ) : (
-        <Padding size="xl">
-          <Padding bottom="s">
-            <Heading level={1}>References</Heading>
-          </Padding>
-          <Padding bottom="l">
-            <Text>
-              We require references from all freelancers prior to their first
-              project on Advisable. We do this to ensure that their
-              self-reported experience is verified by a third party. Only once
-              verified will these references be shown on your profile and
-              visible to clients.
-            </Text>
-          </Padding>
-          <Button size="l" styling="green" onClick={() => setModal(true)}>
-            Add a previous project
-          </Button>
-        </Padding>
+          {previousProjects.length > 0 ? (
+            <PreviousProjects
+              onAdd={() => setModal(true)}
+              initialValues={{
+                references: application.references.map(r => r.project.airtableId)
+              }}
+              previousProjects={previousProjects}
+              onSubmit={handleSubmit(updateApplication)}
+            />
+          ) : (
+            <Padding size="xl">
+              <Padding bottom="s">
+                <Heading level={1}>References</Heading>
+              </Padding>
+              <Padding bottom="l">
+                <Text>
+                  We require references from all freelancers prior to their
+                  first project on Advisable. We do this to ensure that their
+                  self-reported experience is verified by a third party. Only
+                  once verified will these references be shown on your profile
+                  and visible to clients.
+                </Text>
+              </Padding>
+              <Button size="l" styling="green" onClick={() => setModal(true)}>
+                Add a previous project
+              </Button>
+            </Padding>
+          )}
+        </React.Fragment>
       )}
-    </React.Fragment>
+    </Mutation>
   );
 };
 

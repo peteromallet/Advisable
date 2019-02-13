@@ -1,15 +1,17 @@
 import * as React from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import { useScreenSize } from "../../../utilities/screenSizes";
 import { Text, Heading, Padding, Button, Divider } from "../../../components";
 import PreviousProject from "./PreviousProject";
 
-const PreviousProjects = ({ previousProjects, onAdd }) => {
+const PreviousProjects = ({ previousProjects, initialValues, onAdd, onSubmit }) => {
   const isMobile = useScreenSize("small");
-  const handleSubmit = () => {};
 
   return (
-    <Formik initialValues={{}} onSubmit={handleSubmit}>
+    <Formik
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+    >
       {formik => (
         <Form>
           <Padding size="xl">
@@ -26,9 +28,30 @@ const PreviousProjects = ({ previousProjects, onAdd }) => {
             <Padding bottom="xs">
               <Heading level={6}>Previous Projects</Heading>
             </Padding>
-            {previousProjects.map(p => (
-              <PreviousProject key={p.project.id} project={p.project} />
-            ))}
+            <Field name="references">
+              {({ field }) =>
+                previousProjects.map(p => (
+                  <PreviousProject
+                    key={p.project.id}
+                    project={p.project}
+                    checked={field.value.includes(p.project.id)}
+                    onChange={e => {
+                      if (field.value.includes(p.project.id)) {
+                        formik.setFieldValue(
+                          "references",
+                          field.value.filter(id => id !== p.project.id)
+                        );
+                      } else {
+                        formik.setFieldValue(
+                          "references",
+                          field.value.concat(p.project.id)
+                        );
+                      }
+                    }}
+                  />
+                ))
+              }
+            </Field>
             <Padding top="m">
               <Button size="l" type="button" styling="outlined" onClick={onAdd}>
                 Add a previous project
@@ -40,7 +63,7 @@ const PreviousProjects = ({ previousProjects, onAdd }) => {
             <React.Fragment>
               <Divider />
               <Padding size="xl">
-                <Button styling="green" size="l">
+                <Button loading={formik.isSubmitting} styling="green" size="l">
                   Next
                 </Button>
               </Padding>

@@ -5,7 +5,9 @@ import InputLabel from "src/components/InputLabel";
 import InputDescription from "src/components/InputDescription";
 import { Wrapper, Error, Input, Box } from './styles';
 
-const Checkbox = ({ id, error, name, label, onChange, onBlur, value, description, ...props }) => {
+const Checkbox = ({ error, name, label, onChange, onBlur, value, description, ...props }) => {
+  const [id, _] = React.useState(props.id || uniqueId("Checkbox"));
+
   return (
     <Wrapper {...extractSpacingProps(props)}>
       <Input
@@ -24,10 +26,6 @@ const Checkbox = ({ id, error, name, label, onChange, onBlur, value, description
       {error && <Error>{error}</Error>}
     </Wrapper>
   )
-}
-
-Checkbox.defaultProps = {
-  id: uniqueId('Checkbox')
 }
 
 export default Checkbox

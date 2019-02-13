@@ -1,4 +1,5 @@
 import * as React from "react";
+import { compose, graphql } from "react-apollo";
 import { Formik, Form, FormikProps } from "formik";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import {
@@ -16,25 +17,54 @@ import {
 import StepDots from "../../../components/StepDots";
 import { currencySymbol } from "../../../utilities/currency";
 import { useScreenSize } from "../../../utilities/screenSizes";
+import SUBMIT_APPLICATION from "../submitApplication.graphql";
+import UPDATE_APPLICATION from "../updateApplication.graphql";
 
 interface Values {
-  rate: string;
+  rate: number;
   acceptsFee: boolean;
   acceptsTerms: boolean;
 }
 
-const Terms = ({ application, steps, currentStep }) => {
+const Terms = ({
+  match,
+  application,
+  steps,
+  currentStep,
+  updateApplication,
+  submitApplication,
+  ...props
+}) => {
   const isMobile = useScreenSize("small");
-  const handleSubmit = () => {};
+  let applicationId = match.params.applicationId;
+
+  const handleSubmit = async values => {
+    await updateApplication({
+      variables: {
+        input: {
+          ...values,
+          id: applicationId
+        }
+      }
+    });
+
+    await submitApplication({
+      variables: {
+        input: {
+          id: applicationId
+        }
+      }
+    });
+  };
 
   return (
     <Formik
-      initialValues={{
-        rate: "",
-        acceptsFee: false,
-        acceptsTerms: false
-      }}
       onSubmit={handleSubmit}
+      initialValues={{
+        rate: parseFloat(application.rate),
+        acceptsFee: application.acceptsFee,
+        acceptsTerms: application.acceptsTerms
+      }}
     >
       {(formik: FormikProps<Values>) => (
         <Form>
@@ -46,11 +76,16 @@ const Terms = ({ application, steps, currentStep }) => {
               <TextField
                 name="rate"
                 value={formik.values.rate}
-                onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                onChange={({ target }) => {
+                  const val = Number(target.value.replace(/[^0-9\.-]+/g, ""));
+                  formik.setFieldValue("rate", val);
+                }}
                 error={formik.touched.rate && formik.errors.rate}
                 label="Including Advisable's fee, what's your estimated hourly rate for projects like this?"
-                placeholder={`${currencySymbol(application.project.currency)}0.00`}
+                placeholder={`${currencySymbol(
+                  application.project.currency
+                )}0.00`}
                 mask={createNumberMask({
                   prefix: currencySymbol(application.project.currency),
                   allowDecimal: true
@@ -71,7 +106,9 @@ const Terms = ({ application, steps, currentStep }) => {
                 name="acceptsTerms"
                 value={formik.values.acceptsTerms}
                 onChange={formik.handleChange}
-                error={formik.touched.acceptsTerms && formik.touched.acceptsTerms}
+                error={
+                  formik.touched.acceptsTerms && formik.touched.acceptsTerms
+                }
                 label="I agree with Advisable's freelancer agreement."
               />
             </FieldRow>
@@ -81,8 +118,8 @@ const Terms = ({ application, steps, currentStep }) => {
             <React.Fragment>
               <Divider />
               <Padding size="xl">
-                <Button styling="green" size="l">
-                  Next
+                <Button loading={formik.isSubmitting} styling="green" size="l">
+                  Submit Application
                 </Button>
               </Padding>
             </React.Fragment>
@@ -97,7 +134,7 @@ const Terms = ({ application, steps, currentStep }) => {
               </Padding>
               <ButtonGroup fullWidth>
                 <Button size="l" type="submit" styling="green">
-                  Next
+                  Submit Application
                 </Button>
               </ButtonGroup>
             </BottomBar>
@@ -108,4 +145,9 @@ const Terms = ({ application, steps, currentStep }) => {
   );
 };
 
-export default Terms;
+const withMutations = compose(
+  graphql(UPDATE_APPLICATION, { name: "updateApplication" }),
+  graphql(SUBMIT_APPLICATION, { name: "submitApplication" })
+)(Terms);
+
+export default withMutations;

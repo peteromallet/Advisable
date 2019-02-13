@@ -16,4 +16,6 @@ class Types::ApplicationType < Types::BaseType
   field :proposal, Types::Booking, null: true
   field :referral_url, String, null: true
   field :references, [Types::ApplicationReferenceType], null: false
+  field :accepts_fee, Boolean, null: true
+  field :accepts_terms, Boolean, null: true
 end

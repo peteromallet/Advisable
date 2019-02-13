@@ -3,6 +3,7 @@ import { Query } from "react-apollo";
 import NotFound from "../NotFound";
 import { Header, Loading } from "../../components";
 import ApplicationFlow from "./ApplicationFlow";
+import ApplicationSent from "./ApplicationSent";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 
 export default ({ match }) => {
@@ -16,13 +17,13 @@ export default ({ match }) => {
         {query => {
           if (query.loading) return <Loading />;
           if (!query.data.application) return <NotFound />;
+          let { application } = query.data;
 
-          return (
-            <ApplicationFlow
-              match={match}
-              application={query.data.application}
-            />
-          );
+          if (application.status === "Applied") {
+            return <ApplicationSent application={application} />;
+          }
+
+          return <ApplicationFlow match={match} application={application} />;
         }}
       </Query>
     </React.Fragment>
