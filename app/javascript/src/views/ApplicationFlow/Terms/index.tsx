@@ -71,7 +71,7 @@ const Terms = ({
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
       initialValues={{
-        rate: parseFloat(application.rate || ""),
+        rate: parseFloat(application.rate) || "",
         acceptsFee: application.acceptsFee,
         acceptsTerms: application.acceptsTerms
       }}
