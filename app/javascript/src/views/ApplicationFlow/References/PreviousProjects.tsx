@@ -1,20 +1,35 @@
 import * as React from "react";
 import { Formik, Form, Field } from "formik";
 import { useScreenSize } from "../../../utilities/screenSizes";
-import { Text, Heading, Padding, Button, Divider } from "../../../components";
+import {
+  Text,
+  Flex,
+  Heading,
+  Padding,
+  Button,
+  Divider,
+  BottomBar,
+  ButtonGroup
+} from "../../../components";
+import StepDots from "../../../components/StepDots";
 import PreviousProject from "./PreviousProject";
 
-const PreviousProjects = ({ previousProjects, initialValues, onAdd, onSubmit }) => {
+const PreviousProjects = ({
+  steps,
+  currentStep,
+  previousProjects,
+  initialValues,
+  onAdd,
+  onBack,
+  onSubmit
+}) => {
   const isMobile = useScreenSize("small");
 
   return (
-    <Formik
-      onSubmit={onSubmit}
-      initialValues={initialValues}
-    >
+    <Formik onSubmit={onSubmit} initialValues={initialValues}>
       {formik => (
         <Form>
-          <Padding size="xl">
+          <Padding size={isMobile ? "l" : "xl"}>
             <Padding bottom="s">
               <Heading level={1}>References</Heading>
             </Padding>
@@ -68,6 +83,34 @@ const PreviousProjects = ({ previousProjects, initialValues, onAdd, onSubmit }) 
                 </Button>
               </Padding>
             </React.Fragment>
+          )}
+
+          {isMobile && (
+            <BottomBar>
+              <Padding bottom="m">
+                <Flex align="center" distribute="center">
+                  <StepDots total={steps.length} current={currentStep + 1} />
+                </Flex>
+              </Padding>
+              <ButtonGroup fullWidth>
+                <Button
+                  size="l"
+                  type="button"
+                  onClick={onBack}
+                  styling="outlined"
+                >
+                  Back
+                </Button>
+                <Button
+                  size="l"
+                  type="submit"
+                  styling="green"
+                  loading={formik.isSubmitting}
+                >
+                  Next
+                </Button>
+              </ButtonGroup>
+            </BottomBar>
           )}
         </Form>
       )}

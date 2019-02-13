@@ -11,7 +11,6 @@ export default createGlobalStyle`
     /* text-rendering: optimizeLegibility */
   }
 
-
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -77,6 +76,7 @@ export default createGlobalStyle`
   }
 
   body {
-    background-color: #E9ECF6;
+    background-color: ${props => (props.lightBackground ? "#F6F8FF" : "#EFF2FD")};
   }
+
 `;

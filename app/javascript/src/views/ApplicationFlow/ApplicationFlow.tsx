@@ -79,6 +79,10 @@ const ApplicationFlow = ({ application, match }: Props) => {
     }
   ];
 
+  // On mobile we dont want to show the main content inside of a card and so
+  // we just use a div.
+  let ContentContainer = isMobile ? "div" : Card;
+
   return (
     <Layout>
       {!isMobile && (
@@ -120,7 +124,7 @@ const ApplicationFlow = ({ application, match }: Props) => {
         </Layout.Sidebar>
       )}
       <Layout.Main>
-        <Card>
+        <ContentContainer>
           <Switch>
             {STEPS.map((step, i) => {
               const Component = step.component;
@@ -154,7 +158,7 @@ const ApplicationFlow = ({ application, match }: Props) => {
               );
             })}
           </Switch>
-        </Card>
+        </ContentContainer>
       </Layout.Main>
     </Layout>
   );

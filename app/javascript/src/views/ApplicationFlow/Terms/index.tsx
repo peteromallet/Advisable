@@ -28,6 +28,7 @@ interface Values {
 
 const Terms = ({
   match,
+  history,
   application,
   steps,
   currentStep,
@@ -55,6 +56,14 @@ const Terms = ({
         }
       }
     });
+
+    // The mutations above will update the applciation status and cause the page
+    // to re-render so there is no need for us to redirect here.
+  };
+
+  const goBack = () => {
+    let url = `/invites/${applicationId}/apply/references`;
+    history.push(url);
   };
 
   return (
@@ -68,7 +77,7 @@ const Terms = ({
     >
       {(formik: FormikProps<Values>) => (
         <Form>
-          <Padding size="xl">
+          <Padding size={isMobile ? "l" : "xl"}>
             <Padding bottom="l">
               <Heading level={1}>Payment Terms</Heading>
             </Padding>
@@ -133,8 +142,21 @@ const Terms = ({
                 </Flex>
               </Padding>
               <ButtonGroup fullWidth>
-                <Button size="l" type="submit" styling="green">
-                  Submit Application
+                <Button
+                  size="l"
+                  type="button"
+                  onClick={goBack}
+                  styling="outlined"
+                >
+                  Back
+                </Button>
+                <Button
+                  loading={formik.isSubmitting}
+                  size="l"
+                  type="submit"
+                  styling="green"
+                >
+                  Submit
                 </Button>
               </ButtonGroup>
             </BottomBar>

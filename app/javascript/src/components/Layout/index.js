@@ -10,8 +10,7 @@ let Layout = styled.div`
   padding-bottom: 40px;
 
   ${breakpoints.small(css`
-    padding-bottom: 0;
-    padding-top: 0;
+    padding: 0;
   `)};
 `;
 

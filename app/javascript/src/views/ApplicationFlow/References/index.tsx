@@ -12,7 +12,7 @@ interface Values {
   acceptsTerms: boolean;
 }
 
-const References = ({ application, match, history }) => {
+const References = ({ application, match, history, steps, currentStep }) => {
   const { applicationId } = match.params;
   const [modal, setModal] = React.useState(false);
   const { previousProjects } = application.specialist;
@@ -28,8 +28,20 @@ const References = ({ application, match, history }) => {
         }
       });
 
-      history.push(`/invites/${applicationId}/apply/terms`)
+      history.push(`/invites/${applicationId}/apply/terms`);
     };
+  };
+
+  const goBack = () => {
+    let url: string;
+    let questionsCount = application.questions.length;
+    if (questionsCount > 0) {
+      url = `/invites/${applicationId}/apply/questions/${questionsCount}`;
+    } else {
+      url = `/invites/${applicationId}/apply`;
+    }
+
+    history.push(url);
   };
 
   return (
@@ -54,9 +66,14 @@ const References = ({ application, match, history }) => {
 
           {previousProjects.length > 0 ? (
             <PreviousProjects
+              steps={steps}
+              currentStep={currentStep}
+              onBack={goBack}
               onAdd={() => setModal(true)}
               initialValues={{
-                references: application.references.map(r => r.project.airtableId)
+                references: application.references.map(
+                  r => r.project.airtableId
+                )
               }}
               previousProjects={previousProjects}
               onSubmit={handleSubmit(updateApplication)}

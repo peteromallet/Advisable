@@ -50,18 +50,26 @@ const TextField = ({
     Component = InputMask;
   }
 
-  const lineHeight = 18;
-  const handleChange = e => {
-    if (multiline && props.autoHeight) {
-      const previousRows = e.target.rows;
-      e.target.rows = props.minRows;
-      const currentRows = Math.floor((e.target.scrollHeight - 20) / lineHeight);
-      if (currentRows === previousRows) {
-        e.target.rows = currentRows;
-      }
-      setRows(currentRows);
+  const LINE_HEIGHT = 18;
+  const calculateRows = () => {
+    if (!multiline || !props.autoHeight) return;
+    const el = input.current;
+    const previousRows = el.rows;
+    el.rows = props.minRows;
+    let baseHeight = (el.scrollHeight - 20) + (maxLength ? 30 : 0)
+    let currentRows = Math.floor(baseHeight / LINE_HEIGHT);
+
+    if (currentRows === previousRows) {
+      el.rows = currentRows;
     }
 
+    setRows(currentRows);
+  };
+
+  React.useLayoutEffect(calculateRows, [input]);
+
+  const handleChange = e => {
+    calculateRows()
     onChange(e);
   };
 

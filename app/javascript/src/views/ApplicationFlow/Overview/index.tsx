@@ -53,13 +53,14 @@ const Overview = ({ application, history, steps, currentStep }) => {
         >
           {(formik: FormikProps<Values>) => (
             <Form>
-              <Padding size="xl">
+              <Padding size={isMobile ? "l" : "xl"}>
                 <Padding bottom="l">
                   <Heading level={1}>Overview</Heading>
                 </Padding>
                 <FieldRow>
                   <TextField
                     multiline
+                    autoHeight
                     name="introduction"
                     value={formik.values.introduction}
                     onChange={formik.handleChange}

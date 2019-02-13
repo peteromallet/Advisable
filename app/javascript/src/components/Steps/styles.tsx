@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { rgba } from "polished";
+import tick from "./tick.svg";
 
 export const Steps = styled.div``;
 
@@ -40,6 +41,7 @@ export const Step = styled.div`
     &:hover {
       color: #5B637E;
       ${Number} {
+        color: white;
         background: #C4C9DB; 
       }
     }
@@ -63,7 +65,9 @@ export const Step = styled.div`
       color: ${rgba("#173FCD", 0.5)};
 
       ${Number} {
-        background: ${rgba("#173FCD", 0.5)};
+        color: transparent;
+        background: url(${tick}) no-repeat center;
+        background-color: ${rgba("#173FCD", 0.5)};
       }
     }
   `};
