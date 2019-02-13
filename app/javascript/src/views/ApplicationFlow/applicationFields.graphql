@@ -1,0 +1,62 @@
+fragment ApplicationFields on Application {
+  id
+  status
+  rate
+  acceptsFee
+  acceptsTerms
+  airtableId
+  introduction
+  availability
+  questions {
+    answer
+    question
+  }
+  references {
+    id
+    project {
+      ... on Project {
+        airtableId
+      }
+      ... on OffPlatformProject {
+        airtableId
+      }
+    }
+  }
+  specialist {
+    airtableId
+    previousProjects {
+      project {
+        ... on Project {
+          id
+          airtableId
+          description
+          primarySkill
+          user {
+            companyName
+          }
+        }
+        ... on OffPlatformProject {
+          id
+          airtableId
+          description
+          primarySkill
+          clientName
+          confidential
+          skills
+          industry
+          validationStatus
+        }
+      }
+    }
+  }
+  project {
+    id
+    currency
+    airtableId
+    primarySkill
+    companyDescription
+    user {
+      companyName
+    }
+  }
+}

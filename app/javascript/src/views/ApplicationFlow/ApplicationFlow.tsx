@@ -1,5 +1,6 @@
 import * as React from "react";
 import Sticky from "react-stickynode";
+import { isEmpty, filter } from "lodash";
 import { Switch, Route, match, Redirect } from "react-router-dom";
 import Back from "../../components/Back";
 import Steps from "../../components/Steps";
@@ -19,6 +20,11 @@ interface Props {
         question: string;
       }
     ];
+    references: [
+      {
+        id: string;
+      }
+    ];
     project: {
       primarySkill: string;
       companyDescription: string;
@@ -26,6 +32,9 @@ interface Props {
         companyName: string;
       };
     };
+    rate: string;
+    acceptsFee: boolean;
+    acceptsTerms: boolean;
   };
   match: match;
 }
@@ -41,29 +50,32 @@ const ApplicationFlow = ({ application, match }: Props) => {
       to: "/",
       path: "/",
       component: Overview,
-      isComplete: true
-      // isComplete: Boolean(application.introduction && application.availability)
+      isComplete: Boolean(application.introduction && application.availability)
     },
     {
       name: "Application Questions",
       to: "/questions",
       path: "/questions/:number?",
       component: Questions,
-      isComplete: true
+      isComplete: isEmpty(
+        filter(application.questions, q => {
+          return isEmpty(q.answer);
+        })
+      )
     },
     {
       name: "References",
       to: "/references",
       path: "/references",
       component: References,
-      isComplete: true
+      isComplete: !isEmpty(application.references)
     },
     {
       name: "Payment terms",
       to: "/terms",
       path: "/terms",
       component: Terms,
-      isComplete: true
+      isComplete: false
     }
   ];
 
