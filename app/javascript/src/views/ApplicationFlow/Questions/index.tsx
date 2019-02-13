@@ -16,6 +16,7 @@ import {
 import StepDots from "../../../components/StepDots";
 import { useScreenSize } from "../../../utilities/screenSizes";
 import UPDATE_APPLICATION from "../updateApplication.graphql";
+import validationSchema from "./validationSchema";
 
 const Questions = ({ application, match, history, steps, currentStep }) => {
   const isMobile = useScreenSize("small");
@@ -27,7 +28,7 @@ const Questions = ({ application, match, history, steps, currentStep }) => {
     return <Redirect to={`/invites/${applicationId}/apply/questions/1`} />;
   }
 
-  const goBack = (formik) => {
+  const goBack = formik => {
     let url: string;
     if (number > 1) {
       formik.resetForm();
@@ -72,6 +73,7 @@ const Questions = ({ application, match, history, steps, currentStep }) => {
     <Mutation mutation={UPDATE_APPLICATION}>
       {updateApplication => (
         <Formik
+          validationSchema={validationSchema}
           onSubmit={handleSubmit(updateApplication)}
           initialValues={{ answer: applicationQuestion.answer || "" }}
         >
@@ -98,6 +100,7 @@ const Questions = ({ application, match, history, steps, currentStep }) => {
                     onChange={formik.handleChange}
                     label={applicationQuestion.question}
                     placeholder={applicationQuestion.question}
+                    error={formik.touched.answer && formik.errors.answer}
                   />
                 </FieldRow>
               </Padding>

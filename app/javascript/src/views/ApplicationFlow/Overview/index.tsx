@@ -16,6 +16,7 @@ import {
 import StepDots from "../../../components/StepDots";
 import { useScreenSize } from "../../../utilities/screenSizes";
 import UPDATE_APPLICATION from "../updateApplication.graphql";
+import validationSchema from "./validationSchema";
 
 interface Values {
   introduction: string;
@@ -45,10 +46,11 @@ const Overview = ({ application, history, steps, currentStep }) => {
     <Mutation mutation={UPDATE_APPLICATION}>
       {updateApplication => (
         <Formik
+          validationSchema={validationSchema}
           onSubmit={handleSubmit(updateApplication)}
           initialValues={{
-            introduction: application.introduction,
-            availability: application.availability
+            introduction: application.introduction || "",
+            availability: application.availability || ""
           }}
         >
           {(formik: FormikProps<Values>) => (

@@ -19,6 +19,7 @@ import { currencySymbol } from "../../../utilities/currency";
 import { useScreenSize } from "../../../utilities/screenSizes";
 import SUBMIT_APPLICATION from "../submitApplication.graphql";
 import UPDATE_APPLICATION from "../updateApplication.graphql";
+import validationSchema from './validationSchema';
 
 interface Values {
   rate: number;
@@ -34,7 +35,6 @@ const Terms = ({
   currentStep,
   updateApplication,
   submitApplication,
-  ...props
 }) => {
   const isMobile = useScreenSize("small");
   let applicationId = match.params.applicationId;
@@ -69,6 +69,7 @@ const Terms = ({
   return (
     <Formik
       onSubmit={handleSubmit}
+      validationSchema={validationSchema}
       initialValues={{
         rate: parseFloat(application.rate),
         acceptsFee: application.acceptsFee,
@@ -106,7 +107,7 @@ const Terms = ({
                 name="acceptsFee"
                 value={formik.values.acceptsFee}
                 onChange={formik.handleChange}
-                error={formik.touched.acceptsFee && formik.touched.acceptsFee}
+                error={formik.touched.acceptsFee && formik.errors.acceptsFee}
                 label="I agree that If Advisable connects me to a client that I successfully contract with, 20% of my fees are payable to Advisable and all payments go through Advisable. "
               />
             </FieldRow>
@@ -116,7 +117,7 @@ const Terms = ({
                 value={formik.values.acceptsTerms}
                 onChange={formik.handleChange}
                 error={
-                  formik.touched.acceptsTerms && formik.touched.acceptsTerms
+                  formik.touched.acceptsTerms && formik.errors.acceptsTerms
                 }
                 label="I agree with Advisable's freelancer agreement."
               />
