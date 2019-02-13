@@ -13,9 +13,14 @@ import { useScreenSize } from "src/utilities/screenSizes";
 import ProjectAttributes from "./ProjectAttributes";
 import Actions from "./Actions";
 
-let JobListing = ({ application }) => {
+let JobListing = ({ application, history }) => {
   const isMobile = useScreenSize("small");
   const { project } = application;
+
+  const gotoApply =() => {
+    let url = `/invites/${application.airtableId}/apply`
+    history.push(url)
+  }
 
   return (
     <Layout>
@@ -36,7 +41,7 @@ let JobListing = ({ application }) => {
             <Padding bottom="xl">
               <ProjectAttributes project={project} />
             </Padding>
-            <Actions stack={true} application={application} />
+            <Actions stack={true} onApply={gotoApply} application={application} />
           </Sticky>
         </Layout.Sidebar>
       )}

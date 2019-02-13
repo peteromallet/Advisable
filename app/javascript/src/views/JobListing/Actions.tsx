@@ -3,7 +3,7 @@ import ShareModal from "./ShareModal";
 import RejectModal from "./RejectModal";
 import { ButtonGroup, Button } from "../../components";
 
-const Actions = ({ application, stack, fullWidth }) => {
+const Actions = ({ onApply, application, stack, fullWidth }) => {
   const [rejectModal, setRejectModal] = React.useState(false);
   const [shareModal, setShareModal] = React.useState(false);
 
@@ -19,7 +19,7 @@ const Actions = ({ application, stack, fullWidth }) => {
           onReject={() => setShareModal(true)}
         />
         <ButtonGroup stack={stack} fullWidth={fullWidth}>
-          <Button styling="green" size="l" block>
+          <Button onClick={onApply} styling="green" size="l" block>
             Apply
           </Button>
           <Button
