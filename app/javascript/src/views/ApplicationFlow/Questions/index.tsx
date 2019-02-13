@@ -22,7 +22,7 @@ const Questions = ({ application, match, history, steps, currentStep }) => {
   const isMobile = useScreenSize("small");
   const { applicationId } = match.params;
   const number = parseInt(match.params.number);
-  const applicationQuestion = application.questions[number - 1];
+  const applicationQuestion = application.questions[number - 1] || {};
 
   if (!match.params.number) {
     return <Redirect to={`/invites/${applicationId}/apply/questions/1`} />;
