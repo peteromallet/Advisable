@@ -3,20 +3,15 @@ import { Redirect } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { Formik, Form } from "formik";
 import {
-  Flex,
-  Button,
   Heading,
   Padding,
-  Divider,
   FieldRow,
   TextField,
-  BottomBar,
-  ButtonGroup
 } from "../../../components";
-import StepDots from "../../../components/StepDots";
 import { useScreenSize } from "../../../utilities/screenSizes";
 import UPDATE_APPLICATION from "../updateApplication.graphql";
 import validationSchema from "./validationSchema";
+import Actions from "../Actions";
 
 const Questions = ({ application, match, history, steps, currentStep }) => {
   const isMobile = useScreenSize("small");
@@ -105,51 +100,13 @@ const Questions = ({ application, match, history, steps, currentStep }) => {
                 </FieldRow>
               </Padding>
 
-              {!isMobile && (
-                <React.Fragment>
-                  <Divider />
-                  <Padding size="xl">
-                    <Button
-                      loading={formik.isSubmitting}
-                      styling="green"
-                      size="l"
-                    >
-                      Next
-                    </Button>
-                  </Padding>
-                </React.Fragment>
-              )}
-
-              {isMobile && (
-                <BottomBar>
-                  <Padding bottom="m">
-                    <Flex align="center" distribute="center">
-                      <StepDots
-                        total={steps.length}
-                        current={currentStep + 1}
-                      />
-                    </Flex>
-                  </Padding>
-                  <ButtonGroup fullWidth>
-                    <Button
-                      onClick={() => goBack(formik)}
-                      size="l"
-                      type="button"
-                      styling="outlined"
-                    >
-                      Back
-                    </Button>
-                    <Button
-                      size="l"
-                      type="submit"
-                      styling="green"
-                      loading={formik.isSubmitting}
-                    >
-                      Next
-                    </Button>
-                  </ButtonGroup>
-                </BottomBar>
-              )}
+              <Actions
+                steps={steps}
+                currentStep={currentStep}
+                application={application}
+                onBack={() => goBack(formik)}
+                isSubmitting={formik.isSubmitting}
+              />
             </Form>
           )}
         </Formik>

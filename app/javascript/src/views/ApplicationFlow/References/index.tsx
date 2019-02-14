@@ -67,6 +67,7 @@ const References = ({ application, match, history, steps, currentStep }) => {
           {previousProjects.length > 0 ? (
             <PreviousProjects
               steps={steps}
+              application={application}
               currentStep={currentStep}
               onBack={goBack}
               onAdd={() => setModal(true)}

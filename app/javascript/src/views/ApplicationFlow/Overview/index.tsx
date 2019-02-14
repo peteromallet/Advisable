@@ -2,21 +2,16 @@ import * as React from "react";
 import { Mutation } from "react-apollo";
 import { Formik, Form, FormikProps } from "formik";
 import {
-  Flex,
-  Button,
   Heading,
   Padding,
-  Divider,
   FieldRow,
   TextField,
-  BottomBar,
-  ChoiceList,
-  ButtonGroup
+  ChoiceList
 } from "../../../components";
-import StepDots from "../../../components/StepDots";
 import { useScreenSize } from "../../../utilities/screenSizes";
 import UPDATE_APPLICATION from "../updateApplication.graphql";
 import validationSchema from "./validationSchema";
+import Actions from "../Actions";
 
 interface Values {
   introduction: string;
@@ -38,7 +33,7 @@ const Overview = ({ application, history, steps, currentStep }) => {
         }
       });
 
-      history.push(`/invites/${airtableId}/apply/questions`)
+      history.push(`/invites/${airtableId}/apply/questions`);
     };
   };
 
@@ -96,43 +91,12 @@ const Overview = ({ application, history, steps, currentStep }) => {
                 </FieldRow>
               </Padding>
 
-              {!isMobile && (
-                <React.Fragment>
-                  <Divider />
-                  <Padding size="xl">
-                    <Button
-                      loading={formik.isSubmitting}
-                      styling="green"
-                      size="l"
-                    >
-                      Next
-                    </Button>
-                  </Padding>
-                </React.Fragment>
-              )}
-
-              {isMobile && (
-                <BottomBar>
-                  <Padding bottom="m">
-                    <Flex align="center" distribute="center">
-                      <StepDots
-                        total={steps.length}
-                        current={currentStep + 1}
-                      />
-                    </Flex>
-                  </Padding>
-                  <ButtonGroup fullWidth>
-                    <Button
-                      size="l"
-                      type="submit"
-                      styling="green"
-                      loading={formik.isSubmitting}
-                    >
-                      Next
-                    </Button>
-                  </ButtonGroup>
-                </BottomBar>
-              )}
+              <Actions
+                steps={steps}
+                currentStep={currentStep}
+                application={application}
+                isSubmitting={formik.isSubmitting}
+              />
             </Form>
           )}
         </Formik>

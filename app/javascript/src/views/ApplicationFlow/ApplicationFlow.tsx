@@ -75,7 +75,9 @@ const ApplicationFlow = ({ application, match }: Props) => {
       to: "/terms",
       path: "/terms",
       component: Terms,
-      isComplete: false
+      isComplete: Boolean(
+        application.rate && application.acceptsFee && application.acceptsTerms
+      )
     }
   ];
 

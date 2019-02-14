@@ -1,13 +1,24 @@
 import * as React from "react";
 import ShareModal from "./ShareModal";
 import RejectModal from "./RejectModal";
-import { ButtonGroup, Button } from "../../components";
+import { ButtonGroup, Button, Text } from "../../components";
 
 const Actions = ({ onApply, application, stack, fullWidth }) => {
   const [rejectModal, setRejectModal] = React.useState(false);
   const [shareModal, setShareModal] = React.useState(false);
 
   let actions = null;
+
+  if (application.status === "Applied") {
+    actions = (
+      <ButtonGroup stack={stack}>
+        <Text size="xs">You have already applied for this project</Text>
+        <Button onClick={onApply} styling="green" size="l" block>
+          Update Application
+        </Button>
+      </ButtonGroup>
+    )
+  }
 
   if (application.status === "Invited To Apply") {
     actions = (

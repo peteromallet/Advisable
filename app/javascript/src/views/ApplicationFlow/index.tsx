@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Query } from "react-apollo";
+import { Switch, Route, Redirect } from "react-router-dom";
 import NotFound from "../NotFound";
 import BaseStyling from "../../BaseStyling";
 import { Header, Loading } from "../../components";
@@ -9,7 +10,7 @@ import ApplicationSent from "./ApplicationSent";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 
 export default ({ match }) => {
-  const isMobile = useScreenSize('small');
+  const isMobile = useScreenSize("small");
 
   return (
     <React.Fragment>
@@ -24,11 +25,26 @@ export default ({ match }) => {
           if (!query.data.application) return <NotFound />;
           let { application } = query.data;
 
-          if (application.status === "Applied") {
-            return <ApplicationSent application={application} />;
+          if (application.status === "Application Rejected") {
+            let url = `/invites/${match.params.applicationId}`;
+            return <Redirect to={url} />;
           }
 
-          return <ApplicationFlow match={match} application={application} />;
+          return (
+            <Switch>
+              <Route
+                path="/invites/:applicationId/apply/sent"
+                component={ApplicationSent}
+              />
+              <Route
+                render={props => {
+                  return (
+                    <ApplicationFlow {...props} application={application} />
+                  );
+                }}
+              />
+            </Switch>
+          );
         }}
       </Query>
     </React.Fragment>

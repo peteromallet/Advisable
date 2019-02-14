@@ -3,20 +3,17 @@ import { Formik, Form, Field } from "formik";
 import { useScreenSize } from "../../../utilities/screenSizes";
 import {
   Text,
-  Flex,
   Heading,
   Padding,
   Button,
-  Divider,
-  BottomBar,
-  ButtonGroup
 } from "../../../components";
-import StepDots from "../../../components/StepDots";
 import PreviousProject from "./PreviousProject";
+import Actions from "../Actions";
 
 const PreviousProjects = ({
   steps,
   currentStep,
+  application,
   previousProjects,
   initialValues,
   onAdd,
@@ -73,45 +70,13 @@ const PreviousProjects = ({
               </Button>
             </Padding>
           </Padding>
-
-          {!isMobile && (
-            <React.Fragment>
-              <Divider />
-              <Padding size="xl">
-                <Button loading={formik.isSubmitting} styling="green" size="l">
-                  Next
-                </Button>
-              </Padding>
-            </React.Fragment>
-          )}
-
-          {isMobile && (
-            <BottomBar>
-              <Padding bottom="m">
-                <Flex align="center" distribute="center">
-                  <StepDots total={steps.length} current={currentStep + 1} />
-                </Flex>
-              </Padding>
-              <ButtonGroup fullWidth>
-                <Button
-                  size="l"
-                  type="button"
-                  onClick={onBack}
-                  styling="outlined"
-                >
-                  Back
-                </Button>
-                <Button
-                  size="l"
-                  type="submit"
-                  styling="green"
-                  loading={formik.isSubmitting}
-                >
-                  Next
-                </Button>
-              </ButtonGroup>
-            </BottomBar>
-          )}
+          <Actions
+            steps={steps}
+            onBack={onBack}
+            currentStep={currentStep}
+            application={application}
+            isSubmitting={formik.isSubmitting}
+          />
         </Form>
       )}
     </Formik>

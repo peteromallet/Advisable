@@ -20,6 +20,7 @@ import { useScreenSize } from "../../../utilities/screenSizes";
 import SUBMIT_APPLICATION from "../submitApplication.graphql";
 import UPDATE_APPLICATION from "../updateApplication.graphql";
 import validationSchema from './validationSchema';
+import Actions from "../Actions";
 
 interface Values {
   rate: number;
@@ -57,8 +58,8 @@ const Terms = ({
       }
     });
 
-    // The mutations above will update the applciation status and cause the page
-    // to re-render so there is no need for us to redirect here.
+    let url = `/invites/${applicationId}/apply/sent`
+    history.push(url);
   };
 
   const goBack = () => {
@@ -124,44 +125,14 @@ const Terms = ({
             </FieldRow>
           </Padding>
 
-          {!isMobile && (
-            <React.Fragment>
-              <Divider />
-              <Padding size="xl">
-                <Button loading={formik.isSubmitting} styling="green" size="l">
-                  Submit Application
-                </Button>
-              </Padding>
-            </React.Fragment>
-          )}
-
-          {isMobile && (
-            <BottomBar>
-              <Padding bottom="m">
-                <Flex align="center" distribute="center">
-                  <StepDots total={steps.length} current={currentStep + 1} />
-                </Flex>
-              </Padding>
-              <ButtonGroup fullWidth>
-                <Button
-                  size="l"
-                  type="button"
-                  onClick={goBack}
-                  styling="outlined"
-                >
-                  Back
-                </Button>
-                <Button
-                  loading={formik.isSubmitting}
-                  size="l"
-                  type="submit"
-                  styling="green"
-                >
-                  Submit
-                </Button>
-              </ButtonGroup>
-            </BottomBar>
-          )}
+          <Actions
+            steps={steps}
+            onBack={goBack}
+            label="Submit Application"
+            currentStep={currentStep}
+            application={application}
+            isSubmitting={formik.isSubmitting}
+          />
         </Form>
       )}
     </Formik>
