@@ -1,14 +1,11 @@
 import * as React from "react";
 import { Formik, Form, Field } from "formik";
 import { useScreenSize } from "../../../utilities/screenSizes";
-import {
-  Text,
-  Heading,
-  Padding,
-  Button,
-} from "../../../components";
+import { Text, Heading, Padding, Button } from "../../../components";
 import PreviousProject from "./PreviousProject";
 import Actions from "../Actions";
+import validationSchema from "./validationSchema";
+import InputError from "../../../components/InputError";
 
 const PreviousProjects = ({
   steps,
@@ -23,7 +20,11 @@ const PreviousProjects = ({
   const isMobile = useScreenSize("small");
 
   return (
-    <Formik onSubmit={onSubmit} initialValues={initialValues}>
+    <Formik
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+    >
       {formik => (
         <Form>
           <Padding size={isMobile ? "l" : "xl"}>
@@ -64,6 +65,11 @@ const PreviousProjects = ({
                 ))
               }
             </Field>
+            {formik.submitCount > 0 && formik.errors.references && (
+              <Padding bottom="m">
+                <InputError>{formik.errors.references}</InputError>
+              </Padding>
+            )}
             <Padding top="m">
               <Button size="l" type="button" styling="outlined" onClick={onAdd}>
                 Add a previous project
