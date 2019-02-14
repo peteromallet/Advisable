@@ -66,9 +66,9 @@ const Overview = ({ application, history, location, steps, currentStep }) => {
                     error={
                       formik.touched.introduction && formik.errors.introduction
                     }
-                    label="Give a one-line description of your background as it related to this project."
-                    placeholder="Give a one-line description of your background as it related to this project."
-                    maxLength={200}
+                    label="Give a 2-3 line description of your background as it related to this project."
+                    placeholder="Give a 2-3 line description of your background as it related to this project."
+                    charCount={200}
                   />
                 </FieldRow>
                 <FieldRow>
