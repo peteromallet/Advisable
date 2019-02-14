@@ -23,6 +23,7 @@ fragment ApplicationFields on Application {
     }
   }
   specialist {
+    bio
     airtableId
     previousProjects {
       project {

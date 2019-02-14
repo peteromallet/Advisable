@@ -44,7 +44,7 @@ const Overview = ({ application, history, location, steps, currentStep }) => {
           validationSchema={validationSchema}
           onSubmit={handleSubmit(updateApplication)}
           initialValues={{
-            introduction: application.introduction || "",
+            introduction: application.introduction || application.specialist.bio || "",
             availability: application.availability || ""
           }}
         >
