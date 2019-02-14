@@ -11,15 +11,16 @@ import Overview from "./Overview";
 import Questions from "./Questions";
 import References from "./References";
 
+type Question = {
+  question: string;
+  answer?: string;
+}
+
 interface Props {
   application: {
     introduction: string;
     availability: string;
-    questions: [
-      {
-        question: string;
-      }
-    ];
+    questions: Question[];
     references: [
       {
         id: string;
@@ -54,6 +55,7 @@ const ApplicationFlow = ({ application, match }: Props) => {
       to: "/questions",
       path: "/questions/:number?",
       component: Questions,
+      hidden: application.questions.length === 0,
       isComplete: isEmpty(
         filter(application.questions, q => {
           return isEmpty(q.answer);
@@ -82,6 +84,8 @@ const ApplicationFlow = ({ application, match }: Props) => {
   // we just use a div.
   let ContentContainer = isMobile ? "div" : Card;
 
+  const activeSteps = filter(STEPS, step => !step.hidden);
+
   return (
     <Layout>
       {!isMobile && (
@@ -101,9 +105,8 @@ const ApplicationFlow = ({ application, match }: Props) => {
               <Text size="xs">{application.project.companyDescription}</Text>
             </Padding>
             <Steps>
-              {STEPS.map((step, i) => {
+              {activeSteps.map((step, i) => {
                 const previousStep = STEPS[i - 1];
-
                 return (
                   <Steps.Step
                     key={step.name}

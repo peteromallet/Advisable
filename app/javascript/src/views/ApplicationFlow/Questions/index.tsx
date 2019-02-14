@@ -14,10 +14,19 @@ import validationSchema from "./validationSchema";
 import Actions from "../Actions";
 
 const Questions = ({ application, match, history, steps, currentStep, location }) => {
+  const step = steps[currentStep];
   const isMobile = useScreenSize("small");
   const { applicationId } = match.params;
   const number = parseInt(match.params.number);
   const applicationQuestion = application.questions[number - 1] || {};
+
+  if (step.hidden) {
+    let referencesStep = {
+      ...location,
+      pathname: `/invites/${applicationId}/apply/references`
+    }
+    return <Redirect to={referencesStep} />
+  }
 
   if (!match.params.number) {
     let firstQuestion = {
