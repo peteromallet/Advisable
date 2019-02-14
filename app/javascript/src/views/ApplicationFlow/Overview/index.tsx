@@ -59,6 +59,7 @@ const Overview = ({ application, history, location, steps, currentStep }) => {
                     multiline
                     autoHeight
                     name="introduction"
+                    description={application.project.specialistDescription}
                     value={formik.values.introduction}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}

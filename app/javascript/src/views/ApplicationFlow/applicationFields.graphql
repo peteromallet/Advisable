@@ -55,5 +55,6 @@ fragment ApplicationFields on Application {
     airtableId
     primarySkill
     companyDescription
+    specialistDescription
   }
 }
