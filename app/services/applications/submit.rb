@@ -18,7 +18,7 @@ class Applications::Submit < ApplicationService
   def is_submittable?
     return if application.status == 'Invited To Apply'
     # Allow people to change their mind and apply after rejceting an application
-    return if application.status == 'Application Rejected'
+    return if application.status == 'Invitation Rejected'
     message = "Cannot submit application with status of #{application.status}"
     raise Service::Error.new(message)
   end

@@ -35,9 +35,10 @@ interface Props {
     acceptsTerms: boolean;
   };
   match: match;
+  location: object;
 }
 
-const ApplicationFlow = ({ application, match }: Props) => {
+const ApplicationFlow = ({ application, match, location }: Props) => {
   const isMobile = useScreenSize("small");
   const applicationId = match.params.applicationId;
 
@@ -113,7 +114,10 @@ const ApplicationFlow = ({ application, match }: Props) => {
                     exact={step.exact}
                     number={i + 1}
                     isComplete={step.isComplete}
-                    to={`/invites/${applicationId}/apply${step.to}`}
+                    to={{
+                      ...location,
+                      pathname: `/invites/${applicationId}/apply${step.to}`
+                    }}
                     isDisabled={previousStep ? !previousStep.isComplete : false}
                   >
                     {step.name}

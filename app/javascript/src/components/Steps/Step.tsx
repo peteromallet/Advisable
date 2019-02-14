@@ -5,7 +5,10 @@ import { Step as Wrapper, Number } from "./styles";
 interface Props {
   number: number;
   children: React.ReactNode;
-  to?: string;
+  to?: {
+    pathname: string;
+    state?: object;
+  };
   exact?: boolean;
   isDisabled?: boolean;
   isComplete?: boolean;

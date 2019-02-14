@@ -31,6 +31,12 @@ describe Applications::Update do
     accepts_terms: true
   }}
 
+  before :each do
+    airtable_record = double(Airtable::Application)
+    allow(airtable_record).to receive(:push)
+    allow(Airtable::Application).to receive(:find).and_return(airtable_record)
+  end
+
   it "updates the introduction" do
     Applications::Update.call(id: application.airtable_id, attributes: attributes)
     expect(application.reload.introduction).to eq(attributes[:introduction])

@@ -40,7 +40,7 @@ const TextField = ({
   const [id, _] = useState(props.id || uniqueID("TextField"));
 
   let charLimit = charCount || maxLength;
-  let characterCount = (charLimit - value.length);
+  let characterCount = (charLimit - (value || '').length);
   if (characterCount < 0) {
     characterCount = 0
   }

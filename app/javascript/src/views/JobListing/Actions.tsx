@@ -20,10 +20,10 @@ const Actions = ({ onApply, application, stack, fullWidth }) => {
     )
   }
 
-  if (application.status === "Application Rejected") {
+  if (application.status === "Invitation Rejected") {
     actions = (
       <ButtonGroup stack={stack}>
-        <Text size="xs">You have already rejected this application. Changed your mind?</Text>
+        <Text size="xs">You have already rejected this invitation. Changed your mind?</Text>
         <Button onClick={onApply} styling="green" size="l" block>
           Apply Now
         </Button>

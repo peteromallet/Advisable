@@ -30,7 +30,7 @@ export default ({ match, location }) => {
           // key on the locaiton state then redirect to the job listing page.
           // The user can then choose to apply from there which will set the
           // allowApply location state.
-          let isRejected = application.status === 'Application Rejected'
+          let isRejected = application.status === 'Invitation Rejected'
           if (locationState.allowApply !== true && isRejected) {
             let url = `/invites/${match.params.applicationId}`;
             return <Redirect to={url} />;
