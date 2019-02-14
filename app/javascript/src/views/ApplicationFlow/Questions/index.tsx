@@ -13,14 +13,18 @@ import UPDATE_APPLICATION from "../updateApplication.graphql";
 import validationSchema from "./validationSchema";
 import Actions from "../Actions";
 
-const Questions = ({ application, match, history, steps, currentStep }) => {
+const Questions = ({ application, match, history, steps, currentStep, location }) => {
   const isMobile = useScreenSize("small");
   const { applicationId } = match.params;
   const number = parseInt(match.params.number);
   const applicationQuestion = application.questions[number - 1] || {};
 
   if (!match.params.number) {
-    return <Redirect to={`/invites/${applicationId}/apply/questions/1`} />;
+    let firstQuestion = {
+      ...location,
+      pathname: `/invites/${applicationId}/apply/questions/1`,
+    }
+    return <Redirect to={firstQuestion} />
   }
 
   const goBack = formik => {
@@ -33,7 +37,11 @@ const Questions = ({ application, match, history, steps, currentStep }) => {
     } else {
       url = `/invites/${applicationId}/apply`;
     }
-    history.replace(url);
+
+    history.replace({
+      ...location,
+      pathname: url,
+    });
   };
 
   const handleSubmit = updateApplication => {
@@ -56,11 +64,17 @@ const Questions = ({ application, match, history, steps, currentStep }) => {
       const nextQuestion = application.questions[number] || {};
       formikBag.setFieldValue("answer", nextQuestion.answer || "");
 
+      let url: string;
       if (number === application.questions.length) {
-        history.push(`/invites/${applicationId}/apply/references`);
+        url = `/invites/${applicationId}/apply/references`;
       } else {
-        history.push(`/invites/${applicationId}/apply/questions/${number + 1}`);
+        url = `/invites/${applicationId}/apply/questions/${number + 1}`;
       }
+
+      history.push({
+        ...location,
+        pathname: url
+      })
     };
   };
 

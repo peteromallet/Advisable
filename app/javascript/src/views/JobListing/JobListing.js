@@ -19,7 +19,10 @@ let JobListing = ({ application, history }) => {
 
   const gotoApply =() => {
     let url = `/invites/${application.airtableId}/apply`
-    history.push(url)
+    // Set an allowApply key on the location state. We then use this inside of
+    // the ApplicationFlow to determine wether or not to allow an application
+    // with a status of "Application Rejceted" to view the application flow.
+    history.push(url, { allowApply: true })
   }
 
   return (
@@ -79,7 +82,7 @@ let JobListing = ({ application, history }) => {
 
         {isMobile && (
           <BottomBar>
-            <Actions fullWidth={true} application={application} />
+            <Actions fullWidth={true} application={application} onApply={gotoApply} />
           </BottomBar>
         )}
       </Layout.Main>

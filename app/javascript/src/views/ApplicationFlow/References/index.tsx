@@ -12,7 +12,14 @@ interface Values {
   acceptsTerms: boolean;
 }
 
-const References = ({ application, match, history, steps, currentStep }) => {
+const References = ({
+  application,
+  match,
+  history,
+  steps,
+  currentStep,
+  location
+}) => {
   const { applicationId } = match.params;
   const [modal, setModal] = React.useState(false);
   const { previousProjects } = application.specialist;
@@ -28,7 +35,10 @@ const References = ({ application, match, history, steps, currentStep }) => {
         }
       });
 
-      history.push(`/invites/${applicationId}/apply/terms`);
+      history.push({
+        ...location,
+        pathname: `/invites/${applicationId}/apply/terms`
+      });
     };
   };
 
@@ -41,7 +51,10 @@ const References = ({ application, match, history, steps, currentStep }) => {
       url = `/invites/${applicationId}/apply`;
     }
 
-    history.push(url);
+    history.push({
+      ...location,
+      pathname: url
+    });
   };
 
   return (

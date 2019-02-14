@@ -3,23 +3,17 @@ import { compose, graphql } from "react-apollo";
 import { Formik, Form, FormikProps } from "formik";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import {
-  Flex,
-  Button,
   Heading,
   Padding,
-  Divider,
   FieldRow,
   Checkbox,
   TextField,
-  BottomBar,
-  ButtonGroup
 } from "../../../components";
-import StepDots from "../../../components/StepDots";
 import { currencySymbol } from "../../../utilities/currency";
 import { useScreenSize } from "../../../utilities/screenSizes";
 import SUBMIT_APPLICATION from "../submitApplication.graphql";
 import UPDATE_APPLICATION from "../updateApplication.graphql";
-import validationSchema from './validationSchema';
+import validationSchema from "./validationSchema";
 import Actions from "../Actions";
 
 interface Values {
@@ -34,11 +28,13 @@ const Terms = ({
   application,
   steps,
   currentStep,
+  location,
   updateApplication,
-  submitApplication,
+  submitApplication
 }) => {
   const isMobile = useScreenSize("small");
   let applicationId = match.params.applicationId;
+  let locationState = location.state || {};
 
   const handleSubmit = async values => {
     await updateApplication({
@@ -50,21 +46,23 @@ const Terms = ({
       }
     });
 
-    await submitApplication({
-      variables: {
-        input: {
-          id: applicationId
+    if (locationState.allowApply || application.status === "Invited To Apply") {
+      await submitApplication({
+        variables: {
+          input: {
+            id: applicationId
+          }
         }
-      }
-    });
+      });
+    }
 
-    let url = `/invites/${applicationId}/apply/sent`
-    history.push(url);
+    let pathname = `/invites/${applicationId}/apply/sent`;
+    history.push({ ...location, pathname });
   };
 
   const goBack = () => {
-    let url = `/invites/${applicationId}/apply/references`;
-    history.push(url);
+    let pathname = `/invites/${applicationId}/apply/references`;
+    history.push({ ...location, pathname });
   };
 
   return (

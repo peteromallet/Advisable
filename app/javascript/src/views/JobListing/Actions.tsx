@@ -20,6 +20,17 @@ const Actions = ({ onApply, application, stack, fullWidth }) => {
     )
   }
 
+  if (application.status === "Application Rejected") {
+    actions = (
+      <ButtonGroup stack={stack}>
+        <Text size="xs">You have already rejected this application. Changed your mind?</Text>
+        <Button onClick={onApply} styling="green" size="l" block>
+          Apply Now
+        </Button>
+      </ButtonGroup>
+    )
+  }
+
   if (application.status === "Invited To Apply") {
     actions = (
       <React.Fragment>

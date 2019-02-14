@@ -18,7 +18,7 @@ interface Values {
   availability: string;
 }
 
-const Overview = ({ application, history, steps, currentStep }) => {
+const Overview = ({ application, history, location, steps, currentStep }) => {
   const { airtableId } = application;
   const isMobile = useScreenSize("small");
 
@@ -33,7 +33,7 @@ const Overview = ({ application, history, steps, currentStep }) => {
         }
       });
 
-      history.push(`/invites/${airtableId}/apply/questions`);
+      history.push(`/invites/${airtableId}/apply/questions`, location.state);
     };
   };
 

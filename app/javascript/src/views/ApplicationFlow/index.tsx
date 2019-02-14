@@ -9,8 +9,9 @@ import ApplicationFlow from "./ApplicationFlow";
 import ApplicationSent from "./ApplicationSent";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 
-export default ({ match }) => {
+export default ({ match, location }) => {
   const isMobile = useScreenSize("small");
+  let locationState = location.state || {};
 
   return (
     <React.Fragment>
@@ -25,7 +26,12 @@ export default ({ match }) => {
           if (!query.data.application) return <NotFound />;
           let { application } = query.data;
 
-          if (application.status === "Application Rejected") {
+          // If the application has been rejected and there is no "allowApply"
+          // key on the locaiton state then redirect to the job listing page.
+          // The user can then choose to apply from there which will set the
+          // allowApply location state.
+          let isRejected = application.status === 'Application Rejected'
+          if (locationState.allowApply !== true && isRejected) {
             let url = `/invites/${match.params.applicationId}`;
             return <Redirect to={url} />;
           }
