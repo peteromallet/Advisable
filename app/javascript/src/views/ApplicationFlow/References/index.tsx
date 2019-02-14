@@ -85,7 +85,7 @@ const References = ({
               onBack={goBack}
               onAdd={() => setModal(true)}
               initialValues={{
-                references: application.references.map(
+                references: application.previousProjects.map(
                   r => r.project.airtableId
                 )
               }}

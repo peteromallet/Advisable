@@ -11,8 +11,7 @@ fragment ApplicationFields on Application {
     answer
     question
   }
-  references {
-    id
+  previousProjects {
     project {
       ... on Project {
         airtableId

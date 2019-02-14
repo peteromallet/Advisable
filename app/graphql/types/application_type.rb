@@ -15,7 +15,11 @@ class Types::ApplicationType < Types::BaseType
   field :project, Types::ProjectType, null: false
   field :proposal, Types::Booking, null: true
   field :referral_url, String, null: true
-  field :references, [Types::ApplicationReferenceType], null: false
   field :accepts_fee, Boolean, null: true
   field :accepts_terms, Boolean, null: true
+  field :previous_projects, [Types::PreviousProject], null: false
+
+  def previous_projects
+    ::PreviousProject.for_application(object)
+  end
 end

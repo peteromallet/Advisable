@@ -21,7 +21,7 @@ interface Props {
     introduction: string;
     availability: string;
     questions: Question[];
-    references: [
+    previousProjects: [
       {
         id: string;
       }
@@ -68,7 +68,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
       to: "/references",
       path: "/references",
       component: References,
-      isComplete: !isEmpty(application.references)
+      isComplete: !isEmpty(application.previousProjects)
     },
     {
       name: "Payment terms",
