@@ -7,8 +7,9 @@ import {
   Padding,
   FieldRow,
   Checkbox,
-  TextField,
+  TextField
 } from "../../../components";
+import Link from "../../../components/Link";
 import { currencySymbol } from "../../../utilities/currency";
 import { useScreenSize } from "../../../utilities/screenSizes";
 import SUBMIT_APPLICATION from "../submitApplication.graphql";
@@ -118,7 +119,17 @@ const Terms = ({
                 error={
                   formik.touched.acceptsTerms && formik.errors.acceptsTerms
                 }
-                label="I agree with Advisable's freelancer agreement."
+                label={
+                  <span>
+                    I agree with{" "}
+                    <Link
+                      href=" https://www.advisable.com/freelancer-agreement/"
+                      target="_blank"
+                    >
+                      Advisable's freelancer agreement.
+                    </Link>
+                  </span>
+                }
               />
             </FieldRow>
           </Padding>
