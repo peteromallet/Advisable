@@ -101,9 +101,8 @@ const Questions = ({ application, match, history, steps, currentStep, location }
                   <TextField
                     multiline
                     autoHeight
-                    minRows={8}
+                    minRows={10}
                     name="answer"
-                    maxLength={400}
                     onBlur={formik.handleBlur}
                     value={formik.values.answer}
                     onChange={formik.handleChange}
