@@ -28,9 +28,6 @@ interface Props {
     project: {
       primarySkill: string;
       companyDescription: string;
-      user: {
-        companyName: string;
-      };
     };
     rate: string;
     acceptsFee: boolean;
@@ -97,8 +94,7 @@ const ApplicationFlow = ({ application, match }: Props) => {
             </Padding>
             <Padding bottom="m">
               <Heading level={4}>
-                Applying to {application.project.primarySkill} at{" "}
-                {application.project.user.companyName}
+                Applying to {application.project.primarySkill} project
               </Heading>
             </Padding>
             <Padding bottom="l">

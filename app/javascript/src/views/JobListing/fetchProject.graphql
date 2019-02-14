@@ -16,7 +16,6 @@ query Application($id: ID!) {
       estimatedBudget
       remote
       user {
-        companyName
         country {
           name
         }

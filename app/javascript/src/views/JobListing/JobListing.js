@@ -32,13 +32,12 @@ let JobListing = ({ application, history }) => {
           <Sticky top={97}>
             <Padding bottom="xs">
               <Heading level={4}>
-                {project.primarySkill} at {project.user.companyName}
+                {project.primarySkill} project
               </Heading>
             </Padding>
             <Padding bottom="l">
               <Text size="xs">
-                You have been invited to apply for a project with{" "}
-                {project.user.companyName}
+                You have been invited to apply for a new project
               </Text>
             </Padding>
             <Padding bottom="xl">
