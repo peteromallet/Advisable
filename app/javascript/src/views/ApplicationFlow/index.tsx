@@ -8,31 +8,40 @@ import { useScreenSize } from "../../utilities/screenSizes";
 import ApplicationFlow from "./ApplicationFlow";
 import ApplicationSent from "./ApplicationSent";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
+import { RouteComponentProps } from "react-router";
+import { ApplicationType } from "../../types";
 
-export default ({ match, location }) => {
-  const isMobile = useScreenSize("small");
-  let locationState = location.state || {};
+type Params = {
+  applicationId: string;
+};
+
+interface LocationState {
+  allowApply?: boolean;
+}
+
+// Renders the application flow
+export default (props: RouteComponentProps<Params>): React.ReactNode => {
+  const { applicationId } = props.match.params;
+  const isMobile: boolean = useScreenSize("small");
+  let locationState: LocationState = props.location.state || {};
 
   return (
     <React.Fragment>
       <Header />
       <BaseStyling lightBackground={isMobile} />
-      <Query
-        query={FETCH_APPLICATION}
-        variables={{ id: match.params.applicationId }}
-      >
+      <Query query={FETCH_APPLICATION} variables={{ id: applicationId }}>
         {query => {
           if (query.loading) return <Loading />;
           if (!query.data.application) return <NotFound />;
-          let { application } = query.data;
+          let application: ApplicationType = query.data.application;
 
           // If the application has been rejected and there is no "allowApply"
           // key on the locaiton state then redirect to the job listing page.
           // The user can then choose to apply from there which will set the
           // allowApply location state.
-          let isRejected = application.status === 'Invitation Rejected'
+          let isRejected: boolean = application.status === "Invitation Rejected";
           if (locationState.allowApply !== true && isRejected) {
-            let url = `/invites/${match.params.applicationId}`;
+            let url = `/invites/${props.match.params.applicationId}`;
             return <Redirect to={url} />;
           }
 

@@ -1,7 +1,8 @@
 import * as React from "react";
 import Sticky from "react-stickynode";
 import { isEmpty, filter } from "lodash";
-import { Switch, Route, match, Redirect } from "react-router-dom";
+import { RouteComponentProps } from "react-router";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Back from "../../components/Back";
 import Steps from "../../components/Steps";
 import { useScreenSize } from "../../utilities/screenSizes";
@@ -10,39 +11,32 @@ import Terms from "./Terms";
 import Overview from "./Overview";
 import Questions from "./Questions";
 import References from "./References";
+import { ApplicationType } from "../../types";
 
-type Question = {
-  question: string;
-  answer?: string;
+interface Params {
+  applicationId: string;
 }
 
-interface Props {
-  application: {
-    introduction: string;
-    availability: string;
-    questions: Question[];
-    previousProjects: [
-      {
-        id: string;
-      }
-    ];
-    project: {
-      primarySkill: string;
-      companyDescription: string;
-    };
-    rate: string;
-    acceptsFee: boolean;
-    acceptsTerms: boolean;
-  };
-  match: match;
-  location: object;
+interface Props extends RouteComponentProps<Params> {
+  application: ApplicationType;
+}
+
+interface StepType {
+  exact?: boolean; // wether the route should be an exact match
+  name: string; // The name for the step to be displayed in the sidebar
+  to: string; // The link to go to the step, used in the sidebar
+  path: string; // the path for the route
+  component: any; // the component for the step route
+  hidden?: boolean; // Wether or not the step should be hidden
+  isComplete: boolean; // wether or not the step has been complete
 }
 
 const ApplicationFlow = ({ application, match, location }: Props) => {
   const isMobile = useScreenSize("small");
   const applicationId = match.params.applicationId;
 
-  const STEPS = [
+  // STEPS defines all of the various steps inside the application flow.
+  const STEPS: StepType[] = [
     {
       exact: true,
       name: "Overview",
@@ -85,7 +79,11 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
   // we just use a div.
   let ContentContainer = isMobile ? "div" : Card;
 
-  const activeSteps = filter(STEPS, step => !step.hidden);
+  // Iterate through the STEPS and filter our any where hidden is true.
+  const activeSteps: StepType[] = filter(
+    STEPS,
+    (step: StepType) => !step.hidden
+  );
 
   return (
     <Layout>
