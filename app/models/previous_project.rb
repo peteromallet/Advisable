@@ -45,6 +45,16 @@ class PreviousProject
       end.reverse
     end
 
+    def for_application(application)
+      results = application.references.map do |reference|
+        new(project: reference.project, specialist: application.specialist)
+      end
+
+      results.sort_by do |previous_project|
+        previous_project.project.created_at
+      end.reverse
+    end
+
     private
 
     # Returns the projects that specialist where their application has been

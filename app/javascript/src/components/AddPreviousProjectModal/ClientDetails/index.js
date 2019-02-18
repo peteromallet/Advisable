@@ -26,7 +26,7 @@ const ClientDetails = ({ formik, industries }) => {
               autoFocus
               name="clientName"
               placeholder="e.g Apple Inc."
-              label="What was the client’s name?"
+              label="What was the client's name?"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value={formik.values.clientName}

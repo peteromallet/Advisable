@@ -5,7 +5,8 @@ describe Airtable::Project do
     stub_request(:get, /Projects\/rec_123/).to_return(status: 200, body: {
       id: "rec_123",
       fields: {
-        "Project": "Testing"
+        "Project": "Testing",
+        "Remote OK": "Yes, I’m open to using remote talent" 
       }
     }.to_json)
   end

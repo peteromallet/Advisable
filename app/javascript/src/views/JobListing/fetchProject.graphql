@@ -1,0 +1,26 @@
+query Application($id: ID!) {
+  application(id: $id) {
+    id
+    status
+    referralUrl
+    airtableId
+    project {
+      id
+      airtableId
+      name
+      primarySkill
+      description
+      companyDescription
+      goals
+      requiredCharacteristics
+      optionalCharacteristics
+      estimatedBudget
+      remote
+      user {
+        country {
+          name
+        }
+      }
+    }
+  }
+}

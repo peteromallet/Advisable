@@ -33,17 +33,6 @@ class Airtable::Base < Airrecord::Table
       @sync_model = model
     end
 
-    # sync_columns provides a direct mapping from the airtable record to the
-    # active record model. e.g if the airtable table has a 'name' and 'number'
-    # column and the ActiveRecord model has name and number attributes then we
-    # can sync these attributes with.
-    # => sync_columns :name, :number
-    def sync_columns(*attrs)
-      attrs.map(&:to_s).each do |attr|
-        sync_column(attr, to: attr)
-      end
-    end
-
     # sync_column allows us to define a mapping from the airtable record to
     # the ActiveRecord model. e.g if the airtable record has an application_status
     # which we want to sync with the ActiveRecord model's 'status' attribute, we
@@ -83,13 +72,13 @@ class Airtable::Base < Airrecord::Table
 
       instance_exec(model, &self.class.sync_block) if self.class.sync_block
 
-      unless model.save
+      if model.save
+        Webhook.process(model)
+      else
         message = "Failed to sync #{record_type} #{id} \n#{model.errors.full_messages}"
         Rails.logger.warn(message)
         report.failed(id, record_type, model.errors.full_messages) if report
       end
-
-      Webhook.process(model)
 
       model
     end

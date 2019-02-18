@@ -21,6 +21,10 @@ class Types::OffPlatformProject < Types::BaseType
     object.airtable_id
   end
 
+  def airtable_id
+    object.airtable_id
+  end
+
   def client_name
     return "#{object.industry} Company" if object.confidential
     object.client_name

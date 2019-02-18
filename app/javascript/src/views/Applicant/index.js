@@ -133,13 +133,11 @@ class Applicant extends React.Component {
                   <Heading level="6" paddingTop="l" marginBottom="s">
                     Previous Projects
                   </Heading>
-                  {application.specialist.previousProjects.length > 0 ? (
+                  {application.previousProjects.length > 0 ? (
                     <PreviousProjects
                       name={application.specialist.name}
                       specialistId={application.specialist.airtableId}
-                      previousProjects={
-                        application.specialist.previousProjects || []
-                      }
+                      previousProjects={application.previousProjects || []}
                     />
                   ) : (
                     <PreviousProjectsEmptyState
@@ -178,35 +176,34 @@ class Applicant extends React.Component {
                         </Flex>
                       </Spacing>
 
-                      {otherApplicants.map(
-                        applicant =>
-                          applicant.specialist ? (
-                            <Card
-                              key={applicant.id}
-                              onClick={() => history.push(applicant.airtableId)}
-                              padding="l"
-                              marginBottom="m"
-                            >
-                              <Flex align="center">
-                                <Avatar
-                                  name={applicant.specialist.name}
-                                  url={get(applicant.specialist.image, "url")}
-                                  marginRight="l"
-                                />
-                                <Flex.Item distribute="fill">
-                                  <Heading size="s">
-                                    {applicant.specialist.name}
-                                  </Heading>
-                                  <Text>
-                                    {applicant.specialist.city}
-                                    {applicant.specialist.country &&
-                                      `, ${applicant.specialist.country.name}`}
-                                  </Text>
-                                </Flex.Item>
-                                {applicant.featured && <FeaturedBadge />}
-                              </Flex>
-                            </Card>
-                          ) : null
+                      {otherApplicants.map(applicant =>
+                        applicant.specialist ? (
+                          <Card
+                            key={applicant.id}
+                            onClick={() => history.push(applicant.airtableId)}
+                            padding="l"
+                            marginBottom="m"
+                          >
+                            <Flex align="center">
+                              <Avatar
+                                name={applicant.specialist.name}
+                                url={get(applicant.specialist.image, "url")}
+                                marginRight="l"
+                              />
+                              <Flex.Item distribute="fill">
+                                <Heading size="s">
+                                  {applicant.specialist.name}
+                                </Heading>
+                                <Text>
+                                  {applicant.specialist.city}
+                                  {applicant.specialist.country &&
+                                    `, ${applicant.specialist.country.name}`}
+                                </Text>
+                              </Flex.Item>
+                              {applicant.featured && <FeaturedBadge />}
+                            </Flex>
+                          </Card>
+                        ) : null
                       )}
                     </React.Fragment>
                   )}

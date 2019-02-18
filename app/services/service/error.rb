@@ -1,9 +1,9 @@
 class Service::Error < StandardError
   attr_reader :code, :field
 
-  def initialize(msg, **args)
-    @code = msg
+  def initialize(code, **args)
+    @code = code
     @field = args.fetch(:field, nil)
-    super(msg)
+    super(code)
   end
 end
