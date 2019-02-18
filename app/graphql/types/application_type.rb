@@ -17,13 +17,21 @@ class Types::ApplicationType < Types::BaseType
   field :referral_url, String, null: true
   field :accepts_fee, Boolean, null: true
   field :accepts_terms, Boolean, null: true
-  field :previous_projects, [Types::PreviousProject], null: false
+  field :previous_projects, [Types::PreviousProject], null: false do
+    argument :fallback, Boolean, required: false
+  end
 
-  def previous_projects
+  # When querying for an applications previous_projects, we can pass a 'fallback'
+  # argument which when true will fall back to returning all of the specialists
+  # previous proejcts if there are none specifically related to the application
+  # through references. This argument defaults to true.
+  def previous_projects(fallback: true)
     references = ::PreviousProject.for_application(object)
-    if references.empty?
+
+    if fallback && references.empty?
       references = ::PreviousProject.for_specialist(object.specialist)
     end
+
     references
   end
 end
