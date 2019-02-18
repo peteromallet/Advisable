@@ -9,6 +9,7 @@ query Application($id: ID!) {
       airtableId
       name
       primarySkill
+      description
       companyDescription
       goals
       requiredCharacteristics

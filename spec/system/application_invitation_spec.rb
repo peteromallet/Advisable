@@ -44,4 +44,14 @@ describe 'Application invitation view' do
       expect(page).to have_content("Applying to")
     end
   end
+
+  context "when the status is 'Application Rejected'" do
+    let(:application) { create(:application, status: "Application Rejected") }
+
+    it "allows the user to re-apply" do
+      visit "/invites/#{application.airtable_id}"
+      click_on "Apply Now"
+      expect(page).to have_content("Applying to")
+    end
+  end
 end

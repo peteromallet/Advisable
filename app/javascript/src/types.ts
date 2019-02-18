@@ -1,5 +1,6 @@
 export interface ProjectType {
   id: string;
+  description?: string;
   primarySkill?: string;
   companyDescription?: string;
 }

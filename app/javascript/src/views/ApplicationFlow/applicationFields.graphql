@@ -54,6 +54,7 @@ fragment ApplicationFields on Application {
     currency
     airtableId
     primarySkill
+    description
     companyDescription
     specialistDescription
   }

@@ -103,6 +103,9 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
             <Padding bottom="l">
               <Text size="xs">{application.project.companyDescription}</Text>
             </Padding>
+            <Padding bottom="l">
+              <Text size="xs">{application.project.description}</Text>
+            </Padding>
             <Steps>
               {activeSteps.map((step, i) => {
                 const previousStep = STEPS[i - 1];
