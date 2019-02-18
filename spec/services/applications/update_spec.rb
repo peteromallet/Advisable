@@ -42,6 +42,12 @@ describe Applications::Update do
     expect(application.reload.introduction).to eq(attributes[:introduction])
   end
 
+  it "raises an error if the application doesn't exist" do
+    expect {
+      Applications::Update.call(id: "nope", attributes: attributes)
+    }.to raise_error(Service::Error, "record_not_found")
+  end
+
   it "updates the availability" do
     Applications::Update.call(id: application.airtable_id, attributes: attributes)
     expect(application.reload.availability).to eq(attributes[:availability])
