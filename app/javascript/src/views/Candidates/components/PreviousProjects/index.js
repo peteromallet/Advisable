@@ -30,9 +30,10 @@ const PreviousProjects = ({ data, recalculateHeight }) => {
   );
 };
 
+
 const SpecialistProjects = ({ data }) => {
-  if (data.application.specialist.previousProjects.length > 0) {
-    return data.application.specialist.previousProjects.map(previousProject => (
+  if (data.application.previousProjects.length > 0) {
+    return data.application.previousProjects.map(previousProject => (
       <PreviousProject
         key={previousProject.project.id}
         previousProject={previousProject}

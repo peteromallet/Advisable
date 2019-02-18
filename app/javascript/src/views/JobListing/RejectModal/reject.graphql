@@ -1,0 +1,8 @@
+mutation rejectApplicationInvitation($input: RejectApplicationInvitationInput!) {
+  rejectApplicationInvitation(input: $input) {
+    application {
+      id
+      status
+    }
+  }
+}

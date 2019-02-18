@@ -1,6 +1,7 @@
 class Types::QueryType < Types::BaseType
   field :project, Types::ProjectType, description: "Find a Project by ID", null: true do
-    # querying for a specific project requires a special case where the user
+    argument :id, ID, required: true
+    # querying for a project requires a special case where the user
     # will face one of three scenrios:
     # 1. The user is not logged in and the client associated to the project
     # has not yet created an account. In this case we want to return an error
@@ -14,7 +15,7 @@ class Types::QueryType < Types::BaseType
     # nil for the project.
     # The corresponding frontend code for these cases can be found in
     # /views/Project/index.js
-    authorize :can_fetch_project, error: ->(record, ctx) {
+    authorize :can_access_project, error: ->(record, ctx) {
       current_user = ctx[:current_user]
       if !current_user
         user = record.user
@@ -25,7 +26,6 @@ class Types::QueryType < Types::BaseType
         raise GraphQL::ExecutionError.new(code, extensions: extensions)
       end
     }
-    argument :id, ID, required: true
   end
 
   def project(**args)
@@ -68,7 +68,7 @@ class Types::QueryType < Types::BaseType
     begin
       ::Application.find_by_airtable_id(id)
     rescue Airrecord::Error => er
-      GraphQL::ExecutionError.new("Could not find booking #{id}")
+      GraphQL::ExecutionError.new("Could not find application #{id}")
     end
   end
 

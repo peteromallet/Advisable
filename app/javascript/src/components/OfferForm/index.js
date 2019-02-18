@@ -7,15 +7,11 @@
 //
 import React from "react";
 import { Formik, Field } from "formik";
-import Back from "src/components/Back";
-import Flex from "src/components/Flex";
-import Text from "src/components/Text";
 import Select from "src/components/Select";
 import Button from "src/components/Button";
 import Divider from "src/components/Divider";
 import Spacing from "src/components/Spacing";
 import DatePicker from "src/components/DatePicker";
-import InputLabel from "src/components/InputLabel";
 import TextField from "src/components/TextField";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import ListInput from "src/components/ListInput";

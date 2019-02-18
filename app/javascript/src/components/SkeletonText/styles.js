@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { withSpacing } from "../Spacing";
 
 const animation = keyframes`
   from {
@@ -25,6 +26,6 @@ export const SkeletonTextLine = styled.div`
   }
 `
 
-export const SkeletonTextContainer = styled.div`
+export const SkeletonTextContainer = withSpacing(styled.div`
   animation: ${animation} 0.6s linear infinite alternate;
-`
+`)

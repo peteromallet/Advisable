@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { withSpacing } from "src/components/Spacing";
 
 const justifyContent = {
+  center: "center",
   equalSpacing: "space-between"
 };
 

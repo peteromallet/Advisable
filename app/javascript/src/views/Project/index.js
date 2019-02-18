@@ -19,7 +19,7 @@ const redirectError = (error, location) => {
   if (error.message === "signupRequired") {
     redirect = {
       pathname: `/signup`,
-      search: `?email=${error.extensions.email}`,
+      search: `?email=${encodeURIComponent(error.extensions.email)}`,
       state: {
         from: location,
         notice: 'projects.signupRequired'
@@ -30,7 +30,7 @@ const redirectError = (error, location) => {
   if (error.message === 'authenticationRequired') {
     redirect = {
       pathname: "/login",
-      search: `?email=${error.extensions.email}`,
+      search: `?email=${encodeURIComponent(error.extensions.email)}`,
       state: {
         from: location
       }
