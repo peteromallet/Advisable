@@ -21,12 +21,9 @@ const Actions = ({
   steps,
   label = 'Next',
   currentStep,
-  application,
   onBack
 }: Props) => {
   const isMobile = useScreenSize("small");
-
-  let buttonText = application.status === "Invited To Apply" ? label : "Update";
 
   return (
     <React.Fragment>
@@ -35,7 +32,7 @@ const Actions = ({
           <Divider />
           <Padding size="xl">
             <Button loading={isSubmitting} styling="green" size="l">
-              {buttonText}
+              {label}
             </Button>
           </Padding>
         </React.Fragment>
@@ -65,7 +62,7 @@ const Actions = ({
               styling="green"
               loading={isSubmitting}
             >
-              {buttonText}
+              {label}
             </Button>
           </ButtonGroup>
         </BottomBar>

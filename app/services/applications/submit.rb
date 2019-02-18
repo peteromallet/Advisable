@@ -19,6 +19,8 @@ class Applications::Submit < ApplicationService
     return if application.status == 'Invited To Apply'
     # Allow people to change their mind and apply after rejceting an application
     return if application.status == 'Invitation Rejected'
+    # Allow specialists to re-apply after their applcaiton has been rejected
+    return if application.status == 'Application Rejected'
     message = "Cannot submit application with status of #{application.status}"
     raise Service::Error.new(message)
   end

@@ -17,18 +17,34 @@ const Actions = ({ onApply, application, stack, fullWidth }) => {
           Update Application
         </Button>
       </ButtonGroup>
-    )
+    );
   }
 
   if (application.status === "Invitation Rejected") {
     actions = (
       <ButtonGroup stack={stack}>
-        <Text size="xs">You have already rejected this invitation. Changed your mind?</Text>
+        <Text size="xs">
+          You have already rejected this invitation. Changed your mind?
+        </Text>
         <Button onClick={onApply} styling="green" size="l" block>
           Apply Now
         </Button>
       </ButtonGroup>
-    )
+    );
+  }
+
+  if (application.status === "Application Rejected") {
+    actions = (
+      <ButtonGroup stack={stack}>
+        <Text size="xs">
+          Your previous application for this project was rejected. Would you
+          like to re-apply?
+        </Text>
+        <Button onClick={onApply} styling="green" size="l" block>
+          Apply Now
+        </Button>
+      </ButtonGroup>
+    );
   }
 
   if (application.status === "Invited To Apply") {
