@@ -1,9 +1,11 @@
 FactoryBot.define do
   factory :review do
-    specialist nil
-    project nil
-    reviewable nil
-    comment "MyText"
-    ratings ""
+    specialist
+    project
+    association :reviewable, factory: :application
+    comment "Comment"
+    ratings {{
+      overall: 5
+    }}
   end
 end

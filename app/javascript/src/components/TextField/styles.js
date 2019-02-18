@@ -71,8 +71,4 @@ Textarea = styled(Textarea)`
   padding: 10px;
   overflow: auto;
   line-height: 18px;
-
-  ${props => props.maxLength && css`
-    padding-bottom: 30px;
-  `}
 `;

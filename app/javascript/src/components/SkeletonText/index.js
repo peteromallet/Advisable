@@ -1,12 +1,13 @@
 // Skeleton text is used to render a loading indicator that represents a
 // paragraph of text.
 import React from "react";
+import { extractSpacingProps } from "../Spacing";
 import {
   SkeletonTextLine,
   SkeletonTextContainer
 } from "./styles";
 
-export default ({ lines = 3 }) => {
+export default ({ lines = 3, ...props }) => {
   const lineElements = [];
 
   for (let i = 0; i < lines; i++) {
@@ -14,7 +15,7 @@ export default ({ lines = 3 }) => {
   }
 
   return (
-    <SkeletonTextContainer>
+    <SkeletonTextContainer {...extractSpacingProps(props)}>
       {lineElements}
     </SkeletonTextContainer>
   )

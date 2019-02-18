@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_05_092352) do
+ActiveRecord::Schema.define(version: 2019_02_14_082110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "application_references", force: :cascade do |t|
+    t.string "uid"
+    t.bigint "application_id"
+    t.string "project_type"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_id"], name: "index_application_references_on_application_id"
+    t.index ["project_type", "project_id"], name: "index_application_references_on_project_type_and_project_id"
+    t.index ["uid"], name: "index_application_references_on_uid"
+  end
 
   create_table "application_rejection_reasons", force: :cascade do |t|
     t.string "reason"
@@ -43,6 +55,8 @@ ActiveRecord::Schema.define(version: 2019_02_05_092352) do
     t.text "rejection_reason"
     t.text "rejection_reason_comment"
     t.boolean "references_requested"
+    t.string "invitation_rejection_reason"
+    t.string "referral_url"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
@@ -261,6 +275,7 @@ ActiveRecord::Schema.define(version: 2019_02_05_092352) do
     t.string "encrypted_phone_number_iv"
     t.jsonb "ratings", default: {}
     t.integer "reviews_count"
+    t.text "bio"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
@@ -304,6 +319,7 @@ ActiveRecord::Schema.define(version: 2019_02_05_092352) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "application_references", "applications"
   add_foreign_key "applications", "application_rejection_reasons", column: "rejection_reason_id"
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"

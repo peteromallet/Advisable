@@ -1,0 +1,9 @@
+mutation SubmitApplication($input: SubmitApplicationInput!) {
+  submitApplication(input: $input) {
+    application {
+      id
+      status
+    }
+    errors
+  }
+}

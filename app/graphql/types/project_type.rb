@@ -18,6 +18,8 @@ class Types::ProjectType < Types::BaseType
   field :accepted_terms, Boolean, null: false
   field :deposit_owed, Int, null: true
   field :application_count, Int, null: false
+  field :estimated_budget, String, null: true
+  field :remote, Boolean, null: true
 
   field :applications, [Types::ApplicationType, null: true], null: true do
     argument :status, [String], required: false
