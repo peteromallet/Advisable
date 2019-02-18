@@ -21,6 +21,41 @@ query project($projectID: ID!, $applicationID: ID!) {
         question
         answer
       }
+      previousProjects {
+        project {
+          ... on Project {
+            id
+            airtableId
+            description
+            primarySkill
+            user {
+              companyName
+            }
+          }
+          ... on OffPlatformProject {
+            id
+            airtableId
+            description
+            primarySkill
+            clientName
+            validationStatus
+          }
+        }
+        reviews {
+          id
+          name
+          role
+          comment
+          ratings {
+            overall
+            skills
+            qualityOfWork
+            adherenceToSchedule
+            availability
+            communication
+          }
+        }
+      }
       specialist {
         id
         airtableId
@@ -40,41 +75,6 @@ query project($projectID: ID!, $applicationID: ID!) {
         }
         linkedin
         skills
-        previousProjects {
-          project {
-            ... on Project {
-              id
-              airtableId
-              description
-              primarySkill
-              user {
-                companyName
-              }
-            }
-            ... on OffPlatformProject {
-              id
-              airtableId
-              description
-              primarySkill
-              clientName
-              validationStatus
-            }
-          }
-          reviews {
-            id
-            name
-            role
-            comment
-            ratings {
-              overall
-              skills
-              qualityOfWork
-              adherenceToSchedule
-              availability
-              communication
-            }
-          }
-        }
       }
     }
     applications(status: ["Applied"]) {

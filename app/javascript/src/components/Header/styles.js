@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Spacer = styled.div`
   width: 100%;
-  height: 62px;
+  height: 58px;
 `;
 
 export const Header = styled.header`

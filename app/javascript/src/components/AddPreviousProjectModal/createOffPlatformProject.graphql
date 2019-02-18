@@ -14,6 +14,9 @@ mutation CreateOffPlatformProject($input: CreateOffPlatformProjectInput!) {
           validationStatus
         }
       }
+      specialist {
+        id
+      }
       reviews {
         id
       }

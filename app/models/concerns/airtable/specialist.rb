@@ -12,6 +12,7 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'Can Travel', to: :travel_availability
   sync_column 'City', to: :city
   sync_column 'LinkedIn URL', to: :linkedin
+  sync_column 'Biography', to: :bio
 
   sync_data do |specialist|
     # to prevent making more requests than we need, first check if there is

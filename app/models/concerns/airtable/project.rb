@@ -13,6 +13,7 @@ class Airtable::Project < Airtable::Base
   sync_column 'Currency', to: :currency
   sync_column 'Client Referray URL', to: :client_referral_url
   sync_column 'Project Status', to: :sales_status
+  sync_column 'Estimated Budget', to: :estimated_budget
 
   sync_data do |project|
     project.currency = fields['Currency'].try(:first)
@@ -29,6 +30,8 @@ class Airtable::Project < Airtable::Base
 
     project.accepted_terms = fields["Accepted Terms"]
     project.deposit = (fields["Deposit Amount Required"].to_f * 100).to_i
+    project.remote = true if fields['Remote OK'].include?("Yes")
+    project.remote = false if fields['Remote OK'].include?("No")
   end
 
   push_data do |project|

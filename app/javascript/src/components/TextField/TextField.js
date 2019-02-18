@@ -29,6 +29,7 @@ const TextField = ({
   readOnly,
   disabled,
   style,
+  charCount,
   maxLength,
   autoFocus,
   description,
@@ -38,7 +39,11 @@ const TextField = ({
   const [rows, setRows] = useState(props.minRows);
   const [id, _] = useState(props.id || uniqueID("TextField"));
 
-  const charCount = maxLength && (maxLength || 0) - value.length;
+  let charLimit = charCount || maxLength;
+  let characterCount = (charLimit - (value || '').length);
+  if (characterCount < 0) {
+    characterCount = 0
+  }
 
   let Component = Input;
 
@@ -50,18 +55,29 @@ const TextField = ({
     Component = InputMask;
   }
 
-  const lineHeight = 18;
-  const handleChange = e => {
-    if (multiline && props.autoHeight) {
-      const previousRows = e.target.rows;
-      e.target.rows = props.minRows;
-      const currentRows = Math.floor((e.target.scrollHeight - 20) / lineHeight);
-      if (currentRows === previousRows) {
-        e.target.rows = currentRows;
-      }
-      setRows(currentRows);
+  const LINE_HEIGHT = 18;
+  const calculateRows = () => {
+    if (!multiline || !props.autoHeight) return;
+    const el = input.current;
+    const previousRows = el.rows;
+    el.rows = props.minRows;
+    let baseHeight = el.scrollHeight - 20;
+    if (maxLength || charCount) {
+      baseHeight += 30;
+    }
+    let currentRows = Math.floor(baseHeight / LINE_HEIGHT);
+
+    if (currentRows === previousRows) {
+      el.rows = currentRows;
     }
 
+    setRows(currentRows);
+  };
+
+  React.useLayoutEffect(calculateRows, [input]);
+
+  const handleChange = e => {
+    calculateRows();
     onChange(e);
   };
 
@@ -88,7 +104,7 @@ const TextField = ({
           rows={rows}
           maxLength={maxLength}
         />
-        {maxLength && <CharCount>{charCount}</CharCount>}
+        {(charCount || maxLength) && <CharCount>{characterCount}</CharCount>}
       </InputContainer>
       {error && <InputError>{error}</InputError>}
       {description && <InputDescription>{description}</InputDescription>}

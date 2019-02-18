@@ -1,8 +1,18 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Choices = styled.div`
   display: flex;
   margin-left: -10px;
+
+  ${props => props.optionsPerRow && css`
+    flex-wrap: wrap;
+
+    ${Choice} {
+      flex-grow: 1;
+      margin-bottom: 10px;
+      width: calc(50% - 10px);
+    }
+  `}
 `
 
 export const Circle = styled.span`
@@ -44,7 +54,10 @@ export const Choice = styled.div`
   }
 
   label {
+    width: 100%;
     height: 40px;
+    font-size: 15px;
+    font-weight: 500;
     border-radius: 8px;
     position: relative;
     align-items: center;
