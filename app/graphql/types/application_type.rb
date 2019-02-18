@@ -20,6 +20,10 @@ class Types::ApplicationType < Types::BaseType
   field :previous_projects, [Types::PreviousProject], null: false
 
   def previous_projects
-    ::PreviousProject.for_application(object)
+    references = ::PreviousProject.for_application(object)
+    if references.empty?
+      references = ::PreviousProject.for_specialist(object.specialist)
+    end
+    references
   end
 end
