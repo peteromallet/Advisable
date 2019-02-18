@@ -84,9 +84,9 @@ const Overview = ({ application, history, location, steps, currentStep }) => {
                     label="When are you available to start a new project?"
                     options={[
                       "Immediately",
-                      "1 - 2 Weeks",
-                      "2 - 4 Weeks",
-                      "1 Month +"
+                      "1 - 2 weeks",
+                      "2 - 4 weeks",
+                      "1 Month+"
                     ]}
                   />
                 </FieldRow>
