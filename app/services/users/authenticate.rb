@@ -11,6 +11,7 @@ class Users::Authenticate < ApplicationService
     User.find_by_uid(payload["sub"])
   rescue JWT::VerificationError => e
   rescue JWT::ExpiredSignature => e
+  rescue JWT::DecodeError => e
     return nil
   end
 
