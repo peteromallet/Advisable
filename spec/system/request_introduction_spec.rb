@@ -10,10 +10,10 @@ describe 'Request Introduction' do
     expect(Airtable::Interview).to receive(:new).and_return(airtable_interview_record)
     expect(airtable_interview_record).to receive(:create)
 
-    airtable_application_reocrd = double('Airtable::Application')
-    expect(airtable_application_reocrd).to receive(:[]=).with('Application Status', 'Application Accepted').at_least(:once)
-    expect(airtable_application_reocrd).to receive(:save)
-    expect(Airtable::Application).to receive(:find).and_return(airtable_application_reocrd)
+    airtable_application_record = double('Airtable::Application')
+    expect(airtable_application_record).to receive(:[]=).with('Application Status', 'Application Accepted').at_least(:once)
+    expect(airtable_application_record).to receive(:save)
+    expect(Airtable::Application).to receive(:find).and_return(airtable_application_record)
 
     authenticate_as project.user
     visit "/projects/#{project.airtable_id}/applied"

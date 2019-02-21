@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def current_user
-    Users::Authenticate.call(token: auth_token)
+    Accounts::Authenticate.call(auth_token)
   end
 
   def auth_token

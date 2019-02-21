@@ -1,14 +1,17 @@
-# Authenticates a given JWT and returns the user record.
-class Users::Authenticate < ApplicationService
+# Takes a given JWT and returns the account that it represents.
+#
+# === example
+#  user = Accounts::Authenticate.call("...")
+class Accounts::Authenticate < ApplicationService
   attr_reader :token
 
-  def initialize(token:)
+  def initialize(token)
     @token = token
   end
 
   def call
     return nil unless token.present?
-    User.find_by_uid(payload["sub"])
+    Account.find_by_uid(payload["sub"])
   rescue JWT::VerificationError => e
   rescue JWT::ExpiredSignature => e
   rescue JWT::DecodeError => e

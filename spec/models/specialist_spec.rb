@@ -3,7 +3,6 @@ require 'rails_helper'
 describe Specialist do
   it { should have_many(:applications) }
   it { should have_many(:skills).through(:specialist_skills) }
-  it { should validate_presence_of(:first_name) }
 
   describe "#name" do
       it "outputs the full name" do

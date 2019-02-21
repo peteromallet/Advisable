@@ -7,8 +7,8 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
 
   def resolve(**args)
     {
-      user: Users::Confirm.call({
-        user: User.find_by_email!(args[:email]),
+      user: Accounts::Confirm.call({
+        account: Account.find_by_email!(args[:email]),
         token: args[:token]
       })
     }
