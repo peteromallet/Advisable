@@ -32,16 +32,32 @@ class Applications::Update < ApplicationService
   # of the question.
   def apply_question_answers
     return unless attributes[:questions]
-    application_questions = application.questions.map { |q| q['question'] }
-    attributes[:questions].each do |question|
-      index =
-        application.questions.find_index do |q|
-          q['question'] == question[:question]
-        end
 
-      raise Service::Error.new(:invalid_question) if index.nil?
-      application.questions[index]['answer'] = question[:answer]
+    application_questions = application.questions || []
+    # iterate through the passed questions. This should be an array of hashes
+    # with 'question' and 'answer' keys.
+    attributes[:questions].each do |hash|
+      # Check that the passed quesion is in the projects questions array.
+      unless (application.project.questions || []).include?(hash[:question])
+        raise Service::Error.new(:invalid_question)
+      end
+
+      # Check if the question has already been answered
+      index = application_questions.find_index do |q|
+        q['question'] == hash[:question]
+      end
+
+      # Override the answer if it has already been answered
+      if index.present?
+        application_questions[index] = hash
+      else
+        # If it hasnt already been answered then add it to the application
+        # questions array
+        application_questions.push(hash)
+      end
     end
+
+    application.questions = application_questions
   end
 
   def reference_projects

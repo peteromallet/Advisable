@@ -52,6 +52,7 @@ fragment ApplicationFields on Application {
   project {
     id
     currency
+    questions
     airtableId
     primarySkill
     description
