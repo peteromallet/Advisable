@@ -51,11 +51,9 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
       path: "/questions/:number?",
       component: Questions,
       hidden: application.project.questions.length === 0,
-      isComplete: isEmpty(
-        filter(application.questions, q => {
-          return isEmpty(q.answer);
-        })
-      )
+      isComplete:
+        filter(application.questions, q => !isEmpty(q.answer)).length ===
+        application.project.questions.length
     },
     {
       name: "References",
