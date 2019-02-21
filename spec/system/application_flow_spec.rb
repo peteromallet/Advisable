@@ -10,16 +10,8 @@ describe 'Application flow' do
     allow(Airtable::Skill).to receive(:active).and_return([skill])
   end
 
-  let(:application) {
-    create(:application, {
-      status: "Invited To Apply",
-      questions: [{
-        question: "Is this a test?"
-      }, {
-        question: "Is this another question?"
-      }]
-    })
-  }
+  let(:project) { create(:project, questions: ["Is this a test?", "Is this another question?"]) }
+  let(:application) { create(:application, project: project, status: "Invited To Apply") }
 
   describe 'Overview step' do
     it 'Continues to the questions step' do
@@ -59,17 +51,16 @@ describe 'Application flow' do
     context 'when on the last question' do
       let(:application) {
         create(:application, {
+          project: project,
           status: "Invited To Apply",
           questions: [{
             answer: "This has been answered",
-            question: "Is this a test?"
-          }, {
-            question: "Is this another question?"
+            question: project.questions[0]
           }]
         })
       }
 
-      it 'proceeds to the references step' do
+      it 'proceeds to the references step after submission' do
         visit "/invites/#{application.airtable_id}/apply/questions/2"
         fill_in :answer, with: "This is my answer"
         click_on 'Next'
@@ -78,10 +69,11 @@ describe 'Application flow' do
     end
 
     context "when there are no questions" do
+      let(:project) { create(:project, questions: [])}
       let(:application) {
         create(:application, {
+          project: project,
           status: "Invited To Apply",
-          questions: []
         })
       }
 
