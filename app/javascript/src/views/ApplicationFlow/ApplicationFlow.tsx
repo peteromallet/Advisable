@@ -50,7 +50,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
       to: "/questions",
       path: "/questions/:number?",
       component: Questions,
-      hidden: application.questions.length === 0,
+      hidden: application.project.questions.length === 0,
       isComplete: isEmpty(
         filter(application.questions, q => {
           return isEmpty(q.answer);

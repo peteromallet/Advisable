@@ -2,15 +2,17 @@ require 'rails_helper'
 
 describe Applications::Update do
   let(:specialist) { create(:specialist) }
+  let(:project) { create(:project, questions: ["Is this a test?"]) }
   let(:off_platform_project) {
     create(:off_platform_project, airtable_id: "rec_987654321", specialist: specialist)
   }
 
   let(:original_attributes) {{
+    project: project,
     specialist: specialist,
     introduction: "...",
     availability: "1 Month",
-    questions: [{ question: "Is this a test?" }],
+    questions: [],
     rate: "",
     accepts_fee: nil,
     accepts_terms: nil

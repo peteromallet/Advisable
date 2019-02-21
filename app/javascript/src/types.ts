@@ -3,6 +3,7 @@ export interface ProjectType {
   description?: string;
   primarySkill?: string;
   companyDescription?: string;
+  questions: string[];
 }
 
 export interface ApplicationType {
