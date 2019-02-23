@@ -41,15 +41,21 @@ class Airtable::Application < Airtable::Base
     # "Question N" and return an object for each question. This allows us to add
     # more questions to airtable without having to create a direct mapping to
     # each column.
-    application.questions = fields.inject([]) do |questions, (key, val)|
-      matches = key.match(/Question\s(?<number>\d)$/)
-      if matches
-        questions << {
-          question: val,
-          answer: fields["Answer #{matches[:number]}"]
-        }
-      end
-      questions
+
+    if fields["Answer 1"]
+      application.questions ||= []
+      application.questions[0] = {
+        question: fields["Question 1"],
+        answer: fields["Answer 1"],
+      }
+    end
+
+    if fields["Answer 2"]
+      application.questions ||= []
+      application.questions[1] = {
+        question: fields["Question 2"],
+        answer: fields["Answer 2"],
+      }
     end
   end
 
@@ -71,6 +77,8 @@ class Airtable::Application < Airtable::Base
     self['Invitation Rejected Reason'] = application.invitation_rejection_reason if application.saved_change_to_invitation_rejection_reason?
     self['Answer 1'] = application.questions.try(:first).try(:[], "answer") if application.saved_change_to_questions?
     self['Answer 2'] = application.questions.try(:second).try(:[], "answer") if application.saved_change_to_questions?
+    self['Question 1'] = application.questions.try(:first).try(:[], "question") if application.saved_change_to_questions?
+    self['Question 2'] = application.questions.try(:second).try(:[], "question") if application.saved_change_to_questions?
 
     references_project_ids = application.references.where(project_type: "Project").map do |r|
       r.project.airtable_id
