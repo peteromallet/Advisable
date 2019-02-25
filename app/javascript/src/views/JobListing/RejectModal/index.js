@@ -20,13 +20,13 @@ const REJECTION_REASONS = [
   "Doesn’t seem like a good fit"
 ];
 
-const RejectModal = ({ isOpen, onClose, onReject, applicationId }) => {
+const RejectModal = ({ isOpen, onClose, onReject, application }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <Padding size="xl">
         <React.Fragment>
           <Padding bottom="l">
-            <Heading>Reject invitation to ClickDimensions at Selecta</Heading>
+            <Heading>Reject invitation to {application.project.primarySkill} project</Heading>
           </Padding>
           <Mutation mutation={REJECT}>
             {reject => (
@@ -36,7 +36,7 @@ const RejectModal = ({ isOpen, onClose, onReject, applicationId }) => {
                   await reject({
                     variables: {
                       input: {
-                        id: applicationId,
+                        id: application.airtableId,
                         ...values
                       }
                     }
