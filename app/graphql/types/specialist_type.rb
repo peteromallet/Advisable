@@ -16,6 +16,7 @@ class Types::SpecialistType < Types::BaseType
   field :reviews, [Types::Review], null: false
   field :reviewsCount, Integer, null: true
   field :previous_projects, [Types::PreviousProject], null: false
+  field :has_account, Boolean, null: false
 
   def name
     "#{object.first_name} #{object.last_name}"
@@ -27,5 +28,9 @@ class Types::SpecialistType < Types::BaseType
 
   def previous_projects
     ::PreviousProject.for_specialist(object)
+  end
+
+  def has_account
+    object.has_account?
   end
 end
