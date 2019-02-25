@@ -18,6 +18,7 @@ import EditProposal from "./views/EditProposal";
 import CreateProposal from "./views/CreateProposal";
 import ApplicationFlow from "./views/ApplicationFlow";
 import InterviewRequest from "./views/InterviewRequest";
+import FreelancerSignup from "./views/FreelancerSignup";
 import NotFound from "./views/NotFound";
 
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
@@ -28,6 +29,7 @@ const Routes = () => {
     <Suspense fallback={<Loading />}>
       <BrowserRouter>
         <Switch>
+          <AuthenticatedRoute exact path="/" component={RootPath} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route
@@ -38,7 +40,7 @@ const Routes = () => {
             path="/confirm_account/:token"
             render={props => <ConfirmAccount {...props} />}
           />
-          <AuthenticatedRoute exact path="/" component={RootPath} />
+          <Route path="/freelancers/:id/signup" component={FreelancerSignup} />
           <AuthenticatedRoute path="/setup" component={Setup} />
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
           <Route path="/projects/:projectID" component={Project} />
@@ -64,11 +66,7 @@ const Routes = () => {
             path="/applications/:applicationID/proposal"
             component={CreateProposal}
           />
-          <Route
-            exact
-            path="/invites/:applicationId"
-            component={JobListing}
-          />
+          <Route exact path="/invites/:applicationId" component={JobListing} />
           <Route
             path="/invites/:applicationId/apply"
             component={ApplicationFlow}
