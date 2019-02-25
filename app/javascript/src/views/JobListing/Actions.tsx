@@ -52,7 +52,7 @@ const Actions = ({ onApply, application, stack, fullWidth }) => {
       <React.Fragment>
         <RejectModal
           isOpen={rejectModal}
-          applicationId={application.airtableId}
+          application={application}
           onClose={() => setRejectModal(false)}
           onReject={() => setShareModal(true)}
         />
