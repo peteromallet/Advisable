@@ -9,8 +9,8 @@ RSpec.configure do |config|
         }
       )
     end
-    driven_by :selenium_chrome_headless
-    # driven_by :selenium_chrome
+    # driven_by :selenium_chrome_headless
+    driven_by :selenium_chrome
     # driven_by :chrome_with_logs
   end
 end
