@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { Mutation } from "react-apollo";
 import { Formik } from "formik";
 import Text from "src/components/Text";
+import Link from "src/components/Link";
 import Button from "src/components/Button";
 import Checkbox from "src/components/Checkbox";
 import { Mobile } from "src/components/Breakpoint";
@@ -15,9 +16,9 @@ export default ({ project, match, history }) => {
 
   useEffect(() => {
     if (project.questions.length === 0) {
-      history.replace("questions")
+      history.replace("questions");
     }
-  }, [])
+  }, []);
 
   const isLastStep = project.depositOwed === 0;
 
@@ -46,56 +47,43 @@ export default ({ project, match, history }) => {
             {formik => (
               <form onSubmit={formik.handleSubmit}>
                 <Text size="s" weight="bold" colour="dark" marginBottom="xs">
-                  Responsibility for performance
+                  Freelancer payment
                 </Text>
                 <Text size="s" marginBottom="l">
-                  Advisable.com will identify and vet freelance specialists to
-                  match the above Project Brief on behalf of Your Company. Your
-                  Company will then be responsible for interviewing and
-                  assessing the suitability of these candidates. Your Company is
-                  responsible for making any hiring decisions and Advisable.com
-                  will accept no responsibility for the performance of hired
-                  specialists
+                  Advisable earns fees from our freelancers for finding them
+                  projects. If you hire one of Advisable’s freelancers, all
+                  payment must be made via our platform.
                 </Text>
 
                 <Text size="s" weight="bold" colour="dark" marginBottom="xs">
-                  Service fees
+                  Refundable deposit
                 </Text>
                 <Text size="s" marginBottom="l">
-                  If a specialist is hired by your Company on a freelance basis,
-                  Advisable.com will charge this specialist a service fee. Your
-                  Company will ensure Advisable.com is made aware of all
-                  transactions between your Company and this specialist in order
-                  for Advisable.com to accurately calculate and collect it’s fee
+                  To start the recruitment process, we charge a $500 deposit
+                  that is 100% refundable should you decide not to hire a
+                  freelancer, or credited against their first payment if you do
+                  hire one. This is not a fee: we charge a deposit as we need to
+                  know you’re serious prior to commencing our highly customized
+                  and time intensive matching process.
                 </Text>
 
                 <Text size="s" weight="bold" colour="dark" marginBottom="xs">
-                  Specialist payment
-                </Text>
-                <Text size="s" marginBottom="l">
-                  Your Company will ensure that all payments between your
-                  Company and a specialist are made via Advisable.com. Payment
-                  terms will be agreed directly between your Company and
-                  Advisable.com
-                </Text>
-
-                <Text size="s" weight="bold" colour="dark" marginBottom="xs">
-                  Other project terms
-                </Text>
-                <Text size="s" marginBottom="l">
-                  All further agreements (i.e. on project pricing and
-                  deliverables) will be made directly between your Company and a
-                  specialist
-                </Text>
-
-                <Text size="s" weight="bold" colour="dark" marginBottom="xs">
-                  Full-time hire
+                  Engage with the process
                 </Text>
                 <Text size="s" marginBottom="xl">
-                  If a specialist is subsequently hired by your Company in a
-                  full-time capacity, your Company agrees to pay Advisable.com a
-                  one-off recruitment fee of 10% of the year 1 salary upon
-                  commencement of this full-time employment
+                  Our freelancers are in high-demand. In submitting this brief,
+                  you commit to engaging with the recruitment process in a
+                  professional manner and adhering to the{" "}
+                  <Link
+                    href="https://advisable.com/professional-standards/#clients"
+                    target="_blank"
+                  >
+                    Client Professional Standards
+                  </Link>
+                  . This means providing prompt feedback to Advisable and our
+                  freelancers at every stage of the recruitment process.
+                  Penalties of up to $200 are in force should you disengage with
+                  the process without notifying Advisable.
                 </Text>
 
                 <Checkbox

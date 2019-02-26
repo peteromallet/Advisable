@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 
 const STYLES = {
   subtle: css`
-    color: #4D5880;
+    color: #4d5880;
 
     &:hover {
       color: #0064ff;
     }
   `
-}
+};
 
 let RouterLink = styled(Link)`
   color: #0064ff;
@@ -33,7 +33,4 @@ let RouterLink = styled(Link)`
 
 RouterLink = withSpacing(RouterLink);
 
-const ExternalLink = RouterLink.withComponent("a");
-
-export default props =>
-  props.href ? <ExternalLink {...props} /> : <RouterLink {...props} />;
+export default props => <RouterLink as={props.href && "a"} {...props} />;
