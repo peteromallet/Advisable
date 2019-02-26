@@ -1,5 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
-import { animated, useSpring } from "react-spring";
+import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import Text from "src/components/Text";
 import Avatar from "src/components/Avatar";
@@ -24,24 +23,9 @@ import {
 
 const Candidate = ({ application, project, history }) => {
   const [expanded, setExpanded] = useState(false);
-  const moreInfo = useRef(null);
-  const [heightAnimation, setHeightAnimation] = useSpring(() => ({
-    height: 0,
-    opacity: 0
-  }));
-
-  const recalculateHeight = () => {
-    const height = moreInfo.current ? moreInfo.current.getBoundingClientRect().height : 0;
-    setHeightAnimation({ height });
-  };
-
-  useLayoutEffect(() => {
-    recalculateHeight();
-  });
 
   const handleExpand = () => {
     setExpanded(!expanded);
-    setHeightAnimation({ opacity: expanded ? 0 : 1 });
   };
 
   return (
@@ -102,28 +86,23 @@ const Candidate = ({ application, project, history }) => {
         {expanded ? "View Less" : "View More"}
       </Button>
 
-      <animated.div style={{ overflowY: "hidden", ...heightAnimation }}>
-        <div ref={moreInfo}>
-          {expanded && (
-            <React.Fragment>
-              <Questions questions={application.questions} />
-              {application.specialist.skills.length > 0 && (
-                <Spacing marginTop="xl">
-                  <Skills skills={application.specialist.skills} />
-                </Spacing>
-              )}
-
-              <Spacing paddingTop="l">
-                <PreviousProjects
-                  project={project}
-                  recalculateHeight={recalculateHeight}
-                  applicationId={application.airtableId}
-                />
-              </Spacing>
-            </React.Fragment>
+      {expanded && (
+        <React.Fragment>
+          <Questions questions={application.questions} />
+          {application.specialist.skills.length > 0 && (
+            <Spacing marginTop="xl">
+              <Skills skills={application.specialist.skills} />
+            </Spacing>
           )}
-        </div>
-      </animated.div>
+
+          <Spacing paddingTop="l">
+            <PreviousProjects
+              project={project}
+              applicationId={application.airtableId}
+            />
+          </Spacing>
+        </React.Fragment>
+      )}
 
       <CandidateActions history={history} application={application} />
     </Card>

@@ -8,7 +8,7 @@ const windowWidths = {
 };
 
 const expandOnMobile = enabled => {
-  if (!enabled) return null;
+  if (!enabled) return css``;
 
   return css`
     @media (max-width: 800px) {
@@ -25,7 +25,7 @@ export const WindowContainer = styled(animated.div)`
   width: 100%;
   margin: 0 auto;
   max-width: ${props => windowWidths[props.size || "m"]};
-  ${props => expandOnMobile(props.expandOnMobile)};
+  ${props => expandOnMobile(props.expandOnMobile || false)};
 `;
 
 let WindowStyles = styled.div`

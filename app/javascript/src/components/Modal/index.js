@@ -17,7 +17,7 @@ import ModalFooter from "./ModalFooter";
 const modalRoot = document.getElementById("js-modal-root");
 let previousOverflow;
 
-const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...props }) => {
+const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentProps }) => {
 
   const transitions = useTransition(isOpen, null, {
     from: { opacity: 0, transform: "translate3d(0, 100px, 0)" },
@@ -47,18 +47,17 @@ const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...props }) =>
   return ReactDOM.createPortal(
     <ModalContainer expandOnMobile={expandOnMobile}>
       {transitions.map(
-        ({ item, key, style }) =>
+        ({ item, key, props }) =>
           item && (
             <WindowContainer
               key={key}
               size={size}
-              style={style}
-              expandOnMobile={expandOnMobile}
+              style={props}
             >
               <Window
                 className="ModalWindow"
                 expandOnMobile={expandOnMobile}
-                {...extractSpacingProps(props)}
+                {...extractSpacingProps(componentProps)}
               >
                 <CloseModal onClick={onClose}>
                   <svg width={13} height={12} fill="none">

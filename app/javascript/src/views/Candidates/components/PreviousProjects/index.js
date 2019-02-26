@@ -9,11 +9,7 @@ import ProjectSkeleton from "./ProjectSkeleton";
 import FETCH_PROJECTS from "./fetchProjects.graphql";
 import PreviousProjectsModal from "../../../../components/PreviousProjectsModal";
 
-const PreviousProjects = ({ data, recalculateHeight, project }) => {
-  useLayoutEffect(() => {
-    recalculateHeight();
-  });
-
+const PreviousProjects = ({ data, project }) => {
   return (
     <React.Fragment>
       <Heading level="6" marginBottom="s">
