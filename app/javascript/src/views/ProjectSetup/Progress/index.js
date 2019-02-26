@@ -1,22 +1,22 @@
-import React from 'react';
+import React from "react";
 import { Spring } from "react-spring/renderprops";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Bar = styled.div`
   height: 3px;
   margin: 20px 0;
   border-radius: 2px;
   background: rgba(183, 189, 213, 0.34);
-`
+`;
 
-const Inner = styled.div.attrs({
-  style: (props) => {
-    return { width: `${props.width}%` }
+const Inner = styled.div.attrs(props => ({
+  style: {
+    width: `${props.width}%`
   }
-})`
+}))`
   height: 100%;
-  background: #17CDA1;
-`
+  background: #17cda1;
+`;
 
 export default ({ amount }) => {
   return (
@@ -27,5 +27,5 @@ export default ({ amount }) => {
         </Bar>
       )}
     </Spring>
-  )
-}
+  );
+};
