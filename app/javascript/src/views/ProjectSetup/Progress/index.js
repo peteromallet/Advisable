@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spring } from "react-spring";
+import { Spring } from "react-spring/renderprops";
 import styled from 'styled-components';
 
 const Bar = styled.div`

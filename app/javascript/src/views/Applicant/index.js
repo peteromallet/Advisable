@@ -131,11 +131,12 @@ class Applicant extends React.Component {
                   ))}
 
                   <Heading level="6" paddingTop="l" marginBottom="s">
-                    Previous Projects
+                    Previous Projects related to "{project.primarySkill}"
                   </Heading>
                   {application.previousProjects.length > 0 ? (
                     <PreviousProjects
                       name={application.specialist.name}
+                      hasMoreProjects={application.hasMoreProjects}
                       specialistId={application.specialist.airtableId}
                       previousProjects={application.previousProjects || []}
                     />
