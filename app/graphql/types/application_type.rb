@@ -17,6 +17,7 @@ class Types::ApplicationType < Types::BaseType
   field :referral_url, String, null: true
   field :accepts_fee, Boolean, null: true
   field :accepts_terms, Boolean, null: true
+  field :has_more_projects, Boolean, null: false
   field :previous_projects, [Types::PreviousProject], null: false do
     argument :fallback, Boolean, required: false
   end
@@ -33,5 +34,12 @@ class Types::ApplicationType < Types::BaseType
     end
 
     references
+  end
+
+  # Wether or not the candidate has more previous projects than the ones they
+  # have included in their application
+  def has_more_projects
+    return false if object.references.empty?
+    object.references.count < ::PreviousProject.for_specialist(object.specialist).count
   end
 end

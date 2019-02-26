@@ -1,5 +1,5 @@
-import React, { useState, useRef, useLayoutEffect, useCallback } from "react";
-import { animated, useSpring } from "react-spring/hooks";
+import React, { useState, useRef, useLayoutEffect } from "react";
+import { animated, useSpring } from "react-spring";
 import { withRouter } from "react-router-dom";
 import Text from "src/components/Text";
 import Avatar from "src/components/Avatar";
@@ -115,6 +115,7 @@ const Candidate = ({ application, project, history }) => {
 
               <Spacing paddingTop="l">
                 <PreviousProjects
+                  project={project}
                   recalculateHeight={recalculateHeight}
                   applicationId={application.airtableId}
                 />

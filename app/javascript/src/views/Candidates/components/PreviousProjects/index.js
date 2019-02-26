@@ -1,13 +1,15 @@
 // Fetches a specialists previous projects.
 import React, { useLayoutEffect } from "react";
 import { graphql } from "react-apollo";
+import Button from "src/components/Button";
 import Heading from "src/components/Heading";
+import PreviousProject from "src/components/PreviousProject";
 import PreviousProjectsEmptyState from "src/components/PreviousProjectsEmptyState";
-import PreviousProject from "./PreviousProject";
 import ProjectSkeleton from "./ProjectSkeleton";
 import FETCH_PROJECTS from "./fetchProjects.graphql";
+import PreviousProjectsModal from "../../../../components/PreviousProjectsModal";
 
-const PreviousProjects = ({ data, recalculateHeight }) => {
+const PreviousProjects = ({ data, recalculateHeight, project }) => {
   useLayoutEffect(() => {
     recalculateHeight();
   });
@@ -15,7 +17,9 @@ const PreviousProjects = ({ data, recalculateHeight }) => {
   return (
     <React.Fragment>
       <Heading level="6" marginBottom="s">
-        Previous Projects
+        <React.Fragment>
+          Previous Projects related to "{project.primarySkill}"
+        </React.Fragment>
       </Heading>
 
       {data.loading ? (
@@ -24,22 +28,48 @@ const PreviousProjects = ({ data, recalculateHeight }) => {
           <ProjectSkeleton />
         </React.Fragment>
       ) : (
-        <SpecialistProjects data={data} />
+        <React.Fragment>
+          <SpecialistProjects
+            hasMoreProjects={data.application.hasMoreProjects}
+            data={data}
+          />
+        </React.Fragment>
       )}
     </React.Fragment>
   );
 };
 
+const SpecialistProjects = ({ data, hasMoreProjects }) => {
+  const [viewAllProjects, setViewAllProjects] = React.useState(
+    !hasMoreProjects
+  );
 
-const SpecialistProjects = ({ data }) => {
   if (data.application.previousProjects.length > 0) {
-    return data.application.previousProjects.map(previousProject => (
-      <PreviousProject
-        key={previousProject.project.id}
-        previousProject={previousProject}
-        specialistId={data.application.specialist.airtableId}
-      />
-    ));
+    const projects = data.application.previousProjects;
+
+    return (
+      <React.Fragment>
+        {projects.map(previousProject => (
+          <PreviousProject
+            key={previousProject.project.id}
+            previousProject={previousProject}
+            specialistId={data.application.specialist.airtableId}
+          />
+        ))}
+        {hasMoreProjects && (
+          <React.Fragment>
+            <PreviousProjectsModal
+              isOpen={viewAllProjects}
+              onClose={() => setViewAllProjects(false)}
+              specialistId={data.application.specialist.airtableId}
+            />
+            <Button styling="outlined" onClick={() => setViewAllProjects(true)}>
+              View all projects
+            </Button>
+          </React.Fragment>
+        )}
+      </React.Fragment>
+    );
   }
 
   return (

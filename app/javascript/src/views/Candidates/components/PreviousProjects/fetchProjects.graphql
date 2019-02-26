@@ -1,41 +1,20 @@
+#import "../../../../graphql/previousProjectFields.graphql"
 query PreviousProjects($applicationId: ID!) {
   application(id: $applicationId) {
     id
     airtableId
+    hasMoreProjects
     referencesRequested
     previousProjects {
-      project {
-        ... on Project {
-          id
-          airtableId
-          description
-          primarySkill
-          user {
-            companyName
-          }
-        }
-        ... on OffPlatformProject {
-          id
-          airtableId
-          industry
-          clientName
-          description
-          primarySkill
-          confidential
-          validationStatus
-        }
-      }
-      reviews {
-        id
-        ratings {
-          overall
-        }
-      }
+      ...PreviousProjectFields
     }
     specialist {
       id
-      airtableId
       name
+      airtableId
+      previousProjects {
+        ...PreviousProjectFields
+      }
     }
   }
 }

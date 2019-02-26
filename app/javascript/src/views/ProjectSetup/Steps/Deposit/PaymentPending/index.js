@@ -20,7 +20,7 @@ const PaymentPending = ({ source, project, match, history, setError }) => {
     }
   };
 
-  useEffect(async () => {
+  const processPayment = async () => {
     // Submit the source to create a payment record
     const response = await graphqlClient.mutate({
       mutation: CREATE_PAYMENT,
@@ -53,6 +53,10 @@ const PaymentPending = ({ source, project, match, history, setError }) => {
         checkPayment(paymentResponse.data.payment);
       }, 1000);
     }
+  }
+
+  useEffect(() => {
+    processPayment()
   }, []);
 
   return (

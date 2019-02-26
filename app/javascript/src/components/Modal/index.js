@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Spring } from "react-spring";
+import { useTransition } from "react-spring";
 import { extractSpacingProps } from "../Spacing";
 import {
   ModalContainer,
   Backdrop,
+  WindowContainer,
   Window,
-  CloseModal,
+  CloseModal
 } from "./styles";
 
 import ModalHeader from "./ModalHeader";
@@ -14,90 +15,52 @@ import ModalBody from "./ModalBody";
 import ModalFooter from "./ModalFooter";
 
 const modalRoot = document.getElementById("js-modal-root");
+let previousOverflow;
 
-class Modal extends React.Component {
-  static Header = ModalHeader
-  static Body = ModalBody
-  static Footer = ModalFooter
+const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...props }) => {
 
-  state = {
-    scrollPosition: null
-  };
+  const transitions = useTransition(isOpen, null, {
+    from: { opacity: 0, transform: "translate3d(0, 100px, 0)" },
+    enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
+    leave: { opacity: 0, transform: "translate3d(0, 100px, 0)" }
+  });
 
-  constructor(props) {
-    super(props);
-    this.el = document.createElement("div");
-  }
-
-  componentDidMount() {
-    modalRoot.appendChild(this.el);
-  }
-
-  componentWillUnmount() {
-    this.restore();
-
-    if (this.props.isOpen) {
-      window.scrollTo(0, this.state.scrollPosition);
-    }
-
-    modalRoot.removeChild(this.el);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.isOpen === false && this.props.isOpen) {
-      const scrollPosition =
-        (window.pageYOffset || document.documentElement.scrollTop) -
-        (document.documentElement.clientTop || 0);
-      this.setState({ scrollPosition });
+  React.useLayoutEffect(() => {
+    // if there is at least one modal open and the body hasn't been set to
+    // overflow hidden then add the various styles to prevent scrolling on the
+    // body.
+    if (modalRoot.firstChild && document.body.style.overflow !== "hidden") {
+      previousOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
-      document.body.style.top = `-${scrollPosition}px`;
-      document.body.style.position = "fixed";
-      window.addEventListener("keydown", this.handleKeyDown);
     }
 
-    if (prevProps.isOpen && this.props.isOpen === false) {
-      this.restore();
-      window.scrollTo(0, this.state.scrollPosition);
+    // if there is no more modals then set the body overflow back to what it
+    // was.
+    if (modalRoot.firstChild === null) {
+      document.body.style.overflow = previousOverflow || "";
     }
-  }
+  }, [isOpen]);
 
-  restore() {
-    document.body.style.overflow = "scroll";
-    document.body.style.top = "0px";
-    document.body.style.position = "static";
-    window.removeEventListener("keydown", this.handleKeyDown);
-  }
+  // If the modal isn't open then return null
+  if (!isOpen) return null;
 
-  handleKeyDown = e => {
-    if (e.keyCode === 27) {
-      this.props.onClose();
-    }
-  };
-
-  render() {
-    if (!this.props.isOpen) return null;
-
-    return ReactDOM.createPortal(
-      <ModalContainer
-        ref={c => (this.modalContainer = c)}
-        expandOnMobile={this.props.expandOnMobile}
-      >
-          <Spring
-            from={{ opacity: 0, translateY: 100 }}
-            to={{
-              opacity: this.props.isOpen ? 1 : 0,
-              translateY: this.props.isOpen ? 0 : 100
-            }}
-          >
-            {styles => (
+  return ReactDOM.createPortal(
+    <ModalContainer expandOnMobile={expandOnMobile}>
+      {transitions.map(
+        ({ item, key, style }) =>
+          item && (
+            <WindowContainer
+              key={key}
+              size={size}
+              style={style}
+              expandOnMobile={expandOnMobile}
+            >
               <Window
-                styles={styles}
                 className="ModalWindow"
-                size={this.props.size}
-                {...extractSpacingProps(this.props)}
-                expandOnMobile={this.props.expandOnMobile}
+                expandOnMobile={expandOnMobile}
+                {...extractSpacingProps(props)}
               >
-                <CloseModal onClick={this.props.onClose}>
+                <CloseModal onClick={onClose}>
                   <svg width={13} height={12} fill="none">
                     <path
                       fillRule="evenodd"
@@ -107,15 +70,19 @@ class Modal extends React.Component {
                     />
                   </svg>
                 </CloseModal>
-                {this.props.children}
+                {children}
               </Window>
-            )}
-          </Spring>
-        <Backdrop onClick={this.props.onClose} />
-      </ModalContainer>,
-      this.el
-    );
-  }
-}
+            </WindowContainer>
+          )
+      )}
+      <Backdrop onClick={onClose} />
+    </ModalContainer>,
+    modalRoot
+  );
+};
+
+Modal.Header = ModalHeader;
+Modal.Body = ModalBody;
+Modal.Footer = ModalFooter;
 
 export default Modal;
