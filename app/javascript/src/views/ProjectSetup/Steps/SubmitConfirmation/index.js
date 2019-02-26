@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { Spring } from "react-spring";
+import { Spring } from "react-spring/renderprops";
 import graphqlClient from "src/graphqlClient";
 import CONFIRM_PROJECT from "./confirmProject.graphql";
 import { Wrapper, Progress } from "./styles";

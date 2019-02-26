@@ -4,6 +4,7 @@ query project($projectID: ID!, $applicationID: ID!) {
     name
     currency
     airtableId
+    primarySkill
     application(id: $applicationID) {
       id
       airtableId
@@ -21,6 +22,7 @@ query project($projectID: ID!, $applicationID: ID!) {
         question
         answer
       }
+      hasMoreProjects
       previousProjects {
         project {
           ... on Project {

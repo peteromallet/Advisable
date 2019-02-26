@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Flex from "src/components/Flex";
-import Spacing from "src/components/Spacing";
-import StarRating from "src/components/StarRating";
-import ProjectValidationStatus from "src/components/ProjectValidationStatus";
-import PreviousProjectModal from "src/components/PreviousProjectModal";
-import { useMobile } from "src/components/Breakpoint";
+import * as React from "react";
+import Flex from "../Flex";
+import Spacing from "../Spacing";
+import StarRating from "../StarRating";
+import { useMobile } from "../Breakpoint";
+import ProjectValidationStatus from "../ProjectValidationStatus";
+import PreviousProjectModal from "../PreviousProjectModal";
 import { PreviousProject, ProjectTitle, ProjectDescription } from "./styles";
 
 const companyName = project => {
@@ -20,7 +20,7 @@ const title = project => {
 };
 
 export default ({ specialistId, previousProject }) => {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = React.useState(false);
   const isMobile = useMobile();
   const { project, reviews } = previousProject;
 

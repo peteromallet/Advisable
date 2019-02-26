@@ -1,5 +1,53 @@
 import styled, { keyframes, css } from "styled-components";
-import { withSpacing } from '../Spacing';
+import { withSpacing } from "../Spacing";
+import { animated } from "react-spring";
+
+const windowWidths = {
+  m: "500px",
+  l: "700px"
+};
+
+const expandOnMobile = enabled => {
+  if (!enabled) return null;
+
+  return css`
+    @media (max-width: 800px) {
+      width: 100%;
+      height: 100%;
+      border-radius: 0px;
+      max-height: 100% !important;
+    }
+  `;
+};
+
+export const WindowContainer = styled(animated.div)`
+  z-index: 3;
+  width: 100%;
+  margin: 0 auto;
+  max-width: ${props => windowWidths[props.size || "m"]};
+  ${props => expandOnMobile(props.expandOnMobile)};
+`;
+
+let WindowStyles = styled.div`
+  width: 100%;
+  z-index: 500;
+  display: flex;
+  margin: 0 auto;
+  overflow: hidden;
+  background: white;
+  border-radius: 8px;
+  position: relative;
+  flex-direction: column;
+  max-height: calc(100vh - 60px);
+  box-shadow: 0px 10px 50px rgba(14, 29, 78, 0.3);
+  transition: transform 400ms, opacity 300ms;
+  ${props => expandOnMobile(props.expandOnMobile)};
+
+  opacity: 0;
+  transform: scale(0.98) translate3d(0, -80px, 0);
+`;
+
+export const Window = withSpacing(WindowStyles);
 
 export const ModalContainer = styled.div`
   top: 0;
@@ -12,58 +60,32 @@ export const ModalContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: ${props => !props.expandOnMobile && "15px"};
-`;
 
-const windowWidths = {
-  m: "500px",
-  l: "700px"
-};
+  &:first-child ${Backdrop} {
+    background: rgba(76, 87, 126, 0.7);
+  }
+
+  &:last-child ${Window} {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+`;
 
 export const ModalBody = styled.div`
   flex-grow: 1;
   display: flex;
   overflow-y: hidden;
-`
+`;
 
 export const ModalHeader = styled.div`
-  padding: 25px 30px;
-  border-bottom: 1px solid #E4E5EB;
-`
+  padding: 25px 50px 25px 30px;
+  border-bottom: 1px solid #e4e5eb;
+`;
 
 export const ModalFooter = styled.div`
   padding: 25px 30px;
-  border-top: 1px solid #E4E5EB;
-`
-
-export const Window = withSpacing(styled.div.attrs(({ styles }) => ({
-  style: {
-    opacity: styles.opacity,
-    transform: `translatey(${styles.translateY}px)`
-  }
-}))`
-  width: 100%;
-  z-index: 500;
-  display: flex;
-  margin: 0 auto;
-  overflow: hidden;
-  background: white;
-  border-radius: 8px;
-  position: relative;
-  flex-direction: column;
-  max-height: calc(100vh - 60px);
-  max-width: ${props => windowWidths[props.size || "m"]};
-  box-shadow: 0px 10px 50px rgba(14, 29, 78, 0.3);
-  ${props =>
-    props.expandOnMobile &&
-    css`
-      @media (max-width: 800px) {
-        width: 100%;
-        height: 100%;
-        border-radius: 0px;
-        max-height: 100% !important;
-      }
-    `};
-`);
+  border-top: 1px solid #e4e5eb;
+`;
 
 const fadeIn = keyframes`
   from {
@@ -80,12 +102,12 @@ export const Backdrop = styled.div`
   right: 0;
   bottom: 0;
   position: fixed;
-  background: rgba(76, 87, 126, 0.7);
   animation: ${fadeIn} 500ms ease-out;
 `;
 
 export const CloseModal = styled.button`
   top: 15px;
+  z-index: 2;
   right: 15px;
   width: 30px;
   height: 30px;

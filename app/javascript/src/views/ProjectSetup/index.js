@@ -1,6 +1,6 @@
 // Renders the confirmation steps for a project.
 import { graphql } from "react-apollo";
-import { Transition, animated } from "react-spring";
+import { Transition, animated } from "react-spring/renderprops";
 import { Route, Switch, Redirect } from "react-router";
 import React, { Fragment, useEffect, useRef } from "react";
 import NotFound from "src/views/NotFound";
@@ -30,7 +30,9 @@ const ProjectSetup = ({ data = {}, match }) => {
 
   // Keep track of the last step.
   const lastStepRef = useRef(currentStepNumber);
-  useEffect(() => (lastStepRef.current = currentStepNumber));
+  useEffect(() => {
+    lastStepRef.current = currentStepNumber
+  });
   const previousStep = lastStepRef.current;
 
   return (
@@ -92,7 +94,6 @@ const ProjectSetup = ({ data = {}, match }) => {
                       />
                     );
                   })}
-                  <Redirect to={`${match.url}/company_overview`} />
                 </Switch>
               )}
             </Transition>
