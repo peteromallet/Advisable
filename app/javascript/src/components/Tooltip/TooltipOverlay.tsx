@@ -3,8 +3,8 @@ import * as ReactDOM from "react-dom";
 import { TooltipOverlay as Container } from "./styles";
 
 const tooltipsEl = document.createElement("div");
-document.body.style.position = 'absolute'
-document.body.style.width = '100%'
+tooltipsEl.style.position = 'absolute'
+tooltipsEl.style.width = '100%'
 document.body.appendChild(tooltipsEl);
 
 interface Props {
