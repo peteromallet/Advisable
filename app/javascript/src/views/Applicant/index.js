@@ -105,9 +105,11 @@ class Applicant extends React.Component {
                   {application.comment && (
                     <AdvisableMessage>{application.comment}</AdvisableMessage>
                   )}
-                  <Heading level="6" marginBottom="s">
-                    Application Questions
-                  </Heading>
+                  {application.questions.length > 0 && (
+                    <Heading level="6" marginBottom="s">
+                      Application Questions
+                    </Heading>
+                  )}
                   {application.questions.map((question, i) => (
                     <Card key={i} padding="xl" marginBottom="l">
                       <Text marginBottom="m" weight="strong" colour="dark">
