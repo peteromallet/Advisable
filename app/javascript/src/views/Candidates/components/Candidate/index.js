@@ -31,7 +31,7 @@ const Candidate = ({ application, project, history }) => {
   }));
 
   const recalculateHeight = () => {
-    const height = moreInfo.current ? moreInfo.current.offsetHeight : 0;
+    const height = moreInfo.current ? moreInfo.current.getBoundingClientRect().height : 0;
     setHeightAnimation({ height });
   };
 
