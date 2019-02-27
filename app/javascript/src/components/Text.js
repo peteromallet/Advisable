@@ -22,7 +22,7 @@ const sizes = {
 const lineHeights = {
   xs: "19px",
   s: '21px',
-  m: "23px",
+  m: "21px",
   l: "28px"
 };
 
