@@ -21,6 +21,7 @@ const title = project => {
 const Wrapper = styled.div`
   margin-bottom: 8px;
   position: relative;
+  user-select: none;
 `
 
 const Label = styled.label`
