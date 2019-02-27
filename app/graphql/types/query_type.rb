@@ -104,7 +104,7 @@ class Types::QueryType < Types::BaseType
     Payment.find_by_uid(id)
   end
 
-  field :viewer, Types::User, "Get the current user", null: true
+  field :viewer, Types::ViewerUnion, "Get the current viewer", null: true
 
   def viewer
     context[:current_user]
