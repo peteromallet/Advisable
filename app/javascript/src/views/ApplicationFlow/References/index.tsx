@@ -2,6 +2,7 @@ import * as React from "react";
 import { Mutation, compose } from "react-apollo";
 import { Heading, Text, Button, Padding } from "../../../components";
 import AddPreviousProjectModal from "../../../components/AddPreviousProjectModal";
+import NoReferences from "./NoReferences";
 import PreviousProjects from "./PreviousProjects";
 import FETCH_APPLICATION from "../fetchApplication.graphql";
 import UPDATE_APPLICATION from "../updateApplication.graphql";
@@ -17,6 +18,7 @@ const References = ({
   match,
   history,
   steps,
+  skipStep,
   currentStep,
   location
 }) => {
@@ -57,6 +59,14 @@ const References = ({
     });
   };
 
+  const handleSkip = () => {
+    skipStep()
+    history.push({
+      ...location,
+      pathname: `/invites/${applicationId}/apply/terms`
+    })
+  }
+
   return (
     <Mutation mutation={UPDATE_APPLICATION}>
       {updateApplication => (
@@ -93,23 +103,10 @@ const References = ({
               onSubmit={handleSubmit(updateApplication)}
             />
           ) : (
-            <Padding size="xl">
-              <Padding bottom="s">
-                <Heading level={1}>References</Heading>
-              </Padding>
-              <Padding bottom="l">
-                <Text>
-                  We require references from all freelancers prior to their
-                  first project on Advisable. We do this to ensure that their
-                  self-reported experience is verified by a third party. Only
-                  once verified will these references be shown on your profile
-                  and visible to clients.
-                </Text>
-              </Padding>
-              <Button size="l" styling="green" onClick={() => setModal(true)}>
-                Add a previous project
-              </Button>
-            </Padding>
+            <NoReferences
+              onSkip={handleSkip}
+              openAddReferenceModal={() => setModal(true)}
+            />
           )}
         </React.Fragment>
       )}
