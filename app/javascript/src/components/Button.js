@@ -108,7 +108,24 @@ const STYLES = {
     &:active {
       background-color: ${rgba("#0A1745", 0.05)};
     }
-  `
+  `,
+  plainSubtle: css`
+    height: auto;
+    color: #7A829E;
+    padding: 2px 8px;
+    margin: -2px -8px;
+    background: transparent;
+    transition: background-color 300ms;
+
+    &:hover {
+      color: ${darken(0.1, "#7A829E")};
+    }
+
+    &:active {
+      color: ${darken(0.2, "#7A829E")};
+      background-color: ${rgba("#7A829E", 0.05)};
+    }
+  `,
 };
 
 export const ButtonStyling = styled.button`
