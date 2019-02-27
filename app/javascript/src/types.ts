@@ -3,20 +3,22 @@ export interface ProjectType {
   description?: string;
   primarySkill?: string;
   companyDescription?: string;
-  questions: string[];
+  questions?: string[];
+  estimatedBudget?: string;
 }
 
 export interface ApplicationType {
   id: string;
   status?: string;
+  appliedAt?: string;
   introduction?: string;
   availability?: string;
-  project: ProjectType;
+  project?: ProjectType;
   questions?: ApplicationQuestionType[];
-  previousProjects: PreviousProjectType[]
-  rate: string;
-  acceptsFee: boolean;
-  acceptsTerms: boolean;
+  previousProjects?: PreviousProjectType[]
+  rate?: string;
+  acceptsFee?: boolean;
+  acceptsTerms?: boolean;
 }
 
 type PreviousProjectType = ProjectType | OffPlatformProjectType

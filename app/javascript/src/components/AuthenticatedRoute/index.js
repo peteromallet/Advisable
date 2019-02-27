@@ -1,7 +1,6 @@
 // Similar to the Route component from reach component but requires an
 // authenticated user to view the route. If the viewer is not authenticated it
 // will redirect to the Login view.
-
 import React from "react";
 import { Query } from "react-apollo";
 import { Route, Redirect } from "react-router-dom";
@@ -9,7 +8,7 @@ import Loading from "../Loading";
 import VIEWER from "./viewer.graphql";
 import PendingConfirmation from "./PendingConfirmation";
 
-const AuthenticatedRoute = ({ render, component: Component, ...rest }) => (
+const AuthenticatedRoute = ({ render, component: Component, freelancerRoute, ...rest }) => (
   <Route
     {...rest}
     render={props => {
@@ -34,30 +33,51 @@ const AuthenticatedRoute = ({ render, component: Component, ...rest }) => (
           {query => {
             if (query.loading) return <Loading />;
             const viewer = query.data.viewer;
+            const isSpecialist = viewer && viewer.__typename === 'Specialist';
 
-            if (rest.path !== "/setup" && viewer && viewer.setupRequired) {
-              return <Redirect to="/setup" />;
+            // If there is no viewer then remove any authToken and redirect to
+            // the login page
+            if (!viewer) {
+              window.sessionStorage.removeItem("authToken");
+              window.localStorage.removeItem("authToken");
+
+              return (
+                <Redirect
+                  to={{
+                    pathname: "/login",
+                    state: { from: props.location }
+                  }}
+                />
+              );
             }
 
-            if (viewer && !viewer.confirmed) {
-              return <PendingConfirmation viewer={viewer} />;
+            // if this is a freelancer route and the viewer is a user then
+            // redirect back to the root path.
+            if (freelancerRoute && !isSpecialist && rest.path !== "/") {
+              return <Redirect to="/" />
             }
 
-            if (viewer && viewer.confirmed) {
-              return Component ? <Component {...props} /> : render(props);
+            // if this is not a freelancer route and a freelancer is logged in
+            // then redirect to the root path.
+            if (!freelancerRoute && isSpecialist && rest.path !== "/") {
+              return <Redirect to="/" />
             }
 
-            window.sessionStorage.removeItem("authToken");
-            window.localStorage.removeItem("authToken");
+            // If the viewer is a user.
+            if (viewer.__typename === "User") {
+              // if the client has not setup their account.
+              if (rest.path !== "/setup" && viewer.setupRequired && !viewer.confirmed) {
+                return <Redirect to="/setup" />;
+              }
 
-            return (
-              <Redirect
-                to={{
-                  pathname: "/login",
-                  state: { from: props.location }
-                }}
-              />
-            );
+              // if the client has not confirmed their account then show the
+              // confirmation pending page.
+              if (viewer && !viewer.confirmed) {
+                return <PendingConfirmation viewer={viewer} />;
+              }
+            }
+
+            return Component ? <Component {...props} /> : render(props);
           }}
         </Query>
       );

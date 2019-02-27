@@ -4,6 +4,7 @@ class Types::SpecialistType < Types::BaseType
   field :first_name, String, null: true
   field :last_name, String, null: true
   field :name, String, null: true
+  field :email, String, null: true
   field :city, String, null: true
   field :bio, String, null: true
   field :country, Types::CountryType, null: true

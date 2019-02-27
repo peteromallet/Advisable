@@ -8,6 +8,14 @@
           { "name": "Project" },
           { "name": "OffPlatformProject" }
         ]
+      },
+      {
+        "kind": "UNION",
+        "name": "ViewerUnion",
+        "possibleTypes": [
+          { "name": "User" },
+          { "name": "Specialist" }
+        ]
       }
     ]
   }

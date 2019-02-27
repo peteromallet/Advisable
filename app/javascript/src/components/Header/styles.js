@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export const Spacer = styled.div`
   width: 100%;
@@ -21,6 +21,26 @@ export const Header = styled.header`
 `;
 
 export const Logo = styled(Link)``;
+
+export const Nav = styled.nav`
+`
+
+export const NavItem = styled(NavLink)`
+  height: 58px;
+  color: #AABDFF;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 58px;
+  user-select: none;
+  margin-left: 28px;
+  display: inline-block;
+  text-decoration: none;
+
+  &.active {
+    color: white;
+    border-bottom: 2px solid white;
+  }
+`
 
 export const CurrentUserWrapper = styled.div`
   right: 25px;

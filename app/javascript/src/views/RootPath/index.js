@@ -7,8 +7,11 @@ export default () => {
   return (
     <Query query={VIEWER}>
       {({ data }) => {
-        if (data.viewer && !data.viewer.confirmed) {
-          return <Redirect to="/setup" />;
+        const { viewer } = data; 
+        const isSpecialist = viewer && viewer.__typename === 'Specialist';
+
+        if (isSpecialist) {
+          return <Redirect to="/applications" />;
         }
 
         return <Redirect to="/projects" />;
