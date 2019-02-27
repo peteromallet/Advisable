@@ -2,6 +2,25 @@ import styled, { keyframes, css } from "styled-components";
 import { withSpacing } from "../Spacing";
 import { animated } from "react-spring";
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+export const Backdrop = styled.div`
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  animation: ${fadeIn} 500ms ease-out;
+`;
+
+
 const windowWidths = {
   m: "500px",
   l: "700px"
@@ -86,25 +105,6 @@ export const ModalFooter = styled.div`
   padding: 25px 30px;
   border-top: 1px solid #e4e5eb;
 `;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-export const Backdrop = styled.div`
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: fixed;
-  animation: ${fadeIn} 500ms ease-out;
-`;
-
 export const CloseModal = styled.button`
   top: 15px;
   z-index: 2;

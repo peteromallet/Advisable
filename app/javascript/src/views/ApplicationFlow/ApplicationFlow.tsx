@@ -28,14 +28,27 @@ interface StepType {
   path: string; // the path for the route
   component: any; // the component for the step route
   hidden?: boolean; // Wether or not the step should be hidden
-  isComplete: boolean; // wether or not the step has been complete
+  isComplete?: boolean; // wether or not the step has been complete
 }
 
 const ApplicationFlow = ({ application, match, location }: Props) => {
   const isMobile = useScreenSize("small");
   const applicationId = match.params.applicationId;
 
+  // Some steps are able to be skipped. e.g the references step. The skipped
+  // variable is an array of step names to keep track of the steps that have
+  // been skipped.
+  const [skipped, setSkipped] = React.useState([]);
+  const skipStep = (step: StepType) => setSkipped([...skipped, step.name]);
+
+  // Various parts of this flow need to act differently based on wether the user
+  // is applying or updating an existing application.
+  const isApplying = application.status === "Invited To Apply";
+
   // STEPS defines all of the various steps inside the application flow.
+  // Note how each step returns true if isApplying is false. This is to allow
+  // the user to jump between steps when they are updating an existing
+  // application.
   const STEPS: StepType[] = [
     {
       exact: true,
@@ -43,7 +56,9 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
       to: "/",
       path: "/",
       component: Overview,
-      isComplete: Boolean(application.introduction && application.availability)
+      isComplete:
+        !isApplying ||
+        Boolean(application.introduction && application.availability)
     },
     {
       name: "Application Questions",
@@ -52,24 +67,30 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
       component: Questions,
       hidden: application.project.questions.length === 0,
       isComplete:
+        !isApplying ||
         filter(application.questions, q => !isEmpty(q.answer)).length ===
-        application.project.questions.length
+          application.project.questions.length
     },
     {
       name: "References",
       to: "/references",
       path: "/references",
       component: References,
-      isComplete: !isEmpty(application.previousProjects)
+      isComplete:
+        !isApplying ||
+        skipped.indexOf("References") !== -1 ||
+        !isEmpty(application.previousProjects)
     },
     {
       name: "Payment terms",
       to: "/terms",
       path: "/terms",
       component: Terms,
-      isComplete: Boolean(
-        application.rate && application.acceptsFee && application.acceptsTerms
-      )
+      isComplete:
+        !isApplying ||
+        Boolean(
+          application.rate && application.acceptsFee && application.acceptsTerms
+        )
     }
   ];
 
@@ -112,12 +133,12 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
                     key={step.name}
                     exact={step.exact}
                     number={i + 1}
-                    isComplete={step.isComplete}
+                    isComplete={isApplying && step.isComplete}
+                    isDisabled={previousStep ? !previousStep.isComplete : false}
                     to={{
                       ...location,
                       pathname: `/invites/${applicationId}/apply${step.to}`
                     }}
-                    isDisabled={previousStep ? !previousStep.isComplete : false}
                   >
                     {step.name}
                   </Steps.Step>
@@ -148,6 +169,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
                         steps={STEPS}
                         currentStep={i}
                         application={application}
+                        skipStep={() => skipStep(step)}
                         {...props}
                       />
                     ) : (

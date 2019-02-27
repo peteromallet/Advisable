@@ -7,16 +7,17 @@ export const Steps = styled.div``;
 export const Number = styled.div`
   width: 25px;
   height: 25px;
-  color: white;
+  color: #A8AFC3;
   font-size: 12px;
   font-weight: 600;
   margin-right: 8px;
+  background: white;
   align-items: center;
-  background: #d2d7e7;
   border-radius: 20px;
   display: inline-flex;
   justify-content: center;
   transition: background-color 300ms;
+  box-shadow: 0px 2px 6px rgba(1, 14, 60, 0.08);
 `;
 
 export const Step = styled.div`
@@ -41,16 +42,14 @@ export const Step = styled.div`
     &:hover {
       color: #5B637E;
       ${Number} {
-        color: white;
-        background: #C4C9DB; 
+        color: #8C93A8;
       }
     }
 
     &.active {
       ${Number} {
-        color: #173fcd;
-        background: white;
-        box-shadow: 0px 2px 6px rgba(1, 14, 60, 0.08);
+        color: white;
+        background: #173FCD;
       }
 
       span {
@@ -62,9 +61,8 @@ export const Step = styled.div`
   ${props => props.isComplete && css`
     > div,
     > a {
-      color: ${rgba("#173FCD", 0.5)};
 
-      ${Number} {
+      ${Number}, &:hover ${Number} {
         color: transparent;
         background: url(${tick}) no-repeat center;
         background-color: ${rgba("#173FCD", 0.5)};
