@@ -32,6 +32,6 @@ class Project < ApplicationRecord
 
   # Returns the total number of applications for the project
   def application_count
-    applications.where.not(status: ["Invited To Apply"]).count
+    applications.where.not(status: ["Invited To Apply", "Invitation Rejected"]).count
   end
 end
