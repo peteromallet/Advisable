@@ -2,7 +2,8 @@
 import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
+  /* @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700'); */
+  @import url("https://use.typekit.net/smt8hcq.css");
 
   * {
     box-sizing: border-box;
@@ -31,7 +32,7 @@ export default createGlobalStyle`
     font: inherit;
     box-sizing: border-box;
     vertical-align: baseline;
-    font-family: 'Poppins', sans-serif;
+    font-family: poppins, sans-serif;
   }
 
   /* HTML5 display-role reset for older browsers */

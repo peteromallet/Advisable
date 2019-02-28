@@ -18,6 +18,10 @@ class Types::SpecialistType < Types::BaseType
   field :reviewsCount, Integer, null: true
   field :previous_projects, [Types::PreviousProject], null: false
   field :has_account, Boolean, null: false
+  field :applications, [Types::ApplicationType], null: true do
+    authorize :is_specialist
+    argument :status, [String], required: false
+  end
 
   def name
     "#{object.first_name} #{object.last_name}"
@@ -33,5 +37,11 @@ class Types::SpecialistType < Types::BaseType
 
   def has_account
     object.has_account?
+  end
+
+  def applications(status: nil)
+    applications = object.applications
+    applications = applications.where(status: status) if status.present?
+    applications
   end
 end

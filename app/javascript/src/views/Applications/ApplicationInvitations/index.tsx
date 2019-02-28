@@ -11,7 +11,7 @@ const ApplicationInvitations = () => {
       <Padding bottom="xs">
         <Heading>Application Invitations</Heading>
       </Padding>
-      <Text>
+      <Text size="s">
         We have found some projects we think you might be interested in.
       </Text>
       <InvitationsWrapper>

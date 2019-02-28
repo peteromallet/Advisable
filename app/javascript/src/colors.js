@@ -1,8 +1,8 @@
 // Defines the colours used throughout the app.
 export default {
   teal: {
-    base: "#32A6CB",
-    dark: "#2F93B2"
+    base: "#31BBCE",
+    dark: "#24ADC0"
   },
   purple: {
     base: "#755BDE",
