@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import colors from "../../../colors";
-import { rgba } from "polished";
+import { rgba, darken, lighten } from "polished";
 
 export const InvitationsWrapper = styled.div`
   width: 100%;
@@ -43,9 +43,10 @@ export const Invitations = styled.div`
 
 export const Title = styled.h4`
   color: white;
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 600;
-  margin-bottom: 4px;
+  line-height: 22px;
+  margin-bottom: 6px;
   letter-spacing: -0.01em;
 `;
 
@@ -53,7 +54,8 @@ export const Rate = styled.p`
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 20px;
-  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: -0.01em;
+  color: inherit;
 `;
 
 export const Description = styled.p`
@@ -65,7 +67,7 @@ export const Description = styled.p`
   position: relative;
   margin-bottom: 20px;
   white-space: normal;
-  color: rgba(255, 255, 255, 0.9);
+  color: inherit;
 `;
 
 export const Button = styled.button`
@@ -73,9 +75,9 @@ export const Button = styled.button`
   height: 32px;
   cursor: pointer;
   padding: 0 16px;
-  font-size: 13px;
+  font-size: 14px;
   appearance: none;
-  font-weight: 500;
+  font-weight: 600;
   background: white;
   line-height: 28px;
   border-radius: 6px;
@@ -105,10 +107,21 @@ export const Background = styled.div`
   right: 0;
   bottom: 0;
   z-index: -1;
+  overflow: hidden;
   border-radius: 6px;
   position: absolute;
   transform: scale(1);
   transition: transform 300ms, box-shadow 300ms;
+
+  &::before {
+    content: "";
+    z-index: 0;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    position: absolute;
+    border: 50px solid transparent;
+  }
 `;
 
 export const Invitation = styled.div`
@@ -116,18 +129,6 @@ export const Invitation = styled.div`
   cursor: pointer;
   user-select: none;
   position: relative;
-
-  &::after {
-    content: "";
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    z-index: 1;
-    height: 110px;
-    position: absolute;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-  }
 
   @media (min-width: 800px) {
     margin: 0 8px;
@@ -160,16 +161,17 @@ export const Invitation = styled.div`
   }
 
   /* Teal Card */
+  color: #C4F8FF;
+
   ${Background} {
     background: ${colors.teal.base};
     box-shadow: 0px 3px 5px -3px ${rgba(colors.teal.dark, 0.3)};
-  }
 
-  &::after {
-    background: linear-gradient(
-      ${rgba(colors.teal.base, 0)} 0%,
-      ${rgba(colors.teal.base, 1)} 40%
-    );
+    &::before {
+      right: -70px;
+      bottom: -90px;
+      border-color: ${darken(0.02, colors.teal.base)};
+    }
   }
 
   ${Button} {
@@ -178,21 +180,22 @@ export const Invitation = styled.div`
   }
 
   /* Purple Cards */
-  &:nth-child(2) {
+  &:nth-child(3n+2) {
+    color: ${lighten(0.3, colors.purple.base)};
+
     ${Background} {
       background: ${colors.purple.base};
       box-shadow: 0px 3px 5px -3px ${rgba(colors.purple.dark, 0.3)};
+
+      &::before {
+        top: -120px;
+        right: -50px;
+        border-color: ${darken(0.02, colors.purple.base)};
+      }
     }
 
     &:hover ${Background} {
       box-shadow: 0px 10px 16px -10px ${rgba(colors.purple.dark, 0.5)};
-    }
-
-    &::after {
-      background: linear-gradient(
-        ${rgba(colors.purple.base, 0)} 0%,
-        ${rgba(colors.purple.base, 1)} 40%
-      );
     }
 
     ${Button} {
@@ -202,26 +205,27 @@ export const Invitation = styled.div`
   }
 
   /* Dark Cards */
-  &:nth-child(3) {
+  &:nth-child(3n+3) {
+    color: ${lighten(0.5, "#372F58")};
+
     ${Background} {
-      background: #372F58;
+      background: #372f58;
       box-shadow: 0px 3px 5px -3px ${rgba("#372F58", 0.3)};
+
+      &::before {
+        bottom: -70px;
+        left: -100px;
+        border-color: ${darken(0.03, "#372F58")};
+      }
     }
 
     &:hover ${Background} {
       box-shadow: 0px 10px 16px -10px ${rgba("#372F58", 0.5)};
     }
 
-    &::after {
-      background: linear-gradient(
-        ${rgba("#372F58", 0)} 0%,
-        ${rgba("#372F58", 1)} 40%
-      );
-    }
-
     ${Button} {
-      fill: #372F58;
-      color: #372F58;
+      fill: #372f58;
+      color: #372f58;
     }
   }
 `;

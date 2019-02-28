@@ -28,8 +28,8 @@ export const Nav = styled.nav`
 export const NavItem = styled(NavLink)`
   height: 58px;
   color: #AABDFF;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 500;
   line-height: 58px;
   user-select: none;
   margin-left: 28px;

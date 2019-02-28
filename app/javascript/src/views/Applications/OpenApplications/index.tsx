@@ -25,6 +25,15 @@ const applications = [
       id: "1",
       primarySkill: "Tourism Marketing"
     }
+  },
+  {
+    id: "3",
+    status: "Interview Scheduled",
+    appliedAt: "2019-02-27T07:00:00",
+    project: {
+      id: "2",
+      primarySkill: "Web Content Optimization"
+    }
   }
 ];
 

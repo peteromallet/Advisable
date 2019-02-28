@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ApplicationType } from "../../../types";
+import LineClamp from "../../../components/LineClamp";
 import {
   Invitation,
   Background,
@@ -20,7 +21,11 @@ const InvitationComponent = ({ application }: Props) => {
       <Content>
         <Title>{application.project.primarySkill}</Title>
         <Rate>{application.project.estimatedBudget}</Rate>
-        <Description>{application.project.description}</Description>
+        <Description>
+          <LineClamp maxHeight={70}>
+            {application.project.description}
+          </LineClamp>
+        </Description>
       </Content>
       <Button>
         View Details

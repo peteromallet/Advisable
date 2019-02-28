@@ -28,14 +28,10 @@ const Application = ({ application }: Props) => {
         </Padding>
         <Notice>
           <Icon icon="info" />
-          <Styles display="flex">
-            <Styles flexGrow={1}>
-              <Text size="s">
-                Your application has been sent and is being reviewed.
-              </Text>
-            </Styles>
-            <Button styling="plain">Take Action</Button>
-          </Styles>
+          <Text size="s">
+            Your application has been sent and is being reviewed.
+          </Text>
+          <Button styling="plain">Take Action</Button>
         </Notice>
       </Padding>
     </Card>

@@ -9148,6 +9148,11 @@ shallowequal@^1.0.2:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.0.2.tgz#1561dbdefb8c01408100319085764da3fcf83f8f"
   integrity sha512-zlVXeVUKvo+HEv1e2KQF/csyeMKx2oHvatQ9l6XjCUj3agvC8XGf6R9HvIPDSmp8FNPvx7b5kaEJTRi7CqxtEw==
 
+shave@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/shave/-/shave-2.5.2.tgz#c0d9dd214c2b60b199225ccc0363785875a3f642"
+  integrity sha512-27Mkv0mL+wao68I6Xui8nBggeNBC+dFBweM4aiPWHM5Ry8emRoM0f+e1l0CEl/HTjgEpygwCkOs6a5xc994h/w==
+
 shebang-command@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"
