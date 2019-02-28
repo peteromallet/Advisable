@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_14_082110) do
+ActiveRecord::Schema.define(version: 2019_02_28_110937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2019_02_14_082110) do
     t.boolean "references_requested"
     t.string "invitation_rejection_reason"
     t.string "referral_url"
+    t.datetime "applied_at"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
@@ -276,6 +277,14 @@ ActiveRecord::Schema.define(version: 2019_02_14_082110) do
     t.jsonb "ratings", default: {}
     t.integer "reviews_count"
     t.text "bio"
+    t.string "uid"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "confirmed_at"
+    t.string "confirmation_digest"
+    t.datetime "reset_sent_at"
+    t.string "reset_digest"
+    t.text "permissions", default: [], array: true
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
