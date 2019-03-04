@@ -1,4 +1,6 @@
 en:
+  errors:
+    format: "%{message}"
   activerecord:
     errors:
       models:
