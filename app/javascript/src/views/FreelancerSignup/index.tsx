@@ -140,6 +140,7 @@ const FreelancerSignup = ({ match, history }: Props) => {
                             size="l"
                             type="submit"
                             styling="primary"
+                            loading={formik.isSubmitting}
                           >
                             Create Account
                           </Button>

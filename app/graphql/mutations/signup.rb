@@ -7,7 +7,7 @@ class Mutations::Signup < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def resolve(**args)
-    user = Accounts::Signup.call(args)
+    user = Users::Signup.call(args)
     token = Accounts::JWT.call(user)
     { token: token }
 
