@@ -9,19 +9,25 @@ export interface ProjectType {
 
 export interface ApplicationType {
   id: string;
+  airtableId?: string;
   status?: string;
   appliedAt?: string;
   introduction?: string;
   availability?: string;
   project?: ProjectType;
   questions?: ApplicationQuestionType[];
-  previousProjects?: PreviousProjectType[]
+  previousProjects?: PreviousProjectType[];
+  interviewRequest?: InterviewType;
   rate?: string;
   acceptsFee?: boolean;
   acceptsTerms?: boolean;
 }
 
-type PreviousProjectType = ProjectType | OffPlatformProjectType
+export interface InterviewType {
+  id: string;
+}
+
+type PreviousProjectType = ProjectType | OffPlatformProjectType;
 
 interface ApplicationQuestionType {
   question: string;
@@ -29,5 +35,5 @@ interface ApplicationQuestionType {
 }
 
 export interface OffPlatformProjectType {
-  id: string
+  id: string;
 }

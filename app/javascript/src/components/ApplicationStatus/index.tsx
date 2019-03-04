@@ -4,9 +4,16 @@
 import * as React from "react";
 import Status from "../Status";
 
+const COLOURS = {
+  "Applied": "green",
+  "Offered": "yellow",
+  "Application Accepted": "yellow",
+  "Proposed": "yellow",
+}
+
 const ApplicationStatus = ({ children }) => {
   return (
-    <Status>{children}</Status>
+    <Status styling={COLOURS[children]}>{children}</Status>
   )
 }
 

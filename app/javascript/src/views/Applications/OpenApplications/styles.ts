@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { default as CardStyles } from "../../../components/Card";
+import Text from "../../../components/Text";
 import { Icon } from "../../../components/Icon/styles";
 import { Status } from "../../../components/Status/styles";
 
@@ -17,7 +18,7 @@ export const Notice = styled.div`
   position: relative;
   background: #F2F3F7;
   border-radius: 10px;
-  padding: 16px 16px 16px 50px;
+  padding: 16px 16px 16px 55px;
 
   ${Icon} {
     top: 50%;
@@ -26,4 +27,26 @@ export const Notice = styled.div`
     position: absolute;
     transform: translateY(-50%);
   }
+
+  ${Text} {
+    margin-bottom: 2px;
+  }
 `
+
+const loadingAnimation = keyframes`
+  from {
+    opacity: 0.05;
+  }
+
+  to {
+    opacity: 0.1;
+  }
+`;
+
+export const SkeletonApplication = styled.div`
+  height: 90px;
+  border-radius: 6px;
+  background: #3C466A;
+  margin-bottom: 16px;
+  animation: ${loadingAnimation} 0.6s linear infinite alternate;
+`;

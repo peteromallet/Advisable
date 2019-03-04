@@ -5,48 +5,29 @@ import * as React from "react";
 import Heading from "../../../components/Heading";
 import Padding from "../../../components/Spacing/Padding";
 import Empty from "./Empty";
+import Loading from "./Loading";
 import Application from "./Application";
+import { ApplicationType } from "../../../types";
 
-const applications = [
-  {
-    id: "1",
-    status: "Applied",
-    appliedAt: "2019-02-26T14:00:00",
-    project: {
-      id: "2",
-      primarySkill: "User Experience Design"
-    }
-  },
-  {
-    id: "2",
-    status: "Interview Requested",
-    appliedAt: "2019-02-27T07:00:00",
-    project: {
-      id: "1",
-      primarySkill: "Tourism Marketing"
-    }
-  },
-  {
-    id: "3",
-    status: "Interview Scheduled",
-    appliedAt: "2019-02-27T07:00:00",
-    project: {
-      id: "2",
-      primarySkill: "Web Content Optimization"
-    }
-  }
-];
+interface Props {
+  loading: boolean;
+  applications: ApplicationType[];
+}
 
-const OpenApplications = () => {
-  let content;
+const OpenApplications = (props: Props) => {
+  if (props.loading) return <Loading />
+
+  let content : React.ReactNode;
 
   content = <Empty />;
 
-  content = applications.map(application => (
-    <Padding bottom="m" key={application.id}>
-      <Application application={application} />
-    </Padding>
-  ));
+  if (props.applications.length > 0) {
+    content = props.applications.map(application => (
+      <Padding bottom="m" key={application.id}>
+        <Application application={application} />
+      </Padding>
+    ));
+  }
 
   return (
     <div>
