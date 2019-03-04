@@ -40,7 +40,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   def applications(status: nil)
-    applications = object.applications
+    applications = object.applications.order(created_at: :desc)
     applications = applications.where(status: status) if status.present?
     applications
   end
