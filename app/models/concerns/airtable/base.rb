@@ -16,6 +16,10 @@ class Airtable::Base < Airrecord::Table
     def columns_hash
       @columns_hash || {}
     end
+    
+    def associations
+      @associations ||= {}
+    end
 
     # Sync can be called on any class that inherits from Airtable::Base
     # to sync all records from airtable
@@ -43,6 +47,15 @@ class Airtable::Base < Airrecord::Table
       @columns_hash[column] = options[:to]
     end
 
+    # sync_assocation allows us to define a mapping from an airtable column to
+    # an associated ActiveRecord model. This should be used when airtable
+    # columns are setup to 'Link to another record'.
+    # Note: Currently only supports belongs_to relationships
+    def sync_association(column, options = {})
+      @associations ||= {}
+      @associations[column] = options
+    end
+
     # sync_data allows us to sync data which might not fit into a direct mapping
     # with the airtable record. This can also be useful for setting relationships.
     # See how app/models/concerns/airtable/application.rb syncs the 'questions'
@@ -68,6 +81,10 @@ class Airtable::Base < Airrecord::Table
 
       self.class.columns_hash.each do |column, attr|
         model.send("#{attr}=", self[column])
+      end
+
+      self.class.associations.each do |column, options|
+        sync_association(column: column, record: model, attribute: options[:to])
       end
 
       instance_exec(model, &self.class.sync_block) if self.class.sync_block
@@ -105,5 +122,25 @@ class Airtable::Base < Airrecord::Table
   # returns the active record model to sync data to
   def model
     @model ||= self.class.sync_model.find_or_initialize_by(airtable_id: id)
+  end
+
+  private
+
+  def sync_association(column:,record:,attribute:)
+    # read the id from the column data.
+    id = self[column].try(:first)
+    # if there is no ID then we are done.
+    return unless id
+    # use rails reflect_on_association metod to find the association class.
+    reflection = record.class.reflect_on_association(attribute)
+    association_class = reflection.class_name.constantize
+    # use the class name to find the association airtable class
+    airtable_class = "Airtable::#{reflection.class_name}".constantize
+    # see if we have a synced copy of the association first
+    associate = association_class.find_by_airtable_id(id)
+    # if there isn't a synced version of the association then sync it
+    associate = airtable_class.find(id).sync if associate.nil?
+    # assign the association
+    record.send("#{attribute}=", associate)
   end
 end

@@ -13,21 +13,26 @@ import {
 
 interface Props {
   application: ApplicationType;
+  onViewInvitation: (id: string) => void;
 }
 
-const InvitationComponent = ({ application }: Props) => {
+const InvitationComponent = ({ application, onViewInvitation }: Props) => {
+  const handleView = () => {
+    onViewInvitation(application.airtableId)
+  }
+
   return (
-    <Invitation>
+    <Invitation onClick={handleView}>
       <Content>
         <Title>{application.project.primarySkill}</Title>
         <Rate>{application.project.estimatedBudget}</Rate>
         <Description>
           <LineClamp maxHeight={70}>
-            {application.project.description}
+            {application.project.companyDescription}
           </LineClamp>
         </Description>
       </Content>
-      <Button>
+      <Button onClick={handleView}>
         View Details
         <svg width="11" height="10" viewBox="0 0 11 10">
           <path

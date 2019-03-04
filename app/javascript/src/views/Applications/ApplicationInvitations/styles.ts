@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import colors from "../../../colors";
 import { rgba, darken, lighten } from "polished";
 
@@ -38,6 +38,35 @@ export const Invitations = styled.div`
   &::after {
     content: "";
     flex: 0 0 12%;
+  }
+`;
+
+const loadingAnimation = keyframes`
+  from {
+    opacity: 0.05;
+  }
+
+  to {
+    opacity: 0.1;
+  }
+`;
+
+export const LoadingTile = styled.div`
+  height: 220px;
+  border-radius: 6px;
+  background: #3C466A;
+  animation: ${loadingAnimation} 0.6s linear infinite alternate;
+
+  @media (min-width: 800px) {
+    margin: 0 8px;
+    margin-bottom: 16px;
+    max-width: calc(33.3333% - 16px);
+    flex: 1 0 calc(33.3333% - 16px);
+  }
+
+  @media (max-width: 800px) {
+    width: 90%;
+    flex: 0 0 auto;
   }
 `;
 
@@ -161,7 +190,7 @@ export const Invitation = styled.div`
   }
 
   /* Teal Card */
-  color: #C4F8FF;
+  color: #c4f8ff;
 
   ${Background} {
     background: ${colors.teal.base};
@@ -180,7 +209,7 @@ export const Invitation = styled.div`
   }
 
   /* Purple Cards */
-  &:nth-child(3n+2) {
+  &:nth-child(3n + 2) {
     color: ${lighten(0.3, colors.purple.base)};
 
     ${Background} {
@@ -205,7 +234,7 @@ export const Invitation = styled.div`
   }
 
   /* Dark Cards */
-  &:nth-child(3n+3) {
+  &:nth-child(3n + 3) {
     color: ${lighten(0.5, "#372F58")};
 
     ${Background} {

@@ -28,13 +28,17 @@ export const Nav = styled.nav`
 export const NavItem = styled(NavLink)`
   height: 58px;
   color: #AABDFF;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   line-height: 58px;
   user-select: none;
   margin-left: 28px;
   display: inline-block;
   text-decoration: none;
+
+  &:hover {
+    color: white;
+  }
 
   &.active {
     color: white;

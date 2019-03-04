@@ -44,12 +44,6 @@ const Routes = () => {
           <Route path="/freelancers/:id/signup" component={FreelancerSignup} />
           <AuthenticatedRoute path="/setup" component={Setup} />
 
-          <AuthenticatedRoute
-            freelancerRoute
-            path="/applications"
-            component={Applications}
-          />
-
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
           <Route path="/projects/:projectID" component={Project} />
           <AuthenticatedRoute path="/projects" component={Projects} />
@@ -83,6 +77,13 @@ const Routes = () => {
             path="/applications/:applicationID/proposals/:proposalID"
             component={EditProposal}
           />
+
+          <AuthenticatedRoute
+            freelancerRoute
+            path="/applications"
+            component={Applications}
+          />
+
           <Route component={NotFound} />
         </Switch>
       </BrowserRouter>

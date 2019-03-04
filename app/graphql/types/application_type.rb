@@ -1,6 +1,7 @@
 class Types::ApplicationType < Types::BaseType
   field :id, ID, null: false
   field :rate, String, null: true
+  field :applied_at, String, null: true
   field :airtable_id, String, null: false
   field :featured, Boolean, null: true
   field :references_requested, Boolean, null: true
@@ -14,12 +15,18 @@ class Types::ApplicationType < Types::BaseType
   field :questions, [Types::ApplicationQuestionType, null: true], null: true
   field :project, Types::ProjectType, null: false
   field :proposal, Types::Booking, null: true
+  field :offer, Types::Booking, null: true
   field :referral_url, String, null: true
   field :accepts_fee, Boolean, null: true
   field :accepts_terms, Boolean, null: true
   field :has_more_projects, Boolean, null: false
+  field :interview, Types::Interview, null: true
   field :previous_projects, [Types::PreviousProject], null: false do
     argument :fallback, Boolean, required: false
+  end
+
+  def applied_at
+    object.applied_at.try(:iso8601)
   end
 
   # When querying for an applications previous_projects, we can pass a 'fallback'
