@@ -92,7 +92,7 @@ const INFORMATION = {
           <Text size="s">
             Your interview with {application.project.user.companyName} has been
             scheduled for{" "}
-            <Text weight="semibold" inline>
+            <Text weight="semibold" as="span" inline>
               {moment
                 .tz(interview.startsAt, interview.timeZone)
                 .format("dddd, DD MMMM [at] hh:mma")}
