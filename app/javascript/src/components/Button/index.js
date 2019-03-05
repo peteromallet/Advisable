@@ -1,7 +1,7 @@
 import React from "react";
 import { rgba, darken } from "polished";
 import styled, { keyframes, css } from "styled-components";
-import { withSpacing } from "./Spacing";
+import { withSpacing } from "../Spacing";
 
 const heights = {
   s: "30px",
