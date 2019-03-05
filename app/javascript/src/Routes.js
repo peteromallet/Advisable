@@ -20,6 +20,7 @@ import CreateProposal from "./views/CreateProposal";
 import ApplicationFlow from "./views/ApplicationFlow";
 import InterviewRequest from "./views/InterviewRequest";
 import FreelancerSignup from "./views/FreelancerSignup";
+import UpdateProfile from "./views/UpdateProfile";
 import NotFound from "./views/NotFound";
 
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
@@ -82,6 +83,12 @@ const Routes = () => {
             freelancerRoute
             path="/applications"
             component={Applications}
+          />
+
+          <AuthenticatedRoute
+            freelancerRoute
+            path="/profile"
+            component={UpdateProfile}
           />
 
           <Route component={NotFound} />

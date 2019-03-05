@@ -1,56 +1,52 @@
 import React from "react";
 import uniqueId from "lodash/uniqueId";
-import { PoseGroup } from "react-pose";
-import findIndex from "lodash/findIndex";
+import { useTransition, animated } from "react-spring";
 import { Container, NotificationWrapper } from "./styles";
 import Notification from "./Notification";
 import Context from "./context";
+export { default as useNotifications } from "./useNotifications";
 export { default as withNotifications } from "./withNotifications";
 
-export class NotificationsProvider extends React.Component {
-  state = {
-    queue: [],
-    notify: this.notify
-  };
+export const NotificationsProvider = ({ children }) => {
+  const [queue, setQueue] = React.useState([]);
 
-  notify = message => {
+  const notify = content => {
     const id = uniqueId("notification");
-    this.setState(state => ({
-      queue: [
-        ...state.queue,
-        {
-          id,
-          content: message
-        }
-      ]
-    }));
+    setQueue(items => [...items, { id, content }]);
+    setTimeout(() => remove(id), 3000);
   };
 
-  remove = id => {
-    const index = findIndex(this.state.queue, { id });
-    this.setState(state => ({
-      queue: [...state.queue.slice(0, index), ...state.queue.slice(index + 1)]
-    }));
+  const remove = id => {
+    setQueue(items => items.filter(i => i.id !== id));
   };
 
-  render() {
-    return (
-      <Context.Provider value={{ notify: this.notify }}>
-        {this.state.queue.length > 0 && (
-          <Container>
-            <PoseGroup preEnterPose="initial">
-              {this.state.queue.map(notification => (
-                <NotificationWrapper key={notification.id}>
-                  <Notification {...notification} onRemove={this.remove} />
-                </NotificationWrapper>
-              ))}
-            </PoseGroup>
-          </Container>
-        )}
-        <React.Fragment>{this.props.children}</React.Fragment>
-      </Context.Provider>
-    );
-  }
-}
+  console.log(queue);
+  const transitions = useTransition(
+    queue,
+    item => {
+      return item.id;
+    },
+    {
+      from: { transform: "translate3d(100%, 0, 0)", opacity: 0 },
+      enter: { transform: "translate3d(0, 0, 0)", opacity: 1 },
+      leave: { transform: "translate3d(100%, 0, 0)", opacity: 0 }
+    }
+  );
+
+  return (
+    <Context.Provider value={{ notify }}>
+      <Container>
+        {transitions.map(({ item, props, key }) => {
+          return (
+            <animated.div key={key} style={props}>
+              <Notification {...item} />
+            </animated.div>
+          );
+        })}
+      </Container>
+      <React.Fragment>{children}</React.Fragment>
+    </Context.Provider>
+  );
+};
 
 export default Context.Consumer;

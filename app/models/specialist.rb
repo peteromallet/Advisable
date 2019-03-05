@@ -1,6 +1,7 @@
 class Specialist < ApplicationRecord
   include UID
   include Account
+  include Airtable::Syncable
   belongs_to :country, required: false
   has_many :reviews
 

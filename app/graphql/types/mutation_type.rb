@@ -37,4 +37,6 @@ class Types::MutationType < GraphQL::Schema::Object
   field :request_password_reset, mutation: Mutations::RequestPasswordReset
   field :reset_password, mutation: Mutations::ResetPassword
   field :create_freelancer_account, mutation: Mutations::CreateFreelancerAccount
+
+  field :update_profile, mutation: Mutations::UpdateProfile
 end
