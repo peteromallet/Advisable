@@ -1,5 +1,3 @@
-// @flow
-//
 // Renders the form for a proposal. A proposal is a booking with a status
 // of Proposed.
 import React from "react";

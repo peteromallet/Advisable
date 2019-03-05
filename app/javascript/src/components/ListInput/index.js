@@ -1,12 +1,10 @@
 import React from "react";
 import uniqueID from "lodash/uniqueId";
 import styled from "styled-components";
-import Textarea from "react-textarea-autosize";
 import TextField from "src/components/TextField";
 import InputError from "src/components/InputError";
 import InputLabel from "src/components/InputLabel";
 import { withSpacing, extractSpacingProps } from 'src/components/Spacing';
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const Wrapper = withSpacing(styled.div``)
 
