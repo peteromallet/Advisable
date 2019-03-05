@@ -1,0 +1,9 @@
+query {
+  viewer {
+    ... on Specialist {
+      id
+      airtableId
+      bio
+    }
+  }
+}

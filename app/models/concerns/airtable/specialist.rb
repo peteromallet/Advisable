@@ -44,6 +44,10 @@ class Airtable::Specialist < Airtable::Base
     end
   end
 
+  push_data do |specialist|
+    self['Biography'] = specialist.bio
+  end
+
   private
 
   def specialist_skills

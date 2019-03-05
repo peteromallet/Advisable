@@ -46,7 +46,7 @@ const levels = {
   `,
   2: css`
     color: #0A1745;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 600;
     line-height: 28px;
     letter-spacing: -0.02em;
