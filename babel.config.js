@@ -40,7 +40,7 @@ module.exports = function(api) {
           development: isDevelopmentEnv || isTestEnv,
           useBuiltIns: true
         }
-      ]
+      ],
     ].filter(Boolean),
     plugins: [
       require('babel-plugin-macros'),

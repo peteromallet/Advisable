@@ -1,7 +1,7 @@
 import React from "react";
 import uniqueId from "lodash/uniqueId";
 import { useTransition, animated } from "react-spring";
-import { Container, NotificationWrapper } from "./styles";
+import { Container } from "./styles";
 import Notification from "./Notification";
 import Context from "./context";
 export { default as useNotifications } from "./useNotifications";
@@ -20,7 +20,6 @@ export const NotificationsProvider = ({ children }) => {
     setQueue(items => items.filter(i => i.id !== id));
   };
 
-  console.log(queue);
   const transitions = useTransition(
     queue,
     item => {
