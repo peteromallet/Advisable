@@ -5,6 +5,11 @@ query {
       airtableId
       bio
       skills
+      city
+      remote
+      country {
+        id
+      }
     }
   }
 }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_28_110937) do
+ActiveRecord::Schema.define(version: 2019_03_06_115857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 2019_02_28_110937) do
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uid"
   end
 
   create_table "industries", force: :cascade do |t|
@@ -285,6 +286,7 @@ ActiveRecord::Schema.define(version: 2019_02_28_110937) do
     t.datetime "reset_sent_at"
     t.string "reset_digest"
     t.text "permissions", default: [], array: true
+    t.boolean "remote"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 

@@ -17,6 +17,7 @@ class Types::SpecialistType < Types::BaseType
   field :ratings, Types::Ratings, null: false
   field :reviews, [Types::Review], null: false
   field :reviewsCount, Integer, null: true
+  field :remote, Boolean, null: true
   field :previous_projects, [Types::PreviousProject], null: false
   field :has_account, Boolean, null: false
   field :applications, [Types::ApplicationType], null: true do
