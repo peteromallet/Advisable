@@ -1,4 +1,5 @@
 class AdvisableSchema < GraphQL::Schema
+  max_depth 10
   query Types::QueryType
   mutation Types::MutationType
 
