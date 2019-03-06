@@ -6,6 +6,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Navigation from "./Navigation";
 import Introduction from "./Introduction";
 import Skills from "./Skills";
+import Location from "./Location";
 
 // The navigation for a freelancers profile works differently on mobile compared
 // to desktop. On desktop the navigation is always present in the sidebar,
@@ -26,6 +27,7 @@ const UpdateProfile = ({ match }) => {
           <Switch>
             <Route path="/profile/introduction" component={Introduction} />
             <Route path="/profile/skills" component={Skills} />
+            <Route path="/profile/location" component={Location} />
             {/* If we are on desktop then redirect user to /profile/introduction
             if their URL is exactly /profile */}
             {!isMobile && (

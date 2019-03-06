@@ -36,6 +36,9 @@ class Airtable::Specialist < Airtable::Base
       # find or initialize an association.
       specialist.specialist_skills.find_or_initialize_by(skill: skill)
     end
+
+    specialist.remote = true if fields['Remote OK'].try(:include?, "Yes")
+    specialist.remote = false if fields['Remote OK'].try(:include?, "No")
   end
 
   # Describes how data should be synced to airtable.
@@ -43,6 +46,14 @@ class Airtable::Specialist < Airtable::Base
     self['Biography'] = specialist.bio
     self['Email Address'] = specialist.email
     self['Specialist Skills'] = specialist.skills.map(&:airtable_id)
+    self['City'] = specialist.city
+    self['Country'] = [specialist.country.try(:airtable_id)]
+
+    if specialist.remote
+      self['Remote OK'] = "Yes, I'm happy to work remote"
+    else
+      self['Remote OK'] = "No, I only work with clients in person"
+    end
   end
 
   private

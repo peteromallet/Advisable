@@ -2,6 +2,9 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :bio, String, required: false
   argument :skills, [String], required: false
+  argument :city, String, required: false
+  argument :country, ID, required: false
+  argument :remote, Boolean, required: false
 
   field :specialist, Types::SpecialistType, null: true
   field :errors, [Types::Error], null: true
