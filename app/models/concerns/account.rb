@@ -37,7 +37,7 @@ module Account
       token = Token.new
       self.confirmation_digest = Token.digest(token)
       save(validate: false)
-      UserMailer.confirm(id: id, token: token).deliver_later
+      AccountMailer.confirm(uid: uid, token: token).deliver_later
     end
   end
 

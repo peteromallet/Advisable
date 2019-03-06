@@ -1,8 +1,14 @@
 mutation ConfirmAccount($input: ConfirmAccountInput!) {
   confirmAccount(input: $input) {
-    user {
-      id
-      confirmed
+    viewer {
+      ... on User {
+        id
+        confirmed
+      }
+      ... on Specialist {
+        id
+        confirmed
+      }
     }
     errors {
       code
