@@ -19,7 +19,7 @@ const OpenApplications = (props: Props) => {
 
   let content : React.ReactNode = <Empty />;
 
-  if (props.applications.length === 0) {
+  if (props.applications.length > 0) {
     content = props.applications.map(application => (
       <Padding bottom="m" key={application.id}>
         <Application application={application} />
