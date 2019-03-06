@@ -66,7 +66,6 @@ const INFORMATION = {
   ),
   "Application Accepted": ({ application }) => {
     const { interview } = application;
-    console.log(interview)
 
     if (interview && interview.status === "Call Completed") {
       return (
