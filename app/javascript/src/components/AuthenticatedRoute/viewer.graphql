@@ -18,6 +18,7 @@ query {
       email
       firstName
       lastName
+      confirmed
     }
   }
 }

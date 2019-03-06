@@ -7,6 +7,7 @@ class Types::SpecialistType < Types::BaseType
   field :email, String, null: true
   field :city, String, null: true
   field :bio, String, null: true
+  field :confirmed, Boolean, null: false
   field :country, Types::CountryType, null: true
   field :travel_availability, String, null: true
   field :linkedin, String, null: true

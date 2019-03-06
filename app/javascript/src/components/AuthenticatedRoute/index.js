@@ -69,12 +69,12 @@ const AuthenticatedRoute = ({ render, component: Component, freelancerRoute, ...
               if (rest.path !== "/setup" && viewer.setupRequired && !viewer.confirmed) {
                 return <Redirect to="/setup" />;
               }
+            }
 
-              // if the client has not confirmed their account then show the
-              // confirmation pending page.
-              if (viewer && !viewer.confirmed) {
-                return <PendingConfirmation viewer={viewer} />;
-              }
+            // if the viewer has not confirmed their account then show the
+            // confirmation pending page.
+            if (viewer && !viewer.confirmed) {
+              return <PendingConfirmation viewer={viewer} />;
             }
 
             return Component ? <Component {...props} /> : render(props);
