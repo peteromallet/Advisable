@@ -66,6 +66,25 @@ const INFORMATION = {
   ),
   "Application Accepted": ({ application }) => {
     const { interview } = application;
+    console.log(interview)
+
+    if (interview && interview.status === "Call Completed") {
+      return (
+        <React.Fragment>
+          <Text size="s">
+            Your interview with {application.project.user.companyName} has been complete. We will let you know when they respond. In the mean time you can send them a proposal.
+          </Text>
+          <Button
+            styling="plain"
+            as={Link}
+            target="_blank"
+            to={`/applications/${application.airtableId}/proposal`}
+          >
+            Send Proposal
+          </Button>
+        </React.Fragment>
+      );
+    }
 
     if (interview && interview.status === "Call Requested") {
       return (
