@@ -7,6 +7,7 @@ import * as React from "react";
 import { Formik, Form } from "formik";
 import { Redirect } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
+import queryString from 'query-string';
 import Text from "../../components/Text";
 import Card from "../../components/Card";
 import Button from "../../components/Button";
@@ -28,7 +29,7 @@ interface Params {
 
 interface Props extends RouteComponentProps<Params> {}
 
-const FreelancerSignup = ({ match, history }: Props) => {
+const FreelancerSignup = ({ match, history, location }: Props) => {
   const handleSubmit = mutation => async (values, formikBag) => {
     const { data } = await mutation({
       variables: {
@@ -54,6 +55,8 @@ const FreelancerSignup = ({ match, history }: Props) => {
 
     formikBag.setSubmitting(false);
   };
+
+  const queryParams: any = queryString.parse(location.search);
 
   return (
     <Mutation mutation={CREATE_ACCOUNT}>
@@ -99,11 +102,27 @@ const FreelancerSignup = ({ match, history }: Props) => {
                       onSubmit={handleSubmit(createAccount)}
                       initialValues={{
                         password: "",
+                        email: queryParams.email || "",
                         passwordConfirmation: ""
                       }}
                     >
                       {formik => (
                         <Form>
+                          <FieldRow>
+                            <TextField
+                              type="email"
+                              name="email"
+                              label="Email"
+                              placeholder="email"
+                              value={formik.values.email}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              error={
+                                formik.touched.email &&
+                                formik.errors.email
+                              }
+                            />
+                          </FieldRow>
                           <FieldRow>
                             <TextField
                               type="password"

@@ -4,10 +4,11 @@
 # freelancers is done by ID rather than email because we do want to allow
 # freelancers to create new accounts, only claim their existing one.
 class Specialists::CreateAccount < ApplicationService
-  attr_accessor :specialist, :password, :password_confirmation
+  attr_accessor :specialist, :email, :password, :password_confirmation
 
-  def initialize(specialist:, password:, password_confirmation:)
+  def initialize(specialist:, email:, password:, password_confirmation:)
     @specialist = specialist
+    @email = email
     @password = password
     @password_confirmation = password_confirmation
   end
@@ -15,11 +16,13 @@ class Specialists::CreateAccount < ApplicationService
   def call
     account_already_exists?
     specialist.assign_attributes(
+      email: email,
       password: password,
       password_confirmation: password_confirmation
     )
 
     if specialist.save
+      specialist.sync_to_airtable
       specialist
     else
       raise Service::Error.new(specialist.errors.full_messages.first)
