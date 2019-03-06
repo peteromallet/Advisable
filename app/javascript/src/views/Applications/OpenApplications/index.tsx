@@ -17,11 +17,9 @@ interface Props {
 const OpenApplications = (props: Props) => {
   if (props.loading) return <Loading />
 
-  let content : React.ReactNode;
+  let content : React.ReactNode = <Empty />;
 
-  content = <Empty />;
-
-  if (props.applications.length > 0) {
+  if (props.applications.length === 0) {
     content = props.applications.map(application => (
       <Padding bottom="m" key={application.id}>
         <Application application={application} />
