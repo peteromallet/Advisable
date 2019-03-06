@@ -4,6 +4,7 @@ query {
       id
       airtableId
       bio
+      skills
     }
   }
 }

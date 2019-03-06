@@ -28,13 +28,7 @@ class Airtable::Specialist < Airtable::Base
     specialist.image = self['Image'].try(:first)
 
     # iterate through each associated specialist id from airtable
-    specialist_skills.each do |specialist_skill_id|
-      # fetch the specialist skill airtable record
-      specialist_skill = Airtable::SpecialistSkill.find(specialist_skill_id)
-      # Go to the next record if their is no associated skill.
-      next if specialist_skill['Skill'].nil?
-      # get the associated skill record
-      skill_id = specialist_skill['Skill'][0]
+    specialist_skills.each do |skill_id|
       # check if we already have a synced record of that skill.
       skill = ::Skill.find_by_airtable_id(skill_id)
       # if not then sync it
@@ -44,8 +38,10 @@ class Airtable::Specialist < Airtable::Base
     end
   end
 
+  # Describes how data should be synced to airtable.
   push_data do |specialist|
     self['Biography'] = specialist.bio
+    self['Specialist Skills'] = specialist.skills.map(&:airtable_id)
   end
 
   private

@@ -29,5 +29,11 @@ module Airtable::Syncable
 
       airtable_record.push(self)
     end
+
+    def sync_from_airtable
+      airtable_class = "Airtable::#{self.class}".constantize
+      airtable_record = airtable_class.find(airtable_id)
+      airtable_record.sync
+    end
   end
 end

@@ -5,10 +5,7 @@ import { useMobile } from "../../components/Breakpoint";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Navigation from "./Navigation";
 import Introduction from "./Introduction";
-
-const Skills = () => {
-  return <div>skills</div>;
-};
+import Skills from "./Skills";
 
 // The navigation for a freelancers profile works differently on mobile compared
 // to desktop. On desktop the navigation is always present in the sidebar,
