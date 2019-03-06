@@ -1,6 +1,7 @@
 class Mutations::UpdateProfile < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :bio, String, required: false
+  argument :skills, [String], required: false
 
   field :specialist, Types::SpecialistType, null: true
   field :errors, [Types::Error], null: true

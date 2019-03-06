@@ -1,3 +1,15 @@
+
+export interface SpecialistViewer {
+  id: string;
+  airtableId?: string;
+  bio?: string;
+  skills?: string[];
+}
+
+export interface UserViewer {
+  id: string;
+}
+
 export interface ProjectType {
   id: string;
   description?: string;

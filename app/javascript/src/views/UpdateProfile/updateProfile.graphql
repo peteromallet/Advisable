@@ -3,6 +3,7 @@ mutation UpdateProfile($input: UpdateProfileInput!) {
     specialist {
       id
       bio
+      skills
     }
   }
 }
