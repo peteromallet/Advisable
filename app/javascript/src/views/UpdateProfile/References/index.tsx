@@ -3,6 +3,7 @@ import { get } from "lodash";
 import { graphql } from "react-apollo";
 import Text from "../../../components/Text";
 import Button from "../../../components/Button";
+import Loading from "../../../components/Loading";
 import Heading from "../../../components/Heading";
 import Padding from "../../../components/Spacing/Padding";
 import PreviousProjects from "../../../components/PreviousProjects";
@@ -12,7 +13,7 @@ import PREVIOUS_PROJECTS from "./previousProjects.graphql";
 const References = ({ data }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
 
-  if (data.loading) return <div>loading...</div>;
+  if (data.loading) return <Loading />;
 
   const handleAddProject = () => {
     setModalOpen(true);

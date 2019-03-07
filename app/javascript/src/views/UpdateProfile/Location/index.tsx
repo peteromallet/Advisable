@@ -6,6 +6,7 @@ import { compose, graphql } from "react-apollo";
 import Text from "../../../components/Text";
 import Card from "../../../components/Card";
 import Button from "../../../components/Button";
+import Loading from "../../../components/Loading";
 import Heading from "../../../components/Heading";
 import FieldRow from "../../../components/FieldRow";
 import Checkbox from "../../../components/Checkbox";
@@ -20,8 +21,7 @@ import FETCH_COUNTRIES from "./fetchCountries.graphql";
 let Location = ({ profileQuery, countriesQuery, mutate }) => {
   const notifications = useNotifications();
 
-  if (profileQuery.loading || countriesQuery.loading)
-    return <div>loading...</div>;
+  if (profileQuery.loading || countriesQuery.loading) return <Loading />;
 
   const handleSubmit = async (values, formikBag) => {
     await mutate({
