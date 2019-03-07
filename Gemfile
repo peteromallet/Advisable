@@ -28,6 +28,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'faraday'
 gem 'sidekiq'
+gem 'rack-attack'
 
 gem 'bcrypt', '~> 3.1.7'
 
