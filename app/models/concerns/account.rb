@@ -10,7 +10,8 @@ module Account
     has_secure_password validations: false
     validates_confirmation_of :password
     validates :password, length: { minimum: 8 }, allow_blank: true
-    validates :email, uniqueness: true, allow_blank: true, format: {
+    validate :email_not_taken
+    validates :email, allow_blank: true, format: {
       with: VALID_EMAIL_REGEX
     }
 
@@ -38,6 +39,16 @@ module Account
       self.confirmation_digest = Token.digest(token)
       save(validate: false)
       AccountMailer.confirm(uid: uid, token: token).deliver_later
+    end
+
+    private
+
+    # Validate that the email does not already exist as a user or specialist
+    def email_not_taken
+      return unless email.present?
+      existing = Account.find_by_email(email.downcase)
+      return if persisted? && existing == self
+      errors.add(:email, "email_taken") if existing.present?
     end
   end
 

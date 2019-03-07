@@ -43,7 +43,7 @@ RSpec.shared_examples "account" do
       user = build(factory, confirmation_digest: nil)
       mail = double('email')
       expect(mail).to receive(:deliver_later)
-      expect(UserMailer).to receive(:confirm).and_return(mail)
+      expect(AccountMailer).to receive(:confirm).and_return(mail)
       user.send_confirmation_email
     end
   end
