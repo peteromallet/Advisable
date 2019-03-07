@@ -70,7 +70,7 @@ class Airtable::Application < Airtable::Base
     end
 
     # Sync any records with a status of To Be Invited as "Invited To Apply"
-    return "Invited To Apply" if status = "To Be Invited"
+    return "Invited To Apply" if status == "To Be Invited"
     status
   end
 
