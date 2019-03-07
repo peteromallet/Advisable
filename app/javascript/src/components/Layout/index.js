@@ -12,6 +12,10 @@ let Layout = styled.div`
   ${breakpoints.small(css`
     padding: 0;
   `)};
+
+  @media (max-width: 900px) {
+    padding: 20px;
+  }
 `;
 
 const sidebarWidths = {
@@ -23,6 +27,10 @@ let Sidebar = styled.div`
   flex-shrink: 0;
   margin-right: 50px;
   width: ${props => sidebarWidths[props.size || "m"]};
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 
 let Main = styled.div`

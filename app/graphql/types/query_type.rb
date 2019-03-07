@@ -18,22 +18,18 @@ class Types::QueryType < Types::BaseType
   # The corresponding frontend code for these cases can be found in
   # /views/Project/index.js
   def project(**args)
-    begin
-      project = Project.find_by_airtable_id!(args[:id])
-      policy = ProjectPolicy.new(context[:current_user], project)
-      # Return the project if the user has access to it.
-      return project if policy.can_access_project?
-      # If there is a user logged in but they don't have access then return nil
-      return nil if context[:current_user]
-      # Returns special error codes if there is no user logged in.
-      user = project.user
-      code = "authenticationRequired"
-      extensions = { email: user.try(:email) } 
-      code = "signupRequired" unless user.try(:has_account?)
-      raise GraphQL::ExecutionError.new(code, extensions: extensions)
-    rescue ActiveRecord::RecordNotFound => er
-      GraphQL::ExecutionError.new("Could not find project #{args[:id]}")
-    end
+    project = Project.find_by_airtable_id!(args[:id])
+    policy = ProjectPolicy.new(context[:current_user], project)
+    # Return the project if the user has access to it.
+    return project if policy.can_access_project?
+    # If there is a user logged in but they don't have access then return nil
+    return nil if context[:current_user]
+    # Returns special error codes if there is no user logged in.
+    user = project.user
+    code = "authenticationRequired"
+    extensions = { email: user.try(:email) } 
+    code = "signupRequired" unless user.try(:has_account?)
+    raise GraphQL::ExecutionError.new(code, extensions: extensions)
   end
 
   field :application_rejection_reasons, [Types::ApplicationRejectionReasonType, null: true], null: true
@@ -134,9 +130,6 @@ class Types::QueryType < Types::BaseType
 
   def previous_project(id:, type:, specialist_id:)
     ::PreviousProject.find(id: id, type: type, specialist_id: specialist_id)
-
-    rescue ActiveRecord::RecordNotFound => er
-      GraphQL::ExecutionError.new("Could not find project #{id} with type #{type}")
   end
 
   field :specialist, Types::SpecialistType, null: true do
@@ -144,11 +137,7 @@ class Types::QueryType < Types::BaseType
   end
 
   def specialist(id: )
-    begin
-      Specialist.find_by_airtable_id!(id)
-    rescue ActiveRecord::RecordNotFound => er
-      GraphQL::ExecutionError.new("Could not find specialist #{id}")
-    end
+    Specialist.find_by_airtable_id!(id)
   end
 
   field :industries, [Types::IndustryType], null: false
