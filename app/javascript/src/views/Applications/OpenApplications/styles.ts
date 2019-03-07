@@ -12,6 +12,15 @@ export const Card = styled(CardStyles)`
     right: 20px;
     position: absolute;
   }
+
+  @media (max-width: 900px) {
+    ${Status} {
+      top: auto;
+      right: auto;
+      margin-top: 8px;
+      position: relative;
+    }
+  }
 `
 
 export const Notice = styled.div`
