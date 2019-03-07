@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   include UID
   include Account
+  include Airtable::Syncable
+  airtable_class Airtable::ClientContact
+
   has_many :projects
   has_many :interviews
   belongs_to :country, required: false

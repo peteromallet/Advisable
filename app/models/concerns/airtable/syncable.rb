@@ -1,6 +1,14 @@
 module Airtable::Syncable
   extend ActiveSupport::Concern
 
+  class_methods do
+    attr_reader :airtable
+
+    def airtable_class(klass)
+      @airtable = klass
+    end
+  end
+
   # Adds functionality to push a record to airtable. This should be included
   # as a concern for models that sync with airtable
   included do
@@ -20,7 +28,7 @@ module Airtable::Syncable
 
     # Updates or creates an airtable record for the instance
     def sync_to_airtable
-      airtable_class = "Airtable::#{self.class}".constantize
+      airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
       airtable_record = if airtable_id.present?
         airtable_class.find(airtable_id)
       else
@@ -31,7 +39,7 @@ module Airtable::Syncable
     end
 
     def sync_from_airtable
-      airtable_class = "Airtable::#{self.class}".constantize
+      airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
       airtable_record = airtable_class.find(airtable_id)
       airtable_record.sync
     end
