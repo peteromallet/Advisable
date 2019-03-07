@@ -68,6 +68,9 @@ class Airtable::Application < Airtable::Base
     if ["Interview Scheduled", "Interview Completed"].include?(status)
       return 'Application Accepted'
     end
+
+    # Sync any records with a status of To Be Invited as "Invited To Apply"
+    return "Invited To Apply" if status = "To Be Invited"
     status
   end
 
