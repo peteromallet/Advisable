@@ -4,6 +4,7 @@ import { compose, graphql } from "react-apollo";
 import { RouteComponentProps } from "react-router";
 import Card from "../../../components/Card";
 import Button from "../../../components/Button";
+import Loading from "../../../components/Loading";
 import Heading from "../../../components/Heading";
 import FieldRow from "../../../components/FieldRow";
 import Padding from "../../../components/Spacing/Padding";
@@ -36,7 +37,7 @@ interface Props extends RouteComponentProps {
 const Skills = ({ skillsQuery, profileQuery, mutate }: Props) => {
   const notifications = useNotifications();
 
-  if (skillsQuery.loading || profileQuery.loading) return <div>loading...</div>;
+  if (skillsQuery.loading || profileQuery.loading) return <Loading />;
 
   const handleSubmit = async (values, formikBag) => {
     await mutate({

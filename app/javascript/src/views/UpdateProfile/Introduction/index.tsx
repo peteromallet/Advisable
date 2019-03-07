@@ -6,6 +6,7 @@ import { Formik, Form } from "formik";
 import { compose, graphql } from "react-apollo";
 import Card from "../../../components/Card";
 import Button from "../../../components/Button";
+import Loading from "../../../components/Loading";
 import Heading from "../../../components/Heading";
 import FieldRow from "../../../components/FieldRow";
 import TextField from "../../../components/TextField";
@@ -17,7 +18,7 @@ import UPDATE_PROFILE from "../updateProfile.graphql";
 let Introduction = ({ data, mutate }) => {
   const notifications = useNotifications()
 
-  if (data.loading) return <div>loading...</div>;
+  if (data.loading) return <Loading />;
 
   const handleSubmit = async (values, formikBag) => {
     await mutate({
