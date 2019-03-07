@@ -39,15 +39,6 @@ describe Account do
       end
     end
 
-    context "when there is both a user and specialist with the email" do
-      it 'takes preference over the user' do
-        email = Time.now.to_i
-        user = create(:user, email: "#{email}@test.com")
-        specialist = create(:specialist, email: "#{email}@test.com")
-        expect(Account.find_by_email(specialist.email)).to eq(user)
-      end
-    end
-
     context "when there is no match" do
       it "returns nil" do
         expect(Account.find_by_email("nope")).to be_nil

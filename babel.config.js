@@ -77,7 +77,8 @@ module.exports = function(api) {
         {
           removeImport: true
         }
-      ]
+      ],
+      require('babel-plugin-styled-components').default
     ].filter(Boolean)
   }
 }

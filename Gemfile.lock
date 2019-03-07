@@ -342,7 +342,7 @@ DEPENDENCIES
   rack-attack
   rails (~> 5.2.0)
   rollbar
-  rspec-rails (~> 3.7)
+  rspec-rails (~> 3.8.2)
   sass-rails (~> 5.0)
   selenium-webdriver
   shoulda-matchers
