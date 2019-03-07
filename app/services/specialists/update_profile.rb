@@ -1,3 +1,5 @@
+# Service object to update a specialists profile. This is primarily
+# used by the graphql update_profile mutation.
 class Specialists::UpdateProfile < ApplicationService
   attr_accessor :specialist, :attributes
 

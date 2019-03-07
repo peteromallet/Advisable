@@ -16,7 +16,7 @@ import FETCH_PROFILE from "../fetchProfile.graphql";
 import UPDATE_PROFILE from "../updateProfile.graphql";
 
 let Introduction = ({ data, mutate }) => {
-  const notifications = useNotifications()
+  const notifications = useNotifications();
 
   if (data.loading) return <Loading />;
 
@@ -25,17 +25,20 @@ let Introduction = ({ data, mutate }) => {
       variables: {
         input: {
           id: data.viewer.airtableId,
-          bio: values.bio
-        }
-      }
+          bio: values.bio,
+        },
+      },
     });
-    
-    notifications.notify("Your profile has been updated")
+
+    notifications.notify("Your profile has been updated");
     formikBag.setSubmitting(false);
   };
 
   return (
-    <Formik initialValues={{ bio: data.viewer.bio }} onSubmit={handleSubmit}>
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={{ bio: data.viewer.bio || "" }}
+    >
       {formik => (
         <React.Fragment>
           <Padding bottom="m">
@@ -58,7 +61,7 @@ let Introduction = ({ data, mutate }) => {
                     description="A well structured bio demonstrates your experience and expertise by referencing past projects and achievements, including notable clients or numeric results. You will have a chance to customize this each time you apply for a project."
                   />
                 </FieldRow>
-                <Button loading={formik.isSubmitting} styling="green">
+                <Button type="submit" loading={formik.isSubmitting} styling="green">
                   Save Changes
                 </Button>
               </Form>

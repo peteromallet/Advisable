@@ -5,8 +5,9 @@ FactoryBot.define do
     password "testing123"
     company_name "Test Company"
     confirmed_at 2.weeks.ago
-    sequence(:email) { |n| "user#{n}@test.com" }
+    sequence(:uid) { |n| "use_#{n}" }
     sequence(:airtable_id) { |n| "rec_#{n}" }
+    sequence(:email) { |n| "user#{n}@test.com" }
 
     availability [
       2.days.from_now.change({ hour: 12, min: 0, sec: 0 }),
