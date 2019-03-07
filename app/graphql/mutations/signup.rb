@@ -1,4 +1,5 @@
 class Mutations::Signup < Mutations::BaseMutation
+  argument :id, String, required: true
   argument :email, String, required: true
   argument :password, String, required: true
   argument :password_confirmation, String, required: true

@@ -22,6 +22,7 @@ class Specialists::CreateAccount < ApplicationService
     )
 
     if specialist.save
+      specialist.send_confirmation_email
       specialist.sync_to_airtable
       specialist
     else

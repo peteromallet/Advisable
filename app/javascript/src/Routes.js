@@ -33,7 +33,6 @@ const Routes = () => {
         <Switch>
           <AuthenticatedRoute exact path="/" component={RootPath} />
           <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
           <Route
             path="/reset_password"
             render={props => <ResetPassword {...props} />}
@@ -42,6 +41,7 @@ const Routes = () => {
             path="/confirm_account/:token"
             render={props => <ConfirmAccount {...props} />}
           />
+          <Route path="/signup/:id" component={Signup} />
           <Route path="/freelancers/:id/signup" component={FreelancerSignup} />
           <AuthenticatedRoute path="/setup" component={Setup} />
 
