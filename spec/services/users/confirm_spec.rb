@@ -15,7 +15,17 @@ describe Users::Confirm do
       user = create(:user, confirmation_digest: digest, confirmed_at: nil)
       expect {
         Users::Confirm.call(user: user, token: "wrong")
-      }.to raise_error(Service::Error, "Invalid token")
+      }.to raise_error(Service::Error, "accounts.invalid_token")
+    end
+  end
+
+  context "when there is no confirmation_digest" do
+    it "raises an error" do
+      digest = Token.digest("testing123")
+      user = create(:user, confirmation_digest: nil, confirmed_at: nil)
+      expect {
+        Users::Confirm.call(user: user, token: "testing123")
+      }.to raise_error(Service::Error, "accounts.invalid_token")
     end
   end
 
@@ -25,7 +35,7 @@ describe Users::Confirm do
       user = create(:user, confirmation_digest: digest, confirmed_at: DateTime.now)
       expect {
         Users::Confirm.call(user: user, token: "testing123")
-      }.to raise_error(Service::Error, "Already confirmed")
+      }.to raise_error(Service::Error, "accounts.already_confirmed")
     end
   end
 end
