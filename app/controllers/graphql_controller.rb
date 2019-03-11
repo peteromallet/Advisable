@@ -1,5 +1,8 @@
 class GraphqlController < ApplicationController
-  protect_from_forgery with: :null_session
+  protect_from_forgery with: :null_session 
+  skip_before_action :verify_authenticity_token, if: -> {
+    Rails.env == "development"
+  }
 
   def execute
     variables = ensure_hash(params[:variables])

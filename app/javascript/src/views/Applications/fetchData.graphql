@@ -2,6 +2,8 @@ query {
   viewer {
     ... on Specialist {
       id
+      email
+      airtableId
       invitations: applications(status: ["Invited To Apply"]) {
         id
         status

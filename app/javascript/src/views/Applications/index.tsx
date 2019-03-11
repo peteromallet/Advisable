@@ -15,24 +15,30 @@ const Applications = ({ history }) => {
 
   return (
     <Query query={FETCH_DATA}>
-      {query => (
+      {({ loading, data }) => (
         <React.Fragment>
           <Header />
           <Layout>
             <Layout.Main>
               <Padding bottom="xl">
                 <ApplicationInvitations
-                  loading={query.loading}
+                  loading={loading}
                   onViewInvitation={handleViewInvitation}
-                  applications={
-                    query.loading ? [] : query.data.viewer.invitations
-                  }
+                  applications={loading ? [] : data.viewer.invitations}
                 />
               </Padding>
               <OpenApplications
-                loading={query.loading}
-                applications={
-                  query.loading ? [] : query.data.viewer.applications
+                loading={loading}
+                specialist={data.viewer}
+                applications={loading ? [] : data.viewer.applications}
+                featuredURL={
+                  loading
+                    ? null
+                    : encodeURI(
+                        `https://advisable.com/request_feature_invitation?field75221875=${
+                          data.viewer.email
+                        }&sid=${data.viewer.airtableId}`
+                      )
                 }
               />
             </Layout.Main>

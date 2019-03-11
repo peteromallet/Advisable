@@ -5,8 +5,13 @@ import Link from "../../../components/Link";
 import Styles from "../../../components/Styles";
 import Padding from "../../../components/Spacing/Padding";
 import illustration from "./illustration.png";
+import { SpecialistType } from "../../../types";
 
-const Empty = () => {
+interface Props {
+  featuredURL: string;
+}
+
+const Empty = (props: Props) => {
   return (
     <Card>
       <Styles textAlign="center">
@@ -34,7 +39,7 @@ const Empty = () => {
               </Text>
             </Padding>
             <Text size="xs">
-              <Link href="mailto:hello@advisable.com?subject=Featured Freelancer Request">
+              <Link target="_blank" href={props.featuredURL}>
                 Become a featured freelancer
               </Link>
             </Text>

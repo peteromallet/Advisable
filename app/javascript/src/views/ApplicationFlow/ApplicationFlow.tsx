@@ -44,6 +44,9 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
   // Various parts of this flow need to act differently based on wether the user
   // is applying or updating an existing application.
   const isApplying = application.status === "Invited To Apply";
+
+  console.log(application.questions);
+  console.log(application.project.questions);
  
   // STEPS defines all of the various steps inside the application flow.
   // Note how each step returns true if isApplying is false. This is to allow
@@ -68,7 +71,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
       hidden: application.project.questions.length === 0,
       isComplete:
         !isApplying ||
-        filter(application.questions, q => !isEmpty(q.answer)).length ===
+        filter(application.questions, q => !isEmpty(q.answer)).length >=
           application.project.questions.length
     },
     {

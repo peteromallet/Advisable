@@ -10,7 +10,7 @@ import FieldRow from "../../../components/FieldRow";
 import Padding from "../../../components/Spacing/Padding";
 import SuggestedSelect from "../../../components/SuggestedSelect";
 import { useNotifications } from "../../../components/Notifications";
-import { SpecialistViewer } from "../../../types";
+import { SpecialistType } from "../../../types";
 import FETCH_SKILLS from "./fetchSkills.graphql";
 import FETCH_PROFILE from "../fetchProfile.graphql";
 import UPDATE_PROFILE from "../updateProfile.graphql";
@@ -28,7 +28,7 @@ interface Props extends RouteComponentProps {
   };
   profileQuery: {
     loading: boolean;
-    viewer: SpecialistViewer;
+    viewer: SpecialistType;
   };
   mutate: (props: any) => void;
 }
