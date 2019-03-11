@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link, NavLink } from "react-router-dom";
+import colors from "../../colors";
 
 export const Spacer = styled.div`
   width: 100%;
@@ -20,14 +21,108 @@ export const Header = styled.header`
   box-shadow: 0px 2px 3px rgba(0, 25, 116, 0.14);
 `;
 
-export const Logo = styled(Link)``;
+export const Logo = styled(Link)`
+  @media (max-width: 800px) {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+`;
+
+export const Hamburger = styled.button`
+  display: none;
+
+  @media screen and (max-width: 800px) {
+    top: 20px;
+    left: 16px;
+    padding: 0;
+    width: 20px;
+    border: none;
+    opacity: 0.8;
+    outline: none;
+    display: block;
+    appearance: none;
+    position: absolute;
+    background: transparent;
+
+    &:active {
+      opacity: 1;
+    }
+
+    div {
+      width: 100%;
+      height: 2px;
+      background: white;
+      border-radius: 1px;
+      margin-bottom: 5px;
+    }
+  }
+`;
+
+export const CloseNav = styled.button`
+  display: none;
+
+  @media (max-width: 800px) {
+    width: 40px;
+    height: 40px;
+    display: block;
+    position: relative;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    color: ${colors.neutral.s3};
+    border: 1px solid ${colors.neutral.s2};
+
+    svg {
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+    }
+  }
+`;
 
 export const Nav = styled.nav`
-`
+  @media (max-width: 800px) {
+    width: 100%;
+    height: 100vh;
+    background: white;
+    padding: 20px 20px 20px 20px;
+    box-shadow: 0 0 50px rgb(0, 0, 0, 0.15);
+    transform: translate(-100%, 0);
+    transition: transform 300ms;
+  }
+`;
+
+export const NavContainer = styled.div`
+  @media (max-width: 800px) {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.4);
+    transition: opacity 300ms;
+
+    visibility: hidden;
+    opacity: 0;
+
+    ${props =>
+      props.isOpen &&
+      css`
+        opacity: 1;
+        visibility: visible;
+
+        ${Nav} {
+          transform: translate(0, 0);
+        }
+      `}
+  }
+`;
 
 export const NavItem = styled(NavLink)`
   height: 58px;
-  color: #AABDFF;
+  color: #aabdff;
   font-size: 14px;
   font-weight: 600;
   line-height: 58px;
@@ -44,7 +139,28 @@ export const NavItem = styled(NavLink)`
     color: white;
     border-bottom: 2px solid white;
   }
-`
+
+  @media (max-width: 800px) {
+    height: auto;
+    padding: 20px 0;
+    line-height: 1;
+    display: block;
+    font-size: 17px;
+    font-weight: 500;
+    margin-left: 0px;
+    color: ${colors.neutral.s7};
+    border-bottom: 1px solid ${colors.neutral.s2};
+
+    &:hover {
+      color: ${colors.neutral.s9};
+    }
+
+    &.active {
+      color: ${colors.blue.base};
+      border-bottom: 1px solid ${colors.neutral.s2};
+    }
+  }
+`;
 
 export const CurrentUserWrapper = styled.div`
   right: 25px;
@@ -81,7 +197,6 @@ export const CurrentUserToggle = styled.div`
     border-top: 4px solid rgba(255, 255, 255, 0.2);
   }
 
-
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
     &::after {
@@ -103,12 +218,12 @@ export const CurrentUserDropdown = styled.div`
   transition: opacity 250ms cubic-bezier(0, 1, 0.4, 1),
     transform 250ms cubic-bezier(0.18, 1.25, 0.4, 1);
 
-  opacity: ${props => props.open ? "1" : "0"};
-  pointer-events: ${props => props.open ? "all" : "none"};
-  transform: ${props => props.open ? "scale(1)" : "scale(0.7)"};
+  opacity: ${props => (props.open ? "1" : "0")};
+  pointer-events: ${props => (props.open ? "all" : "none")};
+  transform: ${props => (props.open ? "scale(1)" : "scale(0.7)")};
 
   a {
-    color: #4D5880;
+    color: #4d5880;
     display: block;
     font-size: 14px;
     font-weight: 500;
@@ -116,7 +231,7 @@ export const CurrentUserDropdown = styled.div`
     text-decoration: none;
 
     &:hover {
-      background-color: #F4F5FB;
+      background-color: #f4f5fb;
     }
   }
 `;

@@ -39,7 +39,7 @@ describe Accounts::RequestPasswordReset do
 
         expect {
           Accounts::RequestPasswordReset.call(specialist)
-        }.to raise_error(Service::Error, "request_password_reset.no_account")
+        }.to raise_error(Service::Error, "request_password_reset.application_required")
       end
     end
   end
