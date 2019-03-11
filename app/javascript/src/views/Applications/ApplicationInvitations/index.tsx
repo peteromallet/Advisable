@@ -1,4 +1,5 @@
 import * as React from "react";
+import { filter } from "lodash";
 import Text from "../../../components/Text";
 import Heading from "../../../components/Heading";
 import Padding from "../../../components/Spacing/Padding";
@@ -15,7 +16,13 @@ interface Props {
 
 const ApplicationInvitations = (props: Props) => {
   if (props.loading) return <Loading />;
-  if (!props.loading && props.applications.length === 0) return null;
+
+  // We filter the application recrods by status so that if the status
+  // is updated in the graphql cache elsewhere in the app, this view will
+  // automaticcaly be updated.
+  let filtered = filter(props.applications, { status: "Invited To Apply" })
+
+  if (!props.loading && filtered.length === 0) return null;
 
   return (
     <React.Fragment>
@@ -27,7 +34,7 @@ const ApplicationInvitations = (props: Props) => {
       </Text>
       <InvitationsWrapper>
         <Invitations>
-          {props.applications.map(application => (
+          {filtered.map(application => (
             <Invitation
               key={application.id}
               application={application}

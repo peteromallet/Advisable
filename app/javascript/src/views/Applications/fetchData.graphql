@@ -4,6 +4,7 @@ query {
       id
       invitations: applications(status: ["Invited To Apply"]) {
         id
+        status
         airtableId
         project {
           id
