@@ -26,4 +26,21 @@ describe Accounts::RequestPasswordReset do
     expect(AccountMailer).to receive(:reset_password).and_return(email)
     Accounts::RequestPasswordReset.call(user)
   end
+
+  context "when the account has not set a password" do
+    context "and the account is a specialist" do
+      let(:specialist) { create(:specialist, password: nil) }
+
+      it 'triggers the specialists.forgotten_password_for_non_account webhook' do
+        expect(WebhookEvent).to receive(:trigger).with(
+          "specialists.forgotten_password_for_non_account",
+          WebhookEvent::Specialist.data(specialist)
+        )
+
+        expect {
+          Accounts::RequestPasswordReset.call(specialist)
+        }.to raise_error(Service::Error, "request_password_reset.no_account")
+      end
+    end
+  end
 end

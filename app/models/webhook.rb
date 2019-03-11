@@ -1,3 +1,4 @@
+# Represents an instance of a webhook
 class Webhook < ApplicationRecord
   serialize :response, Hash
   after_initialize :set_pending, if: :new_record?
