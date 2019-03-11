@@ -1,23 +1,38 @@
 import * as React from "react";
 import { Query } from "react-apollo";
+import Icon from "../Icon";
+import { useMobile } from "../../components/Breakpoint";
 import VIEWER from "../../graphql/viewer.graphql";
-import { Nav, NavItem } from "./styles";
+import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
 
-const FreelancerNavigation = () => {
+const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
+  const isMobile = useMobile();
+
   return (
     <Query query={VIEWER}>
       {query => {
         if (query.loading) return null;
         const { viewer } = query.data;
-        const isSpecialist = viewer && viewer.__typename === 'Specialist'
+        const isSpecialist = viewer && viewer.__typename === "Specialist";
 
-        if (!isSpecialist) return null
+        if (!isSpecialist) return null;
 
         return (
-          <Nav>
-            <NavItem to="/applications">Applications</NavItem>
-            <NavItem to="/profile">Profile</NavItem>
-          </Nav>
+          <NavContainer isOpen={navOpen}>
+            <Nav>
+              <CloseNav onClick={onCloseNav}>
+                <Icon icon="x" />
+              </CloseNav>
+              <NavItem to="/applications">Applications</NavItem>
+              <NavItem to="/profile">Profile</NavItem>
+
+              {isMobile && (
+                <NavItem as="a" href="#" onClick={onLogout}>
+                  Logout
+                </NavItem>
+              )}
+            </Nav>
+          </NavContainer>
         );
       }}
     </Query>
