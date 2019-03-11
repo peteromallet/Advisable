@@ -1,12 +1,13 @@
 
-export interface SpecialistViewer {
+export interface SpecialistType { 
   id: string;
+  email?: string;
   airtableId?: string;
   bio?: string;
   skills?: string[];
 }
 
-export interface UserViewer {
+export interface UserType {
   id: string;
 }
 

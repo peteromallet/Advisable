@@ -2,7 +2,6 @@ class Types::User < Types::BaseType
   field :id, ID, null: false
   field :airtable_id, String, null: false
   field :name, String, null: true
-  field :email, String, null: false
   field :first_name, String, null: true
   field :last_name, String, null: true
   field :title, String, null: true
@@ -13,6 +12,10 @@ class Types::User < Types::BaseType
   field :confirmed, Boolean, null: false
   field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
     argument :exclude_conflicts, Boolean, required: false, description: 'Exclude any times that conflict with scheduled interviews'
+  end
+
+  field :email, String, null: false do
+    authorize :is_user
   end
 
   # Exclude any projects where the sales status is 'Lost'. We need to use an

@@ -4,7 +4,6 @@ class Types::SpecialistType < Types::BaseType
   field :first_name, String, null: true
   field :last_name, String, null: true
   field :name, String, null: true
-  field :email, String, null: true
   field :city, String, null: true
   field :bio, String, null: true
   field :confirmed, Boolean, null: false
@@ -20,9 +19,14 @@ class Types::SpecialistType < Types::BaseType
   field :remote, Boolean, null: true
   field :previous_projects, [Types::PreviousProject], null: false
   field :has_account, Boolean, null: false
+
   field :applications, [Types::ApplicationType], null: true do
     authorize :is_specialist
     argument :status, [String], required: false
+  end
+
+  field :email, String, null: true do
+    authorize :is_specialist
   end
 
   def name
