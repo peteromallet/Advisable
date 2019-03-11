@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class WebhookDashboard < Administrate::BaseDashboard
+class WebhookEventDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -9,11 +9,11 @@ class WebhookDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
+    name: Field::String,
     url: Field::String,
-    data: Field::String,
-    status: Field::String,
-    response: Field::String,
-    created_at: Field::DateTime,
+    event: Field::Select.with_options({
+      collection: WebhookEvent::EVENTS
+    }),
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -22,20 +22,17 @@ class WebhookDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :url,
-    :status,
-    :created_at
+    :name,
+    :event,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :id,
+    :name,
     :url,
-    :status,
-    :created_at,
-    :data,
-    :response,
+    :event,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -43,14 +40,18 @@ class WebhookDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :name,
+    :event,
     :url,
-    :type,
-    :criteria
   ].freeze
 
   # Overwrite this method to customize how specialists are displayed
   # across all pages of the admin dashboard.
-  def display_resource(webhook)
-    webhook.url
+  #
+  def display_resource(webhook_config)
+    webhook_config.name
+  end
+
+  def permitted_attributes
+    [:name, :event, :url]
   end
 end

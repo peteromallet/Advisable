@@ -15,7 +15,7 @@ class Mutations::RequestPasswordReset < Mutations::BaseMutation
       return { sent: false, errors: [e] }
     rescue ActiveRecord::RecordNotFound => e
       return { sent: false, errors: [
-        Service::Error.new("Cant find user")
+        Service::Error.new("request_password_reset.account_not_found")
       ] }
   end
 end
