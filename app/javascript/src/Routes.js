@@ -19,7 +19,6 @@ import EditProposal from "./views/EditProposal";
 import CreateProposal from "./views/CreateProposal";
 import ApplicationFlow from "./views/ApplicationFlow";
 import InterviewRequest from "./views/InterviewRequest";
-import FreelancerSignup from "./views/FreelancerSignup";
 import UpdateProfile from "./views/UpdateProfile";
 import NotFound from "./views/NotFound";
 
@@ -42,7 +41,6 @@ const Routes = () => {
             render={props => <ConfirmAccount {...props} />}
           />
           <Route path="/signup/:id" component={Signup} />
-          <Route path="/freelancers/:id/signup" component={FreelancerSignup} />
           <AuthenticatedRoute path="/setup" component={Setup} />
 
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
