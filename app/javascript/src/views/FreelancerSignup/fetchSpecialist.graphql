@@ -1,6 +1,0 @@
-query Specialist($id: ID!) {
-  specialist(id: $id) {
-    id
-    hasAccount
-  }
-}

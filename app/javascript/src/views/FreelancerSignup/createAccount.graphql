@@ -1,8 +1,0 @@
-mutation CreateFreelancerAccount($input: CreateFreelancerAccountInput!) {
-  createFreelancerAccount(input: $input) {
-    token
-    errors {
-      code
-    }
-  }
-}
