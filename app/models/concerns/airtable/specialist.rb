@@ -47,6 +47,7 @@ class Airtable::Specialist < Airtable::Base
     self['Email Address'] = specialist.email
     self['Specialist Skills'] = specialist.skills.map(&:airtable_id)
     self['City'] = specialist.city
+    self['Account Created'] = specialist.has_account? ? "Yes" : nil
     self['Country'] = [specialist.country.try(:airtable_id)]
 
     if specialist.remote
