@@ -152,5 +152,208 @@ describe Airtable::Application do
         airtable.sync
       end
     end
+
+    context "when there is an 'Answer 1'" do
+      it 'syncs it as a question' do
+        application = create(:application, questions: [])
+        airtable = Airtable::Application.new({
+          "Answer 1" => "Answer",
+          "Question 1" => "Question",
+        }, id: application.airtable_id)
+        expect { airtable.sync }.to change { application.reload.questions }
+          .from([]).to([{ "question" => "Question", "answer" => "Answer" }])
+      end
+    end
+
+    context "when there is an 'Answer 2'" do
+      it 'syncs it as a question' do
+        application = create(:application, questions: [])
+        airtable = Airtable::Application.new({
+          "Answer 2" => "Answer",
+          "Question 2" => "Question",
+        }, id: application.airtable_id)
+        expect { airtable.sync }.to change { application.reload.questions }
+          .from([]).to([{ "question" => "Question", "answer" => "Answer" }])
+      end
+    end
+  end
+
+  describe "#push_data" do
+    let(:application) { create(:application) }
+
+    let(:airtable) {
+      Airtable::Application.new({}, id: application.airtable_id)
+    }
+
+    before :each do
+      allow(airtable).to receive(:save)
+    end
+
+    context "when the status has been changed" do
+      it "syncs the 'Application Status' column" do
+        application.reload
+        application.status = 'Invited To Apply'
+        application.save
+        expect { airtable.push(application) }.to change {
+          airtable.fields['Application Status']
+        }.from(nil).to("Invited To Apply")
+      end
+    end
+
+    context "when the status has not been changed" do
+      it "doesn't sync the 'Application Status' column" do
+        application.reload
+        expect { airtable.push(application) }.not_to change {
+          airtable.fields['Application Status']
+        }
+      end
+    end
+
+    context "when the introduction has been changed" do
+      it "syncs the 'One Line Overview' column" do
+        application.reload
+        application.introduction = 'Intro'
+        application.save
+        expect { airtable.push(application) }.to change {
+          airtable.fields['One Line Overview']
+        }.from(nil).to("Intro")
+      end
+    end
+
+    context "when the introduction has not been changed" do
+      it "doesn't sync the 'Application Status' column" do
+        application.reload
+        expect { airtable.push(application) }.not_to change {
+          airtable.fields['One Line Overview']
+        }
+      end
+    end
+
+    context "when the availability has been changed" do
+      it "syncs the 'One Line Overview' column" do
+        application.reload
+        application.introduction = 'Intro'
+        application.save
+        expect { airtable.push(application) }.to change {
+          airtable.fields['One Line Overview']
+        }.from(nil).to("Intro")
+      end
+    end
+
+    context "when the introduction has not been changed" do
+      it "doesn't sync the 'Application Status' column" do
+        application.reload
+        expect { airtable.push(application) }.not_to change {
+          airtable.fields['One Line Overview']
+        }
+      end
+    end
+
+    context "when saved changes to questions" do
+      it "syncs the Answer and Question fields" do
+        application.reload
+        application.questions = [{
+          "question" => "Question 1",
+          "answer" => "Answer 1"
+        }, {
+          "question" => "Question 2",
+          "answer" => "Answer 2"
+        }]
+        application.save
+        airtable.push(application)
+        expect(airtable.fields["Question 1"]).to eq("Question 1")
+        expect(airtable.fields["Answer 1"]).to eq("Answer 1")
+        expect(airtable.fields["Question 2"]).to eq("Question 2")
+        expect(airtable.fields["Answer 2"]).to eq("Answer 2")
+      end
+    end
+
+    it "syncs the 'References - Projects' column" do
+      project = create(:project)
+      create(:application_reference, application: application, project: project)
+      expect { airtable.push(application) }.to change {
+        airtable.fields['References - Projects']
+      }.from(nil).to([project.airtable_id])
+    end
+
+    it "syncs the 'References - Off Platform Projects' column" do
+      project = create(:off_platform_project)
+      create(:application_reference, application: application, project: project)
+      expect { airtable.push(application) }.to change {
+        airtable.fields['References - Off Platform Projects']
+      }.from(nil).to([project.airtable_id])
+    end
+
+    context "when saved changes to rate" do
+      it "syncs the 'Hourly Rate For Project'" do
+        application.reload
+        application.rate = 100
+        application.save
+        expect { airtable.push(application) }.to change {
+          airtable.fields['Hourly Rate For Project']
+        }.from(nil).to(100)
+      end
+    end
+
+    context "when hasn't saved changes to rate" do
+      it "does not sync the 'Hourly Rate For Project'" do
+        application.reload
+        expect { airtable.push(application) }.to_not change {
+          airtable.fields['Hourly Rate For Project']
+        }
+      end
+    end
+
+    context "if accepts_terms is true" do
+      it "syncs 'Accepts Terms' as 'Yes'" do
+        application.reload
+        application.accepts_terms = true
+        application.save
+        expect { airtable.push(application) }.to change {
+          airtable.fields['Accepts Terms']
+        }.from(nil).to("Yes")
+      end
+    end
+
+    context "if accepts_terms is false" do
+      it "syncs 'Accepts Terms' as 'No'" do
+        application.reload
+        application.accepts_terms = false
+        application.save
+        expect { airtable.push(application) }.to change {
+          airtable.fields['Accepts Terms']
+        }.from(nil).to("No")
+      end
+    end
+
+    context "if accepts_fee is true" do
+      it "syncs 'Accepts Fee' as 'Yes'" do
+        application.reload
+        application.accepts_fee = true
+        application.save
+        expect { airtable.push(application) }.to change {
+          airtable.fields['Accepts Fee']
+        }.from(nil).to("Yes")
+      end
+    end
+
+    context "if accepts_fee is false" do
+      it "syncs 'Accepts Fee' as 'No'" do
+        application.reload
+        application.accepts_fee = false
+        application.save
+        expect { airtable.push(application) }.to change {
+          airtable.fields['Accepts Fee']
+        }.from(nil).to("No")
+      end
+    end
+
+    it "syncs the 'Applied At' column" do
+      application.applied_at = DateTime.now
+      application.save
+      expect { airtable.push(application) }.to change {
+        airtable.fields['Applied At']
+      }.from(nil).to(application.applied_at)
+    end
   end
 end
