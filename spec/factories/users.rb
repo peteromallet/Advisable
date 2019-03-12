@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :user do
+    country
     first_name "MyString"
     last_name "MyString"
     password "testing123"

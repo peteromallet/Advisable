@@ -33,9 +33,9 @@ class Airtable::OffPlatformProject < Airtable::Base
     fields["Client Contact Email Address"] = project.contact_email
     fields["Validation Method"] = project.validation_method
     fields["Validation URL"] = project.validation_url
-    fields["Okay with naming client"] = project.confidential ? "No" : "Yes"
-    fields["Okay To Contact"] = project.can_contact ? "Yes" : "No"
-    fields["Specialist"] = [project.specialist.airtable_id]
+    fields["Okay with naming client"] = project.confidential ? nil : "Yes"
+    fields["Okay To Contact"] = project.can_contact ? "Yes" : nil
+    fields["Specialist"] = [project.specialist.try(:airtable_id)]
     fields["Skills Required"] = project.skills.map(&:airtable_id)
     fields["Advisable Validation Status"] = project.validation_status
     fields["Validated By Client"] = project.validated_by_client ? "Yes" : 'No'

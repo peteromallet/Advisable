@@ -33,4 +33,43 @@ describe Airtable::ClientContact do
       }.from(nil).to("Testing")
     end
   end
+
+  describe "push_data" do
+    let(:user) { create(:user) }
+    let(:airtable) { Airtable::ClientContact.new({}, id: user.airtable_id) }
+
+    before :each do
+      allow(airtable).to receive(:save)
+    end
+
+    it "syncs the email" do
+      expect { airtable.push(user) }.to change {
+        airtable.fields['Email Address']
+      }.from(nil).to(user.email)
+    end
+
+    it "syncs the first_name" do
+      expect { airtable.push(user) }.to change {
+        airtable.fields['First Name']
+      }.from(nil).to(user.first_name)
+    end
+
+    it "syncs the last_name" do
+      expect { airtable.push(user) }.to change {
+        airtable.fields['Last Name']
+      }.from(nil).to(user.last_name)
+    end
+
+    it "syncs the country" do
+      expect { airtable.push(user) }.to change {
+        airtable.fields['Country']
+      }.from(nil).to([user.country.airtable_id])
+    end
+
+    it "syncs the company_name" do
+      expect { airtable.push(user) }.to change {
+        airtable.fields['Company Name']
+      }.from(nil).to(user.company_name)
+    end
+  end
 end
