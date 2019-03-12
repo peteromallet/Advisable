@@ -31,21 +31,54 @@ const INFORMATION = {
       </Button>
     </React.Fragment>
   ),
-  Offered: ({ application }) => (
-    <React.Fragment>
-      <Text size="s">
-        {application.project.user.companyName} has sent you an offer
-      </Text>
-      <Button
-        as={Link}
-        styling="plain"
-        target="_blank"
-        to={`/offers/${get(application, "offer.airtableId")}`}
-      >
-        View Offer
-      </Button>
-    </React.Fragment>
-  ),
+  Offered: ({ application }) => {
+    const { offer } = application;
+
+    if (offer && offer.status === "Declined") {
+      return (
+        <React.Fragment>
+          <Text size="s">
+            You have declined the offer from{" "}
+            {application.project.user.companyName}
+          </Text>
+        </React.Fragment>
+      );
+    }
+
+    if (offer && offer.status === "Accepted") {
+      return (
+        <React.Fragment>
+          <Text size="s">
+            You have accepted an offer from {application.project.user.companyName}
+          </Text>
+          <Button
+            as={Link}
+            styling="plain"
+            target="_blank"
+            to={`/offers/${get(application, "offer.airtableId")}`}
+          >
+            View Offer
+          </Button>
+        </React.Fragment>
+      );
+    }
+
+    return (
+      <React.Fragment>
+        <Text size="s">
+          {application.project.user.companyName} has sent you an offer
+        </Text>
+        <Button
+          as={Link}
+          styling="plain"
+          target="_blank"
+          to={`/offers/${get(application, "offer.airtableId")}`}
+        >
+          View Offer
+        </Button>
+      </React.Fragment>
+    );
+  },
   Proposed: ({ application }) => (
     <React.Fragment>
       <Text size="s">
@@ -71,7 +104,9 @@ const INFORMATION = {
       return (
         <React.Fragment>
           <Text size="s">
-            Your interview with {application.project.user.companyName} has been complete. We will let you know when they respond. In the mean time you can send them a proposal.
+            Your interview with {application.project.user.companyName} has been
+            complete. We will let you know when they respond. In the mean time
+            you can send them a proposal.
           </Text>
           <Button
             styling="plain"
@@ -121,7 +156,7 @@ const INFORMATION = {
     }
 
     return null;
-  }
+  },
 };
 
 const Application = ({ application }: Props) => {

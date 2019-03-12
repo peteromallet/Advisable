@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe Airtable::Application do
   include_examples 'airtable syncing'
+  include_examples "sync airtable association", "Client Project", to: :project
 
   describe '#status_to_sync' do
     context 'when the status is Interview Scheduled' do

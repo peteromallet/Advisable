@@ -3,6 +3,6 @@ FactoryBot.define do
     name "Ireland"
     currency "EUR"
     sequence(:uid) { |id| "cou_#{id}" }
-    sequence(:airtable_id) { |id| "airtable_#{id}" }
+    sequence(:airtable_id) { |id| "airtable_country_#{id}" }
   end
 end

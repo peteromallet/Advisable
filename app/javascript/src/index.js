@@ -7,13 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
   root.id = "AppRoot";
   document.body.appendChild(root);
 
-  ReactDOM.render(
-    <Root />,
-    root
-  );
+  ReactDOM.render(<Root />, root);
 });
 
-module.hot.accept('./Root', () => {
-  const NextRootContainer = require('./Root').default;
-  ReactDOM.render(<NextRootContainer />, document.getElementById('AppRoot'));
-})
+if (module.hot) {
+  module.hot.accept("./Root", () => {
+    const NextRootContainer = require("./Root").default;
+    ReactDOM.render(<NextRootContainer />, document.getElementById("AppRoot"));
+  });
+}
