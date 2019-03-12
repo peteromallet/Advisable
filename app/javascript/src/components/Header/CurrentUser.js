@@ -6,6 +6,8 @@ import {
 } from "./styles";
 
 const CurrentUser = ({ user, onLogout }) => {
+  if (!user) return null;
+
   const [open, setOpen] = useState(false);
   const handleBlur = () => setOpen(false);
   const handleFocus = () => setOpen(true);

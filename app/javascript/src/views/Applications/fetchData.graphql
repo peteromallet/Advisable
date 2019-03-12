@@ -35,6 +35,7 @@ query {
         }
         offer {
           id
+          status
           airtableId
         }
         proposal {

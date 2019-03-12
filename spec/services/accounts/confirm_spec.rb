@@ -14,7 +14,7 @@ describe Accounts::Confirm do
       digest = Token.digest("testing123")
       user = create(:user, confirmation_digest: digest, confirmed_at: nil)
       expect {
-        Accounts::Confirm.call(user: user, token: "wrong")
+        Accounts::Confirm.call(account: user, token: "wrong")
       }.to raise_error(Service::Error, "accounts.invalid_token")
     end
   end
@@ -35,7 +35,7 @@ describe Accounts::Confirm do
       user = create(:user, confirmation_digest: digest, confirmed_at: DateTime.now)
       expect {
         Accounts::Confirm.call(account: user, token: "testing123")
-      }.to raise_error(Service::Error, "Already confirmed")
+      }.to raise_error(Service::Error, "accounts.already_confirmed")
     end
   end
 end

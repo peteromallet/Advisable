@@ -38,10 +38,12 @@ export default () => {
                 onLogout={() => handleLogout(query.client)}
                 onCloseNav={() => setNavOpen(false)}
               />
-              {!isMobile && <CurrentUser
-                user={query.data.viewer}
-                onLogout={() => handleLogout(query.client)}
-              />}
+              {!isMobile && !query.loading && (
+                <CurrentUser
+                  user={query.data.viewer}
+                  onLogout={() => handleLogout(query.client)}
+                />
+              )}
             </React.Fragment>
           )}
         </Query>
