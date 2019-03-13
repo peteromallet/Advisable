@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '~> 2.5.1'
+ruby '~> 2.6.1'
 
 # loads env vars from the .env file in dev and test
 gem 'dotenv-rails', groups: [:development, :test]
@@ -82,7 +82,7 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers'
   gem "webmock"
 end
 

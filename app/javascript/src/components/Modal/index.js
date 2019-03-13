@@ -18,12 +18,21 @@ const modalRoot = document.getElementById("js-modal-root");
 let previousOverflow;
 
 const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentProps }) => {
-
   const transitions = useTransition(isOpen, null, {
     from: { opacity: 0, transform: "translate3d(0, 100px, 0)" },
     enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
     leave: { opacity: 0, transform: "translate3d(0, 100px, 0)" }
   });
+
+  // When the component is unmounting and there is only 1 modal open then set
+  // the body overflow back to it was as the last modal is about to close.
+  React.useEffect(() => {
+    return () => {
+      if (modalRoot.children.length <= 1) {
+        document.body.style.overflow = previousOverflow || "";
+      }
+    }
+  }, [])
 
   React.useLayoutEffect(() => {
     // if there is at least one modal open and the body hasn't been set to
@@ -39,6 +48,7 @@ const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentPr
     if (modalRoot.firstChild === null) {
       document.body.style.overflow = previousOverflow || "";
     }
+
   }, [isOpen]);
 
   // If the modal isn't open then return null
