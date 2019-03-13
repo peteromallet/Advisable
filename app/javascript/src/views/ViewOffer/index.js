@@ -28,13 +28,18 @@ const bookingType = booking => {
 
 const payment = booking => {
   const rate = currency(booking.rate, booking.application.project.currency);
+  const rateLimit = currency(booking.rateLimit, booking.application.project.currency);
 
   if (booking.type === "Recurring" && booking.rateType === "Fixed") {
-    return `${rate}/Mo`;
+    return `${rate}/month`;
   }
 
-  if (booking.type === "Recurring") {
-    return `${rate}/Hr`;
+  if (booking.rateType === "Fixed") {
+    return rate;
+  }
+
+  if (booking.rateLimit) {
+    return `${rate}/hour (max ${rateLimit}/month)`
   }
 
   return rate;
@@ -65,14 +70,14 @@ class ViewOffer extends React.Component {
               <Flex distribute="fillEvenly">
                 <div>
                   <Text size="s">Project Type</Text>
-                  <Text size="l" variation="strong">
+                  <Text size="m" variation="strong">
                     {bookingType(data.booking)}
                   </Text>
                 </div>
 
                 <div>
                   <Text size="s">Payment</Text>
-                  <Text size="l" variation="strong">
+                  <Text size="m" variation="strong">
                     {payment(data.booking)}
                   </Text>
                 </div>
@@ -83,14 +88,14 @@ class ViewOffer extends React.Component {
                 <Flex distribute="fillEvenly">
                   <div>
                     <Text size="s">Duration</Text>
-                    <Text size="l" variation="strong">
+                    <Text size="m" variation="strong">
                       {data.booking.duration}
                     </Text>
                   </div>
 
                   <div>
                     <Text size="s">Monthly Limit</Text>
-                    <Text size="l" variation="strong">
+                    <Text size="m" variation="strong">
                       {currency(
                         data.booking.rateLimit,
                         data.booking.application.project.currency
@@ -106,7 +111,7 @@ class ViewOffer extends React.Component {
                   <Flex distribute="fillEvenly">
                     <div>
                       <Text size="s">Estimated Start Date</Text>
-                      <Text size="l" variation="strong">
+                      <Text size="m" variation="strong">
                         {DateTime.fromISO(data.booking.startDate).toFormat(
                           "d LLLL yyyy"
                         )}
@@ -115,7 +120,7 @@ class ViewOffer extends React.Component {
 
                     <div>
                       <Text size="s">Estimated End Date</Text>
-                      <Text size="l" variation="strong">
+                      <Text size="m" variation="strong">
                         {DateTime.fromISO(data.booking.endDate).toFormat(
                           "d LLLL yyyy"
                         )}
