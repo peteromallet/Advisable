@@ -26,6 +26,11 @@ require 'rspec/rails'
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+# If there is a specific chromedriver version specified then use that
+if ENV["CHROMEDRIVER_VERSION"]
+  Chromedriver.set_version ENV["CHROMEDRIVER_VERSION"]
+end
+
 # configure shoulda matchers
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
