@@ -38,14 +38,9 @@ class Airtable::Application < Airtable::Base
       application.project = project
     end
 
-    # for the questions field we find any fields that match the string
-    # "Question N" and return an object for each question. This allows us to add
-    # more questions to airtable without having to create a direct mapping to
-    # each column.
-
     if fields["Answer 1"]
       application.questions ||= []
-      application.questions[0] = {
+      application.questions << {
         question: fields["Question 1"],
         answer: fields["Answer 1"],
       }
@@ -53,7 +48,7 @@ class Airtable::Application < Airtable::Base
 
     if fields["Answer 2"]
       application.questions ||= []
-      application.questions[1] = {
+      application.questions << {
         question: fields["Question 2"],
         answer: fields["Answer 2"],
       }

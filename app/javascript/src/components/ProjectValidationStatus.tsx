@@ -1,4 +1,3 @@
-// @flow
 import * as React from "react";
 import Status from "./Status";
 import Tooltip from "./Tooltip";
@@ -27,11 +26,7 @@ const STATUSES = {
   }
 };
 
-export interface Props {
-  status?: string;
-}
-
-const ProjectValidationStatus = ({ status }: Props) => {
+const ProjectValidationStatus = ({ status }) => {
   const config = STATUSES[status || "Validated"];
   return (
     <Tooltip content={config.tooltip}>

@@ -1,5 +1,6 @@
 module Permissions
   extend ActiveSupport::Concern
+
   SCOPES = [
     "projects:all"
   ]

@@ -3,9 +3,9 @@ import { withSpacing } from "./Spacing";
 
 const sizes = {
   xxs: "13px",
-  s: "19px",
-  m: "21px",
-  l: "30px"
+  s: "18px",
+  m: "20px",
+  l: "28px"
 };
 
 const textTransform = {
@@ -31,8 +31,8 @@ const colours = {
 };
 
 const letterSpacing = {
-  m: "-0.035em",
-  l: "-0.035em",
+  m: "-0.015em",
+  l: "-0.025em",
   xxs: ""
 };
 
@@ -46,7 +46,7 @@ const levels = {
   `,
   2: css`
     color: #0A1745;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 600;
     line-height: 28px;
     letter-spacing: -0.02em;

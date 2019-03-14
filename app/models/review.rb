@@ -11,7 +11,7 @@ class Review < ApplicationRecord
   # disable STI for the type column
   self.inheritance_column = :_type_disabled
 
-  belongs_to :specialist
+  belongs_to :specialist, required: false
   # The review project is a polymorphic association. The review
   # can either blong to a project or an off-platform project. 
   belongs_to :project, polymorphic: true
@@ -29,6 +29,7 @@ class Review < ApplicationRecord
   private
 
   def update_specialist_reviews_count
+    return unless specialist.present?
     specialist.reviews_count = Review.where(
       specialist: specialist,
       type: ["On-Platform Job Review", "Off-Platform Project Review"],

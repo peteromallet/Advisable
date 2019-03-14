@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import queryString from "query-string";
 import { Redirect } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
-import { useTranslation } from 'react-i18next/hooks';
+import { useTranslation } from "react-i18next/hooks";
 import Loading from "src/components/Loading";
 import Link from "src/components/Link";
 import Text from "src/components/Text";
@@ -12,14 +12,15 @@ import Button from "src/components/Button";
 import Heading from "src/components/Heading";
 import FieldRow from "src/components/FieldRow";
 import TextField from "src/components/TextField";
-import useScrollRestore from 'src/utilities/useScrollRestore';
+import Padding from "src/components/Spacing/Padding";
+import useScrollRestore from "src/utilities/useScrollRestore";
 import VIEWER from "../../components/AuthenticatedRoute/viewer.graphql";
 import validationSchema from "./validationSchema";
-import { Container, Card, Error } from "./styles";
+import { Container, Card, Error, SignupLinks, SignupLink } from "./styles";
 import LOGIN from "./login.graphql";
 
 const Login = ({ location }) => {
-  useScrollRestore()
+  useScrollRestore();
   const [t] = useTranslation();
   const [error, setError] = useState(null);
   const queryParams = queryString.parse(location.search);
@@ -54,18 +55,21 @@ const Login = ({ location }) => {
                 {login => (
                   <Formik
                     validationSchema={validationSchema}
-                    initialValues={{ email: queryParams.email || "", password: "" }}
+                    initialValues={{
+                      email: queryParams.email || "",
+                      password: "",
+                    }}
                     onSubmit={async (values, formikBag) => {
                       const { data } = await login({
                         variables: {
-                          input: values
-                        }
+                          input: values,
+                        },
                       });
 
                       if (data.login.token) {
                         localStorage.setItem("authToken", data.login.token);
                         let { from } = location.state || {
-                          from: { pathname: "/" }
+                          from: { pathname: "/" },
                         };
                         window.location = from.pathname;
                         return;
@@ -83,8 +87,8 @@ const Login = ({ location }) => {
                             placeholder="Email"
                             value={formik.values.email}
                             onChange={e => {
-                              setError(null)
-                              formik.handleChange(e)
+                              setError(null);
+                              formik.handleChange(e);
                             }}
                             onBlur={formik.handleBlur}
                             error={formik.touched.email && formik.errors.email}
@@ -98,8 +102,8 @@ const Login = ({ location }) => {
                             placeholder="Password"
                             value={formik.values.password}
                             onChange={e => {
-                              setError(null)
-                              formik.handleChange(e)
+                              setError(null);
+                              formik.handleChange(e);
                             }}
                             onBlur={formik.handleBlur}
                             error={
@@ -131,9 +135,19 @@ const Login = ({ location }) => {
               </Mutation>
             </Card>
 
-            <Text size="s" center paddingTop="xl">
-              Don't have an account? <Link to="/signup">Sign up</Link>
-            </Text>
+            <Padding top="xl" bottom="s">
+              <Text size="s" weight="semibold" center>
+                Don't have an account?
+              </Text>
+            </Padding>
+            <SignupLinks>
+              <SignupLink href="https://advisable.com/apply-to-be-a-client/">
+                Apply to be a client
+              </SignupLink>
+              <SignupLink href="https://advisable.com/apply-to-be-a-specialist/">
+                Apply to be a specialist
+              </SignupLink>
+            </SignupLinks>
           </Container>
         );
       }}

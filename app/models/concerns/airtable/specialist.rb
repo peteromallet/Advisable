@@ -6,6 +6,7 @@ class Airtable::Specialist < Airtable::Base
 
   # Tells which active record model to sync data with.
   sync_with ::Specialist
+  sync_column 'Email Address', to: :email
   sync_column 'First Name', to: :first_name
   sync_column 'Last Name', to: :last_name
   sync_column 'Phone Number', to: :phone_number
@@ -27,19 +28,32 @@ class Airtable::Specialist < Airtable::Base
     specialist.image = self['Image'].try(:first)
 
     # iterate through each associated specialist id from airtable
-    specialist_skills.each do |specialist_skill_id|
-      # fetch the specialist skill airtable record
-      specialist_skill = Airtable::SpecialistSkill.find(specialist_skill_id)
-      # Go to the next record if their is no associated skill.
-      next if specialist_skill['Skill'].nil?
-      # get the associated skill record
-      skill_id = specialist_skill['Skill'][0]
+    specialist_skills.each do |skill_id|
       # check if we already have a synced record of that skill.
       skill = ::Skill.find_by_airtable_id(skill_id)
       # if not then sync it
       skill = Airtable::Skill.find(skill_id).sync if skill.nil?
       # find or initialize an association.
       specialist.specialist_skills.find_or_initialize_by(skill: skill)
+    end
+
+    specialist.remote = true if fields['Remote OK'].try(:include?, "Yes")
+    specialist.remote = false if fields['Remote OK'].try(:include?, "No")
+  end
+
+  # Describes how data should be synced to airtable.
+  push_data do |specialist|
+    self['Biography'] = specialist.bio
+    self['Email Address'] = specialist.email
+    self['Specialist Skills'] = specialist.skills.map(&:airtable_id)
+    self['City'] = specialist.city
+    self['Account Created'] = specialist.has_account? ? "Yes" : nil
+    self['Country'] = [specialist.country.try(:airtable_id)]
+
+    if specialist.remote
+      self['Remote OK'] = "Yes, I'm happy to work remote"
+    else
+      self['Remote OK'] = "No, I only work with clients in person"
     end
   end
 
