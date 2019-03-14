@@ -2,6 +2,7 @@ import React from "react";
 import { isObject } from "lodash";
 import InputLabel from "../InputLabel";
 import InputError from "../InputError";
+import InputDescription from "../InputDescription";
 import { Choices, Choice, Circle, Label } from "./styles";
 
 const ChoiceList = ({
@@ -11,6 +12,7 @@ const ChoiceList = ({
   options = [],
   onChange,
   fullWidth,
+  description,
   optionsPerRow,
   error
 }) => {
@@ -39,6 +41,7 @@ const ChoiceList = ({
           </Choice>
         ))}
       </Choices>
+      {description && <InputDescription>{description}</InputDescription>}
       {error && <InputError>{error}</InputError>}
     </React.Fragment>
   );

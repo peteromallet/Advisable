@@ -27,6 +27,7 @@ const ProjectDetails = ({ formik, gotoPreviousStep }) => {
               name="results"
               placeholder="We achieved..."
               label="What were the results of your work during this project?"
+              description="Please provide as specific information as possible about the results of this project. Include URLs and examples of work where possible.  You're welcome to re-use content you've written elsewhere for this section"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value={formik.values.results}

@@ -113,7 +113,7 @@ describe Airtable::OffPlatformProject do
         airtable.fields['Okay with naming client'] = 'Yes'
         expect { airtable.push(project) }.to change {
           airtable.fields['Okay with naming client']
-        }.from('Yes').to(nil)
+        }.from('Yes').to('No')
       end 
     end
 
@@ -143,7 +143,7 @@ describe Airtable::OffPlatformProject do
         airtable.fields['Okay To Contact'] = "Yes"
         expect { airtable.push(project) }.to change {
           airtable.fields['Okay To Contact']
-        }.from("Yes").to(nil)
+        }.from("Yes").to('No')
       end
     end
 
