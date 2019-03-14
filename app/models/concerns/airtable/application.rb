@@ -38,20 +38,27 @@ class Airtable::Application < Airtable::Base
       application.project = project
     end
 
+    # Build the questions array
+    questions = [];
+
     if fields["Answer 1"]
-      application.questions ||= []
-      application.questions << {
+      questions << {
         question: fields["Question 1"],
         answer: fields["Answer 1"],
       }
     end
 
     if fields["Answer 2"]
-      application.questions ||= []
-      application.questions << {
+      questions << {
         question: fields["Question 2"],
         answer: fields["Answer 2"],
       }
+    end
+
+    # If the application questions is not equal to the questions array then set
+    # it to the questions variable
+    if (application.questions || []) != questions
+      application.questions = questions
     end
   end
 
