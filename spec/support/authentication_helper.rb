@@ -3,7 +3,7 @@ module AuthenticationHelper
   # a JWT for the user in local storage
   def authenticate_as(user)
     visit '/login'
-    jwt = Users::CreateToken.call(user: user)
+    jwt = Accounts::JWT.call(user)
     Capybara.execute_script("localStorage.setItem('authToken', '#{jwt}')")
   end
 end

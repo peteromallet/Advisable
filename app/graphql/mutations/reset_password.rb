@@ -8,8 +8,8 @@ class Mutations::ResetPassword < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def resolve(**args)
-    Users::ResetPassword.call({
-      user: User.find_by_email!(args[:email].downcase),
+    Accounts::ResetPassword.call({
+      account: Account.find_by_email!(args[:email].downcase),
       token: args[:token],
       password: args[:password],
       password_confirmation: args[:password_confirmation]

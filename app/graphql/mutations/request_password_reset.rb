@@ -5,9 +5,9 @@ class Mutations::RequestPasswordReset < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def resolve(**args)
-    Users::RequestPasswordReset.call({
-      user: User.find_by_email!(args[:email].downcase)
-    })
+    Accounts::RequestPasswordReset.call(
+      Account.find_by_email!(args[:email].downcase)
+    )
 
     { sent: true }
 
@@ -15,7 +15,7 @@ class Mutations::RequestPasswordReset < Mutations::BaseMutation
       return { sent: false, errors: [e] }
     rescue ActiveRecord::RecordNotFound => e
       return { sent: false, errors: [
-        Service::Error.new("Cant find user")
+        Service::Error.new("request_password_reset.account_not_found")
       ] }
   end
 end

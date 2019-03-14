@@ -1,5 +1,3 @@
-// @flow
-//
 // Renders the form for an offer. This is used in places where
 // a client sends an offer to a specialist.
 // - The send offer flow
@@ -33,27 +31,13 @@ const amountLabel = form => {
   return "Amount";
 };
 
-type Props = {
-  // onSubmit will be called when the form is submitted. It will be passes all of the
-  // values of the form and should return a promise.
-  onSubmit: () => Promise<any>,
-  // onCancel is an optional function that when passed will display a cancel button
-  // which when clicked will call the onCancel function.
-  onCancel: ?() => mixed,
-  // The currency that the amount input should use. This is expected to be a currency
-  // ISO code. e.g EUR
-  currency: string,
-  // An object of initial values for the form
-  initialValues: Object
-};
-
 export default ({
   onSubmit,
   onCancel,
   secondaryAction,
   currency = "€",
   initialValues
-}: Props) => {
+}) => {
   return (
     <Formik
       onSubmit={onSubmit}

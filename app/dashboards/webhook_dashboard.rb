@@ -50,7 +50,6 @@ class WebhookDashboard < Administrate::BaseDashboard
 
   # Overwrite this method to customize how specialists are displayed
   # across all pages of the admin dashboard.
-  #
   def display_resource(webhook)
     webhook.url
   end

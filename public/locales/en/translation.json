@@ -1,5 +1,7 @@
 {
   "errors": {
+    "account_not_found": "Your account could not be found. You must first go through our application process.",
+    "account_already_exists": "This account already exists",
     "authentication": {
       "failed": "Invalid login credentials, please try again."
     },

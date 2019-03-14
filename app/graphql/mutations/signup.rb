@@ -1,4 +1,5 @@
 class Mutations::Signup < Mutations::BaseMutation
+  argument :id, String, required: true
   argument :email, String, required: true
   argument :password, String, required: true
   argument :password_confirmation, String, required: true
@@ -7,8 +8,14 @@ class Mutations::Signup < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def resolve(**args)
-    user = Users::Signup.call(args)
-    token = Users::CreateToken.call(user: user)
+    account = Accounts::Signup.call(
+      airtable_id: args[:id],
+      email: args[:email],
+      password: args[:password],
+      password_confirmation: args[:password_confirmation]
+    )
+
+    token = Accounts::JWT.call(account)
     { token: token }
 
     rescue Service::Error => e

@@ -1,0 +1,47 @@
+query {
+  viewer {
+    ... on Specialist {
+      id
+      airtableId
+      previousProjects {
+        project {
+          ... on Project {
+            id
+            airtableId
+            description
+            primarySkill
+            user {
+              companyName
+            }
+          }
+          ... on OffPlatformProject {
+            id
+            airtableId
+            description
+            primarySkill
+            clientName
+            confidential
+            skills
+            primarySkill
+            industry
+            validationStatus
+          }
+        }
+        reviews {
+          id
+          name
+          role
+          comment
+          ratings {
+            overall
+            skills
+            qualityOfWork
+            adherenceToSchedule
+            availability
+            communication
+          }
+        }
+      }
+    }
+  }
+}

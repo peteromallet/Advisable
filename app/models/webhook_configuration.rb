@@ -1,3 +1,6 @@
+# DEPRECATED
+# Webhook configurations have been deprecated and you should add a new
+# WebhookEvent instead.
 class WebhookConfiguration < ApplicationRecord
   validates :url, presence: true
   validates :type, presence: true
