@@ -1,12 +1,10 @@
 {
   "errors": {
+    "email_taken": "This email address is associated with an existing account.",
     "account_not_found": "Your account could not be found. You must first go through our application process.",
     "account_already_exists": "This account already exists",
     "authentication": {
       "failed": "Invalid login credentials, please try again."
-    },
-    "users": {
-      "email_taken": "This email address is associated with an existing account."
     }
   },
   "projects": {
