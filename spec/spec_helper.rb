@@ -1,5 +1,6 @@
 require 'simplecov'
 require 'webmock/rspec'
+require 'rspec/retry'
 
 # setup simplecov for test coverage reports
 SimpleCov.start 'rails' do
@@ -37,6 +38,20 @@ WebMock.disable_net_connect!(allow_localhost: true)
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.include AuthenticationHelper
+
+  # run retry only on features
+  config.around :each, :js do |ex|
+    ex.run_with_retry retry: 3
+  end
+
+  # callback to be run between retries  
+  config.retry_callback = proc do |ex|
+    # run some additional clean up task - can be filtered by example metadata
+    if ex.metadata[:js]
+      Capybara.reset!     
+    end
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
