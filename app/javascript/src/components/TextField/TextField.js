@@ -10,6 +10,7 @@ import {
 } from "./styles";
 import InputError from "src/components/InputError";
 import InputLabel from "src/components/InputLabel";
+import InputSubLabel from "src/components/InputSubLabel";
 import InputDescription from "src/components/InputDescription";
 import { extractSpacingProps } from "src/components/Spacing";
 
@@ -33,6 +34,7 @@ const TextField = ({
   maxLength,
   autoFocus,
   description,
+  subLabel,
   ...props
 }) => {
   const input = useRef(null);
@@ -84,6 +86,7 @@ const TextField = ({
   return (
     <Wrapper block={block} {...extractSpacingProps(props)}>
       {label && <InputLabel htmlFor={id}>{label}</InputLabel>}
+      {subLabel && <InputSubLabel>{subLabel}</InputSubLabel>}
       <InputContainer>
         <Component
           autoFocus={autoFocus}

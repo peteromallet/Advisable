@@ -1,0 +1,15 @@
+query {
+  viewer {
+    ... on Specialist {
+      id
+      airtableId
+      bio
+      skills
+      city
+      remote
+      country {
+        id
+      }
+    }
+  }
+}

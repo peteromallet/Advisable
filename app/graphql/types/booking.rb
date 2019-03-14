@@ -1,5 +1,6 @@
 class Types::Booking < Types::BaseType
   field :id, ID, null: false
+  field :airtable_id, ID, null: false
   field :type, String, null: true
   field :rate, Float, null: true
   field :rate_type, String, null: true

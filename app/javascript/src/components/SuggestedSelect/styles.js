@@ -1,6 +1,7 @@
-import styled from "styled-components";
-import { darken } from 'polished';
+import styled, { keyframes } from "styled-components";
+import { rgba } from "polished";
 import ReactSelect from "react-select";
+import colors from "../../colors";
 
 export const Select = styled(ReactSelect)`
   .SuggestedSelect__control {
@@ -26,7 +27,7 @@ export const Select = styled(ReactSelect)`
   }
 
   .SuggestedSelect__placeholder {
-    color: #8C92AE;
+    color: #8c92ae;
   }
 
   .SuggestedSelect__menu {
@@ -59,5 +60,41 @@ export const Select = styled(ReactSelect)`
         background-color: transparent;
       }
     }
+  }
+
+  .SuggestedSelect__indicator-separator {
+    display: none;
+  }
+`;
+
+const menuAnimation = keyframes`
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+`;
+
+export const MenuContainer = styled.div`
+  .SuggestedSelect__menu {
+    animation: ${menuAnimation} 300ms;
+    box-shadow: 0 30px 60px -30px ${rgba(colors.neutral.s9, 0.2)},
+      0 10px 60px ${rgba(colors.neutral.s9, 0.1)},
+      0 0 5px ${rgba(colors.neutral.s9, 0.1)};
+  }
+
+  .SuggestedSelect__option {
+    font-size: 14px;
+    font-weight: 500;
+    color: ${colors.neutral.s8};
+  }
+
+  .SuggestedSelect__option--is-focused {
+    color: ${colors.neutral.s10};
+    background: ${rgba(colors.blue.base, 0.05)};
   }
 `;

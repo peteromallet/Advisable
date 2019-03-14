@@ -1,13 +1,15 @@
 query {
   viewer {
-    id
-    projects {
+    ... on User {
       id
-      airtableId
-      primarySkill
-      status
-      description
-      applicationCount
+      projects {
+        id
+        airtableId
+        primarySkill
+        status
+        description
+        applicationCount
+      }
     }
   }
 }

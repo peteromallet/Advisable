@@ -19,7 +19,7 @@ import validationSchema from "./validationSchema";
 import { Container, Card, Error } from "./styles";
 import SIGNUP from "./signup.graphql";
 
-const Signup = ({ location }) => {
+const Signup = ({ location, match }) => {
   useScrollRestore()
   const [t] = useTranslation();
   const queryParams = queryString.parse(location.search);
@@ -63,7 +63,10 @@ const Signup = ({ location }) => {
                     onSubmit={async (values, formikBag) => {
                       const { data } = await signup({
                         variables: {
-                          input: values
+                          input: {
+                            id: match.params.id,
+                            ...values
+                          }
                         }
                       });
 
@@ -74,7 +77,7 @@ const Signup = ({ location }) => {
                       }
 
                       if (data.signup.errors) {
-                        formikBag.setError(data.signup.errors[0].code);
+                        formikBag.setStatus(data.signup.errors[0].code);
                       }
 
                       formikBag.setSubmitting(false);
@@ -86,7 +89,6 @@ const Signup = ({ location }) => {
                             name="email"
                             label="Email"
                             placeholder="Email"
-                            disabled={queryParams.email}
                             value={formik.values.email}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
@@ -132,8 +134,8 @@ const Signup = ({ location }) => {
                         >
                           Signup
                         </Button>
-                        {formik.error && (
-                          <Error>{t(`errors.${formik.error}`)}</Error>
+                        {formik.status && (
+                          <Error>{t(`errors.${formik.status}`)}</Error>
                         )}
                       </form>
                     )}

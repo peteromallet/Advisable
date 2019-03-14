@@ -17,7 +17,6 @@ const SkeletonHeading = styled.div`
   max-width: 120px;
   border-radius: 5px;
   background: #3C466A;
-  margin-bottom: 10px;
   animation: ${animation} 0.6s linear infinite alternate;
 `
 

@@ -1,0 +1,9 @@
+mutation UpdateProfile($input: UpdateProfileInput!) {
+  updateProfile(input: $input) {
+    specialist {
+      id
+      bio
+      skills
+    }
+  }
+}

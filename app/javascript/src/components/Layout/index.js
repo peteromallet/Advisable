@@ -5,19 +5,32 @@ let Layout = styled.div`
   width: 100%;
   display: flex;
   margin: 0 auto;
-  max-width: 1060px;
+  max-width: 1020px;
   padding-top: 40px;
   padding-bottom: 40px;
 
   ${breakpoints.small(css`
     padding: 0;
   `)};
+
+  @media (max-width: 900px) {
+    padding: 20px;
+  }
 `;
 
+const sidebarWidths = {
+  s: "200px",
+  m: "300px",
+}
+
 let Sidebar = styled.div`
-  width: 300px;
   flex-shrink: 0;
   margin-right: 50px;
+  width: ${props => sidebarWidths[props.size || "m"]};
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 
 let Main = styled.div`
