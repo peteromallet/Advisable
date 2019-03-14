@@ -1,17 +1,32 @@
 import { Formik } from "formik";
 import { Mutation } from "react-apollo";
 import React, { Fragment, useState } from "react";
+import { useTranslation } from "react-i18next/hooks";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
 import Heading from "src/components/Heading";
 import FieldRow from "src/components/FieldRow";
 import TextField from "src/components/TextField";
+import Padding from "src/components/Spacing/Padding";
 import validationSchema from "./validationSchema";
 import REQUEST_PASSWORD_RESET from "./requestPasswordReset.graphql";
-import { Container, Card, Error } from "../styles";
+import { Container, Card } from "../styles";
+
+// The constants below define the various stages or states of the request
+// password reset flow.
+// the main request form
+const REQUEST = "REQUEST";
+// When the password reset has been sent
+const SENT = "SENT";
+// If there is no account matching the email
+const NO_ACCOUNT = "NO_ACCOUNT";
+// if the found account has not created an account yet. i.e they haven't
+// finished the freelancer application process.
+const APPLICATION_IN_PROCESS = "APPLICATION_IN_PROCESS";
 
 export default () => {
-  const [sent, setSent] = useState(false);
+  const [t] = useTranslation();
+  const [status, setStatus] = useState("REQUEST");
   const [error, setError] = useState(null);
 
   return (
@@ -25,7 +40,7 @@ export default () => {
         />
       </svg>
       <Card padding="xl">
-        {sent ? (
+        {status === SENT && (
           <Fragment>
             <Heading center marginBottom="l">
               Instructions sent!
@@ -35,7 +50,43 @@ export default () => {
               email.
             </Text>
           </Fragment>
-        ) : (
+        )}
+
+        {status === NO_ACCOUNT && (
+          <Fragment>
+            <Heading center marginBottom="l">
+              Account Not Found
+            </Heading>
+            <Padding bottom="l">
+              <Text center>
+                We couldn't find an account for the email you provided.
+              </Text>
+            </Padding>
+            <Padding bottom="s">
+              <Button size="l" block href="https://advisable.com/apply-to-be-a-client/" as="a">
+                Apply to be a client
+              </Button>
+            </Padding>
+            <Button size="l" block href="https://advisable.com/apply-to-be-a-specialist/" as="a">
+              Apply to be a specialist
+            </Button>
+          </Fragment>
+        )}
+
+        {status === APPLICATION_IN_PROCESS && (
+          <Fragment>
+            <Heading center marginBottom="l">
+              Application not complete
+            </Heading>
+            <Text center>
+              It looks like you haven't finished your Advisable application.
+              We've sent you an email with details on how to continue your
+              application.
+            </Text>
+          </Fragment>
+        )}
+
+        {status === REQUEST && (
           <Mutation mutation={REQUEST_PASSWORD_RESET}>
             {requestPasswordReset => (
               <Formik
@@ -44,16 +95,25 @@ export default () => {
                 onSubmit={async (values, formikBag) => {
                   const { data } = await requestPasswordReset({
                     variables: {
-                      input: values
-                    }
+                      input: values,
+                    },
                   });
 
-                  setSent(data.requestPasswordReset.sent);
+                  if (data.requestPasswordReset.sent) {
+                    setStatus(SENT);
+                  }
 
                   if (data.requestPasswordReset.errors.length > 0) {
-                    setError(
-                      `Sorry, We couldn't find an account for ${values.email}`
-                    );
+                    let error = data.requestPasswordReset.errors[0].code;
+                    if (
+                      error === "request_password_reset.application_required"
+                    ) {
+                      setStatus(APPLICATION_IN_PROCESS);
+                    }
+
+                    if (error === "request_password_reset.account_not_found") {
+                      setStatus(NO_ACCOUNT);
+                    }
                   }
 
                   formikBag.setSubmitting(false);
@@ -69,8 +129,8 @@ export default () => {
                         label="Email Address"
                         value={formik.values.email}
                         onChange={e => {
-                          setError(null)
-                          return formik.handleChange(e)
+                          setError(null);
+                          return formik.handleChange(e);
                         }}
                         onBlur={formik.handleBlur}
                         placeholder="Email Address"
@@ -78,14 +138,14 @@ export default () => {
                       />
                     </FieldRow>
                     <Button
-                      loading={formik.isSubmitting}
+                      block
+                      size="l"
                       type="submit"
                       styling="primary"
+                      loading={formik.isSubmitting}
                     >
                       Send password reset
                     </Button>
-
-                    {error && <Error>{error}</Error>}
                   </form>
                 )}
               />

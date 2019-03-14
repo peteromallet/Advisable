@@ -12,12 +12,14 @@ import Projects from "./views/Projects";
 import ViewOffer from "./views/ViewOffer";
 import References from "./views/References";
 import JobListing from "./views/JobListing";
+import Applications from "./views/Applications";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
 import EditProposal from "./views/EditProposal";
 import CreateProposal from "./views/CreateProposal";
 import ApplicationFlow from "./views/ApplicationFlow";
 import InterviewRequest from "./views/InterviewRequest";
+import UpdateProfile from "./views/UpdateProfile";
 import NotFound from "./views/NotFound";
 
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
@@ -28,8 +30,8 @@ const Routes = () => {
     <Suspense fallback={<Loading />}>
       <BrowserRouter>
         <Switch>
+          <AuthenticatedRoute exact path="/" component={RootPath} />
           <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
           <Route
             path="/reset_password"
             render={props => <ResetPassword {...props} />}
@@ -38,8 +40,9 @@ const Routes = () => {
             path="/confirm_account/:token"
             render={props => <ConfirmAccount {...props} />}
           />
-          <AuthenticatedRoute exact path="/" component={RootPath} />
+          <Route path="/signup/:id" component={Signup} />
           <AuthenticatedRoute path="/setup" component={Setup} />
+
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
           <Route path="/projects/:projectID" component={Project} />
           <AuthenticatedRoute path="/projects" component={Projects} />
@@ -64,11 +67,7 @@ const Routes = () => {
             path="/applications/:applicationID/proposal"
             component={CreateProposal}
           />
-          <Route
-            exact
-            path="/invites/:applicationId"
-            component={JobListing}
-          />
+          <Route exact path="/invites/:applicationId" component={JobListing} />
           <Route
             path="/invites/:applicationId/apply"
             component={ApplicationFlow}
@@ -77,6 +76,19 @@ const Routes = () => {
             path="/applications/:applicationID/proposals/:proposalID"
             component={EditProposal}
           />
+
+          <AuthenticatedRoute
+            freelancerRoute
+            path="/applications"
+            component={Applications}
+          />
+
+          <AuthenticatedRoute
+            freelancerRoute
+            path="/profile"
+            component={UpdateProfile}
+          />
+
           <Route component={NotFound} />
         </Switch>
       </BrowserRouter>

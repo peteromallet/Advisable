@@ -12,10 +12,10 @@ describe 'Creating a proposal' do
     expect(airtable_booking_record).to receive(:create)
     expect(Airtable::Booking).to receive(:new).and_return(airtable_booking_record)
 
-    airtable_application_reocrd = double('Airtable::Application')
-    expect(airtable_application_reocrd).to receive(:[]=).with('Application Status', 'Proposed').at_least(:once)
-    expect(airtable_application_reocrd).to receive(:save)
-    expect(Airtable::Application).to receive(:find).and_return(airtable_application_reocrd)
+    airtable_application_record = double('Airtable::Application')
+    expect(airtable_application_record).to receive(:[]=).with('Application Status', 'Proposed').at_least(:once)
+    expect(airtable_application_record).to receive(:save)
+    expect(Airtable::Application).to receive(:find).and_return(airtable_application_record)
 
     visit "/applications/#{application.airtable_id}/proposal"
 

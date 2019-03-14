@@ -12,6 +12,7 @@ describe 'Application invitation view' do
 
     it 'allows the user to appy' do
       visit "/invites/#{application.airtable_id}"
+      sleep 10
       click_on "Apply"
       expect(page).to have_content("Applying to")
     end

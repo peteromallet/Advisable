@@ -1,0 +1,23 @@
+query {
+  viewer {
+    ... on User {
+      id
+      email
+      firstName
+      lastName
+      confirmed
+      setupRequired
+      companyName
+      country {
+        name
+      }
+    }
+
+    ... on Specialist {
+      id
+      email
+      firstName
+      lastName
+    }
+  }
+}

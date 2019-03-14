@@ -1,0 +1,55 @@
+query {
+  viewer {
+    ... on Specialist {
+      id
+      email
+      airtableId
+      invitations: applications(status: ["Invited To Apply"]) {
+        id
+        status
+        airtableId
+        project {
+          id
+          primarySkill
+          estimatedBudget
+          companyDescription
+        }
+      }
+      applications(status: [
+        "Applied",
+        "Application Accepted",
+        "Offered",
+        "Interview Scheduled",
+        "Interview Completed",
+        "Proposed"
+      ]) {
+        id
+        airtableId
+        status
+        appliedAt
+        project {
+          primarySkill
+          user {
+            companyName
+          }
+        }
+        offer {
+          id
+          status
+          airtableId
+        }
+        proposal {
+          id
+          airtableId
+        }
+        interview {
+          id
+          airtableId
+          status
+          startsAt
+          timeZone
+        }
+      }
+    }
+  }
+}

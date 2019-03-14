@@ -10,10 +10,10 @@ describe 'Viewing a proposal' do
     expect(airtable_booking_record).to receive(:save)
     expect(Airtable::Booking).to receive(:find).and_return(airtable_booking_record)
 
-    airtable_application_reocrd = double('Airtable::Application')
-    expect(airtable_application_reocrd).to receive(:[]=).with('Application Status', 'Offered').at_least(:once)
-    expect(airtable_application_reocrd).to receive(:save)
-    expect(Airtable::Application).to receive(:find).and_return(airtable_application_reocrd)
+    airtable_application_record = double('Airtable::Application')
+    expect(airtable_application_record).to receive(:[]=).with('Application Status', 'Offered').at_least(:once)
+    expect(airtable_application_record).to receive(:save)
+    expect(Airtable::Application).to receive(:find).and_return(airtable_application_record)
 
     project = proposal.application.project
 

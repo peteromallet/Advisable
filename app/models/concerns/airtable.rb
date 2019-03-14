@@ -6,6 +6,7 @@ module Airtable
       table.sync(report)
     end
 
+    # :nocov:
     if report.failures.any?
       output = "Some records failed to sync \n"
       report.failures.each do |failure|
@@ -14,5 +15,6 @@ module Airtable
       Rollbar.scope({:fingerprint => "airtablesync"}).warn(output)
       puts output
     end
+    # :nocov:
   end
 end
