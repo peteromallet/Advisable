@@ -14,6 +14,7 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
   argument :description, String, required: true
   argument :validation_method, String, required: true
   argument :validation_url, String, required: true
+  argument :validation_explanation, String, required: true
 
   field :previous_project, Types::PreviousProject, null: true
   field :errors, [Types::Error], null: true

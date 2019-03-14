@@ -53,8 +53,12 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
               label="Are you okay with us contacting them to validate this project?"
               options={[
                 { value: true, label: "Yes" },
-                { value: false, label: "No" }
+                { value: false, label: "No" },
               ]}
+              description={
+                formik.values.canContact === false &&
+                "This may cause the project not to be validated."
+              }
               onChange={e => {
                 const value = e.target.value === "true";
                 if (value) {
@@ -90,7 +94,13 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
               <FieldRow>
                 <Select
                   name="validationMethod"
-                  onChange={formik.handleChange}
+                  onChange={e => {
+                    if (e.target.value === "None") {
+                      formik.setFieldValue("validationUrl", "")
+                      formik.setFieldValue("validationExplanation", "")
+                    }
+                    formik.handleChange(e)
+                  }}
                   value={formik.values.validationMethod}
                   label="How can we validate that this project happened?"
                   description={
@@ -101,13 +111,13 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
                     { value: "Linkedin", label: "Linkedin Reference" },
                     {
                       value: "External Site",
-                      label: "External Site Reference"
+                      label: "External Site Reference",
                     },
                     { value: "Portfolio", label: "Link to Portfolio" },
                     {
                       value: "None",
-                      label: "Validation not possible"
-                    }
+                      label: "Validation not possible",
+                    },
                   ]}
                 />
               </FieldRow>
@@ -115,12 +125,33 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
                 <FieldRow>
                   <TextField
                     name="validationUrl"
-                    label="Please share the relevant URL for us to review"
+                    placeholder="https://"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.validationUrl}
-                    error={formik.touched.validationUrl && formik.errors.validationUrl}
-                    placeholder="https://"
+                    label="Please share the relevant URL for us to review"
+                    error={
+                      formik.touched.validationUrl &&
+                      formik.errors.validationUrl
+                    }
+                  />
+                </FieldRow>
+              )}
+              {formik.values.validationMethod !== "None" && (
+                <FieldRow>
+                  <TextField
+                    multiline
+                    minRows={2}
+                    name="validationExplanation"
+                    label="How does this URL validate that the project happened?"
+                    placeholder="How does this URL validate that the project happened?"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.validationExplanation}
+                    error={
+                      formik.touched.validationExplanation &&
+                      formik.errors.validationExplanation
+                    }
                   />
                 </FieldRow>
               )}
