@@ -27,6 +27,7 @@ const blankProject = {
   contactJobTitle: "",
   validationMethod: "Client",
   validationUrl: "",
+  validationExplanation: "",
 };
 
 const validationMethodValue = selected => {

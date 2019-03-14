@@ -97,4 +97,10 @@ export const MenuContainer = styled.div`
     color: ${colors.neutral.s10};
     background: ${rgba(colors.blue.base, 0.05)};
   }
+
+  .SuggestedSelect__menu-notice--no-options {
+    padding: 10px;
+    font-size: 14px;
+    color: ${colors.neutral.s6};
+  }
 `;

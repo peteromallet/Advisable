@@ -15,6 +15,7 @@ class Airtable::OffPlatformProject < Airtable::Base
   sync_column 'Advisable Validation Status', to: :validation_status
   sync_column 'Validation Method', to: :validation_method
   sync_column 'Validated By Client', to: :validated_by_client
+  sync_column 'Validation Explanation', to: :validation_explanation
 
   sync_data do |off_platform_project|
     pull_specialist(off_platform_project)
@@ -24,6 +25,7 @@ class Airtable::OffPlatformProject < Airtable::Base
   push_data do |project|
     fields["Client Industry"] = project.industry
     fields["Client Contact First Name"] = project.contact_first_name
+    fields["Client Contact Last Name"] = project.contact_last_name
     fields["Client Contact Job Title"] = project.contact_job_title
     fields["Client Name"] = project.client_name
     fields["Client Description"] = project.client_description
@@ -33,12 +35,13 @@ class Airtable::OffPlatformProject < Airtable::Base
     fields["Client Contact Email Address"] = project.contact_email
     fields["Validation Method"] = project.validation_method
     fields["Validation URL"] = project.validation_url
-    fields["Okay with naming client"] = project.confidential ? nil : "Yes"
-    fields["Okay To Contact"] = project.can_contact ? "Yes" : nil
+    fields["Okay with naming client"] = project.confidential ? "No" : "Yes"
+    fields["Okay To Contact"] = project.can_contact ? "Yes" : "No"
     fields["Specialist"] = [project.specialist.try(:airtable_id)]
     fields["Skills Required"] = project.skills.map(&:airtable_id)
     fields["Advisable Validation Status"] = project.validation_status
     fields["Validated By Client"] = project.validated_by_client ? "Yes" : 'No'
+    fields["Validation Explanation"] = project.validation_explanation
   end
 
   private

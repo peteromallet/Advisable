@@ -13,8 +13,14 @@ const validationSchema = Yup.object({
   validationUrl: Yup.string()
   .nullable()
   .when("validationMethod", {
-    is: "URL",
+    is: method => ["URL", "Linkedin", "Portfolio", "External Site"].indexOf(method) > -1,
     then: Yup.string().required("Please provide a validation URL")
+  }),
+  validationExplanation: Yup.string()
+  .nullable()
+  .when("validationMethod", {
+    is: method => ["URL", "Linkedin", "Portfolio", "External Site"].indexOf(method) > -1,
+    then: Yup.string().required("Please explain how this URL validates that the project happened.")
   })
 });
 
