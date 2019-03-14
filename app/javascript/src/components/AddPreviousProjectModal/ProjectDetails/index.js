@@ -21,6 +21,7 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
         <form onSubmit={formik.handleSubmit}>
           <FieldRow>
             <SuggestedSelect
+              max={5}
               name="skills"
               isMulti={true}
               placeholder="e.g Facebook Marketing"

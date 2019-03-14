@@ -239,6 +239,8 @@ GEM
       rspec-expectations (~> 3.8.0)
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
+    rspec-retry (0.6.1)
+      rspec-core (> 3.3)
     rspec-support (3.8.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
@@ -343,6 +345,7 @@ DEPENDENCIES
   rails (~> 5.2.0)
   rollbar
   rspec-rails (~> 3.8.2)
+  rspec-retry
   sass-rails (~> 5.0)
   selenium-webdriver
   shoulda-matchers
