@@ -3,7 +3,7 @@ import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
   /* @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700'); */
-  @import url("https://use.typekit.net/smt8hcq.css");
+  @import url("https://use.typekit.net/yuq4swo.css");
 
   * {
     box-sizing: border-box;
