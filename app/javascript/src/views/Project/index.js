@@ -18,7 +18,7 @@ const redirectError = (error, location) => {
 
   if (error.message === "signupRequired") {
     redirect = {
-      pathname: `/signup`,
+      pathname: error.extensions.redirect,
       search: `?email=${encodeURIComponent(error.extensions.email)}`,
       state: {
         from: location,
@@ -29,7 +29,7 @@ const redirectError = (error, location) => {
 
   if (error.message === 'authenticationRequired') {
     redirect = {
-      pathname: "/login",
+      pathname: error.extensions.redirect,
       search: `?email=${encodeURIComponent(error.extensions.email)}`,
       state: {
         from: location
@@ -52,9 +52,9 @@ const Project = ({ location, match: { path, params } }) => {
         // an account
         if (query.error && query.error.graphQLErrors.length > 0) {
           let error = query.error.graphQLErrors[0]
-          let redirect = redirectError(error)
+          let redirect = redirectError(error, location)
           if (redirect) {
-            return <Redirect to={redirectError(error, location)} />
+            return <Redirect to={redirect} />
           }
         }
 

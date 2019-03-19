@@ -26,9 +26,14 @@ class Types::QueryType < Types::BaseType
     return nil if context[:current_user]
     # Returns special error codes if there is no user logged in.
     user = project.user
-    code = "authenticationRequired"
-    extensions = { email: user.try(:email) } 
-    code = "signupRequired" unless user.try(:has_account?)
+    email = user.try(:email)
+    has_account = user.try(:has_account?)
+    code = has_account ? "authenticationRequired" : "signupRequired"
+    url = has_account ? "/login" : "/signup/#{user.try(:airtable_id)}"
+    extensions = {
+      redirect: url,
+      email: email
+    } 
     raise GraphQL::ExecutionError.new(code, extensions: extensions)
   end
 
