@@ -6,6 +6,7 @@ class WebhookEvent::Specialist
       first_name: specialist.first_name,
       last_name: specialist.last_name,
       has_account: specialist.has_account?,
+      application_stage: specialist.application_stage,
     }
   end
 end

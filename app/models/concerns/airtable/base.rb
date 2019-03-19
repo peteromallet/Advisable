@@ -7,7 +7,7 @@
 # expected to have an airtable_id column.
 class Airtable::Base < Airrecord::Table
   class << self
-    attr_accessor :sync_model, :sync_block, :push_block
+    attr_accessor :sync_model, :sync_block, :push_block, :after_sync_block
 
     def base_key
       ENV["AIRTABLE_DATABASE_KEY"]
@@ -67,6 +67,10 @@ class Airtable::Base < Airrecord::Table
     def push_data(&block)
       @push_block = block
     end
+
+    def after_sync(&block)
+      @after_sync_block = block
+    end
   end
 
   # You can call sync on an instance of any class that inherits from
@@ -91,6 +95,9 @@ class Airtable::Base < Airrecord::Table
 
       if model.save
         Webhook.process(model)
+        if self.class.after_sync_block
+          instance_exec(model, &self.class.after_sync_block)
+        end
       else
         message = "Failed to sync #{record_type} #{id} \n#{model.errors.full_messages}"
         Rails.logger.warn(message)

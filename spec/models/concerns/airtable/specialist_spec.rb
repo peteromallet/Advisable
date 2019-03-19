@@ -3,6 +3,52 @@ require "rails_helper"
 describe Airtable::Specialist do
   include_examples "sync airtable association", "Country", to: :country
 
+  describe "syncing the application stage" do
+    let(:specialist) { create(:specialist, application_stage: nil) }
+    let(:airtable) { Airtable::Specialist.new({
+      "Application Stage" => "Applied"
+    }, id: specialist.airtable_id) }
+
+    it 'saves the application stage' do
+      expect { airtable.sync }.to change { specialist.reload.application_stage }
+        .from(nil).to("Applied")
+    end
+
+    it 'triggers the application_stage_changed webhook event' do
+      expect(WebhookEvent).to receive(:trigger).with(
+        "specialists.application_stage_changed",
+        hash_including(:application_stage => "Applied")
+      )
+      airtable.sync
+    end
+
+    context "when the record is a new record" do
+      let(:airtable) { Airtable::Specialist.new({
+        "Application Stage" => "Applied"
+      }, id: "rec_new") }
+
+      it "does not trigger a webhook" do
+        expect(WebhookEvent).not_to receive(:trigger).with(
+          "specialists.application_stage_changed",
+          hash_including(:application_stage => "Applied")
+        )
+        airtable.sync
+      end
+    end
+
+    context "when there is no change to the application_stage" do
+      let(:specialist) { create(:specialist, application_stage: "Applied") }
+
+      it "does not trigger a webhook" do
+        expect(WebhookEvent).not_to receive(:trigger).with(
+          "specialists.application_stage_changed",
+          hash_including(:application_stage => "Applied")
+        )
+        airtable.sync
+      end
+    end
+  end
+
   describe "push_data" do
     let(:specialist) { create(:specialist, {
       bio: "bio",
