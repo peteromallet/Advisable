@@ -17,11 +17,11 @@ export const Projects = styled.div`
   }
 `;
 
-export const Tile = styled.div.attrs({
-  style: props => ({
-    opacity: props.opacity
-  })
-})`
+export const Tile = styled.div.attrs(props => ({
+  style: {
+    opacity: props.opacity,
+  },
+}))`
   float: left;
   margin-bottom: 30px;
 
@@ -130,14 +130,14 @@ export const ProjectTitle = styled.h4`
 
 const statusStyling = {
   "Brief Pending Confirmation": css`
-    color: #684A00;
-    background: #FFF1CE;
+    color: #684a00;
+    background: #fff1ce;
   `,
   "Project Created": css`
-    color: #684A00;
-    background: #FFF1CE;
-  `
-}
+    color: #684a00;
+    background: #fff1ce;
+  `,
+};
 
 export const ProjectStatus = styled.div`
   height: 28px;
@@ -175,5 +175,3 @@ export const ProjectDescription = styled.p`
     background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
   }
 `;
-
-

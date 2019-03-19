@@ -72,7 +72,10 @@ const Signup = ({ location, match }) => {
 
                       if (data.signup.token) {
                         localStorage.setItem("authToken", data.signup.token);
-                        window.location = "/";
+                        let { from } = location.state || {
+                          from: { pathname: "/" },
+                        };
+                        window.location = from.pathname;
                         return;
                       }
 
