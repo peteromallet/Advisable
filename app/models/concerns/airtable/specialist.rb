@@ -14,6 +14,7 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'City', to: :city
   sync_column 'LinkedIn URL', to: :linkedin
   sync_column 'Biography', to: :bio
+  sync_column 'Application Stage', to: :application_stage
 
   sync_data do |specialist|
     # to prevent making more requests than we need, first check if there is
@@ -39,6 +40,22 @@ class Airtable::Specialist < Airtable::Base
 
     specialist.remote = true if fields['Remote OK'].try(:include?, "Yes")
     specialist.remote = false if fields['Remote OK'].try(:include?, "No")
+  end
+
+  # After the syncing process has been complete
+  after_sync do |specialist|
+    # Deteremine wether or not the specialist record was just created for the
+    # first time.
+    new_record = specialist.created_at == specialist.updated_at
+
+    # if the record is not a new record and there was an update to the
+    # application_stage column then trigger a webhook event.
+    if !new_record && specialist.saved_change_to_application_stage
+      WebhookEvent.trigger(
+        "specialists.application_stage_changed",
+        WebhookEvent::Specialist.data(specialist)
+      )
+    end
   end
 
   # Describes how data should be synced to airtable.

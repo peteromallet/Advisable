@@ -10,6 +10,10 @@ RSpec.shared_examples "airtable syncing" do
   it "has a sync_model" do
     expect(described_class.sync_model).to be < ActiveRecord::Base
   end
+
+  describe "after_sync" do
+    
+  end
 end
 
 RSpec.shared_examples "sync airtable column" do |column, config|
