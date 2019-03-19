@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_14_142316) do
+ActiveRecord::Schema.define(version: 2019_03_19_074606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -288,6 +288,7 @@ ActiveRecord::Schema.define(version: 2019_03_14_142316) do
     t.string "reset_digest"
     t.text "permissions", default: [], array: true
     t.boolean "remote"
+    t.string "application_stage"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
