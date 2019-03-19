@@ -1,12 +1,24 @@
 # WebhookEvent's are used to trigger webhooks. The actual event names are hard
 # coded and an instance of WebhookEvent configures a webhook to be fired when a
 # given event happens.
+#
+# The following would trigger a webhook to "https://test.com" every time the
+# "specialists.application_stage_changed" event was fired.
+#
+#   WebhookEvent.create(
+#     event: "specialists.application_stage_changed",
+#     url: "https://test.com"
+#   )
+#
 class WebhookEvent < ApplicationRecord
   EVENTS = [
     # specialists.forgotten_password_for_non_account is triggered when a forgotten
     # password email is requested for a specialist who has not yet setup their
     # account.
-    "specialists.forgotten_password_for_non_account"
+    "specialists.forgotten_password_for_non_account",
+    # "specialists.application_stage_changed" is triggered when the
+    # "application_stage" column is updated during the airtable syncing process. 
+    "specialists.application_stage_changed"
   ].freeze
 
   # self.trigger is used to trigger a webhook event.
