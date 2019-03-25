@@ -47,17 +47,17 @@ const PreviousProjects = ({
                   <PreviousProject
                     key={p.project.id}
                     project={p.project}
-                    checked={field.value.includes(p.project.id)}
+                    checked={field.value.includes(p.project.airtableId)}
                     onChange={e => {
-                      if (field.value.includes(p.project.id)) {
+                      if (field.value.includes(p.project.airtableId)) {
                         formik.setFieldValue(
                           "references",
-                          field.value.filter(id => id !== p.project.id)
+                          field.value.filter(id => id !== p.project.airtableId)
                         );
                       } else {
                         formik.setFieldValue(
                           "references",
-                          field.value.concat(p.project.id)
+                          field.value.concat(p.project.airtableId)
                         );
                       }
                     }}
