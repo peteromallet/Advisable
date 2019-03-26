@@ -23,6 +23,7 @@ import NotFound from "./views/NotFound";
 
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
+const Booking = lazy(() => import("./views/Booking"));
 
 const Routes = () => {
   return (
@@ -43,6 +44,7 @@ const Routes = () => {
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
           <Route path="/projects/:projectID" component={Project} />
           <AuthenticatedRoute path="/projects" component={Projects} />
+          <AuthenticatedRoute path="/bookings/:bookingID" component={Booking} />
           <Route path="/offers/:bookingID" component={ViewOffer} />
           <Route
             path="/clients/:userID/availability"

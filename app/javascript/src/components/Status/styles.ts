@@ -24,7 +24,7 @@ export const Status = styled.span`
   padding: 0 12px;
   font-weight: 500;
   line-height: 22px;
-  border-radius: 15px;
+  border-radius: 6px;
   align-items: center;
   display: inline-flex;
   letter-spacing: 0.01rem;
