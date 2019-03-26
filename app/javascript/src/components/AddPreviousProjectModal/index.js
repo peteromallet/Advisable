@@ -60,7 +60,7 @@ const AddPreviousProjectModal = ({ specialistId, isOpen, onClose, data, mutate }
       })
 
       setStepIndex(0);
-      formikBag.resetForm({})
+      formikBag.resetForm(blankProject)
       onClose();
     } else {
       formikBag.setTouched({});
