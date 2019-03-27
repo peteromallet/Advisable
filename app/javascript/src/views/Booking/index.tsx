@@ -7,7 +7,7 @@ const tasks = [
     id: "tas_1234",
     status: "Not Assigned",
     name: "Write style guide for content voice and tone",
-    due_date: "2019-03-28",
+    dueDate: "2019-03-28",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis",
   },
@@ -16,7 +16,7 @@ const tasks = [
     status: "Quote Received",
     name:
       "Another task that has an estimate and will through warning when editing description",
-    due_date: "2019-03-28",
+    dueDate: "2019-03-28",
     estimate: "8 hours",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis",
@@ -25,7 +25,7 @@ const tasks = [
     id: "tas_1234",
     status: "In Progress",
     name: "This task is in progress and the description can not be edited",
-    due_date: "2019-03-28",
+    dueDate: "2019-03-28",
     estimate: "8 hours",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis",

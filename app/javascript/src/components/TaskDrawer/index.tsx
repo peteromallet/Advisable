@@ -5,6 +5,7 @@ import Scrollable from "../Scrollable";
 import Padding from "../Spacing/Padding";
 import VerticalLayout from "../VerticalLayout";
 import Title from "./Title";
+import DueDate from "./DueDate";
 import Description from "./Description";
 import {
   TaskDrawer,
@@ -30,11 +31,7 @@ export default ({ isOpen, onClose, task, isClient }) => {
             <Scrollable>
               <Padding left="m" bottom="m" right="m">
                 <TaskDetails>
-                  <Detail>
-                    <DetailIcon />
-                    <DetailLabel>Due Date</DetailLabel>
-                    <DetailValue>29 April 2019</DetailValue>
-                  </Detail>
+                  <DueDate task={task} />
                   {task.estimate && (
                     <Detail>
                       <DetailIcon />
