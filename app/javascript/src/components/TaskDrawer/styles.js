@@ -1,11 +1,25 @@
 import { rgba } from "polished";
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import colors from "../../colors";
 import { Status } from "../Status/styles";
 
+const placeholderColor = color => css`
+  &::-webkit-input-placeholder {
+    color: ${color};
+  }
+  &::-moz-placeholder {
+    color: ${color};
+  }
+  &:-ms-input-placeholder {
+    color: ${color};
+  }
+  &:-moz-placeholder {
+    color: ${color};
+  }
+`;
+
 export const TaskDrawer = styled.div`
   height: 100vh;
-  padding: 20px;
   position: relative;
 
   ${Status} {
@@ -40,6 +54,8 @@ export const Title = styled.textarea`
     background: #f5f6f9;
     border: 2px solid ${colors.blue.base};
   }
+
+  ${placeholderColor(colors.neutral.s5)}
 `;
 
 export const TaskDetails = styled.div`
@@ -107,6 +123,7 @@ export const Description = styled.textarea`
   margin-bottom: 16px;
   border: 2px solid transparent;
   transition: border-color 200ms;
+  ${placeholderColor(colors.neutral.s5)}
 
   &:hover {
     background: #f5f6f9;
@@ -146,7 +163,7 @@ to {
   opacity: 1;
   transform: scale(1) translate3d(0, 0, 0);
 }
-`
+`;
 
 export const ConfirmationContainer = styled.div`
   padding: 30px;
@@ -156,14 +173,13 @@ export const ConfirmationContainer = styled.div`
   position: absolute;
   text-align: center;
   animation: ${slideInUp} 300ms;
-  box-shadow:
-    0 8px 60px ${rgba(colors.neutral.s8, 0.2)},
+  box-shadow: 0 8px 60px ${rgba(colors.neutral.s8, 0.2)},
     0 2px 6px ${rgba(colors.neutral.s8, 0.15)};
 
   p {
     font-size: 15px;
     line-height: 19px;
     margin-bottom: 20px;
-    color: ${colors.neutral.s9}
+    color: ${colors.neutral.s9};
   }
 `;
