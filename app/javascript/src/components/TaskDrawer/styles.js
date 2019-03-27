@@ -68,19 +68,43 @@ export const TaskDetails = styled.div`
 `;
 
 export const Detail = styled.div`
-  padding-left: 42px;
+  padding: 8px;
+  margin-left: -8px;
+  padding-left: 50px;
   position: relative;
   margin-right: 60px;
+  border-radius: 6px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background: #f5f6f9;
+  }
+`;
+
+export const Popout = styled.div`
+  z-index: 1;
+  width: 300px;
+  padding: 20px;
+  background: white;
+  position: absolute;
+  border-radius: 6px;
+  box-shadow: 0 4px 60px ${rgba(colors.neutral.s9, 0.25)},
+    0 2px 8px ${rgba(colors.neutral.s9, 0.1)};
 `;
 
 export const DetailIcon = styled.div`
-  left: 0;
   top: 50%;
+  left: 8px;
   width: 30px;
   height: 30px;
+  user-select: none;
   position: absolute;
   border-radius: 50%;
-  background: #eff3ff;
+  background: ${rgba(colors.blue.base, 0.075)};
   transform: translateY(-50%);
 `;
 

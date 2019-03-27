@@ -13,6 +13,19 @@ interface Props {
 }
 
 export default ({ isOpen, onClose, children }: Props) => {
+  const handleKeyPress = e => {
+    if (e.keyCode === 27) {
+      onClose();
+    }
+  };
+
+  React.useEffect(() => {
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  });
+
   const fadeTransition = useTransition(isOpen, null, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -27,7 +40,7 @@ export default ({ isOpen, onClose, children }: Props) => {
       mass: 1,
       tension: 320,
       friction: 35,
-    }
+    },
   });
 
   const handleBackdropClick = () => {
