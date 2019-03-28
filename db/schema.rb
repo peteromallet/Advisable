@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_19_074606) do
+ActiveRecord::Schema.define(version: 2019_03_28_111610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,15 @@ ActiveRecord::Schema.define(version: 2019_03_19_074606) do
     t.index ["airtable_id"], name: "index_interviews_on_airtable_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
     t.index ["user_id"], name: "index_interviews_on_user_id"
+  end
+
+  create_table "matches", force: :cascade do |t|
+    t.bigint "specialist_id"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_matches_on_project_id"
+    t.index ["specialist_id"], name: "index_matches_on_specialist_id"
   end
 
   create_table "off_platform_projects", force: :cascade do |t|
@@ -349,6 +358,8 @@ ActiveRecord::Schema.define(version: 2019_03_19_074606) do
   add_foreign_key "client_users", "users"
   add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "users"
+  add_foreign_key "matches", "projects"
+  add_foreign_key "matches", "specialists"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
   add_foreign_key "project_skills", "skills"
