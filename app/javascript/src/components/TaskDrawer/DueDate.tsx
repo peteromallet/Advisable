@@ -1,69 +1,57 @@
 import * as moment from "moment";
 import * as React from "react";
-import Popper from "popper.js";
+import Icon from "../Icon";
+import Popover from "../Popover";
 import DatePicker from "../DatePicker";
-import { Detail, DetailIcon, DetailLabel, DetailValue, Popout } from "./styles";
+import {
+  Detail,
+  DetailIcon,
+  DetailLabel,
+  DetailValue,
+  DetailPlaceholder,
+  Popout,
+} from "./styles";
 
-export default ({ task }) => {
-  const popoutRef = React.useRef(null);
-  const triggerRef = React.useRef(null);
-  const [open, setOpen] = React.useState(false);
-  const [selected, setSelected] = React.useState(new Date(task.dueDate));
+interface Props {
+  task: any;
+  isClient: boolean;
+}
 
-  const handleFocus = () => {
-    setOpen(true);
-  };
+export default ({ task, isClient }) => {
+  const [selected, setSelected] = React.useState(
+    task.dueDate ? new Date(task.dueDate) : null
+  );
 
-  const close = e => {
-    e.preventDefault();
-    e.stopPropagation();
-    setOpen(false);
-  };
-
-  const handleDocumentClick = e => {
-    if (triggerRef.current.contains(e.target)) {
-      return
-    }
-
-    setOpen(false)
-  }
-
-  React.useEffect(() => {
-    document.addEventListener("mousedown", handleDocumentClick)
-    return () => document.removeEventListener("mousedown", handleDocumentClick)
-  }, [])
-
-  React.useLayoutEffect(() => {
-    if (open && popoutRef) {
-      new Popper(triggerRef.current, popoutRef.current, {
-        placement: "bottom-start",
-      });
-    }
-  }, [open, popoutRef]);
+  const initialMonth = selected || new Date();
 
   return (
-    <Detail
-      tabIndex={0}
-      ref={triggerRef}
-      onFocus={handleFocus}
+    <Popover
+      trigger={
+        <Detail tabIndex={0}>
+          <DetailIcon>
+            <Icon strokeWidth={1} width={20} icon="calendar" />
+          </DetailIcon>
+          <DetailLabel>Due Date</DetailLabel>
+          {selected ? (
+            <DetailValue>{moment(selected).format("DD MMMM YYYY")}</DetailValue>
+          ) : (
+            <DetailPlaceholder>+ Add due date</DetailPlaceholder>
+          )}
+        </Detail>
+      }
     >
-      <DetailIcon />
-      <DetailLabel>Due Date</DetailLabel>
-      <DetailValue>
-        {moment(selected).format("DD MMMM YYYY")}
-      </DetailValue>
-      {open && (
-        <Popout ref={popoutRef}>
+      {popover => (
+        <Popout>
           <DatePicker
+            initialMonth={initialMonth}
             selectedDays={selected}
             onDayClick={day => {
-              setSelected(day)
-              setOpen(false);
+              setSelected(day);
+              popover.close();
             }}
           />
-          <div tabIndex={0} onFocus={close} />
         </Popout>
       )}
-    </Detail>
+    </Popover>
   );
 };

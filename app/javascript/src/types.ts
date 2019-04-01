@@ -50,3 +50,9 @@ interface ApplicationQuestionType {
 export interface OffPlatformProjectType {
   id: string;
 }
+
+export interface Task {
+  id: string;
+  status: string;
+  estimate?: number;
+}

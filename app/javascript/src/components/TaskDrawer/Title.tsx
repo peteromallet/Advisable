@@ -27,7 +27,7 @@ export default ({ value, ...props }) => {
     calculateRows()
     setInputValue(e.target.value)
   }
-
+  
   const handleKeyDown = e => {
     if (e.keyCode === 13) {
       e.preventDefault();

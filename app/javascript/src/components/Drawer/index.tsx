@@ -1,7 +1,8 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
 import { useTransition } from "react-spring";
-import { Container, Backdrop, Drawer } from "./styles";
+import Icon from "../Icon";
+import { Container, Backdrop, Drawer, CloseButton } from "./styles";
 
 const root = document.createElement("div");
 document.body.appendChild(root);
@@ -56,6 +57,9 @@ export default ({ isOpen, onClose, children }: Props) => {
               drawer =>
                 drawer.item && (
                   <Drawer key={drawer.key} style={drawer.props}>
+                    <CloseButton onClick={onClose}>
+                      <Icon icon="x" />
+                    </CloseButton>
                     {children}
                   </Drawer>
                 )
