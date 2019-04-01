@@ -30,7 +30,6 @@ class Types::MutationType < GraphQL::Schema::Object
   field :create_off_platform_project, mutation: Mutations::CreateOffPlatformProject
 
   field :login, mutation: Mutations::Login
-  field :setup, mutation: Mutations::Setup
   field :signup, mutation: Mutations::Signup
   field :confirm_account, mutation: Mutations::ConfirmAccount
   field :resend_confirmation_email, mutation: Mutations::ResendConfirmationEmail
