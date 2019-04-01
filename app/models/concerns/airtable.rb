@@ -13,7 +13,7 @@ module Airtable
     end
 
     duration = Time.at(Time.now - started_at).utc.strftime("%H:%M:%S")
-    Rails.logger.info("Finished airtable sync: #{duration}")
+    Rails.logger.info("Finished airtable sync: [#{duration}]")
 
     # :nocov:
     if report.failures.any?
