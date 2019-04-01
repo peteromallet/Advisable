@@ -2,9 +2,18 @@ module Airtable
   def self.sync
     Rails.application.eager_load!
     report = Airtable::SyncReport.new
-    Airtable::Base.descendants.each do |table|
-      table.sync(report)
+
+    started_at = DateTime.now
+    Rails.logger.info("Syncing data from airtable...")
+
+    ActiveRecord::Base.logger.silence do
+      Airtable::Base.descendants.each do |table|
+        table.sync(report)
+      end
     end
+
+    duration = Time.at(Time.now - started_at).utc.strftime("%H:%M:%S")
+    Rails.logger.info("Finished airtable sync: [#{duration}]")
 
     # :nocov:
     if report.failures.any?
@@ -12,8 +21,7 @@ module Airtable
       report.failures.each do |failure|
         output += "#{failure[:type]} #{failure[:id]}: #{failure[:errors]}\n"
       end
-      Rollbar.scope({:fingerprint => "airtablesync"}).warn(output)
-      puts output
+      Rails.logger.info(output)
     end
     # :nocov:
   end

@@ -24,9 +24,7 @@ class Airtable::Base < Airrecord::Table
     # Sync can be called on any class that inherits from Airtable::Base
     # to sync all records from airtable
     def sync(report = nil)
-      records = all
-      Rails.logger.info "Syncing #{sync_model.to_s.underscore.pluralize} (#{records.length})"
-      records.each do |r|
+      all.each do |r|
         r.sync(report)
       end
     end
@@ -81,7 +79,6 @@ class Airtable::Base < Airrecord::Table
   def sync(report = nil)
     ActiveRecord::Base.transaction do
       record_type = self.class.sync_model.to_s.underscore
-      Rails.logger.info "Syncing #{record_type} #{id}"
 
       self.class.columns_hash.each do |column, attr|
         model.send("#{attr}=", self[column])
