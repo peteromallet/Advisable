@@ -32,3 +32,24 @@ export const Drawer = styled(animated.div)`
   max-width: 620px;
   background: white;
 `;
+
+export const CloseButton = styled.button`
+  top: 20px;
+  z-index: 3;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  display: flex;
+  outline: none;
+  border-radius: 6px;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  color: ${colors.neutral.s6};
+
+  &:hover {
+    color: ${colors.neutral.s8};
+    background: ${rgba(colors.neutral.s1, 0.5)};
+  }
+`

@@ -16,4 +16,8 @@ VerticalLayout.Content = styled.div`
   display: flex;
 `
 
+VerticalLayout.Footer = styled.div`
+  flex-shrink: 0;
+`
+
 export default VerticalLayout

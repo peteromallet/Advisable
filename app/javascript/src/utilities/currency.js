@@ -2,10 +2,11 @@ export const currencySymbol = currency => symbols[currency] || currency || "€"
 
 export default (amount, currency = "EUR") => {
   const symbol = currencySymbol(currency.toUpperCase())
+  let commaSeparated = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   if (symbol != null) {
-    return `${symbol}${amount}`;
+    return `${symbol}${commaSeparated}`;
   } else {
-    return `${amount} ${currency}`;
+    return `${commaSeparated} ${currency}`;
   }
 };
 

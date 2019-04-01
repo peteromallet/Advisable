@@ -2,6 +2,7 @@ import { rgba } from "polished";
 import styled, { css, keyframes } from "styled-components";
 import colors from "../../colors";
 import { Status } from "../Status/styles";
+import { Menu } from "../Menu/styles";
 
 const placeholderColor = color => css`
   &::-webkit-input-placeholder {
@@ -26,6 +27,12 @@ export const TaskDrawer = styled.div`
     margin-top: 8px;
     margin-left: 8px;
     margin-bottom: 8px;
+  }
+
+  ${Menu} {
+    top: 20px;
+    right: 60px;
+    position: absolute;
   }
 `;
 
@@ -67,17 +74,23 @@ export const TaskDetails = styled.div`
   border-bottom: 1px solid #ebeef5;
 `;
 
-export const Detail = styled.div`
+export const Detail = styled.button`
   padding: 8px;
+  border: none;
+  text-align: left;
+  appearance: none;
   margin-left: -8px;
-  padding-left: 50px;
+  padding-left: 55px;
   position: relative;
   margin-right: 60px;
   border-radius: 6px;
+  line-height: 18px;
+  background: transparent;
 
   &:focus {
     outline: none;
   }
+
 
   &:hover {
     cursor: pointer;
@@ -99,11 +112,15 @@ export const Popout = styled.div`
 export const DetailIcon = styled.div`
   top: 50%;
   left: 8px;
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
+  display: flex;
   user-select: none;
   position: absolute;
   border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  color: ${colors.blue.base};
   background: ${rgba(colors.blue.base, 0.075)};
   transform: translateY(-50%);
 `;
@@ -112,16 +129,19 @@ export const DetailLabel = styled.h5`
   color: #7f87a5;
   font-size: 11px;
   font-weight: 600;
-  margin-bottom: 4px;
   letter-spacing: 0.005em;
   text-transform: uppercase;
 `;
 
 export const DetailValue = styled.span`
-  color: #0a163f;
+  color: ${colors.neutral.s9};
   font-size: 15px;
   font-weight: 500;
 `;
+
+export const DetailPlaceholder = styled(DetailValue)`
+  color: ${colors.neutral.s4};
+`
 
 export const Label = styled.label`
   color: #0a163f;
@@ -169,6 +189,7 @@ export const Confirmation = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 10;
   display: flex;
   position: absolute;
   align-items: center;
