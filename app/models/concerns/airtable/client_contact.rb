@@ -9,7 +9,7 @@ class Airtable::ClientContact < Airtable::Base
   sync_column 'Title', to: :title
 
   sync_data do |user|
-    client_id = fields["Client"]
+    client_id = fields["Client"].try(:first)
     
     # If the client column is blank in airtable and the user has a client
     # in postgres then delete it.
