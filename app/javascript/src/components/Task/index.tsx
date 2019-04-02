@@ -3,8 +3,8 @@ import * as moment from "moment";
 import { Task as TaskType } from "../../types";
 import { Task, Title, Detail, Description } from "./styles";
 import Icon from "../Icon";
-import Status from "../Status";
 import LineClamp from "../LineClamp";
+import TaskStatus from "../TaskStatus";
 import pluarlize from "../../utilities/pluralize";
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 export default ({ task, onClick }: Props) => {
   return (
     <Task onClick={onClick}>
-      <Status>{task.status}</Status>
+      <TaskStatus isClient={true}>{task.status}</TaskStatus>
       <Title>{task.name}</Title>
       <Description>
         <LineClamp maxHeight={40}>{task.description}</LineClamp>

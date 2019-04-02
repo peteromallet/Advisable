@@ -1,4 +1,5 @@
 import * as React from "react";
+import { find } from "lodash";
 import Sticky from "react-stickynode";
 import { Route } from "react-router-dom";
 import Card from "../../components/Card";
@@ -87,7 +88,7 @@ export default ({ match, history }) => {
         render={route => (
           <TaskDrawer
             isOpen={true}
-            task={tasks[2]}
+            task={find(tasks, { id: route.match.params.taskId })}
             isClient={true}
             onClose={() => closeTask()}
           />
@@ -124,7 +125,7 @@ export default ({ match, history }) => {
         </Layout.Sidebar>
         <Layout.Main>
           <Card>
-            <Padding size="l">
+            <Padding size="l" left="xl">
               <Heading>Active Tasks</Heading>
             </Padding>
             <Divider />

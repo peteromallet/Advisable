@@ -8,7 +8,8 @@ export const Title = styled.h5`
   font-size: 15px;
   font-weight: 500;
   line-height: 20px;
-  margin-bottom: 2px;
+  margin-top: 2px;
+  margin-bottom: 4px;
 `;
 
 export const Description = styled.p`

@@ -1,6 +1,6 @@
 import * as React from "react";
 import Drawer from "../Drawer";
-import Status from "../Status";
+import TaskStatus from "../TaskStatus";
 import Button from "../Button";
 import Scrollable from "../Scrollable";
 import ButtonGroup from "../ButtonGroup";
@@ -73,7 +73,7 @@ export default ({ isOpen, onClose, task, isClient }) => {
         <VerticalLayout>
           <VerticalLayout.Header>
             <Padding left="m" top="m" right="m">
-              <Status>{task.status}</Status>
+              <TaskStatus showIcon>{task.status}</TaskStatus>
               <Title
                 value={task.name}
                 onBlur={handleBlur}
