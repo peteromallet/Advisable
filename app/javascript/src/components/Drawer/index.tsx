@@ -58,7 +58,7 @@ export default ({ isOpen, onClose, children }: Props) => {
                 drawer.item && (
                   <Drawer key={drawer.key} style={drawer.props}>
                     <CloseButton onClick={onClose}>
-                      <Icon icon="x" />
+                      <Icon icon="x" strokeWidth={2} />
                     </CloseButton>
                     {children}
                   </Drawer>
