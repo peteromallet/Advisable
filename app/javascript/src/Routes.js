@@ -5,7 +5,6 @@ import Loading from "src/components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Project from "./views/Project";
 import Login from "./views/Login";
-import Setup from "./views/Setup";
 import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
 import Projects from "./views/Projects";
@@ -41,8 +40,6 @@ const Routes = () => {
             render={props => <ConfirmAccount {...props} />}
           />
           <Route path="/signup/:id" component={Signup} />
-          <AuthenticatedRoute path="/setup" component={Setup} />
-
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
           <Route path="/projects/:projectID" component={Project} />
           <AuthenticatedRoute path="/projects" component={Projects} />
