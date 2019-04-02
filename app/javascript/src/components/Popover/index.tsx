@@ -25,15 +25,21 @@ interface Props {
   children: ((props: RenderProps) => React.ReactNode) | React.ReactNode;
   trigger: React.ReactElement<any>;
   placement?: Placement;
+  onFocus?: (e: React.SyntheticEvent) => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
-export default ({ children, trigger, placement }: Props) => {
-  const [open, setOpen] = React.useState(false);
+export default ({ children, trigger, placement, onFocus, ...props }: Props) => {
+  const [open, setOpen] = React.useState(props.isOpen || false);
   const triggerRef = React.useRef(null);
   const popoverRef = React.useRef(null);
 
-  const handleFocus = () => {
-    setOpen(!open);
+  const handleFocus = e => {
+    if (onFocus) onFocus(e);
+    if (!e.defaultPrevented) {
+      setOpen(!open);
+    }
   };
 
   const handleDocumentClick = e => {
@@ -45,8 +51,20 @@ export default ({ children, trigger, placement }: Props) => {
       return;
     }
 
-    setOpen(false);
+    if (open) {
+      setOpen(false);
+    }
   };
+
+  React.useEffect(() => {
+    if (!open && props.onClose) {
+      props.onClose()
+    }
+  }, [open])
+
+  React.useEffect(() => {
+    setOpen(props.isOpen)
+  }, [props.isOpen])
 
   React.useEffect(() => {
     document.addEventListener("click", handleDocumentClick);
@@ -73,7 +91,7 @@ export default ({ children, trigger, placement }: Props) => {
 
   const triggerProps = {
     ref: triggerRef,
-    onFocus: handleFocus
+    onFocus: handleFocus,
   }
 
   return (

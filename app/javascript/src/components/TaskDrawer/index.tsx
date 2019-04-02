@@ -18,39 +18,30 @@ import {
   Confirmation,
   ConfirmationContainer,
 } from "./styles";
-import usePrevious from "../../utilities/usePrevious";
 
 export default ({ isOpen, onClose, task, isClient }) => {
   const [focusedElement, setFocusedElement] = React.useState(null);
   const [editAllowed, setEditAllowed] = React.useState(false);
   const [confirmPrompt, setConfirmPrompt] = React.useState(false);
-  const editPreviouslyAllowed = usePrevious(editAllowed);
 
-  const handleFocus = e => {
-    setFocusedElement(e.target);
+  const handleFocus = input => e => {
+    setFocusedElement(input);
 
     if (!editAllowed && isClient && task.status === "Quote Provided") {
       e.preventDefault();
       e.stopPropagation();
       setConfirmPrompt(true);
       e.target.blur();
+      return;
     }
   };
-
-  // If the confirm state has just turned from false to true then focus on the
-  // input
-  React.useLayoutEffect(() => {
-    if (editAllowed && !editPreviouslyAllowed) {
-      focusedElement.focus();
-    }
-  });
 
   const handleConfirm = () => {
     setConfirmPrompt(false);
     setEditAllowed(true);
   };
 
-  const handleBlur = e => {
+  const handleBlur = () => {
     setEditAllowed(false);
   };
 
@@ -86,7 +77,8 @@ export default ({ isOpen, onClose, task, isClient }) => {
               <Title
                 value={task.name}
                 onBlur={handleBlur}
-                onFocus={handleFocus}
+                onFocus={handleFocus("TITLE")}
+                isFocused={editAllowed && focusedElement === "TITLE"}
               />
             </Padding>
           </VerticalLayout.Header>
@@ -97,15 +89,23 @@ export default ({ isOpen, onClose, task, isClient }) => {
                   <DueDate
                     task={task}
                     isClient={isClient}
-                    // onBlur={handleBlur}
-                    // onFocus={handleFocus}
+                    onFocus={handleFocus("DUE_DATE")}
+                    onClose={handleBlur}
+                    isFocused={editAllowed && focusedElement === "DUE_DATE"}
                   />
-                  <Estimate task={task} isClient={isClient} />
+                  <Estimate
+                    task={task}
+                    isClient={isClient}
+                    onFocus={handleFocus("QUOTE")}
+                    onClose={handleBlur}
+                    isFocused={editAllowed && focusedElement === "QUOTE"}
+                  />
                 </TaskDetails>
                 <Description
                   task={task}
                   onBlur={handleBlur}
-                  onFocus={handleFocus}
+                  onFocus={handleFocus("DESCRIPTION")}
+                  isFocused={editAllowed && focusedElement === "DESCRIPTION"}
                 />
               </Padding>
             </Scrollable>

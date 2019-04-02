@@ -20,7 +20,7 @@ const STYLES = {
 export const Status = styled.span`
   height: 22px;
   color: #1D274B;
-  font-size: 14px;
+  font-size: 13px;
   padding: 0 12px;
   font-weight: 500;
   line-height: 22px;

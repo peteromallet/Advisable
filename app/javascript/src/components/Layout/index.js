@@ -5,7 +5,7 @@ let Layout = styled.div`
   width: 100%;
   display: flex;
   margin: 0 auto;
-  max-width: 1020px;
+  max-width: 1080px;
   padding-top: 40px;
   padding-bottom: 40px;
 
@@ -19,7 +19,7 @@ let Layout = styled.div`
 `;
 
 const sidebarWidths = {
-  s: "200px",
+  s: "220px",
   m: "300px",
 }
 

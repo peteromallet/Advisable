@@ -74,7 +74,7 @@ export const TaskDetails = styled.div`
   border-bottom: 1px solid #ebeef5;
 `;
 
-export const Detail = styled.button`
+export const Detail = styled.div`
   padding: 8px;
   border: none;
   text-align: left;

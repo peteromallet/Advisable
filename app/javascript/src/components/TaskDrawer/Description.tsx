@@ -23,6 +23,12 @@ export default ({ task, ...props }) => {
 
   React.useLayoutEffect(calculateRows, [ref]);
 
+  React.useLayoutEffect(() => {
+    if (props.isFocused) {
+      ref.current.focus();
+    }
+  }, [props.isFocused])
+
   const handleChange = e => {
     calculateRows();
     setInputValue(e.target.value);
