@@ -1,5 +1,6 @@
 import * as React from "react";
 import { isFunction } from "lodash";
+import { useTransition, animated } from "react-spring";
 import Popper, { Placement } from "popper.js";
 
 // Popover provides a simple component to built UI elements that have popover
@@ -25,22 +26,33 @@ interface Props {
   children: ((props: RenderProps) => React.ReactNode) | React.ReactNode;
   trigger: React.ReactElement<any>;
   placement?: Placement;
-  onFocus?: (e: React.SyntheticEvent) => void;
+  onClick?: (e: React.SyntheticEvent) => void;
   isOpen?: boolean;
   onClose?: () => void;
 }
 
-export default ({ children, trigger, placement, onFocus, ...props }: Props) => {
+export default ({ children, trigger, placement, onClick, ...props }: Props) => {
   const [open, setOpen] = React.useState(props.isOpen || false);
   const triggerRef = React.useRef(null);
   const popoverRef = React.useRef(null);
 
-  const handleFocus = e => {
-    if (onFocus) onFocus(e);
+  const transitions = useTransition(open, null, {
+    from: { opacity: 0, transform: "scale(0.9)" },
+    enter: { opacity: 1, transform: "scale(1)" },
+    leave: { opacity: 0, transform: "scale(0.9)" },
+    config: { mass: 1, tension: 500, friction: 30 },
+  });
+
+  const handleClick = e => {
+    if (onClick) onClick(e);
     if (!e.defaultPrevented) {
       setOpen(!open);
     }
   };
+
+  const handleFocusClose = e => {
+    setOpen(false)
+  }
 
   const handleDocumentClick = e => {
     if (popoverRef.current && popoverRef.current.contains(e.target)) {
@@ -58,18 +70,18 @@ export default ({ children, trigger, placement, onFocus, ...props }: Props) => {
 
   React.useEffect(() => {
     if (!open && props.onClose) {
-      props.onClose()
+      props.onClose();
     }
-  }, [open])
+  }, [open]);
 
   React.useEffect(() => {
-    setOpen(props.isOpen)
-  }, [props.isOpen])
+    setOpen(props.isOpen);
+  }, [props.isOpen]);
 
   React.useEffect(() => {
     document.addEventListener("click", handleDocumentClick);
     return () => document.removeEventListener("click", handleDocumentClick);
-  }, []);
+  }, [open]);
 
   React.useLayoutEffect(() => {
     if (open && triggerRef.current && popoverRef.current) {
@@ -82,7 +94,7 @@ export default ({ children, trigger, placement, onFocus, ...props }: Props) => {
   const renderChildren = () => {
     if (isFunction(children)) {
       return (children as (props: RenderProps) => React.ReactNode)({
-        close: () => setOpen(false)
+        close: () => setOpen(false),
       });
     }
 
@@ -91,13 +103,23 @@ export default ({ children, trigger, placement, onFocus, ...props }: Props) => {
 
   const triggerProps = {
     ref: triggerRef,
-    onFocus: handleFocus,
-  }
+    onClick: handleClick,
+  };
 
   return (
     <>
       {React.cloneElement(trigger, triggerProps)}
-      {open && <div ref={popoverRef}>{renderChildren()}</div>}
+      <div ref={popoverRef}>
+        {transitions.map(
+          ({ item, key, props }) =>
+            item && (
+              <animated.div key={key} style={props}>
+                {renderChildren()}
+                <div onFocus={handleFocusClose} tabIndex={0} />
+              </animated.div>
+            )
+        )}
+      </div>
     </>
   );
 };

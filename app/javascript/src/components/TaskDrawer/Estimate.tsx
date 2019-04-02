@@ -20,9 +20,9 @@ import { Task } from "../../types";
 interface Props {
   task: Task;
   isClient: boolean;
-  onFocus: (e: React.SyntheticEvent) => void;
+  onClick: (e: React.SyntheticEvent) => void;
   onClose: () => void;
-  isFocused: boolean;
+  isOpen: boolean;
 }
 
 const numberMask = createNumberMask({
@@ -34,7 +34,7 @@ const calcEarnings = (hours: string, rate: string) => {
   return total - total * 0.2;
 };
 
-export default ({ task, isClient,onFocus, onClose, isFocused }) => {
+export default ({ task, isClient,onClick, onClose, isOpen }) => {
   const [value, setValue] = React.useState(task.estimate ? task.estimate.toString() : null);
 
   if (isClient && !task.estimate) {
@@ -45,9 +45,9 @@ export default ({ task, isClient,onFocus, onClose, isFocused }) => {
 
   return (
     <Popover
-      onFocus={onFocus}
+      onClick={onClick}
       onClose={onClose}
-      isOpen={isFocused}
+      isOpen={isOpen}
       trigger={
         <Detail tabIndex={0}>
           <DetailIcon>

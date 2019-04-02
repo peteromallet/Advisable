@@ -89,16 +89,16 @@ export default ({ isOpen, onClose, task, isClient }) => {
                   <DueDate
                     task={task}
                     isClient={isClient}
-                    onFocus={handleFocus("DUE_DATE")}
+                    onClick={handleFocus("DUE_DATE")}
                     onClose={handleBlur}
-                    isFocused={editAllowed && focusedElement === "DUE_DATE"}
+                    isOpen={editAllowed && focusedElement === "DUE_DATE"}
                   />
                   <Estimate
                     task={task}
                     isClient={isClient}
-                    onFocus={handleFocus("QUOTE")}
+                    onClick={handleFocus("QUOTE")}
                     onClose={handleBlur}
-                    isFocused={editAllowed && focusedElement === "QUOTE"}
+                    isOpen={editAllowed && focusedElement === "QUOTE"}
                   />
                 </TaskDetails>
                 <Description

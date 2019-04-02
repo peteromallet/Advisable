@@ -3,6 +3,7 @@ import styled, { css, keyframes } from "styled-components";
 import colors from "../../colors";
 import { Status } from "../Status/styles";
 import { Menu } from "../Menu/styles";
+import { Icon } from "../Icon/styles";
 
 const placeholderColor = color => css`
   &::-webkit-input-placeholder {
@@ -74,7 +75,7 @@ export const TaskDetails = styled.div`
   border-bottom: 1px solid #ebeef5;
 `;
 
-export const Detail = styled.div`
+export const Detail = styled.button`
   padding: 8px;
   border: none;
   text-align: left;
@@ -123,6 +124,10 @@ export const DetailIcon = styled.div`
   color: ${colors.blue.base};
   background: ${rgba(colors.blue.base, 0.075)};
   transform: translateY(-50%);
+
+  ${Icon} {
+    display: flex;
+  }
 `;
 
 export const DetailLabel = styled.h5`

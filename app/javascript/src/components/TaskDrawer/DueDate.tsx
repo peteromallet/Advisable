@@ -15,12 +15,12 @@ import {
 interface Props {
   task: any;
   isClient: boolean;
-  isFocused: boolean;
-  onFocus?: (e: React.SyntheticEvent) => void;
+  isOpen: boolean;
+  onClick?: (e: React.SyntheticEvent) => void;
   onClose: () => void;
 }
 
-export default ({ task, isClient, onFocus, isFocused, onClose }: Props) => {
+export default ({ task, isClient, onClick, isOpen, onClose }: Props) => {
   const [selected, setSelected] = React.useState(
     task.dueDate ? new Date(task.dueDate) : null
   );
@@ -29,8 +29,8 @@ export default ({ task, isClient, onFocus, isFocused, onClose }: Props) => {
 
   return (
     <Popover
-      onFocus={onFocus}
-      isOpen={isFocused}
+      onClick={onClick}
+      isOpen={isOpen}
       onClose={onClose}
       trigger={
         <Detail tabIndex={0}>
