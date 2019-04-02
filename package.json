@@ -15,6 +15,7 @@
     "dotenv": "^6.1.0",
     "feather-icons": "^4.7.0",
     "focus-trap": "^5.0.0",
+    "focus-trap-react": "^6.0.0",
     "formik": "^1.4.3",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
