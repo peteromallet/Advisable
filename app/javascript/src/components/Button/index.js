@@ -1,34 +1,36 @@
 import React from "react";
 import { rgba, darken } from "polished";
 import styled, { keyframes, css } from "styled-components";
+import Icon from "../Icon";
+import { Icon as IconStyles } from "../Icon/styles";
 import { withSpacing } from "../Spacing";
 
 const heights = {
   s: "30px",
   m: "34px",
   l: "44px",
-  xl: "44px"
+  xl: "44px",
 };
 
 const mobileHeights = {
   s: "38px",
   m: "42px",
   l: "48px",
-  xl: "54px"
+  xl: "54px",
 };
 
 const fontSizes = {
   s: "14px",
   m: "15px",
   l: "16px",
-  xl: "16px"
+  xl: "16px",
 };
 
 const padding = {
   s: "0 15px",
   m: "0 16px",
   l: "0 25px",
-  xl: "0 30px"
+  xl: "0 30px",
 };
 
 // STYLES defines the various styles for buttons. The style for a button can be
@@ -111,7 +113,7 @@ const STYLES = {
   `,
   plainSubtle: css`
     height: auto;
-    color: #7A829E;
+    color: #7a829e;
     padding: 2px 8px;
     margin: -2px -8px;
     background: transparent;
@@ -237,6 +239,10 @@ const ButtonInner = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  ${IconStyles} {
+    display: inline-flex;
+  }
 `;
 
 const ButtonLoadingDot = styled.div`
@@ -267,13 +273,16 @@ const Loading = () => (
 
 const ButtonWithSpacing = withSpacing(ButtonStyling);
 
-export default ({ loading, children, ...props }) => (
+export default ({ loading, icon, children, ...props }) => (
   <ButtonWithSpacing
     loading={loading}
     disabled={loading || props.disabled}
     {...props}
   >
     {loading && <Loading />}
-    <ButtonInner>{children}</ButtonInner>
+    <ButtonInner>
+      {icon && <Icon icon={icon} height={20} />}
+      {children}
+    </ButtonInner>
   </ButtonWithSpacing>
 );

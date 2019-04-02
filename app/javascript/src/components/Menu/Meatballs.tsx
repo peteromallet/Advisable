@@ -3,11 +3,12 @@ import { Trigger } from "./styles";
 
 interface Props {
   onClick?: () => void;
+  onFocus?: () => void;
 }
 
 export default React.forwardRef((props: Props, ref: any) => {
   return (
-    <Trigger ref={ref} onClick={props.onClick}>
+    <Trigger ref={ref} onFocus={props.onFocus} onClick={props.onClick}>
       <svg
         width="18"
         height="4"
