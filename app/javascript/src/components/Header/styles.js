@@ -176,8 +176,8 @@ export const CurrentUserToggle = styled.div`
 
   strong {
     display: block;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
   }
 
   span {

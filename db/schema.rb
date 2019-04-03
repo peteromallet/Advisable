@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_03_140949) do
+ActiveRecord::Schema.define(version: 2019_04_03_201430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -303,6 +303,21 @@ ActiveRecord::Schema.define(version: 2019_04_03_140949) do
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.string "name"
+    t.string "airtable_id"
+    t.bigint "booking_id"
+    t.string "stage"
+    t.decimal "estimate"
+    t.datetime "due_date"
+    t.string "description"
+    t.string "submitted_for_approval_comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["airtable_id"], name: "index_tasks_on_airtable_id"
+    t.index ["booking_id"], name: "index_tasks_on_booking_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -371,5 +386,6 @@ ActiveRecord::Schema.define(version: 2019_04_03_140949) do
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "countries"
+  add_foreign_key "tasks", "bookings"
   add_foreign_key "users", "countries"
 end
