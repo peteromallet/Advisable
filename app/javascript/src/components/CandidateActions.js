@@ -15,13 +15,12 @@ const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
 const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
 
 const statusActions = {
-  Applied: ({ application }) => {
+  Applied: ({ application, stack, fullWidth }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
 
     return (
       <React.Fragment>
-        <Divider marginTop="xl" marginBottom="xl" />
         <RequestIntroduction
           isOpen={modal === REQUEST_INTRODUCTION}
           application={application}
@@ -33,7 +32,7 @@ const statusActions = {
           application={application}
           onClose={() => setModal(null)}
         />
-        <ButtonGroup stack={isMobile}>
+        <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
             styling="primary"
             onClick={() => setModal(REQUEST_INTRODUCTION)}
@@ -47,13 +46,12 @@ const statusActions = {
       </React.Fragment>
     );
   },
-  "Application Accepted": ({ application, history }) => {
+  "Application Accepted": ({ application, history, stack, fullWidth  }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
 
     return (
       <Fragment>
-        <Divider marginTop="xl" marginBottom="xl" />
         <RejectModal
           isOpen={modal === REJECT_MODAL}
           onRequestCall={() => setModal(REQUEST_INTRODUCTION)}
@@ -66,7 +64,7 @@ const statusActions = {
           isOpen={modal === REQUEST_REFERENCES_MODAL}
           onClose={() => setModal(null)}
         />
-        <ButtonGroup stack={isMobile}>
+        <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
             onClick={() => history.push(`applications/${application.id}/offer`)}
             styling="primary"
@@ -85,7 +83,7 @@ const statusActions = {
       </Fragment>
     );
   },
-  Proposed: ({ application, history }) => {
+  Proposed: ({ application, history, stack, fullWidth }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
     const { proposal } = application;
@@ -94,7 +92,6 @@ const statusActions = {
 
     return (
       <Fragment>
-        <Divider marginTop="xl" marginBottom="xl" />
         <RejectProposalModal
           booking={proposal}
           specialist={application.specialist}
@@ -106,7 +103,7 @@ const statusActions = {
           isOpen={modal === REQUEST_REFERENCES_MODAL}
           onClose={() => setModal(null)}
         />
-        <ButtonGroup stack={isMobile}>
+        <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
             styling="primary"
             onClick={() => history.push(`proposals/${proposal.id}`)}
@@ -127,7 +124,7 @@ const statusActions = {
   }
 };
 
-export default ({ application, history }) => {
+export default ({ application, history, stack, fullWidth  }) => {
   const actions = statusActions[application.status];
-  return actions ? actions({ application, history }) : null;
+  return actions ? actions({ application, history, stack, fullWidth  }) : null;
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { rgba } from "polished";
 import styled from "styled-components";
 import { withSpacing } from "./Spacing";
+import colors from "../colors";
 
 let Divider = styled.div`
   width: 100%;
@@ -9,18 +10,12 @@ let Divider = styled.div`
   text-align: center;
   align-items: center;
 
-  &::before {
-    height: 1px;
-    width: 100%;
-    content: "";
-    background: ${rgba("#0A2248", 0.1)};
-  }
-
+  &::before,
   &::after {
     height: 1px;
     width: 100%;
     content: "";
-    background: ${rgba("#0A2248", 0.1)};
+    background: ${rgba(colors.neutral.s8, 0.1)};
   }
 `;
 

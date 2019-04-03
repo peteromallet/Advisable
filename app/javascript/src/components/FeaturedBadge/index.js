@@ -1,25 +1,47 @@
 import React from "react";
-import styled from "styled-components";
-
-export const FeaturedBadge = styled.div`
-  align-items: center;
-  display: inline-flex;
-`;
+import styled, { css } from "styled-components";
 
 const BadgeLabel = styled.span`
   color: #f6ab00;
-  font-size: 11px;
+  font-size: 10px;
   margin-top: 5px;
   font-weight: 600;
   line-height: 13px;
   text-align: right;
-  margin-right: 10px;
   text-transform: uppercase;
 `;
 
-export default () => {
+
+export const FeaturedBadge = styled.div`
+  position: relative;
+  align-items: center;
+  display: inline-flex;
+  padding-right: 45px;
+
+  svg {
+    top: 50%;
+    right: 0;
+    position: absolute;
+    transform: translateY(-50%);
+  }
+
+  ${props =>props.leftAligned && css`
+    ${BadgeLabel} {
+      text-align: left;
+      padding-right: 0;
+      padding-left: 45px;
+    }
+
+    svg {
+      left: 0;
+      right: auto;
+    }
+  `}
+`;
+
+export default ({ leftAligned }) => {
   return (
-    <FeaturedBadge>
+    <FeaturedBadge leftAligned={leftAligned}>
       <BadgeLabel>Recommended<br/>Candidate</BadgeLabel>
       <svg width={36} height={42}>
         <title>Group</title>

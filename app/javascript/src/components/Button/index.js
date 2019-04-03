@@ -21,8 +21,8 @@ const mobileHeights = {
 
 const fontSizes = {
   s: "14px",
-  m: "15px",
-  l: "16px",
+  m: "14px",
+  l: "15px",
   xl: "16px",
 };
 
@@ -72,7 +72,6 @@ const STYLES = {
   `,
   primary: css`
     color: white;
-    font-weight: 600;
     background: #173fcd;
 
     &:hover {

@@ -18,13 +18,13 @@ const STYLES = {
 }
 
 export const Status = styled.span`
-  height: 22px;
+  height: 20px;
   color: #1D274B;
   font-size: 12px;
   padding: 0 10px;
   font-weight: 500;
-  line-height: 22px;
-  border-radius: 6px;
+  line-height: 20px;
+  border-radius: 10px;
   align-items: center;
   display: inline-flex;
   /* text-transform: uppercase; */

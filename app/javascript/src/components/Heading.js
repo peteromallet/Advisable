@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { withSpacing } from "./Spacing";
+import colors from "../colors";
 
 const sizes = {
   xxs: "13px",
@@ -66,8 +67,8 @@ const levels = {
     letter-spacing: 0;
   `,
   6: css`
-    color: #757fa4;
-    font-size: 12px;
+    color: ${colors.neutral.s6};
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0;
     text-transform: uppercase;
