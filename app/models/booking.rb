@@ -6,6 +6,7 @@ class Booking < ApplicationRecord
   # disable STI
   self.inheritance_column = :_type_disabled
 
+  has_many :tasks
   belongs_to :application
   belongs_to :rejection_reason, required: false, class_name: "BookingRejectionReason"
 

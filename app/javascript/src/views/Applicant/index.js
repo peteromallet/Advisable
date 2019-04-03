@@ -1,29 +1,18 @@
 import React from "react";
-import get from "lodash/get";
-import filter from "lodash/filter";
-import Sticky from "react-stickynode";
 import { graphql } from "react-apollo";
-import Back from "src/components/Back";
 import Card from "src/components/Card";
-import Flex from "src/components/Flex";
 import Text from "src/components/Text";
-import Link from "src/components/Link";
 import View from "src/components/View";
 import Skills from "../../components/Skills";
 import Layout from "src/components/Layout";
-import Button from "src/components/Button";
-import ButtonGroup from "src/components/ButtonGroup";
-import { FadeInUp, FadeIn } from "src/components/Animation";
+import { FadeInUp } from "src/components/Animation";
 import { Padding } from "src/components/Spacing";
 import Loading from "src/components/Loading";
 import Divider from "src/components/Divider";
 import Heading from "src/components/Heading";
-import Container from "src/components/Container";
-import FeaturedBadge from "src/components/FeaturedBadge";
-import CandidateAttributes from "src/components/CandidateAttributes";
 import AdvisableMessage from "./AdvisableMessage";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
-import Info from "./Info";
+import Sidebar from "./Sidebar";
 import Questions from "./Questions";
 import PreviousProjects from "./PreviousProjects";
 import MoreApplicants from "./MoreApplicants";
@@ -40,13 +29,7 @@ const Applicant = ({ data, match, history }) => {
   return (
     <View>
       <Layout>
-        <Layout.Sidebar size="m">
-          <Sticky top={98}>
-            <FadeIn duration="500ms">
-              <Info data={data} history={history} />
-            </FadeIn>
-          </Sticky>
-        </Layout.Sidebar>
+        <Sidebar data={data} history={history} />
         <Layout.Main>
           <FadeInUp duration="500ms">
             <Padding bottom="l">
@@ -62,7 +45,9 @@ const Applicant = ({ data, match, history }) => {
                       {data.project.application.introduction}
                     </Text>
                   </Padding>
-                  <Heading level={6}>Skills</Heading>
+                  <Padding bottom="xs">
+                    <Heading level={6}>Skills</Heading>
+                  </Padding>
                   <Skills skills={data.project.application.specialist.skills} />
                   {application.comment && (
                     <Padding top="l">
