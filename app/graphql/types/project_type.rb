@@ -30,9 +30,9 @@ class Types::ProjectType < Types::BaseType
   end
 
   def applications(**args)
-    applications = object.applications.order(score: :desc)
+    applications = object.applications
     applications = applications.where(status: args[:status]) if args[:status]
-    applications
+    applications.order(score: :desc)
   end
 
   def application(**args)
