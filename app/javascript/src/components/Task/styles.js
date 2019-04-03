@@ -5,11 +5,10 @@ import colors from "../../colors";
 
 export const Title = styled.h5`
   color: #0a153d;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 20px;
-  margin-top: 2px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 `;
 
 export const Description = styled.p`
@@ -22,7 +21,7 @@ export const Detail = styled.div`
   font-size: 13px;
   font-weight: 500;
   margin-right: 20px;
-  margin-top: 12px;
+  /* margin-top: 12px; */
   align-items: center;
   display: inline-flex;
   margin-left: -5px;
@@ -38,9 +37,10 @@ export const Detail = styled.div`
 `;
 
 export const Task = styled.div`
-  padding: 20px 30px;
+  padding: 15px 20px;
   cursor: pointer;
   user-select: none;
+  position: relative;
   border-bottom: 1px solid #eceff8;
 
   &:hover {
@@ -52,6 +52,10 @@ export const Task = styled.div`
   }
 
   ${Status} {
-    margin-bottom: 8px;
+    top: 50%;
+    right: 20px;
+    position: absolute;
+    transform: translateY(-50%);
+    /* margin-bottom: 8px; */
   }
 `;

@@ -17,9 +17,6 @@ export default ({ task, onClick }: Props) => {
     <Task onClick={onClick}>
       <TaskStatus isClient={true}>{task.status}</TaskStatus>
       <Title>{task.name}</Title>
-      <Description>
-        <LineClamp maxHeight={40}>{task.description}</LineClamp>
-      </Description>
       {task.dueDate && (
         <Detail>
           <Icon height={17} icon="calendar" />

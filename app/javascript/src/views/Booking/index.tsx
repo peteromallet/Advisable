@@ -27,10 +27,10 @@ const tasks = [
   {
     id: "tas_2",
     status: "Quote Requested",
-    name: "Write style guide for content voice and tone",
+    name: "Weekly newsletter template",
     dueDate: "2019-03-28",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis",
+      "We need a template put together for our weekly newletter.",
   },
   {
     id: "tas_3",
@@ -96,7 +96,7 @@ export default ({ match, history }) => {
       />
       <Header />
       <Layout>
-        <Layout.Sidebar size="s">
+        <Layout.Sidebar>
           <Sticky top={98}>
             <Padding bottom="l">
               <Back to="/">Back</Back>
@@ -125,8 +125,8 @@ export default ({ match, history }) => {
         </Layout.Sidebar>
         <Layout.Main>
           <Card>
-            <Padding size="l" left="xl">
-              <Heading>Active Tasks</Heading>
+            <Padding size="l">
+              <Heading level={3}>Active Tasks</Heading>
             </Padding>
             <Divider />
             <Padding bottom="m">

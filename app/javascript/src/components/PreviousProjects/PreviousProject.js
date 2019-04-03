@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
 import Review from "src/components/Review";
-import Spacing from "src/components/Spacing";
-import Heading from "src/components/Heading";
+import Spacing, { Padding } from "src/components/Spacing";
+import Divider from "src/components/Divider";
 import PreviousProjectModal from "src/components/PreviousProjectModal";
 import ProjectValidationStatus from "src/components/ProjectValidationStatus";
-import { PreviousProject, ProjectTitle } from "./styles";
+import { ProjectTitle } from "./styles";
 
 const companyName = project => {
   if (project.__typename === "Project") return project.user.companyName;
@@ -36,12 +36,14 @@ export default ({ previousProject, specialistId }) => {
         type={project.__typename}
         specialistId={specialistId}
       />
-      <PreviousProject>
-        <Heading marginBottom="xs" level={4}>
-          <ProjectTitle href="#" onClick={openProject}>
-            {title(project)}
-          </ProjectTitle>
-        </Heading>
+      <Padding size="xl">
+        <Padding bottom="xs">
+          <Text size="l" weight="semibold">
+            <ProjectTitle href="#" onClick={openProject}>
+              {title(project)}
+            </ProjectTitle>
+          </Text>
+        </Padding>
         <Text marginBottom="l" size="s">
           {project.description}
         </Text>
@@ -65,7 +67,8 @@ export default ({ previousProject, specialistId }) => {
         <Button styling="outlined" onClick={openProject}>
           View project details
         </Button>
-      </PreviousProject>
+      </Padding>
+      <Divider />
     </React.Fragment>
   );
 };

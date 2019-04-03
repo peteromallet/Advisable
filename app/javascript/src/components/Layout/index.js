@@ -20,7 +20,7 @@ let Layout = styled.div`
 
 const sidebarWidths = {
   s: "220px",
-  m: "300px",
+  m: "280px",
 }
 
 let Sidebar = styled.div`
