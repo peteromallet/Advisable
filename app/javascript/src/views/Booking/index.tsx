@@ -1,98 +1,77 @@
 import * as React from "react";
-import { find } from "lodash";
 import Sticky from "react-stickynode";
-import { Route } from "react-router-dom";
-import Card from "../../components/Card";
-import Task from "../../components/Task";
+import { graphql } from "react-apollo";
+import { match } from "react-router";
+import { matchPath } from "react-router-dom";
 import Back from "../../components/Back";
-import Button from "../../components/Button";
-import ButtonGroup from "../../components/ButtonGroup";
+import Text from "../../components/Text";
+import NotFound from "../../views/NotFound";
 import Header from "../../components/Header";
 import Layout from "../../components/Layout";
 import Avatar from "../../components/Avatar";
 import Heading from "../../components/Heading";
-import Divider from "../../components/Divider";
+import Loading from "../../components/Loading";
 import { Padding } from "../../components/Spacing";
 import TaskDrawer from "../../components/TaskDrawer";
-import { Skill, Detail, DetailLabel, DetailValue } from "./styles";
+import AttributeList from "../../components/AttributeList";
+import FETCH_BOOKING from "./fetchBooking.graphql";
+import Tasks from "./Tasks";
+import { Location } from "history";
+import graphqlClient from "../../graphqlClient";
 
-const tasks = [
-  {
-    id: "tas_1",
-    status: "Not Assigned",
-    name: "Write style guide for content voice and tone",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis",
-  },
-  {
-    id: "tas_2",
-    status: "Quote Requested",
-    name: "Weekly newsletter template",
-    dueDate: "2019-03-28",
-    description:
-      "We need a template put together for our weekly newletter.",
-  },
-  {
-    id: "tas_3",
-    status: "Quote Provided",
-    name: "Write style guide for content voice and tone",
-    dueDate: "2019-03-28",
-    estimate: 8,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis",
-  },
-  {
-    id: "tas_4",
-    status: "Assigned",
-    name: "Write style guide for content voice and tone",
-    dueDate: "2019-03-28",
-    estimate: 8,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis",
-  },
-  {
-    id: "tas_5",
-    status: "In Progress",
-    name: "Write style guide for content voice and tone",
-    dueDate: "2019-03-28",
-    estimate: 8,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis",
-  },
-  {
-    id: "tas_6",
-    status: "Pending Approval",
-    name: "Write style guide for content voice and tone",
-    dueDate: "2019-03-28",
-    estimate: 8,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod, lacus eget aliquet tempus, leo enim sollicitudin leo, at sollicitudin ipsum felis eget leo. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis. Donec cursus risus et nisl ullamcorper, et dignissim ex ornare. Donec diam diam, pretium id risus quis, iaculis",
-  },
-];
+interface Params {
+  bookingID: string;
+}
 
-export default ({ match, history }) => {
+interface Props {
+  match: match<Params>;
+  history: any;
+  data: any;
+  location: Location
+}
+
+const Booking = ({ data, match, history, location }: Props) => {
+  if (data.loading) return <Loading />;
+  if (!data.booking) return <NotFound />;
+
   const { bookingID } = match.params;
+  const tasks = data.booking.tasks;
+  const specialist = data.booking.application.specialist;
 
   const openTask = task => {
-    history.replace(`/bookings/${bookingID}/tasks/${task.id}`);
+    history.replace(`/bookings/${bookingID}/tasks/${task.airtableId}`);
+  };
+
+  const newTask = () => {
+    history.replace(`/bookings/${bookingID}/tasks/new`);
   };
 
   const closeTask = () => {
     history.replace(match.url);
   };
 
+  const taskDrawerPath = matchPath(location.pathname, {
+    path: `${match.path}/tasks`
+  })
+
+  const addNewTaskToCache = task => {
+    const newData = data;
+    newData.booking.tasks.push(task);
+    graphqlClient.cache.writeQuery({
+      query: FETCH_BOOKING,
+      data: newData,
+      variables: {
+        id: bookingID
+      }
+    })
+  }
+
   return (
     <>
-      <Route
-        path={`${match.path}/tasks/:taskId`}
-        render={route => (
-          <TaskDrawer
-            isOpen={true}
-            task={find(tasks, { id: route.match.params.taskId })}
-            isClient={true}
-            onClose={() => closeTask()}
-          />
-        )}
+      <TaskDrawer
+        isOpen={Boolean(taskDrawerPath)}
+        onClose={() => closeTask()}
+        onCreate={addNewTaskToCache}
       />
       <Header />
       <Layout>
@@ -106,41 +85,32 @@ export default ({ match, history }) => {
             </Padding>
             <Padding bottom="l">
               <Heading>Thomas Cullen</Heading>
-              <Skill>Search Engine Optimization</Skill>
+              <Text>Search Engine Optimization</Text>
             </Padding>
             <Padding bottom="xl">
-              <Detail>
-                <DetailLabel>Hourly Rate</DetailLabel>
-                <DetailValue>€65</DetailValue>
-              </Detail>
+              <AttributeList>
+                <AttributeList.Item label="Hourly Rate" value="€64" />
+              </AttributeList>
             </Padding>
-            <ButtonGroup fullWidth>
-              <Button styling="primary" onClick={() => {
-                history.replace(`/bookings/${bookingID}/tasks/new`)
-              }}>
-                Add a task
-              </Button>
-            </ButtonGroup>
           </Sticky>
         </Layout.Sidebar>
         <Layout.Main>
-          <Card>
-            <Padding size="l">
-              <Heading level={3}>Active Tasks</Heading>
-            </Padding>
-            <Divider />
-            <Padding bottom="m">
-              {tasks.map(task => (
-                <Task
-                  key={task.id}
-                  task={task}
-                  onClick={() => openTask(task)}
-                />
-              ))}
-            </Padding>
-          </Card>
+          <Tasks
+            tasks={tasks}
+            onNewTask={newTask}
+            onSelectTask={openTask}
+            firstName={specialist.firstName}
+          />
         </Layout.Main>
       </Layout>
     </>
   );
 };
+
+export default graphql(FETCH_BOOKING, {
+  options: (props: { match: match<Params> }) => ({
+    variables: {
+      id: props.match.params.bookingID,
+    },
+  }),
+})(Booking);

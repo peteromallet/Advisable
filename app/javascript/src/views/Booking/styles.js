@@ -1,31 +1,51 @@
+import { darken } from "polished";
 import styled from "styled-components";
 import colors from "../../colors";
 
-export const Skill = styled.h5`
-  color: ${colors.neutral.s7};
-  font-size: 15px;
-  line-height: 20px;
-`;
-
-export const Detail = styled.div`
-  display: flex;
-  padding: 16px 0;
+export const NewTaskIcon = styled.span`
+  width: 28px;
+  height: 28px;
+  color: white;
+  margin-right: 8px;
   align-items: center;
-  border-top: 1px solid #d7ddec;
-  border-bottom: 1px solid #d7ddec;
-`;
+  display: inline-flex;
+  justify-content: center;
+  position: relative;
 
-export const DetailLabel = styled.span`
-  flex-grow: 1;
-  font-size: 14px;
+  svg {
+    z-index: 1;
+  }
+
+  &::after {
+    content: "";
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+    background: ${colors.blue.base};
+    transition: transform 200ms cubic-bezier(0, 0.4, 0.3, 1.2);
+  }
+`
+
+export const NewTask = styled.button`
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 15px;
+  appearance: none;
   font-weight: 500;
-  line-height: 16px;
-  color: ${colors.neutral.s7};
-`;
+  align-items: center;
+  display: inline-flex;
+  color: ${colors.blue.base};
 
-export const DetailValue = styled.span`
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 19px;
-  color: ${colors.neutral.s9};
-`;
+  &:hover {
+    color: ${darken(0.2, colors.blue.base)};
+
+    ${NewTaskIcon}::after {
+      transform: scale(1.12);
+    }
+  }
+`

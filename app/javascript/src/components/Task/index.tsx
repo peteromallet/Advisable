@@ -15,8 +15,8 @@ interface Props {
 export default ({ task, onClick }: Props) => {
   return (
     <Task onClick={onClick}>
-      <TaskStatus isClient={true}>{task.status}</TaskStatus>
-      <Title>{task.name}</Title>
+      <TaskStatus isClient={true}>{task.stage}</TaskStatus>
+      <Title>{task.name || "Untitled"}</Title>
       {task.dueDate && (
         <Detail>
           <Icon height={17} icon="calendar" />

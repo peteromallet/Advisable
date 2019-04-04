@@ -13,22 +13,20 @@ const colours = {
 };
 
 const sizes = {
-  xs: "14px",
-  s: "15px",
-  m: "16px",
-  l: "17px"
+  xs: "13px",
+  s: "14px",
+  m: "15px",
+  l: "16px"
 };
 
 const lineHeights = {
   xs: "19px",
-  s: '20px',
+  s: '19px',
   m: "20px",
   l: "22px"
 };
 
 const Text = styled.p`
-  font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-
   display: ${props => props.inline && 'inline'};
   font-size: ${props => sizes[props.size] || sizes["m"]};
   line-height: ${props => lineHeights[props.size] || lineHeights["m"]};

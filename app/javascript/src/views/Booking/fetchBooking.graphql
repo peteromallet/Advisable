@@ -1,0 +1,28 @@
+query booking($id: ID!) {
+  booking(id: $id) {
+    id
+    status
+    rate
+    tasks {
+      id
+      airtableId
+      name
+      stage
+      dueDate
+      estimate
+      createdAt
+    }
+    application {
+      id
+      project {
+        id
+        primarySkill
+      }
+      specialist {
+        id
+        name
+        firstName
+      }
+    }
+  }
+}

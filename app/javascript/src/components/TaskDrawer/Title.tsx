@@ -3,7 +3,6 @@ import { Title } from "./styles";
 
 export default ({ value, ...props }) => {
   const ref = React.useRef(null)
-  const [inputValue, setInputValue] = React.useState(value);
   const [rows, setRows] = React.useState(1);
 
   const LINE_HEIGHT = 24;
@@ -31,7 +30,7 @@ export default ({ value, ...props }) => {
 
   const handleChange = e => {
     calculateRows()
-    setInputValue(e.target.value)
+    props.onChange(e.target.value)
   }
   
   const handleKeyDown = e => {
@@ -47,9 +46,10 @@ export default ({ value, ...props }) => {
       {...props}
       ref={ref}
       rows={rows}
-      value={inputValue}
+      value={value}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
+      onBlur={props.onBlur}
       placeholder="Add a task name..."
     />
   )
