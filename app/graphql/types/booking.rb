@@ -12,11 +12,20 @@ class Types::Booking < Types::BaseType
   field :start_date, Types::Date, null: true
   field :end_date, Types::Date, null: true
   field :application, Types::ApplicationType, null: false
-  field :tasks, [Types::TaskType], null: false do
+  field :tasks, [Types::TaskType], null: true do
     authorize :is_specialist_or_client
+  end
+  
+  field :task, Types::TaskType, null: true do
+    authorize :is_specialist_or_client
+    argument :id, ID, required: true
   end
 
   def id
     object.airtable_id
+  end
+
+  def task(id: )
+    object.tasks.find_by_airtable_id!(id)
   end
 end

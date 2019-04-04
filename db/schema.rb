@@ -305,6 +305,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_201430) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "name"
+    t.string "uid"
     t.string "airtable_id"
     t.bigint "booking_id"
     t.string "stage"
@@ -316,6 +317,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_201430) do
     t.datetime "updated_at", null: false
     t.index ["airtable_id"], name: "index_tasks_on_airtable_id"
     t.index ["booking_id"], name: "index_tasks_on_booking_id"
+    t.index ["uid"], name: "index_tasks_on_uid"
   end
 
   create_table "users", force: :cascade do |t|

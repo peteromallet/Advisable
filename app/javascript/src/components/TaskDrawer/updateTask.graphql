@@ -1,0 +1,16 @@
+mutation UpdateTask($input: UpdateTaskInput!) {
+  updateTask(input: $input) {
+    task {
+      id
+      stage
+      name
+      estimate
+      dueDate
+      description
+      airtableId
+    }
+    errors {
+      code
+    }
+  }
+}
