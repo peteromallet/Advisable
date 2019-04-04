@@ -22,6 +22,8 @@ import {
 } from "./styles";
 
 const Candidate = ({ application, project, history }) => {
+  if (application.hidden) return null;
+
   const [expanded, setExpanded] = useState(false);
 
   const handleExpand = () => {

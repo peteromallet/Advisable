@@ -1,6 +1,7 @@
 // Renders the navigation for the project candidates view
 import React from "react";
 import get from "lodash/get";
+import filter from "lodash/filter";
 import reject from "lodash/reject";
 import countBy from "lodash/countBy";
 import Sticky from "react-stickynode";
@@ -56,7 +57,8 @@ const navigation = [
 export default ({ match, data }) => {
   useScrollRestore()
   const applications = get(data, "project.applications", []);
-  const counts = countBy(applications, "status");
+  const notHidden = filter(applications, { hidden: false })
+  const counts = countBy(notHidden, "status");
 
   return (
     <Mobile>
