@@ -23,6 +23,7 @@ class Airtable::Application < Airtable::Base
     application.accepts_terms = fields['Accepts Terms'] == 'Yes'
     application.featured = fields['Featured Candidate'] == 'Yes'
     application.references_requested = fields['References Requested'] == 'Yes'
+    application.hidden = fields['Application Hidden'] == 'Yes'
 
     specialist_id = fields["Expert"].try(:first)
     if specialist_id

@@ -12,6 +12,7 @@ query project($id: ID!) {
       status
       featured
       comment
+      hidden
       airtableId
       availability
       introduction
