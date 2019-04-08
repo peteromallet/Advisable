@@ -1,9 +1,8 @@
 import * as React from "react";
 import { Label, Description } from "./styles";
 
-export default ({ task, ...props }) => {
+export default (props) => {
   const ref = React.useRef(null);
-  const [inputValue, setInputValue] = React.useState(task.description);
   const [rows, setRows] = React.useState(1);
 
   const LINE_HEIGHT = 20;
@@ -21,7 +20,7 @@ export default ({ task, ...props }) => {
     setRows(currentRows);
   };
 
-  React.useLayoutEffect(calculateRows, [ref]);
+  React.useLayoutEffect(calculateRows, [ref, props.value]);
 
   React.useLayoutEffect(() => {
     if (props.isFocused) {
@@ -30,8 +29,7 @@ export default ({ task, ...props }) => {
   }, [props.isFocused])
 
   const handleChange = e => {
-    calculateRows();
-    setInputValue(e.target.value);
+    props.onChange(e.target.value);
   };
 
   return (
@@ -42,7 +40,7 @@ export default ({ task, ...props }) => {
         {...props}
         ref={ref}
         rows={rows}
-        value={inputValue}
+        value={props.value}
         onChange={handleChange}
         placeholder="Add a description..."
       />

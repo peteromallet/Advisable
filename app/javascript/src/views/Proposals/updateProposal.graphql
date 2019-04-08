@@ -1,0 +1,12 @@
+mutation updateProposal($input: UpdateProposalInput!) {
+  updateProposal(input: $input) {
+    booking {
+      id
+      airtableId
+      rate
+    }
+    errors {
+      code
+    }
+  }
+}

@@ -8,14 +8,13 @@ import Login from "./views/Login";
 import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
 import Projects from "./views/Projects";
+import Proposals from "./views/Proposals";
 import ViewOffer from "./views/ViewOffer";
 import References from "./views/References";
 import JobListing from "./views/JobListing";
 import Applications from "./views/Applications";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
-import EditProposal from "./views/EditProposal";
-import CreateProposal from "./views/CreateProposal";
 import ApplicationFlow from "./views/ApplicationFlow";
 import InterviewRequest from "./views/InterviewRequest";
 import UpdateProfile from "./views/UpdateProfile";
@@ -58,22 +57,15 @@ const Routes = () => {
             path="/interview_request/:interviewID"
             component={InterviewRequest}
           />
-          <Route
-            path="/applications/:applicationID/proposals/:proposalID"
-            component={EditProposal}
-          />
-          <Route
-            path="/applications/:applicationID/proposal"
-            component={CreateProposal}
+          <AuthenticatedRoute
+            freelancerRoute
+            path="/applications/:applicationId/proposals"
+            component={Proposals}
           />
           <Route exact path="/invites/:applicationId" component={JobListing} />
           <Route
             path="/invites/:applicationId/apply"
             component={ApplicationFlow}
-          />
-          <Route
-            path="/applications/:applicationID/proposals/:proposalID"
-            component={EditProposal}
           />
 
           <AuthenticatedRoute

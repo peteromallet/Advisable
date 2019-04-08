@@ -3,8 +3,8 @@ import styled from "styled-components";
 import colors from "../../colors";
 
 export const NewTaskIcon = styled.span`
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   color: white;
   margin-right: 8px;
   align-items: center;
@@ -31,6 +31,8 @@ export const NewTaskIcon = styled.span`
 `
 
 export const NewTask = styled.button`
+  margin: 0;
+  padding: 0;
   border: none;
   outline: none;
   cursor: pointer;

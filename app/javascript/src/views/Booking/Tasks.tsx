@@ -3,9 +3,9 @@ import Card from "../../components/Card";
 import Task from "../../components/Task";
 import Heading from "../../components/Heading";
 import Divider from "../../components/Divider";
+import NewTask from "../../components/NewTask";
 import { Padding } from "../../components/Spacing";
 import NoTasks from "./NoTasks";
-import NewTask from "./NewTask";
 
 export default ({ tasks, firstName, onNewTask, onSelectTask }) => {
   if (tasks.length === 0) {

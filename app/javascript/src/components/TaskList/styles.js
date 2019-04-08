@@ -36,14 +36,18 @@ export const Detail = styled.div`
   }
 `;
 
-export const Task = styled.div`
-  padding: 15px 20px;
-  cursor: pointer;
+export const Row = styled.div`
+  margin-top: -1px;
   user-select: none;
+  padding: 15px 20px;
   position: relative;
+  border-top: 1px solid #eceff8;
   border-bottom: 1px solid #eceff8;
+`;
 
+export const Task = styled(Row)`
   &:hover {
+    cursor: pointer;
     background: #fafbfe;
 
     ${Title} {
@@ -56,6 +60,7 @@ export const Task = styled.div`
     right: 20px;
     position: absolute;
     transform: translateY(-50%);
-    /* margin-bottom: 8px; */
   }
 `;
+
+export const TaskList = styled.div``;

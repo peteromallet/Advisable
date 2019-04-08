@@ -8,7 +8,7 @@ const NewTask = props => {
     const response = await props.mutate({
       variables: {
         input: {
-          booking: props.match.params.bookingId,
+          booking: props.bookingId,
         },
       },
     });
@@ -28,4 +28,3 @@ const NewTask = props => {
 };
 
 export default graphql(CREATE_TASK)(NewTask);
-

@@ -56,7 +56,7 @@ const levels = {
     color: #0a1745;
     font-size: 18px;
     font-weight: 500;
-    line-height: 24px;
+    line-height: 22px;
     letter-spacing: 0;
   `,
   5: css`

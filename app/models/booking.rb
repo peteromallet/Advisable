@@ -1,5 +1,6 @@
 class Booking < ApplicationRecord
-  validates :status, inclusion: { in: %w(Proposed Offered Accepted Declined Complete) }, allow_nil: true
+  include Airtable::Syncable
+  validates :status, inclusion: { in: ["Proposal Started", "Proposed", "Offered", "Accepted", "Declined", "Complete"] }, allow_nil: true
 
   validate :valid_proposal, on: :create
 
