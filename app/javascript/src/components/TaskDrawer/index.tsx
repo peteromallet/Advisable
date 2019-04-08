@@ -11,6 +11,7 @@ const Component = ({
   closeURL,
   history,
   bookingId,
+  onDeleteTask,
 }: any) => {
   const taskDrawerPath = matchPath(location.pathname, {
     path: `*/tasks/:taskId`,
@@ -32,7 +33,7 @@ const Component = ({
           />
           <Route
             path="*/tasks/:taskId"
-            render={props => <EditTask {...props} bookingId={bookingId} />}
+            render={props => <EditTask {...props} bookingId={bookingId} onDeleteTask={onDeleteTask} />}
           />
         </Switch>
       </TaskDrawer>

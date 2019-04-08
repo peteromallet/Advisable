@@ -38,6 +38,11 @@ module Airtable::Syncable
       airtable_record.push(self)
     end
 
+    def remove_from_airtable
+      airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
+      airtable_class.find(airtable_id).destroy
+    end
+
     def sync_from_airtable
       airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
       airtable_record = airtable_class.find(airtable_id)
