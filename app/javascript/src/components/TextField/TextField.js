@@ -35,6 +35,8 @@ const TextField = ({
   autoFocus,
   description,
   subLabel,
+  onKeyPress,
+  onKeyDown,
   ...props
 }) => {
   const input = useRef(null);
@@ -106,6 +108,8 @@ const TextField = ({
           disabled={disabled}
           rows={rows}
           maxLength={maxLength}
+          onKeyPress={onKeyPress}
+          onKeyDown={onKeyDown}
         />
         {(charCount || maxLength) && <CharCount>{characterCount}</CharCount>}
       </InputContainer>

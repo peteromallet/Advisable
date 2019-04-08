@@ -272,16 +272,19 @@ const Loading = () => (
 
 const ButtonWithSpacing = withSpacing(ButtonStyling);
 
-export default ({ loading, icon, children, ...props }) => (
-  <ButtonWithSpacing
-    loading={loading}
-    disabled={loading || props.disabled}
-    {...props}
-  >
-    {loading && <Loading />}
-    <ButtonInner>
-      {icon && <Icon icon={icon} height={20} />}
-      {children}
-    </ButtonInner>
-  </ButtonWithSpacing>
+export default React.forwardRef(
+  ({ loading, icon, children, ...props }, ref) => (
+    <ButtonWithSpacing
+      ref={ref}
+      loading={loading}
+      disabled={loading || props.disabled}
+      {...props}
+    >
+      {loading && <Loading />}
+      <ButtonInner>
+        {icon && <Icon icon={icon} height={20} />}
+        {children}
+      </ButtonInner>
+    </ButtonWithSpacing>
+  )
 );
