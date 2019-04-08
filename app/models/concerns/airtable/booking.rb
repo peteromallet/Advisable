@@ -34,4 +34,8 @@ class Airtable::Booking < Airtable::Base
       booking.rejection_reason = rejection_reason
     end
   end
+
+  push_data do |booking|
+    self['Rate'] = booking.rate.to_f
+  end
 end

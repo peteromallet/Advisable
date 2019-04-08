@@ -13,19 +13,21 @@ import {
 } from "./styles";
 
 interface Props {
-  task: any;
-  isClient: boolean;
+  value: string;
   isOpen: boolean;
   onClick?: (e: React.SyntheticEvent) => void;
   onClose: () => void;
+  onChange: (date: string) => void;
 }
 
-export default ({ task, isClient, onClick, isOpen, onClose }: Props) => {
-  const [selected, setSelected] = React.useState(
-    task.dueDate ? new Date(task.dueDate) : null
-  );
-
+export default ({ value, onChange, onClick, isOpen, onClose }: Props) => {
+  const selected = value ? new Date(value) : null;
   const initialMonth = selected || new Date();
+
+  const handleSelection = (popover) => day => {
+    onChange(day.toISOString());
+    popover.close();
+  }
 
   return (
     <Popover
@@ -49,12 +51,9 @@ export default ({ task, isClient, onClick, isOpen, onClose }: Props) => {
       {popover => (
         <Popout>
           <DatePicker
-            initialMonth={initialMonth}
             selectedDays={selected}
-            onDayClick={day => {
-              setSelected(day);
-              popover.close();
-            }}
+            initialMonth={initialMonth}
+            onDayClick={handleSelection(popover)}
           />
         </Popout>
       )}

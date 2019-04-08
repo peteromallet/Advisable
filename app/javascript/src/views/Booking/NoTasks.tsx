@@ -1,8 +1,8 @@
 import * as React from "react";
 import Text from "../../components/Text";
 import Card from "../../components/Card";
+import NewTask from "../../components/NewTask";
 import { Padding } from "../../components/Spacing";
-import NewTask from "./NewTask";
 import illustration from "./no_tasks.png";
 
 interface Props {

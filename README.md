@@ -8,7 +8,7 @@ made from here will NOT be synced to airtable**. These credentials are defined
 by two environment variables `ADMIN_USERNAME` and `ADMIN_PASSWORD`.
 
 ## Database
-The data for the application originates from an airtable database. **It is vital
+The data for the application is synced with an airtable database. **It is vital
 that the airtable database column names are not changed as this will break the
 mapping between the local database and airtable.**
 The data can be synced to the local database using the command.

@@ -3,7 +3,6 @@ import * as moment from "moment";
 import { Task as TaskType } from "../../types";
 import { Task, Title, Detail, Description } from "./styles";
 import Icon from "../Icon";
-import LineClamp from "../LineClamp";
 import TaskStatus from "../TaskStatus";
 import pluarlize from "../../utilities/pluralize";
 

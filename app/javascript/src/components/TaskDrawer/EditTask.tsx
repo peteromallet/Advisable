@@ -34,6 +34,8 @@ let timer;
 const EditTask = ({ data, mutate }) => {
   const [attributes, setAttributes] = React.useState({
     name: "",
+    description: "",
+    dueDate: "",
   });
   const [focusedElement, setFocusedElement] = React.useState(null);
   const [editAllowed, setEditAllowed] = React.useState(false);
@@ -44,6 +46,8 @@ const EditTask = ({ data, mutate }) => {
       const task = data.booking.task;
       setAttributes({
         name: task.name || "",
+        description: task.description || "",
+        dueDate: task.dueDate || "",
       });
     }
   }, [data.loading]);
@@ -85,14 +89,24 @@ const EditTask = ({ data, mutate }) => {
     });
   };
 
-  const saveWithTimeout = attribute => value => {
-    clearTimeout(timer);
+  const updateField = (attribute, value) => {
     const newAttributes = { ...attributes, [attribute]: value };
     setAttributes(newAttributes);
     graphqlClient.writeData({
       id: `Task:${task.id}`,
       data: newAttributes,
     });
+    return newAttributes;
+  }
+
+  const handleChange = attribute => value => {
+    const newAttributes = updateField(attribute, value);
+    save(newAttributes)
+  }
+
+  const handleChangeWithTimeout = attribute => value => {
+    const newAttributes = updateField(attribute, value);
+    clearTimeout(timer);
     timer = setTimeout(() => save(newAttributes), 1000);
   };
 
@@ -128,7 +142,7 @@ const EditTask = ({ data, mutate }) => {
               onBlur={handleBlur}
               value={attributes.name}
               onFocus={handleFocus("TITLE")}
-              onChange={saveWithTimeout("name")}
+              onChange={handleChangeWithTimeout("name")}
               autoFocus={!Boolean(task.name)}
               isFocused={editAllowed && focusedElement === "TITLE"}
             />
@@ -139,10 +153,10 @@ const EditTask = ({ data, mutate }) => {
             <Padding left="m" bottom="m" right="m">
               <TaskDetails>
                 <DueDate
-                  task={task}
-                  isClient={isClient}
+                  value={attributes.dueDate}
                   onClick={handleFocus("DUE_DATE")}
                   onClose={handleBlur}
+                  onChange={handleChange("dueDate")}
                   isOpen={editAllowed && focusedElement === "DUE_DATE"}
                 />
                 <Estimate
@@ -154,9 +168,10 @@ const EditTask = ({ data, mutate }) => {
                 />
               </TaskDetails>
               <Description
-                task={task}
+                value={attributes.description}
                 onBlur={handleBlur}
                 onFocus={handleFocus("DESCRIPTION")}
+                onChange={handleChangeWithTimeout("description")}
                 isFocused={editAllowed && focusedElement === "DESCRIPTION"}
               />
             </Padding>
@@ -179,6 +194,7 @@ type Variables = {
 };
 
 type InputProps = {
+  bookingId: string;
   match: match<Params>;
 };
 
@@ -188,7 +204,7 @@ export default compose(
   graphql<InputProps, Response, Variables, ChildProps>(FETCH_TASK, {
     options: props => ({
       variables: {
-        bookingId: props.match.params.bookingId,
+        bookingId: props.bookingId,
         taskId: props.match.params.taskId,
       },
     }),
