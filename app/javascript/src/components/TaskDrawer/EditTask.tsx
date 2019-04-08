@@ -36,6 +36,7 @@ const EditTask = ({ data, mutate }) => {
     name: "",
     description: "",
     dueDate: "",
+    estimate: "",
   });
   const [focusedElement, setFocusedElement] = React.useState(null);
   const [editAllowed, setEditAllowed] = React.useState(false);
@@ -48,6 +49,7 @@ const EditTask = ({ data, mutate }) => {
         name: task.name || "",
         description: task.description || "",
         dueDate: task.dueDate || "",
+        estimate: task.estimate || "",
       });
     }
   }, [data.loading]);
@@ -55,7 +57,7 @@ const EditTask = ({ data, mutate }) => {
   if (data.loading) return <Loading />;
 
   const task = data.booking.task;
-  const isClient = true;
+  const isClient = false;
 
   const handleFocus = input => e => {
     setFocusedElement(input);
@@ -164,6 +166,7 @@ const EditTask = ({ data, mutate }) => {
                   isClient={isClient}
                   onClick={handleFocus("QUOTE")}
                   onClose={handleBlur}
+                  onChange={handleChange("estimate")}
                   isOpen={editAllowed && focusedElement === "QUOTE"}
                 />
               </TaskDetails>

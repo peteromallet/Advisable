@@ -3,6 +3,7 @@ class Mutations::UpdateTask < Mutations::BaseMutation
   argument :name, String, required: false
   argument :description, String, required: false
   argument :dueDate, GraphQL::Types::ISO8601DateTime, required: false
+  argument :estimate, Float, required: false
 
   field :task, Types::TaskType, null: true
   field :errors, [Types::Error], null: true

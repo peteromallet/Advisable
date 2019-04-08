@@ -22,6 +22,7 @@ interface Props {
   isClient: boolean;
   onClick: (e: React.SyntheticEvent) => void;
   onClose: () => void;
+  onChange: (estimate: number) => void;
   isOpen: boolean;
 }
 
@@ -29,19 +30,33 @@ const numberMask = createNumberMask({
   prefix: "",
 });
 
-const calcEarnings = (hours: string, rate: string) => {
-  const total = parseInt(hours.replace(/,/g, "")) * parseFloat(rate);
+const calcEarnings = (hours: number, rate: string) => {
+  const total = hours * parseFloat(rate);
   return total - total * 0.2;
 };
 
-export default ({ task, isClient,onClick, onClose, isOpen }) => {
-  const [value, setValue] = React.useState(task.estimate ? task.estimate.toString() : null);
+export default ({ task, isClient, onClick, onClose, isOpen, onChange }) => {
+  const saveButton = React.useRef(null);
+  const [value, setValue] = React.useState(task.estimate);
+  const [inputValue, setInputValue] = React.useState(value && value.toString());
 
   if (isClient && !task.estimate) {
     return null;
   }
 
   const earnings = value ? calcEarnings(value, "35.00") : null;
+
+  const handleSave = popover => () => {
+    popover.close();
+    setValue(parseFloat(inputValue));
+    onChange(parseFloat(inputValue));
+  }
+
+  const handleKeyDown = e => {
+    if (e.keyCode === 13) {
+      saveButton.current.click();
+    }
+  }
 
   return (
     <Popover
@@ -66,10 +81,12 @@ export default ({ task, isClient,onClick, onClose, isOpen }) => {
         <Popout>
           <Padding bottom="m">
             <TextField
-              value={value}
+              autoFocus
+              value={inputValue}
               placeholder="e.g 8"
               mask={numberMask}
-              onChange={e => setValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+              onChange={e => setInputValue(e.target.value)}
               label="How many hours do you think this task will take?"
               description={
                 earnings && `You would earn ${currency(earnings)} for this task`
@@ -77,7 +94,7 @@ export default ({ task, isClient,onClick, onClose, isOpen }) => {
             />
           </Padding>
           <ButtonGroup fullWidth>
-            <Button styling="primary" onClick={popover.close}>
+            <Button ref={saveButton} styling="primary" onClick={handleSave(popover)}>
               Save
             </Button>
             <Button onClick={popover.close}>Cancel</Button>
