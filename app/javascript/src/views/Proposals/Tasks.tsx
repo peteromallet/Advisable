@@ -33,6 +33,21 @@ const Tasks = ({ application, match, data, history }) => {
     })
   }
 
+  const handleDeleteTask = task => {
+    history.push(match.url);
+    const newData = data;
+    newData.booking.tasks = data.booking.tasks.filter(t => {
+      return t.id !== task.id
+    })
+    graphqlClient.cache.writeQuery({
+      query: FETCH_BOOKING,
+      data: newData,
+      variables: {
+        id: match.params.bookingId
+      }
+    })
+  }
+
   return (
     <Card>
       <Padding size="l">
@@ -55,6 +70,7 @@ const Tasks = ({ application, match, data, history }) => {
         closeURL={match.url}
         onCreate={addNewTaskToCache}
         bookingId={match.params.bookingId}
+        onDeleteTask={handleDeleteTask}
       />
       {data.booking.tasks.length > 0 && (
         <Padding size="l">

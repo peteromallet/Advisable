@@ -31,7 +31,7 @@ interface Params {
 
 let timer;
 
-const EditTask = ({ data, mutate }) => {
+const EditTask = ({ data, mutate, onDeleteTask }) => {
   const [attributes, setAttributes] = React.useState({
     name: "",
     description: "",
@@ -99,12 +99,12 @@ const EditTask = ({ data, mutate }) => {
       data: newAttributes,
     });
     return newAttributes;
-  }
+  };
 
   const handleChange = attribute => value => {
     const newAttributes = updateField(attribute, value);
-    save(newAttributes)
-  }
+    save(newAttributes);
+  };
 
   const handleChangeWithTimeout = attribute => value => {
     const newAttributes = updateField(attribute, value);
@@ -135,7 +135,7 @@ const EditTask = ({ data, mutate }) => {
           </ConfirmationContainer>
         </Confirmation>
       )}
-      <Menu task={task} isClient={isClient} />
+      <Menu task={task} isClient={isClient} onDelete={onDeleteTask} />
       <VerticalLayout>
         <VerticalLayout.Header>
           <Padding left="m" top="m" right="m">
