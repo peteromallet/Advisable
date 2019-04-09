@@ -10,16 +10,14 @@ import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
 import NewProposal from "./NewProposal";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
-import { match } from "react-router";
+import { match, RouteComponentProps } from "react-router";
 import { ApplicationType } from "../../types";
 
 interface Params {
   applicationId: string;
 }
 
-interface Props {
-  match: match<Params>;
-}
+interface Props extends RouteComponentProps<Params> {}
 
 type Variables = {
   id: string;
