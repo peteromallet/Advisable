@@ -18,7 +18,9 @@ class WebhookEvent < ApplicationRecord
     "specialists.forgotten_password_for_non_account",
     # "specialists.application_stage_changed" is triggered when the
     # "application_stage" column is updated during the airtable syncing process. 
-    "specialists.application_stage_changed"
+    "specialists.application_stage_changed",
+    # proposals.sent is triggered when a proposal is sent.
+    "proposals.sent",
   ].freeze
 
   # self.trigger is used to trigger a webhook event.
