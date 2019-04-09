@@ -12,12 +12,12 @@ import { Padding } from "../../components/Spacing";
 import currency, { currencySymbol } from "../../utilities/currency";
 import { ApplicationType } from "../../types";
 import { rateValidationSchema } from "./validationSchema";
-import FETCH_BOOKING from "./fetchBooking.graphql";
 import CREATE_PROPOSAL from "./createProposal.graphql";
 import UPDATE_PROPOSAL from "./updateProposal.graphql";
 
 type Props = {
   history: any;
+  booking: any;
   application: ApplicationType;
   createProposal: (opts: any) => any;
   fetchBooking: any;
@@ -26,16 +26,12 @@ type Props = {
 
 const Rate = ({
   history,
+  booking,
   application,
-  fetchBooking,
   createProposal,
   updateProposal,
 }: Props) => {
-  const isEditing = Boolean(fetchBooking);
-
-  if (isEditing && fetchBooking.loading) {
-    return <div>Loading...</div>;
-  }
+  const isEditing = Boolean(booking);
 
   const handleCreateProposal = async values => {
     const response = await createProposal({
@@ -54,7 +50,7 @@ const Rate = ({
       variables: {
         input: {
           ...values,
-          booking: get(fetchBooking, "booking.airtableId"),
+          booking: booking.airtableId,
         },
       },
     });
@@ -73,7 +69,7 @@ const Rate = ({
   };
 
   const initialValues = {
-    rate: get(fetchBooking, "booking.rate", null),
+    rate: booking ? booking.rate : null,
   };
 
   const calculateRate = amount => {
@@ -151,13 +147,4 @@ const Rate = ({
 export default compose(
   graphql(CREATE_PROPOSAL, { name: "createProposal" }),
   graphql(UPDATE_PROPOSAL, { name: "updateProposal" }),
-  graphql(FETCH_BOOKING, {
-    name: "fetchBooking",
-    skip: (props: any) => !props.match.params.bookingId,
-    options: props => ({
-      variables: {
-        id: props.match.params.bookingId,
-      },
-    }),
-  })
 )(Rate);

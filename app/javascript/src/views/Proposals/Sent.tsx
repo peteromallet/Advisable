@@ -1,17 +1,14 @@
 import * as React from "react";
-import { compose, graphql } from "react-apollo";
 import Text from "../../components/Text";
 import Card from "../../components/Card";
 import Link from "../../components/Link";
 import Heading from "../../components/Heading";
 import { Padding } from "../../components/Spacing";
-import FETCH_BOOKING from "./fetchBooking.graphql";
 import illustration from "./illustration.png";
 
-const Send = ({ application, data }) => {
-  if (data.loading) return <>loading</>;
+const Send = ({ application, booking }) => {
   const proposalUrl = `/applications/${application.airtableId}/proposals/${
-    data.booking.airtableId
+    booking.airtableId
   }`;
 
   return (
@@ -36,12 +33,4 @@ const Send = ({ application, data }) => {
   );
 };
 
-export default compose(
-  graphql(FETCH_BOOKING, {
-    options: (props: any) => ({
-      variables: {
-        id: props.match.params.bookingId,
-      },
-    }),
-  })
-)(Send);
+export default Send

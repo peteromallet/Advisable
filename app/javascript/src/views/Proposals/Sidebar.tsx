@@ -1,6 +1,5 @@
 import { get } from "lodash";
 import * as React from "react";
-import { graphql } from "react-apollo";
 import { matchPath } from "react-router";
 import Text from "../../components/Text";
 import Back from "../../components/Back";
@@ -9,21 +8,13 @@ import Layout from "../../components/Layout";
 import Heading from "../../components/Heading";
 import { Padding } from "../../components/Spacing";
 import { ApplicationType } from "../../types";
-import FETCH_BOOKING from "./fetchBooking.graphql";
 
 interface Props {
   application: ApplicationType;
 }
 
 let SideBar = (props: any) => {
-  const { application } = props;
-
-  if (props.data && props.data.loading) {
-    return <div>loading ...</div>;
-  }
-
-  const booking = props.data.booking || {};
-  const tasks = get(booking, "tasks", []);
+  const { application, booking } = props;
 
   const newPath = matchPath(location.pathname, {
     path: "/applications/:applicationId/proposals/new",
@@ -39,9 +30,9 @@ let SideBar = (props: any) => {
   const tasksPath = `${urlPrefix}/${proposalId}/tasks`;
   const sendPath = `${urlPrefix}/${proposalId}/send`;
 
-  const hasRate = Boolean(booking.rate);
-  const hasTasks = tasks.length > 0;
-  const isSent = booking.status === "Proposed";
+  const hasRate = booking ? Boolean(booking.rate) : false;
+  const hasTasks = booking ? booking.tasks.length > 0 : false;
+  const isSent = booking ? booking.status === "Proposed" : false;
 
   return (
     <Layout.Sidebar>
@@ -91,19 +82,4 @@ let SideBar = (props: any) => {
   );
 };
 
-export default graphql<any, any, any, any>(FETCH_BOOKING, {
-  skip: () =>
-    !matchPath(location.pathname, {
-      path: "/applications/:applicationId/proposals/:proposalId",
-    }),
-  options: () => {
-    const match = matchPath<{ proposalId: string }>(location.pathname, {
-      path: "/applications/:applicationId/proposals/:proposalId",
-    });
-    return {
-      variables: {
-        id: match.params.proposalId,
-      },
-    };
-  },
-})(SideBar);
+export default SideBar;
