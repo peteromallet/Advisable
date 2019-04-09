@@ -7,18 +7,14 @@ import Button from "../../components/Button";
 import Heading from "../../components/Heading";
 import TextField from "../../components/TextField";
 import { Padding } from "../../components/Spacing";
-import FETCH_BOOKING from "./fetchBooking.graphql";
 import SEND_PROPOSAL from "./sendProposal.graphql";
 
-const Send = ({ application, data, history, sendProposal }) => {
-  if (data.loading) return <>loading</>
-
-  const booking = data.booking;
+const Send = ({ booking, history, sendProposal }) => {
   const handleSubmit = async values => {
     const response = await sendProposal({
       variables: {
         input: {
-          booking: data.booking.airtableId,
+          booking: booking.airtableId,
           ...values
         }
       }
@@ -70,11 +66,4 @@ const Send = ({ application, data, history, sendProposal }) => {
 
 export default compose(
   graphql(SEND_PROPOSAL, { name: "sendProposal" }),
-  graphql(FETCH_BOOKING, {
-    options: (props: any) => ({
-      variables: {
-        id: props.match.params.bookingId,
-      },
-    }),
-  })
 )(Send);

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { compose, graphql } from "react-apollo";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
@@ -10,9 +9,7 @@ import { Padding } from "../../components/Spacing";
 import graphqlClient from "../../graphqlClient";
 import FETCH_BOOKING from "./fetchBooking.graphql";
 
-const Tasks = ({ application, match, data, history }) => {
-  if (data.loading) return <div>loading...</div>;
-
+const Tasks = ({ application, match, booking, history }) => {
   const onSelectTask = task => {
     history.push(`${match.url}/${task.airtableId}`);
   };
@@ -21,30 +18,31 @@ const Tasks = ({ application, match, data, history }) => {
     history.push(`${match.url}/new`);
   };
 
+  const bookingQuery = {
+    query: FETCH_BOOKING,
+    variables: {
+      id: match.params.bookingId
+    }
+  }
+
   const addNewTaskToCache = task => {
-    const newData = data;
+    const newData = graphqlClient.cache.readQuery(bookingQuery);
     newData.booking.tasks.push(task);
     graphqlClient.cache.writeQuery({
-      query: FETCH_BOOKING,
+      ...bookingQuery,
       data: newData,
-      variables: {
-        id: match.params.bookingId
-      }
     })
   }
 
   const handleDeleteTask = task => {
     history.push(match.url);
-    const newData = data;
-    newData.booking.tasks = data.booking.tasks.filter(t => {
+    const newData = graphqlClient.cache.readQuery(bookingQuery);
+    newData.booking.tasks = booking.tasks.filter(t => {
       return t.id !== task.id
     })
     graphqlClient.cache.writeQuery({
-      query: FETCH_BOOKING,
+      ...bookingQuery,
       data: newData,
-      variables: {
-        id: match.params.bookingId
-      }
     })
   }
 
@@ -66,7 +64,7 @@ const Tasks = ({ application, match, data, history }) => {
         </Text>
       </Padding>
       <TaskList
-        tasks={data.booking.tasks}
+        tasks={booking.tasks}
         onClickTask={onSelectTask}
         onNewTask={handleNewTask}
       />
@@ -76,7 +74,7 @@ const Tasks = ({ application, match, data, history }) => {
         bookingId={match.params.bookingId}
         onDeleteTask={handleDeleteTask}
       />
-      {data.booking.tasks.length > 0 && (
+      {booking.tasks.length > 0 && (
         <Padding size="l">
           <Button styling="primary" onClick={handleContinue}>Continue</Button>
         </Padding>
@@ -85,12 +83,4 @@ const Tasks = ({ application, match, data, history }) => {
   );
 };
 
-export default compose(
-  graphql(FETCH_BOOKING, {
-    options: (props: any) => ({
-      variables: {
-        id: props.match.params.bookingId,
-      },
-    }),
-  })
-)(Tasks);
+export default Tasks
