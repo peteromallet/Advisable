@@ -35,7 +35,12 @@ class Airtable::Booking < Airtable::Base
     end
   end
 
+  # Describes what data should be pushed into airtable when 'sync_to_airtable'
+  # is called on a model.
   push_data do |booking|
     self['Rate'] = booking.rate.to_f
+    self['Status'] = booking.status
+    self['Proposal Comment'] = booking.proposal_comment
+    self['Application'] = [booking.application.try(:airtable_id)]
   end
 end

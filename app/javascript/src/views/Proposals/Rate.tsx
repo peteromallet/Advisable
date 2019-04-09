@@ -11,6 +11,7 @@ import TextField from "../../components/TextField";
 import { Padding } from "../../components/Spacing";
 import currency, { currencySymbol } from "../../utilities/currency";
 import { ApplicationType } from "../../types";
+import { rateValidationSchema } from "./validationSchema";
 import FETCH_BOOKING from "./fetchBooking.graphql";
 import CREATE_PROPOSAL from "./createProposal.graphql";
 import UPDATE_PROPOSAL from "./updateProposal.graphql";
@@ -72,7 +73,7 @@ const Rate = ({
   };
 
   const initialValues = {
-    rate: get(fetchBooking, "booking.rate", ""),
+    rate: get(fetchBooking, "booking.rate", null),
   };
 
   const calculateRate = amount => {
@@ -80,9 +81,16 @@ const Rate = ({
     return currency(rate, application.project.currency);
   };
 
+  const isInitialValid = rateValidationSchema.isValidSync(initialValues);
+
   return (
     <Card>
-      <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+      <Formik
+        onSubmit={handleSubmit}
+        initialValues={initialValues}
+        validationSchema={rateValidationSchema}
+        isInitialValid={isInitialValid}
+      >
         {formik => (
           <Form>
             <Padding size="xl">
@@ -105,8 +113,11 @@ const Rate = ({
                   )}0.00`}
                   value={formik.values.rate}
                   onBlur={formik.handleBlur}
-                  onChange={({ target }) => {
-                    const val = Number(target.value.replace(/[^0-9\.-]+/g, ""));
+                  error={formik.touched.rate && formik.errors.rate}
+                  onChange={e => {
+                    const value = e.target.value;
+                    const stripped = value.replace(/[^0-9\.-]+/g, "");
+                    const val = stripped ? Number(stripped) : null;
                     formik.setFieldValue("rate", val);
                   }}
                   mask={createNumberMask({
@@ -123,6 +134,7 @@ const Rate = ({
               </Padding>
               <Button
                 type="submit"
+                disabled={!formik.isValid}
                 loading={formik.isSubmitting}
                 styling="primary"
               >

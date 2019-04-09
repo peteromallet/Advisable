@@ -48,6 +48,10 @@ const Tasks = ({ application, match, data, history }) => {
     })
   }
 
+  const handleContinue = () => {
+    history.push("send")
+  }
+
   return (
     <Card>
       <Padding size="l">
@@ -74,7 +78,7 @@ const Tasks = ({ application, match, data, history }) => {
       />
       {data.booking.tasks.length > 0 && (
         <Padding size="l">
-          <Button styling="primary">Continue</Button>
+          <Button styling="primary" onClick={handleContinue}>Continue</Button>
         </Padding>
       )}
     </Card>

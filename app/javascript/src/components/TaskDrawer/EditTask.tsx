@@ -103,13 +103,13 @@ const EditTask = ({ data, mutate, onDeleteTask }) => {
 
   const handleChange = attribute => value => {
     const newAttributes = updateField(attribute, value);
-    save(newAttributes);
+    save({ [attribute]: value });
   };
 
   const handleChangeWithTimeout = attribute => value => {
     const newAttributes = updateField(attribute, value);
     clearTimeout(timer);
-    timer = setTimeout(() => save(newAttributes), 1000);
+    timer = setTimeout(() => save({ [attribute]: value }), 1000);
   };
 
   return (

@@ -4,6 +4,10 @@ query Application($id: ID!) {
     airtableId
     status
     rate
+    proposal {
+      id
+      airtableId
+    }
     project {
       id
       currency

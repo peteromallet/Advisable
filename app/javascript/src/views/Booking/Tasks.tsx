@@ -1,9 +1,8 @@
 import * as React from "react";
 import Card from "../../components/Card";
-import Task from "../../components/Task";
+import TaskList from "../../components/TaskList";
 import Heading from "../../components/Heading";
 import Divider from "../../components/Divider";
-import NewTask from "../../components/NewTask";
 import { Padding } from "../../components/Spacing";
 import NoTasks from "./NoTasks";
 
@@ -18,24 +17,13 @@ export default ({ tasks, firstName, onNewTask, onSelectTask }) => {
     );
   }
 
-  const sorted = tasks.sort((a, b) => {
-    const dateA = Date.parse(a.createdAt)
-    const dateB = Date.parse(b.createdAt)
-    return dateA - dateB
-  })
-
   return (
     <Card>
       <Padding size="l">
         <Heading level={3}>Active Tasks</Heading>
       </Padding>
       <Divider />
-      {sorted.map(task => (
-        <Task key={task.id} task={task} onClick={() => onSelectTask(task)} />
-      ))}
-      <Padding size="l">
-        <NewTask onClick={onNewTask} />
-      </Padding>
+      <TaskList tasks={tasks} onNewTask={onNewTask} onClickTask={onSelectTask} />
     </Card>
   );
 };
