@@ -1,7 +1,10 @@
 import * as moment from "moment";
 import * as React from "react";
 import Icon from "../Icon";
+import Button from "../Button";
+import ButtonGroup from "../ButtonGroup";
 import Popover from "../Popover";
+import { Padding } from "../Spacing";
 import DatePicker from "../DatePicker";
 import {
   Detail,
@@ -24,8 +27,20 @@ export default ({ value, onChange, onClick, isOpen, onClose }: Props) => {
   const selected = value ? new Date(value) : null;
   const initialMonth = selected || new Date();
 
-  const handleSelection = (popover) => day => {
+  const handleSelection = popover => (day, modifiers) => {
+    if (modifiers.disabled) return;
     onChange(day.toISOString());
+    popover.close();
+  };
+
+  const isDayDisabled = day => {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    return day < now;
+  };
+
+  const handleRemove = popover => () => {
+    onChange(null);
     popover.close();
   }
 
@@ -51,10 +66,19 @@ export default ({ value, onChange, onClick, isOpen, onClose }: Props) => {
       {popover => (
         <Popout>
           <DatePicker
+            showOutsideDays={false}
             selectedDays={selected}
             initialMonth={initialMonth}
+            disabledDays={isDayDisabled}
             onDayClick={handleSelection(popover)}
           />
+          {selected && (
+            <Padding top="m">
+              <ButtonGroup fullWidth>
+                <Button onClick={handleRemove(popover)}>Remove due date</Button>
+              </ButtonGroup>
+            </Padding>
+          )}
         </Popout>
       )}
     </Popover>
