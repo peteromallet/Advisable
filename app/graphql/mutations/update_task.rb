@@ -16,7 +16,7 @@ class Mutations::UpdateTask < Mutations::BaseMutation
   # end
 
   def resolve(**args)
-    task = Task.find_by_airtable_id!(args[:id])
+    task = Task.find_by_uid!(args[:id])
 
     {
       task: Tasks::Update.call(

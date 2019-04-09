@@ -8,7 +8,11 @@ class Tasks::Create < ApplicationService
   end
 
   def call
-    task.sync_to_airtable if task.save
-    task
+    if task.save
+      task.sync_to_airtable
+      return task
+    end
+
+    raise Service::Error.new(task.errors.full_messages.first)
   end
 end

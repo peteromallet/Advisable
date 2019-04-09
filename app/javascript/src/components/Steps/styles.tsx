@@ -23,13 +23,20 @@ export const Number = styled.div`
 export const Step = styled.div`
   display: flex;
   font-size: 14px;
-  padding: 15px 0;
   font-weight: 400;
   user-select: none;
   align-items: center;
   text-decoration: none;
   border-bottom: 1px solid #d8dded;
   cursor: ${props => (props.isDisabled ? "default" : "pointer")};
+
+  > div, > a {
+    width: 100%;
+    display: flex;
+    padding: 15px 0;
+    align-items: center;
+    text-decoration: none;
+  }
 
   &:last-child {
     border-bottom: none;
@@ -62,24 +69,28 @@ export const Step = styled.div`
       color: ${colors.neutral.s6};
     }
   `}
+  
+  > div, > a {
+    &.active {
+      span {
+        font-weight: 500;
+        color: ${colors.neutral.s10};
+      }
 
-  ${props => props.isComplete && css`
-    ${Number}, &:hover ${Number} {
-      color: transparent;
-      background: url(${tick}) no-repeat center;
-      background-color: ${colors.teal.base};
-    }
-  `};
-
-  &.active {
-    ${Number} {
-      color: white;
-      background: ${colors.teal.base};
-    }
-
-    span {
-      color: ${colors.neutral.s10};
-      font-weight: 500;
+      ${Number} {
+        color: white;
+        background: ${colors.teal.base};
+      }
     }
   }
+
+  ${props => props.isComplete && css`
+    > div, > a {
+      ${Number}, &:hover ${Number} {
+        color: transparent;
+        background: url(${tick}) no-repeat center;
+        background-color: ${colors.teal.base};
+      }
+    }
+  `};
 `;

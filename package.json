@@ -31,6 +31,7 @@
     "luxon": "^1.4.2",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
+    "nanoid": "^2.0.1",
     "polished": "^1.9.2",
     "popper.js": "^1.14.7",
     "query-string": "^6.2.0",

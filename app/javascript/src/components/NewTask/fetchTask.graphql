@@ -1,0 +1,14 @@
+query booking($bookingId: ID!, $taskId: ID!) {
+  booking(id: $bookingId) {
+    id
+    task(id: $taskId) {
+      id
+      airtableId
+      name
+      stage
+      dueDate
+      description
+      estimate
+    }
+  }
+}

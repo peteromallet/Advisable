@@ -7,15 +7,12 @@ import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
 import { Padding } from "../../components/Spacing";
 import graphqlClient from "../../graphqlClient";
+import FETCH_TASK from "./fetchTask.graphql";
 import FETCH_BOOKING from "./fetchBooking.graphql";
 
 const Tasks = ({ application, match, booking, history }) => {
   const onSelectTask = task => {
-    history.push(`${match.url}/${task.airtableId}`);
-  };
-
-  const handleNewTask = () => {
-    history.push(`${match.url}/new`);
+    history.push(`${match.url}/${task.id}`);
   };
 
   const bookingQuery = {
@@ -25,14 +22,26 @@ const Tasks = ({ application, match, booking, history }) => {
     }
   }
 
-  const addNewTaskToCache = task => {
+  const handleNewTask = task => {
+    graphqlClient.cache.writeQuery({
+      query: FETCH_TASK,
+      variables: {
+        id: task.id
+      },
+      data: {
+        task
+      }
+    })
+
     const newData = graphqlClient.cache.readQuery(bookingQuery);
     newData.booking.tasks.push(task);
     graphqlClient.cache.writeQuery({
       ...bookingQuery,
       data: newData,
     })
-  }
+
+    history.push(`${match.url}/${task.id}`)
+  };
 
   const handleDeleteTask = task => {
     history.push(match.url);
@@ -65,12 +74,12 @@ const Tasks = ({ application, match, booking, history }) => {
       </Padding>
       <TaskList
         tasks={booking.tasks}
-        onClickTask={onSelectTask}
         onNewTask={handleNewTask}
+        onClickTask={onSelectTask}
+        bookingId={booking.airtableId}
       />
       <TaskDrawer
         closeURL={match.url}
-        onCreate={addNewTaskToCache}
         bookingId={match.params.bookingId}
         onDeleteTask={handleDeleteTask}
       />

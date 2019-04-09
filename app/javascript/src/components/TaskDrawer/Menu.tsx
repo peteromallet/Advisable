@@ -17,7 +17,7 @@ const Component = (props: Props) => {
     await props.deleteTask({
       variables: {
         input: {
-          task: props.task.airtableId,
+          task: props.task.id,
         },
       },
     });

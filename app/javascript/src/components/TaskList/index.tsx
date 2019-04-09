@@ -12,7 +12,8 @@ type Task = {
 
 type Props = {
   tasks: Task[];
-  onNewTask: () => void;
+  bookingId: string;
+  onNewTask: (task: any) => void;
   onClickTask: (task: Task) => void;
 };
 
@@ -26,10 +27,17 @@ const TaskList = (props: Props) => {
   return (
     <Container>
       {sorted.map(task => (
-        <Task key={task.id} task={task} onClick={() => props.onClickTask(task)} />
+        <Task
+          key={task.id}
+          task={task}
+          onClick={() => props.onClickTask(task)}
+        />
       ))}
       <Row>
-        <NewTask onClick={props.onNewTask} />
+        <NewTask
+          onCreate={props.onNewTask}
+          bookingId={props.bookingId}
+        />
       </Row>
     </Container>
   );

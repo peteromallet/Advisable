@@ -23,7 +23,6 @@ export default ({ tasks, firstName, onNewTask, onSelectTask }) => {
         <Heading level={3}>Active Tasks</Heading>
       </Padding>
       <Divider />
-      <TaskList tasks={tasks} onNewTask={onNewTask} onClickTask={onSelectTask} />
     </Card>
   );
 };
