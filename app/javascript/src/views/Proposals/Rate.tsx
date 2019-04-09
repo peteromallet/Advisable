@@ -93,7 +93,7 @@ const Rate = ({
       >
         {formik => (
           <Form>
-            <Padding size="xl">
+            <Padding size="l">
               <Padding bottom="s">
                 <Heading level={3}>
                   What is your hourly rate for this project?

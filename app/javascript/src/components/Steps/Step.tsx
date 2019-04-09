@@ -20,16 +20,18 @@ const Step = ({
   children,
   to,
   isComplete,
-  isDisabled
+  isDisabled,
 }: Props) => {
-  const Component = isDisabled ? "div" : NavLink;
-
   return (
-    <Wrapper isDisabled={isDisabled} isComplete={isComplete}>
-      <Component to={to} exact={isDisabled ? null : exact}>
-        <Number>{number}</Number>
-        <span>{children}</span>
-      </Component>
+    <Wrapper
+      to={to}
+      isDisabled={isDisabled}
+      isComplete={isComplete}
+      as={isDisabled ? "div" : NavLink}
+      exact={isDisabled ? null : exact}
+    >
+      <Number>{number}</Number>
+      <span>{children}</span>
     </Wrapper>
   );
 };
