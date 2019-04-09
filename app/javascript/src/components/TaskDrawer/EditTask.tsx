@@ -25,7 +25,6 @@ import UPDATE_TASK from "./updateTask.graphql";
 import graphqlClient from "../../graphqlClient";
 
 interface Params {
-  bookingId: string;
   taskId: string;
 }
 
@@ -44,7 +43,7 @@ const EditTask = ({ data, mutate, onDeleteTask }) => {
 
   React.useEffect(() => {
     if (!data.loading) {
-      const task = data.booking.task;
+      const task = data.task;
       setAttributes({
         name: task.name || "",
         description: task.description || "",
@@ -56,7 +55,7 @@ const EditTask = ({ data, mutate, onDeleteTask }) => {
 
   if (data.loading) return <Loading />;
 
-  const task = data.booking.task;
+  const task = data.task;
   const isClient = false;
 
   const handleFocus = input => e => {
@@ -84,7 +83,7 @@ const EditTask = ({ data, mutate, onDeleteTask }) => {
     mutate({
       variables: {
         input: {
-          id: task.airtableId,
+          id: task.id,
           ...fields,
         },
       },
@@ -192,12 +191,10 @@ type Response = {
 };
 
 type Variables = {
-  bookingId: string;
-  taskId: string;
+  id: string;
 };
 
 type InputProps = {
-  bookingId: string;
   match: match<Params>;
 };
 
@@ -207,8 +204,7 @@ export default compose(
   graphql<InputProps, Response, Variables, ChildProps>(FETCH_TASK, {
     options: props => ({
       variables: {
-        bookingId: props.bookingId,
-        taskId: props.match.params.taskId,
+        id: props.match.params.taskId,
       },
     }),
   }),

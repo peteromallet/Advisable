@@ -1,6 +1,6 @@
 class Types::TaskType < Types::BaseType
   field :id, ID, null: false
-  field :airtable_id, String, null: false
+  field :airtable_id, String, null: true
   field :stage, String, null: true
   field :name, String, null: true
   field :estimate, Float, null: true

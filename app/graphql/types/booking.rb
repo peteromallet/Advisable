@@ -26,6 +26,6 @@ class Types::Booking < Types::BaseType
   end
 
   def task(id: )
-    object.tasks.find_by_airtable_id!(id)
+    object.tasks.find_by_uid!(id)
   end
 end

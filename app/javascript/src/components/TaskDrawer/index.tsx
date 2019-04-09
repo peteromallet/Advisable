@@ -2,7 +2,6 @@ import * as React from "react";
 import { Switch, Route, withRouter, matchPath } from "react-router-dom";
 import Drawer from "../Drawer";
 import { TaskDrawer } from "./styles";
-import NewTask from "./NewTask";
 import EditTask from "./EditTask";
 
 const Component = ({
@@ -26,14 +25,14 @@ const Component = ({
       <TaskDrawer>
         <Switch>
           <Route
-            path="*/tasks/new"
-            render={route => (
-              <NewTask {...route} bookingId={bookingId} onCreate={onCreate} />
-            )}
-          />
-          <Route
             path="*/tasks/:taskId"
-            render={props => <EditTask {...props} bookingId={bookingId} onDeleteTask={onDeleteTask} />}
+            render={props => (
+              <EditTask
+                {...props}
+                bookingId={bookingId}
+                onDeleteTask={onDeleteTask}
+              />
+            )}
           />
         </Switch>
       </TaskDrawer>

@@ -12,7 +12,7 @@ class Mutations::DeleteTask < Mutations::BaseMutation
   end
 
   def resolve(**args)
-    task = Task.find_by_airtable_id!(args[:task])
+    task = Task.find_by_uid!(args[:task])
     task.destroy
     task.remove_from_airtable
 

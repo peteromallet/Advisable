@@ -1,5 +1,6 @@
 class Mutations::CreateTask < Mutations::BaseMutation
   argument :booking, ID, required: true
+  argument :id, String, required: false
   argument :name, String, required: false
   argument :due_date, String, required: false
   argument :description, String, required: false
@@ -20,7 +21,9 @@ class Mutations::CreateTask < Mutations::BaseMutation
     {
       task: Tasks::Create.call(
         booking: booking,
-        attributes: args.except(:booking)
+        attributes: args.except(:booking, :id).merge({
+          uid: args[:id]
+        })
       )
     }
 
