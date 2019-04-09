@@ -44,12 +44,15 @@ export default ({ task, isClient, onClick, onClose, isOpen, onChange }) => {
     return null;
   }
 
-  const earnings = value ? calcEarnings(value, "35.00") : null;
+  const inputAsFloat = parseFloat(inputValue)
+  const estimateProvided = inputValue && inputAsFloat > 0;
+  const earnings = estimateProvided ? calcEarnings(inputAsFloat, "35.00") : null;
 
   const handleSave = popover => () => {
     popover.close();
-    setValue(parseFloat(inputValue));
-    onChange(parseFloat(inputValue));
+    const nextValue = estimateProvided ? inputAsFloat : null;
+    setValue(nextValue);
+    onChange(nextValue);
   }
 
   const handleKeyDown = e => {
