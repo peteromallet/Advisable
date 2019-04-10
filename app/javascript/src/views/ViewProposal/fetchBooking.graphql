@@ -1,6 +1,7 @@
 query booking($id: ID!) {
   booking(id: $id) {
     id
+    airtableId
     type
     rate
     rateType
@@ -21,9 +22,11 @@ query booking($id: ID!) {
     application {
       id
       rate
+      airtableId
       availability
       project {
         id
+        airtableId
         name
         currency
         primarySkill

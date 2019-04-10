@@ -21,6 +21,8 @@ class WebhookEvent < ApplicationRecord
     "specialists.application_stage_changed",
     # proposals.sent is triggered when a proposal is sent.
     "proposals.sent",
+    # proposals.accepted is triggered when a proposal is accepted.
+    "proposals.accepted",
   ].freeze
 
   # self.trigger is used to trigger a webhook event.

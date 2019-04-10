@@ -1,5 +1,6 @@
 import * as React from "react";
 import { get } from "lodash";
+import { withRouter } from "react-router";
 import Sticky from "react-stickynode";
 import Text from "../../components/Text";
 import Avatar from "../../components/Avatar";
@@ -12,14 +13,21 @@ import { Padding } from "../../components/Spacing";
 import { FadeIn } from "../../components/Animation";
 import StarRating from "../../components/StarRating";
 import FeaturedBadge from "../../components/FeaturedBadge";
+import RejectProposalModal from "../../components/RejectProposalModal";
 import AttributeList from "../../components/AttributeList";
 import { useMobile } from "../../components/Breakpoint";
+import AcceptModal from "./AcceptModal";
 
-const Sidebar = ({ data }) => {
+const Sidebar = ({ data, history }) => {
   const isMobile = useMobile();
+  const [modal, setModal] = React.useState(null);
   const application = data.booking.application;
   const project = application.project;
   const specialist = application.specialist;
+
+  const handleReject = () => {
+    history.push(`/projects/${project.airtableId}/applications/${application.airtableId}`)
+  }
 
   return (
     <Layout.Sidebar>
@@ -70,12 +78,25 @@ const Sidebar = ({ data }) => {
             )}
           </AttributeList>
           <Padding top="xl">
+            <AcceptModal
+              isOpen={modal === "ACCEPT"}
+              firstName={specialist.firstName}
+              bookingId={data.booking.airtableId}
+              onClose={() => setModal(null)}
+            />
+            <RejectProposalModal
+              isOpen={modal === "REJECT"}
+              booking={data.booking}
+              specialist={specialist}
+              onClose={() => setModal(null)}
+              onReject={handleReject}
+            />
             <ButtonGroup fullWidth stack>
-              <Button styling="primary">
+              <Button styling="primary" onClick={() => setModal("ACCEPT")}>
                 Start working with {specialist.firstName}
               </Button>
               <Button>View application</Button>
-              <Button>Reject proposal</Button>
+              <Button onClick={() => setModal("REJECT")}>Reject application</Button>
             </ButtonGroup>
           </Padding>
         </FadeIn>
@@ -84,4 +105,4 @@ const Sidebar = ({ data }) => {
   );
 };
 
-export default Sidebar;
+export default withRouter(Sidebar);

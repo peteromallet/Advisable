@@ -3,6 +3,7 @@ class Types::MutationType < GraphQL::Schema::Object
   field :send_proposal, mutation: Mutations::SendProposal
   field :create_proposal, mutation: Mutations::CreateProposal
   field :update_proposal, mutation: Mutations::UpdateProposal
+  field :accept_proposal, mutation: Mutations::AcceptProposal
 
   field :accept_booking, mutation: Mutations::AcceptBooking
   field :decline_booking, mutation: Mutations::DeclineBooking

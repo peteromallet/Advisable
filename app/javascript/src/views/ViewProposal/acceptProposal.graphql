@@ -1,0 +1,11 @@
+mutation acceptProposal($input: AcceptProposalInput!) {
+  acceptProposal(input: $input) {
+    errors {
+      code
+    }
+    booking {
+      id
+      status
+    }
+  }
+}

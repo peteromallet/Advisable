@@ -12,13 +12,17 @@ import { Padding } from "../../components/Spacing";
 import Sidebar from "./Sidebar";
 import FETCH_BOOKING from "./fetchBooking.graphql";
 
-const ViewProposal = ({ data }) => {
+const ViewProposal = ({ data, history }) => {
   const [selectedTask, setSelectedTask] = React.useState(null);
   if (data.loading) return <div>loading...</div>;
 
   const handleSelectTask = task => {
     setSelectedTask(task.id);
   };
+
+  if (data.booking.status === "Accepted") {
+    history.replace(`/bookings/${data.booking.airtableId}`)
+  }
 
   return (
     <>
@@ -35,10 +39,10 @@ const ViewProposal = ({ data }) => {
             <Padding left="l" right="l" bottom="l">
               <Text size="s">
                 Accepting this proposal wont assign any tasks. You’ll have the
-                opportunity to assign and add tasks once you start working with
-                Charlie. Once you assign a task, if you’re not happy with the
-                quality of the work, we’ll give you a 100% refund for up to 8
-                hours work.
+                opportunity to assign and add tasks once you start working with{" "}
+                {data.booking.application.specialist.firstName}. Once you assign
+                a task, if you’re not happy with the quality of the work, we’ll
+                give you a 100% refund for up to 8 hours work.
               </Text>
             </Padding>
             {data.booking.proposalComment && (

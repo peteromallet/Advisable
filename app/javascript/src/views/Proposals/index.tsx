@@ -1,5 +1,5 @@
 import * as React from "react";
-import { matchPath } from "react-router";
+import { get } from "lodash";
 import { compose, graphql } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Header from "../../components/Header";
@@ -15,11 +15,11 @@ import FETCH_BOOKING from "./fetchBooking.graphql";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 
 const Proposals = ({ fetchApplication, fetchBooking }) => {
-  if (fetchApplication.loading || fetchBooking.loading) {
+  if (fetchApplication.loading || (fetchBooking && fetchBooking.loading)) {
     return <Loading />;
   }
 
-  const booking = fetchBooking.booking;
+  const booking = get(fetchBooking, "booking");
   const application = fetchApplication.application;
   const urlPrefix = `/applications/${application.airtableId}/proposals`;
 
@@ -80,16 +80,11 @@ export default compose(
   }),
   graphql(FETCH_BOOKING, {
     name: "fetchBooking",
-    skip: !matchPath(location.pathname, {
-      path: "/applications/:applicationId/proposals/:proposalId",
-    }),
+    skip: props => !props.match.params.proposalId,
     options: (props: any) => {
-      const match = matchPath<{ proposalId: string }>(location.pathname, {
-        path: "/applications/:applicationId/proposals/:proposalId",
-      });
       return {
         variables: {
-          id: match.params.proposalId,
+          id: props.match.params.proposalId,
         },
       };
     },
