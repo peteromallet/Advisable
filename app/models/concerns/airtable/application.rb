@@ -101,5 +101,6 @@ class Airtable::Application < Airtable::Base
     self['Accepts Terms'] = application.accepts_terms ? "Yes" : "No"
     self['Accepts Fee'] = application.accepts_fee ? "Yes" : "No"
     self['Applied At'] = application.applied_at
+    self['Rejected Reason'] = application.rejection_reason
   end
 end

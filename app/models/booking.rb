@@ -9,7 +9,6 @@ class Booking < ApplicationRecord
 
   has_many :tasks
   belongs_to :application
-  belongs_to :rejection_reason, required: false, class_name: "BookingRejectionReason"
 
   serialize :deliverables, Array
 

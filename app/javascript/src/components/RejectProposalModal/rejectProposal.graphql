@@ -1,11 +1,5 @@
-mutation RejectProposal($id: ID!, $reason: ID!, $comment: String) {
-  rejectProposal(
-    input: {
-      id: $id
-      reason: $reason
-      comment: $comment
-    }
-  ) {
+mutation rejectProposal($input: RejectProposalInput!) {
+  rejectProposal(input: $input) {
     booking {
       id
       status
