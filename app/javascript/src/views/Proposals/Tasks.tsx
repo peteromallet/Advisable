@@ -74,15 +74,13 @@ const Tasks = ({ application, match, booking, history }) => {
       </Padding>
       <TaskList
         tasks={booking.tasks}
-        onNewTask={handleNewTask}
         onClickTask={onSelectTask}
-        bookingId={booking.airtableId}
       />
-      <TaskDrawer
+      {/* <TaskDrawer
         closeURL={match.url}
         bookingId={match.params.bookingId}
         onDeleteTask={handleDeleteTask}
-      />
+      /> */}
       {booking.tasks.length > 0 && (
         <Padding size="l">
           <Button styling="primary" onClick={handleContinue}>Continue</Button>

@@ -15,17 +15,8 @@ class Types::Booking < Types::BaseType
   field :tasks, [Types::TaskType], null: true do
     authorize :is_specialist_or_client
   end
-  
-  field :task, Types::TaskType, null: true do
-    authorize :is_specialist_or_client
-    argument :id, ID, required: true
-  end
 
   def id
     object.airtable_id
-  end
-
-  def task(id: )
-    object.tasks.find_by_uid!(id)
   end
 end

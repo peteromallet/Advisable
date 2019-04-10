@@ -202,9 +202,9 @@ type ChildProps = ChildDataProps<{}, Response, Variables>;
 
 export default compose(
   graphql<InputProps, Response, Variables, ChildProps>(FETCH_TASK, {
-    options: props => ({
+    options: (props: any) => ({
       variables: {
-        id: props.match.params.taskId,
+        id: props.taskId,
       },
     }),
   }),

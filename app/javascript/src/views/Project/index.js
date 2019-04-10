@@ -7,7 +7,6 @@ import Applicant from "../Applicant";
 import Candidates from "../Candidates";
 import CreateOffer from "../CreateOffer";
 import CounterOffer from "../CounterOffer";
-import ViewProposal from "../ViewProposal";
 import NotFound from "../NotFound";
 import InterviewAvailability from "../InterviewAvailability";
 import FETCH_PROJECT from "./fetchProject.graphql";
@@ -80,10 +79,6 @@ const Project = ({ location, match: { path, params } }) => {
             <Route
               path={`${path}/applications/:applicationID`}
               component={Applicant}
-            />
-            <Route
-              path={`${path}/proposals/:bookingID`}
-              component={ViewProposal}
             />
             <Route
               path={`${path}/offers/:bookingID`}

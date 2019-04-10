@@ -68,11 +68,11 @@ const Booking = ({ data, match, history, location }: Props) => {
 
   return (
     <>
-      <TaskDrawer
+      {/* <TaskDrawer
         isOpen={Boolean(taskDrawerPath)}
         onClose={() => closeTask()}
         onCreate={addNewTaskToCache}
-      />
+      /> */}
       <Header />
       <Layout>
         <Layout.Sidebar>

@@ -1,7 +1,6 @@
 import * as React from "react";
-import { TaskList as Container, Row } from "./styles";
+import { TaskList as Container } from "./styles";
 import Task from "./Task";
-import NewTask from "../NewTask";
 
 type Task = {
   id: string;
@@ -12,8 +11,7 @@ type Task = {
 
 type Props = {
   tasks: Task[];
-  bookingId: string;
-  onNewTask: (task: any) => void;
+  hideStatus?: boolean;
   onClickTask: (task: Task) => void;
 };
 
@@ -30,15 +28,10 @@ const TaskList = (props: Props) => {
         <Task
           key={task.id}
           task={task}
+          hideStatus={props.hideStatus}
           onClick={() => props.onClickTask(task)}
         />
       ))}
-      <Row>
-        <NewTask
-          onCreate={props.onNewTask}
-          bookingId={props.bookingId}
-        />
-      </Row>
     </Container>
   );
 };
