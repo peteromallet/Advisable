@@ -1,6 +1,0 @@
-query {
-  reasons:applicationRejectionReasons {
-    value:id
-    label:reason
-  }
-}

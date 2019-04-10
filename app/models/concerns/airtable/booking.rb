@@ -11,6 +11,7 @@ class Airtable::Booking < Airtable::Base
   sync_column 'Decline Comment', to: :decline_comment
   sync_column 'Proposal Comment', to: :proposal_comment
   sync_column 'Client Decline Comment', to: :client_decline_comment
+  sync_column 'Rejected Reason', to: :rejection_reason
 
   sync_data do |booking|
     booking.deliverables = JSON.parse(fields['Deliverables']) if fields['Deliverables']
@@ -26,13 +27,6 @@ class Airtable::Booking < Airtable::Base
       application = Airtable::Application.find(application_id).sync if application.nil?
       booking.application = application
     end
-
-    rejected_reason_id = fields["Rejected Reason"].try(:first)
-    if rejected_reason_id
-      rejection_reason = ::BookingRejectionReason.find_by_airtable_id(rejected_reason_id)
-      rejection_reason = Airtable::BookingRejectedReason.find(rejected_reason_id).sync if rejection_reason.nil?
-      booking.rejection_reason = rejection_reason
-    end
   end
 
   # Describes what data should be pushed into airtable when 'sync_to_airtable'
@@ -42,5 +36,6 @@ class Airtable::Booking < Airtable::Base
     self['Status'] = booking.status
     self['Proposal Comment'] = booking.proposal_comment
     self['Application'] = [booking.application.try(:airtable_id)]
+    self['Client Decline Comment'] = booking.client_decline_comment
   end
 end
