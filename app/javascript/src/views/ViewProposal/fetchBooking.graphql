@@ -11,17 +11,40 @@ query booking($id: ID!) {
     endDate
     deliverables
     proposalComment
+    tasks {
+      id
+      name
+      stage
+      dueDate
+      estimate
+    }
     application {
       id
+      rate
+      availability
       project {
         id
         name
         currency
+        primarySkill
       }
       specialist {
         id
         name
         firstName
+        city
+        linkedin
+        country {
+          id
+          name
+        }
+        reviewsCount
+        ratings {
+          overall
+        }
+        image {
+          url
+        }
       }
     }
   }

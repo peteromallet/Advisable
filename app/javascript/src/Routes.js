@@ -15,6 +15,7 @@ import JobListing from "./views/JobListing";
 import Applications from "./views/Applications";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
+import ViewProposal from "./views/ViewProposal";
 import ApplicationFlow from "./views/ApplicationFlow";
 import InterviewRequest from "./views/InterviewRequest";
 import UpdateProfile from "./views/UpdateProfile";
@@ -41,8 +42,6 @@ const Routes = () => {
           />
           <Route path="/signup/:id" component={Signup} />
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
-          <Route path="/projects/:projectID" component={Project} />
-          <AuthenticatedRoute path="/projects" component={Projects} />
           <AuthenticatedRoute path="/bookings/:bookingID" component={Booking} />
           <Route path="/offers/:bookingID" component={ViewOffer} />
           <Route
@@ -62,6 +61,12 @@ const Routes = () => {
             path="/applications/:applicationId/proposals"
             component={Proposals}
           />
+          <AuthenticatedRoute
+            path="/projects/:projectId/proposals/:bookingId"
+            component={ViewProposal}
+          />
+          <Route path="/projects/:projectID" component={Project} />
+          <AuthenticatedRoute path="/projects" component={Projects} />
           <Route exact path="/invites/:applicationId" component={JobListing} />
           <Route
             path="/invites/:applicationId/apply"

@@ -8,13 +8,16 @@ import pluarlize from "../../utilities/pluralize";
 
 interface Props {
   task: TaskType;
+  hideStatus?: boolean;
   onClick: () => void;
 }
 
-export default ({ task, onClick }: Props) => {
+export default ({ task, hideStatus, onClick }: Props) => {
   return (
     <Task onClick={onClick}>
-      <TaskStatus isClient={true}>{task.stage}</TaskStatus>
+      {!hideStatus && (
+        <TaskStatus isClient={true}>{task.stage}</TaskStatus>
+      )}
       <Title>{task.name || "Untitled"}</Title>
       {task.dueDate && (
         <Detail>

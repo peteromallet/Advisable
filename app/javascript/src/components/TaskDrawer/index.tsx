@@ -1,43 +1,23 @@
 import * as React from "react";
-import { Switch, Route, withRouter, matchPath } from "react-router-dom";
 import Drawer from "../Drawer";
 import { TaskDrawer } from "./styles";
 import EditTask from "./EditTask";
+import { Task } from "../../types";
 
-const Component = ({
-  onCreate,
-  location,
-  closeURL,
-  history,
-  bookingId,
-  onDeleteTask,
-}: any) => {
-  const taskDrawerPath = matchPath(location.pathname, {
-    path: `*/tasks/:taskId`,
-  });
+type Props = {
+  taskId?: string;
+  onClose: () => void;
+  onDeleteTask?: (task: Task) => void;
+}
 
-  const handleClose = () => {
-    history.replace(closeURL);
-  };
-
+const Component = ({ taskId, onClose, onDeleteTask }: Props) => {
   return (
-    <Drawer isOpen={Boolean(taskDrawerPath)} onClose={handleClose}>
+    <Drawer isOpen={Boolean(taskId)} onClose={onClose}>
       <TaskDrawer>
-        <Switch>
-          <Route
-            path="*/tasks/:taskId"
-            render={props => (
-              <EditTask
-                {...props}
-                bookingId={bookingId}
-                onDeleteTask={onDeleteTask}
-              />
-            )}
-          />
-        </Switch>
+        <EditTask taskId={taskId} onDeleteTask={onDeleteTask} />
       </TaskDrawer>
     </Drawer>
   );
 };
 
-export default withRouter(Component);
+export default Component;
