@@ -58,8 +58,11 @@ const Routes = () => {
           />
           <AuthenticatedRoute
             freelancerRoute
-            path="/applications/:applicationId/proposals"
             component={Proposals}
+            path={[
+              "/applications/:applicationId/proposals/new",
+              "/applications/:applicationId/proposals/:proposalId",
+            ]}
           />
           <AuthenticatedRoute
             path="/projects/:projectId/proposals/:bookingId"

@@ -20,6 +20,7 @@ const RejectProposalModal = ({
   onClose,
   specialist,
   booking,
+  onReject,
   notifications
 }) => (
   <Modal isOpen={isOpen} onClose={onClose}>
@@ -40,6 +41,10 @@ const RejectProposalModal = ({
                       comment: values.comment
                     }
                   });
+
+                  if (onReject) {
+                    onReject()
+                  }
 
                   notifications.notify(`
                     ${specialist.firstName}'s application has been rejected

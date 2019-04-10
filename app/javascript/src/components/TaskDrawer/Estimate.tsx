@@ -46,7 +46,7 @@ export default ({ task, isClient, onClick, onClose, isOpen, onChange }) => {
 
   const inputAsFloat = parseFloat(inputValue)
   const estimateProvided = inputValue && inputAsFloat > 0;
-  const earnings = estimateProvided ? calcEarnings(inputAsFloat, "35.00") : null;
+  const earnings = estimateProvided ? calcEarnings(inputAsFloat, task.booking.rate) : null;
 
   const handleSave = popover => () => {
     popover.close();
@@ -92,7 +92,7 @@ export default ({ task, isClient, onClick, onClose, isOpen, onChange }) => {
               onChange={e => setInputValue(e.target.value)}
               label="How many hours do you think this task will take?"
               description={
-                earnings && `You would earn ${currency(earnings)} for this task`
+                earnings && `You would earn ${currency(earnings, task.booking.currency)} for this task`
               }
             />
           </Padding>

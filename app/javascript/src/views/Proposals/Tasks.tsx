@@ -1,8 +1,10 @@
 import * as React from "react";
+import { matchPath } from "react-router";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
 import Heading from "../../components/Heading";
+import NewTask from "../../components/NewTask";
 import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
 import { Padding } from "../../components/Spacing";
@@ -10,7 +12,7 @@ import graphqlClient from "../../graphqlClient";
 import FETCH_TASK from "./fetchTask.graphql";
 import FETCH_BOOKING from "./fetchBooking.graphql";
 
-const Tasks = ({ application, match, booking, history }) => {
+const Tasks = ({ application, match, booking, location, history }) => {
   const onSelectTask = task => {
     history.push(`${match.url}/${task.id}`);
   };
@@ -18,46 +20,50 @@ const Tasks = ({ application, match, booking, history }) => {
   const bookingQuery = {
     query: FETCH_BOOKING,
     variables: {
-      id: match.params.bookingId
-    }
-  }
+      id: match.params.bookingId,
+    },
+  };
 
   const handleNewTask = task => {
     graphqlClient.cache.writeQuery({
       query: FETCH_TASK,
       variables: {
-        id: task.id
+        id: task.id,
       },
       data: {
-        task
-      }
-    })
+        task,
+      },
+    });
 
     const newData = graphqlClient.cache.readQuery(bookingQuery);
     newData.booking.tasks.push(task);
     graphqlClient.cache.writeQuery({
       ...bookingQuery,
       data: newData,
-    })
+    });
 
-    history.push(`${match.url}/${task.id}`)
+    history.push(`${match.url}/${task.id}`);
   };
 
   const handleDeleteTask = task => {
     history.push(match.url);
     const newData = graphqlClient.cache.readQuery(bookingQuery);
     newData.booking.tasks = booking.tasks.filter(t => {
-      return t.id !== task.id
-    })
+      return t.id !== task.id;
+    });
     graphqlClient.cache.writeQuery({
       ...bookingQuery,
       data: newData,
-    })
-  }
+    });
+  };
+
+  const taskMatch: any = matchPath(location.pathname, {
+    path: "*/tasks/:taskId"
+  })
 
   const handleContinue = () => {
-    history.push("send")
-  }
+    history.push("send");
+  };
 
   return (
     <Card>
@@ -73,21 +79,27 @@ const Tasks = ({ application, match, booking, history }) => {
         </Text>
       </Padding>
       <TaskList
+        hideStatus
         tasks={booking.tasks}
         onClickTask={onSelectTask}
+        lastRow={
+          <NewTask onCreate={handleNewTask} bookingId={booking.airtableId} />
+        }
       />
-      {/* <TaskDrawer
-        closeURL={match.url}
-        bookingId={match.params.bookingId}
+      <TaskDrawer
+        onClose={() => history.push(match.url)}
+        taskId={taskMatch ? taskMatch.params.taskId : null}
         onDeleteTask={handleDeleteTask}
-      /> */}
+      />
       {booking.tasks.length > 0 && (
         <Padding size="l">
-          <Button styling="primary" onClick={handleContinue}>Continue</Button>
+          <Button styling="primary" onClick={handleContinue}>
+            Continue
+          </Button>
         </Padding>
       )}
     </Card>
   );
 };
 
-export default Tasks
+export default Tasks;
