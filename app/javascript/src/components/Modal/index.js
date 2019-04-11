@@ -14,7 +14,13 @@ import ModalHeader from "./ModalHeader";
 import ModalBody from "./ModalBody";
 import ModalFooter from "./ModalFooter";
 
-const modalRoot = document.getElementById("js-modal-root");
+let modalRoot = document.getElementById("js-modal-root");
+if (!modalRoot) {
+  modalRoot = document.createElement("div")
+  modalRoot.id = "js-modal-root"
+  document.body.appendChild(modalRoot);
+}
+
 let previousOverflow;
 
 const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentProps }) => {

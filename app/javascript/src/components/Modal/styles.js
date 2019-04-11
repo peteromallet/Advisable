@@ -90,21 +90,25 @@ export const ModalContainer = styled.div`
   }
 `;
 
-export const ModalBody = styled.div`
-  flex-grow: 1;
-  display: flex;
-  overflow-y: hidden;
-`;
-
 export const ModalHeader = styled.div`
+  display: flex;
+  flex-shrink: 0;
   padding: 25px 50px 25px 30px;
   border-bottom: 1px solid #e4e5eb;
+`;
+
+
+export const ModalBody = styled.div`
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
 `;
 
 export const ModalFooter = styled.div`
   padding: 25px 30px;
   border-top: 1px solid #e4e5eb;
 `;
+
 export const CloseModal = styled.button`
   top: 15px;
   z-index: 2;
