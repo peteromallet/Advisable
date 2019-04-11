@@ -76,7 +76,7 @@ const statusActions = {
         />
         <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
-            styling="primary"
+            styling="green"
             onClick={() => setModal(CREATE_BOOKING_MODAL)}
           >
             Start working with {application.specialist.firstName}
