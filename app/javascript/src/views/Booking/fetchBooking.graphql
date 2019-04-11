@@ -3,6 +3,7 @@ query booking($id: ID!) {
     id
     status
     rate
+    currency
     tasks {
       id
       airtableId
@@ -21,7 +22,14 @@ query booking($id: ID!) {
       specialist {
         id
         name
+        image {
+          url
+        }
         firstName
+        city
+        country {
+          name
+        }
       }
     }
   }

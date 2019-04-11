@@ -45,6 +45,7 @@ const Send = ({ booking, history, sendProposal }) => {
               <Padding bottom="l">
                 <TextField
                   multiline
+                  autoHeight
                   name="proposalComment"
                   onBlur={formik.handleBlur}
                   value={formik.values.proposalComment}

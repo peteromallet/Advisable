@@ -14,7 +14,6 @@ const Component = (props: Props) => {
   const handleDelete = popover => async () => {
     props.onDelete(props.task);
     popover.close();
-    console.log(props.task)
     await props.deleteTask({
       variables: {
         input: {

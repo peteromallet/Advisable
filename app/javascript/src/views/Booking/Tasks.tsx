@@ -10,7 +10,7 @@ import NoTasks from "./NoTasks";
 export default ({ tasks, firstName, onNewTask, bookingId, onSelectTask }) => {
   if (tasks.length === 0) {
     return (
-      <NoTasks tasks={tasks} firstName={firstName} onNewTask={onNewTask} />
+      <NoTasks tasks={tasks} firstName={firstName} onNewTask={onNewTask} bookingId={bookingId} />
     );
   }
 

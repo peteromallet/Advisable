@@ -37,7 +37,7 @@ const Rate = ({
     const response = await createProposal({
       variables: {
         input: {
-          ...values,
+          rate: parseFloat(values.rate),
           application: application.airtableId,
         },
       },
@@ -49,7 +49,7 @@ const Rate = ({
     const response = await updateProposal({
       variables: {
         input: {
-          ...values,
+          rate: parseFloat(values.rate),
           booking: booking.airtableId,
         },
       },

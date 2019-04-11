@@ -20,7 +20,7 @@ export default ({ value, ...props }) => {
     setRows(currentRows);
   };
 
-  React.useLayoutEffect(calculateRows, [ref, props.value]);
+  React.useLayoutEffect(calculateRows, [ref.current]);
 
   React.useLayoutEffect(() => {
     if (props.isFocused) {
@@ -29,6 +29,7 @@ export default ({ value, ...props }) => {
   }, [props.isFocused])
 
   const handleChange = e => {
+    calculateRows()
     props.onChange(e.target.value)
   }
   

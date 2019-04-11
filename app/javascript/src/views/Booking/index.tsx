@@ -17,6 +17,7 @@ import AttributeList from "../../components/AttributeList";
 import FETCH_BOOKING from "./fetchBooking.graphql";
 import FETCH_TASK from "./fetchTask.graphql";
 import Tasks from "./Tasks";
+import Sidebar from "./Sidebar";
 import { Location } from "history";
 import graphqlClient from "../../graphqlClient";
 
@@ -64,7 +65,6 @@ const Booking = ({ data, match, history, location }: Props) => {
 
     const newData = data;
     newData.booking.tasks.push(task);
-    console.log(newData);
     graphqlClient.cache.writeQuery({
       query: FETCH_BOOKING,
       data: newData,
@@ -100,25 +100,7 @@ const Booking = ({ data, match, history, location }: Props) => {
       />
       <Header />
       <Layout>
-        <Layout.Sidebar>
-          <Sticky top={98}>
-            <Padding bottom="l">
-              <Back to="/">Back</Back>
-            </Padding>
-            <Padding bottom="l">
-              <Avatar name="Thomas Cullen" size="l" />
-            </Padding>
-            <Padding bottom="l">
-              <Heading>Thomas Cullen</Heading>
-              <Text>Search Engine Optimization</Text>
-            </Padding>
-            <Padding bottom="xl">
-              <AttributeList>
-                <AttributeList.Item label="Hourly Rate" value="€64" />
-              </AttributeList>
-            </Padding>
-          </Sticky>
-        </Layout.Sidebar>
+        <Sidebar data={data} />
         <Layout.Main>
           <Tasks
             tasks={tasks}
