@@ -6,9 +6,10 @@ class Mutations::CreateBooking < Mutations::BaseMutation
 
   def resolve(application:)
     application = Application.find_by_airtable_id!(application)
-
+    booking = Bookings::Create.call(application: application)
+    
     {
-      booking: Bookings::Create.call(application: application)
+      booking: booking
     }
 
     rescue Service::Error => e

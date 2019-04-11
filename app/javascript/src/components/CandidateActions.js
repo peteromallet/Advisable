@@ -5,6 +5,7 @@ import Divider from "src/components/Divider";
 import useMobile from "src/utilities/useMobile";
 import ButtonGroup from "src/components/ButtonGroup";
 import RejectModal from "src/components/RejectModal";
+import CreateBookingModal from "./CreateBookingModal";
 import RequestReferences from "src/components/RequestReferences";
 import RequestIntroduction from "src/components/RequestIntroduction";
 import RejectProposalModal from "src/components/RejectProposalModal";
@@ -13,6 +14,7 @@ const REJECT_MODAL = "REJECT";
 const REQUEST_INTRODUCTION = "REQUEST_INTRODUCTION";
 const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
 const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
+const CREATE_BOOKING_MODAL = "CREATE_BOOKING_MODAL"
 
 const statusActions = {
   Applied: ({ application, stack, fullWidth }) => {
@@ -64,12 +66,19 @@ const statusActions = {
           isOpen={modal === REQUEST_REFERENCES_MODAL}
           onClose={() => setModal(null)}
         />
+        <CreateBookingModal
+          onClose={() => setModal(null)}
+          applicationId={application.airtableId}
+          isOpen={modal === CREATE_BOOKING_MODAL}
+          firstName={application.specialist.firstName}
+          onCreate={b => history.push(`/bookings/${b.airtableId}`)}
+        />
         <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
-            onClick={() => history.push(`applications/${application.id}/offer`)}
             styling="primary"
+            onClick={() => setModal(CREATE_BOOKING_MODAL)}
           >
-            Send Offer
+            Start working with {application.specialist.firstName}
           </Button>
           <Button onClick={() => setModal(REJECT_MODAL)}>
             Provide Feedback
