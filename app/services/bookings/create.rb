@@ -10,7 +10,10 @@ class Bookings::Create < ApplicationService
       status: "Accepted",
       rate: application.rate
     )
+
     if booking.save
+      booking.sync_to_airtable
+      Webhook.process(booking)
       return booking
     end
 
