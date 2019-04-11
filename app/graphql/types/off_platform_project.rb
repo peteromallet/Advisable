@@ -31,7 +31,7 @@ class Types::OffPlatformProject < Types::BaseType
   end
 
   def primary_skill
-    object.primary_skill || skills.first
+    object.primary_skill || skills.try(:last)
   end
 
   def skills
