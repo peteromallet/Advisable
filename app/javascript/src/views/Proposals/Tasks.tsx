@@ -58,8 +58,8 @@ const Tasks = ({ application, match, booking, location, history }) => {
   };
 
   const taskMatch: any = matchPath(location.pathname, {
-    path: "*/tasks/:taskId"
-  })
+    path: "*/tasks/:taskId",
+  });
 
   const handleContinue = () => {
     history.push("send");

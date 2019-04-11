@@ -4,7 +4,6 @@ import Icon from "../../components/Icon";
 import { NewTask, NewTaskIcon } from "./styles";
 import generateID from "../../utilities/generateID";
 import CREATE_TASK from "./createTask.graphql";
-import FETCH_TASK from "./fetchTask.graphql";
 
 const Component = ({ bookingId, onCreate, mutate }) => {
   const handleClick = async () => {
@@ -41,29 +40,6 @@ const Component = ({ bookingId, onCreate, mutate }) => {
           task,
         },
       },
-      // update: (proxy, { data: { createTask } }) => {
-      //   console.log("- update -", createTask)
-      //   const data = {
-      //     booking: {
-      //       id: bookingId,
-      //       __typename: "Booking",
-      //       task: createTask.task,
-      //     },
-      //   };
-
-      //   proxy.writeQuery({
-      //     query: FETCH_TASK,
-      //     options: {
-      //       variables: {
-      //         bookingId,
-      //         taskId: id,
-      //       },
-      //     },
-      //     data,
-      //   });
-
-      //   onCreate({ id });
-      // },
     });
 
     onCreate(task);

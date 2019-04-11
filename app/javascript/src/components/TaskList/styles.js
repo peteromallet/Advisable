@@ -21,7 +21,6 @@ export const Detail = styled.div`
   font-size: 13px;
   font-weight: 500;
   margin-right: 20px;
-  /* margin-top: 12px; */
   align-items: center;
   display: inline-flex;
   margin-left: -5px;
@@ -57,7 +56,7 @@ export const Task = styled(Row)`
 
   ${Status} {
     top: 50%;
-    right: 20px;
+    right: 30px;
     position: absolute;
     transform: translateY(-50%);
   }

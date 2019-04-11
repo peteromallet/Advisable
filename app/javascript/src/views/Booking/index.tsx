@@ -15,6 +15,7 @@ import { Padding } from "../../components/Spacing";
 import TaskDrawer from "../../components/TaskDrawer";
 import AttributeList from "../../components/AttributeList";
 import FETCH_BOOKING from "./fetchBooking.graphql";
+import FETCH_TASK from "./fetchTask.graphql";
 import Tasks from "./Tasks";
 import { Location } from "history";
 import graphqlClient from "../../graphqlClient";
@@ -39,11 +40,7 @@ const Booking = ({ data, match, history, location }: Props) => {
   const specialist = data.booking.application.specialist;
 
   const openTask = task => {
-    history.replace(`/bookings/${bookingID}/tasks/${task.airtableId}`);
-  };
-
-  const newTask = () => {
-    history.replace(`/bookings/${bookingID}/tasks/new`);
+    history.replace(`/bookings/${bookingID}/tasks/${task.id}`);
   };
 
   const closeTask = () => {
@@ -51,12 +48,23 @@ const Booking = ({ data, match, history, location }: Props) => {
   };
 
   const taskDrawerPath = matchPath(location.pathname, {
-    path: `${match.path}/tasks`
+    path: `${match.path}/tasks/:taskId`
   })
 
   const addNewTaskToCache = task => {
+    graphqlClient.cache.writeQuery({
+      query: FETCH_TASK,
+      variables: {
+        id: task.id,
+      },
+      data: {
+        task,
+      },
+    });
+
     const newData = data;
     newData.booking.tasks.push(task);
+    console.log(newData);
     graphqlClient.cache.writeQuery({
       query: FETCH_BOOKING,
       data: newData,
@@ -64,15 +72,32 @@ const Booking = ({ data, match, history, location }: Props) => {
         id: bookingID
       }
     })
+
+    history.replace(`/bookings/${bookingID}/tasks/${task.id}`);
   }
+  
+  const handleDeleteTask = task => {
+    history.push(match.url);
+    const newData = data
+    newData.booking.tasks = tasks.filter(t => {
+      return t.id !== task.id;
+    });
+    graphqlClient.cache.writeQuery({
+      query: FETCH_BOOKING,
+      data: newData,
+      variables: {
+        id: bookingID
+      }
+    });
+  };
 
   return (
     <>
-      {/* <TaskDrawer
-        isOpen={Boolean(taskDrawerPath)}
+      <TaskDrawer
         onClose={() => closeTask()}
-        onCreate={addNewTaskToCache}
-      /> */}
+        onDeleteTask={handleDeleteTask}
+        taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
+      />
       <Header />
       <Layout>
         <Layout.Sidebar>
@@ -97,8 +122,9 @@ const Booking = ({ data, match, history, location }: Props) => {
         <Layout.Main>
           <Tasks
             tasks={tasks}
-            onNewTask={newTask}
+            onNewTask={addNewTaskToCache}
             onSelectTask={openTask}
+            bookingId={bookingID}
             firstName={specialist.firstName}
           />
         </Layout.Main>
