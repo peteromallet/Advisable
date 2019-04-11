@@ -1,8 +1,0 @@
-mutation acceptBooking($id: ID!) {
-  acceptBooking(id: $id) {
-    booking {
-      id
-      status
-    }
-  }
-}

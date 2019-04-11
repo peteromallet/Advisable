@@ -9,7 +9,6 @@ import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
 import Projects from "./views/Projects";
 import Proposals from "./views/Proposals";
-import ViewOffer from "./views/ViewOffer";
 import References from "./views/References";
 import JobListing from "./views/JobListing";
 import Applications from "./views/Applications";
@@ -43,7 +42,6 @@ const Routes = () => {
           <Route path="/signup/:id" component={Signup} />
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
           <AuthenticatedRoute path="/bookings/:bookingID" component={Booking} />
-          <Route path="/offers/:bookingID" component={ViewOffer} />
           <Route
             path="/clients/:userID/availability"
             component={Availability}
