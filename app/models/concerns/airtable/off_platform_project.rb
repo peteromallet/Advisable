@@ -20,6 +20,12 @@ class Airtable::OffPlatformProject < Airtable::Base
   sync_data do |off_platform_project|
     pull_specialist(off_platform_project)
     off_platform_project.confidential = fields['Okay with naming client'] != 'Yes'
+
+    fields['Skills Required'].each do |skill_id|
+      skill = ::Skill.find_by_airtable_id(skill_id)
+      skill = Airtable::Skill.find(skill_id) unless skill.present?
+      off_platform_project.project_skills.find_or_create_by(skill: skill)
+    end
   end
 
   push_data do |project|
