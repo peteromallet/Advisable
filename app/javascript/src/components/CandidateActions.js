@@ -2,6 +2,7 @@
 import React, { Fragment, useState } from "react";
 import Button from "src/components/Button";
 import Divider from "src/components/Divider";
+import { Link } from "react-router-dom";
 import useMobile from "src/utilities/useMobile";
 import ButtonGroup from "src/components/ButtonGroup";
 import RejectModal from "src/components/RejectModal";
@@ -92,7 +93,7 @@ const statusActions = {
       </Fragment>
     );
   },
-  Proposed: ({ application, history, stack, fullWidth }) => {
+  Proposed: ({ projectId, application, history, stack, fullWidth }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
     const { proposal } = application;
@@ -114,8 +115,9 @@ const statusActions = {
         />
         <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
+            as={Link}
             styling="primary"
-            onClick={() => history.push(`proposals/${proposal.id}`)}
+            to={`/projects/${projectId}/applications/${application.airtableId}/proposal`}
           >
             View Proposal
           </Button>
@@ -133,7 +135,7 @@ const statusActions = {
   }
 };
 
-export default ({ application, history, stack, fullWidth  }) => {
+export default ({ projectId, application, history, stack, fullWidth  }) => {
   const actions = statusActions[application.status];
-  return actions ? actions({ application, history, stack, fullWidth  }) : null;
+  return actions ? actions({ projectId, application, history, stack, fullWidth  }) : null;
 };

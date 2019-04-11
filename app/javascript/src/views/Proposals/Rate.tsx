@@ -69,7 +69,7 @@ const Rate = ({
   };
 
   const initialValues = {
-    rate: booking ? booking.rate : null,
+    rate: get(booking, "rate") || application.rate || "",
   };
 
   const calculateRate = amount => {

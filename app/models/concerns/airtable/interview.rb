@@ -7,6 +7,6 @@ class Airtable::Interview < Airtable::Base
   sync_association "Application", to: :application
 
   sync_data do |interview|
-    interview.user = interview.application.project.user
+    interview.user = interview.application.try(:project).try(:user)
   end
 end

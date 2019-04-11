@@ -9,12 +9,12 @@ import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
 import Projects from "./views/Projects";
 import Proposals from "./views/Proposals";
+import Applicant from "./views/Applicant";
 import References from "./views/References";
 import JobListing from "./views/JobListing";
 import Applications from "./views/Applications";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
-import ViewProposal from "./views/ViewProposal";
 import ApplicationFlow from "./views/ApplicationFlow";
 import InterviewRequest from "./views/InterviewRequest";
 import UpdateProfile from "./views/UpdateProfile";
@@ -63,8 +63,8 @@ const Routes = () => {
             ]}
           />
           <AuthenticatedRoute
-            path="/projects/:projectId/proposals/:bookingId"
-            component={ViewProposal}
+            path="/projects/:projectID/applications/:applicationID"
+            component={Applicant}
           />
           <Route path="/projects/:projectID" component={Project} />
           <AuthenticatedRoute path="/projects" component={Projects} />
