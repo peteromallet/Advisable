@@ -11,7 +11,6 @@ class Airtable::Booking < Airtable::Base
   sync_column 'Decline Comment', to: :decline_comment
   sync_column 'Proposal Comment', to: :proposal_comment
   sync_column 'Client Decline Comment', to: :client_decline_comment
-  sync_column 'Rejected Reason', to: :rejection_reason
 
   sync_data do |booking|
     booking.deliverables = JSON.parse(fields['Deliverables']) if fields['Deliverables']
