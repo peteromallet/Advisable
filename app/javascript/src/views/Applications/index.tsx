@@ -18,7 +18,6 @@ const Applications = ({ history }) => {
       {({ loading, data }) => (
         <React.Fragment>
           <Header />
-          {console.log(data)}
           <Layout>
             <Layout.Main>
               <Padding bottom="xl">

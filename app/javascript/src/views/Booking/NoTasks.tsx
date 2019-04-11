@@ -8,10 +8,11 @@ import illustration from "./no_tasks.png";
 interface Props {
   firstName: string;
   tasks: any;
+  bookingId: string;
   onNewTask: (e: React.SyntheticEvent) => void;
 }
 
-export default ({ firstName, tasks, onNewTask }: Props) => {
+export default ({ firstName, tasks, onNewTask, bookingId }: Props) => {
   if (!tasks || tasks.length > 0) return null;
 
   return (
@@ -35,7 +36,7 @@ export default ({ firstName, tasks, onNewTask }: Props) => {
             to {firstName}
           </Text>
         </Padding>
-        <NewTask onClick={onNewTask} />
+        <NewTask onCreate={onNewTask} bookingId={bookingId} />
       </Padding>
     </Card>
   );
