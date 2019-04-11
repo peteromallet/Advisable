@@ -5,8 +5,8 @@ class Mutations::DeleteTask < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def authorized?(**args)
-    booking = Booking.find_by_airtable_id!(args[:booking])
-    policy = BookingPolicy.new(context[:current_user], booking)
+    task = Task.find_by_uid!(args[:task])
+    policy = BookingPolicy.new(context[:current_user], task.booking)
     return true if policy.is_specialist_or_client
     return false, { errors: [{ code: "not_authorized" }] }
   end
