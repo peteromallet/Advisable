@@ -30,7 +30,7 @@ const RejectProposalModal = ({
   isOpen,
   onClose,
   specialist,
-  booking,
+  bookingId,
   onReject,
   mutate,
   notifications,
@@ -42,7 +42,7 @@ const RejectProposalModal = ({
         await mutate({
           variables: {
             input: {
-              id: booking.id,
+              id: bookingId,
               reason: values.reason,
               comment: values.comment,
             },

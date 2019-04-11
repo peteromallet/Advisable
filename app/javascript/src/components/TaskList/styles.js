@@ -39,7 +39,7 @@ export const Detail = styled.div`
 export const Row = styled.div`
   margin-top: -1px;
   user-select: none;
-  padding: 15px 20px;
+  padding: 15px 30px;
   position: relative;
   border-top: 1px solid #eceff8;
   border-bottom: 1px solid #eceff8;

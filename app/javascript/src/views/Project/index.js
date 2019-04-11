@@ -3,7 +3,6 @@ import { Query } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 import Loading from "src/components/Loading";
-import Applicant from "../Applicant";
 import Candidates from "../Candidates";
 import NotFound from "../NotFound";
 import InterviewAvailability from "../InterviewAvailability";
@@ -74,10 +73,6 @@ const Project = ({ location, match: { path, params } }) => {
 
         return (
           <Switch>
-            <Route
-              path={`${path}/applications/:applicationID`}
-              component={Applicant}
-            />
             <Route
               path={`${path}/interviews/:interviewID/availability`}
               component={InterviewAvailability}

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { get } from "lodash";
+import { Route } from "react-router-dom";
 import Sticky from "react-stickynode";
 import Text from "../../components/Text";
 import Avatar from "../../components/Avatar";
@@ -13,8 +14,9 @@ import FeaturedBadge from "../../components/FeaturedBadge";
 import AttributeList from "../../components/AttributeList";
 import CandidateActions from "../../components/CandidateActions";
 import { useMobile } from "../../components/Breakpoint";
+import ProposalActions from "./ProposalActions";
 
-export default ({ data, history }) => {
+export default ({ data, history, match }) => {
   const isMobile = useMobile();
   const project = data.project;
   const application = project.application;
@@ -69,11 +71,28 @@ export default ({ data, history }) => {
             )}
           </AttributeList>
           <Padding top="xl" bottom="xl">
-            <CandidateActions
-              stack
-              fullWidth
-              application={application}
-              history={history}
+            <Route
+              path={match.path}
+              exact
+              render={() => (
+                <CandidateActions
+                  stack
+                  fullWidth
+                  projectId={data.project.airtableId}
+                  application={application}
+                  history={history}
+                />
+              )}
+            />
+            <Route
+              path={`${match.path}/proposal`}
+              exact
+              render={() => (
+                <ProposalActions
+                  specialist={specialist}
+                  bookingId={application.proposal.airtableId}
+                />
+              )}
             />
           </Padding>
         </FadeIn>
