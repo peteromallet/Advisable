@@ -7,7 +7,7 @@ import Manage from "./Manage";
 import Loading from "./Loading";
 import FETCH_DATA from "./fetchData.graphql";
 
-const ActiveTalent = ({ data, match, history }) => {
+const ActiveTalent = ({ data, history }) => {
   const handleClick = application => {
     history.push(`/manage/${application.airtableId}`);
   };

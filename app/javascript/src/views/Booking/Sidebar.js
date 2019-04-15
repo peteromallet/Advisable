@@ -12,8 +12,7 @@ import { useMobile } from "../../components/Breakpoint";
 
 export default ({ data }) => {
   const isMobile = useMobile();
-  const booking = data.booking
-  const application = booking.application;
+  const application = data.application;
   const project = application.project;
   const specialist = application.specialist;
 
@@ -38,7 +37,7 @@ export default ({ data }) => {
           <AttributeList>
             <AttributeList.Item
               label="Hourly Rate"
-              value={currency(booking.rate, booking.currency)}
+              value={currency(application.rate, project.currency)}
             />
           </AttributeList>
         </FadeIn>

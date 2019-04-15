@@ -7,10 +7,10 @@ import NewTask from "../../components/NewTask";
 import { Padding } from "../../components/Spacing";
 import NoTasks from "./NoTasks";
 
-export default ({ tasks, firstName, onNewTask, bookingId, onSelectTask }) => {
+export default ({ tasks, firstName, onNewTask, application, onSelectTask }) => {
   if (tasks.length === 0) {
     return (
-      <NoTasks tasks={tasks} firstName={firstName} onNewTask={onNewTask} bookingId={bookingId} />
+      <NoTasks tasks={tasks} firstName={firstName} onNewTask={onNewTask} application={application} />
     );
   }
 
@@ -25,7 +25,7 @@ export default ({ tasks, firstName, onNewTask, bookingId, onSelectTask }) => {
           tasks={tasks}
           onClickTask={onSelectTask}
           lastRow={
-            <NewTask onCreate={onNewTask} bookingId={bookingId} />
+            <NewTask onCreate={onNewTask} application={application} />
           }
         />
       </Padding>
