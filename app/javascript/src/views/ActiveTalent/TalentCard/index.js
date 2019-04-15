@@ -7,6 +7,7 @@ import Status from "../../../components/Status";
 import Avatar from "../../../components/Avatar";
 import Heading from "../../../components/Heading";
 import { Padding } from "../../../components/Spacing";
+import pluralize from "../../../utilities/pluralize";
 
 const Component = ({ onClick, application }) => {
   return (
@@ -20,7 +21,7 @@ const Component = ({ onClick, application }) => {
           <Padding bottom="m">
             <Text size="s">{application.project.primarySkill}</Text>
           </Padding>
-          <Status>2 Tasks</Status>
+          <Status>{pluralize(application.tasks.length, "Task", "Tasks")}</Status>
         </Padding>
       </Card>
     </TalentCard>

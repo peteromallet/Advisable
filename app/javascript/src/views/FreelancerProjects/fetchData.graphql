@@ -5,6 +5,9 @@
       applications(status:["Working"]) {
         id
         airtableId
+        tasks {
+          id
+        }
       	project {
           primarySkill
           user {
