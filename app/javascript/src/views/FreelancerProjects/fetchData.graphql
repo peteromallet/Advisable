@@ -1,0 +1,17 @@
+{
+  viewer {
+    ... on Specialist {
+      id
+      applications(status:["Working"]) {
+        id
+        airtableId
+      	project {
+          primarySkill
+          user {
+            companyName
+          }
+        }
+      }
+    }
+  }
+}
