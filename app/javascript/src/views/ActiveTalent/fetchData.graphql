@@ -9,9 +9,11 @@
           id
         }
       	project {
+          id
           primarySkill
         }
         specialist {
+          id
           name
           image {
             url

@@ -1,9 +1,9 @@
-query booking($id: ID!) {
-  booking(id: $id) {
+query application($id: ID!) {
+  application(id: $id) {
     id
     status
+    airtableId
     rate
-    currency
     tasks {
       id
       airtableId
@@ -13,23 +13,21 @@ query booking($id: ID!) {
       estimate
       createdAt
     }
-    application {
+    project {
       id
-      project {
-        id
-        primarySkill
+      currency
+      primarySkill
+    }
+    specialist {
+      id
+      name
+      image {
+        url
       }
-      specialist {
-        id
+      firstName
+      city
+      country {
         name
-        image {
-          url
-        }
-        firstName
-        city
-        country {
-          name
-        }
       }
     }
   }

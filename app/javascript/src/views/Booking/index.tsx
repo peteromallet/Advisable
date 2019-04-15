@@ -1,19 +1,12 @@
 import * as React from "react";
-import Sticky from "react-stickynode";
 import { graphql } from "react-apollo";
 import { match } from "react-router";
 import { matchPath } from "react-router-dom";
-import Back from "../../components/Back";
-import Text from "../../components/Text";
 import NotFound from "../../views/NotFound";
 import Header from "../../components/Header";
 import Layout from "../../components/Layout";
-import Avatar from "../../components/Avatar";
-import Heading from "../../components/Heading";
 import Loading from "../../components/Loading";
-import { Padding } from "../../components/Spacing";
 import TaskDrawer from "../../components/TaskDrawer";
-import AttributeList from "../../components/AttributeList";
 import FETCH_BOOKING from "./fetchBooking.graphql";
 import FETCH_TASK from "./fetchTask.graphql";
 import Tasks from "./Tasks";
@@ -22,7 +15,7 @@ import { Location } from "history";
 import graphqlClient from "../../graphqlClient";
 
 interface Params {
-  bookingID: string;
+  applicationId: string;
 }
 
 interface Props {
@@ -34,14 +27,14 @@ interface Props {
 
 const Booking = ({ data, match, history, location }: Props) => {
   if (data.loading) return <Loading />;
-  if (!data.booking) return <NotFound />;
+  if (!data.application) return <NotFound />;
 
-  const { bookingID } = match.params;
-  const tasks = data.booking.tasks;
-  const specialist = data.booking.application.specialist;
+  const { applicationId } = match.params;
+  const tasks = data.application.tasks;
+  const specialist = data.application.specialist;
 
   const openTask = task => {
-    history.replace(`/bookings/${bookingID}/tasks/${task.id}`);
+    history.replace(`/manage/${applicationId}/tasks/${task.id}`);
   };
 
   const closeTask = () => {
@@ -64,16 +57,16 @@ const Booking = ({ data, match, history, location }: Props) => {
     });
 
     const newData = data;
-    newData.booking.tasks.push(task);
+    newData.application.tasks.push(task);
     graphqlClient.cache.writeQuery({
       query: FETCH_BOOKING,
       data: newData,
       variables: {
-        id: bookingID
+        id: applicationId
       }
     })
 
-    history.replace(`/bookings/${bookingID}/tasks/${task.id}`);
+    history.replace(`/manage/${applicationId}/tasks/${task.id}`);
   }
   
   const handleDeleteTask = task => {
@@ -86,7 +79,7 @@ const Booking = ({ data, match, history, location }: Props) => {
       query: FETCH_BOOKING,
       data: newData,
       variables: {
-        id: bookingID
+        id: applicationId
       }
     });
   };
@@ -106,7 +99,7 @@ const Booking = ({ data, match, history, location }: Props) => {
             tasks={tasks}
             onNewTask={addNewTaskToCache}
             onSelectTask={openTask}
-            bookingId={bookingID}
+            application={data.application}
             firstName={specialist.firstName}
           />
         </Layout.Main>
@@ -118,7 +111,7 @@ const Booking = ({ data, match, history, location }: Props) => {
 export default graphql(FETCH_BOOKING, {
   options: (props: { match: match<Params> }) => ({
     variables: {
-      id: props.match.params.bookingID,
+      id: props.match.params.applicationId,
     },
   }),
 })(Booking);
