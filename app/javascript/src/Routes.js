@@ -12,6 +12,7 @@ import Proposals from "./views/Proposals";
 import Applicant from "./views/Applicant";
 import References from "./views/References";
 import JobListing from "./views/JobListing";
+import ActiveTalent from "./views/ActiveTalent";
 import Applications from "./views/Applications";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
@@ -41,7 +42,6 @@ const Routes = () => {
           />
           <Route path="/signup/:id" component={Signup} />
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
-          <AuthenticatedRoute path="/bookings/:bookingID" component={Booking} />
           <Route
             path="/clients/:userID/availability"
             component={Availability}
@@ -54,6 +54,8 @@ const Routes = () => {
             path="/interview_request/:interviewID"
             component={InterviewRequest}
           />
+          <AuthenticatedRoute path="/manage/:applicationId" component={Booking} />
+          <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
           <AuthenticatedRoute
             freelancerRoute
             component={Proposals}

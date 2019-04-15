@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :projects
   has_many :interviews
+  has_many :applications, through: :projects
   has_one :client_user
   has_one :client, through: :client_user
   belongs_to :country, required: false
