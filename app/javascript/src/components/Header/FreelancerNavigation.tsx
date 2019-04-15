@@ -24,6 +24,7 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
                 <Icon icon="x" />
               </CloseNav>
               <NavItem to="/applications">Applications</NavItem>
+              <NavItem to="/clients">Active Projects</NavItem>
               <NavItem to="/profile">Profile</NavItem>
 
               {isMobile && (
