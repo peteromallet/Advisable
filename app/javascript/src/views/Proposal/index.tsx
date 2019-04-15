@@ -1,5 +1,4 @@
 import * as React from "react";
-import { get } from "lodash";
 import { compose, graphql } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Header from "../../components/Header";
@@ -12,12 +11,11 @@ import Sidebar from "./Sidebar";
 import Loading from "./Loading";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 
-const Proposals = ({ fetchApplication, fetchBooking }) => {
-  if (fetchApplication.loading || (fetchBooking && fetchBooking.loading)) {
+const Proposals = ({ fetchApplication }) => {
+  if (fetchApplication.loading) {
     return <Loading />;
   }
 
-  const booking = get(fetchBooking, "booking");
   const application = fetchApplication.application;
   const urlPrefix = `/applications/${application.airtableId}/proposal`;
 
@@ -25,32 +23,32 @@ const Proposals = ({ fetchApplication, fetchBooking }) => {
     <>
       <Header />
       <Layout>
-        <Sidebar booking={booking} application={application} />
+        <Sidebar application={application} />
         <Layout.Main>
           <Switch>
             <Route
               exact
               path={urlPrefix}
               render={props => (
-                <Rate booking={booking} application={application} {...props} />
+                <Rate application={application} {...props} />
               )}
             />
             <Route
               path={`${urlPrefix}/tasks`}
               render={props => (
-                <Tasks booking={booking} application={application} {...props} />
+                <Tasks application={application} {...props} />
               )}
             />
             <Route
               path={`${urlPrefix}/send`}
               render={props => (
-                <Send booking={booking} application={application} {...props} />
+                <Send application={application} {...props} />
               )}
             />
             <Route
               path={`${urlPrefix}/sent`}
               render={props => (
-                <Sent booking={booking} application={application} {...props} />
+                <Sent application={application} {...props} />
               )}
             />
             <Route render={() => <Redirect to={urlPrefix} />} />

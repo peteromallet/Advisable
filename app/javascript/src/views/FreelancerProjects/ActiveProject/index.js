@@ -6,6 +6,7 @@ import Text from "../../../components/Text";
 import Status from "../../../components/Status";
 import Heading from "../../../components/Heading";
 import { Padding } from "../../../components/Spacing";
+import pluralize from "../../../utilities/pluralize";
 
 const Component = ({ onClick, application }) => {
   return (
@@ -16,7 +17,9 @@ const Component = ({ onClick, application }) => {
           <Padding bottom="m">
             <Text size="s">{application.project.user.companyName}</Text>
           </Padding>
-          <Status>2 Tasks</Status>
+          <Status>
+            {pluralize(application.tasks.length, "Task", "Tasks")}
+          </Status>
         </Padding>
       </Card>
     </ActiveProject>
