@@ -62,11 +62,6 @@ const Routes = () => {
           <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
           <AuthenticatedRoute
             freelancerRoute
-            component={Proposal}
-            path={"/applications/:applicationId/proposal"}
-          />
-          <AuthenticatedRoute
-            freelancerRoute
             path="/clients"
             component={FreelancerProjects}
           />
@@ -81,8 +76,15 @@ const Routes = () => {
             path="/invites/:applicationId/apply"
             component={ApplicationFlow}
           />
+          
+          <AuthenticatedRoute
+            freelancerRoute
+            component={Proposal}
+            path={"/applications/:applicationId/proposal"}
+          />
 
           <AuthenticatedRoute
+            exact
             freelancerRoute
             path="/applications"
             component={Applications}
