@@ -28,6 +28,7 @@ query {
         status
         appliedAt
         project {
+          id
           primarySkill
           user {
             companyName
