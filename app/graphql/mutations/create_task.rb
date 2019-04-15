@@ -1,5 +1,5 @@
 class Mutations::CreateTask < Mutations::BaseMutation
-  argument :booking, ID, required: true
+  argument :application, ID, required: true
   argument :id, String, required: false
   argument :name, String, required: false
   argument :due_date, String, required: false
@@ -9,19 +9,19 @@ class Mutations::CreateTask < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def authorized?(**args)
-    booking = Booking.find_by_airtable_id!(args[:booking])
-    policy = BookingPolicy.new(context[:current_user], booking)
+    application = Application.find_by_airtable_id!(args[:application])
+    policy = ApplicationPolicy.new(context[:current_user], application)
     return true if policy.is_specialist_or_client
     return false, { errors: [{ code: "not_authorized" }] }
   end
 
   def resolve(**args)
-    booking = Booking.find_by_airtable_id!(args[:booking])
+    application = Application.find_by_airtable_id!(args[:application])
 
     {
       task: Tasks::Create.call(
-        booking: booking,
-        attributes: args.except(:booking, :id).merge({
+        application: application,
+        attributes: args.except(:application, :id).merge({
           uid: args[:id]
         })
       )

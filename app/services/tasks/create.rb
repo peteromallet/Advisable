@@ -1,8 +1,8 @@
 class Tasks::Create < ApplicationService
   attr_reader :task
 
-  def initialize(booking:, attributes:)
-    @task = booking.tasks.new(attributes.merge({
+  def initialize(application:, attributes:)
+    @task = application.tasks.new(attributes.merge({
       stage: "Added"
     }))
   end

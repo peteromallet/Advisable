@@ -22,8 +22,17 @@ class Types::ApplicationType < Types::BaseType
   field :accepts_terms, Boolean, null: true
   field :has_more_projects, Boolean, null: false
   field :interview, Types::Interview, null: true
+ 
+  field :proposal_comment, String, null: true do
+    authorize :is_specialist_or_client
+  end
+
   field :previous_projects, [Types::PreviousProject], null: false do
     argument :fallback, Boolean, required: false
+  end
+
+  field :tasks, [Types::TaskType], null: true do
+    authorize :is_specialist_or_client
   end
 
   def applied_at

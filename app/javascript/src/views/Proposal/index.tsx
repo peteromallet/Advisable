@@ -10,8 +10,6 @@ import Sent from "./Sent";
 import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
 import Loading from "./Loading";
-import NewProposal from "./NewProposal";
-import FETCH_BOOKING from "./fetchBooking.graphql";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 
 const Proposals = ({ fetchApplication, fetchBooking }) => {
@@ -21,7 +19,7 @@ const Proposals = ({ fetchApplication, fetchBooking }) => {
 
   const booking = get(fetchBooking, "booking");
   const application = fetchApplication.application;
-  const urlPrefix = `/applications/${application.airtableId}/proposals`;
+  const urlPrefix = `/applications/${application.airtableId}/proposal`;
 
   return (
     <>
@@ -31,37 +29,31 @@ const Proposals = ({ fetchApplication, fetchBooking }) => {
         <Layout.Main>
           <Switch>
             <Route
-              path={`${urlPrefix}/new`}
-              render={props => (
-                <NewProposal application={application} {...props} />
-              )}
-            />
-            <Route
               exact
-              path={`${urlPrefix}/:bookingId`}
+              path={urlPrefix}
               render={props => (
                 <Rate booking={booking} application={application} {...props} />
               )}
             />
             <Route
-              path={`${urlPrefix}/:bookingId/tasks`}
+              path={`${urlPrefix}/tasks`}
               render={props => (
                 <Tasks booking={booking} application={application} {...props} />
               )}
             />
             <Route
-              path={`${urlPrefix}/:bookingId/send`}
+              path={`${urlPrefix}/send`}
               render={props => (
                 <Send booking={booking} application={application} {...props} />
               )}
             />
             <Route
-              path={`${urlPrefix}/:bookingId/sent`}
+              path={`${urlPrefix}/sent`}
               render={props => (
                 <Sent booking={booking} application={application} {...props} />
               )}
             />
-            <Route render={() => <Redirect to={`${urlPrefix}/new`} />} />
+            <Route render={() => <Redirect to={urlPrefix} />} />
           </Switch>
         </Layout.Main>
       </Layout>
@@ -77,16 +69,5 @@ export default compose(
         id: props.match.params.applicationId,
       },
     }),
-  }),
-  graphql(FETCH_BOOKING, {
-    name: "fetchBooking",
-    skip: props => !props.match.params.proposalId,
-    options: (props: any) => {
-      return {
-        variables: {
-          id: props.match.params.proposalId,
-        },
-      };
-    },
   })
 )(Proposals);

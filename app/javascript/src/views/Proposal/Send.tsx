@@ -9,12 +9,12 @@ import TextField from "../../components/TextField";
 import { Padding } from "../../components/Spacing";
 import SEND_PROPOSAL from "./sendProposal.graphql";
 
-const Send = ({ booking, history, sendProposal }) => {
+const Send = ({ application, history, sendProposal }) => {
   const handleSubmit = async values => {
-    const response = await sendProposal({
+    await sendProposal({
       variables: {
         input: {
-          booking: booking.airtableId,
+          application: application.airtableId,
           ...values
         }
       }
@@ -38,7 +38,7 @@ const Send = ({ booking, history, sendProposal }) => {
         </Padding>
         <Formik
           onSubmit={handleSubmit}
-          initialValues={{ proposalComment: booking.proposalComment || "" }}
+          initialValues={{ proposalComment: application.proposalComment || "" }}
         >
           {formik => (
             <Form>
