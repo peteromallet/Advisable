@@ -1,24 +1,22 @@
 # Service object that handles the action of submitting a proposal. This is
 # called from the sendProposal graphql mutation.
 class Proposals::Send < ApplicationService
-  attr_reader :booking, :comment
+  attr_reader :application, :comment
 
-  def initialize(booking:, comment:)
-    @booking = booking
+  def initialize(application:, comment:)
+    @application = application
     @comment = comment
   end
 
   def call
-    booking.proposal_comment = comment
-    booking.status = "Proposed"
-    if booking.save
-      booking.sync_to_airtable
-      booking.application.update_attributes(status: "Proposed")
-      booking.application.sync_to_airtable
+    application.proposal_comment = comment
+    application.status = "Proposed"
+    if application.save
+      application.sync_to_airtable
       WebhookEvent.trigger("proposals.sent")
-      return booking
+      return application
     else
-      raise Service::Error.new(booking.errors.full_messages.first)
+      raise Service::Error.new(application.errors.full_messages.first)
     end
   end
 end

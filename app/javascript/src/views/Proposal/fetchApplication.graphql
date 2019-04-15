@@ -4,9 +4,15 @@ query Application($id: ID!) {
     airtableId
     status
     rate
-    proposal {
+    proposalComment
+    tasks {
       id
       airtableId
+      name
+      stage
+      dueDate
+      description
+      estimate
     }
     project {
       id

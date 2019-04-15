@@ -12,64 +12,41 @@ import { Padding } from "../../components/Spacing";
 import currency, { currencySymbol } from "../../utilities/currency";
 import { ApplicationType } from "../../types";
 import { rateValidationSchema } from "./validationSchema";
-import CREATE_PROPOSAL from "./createProposal.graphql";
-import UPDATE_PROPOSAL from "./updateProposal.graphql";
+import UPDATE_APPLICATION from "./updateApplication.graphql";
 
 type Props = {
   history: any;
   booking: any;
   application: ApplicationType;
-  createProposal: (opts: any) => any;
-  fetchBooking: any;
-  updateProposal: (opt: any) => any;
+  updateApplication: (opt: any) => any;
 };
 
 const Rate = ({
   history,
-  booking,
   application,
-  createProposal,
-  updateProposal,
+  updateApplication,
 }: Props) => {
-  const isEditing = Boolean(booking);
-
-  const handleCreateProposal = async values => {
-    const response = await createProposal({
-      variables: {
-        input: {
-          rate: parseFloat(values.rate),
-          application: application.airtableId,
-        },
-      },
-    });
-    return response.data.createProposal;
-  };
-
-  const handleUpdateProposal = async values => {
-    const response = await updateProposal({
-      variables: {
-        input: {
-          rate: parseFloat(values.rate),
-          booking: booking.airtableId,
-        },
-      },
-    });
-    return response.data.updateProposal;
-  };
 
   const handleSubmit = async values => {
-    const { errors, booking } = isEditing
-      ? await handleUpdateProposal(values)
-      : await handleCreateProposal(values);
+    const response = await updateApplication({
+      variables: {
+        input: {
+          id: application.airtableId,
+          rate: parseFloat(values.rate),
+        },
+      },
+    });
+
+    const { errors, booking } = response.data.updateApplication
 
     if (!errors) {
-      const urlPrefix = `/applications/${application.airtableId}`;
-      history.push(`${urlPrefix}/proposals/${booking.airtableId}/tasks`);
+      const urlPrefix = `/applications/${application.airtableId}/proposal`;
+      history.push(`${urlPrefix}/tasks`);
     }
   };
 
   const initialValues = {
-    rate: get(booking, "rate") || application.rate || "",
+    rate: application.rate || "",
   };
 
   const calculateRate = amount => {
@@ -84,8 +61,8 @@ const Rate = ({
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
-        validationSchema={rateValidationSchema}
         isInitialValid={isInitialValid}
+        validationSchema={rateValidationSchema}
       >
         {formik => (
           <Form>
@@ -145,6 +122,5 @@ const Rate = ({
 };
 
 export default compose(
-  graphql(CREATE_PROPOSAL, { name: "createProposal" }),
-  graphql(UPDATE_PROPOSAL, { name: "updateProposal" }),
+  graphql(UPDATE_APPLICATION, { name: "updateApplication" }),
 )(Rate);

@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
   include UID
   include Airtable::Syncable
-  belongs_to :booking
+  belongs_to :application
 end

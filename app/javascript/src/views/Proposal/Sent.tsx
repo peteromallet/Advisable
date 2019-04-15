@@ -6,10 +6,8 @@ import Heading from "../../components/Heading";
 import { Padding } from "../../components/Spacing";
 import illustration from "./illustration.png";
 
-const Send = ({ application, booking }) => {
-  const proposalUrl = `/applications/${application.airtableId}/proposals/${
-    booking.airtableId
-  }`;
+const Send = ({ application }) => {
+  const proposalUrl = `/applications/${application.airtableId}/proposal`;
 
   return (
     <Card>

@@ -1,6 +1,6 @@
 mutation sendProposal($input: SendProposalInput!) {
   sendProposal(input: $input) {
-    booking {
+    application {
       id
       airtableId
       rate

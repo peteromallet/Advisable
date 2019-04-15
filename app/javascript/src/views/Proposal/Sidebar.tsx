@@ -1,6 +1,4 @@
-import { get } from "lodash";
 import * as React from "react";
-import { matchPath } from "react-router";
 import Text from "../../components/Text";
 import Back from "../../components/Back";
 import Steps from "../../components/Steps";
@@ -14,25 +12,16 @@ interface Props {
 }
 
 let SideBar = (props: any) => {
-  const { application, booking } = props;
+  const { application } = props;
 
-  const newPath = matchPath(location.pathname, {
-    path: "/applications/:applicationId/proposals/new",
-  });
+  const urlPrefix = `/applications/${application.airtableId}/proposal`;
+  const ratePath = urlPrefix;
+  const tasksPath = `${urlPrefix}/tasks`;
+  const sendPath = `${urlPrefix}/send`;
 
-  const editPath = matchPath<{ proposalId: string }>(location.pathname, {
-    path: "/applications/:applicationId/proposals/:proposalId",
-  });
-
-  const proposalId = get(editPath, "params.proposalId");
-  const urlPrefix = `/applications/${application.airtableId}/proposals`;
-  const ratePath = newPath ? `${urlPrefix}/new` : `${urlPrefix}/${proposalId}`;
-  const tasksPath = `${urlPrefix}/${proposalId}/tasks`;
-  const sendPath = `${urlPrefix}/${proposalId}/send`;
-
-  const hasRate = booking ? Boolean(booking.rate) : false;
-  const hasTasks = booking ? booking.tasks.length > 0 : false;
-  const isSent = booking ? booking.status === "Proposed" : false;
+  const hasRate = Boolean(application.rate);
+  const hasTasks = application.tasks.length > 0;
+  const isSent = application.status === "Proposed";
 
   return (
     <Layout.Sidebar>

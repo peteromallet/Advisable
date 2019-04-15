@@ -10,17 +10,17 @@ import TaskDrawer from "../../components/TaskDrawer";
 import { Padding } from "../../components/Spacing";
 import graphqlClient from "../../graphqlClient";
 import FETCH_TASK from "./fetchTask.graphql";
-import FETCH_BOOKING from "./fetchBooking.graphql";
+import FETCH_APPLICATION from "./fetchApplication.graphql";
 
-const Tasks = ({ application, match, booking, location, history }) => {
+const Tasks = ({ application, match, location, history }) => {
   const onSelectTask = task => {
     history.push(`${match.url}/${task.id}`);
   };
 
-  const bookingQuery = {
-    query: FETCH_BOOKING,
+  const applicationQuery = {
+    query: FETCH_APPLICATION,
     variables: {
-      id: match.params.bookingId,
+      id: application.airtableId,
     },
   };
 
@@ -35,10 +35,10 @@ const Tasks = ({ application, match, booking, location, history }) => {
       },
     });
 
-    const newData = graphqlClient.cache.readQuery(bookingQuery);
-    newData.booking.tasks.push(task);
+    const newData = graphqlClient.cache.readQuery(applicationQuery);
+    newData.application.tasks.push(task);
     graphqlClient.cache.writeQuery({
-      ...bookingQuery,
+      ...applicationQuery,
       data: newData,
     });
 
@@ -47,12 +47,12 @@ const Tasks = ({ application, match, booking, location, history }) => {
 
   const handleDeleteTask = task => {
     history.push(match.url);
-    const newData = graphqlClient.cache.readQuery(bookingQuery);
-    newData.booking.tasks = booking.tasks.filter(t => {
+    const newData = graphqlClient.cache.readQuery(applicationQuery);
+    newData.application.tasks = application.tasks.filter(t => {
       return t.id !== task.id;
     });
     graphqlClient.cache.writeQuery({
-      ...bookingQuery,
+      ...applicationQuery,
       data: newData,
     });
   };
@@ -80,10 +80,10 @@ const Tasks = ({ application, match, booking, location, history }) => {
       </Padding>
       <TaskList
         hideStatus
-        tasks={booking.tasks}
+        tasks={application.tasks}
         onClickTask={onSelectTask}
         lastRow={
-          <NewTask onCreate={handleNewTask} bookingId={booking.airtableId} />
+          <NewTask onCreate={handleNewTask} application={application} />
         }
       />
       <TaskDrawer
@@ -91,7 +91,7 @@ const Tasks = ({ application, match, booking, location, history }) => {
         taskId={taskMatch ? taskMatch.params.taskId : null}
         onDeleteTask={handleDeleteTask}
       />
-      {booking.tasks.length > 0 && (
+      {application.tasks.length > 0 && (
         <Padding size="l">
           <Button styling="primary" onClick={handleContinue}>
             Continue

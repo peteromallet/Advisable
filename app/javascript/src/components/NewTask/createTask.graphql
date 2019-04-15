@@ -9,7 +9,7 @@ mutation createTask($input: CreateTaskInput!) {
       description
       airtableId
       createdAt
-      booking {
+      application {
         id
       }
     }

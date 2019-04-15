@@ -6,7 +6,7 @@ class Mutations::DeleteTask < Mutations::BaseMutation
 
   def authorized?(**args)
     task = Task.find_by_uid!(args[:task])
-    policy = BookingPolicy.new(context[:current_user], task.booking)
+    policy = ApplicationPolicy.new(context[:current_user], task.application)
     return true if policy.is_specialist_or_client
     return false, { errors: [{ code: "not_authorized" }] }
   end

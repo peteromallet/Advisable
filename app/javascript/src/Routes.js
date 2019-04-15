@@ -8,7 +8,7 @@ import Login from "./views/Login";
 import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
 import Projects from "./views/Projects";
-import Proposals from "./views/Proposals";
+import Proposal from "./views/Proposal";
 import Applicant from "./views/Applicant";
 import References from "./views/References";
 import JobListing from "./views/JobListing";
@@ -62,11 +62,8 @@ const Routes = () => {
           <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
           <AuthenticatedRoute
             freelancerRoute
-            component={Proposals}
-            path={[
-              "/applications/:applicationId/proposals/new",
-              "/applications/:applicationId/proposals/:proposalId",
-            ]}
+            component={Proposal}
+            path={"/applications/:applicationId/proposal"}
           />
           <AuthenticatedRoute
             freelancerRoute

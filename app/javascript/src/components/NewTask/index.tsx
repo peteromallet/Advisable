@@ -5,7 +5,7 @@ import { NewTask, NewTaskIcon } from "./styles";
 import generateID from "../../utilities/generateID";
 import CREATE_TASK from "./createTask.graphql";
 
-const Component = ({ bookingId, onCreate, mutate }) => {
+const Component = ({ application, onCreate, mutate }) => {
   const handleClick = async () => {
     const id = generateID("tas");
 
@@ -14,9 +14,10 @@ const Component = ({ bookingId, onCreate, mutate }) => {
       id,
       airtableId: "",
       createdAt: "",
-      booking: {
-        __typename: "Booking",
-        id: bookingId,
+      application: {
+        __typename: "Application",
+        id: application.id,
+        airtableId: application.airtableId,
       },
       name: null,
       estimate: null,
@@ -28,7 +29,7 @@ const Component = ({ bookingId, onCreate, mutate }) => {
     mutate({
       variables: {
         input: {
-          booking: bookingId,
+          application: application.airtableId,
           id,
         },
       },

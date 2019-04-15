@@ -7,7 +7,7 @@ query task($id: ID!) {
     dueDate
     description
     estimate
-    booking {
+    application {
       rate
     }
   }

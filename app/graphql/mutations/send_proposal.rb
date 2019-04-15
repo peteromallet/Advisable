@@ -1,16 +1,23 @@
 class Mutations::SendProposal < Mutations::BaseMutation
-  argument :booking, ID, required: true
+  argument :application, ID, required: true
   argument :proposal_comment, String, required: true
 
-  field :booking, Types::Booking, null: true
+  field :application, Types::ApplicationType, null: true
   field :errors, [Types::Error], null: true
 
+  def authorized?(**args)
+    application = Application.find_by_airtable_id!(args[:application])
+    policy = ApplicationPolicy.new(context[:current_user], application)
+    return true if policy.is_specialist
+    return false, { errors: [{ code: "not_authorized" }] }
+  end
+
   def resolve(**args)
-    booking = Booking.find_by_airtable_id(args[:booking])
+    application = Application.find_by_airtable_id(args[:application])
 
     {
-      booking: Proposals::Send.call(
-        booking: booking,
+      application: Proposals::Send.call(
+        application: application,
         comment: args[:proposal_comment]
       )
     }
