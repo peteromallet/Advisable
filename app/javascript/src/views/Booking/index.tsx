@@ -28,6 +28,7 @@ interface Props {
 const Booking = ({ data, match, history, location }: Props) => {
   if (data.loading) return <Loading />;
   if (!data.application) return <NotFound />;
+  if (data.application.status !== "Working") return <NotFound />
 
   const { applicationId } = match.params;
   const tasks = data.application.tasks;

@@ -1,5 +1,5 @@
 class Types::MutationType < GraphQL::Schema::Object
-  field :create_booking, mutation: Mutations::CreateBooking
+  field :start_working, mutation: Mutations::StartWorking
   field :send_proposal, mutation: Mutations::SendProposal
   field :create_proposal, mutation: Mutations::CreateProposal
   field :update_proposal, mutation: Mutations::UpdateProposal

@@ -8,7 +8,7 @@ import Heading from "../Heading";
 import Button from "../Button";
 import ButtonGroup from "../ButtonGroup";
 import { Padding } from "../Spacing";
-import CREATE_BOOKING from "./createBooking.graphql";
+import START_WORKING from "./startWorking.graphql";
 
 const Component = ({ isOpen, onClose, firstName, applicationId, mutate, onCreate }) => {
   const [loading, setLoading] = React.useState(false);
@@ -21,7 +21,7 @@ const Component = ({ isOpen, onClose, firstName, applicationId, mutate, onCreate
       },
     });
 
-    const { booking, errors } = response.data.createBooking;
+    const { errors } = response.data.createBooking;
 
     if (!errors) {
       onCreate(booking)
@@ -51,4 +51,4 @@ const Component = ({ isOpen, onClose, firstName, applicationId, mutate, onCreate
   );
 };
 
-export default graphql(CREATE_BOOKING)(Component);
+export default graphql(START_WORKING)(Component);
