@@ -73,7 +73,7 @@ const Booking = ({ data, match, history, location }: Props) => {
   const handleDeleteTask = task => {
     history.push(match.url);
     const newData = data
-    newData.booking.tasks = tasks.filter(t => {
+    newData.application.tasks = tasks.filter(t => {
       return t.id !== task.id;
     });
     graphqlClient.cache.writeQuery({

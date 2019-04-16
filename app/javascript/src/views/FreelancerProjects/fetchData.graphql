@@ -9,8 +9,10 @@
           id
         }
       	project {
+          id
           primarySkill
           user {
+            id
             companyName
           }
         }
