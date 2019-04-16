@@ -9,7 +9,7 @@ export default ({ onClick, applications }) => {
   return (
     <>
       <Heading level={2}>Active Projects</Heading>
-      <Padding bottom="xl" top="xl">
+      <Padding bottom="l" top="l">
         <Divider />
       </Padding>
       <Cards>

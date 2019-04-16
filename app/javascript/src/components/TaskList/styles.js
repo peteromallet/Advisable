@@ -38,7 +38,7 @@ export const Detail = styled.div`
 export const Row = styled.div`
   margin-top: -1px;
   user-select: none;
-  padding: 15px 30px;
+  padding: 15px 20px;
   position: relative;
   border-top: 1px solid #eceff8;
   border-bottom: 1px solid #eceff8;
@@ -56,7 +56,7 @@ export const Task = styled(Row)`
 
   ${Status} {
     top: 50%;
-    right: 30px;
+    right: 20px;
     position: absolute;
     transform: translateY(-50%);
   }

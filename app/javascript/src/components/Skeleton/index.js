@@ -13,12 +13,12 @@ const animation = keyframes`
 `
 
 const Skeleton = styled.div`
+  border-radius: 4px;
   background: #3C466A;
   animation: ${animation} 0.6s linear infinite alternate;
 `
 
 Skeleton.Card = styled(Skeleton)`
-  border-radius: 4px;
 `
 
 export default Skeleton;

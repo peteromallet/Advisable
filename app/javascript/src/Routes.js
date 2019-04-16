@@ -25,6 +25,7 @@ const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const Booking = lazy(() => import("./views/Booking"));
 const FreelancerProjects = lazy(() => import("./views/FreelancerProjects"));
+const FreelancerActiveApplication = lazy(() => import("./views/FreelancerActiveApplication"));
 
 const Routes = () => {
   return (
@@ -61,9 +62,15 @@ const Routes = () => {
           />
           <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
           <AuthenticatedRoute
+            exact
             freelancerRoute
             path="/clients"
             component={FreelancerProjects}
+          />
+          <AuthenticatedRoute
+            freelancerRoute
+            path="/clients/:applicationId"
+            component={FreelancerActiveApplication}
           />
           <AuthenticatedRoute
             path="/projects/:projectID/applications/:applicationID"
