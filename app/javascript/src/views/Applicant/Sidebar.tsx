@@ -90,7 +90,7 @@ export default ({ data, history, match }) => {
               render={() => (
                 <ProposalActions
                   specialist={specialist}
-                  bookingId={application.proposal.airtableId}
+                  application={application}
                 />
               )}
             />

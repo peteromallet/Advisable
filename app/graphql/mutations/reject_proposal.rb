@@ -1,22 +1,24 @@
 class Mutations::RejectProposal < Mutations::BaseMutation
-  description <<~SUMMARY
-    Allows a client to reject a specialists proposal. Updates the booking status
-    to declined and reject the specialists application
-  SUMMARY
-
   argument :id, ID, required: true
   argument :reason, String, required: true
   argument :comment, String, required: false
 
-  field :booking, Types::Booking, null: true
+  field :application, Types::ApplicationType, null: true
   field :errors, [String], null: true
 
+  def authorized?(**args)
+    application = Application.find_by_airtable_id!(args[:id])
+    policy = ApplicationPolicy.new(context[:current_user], application)
+    return true if policy.is_client
+    return false, { errors: [{ code: "not_authorized" }] }
+  end
+
   def resolve(**args)
-    booking = Booking.find_by_airtable_id!(args[:id])
+    application = Application.find_by_airtable_id!(args[:id])
 
     {
-      booking: Proposals::Reject.call(
-        booking: booking,
+      application: Proposals::Reject.call(
+        application: application,
         reason: args[:reason],
         comment: args[:comment]
       )

@@ -3,7 +3,7 @@ mutation acceptProposal($input: AcceptProposalInput!) {
     errors {
       code
     }
-    booking {
+    application {
       id
       status
     }

@@ -30,7 +30,7 @@ const RejectProposalModal = ({
   isOpen,
   onClose,
   specialist,
-  bookingId,
+  application,
   onReject,
   mutate,
   notifications,
@@ -42,7 +42,7 @@ const RejectProposalModal = ({
         await mutate({
           variables: {
             input: {
-              id: bookingId,
+              id: application.airtableId,
               reason: values.reason,
               comment: values.comment,
             },

@@ -1,18 +1,18 @@
 class Proposals::Accept < ApplicationService
-  attr_reader :booking
+  attr_reader :application
 
-  def initialize(booking:)
-    @booking = booking
+  def initialize(application:)
+    @application = application
   end
 
   def call
-    booking.status = "Accepted"
-    if booking.save
-      booking.sync_to_airtable
+    application.status = "Working"
+    if application.save
+      application.sync_to_airtable
       WebhookEvent.trigger("proposals.accepted")
-      return booking
+      return application
     else
-      raise Service::Error.new(booking.errors.full_messages.first)
+      raise Service::Error.new(application.errors.full_messages.first)
     end
   end
 end
