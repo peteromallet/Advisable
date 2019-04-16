@@ -1,4 +1,12 @@
 query application($id: ID!) {
+  viewer {
+    ... on Specialist {
+      id
+    }
+    ... on User {
+      id
+    }
+  }
   application(id: $id) {
     id
     status

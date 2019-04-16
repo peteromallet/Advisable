@@ -3,7 +3,7 @@ class Tasks::Create < ApplicationService
 
   def initialize(application:, attributes:)
     @task = application.tasks.new(attributes.merge({
-      stage: "Added"
+      stage: "Not Assigned"
     }))
   end
 

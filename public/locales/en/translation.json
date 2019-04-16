@@ -9,5 +9,13 @@
   },
   "projects": {
     "signupRequired": "We have introduced logins to our system. Please create a password for your account below."
+  },
+  "tasks": {
+    "stageDescriptions": {
+      "client": {
+        "Not Assigned": "This task has not been assigned yet",
+        "Quote Requested": "A quote has been requested for this task"
+      }
+    }
   }
 }

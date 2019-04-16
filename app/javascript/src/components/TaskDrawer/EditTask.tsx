@@ -21,6 +21,7 @@ import {
 } from "./styles";
 import graphqlClient from "../../graphqlClient";
 import { Task } from "../../types";
+import StageDescription from "./StageDescription";
 
 interface Params {
   task: Task;
@@ -28,11 +29,21 @@ interface Params {
   onSave: (fields: any) => void;
   onDeleteTask: (task: Task) => void;
   hideStatus?: boolean;
+  isClient?: boolean;
+  showStatusNotice?: boolean;
 }
 
 let timer;
 
-const EditTask = ({ task, onDeleteTask, readOnly, hideStatus, onSave }) => {
+const EditTask = ({
+  task,
+  onDeleteTask,
+  readOnly,
+  hideStatus,
+  onSave,
+  isClient,
+  showStatusNotice,
+}) => {
   const [attributes, setAttributes] = React.useState({
     name: task.name || "",
     description: task.description || "",
@@ -42,7 +53,6 @@ const EditTask = ({ task, onDeleteTask, readOnly, hideStatus, onSave }) => {
   const [focusedElement, setFocusedElement] = React.useState(null);
   const [editAllowed, setEditAllowed] = React.useState(false);
   const [confirmPrompt, setConfirmPrompt] = React.useState(false);
-  const isClient = false;
 
   const handleFocus = input => e => {
     if (readOnly) {
@@ -151,6 +161,9 @@ const EditTask = ({ task, onDeleteTask, readOnly, hideStatus, onSave }) => {
                   isOpen={editAllowed && focusedElement === "QUOTE"}
                 />
               </TaskDetails>
+              {showStatusNotice && (
+                <StageDescription isClient={isClient} stage={task.stage} />
+              )}
               <Description
                 readOnly={readOnly}
                 value={attributes.description}
@@ -162,7 +175,9 @@ const EditTask = ({ task, onDeleteTask, readOnly, hideStatus, onSave }) => {
             </Padding>
           </Scrollable>
         </VerticalLayout.Content>
-        <Actions isClient={isClient} task={task} />
+        {!readOnly && (
+          <Actions isClient={isClient} task={task} />
+        )}
       </VerticalLayout>
     </TaskDrawer>
   );
