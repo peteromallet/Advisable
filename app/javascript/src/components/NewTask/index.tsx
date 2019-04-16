@@ -13,7 +13,7 @@ const Component = ({ application, onCreate, mutate }) => {
       __typename: "Task",
       id,
       airtableId: "",
-      createdAt: "",
+      createdAt: new Date().toISOString(),
       application: {
         __typename: "Application",
         id: application.id,
@@ -23,7 +23,7 @@ const Component = ({ application, onCreate, mutate }) => {
       estimate: null,
       dueDate: null,
       description: null,
-      stage: "Added",
+      stage: "Not Assigned",
     };
 
     mutate({

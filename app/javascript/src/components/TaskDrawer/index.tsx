@@ -14,19 +14,29 @@ import { Task } from "../../types";
 type Props = {
   taskId: string;
   readOnly?: boolean;
+  isClient?: boolean;
   onClose: () => void;
   hideStatus?: boolean;
+  showStatusNotice?: boolean;
   onDeleteTask: (task: Task) => void;
 };
 
-const Component = ({ taskId, readOnly, onClose, hideStatus, onDeleteTask }: Props) => {
+const Component = ({
+  taskId,
+  onClose,
+  readOnly,
+  isClient,
+  hideStatus,
+  onDeleteTask,
+  showStatusNotice,
+}: Props) => {
+  if (!taskId) return null;
+  
   return (
     <Drawer isOpen={Boolean(taskId)} onClose={onClose}>
       <TaskDrawer>
         <Query query={FETCH_TASK} variables={{ id: taskId }}>
           {query => {
-            console.log(query);
-
             if (query.loading) {
               return (
                 <Padding size="l">
@@ -46,19 +56,21 @@ const Component = ({ taskId, readOnly, onClose, hideStatus, onDeleteTask }: Prop
                       variables: {
                         input: {
                           id: taskId,
-                          ...fields
-                        }
-                      }
-                    })
-                  }
+                          ...fields,
+                        },
+                      },
+                    });
+                  };
 
                   return (
                     <EditTask
                       readOnly={readOnly}
+                      isClient={isClient}
                       hideStatus={hideStatus}
                       onSave={handleSave}
                       task={query.data.task}
                       onDeleteTask={onDeleteTask}
+                      showStatusNotice={showStatusNotice}
                     />
                   );
                 }}

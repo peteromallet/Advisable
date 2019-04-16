@@ -31,8 +31,8 @@ export const TaskDrawer = styled.div`
   }
 
   ${Menu} {
-    top: 20px;
-    right: 60px;
+    top: 12px;
+    right: 45px;
     position: absolute;
   }
 `;
@@ -240,3 +240,22 @@ export const ConfirmationContainer = styled.div`
     color: ${colors.neutral.s9};
   }
 `;
+
+export const StageDescription = styled.div`
+  z-index: 0;
+  font-size: 14px;
+  border-radius: 6px;
+  position: relative;
+  margin: 8px 8px 20px 8px;
+  padding: 12px 8px 12px 38px;
+  color: ${colors.neutral.s8};
+  background: ${colors.neutral.s1};
+
+  ${Icon} {
+    top: 50%;
+    left: 10px;
+    position: absolute;
+    transform: translateY(-50%);
+    color: ${colors.neutral.s6};
+  }
+`

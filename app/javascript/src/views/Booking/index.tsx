@@ -88,8 +88,10 @@ const Booking = ({ data, match, history, location }: Props) => {
   return (
     <>
       <TaskDrawer
+        showStatusNotice
         onClose={() => closeTask()}
         onDeleteTask={handleDeleteTask}
+        isClient={data.viewer.__typename === "User"}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
       <Header />

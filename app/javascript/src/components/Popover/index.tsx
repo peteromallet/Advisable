@@ -109,7 +109,7 @@ export default ({ children, trigger, placement, onClick, ...props }: Props) => {
   return (
     <>
       {React.cloneElement(trigger, triggerProps)}
-      <div ref={popoverRef}>
+      <div ref={popoverRef} style={{ zIndex: 10 }}>
         {transitions.map(
           ({ item, key, props }) =>
             item && (
