@@ -4,21 +4,28 @@ import ButtonGroup from "../../components/ButtonGroup";
 import RejectProposalModal from "../../components/RejectProposalModal";
 import AcceptModal from "./AcceptModal";
 
-const ProposalActions = ({ bookingId, specialist }) => {
+const ProposalActions = ({ application, specialist }) => {
   const [modal, setModal] = React.useState(null);
+
+  const afterReject = () => {
+    setModal(null)
+  }
+
+  if (application.status !== "Proposed") return null;
 
   return (
     <>
       <AcceptModal
         isOpen={modal === "ACCEPT"}
-        bookingId={bookingId}
+        application={application}
         firstName={specialist.firstName}
         onClose={() => setModal(null)}
       />
       <RejectProposalModal
         isOpen={modal === "REJECT"}
-        bookingId={bookingId}
+        application={application}
         specialist={specialist}
+        onReject={afterReject}
         onClose={() => setModal(null)}
       />
       <ButtonGroup fullWidth stack>

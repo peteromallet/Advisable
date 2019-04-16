@@ -9,18 +9,23 @@ import ButtonGroup from "../../components/ButtonGroup";
 import { Padding } from "../../components/Spacing";
 import ACCEPT_PROPOSAL from "./acceptProposal.graphql";
 
-let AcceptedModal = ({ isOpen, onClose, bookingId, firstName, mutate, history }) => {
+let AcceptedModal = ({ isOpen, onClose, application, firstName, mutate, history }) => {
   const [loading, setLoading] = React.useState(false);
 
   const handleAccept = async () => {
     setLoading(true);
-    await mutate({
+    const response = await mutate({
       variables: {
-        input: { id: bookingId },
+        input: { id: application.airtableId },
       },
     });
-    history.replace(`/bookings/${bookingId}`)
-    setLoading(false)
+
+    const { errors } = response.data.acceptProposal;
+    if (errors) {
+      setLoading(false)
+    } else {
+      history.replace(`/manage/${application.airtableId}`)
+    }
   };
 
   return (

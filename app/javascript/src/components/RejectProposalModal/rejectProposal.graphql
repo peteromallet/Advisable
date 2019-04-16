@@ -1,12 +1,8 @@
 mutation rejectProposal($input: RejectProposalInput!) {
   rejectProposal(input: $input) {
-    booking {
+    application {
       id
       status
-      application {
-        id
-        status
-      }
     }
   }
 }

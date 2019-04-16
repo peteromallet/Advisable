@@ -15,8 +15,8 @@ import FETCH_PROPOSAL from "./fetchProposal.graphql";
 
 const Loaded = ({ data }) => {
   const [selectedTask, setSelectedTask] = React.useState(null);
+  const application = data.application;
   const project = data.application.project;
-  const booking = data.application.proposal;
   const specialist = data.application.specialist;
 
   const handleSelectTask = task => {
@@ -46,10 +46,10 @@ const Loaded = ({ data }) => {
           hours work.
         </Text>
       </Padding>
-      {booking.proposalComment && (
+      {application.proposalComment && (
         <Padding left="xl" right="xl" bottom="xl">
           <Message title={`Message from ${specialist.firstName}`}>
-            {booking.proposalComment}
+            {application.proposalComment}
           </Message>
         </Padding>
       )}
@@ -62,7 +62,7 @@ const Loaded = ({ data }) => {
       <Padding bottom="l">
         <TaskList
           hideStatus
-          tasks={booking.tasks}
+          tasks={application.tasks}
           onClickTask={handleSelectTask}
         />
       </Padding>

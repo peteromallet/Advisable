@@ -16,6 +16,10 @@ const Applicant = ({ data, match, history }) => {
 
   if (data.loading) return <Loading />;
 
+  if (data.project.application.status === "Working") {
+    return <Redirect to={`/manage/${data.project.application.airtableId}`} />
+  }
+
   return (
     <View>
       <Layout>
