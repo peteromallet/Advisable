@@ -2,13 +2,6 @@ import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 import plus from "./plus.svg";
 
-export const Container = styled.div`
-  width: 100%;
-  margin: 0 auto;
-  max-width: 1120px;
-  padding: 50px 20px;
-`;
-
 export const Projects = styled.div`
   &::after {
     content: "";
