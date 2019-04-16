@@ -8,6 +8,7 @@ query task($id: ID!) {
     description
     estimate
     application {
+      id
       rate
     }
   }

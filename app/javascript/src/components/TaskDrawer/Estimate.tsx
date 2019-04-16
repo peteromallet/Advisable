@@ -24,6 +24,7 @@ interface Props {
   onClose: () => void;
   onChange: (estimate: number) => void;
   isOpen: boolean;
+  readOnly?: boolean;
 }
 
 const numberMask = createNumberMask({
@@ -35,7 +36,7 @@ const calcEarnings = (hours: number, rate: string) => {
   return total - total * 0.2;
 };
 
-export default ({ task, isClient, onClick, onClose, isOpen, onChange }) => {
+export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }) => {
   const saveButton = React.useRef(null);
   const [value, setValue] = React.useState(task.estimate);
   const [inputValue, setInputValue] = React.useState(value && value.toString());
@@ -67,7 +68,7 @@ export default ({ task, isClient, onClick, onClose, isOpen, onChange }) => {
       onClose={onClose}
       isOpen={isOpen}
       trigger={
-        <Detail tabIndex={0}>
+        <Detail readOnly={readOnly} tabIndex={0}>
           <DetailIcon>
             <Icon strokeWidth={1} width={20} icon="clock" />
           </DetailIcon>

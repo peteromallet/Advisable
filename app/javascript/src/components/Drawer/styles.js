@@ -34,9 +34,9 @@ export const Drawer = styled(animated.div)`
 `;
 
 export const CloseButton = styled.button`
-  top: 20px;
+  top: 10px;
   z-index: 3;
-  right: 20px;
+  right: 10px;
   width: 30px;
   height: 30px;
   border: none;

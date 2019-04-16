@@ -54,13 +54,15 @@ export const Title = styled.textarea`
   border: 2px solid transparent;
   transition: border-color 200ms;
 
-  &:hover {
-    background: #f5f6f9;
-  }
+  &:not([readonly]) {
+    &:hover {
+      background: #f5f6f9;
+    }
 
-  &:focus {
-    background: #f5f6f9;
-    border: 2px solid ${colors.blue.base};
+    &:focus {
+      background: #f5f6f9;
+      border: 2px solid ${colors.blue.base};
+    }
   }
 
   ${placeholderColor(colors.neutral.s5)}
@@ -87,16 +89,19 @@ export const Detail = styled.button`
   border-radius: 6px;
   line-height: 18px;
   background: transparent;
-
+  
   &:focus {
     outline: none;
   }
 
-
-  &:hover {
-    cursor: pointer;
-    background: #f5f6f9;
-  }
+  ${props =>
+    !props.readOnly &&
+    css`
+      &:hover {
+        cursor: pointer;
+        background: #f5f6f9;
+      }
+    `}
 `;
 
 export const Popout = styled.div`
@@ -146,7 +151,7 @@ export const DetailValue = styled.span`
 
 export const DetailPlaceholder = styled(DetailValue)`
   color: ${colors.neutral.s4};
-`
+`;
 
 export const Label = styled.label`
   color: #0a163f;
@@ -174,13 +179,15 @@ export const Description = styled.textarea`
   transition: border-color 200ms;
   ${placeholderColor(colors.neutral.s5)}
 
-  &:hover {
-    background: #f5f6f9;
-  }
+  &:not([readonly]) {
+    &:hover {
+      background: #f5f6f9;
+    }
 
-  &:focus {
-    background: #f5f6f9;
-    border: 2px solid ${colors.blue.base};
+    &:focus {
+      background: #f5f6f9;
+      border: 2px solid ${colors.blue.base};
+    }
   }
 `;
 

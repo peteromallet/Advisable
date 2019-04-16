@@ -1,5 +1,4 @@
 import * as React from "react";
-import { ChildDataProps, graphql, compose } from "react-apollo";
 import { match } from "react-router";
 import TaskStatus from "../TaskStatus";
 import Button from "../Button";
@@ -20,45 +19,37 @@ import {
   Confirmation,
   ConfirmationContainer,
 } from "./styles";
-import FETCH_TASK from "./fetchTask.graphql";
-import UPDATE_TASK from "./updateTask.graphql";
 import graphqlClient from "../../graphqlClient";
+import { Task } from "../../types";
 
 interface Params {
-  taskId: string;
+  task: Task;
+  readOnly: boolean;
+  onSave: (fields: any) => void;
+  onDeleteTask: (task: Task) => void;
+  hideStatus?: boolean;
 }
 
 let timer;
 
-const EditTask = ({ data, mutate, onDeleteTask }) => {
+const EditTask = ({ task, onDeleteTask, readOnly, hideStatus, onSave }) => {
   const [attributes, setAttributes] = React.useState({
-    name: "",
-    description: "",
-    dueDate: "",
-    estimate: "",
+    name: task.name || "",
+    description: task.description || "",
+    dueDate: task.dueDate || "",
+    estimate: task.estimate || "",
   });
   const [focusedElement, setFocusedElement] = React.useState(null);
   const [editAllowed, setEditAllowed] = React.useState(false);
   const [confirmPrompt, setConfirmPrompt] = React.useState(false);
-
-  React.useEffect(() => {
-    if (!data.loading) {
-      const task = data.task;
-      setAttributes({
-        name: task.name || "",
-        description: task.description || "",
-        dueDate: task.dueDate || "",
-        estimate: task.estimate || "",
-      });
-    }
-  }, [data.loading]);
-
-  if (data.loading) return <Loading />;
-
-  const task = data.task;
   const isClient = false;
 
   const handleFocus = input => e => {
+    if (readOnly) {
+      e.preventDefault();
+      return;
+    }
+
     setFocusedElement(input);
 
     // if (!editAllowed && isClient && task.status === "Quote Provided") {
@@ -79,36 +70,22 @@ const EditTask = ({ data, mutate, onDeleteTask }) => {
     setEditAllowed(false);
   };
 
-  const save = fields => {
-    mutate({
-      variables: {
-        input: {
-          id: task.id,
-          ...fields,
-        },
-      },
-    });
-  };
-
   const updateField = (attribute, value) => {
-    const newAttributes = { ...attributes, [attribute]: value };
-    setAttributes(newAttributes);
-    graphqlClient.writeData({
-      id: `Task:${task.id}`,
-      data: newAttributes,
-    });
-    return newAttributes;
+    const newData = { ...attributes, [attribute]: value };
+    setAttributes(newData);
+    graphqlClient.writeData({ id: `Task:${task.id}`, data: newData });
+    return newData;
   };
 
   const handleChange = attribute => value => {
-    const newAttributes = updateField(attribute, value);
-    save({ [attribute]: value });
+    updateField(attribute, value);
+    onSave({ [attribute]: value });
   };
 
   const handleChangeWithTimeout = attribute => value => {
-    const newAttributes = updateField(attribute, value);
+    updateField(attribute, value);
     clearTimeout(timer);
-    timer = setTimeout(() => save({ [attribute]: value }), 1000);
+    timer = setTimeout(() => onSave({ [attribute]: value }), 1000);
   };
 
   return (
@@ -134,13 +111,16 @@ const EditTask = ({ data, mutate, onDeleteTask }) => {
           </ConfirmationContainer>
         </Confirmation>
       )}
-      <Menu task={task} isClient={isClient} onDelete={onDeleteTask} />
+      {!readOnly && (
+        <Menu task={task} isClient={isClient} onDelete={onDeleteTask} />
+      )}
       <VerticalLayout>
         <VerticalLayout.Header>
           <Padding left="m" top="m" right="m">
-            <TaskStatus showIcon>{task.stage}</TaskStatus>
+            {!hideStatus && <TaskStatus showIcon>{task.stage}</TaskStatus>}
             <Title
               onBlur={handleBlur}
+              readOnly={readOnly}
               value={attributes.name}
               onFocus={handleFocus("TITLE")}
               onChange={handleChangeWithTimeout("name")}
@@ -154,6 +134,7 @@ const EditTask = ({ data, mutate, onDeleteTask }) => {
             <Padding left="m" bottom="m" right="m">
               <TaskDetails>
                 <DueDate
+                  readOnly={readOnly}
                   value={attributes.dueDate}
                   onClick={handleFocus("DUE_DATE")}
                   onClose={handleBlur}
@@ -162,6 +143,7 @@ const EditTask = ({ data, mutate, onDeleteTask }) => {
                 />
                 <Estimate
                   task={task}
+                  readOnly={readOnly}
                   isClient={isClient}
                   onClick={handleFocus("QUOTE")}
                   onClose={handleBlur}
@@ -170,6 +152,7 @@ const EditTask = ({ data, mutate, onDeleteTask }) => {
                 />
               </TaskDetails>
               <Description
+                readOnly={readOnly}
                 value={attributes.description}
                 onBlur={handleBlur}
                 onFocus={handleFocus("DESCRIPTION")}
@@ -184,29 +167,5 @@ const EditTask = ({ data, mutate, onDeleteTask }) => {
     </TaskDrawer>
   );
 };
-//
 
-type Response = {
-  task: any;
-};
-
-type Variables = {
-  id: string;
-};
-
-type InputProps = {
-  match: match<Params>;
-};
-
-type ChildProps = ChildDataProps<{}, Response, Variables>;
-
-export default compose(
-  graphql<InputProps, Response, Variables, ChildProps>(FETCH_TASK, {
-    options: (props: any) => ({
-      variables: {
-        id: props.taskId,
-      },
-    }),
-  }),
-  graphql(UPDATE_TASK)
-)(EditTask);
+export default EditTask;

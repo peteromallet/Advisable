@@ -58,7 +58,7 @@ const Loaded = ({ data }) => {
           Suggested tasks
         </Text>
       </Padding>
-      <TaskDrawer taskId={selectedTask} onClose={() => setSelectedTask(null)} />
+      <TaskDrawer readOnly hideStatus taskId={selectedTask} onClose={() => setSelectedTask(null)} />
       <Padding bottom="l">
         <TaskList
           hideStatus

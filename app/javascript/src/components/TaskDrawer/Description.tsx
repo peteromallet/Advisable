@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Label, Description } from "./styles";
 
-export default (props) => {
+export default props => {
   const ref = React.useRef(null);
   const [rows, setRows] = React.useState(1);
 
@@ -26,7 +26,7 @@ export default (props) => {
     if (props.isFocused) {
       ref.current.focus();
     }
-  }, [props.isFocused])
+  }, [props.isFocused]);
 
   const handleChange = e => {
     props.onChange(e.target.value);
@@ -42,7 +42,7 @@ export default (props) => {
         rows={rows}
         value={props.value}
         onChange={handleChange}
-        placeholder="Add a description..."
+        placeholder={props.readOnly ? "No Description" : "Add a description..."}
       />
     </>
   );
