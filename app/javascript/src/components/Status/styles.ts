@@ -20,14 +20,14 @@ const STYLES = {
 export const Status = styled.span`
   height: 20px;
   color: #1D274B;
-  font-size: 12px;
+  font-size: 11px;
   padding: 0 10px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 20px;
-  border-radius: 10px;
+  border-radius: 6px;
   align-items: center;
   display: inline-flex;
-  /* text-transform: uppercase; */
+  text-transform: uppercase;
   background: rgba(29, 39, 75, 0.06);
 
   ${props => STYLES[props.styling]}
