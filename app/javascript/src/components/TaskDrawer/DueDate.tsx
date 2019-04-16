@@ -18,12 +18,20 @@ import {
 interface Props {
   value: string;
   isOpen: boolean;
+  readOnly?: boolean;
   onClick?: (e: React.SyntheticEvent) => void;
   onClose: () => void;
   onChange: (date: string) => void;
 }
 
-export default ({ value, onChange, onClick, isOpen, onClose }: Props) => {
+export default ({
+  value,
+  onChange,
+  onClick,
+  isOpen,
+  onClose,
+  readOnly,
+}: Props) => {
   const selected = value ? new Date(value) : null;
   const initialMonth = selected || new Date();
 
@@ -42,7 +50,7 @@ export default ({ value, onChange, onClick, isOpen, onClose }: Props) => {
   const handleRemove = popover => () => {
     onChange(null);
     popover.close();
-  }
+  };
 
   return (
     <Popover
@@ -50,7 +58,7 @@ export default ({ value, onChange, onClick, isOpen, onClose }: Props) => {
       isOpen={isOpen}
       onClose={onClose}
       trigger={
-        <Detail tabIndex={0}>
+        <Detail tabIndex={0} readOnly={readOnly}>
           <DetailIcon>
             <Icon strokeWidth={1} width={20} icon="calendar" />
           </DetailIcon>
