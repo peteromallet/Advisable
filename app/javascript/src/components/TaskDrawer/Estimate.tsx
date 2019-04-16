@@ -45,9 +45,10 @@ export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }
     return null;
   }
 
+  const rate = task.application.rate
   const inputAsFloat = parseFloat(inputValue)
   const estimateProvided = inputValue && inputAsFloat > 0;
-  const earnings = estimateProvided ? calcEarnings(inputAsFloat, task.application.rate) : null;
+  const earnings = estimateProvided ? calcEarnings(inputAsFloat, rate) : null;
 
   const handleSave = popover => () => {
     popover.close();
@@ -61,6 +62,10 @@ export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }
       saveButton.current.click();
     }
   }
+
+  const label = (value || value !== "") && (
+    `${value} hours / ${currency(value * rate, task.application.currency)}`
+  )
 
   return (
     <Popover
@@ -76,7 +81,7 @@ export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }
           {!value || value === "" ? (
             <DetailPlaceholder>+ Add estimate</DetailPlaceholder>
           ) : (
-            <DetailValue>{value} hours</DetailValue>
+            <DetailValue>{label}</DetailValue>
           )}
         </Detail>
       }

@@ -5,9 +5,17 @@ import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
 import VerticalLayout from "../VerticalLayout";
 import REQUEST_QUOTE from "./requestQuote.graphql";
+import ASSIGN_TASK from "./assignTask.graphql";
+import {
+  TaskDrawer,
+  TaskDetails,
+  Confirmation,
+  ConfirmationContainer,
+} from "./styles";
 
-const Component = ({ task, isClient, requestQuote }) => {
+const Component = ({ task, isClient, requestQuote, assignTask }) => {
   const [loading, setLoading] = React.useState(null);
+  const [confirmation, setConfirmation] = React.useState(null);
   const { stage } = task;
 
   const handleRequestQuote = async () => {
@@ -16,10 +24,31 @@ const Component = ({ task, isClient, requestQuote }) => {
       variables: {
         input: {
           task: task.id,
-        }
-      }
-    })
+        },
+      },
+    });
     setLoading(null);
+  };
+
+  const submitAssignTask = async () => {
+    setLoading("ASSIGN");
+    await assignTask({
+      variables: {
+        input: {
+          task: task.id,
+        },
+      },
+    });
+    setConfirmation(null);
+    setLoading(null);
+  };
+
+  const handleAssign = () => {
+    if (!task.estimate) {
+      setConfirmation("ASSIGN");
+    } else {
+      submitAssignTask();
+    }
   };
 
   let actions = [];
@@ -37,7 +66,12 @@ const Component = ({ task, isClient, requestQuote }) => {
       </Button>
     );
     actions.push(
-      <Button disabled={loading} loading={loading === "ASSIGN"} key="quote">
+      <Button
+        key="quote"
+        disabled={loading}
+        onClick={handleAssign}
+        loading={loading === "ASSIGN"}
+      >
         Assign
       </Button>
     );
@@ -45,8 +79,14 @@ const Component = ({ task, isClient, requestQuote }) => {
 
   if (isClient && stage === "Quote Requested") {
     actions.push(
-      <Button key="assign" styling="primary">
-        Assign
+      <Button
+        key="quote"
+        styling="primary"
+        disabled={loading}
+        onClick={handleAssign}
+        loading={loading === "ASSIGN"}
+      >
+        Assign Task
       </Button>
     );
   }
@@ -54,7 +94,7 @@ const Component = ({ task, isClient, requestQuote }) => {
   if (isClient && stage === "Quote Provided") {
     actions.push(
       <Button key="assign" styling="primary">
-        Assign
+        Assign Task
       </Button>
     );
   }
@@ -86,6 +126,30 @@ const Component = ({ task, isClient, requestQuote }) => {
   if (actions.length > 0) {
     return (
       <VerticalLayout.Footer style={{ background: "white" }}>
+        {confirmation === "ASSIGN" && (
+          <Confirmation>
+            <ConfirmationContainer>
+              <p>
+                Are you sure you want to assign this task without an estimate?
+              </p>
+              <ButtonGroup fullWidth>
+                <Button
+                  loading={loading === "ASSIGN"}
+                  onClick={submitAssignTask}
+                  styling="primary"
+                >
+                  Assign
+                </Button>
+                <Button
+                  disabled={loading === "ASSIGN"}
+                  onClick={() => setConfirmation(null)}
+                >
+                  Cancel
+                </Button>
+              </ButtonGroup>
+            </ConfirmationContainer>
+          </Confirmation>
+        )}
         <Padding size="l">
           <ButtonGroup>{actions}</ButtonGroup>
         </Padding>
@@ -96,6 +160,7 @@ const Component = ({ task, isClient, requestQuote }) => {
   return null;
 };
 
-export default compose(graphql(REQUEST_QUOTE, { name: "requestQuote" }))(
-  Component
-);
+export default compose(
+  graphql(REQUEST_QUOTE, { name: "requestQuote" }),
+  graphql(ASSIGN_TASK, { name: "assignTask" })
+)(Component);

@@ -256,6 +256,6 @@ export const StageDescription = styled.div`
     left: 10px;
     position: absolute;
     transform: translateY(-50%);
-    color: ${colors.neutral.s6};
+    color: ${colors.blue.base};
   }
 `

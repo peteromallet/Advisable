@@ -16,7 +16,7 @@ export default ({ isClient, stage }) => {
 
   return (
     <StageDescription>
-      <Icon icon="info" strokeWidth={2} width={20} />
+      <Icon icon="info" width={20} />
       {t(key)}
     </StageDescription>
   );
