@@ -17,10 +17,7 @@ const ICONS = {
 
 const COLORS = {
   // "Not Assigned": "yellow",
-  "Quote Requested": "green",
   "Quote Provided": "yellow",
-  "Assigned": "green",
-  "In Progress": "green",
   "Pending Approval": "yellow",
 }
 

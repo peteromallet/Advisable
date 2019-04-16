@@ -1,0 +1,11 @@
+mutation assignTask($input: AssignTaskInput!) {
+  assignTask(input: $input) {
+    task {
+      id
+      stage
+    }
+    errors {
+      code
+    }
+  }
+}
