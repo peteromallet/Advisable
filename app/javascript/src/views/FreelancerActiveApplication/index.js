@@ -4,6 +4,7 @@ import React from "react";
 import { Query } from "react-apollo";
 import Header from "../../components/Header";
 import Loading from "./Loading";
+import NotFound from "../NotFound";
 import FetchActiveApplication from "./FetchActiveApplication";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 
@@ -16,7 +17,7 @@ const Component = props => {
       <Query query={FETCH_APPLICATION} variables={{ id }}>
         {query => {
           if (query.loading) return <Loading />;
-
+          if (!query.loading && !query.data.application) return <NotFound />;
           return <FetchActiveApplication {...query} {...props} />;
         }}
       </Query>

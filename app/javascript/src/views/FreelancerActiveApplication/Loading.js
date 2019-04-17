@@ -1,3 +1,4 @@
+// Renders the loading state for the FreelancerActiveApplication view.
 import React from "react";
 import Card from "../../components/Card";
 import Layout from "../../components/Layout";

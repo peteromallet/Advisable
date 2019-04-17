@@ -1,9 +1,7 @@
 // Renders the loaded state for when a freelancer is viewing an active
 // application
 import React from "react";
-import Sticky from "react-stickynode";
 import { matchPath } from "react-router-dom";
-import Text from "../../components/Text";
 import Card from "../../components/Card";
 import Layout from "../../components/Layout";
 import Heading from "../../components/Heading";
@@ -11,6 +9,7 @@ import NewTask from "../../components/NewTask";
 import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
 import { Padding } from "../../components/Spacing";
+import Sidebar from "./Sidebar";
 import FETCH_TASK from "./fetchTask.graphql";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 
@@ -56,7 +55,7 @@ const FetchActiveApplication = ({ history, match, data, client }) => {
   const handleDeleteTask = task => {
     history.push(match.url);
     const newData = data;
-    newData.application.tasks = tasks.filter(t => {
+    newData.application.tasks = data.application.tasks.filter(t => {
       return t.id !== task.id;
     });
 
@@ -78,12 +77,7 @@ const FetchActiveApplication = ({ history, match, data, client }) => {
         onDeleteTask={handleDeleteTask}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
-      <Layout.Sidebar>
-        <Sticky top={98} enabled>
-          <Heading level={3}>{application.project.primarySkill}</Heading>
-          <Text>{application.project.user.companyName}</Text>
-        </Sticky>
-      </Layout.Sidebar>
+      <Sidebar data={data} />
       <Layout.Main>
         <Card elevation={1}>
           <Padding size="m" left="l" right="l">
