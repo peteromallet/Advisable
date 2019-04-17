@@ -13,8 +13,10 @@
   "tasks": {
     "stageDescriptions": {
       "client": {
-        "Not Assigned": "This task has not been assigned yet",
-        "Quote Requested": "A quote has been requested for this task"
+        "quoteRequested": "A quote has been requested for this task"
+      },
+      "specialist": {
+        "quoteRequested": "The client has requested a quote for this task. You should not start work on this task until it is assigned to you."
       }
     }
   }

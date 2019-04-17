@@ -89,7 +89,7 @@ export const Detail = styled.button`
   border-radius: 6px;
   line-height: 18px;
   background: transparent;
-  
+
   &:focus {
     outline: none;
   }
@@ -115,6 +115,18 @@ export const Popout = styled.div`
     0 2px 8px ${rgba(colors.neutral.s9, 0.1)};
 `;
 
+const promptAnimation = keyframes`
+  from {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.3);
+  }
+`;
+
 export const DetailIcon = styled.div`
   top: 50%;
   left: 8px;
@@ -133,6 +145,20 @@ export const DetailIcon = styled.div`
   ${Icon} {
     display: flex;
   }
+
+  ${props =>
+    props.prompt &&
+    css`
+      &::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        position: absolute;
+        border: 1px solid ${colors.blue.base};
+        animation: ${promptAnimation} 2s infinite;
+      }
+    `}
 `;
 
 export const DetailLabel = styled.h5`
@@ -241,9 +267,16 @@ export const ConfirmationContainer = styled.div`
   }
 `;
 
+export const ArrowPrompt = styled.div`
+  top: -15px;
+  left: 205px;
+  position: absolute;
+`;
+
 export const StageDescription = styled.div`
   z-index: 0;
   font-size: 14px;
+  line-height: 18px;
   border-radius: 6px;
   position: relative;
   margin: 8px 8px 20px 8px;
@@ -258,4 +291,4 @@ export const StageDescription = styled.div`
     transform: translateY(-50%);
     color: ${colors.blue.base};
   }
-`
+`;

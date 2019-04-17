@@ -74,7 +74,7 @@ export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }
       isOpen={isOpen}
       trigger={
         <Detail readOnly={readOnly} tabIndex={0}>
-          <DetailIcon>
+          <DetailIcon prompt={task.stage === "Quote Requested"}>
             <Icon strokeWidth={1} width={20} icon="clock" />
           </DetailIcon>
           <DetailLabel>Quote</DetailLabel>
