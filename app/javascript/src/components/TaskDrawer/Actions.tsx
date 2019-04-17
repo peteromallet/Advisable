@@ -1,5 +1,6 @@
 import * as React from "react";
 import { compose, graphql } from "react-apollo";
+import Text from "../Text";
 import Button from "../Button";
 import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
@@ -26,7 +27,7 @@ const Component = ({ task, isClient, requestQuote, assignTask, startTask }) => {
     setLoading(null);
   };
 
-  const submitAssignTask = async () => {
+  const handleAssign = async () => {
     setLoading("ASSIGN");
     await assignTask({
       variables: {
@@ -37,14 +38,6 @@ const Component = ({ task, isClient, requestQuote, assignTask, startTask }) => {
     });
     setConfirmation(null);
     setLoading(null);
-  };
-
-  const handleAssign = () => {
-    if (!task.estimate) {
-      setConfirmation("ASSIGN");
-    } else {
-      submitAssignTask();
-    }
   };
 
   const handleStartTask = async () => {
@@ -78,10 +71,10 @@ const Component = ({ task, isClient, requestQuote, assignTask, startTask }) => {
       <Button
         key="quote"
         disabled={loading}
-        onClick={handleAssign}
         loading={loading === "ASSIGN"}
+        onClick={() => setConfirmation("ASSIGN")}
       >
-        Assign
+        Assign Task
       </Button>
     );
   }
@@ -92,8 +85,8 @@ const Component = ({ task, isClient, requestQuote, assignTask, startTask }) => {
         key="quote"
         styling="primary"
         disabled={loading}
-        onClick={handleAssign}
         loading={loading === "ASSIGN"}
+        onClick={() => setConfirmation("ASSIGN")}
       >
         Assign Task
       </Button>
@@ -106,7 +99,7 @@ const Component = ({ task, isClient, requestQuote, assignTask, startTask }) => {
         key="quote"
         styling="primary"
         disabled={loading}
-        onClick={handleAssign}
+        onClick={() => setConfirmation("ASSIGN")}
         loading={loading === "ASSIGN"}
       >
         Assign Task
@@ -150,13 +143,29 @@ const Component = ({ task, isClient, requestQuote, assignTask, startTask }) => {
         {confirmation === "ASSIGN" && (
           <Confirmation>
             <ConfirmationContainer>
-              <p>
-                Are you sure you want to assign this task without an estimate?
-              </p>
+              <Padding bottom="s">
+                <Text weight="semibold" colour="dark">
+                  Assign Task
+                </Text>
+              </Padding>
+              <Padding bottom="l">
+                <Text size="s">
+                  You will not be able to modify this task after it is assigned.
+                  You can add additional tasks if more working needs to be done.
+                </Text>
+              </Padding>
+              {!task.estimate && (
+                <Padding bottom="l">
+                  <Text size="s">
+                    This task has no estimate. You may want to request a quote
+                    first.
+                  </Text>
+                </Padding>
+              )}
               <ButtonGroup fullWidth>
                 <Button
                   loading={loading === "ASSIGN"}
-                  onClick={submitAssignTask}
+                  onClick={handleAssign}
                   styling="primary"
                 >
                   Assign
