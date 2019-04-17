@@ -4,16 +4,12 @@ import Button from "../Button";
 import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
 import VerticalLayout from "../VerticalLayout";
-import REQUEST_QUOTE from "./requestQuote.graphql";
+import START_TASK from "./startTask.graphql";
 import ASSIGN_TASK from "./assignTask.graphql";
-import {
-  TaskDrawer,
-  TaskDetails,
-  Confirmation,
-  ConfirmationContainer,
-} from "./styles";
+import REQUEST_QUOTE from "./requestQuote.graphql";
+import { Confirmation, ConfirmationContainer } from "./styles";
 
-const Component = ({ task, isClient, requestQuote, assignTask }) => {
+const Component = ({ task, isClient, requestQuote, assignTask, startTask }) => {
   const [loading, setLoading] = React.useState(null);
   const [confirmation, setConfirmation] = React.useState(null);
   const { stage } = task;
@@ -49,6 +45,19 @@ const Component = ({ task, isClient, requestQuote, assignTask }) => {
     } else {
       submitAssignTask();
     }
+  };
+
+  const handleStartTask = async () => {
+    setLoading("START_WORKING");
+    await startTask({
+      variables: {
+        input: {
+          task: task.id,
+        },
+      },
+    });
+
+    setLoading(null);
   };
 
   let actions = [];
@@ -93,7 +102,13 @@ const Component = ({ task, isClient, requestQuote, assignTask }) => {
 
   if (isClient && stage === "Quote Provided") {
     actions.push(
-      <Button key="assign" styling="primary">
+      <Button
+        key="quote"
+        styling="primary"
+        disabled={loading}
+        onClick={handleAssign}
+        loading={loading === "ASSIGN"}
+      >
         Assign Task
       </Button>
     );
@@ -101,7 +116,13 @@ const Component = ({ task, isClient, requestQuote, assignTask }) => {
 
   if (!isClient && stage === "Assigned") {
     actions.push(
-      <Button key="start" styling="primary">
+      <Button
+        key="start"
+        styling="primary"
+        disabled={loading}
+        onClick={handleStartTask}
+        loading={loading === "START_WORKING"}
+      >
         Start Working
       </Button>
     );
@@ -162,5 +183,6 @@ const Component = ({ task, isClient, requestQuote, assignTask }) => {
 
 export default compose(
   graphql(REQUEST_QUOTE, { name: "requestQuote" }),
-  graphql(ASSIGN_TASK, { name: "assignTask" })
+  graphql(ASSIGN_TASK, { name: "assignTask" }),
+  graphql(START_TASK, { name: "startTask" })
 )(Component);

@@ -45,4 +45,5 @@ class Types::MutationType < GraphQL::Schema::Object
   field :delete_task, mutation: Mutations::DeleteTask
   field :request_quote, mutation: Mutations::RequestQuote
   field :assign_task, mutation: Mutations::AssignTask
+  field :start_task, mutation: Mutations::StartTask
 end
