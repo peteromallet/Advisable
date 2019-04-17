@@ -8,6 +8,7 @@ import VerticalLayout from "../VerticalLayout";
 import START_TASK from "./startTask.graphql";
 import ASSIGN_TASK from "./assignTask.graphql";
 import SUBMIT_TASK from "./submitTask.graphql";
+import APPROVE_TASK from "./approveTask.graphql";
 import REQUEST_QUOTE from "./requestQuote.graphql";
 import { Confirmation, ConfirmationContainer } from "./styles";
 
@@ -17,6 +18,7 @@ const Component = ({
   startTask,
   submitTask,
   assignTask,
+  approveTask,
   requestQuote,
 }) => {
   const [loading, setLoading] = React.useState(null);
@@ -64,6 +66,18 @@ const Component = ({
   const handleSubmitTask = async () => {
     setLoading("SUBMIT");
     await submitTask({
+      variables: {
+        input: {
+          task: task.id,
+        },
+      },
+    });
+    setLoading(null);
+  };
+
+  const handleApproveTask = async () => {
+    setLoading("APPROVE");
+    await approveTask({
       variables: {
         input: {
           task: task.id,
@@ -155,9 +169,14 @@ const Component = ({
     );
   }
 
-  if (isClient && stage === "Pending Approval") {
+  if (isClient && stage === "Submitted") {
     actions.push(
-      <Button key="approve" styling="primary">
+      <Button
+        key="approve"
+        styling="primary"
+        onClick={handleApproveTask}
+        loading={loading == "APPROVE"}
+      >
         Approve
       </Button>
     );
@@ -220,5 +239,6 @@ export default compose(
   graphql(REQUEST_QUOTE, { name: "requestQuote" }),
   graphql(ASSIGN_TASK, { name: "assignTask" }),
   graphql(START_TASK, { name: "startTask" }),
-  graphql(SUBMIT_TASK, { name: "submitTask" })
+  graphql(SUBMIT_TASK, { name: "submitTask" }),
+  graphql(APPROVE_TASK, { name: "approveTask" })
 )(Component);

@@ -57,8 +57,12 @@ const navigation = [
 export default ({ match, data }) => {
   useScrollRestore()
   const applications = get(data, "project.applications", []);
-  const notHidden = filter(applications, { hidden: false })
-  const counts = countBy(notHidden, "status");
+  const excludedStatuses = ["Working", "Invited To Apply", "Invitation Rejected"]
+  const filtered = filter(applications, a => {
+    if (a.hidden) return false;
+    return excludedStatuses.indexOf(a.status) === -1;
+  })
+  const counts = countBy(filtered, "status");
 
   return (
     <Mobile>
@@ -68,7 +72,7 @@ export default ({ match, data }) => {
             <ProjectTitle>{data.project.primarySkill}</ProjectTitle>
             <TotalApplicants>
               {pluralize(
-                data.project.applicationCount,
+                filtered.length,
                 "Applicant",
                 "Applicants"
               )}

@@ -47,4 +47,5 @@ class Types::MutationType < GraphQL::Schema::Object
   field :assign_task, mutation: Mutations::AssignTask
   field :start_task, mutation: Mutations::StartTask
   field :submit_task, mutation: Mutations::SubmitTask
+  field :approve_task, mutation: Mutations::ApproveTask
 end
