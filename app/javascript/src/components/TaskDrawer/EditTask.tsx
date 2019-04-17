@@ -1,8 +1,8 @@
 import * as React from "react";
 import { match } from "react-router";
 import TaskStatus from "../TaskStatus";
+import Text from "../Text";
 import Button from "../Button";
-import Loading from "../Loading";
 import Scrollable from "../Scrollable";
 import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
@@ -95,13 +95,13 @@ const EditTask = ({
 
     setFocusedElement(input);
 
-    // if (!editAllowed && isClient && task.status === "Quote Provided") {
-    //   e.preventDefault();
-    //   e.stopPropagation();
-    //   setConfirmPrompt(true);
-    //   e.target.blur();
-    //   return;
-    // }
+    if (!editAllowed && getTaskPermission(task, input, isClient) === PROMPT) {
+      e.preventDefault();
+      e.stopPropagation();
+      setConfirmPrompt(true);
+      e.target.blur();
+      return;
+    }
   };
 
   const handleConfirm = () => {
@@ -146,20 +146,26 @@ const EditTask = ({
     timer = setTimeout(() => onSave({ [attribute]: value }), 1000);
   };
 
-  const titleReadOnly = readOnly || getTaskPermission(task, "title", isClient) === READ;
-  const dueDateReadOnly = readOnly || getTaskPermission(task, "dueDate", isClient) === READ;
-  const estimateReadOnly = readOnly || getTaskPermission(task, "estimate", isClient) === READ;
-  const descriptionReadOnly = readOnly || getTaskPermission(task, "description", isClient) === READ;
+  const titleReadOnly =
+    readOnly || getTaskPermission(task, "title", isClient) === READ;
+  const dueDateReadOnly =
+    readOnly || getTaskPermission(task, "dueDate", isClient) === READ;
+  const estimateReadOnly =
+    readOnly || getTaskPermission(task, "estimate", isClient) === READ;
+  const descriptionReadOnly =
+    readOnly || getTaskPermission(task, "description", isClient) === READ;
 
   return (
     <TaskDrawer>
       {confirmPrompt && (
         <Confirmation>
           <ConfirmationContainer>
-            <p>
-              Editing this task will remove the quote that has been provided.
-              Are you sure you want to continue?
-            </p>
+            <Padding bottom="l">
+              <Text size="s">
+                Editing this task will remove the quote that has been provided.
+                Are you sure you want to continue?
+              </Text>
+            </Padding>
             <ButtonGroup fullWidth>
               <Button onClick={handleConfirm} styling="primary">
                 Continue
@@ -180,7 +186,7 @@ const EditTask = ({
       <VerticalLayout>
         <VerticalLayout.Header>
           <Padding left="m" top="m" right="m">
-            {!hideStatus && <TaskStatus showIcon>{task.stage}</TaskStatus>}
+            {!hideStatus && <TaskStatus>{task.stage}</TaskStatus>}
             <Title
               onBlur={handleBlur}
               readOnly={titleReadOnly}

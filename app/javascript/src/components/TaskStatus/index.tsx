@@ -21,10 +21,10 @@ const COLORS = {
   "Pending Approval": "yellow",
 }
 
-export default ({ children, showIcon }: Props) => {
+export default ({ children }: Props) => {
   return (
     <Status styling={COLORS[children]}>
-      {showIcon && ICONS[children] && <Icon height={12} strokeWidth={2} icon={ICONS[children]} />}
+      {ICONS[children] && <Icon height={12} strokeWidth={2} icon={ICONS[children]} />}
       {children}
     </Status>
   )

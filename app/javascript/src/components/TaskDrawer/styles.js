@@ -27,7 +27,7 @@ export const TaskDrawer = styled.div`
   ${Status} {
     margin-top: 8px;
     margin-left: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
   }
 
   ${Menu} {
