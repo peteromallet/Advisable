@@ -22,6 +22,7 @@ export default ({ tasks, firstName, onNewTask, application, onSelectTask }) => {
       <Divider />
       <Padding bottom="l">
         <TaskList
+          isClient
           tasks={tasks}
           onClickTask={onSelectTask}
           lastRow={

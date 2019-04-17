@@ -10,6 +10,17 @@ query task($id: ID!) {
     application {
       id
       rate
+      specialist {
+        id
+        firstName
+      }
+      project {
+        id
+        user {
+          id
+          companyName
+        }
+      }
     }
   }
 }

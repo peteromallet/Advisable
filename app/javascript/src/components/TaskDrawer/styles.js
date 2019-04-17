@@ -273,13 +273,13 @@ export const StageDescription = styled.div`
   border-radius: 6px;
   position: relative;
   margin: 8px 8px 20px 8px;
-  padding: 12px 8px 12px 38px;
+  padding: 12px 8px 12px 48px;
   color: ${colors.neutral.s8};
   background: ${colors.neutral.s1};
 
   ${Icon} {
     top: 50%;
-    left: 10px;
+    left: 16px;
     position: absolute;
     transform: translateY(-50%);
     color: ${colors.blue.base};
