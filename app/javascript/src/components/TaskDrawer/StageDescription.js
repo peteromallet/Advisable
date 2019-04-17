@@ -37,6 +37,14 @@ const FOR_CLIENT = {
       </StageDescription>
     );
   },
+  Submitted: ({ t, task }) => {
+    return (
+      <StageDescription>
+        <Icon icon="info" width={20} />
+        {t("tasks.stageDescriptions.client.submitted", { task })}
+      </StageDescription>
+    );
+  }
 };
 
 const FOR_SPECIALIST = {
@@ -67,6 +75,22 @@ const FOR_SPECIALIST = {
       </StageDescription>
     );
   },
+  Working: ({ t, task }) => {
+    return (
+      <StageDescription>
+        <Icon icon="info" width={20} />
+        {t("tasks.stageDescriptions.specialist.working", { task })}
+      </StageDescription>
+    );
+  },
+  Submitted: ({ t, task }) => {
+    return (
+      <StageDescription>
+        <Icon icon="info" width={20} />
+        {t("tasks.stageDescriptions.specialist.submitted", { task })}
+      </StageDescription>
+    );
+  }
 };
 
 // Renders the description of a task's stage. The descriptions themselves are

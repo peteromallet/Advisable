@@ -7,10 +7,18 @@ import Padding from "../Spacing/Padding";
 import VerticalLayout from "../VerticalLayout";
 import START_TASK from "./startTask.graphql";
 import ASSIGN_TASK from "./assignTask.graphql";
+import SUBMIT_TASK from "./submitTask.graphql";
 import REQUEST_QUOTE from "./requestQuote.graphql";
 import { Confirmation, ConfirmationContainer } from "./styles";
 
-const Component = ({ task, isClient, requestQuote, assignTask, startTask }) => {
+const Component = ({
+  task,
+  isClient,
+  startTask,
+  submitTask,
+  assignTask,
+  requestQuote,
+}) => {
   const [loading, setLoading] = React.useState(null);
   const [confirmation, setConfirmation] = React.useState(null);
   const { stage } = task;
@@ -50,6 +58,18 @@ const Component = ({ task, isClient, requestQuote, assignTask, startTask }) => {
       },
     });
 
+    setLoading(null);
+  };
+
+  const handleSubmitTask = async () => {
+    setLoading("SUBMIT");
+    await submitTask({
+      variables: {
+        input: {
+          task: task.id,
+        },
+      },
+    });
     setLoading(null);
   };
 
@@ -121,9 +141,15 @@ const Component = ({ task, isClient, requestQuote, assignTask, startTask }) => {
     );
   }
 
-  if (!isClient && stage === "In Progress") {
+  if (!isClient && stage === "Working") {
     actions.push(
-      <Button key="submit" styling="primary">
+      <Button
+        key="submit"
+        styling="primary"
+        disabled={loading}
+        onClick={handleSubmitTask}
+        loading={loading === "SUBMIT"}
+      >
         Submit for approval
       </Button>
     );
@@ -193,5 +219,6 @@ const Component = ({ task, isClient, requestQuote, assignTask, startTask }) => {
 export default compose(
   graphql(REQUEST_QUOTE, { name: "requestQuote" }),
   graphql(ASSIGN_TASK, { name: "assignTask" }),
-  graphql(START_TASK, { name: "startTask" })
+  graphql(START_TASK, { name: "startTask" }),
+  graphql(SUBMIT_TASK, { name: "submitTask" })
 )(Component);
