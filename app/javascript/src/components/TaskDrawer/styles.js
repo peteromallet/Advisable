@@ -250,7 +250,7 @@ to {
 
 export const ConfirmationContainer = styled.div`
   padding: 30px;
-  max-width: 320px;
+  max-width: 400px;
   background: white;
   border-radius: 8px;
   position: absolute;
@@ -258,13 +258,6 @@ export const ConfirmationContainer = styled.div`
   animation: ${slideInUp} 300ms;
   box-shadow: 0 8px 60px ${rgba(colors.neutral.s8, 0.2)},
     0 2px 6px ${rgba(colors.neutral.s8, 0.15)};
-
-  p {
-    font-size: 15px;
-    line-height: 19px;
-    margin-bottom: 20px;
-    color: ${colors.neutral.s9};
-  }
 `;
 
 export const ArrowPrompt = styled.div`
