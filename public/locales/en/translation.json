@@ -16,12 +16,15 @@
         "quoteRequested": "A quote has been requested for this task",
         "quoteProvided": "{{task.application.specialist.firstName}} has provided a quote for this task. If you are happy to proceed you can assign the task to them.",
         "assigned": "This task has been assigned and is waiting for {{task.application.specialist.firstName}} to start it.",
-        "working": "{{task.application.specialist.firstName}} is working on this task."
+        "working": "{{task.application.specialist.firstName}} is working on this task.",
+        "submitted": "{{task.application.specialist.firstName}} has submitted this task for your approval."
       },
       "specialist": {
         "quoteRequested": "The client has requested a quote for this task. You should not start work on this task until it is assigned to you.",
         "quoteProvided": "You have provided a quote for this task. You should not start work on this task until it is assigned to you.",
-        "assigned": "{{task.application.project.user.companyName}} has assigned this task to you and is ready for you to begin working on it."
+        "assigned": "{{task.application.project.user.companyName}} has assigned this task to you and is ready for you to begin working on it.",
+        "working": "You have marked this task as in progress. Once you have completed the task you can submit it for approval.",
+        "submitted": "You have submitted this task for approval."
       }
     }
   }
