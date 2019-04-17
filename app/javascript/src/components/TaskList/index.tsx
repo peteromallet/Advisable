@@ -18,7 +18,12 @@ type Props = {
 };
 
 const TaskList = (props: Props) => {
-  const sorted = props.tasks.sort((a, b) => {
+  // For now we hard code filter out any tasks that have been approved.
+  const tasks = props.tasks.filter(t => {
+    return t.stage !== "Approved"
+  })
+
+  const sorted = tasks.sort((a, b) => {
     const dateA = Date.parse(a.createdAt);
     const dateB = Date.parse(b.createdAt);
     return dateA - dateB;
