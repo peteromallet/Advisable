@@ -221,7 +221,7 @@ const EditTask = ({
                 />
               </TaskDetails>
               {showStatusNotice && (
-                <StageDescription isClient={isClient} stage={task.stage} />
+                <StageDescription isClient={isClient} task={task} />
               )}
               <Description
                 readOnly={descriptionReadOnly}

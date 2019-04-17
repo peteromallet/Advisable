@@ -13,6 +13,7 @@ type Props = {
   tasks: Task[];
   hideStatus?: boolean;
   lastRow?: React.ReactNode;
+  isClient?: boolean;
   onClickTask: (task: Task) => void;
 };
 
@@ -29,6 +30,7 @@ const TaskList = (props: Props) => {
         <Task
           key={task.id}
           task={task}
+          isClient={props.isClient}
           hideStatus={props.hideStatus}
           onClick={() => props.onClickTask(task)}
         />
