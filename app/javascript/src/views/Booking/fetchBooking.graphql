@@ -25,6 +25,10 @@ query application($id: ID!) {
       id
       currency
       primarySkill
+      user {
+        id
+        companyName
+      }
     }
     specialist {
       id

@@ -18,13 +18,11 @@ const Applications = ({ history, data }) => {
       <Header />
       <Layout>
         <Layout.Main>
-          <Padding bottom="xl">
-            <ApplicationInvitations
-              loading={data.loading}
-              onViewInvitation={handleViewInvitation}
-              applications={data.loading ? [] : data.viewer.invitations}
-            />
-          </Padding>
+          <ApplicationInvitations
+            loading={data.loading}
+            onViewInvitation={handleViewInvitation}
+            applications={data.loading ? [] : data.viewer.invitations}
+          />
           <OpenApplications
             loading={data.loading}
             specialist={data.viewer}

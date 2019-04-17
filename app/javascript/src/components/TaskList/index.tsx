@@ -1,3 +1,4 @@
+// Renders a list of given tasks.
 import * as React from "react";
 import { TaskList as Container, Row } from "./styles";
 import Task from "./Task";

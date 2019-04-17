@@ -18,6 +18,20 @@ const Component = ({ application, onCreate, mutate }) => {
         __typename: "Application",
         id: application.id,
         airtableId: application.airtableId,
+        specialist: {
+          __typename: "Specialist",
+          id: application.specialist.id,
+          firstname: application.specialist.firstName,
+        },
+        project: {
+          __typename: "Project",
+          id: application.project.id,
+          user: {
+            __typename: "User",
+            id: application.project.user.id,
+            companyName: application.project.user.companyName
+          }
+        }
       },
       name: null,
       estimate: null,
