@@ -83,7 +83,20 @@ const EditTask = ({
   const updateField = (attribute, value) => {
     const newData = { ...attributes, [attribute]: value };
     setAttributes(newData);
-    graphqlClient.writeData({ id: `Task:${task.id}`, data: newData });
+
+    let stage = task.stage;
+    if (task.stage === "Quote Requested" && attribute === "estimate") {
+      stage = "Quote Provided";
+    }
+
+    graphqlClient.writeData({
+      id: `Task:${task.id}`,
+      data: {
+        ...newData,
+        stage,
+      },
+    });
+
     return newData;
   };
 
@@ -175,9 +188,7 @@ const EditTask = ({
             </Padding>
           </Scrollable>
         </VerticalLayout.Content>
-        {!readOnly && (
-          <Actions isClient={isClient} task={task} />
-        )}
+        {!readOnly && <Actions isClient={isClient} task={task} />}
       </VerticalLayout>
     </TaskDrawer>
   );
