@@ -15,6 +15,15 @@ class Tasks::Update < ApplicationService
       task.stage = "Quote Provided"
     end
 
+    # If the stage is "Quote Provided" and the name, dueDate or description
+    # was changed, then set the stage to "Not Assigned" and clear the estimate
+    if task.stage == "Quote Provided"
+      if task.name_changed? or task.due_date_changed? or task.description_changed?
+        task.stage = "Not Assigned"
+        task.estimate = nil
+      end
+    end
+
     task.sync_to_airtable if task.save
     task
   end

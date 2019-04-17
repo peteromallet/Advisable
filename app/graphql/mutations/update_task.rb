@@ -8,12 +8,12 @@ class Mutations::UpdateTask < Mutations::BaseMutation
   field :task, Types::TaskType, null: true
   field :errors, [Types::Error], null: true
 
-  # def authorized?(**args)
-  #   task = Task.find_by_airtable_id!(args[:id])
-  #   policy = BookingPolicy.new(context[:current_user], booking)
-  #   return true if policy.is_specialist_or_client
-  #   return false, { errors: [{ code: "not_authorized" }] }
-  # end
+  def authorized?(**args)
+    task = Task.find_by_uid!(args[:id])
+    policy = TaskPolicy.new(context[:current_user], task)
+    return true if policy.is_specialist_or_client
+    return false, { errors: [{ code: "not_authorized" }] }
+  end
 
   def resolve(**args)
     task = Task.find_by_uid!(args[:id])
