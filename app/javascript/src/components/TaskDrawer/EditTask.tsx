@@ -33,6 +33,39 @@ interface Params {
   showStatusNotice?: boolean;
 }
 
+const READ = "READ";
+const WRITE = "WRITE";
+const PROMPT = "PROMPT";
+
+const PERMISSIONS = {
+  "Not Assigned": {
+    title: () => WRITE,
+    dueDate: () => WRITE,
+    estimate: isClient => (isClient ? READ : WRITE),
+    description: () => WRITE,
+  },
+  "Quote Requested": {
+    title: () => WRITE,
+    dueDate: () => WRITE,
+    estimate: isClient => (isClient ? READ : WRITE),
+    description: () => WRITE,
+  },
+  "Quote Provided": {
+    title: isClient => (isClient ? PROMPT : READ),
+    dueDate: isClient => (isClient ? PROMPT : READ),
+    estimate: isClient => (isClient ? READ : WRITE),
+    description: isClient => (isClient ? PROMPT : READ),
+  },
+};
+
+const getTaskPermission = (task, key, isClient) => {
+  const permissions = PERMISSIONS[task.stage];
+  if (!permissions) return READ;
+  const permission = permissions[key];
+  if (!permission) return READ;
+  return permission(isClient);
+};
+
 let timer;
 
 const EditTask = ({
@@ -50,12 +83,12 @@ const EditTask = ({
     dueDate: task.dueDate || "",
     estimate: task.estimate || "",
   });
-  const [focusedElement, setFocusedElement] = React.useState(null);
   const [editAllowed, setEditAllowed] = React.useState(false);
   const [confirmPrompt, setConfirmPrompt] = React.useState(false);
+  const [focusedElement, setFocusedElement] = React.useState(null);
 
   const handleFocus = input => e => {
-    if (readOnly) {
+    if (readOnly || getTaskPermission(task, input, isClient) === READ) {
       e.preventDefault();
       return;
     }
@@ -85,6 +118,8 @@ const EditTask = ({
     setAttributes(newData);
 
     let stage = task.stage;
+    // Immediately update the stage in the cache if the freelancer is providing
+    // an estimate.
     if (task.stage === "Quote Requested" && attribute === "estimate") {
       stage = "Quote Provided";
     }
@@ -110,6 +145,11 @@ const EditTask = ({
     clearTimeout(timer);
     timer = setTimeout(() => onSave({ [attribute]: value }), 1000);
   };
+
+  const titleReadOnly = readOnly || getTaskPermission(task, "title", isClient) === READ;
+  const dueDateReadOnly = readOnly || getTaskPermission(task, "dueDate", isClient) === READ;
+  const estimateReadOnly = readOnly || getTaskPermission(task, "estimate", isClient) === READ;
+  const descriptionReadOnly = readOnly || getTaskPermission(task, "description", isClient) === READ;
 
   return (
     <TaskDrawer>
@@ -143,12 +183,12 @@ const EditTask = ({
             {!hideStatus && <TaskStatus showIcon>{task.stage}</TaskStatus>}
             <Title
               onBlur={handleBlur}
-              readOnly={readOnly}
+              readOnly={titleReadOnly}
               value={attributes.name}
-              onFocus={handleFocus("TITLE")}
+              onFocus={handleFocus("title")}
               onChange={handleChangeWithTimeout("name")}
               autoFocus={!Boolean(task.name)}
-              isFocused={editAllowed && focusedElement === "TITLE"}
+              isFocused={editAllowed && focusedElement === "title"}
             />
           </Padding>
         </VerticalLayout.Header>
@@ -157,33 +197,33 @@ const EditTask = ({
             <Padding left="m" bottom="m" right="m">
               <TaskDetails>
                 <DueDate
-                  readOnly={readOnly}
+                  readOnly={dueDateReadOnly}
                   value={attributes.dueDate}
-                  onClick={handleFocus("DUE_DATE")}
+                  onClick={handleFocus("dueDate")}
                   onClose={handleBlur}
                   onChange={handleChange("dueDate")}
-                  isOpen={editAllowed && focusedElement === "DUE_DATE"}
+                  isOpen={editAllowed && focusedElement === "dueDate"}
                 />
                 <Estimate
                   task={task}
-                  readOnly={readOnly}
+                  readOnly={estimateReadOnly}
                   isClient={isClient}
-                  onClick={handleFocus("QUOTE")}
+                  onClick={handleFocus("estimate")}
                   onClose={handleBlur}
                   onChange={handleChange("estimate")}
-                  isOpen={editAllowed && focusedElement === "QUOTE"}
+                  isOpen={editAllowed && focusedElement === "estimate"}
                 />
               </TaskDetails>
               {showStatusNotice && (
                 <StageDescription isClient={isClient} stage={task.stage} />
               )}
               <Description
-                readOnly={readOnly}
+                readOnly={descriptionReadOnly}
                 value={attributes.description}
                 onBlur={handleBlur}
-                onFocus={handleFocus("DESCRIPTION")}
+                onFocus={handleFocus("description")}
                 onChange={handleChangeWithTimeout("description")}
-                isFocused={editAllowed && focusedElement === "DESCRIPTION"}
+                isFocused={editAllowed && focusedElement === "description"}
               />
             </Padding>
           </Scrollable>
