@@ -13,21 +13,18 @@ const ActiveTalent = ({ data, history }) => {
   };
 
   return (
-    <>
-      <Header />
-      <Layout>
-        <Layout.Main>
-          {data.loading && <Loading />}
-          {!data.loading && data.viewer.applications.length > 0 && (
-            <Manage
-              onClick={handleClick}
-              applications={data.viewer.applications}
-            />
-          )}
-          {!data.loading && data.viewer.applications.length === 0 && <Empty />}
-        </Layout.Main>
-      </Layout>
-    </>
+    <Layout>
+      <Layout.Main>
+        {data.loading && <Loading />}
+        {!data.loading && data.viewer.applications.length > 0 && (
+          <Manage
+            onClick={handleClick}
+            applications={data.viewer.applications}
+          />
+        )}
+        {!data.loading && data.viewer.applications.length === 0 && <Empty />}
+      </Layout.Main>
+    </Layout>
   );
 };
 

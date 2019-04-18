@@ -15,25 +15,20 @@ export default () => {
   useScrollRestore();
 
   return (
-    <React.Fragment>
-      <Header />
-      <Layout>
-        <Layout.Main>
-          <Heading level={2}>
-            Your projects
-          </Heading>
-          <Divider marginTop="l" marginBottom="xl" />
-          <Projects>
-            <Query query={PROJECTS}>
-              {query => {
-                if (query.loading) return <Loading />;
+    <Layout>
+      <Layout.Main>
+        <Heading level={2}>Your projects</Heading>
+        <Divider marginTop="l" marginBottom="xl" />
+        <Projects>
+          <Query query={PROJECTS}>
+            {query => {
+              if (query.loading) return <Loading />;
 
-                return <ProjectsList projects={query.data.viewer.projects} />;
-              }}
-            </Query>
-          </Projects>
-        </Layout.Main>
-      </Layout>
-    </React.Fragment>
+              return <ProjectsList projects={query.data.viewer.projects} />;
+            }}
+          </Query>
+        </Projects>
+      </Layout.Main>
+    </Layout>
   );
 };
