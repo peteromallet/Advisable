@@ -39,7 +39,7 @@ export const Row = styled.div`
   display: flex;
   margin-top: -1px;
   user-select: none;
-  padding: 15px 20px;
+  padding: 15px 30px;
   position: relative;
   align-items: center;
   border-top: 1px solid #eceff8;

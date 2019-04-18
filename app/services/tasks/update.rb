@@ -11,7 +11,7 @@ class Tasks::Update < ApplicationService
 
     # If the stage is "Quote Requested" and the estimate has changed then set
     # the status to "Quote Provided".
-    if task.estimate_changed? && task.stage == "Quote Requested"
+    if task.estimate_changed? && ["Quote Requested"].include?(task.stage)
       task.stage = "Quote Provided"
     end
 

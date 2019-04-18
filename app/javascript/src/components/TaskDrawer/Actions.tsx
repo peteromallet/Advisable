@@ -88,23 +88,28 @@ const Component = ({
   };
 
   let actions = [];
+  const hasQuote = Boolean(task.estimate);
 
   if (isClient && stage === "Not Assigned") {
+    if (!hasQuote) {
+      actions.push(
+        <Button
+          key="quote"
+          styling="primary"
+          disabled={loading}
+          onClick={handleRequestQuote}
+          loading={loading === "REQUEST_QUOTE"}
+        >
+          Request Quote
+        </Button>
+      );
+    }
+
     actions.push(
       <Button
         key="quote"
-        styling="primary"
         disabled={loading}
-        onClick={handleRequestQuote}
-        loading={loading === "REQUEST_QUOTE"}
-      >
-        Request Quote
-      </Button>
-    );
-    actions.push(
-      <Button
-        key="quote"
-        disabled={loading}
+        styling={hasQuote && "primary"}
         loading={loading === "ASSIGN"}
         onClick={() => setConfirmation("ASSIGN")}
       >
@@ -199,7 +204,7 @@ const Component = ({
                   You can add additional tasks if more working needs to be done.
                 </Text>
               </Padding>
-              {!task.estimate && (
+              {!hasQuote && (
                 <Padding bottom="l">
                   <Text size="s">
                     This task has no estimate. You may want to request a quote
