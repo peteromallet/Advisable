@@ -3,29 +3,19 @@ import React, { Suspense, lazy } from "react";
 
 import Loading from "src/components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
-import Project from "./views/Project";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
-import Projects from "./views/Projects";
-import Proposal from "./views/Proposal";
-import Applicant from "./views/Applicant";
 import References from "./views/References";
 import JobListing from "./views/JobListing";
-import ActiveTalent from "./views/ActiveTalent";
-import Applications from "./views/Applications";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
 import ApplicationFlow from "./views/ApplicationFlow";
 import InterviewRequest from "./views/InterviewRequest";
-import UpdateProfile from "./views/UpdateProfile";
-import NotFound from "./views/NotFound";
+import ApplicationRoutes from "./ApplicationRoutes";
 
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
-const Booking = lazy(() => import("./views/Booking"));
-const FreelancerProjects = lazy(() => import("./views/FreelancerProjects"));
-const FreelancerActiveApplication = lazy(() => import("./views/FreelancerActiveApplication"));
 
 const Routes = () => {
   return (
@@ -45,6 +35,7 @@ const Routes = () => {
           <Route path="/signup/:id" component={Signup} />
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
           <Route
+            exact
             path="/clients/:userID/availability"
             component={Availability}
           />
@@ -56,54 +47,13 @@ const Routes = () => {
             path="/interview_request/:interviewID"
             component={InterviewRequest}
           />
-          <AuthenticatedRoute
-            path="/manage/:applicationId"
-            component={Booking}
-          />
-          <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
-          <AuthenticatedRoute
-            exact
-            freelancerRoute
-            path="/clients"
-            component={FreelancerProjects}
-          />
-          <AuthenticatedRoute
-            freelancerRoute
-            path="/clients/:applicationId"
-            component={FreelancerActiveApplication}
-          />
-          <AuthenticatedRoute
-            path="/projects/:projectID/applications/:applicationID"
-            component={Applicant}
-          />
-          <Route path="/projects/:projectID" component={Project} />
-          <AuthenticatedRoute path="/projects" component={Projects} />
           <Route exact path="/invites/:applicationId" component={JobListing} />
           <Route
             path="/invites/:applicationId/apply"
             component={ApplicationFlow}
           />
-          
-          <AuthenticatedRoute
-            freelancerRoute
-            component={Proposal}
-            path={"/applications/:applicationId/proposal"}
-          />
 
-          <AuthenticatedRoute
-            exact
-            freelancerRoute
-            path="/applications"
-            component={Applications}
-          />
-
-          <AuthenticatedRoute
-            freelancerRoute
-            path="/profile"
-            component={UpdateProfile}
-          />
-
-          <Route component={NotFound} />
+          <Route component={ApplicationRoutes} />
         </Switch>
       </BrowserRouter>
     </Suspense>

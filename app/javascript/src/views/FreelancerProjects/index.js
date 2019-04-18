@@ -1,7 +1,6 @@
 // Loads the active projects view for freelancers.
 import React from "react";
 import { graphql } from "react-apollo";
-import Header from "../../components/Header";
 import Layout from "../../components/Layout";
 import Empty from "./Empty";
 import Loading from "./Loading";
@@ -14,21 +13,18 @@ const FreelancerProjects = ({ data, history }) => {
   };
 
   return (
-    <>
-      <Header />
-      <Layout>
-        <Layout.Main>
-          {data.loading && <Loading />}
-          {!data.loading && data.viewer.applications.length > 0 && (
-            <ActiveApplications
-              onClick={handleClick}
-              applications={data.viewer.applications}
-            />
-          )}
-          {!data.loading && data.viewer.applications.length === 0 && <Empty />}
-        </Layout.Main>
-      </Layout>
-    </>
+    <Layout>
+      <Layout.Main>
+        {data.loading && <Loading />}
+        {!data.loading && data.viewer.applications.length > 0 && (
+          <ActiveApplications
+            onClick={handleClick}
+            applications={data.viewer.applications}
+          />
+        )}
+        {!data.loading && data.viewer.applications.length === 0 && <Empty />}
+      </Layout.Main>
+    </Layout>
   );
 };
 

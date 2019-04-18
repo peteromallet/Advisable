@@ -3,7 +3,6 @@ import { graphql } from "react-apollo";
 import { match } from "react-router";
 import { matchPath } from "react-router-dom";
 import NotFound from "../../views/NotFound";
-import Header from "../../components/Header";
 import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import TaskDrawer from "../../components/TaskDrawer";
@@ -94,7 +93,6 @@ const Booking = ({ data, match, history, location }: Props) => {
         isClient={data.viewer.__typename === "User"}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
-      <Header />
       <Layout>
         <Sidebar data={data} />
         <Layout.Main>

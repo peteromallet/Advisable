@@ -2,7 +2,6 @@
 import React from "react";
 import get from "lodash/get";
 import filter from "lodash/filter";
-import reject from "lodash/reject";
 import countBy from "lodash/countBy";
 import Sticky from "react-stickynode";
 import Icon from "src/components/Icon";
@@ -10,10 +9,10 @@ import pluralize from "src/utilities/pluralize";
 import useScrollRestore from 'src/utilities/useScrollRestore';
 import { Mobile } from "src/components/Breakpoint";
 import ShareAction from "../components/ShareAction";
+import Layout from "../../../components/Layout";
 import {
   ProjectTitle,
   TotalApplicants,
-  ProjectNavigation,
   NavMenu,
   NavMenuItem,
   NavMenuItemIcon,
@@ -67,8 +66,8 @@ export default ({ match, data }) => {
   return (
     <Mobile>
       {isMobile => (
-        <ProjectNavigation>
-          <Sticky enabled={!isMobile} top={112}>
+        <Layout.Sidebar>
+          <Sticky enabled={!isMobile} top={98}>
             <ProjectTitle>{data.project.primarySkill}</ProjectTitle>
             <TotalApplicants>
               {pluralize(
@@ -100,7 +99,7 @@ export default ({ match, data }) => {
               <ShareAction url={data.project.clientReferralUrl} />
             )}
           </Sticky>
-        </ProjectNavigation>
+        </Layout.Sidebar>
       )}
     </Mobile>
   );
