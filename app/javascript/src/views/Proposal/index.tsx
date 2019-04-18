@@ -1,7 +1,6 @@
 import * as React from "react";
 import { compose, graphql } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Header from "../../components/Header";
 import Layout from "../../components/Layout";
 import Rate from "./Rate";
 import Send from "./Send";
@@ -20,42 +19,31 @@ const Proposals = ({ fetchApplication }) => {
   const urlPrefix = `/applications/${application.airtableId}/proposal`;
 
   return (
-    <>
-      <Header />
-      <Layout>
-        <Sidebar application={application} />
-        <Layout.Main>
-          <Switch>
-            <Route
-              exact
-              path={urlPrefix}
-              render={props => (
-                <Rate application={application} {...props} />
-              )}
-            />
-            <Route
-              path={`${urlPrefix}/tasks`}
-              render={props => (
-                <Tasks application={application} {...props} />
-              )}
-            />
-            <Route
-              path={`${urlPrefix}/send`}
-              render={props => (
-                <Send application={application} {...props} />
-              )}
-            />
-            <Route
-              path={`${urlPrefix}/sent`}
-              render={props => (
-                <Sent application={application} {...props} />
-              )}
-            />
-            <Route render={() => <Redirect to={urlPrefix} />} />
-          </Switch>
-        </Layout.Main>
-      </Layout>
-    </>
+    <Layout>
+      <Sidebar application={application} />
+      <Layout.Main>
+        <Switch>
+          <Route
+            exact
+            path={urlPrefix}
+            render={props => <Rate application={application} {...props} />}
+          />
+          <Route
+            path={`${urlPrefix}/tasks`}
+            render={props => <Tasks application={application} {...props} />}
+          />
+          <Route
+            path={`${urlPrefix}/send`}
+            render={props => <Send application={application} {...props} />}
+          />
+          <Route
+            path={`${urlPrefix}/sent`}
+            render={props => <Sent application={application} {...props} />}
+          />
+          <Route render={() => <Redirect to={urlPrefix} />} />
+        </Switch>
+      </Layout.Main>
+    </Layout>
   );
 };
 

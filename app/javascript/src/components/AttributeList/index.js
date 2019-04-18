@@ -1,7 +1,6 @@
 import React from "react";
-import { rgba } from "polished";
 import styled from "styled-components";
-import colors from "../../colors"
+import colors from "../../colors";
 
 const Container = styled.ul``;
 
@@ -13,8 +12,8 @@ const Item = styled.li`
   line-height: 18px;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid ${rgba(colors.neutral.s8, 0.1)};
-  border-bottom: 1px solid ${rgba(colors.neutral.s8, 0.1)};
+  border-top: 1px solid ${colors.neutral.s2};
+  border-bottom: 1px solid ${colors.neutral.s2};
 
   a {
     text-decoration: none;

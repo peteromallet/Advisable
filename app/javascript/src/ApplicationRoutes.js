@@ -14,6 +14,8 @@ const UpdateProfile = lazy(() => import("./views/UpdateProfile"));
 const Projects = lazy(() => import("./views/Projects"));
 const Project = lazy(() => import("./views/Project"));
 const Booking = lazy(() => import("./views/Booking"));
+const JobListing = lazy(() => import("./views/JobListing"));
+const ApplicationFlow = lazy(() => import("./views/ApplicationFlow"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
 const FreelancerActiveApplication = lazy(() =>
   import("./views/FreelancerActiveApplication")
@@ -60,6 +62,11 @@ export default () => (
           freelancerRoute
           path="/profile"
           component={UpdateProfile}
+        />
+        <Route exact path="/invites/:applicationId" component={JobListing} />
+        <Route
+          path="/invites/:applicationId/apply"
+          component={ApplicationFlow}
         />
         <Route component={NotFound} />
       </Switch>

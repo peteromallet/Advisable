@@ -1,7 +1,6 @@
 import React from "react";
 import { graphql } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
-import View from "src/components/View";
 import Layout from "src/components/Layout";
 import Loading from "src/components/Loading";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
@@ -17,26 +16,24 @@ const Applicant = ({ data, match, history }) => {
   if (data.loading) return <Loading />;
 
   if (data.project.application.status === "Working") {
-    return <Redirect to={`/manage/${data.project.application.airtableId}`} />
+    return <Redirect to={`/manage/${data.project.application.airtableId}`} />;
   }
 
   return (
-    <View>
-      <Layout>
-        <Sidebar data={data} match={match} history={history} />
-        <Layout.Main>
-          <Switch>
-            <Route
-              exact={true}
-              path={match.path}
-              render={route => <ApplicationDetails {...route} data={data} />}
-            />
-            <Route path={`${match.path}/proposal`} component={Proposal} />
-            <Route render={() => <Redirect to={match.url} />} />
-          </Switch>
-        </Layout.Main>
-      </Layout>
-    </View>
+    <Layout>
+      <Sidebar data={data} match={match} history={history} />
+      <Layout.Main>
+        <Switch>
+          <Route
+            exact={true}
+            path={match.path}
+            render={route => <ApplicationDetails {...route} data={data} />}
+          />
+          <Route path={`${match.path}/proposal`} component={Proposal} />
+          <Route render={() => <Redirect to={match.url} />} />
+        </Switch>
+      </Layout.Main>
+    </Layout>
   );
 };
 
