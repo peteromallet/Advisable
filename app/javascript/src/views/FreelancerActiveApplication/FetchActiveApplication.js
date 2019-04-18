@@ -10,6 +10,7 @@ import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
 import { Padding } from "../../components/Spacing";
 import Sidebar from "./Sidebar";
+import NoTasks from "./NoTasks";
 import FETCH_TASK from "./fetchTask.graphql";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 
@@ -79,23 +80,27 @@ const FetchActiveApplication = ({ history, match, data, client }) => {
       />
       <Sidebar data={data} />
       <Layout.Main>
-        <Card elevation={1}>
-          <Padding size="m" left="l" right="l">
-            <Heading level={4}>Active Tasks</Heading>
-          </Padding>
-          <Padding bottom="m">
-            <TaskList
-              tasks={application.tasks}
-              onClickTask={handleTaskClick}
-              lastRow={
-                <NewTask
-                  onCreate={addNewTaskToCache}
-                  application={application}
-                />
-              }
-            />
-          </Padding>
-        </Card>
+        {application.tasks.length > 0 ? (
+          <Card elevation={1}>
+            <Padding size="m" left="l" right="l">
+              <Heading level={4}>Active Tasks</Heading>
+            </Padding>
+            <Padding bottom="m">
+              <TaskList
+                tasks={application.tasks}
+                onClickTask={handleTaskClick}
+                lastRow={
+                  <NewTask
+                    onCreate={addNewTaskToCache}
+                    application={application}
+                  />
+                }
+              />
+            </Padding>
+          </Card>
+        ) : (
+          <NoTasks onNewTask={addNewTaskToCache} application={application} />
+        )}
       </Layout.Main>
     </Layout>
   );

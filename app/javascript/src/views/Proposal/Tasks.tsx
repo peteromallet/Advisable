@@ -87,6 +87,7 @@ const Tasks = ({ application, match, location, history }) => {
         }
       />
       <TaskDrawer
+        hideStatus
         onClose={() => history.push(match.url)}
         taskId={taskMatch ? taskMatch.params.taskId : null}
         onDeleteTask={handleDeleteTask}
