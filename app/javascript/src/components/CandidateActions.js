@@ -96,14 +96,11 @@ const statusActions = {
   Proposed: ({ projectId, application, history, stack, fullWidth }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
-    const { proposal } = application;
-
-    if (!proposal) return null;
 
     return (
       <Fragment>
         <RejectProposalModal
-          booking={proposal}
+          application={application}
           specialist={application.specialist}
           isOpen={modal === REJECT_PROPOSAL_MODAL}
           onClose={() => setModal(null)}

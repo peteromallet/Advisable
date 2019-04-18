@@ -7,10 +7,8 @@ import Login from "./views/Login";
 import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
 import References from "./views/References";
-import JobListing from "./views/JobListing";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
-import ApplicationFlow from "./views/ApplicationFlow";
 import InterviewRequest from "./views/InterviewRequest";
 import ApplicationRoutes from "./ApplicationRoutes";
 
@@ -46,11 +44,6 @@ const Routes = () => {
           <Route
             path="/interview_request/:interviewID"
             component={InterviewRequest}
-          />
-          <Route exact path="/invites/:applicationId" component={JobListing} />
-          <Route
-            path="/invites/:applicationId/apply"
-            component={ApplicationFlow}
           />
 
           <Route component={ApplicationRoutes} />

@@ -2,7 +2,7 @@
 // component mounts.
 import { useLayoutEffect } from 'react';
 
-export default (selector) => {
+export default (selector, dependents = []) => {
   useLayoutEffect(() => {
     if (selector) {
       const el = document.querySelector(selector)
@@ -10,5 +10,5 @@ export default (selector) => {
     } else {
       window.scrollTo(0,0); 
     }
-  }, [])
+  }, dependents)
 }

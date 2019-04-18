@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
+import { Status } from "../../components/Status/styles";
 import plus from "./plus.svg";
 
 export const Projects = styled.div`
@@ -48,7 +49,7 @@ export const Tile = styled.div.attrs(props => ({
 `;
 
 export const ProjectCard = styled(Link)`
-  padding: 40px;
+  padding: 30px;
   height: 280px;
   display: block;
   overflow: hidden;
@@ -61,6 +62,10 @@ export const ProjectCard = styled(Link)`
   &:hover {
     transform: translateY(-1px);
     box-shadow: 0px 10px 50px rgba(14, 29, 78, 0.15);
+  }
+
+  ${Status} {
+    margin-bottom: 20px;
   }
 
   @media (max-width: 650px) {
@@ -121,35 +126,8 @@ export const ProjectTitle = styled.h4`
   letter-spacing: -0.02em;
 `;
 
-const statusStyling = {
-  "Brief Pending Confirmation": css`
-    color: #684a00;
-    background: #fff1ce;
-  `,
-  "Project Created": css`
-    color: #684a00;
-    background: #fff1ce;
-  `,
-};
-
-export const ProjectStatus = styled.div`
-  height: 28px;
-  color: #066f56;
-  padding: 0 15px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 27px;
-  background: #e0f8f3;
-  border-radius: 15px;
-  margin-bottom: 20px;
-  display: inline-block;
-  letter-spacing: -0.03em;
-
-  ${props => statusStyling[props.children]}
-`;
-
 export const ProjectDescription = styled.p`
-  height: 95px;
+  height: 115px;
   color: #4d5880;
   display: block;
   font-size: 14px;

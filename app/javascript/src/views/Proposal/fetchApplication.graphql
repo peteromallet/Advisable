@@ -14,11 +14,16 @@ query Application($id: ID!) {
       description
       estimate
     }
+    specialist {
+      id
+      firstName
+    }
     project {
       id
       currency
       primarySkill
       user {
+        id
         companyName
       }
     }
