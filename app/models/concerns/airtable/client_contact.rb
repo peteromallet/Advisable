@@ -10,12 +10,6 @@ class Airtable::ClientContact < Airtable::Base
 
   sync_data do |user|
     client_id = fields["Client"].try(:first)
-    
-    # If the client column is blank in airtable and the user has a client
-    # in postgres then delete it.
-    if client_id.nil? && user.client_user.present?
-      user.client_user.destroy
-    end
 
     # if there is a client_id and it is not already synced then sync it.
     if client_id && user.client.try(:airtable_id) != client_id

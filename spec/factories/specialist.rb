@@ -6,7 +6,7 @@ FactoryBot.define do
     city "City"
     password "testing123"
     confirmed_at 1.day.ago
-    sequence(:uid) { |n| "spe_#{n}" }
+    sequence(:uid) { "spe_#{SecureRandom.hex[0..14]}" }
     sequence(:airtable_id) { |id| "specialist_#{id}" }
     sequence(:email) { |n| "specialist_#{n}@test.com" }
   end

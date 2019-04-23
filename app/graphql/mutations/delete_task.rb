@@ -19,8 +19,5 @@ class Mutations::DeleteTask < Mutations::BaseMutation
     {
       task: task
     }
-
-    rescue Service::Error => e
-      return { errors: [e] }
   end
 end

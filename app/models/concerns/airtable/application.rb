@@ -104,5 +104,6 @@ class Airtable::Application < Airtable::Base
     self['Applied At'] = application.applied_at
     self['Rejected Reason'] = application.rejection_reason
     self['Proposal Comment'] = application.proposal_comment
+    self['Rejected Reason Comment'] = application.rejection_reason_comment
   end
 end

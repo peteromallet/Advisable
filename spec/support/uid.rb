@@ -5,11 +5,6 @@ RSpec.shared_examples "uid" do
     expect(model.generate_uid).to_not be_nil
   end
 
-  it "can configure the prefix" do
-    model.uid_prefix("test")
-    expect(model.generate_uid).to match(/test\_/)
-  end
-
   it "generates a UID before validation" do
     record = model.new
     expect(record.uid).to be_nil
