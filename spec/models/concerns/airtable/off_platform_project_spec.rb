@@ -1,13 +1,12 @@
 require "rails_helper"
 
 describe Airtable::OffPlatformProject do
-  include_examples "sync airtable association", "Specialist", to: :specialist
-
   context 'when Okay with naming client is Yes' do
     it 'sets confidential to false' do
       record = create(:off_platform_project, confidential: true)
       airtable = Airtable::OffPlatformProject.new({
-        "Okay with naming client" => "Yes"
+        "Okay with naming client" => "Yes",
+        "Skills Required" => []
       }, id: record.airtable_id)
       expect { airtable.sync }.to change {
         record.reload.confidential
@@ -19,7 +18,8 @@ describe Airtable::OffPlatformProject do
     it 'sets confidential to true' do
       record = create(:off_platform_project, confidential: false)
       airtable = Airtable::OffPlatformProject.new({
-        "Okay with naming client" => nil
+        "Okay with naming client" => nil,
+        "Skills Required" => []
       }, id: record.airtable_id)
       expect { airtable.sync }.to change {
         record.reload.confidential

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :payment do
     project
-    uid "pay_1234"
+    sequence(:uid) { "pay_#{SecureRandom.hex[0..14]}" }
     currency "usd"
     source_id "src_1234"
     charge_id "ch_1234"

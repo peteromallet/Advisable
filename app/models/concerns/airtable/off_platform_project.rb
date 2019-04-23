@@ -23,7 +23,7 @@ class Airtable::OffPlatformProject < Airtable::Base
 
     fields['Skills Required'].each do |skill_id|
       skill = ::Skill.find_by_airtable_id(skill_id)
-      skill = Airtable::Skill.find(skill_id) unless skill.present?
+      skill = Airtable::Skill.find(skill_id).sync unless skill.present?
       off_platform_project.project_skills.find_or_create_by(skill: skill)
     end
   end

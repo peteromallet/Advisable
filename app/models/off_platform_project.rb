@@ -11,7 +11,7 @@ class OffPlatformProject < ApplicationRecord
   end
 
   def contact_name=(name)
-    self.contact_first_name = name.split(" ").first
-    self.contact_last_name = name.split(" ").last
+    self.contact_first_name = name.split(" ").try(:[], 0)
+    self.contact_last_name = name.split(" ").try(:[], 1)
   end
 end
