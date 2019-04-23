@@ -69,4 +69,10 @@ describe Mutations::StartWorking do
       expect(errors[0]["code"]).to eq("not_authorized")
     end
   end
+
+  # context "when a Service::Error is thrown" do
+  #   it "includes it in the response" do
+  #     allow(Applications::StartWorking).to reveive(:call)
+  #   end
+  # end
 end
