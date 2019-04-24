@@ -9,7 +9,7 @@ class Proposals::Accept < ApplicationService
     application.status = "Working"
     if application.save
       application.sync_to_airtable
-      WebhookEvent.trigger("proposals.accepted")
+      WebhookEvent.trigger("applications.proposal_accepted")
       return application
     else
       raise Service::Error.new(application.errors.full_messages.first)

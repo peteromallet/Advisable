@@ -6,6 +6,10 @@ class Tasks::Approve < ApplicationService
   end
 
   def call
+    if task.stage != "Submitted"
+      raise Service::Error.new("tasks.statusNotSubmitted")
+    end
+
     if task.update_attributes(stage: "Approved")
       task.sync_to_airtable
       return task

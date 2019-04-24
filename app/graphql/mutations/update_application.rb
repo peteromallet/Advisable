@@ -15,7 +15,7 @@ class Mutations::UpdateApplication < Mutations::BaseMutation
   argument :accepts_terms, Boolean, required: false
 
   field :application, Types::ApplicationType, null: true
-  field :errors, [String], null: true
+  field :errors, [Types::Error], null: true
 
   def resolve(**args)
     begin
@@ -26,9 +26,7 @@ class Mutations::UpdateApplication < Mutations::BaseMutation
         )
       }
     rescue Service::Error => e
-      {
-        errors: [e.message]
-      }
+      return { errors: [e] }
     end
   end
 

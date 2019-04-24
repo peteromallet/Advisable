@@ -1,4 +1,5 @@
 class OffPlatformProject < ApplicationRecord
+  include Airtable::Syncable
   belongs_to :specialist
   has_many :reviews, as: :project
   has_many :project_skills, as: :project

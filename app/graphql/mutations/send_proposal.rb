@@ -1,6 +1,6 @@
 class Mutations::SendProposal < Mutations::BaseMutation
   argument :application, ID, required: true
-  argument :proposal_comment, String, required: true
+  argument :proposal_comment, String, required: false
 
   field :application, Types::ApplicationType, null: true
   field :errors, [Types::Error], null: true

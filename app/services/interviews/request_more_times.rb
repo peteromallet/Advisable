@@ -11,20 +11,9 @@ class Interviews::RequestMoreTimes < ApplicationService
     end
 
     if interview.update_attributes(status: "Need More Time Options")
-      update_airtable
+      interview.sync_to_airtable
     end
 
     interview
-  end
-
-  private
-
-  def airtable_record
-    @airtable ||= Airtable::Interview.find(interview.airtable_id)
-  end
-
-  def update_airtable
-    airtable_record["Call Status"] = "Need More Time Options"
-    airtable_record.save
   end
 end

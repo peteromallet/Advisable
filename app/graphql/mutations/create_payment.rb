@@ -8,7 +8,7 @@ class Mutations::CreatePayment < Mutations::BaseMutation
 
   def resolve(**args)
     begin
-      project = Project.find_by_airtable_id(args[:project_id])
+      project = Project.find_by_airtable_id!(args[:project_id])
       payment = Payments::Create.call(project: project, source_id: args[:source], amount: args[:amount])
       return { payment: payment }
     rescue Service::Error => e

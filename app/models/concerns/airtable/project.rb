@@ -25,6 +25,12 @@ class Airtable::Project < Airtable::Base
       project.user = user
     end
 
+    fields['Skills Required'].each do |skill_id|
+      skill = ::Skill.find_by_airtable_id(skill_id)
+      skill = Airtable::Skill.find(skill_id).sync unless skill.present?
+      project.project_skills.find_or_create_by(skill: skill)
+    end
+
     sync_arrays(project)
     sync_questions(project)
 
@@ -35,11 +41,10 @@ class Airtable::Project < Airtable::Base
   end
 
   push_data do |project|
-    self['Project'] = project.name if project.saved_change_to_name?
     self['Client Contacts'] = [project.user.airtable_id] if project.saved_change_to_user_id?
     self['Project Stage'] = project.status if !project.status.blank? && project.saved_change_to_status?
     self['Deposit Amount Required'] = project.deposit / 100.0 if project.saved_change_to_deposit?
-    self['Deposit Amount Paid'] = project.deposit_paid / 100.0 if project.saved_change_to_deposit_paid?
+    self['Deposit Amount Paid'] = project.deposit_paid / 100.0
     self['Company Description'] = project.company_description if project.saved_change_to_company_description?
     self['Project Description'] = project.description if project.saved_change_to_description?
     self['Specialist Requirement Description'] = project.specialist_description if project.saved_change_to_specialist_description?
@@ -50,6 +55,8 @@ class Airtable::Project < Airtable::Base
     self['Qualification Question 1'] = project.questions.try(:[], 0) if project.saved_change_to_questions?
     self['Qualification Question 2'] = project.questions.try(:[], 1) if project.saved_change_to_questions?
     self['Accepted Terms'] = project.accepted_terms if project.saved_change_to_accepted_terms_at?
+    self['Skills Required'] = project.skills.map(&:airtable_id)
+    self['Primary Skill Required'] = project.primary_skill
   end
 
   private

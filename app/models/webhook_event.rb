@@ -19,9 +19,9 @@ class WebhookEvent < ApplicationRecord
     # "specialists.application_stage_changed" is triggered when the
     # "application_stage" column is updated during the airtable syncing process. 
     "specialists.application_stage_changed",
-    "proposals.sent",
-    "proposals.accepted",
-    "proposals.rejected",
+    "applications.proposal_accepted",
+    "applications.proposal_sent",
+    "applications.proposal_rejected",
     "applications.rejected",
   ].freeze
 

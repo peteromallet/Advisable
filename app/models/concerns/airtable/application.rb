@@ -105,5 +105,6 @@ class Airtable::Application < Airtable::Base
     self['Rejected Reason'] = application.rejection_reason
     self['Proposal Comment'] = application.proposal_comment
     self['Rejected Reason Comment'] = application.rejection_reason_comment
+    self['References Requested'] = application.references_requested ? "Yes" : nil
   end
 end

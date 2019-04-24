@@ -6,6 +6,10 @@ class Tasks::Submit < ApplicationService
   end
 
   def call
+    if task.stage != "Working"
+      raise Service::Error.new("tasks.mustBeWorking")
+    end
+
     if task.update_attributes(stage: "Submitted")
       task.sync_to_airtable
       return task

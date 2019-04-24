@@ -6,6 +6,10 @@ class Tasks::Start < ApplicationService
   end
 
   def call
+    if task.stage != "Assigned"
+      raise Service::Error.new("tasks.mustBeAssigned")
+    end
+
     if task.update_attributes(stage: "Working")
       task.sync_to_airtable
       return task

@@ -12,7 +12,7 @@ class Mutations::UpdateProject < Mutations::BaseMutation
   argument :accepted_terms, Boolean, required: false
 
   field :project, Types::ProjectType, null: true
-  field :errors, String, null: true
+  field :errors, [Types::Error], null: true
 
   def resolve(**args)
     {
@@ -23,6 +23,6 @@ class Mutations::UpdateProject < Mutations::BaseMutation
     }
 
     rescue Service::Error => e
-      return { error: e.message }
+      return { errors: [e] }
   end
 end
