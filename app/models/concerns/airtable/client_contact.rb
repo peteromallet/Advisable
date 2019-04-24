@@ -13,7 +13,7 @@ class Airtable::ClientContact < Airtable::Base
 
     # if there is a client_id and it is not already synced then sync it.
     if client_id && user.client.try(:airtable_id) != client_id
-      client = Client.find_by_airtable_id(client_id)
+      client = ::Client.find_by_airtable_id(client_id)
       client = Airtable::Client.find(client_id).sync if client.nil?
       user.client = client
     end

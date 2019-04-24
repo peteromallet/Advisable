@@ -25,10 +25,13 @@ class Airtable::Project < Airtable::Base
       project.user = user
     end
 
+    skills = project.skills.map(&:airtable_id)
     fields['Skills Required'].each do |skill_id|
-      skill = ::Skill.find_by_airtable_id(skill_id)
-      skill = Airtable::Skill.find(skill_id).sync unless skill.present?
-      project.project_skills.find_or_create_by(skill: skill)
+      unless skills.include?(skill_id)
+        skill = ::Skill.find_by_airtable_id(skill_id)
+        skill = Airtable::Skill.find(skill_id).sync unless skill.present?
+        project.project_skills.new(skill: skill)
+      end
     end
 
     sync_arrays(project)
