@@ -46,7 +46,7 @@ export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }
   }
 
   const rate = task.application.rate
-  const inputAsFloat = parseFloat(inputValue)
+  const inputAsFloat = inputValue ? parseFloat(inputValue.replace(',', '')) : 0;
   const estimateProvided = inputValue && inputAsFloat > 0;
   const earnings = estimateProvided ? calcEarnings(inputAsFloat, rate) : null;
 
