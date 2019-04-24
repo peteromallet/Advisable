@@ -10,9 +10,9 @@ class OffPlatformProjects::Create < ApplicationService
     self.project = specialist.off_platform_projects.new(attributes.except(:skills))
     set_validation_status
     associate_skills
+    
     if project.save
-      record = Airtable::OffPlatformProject.new({})
-      record.push(project)
+      project.sync_to_airtable
     end
 
     project

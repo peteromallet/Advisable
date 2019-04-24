@@ -6,6 +6,10 @@ class Tasks::RequestQuote < ApplicationService
   end
 
   def call
+    if task.stage != "Not Assigned"
+      raise Service::Error.new("tasks.cantRequestQuote")
+    end
+
     if task.update_attributes(stage: "Quote Requested")
       task.sync_to_airtable
       return task

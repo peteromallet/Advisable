@@ -1,13 +1,7 @@
 class Types::MutationType < GraphQL::Schema::Object
   field :start_working, mutation: Mutations::StartWorking
   field :send_proposal, mutation: Mutations::SendProposal
-  field :create_proposal, mutation: Mutations::CreateProposal
-  field :update_proposal, mutation: Mutations::UpdateProposal
   field :accept_proposal, mutation: Mutations::AcceptProposal
-
-  field :accept_booking, mutation: Mutations::AcceptBooking
-  field :decline_booking, mutation: Mutations::DeclineBooking
-  field :update_application_status, mutation: Mutations::UpdateApplicationStatus
 
   field :request_introduction, mutation: Mutations::RequestIntroduction
   field :accept_interview_request, mutation: Mutations::AcceptInterviewRequest

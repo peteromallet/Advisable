@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Mutations::AcceptInterviewRequest do
+describe Mutations::RequestIntroduction do
   let(:application) { create(:application, status: "Applied") }
 
   let(:time) {

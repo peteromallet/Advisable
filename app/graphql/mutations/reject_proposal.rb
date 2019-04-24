@@ -4,7 +4,7 @@ class Mutations::RejectProposal < Mutations::BaseMutation
   argument :comment, String, required: false
 
   field :application, Types::ApplicationType, null: true
-  field :errors, [String], null: true
+  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     application = Application.find_by_airtable_id!(args[:id])

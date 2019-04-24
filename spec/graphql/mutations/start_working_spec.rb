@@ -70,9 +70,14 @@ describe Mutations::StartWorking do
     end
   end
 
-  # context "when a Service::Error is thrown" do
-  #   it "includes it in the response" do
-  #     allow(Applications::StartWorking).to reveive(:call)
-  #   end
-  # end
+  context "when a Service::Error is thrown" do
+    it "includes it in the response" do
+      error = Service::Error.new("service_error")
+      allow(Applications::StartWorking).to receive(:call).and_raise(error)
+      context = { current_user: application.project.user }
+      response = AdvisableSchema.execute(query, context: context)
+      errors = response["data"]["startWorking"]["errors"]
+      expect(errors[0]["code"]).to eq("service_error")
+    end
+  end
 end

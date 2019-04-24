@@ -9,6 +9,10 @@ class Tasks::Update < ApplicationService
   def call
     task.assign_attributes(attributes)
 
+    if ["Assigned", "Working", "Submitted", "Approved"].include?(task.stage)
+      raise Service::Error.new("tasks.isLocked")
+    end
+
     # If the stage is "Quote Requested" and the estimate has changed then set
     # the status to "Quote Provided".
     if task.estimate_changed? && ["Quote Requested"].include?(task.stage)

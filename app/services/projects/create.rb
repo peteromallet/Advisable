@@ -8,16 +8,21 @@ class Projects::Create < ApplicationService
 
   def call
     raise Service::Error.new("Invalid skill") unless skill.present?
+    project.skills << skill
     project.status = project_status
     project.name = "#{user.company_name} - #{project.primary_skill}"
-    sync_with_airtable if project.save
-    project
+    if project.save
+      project.sync_to_airtable({
+        "Project Status" => "Open",
+      })
+      return project
+    end
   end
 
   private
 
   def skill
-    @skill ||= Skill.find_by_name(project.primary_skill) || sync_skill_from_airtable
+    @skill ||= (Skill.find_by_name(project.primary_skill) || sync_skill_from_airtable)
   end
 
   def sync_skill_from_airtable
@@ -29,19 +34,5 @@ class Projects::Create < ApplicationService
   def project_status
     return "Brief Pending Confirmation" if project.service_type == "Self-Service"
     "Project Created"
-  end
-
-  def sync_with_airtable
-    record = Airtable::Project.new(
-      "Client Contacts" => [user.airtable_id],
-      "Skills Required" => [skill.airtable_id],
-      "Project Stage" => project.status,
-      "Service Type" => project.service_type,
-      "Project Status" => "Open",
-      "Primary Skill Required" => project.primary_skill
-    )
-    record.create
-    project.airtable_id = record.id
-    project.save(validate: false)
   end
 end

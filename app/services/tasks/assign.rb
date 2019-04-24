@@ -6,6 +6,10 @@ class Tasks::Assign < ApplicationService
   end
 
   def call
+    unless ["Not Assigned", "Quote Requested", "Quote Provided"].include?(task.stage)
+      raise Service::Error.new("tasks.alreadyAssigned")
+    end
+
     if task.update_attributes(stage: "Assigned")
       task.sync_to_airtable
       return task
