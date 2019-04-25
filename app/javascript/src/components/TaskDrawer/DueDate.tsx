@@ -58,7 +58,7 @@ export default ({
       isOpen={isOpen}
       onClose={onClose}
       trigger={
-        <Detail tabIndex={0} readOnly={readOnly}>
+        <Detail aria-label="Due Date" tabIndex={0} readOnly={readOnly}>
           <DetailIcon>
             <Icon strokeWidth={1} width={20} icon="calendar" />
           </DetailIcon>

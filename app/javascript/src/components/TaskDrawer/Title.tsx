@@ -43,6 +43,7 @@ export default ({ value, ...props }) => {
   return (
     <Title
       type="text"
+      name="name"
       {...props}
       ref={ref}
       rows={rows}

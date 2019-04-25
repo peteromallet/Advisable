@@ -57,7 +57,7 @@ export default ({ isOpen, onClose, children }: Props) => {
               drawer =>
                 drawer.item && (
                   <Drawer key={drawer.key} style={drawer.props}>
-                    <CloseButton onClick={onClose}>
+                    <CloseButton aria-label="Close Drawer" onClick={onClose}>
                       <Icon icon="x" strokeWidth={2} />
                     </CloseButton>
                     {children}

@@ -1,11 +1,15 @@
 require "rails_helper"
 
 describe "Creating a project" do
+  before :each do
+    stub_request(:post, /https:\/\/api\.airtable\.com\/v0\/.*\/Projects/).
+    to_return(status: 200, body: {
+      "id": "rec_123",
+      "fields": {}
+    }.to_json, headers: {})
+  end
+
   it "creates a project record" do
-    airtable = double(Airtable::Project)
-    allow(Airtable::Project).to receive(:new).and_return(airtable)
-    allow(airtable).to receive(:create)
-    allow(airtable).to receive(:id).and_return('rec_1234')
     create(:skill, name: "Testing")
     allow(Airtable::Skill).to receive(:active).and_return([
       OpenStruct.new(id: "rec_1234", fields: {

@@ -40,7 +40,7 @@ RSpec.shared_examples "Airtable::Syncable" do
       inst = create(described_class.to_s.underscore.to_sym, airtable_id: "123")
       airtable_class = "Airtable::#{described_class.to_s}".constantize
       airtable_record = double(airtable_class)
-      expect(airtable_record).to receive(:push).with(inst)
+      expect(airtable_record).to receive(:push).with(inst, {})
       expect(airtable_class).to receive(:find).and_return(airtable_record)
       inst.sync_changes_to_airtable = true
       inst.save
@@ -52,7 +52,7 @@ RSpec.shared_examples "Airtable::Syncable" do
       inst = build(described_class.to_s.underscore.to_sym, airtable_id: nil)
       airtable_class = "Airtable::#{described_class.to_s}".constantize
       airtable_record = double(airtable_class)
-      expect(airtable_record).to receive(:push).with(inst)
+      expect(airtable_record).to receive(:push).with(inst, {})
       expect(airtable_class).to receive(:new).with({}).and_return(airtable_record)
       inst.sync_changes_to_airtable = true
       inst.save

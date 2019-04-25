@@ -10,10 +10,10 @@ const Navbar = ({
 }) => {
   return (
     <div className={className}>
-      <button type='button' onClick={() => onPreviousClick()}>
+      <button aria-label="Previous Month" type='button' onClick={() => onPreviousClick()}>
         ←
       </button>
-      <button type='button' onClick={() => onNextClick()}>
+      <button aria-label="Next Month" type='button' onClick={() => onNextClick()}>
         →
       </button>
     </div>

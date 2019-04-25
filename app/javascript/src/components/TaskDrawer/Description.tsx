@@ -37,6 +37,7 @@ export default props => {
       <Label>Description</Label>
       <Description
         type="text"
+        name="description"
         {...props}
         ref={ref}
         rows={rows}

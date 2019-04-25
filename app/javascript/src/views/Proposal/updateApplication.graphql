@@ -5,6 +5,8 @@ mutation updateApplication($input: UpdateApplicationInput!) {
       airtableId
       rate
     }
-    errors
+    errors {
+      code
+    }
   }
 }

@@ -30,7 +30,7 @@ export default ({ data, history, match }) => {
             <Avatar
               size="l"
               name={specialist.name}
-              url={specialist.image.url}
+              url={get(specialist, "image.url")}
             />
           </Padding>
           <Heading level={3}>{specialist.name}</Heading>
