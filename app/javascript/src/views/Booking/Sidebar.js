@@ -1,4 +1,5 @@
 import  React from "react";
+import { get } from "lodash";
 import Sticky from "react-stickynode";
 import Text from "../../components/Text";
 import Avatar from "../../components/Avatar";
@@ -24,7 +25,7 @@ export default ({ data }) => {
             <Avatar
               size="l"
               name={specialist.name}
-              url={specialist.image.url}
+              url={get(specialist, "image.url")}
             />
           </Padding>
           <Heading level={3}>{specialist.name}</Heading>
