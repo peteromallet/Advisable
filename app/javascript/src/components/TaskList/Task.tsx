@@ -1,11 +1,10 @@
 import * as React from "react";
 import * as moment from "moment";
 import { Task as TaskType } from "../../types";
-import { Task, Title, Detail, TaskContent } from "./styles";
+import { Task, Title, Detail, TaskContent, Prompt } from "./styles";
 import Icon from "../Icon";
 import TaskStatus from "../TaskStatus";
 import pluarlize from "../../utilities/pluralize";
-import Prompt from "./Prompt";
 
 interface Props {
   task: TaskType;
@@ -14,10 +13,19 @@ interface Props {
   hideStatus?: boolean;
 }
 
+const shouldShowPrompt = (isClient, task) => {
+  if (task.stage === "Quote Requested" && !isClient) return true;
+  if (task.stage === "Quote Provided" && isClient) return true;
+  if (task.stage === "Assigned" && !isClient) return true;
+  if (task.stage === "Submitted" && isClient) return true;
+}
+
 export default ({ task, hideStatus, onClick, isClient }: Props) => {
+  const showPrompt = shouldShowPrompt(isClient, task);
+
   return (
-    <Task onClick={onClick}>
-      <Prompt task={task} isClient={isClient} />
+    <Task onClick={onClick} showPrompt={showPrompt}>
+      {showPrompt && <Prompt />}
       <TaskContent>
         <Title>{task.name || "Untitled"}</Title>
         {task.dueDate && (

@@ -3,7 +3,7 @@ import React from "react";
 import Icon from "../Icon";
 import Padding from "../Spacing/Padding";
 import { useTranslation } from "react-i18next/hooks";
-import { ArrowPrompt, StageDescription } from "./styles";
+import { StageDescription } from "./styles";
 
 const FOR_CLIENT = {
   "Not Assigned": ({ t, task }) => {
@@ -20,10 +20,12 @@ const FOR_CLIENT = {
   },
   "Quote Requested": ({ t }) => {
     return (
-      <StageDescription>
-        <Icon icon="info" width={20} />
-        {t("tasks.stageDescriptions.client.quoteRequested")}
-      </StageDescription>
+      <Padding bottom="m">
+        <StageDescription>
+          <Icon icon="info" width={20} />
+          {t("tasks.stageDescriptions.client.quoteRequested")}
+        </StageDescription>
+      </Padding>
     );
   },
   "Quote Provided": ({ t, task }) => {
@@ -64,9 +66,6 @@ const FOR_SPECIALIST = {
   "Quote Requested": ({ t }) => {
     return (
       <StageDescription>
-        <ArrowPrompt>
-          <Icon icon="arrow-up" strokeWidth={2} />
-        </ArrowPrompt>
         <Icon icon="info" width={20} />
         {t("tasks.stageDescriptions.specialist.quoteRequested")}
       </StageDescription>

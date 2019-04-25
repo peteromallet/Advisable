@@ -38,9 +38,11 @@ export const NewTask = styled.button`
   cursor: pointer;
   font-size: 15px;
   appearance: none;
+  appearance: none;
   font-weight: 500;
   align-items: center;
   display: inline-flex;
+  background: transparent;
   color: ${colors.blue.base};
 
   &:hover {

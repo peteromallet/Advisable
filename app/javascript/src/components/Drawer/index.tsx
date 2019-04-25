@@ -1,7 +1,10 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
 import { useTransition } from "react-spring";
+import Div100vh from "react-div-100vh";
+import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import Icon from "../Icon";
+import { useMobile } from "../../components/Breakpoint";
 import { Container, Backdrop, Drawer, CloseButton } from "./styles";
 
 const root = document.createElement("div");
@@ -14,11 +17,30 @@ interface Props {
 }
 
 export default ({ isOpen, onClose, children }: Props) => {
+  const isMobile = useMobile();
+  const drawerRef = React.useRef(null);
+
   const handleKeyPress = e => {
     if (e.keyCode === 27) {
       onClose();
     }
   };
+
+  React.useEffect(() => {
+    return () => {
+      clearAllBodyScrollLocks();
+    };
+  }, []);
+
+  React.useLayoutEffect(() => {
+    if (isOpen && document.body.style.overflow !== "hidden") {
+      disableBodyScroll(drawerRef.current);
+    }
+
+    if (!isOpen) {
+      clearAllBodyScrollLocks();
+    }
+  }, [isOpen]);
 
   React.useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);
@@ -34,9 +56,17 @@ export default ({ isOpen, onClose, children }: Props) => {
   });
 
   const drawerTransition = useTransition(isOpen, null, {
-    from: { transform: "translate3d(100%, 0, 0)" },
+    from: {
+      transform: isMobile
+        ? "translate3d(0, 100%, 0)"
+        : "translate3d(100%, 0, 0)",
+    },
     enter: { transform: "translate3d(0, 0, 0)" },
-    leave: { transform: "translate3d(100%, 0, 0)" },
+    leave: {
+      transform: isMobile
+        ? "translate3d(0, 100%, 0)"
+        : "translate3d(100%, 0, 0)",
+    },
     config: {
       mass: 1,
       tension: 320,
@@ -56,11 +86,13 @@ export default ({ isOpen, onClose, children }: Props) => {
             {drawerTransition.map(
               drawer =>
                 drawer.item && (
-                  <Drawer key={drawer.key} style={drawer.props}>
-                    <CloseButton aria-label="Close Drawer" onClick={onClose}>
-                      <Icon icon="x" strokeWidth={2} />
-                    </CloseButton>
-                    {children}
+                  <Drawer ref={drawerRef} key={drawer.key} style={drawer.props}>
+                    <Div100vh>
+                      <CloseButton aria-label="Close Drawer" onClick={onClose}>
+                        <Icon icon="x" strokeWidth={2} />
+                      </CloseButton>
+                      {children}
+                    </Div100vh>
                   </Drawer>
                 )
             )}

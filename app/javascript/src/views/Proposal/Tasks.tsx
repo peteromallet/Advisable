@@ -3,16 +3,19 @@ import { matchPath } from "react-router";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
+import ButtonGroup from "../../components/ButtonGroup";
 import Heading from "../../components/Heading";
 import NewTask from "../../components/NewTask";
 import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
 import { Padding } from "../../components/Spacing";
 import graphqlClient from "../../graphqlClient";
+import { useMobile } from "../../components/Breakpoint";
 import FETCH_TASK from "./fetchTask.graphql";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 
 const Tasks = ({ application, match, location, history }) => {
+  const isMobile = useMobile();
   const onSelectTask = task => {
     history.push(`${match.url}/${task.id}`);
   };
@@ -82,9 +85,7 @@ const Tasks = ({ application, match, location, history }) => {
         hideStatus
         tasks={application.tasks}
         onClickTask={onSelectTask}
-        lastRow={
-          <NewTask onCreate={handleNewTask} application={application} />
-        }
+        lastRow={<NewTask onCreate={handleNewTask} application={application} />}
       />
       <TaskDrawer
         hideStatus
@@ -94,9 +95,11 @@ const Tasks = ({ application, match, location, history }) => {
       />
       {application.tasks.length > 0 && (
         <Padding size="l">
-          <Button styling="primary" onClick={handleContinue}>
-            Continue
-          </Button>
+          <ButtonGroup fullWidth={isMobile}>
+            <Button styling="primary" onClick={handleContinue}>
+              Continue
+            </Button>
+          </ButtonGroup>
         </Padding>
       )}
     </Card>

@@ -14,6 +14,7 @@ import {
   DetailValue,
   DetailPlaceholder,
   Popout,
+  ArrowPrompt,
 } from "./styles";
 import { Task } from "../../types";
 
@@ -36,7 +37,15 @@ const calcEarnings = (hours: number, rate: string) => {
   return total - total * 0.2;
 };
 
-export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }) => {
+export default ({
+  task,
+  isClient,
+  onClick,
+  onClose,
+  isOpen,
+  readOnly,
+  onChange,
+}) => {
   const saveButton = React.useRef(null);
   const [value, setValue] = React.useState(task.estimate);
   const [inputValue, setInputValue] = React.useState(value && value.toString());
@@ -45,8 +54,8 @@ export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }
     return null;
   }
 
-  const rate = task.application.rate
-  const inputAsFloat = inputValue ? parseFloat(inputValue.replace(',', '')) : 0;
+  const rate = task.application.rate;
+  const inputAsFloat = inputValue ? parseFloat(inputValue.replace(",", "")) : 0;
   const estimateProvided = inputValue && inputAsFloat > 0;
   const earnings = estimateProvided ? calcEarnings(inputAsFloat, rate) : null;
 
@@ -55,17 +64,17 @@ export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }
     const nextValue = estimateProvided ? inputAsFloat : null;
     setValue(nextValue);
     onChange(nextValue);
-  }
+  };
 
   const handleKeyDown = e => {
     if (e.keyCode === 13) {
       saveButton.current.click();
     }
-  }
+  };
 
-  const label = (value || value !== "") && (
-    `${value} hours / ${currency(value * rate, task.application.currency)}`
-  )
+  const label =
+    (value || value !== "") &&
+    `${value} hours / ${currency(value * rate, task.application.currency)}`;
 
   return (
     <Popover
@@ -74,6 +83,11 @@ export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }
       isOpen={isOpen}
       trigger={
         <Detail aria-label="Estimate" readOnly={readOnly} tabIndex={0}>
+          {task.stage === "Quote Requested" && (
+            <ArrowPrompt>
+              <Icon icon="arrow-up" strokeWidth={2} />
+            </ArrowPrompt>
+          )}
           <DetailIcon prompt={task.stage === "Quote Requested"}>
             <Icon strokeWidth={1} width={20} icon="clock" />
           </DetailIcon>
@@ -97,14 +111,22 @@ export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }
               mask={numberMask}
               onKeyDown={handleKeyDown}
               onChange={e => setInputValue(e.target.value)}
-              label="How many hours do you think this task will take?"
+              label="How many hours will this take you?"
               description={
-                earnings && `You would earn ${currency(earnings, task.application.currency)} for this task`
+                earnings &&
+                `You would earn ${currency(
+                  earnings,
+                  task.application.currency
+                )} for this task`
               }
             />
           </Padding>
           <ButtonGroup fullWidth>
-            <Button ref={saveButton} styling="primary" onClick={handleSave(popover)}>
+            <Button
+              ref={saveButton}
+              styling="primary"
+              onClick={handleSave(popover)}
+            >
               Save
             </Button>
             <Button onClick={popover.close}>Cancel</Button>

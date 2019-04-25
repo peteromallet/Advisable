@@ -1,4 +1,4 @@
-import  React from "react";
+import React from "react";
 import { get } from "lodash";
 import Sticky from "react-stickynode";
 import Text from "../../components/Text";
@@ -29,18 +29,18 @@ export default ({ data }) => {
             />
           </Padding>
           <Heading level={3}>{specialist.name}</Heading>
-          <Padding bottom="s">
-            <Text size="xs">
-              {specialist.city}
-              {specialist.country && `, ${specialist.country.name}`}
-            </Text>
+          <Text size="xs">
+            {specialist.city}
+            {specialist.country && `, ${specialist.country.name}`}
+          </Text>
+          <Padding top="m" bottom="l">
+            <AttributeList>
+              <AttributeList.Item
+                label="Hourly Rate"
+                value={currency(application.rate, project.currency)}
+              />
+            </AttributeList>
           </Padding>
-          <AttributeList>
-            <AttributeList.Item
-              label="Hourly Rate"
-              value={currency(application.rate, project.currency)}
-            />
-          </AttributeList>
         </FadeIn>
       </Sticky>
     </Layout.Sidebar>

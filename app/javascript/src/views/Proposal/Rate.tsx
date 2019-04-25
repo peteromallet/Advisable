@@ -6,9 +6,11 @@ import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
+import ButtonGroup from "../../components/ButtonGroup";
 import Heading from "../../components/Heading";
 import TextField from "../../components/TextField";
 import { Padding } from "../../components/Spacing";
+import { useMobile } from "../../components/Breakpoint";
 import currency, { currencySymbol } from "../../utilities/currency";
 import { ApplicationType } from "../../types";
 import { rateValidationSchema } from "./validationSchema";
@@ -21,11 +23,8 @@ type Props = {
   updateApplication: (opt: any) => any;
 };
 
-const Rate = ({
-  history,
-  application,
-  updateApplication,
-}: Props) => {
+const Rate = ({ history, application, updateApplication }: Props) => {
+  const isMobile = useMobile();
 
   const handleSubmit = async values => {
     const response = await updateApplication({
@@ -37,7 +36,7 @@ const Rate = ({
       },
     });
 
-    const { errors, booking } = response.data.updateApplication
+    const { errors, booking } = response.data.updateApplication;
 
     if (!errors) {
       const urlPrefix = `/applications/${application.airtableId}/proposal`;
@@ -105,14 +104,16 @@ const Rate = ({
                   }
                 />
               </Padding>
-              <Button
-                type="submit"
-                disabled={!formik.isValid}
-                loading={formik.isSubmitting}
-                styling="primary"
-              >
-                Continue
-              </Button>
+              <ButtonGroup fullWidth={isMobile}>
+                <Button
+                  type="submit"
+                  disabled={!formik.isValid}
+                  loading={formik.isSubmitting}
+                  styling="primary"
+                >
+                  Continue
+                </Button>
+              </ButtonGroup>
             </Padding>
           </Form>
         )}
@@ -122,5 +123,5 @@ const Rate = ({
 };
 
 export default compose(
-  graphql(UPDATE_APPLICATION, { name: "updateApplication" }),
+  graphql(UPDATE_APPLICATION, { name: "updateApplication" })
 )(Rate);

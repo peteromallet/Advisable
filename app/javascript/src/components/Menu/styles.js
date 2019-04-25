@@ -16,6 +16,8 @@ export const Trigger = styled.button`
   display: inline-flex;
   justify-content: center;
   color: ${colors.neutral.s6};
+  appearance: none;
+  background: transparent;
 
   &:hover {
     color: ${colors.neutral.s8};

@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { Icon } from "../Icon/styles";
 import { Status } from "../Status/styles";
 import colors from "../../colors";
@@ -44,6 +44,16 @@ export const Row = styled.div`
   align-items: center;
   border-top: 1px solid #eceff8;
   border-bottom: 1px solid #eceff8;
+
+  ${props => props.showPrompt && css`
+    padding-left: 55px;
+  `}
+
+  @media (max-width: 900px) {
+    display: block;
+    padding-left: ${props => props.showPrompt ? "45px" : "20px"};
+    padding-right: 20px;
+  }
 `;
 
 export const Task = styled(Row)`
@@ -61,6 +71,14 @@ export const Task = styled(Row)`
     right: 20px;
     position: absolute;
     transform: translateY(-50%);
+
+    @media (max-width: 900px) {
+      top: auto;
+      right: auto;
+      margin-top: 8px;
+      position: static;
+      transform: translateY(0);
+    }
   }
 `;
 
@@ -83,12 +101,13 @@ const promptAnimation = keyframes`
 `;
 
 export const Prompt = styled.div`
+  top: 50%;
   width: 6px;
+  left: 20px;
   height: 6px;
-  margin-right: 20px;
   border-radius: 50%;
-  position: relative;
-  display: inline-flex;
+  position: absolute;
+  transform: translateY(-50%);
   background: ${colors.blue.base};
 
   &::before {

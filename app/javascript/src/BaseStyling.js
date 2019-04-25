@@ -51,12 +51,7 @@ export default createGlobalStyle`
     min-height: 100%;
     overflow-x: hidden;
   }
-
-  #AppRoot {
-    overflow: auto;
-    /* min-height: 100vh; */
-  }
-
+  
   ol, ul {
     list-style: none;
   }
