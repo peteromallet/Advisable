@@ -36,6 +36,9 @@ export default () => {
               </Logo>
               <ClientNavigation
                 data={query.data}
+                navOpen={navOpen}
+                onCloseNav={() => setNavOpen(false)}
+                onLogout={() => handleLogout(query.client)}
               />
               <FreelancerNavigation
                 navOpen={navOpen}

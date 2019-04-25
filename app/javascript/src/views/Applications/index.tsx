@@ -6,8 +6,7 @@ import ApplicationInvitations from "./ApplicationInvitations";
 import OpenApplications from "./OpenApplications";
 import FETCH_DATA from "./fetchData.graphql";
 
-const Applications = ({ history, data, ...props }) => {
-  console.log(data)
+const Applications = ({ history, data }) => {
   const handleViewInvitation = id => {
     history.push(`/invites/${id}`);
   };

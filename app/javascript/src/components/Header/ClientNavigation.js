@@ -3,7 +3,7 @@ import Icon from "../Icon";
 import { useMobile } from "../../components/Breakpoint";
 import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
 
-const FreelancerNavigation = ({ data, navOpen, onCloseNav }) => {
+const FreelancerNavigation = ({ data, navOpen, onCloseNav, onLogout }) => {
   const isMobile = useMobile();
   const { viewer } = data;
   const isUser = viewer && viewer.__typename === "User";
@@ -16,8 +16,18 @@ const FreelancerNavigation = ({ data, navOpen, onCloseNav }) => {
         <CloseNav onClick={onCloseNav}>
           <Icon icon="x" />
         </CloseNav>
-        <NavItem to="/projects">Find Talent</NavItem>
-        <NavItem to="/manage">Manage Talent</NavItem>
+        <NavItem onClick={onCloseNav} to="/projects">
+          Find Talent
+        </NavItem>
+        <NavItem onClick={onCloseNav} to="/manage">
+          Manage Talent
+        </NavItem>
+
+        {isMobile && (
+          <NavItem as="a" href="#" onClick={onLogout}>
+            Logout
+          </NavItem>
+        )}
       </Nav>
     </NavContainer>
   );

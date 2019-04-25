@@ -41,6 +41,7 @@ export const ScrollableContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  flex-grow: 1;
   position: relative;
   align-items: stretch;
   flex-direction: column;

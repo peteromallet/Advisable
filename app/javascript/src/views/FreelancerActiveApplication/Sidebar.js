@@ -8,13 +8,15 @@ import Heading from "../../components/Heading";
 import Divider from "../../components/Divider";
 import Padding from "../../components/Spacing/Padding";
 import AttributeList from "../../components/AttributeList";
+import { useMobile } from "../../components/Breakpoint";
 
 const Component = ({ data }) => {
+  const isMobile = useMobile();
   const application = data.application;
 
   return (
     <Layout.Sidebar>
-      <Sticky top={98} enabled>
+      <Sticky top={98} enabled={!isMobile}>
         <Padding bottom="xl">
           <Back to="/clients">All Clients</Back>
         </Padding>

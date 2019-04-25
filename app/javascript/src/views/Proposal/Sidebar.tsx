@@ -5,6 +5,7 @@ import Steps from "../../components/Steps";
 import Layout from "../../components/Layout";
 import Heading from "../../components/Heading";
 import { Padding } from "../../components/Spacing";
+import { useMobile } from "../../components/Breakpoint";
 import { ApplicationType } from "../../types";
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 }
 
 let SideBar = (props: any) => {
+  const isMobile = useMobile();
   const { application } = props;
 
   const urlPrefix = `/applications/${application.airtableId}/proposal`;
@@ -41,32 +43,34 @@ let SideBar = (props: any) => {
           proposal
         </Text>
       </Padding>
-      <Steps>
-        <Steps.Step
-          exact
-          number={1}
-          to={{ pathname: ratePath }}
-          isComplete={hasRate}
-        >
-          Hourly Rate
-        </Steps.Step>
-        <Steps.Step
-          number={2}
-          to={{ pathname: tasksPath }}
-          isDisabled={!hasRate}
-          isComplete={hasTasks}
-        >
-          Project Tasks
-        </Steps.Step>
-        <Steps.Step
-          number={3}
-          to={{ pathname: sendPath }}
-          isDisabled={!hasTasks}
-          isComplete={isSent}
-        >
-          Send Proposal
-        </Steps.Step>
-      </Steps>
+      {!isMobile && (
+        <Steps>
+          <Steps.Step
+            exact
+            number={1}
+            to={{ pathname: ratePath }}
+            isComplete={hasRate}
+          >
+            Hourly Rate
+          </Steps.Step>
+          <Steps.Step
+            number={2}
+            to={{ pathname: tasksPath }}
+            isDisabled={!hasRate}
+            isComplete={hasTasks}
+          >
+            Project Tasks
+          </Steps.Step>
+          <Steps.Step
+            number={3}
+            to={{ pathname: sendPath }}
+            isDisabled={!hasTasks}
+            isComplete={isSent}
+          >
+            Send Proposal
+          </Steps.Step>
+        </Steps>
+      )}
     </Layout.Sidebar>
   );
 };

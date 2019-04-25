@@ -21,7 +21,7 @@ const placeholderColor = color => css`
 `;
 
 export const TaskDrawer = styled.div`
-  height: 100vh;
+  height: 100%;
   position: relative;
 
   ${Status} {
@@ -31,8 +31,8 @@ export const TaskDrawer = styled.div`
   }
 
   ${Menu} {
-    top: 12px;
-    right: 45px;
+    top: 20px;
+    right: 50px;
     position: absolute;
   }
 `;
@@ -90,6 +90,10 @@ export const Detail = styled.button`
   line-height: 18px;
   background: transparent;
 
+  @media (max-width: 900px) {
+    margin-right: 15px;
+  }
+
   &:focus {
     outline: none;
   }
@@ -109,7 +113,6 @@ export const Popout = styled.div`
   width: 300px;
   padding: 20px;
   background: white;
-  position: absolute;
   border-radius: 6px;
   box-shadow: 0 4px 60px ${rgba(colors.neutral.s9, 0.25)},
     0 2px 8px ${rgba(colors.neutral.s9, 0.1)};
@@ -173,6 +176,10 @@ export const DetailValue = styled.span`
   color: ${colors.neutral.s9};
   font-size: 15px;
   font-weight: 500;
+  
+  @media (max-width: 900px) {
+    font-size: 13px;
+  }
 `;
 
 export const DetailPlaceholder = styled(DetailValue)`
@@ -261,9 +268,10 @@ export const ConfirmationContainer = styled.div`
 `;
 
 export const ArrowPrompt = styled.div`
-  top: -15px;
-  left: 205px;
+  left: 14px;
+  bottom: -30px;
   position: absolute;
+  color: ${colors.blue.base};
 `;
 
 export const StageDescription = styled.div`

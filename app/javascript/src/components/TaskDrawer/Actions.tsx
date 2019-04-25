@@ -9,6 +9,7 @@ import ASSIGN_TASK from "./assignTask.graphql";
 import SUBMIT_TASK from "./submitTask.graphql";
 import APPROVE_TASK from "./approveTask.graphql";
 import REQUEST_QUOTE from "./requestQuote.graphql";
+import { useMobile } from "../../components/Breakpoint";
 import { Confirmation, ConfirmationContainer } from "./styles";
 
 const Component = ({
@@ -20,6 +21,7 @@ const Component = ({
   approveTask,
   requestQuote,
 }) => {
+  const isMobile = useMobile();
   const [loading, setLoading] = React.useState(null);
   const [confirmation, setConfirmation] = React.useState(null);
   const { stage } = task;
@@ -230,7 +232,7 @@ const Component = ({
             </ConfirmationContainer>
           </Confirmation>
         )}
-        <ButtonGroup>{actions}</ButtonGroup>
+        <ButtonGroup fullWidth={isMobile}>{actions}</ButtonGroup>
       </>
     );
   }

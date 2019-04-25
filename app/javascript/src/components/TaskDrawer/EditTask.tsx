@@ -1,5 +1,4 @@
 import * as React from "react";
-import { match } from "react-router";
 import TaskStatus from "../TaskStatus";
 import Text from "../Text";
 import Button from "../Button";
@@ -83,8 +82,8 @@ const EditTask = ({
   const [attributes, setAttributes] = React.useState({
     name: task.name || "",
     description: task.description || "",
-    dueDate: task.dueDate || "",
-    estimate: task.estimate || "",
+    dueDate: task.dueDate || null,
+    estimate: task.estimate || null,
   });
   const [editAllowed, setEditAllowed] = React.useState(false);
   const [confirmPrompt, setConfirmPrompt] = React.useState(false);
@@ -197,7 +196,7 @@ const EditTask = ({
             />
           </Padding>
         </VerticalLayout.Header>
-        <VerticalLayout.Content>
+        <VerticalLayout.Content style={{ flexDirection: "column" }}>
           <Scrollable>
             <Padding left="m" bottom="m" right="m">
               <TaskDetails>

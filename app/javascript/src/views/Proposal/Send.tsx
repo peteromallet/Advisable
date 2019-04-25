@@ -4,23 +4,27 @@ import { compose, graphql } from "react-apollo";
 import Text from "../../components/Text";
 import Card from "../../components/Card";
 import Button from "../../components/Button";
+import ButtonGroup from "../../components/ButtonGroup";
 import Heading from "../../components/Heading";
 import TextField from "../../components/TextField";
 import { Padding } from "../../components/Spacing";
 import SEND_PROPOSAL from "./sendProposal.graphql";
+import { useMobile } from "../../components/Breakpoint";
 
 const Send = ({ application, history, sendProposal }) => {
+  const isMobile = useMobile();
+
   const handleSubmit = async values => {
     await sendProposal({
       variables: {
         input: {
           application: application.airtableId,
-          ...values
-        }
-      }
-    })
+          ...values,
+        },
+      },
+    });
 
-    history.push("sent")
+    history.push("sent");
   };
 
   return (
@@ -54,9 +58,15 @@ const Send = ({ application, history, sendProposal }) => {
                   placeholder="Add a message..."
                 />
               </Padding>
-              <Button loading={formik.isSubmitting} type="submit" styling="primary">
-                Send Proposal
-              </Button>
+              <ButtonGroup fullWidth={isMobile}>
+                <Button
+                  loading={formik.isSubmitting}
+                  type="submit"
+                  styling="primary"
+                >
+                  Send Proposal
+                </Button>
+              </ButtonGroup>
             </Form>
           )}
         </Formik>
@@ -65,6 +75,4 @@ const Send = ({ application, history, sendProposal }) => {
   );
 };
 
-export default compose(
-  graphql(SEND_PROPOSAL, { name: "sendProposal" }),
-)(Send);
+export default compose(graphql(SEND_PROPOSAL, { name: "sendProposal" }))(Send);
