@@ -37,8 +37,7 @@ describe PreviousProject do
       it "returns a PreviousProject" do
         specialist = create(:specialist)
         project = create(:project)
-        application = create(:application, project: project, specialist: specialist)
-        create(:booking, status: "Complete", application: application)
+        application = create(:application, project: project, specialist: specialist, status: "Working")
 
         previous_project = PreviousProject.find(
           id: project.airtable_id,
@@ -51,11 +50,11 @@ describe PreviousProject do
         expect(previous_project.specialist).to eq(specialist)
       end
 
-      context "when the user has no compelte booking for the project" do
+      context "when the user has no active application" do
         it "raises NotFound" do
           specialist = create(:specialist)
           project = create(:project)
-          application = create(:application, project: project, specialist: specialist)
+          application = create(:application, project: project, specialist: specialist, status: "Proposed")
 
           expect {
             previous_project = PreviousProject.find(
@@ -80,46 +79,22 @@ describe PreviousProject do
       end
     end
 
-    context "when the user has a completed booking for a project" do
+    context "when the user has an aplication with a status of 'Working'" do
       it "includes that project" do
         specialist = create(:specialist)
         project = create(:project)
-        application = create(:application, project: project, specialist: specialist)
-        create(:booking, status: "Complete", application: application)
+        application = create(:application, project: project, specialist: specialist, status: "Working")
         projects = PreviousProject.for_specialist(specialist)
         expect(projects).to_not be_empty
         expect(projects.first.project).to eq(project)
       end
     end
 
-    context "when the user has an accepted booking for a project" do
-      it "includes that project" do
-        specialist = create(:specialist)
-        project = create(:project)
-        application = create(:application, project: project, specialist: specialist)
-        create(:booking, status: "Accepted", application: application)
-        projects = PreviousProject.for_specialist(specialist)
-        expect(projects).to_not be_empty
-        expect(projects.first.project).to eq(project)
-      end
-    end
-
-    context "when the user has no booking for a project" do
+    context "when the user has an application that is not 'Working'" do
       it "does not include the project" do
         specialist = create(:specialist)
         project = create(:project)
-        application = create(:application, project: project, specialist: specialist)
-        projects = PreviousProject.for_specialist(specialist)
-        expect(projects).to be_empty
-      end
-    end
-
-    context "when the user has a proposed booking for a project" do
-      it "does not include the project" do
-        specialist = create(:specialist)
-        project = create(:project)
-        application = create(:application, project: project, specialist: specialist)
-        create(:booking, status: "Proposed", application: application)
+        application = create(:application, project: project, specialist: specialist, status: "Proposed")
         projects = PreviousProject.for_specialist(specialist)
         expect(projects).to be_empty
       end
