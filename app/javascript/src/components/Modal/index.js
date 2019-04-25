@@ -75,7 +75,7 @@ const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentPr
                 expandOnMobile={expandOnMobile}
                 {...extractSpacingProps(componentProps)}
               >
-                <CloseModal onClick={onClose}>
+                <CloseModal aria-label="Close Modal" onClick={onClose}>
                   <svg width={13} height={12} fill="none">
                     <path
                       fillRule="evenodd"

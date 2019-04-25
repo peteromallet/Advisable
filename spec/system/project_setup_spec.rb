@@ -15,10 +15,7 @@ describe "Project setup flow" do
   }) }
 
   before :each do
-    airtable_record = double(Airtable::Project)
-    allow(airtable_record).to receive(:[]=)
-    allow(airtable_record).to receive(:save)
-    allow(Airtable::Project).to receive(:find).and_return(airtable_record)
+    allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end
 
   describe "company overview step" do

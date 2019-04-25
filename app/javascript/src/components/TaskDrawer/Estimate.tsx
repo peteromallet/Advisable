@@ -73,7 +73,7 @@ export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }
       onClose={onClose}
       isOpen={isOpen}
       trigger={
-        <Detail readOnly={readOnly} tabIndex={0}>
+        <Detail aria-label="Estimate" readOnly={readOnly} tabIndex={0}>
           <DetailIcon prompt={task.stage === "Quote Requested"}>
             <Icon strokeWidth={1} width={20} icon="clock" />
           </DetailIcon>
@@ -91,6 +91,7 @@ export default ({ task, isClient, onClick, onClose, isOpen, readOnly, onChange }
           <Padding bottom="m">
             <TextField
               autoFocus
+              name="estimate"
               value={inputValue}
               placeholder="e.g 8"
               mask={numberMask}

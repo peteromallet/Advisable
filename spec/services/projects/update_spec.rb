@@ -2,12 +2,9 @@ require "rails_helper"
 
 describe Projects::Update do
   let(:project) { create(:project, description: "description") }
-  let(:airtable_record) { double(Airtable::Project) }
 
   before :each do
-    allow(airtable_record).to receive(:[]=)
-    allow(airtable_record).to receive(:save)
-    allow(Airtable::Project).to receive(:find).and_return(airtable_record)
+    allow(project).to receive(:sync_to_airtable)
   end
 
   it "updates the attributes of the project" do
@@ -17,7 +14,7 @@ describe Projects::Update do
   end
 
   it "Syncs changes with airtable" do
-    expect(airtable_record).to receive(:[]=).with("Project Description", "updated")
+    expect(project).to receive(:sync_to_airtable)
     Projects::Update.call(project: project, attributes: { description: 'updated' })
   end
 
