@@ -31,6 +31,26 @@ describe Mutations::AssignTask do
     expect(stage).to eq("Assigned")
   end
 
+  context "when the task does not have a name" do
+    let(:task) { create(:task, stage: "Not Assigned", name: nil) }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["data"]["assignTask"]["errors"][0]
+      expect(error["code"]).to eq("tasks.nameRequired")
+    end
+  end
+
+  context "when the task does not have a description" do
+    let(:task) { create(:task, stage: "Not Assigned", description: nil) }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["data"]["assignTask"]["errors"][0]
+      expect(error["code"]).to eq("tasks.descriptionRequired")
+    end
+  end
+
   context "when the user doesn't have access to the project" do
     let(:context) {{ current_user: create(:user) }}
 

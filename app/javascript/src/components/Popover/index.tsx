@@ -2,6 +2,7 @@ import * as React from "react";
 import { isFunction } from "lodash";
 import { useTransition, animated } from "react-spring";
 import Popper, { Placement } from "popper.js";
+import usePrevious from "../../utilities/usePrevious";
 
 // Popover provides a simple component to built UI elements that have popover
 // components to them such as datepickers or dropdown menus.
@@ -35,6 +36,7 @@ export default ({ children, trigger, placement, onClick, ...props }: Props) => {
   const [open, setOpen] = React.useState(props.isOpen || false);
   const triggerRef = React.useRef(null);
   const popoverRef = React.useRef(null);
+  const previouslyOpen = usePrevious(open);
 
   const transitions = useTransition(open, null, {
     from: { opacity: 0, transform: "scale(0.9)" },
@@ -69,7 +71,7 @@ export default ({ children, trigger, placement, onClick, ...props }: Props) => {
   };
 
   React.useEffect(() => {
-    if (!open && props.onClose) {
+    if (previouslyOpen && !open && props.onClose) {
       props.onClose();
     }
   }, [open]);

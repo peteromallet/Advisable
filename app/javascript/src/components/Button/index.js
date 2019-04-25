@@ -48,6 +48,10 @@ const STYLES = {
     &:active {
       background-color: ${rgba("#4c496a", 0.2)};
     }
+
+    &:disabled {
+      background-color: ${rgba("#4c496a", 0.15)};
+    }
   `,
   outlined: css`
     color: #4c576a;
@@ -80,6 +84,10 @@ const STYLES = {
 
     &:active {
       background-color: #0c2ea9;
+    }
+
+    &:disabled {
+      background: #173fcd;
     }
   `,
   green: css`
@@ -138,7 +146,7 @@ export const ButtonStyling = styled.button`
   opacity: ${props => (props.disabled ? "0.5" : "1")};
   padding: ${props => padding[props.size] || padding["m"]};
   font-size: ${props => fontSizes[props.size] || fontSizes["m"]};
-  cursor: pointer;
+  cursor: ${props => props.disabled ? "default" : "pointer" };
   font-weight: 500;
   border-radius: 5px;
   align-items: center;

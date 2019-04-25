@@ -10,6 +10,14 @@ class Tasks::RequestQuote < ApplicationService
       raise Service::Error.new("tasks.cantRequestQuote")
     end
 
+    if task.name.blank?
+      raise Service::Error.new("tasks.nameRequired")
+    end
+
+    if task.description.blank?
+      raise Service::Error.new("tasks.descriptionRequired")
+    end
+
     if task.update_attributes(stage: "Quote Requested")
       task.sync_to_airtable
       return task

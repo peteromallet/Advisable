@@ -4,7 +4,6 @@ import Text from "../Text";
 import Button from "../Button";
 import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
-import VerticalLayout from "../VerticalLayout";
 import START_TASK from "./startTask.graphql";
 import ASSIGN_TASK from "./assignTask.graphql";
 import SUBMIT_TASK from "./submitTask.graphql";
@@ -89,6 +88,7 @@ const Component = ({
 
   let actions = [];
   const hasQuote = Boolean(task.estimate);
+  const hasNameAndDescription = Boolean(task.name) && Boolean(task.description);
 
   if (isClient && stage === "Not Assigned") {
     if (!hasQuote) {
@@ -96,7 +96,7 @@ const Component = ({
         <Button
           key="quote"
           styling="primary"
-          disabled={loading}
+          disabled={!hasNameAndDescription || loading}
           onClick={handleRequestQuote}
           loading={loading === "REQUEST_QUOTE"}
         >
@@ -108,7 +108,7 @@ const Component = ({
     actions.push(
       <Button
         key="quote"
-        disabled={loading}
+        disabled={!hasNameAndDescription || loading}
         styling={hasQuote && "primary"}
         loading={loading === "ASSIGN"}
         onClick={() => setConfirmation("ASSIGN")}
@@ -189,7 +189,7 @@ const Component = ({
 
   if (actions.length > 0) {
     return (
-      <VerticalLayout.Footer style={{ background: "white" }}>
+      <>
         {confirmation === "ASSIGN" && (
           <Confirmation>
             <ConfirmationContainer>
@@ -230,10 +230,8 @@ const Component = ({
             </ConfirmationContainer>
           </Confirmation>
         )}
-        <Padding size="l">
-          <ButtonGroup>{actions}</ButtonGroup>
-        </Padding>
-      </VerticalLayout.Footer>
+        <ButtonGroup>{actions}</ButtonGroup>
+      </>
     );
   }
 

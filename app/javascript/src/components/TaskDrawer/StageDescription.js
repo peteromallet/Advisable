@@ -1,10 +1,23 @@
 // Renders the description of a task in its various stages.
 import React from "react";
 import Icon from "../Icon";
+import Padding from "../Spacing/Padding";
 import { useTranslation } from "react-i18next/hooks";
 import { ArrowPrompt, StageDescription } from "./styles";
 
 const FOR_CLIENT = {
+  "Not Assigned": ({ t, task }) => {
+    if (task.name && task.description) return null;
+
+    return (
+      <Padding bottom="m">
+        <StageDescription>
+          <Icon icon="alert-circle" width={20} />
+          {t("tasks.stageDescriptions.client.nameAndDescriptionRequired")}
+        </StageDescription>
+      </Padding>
+    );
+  },
   "Quote Requested": ({ t }) => {
     return (
       <StageDescription>
@@ -44,7 +57,7 @@ const FOR_CLIENT = {
         {t("tasks.stageDescriptions.client.submitted", { task })}
       </StageDescription>
     );
-  }
+  },
 };
 
 const FOR_SPECIALIST = {
@@ -90,7 +103,7 @@ const FOR_SPECIALIST = {
         {t("tasks.stageDescriptions.specialist.submitted", { task })}
       </StageDescription>
     );
-  }
+  },
 };
 
 // Renders the description of a task's stage. The descriptions themselves are

@@ -31,6 +31,7 @@ const Component = ({
   showStatusNotice,
 }: Props) => {
   if (!taskId) return null;
+  const [isSaving, setSaving] = React.useState(false);
   
   return (
     <Drawer isOpen={Boolean(taskId)} onClose={onClose}>
@@ -51,8 +52,9 @@ const Component = ({
             return (
               <Mutation mutation={UPDATE_TASK}>
                 {updateTask => {
-                  const handleSave = fields => {
-                    updateTask({
+                  const handleSave = async fields => {
+                    setSaving(true)
+                    await updateTask({
                       variables: {
                         input: {
                           id: taskId,
@@ -60,10 +62,12 @@ const Component = ({
                         },
                       },
                     });
+                    setSaving(false);
                   };
 
                   return (
                     <EditTask
+                      isSaving={isSaving}
                       readOnly={readOnly}
                       isClient={isClient}
                       hideStatus={hideStatus}
