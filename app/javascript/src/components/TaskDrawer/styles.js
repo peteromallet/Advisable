@@ -272,7 +272,6 @@ export const StageDescription = styled.div`
   line-height: 18px;
   border-radius: 6px;
   position: relative;
-  margin: 8px 8px 20px 8px;
   padding: 12px 8px 12px 48px;
   color: ${colors.neutral.s8};
   background: ${colors.neutral.s1};
@@ -285,3 +284,26 @@ export const StageDescription = styled.div`
     color: ${colors.blue.base};
   }
 `;
+
+export const SavingIndicator = styled.span`
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  z-index: 99;
+  color: white;
+  padding: 8px 0;
+  font-size: 12px;
+  font-weight: 500;
+  position: absolute;
+  text-align: center;
+  background-color: ${colors.blue.base};
+  transition: opacity 900ms, transform 300ms;
+  transform: translateY(-100%);
+
+  ${props => props.isSaving && css`
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 200ms, transform 300ms;
+  `}
+`

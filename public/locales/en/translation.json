@@ -13,6 +13,7 @@
   "tasks": {
     "stageDescriptions": {
       "client": {
+        "nameAndDescriptionRequired": "This task can not be assigned until it has a name and a description.",
         "quoteRequested": "A quote has been requested for this task",
         "quoteProvided": "{{task.application.specialist.firstName}} has provided a quote for this task. If you are happy to proceed you can assign the task to them.",
         "assigned": "This task has been assigned and is waiting for {{task.application.specialist.firstName}} to start it.",
