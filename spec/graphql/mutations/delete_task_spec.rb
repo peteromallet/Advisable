@@ -5,7 +5,7 @@ describe Mutations::DeleteTask do
   let!(:specialist) { create(:specialist) }
   let!(:project) { create(:project, user: user) }
   let!(:application) { create(:application, specialist: specialist, project: project) }
-  let!(:task) { create(:task, application: application) }
+  let!(:task) { create(:task, application: application, stage: "Not Assigned") }
   let(:query) { %|
     mutation {
       deleteTask(input: {
@@ -40,6 +40,16 @@ describe Mutations::DeleteTask do
       response = AdvisableSchema.execute(query, context: { current_user: nil })
       errors = response["data"]["deleteTask"]["errors"]
       expect(errors[0]["code"]).to eq("not_authorized")
+    end
+  end
+
+  context "when the stage is 'Assigned'" do
+    let(:task) { create(:task, application: application, stage: "Assigned") }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: { current_user: user })
+      errors = response["data"]["deleteTask"]["errors"]
+      expect(errors[0]["code"]).to eq("tasks.cantDeleteAssigned")
     end
   end
 end

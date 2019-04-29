@@ -19,19 +19,7 @@ import {
   ConfirmationContainer,
   SavingIndicator,
 } from "./styles";
-import { Task } from "../../types";
 import StageDescription from "./StageDescription";
-
-interface Params {
-  task: Task;
-  readOnly: boolean;
-  onSave: (fields: any) => void;
-  onDeleteTask: (task: Task) => void;
-  hideStatus?: boolean;
-  isClient?: boolean;
-  showStatusNotice?: boolean;
-  isSaving: boolean;
-}
 
 const READ = "READ";
 const WRITE = "WRITE";
@@ -65,7 +53,7 @@ const PERMISSIONS = {
       if (!isClient && !task.estimate) return WRITE;
       return READ;
     }
-  }
+  },
 };
 
 const getTaskPermission = (task, key, isClient) => {
