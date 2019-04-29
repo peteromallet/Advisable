@@ -168,7 +168,7 @@ const Component = ({
         key="submit"
         styling="primary"
         disabled={loading}
-        onClick={handleSubmitTask}
+        onClick={() => setConfirmation("SUBMIT")}
         loading={loading === "SUBMIT"}
       >
         Submit for approval
@@ -224,6 +224,39 @@ const Component = ({
                 </Button>
                 <Button
                   disabled={loading === "ASSIGN"}
+                  onClick={() => setConfirmation(null)}
+                >
+                  Cancel
+                </Button>
+              </ButtonGroup>
+            </ConfirmationContainer>
+          </Confirmation>
+        )}
+
+        {confirmation === "SUBMIT" && (
+          <Confirmation>
+            <ConfirmationContainer>
+              <Padding bottom="s">
+                <Text weight="semibold" colour="dark">
+                  Is the work approved?
+                </Text>
+              </Padding>
+              <Padding bottom="l">
+                <Text size="s">
+                  Before you submit this, please make sure that you've completed
+                  this batch of work and the client has already approved it.
+                </Text>
+              </Padding>
+              <ButtonGroup fullWidth>
+                <Button
+                  loading={loading === "SUBMIT"}
+                  onClick={handleSubmitTask}
+                  styling="primary"
+                >
+                  Submit
+                </Button>
+                <Button
+                  disabled={loading === "SUBMIT"}
                   onClick={() => setConfirmation(null)}
                 >
                   Cancel

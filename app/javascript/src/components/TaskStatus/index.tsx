@@ -15,15 +15,9 @@ const ICONS = {
   "Pending Approval": "lock",
 }
 
-const COLORS = {
-  // "Not Assigned": "yellow",
-  "Quote Provided": "yellow",
-  "Pending Approval": "yellow",
-}
-
 export default ({ children }: Props) => {
   return (
-    <Status styling={COLORS[children]}>
+    <Status>
       {ICONS[children] && <Icon height={12} strokeWidth={2} icon={ICONS[children]} />}
       {children}
     </Status>
