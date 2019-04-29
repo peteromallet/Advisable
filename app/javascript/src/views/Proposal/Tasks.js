@@ -1,4 +1,5 @@
 import * as React from "react";
+import { withApollo } from "react-apollo";
 import { matchPath } from "react-router";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
@@ -9,12 +10,11 @@ import NewTask from "../../components/NewTask";
 import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
 import { Padding } from "../../components/Spacing";
-import graphqlClient from "../../graphqlClient";
 import { useMobile } from "../../components/Breakpoint";
 import FETCH_TASK from "./fetchTask.graphql";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 
-const Tasks = ({ application, match, location, history }) => {
+const Tasks = ({ application, match, location, history, client }) => {
   const isMobile = useMobile();
   const onSelectTask = task => {
     history.push(`${match.url}/${task.id}`);
@@ -28,7 +28,7 @@ const Tasks = ({ application, match, location, history }) => {
   };
 
   const handleNewTask = task => {
-    graphqlClient.cache.writeQuery({
+    client.writeQuery({
       query: FETCH_TASK,
       variables: {
         id: task.id,
@@ -38,9 +38,9 @@ const Tasks = ({ application, match, location, history }) => {
       },
     });
 
-    const newData = graphqlClient.cache.readQuery(applicationQuery);
+    const newData = client.readQuery(applicationQuery);
     newData.application.tasks.push(task);
-    graphqlClient.cache.writeQuery({
+    client.writeQuery({
       ...applicationQuery,
       data: newData,
     });
@@ -50,17 +50,17 @@ const Tasks = ({ application, match, location, history }) => {
 
   const handleDeleteTask = task => {
     history.push(match.url);
-    const newData = graphqlClient.cache.readQuery(applicationQuery);
+    const newData = client.readQuery(applicationQuery);
     newData.application.tasks = application.tasks.filter(t => {
       return t.id !== task.id;
     });
-    graphqlClient.cache.writeQuery({
+    client.writeQuery({
       ...applicationQuery,
       data: newData,
     });
   };
 
-  const taskMatch: any = matchPath(location.pathname, {
+  const taskMatch = matchPath(location.pathname, {
     path: "*/tasks/:taskId",
   });
 
@@ -106,4 +106,4 @@ const Tasks = ({ application, match, location, history }) => {
   );
 };
 
-export default Tasks;
+export default withApollo(Tasks);
