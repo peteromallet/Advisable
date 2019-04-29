@@ -1,0 +1,12 @@
+mutation updateTaskDueDate($input: UpdateTaskInput!) {
+  updateTask(input: $input) {
+    task {
+      id
+      stage
+      dueDate
+    }
+    errors {
+      code
+    }
+  }
+}

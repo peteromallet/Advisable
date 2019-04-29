@@ -114,7 +114,7 @@ const EditTask = ({
 
     if (task[attribute] !== value) {
       clearTimeout(timer);
-      onSave({ [attribute]: value });
+      onSave(attribute, value);
     }
   };
 
@@ -127,7 +127,7 @@ const EditTask = ({
   const handleChange = attribute => value => {
     updateField(attribute, value);
     if (task[attribute] !== value) {
-      onSave({ [attribute]: value });
+      onSave(attribute, value);
     }
   };
 
@@ -136,7 +136,7 @@ const EditTask = ({
     clearTimeout(timer);
     timer = setTimeout(() => {
       if (task[attribute] !== value) {
-        onSave({ [attribute]: value });
+        onSave(attribute, value);
       }
     }, 1000);
   };
@@ -232,8 +232,8 @@ const EditTask = ({
               <StageDescription isClient={isClient} task={task} />
             )}
             {!readOnly && <Actions isClient={isClient} task={task} />}
-            <SavingIndicator isSaving={isSaving}>Saving...</SavingIndicator>
           </Padding>
+          <SavingIndicator isSaving={isSaving}>Saving...</SavingIndicator>
         </VerticalLayout.Footer>
       </VerticalLayout>
     </TaskDrawer>

@@ -30,10 +30,12 @@ const FOR_CLIENT = {
   },
   "Quote Provided": ({ t, task }) => {
     return (
-      <StageDescription>
-        <Icon icon="info" width={20} />
-        {t("tasks.stageDescriptions.client.quoteProvided", { task })}
-      </StageDescription>
+      <Padding bottom="m">
+        <StageDescription>
+          <Icon icon="info" width={20} />
+          {t("tasks.stageDescriptions.client.quoteProvided", { task })}
+        </StageDescription>
+      </Padding>
     );
   },
   Assigned: ({ t, task }) => {
@@ -54,10 +56,22 @@ const FOR_CLIENT = {
   },
   Submitted: ({ t, task }) => {
     return (
-      <StageDescription>
-        <Icon icon="info" width={20} />
-        {t("tasks.stageDescriptions.client.submitted", { task })}
-      </StageDescription>
+      <Padding bottom="m">
+        <StageDescription>
+          <Icon icon="info" width={20} />
+          {t("tasks.stageDescriptions.client.submitted", { task })}
+        </StageDescription>
+      </Padding>
+    );
+  },
+  Approved: ({ t, task }) => {
+    return (
+      <Padding bottom="m">
+        <StageDescription>
+          <Icon icon="info" width={20} />
+          {t("tasks.stageDescriptions.client.approved", { task })}
+        </StageDescription>
+      </Padding>
     );
   },
 };
@@ -80,14 +94,14 @@ const FOR_SPECIALIST = {
     );
   },
   Assigned: ({ t, task }) => {
-    let key = 'assigned';
+    let key = "assigned";
 
     if (!task.estimate) {
-      key = 'estimateRequiredToStart'
+      key = "estimateRequiredToStart";
     }
-    
+
     if (!task.dueDate) {
-      key = 'dueDateRequiredToStart'
+      key = "dueDateRequiredToStart";
     }
 
     return (
@@ -115,6 +129,16 @@ const FOR_SPECIALIST = {
         <Icon icon="info" width={20} />
         {t("tasks.stageDescriptions.specialist.submitted", { task })}
       </StageDescription>
+    );
+  },
+  Approved: ({ t, task }) => {
+    return (
+      <Padding bottom="m">
+        <StageDescription>
+          <Icon icon="info" width={20} />
+          {t("tasks.stageDescriptions.client.approved", { task })}
+        </StageDescription>
+      </Padding>
     );
   },
 };

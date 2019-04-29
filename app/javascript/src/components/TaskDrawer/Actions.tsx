@@ -92,7 +92,7 @@ const Component = ({
   const hasQuote = Boolean(task.estimate);
   const hasDueDate = Boolean(task.dueDate);
   const hasName = Boolean(task.name);
-  const hasDescription = Boolean(task.description)
+  const hasDescription = Boolean(task.description);
   const hasNameAndDescription = hasName && hasDescription;
 
   if (isClient && stage === "Not Assigned") {
@@ -156,7 +156,7 @@ const Component = ({
       <Button
         key="start"
         styling="primary"
-        disabled={(!hasQuote || !hasDueDate) || loading}
+        disabled={!hasQuote || !hasDueDate || loading}
         onClick={handleStartTask}
         loading={loading === "START_WORKING"}
       >
@@ -184,10 +184,10 @@ const Component = ({
       <Button
         key="approve"
         styling="primary"
-        onClick={handleApproveTask}
+        onClick={() => setConfirmation("APPROVE")}
         loading={loading == "APPROVE"}
       >
-        Approve
+        Approve task
       </Button>
     );
   }
@@ -260,6 +260,40 @@ const Component = ({
                 </Button>
                 <Button
                   disabled={loading === "SUBMIT"}
+                  onClick={() => setConfirmation(null)}
+                >
+                  Cancel
+                </Button>
+              </ButtonGroup>
+            </ConfirmationContainer>
+          </Confirmation>
+        )}
+
+        {confirmation === "APPROVE" && (
+          <Confirmation>
+            <ConfirmationContainer>
+              <Padding bottom="s">
+                <Text weight="semibold" colour="dark">
+                  Approve Work
+                </Text>
+              </Padding>
+              <Padding bottom="l">
+                <Text size="s">
+                  Once you approve the work, the freelancer will be paid for
+                  this task. If you have any issues, please make sure to resolve
+                  them in advance.
+                </Text>
+              </Padding>
+              <ButtonGroup fullWidth>
+                <Button
+                  loading={loading === "APPROVE"}
+                  onClick={handleApproveTask}
+                  styling="primary"
+                >
+                  Approve
+                </Button>
+                <Button
+                  disabled={loading === "APPROVE"}
                   onClick={() => setConfirmation(null)}
                 >
                   Cancel

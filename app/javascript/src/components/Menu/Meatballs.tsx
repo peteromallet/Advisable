@@ -8,7 +8,7 @@ interface Props {
 
 export default React.forwardRef((props: Props, ref: any) => {
   return (
-    <Trigger ref={ref} onFocus={props.onFocus} onClick={props.onClick}>
+    <Trigger aria-label="Menu" ref={ref} onFocus={props.onFocus} onClick={props.onClick}>
       <svg
         width="18"
         height="4"

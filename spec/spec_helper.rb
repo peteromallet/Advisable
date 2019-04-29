@@ -39,6 +39,7 @@ WebMock.disable_net_connect!(allow_localhost: true)
 RSpec.configure do |config|
   config.include AuthenticationHelper
 
+  config.verbose_retry = true
   # run retry only on features
   config.around :each, :js do |ex|
     ex.run_with_retry retry: 3
