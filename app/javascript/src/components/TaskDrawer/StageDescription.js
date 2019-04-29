@@ -81,18 +81,22 @@ const FOR_SPECIALIST = {
   },
   Assigned: ({ t, task }) => {
     return (
-      <StageDescription>
-        <Icon icon="info" width={20} />
-        {t("tasks.stageDescriptions.specialist.assigned", { task })}
-      </StageDescription>
+      <Padding bottom="m">
+        <StageDescription>
+          <Icon icon="info" width={20} />
+          {t("tasks.stageDescriptions.specialist.assigned", { task })}
+        </StageDescription>
+      </Padding>
     );
   },
   Working: ({ t, task }) => {
     return (
-      <StageDescription>
-        <Icon icon="info" width={20} />
-        {t("tasks.stageDescriptions.specialist.working", { task })}
-      </StageDescription>
+      <Padding bottom="m">
+        <StageDescription>
+          <Icon icon="info" width={20} />
+          {t("tasks.stageDescriptions.specialist.working", { task })}
+        </StageDescription>
+      </Padding>
     );
   },
   Submitted: ({ t, task }) => {
