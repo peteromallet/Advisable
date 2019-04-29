@@ -1,17 +1,15 @@
 class Tasks::Update < ApplicationService
-  attr_reader :task, :attributes
+  attr_reader :task, :attributes, :user
 
-  def initialize(task:, attributes:)
+  def initialize(task:, attributes:, user:)
     @task = task
     @attributes = attributes
+    @user = user
   end
 
   def call
     task.assign_attributes(attributes)
-
-    if ["Assigned", "Working", "Submitted", "Approved"].include?(task.stage)
-      raise Service::Error.new("tasks.isLocked")
-    end
+    changes_allowed?
 
     # If the stage is "Quote Requested" and the estimate has changed then set
     # the status to "Quote Provided".
@@ -30,5 +28,17 @@ class Tasks::Update < ApplicationService
 
     task.sync_to_airtable if task.save
     task
+  end
+
+  private
+
+  def changes_allowed?
+    policy = TaskPolicy.new(user, task)
+
+    task.changes.each do |att, changes|
+      unless policy.send("update_#{att}")
+        raise Service::Error.new("tasks.#{att}IsLocked")
+      end
+    end
   end
 end

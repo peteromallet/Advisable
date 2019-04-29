@@ -10,6 +10,14 @@ class Tasks::Start < ApplicationService
       raise Service::Error.new("tasks.mustBeAssigned")
     end
 
+    if task.estimate.blank?
+      raise Service::Error.new("tasks.estimateRequired")
+    end
+
+    if task.due_date.blank?
+      raise Service::Error.new("tasks.dueDateRequired")
+    end
+
     if task.update_attributes(stage: "Working")
       task.sync_to_airtable
       return task

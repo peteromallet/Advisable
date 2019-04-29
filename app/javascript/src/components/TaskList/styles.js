@@ -103,12 +103,16 @@ const promptAnimation = keyframes`
 export const Prompt = styled.div`
   top: 50%;
   width: 6px;
-  left: 20px;
+  left: 30px;
   height: 6px;
   border-radius: 50%;
   position: absolute;
   transform: translateY(-50%);
   background: ${colors.blue.base};
+
+  @media (max-width: 900px) {
+    left: 20px;
+  }
 
   &::before {
     content: "";

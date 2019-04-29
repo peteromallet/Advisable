@@ -90,7 +90,10 @@ const Component = ({
 
   let actions = [];
   const hasQuote = Boolean(task.estimate);
-  const hasNameAndDescription = Boolean(task.name) && Boolean(task.description);
+  const hasDueDate = Boolean(task.dueDate);
+  const hasName = Boolean(task.name);
+  const hasDescription = Boolean(task.description)
+  const hasNameAndDescription = hasName && hasDescription;
 
   if (isClient && stage === "Not Assigned") {
     if (!hasQuote) {
@@ -153,7 +156,7 @@ const Component = ({
       <Button
         key="start"
         styling="primary"
-        disabled={loading}
+        disabled={(!hasQuote || !hasDueDate) || loading}
         onClick={handleStartTask}
         loading={loading === "START_WORKING"}
       >

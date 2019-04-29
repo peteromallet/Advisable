@@ -31,6 +31,26 @@ describe Mutations::StartTask do
     expect(stage).to eq("Working")
   end
 
+  context "when the task does not have an estimate" do
+    let(:task) { create(:task, stage: "Assigned", estimate: nil) }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["data"]["startTask"]["errors"][0]
+      expect(error["code"]).to eq("tasks.estimateRequired")
+    end
+  end
+
+  context "when the task does not have a due date" do
+    let(:task) { create(:task, stage: "Assigned", due_date: nil) }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["data"]["startTask"]["errors"][0]
+      expect(error["code"]).to eq("tasks.dueDateRequired")
+    end
+  end
+
   context "when the specialist doesn't have access to the project" do
     let(:context) {{ current_user: create(:specialist) }}
 

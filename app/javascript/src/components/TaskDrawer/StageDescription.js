@@ -80,11 +80,21 @@ const FOR_SPECIALIST = {
     );
   },
   Assigned: ({ t, task }) => {
+    let key = 'assigned';
+
+    if (!task.estimate) {
+      key = 'estimateRequiredToStart'
+    }
+    
+    if (!task.dueDate) {
+      key = 'dueDateRequiredToStart'
+    }
+
     return (
       <Padding bottom="m">
         <StageDescription>
           <Icon icon="info" width={20} />
-          {t("tasks.stageDescriptions.specialist.assigned", { task })}
+          {t(`tasks.stageDescriptions.specialist.${key}`, { task })}
         </StageDescription>
       </Padding>
     );
