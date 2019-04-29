@@ -1,4 +1,5 @@
 import * as React from "react";
+import reduce from "lodash/reduce";
 import Menu from "../Menu";
 import { compose, graphql } from "react-apollo";
 import DELETE_TASK from "./deleteTask.graphql";
@@ -10,7 +11,27 @@ interface Props {
   deleteTask: (options: any) => any;
 }
 
+const ACTIONS = {
+  delete: (task) => {
+    if (task.stage === "Not Assigned") return true;
+    if (task.stage === "Quote Requested") return true;
+    if (task.stage === "Quote Provided") return true;
+    return false
+  }
+}
+
 const Component = (props: Props) => {
+  const allowedActions = reduce(ACTIONS, (actions, isAllowed, action) => {
+    if (isAllowed(props.task)) {
+      return [...actions, action]
+    }
+    return actions;
+  }, [])
+
+  // for now there is only a single delte action and so we can just return
+  // nothing if there are no permitted actions
+  if (allowedActions.length === 0) return null;
+
   const handleDelete = popover => async () => {
     props.onDelete(props.task);
     popover.close();

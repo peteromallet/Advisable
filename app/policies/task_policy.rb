@@ -37,6 +37,10 @@ class TaskPolicy < BasePolicy
     ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)
   end
 
+  def delete
+    ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)
+  end
+
   private
 
   def task
