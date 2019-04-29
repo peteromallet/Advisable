@@ -293,25 +293,23 @@ export const StageDescription = styled.div`
   }
 `;
 
-export const SavingIndicator = styled.span`
-  left: 0;
-  top: 0;
+export const SavingIndicator = styled.div`
+  padding: 0;
   opacity: 0;
   width: 100%;
-  z-index: 99;
-  color: white;
-  padding: 8px 0;
+  color: ${colors.neutral.s7};
+  display: flex;
   font-size: 12px;
   font-weight: 500;
-  position: absolute;
-  text-align: center;
-  background-color: ${colors.blue.base};
-  transition: opacity 900ms, transform 300ms;
-  transform: translateY(-100%);
+  align-items: center;
+  justify-content: center;
+  background-color: ${colors.neutral.s1};
+  transition: opacity 200ms, height 300ms;
+  height: 0px;
 
   ${props => props.isSaving && css`
     opacity: 1;
-    transform: translateY(0);
-    transition: opacity 200ms, transform 300ms;
+    height: 24px;
+    transition: opacity 200ms, height 300ms;
   `}
 `

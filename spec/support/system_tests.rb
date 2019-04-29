@@ -3,7 +3,7 @@ RSpec.configure do |config|
     Capybara.register_driver :chrome do |app|
       options = Selenium::WebDriver::Chrome::Options.new(args: [
         "--window-size=1280,900",
-        "--headless"
+        # "--headless"
       ])
 
       Capybara::Selenium::Driver.new(app,

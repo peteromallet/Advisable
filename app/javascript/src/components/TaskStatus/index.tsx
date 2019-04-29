@@ -11,8 +11,9 @@ interface Props {
 const ICONS = {
   "Quote Provided": "lock",
   "Assigned": "lock",
-  "In Progress": "lock",
-  "Pending Approval": "lock",
+  "Working": "lock",
+  "Submitted": "lock",
+  "Approved": "lock",
 }
 
 export default ({ children }: Props) => {
