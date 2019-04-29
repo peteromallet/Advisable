@@ -18,7 +18,10 @@ class Proposals::Reject < ApplicationService
 
     if application.save
       application.sync_to_airtable
-      WebhookEvent.trigger("applications.proposal_rejected")
+      WebhookEvent.trigger(
+        "applications.proposal_rejected",
+        WebhookEvent::Application.data(application)
+      )
       return application
     else
       raise Service::Error.new(application.errors.full_messages.first)

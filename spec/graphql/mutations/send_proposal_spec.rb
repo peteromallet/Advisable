@@ -39,7 +39,7 @@ describe Mutations::SendProposal do
   end
 
   it "triggers a webhook" do
-    expect(WebhookEvent).to receive(:trigger).with("applications.proposal_sent")
+    expect(WebhookEvent).to receive(:trigger).with("applications.proposal_sent", any_args)
     AdvisableSchema.execute(query, context: context)
   end
 

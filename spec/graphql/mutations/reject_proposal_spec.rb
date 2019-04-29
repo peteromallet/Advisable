@@ -39,7 +39,7 @@ describe Mutations::RejectProposal do
   end
 
   it "triggers a webhook" do
-    expect(WebhookEvent).to receive(:trigger).with("applications.proposal_rejected")
+    expect(WebhookEvent).to receive(:trigger).with("applications.proposal_rejected", any_args)
     AdvisableSchema.execute(query, context: context)
   end
 

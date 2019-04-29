@@ -13,7 +13,10 @@ class Proposals::Send < ApplicationService
     application.status = "Proposed"
     if application.save
       application.sync_to_airtable
-      WebhookEvent.trigger("applications.proposal_sent")
+      WebhookEvent.trigger(
+        "applications.proposal_sent",
+        WebhookEvent::Application.data(application)
+      )
       return application
     else
       raise Service::Error.new(application.errors.full_messages.first)

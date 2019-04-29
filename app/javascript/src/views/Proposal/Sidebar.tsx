@@ -38,9 +38,7 @@ let SideBar = (props: any) => {
       </Padding>
       <Padding bottom="l">
         <Text size="s">
-          Send Dunder Mifflin a proposal to start working together. This is some
-          short text to explain what the freelancer should expect when sending a
-          proposal
+          Send Dunder Mifflin a proposal to start working together.
         </Text>
       </Padding>
       {!isMobile && (
