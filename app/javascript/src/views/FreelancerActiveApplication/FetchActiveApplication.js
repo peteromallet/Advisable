@@ -30,7 +30,7 @@ const FetchActiveApplication = ({ history, match, data, client }) => {
   };
 
   const addNewTaskToCache = task => {
-    client.cache.writeQuery({
+    client.writeQuery({
       query: FETCH_TASK,
       variables: {
         id: task.id,
@@ -42,7 +42,7 @@ const FetchActiveApplication = ({ history, match, data, client }) => {
 
     const newData = data;
     newData.application.tasks.push(task);
-    client.cache.writeQuery({
+    client.writeQuery({
       query: FETCH_APPLICATION,
       data: newData,
       variables: {
@@ -60,7 +60,7 @@ const FetchActiveApplication = ({ history, match, data, client }) => {
       return t.id !== task.id;
     });
 
-    client.cache.writeQuery({
+    client.writeQuery({
       query: FETCH_APPLICATION,
       data: newData,
       variables: {

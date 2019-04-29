@@ -1,8 +1,8 @@
 import * as React from "react";
-import { graphql } from "react-apollo";
+import { graphql, withApollo } from "react-apollo";
 import { match } from "react-router";
 import { matchPath } from "react-router-dom";
-import NotFound from "../../views/NotFound";
+import NotFound from "../NotFound";
 import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import TaskDrawer from "../../components/TaskDrawer";
@@ -10,21 +10,8 @@ import FETCH_BOOKING from "./fetchBooking.graphql";
 import FETCH_TASK from "./fetchTask.graphql";
 import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
-import { Location } from "history";
-import graphqlClient from "../../graphqlClient";
 
-interface Params {
-  applicationId: string;
-}
-
-interface Props {
-  match: match<Params>;
-  history: any;
-  data: any;
-  location: Location
-}
-
-const Booking = ({ data, match, history, location }: Props) => {
+let Booking = ({ data, match, history, location, client }) => {
   if (data.loading) return <Loading />;
   if (!data.application) return <NotFound />;
   if (data.application.status !== "Working") return <NotFound />
@@ -46,7 +33,7 @@ const Booking = ({ data, match, history, location }: Props) => {
   })
 
   const addNewTaskToCache = task => {
-    graphqlClient.cache.writeQuery({
+    client.writeQuery({
       query: FETCH_TASK,
       variables: {
         id: task.id,
@@ -58,7 +45,7 @@ const Booking = ({ data, match, history, location }: Props) => {
 
     const newData = data;
     newData.application.tasks.push(task);
-    graphqlClient.cache.writeQuery({
+    client.writeQuery({
       query: FETCH_BOOKING,
       data: newData,
       variables: {
@@ -75,7 +62,7 @@ const Booking = ({ data, match, history, location }: Props) => {
     newData.application.tasks = tasks.filter(t => {
       return t.id !== task.id;
     });
-    graphqlClient.cache.writeQuery({
+    client.writeQuery({
       query: FETCH_BOOKING,
       data: newData,
       variables: {
@@ -109,10 +96,15 @@ const Booking = ({ data, match, history, location }: Props) => {
   );
 };
 
-export default graphql(FETCH_BOOKING, {
-  options: (props: { match: match<Params> }) => ({
+Booking = withApollo(Booking)
+
+Booking = graphql(FETCH_BOOKING, {
+  options: (props) => ({
     variables: {
       id: props.match.params.applicationId,
     },
   }),
 })(Booking);
+
+
+export default Booking
