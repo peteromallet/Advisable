@@ -65,7 +65,7 @@ describe Mutations::UpdateTask do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["data"]["updateTask"]["errors"][0]
-      expect(error["code"]).to eq("tasks.isLocked")
+      expect(error["code"]).to eq("tasks.nameIsLocked")
     end
   end
 
@@ -75,7 +75,7 @@ describe Mutations::UpdateTask do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["data"]["updateTask"]["errors"][0]
-      expect(error["code"]).to eq("tasks.isLocked")
+      expect(error["code"]).to eq("tasks.nameIsLocked")
     end
   end
 
@@ -85,7 +85,7 @@ describe Mutations::UpdateTask do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["data"]["updateTask"]["errors"][0]
-      expect(error["code"]).to eq("tasks.isLocked")
+      expect(error["code"]).to eq("tasks.nameIsLocked")
     end
   end
 
@@ -95,7 +95,7 @@ describe Mutations::UpdateTask do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["data"]["updateTask"]["errors"][0]
-      expect(error["code"]).to eq("tasks.isLocked")
+      expect(error["code"]).to eq("tasks.nameIsLocked")
     end
   end
 
@@ -111,6 +111,16 @@ describe Mutations::UpdateTask do
       response = AdvisableSchema.execute(query, context: context)
       name = response["data"]["updateTask"]["task"]["name"]
       expect(name).to eq("Updated Name")
+    end
+
+    context "and the stage is Assigned" do
+      let(:task) { create(:task, name: nil, stage: "Assigned") }
+
+      it "returns an error" do
+        response = AdvisableSchema.execute(query, context: context)
+        error = response["data"]["updateTask"]["errors"][0]
+        expect(error["code"]).to eq("tasks.nameIsLocked")
+      end
     end
 
     context "and the stage is Quote Provided" do

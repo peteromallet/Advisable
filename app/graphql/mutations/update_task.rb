@@ -21,7 +21,8 @@ class Mutations::UpdateTask < Mutations::BaseMutation
     {
       task: Tasks::Update.call(
         task: task,
-        attributes: args.except(:id)
+        attributes: args.except(:id),
+        user: context[:current_user]
       )
     }
 

@@ -19,7 +19,6 @@ import {
   ConfirmationContainer,
   SavingIndicator,
 } from "./styles";
-import graphqlClient from "../../graphqlClient";
 import { Task } from "../../types";
 import StageDescription from "./StageDescription";
 
@@ -57,6 +56,16 @@ const PERMISSIONS = {
     estimate: isClient => (isClient ? READ : WRITE),
     description: isClient => (isClient ? PROMPT : READ),
   },
+  "Assigned": {
+    dueDate: (isClient, task) => {
+      if (!isClient && !task.dueDate) return WRITE;
+      return READ;
+    },
+    estimate: (isClient, task) => {
+      if (!isClient && !task.estimate) return WRITE;
+      return READ;
+    }
+  }
 };
 
 const getTaskPermission = (task, key, isClient) => {
@@ -64,7 +73,7 @@ const getTaskPermission = (task, key, isClient) => {
   if (!permissions) return READ;
   const permission = permissions[key];
   if (!permission) return READ;
-  return permission(isClient);
+  return permission(isClient, task);
 };
 
 let timer;
