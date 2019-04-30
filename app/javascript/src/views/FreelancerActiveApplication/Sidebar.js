@@ -5,10 +5,10 @@ import Back from "../../components/Back";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Heading from "../../components/Heading";
-import Divider from "../../components/Divider";
 import Padding from "../../components/Spacing/Padding";
 import AttributeList from "../../components/AttributeList";
 import { useMobile } from "../../components/Breakpoint";
+import currency from "../../utilities/currency";
 
 const Component = ({ data }) => {
   const isMobile = useMobile();
@@ -24,7 +24,9 @@ const Component = ({ data }) => {
         <Text>{application.project.user.companyName}</Text>
         <Padding top="l" bottom="l">
           <AttributeList>
-            <AttributeList.Item label="Hourly Rate" value="€120" />
+            <AttributeList.Item label="Hourly Rate" value={
+              currency(application.rate, application.project.currency)
+            } />
           </AttributeList>
         </Padding>
       </Sticky>

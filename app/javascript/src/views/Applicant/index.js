@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "src/components/Layout";
 import Loading from "src/components/Loading";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
+import NotFound from "../NotFound";
 import Proposal from "./Proposal";
 import Sidebar from "./Sidebar";
 import ApplicationDetails from "./ApplicationDetails";
@@ -14,6 +15,10 @@ const Applicant = ({ data, match, history }) => {
   }, [match.params.applicationID]);
 
   if (data.loading) return <Loading />;
+
+  if (!data.project) {
+    return <NotFound />
+  } 
 
   if (data.project.application.status === "Working") {
     return <Redirect to={`/manage/${data.project.application.airtableId}`} />;
