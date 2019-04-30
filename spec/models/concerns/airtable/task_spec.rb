@@ -48,9 +48,9 @@ describe Airtable::Task do
     end
 
     it "syncs the due date" do
-      expect { airtable.sync }.to change {
-        task.reload.due_date
-      }.from(nil).to(airtable.fields["Due Date"])
+      expect(task.reload.due_date).to be_nil
+      airtable.sync
+      expect(task.reload.due_date).to be_within(2.seconds).of(airtable.fields["Due Date"])
     end
 
     it "syncs the description" do

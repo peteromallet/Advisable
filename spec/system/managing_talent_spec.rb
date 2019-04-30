@@ -76,7 +76,9 @@ describe "Manaing talent" do
       visit "/manage/#{application.airtable_id}"
       find('h5', text: 'This is an existing task').click
       click_on "Assign Task"
-      click_on "Assign"
+      within "div[class^='styles__ConfirmationContainer']" do
+        click_on "Assign"
+      end
       expect(page).to have_content("This task has been assigned")
     end
 
@@ -105,7 +107,9 @@ describe "Manaing talent" do
       visit "/manage/#{application.airtable_id}"
       find('h5', text: 'This is an existing task').click
       click_on "Assign Task"
-      click_on "Assign"
+      within "div[class^='styles__ConfirmationContainer']" do
+        click_on "Assign"
+      end
       expect(page).to have_content("This task has been assigned")
     end
 
@@ -134,7 +138,9 @@ describe "Manaing talent" do
       visit "/manage/#{application.airtable_id}"
       find('h5', text: 'This is an existing task').click
       click_on "Assign Task"
-      click_on "Assign"
+      within "div[class^='styles__ConfirmationContainer']" do
+        click_on "Assign"
+      end
       expect(page).to have_content("This task has been assigned")
     end
 
@@ -166,7 +172,9 @@ describe "Manaing talent" do
       visit "/manage/#{application.airtable_id}"
       find('h5', text: 'This is an existing task').click
       click_on "Approve task"
-      click_on "Approve"
+      within "div[class^='styles__ConfirmationContainer']" do
+        click_on "Approve"
+      end
       expect(page).to have_content("This task has been completed")
     end
   end
