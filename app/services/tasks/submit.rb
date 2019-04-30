@@ -12,6 +12,7 @@ class Tasks::Submit < ApplicationService
 
     if task.update_attributes(stage: "Submitted")
       task.sync_to_airtable
+      WebhookEvent.trigger("tasks.submitted", WebhookEvent::Task.data(task))
       return task
     end
 

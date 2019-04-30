@@ -113,6 +113,11 @@ describe Mutations::UpdateTask do
       expect(name).to eq("Updated Name")
     end
 
+    it "doesnt trigger a webhook" do
+      expect(WebhookEvent).to_not receive(:trigger)
+      AdvisableSchema.execute(query, context: context)
+    end
+
     context "and the stage is Assigned" do
       let(:task) { create(:task, name: nil, stage: "Assigned") }
 
@@ -229,6 +234,11 @@ describe Mutations::UpdateTask do
         }.to change {
           task.reload.stage
         }.from("Quote Requested").to("Quote Provided")
+      end
+
+      it "triggers a webhook" do
+        expect(WebhookEvent).to receive(:trigger).with("tasks.quote_provided", any_args)
+        AdvisableSchema.execute(query, context: context)
       end
     end
   end
