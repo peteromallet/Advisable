@@ -11,4 +11,9 @@ class ApplicationPolicy < BasePolicy
   def is_specialist
     return true if record.specialist == user
   end
+
+  # Wether or not the user has access to read information about the application.
+  def read
+    is_client || is_specialist || has_permission?("projects:all")
+  end
 end

@@ -6,6 +6,10 @@ class BasePolicy
     @record = record
   end
 
+  def has_permission?(permission)
+    user.try(:has_permission?, permission)
+  end
+
   class Scope
     attr_reader :user, :scope
 

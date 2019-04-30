@@ -29,7 +29,8 @@ class WebhookEvent < ApplicationRecord
     "tasks.started",
     "tasks.submitted",
     "tasks.approved",
-    "tasks.due_date_past"
+    "tasks.due_date_past",
+    "tasks.due_date_upcoming",
   ].freeze
 
   # self.trigger is used to trigger a webhook event.
