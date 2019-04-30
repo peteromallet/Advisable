@@ -23,7 +23,12 @@ class Types::QueryType < Types::BaseType
     # Return the project if the user has access to it.
     return project if policy.can_access_project?
     # If there is a user logged in but they don't have access then return nil
-    return nil if context[:current_user]
+    if context[:current_user]
+      raise GraphQL::ExecutionError.new("Invalid Permissions", options: {
+        code: "invalidPermissions"
+      })
+    end
+
     # Returns special error codes if there is no user logged in.
     user = project.user
     email = user.try(:email)
