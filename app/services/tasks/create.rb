@@ -10,6 +10,7 @@ class Tasks::Create < ApplicationService
   def call
     if task.save
       task.sync_to_airtable
+      WebhookEvent.trigger("tasks.created", WebhookEvent::Task.data(task))
       return task
     end
 

@@ -31,6 +31,11 @@ describe Mutations::SubmitTask do
     expect(stage).to eq("Submitted")
   end
 
+  it "triggers a webhook" do
+    expect(WebhookEvent).to receive(:trigger).with("tasks.submitted", any_args)
+    AdvisableSchema.execute(query, context: context)
+  end
+
   context "when the specialist doesn't have access to the project" do
     let(:context) {{ current_user: create(:specialist) }}
 

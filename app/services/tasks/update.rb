@@ -27,6 +27,11 @@ class Tasks::Update < ApplicationService
     end
 
     task.sync_to_airtable if task.save
+
+    if task.saved_change_to_stage? && task.stage == "Quote Provided"
+      WebhookEvent.trigger("tasks.quote_provided", WebhookEvent::Task.data(task))
+    end
+
     task
   end
 
