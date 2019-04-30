@@ -20,6 +20,7 @@ class Tasks::Start < ApplicationService
 
     if task.update_attributes(stage: "Working")
       task.sync_to_airtable
+      WebhookEvent.trigger("tasks.started", WebhookEvent::Task.data(task))
       return task
     end
 

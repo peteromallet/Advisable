@@ -31,6 +31,11 @@ describe Mutations::ApproveTask do
     expect(stage).to eq("Approved")
   end
 
+  it "triggers a webhook" do
+    expect(WebhookEvent).to receive(:trigger).with("tasks.approved", any_args)
+    AdvisableSchema.execute(query, context: context)
+  end
+
   context "when the user doesn't have access to the project" do
     let(:context) {{ current_user: create(:user) }}
 

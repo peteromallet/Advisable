@@ -26,6 +26,7 @@ class Airtable::Project < Airtable::Base
     end
 
     skills = project.skills.map(&:airtable_id)
+    required_skills = fields['Skills Required'] || []
     fields['Skills Required'].each do |skill_id|
       unless skills.include?(skill_id)
         skill = ::Skill.find_by_airtable_id(skill_id)
