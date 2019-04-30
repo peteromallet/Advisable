@@ -31,6 +31,11 @@ describe Mutations::StartTask do
     expect(stage).to eq("Working")
   end
 
+  it "triggers a webhook" do
+    expect(WebhookEvent).to receive(:trigger).with("tasks.started", any_args)
+    AdvisableSchema.execute(query, context: context)
+  end
+
   context "when the task does not have an estimate" do
     let(:task) { create(:task, stage: "Assigned", estimate: nil) }
 

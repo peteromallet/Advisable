@@ -20,6 +20,7 @@ class Tasks::RequestQuote < ApplicationService
 
     if task.update_attributes(stage: "Quote Requested")
       task.sync_to_airtable
+      WebhookEvent.trigger("tasks.quote_requested", WebhookEvent::Task.data(task))
       return task
     end
 

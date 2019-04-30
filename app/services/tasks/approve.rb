@@ -12,6 +12,7 @@ class Tasks::Approve < ApplicationService
 
     if task.update_attributes(stage: "Approved")
       task.sync_to_airtable
+      WebhookEvent.trigger("tasks.approved", WebhookEvent::Task.data(task))
       return task
     end
 
