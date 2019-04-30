@@ -18,7 +18,7 @@ namespace :migrate do
       end
 
       next unless booking.present?
-
+      next unless booking.airtable_id
       airtable = Airtable::Booking.find(booking.airtable_id)
       stage = ""
       stage = "Not Assigned" if booking.status == "Proposed"
@@ -38,6 +38,9 @@ namespace :migrate do
       )
 
       task.sync_to_airtable
+      
+      rescue Airrecord::Error => e
+        next
     end
   end
 
