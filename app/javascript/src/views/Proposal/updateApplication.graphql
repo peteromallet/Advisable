@@ -1,0 +1,12 @@
+mutation updateApplication($input: UpdateApplicationInput!) {
+  updateApplication(input: $input) {
+    application {
+      id
+      airtableId
+      rate
+    }
+    errors {
+      code
+    }
+  }
+}

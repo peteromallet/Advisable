@@ -2,10 +2,7 @@ require "rails_helper"
 
 describe Interviews::RequestMoreTimes do
   before :each do
-    at_recrd = double(Airtable::Interview)
-    allow(at_recrd).to receive(:[]=)
-    allow(at_recrd).to receive(:save)
-    allow(Airtable::Interview).to receive(:find).and_return(at_recrd)
+    allow_any_instance_of(Interview).to receive(:sync_to_airtable)
   end
 
   it "Sets the status to Need More Time Options" do

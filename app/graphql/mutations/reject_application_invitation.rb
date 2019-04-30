@@ -3,18 +3,14 @@ class Mutations::RejectApplicationInvitation < Mutations::BaseMutation
   argument :reason, String, required: true
 
   field :application, Types::ApplicationType, null: true
-  field :errors, [String], null: false
+  field :errors, [String], null: true
 
   def resolve(**args)
-    begin
-      return {
-        application: Applications::RejectApplicationInvitation.call(
-          application_id: args[:id],
-          reason: args[:reason]
-        ),
-      }
-    rescue ActiveRecord::RecordNotFound => er
-      GraphQL::ExecutionError.new("Could not find application #{args[:id]}")
-    end
+    {
+      application: Applications::RejectApplicationInvitation.call(
+        application_id: args[:id],
+        reason: args[:reason]
+      ),
+    }
   end
 end

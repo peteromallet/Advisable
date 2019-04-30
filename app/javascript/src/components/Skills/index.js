@@ -1,19 +1,19 @@
 import React from "react";
 import Spacing from "../Spacing";
 import styled from "styled-components";
+import colors from "../../colors";
 
 const Skill = styled.div`
-  color: #0f3776;
-  padding: 8px 20px;
-  font-size: 15px;
-  font-weight: 500;
-  margin-right: 10px;
-  align-items: center;
-  background: #D9E7FF;
+  font-size: 13px;
+  font-weight: 400;
+  margin-right: 8px;
+  padding: 5px 12px;
+  margin-bottom: 8px;
   border-radius: 15px;
+  align-items: center;
   display: inline-flex;
-  margin-bottom: 10px;
-  letter-spacing: -0.015em;
+  color: ${colors.neutral.s9};
+  background: ${colors.neutral.s2};
 `;
 
 export default ({ skills, ...props }) => {

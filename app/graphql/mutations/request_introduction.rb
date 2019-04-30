@@ -17,39 +17,18 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
       status: "Call Requested"
     )
 
-    if interview.valid?
-      airtable_record = create_airtable_record(interview, application)
-      interview.airtable_id = airtable_record.id
-      interview.save
-      Webhook.process(interview)
-      update_application_status(application)
-      return { interview: interview, errors: [] }
-    end
-
-    return {
-      errors: interview.errors.full_messages
-    }
+    interview.save
+    interview.sync_to_airtable
+    Webhook.process(interview)
+    update_application_status(application)
+    return { interview: interview }
   end
 
   private
 
   def update_application_status(application)
-    airtable_record = Airtable::Application.find(application.airtable_id)
-    airtable_record["Application Status"] = 'Application Accepted'
-    airtable_record.save
     application.update_attributes(status: 'Application Accepted')
+    application.sync_to_airtable
     Webhook.process(application)
-  end
-
-  def create_airtable_record(interview, application)
-    record = Airtable::Interview.new(
-      "Application" => [application.airtable_id],
-      "Interview Time" => interview.starts_at,
-      "Call Status" => interview.status,
-      "Creation Time" => DateTime.now.utc,
-      "Email Post Meeting" => "Yes"
-    )
-    record.create
-    record
   end
 end

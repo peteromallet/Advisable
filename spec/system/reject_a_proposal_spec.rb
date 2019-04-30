@@ -1,27 +1,16 @@
 require 'rails_helper'
 
 describe 'Rejecting an application' do
-  let!(:proposal) { create(:booking, status: 'Proposed') }
-  let!(:reason) { create(:application_rejection_reason, reason: 'Too Expensive') }
+  let(:application) { create(:application, status: 'Proposed') }
+  
+  before :each do
+    allow_any_instance_of(Application).to receive(:sync_to_airtable)
+  end
 
   it "sets the applicaton status to Application Rejected" do
-    airtableApplication = double("Airtable::Application")
-    expect(airtableApplication).to receive(:[]=).with("Application Status", "Application Rejected")
-    expect(airtableApplication).to receive(:[]=).with("Rejected Reason", [reason.airtable_id])
-    expect(airtableApplication).to receive(:save)
-    expect(Airtable::Application).to receive(:find).with(proposal.application.airtable_id)
-      .and_return(airtableApplication)
-
-    airtableBooking = double("Airtable::Booking")
-    expect(airtableBooking).to receive(:[]=).with("Client Decline Comment", "Testing 123")
-    expect(airtableBooking).to receive(:[]=).with("Status", "Declined")
-    expect(airtableBooking).to receive(:save)
-    expect(Airtable::Booking).to receive(:find).with(proposal.airtable_id)
-      .and_return(airtableBooking)
-
-    authenticate_as proposal.application.project.user
-    visit "/projects/#{proposal.application.project.airtable_id}/proposals/#{proposal.airtable_id}"
-    click_on 'Reject Applicant'
+    authenticate_as application.project.user
+    visit "/projects/#{application.project.airtable_id}/applications/#{application.airtable_id}/proposal"
+    click_on 'Reject application'
     select 'Too Expensive', from: "reason"
     fill_in "comment", with: "Testing 123"
     within '.ModalWindow' do

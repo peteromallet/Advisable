@@ -26,12 +26,15 @@ class Airtable::Booking < Airtable::Base
       application = Airtable::Application.find(application_id).sync if application.nil?
       booking.application = application
     end
+  end
 
-    rejected_reason_id = fields["Rejected Reason"].try(:first)
-    if rejected_reason_id
-      rejection_reason = ::BookingRejectionReason.find_by_airtable_id(rejected_reason_id)
-      rejection_reason = Airtable::BookingRejectedReason.find(rejected_reason_id).sync if rejection_reason.nil?
-      booking.rejection_reason = rejection_reason
-    end
+  # Describes what data should be pushed into airtable when 'sync_to_airtable'
+  # is called on a model.
+  push_data do |booking|
+    self['Rate'] = booking.rate.to_f
+    self['Status'] = booking.status
+    self['Proposal Comment'] = booking.proposal_comment
+    self['Application'] = [booking.application.try(:airtable_id)]
+    self['Client Decline Comment'] = booking.client_decline_comment
   end
 end

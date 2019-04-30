@@ -18,15 +18,6 @@ class WebhookConfiguration::Booking < WebhookConfiguration
       rejection_reason: nil
     }
 
-    if booking.rejection_reason
-      base.merge!({
-        rejection_reason: {
-          id: booking.rejection_reason.id,
-          airtable_id: booking.rejection_reason.airtable_id
-        }
-      })
-    end
-
     base
   end
 end

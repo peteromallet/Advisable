@@ -45,7 +45,7 @@ const OpenApplications = (props: Props) => {
   return (
     <div>
       <Padding bottom="m">
-        <Heading>Open Applications</Heading>
+        <Heading level={2}>Open Applications</Heading>
       </Padding>
       {content}
     </div>

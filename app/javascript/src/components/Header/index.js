@@ -5,6 +5,7 @@ import { Header, Spacer, Logo, Hamburger } from "./styles";
 import logo from "./logo.svg";
 import CurrentUser from "./CurrentUser";
 import { useMobile } from "../../components/Breakpoint";
+import ClientNavigation from "./ClientNavigation";
 import FreelancerNavigation from "./FreelancerNavigation";
 import VIEWER from "../AuthenticatedRoute/viewer.graphql";
 
@@ -33,6 +34,12 @@ export default () => {
               <Logo to="/">
                 <img src={logo} alt="" />
               </Logo>
+              <ClientNavigation
+                data={query.data}
+                navOpen={navOpen}
+                onCloseNav={() => setNavOpen(false)}
+                onLogout={() => handleLogout(query.client)}
+              />
               <FreelancerNavigation
                 navOpen={navOpen}
                 onLogout={() => handleLogout(query.client)}

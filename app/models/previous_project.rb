@@ -61,10 +61,12 @@ class PreviousProject
     # successful and has an associated booking with a status of either Complete
     # or Accepted
     def specialist_platform_projects(specialist)
-      Project.joins(applications: [:specialist, :bookings])
+      Project.joins(applications: [:specialist])
         .where(
-          specialists: { id: specialist.id },
-          bookings: { status: ["Complete", "Accepted"] }
+          applications: {
+            status: ["Working"],
+            specialists: { id: specialist.id },
+          },
         )
     end
   end

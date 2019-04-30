@@ -4,13 +4,11 @@ describe 'Rejecting an application' do
   let!(:project) { create(:project) }
   let!(:application) { create(:application, project: project) }
 
-  it "sets the applicaton status to Application Rejected" do
-    airtableApplication = double("Airtable::Application")
-    allow(airtableApplication).to receive(:[]=)
-    allow(airtableApplication).to receive(:save)
-    expect(Airtable::Application).to receive(:find).with(application.airtable_id)
-      .and_return(airtableApplication)
+  before :each do
+    allow_any_instance_of(Application).to receive(:sync_to_airtable)
+  end
 
+  it "sets the applicaton status to Application Rejected" do
     authenticate_as project.user
     visit "/projects/#{project.airtable_id}"
     click_on 'Provide Feedback'

@@ -13,6 +13,7 @@ class Airtable::Application < Airtable::Base
   sync_column 'Advisable Comment', to: :comment
   sync_column 'Rejected Reason', to: :rejection_reason
   sync_column 'Rejected Reason Comment', to: :rejection_reason_comment
+  sync_column 'Proposal Comment', to: :proposal_comment
   sync_column 'Invitation Rejected Reason', to: :invitation_rejection_reason
   sync_column 'Referral URL', to: :referral_url
   sync_column 'Applied At', to: :applied_at
@@ -101,5 +102,9 @@ class Airtable::Application < Airtable::Base
     self['Accepts Terms'] = application.accepts_terms ? "Yes" : "No"
     self['Accepts Fee'] = application.accepts_fee ? "Yes" : "No"
     self['Applied At'] = application.applied_at
+    self['Rejected Reason'] = application.rejection_reason
+    self['Proposal Comment'] = application.proposal_comment
+    self['Rejected Reason Comment'] = application.rejection_reason_comment
+    self['References Requested'] = application.references_requested ? "Yes" : nil
   end
 end

@@ -2,12 +2,9 @@ require "rails_helper"
 
 describe Interviews::ResendInterviewRequest do
   let(:interview) { create(:interview, starts_at: nil, time_zone: "Dublin/Ireland", status: "Need More Time Options") }
-  let(:airtable_record) { double(Airtable::Interview) }
 
   before :each do
-    allow(airtable_record).to receive(:[]=)
-    allow(airtable_record).to receive(:save)
-    allow(Airtable::Interview).to receive(:find).with(interview.airtable_id).and_return(airtable_record)
+    allow(interview).to receive(:sync_to_airtable)
   end
 
   it "updates the users availability" do
@@ -43,9 +40,8 @@ describe Interviews::ResendInterviewRequest do
     }.to change { interview.status }.from("Need More Time Options").to("More Time Options Added")
   end
 
-  it "updates the call status in airtable" do
-    expect(airtable_record).to receive(:[]=).with("Call Status", "More Time Options Added")
-    expect(airtable_record).to receive(:save)
+  it "syncs to airtable" do
+    expect(interview).to receive(:sync_to_airtable)
     Interviews::ResendInterviewRequest.call(
       interview: interview,
       availability: [1.day.from_now],

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { useTransition } from "react-spring";
+import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import { extractSpacingProps } from "../Spacing";
 import {
   ModalContainer,
@@ -14,10 +15,16 @@ import ModalHeader from "./ModalHeader";
 import ModalBody from "./ModalBody";
 import ModalFooter from "./ModalFooter";
 
-const modalRoot = document.getElementById("js-modal-root");
-let previousOverflow;
+let modalRoot = document.getElementById("js-modal-root");
+if (!modalRoot) {
+  modalRoot = document.createElement("div")
+  modalRoot.id = "js-modal-root"
+  document.body.appendChild(modalRoot);
+}
 
 const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentProps }) => {
+  const modalRef = React.useRef(null);
+
   const transitions = useTransition(isOpen, null, {
     from: { opacity: 0, transform: "translate3d(0, 100px, 0)" },
     enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
@@ -29,7 +36,7 @@ const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentPr
   React.useEffect(() => {
     return () => {
       if (modalRoot.children.length <= 1) {
-        document.body.style.overflow = previousOverflow || "";
+        clearAllBodyScrollLocks()
       }
     }
   }, [])
@@ -39,14 +46,13 @@ const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentPr
     // overflow hidden then add the various styles to prevent scrolling on the
     // body.
     if (modalRoot.firstChild && document.body.style.overflow !== "hidden") {
-      previousOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
+      disableBodyScroll(modalRef.current);
     }
 
     // if there is no more modals then set the body overflow back to what it
     // was.
     if (modalRoot.firstChild === null) {
-      document.body.style.overflow = previousOverflow || "";
+      clearAllBodyScrollLocks()
     }
 
   }, [isOpen]);
@@ -65,11 +71,12 @@ const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentPr
               style={props}
             >
               <Window
+                ref={modalRef}
                 className="ModalWindow"
                 expandOnMobile={expandOnMobile}
                 {...extractSpacingProps(componentProps)}
               >
-                <CloseModal onClick={onClose}>
+                <CloseModal aria-label="Close Modal" onClick={onClose}>
                   <svg width={13} height={12} fill="none">
                     <path
                       fillRule="evenodd"

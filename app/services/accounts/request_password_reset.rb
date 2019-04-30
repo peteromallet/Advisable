@@ -4,12 +4,15 @@
 class Accounts::RequestPasswordReset < ApplicationService
   attr_reader :account
 
-  def initialize(account)
-    @account = account
+  def initialize(email)
+    @account = Account.find_by_email!(email.downcase)
+    
+    rescue ActiveRecord::RecordNotFound => e
+      raise Service::Error.new("request_password_reset.account_not_found")
   end
 
   def call
-    return unless has_account?
+    has_account?
     account.update_attributes({
       reset_digest: Token.digest(token),
       reset_sent_at: Time.zone.now
@@ -21,7 +24,7 @@ class Accounts::RequestPasswordReset < ApplicationService
   private
 
   def has_account?
-    return true if account.has_account?
+    return if account.has_account?
 
     if account.is_a?(Specialist)
       WebhookEvent.trigger(
@@ -30,7 +33,10 @@ class Accounts::RequestPasswordReset < ApplicationService
       )
 
       raise Service::Error.new("request_password_reset.application_required")
+      return
     end
+
+    raise Service::Error.new("request_password_reset.account_not_found")
   end
 
   def token

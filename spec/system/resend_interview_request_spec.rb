@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 describe 'Resending interview request' do
-  it 'resends the interview request' do
-    airtable_record = double(Airtable::Interview)
-    allow(Airtable::Interview).to receive(:find).and_return(airtable_record)
-    allow(airtable_record).to receive(:[]=)
-    allow(airtable_record).to receive(:save)
+  before :each do
+    allow_any_instance_of(Interview).to receive(:sync_to_airtable)
+  end
 
+  it 'resends the interview request' do
     interview = create(:interview)
     authenticate_as interview.application.project.user
     visit "/projects/#{interview.application.project.airtable_id}/interviews/#{interview.airtable_id}/availability"

@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import Text from "../../components/Text";
+import Status from "../../components/Status";
 import pluralize from "../../utilities/pluralize";
 import NewProjectModal from "./NewProjectModal";
 import {
@@ -31,7 +32,7 @@ export default ({ projects }) => {
             <Text size="s" marginBottom="l">
               {pluralize(project.applicationCount, "Candidate", "Candidates")}
             </Text>
-            <ProjectStatus>{project.status}</ProjectStatus>
+            <Status>{project.status}</Status>
             <ProjectDescription>{project.description}</ProjectDescription>
           </ProjectCard>
         </Tile>

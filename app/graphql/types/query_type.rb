@@ -150,4 +150,12 @@ class Types::QueryType < Types::BaseType
   def industries
     Industry.all.order(name: :asc)
   end
+
+  field :task, Types::TaskType, null: true do
+    argument :id, ID, required: true
+  end
+
+  def task(id: )
+    Task.find_by_uid!(id)
+  end
 end
