@@ -24,7 +24,7 @@ class Types::ApplicationType < Types::BaseType
   field :interview, Types::Interview, null: true
  
   field :proposal_comment, String, null: true do
-    authorize :is_specialist_or_client
+    authorize :read
   end
 
   field :previous_projects, [Types::PreviousProject], null: false do
@@ -32,7 +32,7 @@ class Types::ApplicationType < Types::BaseType
   end
 
   field :tasks, [Types::TaskType], null: true do
-    authorize :is_specialist_or_client
+    authorize :read
   end
 
   def applied_at
