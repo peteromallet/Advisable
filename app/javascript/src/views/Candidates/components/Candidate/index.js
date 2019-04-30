@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import Text from "src/components/Text";
 import Avatar from "src/components/Avatar";
-import Spacing from "src/components/Spacing";
+import Spacing, { Padding } from "src/components/Spacing";
 import Button from "src/components/Button";
 import FeaturedBadge from "src/components/FeaturedBadge";
 import Questions from "./Questions";
@@ -18,7 +18,7 @@ import {
   Location,
   CandidateHeader,
   NameAndLocation,
-  CandidateHeaderActions
+  CandidateHeaderActions,
 } from "./styles";
 
 const Candidate = ({ application, project, history }) => {
@@ -67,46 +67,50 @@ const Candidate = ({ application, project, history }) => {
         {application.introduction}
       </Text>
 
-      <Button blank className="ViewMore" onClick={handleExpand}>
-        {expanded ? (
-          <svg width={13} height={6}>
-            <path
-              d="M1.314 6l-.668-.6 6-5.4 6 5.4-.667.6-5.333-4.798z"
-              fill="#76859A"
-              fillRule="nonzero"
-            />
-          </svg>
-        ) : (
-          <svg width={13} height={7}>
-            <path
-              d="M1.314.293l-.668.6 6 5.4 6-5.4-.667-.6L6.646 5.09z"
-              fill="#76859A"
-              fillRule="nonzero"
-            />
-          </svg>
-        )}
-        {expanded ? "View Less" : "View More"}
-      </Button>
+      <Padding bottom="xl">
+        <Button blank className="ViewMore" onClick={handleExpand}>
+          {expanded ? (
+            <svg width={13} height={6}>
+              <path
+                d="M1.314 6l-.668-.6 6-5.4 6 5.4-.667.6-5.333-4.798z"
+                fill="#76859A"
+                fillRule="nonzero"
+              />
+            </svg>
+          ) : (
+            <svg width={13} height={7}>
+              <path
+                d="M1.314.293l-.668.6 6 5.4 6-5.4-.667-.6L6.646 5.09z"
+                fill="#76859A"
+                fillRule="nonzero"
+              />
+            </svg>
+          )}
+          {expanded ? "View Less" : "View More"}
+        </Button>
+      </Padding>
 
       {expanded && (
         <React.Fragment>
           <Questions questions={application.questions} />
           {application.specialist.skills.length > 0 && (
-            <Spacing marginTop="xl">
-              <Skills skills={application.specialist.skills} />
-            </Spacing>
+            <Padding bottom="l">
+              <Spacing>
+                <Skills skills={application.specialist.skills} />
+              </Spacing>
+            </Padding>
           )}
 
-          <Spacing paddingTop="l">
+          <Padding bottom="xl">
             <PreviousProjects
               project={project}
               applicationId={application.airtableId}
             />
-          </Spacing>
+          </Padding>
         </React.Fragment>
       )}
 
-      <CandidateActions history={history} application={application} />
+      <CandidateActions projectId={project.airtableId} history={history} application={application} />
     </Card>
   );
 };

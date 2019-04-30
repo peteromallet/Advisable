@@ -62,6 +62,8 @@ export const Hamburger = styled.button`
 
 export const CloseNav = styled.button`
   display: none;
+  appearance: none;
+  background: white;
 
   @media (max-width: 800px) {
     width: 40px;
@@ -70,8 +72,8 @@ export const CloseNav = styled.button`
     position: relative;
     border-radius: 50%;
     margin-bottom: 20px;
-    color: ${colors.neutral.s3};
-    border: 1px solid ${colors.neutral.s2};
+    color: ${colors.neutral.s4};
+    border: 1px solid ${colors.neutral.s3};
 
     svg {
       top: 50%;
@@ -176,8 +178,8 @@ export const CurrentUserToggle = styled.div`
 
   strong {
     display: block;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
   }
 
   span {

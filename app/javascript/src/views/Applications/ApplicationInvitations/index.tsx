@@ -25,9 +25,9 @@ const ApplicationInvitations = (props: Props) => {
   if (!props.loading && filtered.length === 0) return null;
 
   return (
-    <React.Fragment>
+    <Padding bottom="xl">
       <Padding bottom="xs">
-        <Heading>Application Invitations</Heading>
+        <Heading level={2}>Application Invitations</Heading>
       </Padding>
       <Text size="s">
         We have found some projects we think you might be interested in.
@@ -43,7 +43,7 @@ const ApplicationInvitations = (props: Props) => {
           ))}
         </Invitations>
       </InvitationsWrapper>
-    </React.Fragment>
+    </Padding>
   );
 };
 

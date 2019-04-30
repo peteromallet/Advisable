@@ -2,9 +2,11 @@
 import React, { Fragment, useState } from "react";
 import Button from "src/components/Button";
 import Divider from "src/components/Divider";
+import { Link } from "react-router-dom";
 import useMobile from "src/utilities/useMobile";
 import ButtonGroup from "src/components/ButtonGroup";
 import RejectModal from "src/components/RejectModal";
+import CreateBookingModal from "./CreateBookingModal";
 import RequestReferences from "src/components/RequestReferences";
 import RequestIntroduction from "src/components/RequestIntroduction";
 import RejectProposalModal from "src/components/RejectProposalModal";
@@ -13,15 +15,15 @@ const REJECT_MODAL = "REJECT";
 const REQUEST_INTRODUCTION = "REQUEST_INTRODUCTION";
 const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
 const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
+const CREATE_BOOKING_MODAL = "CREATE_BOOKING_MODAL"
 
 const statusActions = {
-  Applied: ({ application }) => {
+  Applied: ({ application, stack, fullWidth }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
 
     return (
       <React.Fragment>
-        <Divider marginTop="xl" marginBottom="xl" />
         <RequestIntroduction
           isOpen={modal === REQUEST_INTRODUCTION}
           application={application}
@@ -33,7 +35,7 @@ const statusActions = {
           application={application}
           onClose={() => setModal(null)}
         />
-        <ButtonGroup stack={isMobile}>
+        <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
             styling="primary"
             onClick={() => setModal(REQUEST_INTRODUCTION)}
@@ -47,13 +49,12 @@ const statusActions = {
       </React.Fragment>
     );
   },
-  "Application Accepted": ({ application, history }) => {
+  "Application Accepted": ({ application, history, stack, fullWidth  }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
 
     return (
       <Fragment>
-        <Divider marginTop="xl" marginBottom="xl" />
         <RejectModal
           isOpen={modal === REJECT_MODAL}
           onRequestCall={() => setModal(REQUEST_INTRODUCTION)}
@@ -66,12 +67,19 @@ const statusActions = {
           isOpen={modal === REQUEST_REFERENCES_MODAL}
           onClose={() => setModal(null)}
         />
-        <ButtonGroup stack={isMobile}>
+        <CreateBookingModal
+          onClose={() => setModal(null)}
+          applicationId={application.airtableId}
+          isOpen={modal === CREATE_BOOKING_MODAL}
+          firstName={application.specialist.firstName}
+          onCreate={b => history.push(`/bookings/${b.airtableId}`)}
+        />
+        <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
-            onClick={() => history.push(`applications/${application.id}/offer`)}
-            styling="primary"
+            styling="green"
+            onClick={() => setModal(CREATE_BOOKING_MODAL)}
           >
-            Send Offer
+            Start working with {application.specialist.firstName}
           </Button>
           <Button onClick={() => setModal(REJECT_MODAL)}>
             Provide Feedback
@@ -85,18 +93,14 @@ const statusActions = {
       </Fragment>
     );
   },
-  Proposed: ({ application, history }) => {
+  Proposed: ({ projectId, application, history, stack, fullWidth }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
-    const { proposal } = application;
-
-    if (!proposal) return null;
 
     return (
       <Fragment>
-        <Divider marginTop="xl" marginBottom="xl" />
         <RejectProposalModal
-          booking={proposal}
+          application={application}
           specialist={application.specialist}
           isOpen={modal === REJECT_PROPOSAL_MODAL}
           onClose={() => setModal(null)}
@@ -106,10 +110,11 @@ const statusActions = {
           isOpen={modal === REQUEST_REFERENCES_MODAL}
           onClose={() => setModal(null)}
         />
-        <ButtonGroup stack={isMobile}>
+        <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
+            as={Link}
             styling="primary"
-            onClick={() => history.push(`proposals/${proposal.id}`)}
+            to={`/projects/${projectId}/applications/${application.airtableId}/proposal`}
           >
             View Proposal
           </Button>
@@ -127,7 +132,7 @@ const statusActions = {
   }
 };
 
-export default ({ application, history }) => {
+export default ({ projectId, application, history, stack, fullWidth  }) => {
   const actions = statusActions[application.status];
-  return actions ? actions({ application, history }) : null;
+  return actions ? actions({ projectId, application, history, stack, fullWidth  }) : null;
 };

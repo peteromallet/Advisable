@@ -4,12 +4,12 @@ import { Icon } from "../Icon/styles";
 
 const STYLES = {
   "yellow": css`
-    color: ${darken(0.5, "#FFC451")};
-    background: ${rgba("#FFC451", 0.3)};
+    color: #2B3169;
+    background: #FFDA91;
   `,
   "green": css`
-    color: ${darken(0.3, "#00CDB4")};
-    background: ${rgba("#17D89E", 0.2)};
+    color: #2B3169;
+    background: #57E1C8;
   `,
   "blue": css`
     color: ${darken(0.3, "#173FCD")};
@@ -18,23 +18,23 @@ const STYLES = {
 }
 
 export const Status = styled.span`
-  height: 22px;
+  height: 20px;
   color: #1D274B;
-  font-size: 14px;
-  padding: 0 12px;
-  font-weight: 500;
-  line-height: 22px;
-  border-radius: 15px;
+  font-size: 11px;
+  padding: 0 10px;
+  font-weight: 600;
+  line-height: 20px;
+  border-radius: 6px;
   align-items: center;
   display: inline-flex;
-  letter-spacing: 0.01rem;
+  text-transform: uppercase;
   background: rgba(29, 39, 75, 0.06);
 
   ${props => STYLES[props.styling]}
 
   ${Icon} {
-    margin-right: 4px;
-    margin-left: -4px;
-    display: inline-block;
+    margin-right: 0px;
+    margin-left: -8px;
+    display: inline-flex;
   }
 `

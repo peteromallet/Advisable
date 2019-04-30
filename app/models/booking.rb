@@ -1,13 +1,14 @@
 class Booking < ApplicationRecord
-  validates :status, inclusion: { in: %w(Proposed Offered Accepted Declined Complete) }, allow_nil: true
+  include Airtable::Syncable
+  validates :status, inclusion: { in: ["Proposal Started", "Proposed", "Offered", "Accepted", "Declined", "Complete"] }, allow_nil: true
 
   validate :valid_proposal, on: :create
 
   # disable STI
   self.inheritance_column = :_type_disabled
 
+  has_many :tasks
   belongs_to :application
-  belongs_to :rejection_reason, required: false, class_name: "BookingRejectionReason"
 
   serialize :deliverables, Array
 

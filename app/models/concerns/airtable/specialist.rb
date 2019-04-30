@@ -66,6 +66,7 @@ class Airtable::Specialist < Airtable::Base
     self['City'] = specialist.city
     self['Account Created'] = specialist.has_account? ? "Yes" : nil
     self['Country'] = [specialist.country.try(:airtable_id)]
+    self["Phone Number"] = specialist.phone_number
 
     if specialist.remote
       self['Remote OK'] = "Yes, I'm happy to work remote"

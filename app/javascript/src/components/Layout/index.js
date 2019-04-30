@@ -5,9 +5,8 @@ let Layout = styled.div`
   width: 100%;
   display: flex;
   margin: 0 auto;
-  max-width: 1020px;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  max-width: 1080px;
+  padding: 40px 20px;
 
   ${breakpoints.small(css`
     padding: 0;
@@ -15,12 +14,13 @@ let Layout = styled.div`
 
   @media (max-width: 900px) {
     padding: 20px;
+    flex-direction: column;
   }
 `;
 
 const sidebarWidths = {
-  s: "200px",
-  m: "300px",
+  s: "220px",
+  m: "280px",
 }
 
 let Sidebar = styled.div`

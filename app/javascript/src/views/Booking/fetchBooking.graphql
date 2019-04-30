@@ -1,0 +1,47 @@
+query application($id: ID!) {
+  viewer {
+    ... on Specialist {
+      id
+    }
+    ... on User {
+      id
+    }
+  }
+  application(id: $id) {
+    id
+    status
+    airtableId
+    rate
+    tasks {
+      id
+      airtableId
+      name
+      stage
+      dueDate
+      estimate
+      createdAt
+    }
+    project {
+      id
+      currency
+      primarySkill
+      user {
+        id
+        companyName
+      }
+    }
+    specialist {
+      id
+      name
+      image {
+        url
+      }
+      firstName
+      city
+      country {
+        id
+        name
+      }
+    }
+  }
+}

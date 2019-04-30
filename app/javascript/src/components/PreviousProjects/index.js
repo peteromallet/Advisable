@@ -1,24 +1,39 @@
 import React from "react";
 import Loading from "./Loading";
 import PreviousProject from "./PreviousProject";
+import Card from "../Card";
 import Button from "../Button";
+import Divider from "../Divider";
+import Heading from "../Heading";
+import { Padding } from "../Spacing";
 import PreviousProjectsModal from "../PreviousProjectsModal";
 
 export default ({
   loading,
+  title,
   showValidationStatus,
   previousProjects,
   specialistId,
-  hasMoreProjects
+  hasMoreProjects,
 }) => {
-  const [viewAllProjects, setViewAllProjects] = React.useState(!hasMoreProjects);
+  const [viewAllProjects, setViewAllProjects] = React.useState(
+    !hasMoreProjects
+  );
 
   if (loading) {
     return <Loading />;
   }
 
   return (
-    <React.Fragment>
+    <Card>
+      {title && (
+        <>
+          <Padding left="xl" top="l" bottom="l">
+            <Heading level={4}>{title}</Heading>
+          </Padding>
+          <Divider />
+        </>
+      )}
       {previousProjects.map(previousProject => (
         <PreviousProject
           specialistId={specialistId}
@@ -34,11 +49,18 @@ export default ({
             onClose={() => setViewAllProjects(false)}
             specialistId={specialistId}
           />
-          <Button size="l" block styling="outlined" onClick={() => setViewAllProjects(true)}>
-            View all projects
-          </Button>
+          <Padding size="xl">
+            <Button
+              block
+              size="l"
+              styling="outlined"
+              onClick={() => setViewAllProjects(true)}
+            >
+              View all projects
+            </Button>
+          </Padding>
         </React.Fragment>
       )}
-    </React.Fragment>
+    </Card>
   );
 };

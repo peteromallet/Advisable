@@ -17,6 +17,11 @@ class Types::User < Types::BaseType
     authorize :is_user
   end
 
+  field :applications, [Types::ApplicationType], null: true do
+    authorize :is_user
+    argument :status, [String], required: false
+  end
+
   # Exclude any projects where the sales status is 'Lost'. We need to use an
   # or statement here otherwise SQL will also exclude records where sales_status
   # is null.
@@ -32,5 +37,12 @@ class Types::User < Types::BaseType
       times.reject! { |t| interviews.include?(t) }
     end
     times
+  end
+
+  # 
+  def applications(status:)
+    records = object.applications
+    records = records.where(status: status) if status
+    records
   end
 end

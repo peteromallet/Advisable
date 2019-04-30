@@ -10,6 +10,21 @@ describe Airtable::ClientContact do
     with: "test@test.com"
   }
 
+  describe "sync_data" do
+    context "when the associated client has been synced" do
+      it "associates the user to that client record" do
+        user = create(:user, client: nil)
+        client = create(:client)
+        airtable = Airtable::ClientContact.new({
+          "Client" => [client.airtable_id]
+        }, id: user.airtable_id)
+        expect {airtable.sync}.to change {
+          user.reload.client
+        }.from(nil).to(client)
+      end
+    end
+  end
+
   describe "push_data" do
     let(:user) { create(:user) }
     let(:airtable) { Airtable::ClientContact.new({}, id: user.airtable_id) }

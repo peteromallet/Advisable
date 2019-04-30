@@ -1,0 +1,12 @@
+mutation updateTaskEstimate($input: UpdateTaskInput!) {
+  updateTask(input: $input) {
+    task {
+      id
+      stage
+      estimate
+    }
+    errors {
+      code
+    }
+  }
+}

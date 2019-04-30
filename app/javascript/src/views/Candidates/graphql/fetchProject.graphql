@@ -2,6 +2,7 @@ query project($id: ID!) {
   project(id: $id) {
     id
     name
+    airtableId
     currency
     primarySkill
     clientReferralUrl

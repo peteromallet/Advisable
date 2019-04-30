@@ -4,6 +4,7 @@ query project($id: ID!) {
     airtableId
     status
     user {
+      id
       name
       email
     }

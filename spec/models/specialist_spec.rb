@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Specialist do
+  include_examples "uid"
+  
   it { should have_many(:applications) }
   it { should have_many(:skills).through(:specialist_skills) }
 

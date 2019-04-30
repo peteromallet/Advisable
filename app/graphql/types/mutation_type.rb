@@ -1,11 +1,7 @@
 class Types::MutationType < GraphQL::Schema::Object
-  field :create_offer, mutation: Mutations::CreateOffer
-  field :create_proposal, mutation: Mutations::CreateProposal
-  field :update_proposal, mutation: Mutations::UpdateProposal
-
-  field :accept_booking, mutation: Mutations::AcceptBooking
-  field :decline_booking, mutation: Mutations::DeclineBooking
-  field :update_application_status, mutation: Mutations::UpdateApplicationStatus
+  field :start_working, mutation: Mutations::StartWorking
+  field :send_proposal, mutation: Mutations::SendProposal
+  field :accept_proposal, mutation: Mutations::AcceptProposal
 
   field :request_introduction, mutation: Mutations::RequestIntroduction
   field :accept_interview_request, mutation: Mutations::AcceptInterviewRequest
@@ -37,4 +33,13 @@ class Types::MutationType < GraphQL::Schema::Object
   field :reset_password, mutation: Mutations::ResetPassword
 
   field :update_profile, mutation: Mutations::UpdateProfile
+
+  field :create_task, mutation: Mutations::CreateTask
+  field :update_task, mutation: Mutations::UpdateTask
+  field :delete_task, mutation: Mutations::DeleteTask
+  field :request_quote, mutation: Mutations::RequestQuote
+  field :assign_task, mutation: Mutations::AssignTask
+  field :start_task, mutation: Mutations::StartTask
+  field :submit_task, mutation: Mutations::SubmitTask
+  field :approve_task, mutation: Mutations::ApproveTask
 end

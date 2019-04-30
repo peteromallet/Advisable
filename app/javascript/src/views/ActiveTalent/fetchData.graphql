@@ -1,0 +1,25 @@
+{
+  viewer {
+    ... on User {
+      id
+      applications(status:["Working"]) {
+        id
+        airtableId
+        tasks {
+          id
+        }
+      	project {
+          id
+          primarySkill
+        }
+        specialist {
+          id
+          name
+          image {
+            url
+          }
+        }
+      }
+    }
+  }
+}
