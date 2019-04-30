@@ -5,6 +5,7 @@ import { Mutation } from "react-apollo";
 import { Formik, Form } from "formik";
 import { Heading, Padding, FieldRow, TextField } from "../../../components";
 import { useScreenSize } from "../../../utilities/screenSizes";
+import useScrollRestore from "../../../utilities/useScrollRestore";
 import UPDATE_APPLICATION from "../updateApplication.graphql";
 import validationSchema from "./validationSchema";
 import Actions from "../Actions";
@@ -21,6 +22,7 @@ const Questions = ({
   const isMobile = useScreenSize("small");
   const { applicationId } = match.params;
   const number = parseInt(match.params.number);
+  useScrollRestore(null, [number]);
   const questions = get(application, "project.questions", []);
   const question = questions[number - 1];
   const applicationQuestion = find(application.questions, { question }) || {};

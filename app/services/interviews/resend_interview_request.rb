@@ -13,21 +13,10 @@ class Interviews::ResendInterviewRequest < ApplicationService
 
     # Don't both validating anything as we want to force these updates
     if interview.save(validate: false)
-      update_airtable
+      interview.sync_to_airtable
       return interview
     end
 
     raise Service::Error.new(interview.errors.full_messages.first)
-  end
-
-  private
-
-  def airtable_record
-    @airtable ||= Airtable::Interview.find(interview.airtable_id)
-  end
-
-  def update_airtable
-    airtable_record["Call Status"] = interview.status
-    airtable_record.save
   end
 end

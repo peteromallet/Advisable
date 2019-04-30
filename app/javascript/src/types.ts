@@ -1,4 +1,3 @@
-
 export interface SpecialistType { 
   id: string;
   email?: string;
@@ -9,15 +8,18 @@ export interface SpecialistType {
 
 export interface UserType {
   id: string;
+  companyName?: string;
 }
 
 export interface ProjectType {
   id: string;
+  currency?: string;
   description?: string;
   primarySkill?: string;
   companyDescription?: string;
   questions?: string[];
   estimatedBudget?: string;
+  user?: UserType;
 }
 
 export interface ApplicationType {
@@ -49,4 +51,13 @@ interface ApplicationQuestionType {
 
 export interface OffPlatformProjectType {
   id: string;
+}
+
+export interface Task {
+  id: string;
+  name?: string;
+  stage: string;
+  estimate?: number;
+  dueDate?: string;
+  description?: string;
 }

@@ -1,0 +1,25 @@
+query project($id: ID!) {
+  application(id: $id) {
+    id
+    airtableId
+    rate
+    proposalComment
+    specialist {
+      id
+      firstName
+    }
+    project {
+      id
+      currency
+      airtableId
+      primarySkill
+    }
+    tasks {
+      id
+      name
+      stage
+      dueDate
+      estimate
+    }
+  }
+}

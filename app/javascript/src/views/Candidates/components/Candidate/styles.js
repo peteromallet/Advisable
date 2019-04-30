@@ -119,7 +119,7 @@ export const CandidateWrapper = styled.div.attrs({
 
 export const Question = styled.div`
   width: 100%;
-  padding-top: 30px;
+  padding-bottom: 30px;
   box-sizing: border-box;
 `;
 

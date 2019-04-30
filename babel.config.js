@@ -44,6 +44,7 @@ module.exports = function(api) {
     ].filter(Boolean),
     plugins: [
       require('babel-plugin-macros'),
+      require('babel-plugin-styled-components').default,
       require('@babel/plugin-syntax-dynamic-import').default,
       isTestEnv && require('babel-plugin-dynamic-import-node'),
       require('@babel/plugin-transform-destructuring').default,
@@ -78,7 +79,6 @@ module.exports = function(api) {
           removeImport: true
         }
       ],
-      require('babel-plugin-styled-components').default
     ].filter(Boolean)
   }
 }

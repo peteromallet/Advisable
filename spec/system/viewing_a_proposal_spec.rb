@@ -1,32 +1,19 @@
 require 'rails_helper'
 
-describe 'Viewing a proposal' do
-  let!(:proposal) { create(:booking, status: 'Proposed', type: 'Fixed', deliverables: ['Test']) }
+describe 'Accepting a proposal' do
+  let(:application) { create(:application, status: 'Proposed') }
 
-  it 'Sends the proposal back to the specialist as an offer' do
-    airtable_booking_record = double('Airtable::Booking')
-    expect(airtable_booking_record).to receive(:[]=).with('Status', 'Offered').at_least(:once)
-    expect(airtable_booking_record).to receive(:[]=).at_least(:once)
-    expect(airtable_booking_record).to receive(:save)
-    expect(Airtable::Booking).to receive(:find).and_return(airtable_booking_record)
+  before :each do
+    allow_any_instance_of(Application).to receive(:sync_to_airtable)
+  end
 
-    airtable_application_record = double('Airtable::Application')
-    expect(airtable_application_record).to receive(:[]=).with('Application Status', 'Offered').at_least(:once)
-    expect(airtable_application_record).to receive(:save)
-    expect(Airtable::Application).to receive(:find).and_return(airtable_application_record)
-
-    project = proposal.application.project
-
+  it 'accepts the proposal' do
+    project = application.project
     authenticate_as project.user
-    visit "/projects/#{project.airtable_id}/proposals/#{proposal.airtable_id}"
+    visit "/projects/#{project.airtable_id}/applications/#{application.airtable_id}/proposal"
 
-    fill_in 'rate', with: ''
-    fill_in 'rate', with: '5000'
-    click_on 'Send Offer'
-
-    expect(page).to have_content('offer has been sent')
-
-    expect(proposal.reload.rate).to eq(5000.0)
-    expect(proposal.status).to eq('Offered')
+    click_on "Start working with #{application.specialist.first_name}"
+    click_on "Accept Proposal"
+    expect(page).to have_content('Add a task')
   end
 end

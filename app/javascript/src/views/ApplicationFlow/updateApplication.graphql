@@ -4,6 +4,8 @@ mutation UpdateApplication($input: UpdateApplicationInput!) {
     application {
       ...ApplicationFields
     }
-    errors
+    errors {
+      code
+    }
   }
 }

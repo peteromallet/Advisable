@@ -5,11 +5,7 @@ describe Projects::Confirm do
     let(:project) { create(:project, status: "Brief Pending Confirmation") }
 
     before :each do
-      airtable_record = double("Airtable::Project")
-      allow(Airtable::Project).to receive(:find).with(project.airtable_id).and_return(airtable_record)
-      allow(airtable_record).to receive(:[]=).with("Project Stage", "Brief Confirmed")
-      allow(airtable_record).to receive(:[]=).with("Deposit Amount Paid", project.deposit_paid)
-      allow(airtable_record).to receive(:save)
+      allow(project).to receive(:sync_to_airtable)
     end
 
     it "sets the status to Brief Confirmed" do
@@ -26,11 +22,7 @@ describe Projects::Confirm do
     end
 
     it 'syncs with airtable' do
-      airtable_record = double("Airtable::Project")
-      expect(Airtable::Project).to receive(:find).with(project.airtable_id).and_return(airtable_record)
-      expect(airtable_record).to receive(:[]=).with("Project Stage", "Brief Confirmed")
-      expect(airtable_record).to receive(:[]=).with("Deposit Amount Paid", project.deposit_paid)
-      expect(airtable_record).to receive(:save)
+      expect(project).to receive(:sync_to_airtable)
       Projects::Confirm.call(project: project)
     end
   end

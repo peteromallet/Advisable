@@ -14,8 +14,8 @@ export const TooltipWrapper = styled.span`
 export const TooltipOverlay = styled.div`
   color: white;
   z-index: 500;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 400;
   max-width: 300px;
   line-height: 20px;
   border-radius: 8px;

@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import NotFound from "../NotFound";
 import BaseStyling from "../../BaseStyling";
-import { Header, Loading } from "../../components";
+import { Loading } from "../../components";
 import { useScreenSize } from "../../utilities/screenSizes";
 import ApplicationFlow from "./ApplicationFlow";
 import ApplicationSent from "./ApplicationSent";
@@ -27,7 +27,6 @@ export default (props: RouteComponentProps<Params>): React.ReactNode => {
 
   return (
     <React.Fragment>
-      <Header />
       <BaseStyling lightBackground={isMobile} />
       <Query query={FETCH_APPLICATION} variables={{ id: applicationId }}>
         {query => {

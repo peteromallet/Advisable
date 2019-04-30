@@ -1,19 +1,20 @@
 require 'rails_helper'
 
 describe 'Request Introduction' do
+  before :each do
+    stub_request(:post, /https:\/\/api\.airtable\.com\/v0\/.*\//).
+    to_return(status: 200, body: {
+      "id": "rec_123",
+      "fields": {}
+    }.to_json, headers: {})
+
+    allow_any_instance_of(Application).to receive(:sync_to_airtable)
+  end
+
   it 'Creates an interview request' do
     user = create(:user)
     project = create(:project, user: user)
     application = create(:application, status: "Applied", project: project)
-
-    airtable_interview_record = double('Airtable::Interview', id: 'interview_1')
-    expect(Airtable::Interview).to receive(:new).and_return(airtable_interview_record)
-    expect(airtable_interview_record).to receive(:create)
-
-    airtable_application_record = double('Airtable::Application')
-    expect(airtable_application_record).to receive(:[]=).with('Application Status', 'Application Accepted').at_least(:once)
-    expect(airtable_application_record).to receive(:save)
-    expect(Airtable::Application).to receive(:find).and_return(airtable_application_record)
 
     authenticate_as project.user
     visit "/projects/#{project.airtable_id}/applied"

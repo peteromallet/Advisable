@@ -1,0 +1,26 @@
+query task($id: ID!) {
+  task(id: $id) {
+    id
+    airtableId
+    name
+    stage
+    dueDate
+    description
+    estimate
+    application {
+      id
+      rate
+      specialist {
+        id
+        firstName
+      }
+      project {
+        id
+        user {
+          id
+          companyName
+        }
+      }
+    }
+  }
+}

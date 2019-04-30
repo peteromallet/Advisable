@@ -1,6 +1,0 @@
-query {
-  reasons:bookingRejectionReasons {
-    value:id
-    label:name
-  }
-}

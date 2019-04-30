@@ -1,0 +1,1 @@
+export { FadeInUp, FadeIn } from "./styles";

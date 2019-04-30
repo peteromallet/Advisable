@@ -2,9 +2,7 @@ require 'rails_helper'
 
 describe 'Application flow' do
   before :each do
-    airtable_record = double(Airtable::Application)
-    allow(airtable_record).to receive(:push)
-    allow(Airtable::Application).to receive(:find).and_return(airtable_record)
+    allow_any_instance_of(Application).to receive(:sync_to_airtable)
     # mock the skills endpoint for the add a previous project modal
     skill = double(Airtable:Skill, id: "rec_123", fields: { "Name" => "Testing" })
     allow(Airtable::Skill).to receive(:active).and_return([skill])
