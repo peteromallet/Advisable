@@ -41,7 +41,7 @@ RSpec.configure do |config|
 
   config.verbose_retry = true
   # run retry only on features
-  config.around :each, :js do |ex|
+  config.around :each, type: :system do |ex|
     ex.run_with_retry retry: 3
   end
 

@@ -112,7 +112,9 @@ describe "Freelancer active project view" do
       visit "/clients/#{application.airtable_id}"
       find('h5', text: 'This is an existing task').click
       click_on "Submit for approval"
-      click_on "Submit"
+      within "div[class^='styles__ConfirmationContainer']" do
+        click_on "Submit"
+      end
       expect(page).to have_content("You have submitted this task for approval.")
     end
   end

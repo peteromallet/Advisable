@@ -224,11 +224,6 @@ export const Description = styled.textarea`
   }
 `;
 
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`;
-
 export const Confirmation = styled.div`
   top: 0;
   left: 0;
@@ -240,19 +235,6 @@ export const Confirmation = styled.div`
   align-items: center;
   justify-content: center;
   background: ${rgba("#FFFFFF", 0.75)};
-  animation: ${fadeIn} 400ms;
-`;
-
-const slideInUp = keyframes`
-from {
-  opacity: 0;
-  transform: scale(0.9) translate3d(0, 10px, 0);
-}
-
-to {
-  opacity: 1;
-  transform: scale(1) translate3d(0, 0, 0);
-}
 `;
 
 export const ConfirmationContainer = styled.div`
@@ -262,7 +244,6 @@ export const ConfirmationContainer = styled.div`
   border-radius: 8px;
   position: absolute;
   text-align: center;
-  animation: ${slideInUp} 300ms;
   box-shadow: 0 8px 60px ${rgba(colors.neutral.s8, 0.2)},
     0 2px 6px ${rgba(colors.neutral.s8, 0.15)};
 `;
