@@ -22,7 +22,8 @@ class Airtable::OffPlatformProject < Airtable::Base
     off_platform_project.confidential = fields['Okay with naming client'] != 'Yes'
 
     skills = off_platform_project.skills.map(&:airtable_id)
-    fields['Skills Required'].each do |skill_id|
+    skills_required = fields['Skills Required'] || []
+    skills_required.each do |skill_id|
       unless skills.include?(skill_id)
         skill = ::Skill.find_by_airtable_id(skill_id)
         skill = Airtable::Skill.find(skill_id).sync unless skill.present?
