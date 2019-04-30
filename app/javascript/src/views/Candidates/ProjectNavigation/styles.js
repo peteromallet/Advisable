@@ -3,16 +3,6 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import arrow from './arrow.svg';
 
-export const ProjectNavigation = styled.div`
-  width: 260px;
-  margin-right: 50px;
-
-  @media (max-width: 800px) {
-    width: 100%;
-    margin-right: 0;
-  }
-`;
-
 export const ProjectTitle = styled.h3`
   color: #00071f;
   font-size: 18px;

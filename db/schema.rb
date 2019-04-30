@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_03_140949) do
+ActiveRecord::Schema.define(version: 2019_04_15_124201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_140949) do
     t.string "referral_url"
     t.datetime "applied_at"
     t.boolean "hidden"
+    t.string "proposal_comment"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
@@ -301,6 +302,23 @@ ActiveRecord::Schema.define(version: 2019_04_03_140949) do
     t.boolean "remote"
     t.string "application_stage"
     t.index ["country_id"], name: "index_specialists_on_country_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "name"
+    t.string "uid"
+    t.string "airtable_id"
+    t.string "stage"
+    t.decimal "estimate"
+    t.datetime "due_date"
+    t.string "description"
+    t.string "submitted_for_approval_comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "application_id"
+    t.index ["airtable_id"], name: "index_tasks_on_airtable_id"
+    t.index ["application_id"], name: "index_tasks_on_application_id"
+    t.index ["uid"], name: "index_tasks_on_uid"
   end
 
   create_table "users", force: :cascade do |t|

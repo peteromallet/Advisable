@@ -89,9 +89,7 @@ const INFORMATION = {
         as={Link}
         target="_blank"
         styling="plain"
-        to={`/applications/${application.airtableId}/proposals/${
-          application.proposal.airtableId
-        }`}
+        to={`/applications/${application.airtableId}/proposal`}
       >
         Update Proposal
       </Button>

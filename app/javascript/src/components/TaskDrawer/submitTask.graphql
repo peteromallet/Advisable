@@ -1,0 +1,11 @@
+mutation submitTask($input: SubmitTaskInput!) {
+  submitTask(input: $input) {
+    task {
+      id
+      stage
+    }
+    errors {
+      code
+    }
+  }
+}

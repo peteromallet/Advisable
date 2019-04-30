@@ -1,0 +1,12 @@
+mutation startWorking($input: StartWorkingInput!) {
+  startWorking(input: $input) {
+    application {
+      id
+      airtableId
+      status
+    }
+    errors {
+      code
+    }
+  }
+}

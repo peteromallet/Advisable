@@ -13,17 +13,17 @@ const colours = {
 };
 
 const sizes = {
-  xs: "14px",
-  s: "15px",
-  m: "16px",
-  l: "18px"
+  xs: "13px",
+  s: "14px",
+  m: "15px",
+  l: "16px"
 };
 
 const lineHeights = {
   xs: "19px",
-  s: '21px',
-  m: "21px",
-  l: "28px"
+  s: '19px',
+  m: "20px",
+  l: "22px"
 };
 
 const Text = styled.p`

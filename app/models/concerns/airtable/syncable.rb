@@ -27,7 +27,7 @@ module Airtable::Syncable
     end
 
     # Updates or creates an airtable record for the instance
-    def sync_to_airtable
+    def sync_to_airtable(additional_fields={})
       airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
       airtable_record = if airtable_id.present?
         airtable_class.find(airtable_id)
@@ -35,7 +35,12 @@ module Airtable::Syncable
         airtable_class.new({})
       end
 
-      airtable_record.push(self)
+      airtable_record.push(self, additional_fields)
+    end
+
+    def remove_from_airtable
+      airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
+      airtable_class.find(airtable_id).destroy
     end
 
     def sync_from_airtable

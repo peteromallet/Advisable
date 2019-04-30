@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import reduce from "lodash/reduce";
+export { default as Padding } from "./Padding";
 
 const sizes = {
   xs: "5px",

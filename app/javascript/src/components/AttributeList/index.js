@@ -1,25 +1,34 @@
 import React from "react";
 import styled from "styled-components";
+import colors from "../../colors";
 
 const Container = styled.ul``;
 
 const Item = styled.li`
   display: flex;
   font-size: 14px;
+  padding: 16px 0;
+  margin-top: -1px;
   line-height: 18px;
-  margin-bottom: 12px;
+  align-items: center;
   justify-content: space-between;
-  &:last-child { margin-bottom: 0 }
+  border-top: 1px solid ${colors.neutral.s2};
+  border-bottom: 1px solid ${colors.neutral.s2};
+
+  a {
+    text-decoration: none;
+    color: ${colors.blue.base};
+  }
 `;
 
 const Label = styled.span`
-  color: #0e173a;
-  font-weight: 500;
+  color: ${colors.neutral.s8};
+  font-weight: 400;
   padding-right: 12px;
 `;
 
 const Value = styled.span`
-  color: #43506e;
+  color: ${colors.neutral.s10};
   font-weight: 500;
   text-align: right;
 `;

@@ -39,7 +39,6 @@ class Payments::Charge < ApplicationService
     paid = project.deposit_paid + payment.amount
     project.deposit_paid = paid
     project.save(validate: false)
-    airtable_record = Airtable::Project.find(project.airtable_id)
-    airtable_record.push(project)
+    project.sync_to_airtable
   end
 end

@@ -17,6 +17,7 @@ query project($projectID: ID!, $applicationID: ID!) {
       introduction
       proposal {
         id
+        airtableId
       }
       questions {
         question

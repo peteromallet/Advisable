@@ -11,6 +11,7 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
 
   def resolve(**args)
     specialist = Specialist.find_by_airtable_id!(args[:id])
+
     {
       specialist: Specialists::UpdateProfile.call(
         specialist: specialist,
@@ -19,6 +20,6 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
     }
 
     rescue Service::Error => e
-      return { error: e.message }
+      return { errors: [e] }
   end
 end

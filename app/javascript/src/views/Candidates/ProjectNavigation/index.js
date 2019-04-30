@@ -2,7 +2,6 @@
 import React from "react";
 import get from "lodash/get";
 import filter from "lodash/filter";
-import reject from "lodash/reject";
 import countBy from "lodash/countBy";
 import Sticky from "react-stickynode";
 import Icon from "src/components/Icon";
@@ -10,10 +9,10 @@ import pluralize from "src/utilities/pluralize";
 import useScrollRestore from 'src/utilities/useScrollRestore';
 import { Mobile } from "src/components/Breakpoint";
 import ShareAction from "../components/ShareAction";
+import Layout from "../../../components/Layout";
 import {
   ProjectTitle,
   TotalApplicants,
-  ProjectNavigation,
   NavMenu,
   NavMenuItem,
   NavMenuItemIcon,
@@ -57,18 +56,22 @@ const navigation = [
 export default ({ match, data }) => {
   useScrollRestore()
   const applications = get(data, "project.applications", []);
-  const notHidden = filter(applications, { hidden: false })
-  const counts = countBy(notHidden, "status");
+  const excludedStatuses = ["Working", "Invited To Apply", "Invitation Rejected"]
+  const filtered = filter(applications, a => {
+    if (a.hidden) return false;
+    return excludedStatuses.indexOf(a.status) === -1;
+  })
+  const counts = countBy(filtered, "status");
 
   return (
     <Mobile>
       {isMobile => (
-        <ProjectNavigation>
-          <Sticky enabled={!isMobile} top={112}>
+        <Layout.Sidebar>
+          <Sticky enabled={!isMobile} top={98}>
             <ProjectTitle>{data.project.primarySkill}</ProjectTitle>
             <TotalApplicants>
               {pluralize(
-                data.project.applicationCount,
+                filtered.length,
                 "Applicant",
                 "Applicants"
               )}
@@ -96,7 +99,7 @@ export default ({ match, data }) => {
               <ShareAction url={data.project.clientReferralUrl} />
             )}
           </Sticky>
-        </ProjectNavigation>
+        </Layout.Sidebar>
       )}
     </Mobile>
   );

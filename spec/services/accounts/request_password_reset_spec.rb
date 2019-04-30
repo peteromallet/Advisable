@@ -9,14 +9,14 @@ describe Accounts::RequestPasswordReset do
 
   it 'sets the reset_sent_at attribute' do 
     specialist = create(:specialist, reset_sent_at: nil)
-    Accounts::RequestPasswordReset.call(specialist)
-    expect(specialist.reset_sent_at).to_not be_nil
+    Accounts::RequestPasswordReset.call(specialist.email)
+    expect(specialist.reload.reset_sent_at).to_not be_nil
   end
 
   it 'sets the reset_digest attribute' do 
     specialist = create(:specialist, reset_digest: nil)
-    Accounts::RequestPasswordReset.call(specialist)
-    expect(specialist.reset_digest).to_not be_nil
+    Accounts::RequestPasswordReset.call(specialist.email)
+    expect(specialist.reload.reset_digest).to_not be_nil
   end
 
   it 'sends an email' do
@@ -24,7 +24,7 @@ describe Accounts::RequestPasswordReset do
     email = double("Email")
     expect(email).to receive(:deliver_later)
     expect(AccountMailer).to receive(:reset_password).and_return(email)
-    Accounts::RequestPasswordReset.call(user)
+    Accounts::RequestPasswordReset.call(user.email)
   end
 
   context "when the account has not set a password" do
@@ -38,7 +38,7 @@ describe Accounts::RequestPasswordReset do
         )
 
         expect {
-          Accounts::RequestPasswordReset.call(specialist)
+          Accounts::RequestPasswordReset.call(specialist.email)
         }.to raise_error(Service::Error, "request_password_reset.application_required")
       end
     end

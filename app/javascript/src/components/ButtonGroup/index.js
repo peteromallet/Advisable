@@ -24,7 +24,7 @@ const ButtonGroupItem = styled.div`
 
   ${props => props.stack && stackedStyles}
 
-  button {
+  button, a {
     width: 100%;
   }
 `

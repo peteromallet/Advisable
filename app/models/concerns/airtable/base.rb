@@ -108,13 +108,18 @@ class Airtable::Base < Airrecord::Table
   # The push method describes how data should be pushed to airtable. This is
   # not the only place where data is pushed to airtable, we also push data
   # in graphql mutations and service classes.
-  def push(record)
+  def push(record, additional_fields={})
     if id && id != record.try(:airtable_id)
       raise "Airtable ID does not match"
     end
 
     ActiveRecord::Base.transaction do
       instance_exec(record, &self.class.push_block) if self.class.push_block
+
+      additional_fields.each do |field, value|
+        self[field] = value
+      end
+
       id ? save : create
 
       if record.airtable_id.blank?

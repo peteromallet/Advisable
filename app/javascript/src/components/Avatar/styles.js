@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { withSpacing } from 'src/components/Spacing';
 
 const sizes = {
   s: "30px",
@@ -13,7 +12,7 @@ const fontSizes = {
   l: '20px',
 }
 
-export const Avatar = withSpacing(styled.div`
+export const Avatar = styled.div`
   width: ${props => sizes[props.size || "m"]};
   height: ${props => sizes[props.size || "m"]};
   color: #0064FF;
@@ -27,4 +26,4 @@ export const Avatar = withSpacing(styled.div`
   justify-content: center;
   background-position: center;
   background-color: rgba(0,100,255,0.10);
-`);
+`;

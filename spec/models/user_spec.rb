@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  include_examples "uid"
   include_examples "account"
 
   it "has a valid factory" do

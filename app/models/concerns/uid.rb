@@ -5,8 +5,9 @@ module UID
   CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
   included do
-    before_validation :generate_uid, on: :create
+    before_validation :generate_uid, on: :create, unless: :uid?
     validates :uid, presence: true, uniqueness: true
+    validate :valid_uid, on: :create
 
     # self.uid_prefix can be used to override the prefix for the uid.
     # by default it will be the first three characters of the class.
@@ -20,19 +21,30 @@ module UID
       @uid_prefix = prefix
     end
 
+    def self.prefix_for_uid
+      @uid_prefix || self.name[0..2].downcase
+    end
+
     # Generates the uid for the model.
     # == example
     # Deposit.generate_uid
     # => dep_8Aymaf6idazxsWa
     def self.generate_uid
-      prefix = @uid_prefix || self.name[0..2].downcase
-      "#{prefix}_#{Nanoid.generate(size: 15, alphabet: CHARS)}"
+      "#{prefix_for_uid}_#{Nanoid.generate(size: 15, alphabet: CHARS)}"
     end
 
     private
 
     def generate_uid
       self.uid = self.class.generate_uid
+    end
+
+    # Ensure that the UID is valid
+    def valid_uid
+      return unless uid
+      prefix, uniq = uid.split("_")
+      errors.add(:base, "invalid_id_prefix") if prefix != self.class.prefix_for_uid
+      errors.add(:base, "id_too_short") if uniq.length != 15
     end
   end
 end

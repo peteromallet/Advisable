@@ -16,16 +16,8 @@ describe 'Accept interview request' do
   }
 
   it 'Accepts an interview request' do
-    specialist_airtable_record = double('Airtable::Specialist')
-    expect(specialist_airtable_record).to receive(:[]=).with('Phone Number', '0861234567')
-    expect(specialist_airtable_record).to receive(:save)
-    expect(Airtable::Specialist).to receive(:find).with(interview.application.specialist.airtable_id).and_return(specialist_airtable_record)
-
-    interview_airtable_record = double('Airtable::Interview')
-    expect(interview_airtable_record).to receive(:[]=).with('Interview Time', user.availability[0])
-    expect(interview_airtable_record).to receive(:[]=).with('Call Status', 'Call Scheduled')
-    expect(interview_airtable_record).to receive(:save)
-    expect(Airtable::Interview).to receive(:find).with(interview.airtable_id).and_return(interview_airtable_record)
+    allow_any_instance_of(Interview).to receive(:sync_to_airtable)
+    allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
 
     visit "/interview_request/#{interview.airtable_id}"
     click_on user.availability[0].strftime("%A")
