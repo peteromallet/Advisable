@@ -4,6 +4,7 @@ mutation updateTaskDueDate($input: UpdateTaskInput!) {
       id
       stage
       dueDate
+      estimate
     }
     errors {
       code

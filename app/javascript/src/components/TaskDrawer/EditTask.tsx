@@ -27,10 +27,10 @@ const PROMPT = "PROMPT";
 
 const PERMISSIONS = {
   "Not Assigned": {
-    name: () => WRITE,
-    dueDate: () => WRITE,
+    name: (isClient, task) => (isClient && task.estimate) ? PROMPT : WRITE,
+    dueDate: (isClient, task) => (isClient && task.estimate) ? PROMPT : WRITE,
     estimate: isClient => (isClient ? READ : WRITE),
-    description: () => WRITE,
+    description: (isClient, task) => (isClient && task.estimate) ? PROMPT : WRITE,
   },
   "Quote Requested": {
     name: () => WRITE,
