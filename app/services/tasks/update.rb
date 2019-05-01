@@ -17,13 +17,12 @@ class Tasks::Update < ApplicationService
       task.stage = "Quote Provided"
     end
 
-    # If the stage is "Quote Provided" and the name, dueDate or description
-    # was changed, then set the stage to "Not Assigned" and clear the estimate
-    if task.stage == "Quote Provided"
-      if task.name_changed? or task.due_date_changed? or task.description_changed?
-        task.stage = "Not Assigned"
-        task.estimate = nil
-      end
+    # If the the name, dueDate or description was changed
+    if task.name_changed? or task.due_date_changed? or task.description_changed?
+      # clear the estimate if the client is making the edit
+      task.estimate = nil if task.estimate? && is_client?
+      # Set the stage to Not Assigned if the task was Quote Provided
+      task.stage = "Not Assigned" if task.stage == "Quote Provided"
     end
 
     task.sync_to_airtable if task.save
@@ -36,6 +35,14 @@ class Tasks::Update < ApplicationService
   end
 
   private
+
+  def is_client?
+    user.is_a?(User)
+  end
+
+  def is_specialist?
+    user.is_a?(Specialist)
+  end
 
   def changes_allowed?
     policy = TaskPolicy.new(user, task)

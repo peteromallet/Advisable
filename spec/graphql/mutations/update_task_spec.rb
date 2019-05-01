@@ -107,7 +107,7 @@ describe Mutations::UpdateTask do
       }
     |}
 
-    it "Updates the task name" do
+    it "updates the task name" do
       response = AdvisableSchema.execute(query, context: context)
       name = response["data"]["updateTask"]["task"]["name"]
       expect(name).to eq("Updated Name")
@@ -137,6 +137,34 @@ describe Mutations::UpdateTask do
         }.to change {
           task.reload.stage
         }.from("Quote Provided").to("Not Assigned")
+      end
+    end
+
+    context "and the task has an estimate" do
+      let(:task) { create(:task, name: nil, stage: "Not Assigned", estimate: 8) }
+
+      context "and the user is the client" do
+        let(:context) {{ current_user: task.application.project.user }}
+        
+        it "removes the estimate" do
+          expect {
+            AdvisableSchema.execute(query, context: context)
+          }.to change {
+            task.reload.estimate
+          }.from(8).to(nil)
+        end
+      end
+
+      context "and the user is the specialist" do
+        let(:context) {{ current_user: task.application.specialist }}
+        
+        it "does not removes the estimate" do
+          expect {
+            AdvisableSchema.execute(query, context: context)
+          }.to_not change {
+            task.reload.estimate
+          }
+        end
       end
     end
   end
