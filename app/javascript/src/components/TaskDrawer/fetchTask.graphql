@@ -16,6 +16,7 @@ query task($id: ID!) {
       }
       project {
         id
+        currency
         user {
           id
           companyName

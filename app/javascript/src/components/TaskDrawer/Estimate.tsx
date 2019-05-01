@@ -50,6 +50,11 @@ export default ({
   const [value, setValue] = React.useState(task.estimate);
   const [inputValue, setInputValue] = React.useState(value && value.toString());
 
+  // if the task estimate changes then update the state
+  React.useEffect(() => {
+    setValue(task.estimate);
+  }, [task.estimate])
+
   if (isClient && !task.estimate) {
     return null;
   }
@@ -74,7 +79,7 @@ export default ({
 
   const label =
     (value || value !== "") &&
-    `${value} hours / ${currency(value * rate, task.application.currency)}`;
+    `${value} hours / ${currency(value * rate, task.application.project.currency)}`;
 
   return (
     <Popover
@@ -116,7 +121,7 @@ export default ({
                 earnings &&
                 `You would earn ${currency(
                   earnings,
-                  task.application.currency
+                  task.application.project.currency
                 )} for this task`
               }
             />

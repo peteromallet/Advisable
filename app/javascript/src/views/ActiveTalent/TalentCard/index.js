@@ -1,5 +1,6 @@
 // Renders the card for an active booking in the manage talent view
 import React from "react";
+import { get } from "lodash";
 import { TalentCard } from "./styles";
 import Card from "../../../components/Card";
 import Text from "../../../components/Text";
@@ -15,13 +16,19 @@ const Component = ({ onClick, application }) => {
       <Card elevation={1} hoverElevation={3} onClick={onClick}>
         <Padding size="xl">
           <Padding bottom="m">
-            <Avatar size="m" name={application.specialist.name} />
+            <Avatar
+              size="m"
+              name={application.specialist.name}
+              url={get(application.specialist.image, "url")}
+            />
           </Padding>
           <Heading level={4}>{application.specialist.name}</Heading>
           <Padding bottom="m">
             <Text size="s">{application.project.primarySkill}</Text>
           </Padding>
-          <Status>{pluralize(application.tasks.length, "Task", "Tasks")}</Status>
+          <Status>
+            {pluralize(application.tasks.length, "Task", "Tasks")}
+          </Status>
         </Padding>
       </Card>
     </TalentCard>
