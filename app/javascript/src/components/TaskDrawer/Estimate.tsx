@@ -50,6 +50,11 @@ export default ({
   const [value, setValue] = React.useState(task.estimate);
   const [inputValue, setInputValue] = React.useState(value && value.toString());
 
+  // if the task estimate changes then update the state
+  React.useEffect(() => {
+    setValue(task.estimate);
+  }, [task.estimate])
+
   if (isClient && !task.estimate) {
     return null;
   }

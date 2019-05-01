@@ -4,6 +4,7 @@ mutation updateTaskName($input: UpdateTaskInput!) {
       id
       stage
       name
+      estimate
     }
     errors {
       code
