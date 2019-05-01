@@ -74,7 +74,7 @@ export default ({
 
   const label =
     (value || value !== "") &&
-    `${value} hours / ${currency(value * rate, task.application.currency)}`;
+    `${value} hours / ${currency(value * rate, task.application.project.currency)}`;
 
   return (
     <Popover
@@ -116,7 +116,7 @@ export default ({
                 earnings &&
                 `You would earn ${currency(
                   earnings,
-                  task.application.currency
+                  task.application.project.currency
                 )} for this task`
               }
             />
