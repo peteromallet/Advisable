@@ -22,7 +22,7 @@ export const TooltipOverlay = styled.div`
   background: #0E173A;
   letter-spacing: 0.01rem;
   animation: ${fadeIn} 300ms;
-  padding: 10px 12px 12px 12px;
+  padding: 8px 12px 8px 12px;
   box-shadow: 0 1px 10px ${rgba("#0E173A", 0.1)};
   pointer-events: ${props => props.pointerEvents || "none"};
 `

@@ -151,7 +151,7 @@ const EditTask = ({
     readOnly || getTaskPermission(task, "description", isClient) === READ;
 
   return (
-    <TaskDrawer>
+    <>
       {confirmPrompt && (
         <Confirmation>
           <ConfirmationContainer>
@@ -180,7 +180,7 @@ const EditTask = ({
       )}
       <VerticalLayout>
         <VerticalLayout.Header>
-          <Padding left="m" top="m" right="m">
+          <Padding left="m" right="m">
             {!hideStatus && <TaskStatus>{task.stage}</TaskStatus>}
             <Title
               onBlur={handleBlur("name")}
@@ -236,7 +236,7 @@ const EditTask = ({
           <SavingIndicator isSaving={isSaving}>Saving...</SavingIndicator>
         </VerticalLayout.Footer>
       </VerticalLayout>
-    </TaskDrawer>
+    </>
   );
 };
 

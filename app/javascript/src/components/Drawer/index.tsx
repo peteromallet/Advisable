@@ -3,9 +3,9 @@ import { createPortal } from "react-dom";
 import { useTransition } from "react-spring";
 import Div100vh from "react-div-100vh";
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
-import Icon from "../Icon";
 import { useMobile } from "../../components/Breakpoint";
-import { Container, Backdrop, Drawer, CloseButton } from "./styles";
+import IconButton from "../../components/IconButton";
+import { Container, Backdrop, Drawer, Actions } from "./styles";
 
 const root = document.createElement("div");
 document.body.appendChild(root);
@@ -14,9 +14,10 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  actions: any;
 }
 
-export default ({ isOpen, onClose, children }: Props) => {
+export default ({ isOpen, onClose, children, actions }: Props) => {
   const isMobile = useMobile();
   const drawerRef = React.useRef(null);
 
@@ -88,9 +89,10 @@ export default ({ isOpen, onClose, children }: Props) => {
                 drawer.item && (
                   <Drawer ref={drawerRef} key={drawer.key} style={drawer.props}>
                     <Div100vh>
-                      <CloseButton aria-label="Close Drawer" onClick={onClose}>
-                        <Icon icon="x" strokeWidth={2} />
-                      </CloseButton>
+                      <Actions>
+                        {actions}
+                        <IconButton icon="x" aria-label="Close Drawer" onClick={onClose} />
+                      </Actions>
                       {children}
                     </Div100vh>
                   </Drawer>
