@@ -8,6 +8,8 @@ import EditTask from "./EditTask";
 import { Padding } from "../Spacing";
 import SkeletonText from "../SkeletonText";
 import SkeletonHeading from "../SkeletonHeading";
+import Tooltip from "../Tooltip";
+import IconButton from "../IconButton";
 import FETCH_TASK from "./fetchTask.graphql";
 import UPDATE_NAME from "./updateName.graphql";
 import UPDATE_DUE_DATE from "./updateDueDate.graphql";
@@ -25,7 +27,7 @@ const Component = ({
   updateName,
   updateDueDate,
   updateEstimate,
-  updateDescription
+  updateDescription,
 }) => {
   if (!taskId) return null;
   const [saving, setSaving] = React.useState({});
@@ -35,26 +37,35 @@ const Component = ({
     dueDate: updateDueDate,
     estimate: updateEstimate,
     description: updateDescription,
-  }
+  };
 
   const handleSave = async (attr, value) => {
-    setSaving(s => ({ ...s, [attr]: true }))
+    setSaving(s => ({ ...s, [attr]: true }));
     const mutation = mutations[attr];
     await mutation({
       variables: {
         input: {
           id: taskId,
-          [attr]: value
+          [attr]: value,
         },
       },
     });
-    setSaving(s => ({ ...s, [attr]: false }))
+    setSaving(s => ({ ...s, [attr]: false }));
   };
 
   const isSaving = filter(saving, loading => loading).length > 0;
 
   return (
-    <Drawer isOpen={Boolean(taskId)} onClose={onClose}>
+    <Drawer
+      onClose={onClose}
+      isOpen={Boolean(taskId)}
+      actions={[
+        <Tooltip placement="bottom-end" content="Make this a repeating task. You will have the opportunity to repeat this task every month.">
+          <IconButton icon="repeat" />
+        </Tooltip>,
+        <IconButton icon="trash" />,
+      ]}
+    >
       <TaskDrawer>
         <Query query={FETCH_TASK} variables={{ id: taskId }}>
           {query => {
