@@ -15,7 +15,7 @@ const fontSizes = {
 export const Avatar = styled.div`
   width: ${props => sizes[props.size || "m"]};
   height: ${props => sizes[props.size || "m"]};
-  color: #0064FF;
+  color: ${props => props.url ? "transparent" : "#0064FF"};
   font-size: ${props => fontSizes[props.size || "m"]};;
   font-weight: 500;
   border-radius: 50%;
