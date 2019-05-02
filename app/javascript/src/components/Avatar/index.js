@@ -12,8 +12,8 @@ const Component = ({ name, url, size, ...props }) => {
   }
 
   return (
-    <Avatar style={url && style} size={size} {...props}>
-      {!url && initials}
+    <Avatar style={url && style} size={size} url={url} {...props}>
+      {initials}
     </Avatar>
   )
 }
