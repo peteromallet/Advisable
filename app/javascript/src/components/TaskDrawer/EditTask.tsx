@@ -6,14 +6,12 @@ import Scrollable from "../Scrollable";
 import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
 import VerticalLayout from "../VerticalLayout";
-import Menu from "./Menu";
 import Title from "./Title";
 import DueDate from "./DueDate";
 import Actions from "./Actions";
 import Estimate from "./Estimate";
 import Description from "./Description";
 import {
-  TaskDrawer,
   TaskDetails,
   Confirmation,
   ConfirmationContainer,
@@ -27,10 +25,11 @@ const PROMPT = "PROMPT";
 
 const PERMISSIONS = {
   "Not Assigned": {
-    name: (isClient, task) => (isClient && task.estimate) ? PROMPT : WRITE,
-    dueDate: (isClient, task) => (isClient && task.estimate) ? PROMPT : WRITE,
+    name: (isClient, task) => (isClient && task.estimate ? PROMPT : WRITE),
+    dueDate: (isClient, task) => (isClient && task.estimate ? PROMPT : WRITE),
     estimate: isClient => (isClient ? READ : WRITE),
-    description: (isClient, task) => (isClient && task.estimate) ? PROMPT : WRITE,
+    description: (isClient, task) =>
+      isClient && task.estimate ? PROMPT : WRITE,
   },
   "Quote Requested": {
     name: () => WRITE,
@@ -44,7 +43,7 @@ const PERMISSIONS = {
     estimate: isClient => (isClient ? READ : WRITE),
     description: isClient => (isClient ? PROMPT : READ),
   },
-  "Assigned": {
+  Assigned: {
     dueDate: (isClient, task) => {
       if (!isClient && !task.dueDate) return WRITE;
       return READ;
@@ -52,7 +51,7 @@ const PERMISSIONS = {
     estimate: (isClient, task) => {
       if (!isClient && !task.estimate) return WRITE;
       return READ;
-    }
+    },
   },
 };
 
@@ -68,7 +67,6 @@ let timer;
 
 const EditTask = ({
   task,
-  onDeleteTask,
   readOnly,
   hideStatus,
   onSave,
@@ -174,9 +172,6 @@ const EditTask = ({
             </ButtonGroup>
           </ConfirmationContainer>
         </Confirmation>
-      )}
-      {!readOnly && (
-        <Menu task={task} isClient={isClient} onDelete={onDeleteTask} />
       )}
       <VerticalLayout>
         <VerticalLayout.Header>

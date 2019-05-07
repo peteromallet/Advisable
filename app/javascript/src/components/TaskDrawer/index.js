@@ -5,16 +5,22 @@ import { Query, graphql, compose } from "react-apollo";
 import Drawer from "../Drawer";
 import { TaskDrawer } from "./styles";
 import EditTask from "./EditTask";
+import Button from "../Button";
+import Text from "../Text";
+import ButtonGroup from "../ButtonGroup";
 import { Padding } from "../Spacing";
 import SkeletonText from "../SkeletonText";
 import SkeletonHeading from "../SkeletonHeading";
-import Tooltip from "../Tooltip";
-import IconButton from "../IconButton";
+import DrawerActions from "./DrawerActions";
 import FETCH_TASK from "./fetchTask.graphql";
 import UPDATE_NAME from "./updateName.graphql";
+import DELETE_TASK from "./deleteTask.graphql";
 import UPDATE_DUE_DATE from "./updateDueDate.graphql";
 import UPDATE_ESTIMATE from "./updateEstimate.graphql";
 import UPDATE_DESCRIPTION from "./updateDescription.graphql";
+import { Confirmation, ConfirmationContainer } from "./styles";
+
+const DELETE_PROMPT = "DELETE_PROMPT";
 
 const Component = ({
   taskId,
@@ -25,12 +31,15 @@ const Component = ({
   onDeleteTask,
   showStatusNotice,
   updateName,
+  deleteTask,
   updateDueDate,
   updateEstimate,
   updateDescription,
 }) => {
-  if (!taskId) return null;
+  const [prompt, setPrompt] = React.useState(null);
   const [saving, setSaving] = React.useState({});
+
+  if (!taskId) return null;
 
   const mutations = {
     name: updateName,
@@ -53,54 +62,94 @@ const Component = ({
     setSaving(s => ({ ...s, [attr]: false }));
   };
 
+  const handleDelete = task => () => {
+    setPrompt(null);
+    onDeleteTask(task);
+    deleteTask({
+      variables: {
+        input: {
+          task: task.id,
+        },
+      },
+    });
+  };
+
   const isSaving = filter(saving, loading => loading).length > 0;
 
   return (
-    <Drawer
-      onClose={onClose}
-      isOpen={Boolean(taskId)}
-      actions={[
-        <Tooltip placement="bottom-end" content="Make this a repeating task. You will have the opportunity to repeat this task every month.">
-          <IconButton icon="repeat" />
-        </Tooltip>,
-        <IconButton icon="trash" />,
-      ]}
-    >
-      <TaskDrawer>
-        <Query query={FETCH_TASK} variables={{ id: taskId }}>
-          {query => {
-            if (query.loading) {
-              return (
+    <Query query={FETCH_TASK} variables={{ id: taskId }}>
+      {query => {
+        return (
+          <Drawer
+            onClose={onClose}
+            isOpen={Boolean(taskId)}
+            actions={
+              query.loading ? (
+                []
+              ) : (
+                <DrawerActions
+                  task={query.data.task}
+                  onDelete={() => setPrompt(DELETE_PROMPT)}
+                />
+              )
+            }
+          >
+            <TaskDrawer>
+              {query.loading && (
                 <Padding size="l">
                   <Padding bottom="l">
                     <SkeletonHeading />
                   </Padding>
                   <SkeletonText />
                 </Padding>
-              );
-            }
+              )}
 
-            return (
-              <EditTask
-                isSaving={isSaving}
-                readOnly={readOnly}
-                isClient={isClient}
-                hideStatus={hideStatus}
-                onSave={handleSave}
-                task={query.data.task}
-                onDeleteTask={onDeleteTask}
-                showStatusNotice={showStatusNotice}
-              />
-            );
-          }}
-        </Query>
-      </TaskDrawer>
-    </Drawer>
+              {prompt === DELETE_PROMPT && (
+                <Confirmation>
+                  <ConfirmationContainer>
+                    <Padding bottom="l">
+                      <Text>Are you sure you want to delete this task?</Text>
+                    </Padding>
+                    <ButtonGroup fullWidth>
+                      <Button
+                        onClick={handleDelete(query.data.task)}
+                        styling="danger"
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        onClick={() => setPrompt(null)}
+                        styling="outlined"
+                      >
+                        Cancel
+                      </Button>
+                    </ButtonGroup>
+                  </ConfirmationContainer>
+                </Confirmation>
+              )}
+
+              {!query.loading && (
+                <EditTask
+                  isSaving={isSaving}
+                  readOnly={readOnly}
+                  isClient={isClient}
+                  hideStatus={hideStatus}
+                  onSave={handleSave}
+                  task={query.data.task}
+                  showStatusNotice={showStatusNotice}
+                />
+              )}
+            </TaskDrawer>
+          </Drawer>
+        );
+      }}
+    </Query>
   );
 };
 
 export default compose(
   graphql(UPDATE_NAME, { name: "updateName" }),
+  graphql(DELETE_TASK, { name: "deleteTask" }),
   graphql(UPDATE_DUE_DATE, { name: "updateDueDate" }),
   graphql(UPDATE_ESTIMATE, { name: "updateEstimate" }),
   graphql(UPDATE_DESCRIPTION, { name: "updateDescription" })
