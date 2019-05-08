@@ -6,7 +6,6 @@ import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import TaskDrawer from "../../components/TaskDrawer";
 import FETCH_BOOKING from "./fetchBooking.graphql";
-import FETCH_TASK from "./fetchTask.graphql";
 import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
 
@@ -47,15 +46,19 @@ let Booking = ({ data, match, history, location, client }) => {
 
   const handleDeleteTask = task => {
     history.push(match.url);
-    const newData = data;
-    newData.application.tasks = tasks.filter(t => {
-      return t.id !== task.id;
-    });
     client.writeQuery({
       query: FETCH_BOOKING,
-      data: newData,
       variables: {
         id: applicationId,
+      },
+      data: {
+        ...data,
+        application: {
+          ...data.application,
+          tasks: tasks.filter(t => {
+            return t.id !== task.id;
+          }),
+        },
       },
     });
   };

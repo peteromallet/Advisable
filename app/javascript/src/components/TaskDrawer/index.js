@@ -6,9 +6,6 @@ import { Query, graphql, compose } from "react-apollo";
 import Drawer from "../Drawer";
 import { TaskDrawer } from "./styles";
 import EditTask from "./EditTask";
-import Button from "../Button";
-import Text from "../Text";
-import ButtonGroup from "../ButtonGroup";
 import { Padding } from "../Spacing";
 import SkeletonText from "../SkeletonText";
 import SkeletonHeading from "../SkeletonHeading";
@@ -19,13 +16,17 @@ import DELETE_TASK from "./deleteTask.graphql";
 import UPDATE_DUE_DATE from "./updateDueDate.graphql";
 import UPDATE_ESTIMATE from "./updateEstimate.graphql";
 import UPDATE_DESCRIPTION from "./updateDescription.graphql";
-import { Confirmation, ConfirmationContainer } from "./styles";
+import SubmitPrompt from "./SubmitPrompt";
+import AssignPrompt from "./AssignPrompt";
 import RepeatPrompt from "./RepeatPrompt";
+import DeletePrompt from "./DeletePrompt";
 import ApprovePrompt from "./ApprovePrompt";
 
 const DELETE_PROMPT = "DELETE_PROMPT";
 const APPROVE_PROMPT = "APPROVE_PROMPT";
 const REPEAT_PROMPT = "REPEAT_PROMPT";
+const ASSIGN_PROMPT = "ASSIGN_PROMPT";
+const SUBMIT_PROMPT = "SUBMIT_PROMPT";
 
 const Component = ({
   taskId,
@@ -37,7 +38,6 @@ const Component = ({
   onDeleteTask,
   showStatusNotice,
   updateName,
-  deleteTask,
   updateDueDate,
   updateEstimate,
   updateDescription,
@@ -69,16 +69,9 @@ const Component = ({
     setSaving(s => ({ ...s, [attr]: false }));
   };
 
-  const handleDelete = task => () => {
+  const handleDelete = task => {
     setPrompt(null);
     onDeleteTask(task);
-    deleteTask({
-      variables: {
-        input: {
-          task: task.id,
-        },
-      },
-    });
   };
 
   const isSaving = filter(saving, loading => loading).length > 0;
@@ -115,27 +108,19 @@ const Component = ({
               )}
 
               {prompt === DELETE_PROMPT && (
-                <Confirmation>
-                  <ConfirmationContainer>
-                    <Padding bottom="l">
-                      <Text>Are you sure you want to delete this task?</Text>
-                    </Padding>
-                    <ButtonGroup fullWidth>
-                      <Button
-                        onClick={handleDelete(query.data.task)}
-                        styling="danger"
-                      >
-                        Delete
-                      </Button>
-                      <Button
-                        onClick={() => setPrompt(null)}
-                        styling="outlined"
-                      >
-                        Cancel
-                      </Button>
-                    </ButtonGroup>
-                  </ConfirmationContainer>
-                </Confirmation>
+                <DeletePrompt
+                  task={task}
+                  onClose={() => setPrompt(null)}
+                  onDelete={handleDelete}
+                />
+              )}
+
+              {prompt === ASSIGN_PROMPT && (
+                <AssignPrompt
+                  task={task}
+                  onClose={() => setPrompt(null)}
+                  onAssign={() => setPrompt(null)}
+                />
               )}
 
               {prompt === APPROVE_PROMPT && (
@@ -148,6 +133,16 @@ const Component = ({
                     } else {
                       setPrompt(null);
                     }
+                  }}
+                />
+              )}
+
+              {prompt === SUBMIT_PROMPT && (
+                <SubmitPrompt
+                  task={task}
+                  onClose={() => setPrompt(null)}
+                  onSubmit={() => {
+                    setPrompt(null);
                   }}
                 />
               )}
