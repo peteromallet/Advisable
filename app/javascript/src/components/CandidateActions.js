@@ -1,7 +1,7 @@
 // Renders the various actions for a candidate based on its status.
 import React, { Fragment, useState } from "react";
+import { withRouter } from "react-router-dom";
 import Button from "src/components/Button";
-import Divider from "src/components/Divider";
 import { Link } from "react-router-dom";
 import useMobile from "src/utilities/useMobile";
 import ButtonGroup from "src/components/ButtonGroup";
@@ -15,7 +15,7 @@ const REJECT_MODAL = "REJECT";
 const REQUEST_INTRODUCTION = "REQUEST_INTRODUCTION";
 const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
 const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
-const CREATE_BOOKING_MODAL = "CREATE_BOOKING_MODAL"
+const CREATE_BOOKING_MODAL = "CREATE_BOOKING_MODAL";
 
 const statusActions = {
   Applied: ({ application, stack, fullWidth }) => {
@@ -49,7 +49,7 @@ const statusActions = {
       </React.Fragment>
     );
   },
-  "Application Accepted": ({ application, history, stack, fullWidth  }) => {
+  "Application Accepted": ({ application, history, stack, fullWidth }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
 
@@ -72,7 +72,7 @@ const statusActions = {
           applicationId={application.airtableId}
           isOpen={modal === CREATE_BOOKING_MODAL}
           firstName={application.specialist.firstName}
-          onCreate={b => history.push(`/bookings/${b.airtableId}`)}
+          onCreate={b => history.push(`/manage/${b.airtableId}`)}
         />
         <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
@@ -114,7 +114,9 @@ const statusActions = {
           <Button
             as={Link}
             styling="primary"
-            to={`/projects/${projectId}/applications/${application.airtableId}/proposal`}
+            to={`/projects/${projectId}/applications/${
+              application.airtableId
+            }/proposal`}
           >
             View Proposal
           </Button>
@@ -129,10 +131,20 @@ const statusActions = {
         </ButtonGroup>
       </Fragment>
     );
-  }
+  },
 };
 
-export default ({ projectId, application, history, stack, fullWidth  }) => {
+const CandidateActions = ({
+  projectId,
+  application,
+  history,
+  stack,
+  fullWidth,
+}) => {
   const actions = statusActions[application.status];
-  return actions ? actions({ projectId, application, history, stack, fullWidth  }) : null;
+  return actions
+    ? actions({ projectId, application, history, stack, fullWidth })
+    : null;
 };
+
+export default withRouter(CandidateActions);

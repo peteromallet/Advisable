@@ -110,7 +110,10 @@ const Candidate = ({ application, project, history }) => {
         </React.Fragment>
       )}
 
-      <CandidateActions projectId={project.airtableId} history={history} application={application} />
+      <CandidateActions
+        projectId={project.airtableId}
+        application={application}
+      />
     </Card>
   );
 };
