@@ -1,12 +1,11 @@
-query task($id: ID!) {
-  task(id: $id) {
-    id
-    airtableId
-    name
-    stage
-    dueDate
-    description
-    estimate
+import gql from "graphql-tag";
+import taskFields from "./task";
+
+export default gql`
+  ${taskFields}
+
+  fragment TaskDetailFields on Task {
+    ...TaskFields
     application {
       id
       rate
@@ -24,4 +23,4 @@ query task($id: ID!) {
       }
     }
   }
-}
+`;

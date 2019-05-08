@@ -12,7 +12,7 @@ import { Padding } from "../Spacing";
 import SkeletonText from "../SkeletonText";
 import SkeletonHeading from "../SkeletonHeading";
 import DrawerActions from "./DrawerActions";
-import FETCH_TASK from "./fetchTask.graphql";
+import FETCH_TASK from "../../graphql/queries/taskDetails";
 import UPDATE_NAME from "./updateName.graphql";
 import DELETE_TASK from "./deleteTask.graphql";
 import UPDATE_DUE_DATE from "./updateDueDate.graphql";
