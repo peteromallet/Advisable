@@ -66,12 +66,10 @@ const FOR_CLIENT = {
   },
   Approved: ({ t, task }) => {
     return (
-      <Padding bottom="m">
-        <StageDescription>
-          <Icon icon="info" width={20} />
-          {t("tasks.stageDescriptions.client.approved", { task })}
-        </StageDescription>
-      </Padding>
+      <StageDescription>
+        <Icon icon="info" width={20} />
+        {t("tasks.stageDescriptions.client.approved", { task })}
+      </StageDescription>
     );
   },
 };
@@ -133,12 +131,10 @@ const FOR_SPECIALIST = {
   },
   Approved: ({ t, task }) => {
     return (
-      <Padding bottom="m">
-        <StageDescription>
-          <Icon icon="info" width={20} />
-          {t("tasks.stageDescriptions.client.approved", { task })}
-        </StageDescription>
-      </Padding>
+      <StageDescription>
+        <Icon icon="info" width={20} />
+        {t("tasks.stageDescriptions.client.approved", { task })}
+      </StageDescription>
     );
   },
 };

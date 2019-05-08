@@ -1,6 +1,7 @@
 // Renders the drawer for a task
 import * as React from "react";
-import { filter } from "lodash";
+import { get, filter } from "lodash";
+import { withRouter } from "react-router-dom";
 import { Query, graphql, compose } from "react-apollo";
 import Drawer from "../Drawer";
 import { TaskDrawer } from "./styles";
@@ -19,12 +20,17 @@ import UPDATE_DUE_DATE from "./updateDueDate.graphql";
 import UPDATE_ESTIMATE from "./updateEstimate.graphql";
 import UPDATE_DESCRIPTION from "./updateDescription.graphql";
 import { Confirmation, ConfirmationContainer } from "./styles";
+import RepeatPrompt from "./RepeatPrompt";
+import ApprovePrompt from "./ApprovePrompt";
 
 const DELETE_PROMPT = "DELETE_PROMPT";
+const APPROVE_PROMPT = "APPROVE_PROMPT";
+const REPEAT_PROMPT = "REPEAT_PROMPT";
 
 const Component = ({
   taskId,
   onClose,
+  history,
   readOnly,
   isClient,
   hideStatus,
@@ -35,6 +41,7 @@ const Component = ({
   updateDueDate,
   updateEstimate,
   updateDescription,
+  onCreateRepeatingTask,
 }) => {
   const [prompt, setPrompt] = React.useState(null);
   const [saving, setSaving] = React.useState({});
@@ -79,6 +86,8 @@ const Component = ({
   return (
     <Query query={FETCH_TASK} variables={{ id: taskId }}>
       {query => {
+        const task = get(query, "data.task");
+
         return (
           <Drawer
             onClose={onClose}
@@ -88,6 +97,7 @@ const Component = ({
                 []
               ) : (
                 <DrawerActions
+                  isClient={isClient}
                   task={query.data.task}
                   onDelete={() => setPrompt(DELETE_PROMPT)}
                 />
@@ -128,6 +138,34 @@ const Component = ({
                 </Confirmation>
               )}
 
+              {prompt === APPROVE_PROMPT && (
+                <ApprovePrompt
+                  task={task}
+                  onClose={() => setPrompt(null)}
+                  onApprove={() => {
+                    if (Boolean(task.repeat)) {
+                      setPrompt(REPEAT_PROMPT);
+                    } else {
+                      setPrompt(null);
+                    }
+                  }}
+                />
+              )}
+
+              {prompt === REPEAT_PROMPT && (
+                <RepeatPrompt
+                  task={task}
+                  onClose={() => setPrompt(null)}
+                  onRepeat={task => {
+                    history.replace(task.id);
+                    if (onCreateRepeatingTask) {
+                      onCreateRepeatingTask(task);
+                    }
+                    setPrompt(null);
+                  }}
+                />
+              )}
+
               {!query.loading && (
                 <EditTask
                   isSaving={isSaving}
@@ -136,6 +174,7 @@ const Component = ({
                   hideStatus={hideStatus}
                   onSave={handleSave}
                   task={query.data.task}
+                  setPrompt={setPrompt}
                   showStatusNotice={showStatusNotice}
                 />
               )}
@@ -147,10 +186,12 @@ const Component = ({
   );
 };
 
-export default compose(
-  graphql(UPDATE_NAME, { name: "updateName" }),
-  graphql(DELETE_TASK, { name: "deleteTask" }),
-  graphql(UPDATE_DUE_DATE, { name: "updateDueDate" }),
-  graphql(UPDATE_ESTIMATE, { name: "updateEstimate" }),
-  graphql(UPDATE_DESCRIPTION, { name: "updateDescription" })
-)(Component);
+export default withRouter(
+  compose(
+    graphql(UPDATE_NAME, { name: "updateName" }),
+    graphql(DELETE_TASK, { name: "deleteTask" }),
+    graphql(UPDATE_DUE_DATE, { name: "updateDueDate" }),
+    graphql(UPDATE_ESTIMATE, { name: "updateEstimate" }),
+    graphql(UPDATE_DESCRIPTION, { name: "updateDescription" })
+  )(Component)
+);

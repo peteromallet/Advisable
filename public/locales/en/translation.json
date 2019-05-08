@@ -13,7 +13,14 @@
   "tasks": {
     "actions": {
       "setRepeating": {
-        "enable": "Mark this task as a repeating task."
+        "client": {
+          "title": "Create repeating task",
+          "description": "You will have the opportunity to repeat this task every month."
+        },
+        "specialist": {
+          "title": "Create repeating task",
+          "description": "{{task.application.project.user.companyName}} will have the opportunity to repeat this task every month."
+        }
       }
     },
     "stageDescriptions": {

@@ -9,6 +9,7 @@ export default gql`
     application {
       id
       rate
+      airtableId
       specialist {
         id
         firstName

@@ -2,6 +2,7 @@ import React from "react";
 import { reduce } from "lodash";
 import { compose, graphql } from "react-apollo";
 import { useTranslation } from "react-i18next/hooks";
+import Text from "../Text";
 import Tooltip from "../Tooltip";
 import IconButton from "../IconButton";
 import SET_TASK_REPEAT from "./setTaskRepeat.graphql";
@@ -9,7 +10,7 @@ import SET_TASK_REPEAT from "./setTaskRepeat.graphql";
 const ACTIONS = {
   setRepeating: {
     allowed: () => true,
-    render: ({ task, setTaskRepeat }) => {
+    render: ({ task, setTaskRepeat, isClient }) => {
       const [t] = useTranslation();
       const handleClick = async () => {
         const repeat = task.repeat ? null : "Monthly";
@@ -49,9 +50,29 @@ const ACTIONS = {
         return <span key="repeat">{button}</span>;
       }
 
-      let tooltipKey = "tasks.actions.setRepeating.enable";
+      let title = "tasks.actions.setRepeating.specialist.title";
+      let description = "tasks.actions.setRepeating.specialist.description";
+
+      if (isClient) {
+        title = "tasks.actions.setRepeating.client.title";
+        description = "tasks.actions.setRepeating.client.description";
+      }
+
       return (
-        <Tooltip key="setRepeat" placement="bottom-end" content={t(tooltipKey)}>
+        <Tooltip
+          key="setRepeat"
+          placement="bottom-end"
+          content={
+            <>
+              <Text colour="white" weight="semibold" size="xs">
+                {t(title, { task })}
+              </Text>
+              <Text colour="subtleWhite" size="xs">
+                {t(description, { task })}
+              </Text>
+            </>
+          }
+        >
           {button}
         </Tooltip>
       );

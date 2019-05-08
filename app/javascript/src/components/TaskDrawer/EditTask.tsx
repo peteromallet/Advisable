@@ -72,6 +72,7 @@ const EditTask = ({
   onSave,
   isClient,
   isSaving,
+  setPrompt,
   showStatusNotice,
 }) => {
   const [attributes, setAttributes] = React.useState({
@@ -226,7 +227,9 @@ const EditTask = ({
             {showStatusNotice && (
               <StageDescription isClient={isClient} task={task} />
             )}
-            {!readOnly && <Actions isClient={isClient} task={task} />}
+            {!readOnly && (
+              <Actions setPrompt={setPrompt} isClient={isClient} task={task} />
+            )}
           </Padding>
           <SavingIndicator isSaving={isSaving}>Saving...</SavingIndicator>
         </VerticalLayout.Footer>
