@@ -80,7 +80,6 @@ export default ({ data, history, match }) => {
                   fullWidth
                   projectId={data.project.airtableId}
                   application={application}
-                  history={history}
                 />
               )}
             />
