@@ -18,5 +18,6 @@ class Airtable::Task < Airtable::Base
     self['Application'] = [task.application.try(:airtable_id)]
     self['Due Date'] = task.due_date.try(:strftime, "%Y-%m-%d")
     self['Description'] = task.description
+    self['Repeat'] = task.repeat
   end
 end

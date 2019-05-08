@@ -41,6 +41,10 @@ class TaskPolicy < BasePolicy
     ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)
   end
 
+  def set_repeating
+    is_client || is_specialist || has_permission?("projects:all")
+  end
+
   private
 
   def task

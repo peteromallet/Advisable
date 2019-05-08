@@ -5,7 +5,7 @@ import { Query } from "react-apollo";
 import Loading from "./Loading";
 import NotFound from "../NotFound";
 import FetchActiveApplication from "./FetchActiveApplication";
-import FETCH_APPLICATION from "./fetchApplication.graphql";
+import FETCH_APPLICATION from "../../graphql/queries/freelancerActiveApplication";
 
 const Component = props => {
   const id = props.match.params.applicationId;
@@ -13,6 +13,7 @@ const Component = props => {
   return (
     <Query query={FETCH_APPLICATION} variables={{ id }}>
       {query => {
+        console.log("FETCH", query);
         if (query.loading) return <Loading />;
         if (!query.loading && !query.data.application) return <NotFound />;
         return <FetchActiveApplication {...query} {...props} />;

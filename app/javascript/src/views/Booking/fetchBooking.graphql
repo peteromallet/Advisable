@@ -20,6 +20,7 @@ query application($id: ID!) {
       dueDate
       estimate
       createdAt
+      repeat
     }
     project {
       id

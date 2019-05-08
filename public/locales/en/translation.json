@@ -11,6 +11,11 @@
     "signupRequired": "We have introduced logins to our system. Please create a password for your account below."
   },
   "tasks": {
+    "actions": {
+      "setRepeating": {
+        "enable": "Mark this task as a repeating task."
+      }
+    },
     "stageDescriptions": {
       "client": {
         "nameAndDescriptionRequired": "This task can not be assigned until it has a name and a description.",
