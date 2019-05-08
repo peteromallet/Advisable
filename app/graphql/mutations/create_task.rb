@@ -13,7 +13,7 @@ class Mutations::CreateTask < Mutations::BaseMutation
   def authorized?(**args)
     application = Application.find_by_airtable_id!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
-    return true if policy.is_specialist_or_client
+    return true if policy.create_task
     return false, { errors: [{ code: "not_authorized" }] }
   end
 
