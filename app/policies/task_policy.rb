@@ -13,11 +13,13 @@ class TaskPolicy < BasePolicy
   end
 
   def update_name
+    return true if has_permission?("projects:all")
     return false if user.nil?
     ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)
   end
 
   def update_due_date
+    return true if has_permission?("projects:all")
     return false if user.nil?
     return true if ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)
     return true if task.stage == "Assigned" && is_specialist
@@ -25,6 +27,7 @@ class TaskPolicy < BasePolicy
   end
 
   def update_estimate
+    return true if has_permission?("projects:all")
     return false if user.nil?
     return true if ["Not Assigned", "Quote Requested"].include?(record.stage)
     return true if task.stage == "Quote Provided" && is_specialist 
@@ -33,11 +36,13 @@ class TaskPolicy < BasePolicy
   end
 
   def update_description
+    return true if has_permission?("projects:all")
     return false if user.nil?
     ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)
   end
 
   def delete
+    return true if has_permission?("projects:all")
     ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)
   end
 
