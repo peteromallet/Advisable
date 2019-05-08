@@ -10,7 +10,14 @@ import ButtonGroup from "../ButtonGroup";
 import { Padding } from "../Spacing";
 import START_WORKING from "./startWorking.graphql";
 
-const Component = ({ isOpen, onClose, firstName, applicationId, mutate, onCreate }) => {
+const Component = ({
+  isOpen,
+  onClose,
+  firstName,
+  applicationId,
+  mutate,
+  onCreate,
+}) => {
   const [loading, setLoading] = React.useState(false);
 
   const handleContinue = async () => {
@@ -21,10 +28,10 @@ const Component = ({ isOpen, onClose, firstName, applicationId, mutate, onCreate
       },
     });
 
-    const { errors } = response.data.createBooking;
+    const { errors, application } = response.data.startWorking;
 
     if (!errors) {
-      onCreate(booking)
+      onCreate(application);
     }
   };
 
