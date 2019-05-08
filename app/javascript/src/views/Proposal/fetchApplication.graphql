@@ -7,7 +7,6 @@ query Application($id: ID!) {
     proposalComment
     tasks {
       id
-      airtableId
       name
       stage
       dueDate
