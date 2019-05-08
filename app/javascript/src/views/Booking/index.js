@@ -67,6 +67,7 @@ let Booking = ({ data, match, history, location, client }) => {
         onClose={() => closeTask()}
         onDeleteTask={handleDeleteTask}
         isClient={data.viewer.__typename === "User"}
+        onCreateRepeatingTask={addNewTaskToCache}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
       <Layout>

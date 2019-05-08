@@ -7,7 +7,6 @@ import Padding from "../Spacing/Padding";
 import START_TASK from "./startTask.graphql";
 import ASSIGN_TASK from "./assignTask.graphql";
 import SUBMIT_TASK from "./submitTask.graphql";
-import APPROVE_TASK from "./approveTask.graphql";
 import REQUEST_QUOTE from "./requestQuote.graphql";
 import { useMobile } from "../../components/Breakpoint";
 import { Confirmation, ConfirmationContainer } from "./styles";
@@ -20,6 +19,7 @@ const Component = ({
   assignTask,
   approveTask,
   requestQuote,
+  setPrompt,
 }) => {
   const isMobile = useMobile();
   const [loading, setLoading] = React.useState(null);
@@ -67,18 +67,6 @@ const Component = ({
   const handleSubmitTask = async () => {
     setLoading("SUBMIT");
     await submitTask({
-      variables: {
-        input: {
-          task: task.id,
-        },
-      },
-    });
-    setLoading(null);
-  };
-
-  const handleApproveTask = async () => {
-    setLoading("APPROVE");
-    await approveTask({
       variables: {
         input: {
           task: task.id,
@@ -184,10 +172,9 @@ const Component = ({
       <Button
         key="approve"
         styling="primary"
-        onClick={() => setConfirmation("APPROVE")}
-        loading={loading == "APPROVE"}
+        onClick={() => setPrompt("APPROVE_PROMPT")}
       >
-        Approve task
+        Approve
       </Button>
     );
   }
@@ -268,40 +255,6 @@ const Component = ({
             </ConfirmationContainer>
           </Confirmation>
         )}
-
-        {confirmation === "APPROVE" && (
-          <Confirmation>
-            <ConfirmationContainer>
-              <Padding bottom="s">
-                <Text weight="semibold" colour="dark">
-                  Approve Work
-                </Text>
-              </Padding>
-              <Padding bottom="l">
-                <Text size="s">
-                  Once you approve the work, the freelancer will be paid for
-                  this task. If you have any issues, please make sure to resolve
-                  them in advance.
-                </Text>
-              </Padding>
-              <ButtonGroup fullWidth>
-                <Button
-                  loading={loading === "APPROVE"}
-                  onClick={handleApproveTask}
-                  styling="primary"
-                >
-                  Approve
-                </Button>
-                <Button
-                  disabled={loading === "APPROVE"}
-                  onClick={() => setConfirmation(null)}
-                >
-                  Cancel
-                </Button>
-              </ButtonGroup>
-            </ConfirmationContainer>
-          </Confirmation>
-        )}
         <ButtonGroup fullWidth={isMobile}>{actions}</ButtonGroup>
       </>
     );
@@ -314,6 +267,5 @@ export default compose(
   graphql(REQUEST_QUOTE, { name: "requestQuote" }),
   graphql(ASSIGN_TASK, { name: "assignTask" }),
   graphql(START_TASK, { name: "startTask" }),
-  graphql(SUBMIT_TASK, { name: "submitTask" }),
-  graphql(APPROVE_TASK, { name: "approveTask" })
+  graphql(SUBMIT_TASK, { name: "submitTask" })
 )(Component);
