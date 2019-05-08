@@ -1,7 +1,6 @@
 query task($id: ID!) {
   task(id: $id) {
     id
-    airtableId
     name
     stage
     dueDate

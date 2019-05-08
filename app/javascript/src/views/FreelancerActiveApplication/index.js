@@ -13,7 +13,6 @@ const Component = props => {
   return (
     <Query query={FETCH_APPLICATION} variables={{ id }}>
       {query => {
-        console.log("FETCH", query);
         if (query.loading) return <Loading />;
         if (!query.loading && !query.data.application) return <NotFound />;
         return <FetchActiveApplication {...query} {...props} />;

@@ -32,16 +32,6 @@ let Booking = ({ data, match, history, location, client }) => {
   });
 
   const addNewTaskToCache = task => {
-    client.writeQuery({
-      query: FETCH_TASK,
-      variables: {
-        id: task.id,
-      },
-      data: {
-        task,
-      },
-    });
-
     const newData = data;
     newData.application.tasks.push(task);
     client.writeQuery({
