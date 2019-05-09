@@ -5,7 +5,7 @@ import NotFound from "../NotFound";
 import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import TaskDrawer from "../../components/TaskDrawer";
-import FETCH_BOOKING from "./fetchBooking.graphql";
+import { getActiveApplication } from "../../graphql/queries/applications";
 import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
 
@@ -34,7 +34,7 @@ let Booking = ({ data, match, history, location, client }) => {
     const newData = data;
     newData.application.tasks.push(task);
     client.writeQuery({
-      query: FETCH_BOOKING,
+      query: getActiveApplication,
       data: newData,
       variables: {
         id: applicationId,
@@ -47,7 +47,7 @@ let Booking = ({ data, match, history, location, client }) => {
   const handleDeleteTask = task => {
     history.push(match.url);
     client.writeQuery({
-      query: FETCH_BOOKING,
+      query: getActiveApplication,
       variables: {
         id: applicationId,
       },
@@ -66,10 +66,10 @@ let Booking = ({ data, match, history, location, client }) => {
   return (
     <>
       <TaskDrawer
+        isClient
         showStatusNotice
         onClose={() => closeTask()}
         onDeleteTask={handleDeleteTask}
-        isClient={data.viewer.__typename === "User"}
         onCreateRepeatingTask={addNewTaskToCache}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
@@ -91,7 +91,7 @@ let Booking = ({ data, match, history, location, client }) => {
 
 Booking = withApollo(Booking);
 
-Booking = graphql(FETCH_BOOKING, {
+Booking = graphql(getActiveApplication, {
   options: props => ({
     variables: {
       id: props.match.params.applicationId,
