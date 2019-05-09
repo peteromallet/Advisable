@@ -2,7 +2,6 @@
 import React from "react";
 import { Query } from "react-apollo";
 import PROJECTS from "./projects.graphql";
-import Header from "../../components/Header";
 import Heading from "../../components/Heading";
 import Loading from "../../components/Loading";
 import Divider from "../../components/Divider";

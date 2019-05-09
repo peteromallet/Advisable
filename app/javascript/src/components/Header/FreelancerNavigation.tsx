@@ -2,7 +2,7 @@ import * as React from "react";
 import { Query } from "react-apollo";
 import Icon from "../Icon";
 import { useMobile } from "../../components/Breakpoint";
-import VIEWER from "../../graphql/viewer.graphql";
+import VIEWER from "../../graphql/queries/viewer";
 import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
 
 const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
@@ -23,9 +23,15 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
               <CloseNav onClick={onCloseNav}>
                 <Icon icon="x" />
               </CloseNav>
-              <NavItem onClick={onCloseNav} to="/applications">Applications</NavItem>
-              <NavItem onClick={onCloseNav} to="/clients">Active Projects</NavItem>
-              <NavItem onClick={onCloseNav} to="/profile">Profile</NavItem>
+              <NavItem onClick={onCloseNav} to="/applications">
+                Applications
+              </NavItem>
+              <NavItem onClick={onCloseNav} to="/clients">
+                Active Projects
+              </NavItem>
+              <NavItem onClick={onCloseNav} to="/profile">
+                Profile
+              </NavItem>
 
               {isMobile && (
                 <NavItem as="a" href="#" onClick={onLogout}>
