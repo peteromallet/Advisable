@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
+import { Redirect } from "react-router-dom";
 import { compose, graphql } from "react-apollo";
 import Text from "../../components/Text";
 import Card from "../../components/Card";
@@ -10,9 +11,15 @@ import TextField from "../../components/TextField";
 import { Padding } from "../../components/Spacing";
 import SEND_PROPOSAL from "./sendProposal.graphql";
 import { useMobile } from "../../components/Breakpoint";
+import { hasCompleteTasksStep } from "./validationSchema";
 
 const Send = ({ application, history, sendProposal }) => {
   const isMobile = useMobile();
+
+  // If they haven't complete the tasks step then redirect back
+  if (!hasCompleteTasksStep(application)) {
+    return <Redirect to="tasks" />;
+  }
 
   const handleSubmit = async values => {
     await sendProposal({
