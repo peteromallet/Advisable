@@ -1,14 +1,14 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { Redirect } from "react-router-dom";
-import VIEWER from "../../components/AuthenticatedRoute/viewer.graphql";
+import VIEWER from "../../graphql/queries/viewer";
 
 export default () => {
   return (
     <Query query={VIEWER}>
       {({ data }) => {
-        const { viewer } = data; 
-        const isSpecialist = viewer && viewer.__typename === 'Specialist';
+        const { viewer } = data;
+        const isSpecialist = viewer && viewer.__typename === "Specialist";
 
         if (isSpecialist) {
           return <Redirect to="/applications" />;

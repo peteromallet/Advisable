@@ -2,7 +2,7 @@
 import React from "react";
 import Icon from "../Icon";
 import Padding from "../Spacing/Padding";
-import { useTranslation } from "react-i18next/hooks";
+import { useTranslation } from "react-i18next";
 import { StageDescription } from "./styles";
 
 const FOR_CLIENT = {

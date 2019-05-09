@@ -7,7 +7,7 @@ import CurrentUser from "./CurrentUser";
 import { useMobile } from "../../components/Breakpoint";
 import ClientNavigation from "./ClientNavigation";
 import FreelancerNavigation from "./FreelancerNavigation";
-import VIEWER from "../AuthenticatedRoute/viewer.graphql";
+import VIEWER from "../../graphql/queries/viewer";
 
 export default () => {
   const isMobile = useMobile();
