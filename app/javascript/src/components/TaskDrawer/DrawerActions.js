@@ -1,7 +1,7 @@
 import React from "react";
 import { reduce } from "lodash";
 import { compose, graphql } from "react-apollo";
-import { useTranslation } from "react-i18next/hooks";
+import { useTranslation } from "react-i18next";
 import Text from "../Text";
 import Tooltip from "../Tooltip";
 import IconButton from "../IconButton";
