@@ -5,6 +5,7 @@ describe 'Submitting a proposal' do
   let!(:application) { create(:application, project: project) }
 
   before :each do
+    allow_any_instance_of(Task).to receive(:sync_to_airtable)
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
   end
 

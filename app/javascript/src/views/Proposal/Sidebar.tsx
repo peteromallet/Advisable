@@ -7,6 +7,7 @@ import Heading from "../../components/Heading";
 import { Padding } from "../../components/Spacing";
 import { useMobile } from "../../components/Breakpoint";
 import { ApplicationType } from "../../types";
+import { hasCompleteTasksStep } from "./validationSchema";
 
 interface Props {
   application: ApplicationType;
@@ -22,7 +23,6 @@ let SideBar = (props: any) => {
   const sendPath = `${urlPrefix}/send`;
 
   const hasRate = Boolean(application.rate);
-  const hasTasks = application.tasks.length > 0;
   const isSent = application.status === "Proposed";
 
   return (
@@ -55,14 +55,14 @@ let SideBar = (props: any) => {
             number={2}
             to={{ pathname: tasksPath }}
             isDisabled={!hasRate}
-            isComplete={hasTasks}
+            isComplete={hasCompleteTasksStep(application)}
           >
             Project Tasks
           </Steps.Step>
           <Steps.Step
             number={3}
             to={{ pathname: sendPath }}
-            isDisabled={!hasTasks}
+            isDisabled={!hasCompleteTasksStep(application)}
             isComplete={isSent}
           >
             Send Proposal

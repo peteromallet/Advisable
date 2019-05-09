@@ -11,6 +11,7 @@ interface Props {
   isClient?: boolean;
   onClick: () => void;
   hideStatus?: boolean;
+  showPromptForTask?: (task: TaskType) => boolean;
 }
 
 const shouldShowPrompt = (isClient, task) => {
@@ -18,10 +19,20 @@ const shouldShowPrompt = (isClient, task) => {
   if (task.stage === "Quote Provided" && isClient) return true;
   if (task.stage === "Assigned" && !isClient) return true;
   if (task.stage === "Submitted" && isClient) return true;
-}
+};
 
-export default ({ task, hideStatus, onClick, isClient }: Props) => {
-  const showPrompt = shouldShowPrompt(isClient, task);
+export default ({
+  task,
+  hideStatus,
+  onClick,
+  isClient,
+  showPromptForTask,
+}: Props) => {
+  let showPrompt = shouldShowPrompt(isClient, task);
+
+  if (showPromptForTask) {
+    showPrompt = showPromptForTask(task);
+  }
 
   return (
     <Task onClick={onClick} showPrompt={showPrompt}>
