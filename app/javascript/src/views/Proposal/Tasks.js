@@ -4,6 +4,7 @@ import { matchPath } from "react-router";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
+import Notice from "../../components/Notice";
 import ButtonGroup from "../../components/ButtonGroup";
 import Heading from "../../components/Heading";
 import NewTask from "../../components/NewTask";
@@ -13,6 +14,7 @@ import { Padding } from "../../components/Spacing";
 import { useMobile } from "../../components/Breakpoint";
 import FETCH_TASK from "./fetchTask.graphql";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
+import { hasCompleteTasksStep } from "./validationSchema";
 
 const Tasks = ({ application, match, location, history, client }) => {
   const isMobile = useMobile();
@@ -68,6 +70,14 @@ const Tasks = ({ application, match, location, history, client }) => {
     history.push("send");
   };
 
+  const hasTasks = application.tasks.length > 0;
+  // Wether or not the continue button should be visible
+  const canContinue = hasCompleteTasksStep(application);
+
+  const showPromptForTask = task => {
+    return !Boolean(task.name) || !Boolean(task.description);
+  };
+
   return (
     <Card>
       <Padding size="l">
@@ -85,6 +95,7 @@ const Tasks = ({ application, match, location, history, client }) => {
         hideStatus
         tasks={application.tasks}
         onClickTask={onSelectTask}
+        showPromptForTask={showPromptForTask}
         lastRow={<NewTask onCreate={handleNewTask} application={application} />}
       />
       <TaskDrawer
@@ -93,7 +104,14 @@ const Tasks = ({ application, match, location, history, client }) => {
         taskId={taskMatch ? taskMatch.params.taskId : null}
         onDeleteTask={handleDeleteTask}
       />
-      {application.tasks.length > 0 && (
+      {hasTasks && !canContinue && (
+        <Padding size="l">
+          <Notice icon="alert-triangle">
+            Please add a name and description for each task to continue
+          </Notice>
+        </Padding>
+      )}
+      {canContinue && (
         <Padding size="l">
           <ButtonGroup fullWidth={isMobile}>
             <Button styling="primary" onClick={handleContinue}>

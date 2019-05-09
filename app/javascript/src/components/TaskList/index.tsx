@@ -16,13 +16,14 @@ type Props = {
   lastRow?: React.ReactNode;
   isClient?: boolean;
   onClickTask: (task: Task) => void;
+  showPromptForTask?: (task: Task) => boolean;
 };
 
 const TaskList = (props: Props) => {
   // For now we hard code filter out any tasks that have been approved.
   const tasks = props.tasks.filter(t => {
-    return t.stage !== "Approved"
-  })
+    return t.stage !== "Approved";
+  });
 
   const sorted = tasks.sort((a, b) => {
     const dateA = Date.parse(a.createdAt);
@@ -39,6 +40,7 @@ const TaskList = (props: Props) => {
           isClient={props.isClient}
           hideStatus={props.hideStatus}
           onClick={() => props.onClickTask(task)}
+          showPromptForTask={props.showPromptForTask}
         />
       ))}
       {props.lastRow && <Row>{props.lastRow}</Row>}
