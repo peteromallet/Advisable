@@ -1,7 +1,6 @@
-import wait from "waait";
 import renderApp from "../testHelpers/renderApp";
 import generate from "nanoid/generate";
-import { fireEvent, cleanup, act } from "react-testing-library";
+import { fireEvent, cleanup } from "react-testing-library";
 import viewer from "../__mocks__/graphql/queries/viewer";
 import {
   createTask,
@@ -13,39 +12,39 @@ jest.mock("nanoid/generate");
 afterEach(cleanup);
 jest.setTimeout(10000);
 
-// test("Renders the manage view for a specialist", async () => {
-//   const { findByText } = renderApp({
-//     route: "/manage/rec1234",
-//     graphQLMocks: [
-//       viewer.asClient(),
-//       getActiveApplication({
-//         request: {
-//           variables: {
-//             id: "rec1234",
-//           },
-//         },
-//         result: {
-//           data: {
-//             application: {
-//               airtableId: "rec1234",
-//               tasks: [
-//                 {
-//                   name: "This is a test task",
-//                 },
-//               ],
-//             },
-//           },
-//         },
-//       }),
-//     ],
-//   });
+test("Renders the manage view for a specialist", async () => {
+  const { findByText } = renderApp({
+    route: "/manage/rec1234",
+    graphQLMocks: [
+      viewer.asClient(),
+      getActiveApplication({
+        request: {
+          variables: {
+            id: "rec1234",
+          },
+        },
+        result: {
+          data: {
+            application: {
+              airtableId: "rec1234",
+              tasks: [
+                {
+                  name: "This is a test task",
+                },
+              ],
+            },
+          },
+        },
+      }),
+    ],
+  });
 
-//   expect(await findByText("This is a test task")).toBeInTheDocument();
-// });
+  expect(await findByText("This is a test task")).toBeInTheDocument();
+});
 
 test("The client can add a task", async () => {
   generate.mockReturnValue("abc");
-  const { findByText, findByLabelText, getByTestId, findByTestId } = renderApp({
+  const { findByText, findByLabelText, getByTestId } = renderApp({
     route: "/manage/rec1234",
     graphQLMocks: [
       viewer.asClient(),
