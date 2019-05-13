@@ -7,9 +7,6 @@ import { useMobile } from "../../components/Breakpoint";
 import IconButton from "../../components/IconButton";
 import { Container, Backdrop, Drawer, Actions } from "./styles";
 
-const root = document.createElement("div");
-document.body.appendChild(root);
-
 interface Props {
   isOpen: boolean;
   onClose: () => void;
@@ -20,6 +17,13 @@ interface Props {
 export default ({ isOpen, onClose, children, actions }: Props) => {
   const isMobile = useMobile();
   const drawerRef = React.useRef(null);
+
+  let root = document.getElementById("js-drawer-root");
+  if (!root) {
+    root = document.createElement("div");
+    root.id = "js-drawer-root";
+    document.body.appendChild(root);
+  }
 
   const handleKeyPress = e => {
     if (e.keyCode === 27) {
@@ -91,7 +95,11 @@ export default ({ isOpen, onClose, children, actions }: Props) => {
                     <Div100vh>
                       <Actions>
                         {actions}
-                        <IconButton icon="x" aria-label="Close Drawer" onClick={onClose} />
+                        <IconButton
+                          icon="x"
+                          aria-label="Close Drawer"
+                          onClick={onClose}
+                        />
                       </Actions>
                       {children}
                     </Div100vh>

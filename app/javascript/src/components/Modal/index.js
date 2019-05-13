@@ -1,34 +1,41 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { useTransition } from "react-spring";
-import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { extractSpacingProps } from "../Spacing";
 import {
   ModalContainer,
   Backdrop,
   WindowContainer,
   Window,
-  CloseModal
+  CloseModal,
 } from "./styles";
 
 import ModalHeader from "./ModalHeader";
 import ModalBody from "./ModalBody";
 import ModalFooter from "./ModalFooter";
 
-let modalRoot = document.getElementById("js-modal-root");
-if (!modalRoot) {
-  modalRoot = document.createElement("div")
-  modalRoot.id = "js-modal-root"
-  document.body.appendChild(modalRoot);
-}
+const Modal = ({
+  isOpen,
+  onClose,
+  children,
+  size,
+  expandOnMobile,
+  ...componentProps
+}) => {
+  let modalRoot = document.getElementById("js-modal-root");
+  if (!modalRoot) {
+    modalRoot = document.createElement("div");
+    modalRoot.id = "js-modal-root";
+    document.body.appendChild(modalRoot);
+  }
 
-const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentProps }) => {
   const modalRef = React.useRef(null);
 
   const transitions = useTransition(isOpen, null, {
     from: { opacity: 0, transform: "translate3d(0, 100px, 0)" },
     enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
-    leave: { opacity: 0, transform: "translate3d(0, 100px, 0)" }
+    leave: { opacity: 0, transform: "translate3d(0, 100px, 0)" },
   });
 
   // When the component is unmounting and there is only 1 modal open then set
@@ -36,10 +43,10 @@ const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentPr
   React.useEffect(() => {
     return () => {
       if (modalRoot.children.length <= 1) {
-        clearAllBodyScrollLocks()
+        clearAllBodyScrollLocks();
       }
-    }
-  }, [])
+    };
+  }, []);
 
   React.useLayoutEffect(() => {
     // if there is at least one modal open and the body hasn't been set to
@@ -52,9 +59,8 @@ const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentPr
     // if there is no more modals then set the body overflow back to what it
     // was.
     if (modalRoot.firstChild === null) {
-      clearAllBodyScrollLocks()
+      clearAllBodyScrollLocks();
     }
-
   }, [isOpen]);
 
   // If the modal isn't open then return null
@@ -65,11 +71,7 @@ const Modal = ({ isOpen, onClose, children, size, expandOnMobile, ...componentPr
       {transitions.map(
         ({ item, key, props }) =>
           item && (
-            <WindowContainer
-              key={key}
-              size={size}
-              style={props}
-            >
+            <WindowContainer key={key} size={size} style={props}>
               <Window
                 ref={modalRef}
                 className="ModalWindow"

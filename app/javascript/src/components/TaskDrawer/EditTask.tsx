@@ -179,6 +179,7 @@ const EditTask = ({
           <Padding left="m" right="m">
             {!hideStatus && <TaskStatus>{task.stage}</TaskStatus>}
             <Title
+              data-testid="nameField"
               onBlur={handleBlur("name")}
               readOnly={titleReadOnly}
               value={attributes.name}

@@ -11,16 +11,18 @@ import SkeletonText from "../SkeletonText";
 import SkeletonHeading from "../SkeletonHeading";
 import DrawerActions from "./DrawerActions";
 import FETCH_TASK from "../../graphql/queries/taskDetails";
-import UPDATE_NAME from "./updateName.graphql";
-import DELETE_TASK from "./deleteTask.graphql";
-import UPDATE_DUE_DATE from "./updateDueDate.graphql";
-import UPDATE_ESTIMATE from "./updateEstimate.graphql";
-import UPDATE_DESCRIPTION from "./updateDescription.graphql";
 import SubmitPrompt from "./SubmitPrompt";
 import AssignPrompt from "./AssignPrompt";
 import RepeatPrompt from "./RepeatPrompt";
 import DeletePrompt from "./DeletePrompt";
 import ApprovePrompt from "./ApprovePrompt";
+import {
+  deleteTask as DELETE_TASK,
+  updateTaskName as UPDATE_NAME,
+  updateTaskDueDate as UPDATE_DUE_DATE,
+  updateTaskEstimate as UPDATE_ESTIMATE,
+  updateTaskDescription as UPDATE_DESCRIPTION,
+} from "../../graphql/mutations/tasks";
 
 const DELETE_PROMPT = "DELETE_PROMPT";
 const APPROVE_PROMPT = "APPROVE_PROMPT";
