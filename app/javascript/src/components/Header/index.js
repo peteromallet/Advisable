@@ -1,7 +1,8 @@
 // Renders the primary header for the app
 import { Query } from "react-apollo";
+import { withRouter } from "react-router-dom";
 import React, { Fragment } from "react";
-import { Header, Spacer, Logo, Hamburger } from "./styles";
+import { Header as Wrapper, Spacer, Logo, Hamburger } from "./styles";
 import logo from "./logo.svg";
 import CurrentUser from "./CurrentUser";
 import { useMobile } from "../../components/Breakpoint";
@@ -9,20 +10,22 @@ import ClientNavigation from "./ClientNavigation";
 import FreelancerNavigation from "./FreelancerNavigation";
 import VIEWER from "../../graphql/queries/viewer";
 
-export default () => {
+const Header = ({ history }) => {
   const isMobile = useMobile();
   const [navOpen, setNavOpen] = React.useState(false);
 
-  const handleLogout = apolloClient => {
+  const handleLogout = async apolloClient => {
     localStorage.removeItem("authToken");
     sessionStorage.removeItem("authToken");
+    await apolloClient.clearStore();
     apolloClient.resetStore();
+    history.push("/login");
   };
 
   return (
     <Fragment>
       <Spacer />
-      <Header>
+      <Wrapper>
         <Query query={VIEWER}>
           {query => (
             <React.Fragment>
@@ -54,7 +57,9 @@ export default () => {
             </React.Fragment>
           )}
         </Query>
-      </Header>
+      </Wrapper>
     </Fragment>
   );
 };
+
+export default withRouter(Header);
