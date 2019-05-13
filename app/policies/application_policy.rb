@@ -16,4 +16,8 @@ class ApplicationPolicy < BasePolicy
   def read
     is_client || is_specialist || has_permission?("projects:all")
   end
+
+  def create_task
+    is_client || is_specialist || has_permission?("projects:all")
+  end
 end

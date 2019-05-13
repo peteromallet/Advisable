@@ -1,7 +1,8 @@
 // Renders the loaded state for when a freelancer is viewing an active
 // application
 import React from "react";
-import { matchPath } from "react-router-dom";
+import { find } from "lodash";
+import { matchPath, Redirect } from "react-router-dom";
 import Card from "../../components/Card";
 import Layout from "../../components/Layout";
 import Heading from "../../components/Heading";
@@ -11,14 +12,14 @@ import TaskDrawer from "../../components/TaskDrawer";
 import { Padding } from "../../components/Spacing";
 import Sidebar from "./Sidebar";
 import NoTasks from "./NoTasks";
-import FETCH_TASK from "./fetchTask.graphql";
-import FETCH_APPLICATION from "./fetchApplication.graphql";
+import FETCH_TASK from "../../graphql/queries/taskDetails";
+import FETCH_APPLICATION from "../../graphql/queries/freelancerActiveApplication";
 
 const FetchActiveApplication = ({ history, match, data, client }) => {
   const application = data.application;
 
   const handleTaskClick = task => {
-    history.replace(`${match.url}/tasks/${task.id}`);
+    history.replace(`/clients/${application.airtableId}/tasks/${task.id}`);
   };
 
   const taskDrawerPath = matchPath(location.pathname, {
@@ -30,27 +31,21 @@ const FetchActiveApplication = ({ history, match, data, client }) => {
   };
 
   const addNewTaskToCache = task => {
-    client.writeQuery({
-      query: FETCH_TASK,
-      variables: {
-        id: task.id,
-      },
-      data: {
-        task,
-      },
-    });
-
-    const newData = data;
-    newData.application.tasks.push(task);
+    // Add the task to the application queries list of tasks
     client.writeQuery({
       query: FETCH_APPLICATION,
-      data: newData,
       variables: {
         id: application.airtableId,
       },
+      data: {
+        application: {
+          ...data.application,
+          tasks: [...data.application.tasks, task],
+        },
+      },
     });
-
-    history.replace(`${match.url}/tasks/${task.id}`);
+    // open the task
+    history.replace(`/clients/${application.airtableId}/tasks/${task.id}`);
   };
 
   const handleDeleteTask = task => {

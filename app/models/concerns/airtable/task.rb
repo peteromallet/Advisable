@@ -4,6 +4,7 @@ class Airtable::Task < Airtable::Base
   sync_with ::Task
   sync_column 'Name', to: :name
   sync_column 'Stage', to: :stage
+  sync_column 'Repeat', to: :repeat
   sync_column 'Estimate', to: :estimate
   sync_column 'Due Date', to: :due_date
   sync_column 'Description', to: :description
@@ -18,5 +19,6 @@ class Airtable::Task < Airtable::Base
     self['Application'] = [task.application.try(:airtable_id)]
     self['Due Date'] = task.due_date.try(:strftime, "%Y-%m-%d")
     self['Description'] = task.description
+    self['Repeat'] = task.repeat
   end
 end

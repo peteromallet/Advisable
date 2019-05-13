@@ -1,16 +1,11 @@
+import { withApollo } from "react-apollo";
 import React, { Fragment, useEffect } from "react";
-import { Spring } from "react-spring/renderprops";
-import graphqlClient from "src/graphqlClient";
+import { Spring } from "react-spring/renderprops.cjs";
 import CONFIRM_PROJECT from "./confirmProject.graphql";
 import { Wrapper, Progress } from "./styles";
 import illustration from "./illustration.png";
 
-const SubmitConfirmation = ({
-  project,
-  match,
-  history
-}) => {
-
+const SubmitConfirmation = ({ project, match, history, client }) => {
   useEffect(() => {
     if (project.depositOwed !== 0) {
       history.replace("deposit");
@@ -23,22 +18,22 @@ const SubmitConfirmation = ({
 
   useEffect(() => {
     setTimeout(async () => {
-      const response = await graphqlClient.mutate({
+      const response = await client.mutate({
         mutation: CONFIRM_PROJECT,
         variables: {
           input: {
-            id: match.params.projectID
-          }
+            id: match.params.projectID,
+          },
         },
       });
 
       const { errors } = response.data.confirmProject;
       if (errors) {
         console.log(errors);
-        return
+        return;
       }
 
-      window.location = `/projects/${match.params.projectID}`
+      window.location = `/projects/${match.params.projectID}`;
     }, 1000);
   }, []);
 
@@ -57,4 +52,4 @@ const SubmitConfirmation = ({
   );
 };
 
-export default SubmitConfirmation;
+export default withApollo(SubmitConfirmation);

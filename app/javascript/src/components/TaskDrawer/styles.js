@@ -22,12 +22,13 @@ const placeholderColor = color => css`
 
 export const TaskDrawer = styled.div`
   height: 100%;
+  padding-top: 60px;
   position: relative;
 
   ${Status} {
-    margin-top: 8px;
-    margin-left: 8px;
-    margin-bottom: 2px;
+    top: 25px;
+    left: 20px;
+    position: absolute;
   }
 
   ${Menu} {

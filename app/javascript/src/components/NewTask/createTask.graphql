@@ -11,6 +11,19 @@ mutation createTask($input: CreateTaskInput!) {
       createdAt
       application {
         id
+        rate
+        specialist {
+          id
+          firstName
+        }
+        project {
+          id
+          currency
+          user {
+            id
+            companyName
+          }
+        }
       }
     }
     errors {
