@@ -13,6 +13,10 @@ class Types::User < Types::BaseType
     argument :exclude_conflicts, Boolean, required: false, description: 'Exclude any times that conflict with scheduled interviews'
   end
 
+  field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
+    authorize :is_user
+  end
+
   field :email, String, null: false do
     authorize :is_user
   end

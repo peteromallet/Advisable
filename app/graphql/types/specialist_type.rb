@@ -20,6 +20,10 @@ class Types::SpecialistType < Types::BaseType
   field :previous_projects, [Types::PreviousProject], null: false
   field :has_account, Boolean, null: false
 
+  field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
+    authorize :is_specialist
+  end
+
   field :applications, [Types::ApplicationType], null: true do
     authorize :is_specialist
     argument :status, [String], required: false
