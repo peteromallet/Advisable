@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import { Mutation } from "react-apollo";
 import React, { Fragment, useState } from "react";
-import { useTranslation } from "react-i18next/hooks";
+import { useTranslation } from "react-i18next";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
 import Heading from "src/components/Heading";
@@ -63,11 +63,21 @@ export default () => {
               </Text>
             </Padding>
             <Padding bottom="s">
-              <Button size="l" block href="https://advisable.com/apply-to-be-a-client/" as="a">
+              <Button
+                size="l"
+                block
+                href="https://advisable.com/apply-to-be-a-client/"
+                as="a"
+              >
                 Apply to be a client
               </Button>
             </Padding>
-            <Button size="l" block href="https://advisable.com/apply-to-be-a-specialist/" as="a">
+            <Button
+              size="l"
+              block
+              href="https://advisable.com/apply-to-be-a-specialist/"
+              as="a"
+            >
               Apply to be a specialist
             </Button>
           </Fragment>

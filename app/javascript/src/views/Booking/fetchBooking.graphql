@@ -14,12 +14,12 @@ query application($id: ID!) {
     rate
     tasks {
       id
-      airtableId
       name
       stage
       dueDate
       estimate
       createdAt
+      repeat
     }
     project {
       id

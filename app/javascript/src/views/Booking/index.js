@@ -1,20 +1,18 @@
 import * as React from "react";
 import { graphql, withApollo } from "react-apollo";
-import { match } from "react-router";
 import { matchPath } from "react-router-dom";
 import NotFound from "../NotFound";
 import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import TaskDrawer from "../../components/TaskDrawer";
-import FETCH_BOOKING from "./fetchBooking.graphql";
-import FETCH_TASK from "./fetchTask.graphql";
+import { getActiveApplication } from "../../graphql/queries/applications";
 import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
 
 let Booking = ({ data, match, history, location, client }) => {
   if (data.loading) return <Loading />;
   if (!data.application) return <NotFound />;
-  if (data.application.status !== "Working") return <NotFound />
+  if (data.application.status !== "Working") return <NotFound />;
 
   const { applicationId } = match.params;
   const tasks = data.application.tasks;
@@ -29,55 +27,50 @@ let Booking = ({ data, match, history, location, client }) => {
   };
 
   const taskDrawerPath = matchPath(location.pathname, {
-    path: `${match.path}/tasks/:taskId`
-  })
+    path: `${match.path}/tasks/:taskId`,
+  });
 
   const addNewTaskToCache = task => {
-    client.writeQuery({
-      query: FETCH_TASK,
-      variables: {
-        id: task.id,
-      },
-      data: {
-        task,
-      },
-    });
-
     const newData = data;
     newData.application.tasks.push(task);
     client.writeQuery({
-      query: FETCH_BOOKING,
+      query: getActiveApplication,
       data: newData,
       variables: {
-        id: applicationId
-      }
-    })
+        id: applicationId,
+      },
+    });
 
     history.replace(`/manage/${applicationId}/tasks/${task.id}`);
-  }
-  
+  };
+
   const handleDeleteTask = task => {
     history.push(match.url);
-    const newData = data
-    newData.application.tasks = tasks.filter(t => {
-      return t.id !== task.id;
-    });
     client.writeQuery({
-      query: FETCH_BOOKING,
-      data: newData,
+      query: getActiveApplication,
       variables: {
-        id: applicationId
-      }
+        id: applicationId,
+      },
+      data: {
+        ...data,
+        application: {
+          ...data.application,
+          tasks: tasks.filter(t => {
+            return t.id !== task.id;
+          }),
+        },
+      },
     });
   };
 
   return (
     <>
       <TaskDrawer
+        isClient
         showStatusNotice
         onClose={() => closeTask()}
         onDeleteTask={handleDeleteTask}
-        isClient={data.viewer.__typename === "User"}
+        onCreateRepeatingTask={addNewTaskToCache}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
       <Layout>
@@ -96,15 +89,14 @@ let Booking = ({ data, match, history, location, client }) => {
   );
 };
 
-Booking = withApollo(Booking)
+Booking = withApollo(Booking);
 
-Booking = graphql(FETCH_BOOKING, {
-  options: (props) => ({
+Booking = graphql(getActiveApplication, {
+  options: props => ({
     variables: {
       id: props.match.params.applicationId,
     },
   }),
 })(Booking);
 
-
-export default Booking
+export default Booking;

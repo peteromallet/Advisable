@@ -6,14 +6,12 @@ import Scrollable from "../Scrollable";
 import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
 import VerticalLayout from "../VerticalLayout";
-import Menu from "./Menu";
 import Title from "./Title";
 import DueDate from "./DueDate";
 import Actions from "./Actions";
 import Estimate from "./Estimate";
 import Description from "./Description";
 import {
-  TaskDrawer,
   TaskDetails,
   Confirmation,
   ConfirmationContainer,
@@ -27,10 +25,11 @@ const PROMPT = "PROMPT";
 
 const PERMISSIONS = {
   "Not Assigned": {
-    name: (isClient, task) => (isClient && task.estimate) ? PROMPT : WRITE,
-    dueDate: (isClient, task) => (isClient && task.estimate) ? PROMPT : WRITE,
+    name: (isClient, task) => (isClient && task.estimate ? PROMPT : WRITE),
+    dueDate: (isClient, task) => (isClient && task.estimate ? PROMPT : WRITE),
     estimate: isClient => (isClient ? READ : WRITE),
-    description: (isClient, task) => (isClient && task.estimate) ? PROMPT : WRITE,
+    description: (isClient, task) =>
+      isClient && task.estimate ? PROMPT : WRITE,
   },
   "Quote Requested": {
     name: () => WRITE,
@@ -44,7 +43,7 @@ const PERMISSIONS = {
     estimate: isClient => (isClient ? READ : WRITE),
     description: isClient => (isClient ? PROMPT : READ),
   },
-  "Assigned": {
+  Assigned: {
     dueDate: (isClient, task) => {
       if (!isClient && !task.dueDate) return WRITE;
       return READ;
@@ -52,7 +51,7 @@ const PERMISSIONS = {
     estimate: (isClient, task) => {
       if (!isClient && !task.estimate) return WRITE;
       return READ;
-    }
+    },
   },
 };
 
@@ -68,12 +67,12 @@ let timer;
 
 const EditTask = ({
   task,
-  onDeleteTask,
   readOnly,
   hideStatus,
   onSave,
   isClient,
   isSaving,
+  setPrompt,
   showStatusNotice,
 }) => {
   const [attributes, setAttributes] = React.useState({
@@ -151,7 +150,7 @@ const EditTask = ({
     readOnly || getTaskPermission(task, "description", isClient) === READ;
 
   return (
-    <TaskDrawer>
+    <>
       {confirmPrompt && (
         <Confirmation>
           <ConfirmationContainer>
@@ -175,14 +174,12 @@ const EditTask = ({
           </ConfirmationContainer>
         </Confirmation>
       )}
-      {!readOnly && (
-        <Menu task={task} isClient={isClient} onDelete={onDeleteTask} />
-      )}
       <VerticalLayout>
         <VerticalLayout.Header>
-          <Padding left="m" top="m" right="m">
+          <Padding left="m" right="m">
             {!hideStatus && <TaskStatus>{task.stage}</TaskStatus>}
             <Title
+              data-testid="nameField"
               onBlur={handleBlur("name")}
               readOnly={titleReadOnly}
               value={attributes.name}
@@ -231,12 +228,14 @@ const EditTask = ({
             {showStatusNotice && (
               <StageDescription isClient={isClient} task={task} />
             )}
-            {!readOnly && <Actions isClient={isClient} task={task} />}
+            {!readOnly && (
+              <Actions setPrompt={setPrompt} isClient={isClient} task={task} />
+            )}
           </Padding>
           <SavingIndicator isSaving={isSaving}>Saving...</SavingIndicator>
         </VerticalLayout.Footer>
       </VerticalLayout>
-    </TaskDrawer>
+    </>
   );
 };
 

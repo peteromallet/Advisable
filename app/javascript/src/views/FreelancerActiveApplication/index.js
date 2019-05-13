@@ -5,7 +5,7 @@ import { Query } from "react-apollo";
 import Loading from "./Loading";
 import NotFound from "../NotFound";
 import FetchActiveApplication from "./FetchActiveApplication";
-import FETCH_APPLICATION from "./fetchApplication.graphql";
+import FETCH_APPLICATION from "../../graphql/queries/freelancerActiveApplication";
 
 const Component = props => {
   const id = props.match.params.applicationId;

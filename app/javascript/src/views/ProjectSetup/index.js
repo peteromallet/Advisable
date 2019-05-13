@@ -1,6 +1,6 @@
 // Renders the confirmation steps for a project.
 import { graphql } from "react-apollo";
-import { Transition, animated } from "react-spring/renderprops";
+import { Transition, animated } from "react-spring/renderprops.cjs";
 import { Route, Switch, Redirect } from "react-router";
 import React, { Fragment, useEffect, useRef } from "react";
 import NotFound from "src/views/NotFound";
@@ -15,7 +15,7 @@ const ProjectSetup = ({ data = {}, match }) => {
   if (data.loading) return <Loading />;
 
   if (match.params.projectID && !data.project) {
-    return <NotFound />
+    return <NotFound />;
   }
 
   // Redirect to the project dashboard if the status is not pending approval
@@ -31,7 +31,7 @@ const ProjectSetup = ({ data = {}, match }) => {
   // Keep track of the last step.
   const lastStepRef = useRef(currentStepNumber);
   useEffect(() => {
-    lastStepRef.current = currentStepNumber
+    lastStepRef.current = currentStepNumber;
   });
   const previousStep = lastStepRef.current;
 
@@ -65,7 +65,7 @@ const ProjectSetup = ({ data = {}, match }) => {
                 transform:
                   currentStepNumber > previousStep
                     ? "translateX(300px)"
-                    : "translateX(-300px)"
+                    : "translateX(-300px)",
               }}
               enter={{ opacity: 1, transform: "translateX(0px)" }}
               leave={{
@@ -74,7 +74,7 @@ const ProjectSetup = ({ data = {}, match }) => {
                 transform:
                   currentStepNumber <= previousStep
                     ? "translateX(300px)"
-                    : "translateX(-300px)"
+                    : "translateX(-300px)",
               }}
             >
               {location => transition => (
@@ -107,10 +107,10 @@ const ProjectSetup = ({ data = {}, match }) => {
 export default graphql(FETCH_PROJECT, {
   options: props => ({
     variables: {
-      id: props.match.params.projectID
-    }
+      id: props.match.params.projectID,
+    },
   }),
   // We also need to handle the case when the user is at /project_setup and
   // there is no projectID in the url. In these cases we simply skip the query
-  skip: props => props.match.params.projectID === undefined
+  skip: props => props.match.params.projectID === undefined,
 })(ProjectSetup);

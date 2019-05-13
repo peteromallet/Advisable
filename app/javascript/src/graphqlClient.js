@@ -13,7 +13,9 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData,
 });
 
-const cache = new InMemoryCache({ fragmentMatcher });
+const cache = new InMemoryCache({
+  fragmentMatcher,
+});
 
 const httpLink = createHttpLink({
   uri: "/graphql",
