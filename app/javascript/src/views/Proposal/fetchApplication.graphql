@@ -7,12 +7,12 @@ query Application($id: ID!) {
     proposalComment
     tasks {
       id
-      airtableId
       name
       stage
       dueDate
       description
       estimate
+      repeat
     }
     specialist {
       id

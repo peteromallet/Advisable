@@ -9,8 +9,10 @@ import Divider from "../../components/Divider";
 import { Padding } from "../../components/Spacing";
 import FeaturedBadge from "../../components/FeaturedBadge";
 import { OtherApplication } from "./styles";
+import useMobile from "../../utilities/useMobile";
 
 export default ({ data, onClick }) => {
+  const isMobile = useMobile();
   const specialist = data.project.application.specialist;
   const applications = data.project.applications;
   if (applications.length === 0) return null;
@@ -46,7 +48,7 @@ export default ({ data, onClick }) => {
               {application.specialist.country &&
                 `, ${application.specialist.country.name}`}
             </Text>
-            {application.featured && <FeaturedBadge />}
+            {application.featured && <FeaturedBadge hideLabel={isMobile} />}
           </OtherApplication>
         );
       })}

@@ -11,6 +11,18 @@
     "signupRequired": "We have introduced logins to our system. Please create a password for your account below."
   },
   "tasks": {
+    "actions": {
+      "setRepeating": {
+        "client": {
+          "title": "Create repeating task",
+          "description": "You will have the opportunity to repeat this task every month."
+        },
+        "specialist": {
+          "title": "Create repeating task",
+          "description": "{{task.application.project.user.companyName}} will have the opportunity to repeat this task every month."
+        }
+      }
+    },
     "stageDescriptions": {
       "client": {
         "nameAndDescriptionRequired": "This task can not be assigned until it has a name and a description.",

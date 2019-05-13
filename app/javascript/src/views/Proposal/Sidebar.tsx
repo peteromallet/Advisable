@@ -38,7 +38,8 @@ let SideBar = (props: any) => {
       </Padding>
       <Padding bottom="l">
         <Text size="s">
-          Send Dunder Mifflin a proposal to start working together.
+          Send {application.project.user.companyName} a proposal to start
+          working together.
         </Text>
       </Padding>
       {!isMobile && (

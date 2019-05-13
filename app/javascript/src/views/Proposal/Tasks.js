@@ -12,7 +12,6 @@ import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
 import { Padding } from "../../components/Spacing";
 import { useMobile } from "../../components/Breakpoint";
-import FETCH_TASK from "./fetchTask.graphql";
 import FETCH_APPLICATION from "./fetchApplication.graphql";
 import { hasCompleteTasksStep } from "./validationSchema";
 
@@ -30,16 +29,6 @@ const Tasks = ({ application, match, location, history, client }) => {
   };
 
   const handleNewTask = task => {
-    client.writeQuery({
-      query: FETCH_TASK,
-      variables: {
-        id: task.id,
-      },
-      data: {
-        task,
-      },
-    });
-
     const newData = client.readQuery(applicationQuery);
     newData.application.tasks.push(task);
     client.writeQuery({

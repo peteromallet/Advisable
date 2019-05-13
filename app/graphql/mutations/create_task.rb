@@ -2,8 +2,10 @@ class Mutations::CreateTask < Mutations::BaseMutation
   argument :application, ID, required: true
   argument :id, String, required: false
   argument :name, String, required: false
-  argument :due_date, String, required: false
   argument :description, String, required: false
+  argument :dueDate, GraphQL::Types::ISO8601DateTime, required: false
+  argument :estimate, Float, required: false
+  argument :repeat, String, required: false
 
   field :task, Types::TaskType, null: true
   field :errors, [Types::Error], null: true
@@ -11,7 +13,7 @@ class Mutations::CreateTask < Mutations::BaseMutation
   def authorized?(**args)
     application = Application.find_by_airtable_id!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
-    return true if policy.is_specialist_or_client
+    return true if policy.create_task
     return false, { errors: [{ code: "not_authorized" }] }
   end
 
