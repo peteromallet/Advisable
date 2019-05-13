@@ -1,7 +1,7 @@
-export const currencySymbol = currency => symbols[currency] || currency || "€"
+export const currencySymbol = currency => symbols[currency] || currency || "€";
 
-export default (amount, currency = "EUR") => {
-  const symbol = currencySymbol(currency.toUpperCase())
+export default (amount, currency = "USD") => {
+  const symbol = currencySymbol((currency || "USD").toUpperCase());
   let commaSeparated = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   if (symbol != null) {
     return `${symbol}${commaSeparated}`;
@@ -100,5 +100,5 @@ const symbols = {
   GIP: "£",
   IRR: "﷼",
   NGN: "₦",
-  GYD: "$"
+  GYD: "$",
 };

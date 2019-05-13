@@ -67,6 +67,10 @@ jobs: # a collection of steps
           command: bin/rails db:schema:load --trace
 
       - run:
+          name: JS Tests
+          command: yarn test
+
+      - run:
           name: Run rspec in parallel
           command: |
             bundle exec rspec --profile 10 \
