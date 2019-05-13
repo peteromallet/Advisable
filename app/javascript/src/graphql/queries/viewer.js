@@ -6,10 +6,12 @@ export default gql`
       ... on User {
         id
         email
+        name
         airtableId
         firstName
         lastName
         confirmed
+        createdAt
         companyName
         country {
           id
@@ -19,6 +21,8 @@ export default gql`
       ... on Specialist {
         id
         email
+        name
+        createdAt
         airtableId
         firstName
         lastName
