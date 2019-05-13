@@ -11,7 +11,6 @@ const BadgeLabel = styled.span`
   text-transform: uppercase;
 `;
 
-
 export const FeaturedBadge = styled.div`
   position: relative;
   align-items: center;
@@ -25,24 +24,32 @@ export const FeaturedBadge = styled.div`
     transform: translateY(-50%);
   }
 
-  ${props =>props.leftAligned && css`
-    ${BadgeLabel} {
-      text-align: left;
-      padding-right: 0;
-      padding-left: 45px;
-    }
+  ${props =>
+    props.leftAligned &&
+    css`
+      ${BadgeLabel} {
+        text-align: left;
+        padding-right: 0;
+        padding-left: 45px;
+      }
 
-    svg {
-      left: 0;
-      right: auto;
-    }
-  `}
+      svg {
+        left: 0;
+        right: auto;
+      }
+    `}
 `;
 
-export default ({ leftAligned }) => {
+export default ({ leftAligned, hideLabel }) => {
   return (
     <FeaturedBadge leftAligned={leftAligned}>
-      <BadgeLabel>Recommended<br/>Candidate</BadgeLabel>
+      {!hideLabel && (
+        <BadgeLabel>
+          Recommended
+          <br />
+          Candidate
+        </BadgeLabel>
+      )}
       <svg width={36} height={42}>
         <title>Group</title>
         <defs>
