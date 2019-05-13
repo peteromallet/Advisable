@@ -9,6 +9,7 @@ describe Airtable::Task do
         estimate: nil,
         due_date: nil,
         description: nil,
+        repeat: nil,
         submitted_for_approval_comment: nil,
       })
     }
@@ -24,6 +25,7 @@ describe Airtable::Task do
         "Estimate" => 8,
         "Due Date" => 2.days.ago,
         "Description" => "description",
+        "Repeat" => "Monthly",
         "Submitted For Approval Comment" => "comment",
         "Application" => [application.airtable_id]
       }, id: task.airtable_id)
@@ -59,6 +61,12 @@ describe Airtable::Task do
       }.from(nil).to(airtable.fields["Description"])
     end
 
+    it "syncs the repeat attribute" do
+      expect { airtable.sync }.to change {
+        task.reload.repeat
+      }.from(nil).to(airtable.fields["Repeat"])
+    end
+
     it "syncs the Submitted For Approval Comment" do
       expect { airtable.sync }.to change {
         task.reload.submitted_for_approval_comment
@@ -84,6 +92,7 @@ describe Airtable::Task do
       expect(airtable).to receive(:[]=).with("Application", [task.application.airtable_id])
       expect(airtable).to receive(:[]=).with("Due Date", task.due_date.try(:strftime, "%Y-%m-%d"))
       expect(airtable).to receive(:[]=).with("Description", task.description)
+      expect(airtable).to receive(:[]=).with("Repeat", task.repeat)
       expect(airtable).to receive(:save)
       airtable.push(task)
     end
