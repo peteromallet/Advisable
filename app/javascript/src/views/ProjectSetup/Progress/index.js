@@ -1,5 +1,5 @@
 import React from "react";
-import { Spring } from "react-spring/renderprops";
+import { Spring } from "react-spring/renderprops.cjs";
 import styled from "styled-components";
 
 const Bar = styled.div`
@@ -11,8 +11,8 @@ const Bar = styled.div`
 
 const Inner = styled.div.attrs(props => ({
   style: {
-    width: `${props.width}%`
-  }
+    width: `${props.width}%`,
+  },
 }))`
   height: 100%;
   background: #17cda1;

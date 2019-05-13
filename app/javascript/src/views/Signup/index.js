@@ -5,7 +5,7 @@ import { Formik } from "formik";
 import queryString from "query-string";
 import { Redirect } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
-import { useTranslation } from "react-i18next/hooks";
+import { useTranslation } from "react-i18next";
 import Text from "src/components/Text";
 import Link from "src/components/Link";
 import Button from "src/components/Button";
@@ -13,14 +13,14 @@ import Loading from "src/components/Loading";
 import FieldRow from "src/components/FieldRow";
 import Heading from "src/components/Heading";
 import TextField from "src/components/TextField";
-import useScrollRestore from 'src/utilities/useScrollRestore';
-import VIEWER from "../../components/AuthenticatedRoute/viewer.graphql";
+import useScrollRestore from "src/utilities/useScrollRestore";
+import VIEWER from "../../graphql/queries/viewer";
 import validationSchema from "./validationSchema";
 import { Container, Card, Error } from "./styles";
 import SIGNUP from "./signup.graphql";
 
 const Signup = ({ location, match }) => {
-  useScrollRestore()
+  useScrollRestore();
   const [t] = useTranslation();
   const queryParams = queryString.parse(location.search);
   const notice = get(location, "state.notice");
@@ -58,16 +58,16 @@ const Signup = ({ location, match }) => {
                     initialValues={{
                       email: queryParams.email || "",
                       password: "",
-                      passwordConfirmation: ""
+                      passwordConfirmation: "",
                     }}
                     onSubmit={async (values, formikBag) => {
                       const { data } = await signup({
                         variables: {
                           input: {
                             id: match.params.id,
-                            ...values
-                          }
-                        }
+                            ...values,
+                          },
+                        },
                       });
 
                       if (data.signup.token) {

@@ -2,7 +2,7 @@
 import React from "react";
 import Icon from "../Icon";
 import Padding from "../Spacing/Padding";
-import { useTranslation } from "react-i18next/hooks";
+import { useTranslation } from "react-i18next";
 import { StageDescription } from "./styles";
 
 const FOR_CLIENT = {
@@ -66,12 +66,10 @@ const FOR_CLIENT = {
   },
   Approved: ({ t, task }) => {
     return (
-      <Padding bottom="m">
-        <StageDescription>
-          <Icon icon="info" width={20} />
-          {t("tasks.stageDescriptions.client.approved", { task })}
-        </StageDescription>
-      </Padding>
+      <StageDescription>
+        <Icon icon="info" width={20} />
+        {t("tasks.stageDescriptions.client.approved", { task })}
+      </StageDescription>
     );
   },
 };
@@ -133,12 +131,10 @@ const FOR_SPECIALIST = {
   },
   Approved: ({ t, task }) => {
     return (
-      <Padding bottom="m">
-        <StageDescription>
-          <Icon icon="info" width={20} />
-          {t("tasks.stageDescriptions.client.approved", { task })}
-        </StageDescription>
-      </Padding>
+      <StageDescription>
+        <Icon icon="info" width={20} />
+        {t("tasks.stageDescriptions.client.approved", { task })}
+      </StageDescription>
     );
   },
 };

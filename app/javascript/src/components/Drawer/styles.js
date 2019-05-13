@@ -2,6 +2,7 @@ import { rgba } from "polished";
 import { animated } from "react-spring";
 import styled from "styled-components";
 import colors from "../../colors";
+import { IconButton } from "../IconButton/styles";
 
 export const Container = styled.div`
   top: 0;
@@ -32,25 +33,13 @@ export const Drawer = styled(animated.div)`
   background: white;
 `;
 
-export const CloseButton = styled.button`
+export const Actions = styled.div`
   top: 20px;
   z-index: 3;
   right: 20px;
-  width: 30px;
-  height: 30px;
-  border: none;
-  display: flex;
-  outline: none;
-  border-radius: 6px;
   position: absolute;
-  align-items: center;
-  justify-content: center;
-  color: ${colors.neutral.s6};
-  appearance: none;
-  background: transparent;
 
-  &:hover {
-    color: ${colors.neutral.s8};
-    background: ${rgba(colors.neutral.s1, 0.5)};
+  ${IconButton} {
+    margin-left: 8px;
   }
 `

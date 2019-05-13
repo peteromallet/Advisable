@@ -3,6 +3,7 @@ class Types::TaskType < Types::BaseType
   field :airtable_id, String, null: true
   field :stage, String, null: true
   field :name, String, null: true
+  field :repeat, String, null: true
   field :estimate, Float, null: true
   field :due_date, GraphQL::Types::ISO8601DateTime, null: true
   field :description, String, null: true

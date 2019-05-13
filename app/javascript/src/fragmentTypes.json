@@ -12,10 +12,7 @@
       {
         "kind": "UNION",
         "name": "ViewerUnion",
-        "possibleTypes": [
-          { "name": "User" },
-          { "name": "Specialist" }
-        ]
+        "possibleTypes": [{ "name": "User" }, { "name": "Specialist" }]
       }
     ]
   }

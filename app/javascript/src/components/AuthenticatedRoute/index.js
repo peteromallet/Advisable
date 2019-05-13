@@ -5,10 +5,15 @@ import React from "react";
 import { Query } from "react-apollo";
 import { Route, Redirect } from "react-router-dom";
 import Loading from "../Loading";
-import VIEWER from "./viewer.graphql";
+import VIEWER from "../../graphql/queries/viewer";
 import PendingConfirmation from "./PendingConfirmation";
 
-const AuthenticatedRoute = ({ render, component: Component, freelancerRoute, ...rest }) => (
+const AuthenticatedRoute = ({
+  render,
+  component: Component,
+  freelancerRoute,
+  ...rest
+}) => (
   <Route
     {...rest}
     render={props => {
@@ -21,7 +26,7 @@ const AuthenticatedRoute = ({ render, component: Component, freelancerRoute, ...
           <Redirect
             to={{
               pathname: "/login",
-              state: { from: props.location }
+              state: { from: props.location },
             }}
           />
         );
@@ -33,7 +38,7 @@ const AuthenticatedRoute = ({ render, component: Component, freelancerRoute, ...
           {query => {
             if (query.loading) return <Loading />;
             const viewer = query.data.viewer;
-            const isSpecialist = viewer && viewer.__typename === 'Specialist';
+            const isSpecialist = viewer && viewer.__typename === "Specialist";
 
             // If there is no viewer then remove any authToken and redirect to
             // the login page
@@ -45,7 +50,7 @@ const AuthenticatedRoute = ({ render, component: Component, freelancerRoute, ...
                 <Redirect
                   to={{
                     pathname: "/login",
-                    state: { from: props.location }
+                    state: { from: props.location },
                   }}
                 />
               );
@@ -54,13 +59,13 @@ const AuthenticatedRoute = ({ render, component: Component, freelancerRoute, ...
             // if this is a freelancer route and the viewer is a user then
             // redirect back to the root path.
             if (freelancerRoute && !isSpecialist && rest.path !== "/") {
-              return <Redirect to="/" />
+              return <Redirect to="/" />;
             }
 
             // if this is not a freelancer route and a freelancer is logged in
             // then redirect to the root path.
             if (!freelancerRoute && isSpecialist && rest.path !== "/") {
-              return <Redirect to="/" />
+              return <Redirect to="/" />;
             }
 
             // if the viewer has not confirmed their account then show the
