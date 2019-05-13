@@ -11,7 +11,7 @@ import Questions from "./Questions";
 import PreviousProjects from "./PreviousProjects";
 import MoreApplicants from "./MoreApplicants";
 
-export default ({ data }) => {
+export default ({ data, history }) => {
   const project = data.project;
   const application = data.project.application;
 
