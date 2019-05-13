@@ -82,7 +82,6 @@ const Component = ({
     <Query query={FETCH_TASK} variables={{ id: taskId }}>
       {query => {
         const task = get(query, "data.task");
-        console.log(query.error);
 
         return (
           <Drawer
