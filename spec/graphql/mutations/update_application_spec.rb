@@ -148,7 +148,7 @@ describe Mutations::UpdateApplication do
     it "updates the rate" do
       response = AdvisableSchema.execute(query)
       rate = response["data"]["updateApplication"]["application"]["rate"]
-      expect(rate).to eq("100")   
+      expect(rate).to eq("100.0")   
     end
   end
 
