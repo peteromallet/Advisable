@@ -6,7 +6,7 @@ import { Formik, Form } from "formik";
 import { Heading, Padding, FieldRow, TextField } from "../../../components";
 import { useScreenSize } from "../../../utilities/screenSizes";
 import useScrollRestore from "../../../utilities/useScrollRestore";
-import UPDATE_APPLICATION from "../updateApplication.graphql";
+import UPDATE_APPLICATION from "../updateApplication.js";
 import validationSchema from "./validationSchema";
 import Actions from "../Actions";
 
@@ -16,7 +16,7 @@ const Questions = ({
   history,
   steps,
   currentStep,
-  location
+  location,
 }) => {
   const step = steps[currentStep];
   const isMobile = useScreenSize("small");
@@ -28,14 +28,14 @@ const Questions = ({
   const applicationQuestion = find(application.questions, { question }) || {};
   const previousQuestion =
     find(application.questions, {
-      question: questions[number - 2]
+      question: questions[number - 2],
     }) || {};
 
   // if the step is hidden then redirect to the references step.
   if (step.hidden) {
     let referencesStep = {
       ...location,
-      pathname: `/invites/${applicationId}/apply/references`
+      pathname: `/invites/${applicationId}/apply/references`,
     };
     return <Redirect to={referencesStep} />;
   }
@@ -45,7 +45,7 @@ const Questions = ({
   if (!number || number > questions.length || number < 0) {
     let firstQuestion = {
       ...location,
-      pathname: `/invites/${applicationId}/apply/questions/1`
+      pathname: `/invites/${applicationId}/apply/questions/1`,
     };
     return <Redirect to={firstQuestion} />;
   }
@@ -56,7 +56,7 @@ const Questions = ({
       <Redirect
         to={{
           ...location,
-          pathname: `/invites/${applicationId}/apply/questions/${number - 1}`
+          pathname: `/invites/${applicationId}/apply/questions/${number - 1}`,
         }}
       />
     );
@@ -74,7 +74,7 @@ const Questions = ({
 
     history.replace({
       ...location,
-      pathname: url
+      pathname: url,
     });
   };
 
@@ -87,11 +87,11 @@ const Questions = ({
             questions: [
               {
                 question,
-                answer: values.answer
-              }
-            ]
-          }
-        }
+                answer: values.answer,
+              },
+            ],
+          },
+        },
       });
 
       formikBag.resetForm();
@@ -107,7 +107,7 @@ const Questions = ({
 
       history.push({
         ...location,
-        pathname: url
+        pathname: url,
       });
     };
   };

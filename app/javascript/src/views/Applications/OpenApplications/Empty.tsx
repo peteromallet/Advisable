@@ -5,7 +5,6 @@ import Link from "../../../components/Link";
 import Styles from "../../../components/Styles";
 import Padding from "../../../components/Spacing/Padding";
 import illustration from "./illustration.png";
-import { SpecialistType } from "../../../types";
 
 interface Props {
   featuredURL: string;

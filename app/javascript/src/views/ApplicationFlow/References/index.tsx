@@ -4,8 +4,8 @@ import { Heading, Text, Button, Padding } from "../../../components";
 import AddPreviousProjectModal from "../../../components/AddPreviousProjectModal";
 import NoReferences from "./NoReferences";
 import PreviousProjects from "./PreviousProjects";
-import FETCH_APPLICATION from "../fetchApplication.graphql";
-import UPDATE_APPLICATION from "../updateApplication.graphql";
+import FETCH_APPLICATION from "../fetchApplication.js";
+import UPDATE_APPLICATION from "../updateApplication.js";
 
 interface Values {
   rate: string;
@@ -20,7 +20,7 @@ const References = ({
   steps,
   skipStep,
   currentStep,
-  location
+  location,
 }) => {
   const { applicationId } = match.params;
   const [modal, setModal] = React.useState(false);
@@ -32,14 +32,14 @@ const References = ({
         variables: {
           input: {
             ...values,
-            id: applicationId
-          }
-        }
+            id: applicationId,
+          },
+        },
       });
 
       history.push({
         ...location,
-        pathname: `/invites/${applicationId}/apply/terms`
+        pathname: `/invites/${applicationId}/apply/terms`,
       });
     };
   };
@@ -55,17 +55,17 @@ const References = ({
 
     history.push({
       ...location,
-      pathname: url
+      pathname: url,
     });
   };
 
   const handleSkip = () => {
-    skipStep()
+    skipStep();
     history.push({
       ...location,
-      pathname: `/invites/${applicationId}/apply/terms`
-    })
-  }
+      pathname: `/invites/${applicationId}/apply/terms`,
+    });
+  };
 
   return (
     <Mutation mutation={UPDATE_APPLICATION}>
@@ -78,7 +78,7 @@ const References = ({
             mutationUpdate={(proxy, response) => {
               const data = proxy.readQuery({
                 query: FETCH_APPLICATION,
-                variables: { id: applicationId }
+                variables: { id: applicationId },
               });
               const project =
                 response.data.createOffPlatformProject.previousProject;
@@ -97,7 +97,7 @@ const References = ({
               initialValues={{
                 references: application.previousProjects.map(
                   r => r.project.airtableId
-                )
+                ),
               }}
               previousProjects={previousProjects}
               onSubmit={handleSubmit(updateApplication)}
