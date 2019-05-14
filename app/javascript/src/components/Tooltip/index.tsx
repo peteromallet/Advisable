@@ -1,40 +1,70 @@
 import * as React from "react";
 import Popper from "popper.js";
 import TooltipOverlay from "./TooltipOverlay";
+export { default as TooltipPrompt } from "./Prompt";
 import { TooltipWrapper } from "./styles";
 
-export interface Props {
+type Props = {
+  size?: string;
   children: React.ReactNode;
   content: React.ReactNode;
   placement?: "bottom-start";
   pointerEvents?: string;
-}
+};
 
 const Tooltip = ({
+  size,
   children,
   content,
   pointerEvents,
-  placement = "bottom-start"
+  placement = "bottom-start",
 }: Props) => {
   const containerRef = React.useRef(null);
   const tooltipRef = React.useRef(null);
-  const [open, setOpen] = React.useState(false);
+  const [mouseOver, setMouseOver] = React.useState(false);
+  const [focused, setFocused] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
 
-  const handleMouseEnter = () => setOpen(true);
-  const handleMouseLeave = () => setOpen(false);
-  const handleBlur = () => setOpen(false);
-  const handleFocus = () => setOpen(true);
+  const handleMouseEnter = () => {
+    if (!mouseOver) {
+      setMouseOver(true);
+    }
+  };
 
-  React.useLayoutEffect(
-    () => {
-      if (open && tooltipRef) {
-        new Popper(containerRef.current, tooltipRef.current, {
-          placement
-        });
-      }
-    },
-    [open, tooltipRef]
-  );
+  const handleMouseLeave = () => setMouseOver(false);
+  const handleBlur = () => setFocused(false);
+  const handleFocus = () => {
+    if (!focused) {
+      setFocused(true);
+    }
+  };
+
+  const handleClick = () => {
+    if (focused) {
+      setFocused(false);
+    }
+
+    if (mouseOver) {
+      setMouseOver(false);
+    }
+
+    if (!focused) {
+      setFocused(true);
+    }
+
+    console.log("focused", focused);
+    console.log("mouse", mouseOver);
+  };
+
+  const open = mouseOver || focused;
+
+  React.useLayoutEffect(() => {
+    if (open && tooltipRef) {
+      new Popper(containerRef.current, tooltipRef.current, {
+        placement,
+      });
+    }
+  }, [open, tooltipRef]);
 
   return (
     <TooltipWrapper
@@ -42,12 +72,17 @@ const Tooltip = ({
       tabIndex={0}
       onBlur={handleBlur}
       onFocus={handleFocus}
+      onMouseDown={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {children}
       {open && (
-        <TooltipOverlay pointerEvents={pointerEvents} ref={tooltipRef}>
+        <TooltipOverlay
+          size={size}
+          pointerEvents={pointerEvents}
+          ref={tooltipRef}
+        >
           {content}
         </TooltipOverlay>
       )}
