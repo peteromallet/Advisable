@@ -1,21 +1,26 @@
 import React from "react";
-import { Query } from "react-apollo";
+import { get } from "lodash";
+import { graphql } from "react-apollo";
 import Loading from "./Loading";
 import JobListing from "./JobListing";
-import FETCH_PROJECT from "./fetchProject.graphql";
+import NotFound from "../NotFound";
+import ApplicationsClosed from "../ApplicationsClosed";
+import { getApplicationInvitation } from "../../graphql/queries/applications";
 
-let JobListingContainer = ({ match, history }) => {
-  return (
-    <Query query={FETCH_PROJECT} variables={{ id: match.params.applicationId }}>
-      {query => {
-        if (query.loading) return <Loading />;
+let JobListingContainer = ({ history, data }) => {
+  if (data.loading) return <Loading />;
+  if (!data.application) return <NotFound />;
 
-        return (
-          <JobListing history={history} application={query.data.application} />
-        );
-      }}
-    </Query>
-  );
+  const open = get(data, "application.project.applicationsOpen");
+  if (!open) return <ApplicationsClosed />;
+
+  return <JobListing history={history} application={data.application} />;
 };
 
-export default JobListingContainer;
+export default graphql(getApplicationInvitation, {
+  options: props => ({
+    variables: {
+      id: props.match.params.applicationId,
+    },
+  }),
+})(JobListingContainer);
