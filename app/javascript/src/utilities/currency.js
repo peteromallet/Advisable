@@ -2,7 +2,8 @@ export const currencySymbol = currency => symbols[currency] || currency || "€"
 
 export default (amount, currency = "USD") => {
   const symbol = currencySymbol((currency || "USD").toUpperCase());
-  let commaSeparated = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  let rounded = parseFloat(amount).toFixed(2);
+  let commaSeparated = rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   if (symbol != null) {
     return `${symbol}${commaSeparated}`;
   } else {
