@@ -1,11 +1,21 @@
-import React from 'react';
-import uniqueId from 'lodash/uniqueId';
-import { extractSpacingProps } from 'src/components/Spacing';
+import React from "react";
+import uniqueId from "lodash/uniqueId";
+import { extractSpacingProps } from "src/components/Spacing";
 import InputLabel from "src/components/InputLabel";
 import InputDescription from "src/components/InputDescription";
-import { Wrapper, Error, Input, Box } from './styles';
+import { Wrapper, Error, Input, Box } from "./styles";
 
-const Checkbox = ({ error, name, label, onChange, onBlur, value, description, ...props }) => {
+const Checkbox = ({
+  error,
+  name,
+  label,
+  onChange,
+  onBlur,
+  value,
+  description,
+  children,
+  ...props
+}) => {
   const [id, _] = React.useState(props.id || uniqueId("Checkbox"));
 
   return (
@@ -20,12 +30,12 @@ const Checkbox = ({ error, name, label, onChange, onBlur, value, description, ..
       />
       <InputLabel htmlFor={id}>
         <Box />
-        {label}
-        {description && <InputDescription>{description}</InputDescription>}
+        {label || children}
       </InputLabel>
+      {description && <InputDescription>{description}</InputDescription>}
       {error && <Error>{error}</Error>}
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Checkbox
+export default Checkbox;

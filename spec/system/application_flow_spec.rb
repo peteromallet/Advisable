@@ -126,7 +126,7 @@ describe 'Application flow' do
     it 'completes the application process' do
       visit "/invites/#{application.airtable_id}/apply/terms"
       fill_in 'rate', with: '100'
-      find('label', text: 'I agree that If Advisable connects me to a client that I successfully contract with, 20% of my fees are payable to Advisable and all payments go through Advisable.').click
+      find('label', text: 'I agree that if Advisable connects me to a client that I successfully contract with, between 5-20% of my fees are payable to Advisable and all payments must go through Advisable.').click
       find('span', text: "I agree with").sibling("span[class^='styles__Box']").click
       click_on 'Submit Application'
       expect(page).to have_content("Application sent!")

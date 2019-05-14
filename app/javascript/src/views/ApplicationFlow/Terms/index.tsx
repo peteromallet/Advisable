@@ -7,9 +7,12 @@ import {
   Padding,
   FieldRow,
   Checkbox,
-  TextField
+  TextField,
 } from "../../../components";
 import Link from "../../../components/Link";
+import Text from "../../../components/Text";
+import Button from "../../../components/Button";
+import Tooltip, { TooltipPrompt } from "../../../components/Tooltip";
 import { currencySymbol } from "../../../utilities/currency";
 import { useScreenSize } from "../../../utilities/screenSizes";
 import SUBMIT_APPLICATION from "../submitApplication.graphql";
@@ -31,7 +34,7 @@ const Terms = ({
   currentStep,
   location,
   updateApplication,
-  submitApplication
+  submitApplication,
 }) => {
   const isMobile = useScreenSize("small");
   let applicationId = match.params.applicationId;
@@ -42,18 +45,18 @@ const Terms = ({
       variables: {
         input: {
           ...values,
-          id: applicationId
-        }
-      }
+          id: applicationId,
+        },
+      },
     });
 
     if (locationState.allowApply || application.status === "Invited To Apply") {
       await submitApplication({
         variables: {
           input: {
-            id: applicationId
-          }
-        }
+            id: applicationId,
+          },
+        },
       });
     }
 
@@ -73,7 +76,7 @@ const Terms = ({
       initialValues={{
         rate: parseFloat(application.rate) || "",
         acceptsFee: application.acceptsFee,
-        acceptsTerms: application.acceptsTerms
+        acceptsTerms: application.acceptsTerms,
       }}
     >
       {(formik: FormikProps<Values>) => (
@@ -98,7 +101,7 @@ const Terms = ({
                 )}0.00`}
                 mask={createNumberMask({
                   prefix: currencySymbol(application.project.currency),
-                  allowDecimal: true
+                  allowDecimal: true,
                 })}
               />
             </FieldRow>
@@ -107,8 +110,40 @@ const Terms = ({
                 name="acceptsFee"
                 value={formik.values.acceptsFee}
                 onChange={formik.handleChange}
+                description={
+                  <Tooltip
+                    size="l"
+                    content={
+                      <>
+                        <Padding bottom="m">
+                          <Text colour="white" size="xs">
+                            In order to facilitate fair long-term outcomes,
+                            Advisable's fee to freelancers is reduced for larger
+                            relationships between Freelancer and Client
+                          </Text>
+                        </Padding>
+                        <Text colour="white" size="xs">
+                          For the first $10,000, our fee is 20%
+                        </Text>
+                        <Text colour="white" size="xs">
+                          From $10,000-25,000, our fee is 10%
+                        </Text>
+                        <Text colour="white" size="xs">
+                          For $25,000+, our fee is 5%
+                        </Text>
+                      </>
+                    }
+                  >
+                    <Padding top="s">
+                      <TooltipPrompt>More Information</TooltipPrompt>
+                    </Padding>
+                  </Tooltip>
+                }
+                label=" I agree that if Advisable connects me to a client that I
+                successfully contract with, between 5-20% of my fees are
+                payable to Advisable and all payments must go through
+                Advisable."
                 error={formik.touched.acceptsFee && formik.errors.acceptsFee}
-                label="I agree that If Advisable connects me to a client that I successfully contract with, 20% of my fees are payable to Advisable and all payments go through Advisable. "
               />
             </FieldRow>
             <FieldRow>
