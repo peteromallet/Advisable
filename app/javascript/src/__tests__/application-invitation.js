@@ -83,5 +83,7 @@ test("when the project is closed it renders the applications closed view", async
     ],
   });
 
-  expect(await findByText("Applications are closed")).toBeInTheDocument();
+  expect(
+    await findByText("projects.applicationsClosed.title")
+  ).toBeInTheDocument();
 });

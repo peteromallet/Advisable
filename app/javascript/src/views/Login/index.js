@@ -21,7 +21,7 @@ import LOGIN from "./login.graphql";
 
 const Login = ({ location }) => {
   useScrollRestore();
-  const [t] = useTranslation();
+  const { t } = useTranslation();
   const [error, setError] = useState(null);
   const queryParams = queryString.parse(location.search);
 
