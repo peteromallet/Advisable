@@ -12,4 +12,7 @@ module.exports = {
     "^.+\\.graphql$": "jest-transform-graphql",
     "^.+\\.(js|tsx|ts)$": "babel-jest",
   },
+  coverageReporters: ["html"],
+  coverageDirectory: "<rootDir>/jest-coverage",
+  collectCoverageFrom: ["<rootDir>/app/javascript/src/**/*.{js,tsx,ts}"],
 };

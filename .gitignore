@@ -34,3 +34,4 @@ dump.rdb
 credentials.yml.enc
 /.env
 .DS_Store
+jest-coverage

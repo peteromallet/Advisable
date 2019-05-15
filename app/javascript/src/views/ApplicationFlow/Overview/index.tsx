@@ -22,9 +22,9 @@ const Overview = ({ application, history, location, steps, currentStep }) => {
   const { airtableId } = application;
   const isMobile = useScreenSize("small");
 
-  const handleSubmit = updateApplication => {
+  const handleSubmit = mutate => {
     return async values => {
-      await updateApplication({
+      const r = await mutate({
         variables: {
           input: {
             id: application.airtableId,
@@ -39,10 +39,10 @@ const Overview = ({ application, history, location, steps, currentStep }) => {
 
   return (
     <Mutation mutation={UPDATE_APPLICATION}>
-      {updateApplication => (
+      {mutate => (
         <Formik
           validationSchema={validationSchema}
-          onSubmit={handleSubmit(updateApplication)}
+          onSubmit={handleSubmit(mutate)}
           initialValues={{
             introduction:
               application.introduction || application.specialist.bio || "",
