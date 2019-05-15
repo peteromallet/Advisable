@@ -19,9 +19,9 @@ interface Props {
 const Actions = ({
   isSubmitting,
   steps,
-  label = 'Next',
+  label = "Next",
   currentStep,
-  onBack
+  onBack,
 }: Props) => {
   const isMobile = useScreenSize("small");
 
@@ -31,7 +31,12 @@ const Actions = ({
         <React.Fragment>
           <Divider />
           <Padding size="xl">
-            <Button loading={isSubmitting} styling="green" size="l">
+            <Button
+              loading={isSubmitting}
+              aria-label={label}
+              styling="green"
+              size="l"
+            >
               {label}
             </Button>
           </Padding>
@@ -60,6 +65,7 @@ const Actions = ({
               size="l"
               type="submit"
               styling="green"
+              aria-label={label}
               loading={isSubmitting}
             >
               {label}
