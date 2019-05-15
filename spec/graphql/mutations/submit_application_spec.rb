@@ -11,7 +11,9 @@ describe Mutations::SubmitApplication do
           id
           status
         }
-        errors
+        errors {
+          code
+        }
       }
     }
   |}
@@ -34,13 +36,24 @@ describe Mutations::SubmitApplication do
     expect(application.reload.applied_at).to_not be_nil
   end
 
+  context "when applications are closed" do
+    let(:project) { create(:project, sales_status: "Lost") }
+    let(:application) { create(:application, project: project, applied_at: nil, status: "Invited To Apply") }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["data"]["submitApplication"]["errors"][0]["code"]
+      expect(error).to eq("projects.applicationsClosed")
+    end
+  end
+
   context "when the status is Applied" do
     let(:application) { create(:application, applied_at: nil, status: "Applied") }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response["data"]["submitApplication"]["errors"][0]
-      expect(error).to match(/Cannot submit application with status/)
+      error = response["data"]["submitApplication"]["errors"][0]["code"]
+      expect(error).to eq("applications.cannotSubmit")
     end
   end
 end

@@ -8,7 +8,11 @@
     }
   },
   "projects": {
-    "signupRequired": "We have introduced logins to our system. Please create a password for your account below."
+    "signupRequired": "We have introduced logins to our system. Please create a password for your account below.",
+    "applicationsClosed": {
+      "title": "Applications are closed",
+      "description": "We're sorry but this project is no longer accepting applications. We will notify you whenever relevant opportunities come up that match your skillset."
+    }
   },
   "tasks": {
     "actions": {
