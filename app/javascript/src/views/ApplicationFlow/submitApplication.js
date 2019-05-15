@@ -7,7 +7,9 @@ export default gql`
         id
         status
       }
-      errors
+      errors {
+        code
+      }
     }
   }
 `;

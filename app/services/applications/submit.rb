@@ -7,6 +7,7 @@ class Applications::Submit < ApplicationService
   end
 
   def call
+    applications_open?
     is_submittable?
     application.status = 'Applied'
     application.applied_at = DateTime.now unless application.applied_at.present?
@@ -16,13 +17,17 @@ class Applications::Submit < ApplicationService
 
   private
 
+  def applications_open?
+    return if application.project.applications_open
+    raise Service::Error.new("projects.applicationsClosed")
+  end
+
   def is_submittable?
     return if application.status == 'Invited To Apply'
     # Allow people to change their mind and apply after rejceting an application
     return if application.status == 'Invitation Rejected'
     # Allow specialists to re-apply after their applcaiton has been rejected
     return if application.status == 'Application Rejected'
-    message = "Cannot submit application with status of #{application.status}"
-    raise Service::Error.new(message)
+    raise Service::Error.new("applications.cannotSubmit")
   end
 end
