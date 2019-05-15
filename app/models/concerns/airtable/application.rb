@@ -98,7 +98,7 @@ class Airtable::Application < Airtable::Base
     end
     self['References - Off Platform Projects'] = references_off_platform_project_ids
 
-    self['Hourly Rate For Project'] = application.rate if application.saved_change_to_rate?
+    self['Hourly Rate For Project'] = application.rate.try(:to_f)
     self['Accepts Terms'] = application.accepts_terms ? "Yes" : "No"
     self['Accepts Fee'] = application.accepts_fee ? "Yes" : "No"
     self['Applied At'] = application.applied_at
