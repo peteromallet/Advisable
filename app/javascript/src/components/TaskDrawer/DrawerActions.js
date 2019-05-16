@@ -11,7 +11,7 @@ const ACTIONS = {
   setRepeating: {
     allowed: () => true,
     render: ({ task, setTaskRepeat, isClient }) => {
-      const [t] = useTranslation();
+      const { t } = useTranslation();
       const handleClick = async () => {
         const repeat = task.repeat ? null : "Monthly";
 

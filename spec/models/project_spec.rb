@@ -83,4 +83,34 @@ describe Project do
       expect(project.application_count).to eq(1)
     end
   end
+
+  describe "#applications_open" do
+    context "when sales_status is Won" do
+      it "returns false" do
+        project = create(:project, sales_status: "Won")
+        expect(project.applications_open).to be_falsey
+      end
+    end
+
+    context "when sales_status is Lost" do
+      it "returns false" do
+        project = create(:project, sales_status: "Lost")
+        expect(project.applications_open).to be_falsey
+      end
+    end
+
+    context "when sales_status is Open" do
+      it "returns true" do
+        project = create(:project, sales_status: "Open")
+        expect(project.applications_open).to be_truthy
+      end
+    end
+
+    context "when sales_status is nil" do
+      it "returns true" do
+        project = create(:project, sales_status: nil)
+        expect(project.applications_open).to be_truthy
+      end
+    end
+  end
 end

@@ -8,6 +8,7 @@ query Application($id: ID!) {
       id
       airtableId
       name
+      applicationsOpen
       primarySkill
       description
       companyDescription
