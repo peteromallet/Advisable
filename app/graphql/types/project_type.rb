@@ -20,6 +20,7 @@ class Types::ProjectType < Types::BaseType
   field :application_count, Int, null: false
   field :estimated_budget, String, null: true
   field :remote, Boolean, null: true
+  field :applications_open, Boolean, null: false
 
   field :applications, [Types::ApplicationType, null: true], null: true do
     argument :status, [String], required: false

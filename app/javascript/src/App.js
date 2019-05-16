@@ -4,7 +4,6 @@ import BaseStyling from "./BaseStyling";
 import ApplicationProvider from "./components/ApplicationProvider";
 import RootErrorBoundary from "./views/RootErrorBoundary";
 import { NotificationsProvider } from "./components/Notifications";
-import "./i18n";
 
 const App = () => {
   return (

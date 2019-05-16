@@ -19,6 +19,11 @@ class Project < ApplicationRecord
     accepted_terms_at.present?
   end
 
+  # Returns wether or not the project is accepting new applications.
+  def applications_open
+    !["Won", "Lost"].include?(sales_status)
+  end
+
   def deposit
     self[:deposit] || 0
   end
