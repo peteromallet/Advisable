@@ -30,10 +30,23 @@ class Types::ProjectType < Types::BaseType
     argument :id, ID, required: true
   end
 
-  def applications(**args)
-    applications = object.applications
-    applications = applications.where(status: args[:status]) if args[:status]
-    applications.order(score: :desc)
+  # The applications for a project are filtered to only include the top 3
+  # candidates plus any applications that have been rejected or featured.
+  def applications(status: nil)
+    base = object.applications.not_hidden
+    applications = (base.rejected.or(base.featured) + base.not_final.top_three).uniq
+
+    if status
+      applications = applications.select do |a|
+        status.include?(a.status)
+      end
+    end
+
+    applications
+  end
+
+  def application_count
+    applications.count
   end
 
   def application(**args)

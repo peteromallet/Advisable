@@ -17,6 +17,9 @@ const Booking = lazy(() => import("./views/Booking"));
 const JobListing = lazy(() => import("./views/JobListing"));
 const ApplicationFlow = lazy(() => import("./views/ApplicationFlow"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
+const InterviewAvailability = lazy(() =>
+  import("./views/InterviewAvailability")
+);
 const FreelancerActiveApplication = lazy(() =>
   import("./views/FreelancerActiveApplication")
 );
@@ -31,7 +34,11 @@ export default () => (
           path="/projects/:projectID/applications/:applicationID"
           component={Applicant}
         />
-        <Route path="/projects/:projectID" component={Project} />
+        <Route
+          path="/projects/:projectID/interviews/:interviewID/availability"
+          component={InterviewAvailability}
+        />
+        <Route path="/projects/:projectId/:status?" component={Project} />
         <AuthenticatedRoute path="/projects" component={Projects} />
         <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
         <AuthenticatedRoute path="/manage/:applicationId" component={Booking} />

@@ -5,6 +5,19 @@ export const user = (fields = {}) => {
     {
       __typename: "User",
       id: uniqueId("user"),
+      firstName: "Test",
+      lastName: "Account",
+      name: "Test Account",
+      email: "test@test.com",
+      airtableId: "airtableid",
+      confirmed: true,
+      companyName: "Test Corp",
+      createdAt: new Date().toISOString(),
+      country: {
+        __typename: "Country",
+        id: 1,
+        name: "Ireland",
+      },
     },
     fields
   );
@@ -50,9 +63,13 @@ export const application = (fields = {}) => {
     {
       __typename: "Application",
       id: uniqueId("application"),
+      airtableId: uniqueId("rec"),
       rate: "75",
       status: "Working",
-      airtableId: uniqueId("rec"),
+      featured: false,
+      comment: "comment",
+      hidden: false,
+      referencesRequested: false,
       referralUrl: "https://advisable.com",
       introduction: "Application Introduction",
       availability: "2 - 4 Weeks",
@@ -78,7 +95,20 @@ export const specialist = (fields = {}) => {
       id: uniqueId("specialist"),
       bio: "Specialist bio",
       airtableId: uniqueId("rec"),
+      name: "Test Specialist",
+      firstName: "Test",
+      city: "Dublin",
+      reviewsCount: 0,
+      ratings: {},
+      image: null,
+      country: {
+        __typename: "Country",
+        id: 1,
+        name: "Ireland",
+      },
+      linkedin: "https://linkedin.com",
       previousProjects: [],
+      skills: ["Testing"],
     },
     fields
   );
