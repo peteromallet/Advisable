@@ -11,7 +11,7 @@ class Airtable::Project < Airtable::Base
   sync_column 'Project Description', to: :description
   sync_column 'Specialist Requirement Description', to: :specialist_description
   sync_column 'Currency', to: :currency
-  sync_column 'Client Referray URL', to: :client_referral_url
+  sync_column 'Client Referral URL', to: :client_referral_url
   sync_column 'Project Status', to: :sales_status
   sync_column 'Estimated Budget', to: :estimated_budget
 

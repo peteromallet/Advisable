@@ -1,5 +1,5 @@
 import React from "react";
-import illustration from './illustration';
+import illustration from "./illustration.png";
 import Text from "src/components/Text";
 import Spacing from "src/components/Spacing";
 import { Card } from "./styles";
@@ -7,9 +7,15 @@ import { Card } from "./styles";
 export default ({ text, subText }) => (
   <Card>
     <Spacing bottom="xl">
-      <img src={illustration} style={{ width: "100%", maxWidth: "300px" }} alt='' />
+      <img
+        src={illustration}
+        style={{ width: "100%", maxWidth: "300px" }}
+        alt=""
+      />
     </Spacing>
-    <Text marginBottom="m" weight="semibold" colour='dark'>{text}</Text>
+    <Text marginBottom="m" weight="semibold" colour="dark">
+      {text}
+    </Text>
     {subText && <Text>{subText}</Text>}
   </Card>
 );
