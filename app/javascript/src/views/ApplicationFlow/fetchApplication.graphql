@@ -1,6 +1,0 @@
-#import "./applicationFields.graphql"
-query Application($id: ID!) {
-  application(id: $id) {
-    ...ApplicationFields
-  }
-}

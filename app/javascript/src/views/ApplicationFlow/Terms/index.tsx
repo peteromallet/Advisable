@@ -15,8 +15,8 @@ import Button from "../../../components/Button";
 import Tooltip, { TooltipPrompt } from "../../../components/Tooltip";
 import { currencySymbol } from "../../../utilities/currency";
 import { useScreenSize } from "../../../utilities/screenSizes";
-import SUBMIT_APPLICATION from "../submitApplication.graphql";
-import UPDATE_APPLICATION from "../updateApplication.graphql";
+import SUBMIT_APPLICATION from "../submitApplication.js";
+import UPDATE_APPLICATION from "../updateApplication.js";
 import validationSchema from "./validationSchema";
 import Actions from "../Actions";
 

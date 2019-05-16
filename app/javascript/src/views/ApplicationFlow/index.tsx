@@ -1,4 +1,5 @@
 import * as React from "react";
+import { get } from "lodash";
 import { Query } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import NotFound from "../NotFound";
@@ -7,9 +8,10 @@ import { Loading } from "../../components";
 import { useScreenSize } from "../../utilities/screenSizes";
 import ApplicationFlow from "./ApplicationFlow";
 import ApplicationSent from "./ApplicationSent";
-import FETCH_APPLICATION from "./fetchApplication.graphql";
+import FETCH_APPLICATION from "./fetchApplication.js";
 import { RouteComponentProps } from "react-router";
 import { ApplicationType } from "../../types";
+import ApplicationsClosed from "../ApplicationsClosed";
 
 type Params = {
   applicationId: string;
@@ -34,11 +36,15 @@ export default (props: RouteComponentProps<Params>): React.ReactNode => {
           if (!query.data.application) return <NotFound />;
           let application: ApplicationType = query.data.application;
 
+          const open = get(application, "project.applicationsOpen");
+          if (!open) return <ApplicationsClosed />;
+
           // If the application has been rejected and there is no "allowApply"
           // key on the locaiton state then redirect to the job listing page.
           // The user can then choose to apply from there which will set the
           // allowApply location state.
-          let isRejected: boolean = application.status === "Invitation Rejected";
+          let isRejected: boolean =
+            application.status === "Invitation Rejected";
           if (locationState.allowApply !== true && isRejected) {
             let url = `/invites/${props.match.params.applicationId}`;
             return <Redirect to={url} />;

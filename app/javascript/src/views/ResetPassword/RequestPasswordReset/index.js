@@ -25,7 +25,7 @@ const NO_ACCOUNT = "NO_ACCOUNT";
 const APPLICATION_IN_PROCESS = "APPLICATION_IN_PROCESS";
 
 export default () => {
-  const [t] = useTranslation();
+  const { t } = useTranslation();
   const [status, setStatus] = useState("REQUEST");
   const [error, setError] = useState(null);
 

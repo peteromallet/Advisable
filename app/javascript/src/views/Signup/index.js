@@ -21,7 +21,7 @@ import SIGNUP from "./signup.graphql";
 
 const Signup = ({ location, match }) => {
   useScrollRestore();
-  const [t] = useTranslation();
+  const { t } = useTranslation();
   const queryParams = queryString.parse(location.search);
   const notice = get(location, "state.notice");
 

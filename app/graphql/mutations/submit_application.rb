@@ -3,7 +3,7 @@ class Mutations::SubmitApplication < Mutations::BaseMutation
   argument :id, ID, required: true
 
   field :application, Types::ApplicationType, null: true
-  field :errors, [String], null: true
+  field :errors, [Types::Error], null: true
 
   def resolve(**args)
     begin
@@ -13,7 +13,7 @@ class Mutations::SubmitApplication < Mutations::BaseMutation
       }
     rescue Service::Error, ActiveRecord::RecordNotFound => e
       {
-        errors: [e.message]
+        errors: [e]
       }
     end
   end
