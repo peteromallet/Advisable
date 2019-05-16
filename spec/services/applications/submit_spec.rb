@@ -28,7 +28,7 @@ describe Applications::Submit do
     it 'raises an error' do
       application = create(:application, status: "Applied")
       expect { Applications::Submit.call(application) }
-        .to raise_error(Service::Error, /Cannot submit application with status/)
+        .to raise_error(Service::Error, "applications.cannotSubmit")
     end
   end
 end

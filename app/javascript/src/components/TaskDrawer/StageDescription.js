@@ -142,7 +142,7 @@ const FOR_SPECIALIST = {
 // Renders the description of a task's stage. The descriptions themselves are
 // stored inside the translation.json file.
 export default ({ isClient, task }) => {
-  const [t] = useTranslation();
+  const { t } = useTranslation();
   const prompts = isClient ? FOR_CLIENT : FOR_SPECIALIST;
   const Prompt = prompts[task.stage];
 

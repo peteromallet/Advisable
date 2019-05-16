@@ -6,10 +6,10 @@ import {
   Padding,
   FieldRow,
   TextField,
-  ChoiceList
+  ChoiceList,
 } from "../../../components";
 import { useScreenSize } from "../../../utilities/screenSizes";
-import UPDATE_APPLICATION from "../updateApplication.graphql";
+import UPDATE_APPLICATION from "../updateApplication.js";
 import validationSchema from "./validationSchema";
 import Actions from "../Actions";
 
@@ -22,15 +22,15 @@ const Overview = ({ application, history, location, steps, currentStep }) => {
   const { airtableId } = application;
   const isMobile = useScreenSize("small");
 
-  const handleSubmit = updateApplication => {
+  const handleSubmit = mutate => {
     return async values => {
-      await updateApplication({
+      const r = await mutate({
         variables: {
           input: {
             id: application.airtableId,
-            ...values
-          }
-        }
+            ...values,
+          },
+        },
       });
 
       history.push(`/invites/${airtableId}/apply/questions`, location.state);
@@ -39,13 +39,14 @@ const Overview = ({ application, history, location, steps, currentStep }) => {
 
   return (
     <Mutation mutation={UPDATE_APPLICATION}>
-      {updateApplication => (
+      {mutate => (
         <Formik
           validationSchema={validationSchema}
-          onSubmit={handleSubmit(updateApplication)}
+          onSubmit={handleSubmit(mutate)}
           initialValues={{
-            introduction: application.introduction || application.specialist.bio || "",
-            availability: application.availability || ""
+            introduction:
+              application.introduction || application.specialist.bio || "",
+            availability: application.availability || "",
           }}
         >
           {(formik: FormikProps<Values>) => (
@@ -86,7 +87,7 @@ const Overview = ({ application, history, location, steps, currentStep }) => {
                       "Immediately",
                       "1 - 2 weeks",
                       "2 - 4 weeks",
-                      "1 Month+"
+                      "1 Month+",
                     ]}
                   />
                 </FieldRow>

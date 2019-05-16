@@ -1,11 +1,11 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from "styled-components";
 
 const spin = keyframes`
   from { transform: rotate(0) }
   to { transform: rotate(359deg) }
 `;
 
-export const Wrapper = styled.div`
+export const Loading = styled.div`
   width: 100%;
   display: flex;
   padding: 100px 0;
@@ -15,4 +15,4 @@ export const Wrapper = styled.div`
   img {
     animation: ${spin} 600ms linear infinite;
   }
-`
+`;
