@@ -5,6 +5,19 @@ export const user = (fields = {}) => {
     {
       __typename: "User",
       id: uniqueId("user"),
+      firstName: "Test",
+      lastName: "Account",
+      name: "Test Account",
+      email: "test@test.com",
+      airtableId: "airtableid",
+      confirmed: true,
+      companyName: "Test Corp",
+      createdAt: new Date().toISOString(),
+      country: {
+        __typename: "Country",
+        id: 1,
+        name: "Ireland",
+      },
     },
     fields
   );
@@ -33,6 +46,9 @@ export const project = (fields = {}) => {
       applicationsOpen: true,
       primarySkill: "Testing",
       description: "desription",
+      applicationCount: 0,
+      status: "Brief Confirmed",
+      clientReferralUrl: "https://advisable.com",
       companyDescription: "company description",
       specialistDescription: "specialist description",
       goals: ["This is a goal"],
@@ -50,14 +66,19 @@ export const application = (fields = {}) => {
     {
       __typename: "Application",
       id: uniqueId("application"),
+      airtableId: uniqueId("rec"),
       rate: "75",
       status: "Working",
-      airtableId: uniqueId("rec"),
-      referralUrl: "https://advisable.com",
+      featured: false,
+      comment: "comment",
+      hidden: false,
+      referencesRequested: false,
+      referralUrl: "https//advisable.com",
       introduction: "Application Introduction",
       availability: "2 - 4 Weeks",
       acceptsFee: true,
       acceptsTerms: true,
+      proposal: null,
       questions: [
         {
           __typename: "ApplicationQuestion",
@@ -78,7 +99,23 @@ export const specialist = (fields = {}) => {
       id: uniqueId("specialist"),
       bio: "Specialist bio",
       airtableId: uniqueId("rec"),
+      name: "Test Specialist",
+      firstName: "Test",
+      city: "Dublin",
+      reviewsCount: 0,
+      ratings: {
+        __typename: "Ratings",
+        overall: 5.0,
+      },
+      image: null,
+      country: {
+        __typename: "Country",
+        id: 1,
+        name: "Ireland",
+      },
+      linkedin: "https://linkedin.com",
       previousProjects: [],
+      skills: ["Testing"],
     },
     fields
   );

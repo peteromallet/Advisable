@@ -60,30 +60,6 @@ describe Project do
     end
   end
 
-  describe "#application_count" do
-    it "excludes application with a status of Working" do
-      project = create(:project)
-      create(:application, project: project)
-      create(:application, project: project, status: "Working")
-      expect(project.application_count).to eq(1)
-    end
-
-    it "excludes application with a status of Invited To Apply" do
-      project = create(:project)
-      create(:application, project: project)
-      create(:application, project: project, status: "Invited To Apply")
-      expect(project.application_count).to eq(1)
-    end
-
-
-    it "excludes application with a status of Invitation Rejected" do
-      project = create(:project)
-      create(:application, project: project)
-      create(:application, project: project, status: "Invitation Rejected")
-      expect(project.application_count).to eq(1)
-    end
-  end
-
   describe "#applications_open" do
     context "when sales_status is Won" do
       it "returns false" do

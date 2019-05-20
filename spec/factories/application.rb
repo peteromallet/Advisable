@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :application do
     specialist
     project
-    score 9
+    score 90
     status "Applied"
     rate 240
     availability "2 Weeks"
