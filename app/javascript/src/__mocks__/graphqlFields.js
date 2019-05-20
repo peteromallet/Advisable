@@ -47,6 +47,7 @@ export const project = (fields = {}) => {
       primarySkill: "Testing",
       description: "desription",
       applicationCount: 0,
+      status: "Brief Confirmed",
       clientReferralUrl: "https://advisable.com",
       companyDescription: "company description",
       specialistDescription: "specialist description",
