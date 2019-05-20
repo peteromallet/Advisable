@@ -72,6 +72,7 @@ export const application = (fields = {}) => {
       comment: "comment",
       hidden: false,
       referencesRequested: false,
+      referralUrl: "https//advisable.com",
       introduction: "Application Introduction",
       availability: "2 - 4 Weeks",
       acceptsFee: true,
