@@ -32,6 +32,7 @@ describe("Viewing 'Applied'", () => {
             data: {
               project: generateTypes.project({
                 id: "rec1233",
+                user: generateTypes.user(),
                 applications: [
                   generateTypes.application({
                     status: "Applied",
