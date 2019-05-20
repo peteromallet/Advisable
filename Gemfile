@@ -76,6 +76,7 @@ group :development do
   gem 'letter_opener'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'spring-commands-rspec'
+  gem 'prettier'
 end
 
 group :test do

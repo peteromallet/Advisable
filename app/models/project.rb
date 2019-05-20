@@ -36,9 +36,4 @@ class Project < ApplicationRecord
   def deposit_owed
     [deposit - deposit_paid, 0].max
   end
-
-  # Returns the total number of applications for the project
-  def application_count
-    applications.where.not(status: ["Working", "Invited To Apply", "Invitation Rejected"]).count
-  end
 end
