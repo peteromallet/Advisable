@@ -5,11 +5,16 @@ export default gql`
     project(id: $id) {
       id
       name
+      status
       airtableId
       currency
       primarySkill
       clientReferralUrl
       applicationCount
+      user {
+        name
+        email
+      }
       applications {
         id
         rate
