@@ -113,7 +113,7 @@ const EditTask = ({
   };
 
   const handleBlurWithSave = attribute => () => {
-    handleBlur(attribute);
+    handleBlur(attribute)();
 
     const value = attributes[attribute];
     if (task[attribute] !== value) {
@@ -190,7 +190,6 @@ const EditTask = ({
               value={attributes.name}
               onFocus={handleFocus("name")}
               onChange={handleChangeWithTimeout("name")}
-              autoFocus={!Boolean(task.name)}
               isFocused={editAllowed && focusedElement === "name"}
             />
           </Padding>
