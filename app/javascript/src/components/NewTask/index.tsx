@@ -17,6 +17,7 @@ const Component = ({ application, onCreate, mutate }) => {
       stage: "Not Assigned",
       dueDate: null,
       estimate: null,
+      flexibleEstimate: null,
       description: null,
       createdAt: new Date().toISOString(),
       repeat: null,

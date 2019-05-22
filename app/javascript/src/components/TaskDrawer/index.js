@@ -54,17 +54,18 @@ const Component = ({
     name: updateName,
     dueDate: updateDueDate,
     estimate: updateEstimate,
+    flexibleEstimate: updateEstimate,
     description: updateDescription,
   };
 
-  const handleSave = async (attr, value) => {
+  const handleSave = async (attr, fields) => {
     setSaving(s => ({ ...s, [attr]: true }));
     const mutation = mutations[attr];
     await mutation({
       variables: {
         input: {
           id: taskId,
-          [attr]: value,
+          ...fields,
         },
       },
     });

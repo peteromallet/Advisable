@@ -21,6 +21,7 @@ class Tasks::Update < ApplicationService
     if task.name_changed? or task.due_date_changed? or task.description_changed?
       # clear the estimate if the client is making the edit
       task.estimate = nil if task.estimate? && is_client?
+      task.flexible_estimate = nil if task.flexible_estimate? && is_client?
       # Set the stage to Not Assigned if the task was Quote Provided
       task.stage = "Not Assigned" if task.stage == "Quote Provided"
     end

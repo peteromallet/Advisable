@@ -1,105 +1,11 @@
-export const currencySymbol = currency => symbols[currency] || currency || "€";
+import Dinero from "dinero.js";
 
-export default (amount, currency = "USD") => {
-  const symbol = currencySymbol((currency || "USD").toUpperCase());
-  let rounded = parseFloat(amount).toFixed(2);
-  let commaSeparated = rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  if (symbol != null) {
-    return `${symbol}${commaSeparated}`;
-  } else {
-    return `${commaSeparated} ${currency}`;
-  }
+const defaultOptions = {
+  format: "$0,0.00",
 };
 
-const symbols = {
-  ILS: "₪",
-  PEN: "S/.",
-  USD: "$",
-  EUR: "€",
-  AFN: "؋",
-  NZD: "$",
-  HNL: "L",
-  SBD: "$",
-  AUD: "$",
-  YER: "﷼",
-  MKD: "ден",
-  NPR: "₨",
-  CRC: "₡",
-  TRY: "TL",
-  KGS: "лв",
-  XCD: "$",
-  UAH: "₴",
-  ANG: "ƒ",
-  GBP: "£",
-  QAR: "﷼",
-  FKP: "£",
-  BMD: "$",
-  JMD: "J$",
-  CAD: "$",
-  BBD: "$",
-  CNY: "¥",
-  UZS: "лв",
-  KPW: "₩",
-  SGD: "$",
-  PLN: "zł",
-  RUB: "руб",
-  HRK: "kn",
-  SYP: "£",
-  JPY: "¥",
-  RON: "lei",
-  SRD: "$",
-  TWD: "NT$",
-  THB: "฿",
-  KYD: "$",
-  NOK: "kr",
-  EGP: "£",
-  SCR: "₨",
-  MZN: "MT",
-  BGN: "лв",
-  SAR: "﷼",
-  BND: "$",
-  MYR: "RM",
-  CZK: "Kč",
-  MNT: "₮",
-  ALL: "Lek",
-  OMR: "﷼",
-  BZD: "BZ$",
-  SHP: "£",
-  LRD: "$",
-  SOS: "S",
-  RSD: "Дин.",
-  HUF: "Ft",
-  BAM: "KM",
-  FJD: "$",
-  LKR: "₨",
-  MUR: "₨",
-  PKR: "₨",
-  KZT: "лв",
-  ISK: "kr",
-  SEK: "kr",
-  PYG: "Gs",
-  VEF: "Bs",
-  BSD: "$",
-  GTQ: "Q",
-  DKK: "kr",
-  AWG: "ƒ",
-  KRW: "₩",
-  VND: "₫",
-  DOP: "RD$",
-  ARS: "$",
-  ZAR: "R",
-  LAK: "₭",
-  BRL: "R$",
-  AZN: "ман",
-  BWP: "P",
-  KHR: "៛",
-  TTD: "TT$",
-  LBP: "£",
-  HKD: "$",
-  NIO: "C$",
-  IDR: "Rp",
-  GIP: "£",
-  IRR: "﷼",
-  NGN: "₦",
-  GYD: "$",
+export default (amount, options = {}) => {
+  const dinero = new Dinero({ currency: "USD", amount });
+  const opts = { ...defaultOptions, ...options };
+  return dinero.toFormat(opts.format);
 };

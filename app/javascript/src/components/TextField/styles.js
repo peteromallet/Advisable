@@ -1,3 +1,4 @@
+import { rgba, lighten } from "polished";
 import styled, { css } from "styled-components";
 import MaskedInput from "react-text-mask";
 import { withSpacing } from "src/components/Spacing";
@@ -9,25 +10,42 @@ export let Wrapper = styled.div`
 
 Wrapper = withSpacing(Wrapper);
 
-export const Input = styled.input`
-  width: 100%;
-  height: 40px;
-  border: none;
-  outline: none;
-  padding: 0 14px;
-  font-size: 16px;
-  box-shadow: none;
-  appearance: none;
-  font-weight: 500;
+const fontSizes = {
+  default: "16px",
+  s: "14px",
+};
+
+const heights = {
+  default: "40px",
+  s: "34px",
+};
+
+export const InputBackdrop = styled.div`
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  position: absolute;
   border-radius: 8px;
   border: 2px solid transparent;
   background: rgba(29, 39, 75, 0.06);
-  transition: border-color 200ms, background-color 300ms;
+  transition: border-color 200ms;
+`;
 
-  &:focus {
-    background: #ecf1fa;
-    border-color: #3360ff;
-  }
+export const Input = styled.input`
+  padding: 0;
+  width: 100%;
+  z-index: 20;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  appearance: none;
+  font-weight: 500;
+  background: transparent;
+  line-height: ${props => heights[props.size || "default"]};
+  height: ${props => heights[props.size || "default"]};
+  font-size: ${props => fontSizes[props.size || "default"]};
 
   &::-webkit-inner-spin-button {
     opacity: 0;
@@ -46,14 +64,37 @@ export const Input = styled.input`
   &:-moz-placeholder {
     color: #8c92ae;
   }
+
+  &:focus + ${InputBackdrop} {
+    border: 2px solid ${rgba("#173fcd", 0.9)} !important;
+  }
+`;
+
+export const Prefix = styled.div`
+  z-index: 20;
+  color: #5e6784;
+  font-weight: 500;
+  padding-right: 6px;
+  line-height: ${props => heights[props.size || "default"]};
+  height: ${props => heights[props.size || "default"]};
+  font-size: ${props => fontSizes[props.size || "default"]};
 `;
 
 export const InputContainer = styled.div`
+  display: flex;
   position: relative;
-`
+  align-items: center;
+  padding: 0 12px;
+  cursor: text;
+
+  &:hover ${InputBackdrop} {
+    border-color: #e0e4ef;
+  }
+`;
 
 export const CharCount = styled.span`
   left: 14px;
+  z-index: 20;
   bottom: 15px;
   position: absolute;
   color: #6e7796;
