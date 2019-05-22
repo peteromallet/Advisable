@@ -1,5 +1,6 @@
 class Mutations::SubmitTask < Mutations::BaseMutation
   argument :task, ID, required: true
+  argument :hours_worked, Int, required: false
 
   field :task, Types::TaskType, null: true
   field :errors, [Types::Error], null: true
@@ -15,7 +16,7 @@ class Mutations::SubmitTask < Mutations::BaseMutation
     task = Task.find_by_uid!(args[:task])
 
     {
-      task: Tasks::Submit.call(task: task)
+      task: Tasks::Submit.call(task: task, hours_worked: args[:hours_worked])
     }
 
     rescue Service::Error => e

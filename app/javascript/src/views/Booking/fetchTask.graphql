@@ -6,6 +6,7 @@ query task($id: ID!) {
     dueDate
     description
     estimate
+    flexibleEstimate
     repeat
   }
 }

@@ -18,6 +18,7 @@ query application($id: ID!) {
       stage
       dueDate
       estimate
+      flexibleEstimate
       createdAt
       repeat
     }

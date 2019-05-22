@@ -7,6 +7,7 @@ export const taskFields = gql`
     stage
     dueDate
     estimate
+    flexibleEstimate
     description
     createdAt
     repeat
