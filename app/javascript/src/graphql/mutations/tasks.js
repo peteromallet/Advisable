@@ -30,6 +30,7 @@ export const updateTaskName = gql`
         name
         stage # changing the name can cause the stage to update
         estimate # changing the name can cause the estimate to be removed
+        flexibleEstimate
       }
       errors {
         code
@@ -46,6 +47,7 @@ export const updateTaskDueDate = gql`
         dueDate
         stage # changing the due date can cause the stage to change
         estimate # changing the due date can cause the estimate to be removed
+        flexibleEstimate
       }
       errors {
         code
@@ -60,6 +62,7 @@ export const updateTaskEstimate = gql`
       task {
         id
         estimate
+        flexibleEstimate
         stage # changing the estimate can change the stage
       }
       errors {
@@ -77,6 +80,7 @@ export const updateTaskDescription = gql`
         description
         stage # changing the description can change the stage
         estimate # changing the description can change the estimate
+        flexibleEstimate
       }
       errors {
         code

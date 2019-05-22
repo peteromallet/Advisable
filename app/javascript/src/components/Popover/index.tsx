@@ -39,7 +39,7 @@ export default ({ children, trigger, placement, onClick, ...props }: Props) => {
   const previouslyOpen = usePrevious(open);
 
   const transitions = useTransition(open, null, {
-    from: { opacity: 0, transform: "scale(0.9)" },
+    from: { opacity: 0, transform: "scale(0.9)", transformOrigin: "0 0" },
     enter: { opacity: 1, transform: "scale(1)" },
     leave: { opacity: 0, transform: "scale(0.9)" },
     config: { mass: 1, tension: 500, friction: 30 },
@@ -53,8 +53,8 @@ export default ({ children, trigger, placement, onClick, ...props }: Props) => {
   };
 
   const handleFocusClose = e => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   const handleDocumentClick = e => {
     if (popoverRef.current && popoverRef.current.contains(e.target)) {

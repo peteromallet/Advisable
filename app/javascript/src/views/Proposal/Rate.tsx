@@ -11,7 +11,7 @@ import Heading from "../../components/Heading";
 import TextField from "../../components/TextField";
 import { Padding } from "../../components/Spacing";
 import { useMobile } from "../../components/Breakpoint";
-import currency, { currencySymbol } from "../../utilities/currency";
+import currency from "../../utilities/currency";
 import { ApplicationType } from "../../types";
 import { rateValidationSchema } from "./validationSchema";
 import UPDATE_APPLICATION from "./updateApplication.graphql";
@@ -50,7 +50,7 @@ const Rate = ({ history, application, updateApplication }: Props) => {
 
   const calculateRate = amount => {
     const rate = (amount * 0.8).toFixed(2);
-    return currency(rate, application.project.currency);
+    return currency(parseFloat(rate) * 100.0);
   };
 
   const isInitialValid = rateValidationSchema.isValidSync(initialValues);
@@ -80,9 +80,7 @@ const Rate = ({ history, application, updateApplication }: Props) => {
               <Padding bottom="xl">
                 <TextField
                   name="rate"
-                  placeholder={`${currencySymbol(
-                    application.project.currency
-                  )}0.00`}
+                  placeholder={`$0.00`}
                   value={formik.values.rate}
                   onBlur={formik.handleBlur}
                   error={formik.touched.rate && formik.errors.rate}
@@ -93,7 +91,7 @@ const Rate = ({ history, application, updateApplication }: Props) => {
                     formik.setFieldValue("rate", val);
                   }}
                   mask={createNumberMask({
-                    prefix: currencySymbol(application.project.currency),
+                    prefix: "$",
                     allowDecimal: true,
                   })}
                   description={

@@ -37,7 +37,7 @@ export default ({ data }) => {
             <AttributeList>
               <AttributeList.Item
                 label="Hourly Rate"
-                value={currency(application.rate, project.currency)}
+                value={currency(parseFloat(application.rate) * 100.0)}
               />
             </AttributeList>
           </Padding>

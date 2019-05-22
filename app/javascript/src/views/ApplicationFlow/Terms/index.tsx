@@ -11,9 +11,7 @@ import {
 } from "../../../components";
 import Link from "../../../components/Link";
 import Text from "../../../components/Text";
-import Button from "../../../components/Button";
 import Tooltip, { TooltipPrompt } from "../../../components/Tooltip";
-import { currencySymbol } from "../../../utilities/currency";
 import { useScreenSize } from "../../../utilities/screenSizes";
 import SUBMIT_APPLICATION from "../submitApplication.js";
 import UPDATE_APPLICATION from "../updateApplication.js";
@@ -96,11 +94,9 @@ const Terms = ({
                 }}
                 error={formik.touched.rate && formik.errors.rate}
                 label="Including Advisable's fee, what's your estimated hourly rate for projects like this?"
-                placeholder={`${currencySymbol(
-                  application.project.currency
-                )}0.00`}
+                placeholder={`$0.00`}
                 mask={createNumberMask({
-                  prefix: currencySymbol(application.project.currency),
+                  prefix: "$",
                   allowDecimal: true,
                 })}
               />

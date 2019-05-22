@@ -47,12 +47,18 @@ export default ({
             </span>
           </Detail>
         )}
-        {task.estimate && (
+        {Boolean(task.estimate) && (
           <Detail>
             <Icon height={17} icon="clock" />
             <span>
               Quote:{" "}
-              <strong>{pluarlize(task.estimate, "hour", "hours")}</strong>
+              {Boolean(task.flexibleEstimate) ? (
+                <strong>
+                  {task.estimate}-{task.flexibleEstimate} hours
+                </strong>
+              ) : (
+                <strong>{pluarlize(task.estimate, "hour", "hours")}</strong>
+              )}
             </span>
           </Detail>
         )}
