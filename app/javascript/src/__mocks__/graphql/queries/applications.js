@@ -27,6 +27,7 @@ export const getActiveApplication = config =>
                 dueDate: null,
                 estimate: null,
                 repeat: null,
+                flexibleEstimate: null,
                 description: "This is the task description",
                 createdAt: new Date().toISOString(),
               },
