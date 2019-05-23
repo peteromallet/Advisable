@@ -5,7 +5,7 @@ const defaultOptions = {
 };
 
 export default (amount, options = {}) => {
-  const dinero = new Dinero({ currency: "USD", amount });
+  const dinero = new Dinero({ currency: "USD", amount: parseInt(amount) });
   const opts = { ...defaultOptions, ...options };
   return dinero.toFormat(opts.format);
 };
