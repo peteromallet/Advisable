@@ -7,6 +7,8 @@ export default gql`
     stage
     dueDate
     estimate
+    hoursWorked
+    flexibleEstimate
     description
     createdAt
     repeat

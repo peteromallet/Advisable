@@ -3,10 +3,19 @@ import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Icon from "../Icon";
 import Popover from "../Popover";
 import Button from "../Button";
+import InputLabel from "../InputLabel";
+import InputDescription from "../InputDescription";
 import TextField from "../TextField";
+import FieldGroup from "../FieldGroup";
 import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
+import SegmentedControl from "../SegmentedControl";
 import currency from "../../utilities/currency";
+import {
+  hoursLabel,
+  hoursDisplay,
+  hasBeenSubmitted,
+} from "../../utilities/tasks";
 import {
   Detail,
   DetailIcon,
@@ -32,8 +41,9 @@ const numberMask = createNumberMask({
   prefix: "",
 });
 
-const calcEarnings = (hours: number, rate: string) => {
-  const total = hours * parseFloat(rate);
+const calcEarnings = (hours: string, rate: number) => {
+  const hoursParsed = Boolean(hours) ? parseFloat(hours.replace(",", "")) : 0;
+  const total = hoursParsed * rate;
   return total - total * 0.2;
 };
 
@@ -47,28 +57,48 @@ export default ({
   onChange,
 }) => {
   const saveButton = React.useRef(null);
-  const [value, setValue] = React.useState(task.estimate);
-  const [inputValue, setInputValue] = React.useState(value && value.toString());
-
-  // if the task estimate changes then update the state
-  React.useEffect(() => {
-    setValue(task.estimate);
-  }, [task.estimate])
+  const [mode, setMode] = React.useState(
+    Boolean(task.estimate) && Boolean(task.flexibleEstimate)
+      ? "FLEXIBLE"
+      : "STRICT"
+  );
+  const [values, setValues] = React.useState({
+    estimate: String(task.estimate),
+    flexibleEstimate: String(task.flexibleEstimate),
+  });
 
   if (isClient && !task.estimate) {
     return null;
   }
 
-  const rate = task.application.rate;
-  const inputAsFloat = inputValue ? parseFloat(inputValue.replace(",", "")) : 0;
-  const estimateProvided = inputValue && inputAsFloat > 0;
-  const earnings = estimateProvided ? calcEarnings(inputAsFloat, rate) : null;
+  const rate = parseFloat(task.application.rate) * 100.0;
+
+  const earnings = {
+    estimate: calcEarnings(values.estimate, rate),
+    flexibleEstimate: calcEarnings(values.flexibleEstimate, rate),
+    hoursWorked: calcEarnings(String(task.hoursWorked), rate),
+  };
+
+  const earningsBeforeChange = {
+    estimate: calcEarnings(String(task.estimate), rate),
+    flexibleEstimate: calcEarnings(String(task.flexibleEstimate), rate),
+  };
 
   const handleSave = popover => () => {
     popover.close();
-    const nextValue = estimateProvided ? inputAsFloat : null;
-    setValue(nextValue);
-    onChange(nextValue);
+    onChange({
+      estimate: Number(values.estimate),
+      flexibleEstimate: Boolean(values.flexibleEstimate)
+        ? Number(values.flexibleEstimate)
+        : null,
+    });
+  };
+
+  const handleChangeMode = e => {
+    setMode(e.target.value);
+    if (e.target.value === "STRICT") {
+      setValues({ ...values, flexibleEstimate: "" });
+    }
   };
 
   const handleKeyDown = e => {
@@ -77,9 +107,27 @@ export default ({
     }
   };
 
-  const label =
-    (value || value !== "") &&
-    `${value} hours / ${currency(value * rate, task.application.project.currency)}`;
+  const handleChange = field => e => {
+    setValues({
+      ...values,
+      [field]: e.target.value,
+    });
+  };
+
+  let label;
+  if (task.estimate) {
+    label = currency(earnings.estimate, { format: "$0,0" });
+  }
+
+  if (task.estimate && task.flexibleEstimate) {
+    label = `${currency(earningsBeforeChange.estimate, {
+      format: "$0,0",
+    })}-${currency(earningsBeforeChange.flexibleEstimate, { format: "$0,0" })}`;
+  }
+
+  if (hasBeenSubmitted(task)) {
+    label = currency(earnings.hoursWorked, { format: "$0,0" });
+  }
 
   return (
     <Popover
@@ -96,11 +144,13 @@ export default ({
           <DetailIcon prompt={task.stage === "Quote Requested"}>
             <Icon strokeWidth={1} width={20} icon="clock" />
           </DetailIcon>
-          <DetailLabel>Quote</DetailLabel>
-          {!value || value === "" ? (
-            <DetailPlaceholder>+ Add estimate</DetailPlaceholder>
+          <DetailLabel>{hoursLabel(task)}</DetailLabel>
+          {Boolean(label) ? (
+            <DetailValue>
+              {hoursDisplay(task)} / {label}
+            </DetailValue>
           ) : (
-            <DetailValue>{label}</DetailValue>
+            <DetailPlaceholder>+ Add estimate</DetailPlaceholder>
           )}
         </Detail>
       }
@@ -108,28 +158,68 @@ export default ({
       {popover => (
         <Popout>
           <Padding bottom="m">
-            <TextField
-              autoFocus
-              name="estimate"
-              value={inputValue}
-              placeholder="e.g 8"
-              mask={numberMask}
-              onKeyDown={handleKeyDown}
-              onChange={e => setInputValue(e.target.value)}
-              label="How many hours will this take you?"
-              description={
-                earnings &&
-                `You would earn ${currency(
-                  earnings,
-                  task.application.project.currency
-                )} for this task`
-              }
+            <SegmentedControl
+              value={mode}
+              onChange={handleChangeMode}
+              options={[
+                { label: "Strict", value: "STRICT" },
+                { label: "Flexible", value: "FLEXIBLE" },
+              ]}
             />
+          </Padding>
+          <Padding bottom="m">
+            <InputLabel>How many hours will this take you?</InputLabel>
+            <FieldGroup spacing="s">
+              <TextField
+                size="s"
+                autoFocus
+                labelHidden
+                name="estimate"
+                label="Hours Estimate"
+                value={values.estimate}
+                placeholder="8"
+                mask={numberMask}
+                onKeyDown={handleKeyDown}
+                prefix={mode === "FLEXIBLE" && "Between"}
+                onChange={handleChange("estimate")}
+              />
+              {mode === "FLEXIBLE" && (
+                <TextField
+                  size="s"
+                  labelHidden
+                  label="Flexible Hours Estimate"
+                  name="flexibleEstimate"
+                  value={values.flexibleEstimate}
+                  placeholder="16"
+                  mask={numberMask}
+                  prefix="and"
+                  onKeyDown={handleKeyDown}
+                  onChange={handleChange("flexibleEstimate")}
+                />
+              )}
+            </FieldGroup>
+            {mode === "STRICT" && earnings.estimate > 0 && (
+              <InputDescription>
+                You would earn {currency(earnings.estimate, { format: "$0,0" })}{" "}
+                for this task
+              </InputDescription>
+            )}
+            {mode === "FLEXIBLE" &&
+              earnings.estimate > 0 &&
+              earnings.flexibleEstimate > 0 && (
+                <InputDescription>
+                  You would earn between{" "}
+                  {currency(earnings.estimate, { format: "$0,0" })} and{" "}
+                  {currency(earnings.flexibleEstimate, { format: "$0,0" })} for
+                  this task
+                </InputDescription>
+              )}
           </Padding>
           <ButtonGroup fullWidth>
             <Button
               ref={saveButton}
               styling="primary"
+              aria-label="Save Estimate"
               onClick={handleSave(popover)}
             >
               Save

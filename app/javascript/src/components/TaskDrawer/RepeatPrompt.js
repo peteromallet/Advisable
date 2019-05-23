@@ -11,6 +11,7 @@ import { Confirmation, ConfirmationContainer } from "./styles";
 
 const RepeatPrompt = ({ task, onRepeat, onClose, createTask }) => {
   const [loading, setLoading] = React.useState(false);
+
   const handleRepeat = async () => {
     setLoading(true);
     const response = await createTask({

@@ -35,6 +35,15 @@ class TaskPolicy < BasePolicy
     false
   end
 
+  def update_flexible_estimate
+    return true if has_permission?("projects:all")
+    return false if user.nil?
+    return true if ["Not Assigned", "Quote Requested"].include?(record.stage)
+    return true if task.stage == "Quote Provided" && is_specialist 
+    return true if task.stage == "Assigned" && is_specialist
+    false
+  end
+
   def update_description
     return true if has_permission?("projects:all")
     return false if user.nil?

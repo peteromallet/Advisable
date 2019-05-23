@@ -22,6 +22,21 @@ const defaultConfig = {
   graphQLMocks: [],
 };
 
+jest.mock("popper.js", () => {
+  const PopperJS = jest.requireActual("popper.js");
+
+  return class {
+    static placements = PopperJS.placements;
+
+    constructor() {
+      return {
+        destroy: () => {},
+        scheduleUpdate: () => {},
+      };
+    }
+  };
+});
+
 const renderApp = (config = defaultConfig) => {
   window.scrollTo = () => {};
   window.matchMedia = () => ({

@@ -8,7 +8,14 @@ import CardInput from "./CardInput";
 import { Error, Total, Label, Amount } from "./styles";
 import currency from "src/utilities/currency";
 
-const PaymentDetails = ({ project, match, history, stripe, error, setError }) => {
+const PaymentDetails = ({
+  project,
+  match,
+  history,
+  stripe,
+  error,
+  setError,
+}) => {
   const [submitting, setSubmitting] = useState(false);
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/terms`);
@@ -21,7 +28,7 @@ const PaymentDetails = ({ project, match, history, stripe, error, setError }) =>
     const response = await stripe.createSource({ type: "card" });
 
     if (response.error) {
-    setError(response.error.message)
+      setError(response.error.message);
       setSubmitting(false);
       return;
     }
@@ -33,8 +40,8 @@ const PaymentDetails = ({ project, match, history, stripe, error, setError }) =>
         currency: "usd",
         three_d_secure: { card: response.source.id },
         redirect: {
-          return_url: window.location.href
-        }
+          return_url: window.location.href,
+        },
       });
 
       window.location = three_d_secure.source.redirect.url;
@@ -53,7 +60,7 @@ const PaymentDetails = ({ project, match, history, stripe, error, setError }) =>
         freelancer if you do go ahead with it.
       </Text>
       <Total>
-        <Amount>{currency(project.depositOwed / 100.0, "usd")}</Amount>
+        <Amount>{currency(project.depositOwed)}</Amount>
         <Label>Total</Label>
       </Total>
       <form onSubmit={handleSubmit}>

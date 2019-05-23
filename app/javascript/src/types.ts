@@ -1,4 +1,4 @@
-export interface SpecialistType { 
+export interface SpecialistType {
   id: string;
   email?: string;
   airtableId?: string;
@@ -58,6 +58,8 @@ export interface Task {
   name?: string;
   stage: string;
   estimate?: number;
+  flexibleEstimate?: number;
+  hoursWorked?: number;
   dueDate?: string;
   description?: string;
 }
