@@ -80,6 +80,7 @@ const EditTask = ({
     description: task.description || "",
     dueDate: task.dueDate || null,
     estimate: task.estimate || null,
+    flexibleEstimate: task.flexibleEstimate || null,
   });
   const [editAllowed, setEditAllowed] = React.useState(false);
   const [confirmPrompt, setConfirmPrompt] = React.useState(false);
@@ -109,11 +110,15 @@ const EditTask = ({
 
   const handleBlur = attribute => () => {
     setEditAllowed(false);
-    const value = attributes[attribute];
+  };
 
+  const handleBlurWithSave = attribute => () => {
+    handleBlur(attribute)();
+
+    const value = attributes[attribute];
     if (task[attribute] !== value) {
       clearTimeout(timer);
-      onSave(attribute, value);
+      onSave(attribute, { [attribute]: value });
     }
   };
 
@@ -126,7 +131,7 @@ const EditTask = ({
   const handleChange = attribute => value => {
     updateField(attribute, value);
     if (task[attribute] !== value) {
-      onSave(attribute, value);
+      onSave(attribute, { [attribute]: value });
     }
   };
 
@@ -135,7 +140,7 @@ const EditTask = ({
     clearTimeout(timer);
     timer = setTimeout(() => {
       if (task[attribute] !== value) {
-        onSave(attribute, value);
+        onSave(attribute, { [attribute]: value });
       }
     }, 1000);
   };
@@ -180,12 +185,11 @@ const EditTask = ({
             {!hideStatus && <TaskStatus>{task.stage}</TaskStatus>}
             <Title
               data-testid="nameField"
-              onBlur={handleBlur("name")}
+              onBlur={handleBlurWithSave("name")}
               readOnly={titleReadOnly}
               value={attributes.name}
               onFocus={handleFocus("name")}
               onChange={handleChangeWithTimeout("name")}
-              autoFocus={!Boolean(task.name)}
               isFocused={editAllowed && focusedElement === "name"}
             />
           </Padding>
@@ -208,14 +212,18 @@ const EditTask = ({
                   isClient={isClient}
                   onClick={handleFocus("estimate")}
                   onClose={handleBlur("estimate")}
-                  onChange={handleChange("estimate")}
                   isOpen={editAllowed && focusedElement === "estimate"}
+                  onChange={values => {
+                    updateField("estimate", values.estimate);
+                    updateField("flexibleEstimate", values.flexibleEstimate);
+                    onSave("estimate", values);
+                  }}
                 />
               </TaskDetails>
               <Description
                 readOnly={descriptionReadOnly}
                 value={attributes.description}
-                onBlur={handleBlur("description")}
+                onBlur={handleBlurWithSave("description")}
                 onFocus={handleFocus("description")}
                 onChange={handleChangeWithTimeout("description")}
                 isFocused={editAllowed && focusedElement === "description"}

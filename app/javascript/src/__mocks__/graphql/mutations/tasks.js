@@ -25,6 +25,7 @@ export const createTask = config => {
               estimate: null,
               description: null,
               repeat: null,
+              flexibleEstimate: null,
               createdAt: new Date().toISOString(),
               application: {
                 __typename: "Application",
@@ -74,6 +75,7 @@ export const updateTaskName = config => {
               name: "Updated",
               stage: "Not Assigned",
               estimate: null,
+              flexibleEstimate: null,
             },
             errors: null,
           },

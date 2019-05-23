@@ -6,7 +6,9 @@ import {
   Input,
   InputMask,
   Textarea,
-  CharCount
+  CharCount,
+  Prefix,
+  InputBackdrop,
 } from "./styles";
 import InputError from "src/components/InputError";
 import InputLabel from "src/components/InputLabel";
@@ -16,6 +18,7 @@ import { extractSpacingProps } from "src/components/Spacing";
 
 const TextField = ({
   type,
+  size,
   name,
   value = "",
   multiline,
@@ -25,6 +28,7 @@ const TextField = ({
   onFocus,
   label,
   error,
+  labelHidden,
   placeholder,
   mask,
   readOnly,
@@ -37,6 +41,7 @@ const TextField = ({
   subLabel,
   onKeyPress,
   onKeyDown,
+  prefix,
   ...props
 }) => {
   const input = useRef(null);
@@ -44,9 +49,9 @@ const TextField = ({
   const [id, _] = useState(props.id || uniqueID("TextField"));
 
   let charLimit = charCount || maxLength;
-  let characterCount = (charLimit - (value || '').length);
+  let characterCount = charLimit - (value || "").length;
   if (characterCount < 0) {
-    characterCount = 0
+    characterCount = 0;
   }
 
   let Component = Input;
@@ -85,12 +90,26 @@ const TextField = ({
     onChange(e);
   };
 
+  const handleClick = e => {
+    if (mask) {
+      input.current.inputElement.focus();
+    } else {
+      input.current.focus();
+    }
+  };
+
   return (
     <Wrapper block={block} {...extractSpacingProps(props)}>
-      {label && <InputLabel htmlFor={id}>{label}</InputLabel>}
+      {label && (
+        <InputLabel hidden={labelHidden} htmlFor={id}>
+          {label}
+        </InputLabel>
+      )}
       {subLabel && <InputSubLabel>{subLabel}</InputSubLabel>}
-      <InputContainer>
+      <InputContainer onClick={handleClick}>
+        {prefix && <Prefix size={size}>{prefix}</Prefix>}
         <Component
+          size={size}
           autoFocus={autoFocus}
           type={type}
           mask={mask}
@@ -111,6 +130,7 @@ const TextField = ({
           onKeyPress={onKeyPress}
           onKeyDown={onKeyDown}
         />
+        <InputBackdrop />
         {(charCount || maxLength) && <CharCount>{characterCount}</CharCount>}
       </InputContainer>
       {error && <InputError>{error}</InputError>}
@@ -124,7 +144,7 @@ TextField.defaultProps = {
   minRows: 3,
   block: false,
   multiline: false,
-  autoHeight: false
+  autoHeight: false,
 };
 
 export default TextField;

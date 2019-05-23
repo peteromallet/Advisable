@@ -58,7 +58,7 @@ const Candidate = ({ application, project, history }) => {
         compact
         reviewsCount={application.specialist.reviewsCount}
         rating={application.specialist.ratings.overall}
-        rate={currency(application.rate, project.currency)}
+        rate={currency(parseFloat(application.rate) * 100.0)}
         availability={application.availability}
         linkedin={application.specialist.linkedin}
       />

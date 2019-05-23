@@ -24,9 +24,10 @@ const Component = ({ data }) => {
         <Text>{application.project.user.companyName}</Text>
         <Padding top="l" bottom="l">
           <AttributeList>
-            <AttributeList.Item label="Hourly Rate" value={
-              currency(application.rate, application.project.currency)
-            } />
+            <AttributeList.Item
+              label="Hourly Rate"
+              value={currency(parseFloat(application.rate) * 100.0)}
+            />
           </AttributeList>
         </Padding>
       </Sticky>
