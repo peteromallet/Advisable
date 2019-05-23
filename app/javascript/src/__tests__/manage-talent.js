@@ -1,12 +1,13 @@
-import renderApp from "../testHelpers/renderApp";
 import generate from "nanoid/generate";
 import { fireEvent, cleanup } from "react-testing-library";
-import viewer from "../__mocks__/graphql/queries/viewer";
+import VIEWER from "../graphql/queries/viewer";
+import renderApp from "../testHelpers/renderApp";
+import generateType from "../__mocks__/graphqlFields";
+import { getActiveApplication as GET_ACTIVE_APPLICATION } from "../graphql/queries/applications";
 import {
-  createTask,
-  updateTaskName,
-} from "../__mocks__/graphql/mutations/tasks";
-import { getActiveApplication } from "../__mocks__/graphql/queries/applications";
+  createTask as CREATE_TASK,
+  updateTaskName as UPDATE_TASK_NAME,
+} from "../graphql/mutations/tasks";
 
 jest.mock("nanoid/generate");
 afterEach(cleanup);
@@ -16,26 +17,37 @@ test("Renders the manage view for a specialist", async () => {
   const { findByText } = renderApp({
     route: "/manage/rec1234",
     graphQLMocks: [
-      viewer.asClient(),
-      getActiveApplication({
+      {
         request: {
+          query: VIEWER,
+        },
+        result: {
+          data: {
+            viewer: generateType.user(),
+          },
+        },
+      },
+      {
+        request: {
+          query: GET_ACTIVE_APPLICATION,
           variables: {
             id: "rec1234",
           },
         },
         result: {
           data: {
-            application: {
+            application: generateType.application({
+              id: "rec1234",
               airtableId: "rec1234",
-              tasks: [
-                {
-                  name: "This is a test task",
-                },
-              ],
-            },
+              tasks: [generateType.task({ name: "This is a test task" })],
+              project: generateType.project({
+                user: generateType.user(),
+              }),
+              specialist: generateType.specialist(),
+            }),
           },
         },
-      }),
+      },
     ],
   });
 
@@ -44,26 +56,53 @@ test("Renders the manage view for a specialist", async () => {
 
 test("The client can add a task", async () => {
   generate.mockReturnValue("abc");
+
+  const user = generateType.user();
+  const project = generateType.project({ user });
+  const specialist = generateType.specialist();
+  const application = generateType.application({
+    id: "rec1324",
+    airtableId: "rec1234",
+    project,
+    specialist,
+  });
+
   const { findByText, findByLabelText, getByTestId } = renderApp({
     route: "/manage/rec1234",
     graphQLMocks: [
-      viewer.asClient(),
-      getActiveApplication({
+      {
         request: {
+          query: VIEWER,
+        },
+        result: {
+          data: {
+            viewer: generateType.user(),
+          },
+        },
+      },
+      {
+        request: {
+          query: GET_ACTIVE_APPLICATION,
           variables: {
             id: "rec1234",
           },
         },
         result: {
           data: {
-            application: {
+            application: generateType.application({
+              id: "rec1234",
               airtableId: "rec1234",
-            },
+              project: generateType.project({
+                user: generateType.user(),
+              }),
+              specialist: generateType.specialist(),
+            }),
           },
         },
-      }),
-      createTask({
+      },
+      {
         request: {
+          query: CREATE_TASK,
           variables: {
             input: {
               application: "rec1234",
@@ -71,9 +110,23 @@ test("The client can add a task", async () => {
             },
           },
         },
-      }),
-      updateTaskName({
+        result: {
+          data: {
+            __typename: "Mutation",
+            createTask: {
+              __typename: "CreateTaskPayload",
+              task: generateType.task({
+                id: "tas_abc",
+                application,
+              }),
+              errors: null,
+            },
+          },
+        },
+      },
+      {
         request: {
+          query: UPDATE_TASK_NAME,
           variables: {
             input: {
               id: "tas_abc",
@@ -83,15 +136,18 @@ test("The client can add a task", async () => {
         },
         result: {
           data: {
+            __typename: "Mutation",
             updateTask: {
-              task: {
+              __typename: "UpdateTaskPayload",
+              task: generateType.task({
                 id: "tas_abc",
                 name: "This is a new task",
-              },
+              }),
+              errors: null,
             },
           },
         },
-      }),
+      },
     ],
   });
 

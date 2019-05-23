@@ -7,7 +7,7 @@ import Button from "../Button";
 import Heading from "../Heading";
 import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
-import SUBMIT_TASK from "./submitTask.graphql";
+import SUBMIT_TASK from "./submitTask";
 import { Confirmation, ConfirmationContainer } from "./styles";
 
 // The submit prompt can have two steps. First we show a prompt where the user
@@ -66,6 +66,9 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
               <Button
                 styling="primary"
                 loading={loading}
+                aria-label={
+                  Boolean(task.flexibleEstimate) ? "Continue" : "Complete"
+                }
                 onClick={handleConfirmApproved}
               >
                 {Boolean(task.flexibleEstimate) ? "Continue" : "Complete"}
@@ -93,14 +96,21 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
             </Padding>
             <Padding bottom="xl">
               <Slider
+                labelHidden
                 value={hours}
-                onChange={e => setHours(e.target.value)}
+                label="Hours Worked"
                 min={task.estimate}
                 max={task.flexibleEstimate}
+                onChange={e => setHours(e.target.value)}
               />
             </Padding>
             <ButtonGroup fullWidth>
-              <Button styling="primary" loading={loading} onClick={submit}>
+              <Button
+                styling="primary"
+                loading={loading}
+                onClick={submit}
+                aria-label="Complete"
+              >
                 Complete
               </Button>
               <Button onClick={onClose}>Cancel</Button>
