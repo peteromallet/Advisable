@@ -15,7 +15,7 @@ import NoTasks from "./NoTasks";
 import FETCH_TASK from "../../graphql/queries/taskDetails";
 import FETCH_APPLICATION from "../../graphql/queries/freelancerActiveApplication";
 
-const FetchActiveApplication = ({ history, match, data, client }) => {
+const FetchActiveApplication = ({ location, history, match, data, client }) => {
   const application = data.application;
 
   const handleTaskClick = task => {
@@ -44,6 +44,7 @@ const FetchActiveApplication = ({ history, match, data, client }) => {
         },
       },
     });
+
     // open the task
     history.replace(`/clients/${application.airtableId}/tasks/${task.id}`);
   };

@@ -5,6 +5,7 @@ import { Task, Title, Detail, TaskContent, Prompt } from "./styles";
 import Icon from "../Icon";
 import TaskStatus from "../TaskStatus";
 import pluarlize from "../../utilities/pluralize";
+import { hoursLabel, hoursDisplay } from "../../utilities/tasks";
 
 interface Props {
   task: TaskType;
@@ -51,14 +52,7 @@ export default ({
           <Detail>
             <Icon height={17} icon="clock" />
             <span>
-              Quote:{" "}
-              {Boolean(task.flexibleEstimate) ? (
-                <strong>
-                  {task.estimate}-{task.flexibleEstimate} hours
-                </strong>
-              ) : (
-                <strong>{pluarlize(task.estimate, "hour", "hours")}</strong>
-              )}
+              {hoursLabel(task)}: <strong>{hoursDisplay(task)}</strong>
             </span>
           </Detail>
         )}

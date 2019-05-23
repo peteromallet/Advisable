@@ -68,6 +68,7 @@ export const application = (fields = {}) => {
       id: uniqueId("application"),
       airtableId: uniqueId("rec"),
       rate: "75",
+      currency: "USD",
       status: "Working",
       featured: false,
       comment: "comment",
@@ -86,6 +87,7 @@ export const application = (fields = {}) => {
           answer: "This is the answer",
         },
       ],
+      tasks: [],
       previousProjects: [],
     },
     fields
@@ -101,6 +103,10 @@ export const specialist = (fields = {}) => {
       airtableId: uniqueId("rec"),
       name: "Test Specialist",
       firstName: "Test",
+      lastName: "Specialist",
+      confirmed: true,
+      email: "specialist@test.com",
+      createdAt: new Date().toISOString(),
       city: "Dublin",
       reviewsCount: 0,
       ratings: {
@@ -121,8 +127,27 @@ export const specialist = (fields = {}) => {
   );
 };
 
+export const task = (fields = {}) => {
+  return merge(
+    {
+      __typename: "Task",
+      id: uniqueId("task"),
+      name: null,
+      stage: "Not Assigned",
+      dueDate: null,
+      estimate: null,
+      description: null,
+      repeat: null,
+      flexibleEstimate: null,
+      createdAt: new Date().toISOString(),
+    },
+    fields
+  );
+};
+
 export default {
   user,
+  task,
   country,
   project,
   application,

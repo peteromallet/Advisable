@@ -5,6 +5,7 @@ class Types::TaskType < Types::BaseType
   field :name, String, null: true
   field :repeat, String, null: true
   field :estimate, Int, null: true
+  field :hours_worked, Int, null: true
   field :flexible_estimate, Int, null: true
   field :due_date, GraphQL::Types::ISO8601DateTime, null: true
   field :description, String, null: true

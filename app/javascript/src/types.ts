@@ -59,6 +59,7 @@ export interface Task {
   stage: string;
   estimate?: number;
   flexibleEstimate?: number;
+  hoursWorked?: number;
   dueDate?: string;
   description?: string;
 }
