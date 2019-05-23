@@ -1,11 +1,13 @@
 import renderApp from "../../testHelpers/renderApp";
-import generate from "nanoid/generate";
 import wait from "waait";
+import generate from "nanoid/generate";
 import { fireEvent, cleanup } from "react-testing-library";
 import generateTypes from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
 import CREATE_TASK from "../../graphql/mutations/createTask";
+import GET_TASK from "../../graphql/queries/taskDetails";
 import FETCH_APPLICATION from "../../graphql/queries/freelancerActiveApplication";
+import SUBMIT_TASK from "../../components/TaskDrawer/submitTask";
 import {
   updateTaskName as UPDATE_TASK_NAME,
   updateTaskEstimate as UPDATE_TASK_ESTIMATE,
@@ -33,9 +35,7 @@ test("Freelancer can create a task", async () => {
     findByText,
     getByLabelText,
     getByPlaceholderText,
-    getByText,
     findByTestId,
-    debug,
   } = renderApp({
     route: "/clients/rec1234",
     graphQLMocks: [
@@ -188,4 +188,106 @@ test("Freelancer can create a task", async () => {
   fireEvent.click(close);
   const quote = await findByText("10-20 hours");
   expect(quote).toBeInTheDocument();
+});
+
+test("Freelancer can mark a task as complete", async () => {
+  const user = generateTypes.user();
+  const project = generateTypes.project({ user });
+  const specialist = generateTypes.specialist();
+
+  const task = generateTypes.task({
+    id: "tas_1234",
+    stage: "Working",
+    estimate: 10,
+    flexibleEstimate: 20,
+  });
+
+  const application = generateTypes.application({
+    id: "rec1324",
+    airtableId: "rec1234",
+    project,
+    specialist,
+    tasks: [task],
+  });
+  task.application = application;
+
+  const { findByText, findByLabelText, getByLabelText, debug } = renderApp({
+    route: "/clients/rec1234/tasks/tas_1234",
+    graphQLMocks: [
+      {
+        request: {
+          query: VIEWER,
+        },
+        result: {
+          data: {
+            viewer: specialist,
+          },
+        },
+      },
+      {
+        request: {
+          query: FETCH_APPLICATION,
+          variables: {
+            id: "rec1234",
+          },
+        },
+        result: {
+          data: {
+            application,
+          },
+        },
+      },
+      {
+        request: {
+          query: GET_TASK,
+          variables: {
+            id: "tas_1234",
+          },
+        },
+        result: {
+          data: {
+            task,
+          },
+        },
+      },
+      {
+        request: {
+          query: SUBMIT_TASK,
+          variables: {
+            input: {
+              task: "tas_1234",
+              hoursWorked: 18,
+            },
+          },
+        },
+        result: {
+          data: {
+            __typename: "Mutation",
+            submitTask: {
+              __typename: "SubmitTaskPayload",
+              errors: null,
+              task: {
+                ...task,
+                stage: "Submitted",
+                hoursWorked: 18,
+              },
+            },
+          },
+        },
+      },
+    ],
+  });
+
+  const markAsComplete = await findByLabelText("Mark as complete");
+  fireEvent.click(markAsComplete);
+  const continueButton = getByLabelText("Continue");
+  fireEvent.click(continueButton);
+  const slider = getByLabelText("Hours Worked");
+  fireEvent.change(slider, { target: { value: 18 } });
+  const completeButton = getByLabelText("Complete");
+  fireEvent.click(completeButton);
+  const notice = await findByText(
+    "tasks.stageDescriptions.specialist.submitted"
+  );
+  expect(notice).toBeInTheDocument();
 });

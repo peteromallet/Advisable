@@ -119,6 +119,7 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
         key="submit"
         styling="primary"
         disabled={loading}
+        aria-label="Mark as complete"
         onClick={() => setPrompt("SUBMIT_PROMPT")}
         loading={loading === "SUBMIT"}
       >
