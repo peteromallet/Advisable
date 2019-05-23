@@ -122,7 +122,7 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
         onClick={() => setPrompt("SUBMIT_PROMPT")}
         loading={loading === "SUBMIT"}
       >
-        Submit for approval
+        Mark as complete
       </Button>
     );
   }

@@ -57,8 +57,9 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
             </Padding>
             <Padding bottom="l">
               <Text size="s">
-                Before you submit this, please make sure that you've completed
-                this batch of work and the client has already approved it.
+                Before you mark this as complete, please make sure that you've
+                completed this batch of work and the client has already approved
+                it.
               </Text>
             </Padding>
             <ButtonGroup fullWidth>
@@ -67,7 +68,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
                 loading={loading}
                 onClick={handleConfirmApproved}
               >
-                {Boolean(task.flexibleEstimate) ? "Continue" : "Submit"}
+                {Boolean(task.flexibleEstimate) ? "Continue" : "Complete"}
               </Button>
               <Button onClick={onClose}>Cancel</Button>
             </ButtonGroup>
@@ -100,7 +101,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
             </Padding>
             <ButtonGroup fullWidth>
               <Button styling="primary" loading={loading} onClick={submit}>
-                Submit
+                Complete
               </Button>
               <Button onClick={onClose}>Cancel</Button>
             </ButtonGroup>
