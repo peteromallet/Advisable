@@ -71,13 +71,13 @@ RSpec.shared_examples "account" do
 
   describe "#has_permission?" do
     it "returns true if the user has a given permission" do
-      inst = build(factory, permissions: ["projects:all"])
-      expect(inst.has_permission?("projects:all")).to be_truthy
+      inst = build(factory, permissions: ["admin"])
+      expect(inst.has_permission?("admin")).to be_truthy
     end
 
     it "returns false if the user doesn't have a given permission" do
       inst = build(factory, permissions: [])
-      expect(inst.has_permission?("projects:all")).to be_falsey
+      expect(inst.has_permission?("admin")).to be_falsey
     end
   end
 end

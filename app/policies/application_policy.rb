@@ -14,10 +14,10 @@ class ApplicationPolicy < BasePolicy
 
   # Wether or not the user has access to read information about the application.
   def read
-    is_client || is_specialist || has_permission?("projects:all")
+    is_client || is_specialist || has_permission?("admin")
   end
 
   def create_task
-    is_client || is_specialist || has_permission?("projects:all")
+    is_client || is_specialist || has_permission?("admin")
   end
 end
