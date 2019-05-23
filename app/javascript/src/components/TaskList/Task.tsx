@@ -4,7 +4,6 @@ import { Task as TaskType } from "../../types";
 import { Task, Title, Detail, TaskContent, Prompt } from "./styles";
 import Icon from "../Icon";
 import TaskStatus from "../TaskStatus";
-import pluarlize from "../../utilities/pluralize";
 import { hoursLabel, hoursDisplay } from "../../utilities/tasks";
 
 interface Props {

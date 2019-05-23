@@ -3,6 +3,7 @@ mutation submitTask($input: SubmitTaskInput!) {
     task {
       id
       stage
+      hoursWorked
     }
     errors {
       code
