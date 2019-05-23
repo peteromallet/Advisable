@@ -1,11 +1,16 @@
 import renderApp from "../../testHelpers/renderApp";
 import generate from "nanoid/generate";
-import { fireEvent, cleanup, wait } from "react-testing-library";
+import wait from "waait";
+import { fireEvent, cleanup } from "react-testing-library";
 import generateTypes from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
 import CREATE_TASK from "../../graphql/mutations/createTask";
 import FETCH_APPLICATION from "../../graphql/queries/freelancerActiveApplication";
-import { updateTaskName as UPDATE_TASK_NAME } from "../../graphql/mutations/tasks";
+import {
+  updateTaskName as UPDATE_TASK_NAME,
+  updateTaskEstimate as UPDATE_TASK_ESTIMATE,
+  updateTaskDescription as UPDATE_TASK_DESCRIPTION,
+} from "../../graphql/mutations/tasks";
 
 jest.mock("nanoid/generate");
 afterEach(cleanup);
@@ -24,7 +29,14 @@ test("Freelancer can create a task", async () => {
     specialist,
   });
 
-  const { findByText, findByTestId, debug } = renderApp({
+  const {
+    findByText,
+    getByLabelText,
+    getByPlaceholderText,
+    getByText,
+    findByTestId,
+    debug,
+  } = renderApp({
     route: "/clients/rec1234",
     graphQLMocks: [
       {
@@ -74,13 +86,106 @@ test("Freelancer can create a task", async () => {
           },
         },
       },
+      {
+        request: {
+          query: UPDATE_TASK_NAME,
+          variables: {
+            input: {
+              id: "tas_abc",
+              name: "Task name here",
+            },
+          },
+        },
+        result: {
+          data: {
+            __typename: "Mutation",
+            updateTask: {
+              __typename: "UpdateTaskPayload",
+              task: generateTypes.task({
+                id: "tas_abc",
+                name: "Task name here",
+              }),
+              errors: null,
+            },
+          },
+        },
+      },
+      {
+        request: {
+          query: UPDATE_TASK_ESTIMATE,
+          variables: {
+            input: {
+              id: "tas_abc",
+              estimate: 10,
+              flexibleEstimate: 20,
+            },
+          },
+        },
+        result: {
+          data: {
+            __typename: "Mutation",
+            updateTask: {
+              __typename: "UpdateTaskPayload",
+              task: generateTypes.task({
+                id: "tas_abc",
+                estimate: 10,
+                flexibleEstimate: 20,
+              }),
+              errors: null,
+            },
+          },
+        },
+      },
+      {
+        request: {
+          query: UPDATE_TASK_DESCRIPTION,
+          variables: {
+            input: {
+              id: "tas_abc",
+              description: "Description here",
+            },
+          },
+        },
+        result: {
+          data: {
+            __typename: "Mutation",
+            updateTask: {
+              __typename: "UpdateTaskPayload",
+              task: generateTypes.task({
+                id: "tas_abc",
+                name: "Task name here",
+                description: "Description here",
+                estimate: 10,
+                flexibleEstimate: 20,
+              }),
+              errors: null,
+            },
+          },
+        },
+      },
     ],
   });
 
   const createButton = await findByText("Add a task");
   fireEvent.click(createButton);
   const name = await findByTestId("nameField");
-  // fireEvent.change(name, { target: { value: "Task name here" } });
-  // fireEvent.blur(name);
-  // expect(await findByText("Saving...")).toBeInTheDocument();
+  fireEvent.change(name, { target: { value: "Task name here" } });
+  fireEvent.blur(name);
+  const estimate = getByLabelText("Estimate");
+  fireEvent.click(estimate);
+  const flexible = getByLabelText("Flexible");
+  fireEvent.click(flexible);
+  const from = getByLabelText("Hours Estimate");
+  fireEvent.change(from, { target: { value: 10 } });
+  const to = getByLabelText("Flexible Hours Estimate");
+  fireEvent.change(to, { target: { value: 20 } });
+  const save = getByLabelText("Save Estimate");
+  fireEvent.click(save);
+  const description = getByPlaceholderText("Add a description...");
+  fireEvent.change(description, { target: { value: "Description here" } });
+  fireEvent.blur(description);
+  const close = getByLabelText("Close Drawer");
+  fireEvent.click(close);
+  const quote = await findByText("10-20 hours");
+  expect(quote).toBeInTheDocument();
 });

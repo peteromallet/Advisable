@@ -28,6 +28,7 @@ const TextField = ({
   onFocus,
   label,
   error,
+  labelHidden,
   placeholder,
   mask,
   readOnly,
@@ -99,7 +100,11 @@ const TextField = ({
 
   return (
     <Wrapper block={block} {...extractSpacingProps(props)}>
-      {label && <InputLabel htmlFor={id}>{label}</InputLabel>}
+      {label && (
+        <InputLabel hidden={labelHidden} htmlFor={id}>
+          {label}
+        </InputLabel>
+      )}
       {subLabel && <InputSubLabel>{subLabel}</InputSubLabel>}
       <InputContainer onClick={handleClick}>
         {prefix && <Prefix size={size}>{prefix}</Prefix>}

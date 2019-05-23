@@ -138,6 +138,7 @@ export const task = (fields = {}) => {
       estimate: null,
       description: null,
       repeat: null,
+      hoursWorked: null,
       flexibleEstimate: null,
       createdAt: new Date().toISOString(),
     },
