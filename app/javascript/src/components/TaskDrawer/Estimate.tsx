@@ -173,7 +173,9 @@ export default ({
               <TextField
                 size="s"
                 autoFocus
+                labelHidden
                 name="estimate"
+                label="Hours Estimate"
                 value={values.estimate}
                 placeholder="8"
                 mask={numberMask}
@@ -184,6 +186,8 @@ export default ({
               {mode === "FLEXIBLE" && (
                 <TextField
                   size="s"
+                  labelHidden
+                  label="Flexible Hours Estimate"
                   name="flexibleEstimate"
                   value={values.flexibleEstimate}
                   placeholder="16"
@@ -215,6 +219,7 @@ export default ({
             <Button
               ref={saveButton}
               styling="primary"
+              aria-label="Save Estimate"
               onClick={handleSave(popover)}
             >
               Save
