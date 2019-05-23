@@ -12,6 +12,11 @@ import Padding from "../Spacing/Padding";
 import SegmentedControl from "../SegmentedControl";
 import currency from "../../utilities/currency";
 import {
+  hoursLabel,
+  hoursDisplay,
+  hasBeenSubmitted,
+} from "../../utilities/tasks";
+import {
   Detail,
   DetailIcon,
   DetailLabel,
@@ -71,6 +76,7 @@ export default ({
   const earnings = {
     estimate: calcEarnings(values.estimate, rate),
     flexibleEstimate: calcEarnings(values.flexibleEstimate, rate),
+    hoursWorked: calcEarnings(String(task.hoursWorked), rate),
   };
 
   const earningsBeforeChange = {
@@ -110,16 +116,17 @@ export default ({
 
   let label;
   if (task.estimate) {
-    label = `${task.estimate} hours / ${currency(earnings.estimate, {
-      format: "$0,0",
-    })}`;
+    label = currency(earnings.estimate, { format: "$0,0" });
   }
 
   if (task.estimate && task.flexibleEstimate) {
-    label = `${task.estimate}-${task.flexibleEstimate} hours / ${currency(
-      earningsBeforeChange.estimate,
-      { format: "$0,0" }
-    )}-${currency(earningsBeforeChange.flexibleEstimate, { format: "$0,0" })}`;
+    label = `${currency(earningsBeforeChange.estimate, {
+      format: "$0,0",
+    })}-${currency(earningsBeforeChange.flexibleEstimate, { format: "$0,0" })}`;
+  }
+
+  if (hasBeenSubmitted(task)) {
+    label = currency(earnings.hoursWorked, { format: "$0,0" });
   }
 
   return (
@@ -137,9 +144,11 @@ export default ({
           <DetailIcon prompt={task.stage === "Quote Requested"}>
             <Icon strokeWidth={1} width={20} icon="clock" />
           </DetailIcon>
-          <DetailLabel>Quote</DetailLabel>
+          <DetailLabel>{hoursLabel(task)}</DetailLabel>
           {Boolean(label) ? (
-            <DetailValue>{label}</DetailValue>
+            <DetailValue>
+              {hoursDisplay(task)} / {label}
+            </DetailValue>
           ) : (
             <DetailPlaceholder>+ Add estimate</DetailPlaceholder>
           )}
