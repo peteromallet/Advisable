@@ -1,12 +1,18 @@
 class Applications::StartWorking < ApplicationService
-  attr_reader :application
+  attr_reader :application, :project_type
 
-  def initialize(application:)
+  def initialize(application:, project_type:)
     @application = application
+    @project_type = project_type
   end
 
   def call
+    unless ['Fixed', 'Flexible'].include?(project_type)
+      raise Service::Error.new("invalidProjectType")
+    end
+
     application.status = "Working"
+    application.project_type = project_type
 
     if application.save
       application.sync_to_airtable
