@@ -35,10 +35,12 @@ export default ({ data }) => {
           </Text>
           <Padding top="m" bottom="l">
             <AttributeList>
-              <AttributeList.Item
-                label="Hourly Rate"
-                value={currency(parseFloat(application.rate) * 100.0)}
-              />
+              {Boolean(application.rate) && (
+                <AttributeList.Item
+                  label="Hourly Rate"
+                  value={currency(parseFloat(application.rate) * 100.0)}
+                />
+              )}
             </AttributeList>
           </Padding>
         </FadeIn>
