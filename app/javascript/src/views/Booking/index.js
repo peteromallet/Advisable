@@ -5,6 +5,7 @@ import NotFound from "../NotFound";
 import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import TaskDrawer from "../../components/TaskDrawer";
+import SetMonthlyLimit from "./SetMonthlyLimit";
 import { getActiveApplication } from "../../graphql/queries/applications";
 import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
@@ -13,6 +14,11 @@ let Booking = ({ data, match, history, location, client }) => {
   if (data.loading) return <Loading />;
   if (!data.application) return <NotFound />;
   if (data.application.status !== "Working") return <NotFound />;
+
+  const hasMonthlyLimit = Boolean(data.application.monthlyLimit);
+  if (data.application.projectType === "Flexible" && !hasMonthlyLimit) {
+    return <SetMonthlyLimit applicationId={data.application.airtableId} />;
+  }
 
   const { applicationId } = match.params;
   const tasks = data.application.tasks;
