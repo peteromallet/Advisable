@@ -6,5 +6,7 @@ export const applicationFields = gql`
     rate
     status
     airtableId
+    projectType
+    monthlyLimit
   }
 `;
