@@ -41,9 +41,14 @@ const numberMask = createNumberMask({
   prefix: "",
 });
 
-const calcEarnings = (hours: string, rate: number) => {
+const calculateCost = (hours: string, rate: number) => {
   const hoursParsed = Boolean(hours) ? parseFloat(hours.replace(",", "")) : 0;
   const total = hoursParsed * rate;
+  return total;
+};
+
+const calculateEarnings = (hours: string, rate: number) => {
+  const total = calculateCost(hours, rate);
   return total - total * 0.2;
 };
 
@@ -74,14 +79,14 @@ export default ({
   const rate = parseFloat(task.application.rate) * 100.0;
 
   const earnings = {
-    estimate: calcEarnings(values.estimate, rate),
-    flexibleEstimate: calcEarnings(values.flexibleEstimate, rate),
-    hoursWorked: calcEarnings(String(task.hoursWorked), rate),
+    estimate: calculateEarnings(values.estimate, rate),
+    flexibleEstimate: calculateEarnings(values.flexibleEstimate, rate),
+    hoursWorked: calculateEarnings(String(task.hoursWorked), rate),
   };
 
-  const earningsBeforeChange = {
-    estimate: calcEarnings(String(task.estimate), rate),
-    flexibleEstimate: calcEarnings(String(task.flexibleEstimate), rate),
+  const costs = {
+    estimate: calculateCost(String(task.estimate), rate),
+    flexibleEstimate: calculateCost(String(task.flexibleEstimate), rate),
   };
 
   const handleSave = popover => () => {
@@ -116,13 +121,13 @@ export default ({
 
   let label;
   if (task.estimate) {
-    label = currency(earnings.estimate, { format: "$0,0" });
+    label = currency(costs.estimate, { format: "$0,0" });
   }
 
   if (task.estimate && task.flexibleEstimate) {
-    label = `${currency(earningsBeforeChange.estimate, {
+    label = `${currency(costs.estimate, {
       format: "$0,0",
-    })}-${currency(earningsBeforeChange.flexibleEstimate, { format: "$0,0" })}`;
+    })}-${currency(costs.flexibleEstimate, { format: "$0,0" })}`;
   }
 
   if (hasBeenSubmitted(task)) {
