@@ -51,10 +51,12 @@ export default ({ data, history, match }) => {
             </Padding>
           )}
           <AttributeList>
-            <AttributeList.Item
-              label="Hourly Rate"
-              value={currency(parseFloat(application.rate) * 100.0)}
-            />
+            {Boolean(application.rate) && (
+              <AttributeList.Item
+                label="Hourly Rate"
+                value={currency(parseFloat(application.rate) * 100.0)}
+              />
+            )}
             <AttributeList.Item
               label="Available"
               value={application.availability}
