@@ -24,12 +24,12 @@ export default ({ project, match, history }) => {
       {mutate => (
         <Fragment>
           <Text marginBottom="l">
-            These are characteristics that it'd be nice for your specialist to
-            have, but not essential.
+            Please list any skills and experience that would be an added bonus
+            for candidates to have, but are not required
           </Text>
           <Formik
             initialValues={{
-              optionalCharacteristics: project.optionalCharacteristics
+              optionalCharacteristics: project.optionalCharacteristics,
             }}
             validationSchema={validationSchema}
             onSubmit={async values => {
@@ -38,9 +38,9 @@ export default ({ project, match, history }) => {
                 variables: {
                   input: {
                     id,
-                    ...values
-                  }
-                }
+                    ...values,
+                  },
+                },
               });
               history.push(`/project_setup/${id}/questions`);
             }}

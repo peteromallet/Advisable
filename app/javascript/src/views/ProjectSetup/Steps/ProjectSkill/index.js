@@ -13,7 +13,7 @@ import UPDATE_PROJECT from "../../updateProject.graphql";
 
 export default ({ history, match, project }) => {
   let initialValues = {
-    primarySkill: ""
+    primarySkill: "",
   };
 
   if (project) {
@@ -35,14 +35,14 @@ export default ({ history, match, project }) => {
             {mutate => (
               <Fragment>
                 <Text marginBottom="l">
-                  Select the primary skill you are looking for from the list
-                  below.
+                  Select the primary skill you require from a freelancer in the
+                  list below.
                 </Text>
                 <Formik
                   initialValues={initialValues}
                   onSubmit={async values => {
                     const response = await mutate({
-                      variables: { input: values }
+                      variables: { input: values },
                     });
 
                     let id = match.params.projectID;

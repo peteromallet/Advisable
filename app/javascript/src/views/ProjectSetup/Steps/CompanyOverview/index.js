@@ -10,7 +10,7 @@ import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
 export default ({ project, match, history }) => {
-  const id  = match.params.projectID
+  const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}`);
 
   return (
@@ -18,13 +18,14 @@ export default ({ project, match, history }) => {
       {mutate => (
         <Fragment>
           <Text marginBottom="l">
-            Feel free to remove any identifying information if you'd rather the
-            consultant doesn't know who you are.
+            Provide freelancers with a high-level overview of your company to
+            provide them with context and allow them to tailor their pitch
+            accordingly.
           </Text>
           <Formik
             validationSchema={validationSchema}
             initialValues={{
-              companyDescription: project.companyDescription || ""
+              companyDescription: project.companyDescription || "",
             }}
             onSubmit={async values => {
               const id = match.params.projectID;
@@ -32,9 +33,9 @@ export default ({ project, match, history }) => {
                 variables: {
                   input: {
                     id,
-                    ...values
-                  }
-                }
+                    ...values,
+                  },
+                },
               });
               history.push(`/project_setup/${id}/project_overview`);
             }}

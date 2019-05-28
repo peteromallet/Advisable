@@ -24,7 +24,8 @@ export default ({ project, match, history, transform, position, opacity }) => {
       {mutate => (
         <Fragment>
           <Text marginBottom="l">
-            What goal’s do you have for this project?
+            Please list the high-level goals that you wish to achieve with this
+            project.
           </Text>
           <Formik
             onSubmit={async values => {
@@ -33,9 +34,9 @@ export default ({ project, match, history, transform, position, opacity }) => {
                 variables: {
                   input: {
                     id,
-                    ...values
-                  }
-                }
+                    ...values,
+                  },
+                },
               });
 
               history.push(`/project_setup/${id}/specialist_overview`);

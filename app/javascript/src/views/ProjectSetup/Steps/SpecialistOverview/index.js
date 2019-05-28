@@ -24,12 +24,12 @@ export default ({ project, match, history }) => {
       {mutate => (
         <Fragment>
           <Text marginBottom="l">
-            Give a brief one sentence overview of what you want to get out of an
-            engagement with a specialist.
+            Please give a one-line description of the freelancer you’re looking
+            for.
           </Text>
           <Formik
             initialValues={{
-              specialistDescription: project.specialistDescription || ""
+              specialistDescription: project.specialistDescription || "",
             }}
             validationSchema={validationSchema}
             onSubmit={async values => {
@@ -38,9 +38,9 @@ export default ({ project, match, history }) => {
                 variables: {
                   input: {
                     id,
-                    ...values
-                  }
-                }
+                    ...values,
+                  },
+                },
               });
               history.push(`/project_setup/${id}/must_have`);
             }}

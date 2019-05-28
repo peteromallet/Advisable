@@ -24,7 +24,8 @@ export default ({ project, match, history, transform, position, opacity }) => {
       {mutate => (
         <Fragment>
           <Text marginBottom="l">
-            Give a brief one line overview of the project
+            Give a one line overview of the project to provide freelancers with
+            context on what the project entails.
           </Text>
           <Formik
             initialValues={{ description: project.description || "" }}
@@ -36,9 +37,9 @@ export default ({ project, match, history, transform, position, opacity }) => {
                 variables: {
                   input: {
                     id,
-                    ...values
-                  }
-                }
+                    ...values,
+                  },
+                },
               });
 
               history.push(`/project_setup/${id}/goals`);

@@ -24,9 +24,16 @@ export default ({ project, match, history }) => {
     <Mutation mutation={UPDATE_PROJECT}>
       {mutate => (
         <Fragment>
+          <Text marginBottom="m">
+            We’ll ask all applicants to answer these questions to assess their
+            suitability for this project. Please take the time to provide
+            thoughtful questions for this very important step.
+          </Text>
           <Text marginBottom="l">
-            We'll get the specialist to answer these question in order to assess
-            their suitability for this project.
+            When listing questions, consider whether there is any info or
+            material you’d like for potential candidates to share with you prior
+            to an interview, or what questions might test their knowledge and
+            approach in a suitable way.
           </Text>
           <Formik
             initialValues={{ questions: project.questions || [] }}
@@ -35,8 +42,8 @@ export default ({ project, match, history }) => {
               const id = match.params.projectID;
               await mutate({
                 variables: {
-                  input: { id, ...values }
-                }
+                  input: { id, ...values },
+                },
               });
               history.push(`/project_setup/${id}/terms`);
             }}
@@ -64,7 +71,9 @@ export default ({ project, match, history }) => {
                   onChange={formik.handleChange}
                 />
                 {formik.submitCount > 0 && formik.errors.questions && (
-                  <InputError marginBottom="l">{formik.errors.questions}</InputError>
+                  <InputError marginBottom="l">
+                    {formik.errors.questions}
+                  </InputError>
                 )}
                 <Mobile>
                   {isMobile => (
