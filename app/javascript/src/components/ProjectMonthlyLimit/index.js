@@ -4,7 +4,6 @@ import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { Mutation } from "react-apollo";
 import Button from "../Button";
 import ButtonGroup from "../ButtonGroup";
-import Heading from "../../components/Heading";
 import TextField from "../../components/TextField";
 import Padding from "../../components/Spacing/Padding";
 import validationSchema from "./validationSchema";
@@ -15,8 +14,13 @@ const numberMask = createNumberMask({
   suffix: " hours",
 });
 
-const ProjectMonthlyLimit = ({ applicationId }) => {
-  const initialValues = {
+const ProjectMonthlyLimit = ({
+  applicationId,
+  onUpdate,
+  buttonLabel,
+  initialValues,
+}) => {
+  const initial = initialValues || {
     monthlyLimit: undefined,
   };
 
@@ -29,6 +33,8 @@ const ProjectMonthlyLimit = ({ applicationId }) => {
         },
       },
     });
+
+    if (onUpdate) onUpdate();
   };
 
   const handleChange = formik => e => {
@@ -45,17 +51,15 @@ const ProjectMonthlyLimit = ({ applicationId }) => {
       {(setMonthlyLimit, { loading }) => (
         <Formik
           isInitialValid={false}
-          initialValues={initialValues}
+          initialValues={initial}
           validationSchema={validationSchema}
           onSubmit={handleSubmit(setMonthlyLimit)}
         >
           {formik => (
             <form onSubmit={formik.handleSubmit}>
               <Padding bottom="l">
-                <Heading>Set a monthly limit for this project</Heading>
-              </Padding>
-              <Padding bottom="l">
                 <TextField
+                  autoFocus
                   name="monthlyLimit"
                   mask={numberMask}
                   placeholder="Monthly limit"
@@ -74,7 +78,7 @@ const ProjectMonthlyLimit = ({ applicationId }) => {
                   styling="primary"
                   disabled={!formik.isValid}
                 >
-                  Continue
+                  {buttonLabel || "Set Monthly Limit"}
                 </Button>
               </ButtonGroup>
             </form>
