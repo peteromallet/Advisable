@@ -1,5 +1,6 @@
 import React from "react";
 import { get } from "lodash";
+import { Mutation } from "react-apollo";
 import Sticky from "react-stickynode";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
@@ -12,12 +13,15 @@ import { Padding } from "../../components/Spacing";
 import { FadeIn } from "../../components/Animation";
 import AttributeList from "../../components/AttributeList";
 import { useMobile } from "../../components/Breakpoint";
+import ProjectTypeModal from "../../components/ProjectTypeModal";
 import ProjectMonthlyLimit from "../../components/ProjectMonthlyLimit";
+import SET_PROJECT_TYPE from "./setProjectType";
 
 export default ({ data }) => {
   const isMobile = useMobile();
   const application = data.application;
   const specialist = application.specialist;
+  const [projectTypeModal, setProjectTypeModal] = React.useState(false);
   const [monthlyLimitModal, setMonthlyLimitModal] = React.useState(false);
 
   const handleEditMonthlyLimit = () => {
@@ -73,7 +77,7 @@ export default ({ data }) => {
                         <br />
                         <Button
                           onClick={handleEditMonthlyLimit}
-                          styling="plain"
+                          styling="plainSubtle"
                         >
                           Edit
                         </Button>
@@ -82,6 +86,44 @@ export default ({ data }) => {
                   />
                 </>
               )}
+
+              <Mutation mutation={SET_PROJECT_TYPE}>
+                {setProjectType => (
+                  <ProjectTypeModal
+                    isOpen={projectTypeModal}
+                    onClose={() => setProjectTypeModal(false)}
+                    firstName={application.specialist.firstName}
+                    initialValues={{ projectType: application.projectType }}
+                    onSubmit={async values => {
+                      await setProjectType({
+                        variables: {
+                          input: {
+                            application: application.airtableId,
+                            projectType: values.projectType,
+                          },
+                        },
+                      });
+                      setProjectTypeModal(false);
+                    }}
+                  />
+                )}
+              </Mutation>
+
+              <AttributeList.Item
+                label="Project Type"
+                value={
+                  <>
+                    {application.projectType}
+                    <br />
+                    <Button
+                      styling="plainSubtle"
+                      onClick={() => setProjectTypeModal(true)}
+                    >
+                      Edit
+                    </Button>
+                  </>
+                }
+              />
             </AttributeList>
           </Padding>
         </FadeIn>
