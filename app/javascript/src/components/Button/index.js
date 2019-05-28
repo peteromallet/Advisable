@@ -127,7 +127,7 @@ const STYLES = {
     transition: background-color 300ms;
 
     &:hover {
-      color: ${darken(0.1, "#7A829E")};
+      color: #173fcd;
     }
 
     &:active {
@@ -146,7 +146,7 @@ export const ButtonStyling = styled.button`
   opacity: ${props => (props.disabled ? "0.5" : "1")};
   padding: ${props => padding[props.size] || padding["m"]};
   font-size: ${props => fontSizes[props.size] || fontSizes["m"]};
-  cursor: ${props => props.disabled ? "default" : "pointer" };
+  cursor: ${props => (props.disabled ? "default" : "pointer")};
   font-weight: 500;
   border-radius: 5px;
   align-items: center;
