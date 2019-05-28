@@ -15,22 +15,21 @@ export default ({ project, match, history }) => {
 
   useEffect(() => {
     if (!project.specialistDescription) {
-      history.replace("specialist_overview")
+      history.replace("specialist_overview");
     }
-  }, [])
-
+  }, []);
 
   return (
     <Mutation mutation={UPDATE_PROJECT}>
       {mutate => (
         <Fragment>
           <Text marginBottom="l">
-            These are characteristics that is necessary that your specialist
-            has.
+            Please list the skills and experience required by candidates for
+            this project.
           </Text>
           <Formik
             initialValues={{
-              requiredCharacteristics: project.requiredCharacteristics
+              requiredCharacteristics: project.requiredCharacteristics,
             }}
             validationSchema={validationSchema}
             onSubmit={async values => {
@@ -39,9 +38,9 @@ export default ({ project, match, history }) => {
                 variables: {
                   input: {
                     id,
-                    ...values
-                  }
-                }
+                    ...values,
+                  },
+                },
               });
               history.push(`/project_setup/${id}/nice_to_have`);
             }}
