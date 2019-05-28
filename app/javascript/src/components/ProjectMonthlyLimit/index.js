@@ -7,6 +7,7 @@ import ButtonGroup from "../ButtonGroup";
 import Heading from "../../components/Heading";
 import TextField from "../../components/TextField";
 import Padding from "../../components/Spacing/Padding";
+import validationSchema from "./validationSchema";
 import SET_MONTHLY_LIMIT from "./setMonthlyLimit";
 
 const numberMask = createNumberMask({
@@ -24,19 +25,28 @@ const ProjectMonthlyLimit = ({ applicationId }) => {
       variables: {
         input: {
           application: applicationId,
-          monthlyLimit: monthlyLimit
-            ? Number(monthlyLimit.replace(" hours", ""))
-            : null,
+          monthlyLimit,
         },
       },
     });
+  };
+
+  const handleChange = formik => e => {
+    let value = e.target.value;
+    value = value.replace(" hours", "");
+    value = value.replace(/\,/g, "");
+    value = Number(value);
+    formik.setFieldTouched("monthlyLimit", true);
+    formik.setFieldValue("monthlyLimit", value);
   };
 
   return (
     <Mutation mutation={SET_MONTHLY_LIMIT}>
       {(setMonthlyLimit, { loading }) => (
         <Formik
+          isInitialValid={false}
           initialValues={initialValues}
+          validationSchema={validationSchema}
           onSubmit={handleSubmit(setMonthlyLimit)}
         >
           {formik => (
@@ -50,12 +60,20 @@ const ProjectMonthlyLimit = ({ applicationId }) => {
                   mask={numberMask}
                   placeholder="Monthly limit"
                   label="Monthly hourly limit"
-                  onChange={formik.handleChange}
+                  onChange={handleChange(formik)}
                   value={formik.values.monthlyLimit}
+                  error={
+                    formik.touched.monthlyLimit && formik.errors.monthlyLimit
+                  }
                 />
               </Padding>
               <ButtonGroup fullWidth>
-                <Button loading={loading} styling="primary" type="submit">
+                <Button
+                  type="submit"
+                  loading={loading}
+                  styling="primary"
+                  disabled={!formik.isValid}
+                >
                   Continue
                 </Button>
               </ButtonGroup>
