@@ -42,6 +42,22 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
   const hasName = Boolean(task.name);
   const hasDescription = Boolean(task.description);
   const hasNameAndDescription = hasName && hasDescription;
+  const applicationFlexible = task.application.projectType === "Flexible";
+
+  if (!isClient && applicationFlexible && stage === "Not Assigned") {
+    actions.push(
+      <Button
+        key="submit"
+        styling="primary"
+        disabled={loading || !hasName}
+        aria-label="Mark as complete"
+        onClick={() => setPrompt("SUBMIT_PROMPT")}
+        loading={loading === "SUBMIT"}
+      >
+        Mark as complete
+      </Button>
+    );
+  }
 
   if (isClient && stage === "Not Assigned") {
     if (!hasQuote) {

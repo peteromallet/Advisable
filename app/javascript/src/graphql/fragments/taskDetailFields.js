@@ -10,6 +10,7 @@ export default gql`
       id
       rate
       airtableId
+      projectType
       specialist {
         id
         firstName
