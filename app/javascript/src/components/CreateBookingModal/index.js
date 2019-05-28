@@ -10,7 +10,6 @@ const CreateBookingModal = ({
   onClose,
   firstName,
   applicationId,
-  mutate,
   onCreate,
 }) => {
   return (
