@@ -7,6 +7,7 @@ describe Mutations::StartWorking do
     mutation {
       startWorking(input: {
         application: #{application.airtable_id},
+        projectType: "Fixed"
       }) {
         application {
           id
