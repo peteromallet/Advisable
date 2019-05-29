@@ -38,14 +38,16 @@ const useTutorial = (name, opts = {}) => {
   const stop = () => setActive(false);
 
   const complete = () => {
-    client.mutate({
-      mutation: COMPLETE_TUTORIAL,
-      variables: {
-        input: {
-          tutorial: name,
+    if (!isComplete) {
+      client.mutate({
+        mutation: COMPLETE_TUTORIAL,
+        variables: {
+          input: {
+            tutorial: name,
+          },
         },
-      },
-    });
+      });
+    }
 
     stop();
   };

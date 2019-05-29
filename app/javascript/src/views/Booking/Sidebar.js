@@ -1,6 +1,7 @@
 import React from "react";
 import { get } from "lodash";
 import { Mutation } from "react-apollo";
+import { useTranslation } from "react-i18next";
 import Sticky from "react-stickynode";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
@@ -11,14 +12,16 @@ import Heading from "../../components/Heading";
 import currency from "../../utilities/currency";
 import { Padding } from "../../components/Spacing";
 import { FadeIn } from "../../components/Animation";
+import VideoButton from "../../components/VideoButton";
 import AttributeList from "../../components/AttributeList";
 import { useMobile } from "../../components/Breakpoint";
 import ProjectTypeModal from "../../components/ProjectTypeModal";
 import ProjectMonthlyLimit from "../../components/ProjectMonthlyLimit";
 import SET_PROJECT_TYPE from "./setProjectType";
 
-export default ({ data }) => {
+export default ({ data, tutorial }) => {
   const isMobile = useMobile();
+  const { t } = useTranslation();
   const application = data.application;
   const specialist = application.specialist;
   const [projectTypeModal, setProjectTypeModal] = React.useState(false);
@@ -44,7 +47,7 @@ export default ({ data }) => {
             {specialist.city}
             {specialist.country && `, ${specialist.country.name}`}
           </Text>
-          <Padding top="m" bottom="l">
+          <Padding top="xl" bottom="xl">
             <AttributeList>
               {Boolean(application.rate) && (
                 <AttributeList.Item
@@ -125,6 +128,11 @@ export default ({ data }) => {
                 }
               />
             </AttributeList>
+          </Padding>
+          <Padding bottom="xl">
+            <VideoButton onClick={tutorial.start}>
+              {t(`tutorials.${tutorial.name}.prompt`)}
+            </VideoButton>
           </Padding>
         </FadeIn>
       </Sticky>
