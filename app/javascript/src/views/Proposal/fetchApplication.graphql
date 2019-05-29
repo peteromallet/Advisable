@@ -5,6 +5,7 @@ query Application($id: ID!) {
     status
     rate
     proposalComment
+    projectType
     tasks {
       id
       name
