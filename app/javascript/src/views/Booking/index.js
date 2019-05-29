@@ -93,7 +93,7 @@ let Booking = ({ data, match, history, location, client }) => {
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
       <Layout>
-        <Sidebar data={data} />
+        <Sidebar data={data} tutorial={tutorial} />
         <Layout.Main>
           <Tasks
             tasks={tasks}

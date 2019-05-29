@@ -51,10 +51,12 @@
   },
   "tutorials": {
     "flexibleProjects": {
+      "prompt": "Watch a short video on how to use flexible projects",
       "heading": "How to use flexible projects",
       "summary": "Work with freelancers on a flexible basis with monthly limits."
     },
     "fixedProjects": {
+      "prompt": "Watch a short video on how to use fixed projects",
       "heading": "How to use fixed projects",
       "summary": "Fixed projects can be used to work with freelancers on one big project or a number of smaller tasks."
     }
