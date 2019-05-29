@@ -5,6 +5,7 @@ module Account
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   included do
+    include Tutorials
     include Permissions
 
     has_secure_password validations: false

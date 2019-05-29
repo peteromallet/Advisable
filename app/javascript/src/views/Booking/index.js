@@ -9,11 +9,23 @@ import SetMonthlyLimit from "./SetMonthlyLimit";
 import { getActiveApplication } from "../../graphql/queries/applications";
 import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
+import Tutorial from "./Tutorial";
+import useTutorial from "../../hooks/useTutorial";
+
+const tutorials = {
+  Fixed: "fixedProjects",
+  Flexible: "flexibleProjects",
+};
 
 let Booking = ({ data, match, history, location, client }) => {
   if (data.loading) return <Loading />;
   if (!data.application) return <NotFound />;
   if (data.application.status !== "Working") return <NotFound />;
+  const application = data.application;
+  const tutorial = useTutorial(tutorials[application.projectType], {
+    client,
+    autoStart: true,
+  });
 
   const hasMonthlyLimit = Boolean(data.application.monthlyLimit);
   if (data.application.projectType === "Flexible" && !hasMonthlyLimit) {
@@ -71,6 +83,7 @@ let Booking = ({ data, match, history, location, client }) => {
 
   return (
     <>
+      <Tutorial tutorial={tutorial} />
       <TaskDrawer
         isClient
         showStatusNotice
