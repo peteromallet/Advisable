@@ -4,15 +4,20 @@ import { withRouter } from "react-router-dom";
 import Loading from "../Loading";
 import viewer from "../../graphql/queries/viewer";
 import useIntercom from "../../utilities/useIntercom";
+import ApplicationContext from "../../applicationContext";
 
 let ApplicationProvider = ({ children, location, data }) => {
   useIntercom(location, data.viewer);
 
-  if (data.loading) {
-    return <Loading />;
-  }
+  const context = {
+    viewer: data.viewer,
+  };
 
-  return children;
+  return (
+    <ApplicationContext.Provider value={context}>
+      {data.loading ? <Loading /> : children}
+    </ApplicationContext.Provider>
+  );
 };
 
 // Add viewer query

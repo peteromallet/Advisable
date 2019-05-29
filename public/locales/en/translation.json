@@ -48,5 +48,15 @@
         "approved": "This task has been completed"
       }
     }
+  },
+  "tutorials": {
+    "flexibleProjects": {
+      "heading": "How to use flexible projects",
+      "summary": "Work with freelancers on a flexible basis with monthly limits."
+    },
+    "fixedProjects": {
+      "heading": "How to use fixed projects",
+      "summary": "Fixed projects can be used to work with freelancers on one big project or a number of smaller tasks."
+    }
   }
 }

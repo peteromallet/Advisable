@@ -13,6 +13,7 @@ export default gql`
         confirmed
         createdAt
         companyName
+        completedTutorials
         country {
           id
           name
@@ -27,6 +28,7 @@ export default gql`
         firstName
         lastName
         confirmed
+        completedTutorials
       }
     }
   }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_27_124435) do
+ActiveRecord::Schema.define(version: 2019_05_29_082702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -303,6 +303,7 @@ ActiveRecord::Schema.define(version: 2019_05_27_124435) do
     t.text "permissions", default: [], array: true
     t.boolean "remote"
     t.string "application_stage"
+    t.text "completed_tutorials", default: [], array: true
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
@@ -344,6 +345,7 @@ ActiveRecord::Schema.define(version: 2019_05_27_124435) do
     t.datetime "reset_sent_at"
     t.text "permissions", default: [], array: true
     t.string "title"
+    t.text "completed_tutorials", default: [], array: true
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
   end
