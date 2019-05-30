@@ -37,6 +37,10 @@ class Types::ApplicationType < Types::BaseType
     authorize :read
   end
 
+  def project_type
+    object.project_type || "Fixed"
+  end
+
   def applied_at
     object.applied_at.try(:iso8601)
   end
