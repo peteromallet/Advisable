@@ -13,6 +13,8 @@ class Mutations::UpdateApplication < Mutations::BaseMutation
   argument :rate, Float, required: false
   argument :accepts_fee, Boolean, required: false
   argument :accepts_terms, Boolean, required: false
+  argument :project_type, String, required: false
+  argument :monthly_limit, Int, required: false
 
   field :application, Types::ApplicationType, null: true
   field :errors, [Types::Error], null: true

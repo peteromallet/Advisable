@@ -19,10 +19,12 @@ let SideBar = (props: any) => {
 
   const urlPrefix = `/applications/${application.airtableId}/proposal`;
   const ratePath = urlPrefix;
+  const projectTypePath = `${urlPrefix}/type`;
   const tasksPath = `${urlPrefix}/tasks`;
   const sendPath = `${urlPrefix}/send`;
 
   const hasRate = Boolean(application.rate);
+  const hasProjectType = Boolean(application.projectType);
   const isSent = application.status === "Proposed";
 
   return (
@@ -53,7 +55,15 @@ let SideBar = (props: any) => {
             Hourly Rate
           </Steps.Step>
           <Steps.Step
+            exact
             number={2}
+            to={{ pathname: projectTypePath }}
+            isComplete={hasProjectType}
+          >
+            Project Type
+          </Steps.Step>
+          <Steps.Step
+            number={3}
             to={{ pathname: tasksPath }}
             isDisabled={!hasRate}
             isComplete={hasCompleteTasksStep(application)}
@@ -61,7 +71,7 @@ let SideBar = (props: any) => {
             Project Tasks
           </Steps.Step>
           <Steps.Step
-            number={3}
+            number={4}
             to={{ pathname: sendPath }}
             isDisabled={!hasCompleteTasksStep(application)}
             isComplete={isSent}

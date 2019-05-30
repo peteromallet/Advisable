@@ -4,6 +4,8 @@ mutation updateApplication($input: UpdateApplicationInput!) {
       id
       airtableId
       rate
+      projectType
+      monthlyLimit
     }
     errors {
       code

@@ -1,4 +1,3 @@
-import { get } from "lodash";
 import * as React from "react";
 import { Formik, Form } from "formik";
 import { compose, graphql } from "react-apollo";
@@ -40,7 +39,7 @@ const Rate = ({ history, application, updateApplication }: Props) => {
 
     if (!errors) {
       const urlPrefix = `/applications/${application.airtableId}/proposal`;
-      history.push(`${urlPrefix}/tasks`);
+      history.push(`${urlPrefix}/type`);
     }
   };
 

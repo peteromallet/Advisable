@@ -38,7 +38,11 @@ class Types::ApplicationType < Types::BaseType
   end
 
   def project_type
-    object.project_type || "Fixed"
+    if object.status === "Working"
+      return object.project_type || "Fixed"
+    end
+
+    object.project_type
   end
 
   def applied_at
