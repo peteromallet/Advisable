@@ -57,7 +57,7 @@ export const Label = styled.label`
   display: block;
   cursor: pointer;
   position: relative;
-  padding-left: 26px;
+  padding-left: 28px;
 
   &:hover ${Circle} {
     background-color: #f0f2f7;
@@ -66,7 +66,7 @@ export const Label = styled.label`
   ${props => props.variation === "bordered" && borderedStyling};
 
   ${InputDescription} {
-    padding-top: 4px;
+    padding-top: 2px;
   }
 `;
 
