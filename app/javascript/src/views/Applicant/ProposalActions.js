@@ -1,25 +1,29 @@
 import React from "react";
+import { withRouter } from "react-router";
 import Button from "../../components/Button";
 import ButtonGroup from "../../components/ButtonGroup";
 import RejectProposalModal from "../../components/RejectProposalModal";
-import AcceptModal from "./AcceptModal";
+import CreateBookingModal from "../../components/CreateBookingModal";
 
-const ProposalActions = ({ application, specialist }) => {
+const ProposalActions = ({ application, specialist, history }) => {
   const [modal, setModal] = React.useState(null);
 
   const afterReject = () => {
-    setModal(null)
-  }
+    setModal(null);
+  };
 
   if (application.status !== "Proposed") return null;
 
   return (
     <>
-      <AcceptModal
+      <CreateBookingModal
         isOpen={modal === "ACCEPT"}
         application={application}
         firstName={specialist.firstName}
         onClose={() => setModal(null)}
+        onCreate={app => {
+          history.replace(`/manage/${app.airtableId}`);
+        }}
       />
       <RejectProposalModal
         isOpen={modal === "REJECT"}
@@ -38,4 +42,4 @@ const ProposalActions = ({ application, specialist }) => {
   );
 };
 
-export default ProposalActions;
+export default withRouter(ProposalActions);
