@@ -15,6 +15,9 @@ describe 'Submitting a proposal' do
 
     fill_in "rate", with: "55"
     click_on "Continue"
+    find(:label, text: "Flexible").click
+    fill_in "monthlyLimit", with: "65"
+    click_on "Continue"
     click_on "Add a task"
     fill_in "name", with: "This is a task"
     click_on "Due Date"

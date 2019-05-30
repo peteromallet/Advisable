@@ -2,30 +2,53 @@
 // a new booking.
 import * as React from "react";
 import { Formik } from "formik";
+import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Modal from "../Modal";
 import Radio from "../Radio";
 import Button from "../Button";
 import Heading from "../Heading";
+import TextField from "../TextField";
 import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
 import validationSchema from "./validationSchema";
 
-const ProjectTypeModal = ({
-  isOpen,
-  onClose,
-  firstName,
-  initialValues,
-  onSubmit,
-}) => {
+const numberMask = createNumberMask({
+  prefix: "",
+  suffix: " hours",
+});
+
+const ProjectTypeModal = ({ isOpen, onClose, application, onSubmit }) => {
+  const initialValues = {
+    projectType: application.projectType,
+    monthlyLimit: application.monthlyLimit,
+  };
+
+  const handleLimitChange = formik => e => {
+    let value = e.target.value;
+    if (Boolean(value)) {
+      value = value.replace(" hours", "");
+      value = value.replace(/\,/g, "");
+      value = Number(value);
+    } else {
+      value = undefined;
+    }
+    formik.setFieldTouched("monthlyLimit", true);
+    formik.setFieldValue("monthlyLimit", value);
+  };
+
+  const isInitialValid = validationSchema.isValidSync(initialValues);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <Padding size="xl" bottom="m">
-        <Heading level={3}>How do you want to work with {firstName}?</Heading>
+        <Heading level={3}>
+          How do you want to work with {application.specialist.firstName}?
+        </Heading>
       </Padding>
       <Formik
         onSubmit={onSubmit}
-        isInitialValid={false}
         initialValues={initialValues}
+        isInitialValid={isInitialValid}
         validationSchema={validationSchema}
       >
         {formik => (
@@ -55,6 +78,22 @@ const ProjectTypeModal = ({
                   description="I want to work with them flexibly with monthly limits"
                 />
               </Padding>
+              {formik.values.projectType === "Flexible" && (
+                <Padding top="m" bottom="s">
+                  <TextField
+                    autoFocus={!Boolean(formik.values.monthlyLimit)}
+                    name="monthlyLimit"
+                    mask={numberMask}
+                    placeholder="Monthly limit"
+                    label="Set a monthly hour cap (to 200-hour max)"
+                    onChange={handleLimitChange(formik)}
+                    value={formik.values.monthlyLimit}
+                    error={
+                      formik.touched.monthlyLimit && formik.errors.monthlyLimit
+                    }
+                  />
+                </Padding>
+              )}
             </Padding>
             <Padding top="m" size="xl">
               <ButtonGroup fullWidth>
