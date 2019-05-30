@@ -1,4 +1,5 @@
 import generate from "nanoid/generate";
+import wait from "waait";
 import { fireEvent, cleanup } from "react-testing-library";
 import VIEWER from "../graphql/queries/viewer";
 import renderApp from "../testHelpers/renderApp";
@@ -146,7 +147,13 @@ test("Does not render a tutorial video if the user has completed it", async () =
 });
 
 test("The client can change the project type", async () => {
-  const { findByText, getByText, getByLabelText, getByTestId } = renderApp({
+  const {
+    findByText,
+    findByLabelText,
+    getByText,
+    getByLabelText,
+    getByTestId,
+  } = renderApp({
     route: "/manage/rec1234",
     graphQLMocks: [
       {
@@ -190,6 +197,7 @@ test("The client can change the project type", async () => {
             input: {
               application: "rec1234",
               projectType: "Flexible",
+              monthlyLimit: 100,
             },
           },
         },
@@ -201,29 +209,7 @@ test("The client can change the project type", async () => {
                 id: "rec1234",
                 airtableId: "rec1234",
                 projectType: "Flexible",
-              }),
-            },
-          },
-        },
-      },
-      {
-        request: {
-          query: SET_MONTHLY_LIMIT,
-          variables: {
-            input: {
-              application: "rec1234",
-              monthlyLimit: 100,
-            },
-          },
-        },
-        result: {
-          data: {
-            setMonthlyLimit: {
-              __typename: "SetMonthlyLimitPayload",
-              application: generateType.application({
-                id: "rec1234",
                 monthlyLimit: 100,
-                projectType: "Flexible",
               }),
             },
           },
@@ -237,16 +223,14 @@ test("The client can change the project type", async () => {
   fireEvent.click(button);
   const flexible = getByTestId("flexible");
   fireEvent.click(flexible);
-  const cont = getByLabelText("Continue");
-  fireEvent.click(cont);
-  await findByText("Set a monthly limit for this project");
-  const limit = getByLabelText("Monthly hourly limit");
+  const limit = getByLabelText("Set a monthly hour cap (to 200-hour max)");
   fireEvent.change(limit, { target: { value: "100" } });
-  const submit = getByLabelText("Set Monthly Limit");
+  const submit = getByLabelText("Continue");
   fireEvent.click(submit);
-  await findByText("Active Tasks");
+  await wait(0);
+  await wait(0);
   expect(getByText("100 hours")).toBeInTheDocument();
-  expect(getByText("Flexible")).toBeInTheDocument();
+  expect(getByTestId("projectType")).toHaveTextContent("Flexible");
 });
 
 test("The client can add a task", async () => {
