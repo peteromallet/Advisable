@@ -76,6 +76,7 @@ const ProjectMonthlyLimit = ({
                   type="submit"
                   loading={loading}
                   styling="primary"
+                  aria-label={buttonLabel || "Set Monthly Limit"}
                   disabled={!formik.isValid}
                 >
                   {buttonLabel || "Set Monthly Limit"}

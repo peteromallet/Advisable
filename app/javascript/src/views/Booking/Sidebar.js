@@ -98,7 +98,7 @@ export default ({ data, tutorial }) => {
                     firstName={application.specialist.firstName}
                     initialValues={{ projectType: application.projectType }}
                     onSubmit={async values => {
-                      await setProjectType({
+                      const { data } = await setProjectType({
                         variables: {
                           input: {
                             application: application.airtableId,
@@ -106,7 +106,17 @@ export default ({ data, tutorial }) => {
                           },
                         },
                       });
-                      setProjectTypeModal(false);
+
+                      const a = data.setTypeForProject.application;
+                      // If there is no monthly limit then the page is going
+                      // to re-rendering asking the user to set a monthly limit
+                      // this check prevents the modal state being changed after
+                      // it has unmounted.
+                      if (!a.monthlyLimit && a.projectType === "Flexible") {
+                        return;
+                      } else {
+                        setProjectTypeModal(false);
+                      }
                     }}
                   />
                 )}
@@ -120,6 +130,7 @@ export default ({ data, tutorial }) => {
                     <br />
                     <Button
                       styling="plainSubtle"
+                      aria-label="Edit project type"
                       onClick={() => setProjectTypeModal(true)}
                     >
                       Edit
