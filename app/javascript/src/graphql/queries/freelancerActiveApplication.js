@@ -11,6 +11,7 @@ export default gql`
       rate
       airtableId
       projectType
+      monthlyLimit
       project {
         id
         currency
