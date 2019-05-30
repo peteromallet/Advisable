@@ -20,7 +20,6 @@ class WebhookEvent < ApplicationRecord
     # "application_stage" column is updated during the airtable syncing process. 
     "specialists.application_stage_changed",
     "applications.proposal_sent",
-    "applications.proposal_accepted",
     "applications.proposal_rejected",
     "tasks.created",
     "tasks.quote_requested",

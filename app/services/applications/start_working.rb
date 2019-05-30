@@ -1,9 +1,10 @@
 class Applications::StartWorking < ApplicationService
-  attr_reader :application, :project_type
+  attr_reader :application, :project_type, :monthly_limit
 
-  def initialize(application:, project_type:)
+  def initialize(application:, project_type:, monthly_limit:)
     @application = application
     @project_type = project_type
+    @monthly_limit = monthly_limit
   end
 
   def call
@@ -13,6 +14,7 @@ class Applications::StartWorking < ApplicationService
 
     application.status = "Working"
     application.project_type = project_type
+    application.monthly_limit = monthly_limit
 
     if application.save
       application.sync_to_airtable
