@@ -37,6 +37,7 @@ const ProjectTypeModal = ({
                   value="Fixed"
                   name="projectType"
                   variation="bordered"
+                  data-testid="fixed"
                   onChange={formik.handleChange}
                   checked={formik.values.projectType === "Fixed"}
                   description="I want to work with them on one big project or a number of smaller tasks"
@@ -48,6 +49,7 @@ const ProjectTypeModal = ({
                   value="Flexible"
                   name="projectType"
                   variation="bordered"
+                  data-testid="flexible"
                   onChange={formik.handleChange}
                   checked={formik.values.projectType === "Flexible"}
                   description="I want to work with them flexibly with monthly limits"
@@ -61,6 +63,7 @@ const ProjectTypeModal = ({
                   styling="primary"
                   disabled={!formik.isValid}
                   loading={formik.isSubmitting}
+                  aria-label="Continue"
                 >
                   Continue
                 </Button>
