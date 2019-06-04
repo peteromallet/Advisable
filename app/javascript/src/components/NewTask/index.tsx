@@ -67,7 +67,7 @@ const Component = ({ application, onCreate, mutate }) => {
   return (
     <ApolloConsumer>
       {client => (
-        <NewTask onClick={handleClick(client)}>
+        <NewTask onClick={handleClick(client)} aria-label="Add a task">
           <NewTaskIcon>
             <Icon icon="plus" strokeWidth={2} />
           </NewTaskIcon>
