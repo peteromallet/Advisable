@@ -6,7 +6,11 @@ const FixedProjectTutorial = ({ tutorial, isClient }) => {
   const { t } = useTranslation();
 
   let summary = isClient ? "clientSummary" : "freelancerSummary";
-  let url = "https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0";
+  let videoId = "bWeHGq9Asl0";
+  if (isClient) {
+    videoId = "eU17UD8hKrg";
+  }
+  let url = `https://www.youtube.com/embed/${videoId}`;
 
   return (
     <VideoModal

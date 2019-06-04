@@ -63,7 +63,7 @@ const ProjectTypeModal = ({ isOpen, onClose, application, onSubmit }) => {
                   data-testid="fixed"
                   onChange={formik.handleChange}
                   checked={formik.values.projectType === "Fixed"}
-                  description="I want to work with them on one big project or a number of smaller tasks"
+                  description="I want to work with them on pre-defined tasks and timelines"
                 />
               </Padding>
               <Padding bottom="s">
@@ -75,7 +75,7 @@ const ProjectTypeModal = ({ isOpen, onClose, application, onSubmit }) => {
                   data-testid="flexible"
                   onChange={formik.handleChange}
                   checked={formik.values.projectType === "Flexible"}
-                  description="I want to work with them flexibly with monthly limits"
+                  description="I want to set a maximum monthly budget and allow them to work flexibly"
                 />
               </Padding>
               {formik.values.projectType === "Flexible" && (
