@@ -83,6 +83,7 @@ export const application = (fields = {}) => {
       acceptsFee: true,
       acceptsTerms: true,
       proposal: null,
+      proposalComment: "",
       questions: [
         {
           __typename: "ApplicationQuestion",

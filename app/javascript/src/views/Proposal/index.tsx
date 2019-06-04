@@ -9,7 +9,7 @@ import Tasks from "./Tasks";
 import ProjectType from "./ProjectType";
 import Sidebar from "./Sidebar";
 import Loading from "./Loading";
-import FETCH_APPLICATION from "./fetchApplication.graphql";
+import FETCH_APPLICATION from "./fetchApplication";
 
 const Proposals = ({ fetchApplication }) => {
   if (fetchApplication.loading) {

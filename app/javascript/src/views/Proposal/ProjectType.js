@@ -12,7 +12,7 @@ import Heading from "../../components/Heading";
 import { Padding } from "../../components/Spacing";
 import { useMobile } from "../../components/Breakpoint";
 import { projectTypeValidationSchema } from "./validationSchema";
-import UPDATE_APPLICATION from "./updateApplication.graphql";
+import UPDATE_APPLICATION from "./updateApplication.js";
 
 const numberMask = createNumberMask({
   prefix: "",
@@ -86,6 +86,7 @@ const ProjectType = ({ history, application, updateApplication }) => {
                   name="projectType"
                   value="Fixed"
                   label="Fixed"
+                  data-testid="fixed"
                   onChange={formik.handleChange}
                   checked={formik.values.projectType === "Fixed"}
                   description="I want to work with them on one big project or a number of smaller tasks"
@@ -96,6 +97,7 @@ const ProjectType = ({ history, application, updateApplication }) => {
                   name="projectType"
                   value="Flexible"
                   label="Flexible"
+                  data-testid="flexible"
                   onChange={formik.handleChange}
                   checked={formik.values.projectType === "Flexible"}
                   description="I want to work with them flexibly with monthly limits"
@@ -120,6 +122,7 @@ const ProjectType = ({ history, application, updateApplication }) => {
               <ButtonGroup fullWidth={isMobile}>
                 <Button
                   type="submit"
+                  aria-label="Continue"
                   disabled={!formik.isValid}
                   loading={formik.isSubmitting}
                   styling="primary"

@@ -13,7 +13,7 @@ import { useMobile } from "../../components/Breakpoint";
 import currency from "../../utilities/currency";
 import { ApplicationType } from "../../types";
 import { rateValidationSchema } from "./validationSchema";
-import UPDATE_APPLICATION from "./updateApplication.graphql";
+import UPDATE_APPLICATION from "./updateApplication.js";
 
 type Props = {
   history: any;
@@ -78,7 +78,9 @@ const Rate = ({ history, application, updateApplication }: Props) => {
               </Padding>
               <Padding bottom="xl">
                 <TextField
+                  labelHidden
                   name="rate"
+                  label="Hourly Rate"
                   placeholder={`$0.00`}
                   value={formik.values.rate}
                   onBlur={formik.handleBlur}
@@ -105,6 +107,7 @@ const Rate = ({ history, application, updateApplication }: Props) => {
                 <Button
                   type="submit"
                   disabled={!formik.isValid}
+                  aria-label="Continue"
                   loading={formik.isSubmitting}
                   styling="primary"
                 >
