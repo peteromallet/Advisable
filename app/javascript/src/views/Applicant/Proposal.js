@@ -1,5 +1,7 @@
 import React from "react";
+import { camelCase } from "lodash";
 import { graphql } from "react-apollo";
+import { useTranslation } from "react-i18next";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Back from "../../components/Back";
@@ -7,6 +9,7 @@ import { FadeInUp } from "../../components/Animation";
 import Heading from "../../components/Heading";
 import TaskList from "../../components/TaskList";
 import Message from "../../components/Message";
+import Notice from "../../components/Notice";
 import TaskDrawer from "../../components/TaskDrawer";
 import SkeletonText from "../../components/SkeletonText";
 import SkeletonHeading from "../../components/SkeletonHeading";
@@ -14,6 +17,7 @@ import { Padding } from "../../components/Spacing";
 import FETCH_PROPOSAL from "./fetchProposal.graphql";
 
 const Loaded = ({ data }) => {
+  const { t } = useTranslation();
   const [selectedTask, setSelectedTask] = React.useState(null);
   const application = data.application;
   const project = data.application.project;
@@ -22,6 +26,8 @@ const Loaded = ({ data }) => {
   const handleSelectTask = task => {
     setSelectedTask(task.id);
   };
+
+  const projectType = camelCase(application.projectType);
 
   return (
     <>
@@ -46,19 +52,39 @@ const Loaded = ({ data }) => {
           hours work.
         </Text>
       </Padding>
+
+      <Padding left="xl" right="xl" bottom="m">
+        <Notice icon="info">
+          <Text size="s" weight="semibold" colour="dark">
+            {t(`proposals.projectType.${projectType}.title`, {
+              firstName: application.specialist.firstName,
+              monthlyLimit: application.monthlyLimit,
+            })}
+          </Text>
+          <Text size="s">
+            {t(`proposals.projectType.${projectType}.description`)}
+          </Text>
+        </Notice>
+      </Padding>
+
       {application.proposalComment && (
-        <Padding left="xl" right="xl" bottom="xl">
+        <Padding left="xl" right="xl" bottom="m">
           <Message title={`Message from ${specialist.firstName}`}>
             {application.proposalComment}
           </Message>
         </Padding>
       )}
-      <Padding left="xl" bottom="m">
+      <Padding top="m" left="xl" bottom="m">
         <Text weight="semibold" colour="dark">
           Suggested tasks
         </Text>
       </Padding>
-      <TaskDrawer readOnly hideStatus taskId={selectedTask} onClose={() => setSelectedTask(null)} />
+      <TaskDrawer
+        readOnly
+        hideStatus
+        taskId={selectedTask}
+        onClose={() => setSelectedTask(null)}
+      />
       <Padding bottom="l">
         <TaskList
           hideStatus

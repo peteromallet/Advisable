@@ -27,6 +27,7 @@ const Component = ({ application, onCreate, mutate }) => {
         id: application.id,
         airtableId: application.airtableId,
         rate: "0",
+        projectType: application.projectType,
         specialist: {
           __typename: "Specialist",
           id: application.specialist.id,
@@ -66,7 +67,7 @@ const Component = ({ application, onCreate, mutate }) => {
   return (
     <ApolloConsumer>
       {client => (
-        <NewTask onClick={handleClick(client)}>
+        <NewTask onClick={handleClick(client)} aria-label="Add a task">
           <NewTaskIcon>
             <Icon icon="plus" strokeWidth={2} />
           </NewTaskIcon>

@@ -1,7 +1,6 @@
 class Types::MutationType < GraphQL::Schema::Object
   field :start_working, mutation: Mutations::StartWorking
   field :send_proposal, mutation: Mutations::SendProposal
-  field :accept_proposal, mutation: Mutations::AcceptProposal
 
   field :request_introduction, mutation: Mutations::RequestIntroduction
   field :accept_interview_request, mutation: Mutations::AcceptInterviewRequest
@@ -14,7 +13,9 @@ class Types::MutationType < GraphQL::Schema::Object
   field :reject_application_invitation, mutation: Mutations::RejectApplicationInvitation
   field :update_application, mutation: Mutations::UpdateApplication
   field :submit_application, mutation: Mutations::SubmitApplication
-
+  field :set_monthly_limit, mutation: Mutations::SetMonthlyLimit
+  field :set_type_for_project, mutation: Mutations::SetTypeForProject
+  
   field :update_availability, mutation: Mutations::UpdateAvailability
 
   field :create_payment, mutation: Mutations::CreatePayment
@@ -43,4 +44,6 @@ class Types::MutationType < GraphQL::Schema::Object
   field :submit_task, mutation: Mutations::SubmitTask
   field :approve_task, mutation: Mutations::ApproveTask
   field :set_task_repeat, mutation: Mutations::SetTaskRepeat
+
+  field :complete_tutorial, mutation: Mutations::CompleteTutorial
 end

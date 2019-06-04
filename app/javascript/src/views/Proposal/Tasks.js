@@ -12,7 +12,7 @@ import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
 import { Padding } from "../../components/Spacing";
 import { useMobile } from "../../components/Breakpoint";
-import FETCH_APPLICATION from "./fetchApplication.graphql";
+import FETCH_APPLICATION from "./fetchApplication";
 import { hasCompleteTasksStep } from "./validationSchema";
 
 const Tasks = ({ application, match, location, history, client }) => {

@@ -7,6 +7,18 @@
       "failed": "Invalid login credentials, please try again."
     }
   },
+  "proposals": {
+    "projectType": {
+      "fixed": {
+        "title": "{{firstName}} has suggested a 'Fixed' project",
+        "description": "Fixed projects allow you to work with freelancers on one big project or a number of smaller tasks"
+      },
+      "flexible": {
+        "title": "{{firstName}} has suggested a 'Flexible' project with a monthly limit of {{monthlyLimit}} hours",
+        "description": "Flexible projects allow you to work with freelaners on a flexible basis with monthly limits."
+      }
+    }
+  },
   "projects": {
     "signupRequired": "We have introduced logins to our system. Please create a password for your account below.",
     "applicationsClosed": {
@@ -42,11 +54,25 @@
         "quoteProvided": "You have provided a quote for this task. You should not start work on this task until it is assigned to you.",
         "assigned": "{{task.application.project.user.companyName}} has assigned this task to you and is ready for you to begin working on it.",
         "working": "You have marked this task as in progress. Once you have completed the task you can submit it for approval.",
-        "submitted": "You have submitted this task for approval.",
+        "submitted": "You have marked this task as complete.",
         "estimateRequiredToStart": "You must provide a quote for this task before you can start working on it.",
         "dueDateRequiredToStart": "You must provide a due date for this task before you can start working on it.",
         "approved": "This task has been completed"
       }
+    }
+  },
+  "tutorials": {
+    "flexibleProjects": {
+      "prompt": "Watch a short video on how to use flexible projects",
+      "heading": "How to use flexible projects",
+      "clientSummary": "Work with freelancers on a flexible basis with monthly limits.",
+      "freelancerSummary": "Work with clients on a flexible basis with monthly limits."
+    },
+    "fixedProjects": {
+      "prompt": "Watch a short video on how to use fixed projects",
+      "heading": "How to use fixed projects",
+      "clientSummary": "Fixed projects can be used to work with freelancers on one big project or a number of smaller tasks.",
+      "freelancerSummary": "Fixed projects can be used to work with clients on one big project or a number of smaller tasks."
     }
   }
 }

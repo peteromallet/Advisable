@@ -13,7 +13,9 @@ describe 'Accepting a proposal' do
     visit "/projects/#{project.airtable_id}/applications/#{application.airtable_id}/proposal"
 
     click_on "Start working with #{application.specialist.first_name}"
-    click_on "Accept Proposal"
+    find(:label, text: "Flexible").click
+    fill_in "monthlyLimit", with: "65"
+    click_on "Continue"
     expect(page).to have_content('Add a task')
   end
 end

@@ -1,22 +1,36 @@
 // Renders the loaded state for when a freelancer is viewing an active
 // application
 import React from "react";
-import { find } from "lodash";
-import { matchPath, Redirect } from "react-router-dom";
+import { matchPath } from "react-router-dom";
 import Card from "../../components/Card";
 import Layout from "../../components/Layout";
 import Heading from "../../components/Heading";
 import NewTask from "../../components/NewTask";
 import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
+import FixedTutorial from "../../components/Tutorial/FixedProjectTutorial";
+import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
 import { Padding } from "../../components/Spacing";
 import Sidebar from "./Sidebar";
 import NoTasks from "./NoTasks";
-import FETCH_TASK from "../../graphql/queries/taskDetails";
 import FETCH_APPLICATION from "../../graphql/queries/freelancerActiveApplication";
+import useTutorial from "../../hooks/useTutorial";
+
+const tutorials = {
+  Fixed: "fixedProjects",
+  Flexible: "flexibleProjects",
+};
 
 const FetchActiveApplication = ({ location, history, match, data, client }) => {
   const application = data.application;
+
+  const tutorial = useTutorial(tutorials[application.projectType], {
+    client,
+    autoStart: true,
+  });
+
+  const TutorialComponent =
+    tutorial.name === "flexibleProjects" ? FlexibleTutorial : FixedTutorial;
 
   const handleTaskClick = task => {
     history.replace(`/clients/${application.airtableId}/tasks/${task.id}`);
@@ -67,6 +81,7 @@ const FetchActiveApplication = ({ location, history, match, data, client }) => {
 
   return (
     <Layout>
+      <TutorialComponent tutorial={tutorial} />
       <TaskDrawer
         isClient={false}
         showStatusNotice
@@ -74,7 +89,7 @@ const FetchActiveApplication = ({ location, history, match, data, client }) => {
         onDeleteTask={handleDeleteTask}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
-      <Sidebar data={data} />
+      <Sidebar data={data} tutorial={tutorial} />
       <Layout.Main>
         {application.tasks.length > 0 ? (
           <Card elevation={1}>

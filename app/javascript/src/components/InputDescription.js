@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import colors from "../colors";
 
 export default styled.div`
-  color: #848ba6;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   padding-top: 6px;
   line-height: 16px;
+  color: ${colors.neutral.s8};
 `;

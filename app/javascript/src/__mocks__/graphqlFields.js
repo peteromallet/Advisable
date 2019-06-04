@@ -12,6 +12,7 @@ export const user = (fields = {}) => {
       airtableId: "airtableid",
       confirmed: true,
       companyName: "Test Corp",
+      completedTutorials: [],
       createdAt: new Date().toISOString(),
       country: {
         __typename: "Country",
@@ -73,13 +74,16 @@ export const application = (fields = {}) => {
       featured: false,
       comment: "comment",
       hidden: false,
+      monthlyLimit: null,
       referencesRequested: false,
+      projectType: "Fixed",
       referralUrl: "https//advisable.com",
       introduction: "Application Introduction",
       availability: "2 - 4 Weeks",
       acceptsFee: true,
       acceptsTerms: true,
       proposal: null,
+      proposalComment: "",
       questions: [
         {
           __typename: "ApplicationQuestion",
@@ -106,6 +110,7 @@ export const specialist = (fields = {}) => {
       lastName: "Specialist",
       confirmed: true,
       email: "specialist@test.com",
+      completedTutorials: [],
       createdAt: new Date().toISOString(),
       city: "Dublin",
       reviewsCount: 0,
