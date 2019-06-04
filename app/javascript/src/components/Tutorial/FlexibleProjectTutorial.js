@@ -6,7 +6,13 @@ const FlexibleProjectTutorial = ({ tutorial, isClient = false }) => {
   const { t } = useTranslation();
 
   let summary = isClient ? "clientSummary" : "freelancerSummary";
-  let url = "https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0";
+  // default to the freelancer video
+  let videoId = "wttl9dX1eMs";
+  if (isClient) {
+    videoId = "0XanXMDAqdI";
+  }
+
+  let url = `https://www.youtube.com/embed/${videoId}`;
 
   return (
     <VideoModal
