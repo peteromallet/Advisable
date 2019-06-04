@@ -10,6 +10,8 @@ export default gql`
       status
       rate
       airtableId
+      projectType
+      monthlyLimit
       project {
         id
         currency

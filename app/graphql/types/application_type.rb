@@ -13,6 +13,8 @@ class Types::ApplicationType < Types::BaseType
   field :introduction, String, null: true
   field :rejection_reason, String, null: true
   field :rejection_reason_comment, String, null: true
+  field :project_type, String, null: true
+  field :monthly_limit, Int, null: true
   field :questions, [Types::ApplicationQuestionType, null: true], null: true
   field :project, Types::ProjectType, null: false
   field :proposal, Types::Booking, null: true
@@ -33,6 +35,14 @@ class Types::ApplicationType < Types::BaseType
 
   field :tasks, [Types::TaskType], null: true do
     authorize :read
+  end
+
+  def project_type
+    if object.status === "Working"
+      return object.project_type || "Fixed"
+    end
+
+    object.project_type
   end
 
   def applied_at

@@ -6,9 +6,10 @@ import Rate from "./Rate";
 import Send from "./Send";
 import Sent from "./Sent";
 import Tasks from "./Tasks";
+import ProjectType from "./ProjectType";
 import Sidebar from "./Sidebar";
 import Loading from "./Loading";
-import FETCH_APPLICATION from "./fetchApplication.graphql";
+import FETCH_APPLICATION from "./fetchApplication";
 
 const Proposals = ({ fetchApplication }) => {
   if (fetchApplication.loading) {
@@ -27,6 +28,12 @@ const Proposals = ({ fetchApplication }) => {
             exact
             path={urlPrefix}
             render={props => <Rate application={application} {...props} />}
+          />
+          <Route
+            path={`${urlPrefix}/type`}
+            render={props => (
+              <ProjectType application={application} {...props} />
+            )}
           />
           <Route
             path={`${urlPrefix}/tasks`}

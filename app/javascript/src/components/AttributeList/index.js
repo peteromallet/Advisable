@@ -23,7 +23,7 @@ const Item = styled.li`
 
 const Label = styled.span`
   color: ${colors.neutral.s8};
-  font-weight: 400;
+  font-weight: 500;
   padding-right: 12px;
 `;
 

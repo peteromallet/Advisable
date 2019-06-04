@@ -4,6 +4,8 @@ query project($id: ID!) {
     airtableId
     rate
     proposalComment
+    projectType
+    monthlyLimit
     specialist {
       id
       firstName

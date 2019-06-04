@@ -17,6 +17,8 @@ class Airtable::Application < Airtable::Base
   sync_column 'Invitation Rejected Reason', to: :invitation_rejection_reason
   sync_column 'Referral URL', to: :referral_url
   sync_column 'Applied At', to: :applied_at
+  sync_column 'Project Type', to: :project_type
+  sync_column 'Monthly Limit', to: :monthly_limit
 
   sync_data do |application|
     application.status = status_to_sync
@@ -106,5 +108,7 @@ class Airtable::Application < Airtable::Base
     self['Proposal Comment'] = application.proposal_comment
     self['Rejected Reason Comment'] = application.rejection_reason_comment
     self['References Requested'] = application.references_requested ? "Yes" : nil
+    self['Project Type'] = application.project_type
+    self['Monthly Limit'] = application.monthly_limit
   end
 end

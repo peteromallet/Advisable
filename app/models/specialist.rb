@@ -18,6 +18,9 @@ class Specialist < ApplicationRecord
   has_many :skills, through: :specialist_skills
   attr_encrypted :phone_number, key: [ENV["ENCRYPTION_KEY"]].pack("H*")
 
+  register_tutorial "fixedProjects"
+  register_tutorial "flexibleProjects"
+
   def name
     "#{first_name} #{last_name}"
   end

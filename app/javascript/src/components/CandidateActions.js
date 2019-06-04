@@ -69,9 +69,8 @@ const statusActions = {
         />
         <CreateBookingModal
           onClose={() => setModal(null)}
-          applicationId={application.airtableId}
+          application={application}
           isOpen={modal === CREATE_BOOKING_MODAL}
-          firstName={application.specialist.firstName}
           onCreate={b => history.push(`/manage/${b.airtableId}`)}
         />
         <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>

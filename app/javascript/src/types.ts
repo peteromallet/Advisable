@@ -30,6 +30,8 @@ export interface ApplicationType {
   introduction?: string;
   availability?: string;
   project?: ProjectType;
+  projectType?: string;
+  monthlyLimit?: number;
   questions?: ApplicationQuestionType[];
   previousProjects?: PreviousProjectType[];
   interviewRequest?: InterviewType;

@@ -1,5 +1,4 @@
 import renderApp from "../../testHelpers/renderApp";
-import wait from "waait";
 import generate from "nanoid/generate";
 import { fireEvent, cleanup } from "react-testing-library";
 import generateTypes from "../../__mocks__/graphqlFields";

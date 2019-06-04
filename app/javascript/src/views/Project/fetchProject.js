@@ -12,6 +12,7 @@ export default gql`
       clientReferralUrl
       applicationCount
       user {
+        id
         name
         email
       }

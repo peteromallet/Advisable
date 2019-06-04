@@ -1,3 +1,0 @@
-fragment task on Task {
-  name
-}

@@ -72,7 +72,7 @@ describe Mutations::SubmitTask do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["data"]["submitTask"]["errors"][0]
-      expect(error["code"]).to eq("tasks.mustBeWorking")
+      expect(error["code"]).to eq("tasks.notSubmittable")
     end
   end
 
@@ -82,7 +82,7 @@ describe Mutations::SubmitTask do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["data"]["submitTask"]["errors"][0]
-      expect(error["code"]).to eq("tasks.mustBeWorking")
+      expect(error["code"]).to eq("tasks.notSubmittable")
     end
   end
 end
