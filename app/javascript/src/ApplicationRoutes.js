@@ -17,6 +17,7 @@ const Booking = lazy(() => import("./views/Booking"));
 const JobListing = lazy(() => import("./views/JobListing"));
 const ApplicationFlow = lazy(() => import("./views/ApplicationFlow"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
+const Messages = lazy(() => import("./views/Messages"));
 const InterviewAvailability = lazy(() =>
   import("./views/InterviewAvailability")
 );
@@ -48,6 +49,12 @@ export default () => (
           freelancerRoute
           path="/applications"
           component={Applications}
+        />
+        <AuthenticatedRoute
+          exact
+          freelancerRoute
+          path="/messages"
+          component={Messages}
         />
         <AuthenticatedRoute
           freelancerRoute

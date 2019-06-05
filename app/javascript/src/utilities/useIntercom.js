@@ -1,5 +1,5 @@
 import { get } from "lodash";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import usePrevious from "./usePrevious";
 
 const bootIntercom = viewer => {

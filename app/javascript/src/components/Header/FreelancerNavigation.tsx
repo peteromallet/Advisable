@@ -32,6 +32,9 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
               <NavItem onClick={onCloseNav} to="/profile">
                 Profile
               </NavItem>
+              <NavItem onClick={onCloseNav} to="/messages">
+                Messages
+              </NavItem>
 
               {isMobile && (
                 <NavItem as="a" href="#" onClick={onLogout}>

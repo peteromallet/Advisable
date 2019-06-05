@@ -4,11 +4,13 @@ import { Provider as DonutProvider } from "@advisable/donut";
 import { withRouter } from "react-router-dom";
 import Loading from "../Loading";
 import viewer from "../../graphql/queries/viewer";
+import useTalkjs from "../../hooks/useTalkjs";
 import useIntercom from "../../utilities/useIntercom";
 import ApplicationContext from "../../applicationContext";
 
 let ApplicationProvider = ({ children, location, data }) => {
   useIntercom(location, data.viewer);
+  useTalkjs(data.viewer);
 
   const context = {
     viewer: data.viewer,

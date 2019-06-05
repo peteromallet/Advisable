@@ -18,6 +18,8 @@ import { useMobile } from "../../components/Breakpoint";
 import ProjectTypeModal from "../../components/ProjectTypeModal";
 import ProjectMonthlyLimit from "../../components/ProjectMonthlyLimit";
 import SET_PROJECT_TYPE from "./setProjectType";
+import useViewer from "../../hooks/useViewer";
+import Talk from "talkjs";
 
 export default ({ data, tutorial }) => {
   const isMobile = useMobile();
@@ -26,9 +28,35 @@ export default ({ data, tutorial }) => {
   const specialist = application.specialist;
   const [projectTypeModal, setProjectTypeModal] = React.useState(false);
   const [monthlyLimitModal, setMonthlyLimitModal] = React.useState(false);
+  const viewer = useViewer();
 
   const handleEditMonthlyLimit = () => {
     setMonthlyLimitModal(true);
+  };
+
+  const handleNewMessage = () => {
+    const me = new Talk.User({
+      id: viewer.id,
+      name: viewer.name,
+      email: viewer.email,
+      role: "client",
+    });
+
+    const them = new Talk.User({
+      id: specialist.id,
+      name: specialist.name,
+      role: "freelancer",
+    });
+
+    var conversation = talkSession.getOrCreateConversation(
+      Talk.oneOnOneId(me, them)
+    );
+    conversation.setParticipant(me);
+    conversation.setParticipant(them);
+
+    var popup = talkSession.createPopup(conversation, { keepOpen: false });
+    popup.mount({ show: false });
+    popup.show();
   };
 
   return (
@@ -47,6 +75,11 @@ export default ({ data, tutorial }) => {
             {specialist.city}
             {specialist.country && `, ${specialist.country.name}`}
           </Text>
+          <Padding top="xl">
+            <Button block onClick={handleNewMessage}>
+              message
+            </Button>
+          </Padding>
           <Padding top="xl" bottom="xl">
             <AttributeList>
               {Boolean(application.rate) && (
