@@ -8,7 +8,7 @@ import Heading from "../../../components/Heading";
 import Padding from "../../../components/Spacing/Padding";
 import PreviousProjects from "../../../components/PreviousProjects";
 import AddPreviousProjectModal from "../../../components/AddPreviousProjectModal";
-import PREVIOUS_PROJECTS from "./previousProjects.graphql";
+import PREVIOUS_PROJECTS from "./previousProjects";
 
 const References = ({ data }) => {
   const [modalOpen, setModalOpen] = React.useState(false);

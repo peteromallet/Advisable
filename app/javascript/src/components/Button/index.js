@@ -287,6 +287,7 @@ export default React.forwardRef(
       ref={ref}
       loading={loading}
       disabled={loading || props.disabled}
+      aria-label={props["aria-label"] || children}
       {...props}
     >
       {loading && <Loading />}

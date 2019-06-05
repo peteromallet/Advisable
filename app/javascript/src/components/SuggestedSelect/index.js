@@ -80,6 +80,7 @@ const SuggestedSelect = ({
       {label && <InputLabel>{label}</InputLabel>}
       {subLabel && <InputSubLabel>{subLabel}</InputSubLabel>}
       <Select
+        label={label}
         classNamePrefix="SuggestedSelect"
         menuPortalTarget={document.body}
         styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
