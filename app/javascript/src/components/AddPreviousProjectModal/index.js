@@ -1,3 +1,4 @@
+// Renders the modal for adding a previous project reference.
 import { Formik } from "formik";
 import React, { useState } from "react";
 import { graphql, compose } from "react-apollo";
@@ -5,62 +6,56 @@ import Modal from "src/components/Modal";
 import Loading from "src/components/Loading";
 import ClientDetails from "./ClientDetails";
 import ProjectDetails from "./ProjectDetails";
-import Results from "./Results";
 import Reference from "./Reference";
-import FETCH_DATA from "./fetchData.graphql";
+import FETCH_DATA from "./fetchData";
 import CREATE_OFF_PLATFORM_PROJECT from "./createOffPlatformProject.graphql";
 
-const STEPS = [ClientDetails, ProjectDetails, Results, Reference];
+// Build an array of components for each step in the form. Each of these steps
+// are just components that are imported above.
+const STEPS = [ClientDetails, ProjectDetails, Reference];
 
 const blankProject = {
   clientName: "",
   confidential: false,
   industry: "",
-  clientDescription: "",
   skills: [],
-  requirements: "",
   description: "",
-  results: "",
   contactName: "",
   contactEmail: "",
-  canContact: true,
   contactJobTitle: "",
   validationMethod: "Client",
   validationUrl: "",
   validationExplanation: "",
 };
 
-const validationMethodValue = selected => {
-  const values = {
-    "Linkedin": "URL",
-    "Portfolio": "URL",
-    "External Site": "URL"
-  }
-
-  return values[selected] || selected;
-}
-
-const AddPreviousProjectModal = ({ specialistId, isOpen, onClose, data, mutate }) => {
+const AddPreviousProjectModal = ({
+  specialistId, // the component expects to receive the specialist id as a prop
+  isOpen, // a boolean value that is passed to the Modal isOpen prop
+  onClose, // a function that should be called to close the modal.
+  data, // The resulting data from the graphql call to fetch skills and inudstries
+  createProject, // The mutation that should be called to create the project
+}) => {
+  // Use react state to keep track of the overall state.
   const [values, setValues] = useState(blankProject);
+  // We keep track of which step is currently being displayed via a 'stepIndex'.
   const [stepIndex, setStepIndex] = useState(0);
-
+  // Get the current step from the STEPS array.
   const Step = STEPS[stepIndex];
 
   const handleSubmit = async (values, formikBag) => {
     const isLastStep = stepIndex === STEPS.length - 1;
     if (isLastStep) {
-      await mutate({
+      await createProject({
         variables: {
           input: {
             ...values,
-            validationMethod: validationMethodValue(values.validationMethod),
             specialistId,
-          }
-        }
-      })
+          },
+        },
+      });
 
       setStepIndex(0);
-      formikBag.resetForm(blankProject)
+      formikBag.resetForm(blankProject);
       onClose();
     } else {
       formikBag.setTouched({});
@@ -86,8 +81,8 @@ const AddPreviousProjectModal = ({ specialistId, isOpen, onClose, data, mutate }
               formik={formik}
               skills={data.skills}
               industries={data.industries}
-              gotoNextStep={_ => setStepIndex(stepIndex + 1)}
-              gotoPreviousStep={_ => setStepIndex(stepIndex - 1)}
+              gotoNextStep={() => setStepIndex(stepIndex + 1)}
+              gotoPreviousStep={() => setStepIndex(stepIndex - 1)}
             />
           )}
         </Modal>
@@ -99,8 +94,9 @@ const AddPreviousProjectModal = ({ specialistId, isOpen, onClose, data, mutate }
 export default compose(
   graphql(FETCH_DATA),
   graphql(CREATE_OFF_PLATFORM_PROJECT, {
+    name: "createProject",
     options: props => ({
-      update: props.mutationUpdate
-    })
+      update: props.mutationUpdate,
+    }),
   })
 )(AddPreviousProjectModal);

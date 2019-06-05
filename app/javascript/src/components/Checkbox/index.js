@@ -31,8 +31,8 @@ const Checkbox = ({
       <InputLabel htmlFor={id}>
         <Box />
         {label || children}
+        {description && <InputDescription>{description}</InputDescription>}
       </InputLabel>
-      {description && <InputDescription>{description}</InputDescription>}
       {error && <Error>{error}</Error>}
     </Wrapper>
   );

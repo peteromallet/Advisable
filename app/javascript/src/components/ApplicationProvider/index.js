@@ -1,5 +1,6 @@
 import React from "react";
 import { graphql } from "react-apollo";
+import { Provider as DonutProvider } from "@advisable/donut";
 import { withRouter } from "react-router-dom";
 import Loading from "../Loading";
 import viewer from "../../graphql/queries/viewer";
@@ -15,7 +16,7 @@ let ApplicationProvider = ({ children, location, data }) => {
 
   return (
     <ApplicationContext.Provider value={context}>
-      {data.loading ? <Loading /> : children}
+      <DonutProvider>{data.loading ? <Loading /> : children}</DonutProvider>
     </ApplicationContext.Provider>
   );
 };

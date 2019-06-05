@@ -2,22 +2,24 @@ import React from "react";
 import Flex from "src/components/Flex";
 import Modal from "src/components/Modal";
 import Button from "src/components/Button";
-import Heading from "src/components/Heading";
 import FieldRow from "src/components/FieldRow";
 import StepDots from "src/components/StepDots";
 import Checkbox from "src/components/Checkbox";
 import TextField from "src/components/TextField";
 import { useMobile } from "src/components/Breakpoint";
+import { Text } from "@advisable/donut";
 import SuggestedSelect from "src/components/SuggestedSelect";
 import validationSchema from "./validationSchema";
 
-const ClientDetails = ({ formik, industries }) => {
+const ClientDetails = ({ formik, industries, skills }) => {
   let isMobile = useMobile();
 
   return (
     <React.Fragment>
       <Modal.Header>
-        <Heading size="s">Client Details</Heading>
+        <Text size="l" weight="semibold">
+          Client Details
+        </Text>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={formik.handleSubmit}>
@@ -53,26 +55,26 @@ const ClientDetails = ({ formik, industries }) => {
               onBlur={formik.handleBlur}
               value={formik.values.industry}
               onChange={industry => {
-                formik.setFieldTouched('industry', true)
+                formik.setFieldTouched("industry", true);
                 formik.setFieldValue("industry", industry);
               }}
             />
           </FieldRow>
           <FieldRow>
-            <TextField
-              multiline
-              minRows={6}
-              maxLength={300}
-              name="clientDescription"
-              placeholder="The client is..."
-              label="Give a short overview of this company"
-              onChange={formik.handleChange}
-              value={formik.values.clientDescription}
-              description="This should start with &quot;The client/company is...&quot;."
-              error={
-                formik.touched.clientDescription &&
-                formik.errors.clientDescription
-              }
+            <SuggestedSelect
+              max={5}
+              name="skills"
+              isMulti={true}
+              placeholder="e.g Facebook Marketing"
+              label="What skills did you use for this project?"
+              error={formik.touched.skills && formik.errors.skills}
+              options={skills}
+              onBlur={formik.handleBlur}
+              value={formik.values.skills}
+              onChange={skill => {
+                formik.setFieldTouched("skills", true);
+                formik.setFieldValue("skills", skill);
+              }}
             />
           </FieldRow>
         </form>
@@ -82,7 +84,7 @@ const ClientDetails = ({ formik, industries }) => {
           {!isMobile && <Flex.Item style={{ width: "120px" }} />}
           {!isMobile && (
             <Flex.Item distribute="fill">
-              <StepDots current={1} total={4} />
+              <StepDots current={1} total={3} />
             </Flex.Item>
           )}
           <Flex.Item style={{ width: isMobile ? "100%" : "120px" }}>

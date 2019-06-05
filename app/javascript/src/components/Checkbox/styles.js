@@ -13,8 +13,7 @@ export const Wrapper = withSpacing(styled.div`
   }
 
   ${InputDescription} {
-    padding-top: 5px;
-    padding-left: 28px;
+    padding-top: 2px;
   }
 `);
 
