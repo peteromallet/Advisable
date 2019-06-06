@@ -98,7 +98,7 @@ const AutocompleteMobile = ({
                   <List
                     width="100%"
                     itemCount={items.length}
-                    height={window.innerHeight - 50}
+                    height={window.screen.height - 50}
                     itemSize={38}
                     itemData={{
                       items,
