@@ -4,6 +4,7 @@ import Downshift from "downshift";
 import { createPortal } from "react-dom";
 import { FixedSizeList as List } from "react-window";
 import MenuItem from "../Desktop/MenuItem";
+import FieldError from "../../FieldError";
 import filterItems from "../filterItems";
 import {
   Autocomplete as AutocompleteStyles,
@@ -21,6 +22,7 @@ const AutocompleteMobile = ({
   onBlur,
   onChange,
   label,
+  error,
   initalSelectedItem,
 }) => {
   const [open, setOpen] = React.useState(false);
@@ -50,6 +52,7 @@ const AutocompleteMobile = ({
         placeholder={placeholder}
         readOnly
       />
+      {error && <FieldError>{error}</FieldError>}
       {open &&
         createPortal(
           <Downshift

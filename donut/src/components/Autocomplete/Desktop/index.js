@@ -3,11 +3,13 @@ import { get } from "lodash";
 import Downshift from "downshift";
 import { Manager, Reference } from "react-popper";
 import useComponentSize from "@rehooks/component-size";
+import FieldError from "../../FieldError";
 import Menu from "./Menu";
 import { Autocomplete as AutocompleteStyles, Input, Label } from "../styles";
 
 const AutocompleteDesktop = ({
   label,
+  error,
   onBlur,
   options,
   onChange,
@@ -54,6 +56,7 @@ const AutocompleteDesktop = ({
                 </div>
               )}
             </Reference>
+            {error && <FieldError>{error}</FieldError>}
             <Menu
               width={inputSize.width}
               downshift={downshift}

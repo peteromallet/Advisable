@@ -1,8 +1,8 @@
 import { rgba } from "polished";
 import styled, { css } from "styled-components";
 import Text from "../Text/styles";
+import FieldError from "../FieldError/styles";
 import colors from "../../colors";
-import breakpoints from "../../breakpoints";
 
 export const Label = styled(Text)`
   display: block;
@@ -11,6 +11,10 @@ export const Label = styled(Text)`
 
 export const Autocomplete = styled.div`
   position: relative;
+
+  ${FieldError} {
+    margin-top: 8px;
+  }
 `;
 
 export const Input = styled.input`

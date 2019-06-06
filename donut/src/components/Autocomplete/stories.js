@@ -1010,7 +1010,7 @@ storiesOf("Autocomplete", module).add("Basic", () =>
     const [value, setValue] = React.useState();
 
     return (
-      <div style={{ maxWidth: 550, margin: "50px auto " }}>
+      <div style={{ maxWidth: 550, margin: "50px auto", padding: "0 20px" }}>
         <Autocomplete
           value={value}
           onChange={s => setValue(s.value)}

@@ -32,7 +32,7 @@ const ClientDetails = ({ formik, industries, skills }) => {
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value={formik.values.clientName}
-              error={formik.touched.clientName && formik.errors.clientName}
+              error={formik.submitCount > 0 && formik.errors.clientName}
             />
           </FieldRow>
           <FieldRow>
@@ -50,7 +50,7 @@ const ClientDetails = ({ formik, industries, skills }) => {
               name="industry"
               placeholder="e.g Financial Services"
               label="What industry/category is this company in?"
-              error={formik.touched.industry && formik.errors.industry}
+              error={formik.submitCount > 0 && formik.errors.industry}
               options={industries}
               onBlur={formik.handleBlur}
               value={formik.values.industry}
@@ -67,7 +67,7 @@ const ClientDetails = ({ formik, industries, skills }) => {
               isMulti={true}
               placeholder="e.g Facebook Marketing"
               label="What skills did you use for this project?"
-              error={formik.touched.skills && formik.errors.skills}
+              error={formik.submitCount > 0 && formik.errors.skills}
               options={skills}
               onBlur={formik.handleBlur}
               value={formik.values.skills}
