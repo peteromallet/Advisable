@@ -24,6 +24,10 @@ const DonutProvider = ({ children }) => {
     {}
   );
 
+  const context = {
+    breakpoints,
+  };
+
   // We use a theme object for styled-components to be able to use donuts
   // 'responsive props' functionality inside of component styles.
   const theme = {
@@ -36,7 +40,7 @@ const DonutProvider = ({ children }) => {
   };
 
   return (
-    <Context.Provider>
+    <Context.Provider value={context}>
       <ThemeProvider theme={theme}>
         <>
           <BaseStyles />
