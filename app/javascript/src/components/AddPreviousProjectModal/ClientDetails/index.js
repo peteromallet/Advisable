@@ -53,9 +53,10 @@ const ClientDetails = ({ formik, industries, skills }) => {
               error={formik.touched.industry && formik.errors.industry}
               options={industries}
               onBlur={formik.handleBlur}
-              onChange={industry => {
+              value={formik.values.industry}
+              onChange={selection => {
                 formik.setFieldTouched("industry", true);
-                formik.setFieldValue("industry", industry);
+                formik.setFieldValue("industry", selection.value);
               }}
             />
           </FieldRow>
