@@ -65,14 +65,14 @@
     "flexibleProjects": {
       "prompt": "Watch a short video on how to use flexible projects",
       "heading": "How to use flexible projects",
-      "clientSummary": "Work with freelancers on a flexible basis with monthly limits.",
-      "freelancerSummary": "Work with clients on a flexible basis with monthly limits."
+      "clientSummary": "Flexible projects can be used to allow your freelancer to work flexibly up to a set maximum limit of monthly hours.",
+      "freelancerSummary": "Flexible projects can be used to allow you to work flexibly up to a set maximum limit of monthly hours."
     },
     "fixedProjects": {
       "prompt": "Watch a short video on how to use fixed projects",
       "heading": "How to use fixed projects",
-      "clientSummary": "Fixed projects can be used to work with freelancers on one big project or a number of smaller tasks.",
-      "freelancerSummary": "Fixed projects can be used to work with clients on one big project or a number of smaller tasks."
+      "clientSummary": "Fixed projects can be used to work with your freelancer on pre-defined tasks and timelines.",
+      "freelancerSummary": "Fixed projects can be used to work with the client on pre-defined tasks and timelines."
     }
   }
 }
