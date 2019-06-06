@@ -9,7 +9,8 @@ const SIZES = {
   l: "1.33rem",
   m: "1.13rem",
   s: "1rem",
-  xs: "0.86rem",
+  xs: "0.92rem",
+  xxs: "0.86rem",
 };
 
 const WEIGHTS = {
@@ -25,7 +26,8 @@ const LINE_HEIGHTS = {
   l: "1.7rem",
   m: "1.5rem",
   s: "1.4rem",
-  xs: "1.2rem",
+  xs: "1.3rem",
+  xxs: "1.2rem",
 };
 
 export const Text = styled.div`

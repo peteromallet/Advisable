@@ -7,7 +7,7 @@ import StepDots from "src/components/StepDots";
 import Checkbox from "src/components/Checkbox";
 import TextField from "src/components/TextField";
 import { useMobile } from "src/components/Breakpoint";
-import { Text } from "@advisable/donut";
+import { Text, Autocomplete } from "@advisable/donut";
 import SuggestedSelect from "src/components/SuggestedSelect";
 import validationSchema from "./validationSchema";
 
@@ -46,14 +46,13 @@ const ClientDetails = ({ formik, industries, skills }) => {
             />
           </FieldRow>
           <FieldRow>
-            <SuggestedSelect
+            <Autocomplete
               name="industry"
               placeholder="e.g Financial Services"
               label="What industry/category is this company in?"
               error={formik.touched.industry && formik.errors.industry}
               options={industries}
               onBlur={formik.handleBlur}
-              value={formik.values.industry}
               onChange={industry => {
                 formik.setFieldTouched("industry", true);
                 formik.setFieldValue("industry", industry);
