@@ -1,7 +1,8 @@
 const BREAKPOINTS = {
-  mobile: "(max-width: 600px)",
-  tablet: "(max-width: 900px)",
-  desktop: "(min-width: 900px)",
+  s: "(max-width: 640px)",
+  m: "(max-width: 768px)",
+  l: "(max-width: 1024px)",
+  xl: "(max-width: 1280px)",
 };
 
 export default BREAKPOINTS;

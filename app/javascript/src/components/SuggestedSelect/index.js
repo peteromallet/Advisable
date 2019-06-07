@@ -3,6 +3,7 @@ import { components } from "react-select";
 import { map, isArray, isString, isObject, find } from "lodash";
 import { Select, MenuContainer } from "./styles";
 import InputLabel from "src/components/InputLabel";
+import InputError from "src/components/InputError";
 import InputSubLabel from "src/components/InputSubLabel";
 
 const Menu = props => {
@@ -20,6 +21,7 @@ const SuggestedSelect = ({
   max,
   label,
   value,
+  error,
   options,
   onChange,
   subLabel,
@@ -69,8 +71,8 @@ const SuggestedSelect = ({
 
   if (isMax) {
     noOptionsMessage = () => {
-      return `You can not add more than ${max} items.`
-    }
+      return `You can not add more than ${max} items.`;
+    };
   }
 
   return (
@@ -78,6 +80,7 @@ const SuggestedSelect = ({
       {label && <InputLabel>{label}</InputLabel>}
       {subLabel && <InputSubLabel>{subLabel}</InputSubLabel>}
       <Select
+        label={label}
         classNamePrefix="SuggestedSelect"
         menuPortalTarget={document.body}
         styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
@@ -88,6 +91,7 @@ const SuggestedSelect = ({
         noOptionsMessage={noOptionsMessage}
         {...props}
       />
+      {error && <InputError>{error}</InputError>}
     </React.Fragment>
   );
 };

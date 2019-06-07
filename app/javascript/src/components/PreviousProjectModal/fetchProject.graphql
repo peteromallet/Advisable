@@ -10,6 +10,7 @@ query PreviousProject(
         primarySkill
         description
         user {
+          id
           companyName
         }
         companyDescription

@@ -2,22 +2,24 @@ import React from "react";
 import Flex from "src/components/Flex";
 import Modal from "src/components/Modal";
 import Button from "src/components/Button";
-import Heading from "src/components/Heading";
 import FieldRow from "src/components/FieldRow";
 import StepDots from "src/components/StepDots";
 import Checkbox from "src/components/Checkbox";
 import TextField from "src/components/TextField";
 import { useMobile } from "src/components/Breakpoint";
+import { Text, Autocomplete } from "@advisable/donut";
 import SuggestedSelect from "src/components/SuggestedSelect";
 import validationSchema from "./validationSchema";
 
-const ClientDetails = ({ formik, industries }) => {
+const ClientDetails = ({ formik, industries, skills }) => {
   let isMobile = useMobile();
 
   return (
     <React.Fragment>
       <Modal.Header>
-        <Heading size="s">Client Details</Heading>
+        <Text size="l" weight="semibold">
+          Client Details
+        </Text>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={formik.handleSubmit}>
@@ -30,7 +32,7 @@ const ClientDetails = ({ formik, industries }) => {
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value={formik.values.clientName}
-              error={formik.touched.clientName && formik.errors.clientName}
+              error={formik.submitCount > 0 && formik.errors.clientName}
             />
           </FieldRow>
           <FieldRow>
@@ -44,35 +46,34 @@ const ClientDetails = ({ formik, industries }) => {
             />
           </FieldRow>
           <FieldRow>
-            <SuggestedSelect
+            <Autocomplete
               name="industry"
               placeholder="e.g Financial Services"
               label="What industry/category is this company in?"
-              error={formik.touched.industry && formik.errors.industry}
+              error={formik.submitCount > 0 && formik.errors.industry}
               options={industries}
               onBlur={formik.handleBlur}
               value={formik.values.industry}
-              onChange={industry => {
-                formik.setFieldTouched('industry', true)
-                formik.setFieldValue("industry", industry);
+              onChange={selection => {
+                formik.setFieldTouched("industry", true);
+                formik.setFieldValue("industry", selection.value);
               }}
             />
           </FieldRow>
           <FieldRow>
-            <TextField
-              multiline
-              minRows={6}
-              maxLength={300}
-              name="clientDescription"
-              placeholder="The client is..."
-              label="Give a short overview of this company"
-              onChange={formik.handleChange}
-              value={formik.values.clientDescription}
-              description="This should start with &quot;The client/company is...&quot;."
-              error={
-                formik.touched.clientDescription &&
-                formik.errors.clientDescription
-              }
+            <Autocomplete
+              max={5}
+              multiple
+              name="skills"
+              placeholder="Search for a skill..."
+              label="What skills did you use for this project?"
+              error={formik.submitCount > 0 && formik.errors.skills}
+              options={skills}
+              value={formik.values.skills}
+              onChange={skills => {
+                formik.setFieldTouched("skills", true);
+                formik.setFieldValue("skills", skills);
+              }}
             />
           </FieldRow>
         </form>
@@ -82,7 +83,7 @@ const ClientDetails = ({ formik, industries }) => {
           {!isMobile && <Flex.Item style={{ width: "120px" }} />}
           {!isMobile && (
             <Flex.Item distribute="fill">
-              <StepDots current={1} total={4} />
+              <StepDots current={1} total={3} />
             </Flex.Item>
           )}
           <Flex.Item style={{ width: isMobile ? "100%" : "120px" }}>

@@ -3,14 +3,10 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
   argument :client_name, String, required: true
   argument :confidential, Boolean, required: false
   argument :industry, String, required: true
-  argument :client_description, String, required: true
   argument :skills, [String], required: true
-  argument :requirements, String, required: true
-  argument :results, String, required: true
   argument :contact_name, String, required: true
   argument :contact_job_title, String, required: true
   argument :contact_email, String, required: true
-  argument :can_contact, Boolean, required: false
   argument :description, String, required: true
   argument :validation_method, String, required: true
   argument :validation_url, String, required: true

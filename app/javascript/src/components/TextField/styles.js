@@ -106,10 +106,11 @@ export const CharCount = styled.span`
 export const InputMask = Input.withComponent(MaskedInput);
 
 export let Textarea = Input.withComponent("textarea");
+
 Textarea = styled(Textarea)`
   resize: none;
   height: auto;
-  padding: 10px;
+  padding: 10px 0;
   overflow: auto;
   line-height: 18px;
 `;
