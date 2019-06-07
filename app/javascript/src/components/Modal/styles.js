@@ -20,10 +20,9 @@ export const Backdrop = styled.div`
   animation: ${fadeIn} 500ms ease-out;
 `;
 
-
 const windowWidths = {
   m: "500px",
-  l: "700px"
+  l: "700px",
 };
 
 const expandOnMobile = enabled => {
@@ -40,9 +39,10 @@ const expandOnMobile = enabled => {
 };
 
 export const WindowContainer = styled(animated.div)`
-  z-index: 3;
+  z-index: 30;
   width: 100%;
   margin: 0 auto;
+  position: relative;
   max-width: ${props => windowWidths[props.size || "m"]};
   ${props => expandOnMobile(props.expandOnMobile || false)};
 `;
@@ -96,7 +96,6 @@ export const ModalHeader = styled.div`
   padding: 25px 50px 25px 30px;
   border-bottom: 1px solid #e4e5eb;
 `;
-
 
 export const ModalBody = styled.div`
   display: flex;
