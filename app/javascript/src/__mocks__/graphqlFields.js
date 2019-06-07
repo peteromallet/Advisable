@@ -151,11 +151,29 @@ export const task = (fields = {}) => {
   );
 };
 
+export const skill = (fields = {}) => {
+  return merge({
+    __typename: "Skill",
+    id: uniqueId("skill"),
+    name: "Skill",
+  });
+};
+
+export const industry = (fields = {}) => {
+  return merge({
+    __typename: "Industry",
+    id: uniqueId("industry"),
+    name: "Industry",
+  });
+};
+
 export default {
   user,
   task,
+  skill,
   country,
   project,
+  industry,
   application,
   specialist,
 };

@@ -1,15 +1,28 @@
 import React from "react";
+import { Text, Padding } from "@advisable/donut";
 import Flex from "src/components/Flex";
 import Modal from "src/components/Modal";
 import Button from "src/components/Button";
+import Notice from "src/components/Notice";
 import Select from "src/components/Select";
-import Heading from "src/components/Heading";
-import ChoiceList from "src/components/ChoiceList";
-import FieldRow from "src/components/FieldRow";
+import FieldGroup from "src/components/FieldGroup";
 import StepDots from "src/components/StepDots";
-import TextField from "src/components/TextField";
+import URLFields from "./URLFields";
+import ClientFields from "./ClientFields";
 import { useMobile } from "src/components/Breakpoint";
 import validationSchema from "./validationSchema";
+
+const validationOptions = [
+  { value: "Client", label: "I want you to contact the client" },
+  {
+    value: "URL",
+    label: "I can share a link that proves that this project happened",
+  },
+  {
+    value: "None",
+    label: "I can't prove that this project happened",
+  },
+];
 
 const ProjectReference = ({ formik, gotoPreviousStep }) => {
   let isMobile = useMobile();
@@ -17,145 +30,36 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
   return (
     <React.Fragment>
       <Modal.Header>
-        <Heading size="s">Project Reference</Heading>
+        <Text size="l" weight="semibold">
+          Project Validation
+        </Text>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={formik.handleSubmit}>
-          <FieldRow>
-            <TextField
-              autoFocus
-              name="contactName"
-              placeholder="e.g Jane Doe"
-              label="What was the name of your contact with this client?"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.contactName}
-              error={formik.touched.contactName && formik.errors.contactName}
-            />
-          </FieldRow>
-          <FieldRow>
-            <TextField
-              name="contactJobTitle"
-              placeholder="e.g Head of marketing"
-              label="What was their job title?"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.contactJobTitle}
-              error={
-                formik.touched.contactJobTitle && formik.errors.contactJobTitle
-              }
-            />
-          </FieldRow>
-          <FieldRow>
-            <ChoiceList
-              name="canContact"
-              value={formik.values.canContact}
-              label="Are you okay with us contacting them to validate this project?"
-              options={[
-                { value: true, label: "Yes" },
-                { value: false, label: "No" },
-              ]}
-              description={
-                formik.values.canContact === false &&
-                "This may cause the project not to be validated."
-              }
-              onChange={e => {
-                const value = e.target.value === "true";
-                if (value) {
-                  formik.setFieldValue("validationMethod", "Client");
-                } else {
-                  formik.setFieldValue("validationMethod", "URL");
-                }
-                formik.setFieldValue("canContact", value);
-              }}
-            />
-          </FieldRow>
-          {formik.values.canContact && (
-            <FieldRow>
-              <React.Fragment>
-                <TextField
-                  name="contactEmail"
-                  placeholder="e.g jane@company.com"
-                  label="What’s their email address?"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.contactEmail}
-                  error={
-                    formik.touched.contactEmail && formik.errors.contactEmail
-                  }
-                  description="If possible, please share their corporate email address. If not, if possible, please share the email address associated with their LinkedIn account."
-                />
-              </React.Fragment>
-            </FieldRow>
+          <Padding bottom="s">
+            <FieldGroup>
+              <Select
+                name="validationMethod"
+                onBlur={formik.handleBlur}
+                options={validationOptions}
+                onChange={formik.handleChange}
+                value={formik.values.validationMethod}
+                label="How do you want to validate this project?"
+              />
+            </FieldGroup>
+          </Padding>
+          {formik.values.validationMethod === "Client" && (
+            <ClientFields formik={formik} />
           )}
-
-          {formik.values.canContact === false && (
-            <React.Fragment>
-              <FieldRow>
-                <Select
-                  name="validationMethod"
-                  onChange={e => {
-                    if (e.target.value === "None") {
-                      formik.setFieldValue("validationUrl", "")
-                      formik.setFieldValue("validationExplanation", "")
-                    }
-                    formik.handleChange(e)
-                  }}
-                  value={formik.values.validationMethod}
-                  label="How can we validate that this project happened?"
-                  description={
-                    formik.values.validationMethod === "None" &&
-                    "If you can't validate a project, we can use the data to figure out which projects to invite you to but we can't display it on your profile or use it as validation"
-                  }
-                  options={[
-                    { value: "Linkedin", label: "Linkedin Reference" },
-                    {
-                      value: "External Site",
-                      label: "External Site Reference",
-                    },
-                    { value: "Portfolio", label: "Link to Portfolio" },
-                    {
-                      value: "None",
-                      label: "Validation not possible",
-                    },
-                  ]}
-                />
-              </FieldRow>
-              {formik.values.validationMethod !== "None" && (
-                <FieldRow>
-                  <TextField
-                    name="validationUrl"
-                    placeholder="https://"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.validationUrl}
-                    label="Please share the relevant URL for us to review"
-                    error={
-                      formik.touched.validationUrl &&
-                      formik.errors.validationUrl
-                    }
-                  />
-                </FieldRow>
-              )}
-              {formik.values.validationMethod !== "None" && (
-                <FieldRow>
-                  <TextField
-                    multiline
-                    minRows={2}
-                    name="validationExplanation"
-                    label="How does this URL validate that the project happened?"
-                    placeholder="How does this URL validate that the project happened?"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.validationExplanation}
-                    error={
-                      formik.touched.validationExplanation &&
-                      formik.errors.validationExplanation
-                    }
-                  />
-                </FieldRow>
-              )}
-            </React.Fragment>
+          {formik.values.validationMethod === "URL" && (
+            <URLFields formik={formik} />
+          )}
+          {formik.values.validationMethod === "None" && (
+            <Notice icon="info">
+              If you can't validate a project, we can use the data to figure out
+              which projects to invite you to but we can't display it on your
+              profile or use it as validation
+            </Notice>
           )}
         </form>
       </Modal.Body>
@@ -174,7 +78,7 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
           </Flex.Item>
           {!isMobile && (
             <Flex.Item distribute="fill">
-              <StepDots current={4} total={4} />
+              <StepDots current={3} total={3} />
             </Flex.Item>
           )}
           <Flex.Item style={{ width: isMobile ? "50%" : "120px" }}>

@@ -2,26 +2,44 @@ import * as Yup from "yup";
 
 const validationSchema = Yup.object({
   validationMethod: Yup.string(),
-  contactName: Yup.string().required("Please provide the name of your contact for this project"),
-  contactJobTitle: Yup.string().required("Please provide the title of your contact for this project"),
+  contactName: Yup.string()
+    .nullable()
+    .when("validationMethod", {
+      is: "Client",
+      then: Yup.string().required(
+        "Please provide a name for your contact with this client"
+      ),
+    }),
+  contactJobTitle: Yup.string()
+    .nullable()
+    .when("validationMethod", {
+      is: "Client",
+      then: Yup.string().required(
+        "Please provide the title of your contact for this project"
+      ),
+    }),
   contactEmail: Yup.string()
-  .nullable()
-  .when("validationMethod", {
-    is: "Client",
-    then: Yup.string().required("Please provide an email address so that we can contact the client")
-  }),
+    .nullable()
+    .when("validationMethod", {
+      is: "Client",
+      then: Yup.string().required(
+        "Please provide an email address so that we can contact the client"
+      ),
+    }),
   validationUrl: Yup.string()
-  .nullable()
-  .when("validationMethod", {
-    is: method => ["URL", "Linkedin", "Portfolio", "External Site"].indexOf(method) > -1,
-    then: Yup.string().required("Please provide a validation URL")
-  }),
+    .nullable()
+    .when("validationMethod", {
+      is: "URL",
+      then: Yup.string().required("Please provide a validation URL"),
+    }),
   validationExplanation: Yup.string()
-  .nullable()
-  .when("validationMethod", {
-    is: method => ["URL", "Linkedin", "Portfolio", "External Site"].indexOf(method) > -1,
-    then: Yup.string().required("Please explain how this URL validates that the project happened.")
-  })
+    .nullable()
+    .when("validationMethod", {
+      is: "URL",
+      then: Yup.string().required(
+        "Please explain how this URL validates that the project happened."
+      ),
+    }),
 });
 
 export default validationSchema;

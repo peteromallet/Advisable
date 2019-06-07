@@ -25,14 +25,10 @@ describe Mutations::CreateOffPlatformProject do
         clientName: "#{client_name}",
         confidential: #{confidential},
         industry: "#{industry}",
-        clientDescription: "#{client_description}",
         skills: #{skills},
-        requirements: "#{requirements}",
-        results: "#{results}",
         contactName: "#{contact_name}",
         contactJobTitle: "#{contact_job_title}",
         contactEmail: "#{contact_email}",
-        canContact: #{can_contact},
         description: "#{description}",
         validationMethod: "#{validation_method}",
         validationUrl: "#{validation_url}",
@@ -103,16 +99,8 @@ describe Mutations::CreateOffPlatformProject do
       expect(project["description"]).to eq(description)
     end
 
-    it "sets the clientDescription" do
-      expect(project["clientDescription"]).to eq(client_description)
-    end
-
     it "sets the skills" do
       expect(project["skills"]).to eq(skills)
-    end
-
-    it "sets the results" do
-      expect(project["results"]).to eq(results)
     end
 
     it "sets the contactFirstName" do

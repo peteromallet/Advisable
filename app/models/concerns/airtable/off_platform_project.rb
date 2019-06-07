@@ -33,25 +33,26 @@ class Airtable::OffPlatformProject < Airtable::Base
   end
 
   push_data do |project|
-    fields["Client Industry"] = project.industry
-    fields["Client Contact First Name"] = project.contact_first_name
-    fields["Client Contact Last Name"] = project.contact_last_name
-    fields["Client Contact Job Title"] = project.contact_job_title
-    fields["Client Name"] = project.client_name
-    fields["Client Description"] = project.client_description
-    fields["Project Description"] = project.description
-    fields["Results Description"] = project.results
-    fields["Specialist Requirement Description"] = project.requirements
-    fields["Client Contact Email Address"] = project.contact_email
-    fields["Validation Method"] = project.validation_method
-    fields["Validation URL"] = project.validation_url
-    fields["Okay with naming client"] = project.confidential ? "No" : "Yes"
-    fields["Okay To Contact"] = project.can_contact ? "Yes" : "No"
-    fields["Specialist"] = [project.specialist.try(:airtable_id)]
-    fields["Skills Required"] = project.skills.map(&:airtable_id)
-    fields["Advisable Validation Status"] = project.validation_status
-    fields["Validated By Client"] = project.validated_by_client ? "Yes" : 'No'
-    fields["Validation Explanation"] = project.validation_explanation
+    self["Client Industry"] = project.industry
+    self["Client Contact First Name"] = project.contact_first_name
+    self["Client Contact Last Name"] = project.contact_last_name
+    self["Client Contact Job Title"] = project.contact_job_title
+    self["Client Name"] = project.client_name
+    self["Client Description"] = project.client_description
+    self["Project Description"] = project.description
+    self["Results Description"] = project.results
+    self["Primary Skill Required"] = project.primary_skill
+    self["Specialist Requirement Description"] = project.requirements
+    self["Client Contact Email Address"] = project.contact_email
+    self["Validation Method"] = project.validation_method
+    self["Validation URL"] = project.validation_url
+    self["Okay with naming client"] = project.confidential ? "No" : "Yes"
+    self["Okay To Contact"] = project.can_contact ? "Yes" : "No"
+    self["Specialist"] = [project.specialist.try(:airtable_id)]
+    self["Skills Required"] = project.skills.map(&:airtable_id)
+    self["Advisable Validation Status"] = project.validation_status
+    self["Validated By Client"] = project.validated_by_client ? "Yes" : 'No'
+    self["Validation Explanation"] = project.validation_explanation
   end
 
   private

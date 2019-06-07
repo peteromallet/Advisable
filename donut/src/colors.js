@@ -32,6 +32,17 @@ const COLORS = {
     N8: "#0A2172",
     N9: "#051448",
   },
+  red: {
+    N1: "#FFECEE",
+    N2: "#FFD6DB",
+    N3: "#FFB0BA",
+    N4: "#FF7787",
+    N5: "#FF3F56",
+    N6: "#D7283D",
+    N7: "#AC1B2C",
+    N8: "#7D0D1A",
+    N9: "#4B030C",
+  },
 };
 
 export default COLORS;

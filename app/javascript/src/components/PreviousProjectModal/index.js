@@ -13,7 +13,9 @@ const PreviousProjectModal = ({ isOpen, onClose, id, type, specialistId }) => {
         {query => {
           if (query.loading) return <Loading />;
 
-          return <ProjectDetails previousProject={query.data.previousProject} />;
+          return (
+            <ProjectDetails previousProject={query.data.previousProject} />
+          );
         }}
       </Query>
     </Modal>
