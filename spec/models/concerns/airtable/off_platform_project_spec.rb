@@ -63,6 +63,7 @@ describe Airtable::OffPlatformProject do
       expect(airtable).to receive(:[]=).with("Client Description", project.client_description) 
       expect(airtable).to receive(:[]=).with("Project Description", project.description)
       expect(airtable).to receive(:[]=).with("Results Description", project.results)
+      expect(airtable).to receive(:[]=).with("Primary Skill Required", project.primary_skill)
       expect(airtable).to receive(:[]=).with("Specialist Requirement Description", project.requirements)
       expect(airtable).to receive(:[]=).with("Client Contact Email Address", project.contact_email)
       expect(airtable).to receive(:[]=).with("Validation Method", project.validation_method)

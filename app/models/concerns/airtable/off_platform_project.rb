@@ -41,6 +41,7 @@ class Airtable::OffPlatformProject < Airtable::Base
     self["Client Description"] = project.client_description
     self["Project Description"] = project.description
     self["Results Description"] = project.results
+    self["Primary Skill Required"] = project.primary_skill
     self["Specialist Requirement Description"] = project.requirements
     self["Client Contact Email Address"] = project.contact_email
     self["Validation Method"] = project.validation_method
