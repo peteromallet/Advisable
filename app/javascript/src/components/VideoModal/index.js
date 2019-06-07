@@ -32,7 +32,7 @@ const VideoModal = ({
       />
       <Spacing size="l" css="text-align: center;">
         <Button size="l" styling="primary" onClick={onDismiss}>
-          {buttonLabel || "Continue"}
+          {buttonLabel || "Okay"}
         </Button>
       </Spacing>
     </Modal>

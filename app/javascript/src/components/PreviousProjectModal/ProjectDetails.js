@@ -18,6 +18,16 @@ const title = project => {
 export default ({ previousProject }) => {
   const { project, reviews } = previousProject;
 
+  const clientDescription =
+    project.__typename === "Project"
+      ? project.companyDescription
+      : project.clientDescription;
+
+  const requirements =
+    project.__typename === "Project"
+      ? project.specialistDescription
+      : project.requirements;
+
   return (
     <React.Fragment>
       <Modal.Header>
@@ -28,23 +38,37 @@ export default ({ previousProject }) => {
       </Modal.Header>
       <Modal.Body>
         <Spacing paddingBottom="s">
-          {project.__typename === "Project" && (
+          {clientDescription && (
             <>
               <Heading level={6}>Client Description</Heading>
               <Text size="s" marginBottom="l">
-                {project.companyDescription}
-              </Text>
-
-              <Heading level={6}>Requirements</Heading>
-              <Text size="s" marginBottom="l">
-                {project.specialistDescription}
+                {clientDescription}
               </Text>
             </>
           )}
+
+          {requirements && (
+            <>
+              <Heading level={6}>Requirements</Heading>
+              <Text size="s" marginBottom="l">
+                {requirements}
+              </Text>
+            </>
+          )}
+
           <Heading level={6}>Project Description</Heading>
           <Text size="s" marginBottom="l">
             {project.description}
           </Text>
+
+          {project.results && (
+            <>
+              <Heading level={6}>Results</Heading>
+              <Text size="s" marginBottom="l">
+                {project.results}
+              </Text>
+            </>
+          )}
         </Spacing>
 
         {reviews.map(review => (

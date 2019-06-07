@@ -54,14 +54,9 @@ const Modal = ({
                   alignItems: "center",
                 }}
               >
-                <WindowContainer
-                  size={size}
-                  style={props}
-                  expandOnMobile={expandOnMobile}
-                >
+                <WindowContainer size={size} style={props}>
                   <Window
                     className="ModalWindow"
-                    expandOnMobile={expandOnMobile}
                     {...extractSpacingProps(componentProps)}
                   >
                     {onClose && (

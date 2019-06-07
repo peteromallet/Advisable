@@ -1,5 +1,4 @@
 import styled, { keyframes, css } from "styled-components";
-import { withSpacing } from "../Spacing";
 import { animated } from "react-spring";
 
 const fadeIn = keyframes`
@@ -25,29 +24,15 @@ const windowWidths = {
   l: "700px",
 };
 
-const expandOnMobile = enabled => {
-  if (!enabled) return css``;
-
-  return css`
-    @media (max-width: 800px) {
-      width: 100%;
-      height: 100%;
-      border-radius: 0px;
-      max-height: 100% !important;
-    }
-  `;
-};
-
 export const WindowContainer = styled(animated.div)`
   z-index: 30;
   width: 100%;
   margin: 0 auto;
   position: relative;
   max-width: ${props => windowWidths[props.size || "m"]};
-  ${props => expandOnMobile(props.expandOnMobile || false)};
 `;
 
-let WindowStyles = styled.div`
+export const Window = styled.div`
   width: 100%;
   z-index: 500;
   display: flex;
@@ -60,13 +45,22 @@ let WindowStyles = styled.div`
   max-height: calc(100vh - 60px);
   box-shadow: 0px 10px 50px rgba(14, 29, 78, 0.3);
   transition: transform 400ms, opacity 300ms;
-  ${props => expandOnMobile(props.expandOnMobile)};
 
   opacity: 0;
   transform: scale(0.98) translate3d(0, -80px, 0);
 `;
 
-export const Window = withSpacing(WindowStyles);
+const expandOnMobileStyles = css`
+  ${Window},
+  ${WindowContainer} {
+    @media (max-width: 800px) {
+      width: 100%;
+      height: 100%;
+      border-radius: 0px;
+      max-height: 100% !important;
+    }
+  }
+`;
 
 export const ModalContainer = styled.div`
   top: 0;
@@ -79,6 +73,7 @@ export const ModalContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: ${props => !props.expandOnMobile && "15px"};
+  ${props => props.expandOnMobile && expandOnMobileStyles};
 
   &:first-child ${Backdrop} {
     background: rgba(76, 87, 126, 0.7);
