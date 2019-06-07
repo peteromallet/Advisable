@@ -1,4 +1,3 @@
-import { get } from "lodash";
 import Fuse from "fuse.js";
 
 const fuseOptions = {
@@ -12,11 +11,11 @@ const fuseOptions = {
 };
 
 const filterItems = (downshift, options) => {
-  const { inputValue, selectedItem } = downshift;
+  const { inputValue } = downshift;
   let items = options;
 
-  if (inputValue && inputValue !== get(selectedItem, "label", undefined)) {
-    var fuse = new Fuse(options, fuseOptions); // "list" is the item array
+  if (Boolean(inputValue)) {
+    var fuse = new Fuse(options, fuseOptions);
     items = fuse.search(inputValue);
   }
 

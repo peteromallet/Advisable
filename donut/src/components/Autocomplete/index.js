@@ -21,16 +21,28 @@ const Autocomplete = ({ options: selectOptions, ...rest }) => {
   // Use the value prop to find the initially selected item. This may be null
   const selectedItem = find(options, { value: rest.value });
 
+  let isMax = rest.multiple && rest.max && rest.value.length >= rest.max;
+
   // If on mobile then load the mobile experience
   if (isMobile) {
     return (
-      <Mobile options={options} initalSelectedItem={selectedItem} {...rest} />
+      <Mobile
+        options={options}
+        initalSelectedItem={selectedItem}
+        isMax={isMax}
+        {...rest}
+      />
     );
   }
 
   // fallback to the desktop experience
   return (
-    <Desktop options={options} initalSelectedItem={selectedItem} {...rest} />
+    <Desktop
+      options={options}
+      initalSelectedItem={selectedItem}
+      isMax={isMax}
+      {...rest}
+    />
   );
 };
 

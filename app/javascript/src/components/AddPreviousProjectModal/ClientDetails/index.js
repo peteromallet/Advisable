@@ -61,19 +61,18 @@ const ClientDetails = ({ formik, industries, skills }) => {
             />
           </FieldRow>
           <FieldRow>
-            <SuggestedSelect
+            <Autocomplete
               max={5}
+              multiple
               name="skills"
-              isMulti={true}
-              placeholder="e.g Facebook Marketing"
+              placeholder="Search for a skill..."
               label="What skills did you use for this project?"
               error={formik.submitCount > 0 && formik.errors.skills}
               options={skills}
-              onBlur={formik.handleBlur}
               value={formik.values.skills}
-              onChange={skill => {
+              onChange={skills => {
                 formik.setFieldTouched("skills", true);
-                formik.setFieldValue("skills", skill);
+                formik.setFieldValue("skills", skills);
               }}
             />
           </FieldRow>

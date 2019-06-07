@@ -1022,3 +1022,23 @@ storiesOf("Autocomplete", module).add("Basic", () =>
     );
   })
 );
+
+storiesOf("Autocomplete", module).add("Multi-Select", () =>
+  React.createElement(() => {
+    const [value, setValue] = React.useState([]);
+
+    return (
+      <div style={{ maxWidth: 550, margin: "50px auto", padding: "0 20px" }}>
+        <Autocomplete
+          multiple
+          max={5}
+          value={value}
+          onChange={v => setValue(v)}
+          label="Select countries"
+          placeholder="Search for a country..."
+          options={COUNTRIES}
+        />
+      </div>
+    );
+  })
+);

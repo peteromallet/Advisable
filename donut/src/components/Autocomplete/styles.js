@@ -45,10 +45,6 @@ const highlightedItemStyles = css`
   background: ${colors.neutral.N1};
 `;
 
-const selectedItemStyles = css`
-  color: ${colors.blue.N5};
-`;
-
 export const MenuItem = styled.div`
   font-size: 15px;
   font-weight: 500;
@@ -57,10 +53,17 @@ export const MenuItem = styled.div`
   display: flex;
   cursor: pointer;
   align-items: center;
-  color: ${colors.neutral.N7};
+  color: ${colors.neutral.N6};
 
-  ${props => props.selected && selectedItemStyles};
   ${props => props.highlighted && highlightedItemStyles};
+
+  &[disabled] {
+    opacity: 0.5;
+  }
+
+  svg {
+    margin-right: 8px;
+  }
 `;
 
 export const MobileContainer = styled.div`
@@ -93,6 +96,47 @@ export const MobileContainerBack = styled.button`
 
 export const MobileContainerSearch = styled.div`
   flex-grow: 1;
+`;
+
+export const Tags = styled.div`
+  display: block;
+`;
+
+export const Tag = styled.div`
+  height: 28px;
+  display: inline-flex;
+  border-radius: 4px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+  color: ${colors.blue.N7};
+  background: ${colors.blue.N1};
+`;
+
+export const TagName = styled.div`
+  padding: 0 8px;
+  font-size: 14px;
+  font-weight: 500;
+`;
+
+export const RemoveTag = styled.button`
+  padding: 0;
+  width: 30px;
+  height: 100%;
+  border: none;
+  outline: none;
+  appearance: none;
+  justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  background: ${rgba(colors.blue.N3, 0.4)};
+
+  &:hover {
+    background: ${rgba(colors.blue.N3, 0.6)};
+  }
 `;
 
 export default Autocomplete;
