@@ -1,0 +1,156 @@
+/** TalkJS Default Theme **/
+/*
+This is a TalkJS theme file. Themes are designed to allow you to easily change 
+the main look and feel of TalkJS. Themes cannot be used to change the layout, 
+e.g. you cannot change which panels appear where.
+
+If you understand CSS, you will feel right at home with TalkJS theme files.
+A theme looks like a CSS file, except that the available classes and 
+properties are limited to what you see here. If you remove a property, the theme
+will fail to work and TalkJS will revert to the default theme. If you add a 
+property, it will be ignored.
+
+The easiest way to make a theme is to start with a default theme (this file)
+and edit it until you're happy with the results.
+
+PLEASE NOTE: We continuously add options and features to TalkJS themes (in a 
+backward compatible way). If you need to theme something that you can't access,
+let us know! We may be able to add it quickly.
+*/
+
+/* If you use webfonts, use one or more @font directives as shown below.
+   You usually won't want to change the @version number unless you're upgrading 
+   an existing theme.
+*/
+
+/* @version 3 */
+/* @font url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"); */
+@import url("https://use.typekit.net/yuq4swo.css");
+
+/* Theses properties apply to all TalkJS UI elements. */
+.global {
+  font-family: poppins, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: normal;
+  color: #111;
+}
+
+/* A panel is a rectangular box, such as the message list or
+   the conversation history box */
+.panel {
+  border-radius: 0px;
+  border-width: 1px;
+  border-color: #dce0e0;
+  background-color: white;
+  padding: 10px;
+  /* optional field: box-shadow */
+}
+
+/* The following three sections allow you to tune the TalkJS layout. 
+   Unlike all other properties in a theme, `width` and `max-width` are both
+   optional. 
+
+   Note: there is no way to give the entire Inbox a maximum width: use CSS 
+   in your own app to restrict the with of the container div, if necessary.
+
+   Note: The inbox sections only apply to wide screens, when the inbox panels
+   are rendered side-by-side. */
+.chatbox {
+  /* width: 100%; */
+  /* max-width: 420px; */
+  /* optional fields: border-radius, border-width, border-color, background-color, box-shadow */
+}
+
+.inbox-feed-panel {
+  width: 30%;
+  /* max-width: 300px; */
+  /* min-width: 270px; */
+  /* optional fields: margin-top, margin-bottom, border-radius, border-width,
+     border-color, background-color, box-shadow */
+}
+
+.inbox-chat-panel {
+  /* By using `calc` below we can ensure that the total width of the feed, the chat,
+     and the space in between is precisely 100%. We recommend the same if you also
+     use percentage widths and a margin. */
+  width: calc(70% - 20px);
+  /* max-width: 420px; */
+  margin-left: 20px;
+  /* optional fields: margin-top, margin-bottom */
+}
+
+.panel-header {
+  background-color: #f0f2f2;
+  border-bottom-width: 1px;
+  border-bottom-color: #dce0e0;
+}
+
+/* Note: the chatbox panel footer contains the message field */
+.panel-footer {
+  background-color: #f0f2f2;
+  border-top-width: 1px;
+  border-top-color: #dce0e0;
+}
+
+/* Applies to messages written by the current user. */
+.message-balloon-me {
+  width: 75%;
+  background-color: #1944dc;
+  color: #fff; /* optional, defaults to .global#color */
+  border-color: #02b3c9;
+  border-radius: 4px;
+  border-width: 0px;
+}
+
+/* Applies to messages *not* written by the current user. */
+.message-balloon-other {
+  width: 75%;
+  background-color: #f4f6fd;
+  color: #111; /* optional, defaults to .global#color */
+  border-color: #dbdee8;
+  border-radius: 4px;
+  border-width: 1px;
+}
+
+/* These are the horizontal markers that separate messages sent on different days */
+.day-marker {
+  color: #fe4365;
+}
+
+/* The avatar is the user's picture in the profile panel and in the conversation
+   history. */
+.avatar {
+  border-radius: 50%;
+  border-width: 2px;
+  border-color: #fff;
+  /* optional field: clip-path */
+}
+
+/* This applies to the text input box underneath the message list. */
+.message-field {
+  border-radius: 4px;
+  border-width: 1px;
+  border-color: #e0e0e0;
+  background-color: #fff;
+  color: #232529;
+}
+
+/* Styles all links, globally. */
+.link {
+  color: rgb(0, 0, 238);
+}
+
+/* The highlight colors control of the currently selected 
+   conversation in the conversation feed, as well as a few accents here and
+   there. */
+.highlight {
+  background-color: #0288d1;
+  color: #fff;
+}
+
+/* This colors the "Desktop Notifications" toggle in the Inbox view. */
+.toggle-button {
+  border-color: #6fc754;
+}

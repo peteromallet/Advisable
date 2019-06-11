@@ -23,7 +23,7 @@ const createTalkSession = viewerQuery => {
         name: viewer.name,
         email: viewer.email,
         photoUrl: get(viewer, "image.url"),
-        role: viewer.__typename === "Specialist" ? "freelancer" : "client",
+        role: viewer.__typename === "Specialist" ? "Specialist" : "Client",
       });
 
       const session = new Talk.Session({
@@ -33,7 +33,6 @@ const createTalkSession = viewerQuery => {
       });
 
       setSession(session);
-      window.talkSession = session;
       setLoading(false);
     });
   }, [viewerQuery]);

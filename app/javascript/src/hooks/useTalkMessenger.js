@@ -12,7 +12,7 @@ const useTalkMessenger = config => {
     const user = new Talk.User({
       id: participant.id,
       name: participant.name,
-      role: participant.__typename === "User" ? "client" : "freelancer",
+      role: participant.__typename === "User" ? "Client" : "Specialist",
     });
 
     conversation.setParticipant(user);
