@@ -10,8 +10,9 @@ const useMessageCount = () => {
   };
 
   useEffect(() => {
+    if (!talkSession) return;
     talkSession.unreads.on("change", handleUnread);
-  });
+  }, [talkSession]);
 
   return messageCount;
 };
