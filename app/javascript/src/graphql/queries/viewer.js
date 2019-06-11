@@ -31,6 +31,9 @@ export default gql`
         confirmed
         talkSignature
         completedTutorials
+        image {
+          url
+        }
       }
     }
   }

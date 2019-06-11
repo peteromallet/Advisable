@@ -1,10 +1,12 @@
 import * as React from "react";
 import Icon from "../Icon";
 import { useMobile } from "../../components/Breakpoint";
-import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
+import useMessageCount from "../../hooks/useMessageCount";
+import { CloseNav, NavContainer, Nav, NavItem, Badge } from "./styles";
 
 const FreelancerNavigation = ({ data, navOpen, onCloseNav, onLogout }) => {
   const isMobile = useMobile();
+  const messageCount = useMessageCount();
   const { viewer } = data;
   const isUser = viewer && viewer.__typename === "User";
 
@@ -21,6 +23,10 @@ const FreelancerNavigation = ({ data, navOpen, onCloseNav, onLogout }) => {
         </NavItem>
         <NavItem onClick={onCloseNav} to="/manage">
           Manage Talent
+        </NavItem>
+        <NavItem onClick={onCloseNav} to="/messages">
+          {messageCount > 0 && <Badge>{messageCount}</Badge>}
+          Messages
         </NavItem>
 
         {isMobile && (

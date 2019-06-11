@@ -1,4 +1,5 @@
 import Talk from "talkjs";
+import { get } from "lodash";
 import { useEffect, useState } from "react";
 
 const createTalkSession = viewerQuery => {
@@ -21,6 +22,7 @@ const createTalkSession = viewerQuery => {
         id: viewer.id,
         name: viewer.name,
         email: viewer.email,
+        photoUrl: get(viewer, "image.url"),
         role: viewer.__typename === "Specialist" ? "freelancer" : "client",
       });
 

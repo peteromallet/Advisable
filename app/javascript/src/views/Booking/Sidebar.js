@@ -19,7 +19,7 @@ import ProjectTypeModal from "../../components/ProjectTypeModal";
 import ProjectMonthlyLimit from "../../components/ProjectMonthlyLimit";
 import SET_PROJECT_TYPE from "./setProjectType";
 import useViewer from "../../hooks/useViewer";
-import Talk from "talkjs";
+import useTalkSession from "../../hooks/useTalkSession";
 
 export default ({ data, tutorial }) => {
   const isMobile = useMobile();
@@ -29,6 +29,7 @@ export default ({ data, tutorial }) => {
   const [projectTypeModal, setProjectTypeModal] = React.useState(false);
   const [monthlyLimitModal, setMonthlyLimitModal] = React.useState(false);
   const viewer = useViewer();
+  const talkSession = useTalkSession();
 
   const handleEditMonthlyLimit = () => {
     setMonthlyLimitModal(true);
@@ -75,11 +76,18 @@ export default ({ data, tutorial }) => {
             {specialist.city}
             {specialist.country && `, ${specialist.country.name}`}
           </Text>
-          <Padding top="xl">
-            <Button block onClick={handleNewMessage}>
-              message
-            </Button>
-          </Padding>
+          {talkSession && (
+            <Padding top="xl">
+              <Button
+                block
+                icon="message-circle"
+                styling="primary"
+                onClick={handleNewMessage}
+              >
+                Message {specialist.firstName}
+              </Button>
+            </Padding>
+          )}
           <Padding top="xl" bottom="xl">
             <AttributeList>
               {Boolean(application.rate) && (
