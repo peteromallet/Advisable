@@ -19,7 +19,7 @@ import ProjectTypeModal from "../../components/ProjectTypeModal";
 import ProjectMonthlyLimit from "../../components/ProjectMonthlyLimit";
 import SET_PROJECT_TYPE from "./setProjectType";
 import useViewer from "../../hooks/useViewer";
-import useTalkSession from "../../hooks/useTalkSession";
+import useTalkMessenger from "../../hooks/useTalkMessenger";
 
 export default ({ data, tutorial }) => {
   const isMobile = useMobile();
@@ -28,35 +28,17 @@ export default ({ data, tutorial }) => {
   const specialist = application.specialist;
   const [projectTypeModal, setProjectTypeModal] = React.useState(false);
   const [monthlyLimitModal, setMonthlyLimitModal] = React.useState(false);
-  const viewer = useViewer();
-  const talkSession = useTalkSession();
+  const messenger = useTalkMessenger({
+    conversation: application.id,
+    participants: [specialist],
+  });
 
   const handleEditMonthlyLimit = () => {
     setMonthlyLimitModal(true);
   };
 
   const handleNewMessage = () => {
-    const me = new Talk.User({
-      id: viewer.id,
-      name: viewer.name,
-      email: viewer.email,
-      role: "client",
-    });
-
-    const them = new Talk.User({
-      id: specialist.id,
-      name: specialist.name,
-      role: "freelancer",
-    });
-
-    var conversation = talkSession.getOrCreateConversation(application.id);
-
-    conversation.setParticipant(me);
-    conversation.setParticipant(them);
-
-    var popup = talkSession.createPopup(conversation, { keepOpen: false });
-    popup.mount({ show: false });
-    popup.show();
+    messenger.open();
   };
 
   return (

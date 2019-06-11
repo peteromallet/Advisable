@@ -10,6 +10,7 @@ import CreateBookingModal from "./CreateBookingModal";
 import RequestReferences from "src/components/RequestReferences";
 import RequestIntroduction from "src/components/RequestIntroduction";
 import RejectProposalModal from "src/components/RejectProposalModal";
+import useTalkMessenger from "../hooks/useTalkMessenger";
 
 const REJECT_MODAL = "REJECT";
 const REQUEST_INTRODUCTION = "REQUEST_INTRODUCTION";
@@ -52,6 +53,10 @@ const statusActions = {
   "Application Accepted": ({ application, history, stack, fullWidth }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
+    const messenger = useTalkMessenger({
+      conversation: application.id,
+      participants: [application.specialist],
+    });
 
     return (
       <Fragment>
@@ -80,6 +85,9 @@ const statusActions = {
           >
             Start working with {application.specialist.firstName}
           </Button>
+          <Button onClick={messenger.open}>
+            Message {application.specialist.firstName}
+          </Button>
           <Button onClick={() => setModal(REJECT_MODAL)}>
             Provide Feedback
           </Button>
@@ -95,6 +103,10 @@ const statusActions = {
   Proposed: ({ projectId, application, history, stack, fullWidth }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
+    const messenger = useTalkMessenger({
+      conversation: application.id,
+      participants: [application.specialist],
+    });
 
     return (
       <Fragment>
@@ -118,6 +130,9 @@ const statusActions = {
             }/proposal`}
           >
             View Proposal
+          </Button>
+          <Button onClick={messenger.open}>
+            Message {application.specialist.firstName}
           </Button>
           <Button onClick={() => setModal(REJECT_PROPOSAL_MODAL)}>
             Reject
