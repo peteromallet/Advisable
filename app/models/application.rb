@@ -1,4 +1,5 @@
 class Application < ApplicationRecord
+  include UID
   include Airtable::Syncable
   belongs_to :specialist
   belongs_to :project

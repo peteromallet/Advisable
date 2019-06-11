@@ -49,9 +49,8 @@ export default ({ data, tutorial }) => {
       role: "freelancer",
     });
 
-    var conversation = talkSession.getOrCreateConversation(
-      Talk.oneOnOneId(me, them)
-    );
+    var conversation = talkSession.getOrCreateConversation(application.id);
+
     conversation.setParticipant(me);
     conversation.setParticipant(them);
 
