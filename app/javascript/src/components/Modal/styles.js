@@ -25,7 +25,7 @@ const windowWidths = {
 };
 
 export const WindowContainer = styled(animated.div)`
-  z-index: 30;
+  z-index: 999;
   width: 100%;
   margin: 0 auto;
   position: relative;

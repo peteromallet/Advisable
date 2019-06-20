@@ -9,7 +9,11 @@ const Messages = ({ location }) => {
   const talkSession = useTalkSession();
 
   React.useEffect(() => {
-    var inbox = talkSession.createInbox({ style: { background: "white" } });
+    // talkSession.syncThemeForLocalDev("/talkjs.css");
+    var inbox = talkSession.createInbox({
+      showChatHeader: false,
+      showFeedHeader: false,
+    });
     inbox.mount(container.current);
 
     if (queryParams.conversation) {

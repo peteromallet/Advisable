@@ -30,7 +30,7 @@ let us know! We may be able to add it quickly.
 /* Theses properties apply to all TalkJS UI elements. */
 .global {
   font-family: poppins, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 18px;
   letter-spacing: normal;
@@ -97,6 +97,7 @@ let us know! We may be able to add it quickly.
 /* Applies to messages written by the current user. */
 .message-balloon-me {
   width: 75%;
+  font-size: 14px;
   background-color: #1944dc;
   color: #fff; /* optional, defaults to .global#color */
   border-color: #02b3c9;
@@ -107,6 +108,7 @@ let us know! We may be able to add it quickly.
 /* Applies to messages *not* written by the current user. */
 .message-balloon-other {
   width: 75%;
+  font-size: 14px;
   background-color: #f4f6fd;
   color: #111; /* optional, defaults to .global#color */
   border-color: #dbdee8;
@@ -153,4 +155,8 @@ let us know! We may be able to add it quickly.
 /* This colors the "Desktop Notifications" toggle in the Inbox view. */
 .toggle-button {
   border-color: #6fc754;
+}
+
+.inbox-link-panel {
+  margin-bottom: 0;
 }
