@@ -1,4 +1,5 @@
 import React from "react";
+import Div100vh from "react-div-100vh";
 import queryString from "query-string";
 import useTalkSession from "../../hooks/useTalkSession";
 
@@ -17,10 +18,16 @@ const Messages = ({ location }) => {
   }, container);
 
   return (
-    <div
-      ref={container}
-      style={{ maxWidth: 1050, margin: "0 auto", height: "calc(100vh - 60px)" }}
-    />
+    <Div100vh style={{ height: "calc(100rvh - 60px)" }}>
+      <div
+        ref={container}
+        style={{
+          maxWidth: 1050,
+          margin: "0 auto",
+          height: "100%",
+        }}
+      />
+    </Div100vh>
   );
 };
 
