@@ -8,7 +8,6 @@ const Messages = ({ location }) => {
   const talkSession = useTalkSession();
 
   React.useEffect(() => {
-    // talkSession.syncThemeForLocalDev("./talkjs.css");
     var inbox = talkSession.createInbox({ style: { background: "white" } });
     inbox.mount(container.current);
 

@@ -10,9 +10,10 @@ import CreateBookingModal from "./CreateBookingModal";
 import RequestReferences from "src/components/RequestReferences";
 import RequestIntroduction from "src/components/RequestIntroduction";
 import RejectProposalModal from "src/components/RejectProposalModal";
-import useTalkMessenger from "../hooks/useTalkMessenger";
+import TalkModal from "./TalkModal";
 
 const REJECT_MODAL = "REJECT";
+const TALK_MODAL = "TALK_MODAL";
 const REQUEST_INTRODUCTION = "REQUEST_INTRODUCTION";
 const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
 const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
@@ -53,10 +54,6 @@ const statusActions = {
   "Application Accepted": ({ application, history, stack, fullWidth }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
-    const messenger = useTalkMessenger({
-      conversation: application.id,
-      participants: [application.specialist],
-    });
 
     return (
       <Fragment>
@@ -78,6 +75,12 @@ const statusActions = {
           isOpen={modal === CREATE_BOOKING_MODAL}
           onCreate={b => history.push(`/manage/${b.airtableId}`)}
         />
+        <TalkModal
+          isOpen={modal === TALK_MODAL}
+          onClose={() => setModal(null)}
+          conversationId={application.id}
+          participants={[application.specialist]}
+        />
         <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
             styling="green"
@@ -85,7 +88,7 @@ const statusActions = {
           >
             Start working with {application.specialist.firstName}
           </Button>
-          <Button onClick={messenger.open}>
+          <Button onClick={() => setModal(TALK_MODAL)}>
             Message {application.specialist.firstName}
           </Button>
           <Button onClick={() => setModal(REJECT_MODAL)}>
@@ -103,10 +106,6 @@ const statusActions = {
   Proposed: ({ projectId, application, history, stack, fullWidth }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
-    const messenger = useTalkMessenger({
-      conversation: application.id,
-      participants: [application.specialist],
-    });
 
     return (
       <Fragment>
@@ -121,6 +120,12 @@ const statusActions = {
           isOpen={modal === REQUEST_REFERENCES_MODAL}
           onClose={() => setModal(null)}
         />
+        <TalkModal
+          isOpen={modal === TALK_MODAL}
+          onClose={() => setModal(null)}
+          conversationId={application.id}
+          participants={[application.specialist]}
+        />
         <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
             as={Link}
@@ -131,7 +136,7 @@ const statusActions = {
           >
             View Proposal
           </Button>
-          <Button onClick={messenger.open}>
+          <Button onClick={() => setModal(TALK_MODAL)}>
             Message {application.specialist.firstName}
           </Button>
           <Button onClick={() => setModal(REJECT_PROPOSAL_MODAL)}>

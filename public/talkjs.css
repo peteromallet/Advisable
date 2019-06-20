@@ -58,8 +58,8 @@ let us know! We may be able to add it quickly.
    Note: The inbox sections only apply to wide screens, when the inbox panels
    are rendered side-by-side. */
 .chatbox {
-  /* width: 100%; */
-  /* max-width: 420px; */
+  width: 100%;
+  max-width: 500px;
   /* optional fields: border-radius, border-width, border-color, background-color, box-shadow */
 }
 

@@ -10,22 +10,15 @@ import Heading from "../../components/Heading";
 import Padding from "../../components/Spacing/Padding";
 import VideoButton from "../../components/VideoButton";
 import AttributeList from "../../components/AttributeList";
+import TalkModal from "../../components/TalkModal";
 import { useMobile } from "../../components/Breakpoint";
 import currency from "../../utilities/currency";
-import useTalkMessenger from "../../hooks/useTalkMessenger";
 
 const Component = ({ data, tutorial }) => {
   const isMobile = useMobile();
   const { t } = useTranslation();
   const application = data.application;
-  const messenger = useTalkMessenger({
-    conversation: application.id,
-    participants: [application.project.user],
-  });
-
-  const handleNewMessage = () => {
-    messenger.open();
-  };
+  const [talkModal, setTalkModal] = React.useState(false);
 
   return (
     <Layout.Sidebar>
@@ -35,6 +28,12 @@ const Component = ({ data, tutorial }) => {
         </Padding>
         <Heading level={3}>{application.project.primarySkill}</Heading>
         <Text>{application.project.user.companyName}</Text>
+        <TalkModal
+          isOpen={talkModal}
+          onClose={() => setTalkModal(false)}
+          conversationId={application.id}
+          participants={[application.project.user]}
+        />
         <Padding top="xl">
           <Button
             block
