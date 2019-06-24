@@ -34,7 +34,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :email, String, null: true do
-    authorize :is_specialist
+    authorize :is_admin, :is_specialist, :is_applicant_of_user_project
   end
 
   field :talk_signature, String, null: false do

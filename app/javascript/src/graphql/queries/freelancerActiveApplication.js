@@ -19,6 +19,7 @@ export default gql`
         user {
           id
           name
+          email
           firstName
           companyName
         }

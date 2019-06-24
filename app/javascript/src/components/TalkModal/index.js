@@ -27,6 +27,7 @@ const TalkModal = ({ isOpen, onClose, conversationId, participants }) => {
     const user = new Talk.User({
       id: participant.id,
       name: participant.name,
+      email: participant.email,
       role: participant.__typename === "User" ? "Client" : "Specialist",
     });
 
@@ -42,7 +43,7 @@ const TalkModal = ({ isOpen, onClose, conversationId, participants }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} expandOnMobile>
-      <Div100vh>
+      <Div100vh style={{ height: isMobile ? "100rvh" : "auto" }}>
         <div
           ref={messengerRef}
           style={{

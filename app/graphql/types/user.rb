@@ -26,7 +26,7 @@ class Types::User < Types::BaseType
   end
 
   field :email, String, null: false do
-    authorize :is_user
+    authorize :is_admin, :is_user, :is_candidate_for_user_project
   end
 
   field :applications, [Types::ApplicationType], null: true do
