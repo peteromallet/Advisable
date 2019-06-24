@@ -292,7 +292,7 @@ export default React.forwardRef(
     >
       {loading && <Loading />}
       <ButtonInner>
-        {icon && <Icon icon={icon} height={20} />}
+        {icon && <Icon strokeWidth={2} icon={icon} height={20} />}
         {children}
       </ButtonInner>
     </ButtonWithSpacing>

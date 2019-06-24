@@ -32,7 +32,9 @@
       Rollbar.global({itemsPerMinute: 5});
       // End Rollbar Snippet
     </script>
-    <% end %> <% if ENV["INTERCOM_APP_ID"] %>
+    <% end %>
+    
+    <% if ENV["INTERCOM_APP_ID"] %>
     <script>
       (function() {
         var w = window;

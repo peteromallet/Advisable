@@ -10,16 +10,14 @@ import ClientNavigation from "./ClientNavigation";
 import FreelancerNavigation from "./FreelancerNavigation";
 import VIEWER from "../../graphql/queries/viewer";
 
-const Header = ({ history }) => {
+const Header = () => {
   const isMobile = useMobile();
   const [navOpen, setNavOpen] = React.useState(false);
 
-  const handleLogout = async apolloClient => {
+  const handleLogout = () => {
     localStorage.removeItem("authToken");
     sessionStorage.removeItem("authToken");
-    await apolloClient.clearStore();
-    apolloClient.resetStore();
-    history.push("/login");
+    window.location = "/login";
   };
 
   return (
@@ -41,17 +39,17 @@ const Header = ({ history }) => {
                 data={query.data}
                 navOpen={navOpen}
                 onCloseNav={() => setNavOpen(false)}
-                onLogout={() => handleLogout(query.client)}
+                onLogout={() => handleLogout()}
               />
               <FreelancerNavigation
                 navOpen={navOpen}
-                onLogout={() => handleLogout(query.client)}
+                onLogout={() => handleLogout()}
                 onCloseNav={() => setNavOpen(false)}
               />
               {!isMobile && !query.loading && (
                 <CurrentUser
                   user={query.data.viewer}
-                  onLogout={() => handleLogout(query.client)}
+                  onLogout={() => handleLogout()}
                 />
               )}
             </React.Fragment>

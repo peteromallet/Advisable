@@ -127,10 +127,11 @@ export const NavItem = styled(NavLink)`
   color: #aabdff;
   font-size: 14px;
   font-weight: 600;
-  line-height: 58px;
+  align-items: center;
   user-select: none;
   margin-left: 28px;
-  display: inline-block;
+  position: relative;
+  display: inline-flex;
   text-decoration: none;
 
   &:hover {
@@ -162,6 +163,19 @@ export const NavItem = styled(NavLink)`
       border-bottom: 1px solid ${colors.neutral.s2};
     }
   }
+`;
+
+export const Badge = styled.div`
+  color: white;
+  height: 18px;
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 8px;
+  border-radius: 4px;
+  background: #ff4672;
+  align-items: center;
+  display: inline-flex;
 `;
 
 export const CurrentUserWrapper = styled.div`

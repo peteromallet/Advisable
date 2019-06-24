@@ -15,10 +15,15 @@ import ApplicationRoutes from "./ApplicationRoutes";
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 
+const MessageActions = () => {
+  return <div>testing</div>;
+};
+
 const Routes = () => {
   return (
     <Suspense fallback={<Loading />}>
       <Switch>
+        <Route path="/testing" component={MessageActions} />
         <AuthenticatedRoute exact path="/" component={RootPath} />
         <Route path="/login" component={Login} />
         <Route

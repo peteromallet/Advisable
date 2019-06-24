@@ -37,6 +37,7 @@ export default gql`
         specialist {
           id
           name
+          email
           airtableId
           firstName
           city

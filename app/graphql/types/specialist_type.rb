@@ -34,7 +34,20 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :email, String, null: true do
+    authorize :is_admin, :is_specialist, :is_applicant_of_user_project
+  end
+
+  field :talk_signature, String, null: false do
     authorize :is_specialist
+  end
+
+  def id
+    object.uid
+  end
+
+  def talk_signature
+    user_id = context[:current_user].uid
+    OpenSSL::HMAC.hexdigest('SHA256', ENV["TALKJS_SECRET"], user_id)
   end
 
   def name

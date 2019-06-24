@@ -13,6 +13,7 @@ export const user = (fields = {}) => {
       confirmed: true,
       companyName: "Test Corp",
       completedTutorials: [],
+      talkSignature: "1234",
       createdAt: new Date().toISOString(),
       country: {
         __typename: "Country",
@@ -111,6 +112,7 @@ export const specialist = (fields = {}) => {
       confirmed: true,
       email: "specialist@test.com",
       completedTutorials: [],
+      talkSignature: "1234",
       createdAt: new Date().toISOString(),
       city: "Dublin",
       reviewsCount: 0,

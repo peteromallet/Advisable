@@ -18,6 +18,9 @@ export default gql`
         primarySkill
         user {
           id
+          name
+          email
+          firstName
           companyName
         }
       }

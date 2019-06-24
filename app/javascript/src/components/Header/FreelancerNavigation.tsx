@@ -3,10 +3,12 @@ import { Query } from "react-apollo";
 import Icon from "../Icon";
 import { useMobile } from "../../components/Breakpoint";
 import VIEWER from "../../graphql/queries/viewer";
-import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
+import useMessageCount from "../../hooks/useMessageCount";
+import { CloseNav, NavContainer, Nav, NavItem, Badge } from "./styles";
 
 const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
   const isMobile = useMobile();
+  const messageCount = useMessageCount();
 
   return (
     <Query query={VIEWER}>
@@ -31,6 +33,10 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
               </NavItem>
               <NavItem onClick={onCloseNav} to="/profile">
                 Profile
+              </NavItem>
+              <NavItem onClick={onCloseNav} to="/messages">
+                {messageCount > 0 && <Badge>{messageCount}</Badge>}
+                Messages
               </NavItem>
 
               {isMobile && (

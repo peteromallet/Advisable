@@ -1,85 +1,59 @@
 // Similar to the Route component from reach component but requires an
 // authenticated user to view the route. If the viewer is not authenticated it
 // will redirect to the Login view.
+// You can use the as prop to determine which type of viewer should be logged
+// in. The value for this prop should correspond direclty with the graphql
+// __typename attribute of the viewer. e.g "User" or "Specialist". Without this
+// prop the component will simply check there is a viewer.
 import React from "react";
-import { Query } from "react-apollo";
 import { Route, Redirect } from "react-router-dom";
-import Loading from "../Loading";
-import VIEWER from "../../graphql/queries/viewer";
 import PendingConfirmation from "./PendingConfirmation";
+import useViewer from "../../hooks/useViewer";
 
 const AuthenticatedRoute = ({
+  as,
   render,
   component: Component,
   freelancerRoute,
   ...rest
-}) => (
-  <Route
-    {...rest}
-    render={props => {
-      const token =
-        sessionStorage.getItem("authToken") ||
-        localStorage.getItem("authToken");
-      // If there is no authToken in storage then redirect immediately
-      if (!token) {
-        return (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: props.location },
-            }}
-          />
-        );
-      }
+}) => {
+  const viewer = useViewer();
 
-      // Query for the viewer to ensure their token is valid
-      return (
-        <Query query={VIEWER}>
-          {query => {
-            if (query.loading) return <Loading />;
-            const viewer = query.data.viewer;
-            const isSpecialist = viewer && viewer.__typename === "Specialist";
+  return (
+    <Route
+      {...rest}
+      render={props => {
+        // If there is no user then clear out any token and redirect immediately
+        if (!viewer) {
+          window.sessionStorage.removeItem("authToken");
+          window.localStorage.removeItem("authToken");
 
-            // If there is no viewer then remove any authToken and redirect to
-            // the login page
-            if (!viewer) {
-              window.sessionStorage.removeItem("authToken");
-              window.localStorage.removeItem("authToken");
+          return (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: props.location },
+              }}
+            />
+          );
+        }
 
-              return (
-                <Redirect
-                  to={{
-                    pathname: "/login",
-                    state: { from: props.location },
-                  }}
-                />
-              );
-            }
+        // If the "as" prop was passed then make sure the viewer it the correct
+        // type otherwhise redirect to the apex route.
+        if (as && as !== viewer.__typename) {
+          return <Redirect to="/" />;
+        }
 
-            // if this is a freelancer route and the viewer is a user then
-            // redirect back to the root path.
-            if (freelancerRoute && !isSpecialist && rest.path !== "/") {
-              return <Redirect to="/" />;
-            }
+        // if the viewer still needs to confirm their account then render the
+        // confirmation view.
+        if (!viewer.confirmed) {
+          return <PendingConfirmation viewer={viewer} />;
+        }
 
-            // if this is not a freelancer route and a freelancer is logged in
-            // then redirect to the root path.
-            if (!freelancerRoute && isSpecialist && rest.path !== "/") {
-              return <Redirect to="/" />;
-            }
-
-            // if the viewer has not confirmed their account then show the
-            // confirmation pending page.
-            if (viewer && !viewer.confirmed) {
-              return <PendingConfirmation viewer={viewer} />;
-            }
-
-            return Component ? <Component {...props} /> : render(props);
-          }}
-        </Query>
-      );
-    }}
-  />
-);
+        return Component ? <Component {...props} /> : render(props);
+      }}
+    />
+  );
+};
 
 export default AuthenticatedRoute;
