@@ -10,8 +10,10 @@ import CreateBookingModal from "./CreateBookingModal";
 import RequestReferences from "src/components/RequestReferences";
 import RequestIntroduction from "src/components/RequestIntroduction";
 import RejectProposalModal from "src/components/RejectProposalModal";
+import TalkModal from "./TalkModal";
 
 const REJECT_MODAL = "REJECT";
+const TALK_MODAL = "TALK_MODAL";
 const REQUEST_INTRODUCTION = "REQUEST_INTRODUCTION";
 const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
 const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
@@ -73,12 +75,21 @@ const statusActions = {
           isOpen={modal === CREATE_BOOKING_MODAL}
           onCreate={b => history.push(`/manage/${b.airtableId}`)}
         />
+        <TalkModal
+          isOpen={modal === TALK_MODAL}
+          onClose={() => setModal(null)}
+          conversationId={application.id}
+          participants={[application.specialist]}
+        />
         <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
             styling="green"
             onClick={() => setModal(CREATE_BOOKING_MODAL)}
           >
             Start working with {application.specialist.firstName}
+          </Button>
+          <Button onClick={() => setModal(TALK_MODAL)}>
+            Message {application.specialist.firstName}
           </Button>
           <Button onClick={() => setModal(REJECT_MODAL)}>
             Provide Feedback
@@ -109,6 +120,12 @@ const statusActions = {
           isOpen={modal === REQUEST_REFERENCES_MODAL}
           onClose={() => setModal(null)}
         />
+        <TalkModal
+          isOpen={modal === TALK_MODAL}
+          onClose={() => setModal(null)}
+          conversationId={application.id}
+          participants={[application.specialist]}
+        />
         <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
           <Button
             as={Link}
@@ -118,6 +135,9 @@ const statusActions = {
             }/proposal`}
           >
             View Proposal
+          </Button>
+          <Button onClick={() => setModal(TALK_MODAL)}>
+            Message {application.specialist.firstName}
           </Button>
           <Button onClick={() => setModal(REJECT_PROPOSAL_MODAL)}>
             Reject

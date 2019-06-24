@@ -37,6 +37,12 @@ class Types::ApplicationType < Types::BaseType
     authorize :read
   end
 
+  # Return the UID for the application id field. Fall back to the actual 'id'
+  # for records that don't have a uid
+  def id
+    object.uid || object.id
+  end
+
   def project_type
     if object.status === "Working"
       return object.project_type || "Fixed"

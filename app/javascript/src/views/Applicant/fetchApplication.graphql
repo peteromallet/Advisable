@@ -66,6 +66,7 @@ query project($projectID: ID!, $applicationID: ID!) {
         airtableId
         name
         city
+        email
         firstName
         reviewsCount
         ratings {

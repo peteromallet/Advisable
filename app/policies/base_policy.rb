@@ -10,6 +10,10 @@ class BasePolicy
     user.try(:has_permission?, permission)
   end
 
+  def is_admin
+    user.try(:has_permission?, "admin")
+  end
+
   class Scope
     attr_reader :user, :scope
 

@@ -13,6 +13,7 @@ export default gql`
         confirmed
         createdAt
         companyName
+        talkSignature
         completedTutorials
         country {
           id
@@ -28,7 +29,11 @@ export default gql`
         firstName
         lastName
         confirmed
+        talkSignature
         completedTutorials
+        image {
+          url
+        }
       }
     }
   }

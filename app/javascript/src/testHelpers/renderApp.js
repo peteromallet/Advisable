@@ -37,6 +37,35 @@ jest.mock("popper.js", () => {
   };
 });
 
+jest.mock("talkjs", () => {
+  class User {}
+  class Session {
+    getOrCreateConversation() {
+      return {
+        setParticipant: user => {},
+      };
+    }
+
+    createChatbox(conversation) {
+      return {
+        mount: node => {},
+      };
+    }
+
+    get unreads() {
+      return {
+        on: (event, handler) => {},
+      };
+    }
+  }
+
+  return {
+    ready: Promise.resolve(),
+    User: User,
+    Session: Session,
+  };
+});
+
 const renderApp = (config = defaultConfig) => {
   window.scrollTo = () => {};
   window.matchMedia = () => ({

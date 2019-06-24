@@ -20,6 +20,7 @@ export const getActiveApplication = gql`
         }
       }
       specialist {
+        email
         ...specialistFields
       }
     }

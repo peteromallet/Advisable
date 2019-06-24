@@ -13,6 +13,10 @@ class Types::User < Types::BaseType
     argument :exclude_conflicts, Boolean, required: false, description: 'Exclude any times that conflict with scheduled interviews'
   end
 
+  field :talk_signature, String, null: false do
+    authorize :is_user
+  end
+
   field :completed_tutorials, [String], null: false do
     authorize :is_user
   end
@@ -22,12 +26,21 @@ class Types::User < Types::BaseType
   end
 
   field :email, String, null: false do
-    authorize :is_user
+    authorize :is_admin, :is_user, :is_candidate_for_user_project
   end
 
   field :applications, [Types::ApplicationType], null: true do
     authorize :is_user
     argument :status, [String], required: false
+  end
+
+  def id
+    object.uid
+  end
+
+  def talk_signature
+    user_id = context[:current_user].uid
+    OpenSSL::HMAC.hexdigest('SHA256', ENV["TALKJS_SECRET"], user_id)
   end
 
   # Exclude any projects where the sales status is 'Lost'. We need to use an

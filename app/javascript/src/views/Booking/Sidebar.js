@@ -15,6 +15,7 @@ import { FadeIn } from "../../components/Animation";
 import VideoButton from "../../components/VideoButton";
 import AttributeList from "../../components/AttributeList";
 import { useMobile } from "../../components/Breakpoint";
+import TalkModal from "../../components/TalkModal";
 import ProjectTypeModal from "../../components/ProjectTypeModal";
 import ProjectMonthlyLimit from "../../components/ProjectMonthlyLimit";
 import SET_PROJECT_TYPE from "./setProjectType";
@@ -24,6 +25,7 @@ export default ({ data, tutorial }) => {
   const { t } = useTranslation();
   const application = data.application;
   const specialist = application.specialist;
+  const [talkModal, setTalkModal] = React.useState(false);
   const [projectTypeModal, setProjectTypeModal] = React.useState(false);
   const [monthlyLimitModal, setMonthlyLimitModal] = React.useState(false);
 
@@ -47,6 +49,23 @@ export default ({ data, tutorial }) => {
             {specialist.city}
             {specialist.country && `, ${specialist.country.name}`}
           </Text>
+          <TalkModal
+            isOpen={talkModal}
+            onClose={() => setTalkModal(false)}
+            conversationId={application.id}
+            participants={[application.specialist]}
+          />
+
+          <Padding top="xl">
+            <Button
+              block
+              icon="message-circle"
+              styling="primary"
+              onClick={() => setTalkModal(true)}
+            >
+              Message {specialist.firstName}
+            </Button>
+          </Padding>
           <Padding top="xl" bottom="xl">
             <AttributeList>
               {Boolean(application.rate) && (
