@@ -13,6 +13,7 @@
 // __typename attribute.
 import React from "react";
 import Modal from "../Modal";
+import Talk from "talkjs";
 import Div100vh from "react-div-100vh";
 import { useBreakpoint } from "@advisable/donut";
 import useTalkSession from "../../hooks/useTalkSession";
