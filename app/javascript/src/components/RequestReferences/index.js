@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { graphql } from "react-apollo";
+import { Padding } from "@advisable/donut";
 import Text from "../Text";
 import Modal from "../Modal";
 import Button from "../Button";
@@ -15,7 +16,7 @@ const RequestReferences = ({
   name,
   applicationId,
   notifications,
-  requestReferences
+  requestReferences,
 }) => {
   const isMobile = useMobile();
   const [isLoading, setLoading] = useState(false);
@@ -25,9 +26,9 @@ const RequestReferences = ({
     await requestReferences({
       variables: {
         input: {
-          id: applicationId
-        }
-      }
+          id: applicationId,
+        },
+      },
     });
     setLoading(false);
     notifications.notify(`References have been requested for ${name}`);
@@ -36,22 +37,24 @@ const RequestReferences = ({
 
   return (
     <Modal padding="xl" isOpen={isOpen} onClose={onClose}>
-      <Heading marginBottom="m">Request References For {name}</Heading>
-      <Text marginBottom="xl">
-        Do you need validated references and reviews for {name}? We can reach
-        out to their previous clients in order to get feedback on their past
-        projects and performance and share the results with you.
-      </Text>
-      <ButtonGroup stack={isMobile}>
-        <Button loading={isLoading} onClick={handleSubmit} styling="primary">
-          Request References
-        </Button>
-        <Button onClick={onClose}>Cancel</Button>
-      </ButtonGroup>
+      <Padding size="m">
+        <Heading marginBottom="m">Request References For {name}</Heading>
+        <Text marginBottom="xl">
+          Do you need validated references and reviews for {name}? We can reach
+          out to their previous clients in order to get feedback on their past
+          projects and performance and share the results with you.
+        </Text>
+        <ButtonGroup stack={isMobile}>
+          <Button loading={isLoading} onClick={handleSubmit} styling="primary">
+            Request References
+          </Button>
+          <Button onClick={onClose}>Cancel</Button>
+        </ButtonGroup>
+      </Padding>
     </Modal>
   );
 };
 
 export default graphql(REQUEST_REFERENCES, {
-  name: "requestReferences"
+  name: "requestReferences",
 })(withNotifications(RequestReferences));
