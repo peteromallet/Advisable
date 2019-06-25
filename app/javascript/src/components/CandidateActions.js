@@ -155,9 +155,9 @@ const statusActions = {
                 </Text>
               </Padding>
               <Text size="xxs" color="neutral.N7" multiline>
-                You have requested references for{" "}
-                {application.specialist.firstName}. We will contact you once we
-                have acquired them.
+                You have requested references from{" "}
+                {application.specialist.firstName} and will add them here once
+                we receive them.
               </Text>
             </Notice>
           </Padding>
@@ -252,9 +252,9 @@ const statusActions = {
                 </Text>
               </Padding>
               <Text size="xxs" color="neutral.N7" multiline>
-                You have requested references for{" "}
-                {application.specialist.firstName}. We will contact you once we
-                have acquired them.
+                You have requested references from{" "}
+                {application.specialist.firstName} and will add them here once
+                we receive them.
               </Text>
             </Notice>
           </Padding>
