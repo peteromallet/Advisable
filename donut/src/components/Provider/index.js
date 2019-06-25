@@ -33,9 +33,10 @@ const DonutProvider = ({ children }) => {
   const theme = {
     responsiveProp: prop => {
       if (!isObject(prop)) return prop;
-      return find(prop, (_, breakpoint) => {
+      let propForBreakpoint = find(prop, (_, breakpoint) => {
         return breakpoints[breakpoint];
       });
+      return propForBreakpoint || prop.default || prop.all;
     },
   };
 

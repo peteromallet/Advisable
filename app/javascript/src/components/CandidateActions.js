@@ -1,7 +1,7 @@
 // Renders the various actions for a candidate based on its status.
 import React, { Fragment, useState } from "react";
 import { withRouter } from "react-router-dom";
-import Button from "src/components/Button";
+import { Text, Padding, Flex, Button } from "@advisable/donut";
 import { Link } from "react-router-dom";
 import useMobile from "src/utilities/useMobile";
 import ButtonGroup from "src/components/ButtonGroup";
@@ -11,6 +11,7 @@ import RequestReferences from "src/components/RequestReferences";
 import RequestIntroduction from "src/components/RequestIntroduction";
 import RejectProposalModal from "src/components/RejectProposalModal";
 import TalkModal from "./TalkModal";
+import Notice from "./Notice";
 
 const REJECT_MODAL = "REJECT";
 const TALK_MODAL = "TALK_MODAL";
@@ -20,8 +21,7 @@ const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
 const CREATE_BOOKING_MODAL = "CREATE_BOOKING_MODAL";
 
 const statusActions = {
-  Applied: ({ application, stack, fullWidth }) => {
-    const isMobile = useMobile();
+  Applied: ({ application, stack }) => {
     const [modal, setModal] = useState(null);
 
     return (
@@ -37,21 +37,35 @@ const statusActions = {
           application={application}
           onClose={() => setModal(null)}
         />
-        <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
+        <Flex
+          spacing="xs"
+          distribute="evenly"
+          direction={{
+            default: stack ? "vertical" : "horizontal",
+            s: "vertical",
+          }}
+        >
           <Button
-            styling="primary"
+            width="100%"
+            intent="success"
+            icon="phone-call"
+            appearance="primary"
             onClick={() => setModal(REQUEST_INTRODUCTION)}
           >
             Request Call
           </Button>
-          <Button onClick={() => setModal(REJECT_MODAL)}>
+          <Button
+            icon="trash"
+            width="100%"
+            onClick={() => setModal(REJECT_MODAL)}
+          >
             Provide Feedback
           </Button>
-        </ButtonGroup>
+        </Flex>
       </React.Fragment>
     );
   },
-  "Application Accepted": ({ application, history, stack, fullWidth }) => {
+  "Application Accepted": ({ application, history, stack }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
 
@@ -81,29 +95,77 @@ const statusActions = {
           conversationId={application.id}
           participants={[application.specialist]}
         />
-        <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
-          <Button
-            styling="green"
-            onClick={() => setModal(CREATE_BOOKING_MODAL)}
+        <Padding bottom="xs">
+          <Flex
+            spacing="xs"
+            distribute="evenly"
+            direction={{
+              default: stack ? "vertical" : "horiztonal",
+              s: "vertical",
+            }}
           >
-            Start working with {application.specialist.firstName}
+            <Button
+              width="100%"
+              intent="success"
+              icon="user-check"
+              appearance="primary"
+              onClick={() => setModal(CREATE_BOOKING_MODAL)}
+            >
+              Start working with {application.specialist.firstName}
+            </Button>
+            <Button
+              width="100%"
+              icon="message-circle"
+              onClick={() => setModal(TALK_MODAL)}
+            >
+              Message {application.specialist.firstName}
+            </Button>
+          </Flex>
+        </Padding>
+        <Flex
+          spacing="xs"
+          distribute="evenly"
+          direction={{
+            default: stack ? "vertical" : "horiztonal",
+            s: "vertical",
+          }}
+        >
+          <Button
+            width="100%"
+            icon="award"
+            disabled={application.referencesRequested}
+            onClick={() => setModal(REQUEST_REFERENCES_MODAL)}
+          >
+            Request References
           </Button>
-          <Button onClick={() => setModal(TALK_MODAL)}>
-            Message {application.specialist.firstName}
-          </Button>
-          <Button onClick={() => setModal(REJECT_MODAL)}>
+          <Button
+            icon="trash"
+            width="100%"
+            onClick={() => setModal(REJECT_MODAL)}
+          >
             Provide Feedback
           </Button>
-          {!application.referencesRequested && (
-            <Button onClick={() => setModal(REQUEST_REFERENCES_MODAL)}>
-              Request References
-            </Button>
-          )}
-        </ButtonGroup>
+        </Flex>
+        {application.referencesRequested && (
+          <Padding top="m">
+            <Notice icon="info">
+              <Padding bottom="xxs">
+                <Text size="xxs" weight="medium">
+                  References requested
+                </Text>
+              </Padding>
+              <Text size="xxs" color="neutral.N7" multiline>
+                You have requested references for{" "}
+                {application.specialist.firstName}. We will contact you once we
+                have acquired them.
+              </Text>
+            </Notice>
+          </Padding>
+        )}
       </Fragment>
     );
   },
-  Proposed: ({ projectId, application, history, stack, fullWidth }) => {
+  Proposed: ({ projectId, application, stack }) => {
     const isMobile = useMobile();
     const [modal, setModal] = useState(null);
 
@@ -126,28 +188,77 @@ const statusActions = {
           conversationId={application.id}
           participants={[application.specialist]}
         />
-        <ButtonGroup stack={stack || isMobile} fullWidth={fullWidth}>
-          <Button
-            as={Link}
-            styling="primary"
-            to={`/projects/${projectId}/applications/${
-              application.airtableId
-            }/proposal`}
+        <Padding bottom="xs">
+          <Flex
+            spacing="xs"
+            distribute="evenly"
+            direction={{
+              default: stack ? "vertical" : "horiztonal",
+              s: "vertical",
+            }}
           >
-            View Proposal
-          </Button>
-          <Button onClick={() => setModal(TALK_MODAL)}>
-            Message {application.specialist.firstName}
-          </Button>
-          <Button onClick={() => setModal(REJECT_PROPOSAL_MODAL)}>
-            Reject
-          </Button>
-          {!application.referencesRequested && (
-            <Button onClick={() => setModal(REQUEST_REFERENCES_MODAL)}>
-              Request References
+            <Button
+              as={Link}
+              width="100%"
+              intent="success"
+              icon="file-text"
+              appearance="primary"
+              to={`/projects/${projectId}/applications/${
+                application.airtableId
+              }/proposal`}
+            >
+              View Proposal
             </Button>
-          )}
-        </ButtonGroup>
+            <Button
+              width="100%"
+              icon="message-circle"
+              onClick={() => setModal(TALK_MODAL)}
+            >
+              Message {application.specialist.firstName}
+            </Button>
+          </Flex>
+        </Padding>
+
+        <Flex
+          spacing="xs"
+          distribute="evenly"
+          direction={{
+            default: stack ? "vertical" : "horiztonal",
+            s: "vertical",
+          }}
+        >
+          <Button
+            width="100%"
+            icon="award"
+            disabled={application.referencesRequested}
+            onClick={() => setModal(REQUEST_REFERENCES_MODAL)}
+          >
+            Request References
+          </Button>
+          <Button
+            icon="trash"
+            width="100%"
+            onClick={() => setModal(REJECT_PROPOSAL_MODAL)}
+          >
+            Provide Feedback
+          </Button>
+        </Flex>
+        {application.referencesRequested && (
+          <Padding top="m">
+            <Notice icon="info">
+              <Padding bottom="xxs">
+                <Text size="xxs" weight="medium">
+                  References requested
+                </Text>
+              </Padding>
+              <Text size="xxs" color="neutral.N7" multiline>
+                You have requested references for{" "}
+                {application.specialist.firstName}. We will contact you once we
+                have acquired them.
+              </Text>
+            </Notice>
+          </Padding>
+        )}
       </Fragment>
     );
   },

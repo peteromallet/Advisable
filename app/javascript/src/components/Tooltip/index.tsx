@@ -51,9 +51,6 @@ const Tooltip = ({
     if (!focused) {
       setFocused(true);
     }
-
-    console.log("focused", focused);
-    console.log("mouse", mouseOver);
   };
 
   const open = mouseOver || focused;
