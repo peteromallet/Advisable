@@ -34,60 +34,40 @@ const ApplicationRoutes = () => {
           <AuthenticatedRoute exact path="/messages" component={Messages} />
           {/* Client routes */}
           <AuthenticatedRoute
-            as="User"
             component={Applicant}
             path="/projects/:projectID/applications/:applicationID"
           />
           <Route
-            as="User"
             path="/projects/:projectID/interviews/:interviewID/availability"
             component={InterviewAvailability}
           />
-          <Route
-            as="User"
-            path="/projects/:projectId/:status?"
-            component={Project}
-          />
+          <Route path="/projects/:projectId/:status?" component={Project} />
           <AuthenticatedRoute as="User" path="/projects" component={Projects} />
+          <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
           <AuthenticatedRoute
-            exact
-            as="User"
-            path="/manage"
-            component={ActiveTalent}
-          />
-          <AuthenticatedRoute
-            as="User"
             path="/manage/:applicationId"
             component={Booking}
           />
           {/* Freelancer Routes */}
           <AuthenticatedRoute
             exact
-            as="Specialist"
             path="/applications"
             component={Applications}
           />
           <AuthenticatedRoute
-            as="Specialist"
             component={Proposal}
             path={"/applications/:applicationId/proposal"}
           />
           <AuthenticatedRoute
             exact
-            as="Specialist"
             path="/clients"
             component={FreelancerProjects}
           />
           <AuthenticatedRoute
-            as="Specialist"
             path="/clients/:applicationId"
             component={FreelancerActiveApplication}
           />
-          <AuthenticatedRoute
-            as="Specialist"
-            path="/profile"
-            component={UpdateProfile}
-          />
+          <AuthenticatedRoute path="/profile" component={UpdateProfile} />
           <Route exact path="/invites/:applicationId" component={JobListing} />
           <Route
             path="/invites/:applicationId/apply"
