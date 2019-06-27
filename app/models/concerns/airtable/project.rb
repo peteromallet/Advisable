@@ -59,7 +59,7 @@ class Airtable::Project < Airtable::Base
     self['Qualification Question 1'] = project.questions.try(:[], 0) if project.saved_change_to_questions?
     self['Qualification Question 2'] = project.questions.try(:[], 1) if project.saved_change_to_questions?
     self['Accepted Terms'] = project.accepted_terms if project.saved_change_to_accepted_terms_at?
-    self['Skills Required'] = project.skills.map(&:airtable_id)
+    self['Skills Required'] = project.skills.map(&:airtable_id).uniq
     self['Primary Skill Required'] = project.primary_skill
   end
 
