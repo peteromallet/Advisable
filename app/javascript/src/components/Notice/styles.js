@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { rgba } from "polished";
 import colors from "../../colors";
 import { Icon } from "../Icon/styles";
 
@@ -20,7 +21,7 @@ export const Notice = styled.div`
   border-radius: 4px;
   position: relative;
   color: ${colors.neutral.s9};
-  background: ${colors.neutral.s1};
+  background: ${rgba(colors.neutral.s2, 0.75)};
   ${props => props.hasIcon && withIcon};
 `;
 

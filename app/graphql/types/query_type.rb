@@ -71,11 +71,11 @@ class Types::QueryType < Types::BaseType
   end
 
   def application(id: )
-    begin
-      ::Application.find_by_airtable_id(id)
-    rescue Airrecord::Error => er
-      GraphQL::ExecutionError.new("Could not find application #{id}")
-    end
+    application = Application.find_by_airtable_id(id)
+    application = Application.find_by_uid(id) if application.nil?
+    return application if application.present?
+
+    GraphQL::ExecutionError.new("Could not find application #{id}")
   end
 
   field :interview, Types::Interview, description: "Fetch an interview record by its airtable ID", null: true do

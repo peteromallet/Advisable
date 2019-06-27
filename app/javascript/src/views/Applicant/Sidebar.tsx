@@ -2,12 +2,10 @@ import * as React from "react";
 import { get } from "lodash";
 import { Route } from "react-router-dom";
 import Sticky from "react-stickynode";
-import Text from "../../components/Text";
+import { Text, Padding } from "../../../../../donut/src";
 import Avatar from "../../components/Avatar";
 import Layout from "../../components/Layout";
-import Heading from "../../components/Heading";
 import currency from "../../utilities/currency";
-import { Padding } from "../../components/Spacing";
 import { FadeIn } from "../../components/Animation";
 import StarRating from "../../components/StarRating";
 import FeaturedBadge from "../../components/FeaturedBadge";
@@ -15,8 +13,9 @@ import AttributeList from "../../components/AttributeList";
 import CandidateActions from "../../components/CandidateActions";
 import { useMobile } from "../../components/Breakpoint";
 import ProposalActions from "./ProposalActions";
+import CandidateAttributeList from "../../components/CandidateAttributeList";
 
-export default ({ data, history, match }) => {
+export default ({ data, match }) => {
   const isMobile = useMobile();
   const project = data.project;
   const application = project.application;
@@ -26,16 +25,20 @@ export default ({ data, history, match }) => {
     <Layout.Sidebar size="m">
       <Sticky top={98} enabled={!isMobile}>
         <FadeIn duration="500ms">
-          <Padding bottom="l">
+          <Padding bottom="m">
             <Avatar
               size="l"
               name={specialist.name}
               url={get(specialist, "image.url")}
             />
           </Padding>
-          <Heading level={3}>{specialist.name}</Heading>
-          <Padding bottom="s">
-            <Text size="xs">
+          <Padding bottom="xxs">
+            <Text size="l" as="h3" weight="semibold" color="neutral.N9">
+              {specialist.name}
+            </Text>
+          </Padding>
+          <Padding bottom="m">
+            <Text size="xs" color="neutral.N6">
               {specialist.city}
               {specialist.country && `, ${specialist.country.name}`}
             </Text>
@@ -50,29 +53,8 @@ export default ({ data, history, match }) => {
               <FeaturedBadge leftAligned />
             </Padding>
           )}
-          <AttributeList>
-            {Boolean(application.rate) && (
-              <AttributeList.Item
-                label="Hourly Rate"
-                value={currency(parseFloat(application.rate) * 100.0)}
-              />
-            )}
-            <AttributeList.Item
-              label="Available"
-              value={application.availability}
-            />
-            {specialist.linkedin && (
-              <AttributeList.Item
-                label="Linkedin"
-                value={
-                  <a href={specialist.linkedin} target="_blank">
-                    View on Linkedin
-                  </a>
-                }
-              />
-            )}
-          </AttributeList>
-          <Padding top="xl" bottom="xl">
+          <CandidateAttributeList application={application} />
+          <Padding top="l" bottom="xl">
             <Route
               path={match.path}
               exact
