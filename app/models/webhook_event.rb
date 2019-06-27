@@ -41,7 +41,6 @@ class WebhookEvent < ApplicationRecord
 
     where(event: event).each do |webhook_event|
       webhook = Webhook.create(url: webhook_event.url, data: data)
-      WebhookJob.perform_later(webhook.id)
     end
   end
 

@@ -9,13 +9,12 @@ describe WebhookEvent do
   describe "self.trigger" do
     it "triggers webhooks for any webhook_event records matching that event" do
       event = create(:webhook_event, url: "https://localhost:3000/1")
-      webhook = double(Webhook, id: 1)
+      allow_any_instance_of(Webhook).to receive(:id).and_return(1234)
       data = { test: "data" }
       expect(Webhook).to receive(:create).with({
         url: event.url,
         data: data
-      }).and_return(webhook)
-      expect(WebhookJob).to receive(:perform_later).with(webhook.id)
+      })
       WebhookEvent.trigger(event.event, data)
     end
 

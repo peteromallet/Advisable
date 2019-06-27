@@ -27,7 +27,6 @@ class WebhookConfiguration < ApplicationRecord
     end
     return unless matched_criteria.length == criteria.length
     webhook = Webhook.create(url: url, data: data(entity))
-    WebhookJob.perform_later(webhook.id)
     webhook
   end
 
