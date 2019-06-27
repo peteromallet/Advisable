@@ -2,6 +2,7 @@
 import React from "react";
 import { Query } from "react-apollo";
 import PROJECTS from "./projects.graphql";
+import { Redirect } from "react-router-dom";
 import Heading from "../../components/Heading";
 import Loading from "../../components/Loading";
 import Divider from "../../components/Divider";
@@ -9,9 +10,15 @@ import Layout from "../../components/Layout";
 import useScrollRestore from "../../utilities/useScrollRestore";
 import { Projects } from "./styles";
 import ProjectsList from "./ProjectsList";
+import useViewer from "../../hooks/useViewer";
 
 export default () => {
   useScrollRestore();
+  const viewer = useViewer();
+
+  if (viewer.__typename !== "User") {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Layout>
