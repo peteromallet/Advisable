@@ -3,8 +3,8 @@ import { createGlobalStyle } from "styled-components";
 const BaseStyles = createGlobalStyle`
   @import url("https://use.typekit.net/yuq4swo.css");
 
-  html {
-    font-size: 15px;
+  html, body {
+    font-size: 16px;
     box-sizing: border-box;
     font-family: poppins, sans-serif;
   }

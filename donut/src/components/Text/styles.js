@@ -4,13 +4,13 @@ import colors from "../../colors";
 import responsiveProp from "../../utilities/responsiveProp";
 
 const SIZES = {
-  xxl: "1.86rem",
-  xl: "1.6rem",
-  l: "1.33rem",
-  m: "1.13rem",
-  s: "1rem",
-  xs: "0.92rem",
-  xxs: "0.86rem",
+  xxl: "1.75rem",
+  xl: "1.5rem",
+  l: "1.25rem",
+  m: "1.1rem",
+  s: "0.937rem",
+  xs: "0.875rem",
+  xxs: "0.75rem",
 };
 
 const WEIGHTS = {

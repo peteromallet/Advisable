@@ -10,7 +10,7 @@ const STYLES = {
     &:hover {
       color: #0064ff;
     }
-  `
+  `,
 };
 
 let RouterLink = styled(Link)`

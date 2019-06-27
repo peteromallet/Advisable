@@ -22,7 +22,7 @@ const APPEARANCES = {
     height: 36px;
     line-height: 1;
     padding: 0 16px;
-    font-weight: 700;
+    font-weight: 600;
   `,
   minimal: css``,
 };

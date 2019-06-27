@@ -64,7 +64,7 @@ let us know! We may be able to add it quickly.
 }
 
 .inbox-feed-panel {
-  width: 30%;
+  width: 25%;
   /* max-width: 300px; */
   /* min-width: 270px; */
   /* optional fields: margin-top, margin-bottom, border-radius, border-width,
@@ -75,9 +75,8 @@ let us know! We may be able to add it quickly.
   /* By using `calc` below we can ensure that the total width of the feed, the chat,
      and the space in between is precisely 100%. We recommend the same if you also
      use percentage widths and a margin. */
-  width: calc(70% - 20px);
+  width: 75%;
   /* max-width: 420px; */
-  margin-left: 20px;
   /* optional fields: margin-top, margin-bottom */
 }
 

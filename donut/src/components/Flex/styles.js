@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import SPACING from "../../spacing";
 import responsiveProp from "../../utilities/responsiveProp";
 
@@ -50,15 +50,28 @@ const distribution = {
   evenly: "1 0 0%",
 };
 
+const align = {
+  center: "center",
+};
+
 export const Flex = styled.div`
+  width: 100%;
   display: flex;
+  align-items: ${props => align[responsiveProp(props, "align")]};
   ${props => applyNegativeSpacing(props)};
   flex-direction: ${props => DIRECTION[responsiveProp(props, "direction")]};
 `;
 
 export const FlexItem = styled.div`
+  display: inline-block;
   ${props => applyItemSpacing(props)};
   flex: ${props => distribution[props.distribute]};
+
+  ${props =>
+    props.fill &&
+    css`
+      flex: 1 1 auto;
+    `}
 `;
 
 FlexItem.displayName = "FlexItem";
