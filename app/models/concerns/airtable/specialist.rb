@@ -62,7 +62,7 @@ class Airtable::Specialist < Airtable::Base
   push_data do |specialist|
     self['Biography'] = specialist.bio
     self['Email Address'] = specialist.email
-    self['Specialist Skills'] = specialist.skills.map(&:airtable_id)
+    self['Specialist Skills'] = specialist.skills.map(&:airtable_id).uniq
     self['City'] = specialist.city
     self['Account Created'] = specialist.has_account? ? "Yes" : nil
     self['Country'] = [specialist.country.try(:airtable_id)]
