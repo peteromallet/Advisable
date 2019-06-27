@@ -64,6 +64,7 @@
     "@storybook/addon-links": "^5.1.1",
     "@storybook/addons": "^5.1.1",
     "@storybook/react": "^5.1.1",
+    "@testing-library/react": "^8.0.4",
     "@types/jest": "^24.0.15",
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.6",
@@ -72,7 +73,6 @@
     "jest-dom": "^3.5.0",
     "jest-transform-graphql": "^2.1.0",
     "prettier": "^1.18.2",
-    "react-testing-library": "^8.0.1",
     "waait": "^1.0.5",
     "webpack-dev-server": "^3.7.2"
   },
