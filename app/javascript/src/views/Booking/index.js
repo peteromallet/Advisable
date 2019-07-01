@@ -94,11 +94,9 @@ let Booking = ({ data, match, history, location, client }) => {
         <Sidebar data={data} tutorial={tutorial} />
         <Layout.Main>
           <Tasks
-            tasks={tasks}
-            onNewTask={addNewTaskToCache}
             onSelectTask={openTask}
+            onNewTask={addNewTaskToCache}
             application={data.application}
-            firstName={specialist.firstName}
           />
         </Layout.Main>
       </Layout>

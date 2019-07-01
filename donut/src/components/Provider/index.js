@@ -5,7 +5,7 @@ import Context from "./context";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import breakpointConfig from "../../breakpoints";
 import { ThemeProvider } from "styled-components";
-import theme from "./theme";
+import theme from "../../theme";
 
 const DonutProvider = ({ children }) => {
   // Iterate through the breakpoints and build up an object determining which

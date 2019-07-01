@@ -1,12 +1,18 @@
 import React from "react";
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
+import Icon from "../Icon";
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "./styles";
 
-const Component = ({ children }) => {
+const Component = ({ tabListProps, children }) => {
   return (
     <Tabs>
-      <TabList>
+      <TabList {...tabListProps}>
         {React.Children.map(children, child => {
-          return <Tab>{child.props.title}</Tab>;
+          return (
+            <Tab>
+              {child.props.icon && <Icon icon={child.props.icon} height={16} />}
+              {child.props.title}
+            </Tab>
+          );
         })}
       </TabList>
 
