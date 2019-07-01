@@ -81,12 +81,12 @@ export default ({
   const earnings = {
     estimate: calculateEarnings(values.estimate, rate),
     flexibleEstimate: calculateEarnings(values.flexibleEstimate, rate),
-    hoursWorked: calculateEarnings(String(task.hoursWorked), rate),
   };
 
   const costs = {
     estimate: calculateCost(String(task.estimate), rate),
     flexibleEstimate: calculateCost(String(task.flexibleEstimate), rate),
+    hoursWorked: calculateCost(String(task.hoursWorked), rate),
   };
 
   const handleSave = popover => () => {
@@ -131,7 +131,7 @@ export default ({
   }
 
   if (hasBeenSubmitted(task)) {
-    label = currency(earnings.hoursWorked, { format: "$0,0" });
+    label = currency(costs.hoursWorked, { format: "$0,0" });
   }
 
   return (
