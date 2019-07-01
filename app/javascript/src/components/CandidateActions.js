@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import { Text, Padding, Flex, Button } from "@advisable/donut";
 import { Link } from "react-router-dom";
 import useMobile from "src/utilities/useMobile";
-import ButtonGroup from "src/components/ButtonGroup";
 import RejectModal from "src/components/RejectModal";
 import CreateBookingModal from "./CreateBookingModal";
 import RequestReferences from "src/components/RequestReferences";
@@ -21,9 +20,7 @@ const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
 const CREATE_BOOKING_MODAL = "CREATE_BOOKING_MODAL";
 
 const statusActions = {
-  Applied: ({ application, stack }) => {
-    const [modal, setModal] = useState(null);
-
+  Applied: ({ application, stack, modal, setModal }) => {
     return (
       <React.Fragment>
         <RequestIntroduction
@@ -65,10 +62,13 @@ const statusActions = {
       </React.Fragment>
     );
   },
-  "Application Accepted": ({ application, history, stack }) => {
-    const isMobile = useMobile();
-    const [modal, setModal] = useState(null);
-
+  "Application Accepted": ({
+    application,
+    history,
+    stack,
+    modal,
+    setModal,
+  }) => {
     return (
       <Fragment>
         <RejectModal
@@ -165,10 +165,7 @@ const statusActions = {
       </Fragment>
     );
   },
-  Proposed: ({ projectId, application, stack }) => {
-    const isMobile = useMobile();
-    const [modal, setModal] = useState(null);
-
+  Proposed: ({ projectId, application, stack, modal, setModal }) => {
     return (
       <Fragment>
         <RejectProposalModal
@@ -271,9 +268,21 @@ const CandidateActions = ({
   stack,
   fullWidth,
 }) => {
+  const isMobile = useMobile();
+  const [modal, setModal] = useState(null);
   const actions = statusActions[application.status];
+
   return actions
-    ? actions({ projectId, application, history, stack, fullWidth })
+    ? actions({
+        projectId,
+        application,
+        history,
+        stack,
+        fullWidth,
+        modal,
+        setModal,
+        isMobile,
+      })
     : null;
 };
 
