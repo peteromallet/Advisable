@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import Text from "src/components/Text";
 import Avatar from "src/components/Avatar";
+import Linkify from "linkifyjs/react";
 import Spacing, { Padding } from "src/components/Spacing";
 import Button from "src/components/Button";
 import FeaturedBadge from "src/components/FeaturedBadge";
@@ -21,7 +22,7 @@ import {
   CandidateHeaderActions,
 } from "./styles";
 
-const Candidate = ({ application, project, history }) => {
+const Candidate = ({ application, project }) => {
   if (application.hidden) return null;
 
   const [expanded, setExpanded] = useState(false);
@@ -63,9 +64,11 @@ const Candidate = ({ application, project, history }) => {
         linkedin={application.specialist.linkedin}
       />
 
-      <Text size="s" marginBottom="l">
-        {application.introduction}
-      </Text>
+      <Linkify options={{ attributes: { rel: "nofollow" } }}>
+        <Text size="s" marginBottom="l">
+          {application.introduction}
+        </Text>
+      </Linkify>
 
       <Padding bottom="xl">
         <Button blank className="ViewMore" onClick={handleExpand}>

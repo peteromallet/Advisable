@@ -1,4 +1,5 @@
 import React from "react";
+import Linkify from "linkifyjs/react";
 import Card from "src/components/Card";
 import Text from "src/components/Text";
 import Skills from "../../components/Skills";
@@ -27,7 +28,9 @@ export default ({ data, history }) => {
             <Padding size="xl">
               <Padding bottom="l">
                 <Heading level={6}>Introduction</Heading>
-                <Text size="s">{data.project.application.introduction}</Text>
+                <Linkify options={{ attributes: { rel: "nofollow" } }}>
+                  <Text size="s">{data.project.application.introduction}</Text>
+                </Linkify>
               </Padding>
               <Padding bottom="xs">
                 <Heading level={6}>Skills</Heading>
