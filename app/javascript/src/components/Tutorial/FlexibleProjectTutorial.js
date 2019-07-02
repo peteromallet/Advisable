@@ -7,7 +7,7 @@ const FlexibleProjectTutorial = ({ tutorial, isClient = false }) => {
 
   let summary = isClient ? "clientSummary" : "freelancerSummary";
   // default to the freelancer video
-  let videoId = "wttl9dX1eMs";
+  let videoId = "qDodYvL4H8g";
   if (isClient) {
     videoId = "0XanXMDAqdI";
   }
