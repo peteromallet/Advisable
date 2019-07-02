@@ -44,6 +44,10 @@ let Main = styled.div`
   width: ${props => mainWidths[props.size || "m"]};
   flex-grow: 1;
   flex-shrink: 1;
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 
 Layout.Sidebar = Sidebar;
