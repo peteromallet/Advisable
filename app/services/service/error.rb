@@ -3,7 +3,7 @@ class Service::Error < StandardError
 
   def initialize(code, **args)
     @code = code
-    @message = args.fetch(:message, nil)
+    @message = args.fetch(:message, code)
     @field = args.fetch(:field, nil)
     super(code)
   end

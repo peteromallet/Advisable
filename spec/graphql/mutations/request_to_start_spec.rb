@@ -1,7 +1,8 @@
 require "rails_helper"
 
 describe Mutations::RequestToStart do
-  let(:task) { create(:task, stage: "Not Assigned") }
+  let(:application) { create(:application, status: "Working") }
+  let(:task) { create(:task, stage: "Not Assigned", application: application) }
 
   let(:query) { %|
     mutation {
@@ -14,6 +15,7 @@ describe Mutations::RequestToStart do
         }
         errors {
           code
+          message
         }
       }
     }
@@ -114,6 +116,16 @@ describe Mutations::RequestToStart do
       response = AdvisableSchema.execute(query, context: context)
       error = response["data"]["requestToStart"]["errors"][0]
       expect(error["code"]).to eq("tasks.cantRequestToStart")
+    end
+  end
+
+  context "when the application status is not 'Working'" do
+    let(:application) { create(:application, status: "Proposed") }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["data"]["requestToStart"]["errors"][0]
+      expect(error["message"]).to eq("Application status is not 'Working'")
     end
   end
 end
