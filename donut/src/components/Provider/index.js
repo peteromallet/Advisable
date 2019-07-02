@@ -1,12 +1,11 @@
 import React from "react";
 import reduce from "lodash/reduce";
-import isObject from "lodash/isObject";
-import find from "lodash/find";
 import BaseStyles from "./BaseStyles";
 import Context from "./context";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import breakpointConfig from "../../breakpoints";
 import { ThemeProvider } from "styled-components";
+import theme from "../../theme";
 
 const DonutProvider = ({ children }) => {
   // Iterate through the breakpoints and build up an object determining which
@@ -26,18 +25,6 @@ const DonutProvider = ({ children }) => {
 
   const context = {
     breakpoints,
-  };
-
-  // We use a theme object for styled-components to be able to use donuts
-  // 'responsive props' functionality inside of component styles.
-  const theme = {
-    responsiveProp: prop => {
-      if (!isObject(prop)) return prop;
-      let propForBreakpoint = find(prop, (_, breakpoint) => {
-        return breakpoints[breakpoint];
-      });
-      return propForBreakpoint || prop.default || prop.all;
-    },
   };
 
   return (

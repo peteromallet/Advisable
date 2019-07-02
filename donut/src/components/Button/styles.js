@@ -1,5 +1,6 @@
-import { darken, lighten, rgba } from "polished";
+import { space } from "styled-system";
 import styled, { css } from "styled-components";
+import { darken, lighten, rgba } from "polished";
 import colors from "../../colors";
 import Icon from "../Icon/styles";
 
@@ -90,6 +91,8 @@ export const Button = styled.button`
   text-decoration: none;
   justify-content: center;
   width: ${props => props.width};
+
+  ${space}
 
   ${props => props.disabled && disabledStyling};
 
