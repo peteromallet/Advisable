@@ -21,7 +21,7 @@ let Layout = styled.div`
 const sidebarWidths = {
   s: "220px",
   m: "280px",
-}
+};
 
 let Sidebar = styled.div`
   flex-shrink: 0;
@@ -33,9 +33,17 @@ let Sidebar = styled.div`
   }
 `;
 
+const mainWidths = {
+  s: "calc(100% - 270px)",
+  m: "calc(100% - 330px)",
+};
+
 let Main = styled.div`
-  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: ${props => mainWidths[props.size || "m"]};
   flex-grow: 1;
+  flex-shrink: 1;
 `;
 
 Layout.Sidebar = Sidebar;

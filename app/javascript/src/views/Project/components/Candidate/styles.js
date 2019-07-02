@@ -1,9 +1,8 @@
 import styled, { keyframes } from "styled-components";
-import {default as BaseCard} from "src/components/Card";
-import {Avatar} from "src/components/Avatar/styles";
-import { AdvisableComment } from '../AdvisableComment';
-import { ButtonStyling } from "src/components/Button";
-import { FeaturedBadge } from 'src/components/FeaturedBadge';
+import { default as BaseCard } from "src/components/Card";
+import { Avatar } from "src/components/Avatar/styles";
+import { AdvisableComment } from "../AdvisableComment";
+import { FeaturedBadge } from "src/components/FeaturedBadge";
 
 const slideUp = keyframes`
   from {
@@ -15,7 +14,7 @@ const slideUp = keyframes`
     opacity: 1;
     transform: translateY(0);
   }
-`
+`;
 
 export const Card = styled(BaseCard)`
   opacity: 0;
@@ -27,11 +26,21 @@ export const Card = styled(BaseCard)`
       ? `0 50px 200px -50px rgba(55, 69, 120, 0.45)`
       : `0 15px 40px -15px rgba(55, 69, 120, 0.2)`};
 
-  &:nth-child(2) { animation-delay: 100ms }
-  &:nth-child(3) { animation-delay: 200ms }
-  &:nth-child(4) { animation-delay: 300ms }
-  &:nth-child(5) { animation-delay: 400ms }
-  &:nth-child(6) { animation-delay: 500ms }
+  &:nth-child(2) {
+    animation-delay: 100ms;
+  }
+  &:nth-child(3) {
+    animation-delay: 200ms;
+  }
+  &:nth-child(4) {
+    animation-delay: 300ms;
+  }
+  &:nth-child(5) {
+    animation-delay: 400ms;
+  }
+  &:nth-child(6) {
+    animation-delay: 500ms;
+  }
 
   .ViewMore {
     @media (max-width: 768px) {
@@ -55,7 +64,7 @@ export const Name = styled.h3`
 `;
 
 export const Location = styled.span`
-  color: #7A779F;
+  color: #7a779f;
   line-height: 1;
   font-size: 16px;
   font-weight: 400;
@@ -76,7 +85,7 @@ export const CandidateHeaderActions = styled.div`
   ${AdvisableComment} {
     margin-left: 15px;
   }
-`
+`;
 
 export const CandidateHeader = styled.div`
   display: flex;
@@ -110,8 +119,8 @@ export const MoreInfo = styled.div`
 export const CandidateWrapper = styled.div.attrs({
   style: ({ height, opacity }) => ({
     opacity: opacity,
-    height: `${height}px`
-  })
+    height: `${height}px`,
+  }),
 })`
   box-sizing: border-box;
   padding-bottom: 20px;

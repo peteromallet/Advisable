@@ -1,5 +1,5 @@
 import { rgba } from "polished";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import colors from "../../colors";
 import { Avatar } from "../../components/Avatar/styles";
 import { FeaturedBadge } from "../../components/FeaturedBadge";
