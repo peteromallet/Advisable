@@ -35,6 +35,15 @@ export const Text = styled.p`
   font-weight: ${props => weights[props.weight || props.variation] || 400};
   color: ${props => colours[props.colour || props.variation] || "#353E5C"};
   text-align: ${props => (props.center ? "center" : "inherit")};
+
+  a {
+    color: #1232a6;
+    text-decoration: none;
+
+    &:hover {
+      color: #2555ff;
+    }
+  }
 `;
 
 export default withSpacing(Text);
