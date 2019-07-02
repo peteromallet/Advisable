@@ -10,7 +10,6 @@ storiesOf("TextField", module)
       const [value, setValue] = React.useState("");
 
       const handleChange = e => {
-        console.log(e.target.value);
         setValue(e.target.value);
       };
 
@@ -30,7 +29,6 @@ storiesOf("TextField", module)
       const [value, setValue] = React.useState("");
 
       const handleChange = e => {
-        console.log(e.target.value);
         setValue(e.target.value);
       };
 

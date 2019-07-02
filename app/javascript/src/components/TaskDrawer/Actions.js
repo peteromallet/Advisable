@@ -68,10 +68,16 @@ const Component = ({
   const hasNameAndDescription = hasName && hasDescription;
   const isFixed = task.application.projectType === "Fixed";
   const applicationFlexible = task.application.projectType === "Flexible";
+  const applicationIsWorking = task.application.status === "Working";
 
   let notice;
 
-  if (!isClient && applicationFlexible && stage === "Not Assigned") {
+  if (
+    !isClient &&
+    applicationFlexible &&
+    applicationIsWorking &&
+    stage === "Not Assigned"
+  ) {
     actions.push(
       <Button
         key="submit"
@@ -116,7 +122,12 @@ const Component = ({
 
   // when the specialist is viewing and the project is a Fixed project and the
   // task stage is Not Assigned then allow them to request to start.
-  if (!isClient && isFixed && stage === "Not Assigned") {
+  if (
+    !isClient &&
+    isFixed &&
+    applicationIsWorking &&
+    stage === "Not Assigned"
+  ) {
     actions.push(
       <Button
         styling="primary"
