@@ -7,23 +7,15 @@ class Tasks::RequestToStart < ApplicationService
 
   def call
     if task.stage != "Not Assigned"
-      raise Service::Error.new("tasks.cantRequestToStart")
+      raise Service::Error.new("tasks.cantRequestToStart", message: "Stage must be 'Not Assigned'")
     end
 
-    if task.name.blank?
-      raise Service::Error.new("tasks.nameRequired")
-    end
-
-    if task.description.blank?
-      raise Service::Error.new("tasks.descriptionRequired")
-    end
-
-    if task.update_attributes(stage: "Quote Requested")
+    if task.update_attributes(stage: "Requested To Start")
       task.sync_to_airtable
-      WebhookEvent.trigger("tasks.quote_requested", WebhookEvent::Task.data(task))
+      WebhookEvent.trigger("tasks.requested_to_start", WebhookEvent::Task.data(task))
       return task
     end
 
-    raise Service::Error.new(task.errors.full_messages.first)
+    raise Service::Error.new("tasks.failedToSave", message: task.errors.full_messages.first)
   end
 end
