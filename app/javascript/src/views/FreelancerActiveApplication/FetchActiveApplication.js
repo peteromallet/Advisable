@@ -2,19 +2,14 @@
 // application
 import React from "react";
 import { matchPath } from "react-router-dom";
-import Card from "../../components/Card";
 import Layout from "../../components/Layout";
-import Heading from "../../components/Heading";
-import NewTask from "../../components/NewTask";
-import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
 import FixedTutorial from "../../components/Tutorial/FixedProjectTutorial";
 import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
-import { Padding } from "../../components/Spacing";
 import Sidebar from "./Sidebar";
-import NoTasks from "./NoTasks";
 import FETCH_APPLICATION from "../../graphql/queries/freelancerActiveApplication";
 import useTutorial from "../../hooks/useTutorial";
+import Tasks from "./Tasks";
 
 const tutorials = {
   Fixed: "fixedProjects",
@@ -91,27 +86,11 @@ const FetchActiveApplication = ({ location, history, match, data, client }) => {
       />
       <Sidebar data={data} tutorial={tutorial} />
       <Layout.Main>
-        {application.tasks.length > 0 ? (
-          <Card elevation={1}>
-            <Padding size="m" left="l" right="l">
-              <Heading level={4}>Active Tasks</Heading>
-            </Padding>
-            <Padding bottom="m">
-              <TaskList
-                tasks={application.tasks}
-                onClickTask={handleTaskClick}
-                lastRow={
-                  <NewTask
-                    onCreate={addNewTaskToCache}
-                    application={application}
-                  />
-                }
-              />
-            </Padding>
-          </Card>
-        ) : (
-          <NoTasks onNewTask={addNewTaskToCache} application={application} />
-        )}
+        <Tasks
+          application={application}
+          onClick={handleTaskClick}
+          onCreate={addNewTaskToCache}
+        />
       </Layout.Main>
     </Layout>
   );

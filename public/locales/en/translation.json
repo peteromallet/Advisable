@@ -27,6 +27,7 @@
     }
   },
   "tasks": {
+    "title": "{{firstName}}'s tasks",
     "actions": {
       "setRepeating": {
         "client": {
