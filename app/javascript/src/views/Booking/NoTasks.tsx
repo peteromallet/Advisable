@@ -1,4 +1,5 @@
 import * as React from "react";
+import { get } from "lodash";
 import Text from "../../components/Text";
 import Card from "../../components/Card";
 import NewTask from "../../components/NewTask";
@@ -6,15 +7,12 @@ import { Padding } from "../../components/Spacing";
 import illustration from "./no_tasks.png";
 
 interface Props {
-  firstName: string;
-  tasks: any;
   application: any;
   onNewTask: (e: React.SyntheticEvent) => void;
 }
 
-export default ({ firstName, tasks, onNewTask, application }: Props) => {
-  if (!tasks || tasks.length > 0) return null;
-
+export default ({ onNewTask, application }: Props) => {
+  let firstName = get(application, "specialist.firstName");
   return (
     <Card>
       <Padding size="xxl" style={{ textAlign: "center" }}>
