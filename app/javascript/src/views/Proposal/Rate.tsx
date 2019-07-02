@@ -108,7 +108,7 @@ const Rate = ({ history, application, updateApplication }: Props) => {
                   type="submit"
                   disabled={!formik.isValid}
                   aria-label="Continue"
-                  loading={formik.isSubmitting}
+                  loading={formik.isSubmitting ? true : undefined}
                   styling="primary"
                 >
                   Continue

@@ -79,7 +79,7 @@ const Component = ({
         disabled={loading || !hasName}
         aria-label="Mark as complete"
         onClick={() => setPrompt("SUBMIT_PROMPT")}
-        loading={loading === "SUBMIT"}
+        loading={loading === "SUBMIT" ? true : undefined}
       >
         Mark as complete
       </Button>
@@ -93,7 +93,7 @@ const Component = ({
       <Button
         key="assign"
         styling={"primary"}
-        loading={loading === "ASSIGN"}
+        loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
@@ -106,7 +106,7 @@ const Component = ({
           key="quote"
           disabled={!hasNameAndDescription || loading}
           onClick={handleRequestQuote}
-          loading={loading === "REQUEST_QUOTE"}
+          loading={loading === "REQUEST_QUOTE" ? true : undefined}
         >
           Request Quote
         </Button>
@@ -123,7 +123,7 @@ const Component = ({
         key="requestToStart"
         disabled={!hasNameAndDescription || loading}
         onClick={handleRequestToStart}
-        loading={loading === "REQUEST_TO_START"}
+        loading={loading === "REQUEST_TO_START" ? true : undefined}
       >
         Request to Start Working
       </Button>
@@ -154,7 +154,7 @@ const Component = ({
           styling="primary"
           disabled={!hasNameAndDescription || loading}
           onClick={handleRequestQuote}
-          loading={loading === "REQUEST_QUOTE"}
+          loading={loading === "REQUEST_QUOTE" ? true : undefined}
         >
           Request Quote
         </Button>
@@ -166,7 +166,7 @@ const Component = ({
         key="assign"
         disabled={!hasNameAndDescription || loading}
         styling={hasQuote && "primary"}
-        loading={loading === "ASSIGN"}
+        loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
@@ -180,7 +180,7 @@ const Component = ({
         key="quote"
         styling="primary"
         disabled={loading}
-        loading={loading === "ASSIGN"}
+        loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
@@ -195,7 +195,7 @@ const Component = ({
         styling="primary"
         disabled={loading}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
-        loading={loading === "ASSIGN"}
+        loading={loading === "ASSIGN" ? true : undefined}
       >
         Assign Task
       </Button>
@@ -209,7 +209,7 @@ const Component = ({
         styling="primary"
         disabled={!hasQuote || !hasDueDate || loading}
         onClick={handleStartTask}
-        loading={loading === "START_WORKING"}
+        loading={loading === "START_WORKING" ? true : undefined}
       >
         Start Working
       </Button>
@@ -224,7 +224,7 @@ const Component = ({
         disabled={loading}
         aria-label="Mark as complete"
         onClick={() => setPrompt("SUBMIT_PROMPT")}
-        loading={loading === "SUBMIT"}
+        loading={loading === "SUBMIT" ? true : undefined}
       >
         Mark as complete
       </Button>
