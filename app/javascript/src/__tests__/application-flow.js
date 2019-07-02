@@ -1,4 +1,4 @@
-import { cleanup, fireEvent } from "react-testing-library";
+import { cleanup, fireEvent } from "@testing-library/react";
 import renderApp from "../testHelpers/renderApp";
 import viewer from "../graphql/queries/viewer";
 import getApplication from "../views/ApplicationFlow/fetchApplication";
