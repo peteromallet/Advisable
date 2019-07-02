@@ -86,6 +86,34 @@ const Component = ({
     );
   }
 
+  // If the client s viewing and the task stage is Requested To Start then show
+  // an action to assign the task.
+  if (isClient && stage === "Requested To Start") {
+    actions.push(
+      <Button
+        key="assign"
+        styling={"primary"}
+        loading={loading === "ASSIGN"}
+        onClick={() => setPrompt("ASSIGN_PROMPT")}
+      >
+        Assign Task
+      </Button>
+    );
+
+    if (!hasQuote) {
+      actions.push(
+        <Button
+          key="quote"
+          disabled={!hasNameAndDescription || loading}
+          onClick={handleRequestQuote}
+          loading={loading === "REQUEST_QUOTE"}
+        >
+          Request Quote
+        </Button>
+      );
+    }
+  }
+
   // when the specialist is viewing and the project is a Fixed project and the
   // task stage is Not Assigned then allow them to request to start.
   if (!isClient && isFixed && stage === "Not Assigned") {
@@ -135,7 +163,7 @@ const Component = ({
 
     actions.push(
       <Button
-        key="quote"
+        key="assign"
         disabled={!hasNameAndDescription || loading}
         styling={hasQuote && "primary"}
         loading={loading === "ASSIGN"}
