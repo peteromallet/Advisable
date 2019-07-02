@@ -1,12 +1,23 @@
 import * as React from "react";
 import { compose, graphql } from "react-apollo";
 import Button from "../Button";
+import Padding from "../Spacing/Padding";
+import { Text } from "@advisable/donut";
 import ButtonGroup from "../ButtonGroup";
+import Notice from "../Notice";
 import START_TASK from "./startTask.graphql";
 import REQUEST_QUOTE from "./requestQuote.graphql";
-import { useMobile } from "../../components/Breakpoint";
+import REQUEST_TO_START from "./requestToStart";
+import { useMobile } from "../Breakpoint";
 
-const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
+const Component = ({
+  task,
+  isClient,
+  startTask,
+  requestQuote,
+  setPrompt,
+  requestToStart,
+}) => {
   const isMobile = useMobile();
   const [loading, setLoading] = React.useState(null);
   const { stage } = task;
@@ -20,6 +31,19 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
         },
       },
     });
+    setLoading(null);
+  };
+
+  const handleRequestToStart = async () => {
+    setLoading("REQUEST_TO_START");
+    await requestToStart({
+      variables: {
+        input: {
+          task: task.id,
+        },
+      },
+    });
+
     setLoading(null);
   };
 
@@ -42,7 +66,10 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
   const hasName = Boolean(task.name);
   const hasDescription = Boolean(task.description);
   const hasNameAndDescription = hasName && hasDescription;
+  const isFixed = task.application.projectType === "Fixed";
   const applicationFlexible = task.application.projectType === "Flexible";
+
+  let notice;
 
   if (!isClient && applicationFlexible && stage === "Not Assigned") {
     actions.push(
@@ -57,6 +84,38 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
         Mark as complete
       </Button>
     );
+  }
+
+  // when the specialist is viewing and the project is a Fixed project and the
+  // task stage is Not Assigned then allow them to request to start.
+  if (!isClient && isFixed && stage === "Not Assigned") {
+    actions.push(
+      <Button
+        styling="primary"
+        key="requestToStart"
+        disabled={!hasNameAndDescription || loading}
+        onClick={handleRequestToStart}
+        loading={loading === "REQUEST_TO_START"}
+      >
+        Request to Start Working
+      </Button>
+    );
+
+    if (!hasName || !hasDescription) {
+      notice = (
+        <Padding bottom="m">
+          <Notice icon="info">
+            <Text size="xs" mb="xxs" weight="medium" color="neutral.9">
+              Not Assigned
+            </Text>
+            <Text size="xs" color="neutral.6" lineHeight="xs">
+              You must provide a name or description for this task before you
+              can request to start working on it.
+            </Text>
+          </Notice>
+        </Padding>
+      );
+    }
   }
 
   if (isClient && stage === "Not Assigned") {
@@ -157,7 +216,12 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
   }
 
   if (actions.length > 0) {
-    return <ButtonGroup fullWidth={isMobile}>{actions}</ButtonGroup>;
+    return (
+      <>
+        {notice}
+        <ButtonGroup fullWidth={isMobile}>{actions}</ButtonGroup>
+      </>
+    );
   }
 
   return null;
@@ -165,5 +229,6 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
 
 export default compose(
   graphql(REQUEST_QUOTE, { name: "requestQuote" }),
-  graphql(START_TASK, { name: "startTask" })
+  graphql(START_TASK, { name: "startTask" }),
+  graphql(REQUEST_TO_START, { name: "requestToStart" })
 )(Component);
