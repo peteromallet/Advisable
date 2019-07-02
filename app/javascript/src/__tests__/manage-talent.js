@@ -1,6 +1,6 @@
 import generate from "nanoid/generate";
 import wait from "waait";
-import { fireEvent, cleanup } from "react-testing-library";
+import { fireEvent, cleanup } from "@testing-library/react";
 import VIEWER from "../graphql/queries/viewer";
 import renderApp from "../testHelpers/renderApp";
 import generateType from "../__mocks__/graphqlFields";

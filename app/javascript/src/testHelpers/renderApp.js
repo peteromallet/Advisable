@@ -2,7 +2,7 @@ import React from "react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { I18nextProvider } from "react-i18next";
-import { render } from "react-testing-library";
+import { render } from "@testing-library/react";
 import { MockedProvider } from "react-apollo/test-utils";
 import {
   InMemoryCache,

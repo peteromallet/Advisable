@@ -1,4 +1,4 @@
-import { cleanup } from "react-testing-library";
+import { cleanup } from "@testing-library/react";
 import renderApp from "../testHelpers/renderApp";
 import viewer from "../graphql/queries/viewer";
 import generateTypes from "../__mocks__/graphqlFields";
