@@ -97,6 +97,14 @@ const FOR_SPECIALIST = {
       </StageDescription>
     );
   },
+  "Requested To Start": ({ t }) => {
+    return (
+      <StageDescription>
+        <Icon icon="info" width={20} />
+        {t("tasks.stageDescriptions.specialist.requestedToStart")}
+      </StageDescription>
+    );
+  },
   "Quote Provided": ({ t }) => {
     return (
       <StageDescription>

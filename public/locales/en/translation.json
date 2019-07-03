@@ -62,7 +62,8 @@
         "submitted": "You have marked this task as complete.",
         "estimateRequiredToStart": "You must provide a quote for this task before you can start working on it.",
         "dueDateRequiredToStart": "You must provide a due date for this task before you can start working on it.",
-        "approved": "This task has been completed"
+        "approved": "This task has been completed",
+        "requestedToStart": "You have requested to start working on this task. You should not start working on it until it has been assigned to you."
       }
     }
   },
