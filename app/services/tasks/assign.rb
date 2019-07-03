@@ -14,7 +14,7 @@ class Tasks::Assign < ApplicationService
       raise Service::Error.new("tasks.descriptionRequired")
     end
 
-    unless ["Not Assigned", "Quote Requested", "Quote Provided"].include?(task.stage)
+    unless ["Not Assigned", "Requested To Start", "Quote Requested", "Quote Provided"].include?(task.stage)
       raise Service::Error.new("tasks.alreadyAssigned")
     end
 

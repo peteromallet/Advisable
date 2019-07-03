@@ -22,7 +22,7 @@ export const TabPanel = styled(ReachTabPanel)`
 export const TabList = styled(ReachTabList)`
   ${space};
 
-  z-index: 10;
+  z-index: 2;
   position: relative;
   border-bottom: 1px solid ${colors.neutral[1]};
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);

@@ -2,6 +2,8 @@
 import React from "react";
 import Icon from "../Icon";
 import Padding from "../Spacing/Padding";
+import Notice from "../Notice";
+import { Text } from "@advisable/donut";
 import { useTranslation } from "react-i18next";
 import { StageDescription } from "./styles";
 
@@ -18,6 +20,18 @@ const FOR_CLIENT = {
       </Padding>
     );
   },
+  "Requested To Start": ({ t, task }) => (
+    <Padding bottom="m">
+      <Notice icon="info">
+        <Text size="xs" mb="xxs" weight="medium" color="neutral.9">
+          {t("tasks.stageDescriptions.client.requestedToStart.title", { task })}
+        </Text>
+        <Text size="xs" color="neutral.6" lineHeight="xs">
+          {t("tasks.stageDescriptions.client.requestedToStart.description")}
+        </Text>
+      </Notice>
+    </Padding>
+  ),
   "Quote Requested": ({ t }) => {
     return (
       <Padding bottom="m">
@@ -80,6 +94,14 @@ const FOR_SPECIALIST = {
       <StageDescription>
         <Icon icon="info" width={20} />
         {t("tasks.stageDescriptions.specialist.quoteRequested")}
+      </StageDescription>
+    );
+  },
+  "Requested To Start": ({ t }) => {
+    return (
+      <StageDescription>
+        <Icon icon="info" width={20} />
+        {t("tasks.stageDescriptions.specialist.requestedToStart")}
       </StageDescription>
     );
   },

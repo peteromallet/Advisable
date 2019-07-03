@@ -9,6 +9,7 @@ export default gql`
     application {
       id
       rate
+      status
       airtableId
       projectType
       specialist {

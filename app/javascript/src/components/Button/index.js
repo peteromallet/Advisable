@@ -3,7 +3,6 @@ import { rgba, darken } from "polished";
 import styled, { keyframes, css } from "styled-components";
 import Icon from "../Icon";
 import { Icon as IconStyles } from "../Icon/styles";
-import { withSpacing } from "../Spacing";
 
 const heights = {
   s: "30px",
@@ -209,7 +208,7 @@ export const ButtonStyling = styled.button`
   `}
 
   ${props =>
-    props.loading &&
+    props.isLoading &&
     css`
       color: transparent !important;
     `}
@@ -278,14 +277,12 @@ const Loading = () => (
   </ButtonLoading>
 );
 
-const ButtonWithSpacing = withSpacing(ButtonStyling);
-
 export default React.forwardRef(
   ({ loading, icon, children, as, ...props }, ref) => (
-    <ButtonWithSpacing
+    <ButtonStyling
       as={as}
       ref={ref}
-      loading={loading}
+      isLoading={loading ? true : undefined}
       disabled={loading || props.disabled}
       aria-label={props["aria-label"] || children}
       {...props}
@@ -295,6 +292,6 @@ export default React.forwardRef(
         {icon && <Icon strokeWidth={2} icon={icon} height={20} />}
         {children}
       </ButtonInner>
-    </ButtonWithSpacing>
+    </ButtonStyling>
   )
 );

@@ -9,7 +9,6 @@ storiesOf("SegmentedControl", module).add("default", () => {
     const [value, setValue] = React.useState("Strict");
 
     const handleChange = e => {
-      console.log(e.target.value);
       setValue(e.target.value);
     };
 

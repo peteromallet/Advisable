@@ -7,6 +7,10 @@ class Tasks::Submit < ApplicationService
   end
 
   def call
+    if task.application.status != 'Working'
+      raise Service::Error.new("tasks.notSubmittable", message: "Application status is not 'Working'")
+    end
+
     unless allowed_stages.include?(task.stage)
       raise Service::Error.new("tasks.notSubmittable")
     end
