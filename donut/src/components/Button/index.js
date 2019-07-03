@@ -10,9 +10,9 @@ import { Button as ButtonStyles } from "./styles";
 // - intent: 'default', 'success', 'danger'. The intent prop dtermins the
 // coloring for the button.
 // - icon: Accepts any icon string for feather-icons.
-const Button = ({ children, icon, ...rest }) => {
+const Button = ({ children, icon, loading, ...rest }) => {
   return (
-    <ButtonStyles {...rest}>
+    <ButtonStyles {...rest} isLoading={loading ? true : undefined}>
       {icon && <Icon icon={icon} width={20} />}
       {children}
     </ButtonStyles>

@@ -1,7 +1,8 @@
 require "rails_helper"
 
 describe Mutations::SubmitTask do
-  let(:task) { create(:task, stage: "Working") }
+  let(:application) { create(:application, status: "Working") }
+  let(:task) { create(:task, stage: "Working", application: application) }
 
   let(:query) { %|
     mutation {
@@ -14,6 +15,7 @@ describe Mutations::SubmitTask do
         }
         errors {
           code
+          message
         }
       }
     }
@@ -83,6 +85,16 @@ describe Mutations::SubmitTask do
       response = AdvisableSchema.execute(query, context: context)
       error = response["data"]["submitTask"]["errors"][0]
       expect(error["code"]).to eq("tasks.notSubmittable")
+    end
+  end
+
+  context "when the application status is not 'Working'" do
+    let(:application) { create(:application, status: "Proposed") }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["data"]["submitTask"]["errors"][0]
+      expect(error["message"]).to eq("Application status is not 'Working'")
     end
   end
 end

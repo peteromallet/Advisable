@@ -6,7 +6,7 @@ class Tasks::RequestQuote < ApplicationService
   end
 
   def call
-    if task.stage != "Not Assigned"
+    unless ["Not Assigned", "Requested To Start"].include?(task.stage)
       raise Service::Error.new("tasks.cantRequestQuote")
     end
 

@@ -1,12 +1,23 @@
 import * as React from "react";
 import { compose, graphql } from "react-apollo";
 import Button from "../Button";
+import Padding from "../Spacing/Padding";
+import { Text } from "@advisable/donut";
 import ButtonGroup from "../ButtonGroup";
+import Notice from "../Notice";
 import START_TASK from "./startTask.graphql";
 import REQUEST_QUOTE from "./requestQuote.graphql";
-import { useMobile } from "../../components/Breakpoint";
+import REQUEST_TO_START from "./requestToStart";
+import { useMobile } from "../Breakpoint";
 
-const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
+const Component = ({
+  task,
+  isClient,
+  startTask,
+  requestQuote,
+  setPrompt,
+  requestToStart,
+}) => {
   const isMobile = useMobile();
   const [loading, setLoading] = React.useState(null);
   const { stage } = task;
@@ -20,6 +31,19 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
         },
       },
     });
+    setLoading(null);
+  };
+
+  const handleRequestToStart = async () => {
+    setLoading("REQUEST_TO_START");
+    await requestToStart({
+      variables: {
+        input: {
+          task: task.id,
+        },
+      },
+    });
+
     setLoading(null);
   };
 
@@ -42,9 +66,18 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
   const hasName = Boolean(task.name);
   const hasDescription = Boolean(task.description);
   const hasNameAndDescription = hasName && hasDescription;
+  const isFixed = task.application.projectType === "Fixed";
   const applicationFlexible = task.application.projectType === "Flexible";
+  const applicationIsWorking = task.application.status === "Working";
 
-  if (!isClient && applicationFlexible && stage === "Not Assigned") {
+  let notice;
+
+  if (
+    !isClient &&
+    applicationFlexible &&
+    applicationIsWorking &&
+    stage === "Not Assigned"
+  ) {
     actions.push(
       <Button
         key="submit"
@@ -52,11 +85,76 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
         disabled={loading || !hasName}
         aria-label="Mark as complete"
         onClick={() => setPrompt("SUBMIT_PROMPT")}
-        loading={loading === "SUBMIT"}
+        loading={loading === "SUBMIT" ? true : undefined}
       >
         Mark as complete
       </Button>
     );
+  }
+
+  // If the client s viewing and the task stage is Requested To Start then show
+  // an action to assign the task.
+  if (isClient && stage === "Requested To Start") {
+    actions.push(
+      <Button
+        key="assign"
+        styling={"primary"}
+        loading={loading === "ASSIGN" ? true : undefined}
+        onClick={() => setPrompt("ASSIGN_PROMPT")}
+      >
+        Assign Task
+      </Button>
+    );
+
+    if (!hasQuote) {
+      actions.push(
+        <Button
+          key="quote"
+          disabled={!hasNameAndDescription || loading}
+          onClick={handleRequestQuote}
+          loading={loading === "REQUEST_QUOTE" ? true : undefined}
+        >
+          Request Quote
+        </Button>
+      );
+    }
+  }
+
+  // when the specialist is viewing and the project is a Fixed project and the
+  // task stage is Not Assigned then allow them to request to start.
+  if (
+    !isClient &&
+    isFixed &&
+    applicationIsWorking &&
+    stage === "Not Assigned"
+  ) {
+    actions.push(
+      <Button
+        styling="primary"
+        key="requestToStart"
+        disabled={!hasNameAndDescription || loading}
+        onClick={handleRequestToStart}
+        loading={loading === "REQUEST_TO_START" ? true : undefined}
+      >
+        Request to Start Working
+      </Button>
+    );
+
+    if (!hasName || !hasDescription) {
+      notice = (
+        <Padding bottom="m">
+          <Notice icon="info">
+            <Text size="xs" mb="xxs" weight="medium" color="neutral.9">
+              Not Assigned
+            </Text>
+            <Text size="xs" color="neutral.6" lineHeight="xs">
+              You must provide a name or description for this task before you
+              can request to start working on it.
+            </Text>
+          </Notice>
+        </Padding>
+      );
+    }
   }
 
   if (isClient && stage === "Not Assigned") {
@@ -67,7 +165,7 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
           styling="primary"
           disabled={!hasNameAndDescription || loading}
           onClick={handleRequestQuote}
-          loading={loading === "REQUEST_QUOTE"}
+          loading={loading === "REQUEST_QUOTE" ? true : undefined}
         >
           Request Quote
         </Button>
@@ -76,10 +174,10 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
 
     actions.push(
       <Button
-        key="quote"
+        key="assign"
         disabled={!hasNameAndDescription || loading}
         styling={hasQuote && "primary"}
-        loading={loading === "ASSIGN"}
+        loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
@@ -93,7 +191,7 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
         key="quote"
         styling="primary"
         disabled={loading}
-        loading={loading === "ASSIGN"}
+        loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
@@ -108,7 +206,7 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
         styling="primary"
         disabled={loading}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
-        loading={loading === "ASSIGN"}
+        loading={loading === "ASSIGN" ? true : undefined}
       >
         Assign Task
       </Button>
@@ -122,7 +220,7 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
         styling="primary"
         disabled={!hasQuote || !hasDueDate || loading}
         onClick={handleStartTask}
-        loading={loading === "START_WORKING"}
+        loading={loading === "START_WORKING" ? true : undefined}
       >
         Start Working
       </Button>
@@ -137,7 +235,7 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
         disabled={loading}
         aria-label="Mark as complete"
         onClick={() => setPrompt("SUBMIT_PROMPT")}
-        loading={loading === "SUBMIT"}
+        loading={loading === "SUBMIT" ? true : undefined}
       >
         Mark as complete
       </Button>
@@ -157,7 +255,12 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
   }
 
   if (actions.length > 0) {
-    return <ButtonGroup fullWidth={isMobile}>{actions}</ButtonGroup>;
+    return (
+      <>
+        {notice}
+        <ButtonGroup fullWidth={isMobile}>{actions}</ButtonGroup>
+      </>
+    );
   }
 
   return null;
@@ -165,5 +268,6 @@ const Component = ({ task, isClient, startTask, requestQuote, setPrompt }) => {
 
 export default compose(
   graphql(REQUEST_QUOTE, { name: "requestQuote" }),
-  graphql(START_TASK, { name: "startTask" })
+  graphql(START_TASK, { name: "startTask" }),
+  graphql(REQUEST_TO_START, { name: "requestToStart" })
 )(Component);

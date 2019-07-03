@@ -31,6 +31,13 @@ const PERMISSIONS = {
     description: (isClient, task) =>
       isClient && task.estimate ? PROMPT : WRITE,
   },
+  "Requested To Start": {
+    name: (isClient, task) => (isClient && task.estimate ? PROMPT : WRITE),
+    dueDate: (isClient, task) => (isClient && task.estimate ? PROMPT : WRITE),
+    estimate: isClient => (isClient ? READ : WRITE),
+    description: (isClient, task) =>
+      isClient && task.estimate ? PROMPT : WRITE,
+  },
   "Quote Requested": {
     name: () => WRITE,
     dueDate: () => WRITE,
