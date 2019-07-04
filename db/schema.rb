@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_11_085955) do
+ActiveRecord::Schema.define(version: 2019_07_04_073342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,6 +237,20 @@ ActiveRecord::Schema.define(version: 2019_06_11_085955) do
     t.string "estimated_budget"
     t.boolean "remote"
     t.string "sales_status"
+    t.string "owner"
+    t.string "campaign_source"
+    t.datetime "brief_pending_confirmation_at"
+    t.datetime "brief_confirmed_at"
+    t.datetime "interview_scheduled_at"
+    t.datetime "call_scheduled_at"
+    t.datetime "candidate_proposed_at"
+    t.datetime "candidate_accepted_at"
+    t.datetime "interview_completed_at"
+    t.datetime "booking_request_sent_at"
+    t.datetime "booking_confirmed_at"
+    t.datetime "proposal_received_at"
+    t.datetime "won_at"
+    t.datetime "lost_at"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
