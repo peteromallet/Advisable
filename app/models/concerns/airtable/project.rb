@@ -15,6 +15,7 @@ class Airtable::Project < Airtable::Base
   sync_column 'Project Status', to: :sales_status
   sync_column 'Estimated Budget', to: :estimated_budget
   sync_column 'Campaign Source', to: :campaign_source
+  sync_column 'Campaign Name', to: :campaign_name
   sync_column 'Brief Confirmed - Timestamp', to: :brief_confirmed_at
   sync_column 'Brief Pending Confirmation - Timestamp', to: :brief_pending_confirmation_at
   sync_column 'Call Scheduled - Timestamp', to: :call_scheduled_at

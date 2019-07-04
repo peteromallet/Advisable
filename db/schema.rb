@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_04_073342) do
+ActiveRecord::Schema.define(version: 2019_07_04_092029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -251,6 +251,8 @@ ActiveRecord::Schema.define(version: 2019_07_04_073342) do
     t.datetime "proposal_received_at"
     t.datetime "won_at"
     t.datetime "lost_at"
+    t.string "deposit_payment_intent_id"
+    t.string "campaign_name"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
