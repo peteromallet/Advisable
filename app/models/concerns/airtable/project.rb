@@ -14,9 +14,33 @@ class Airtable::Project < Airtable::Base
   sync_column 'Client Referral URL', to: :client_referral_url
   sync_column 'Project Status', to: :sales_status
   sync_column 'Estimated Budget', to: :estimated_budget
+  sync_column 'Campaign Source', to: :campaign_source
+  sync_column 'Brief Confirmed - Timestamp', to: :brief_confirmed_at
+  sync_column 'Brief Pending Confirmation - Timestamp', to: :brief_pending_confirmation_at
+  sync_column 'Call Scheduled - Timestamp', to: :call_scheduled_at
+  sync_column 'Interview Scheduled - Timestamp', to: :interview_scheduled_at
+  sync_column 'Candidate Proposed - Timestamp', to: :candidate_proposed_at
+  sync_column 'Candidate Accepted - Timestamp', to: :candidate_accepted_at
+  sync_column 'Interview Completed - Timestamp', to: :interview_completed_at
+  sync_column 'Booking Request Sent - Timestamp', to: :booking_request_sent_at
+  sync_column 'Booking Confirmed - Timestamp', to: :booking_confirmed_at
+  sync_column 'Proposal Received - Timestamp', to: :proposal_received_at
+  sync_column 'Won - Timestamp', to: :won_at
+  sync_column 'Lost - Timestamp', to: :lost_at
 
+  # sync_data is used to sync more complicated parts of the airtable record that
+  # dont fit into a simple column mapping like above. It takes the ActiveRecord
+  # project record as an argument and allows you to set atttributes directly
+  # onto it. You do not need to call 'save' on the active record object.
   sync_data do |project|
     project.currency = fields['Currency'].try(:first)
+
+    # Sync the project owner username
+    owner_id = fields['Owner'].try(:first)
+    if owner_id
+      owner = Airtable::SalesPeople.find(owner_id)
+      project.owner = owner['Username']
+    end
 
     user_id = fields['Client Contacts'].try(:first)
     if user_id
