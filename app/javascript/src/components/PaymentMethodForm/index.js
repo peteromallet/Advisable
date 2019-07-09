@@ -10,6 +10,7 @@ import InputLabel from "../InputLabel";
 import { Field } from "./styles";
 import GET_VIEWER from "./getViewer";
 import UPDATE_CUSTOMER from "./updateCustomer";
+import validationSchema from "./validationSchema";
 
 // Used to update a user's payment method. This component will always update
 // the users stripe customer object with the provided name and email, however,
@@ -73,7 +74,11 @@ const PaymentMethodForm = ({
   if (data.loading) return <>loading...</>;
 
   return (
-    <Formik initialValues={formikInitialValues} onSubmit={handleSubmit}>
+    <Formik
+      onSubmit={handleSubmit}
+      validationSchema={validationSchema}
+      initialValues={formikInitialValues}
+    >
       {formik => (
         <Form>
           <Box mb="s">
@@ -84,6 +89,7 @@ const PaymentMethodForm = ({
               placeholder="Company Name"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              error={formik.touched.name && formik.errors.name}
             />
           </Box>
           <Box mb="s">
@@ -95,6 +101,7 @@ const PaymentMethodForm = ({
               description="This is where we will send receipts and invoices"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              error={formik.touched.email && formik.errors.email}
             />
           </Box>
           <Box mb="s">
@@ -105,6 +112,7 @@ const PaymentMethodForm = ({
               value={formik.values.cardholder}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              error={formik.touched.cardholder && formik.errors.cardholder}
             />
           </Box>
           <InputLabel>Card Details</InputLabel>
