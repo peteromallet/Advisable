@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_04_092029) do
+ActiveRecord::Schema.define(version: 2019_07_04_133103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,6 +253,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_092029) do
     t.datetime "lost_at"
     t.string "deposit_payment_intent_id"
     t.string "campaign_name"
+    t.string "uid"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -363,6 +364,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_092029) do
     t.text "permissions", default: [], array: true
     t.string "title"
     t.text "completed_tutorials", default: [], array: true
+    t.string "stripe_customer_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
   end

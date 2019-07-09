@@ -34,6 +34,34 @@ class Types::User < Types::BaseType
     argument :status, [String], required: false
   end
 
+  field :payment_method_setup_intent, Types::PaymentMethodSetupIntentType, null: true do
+    authorize :is_user
+  end
+
+  def payment_method_setup_intent
+    Stripe::SetupIntent.create
+  end
+
+  # The customer field returns information from the users stripe customer
+  # object.
+  field :customer, Types::CustomerType, null: true do
+    authorize :is_user
+  end
+
+  def customer
+    Stripe::Customer.retrieve(object.stripe_customer_id)
+  end
+
+  # The paymentMethod field returns the users default payment method from
+  # stripe.
+  field :payment_method, Types::PaymentMethodType, null: true do
+    authorize :is_user
+  end
+
+  def payment_method
+    object.stripe_customer.invoice_settings.default_payment_method
+  end
+
   def id
     object.uid
   end

@@ -1,76 +1,54 @@
+import gql from "graphql-tag";
 import { withApollo } from "react-apollo";
-import React, { Fragment, useEffect } from "react";
+import { Text } from "@advisable/donut";
+import React, { Fragment } from "react";
 import Loading from "src/components/Loading";
-import CREATE_PAYMENT from "./createPayment.graphql";
-import FETCH_PAYMENT from "./fetchPayment.graphql";
 
-const PaymentPending = ({
-  source,
-  project,
-  match,
-  history,
-  setError,
-  client,
-}) => {
-  let pollingTimer;
-  const { projectID } = match.params;
-
-  const checkPayment = payment => {
-    if (payment.status === "captured") {
-      clearInterval(pollingTimer);
-      history.replace(`/project_setup/${projectID}/confirm`);
+const GET_DEPOSIT = gql`
+  query getProject($id: ID!) {
+    project(id: $id) {
+      id
+      depositOwed
     }
+  }
+`;
 
-    if (payment.status === "failed") {
-      clearInterval(pollingTimer);
-      history.replace(`/project_setup/${projectID}/deposit`);
-    }
-  };
+const PaymentPending = ({ id, client, onSuccess }) => {
+  const [seconds, setSeconds] = React.useState(0);
+  const [timer, setTimer] = React.useState(null);
 
-  const processPayment = async () => {
-    // Submit the source to create a payment record
-    const response = await client.mutate({
-      mutation: CREATE_PAYMENT,
-      variables: {
-        input: {
-          source: source,
-          projectId: projectID,
-          amount: project.depositOwed,
-        },
-      },
-    });
-
-    const { payment, errors } = response.data.createPayment;
-
-    if (errors || payment.status === "failed") {
-      setError(
-        "We had some difficulties processing your payment. Please try again."
-      );
-      return history.replace(`/project_setup/${projectID}/deposit`);
-    }
-
-    checkPayment(payment);
-
-    if (payment.status === "pending") {
-      pollingTimer = setInterval(async () => {
-        const paymentResponse = await client.query({
-          query: FETCH_PAYMENT,
+  const poll = () => {
+    setTimer(
+      setInterval(async () => {
+        let response = await client.query({
           fetchPolicy: "network-only",
-          variables: { id: payment.id },
+          query: GET_DEPOSIT,
+          variables: {
+            id,
+          },
         });
 
-        checkPayment(paymentResponse.data.payment);
-      }, 1000);
-    }
+        const { project } = response.data;
+        if (project.depositOwed === 0) {
+          onSuccess();
+        }
+
+        setSeconds(seconds + 2);
+      }, 2000)
+    );
   };
 
-  useEffect(() => {
-    processPayment();
+  React.useEffect(() => {
+    poll();
+    return clearInterval(timer);
   }, []);
 
   return (
     <Fragment>
       <Loading />
+      <Text textAlign="center" size="s" color="neutral.7" lineHeight="s">
+        Please wait while we process your payment...
+      </Text>
     </Fragment>
   );
 };

@@ -43,13 +43,13 @@ gem 'webpacker', '~> 4.0.x'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # Airrecord for querying airtable
-gem 'airrecord'
+gem 'airrecord', '~> 1.0.2'
 
 # For graphQL endpoint
 gem 'graphql'
 gem 'parser'
 gem 'rollbar'
-gem 'stripe'
+gem 'stripe', '~> 4.21.0'
 gem "attr_encrypted", "~> 3.0.0"
 
 gem 'jwt'

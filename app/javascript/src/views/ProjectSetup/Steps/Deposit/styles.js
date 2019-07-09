@@ -1,13 +1,5 @@
 import styled from "styled-components";
 
-export const Field = styled.div`
-  padding: 10px;
-  border-radius: 8px;
-  background: #ebedf3;
-  margin-bottom: 20px;
-  border: 2px solid ${props => props.focused ? '#3360FF': '#ebedf3'};
-`;
-
 export const Total = styled.div`
   margin: 20px 0;
   padding: 20px 0;
@@ -29,13 +21,3 @@ export const Label = styled.p`
   font-weight: 600;
   text-transform: uppercase;
 `;
-
-export const Error = styled.div`
-  padding: 20px;
-  color: #CD1743;
-  font-size: 16px;
-  border-radius: 3px;
-  margin-bottom: 20px;
-  border: 1px solid #CD1743;
-  background: rgba(205, 23, 67, 0.1);
-`

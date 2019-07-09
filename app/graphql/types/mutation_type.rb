@@ -47,4 +47,5 @@ class Types::MutationType < GraphQL::Schema::Object
   field :request_to_start, mutation: Mutations::RequestToStart
 
   field :complete_tutorial, mutation: Mutations::CompleteTutorial
+  field :update_customer, mutation: Mutations::UpdateCustomer
 end

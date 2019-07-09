@@ -21,6 +21,10 @@ class Types::ProjectType < Types::BaseType
   field :estimated_budget, String, null: true
   field :remote, Boolean, null: true
   field :applications_open, Boolean, null: false
+  
+  field :deposit_payment_intent, Types::PaymentIntentType, null: false do
+    authorize :is_client, :is_admin
+  end
 
   field :applications, [Types::ApplicationType, null: true], null: true do
     argument :status, [String], required: false
@@ -43,6 +47,28 @@ class Types::ProjectType < Types::BaseType
     end
 
     applications
+  end
+
+  def deposit_payment_intent 
+    if object.deposit_payment_intent_id
+      return Stripe::PaymentIntent.retrieve(object.deposit_payment_intent_id)
+    end
+
+    intent = Stripe::PaymentIntent.create({
+      currency: "usd",
+      amount: object.deposit_owed,
+      customer: object.user.stripe_customer_id,
+      setup_future_usage: "off_session",
+      metadata: {
+        payment_type: "deposit",
+        project: object.uid
+      }
+    }, {
+      # idempotency_key: "deposit_#{object.uid}"
+    })
+    
+    object.update_columns(deposit_payment_intent_id: intent.id)
+    intent
   end
 
   def application_count

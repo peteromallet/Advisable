@@ -1,3 +1,4 @@
+export { default as Box } from "./components/Box";
 export { default as Icon } from "./components/Icon";
 export { default as Text } from "./components/Text";
 export { default as Flex } from "./components/Flex";
@@ -7,3 +8,5 @@ export { default as Padding } from "./components/Padding";
 export { default as Provider } from "./components/Provider";
 export { default as Autocomplete } from "./components/Autocomplete";
 export { default as useBreakpoint } from "./hooks/useBreakpoint";
+
+export { default as theme } from "./theme";
