@@ -32,6 +32,8 @@ gem 'rack-attack'
 
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'countries'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

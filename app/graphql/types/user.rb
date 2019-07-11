@@ -6,7 +6,6 @@ class Types::User < Types::BaseType
   field :last_name, String, null: true
   field :title, String, null: true
   field :company_name, String, null: true
-  field :country, Types::CountryType, null: true
   field :projects, [Types::ProjectType], null: true
   field :confirmed, Boolean, null: false
   field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
@@ -32,6 +31,24 @@ class Types::User < Types::BaseType
   field :applications, [Types::ApplicationType], null: true do
     authorize :is_user
     argument :status, [String], required: false
+  end
+
+  field :project_payment_method, String, null: true do
+    authorize :is_user
+  end
+
+  field :invoice_settings, Types::InvoiceSettingsType, null: true do
+    authorize :is_user
+  end
+
+  field :country, Types::CountryType, null: true
+
+  # The users country is an association to a record in the countries table,
+  # however, the CountryType expects an object from the 'countries' gem. We
+  # use the records name to retrieve this.
+  def country
+    return nil unless object.country.present?
+    ISO3166::Country.find_country_by_name(object.country.name)
   end
 
   field :payment_method_setup_intent, Types::PaymentMethodSetupIntentType, null: true do

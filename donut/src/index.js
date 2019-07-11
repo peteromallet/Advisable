@@ -1,4 +1,6 @@
 export { default as Box } from "./components/Box";
+export { default as Link } from "./components/Link";
+export { default as Card } from "./components/Card";
 export { default as Icon } from "./components/Icon";
 export { default as Text } from "./components/Text";
 export { default as Flex } from "./components/Flex";

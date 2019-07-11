@@ -7,6 +7,7 @@ class Airtable::ClientContact < Airtable::Base
   sync_column 'First Name', to: :first_name
   sync_column 'Last Name', to: :last_name
   sync_column 'Title', to: :title
+  sync_column 'Project Payment Method', to: :project_payment_method
 
   sync_data do |user|
     client_id = fields["Client"].try(:first)

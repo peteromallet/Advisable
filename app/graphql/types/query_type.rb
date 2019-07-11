@@ -163,4 +163,10 @@ class Types::QueryType < Types::BaseType
   def task(id: )
     Task.find_by_uid!(id)
   end
+
+  field :countries, [Types::CountryType], null: false
+
+  def countries
+    ISO3166::Country.all.sort
+  end
 end

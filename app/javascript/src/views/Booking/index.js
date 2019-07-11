@@ -1,16 +1,18 @@
 import * as React from "react";
+import { get } from "lodash";
 import { graphql, withApollo } from "react-apollo";
 import { matchPath } from "react-router-dom";
 import NotFound from "../NotFound";
 import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import TaskDrawer from "../../components/TaskDrawer";
-import { getActiveApplication } from "../../graphql/queries/applications";
 import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
 import FixedTutorial from "../../components/Tutorial/FixedProjectTutorial";
 import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
 import useTutorial from "../../hooks/useTutorial";
+import GET_ACTIVE_APPLICATION from "./getActiveApplication";
+import SetupPaymentMethod from "./SetupPaymentMethod";
 
 const tutorials = {
   Fixed: "fixedProjects",
@@ -21,18 +23,25 @@ let Booking = ({ data, match, history, location, client }) => {
   if (data.loading) return <Loading />;
   if (!data.application) return <NotFound />;
   if (data.application.status !== "Working") return <NotFound />;
-  const application = data.application;
+  let application = data.application;
+  let specialist = get(data, "application.specialist");
   const tutorial = useTutorial(tutorials[application.projectType], {
     client,
     autoStart: true,
   });
+
+  // If the user has not setup their project payment method then render the
+  // SetupPaymentMethod component.
+  let projectPaymentMethod = get(data, "viewer.projectPaymentMethod");
+  if (!projectPaymentMethod) {
+    return <SetupPaymentMethod specialist={specialist} />;
+  }
 
   const TutorialComponent =
     tutorial.name === "flexibleProjects" ? FlexibleTutorial : FixedTutorial;
 
   const { applicationId } = match.params;
   const tasks = data.application.tasks;
-  const specialist = data.application.specialist;
 
   const openTask = task => {
     history.replace(`/manage/${applicationId}/tasks/${task.id}`);
@@ -106,7 +115,7 @@ let Booking = ({ data, match, history, location, client }) => {
 
 Booking = withApollo(Booking);
 
-Booking = graphql(getActiveApplication, {
+Booking = graphql(GET_ACTIVE_APPLICATION, {
   options: props => ({
     variables: {
       id: props.match.params.applicationId,

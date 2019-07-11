@@ -7,7 +7,6 @@ class Types::SpecialistType < Types::BaseType
   field :city, String, null: true
   field :bio, String, null: true
   field :confirmed, Boolean, null: false
-  field :country, Types::CountryType, null: true
   field :travel_availability, String, null: true
   field :linkedin, String, null: true
   field :phone_number, String, null: true
@@ -39,6 +38,16 @@ class Types::SpecialistType < Types::BaseType
 
   field :talk_signature, String, null: false do
     authorize :is_specialist
+  end
+
+  field :country, Types::CountryType, null: true
+
+  # The specialist country is an association to a record in the countries table,
+  # however, the CountryType expects an object from the 'countries' gem. We
+  # use the records name to retrieve this.
+  def country
+    return nil unless object.country.present?
+    ISO3166::Country.find_country_by_name(object.country.name)
   end
 
   def id

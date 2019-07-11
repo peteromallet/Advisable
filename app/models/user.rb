@@ -22,6 +22,15 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def invoice_settings
+    {
+      name: invoice_name,
+      company_name: invoice_company_name,
+      vat_number: vat_number,
+      address: address
+    }
+  end
+
   def stripe_customer_id
     return self[:stripe_customer_id] if self[:stripe_customer_id]
     customer = Stripe::Customer.create({
