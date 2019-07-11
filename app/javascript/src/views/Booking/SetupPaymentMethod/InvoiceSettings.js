@@ -58,11 +58,13 @@ const InvoiceSettings = ({ data, match, setValue, history, values }) => {
 
   let hasSelectedEUCountry = formik => {
     let country = find(countries, { id: formik.values.address.country });
+    if (!country) return false;
     return country.eu;
   };
 
   let countryStates = formik => {
     let country = find(countries, { id: formik.values.address.country });
+    if (!country) return [];
     return country.states;
   };
 
