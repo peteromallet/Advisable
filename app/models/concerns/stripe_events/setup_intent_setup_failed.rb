@@ -1,7 +1,7 @@
-class StripeEvents::SetupIntentSucceeded < StripeEvents::BaseEvent
+class StripeEvents::SetupIntentSetupFailed < StripeEvents::BaseEvent
   def process
     return true if user.nil?
-    user.update_columns(stripe_setup_intent_id: nil)
+    user.update_columns(setup_intent_status: 'failed')
   end
 
   private

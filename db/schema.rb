@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_15_073334) do
+ActiveRecord::Schema.define(version: 2019_07_15_130412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -373,6 +373,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_073334) do
     t.datetime "accepted_project_payment_terms_at"
     t.string "exceptional_project_payment_terms"
     t.string "stripe_setup_intent_id"
+    t.string "setup_intent_status"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
   end

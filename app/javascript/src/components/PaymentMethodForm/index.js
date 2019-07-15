@@ -39,6 +39,8 @@ const PaymentMethodForm = ({
   }, [data.loading]);
 
   const handleSubmit = async (values, formikBag) => {
+    formikBag.setStatus(null);
+
     // Update the customer data first
     await updateCustomer({
       variables: {

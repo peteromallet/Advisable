@@ -49,4 +49,5 @@ class Types::MutationType < GraphQL::Schema::Object
   field :complete_tutorial, mutation: Mutations::CompleteTutorial
   field :update_customer, mutation: Mutations::UpdateCustomer
   field :update_project_payment_method, mutation: Mutations::UpdateProjectPaymentMethod
+  field :create_setup_intent, mutation: Mutations::CreateSetupIntent
 end

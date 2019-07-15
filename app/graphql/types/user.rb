@@ -51,18 +51,8 @@ class Types::User < Types::BaseType
     ISO3166::Country.find_country_by_name(object.country.name)
   end
 
-  field :payment_method_setup_intent, Types::PaymentMethodSetupIntentType, null: true do
+  field :setup_intent_status, String, null: true do
     authorize :is_user
-  end
-
-  def payment_method_setup_intent
-    if object.stripe_setup_intent_id
-      return Stripe::SetupIntent.retrieve(object.stripe_setup_intent_id)
-    end
-
-    intent = Stripe::SetupIntent.create
-    object.update_columns(stripe_setup_intent_id: intent.id)
-    intent
   end
 
   # The customer field returns information from the users stripe customer

@@ -1,7 +1,7 @@
 class StripeEvents::SetupIntentSucceeded < StripeEvents::BaseEvent
   def process
     return true if user.nil?
-    user.update_columns(stripe_setup_intent_id: nil)
+    user.update_columns(setup_intent_status: 'succeeded')
     Users::AttachPaymentMethod.call(
       user: user,
       payment_method_id: setup_intent.payment_method
