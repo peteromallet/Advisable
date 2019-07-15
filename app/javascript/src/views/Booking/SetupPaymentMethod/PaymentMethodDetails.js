@@ -1,9 +1,10 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import InvoiceSettings from './InvoiceSettings';
-import { Card, Box, Text, Icon } from "@advisable/donut";
+import CardDetails from "./CardDetails";
+import InvoiceSettings from "./InvoiceSettings";
+import { Card } from "@advisable/donut";
 
-const PaymentMethodDetails = (props) => {
+const PaymentMethodDetails = props => {
   let methodType = props.values.paymentMethod;
 
   if (!methodType) {
@@ -11,9 +12,15 @@ const PaymentMethodDetails = (props) => {
     return <Redirect to={url} />;
   }
 
-  return <Card>
-    {methodType === "Bank Transfer" && <InvoiceSettings {...props} />}
-  </Card>;
+  return (
+    <Card>
+      {methodType === "Bank Transfer" ? (
+        <InvoiceSettings {...props} />
+      ) : (
+        <CardDetails {...props} />
+      )}
+    </Card>
+  );
 };
 
 export default PaymentMethodDetails;

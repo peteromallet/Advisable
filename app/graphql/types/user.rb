@@ -56,7 +56,13 @@ class Types::User < Types::BaseType
   end
 
   def payment_method_setup_intent
-    Stripe::SetupIntent.create
+    if object.stripe_setup_intent_id
+      return Stripe::SetupIntent.retrieve(object.stripe_setup_intent_id)
+    end
+
+    intent = Stripe::SetupIntent.create
+    object.update_columns(stripe_setup_intent_id: intent.id)
+    intent
   end
 
   # The customer field returns information from the users stripe customer

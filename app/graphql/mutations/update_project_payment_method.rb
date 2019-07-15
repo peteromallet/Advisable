@@ -17,11 +17,14 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
   def resolve(**args)
     user = context[:current_user]
     user.project_payment_method = args[:payment_method]
-    user.invoice_name = args[:invoice_settings][:name]
-    user.invoice_company_name = args[:invoice_settings][:company_name]
-    user.vat_number = args[:invoice_settings][:vat_number]
-    user.address = args[:invoice_settings][:address].try(:to_h)
     user.exceptional_project_payment_terms = args[:exceptional_terms]
+
+    if args[:invoice_settings]
+      user.invoice_name = args[:invoice_settings][:name]
+      user.invoice_company_name = args[:invoice_settings][:company_name]
+      user.vat_number = args[:invoice_settings][:vat_number]
+      user.address = args[:invoice_settings][:address].try(:to_h)
+    end
 
     if user.accepted_project_payment_terms_at.nil? && args[:accept_terms]
       user.accepted_project_payment_terms_at = DateTime.now.utc
