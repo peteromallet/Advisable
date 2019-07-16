@@ -25,7 +25,13 @@ const APPEARANCES = {
     padding: 0 16px;
     font-weight: 600;
   `,
-  minimal: css``,
+  minimal: css`
+    outline: none;
+    font-weight: 500;
+    padding: 2px 8px;
+    margin-left: -8px;
+    background: transparent;
+  `,
 };
 
 const INTENT = {
@@ -71,6 +77,19 @@ const INTENT = {
       }
     `,
   },
+  minimal: {
+    success: css`
+      color: ${colors.blue.N5};
+
+      &:hover:not(:disabled) {
+        color: ${colors.blue.N6};
+      }
+
+      &:active:not(:disabled) {
+        color: ${colors.blue.N4};
+      }
+    `,
+  },
 };
 
 const disabledStyling = css`
@@ -81,6 +100,7 @@ const disabledStyling = css`
 export const Button = styled.button`
   margin: 0;
   border: none;
+  outline: none;
   font-size: 14px;
   cursor: pointer;
   appearance: none;

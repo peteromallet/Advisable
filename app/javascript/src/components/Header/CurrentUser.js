@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   CurrentUserWrapper,
   CurrentUserToggle,
   CurrentUserDropdown,
 } from "./styles";
+import useViewer from "../../hooks/useViewer";
 
 const CurrentUser = ({ user, onLogout }) => {
+  const viewer = useViewer();
   const [open, setOpen] = useState(false);
   const handleBlur = () => setOpen(false);
   const handleFocus = () => setOpen(true);
+  let isClient = viewer.__typename === "User";
 
   React.useEffect(() => {
     if (!window.Rollbar) return;
@@ -25,9 +29,9 @@ const CurrentUser = ({ user, onLogout }) => {
     } else {
       Rollbar.configure({
         payload: {
-          environment: process.env.ROLLBAR_ENV
-        }
-      })
+          environment: process.env.ROLLBAR_ENV,
+        },
+      });
     }
   });
 
@@ -40,6 +44,7 @@ const CurrentUser = ({ user, onLogout }) => {
         {user.companyName && <span>{user.companyName}</span>}
       </CurrentUserToggle>
       <CurrentUserDropdown open={open}>
+        {isClient && <Link to="/settings">Settings</Link>}
         <a href="#" onClick={onLogout}>
           Logout
         </a>

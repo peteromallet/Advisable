@@ -1,5 +1,4 @@
 class Types::PaymentMethodType < Types::BaseType
-  field :id, ID, null: false
   field :name, String, null: false
   field :last4, String, null: false
   field :brand, String, null: false

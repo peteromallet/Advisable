@@ -11,7 +11,6 @@ export default gql`
           email
         }
         paymentMethod {
-          id
           name
         }
       }
