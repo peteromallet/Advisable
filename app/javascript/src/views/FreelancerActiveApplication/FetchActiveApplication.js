@@ -1,6 +1,7 @@
 // Renders the loaded state for when a freelancer is viewing an active
 // application
 import React from "react";
+import { get } from "lodash";
 import { matchPath } from "react-router-dom";
 import Layout from "../../components/Layout";
 import TaskDrawer from "../../components/TaskDrawer";
@@ -10,6 +11,7 @@ import Sidebar from "./Sidebar";
 import FETCH_APPLICATION from "../../graphql/queries/freelancerActiveApplication";
 import useTutorial from "../../hooks/useTutorial";
 import Tasks from "./Tasks";
+import SetupPayments from "./SetupPayments";
 
 const tutorials = {
   Fixed: "fixedProjects",
@@ -23,6 +25,11 @@ const FetchActiveApplication = ({ location, history, match, data, client }) => {
     client,
     autoStart: true,
   });
+
+  let hasSetupPayments = get(data, "viewer.hasSetupPayments");
+  if (!hasSetupPayments) {
+    return <SetupPayments data={data} />;
+  }
 
   const TutorialComponent =
     tutorial.name === "flexibleProjects" ? FlexibleTutorial : FixedTutorial;

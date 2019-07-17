@@ -30,21 +30,47 @@ const AddressFields = ({ label, name, formik, data }) => {
         <Field
           name={`${name}.line1`}
           render={({ field }) => (
-            <TextField {...field} label={label} placeholder="line 1" />
+            <TextField
+              {...field}
+              label={label}
+              placeholder="line 1"
+              error={
+                get(formik.touched, `${name}.line1`) &&
+                get(formik.errors, `${name}.line1`)
+              }
+            />
           )}
         />
       </Box>
       <Box mb="xs">
         <Field
           name={`${name}.line2`}
-          render={({ field }) => <TextField {...field} placeholder="line 1" />}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              placeholder="line 2"
+              error={
+                get(formik.touched, `${name}.line2`) &&
+                get(formik.errors, `${name}.line2`)
+              }
+            />
+          )}
         />
       </Box>
       <Box mb="xs" display="flex">
         <Box width="100%" mr="xxs">
           <Field
             name={`${name}.city`}
-            render={({ field }) => <TextField {...field} placeholder="City" />}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                placeholder="City"
+                error={
+                  get(formik.touched, `${name}.city`) &&
+                  get(formik.errors, `${name}.city`)
+                }
+              />
+            )}
           />
         </Box>
         {country && country.states.length > 0 && (
