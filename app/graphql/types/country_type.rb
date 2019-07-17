@@ -3,6 +3,7 @@ class Types::CountryType < Types::BaseType
   field :name, String, null: false
   field :states, [String], null: false
   field :eu, Boolean, null: false
+  field :currency, Types::CurrencyType, null: false
 
   def id
     object.alpha2

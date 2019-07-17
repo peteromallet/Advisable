@@ -24,4 +24,13 @@ class Specialist < ApplicationRecord
   def name
     "#{first_name} #{last_name}"
   end
+
+  # Wether or not the specialist has provided payment information. Returns true
+  # if enough payment information has been provided.
+  def has_setup_payments
+    return false if bank_holder_name.blank?
+    return false if bank_holder_address.blank?
+    return false if bank_currency.blank?
+    true
+  end
 end

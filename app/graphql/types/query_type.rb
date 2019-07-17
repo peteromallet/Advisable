@@ -169,4 +169,14 @@ class Types::QueryType < Types::BaseType
   def countries
     ISO3166::Country.all.sort
   end
+
+  field :currencies, [Types::CurrencyType], null: false do
+    description 'A list of all currencies'
+  end
+
+  def currencies
+    Money::Currency.all.sort_by do |c|
+      c.name
+    end
+  end
 end

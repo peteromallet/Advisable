@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_15_130412) do
+ActiveRecord::Schema.define(version: 2019_07_17_071951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -322,6 +322,10 @@ ActiveRecord::Schema.define(version: 2019_07_15_130412) do
     t.boolean "remote"
     t.string "application_stage"
     t.text "completed_tutorials", default: [], array: true
+    t.string "bank_holder_name"
+    t.jsonb "bank_holder_address", default: {}
+    t.string "bank_currency"
+    t.string "vat_number"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
