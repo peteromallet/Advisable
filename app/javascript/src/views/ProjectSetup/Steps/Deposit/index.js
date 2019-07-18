@@ -1,6 +1,7 @@
 import React from "react";
 import { get } from "lodash";
 import { graphql } from "react-apollo";
+import { Redirect } from "react-router-dom";
 import { Box, Text } from "@advisable/donut";
 import useStripe from "../../../../hooks/useStripe";
 import currency from "../../../../utilities/currency";
@@ -16,6 +17,10 @@ const Deposit = ({ data, project, history }) => {
   const [useNewCard, setUseNewCard] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [pending, setPending] = React.useState(false);
+
+  if (project.acceptedTerms === false) {
+    return <Redirect to="terms" />;
+  }
 
   const handleSuccess = () => {
     let projectId = project.airtableId;

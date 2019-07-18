@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { get } from "lodash";
 import { Link } from "react-router-dom";
 import {
   CurrentUserWrapper,
@@ -12,7 +13,7 @@ const CurrentUser = ({ user, onLogout }) => {
   const [open, setOpen] = useState(false);
   const handleBlur = () => setOpen(false);
   const handleFocus = () => setOpen(true);
-  let isClient = viewer.__typename === "User";
+  let isClient = get(viewer, "__typename") === "User";
 
   React.useEffect(() => {
     if (!window.Rollbar) return;

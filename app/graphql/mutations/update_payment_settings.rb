@@ -37,6 +37,8 @@ class Mutations::UpdatePaymentSettings < Mutations::BaseMutation
       vat_number: args[:vat_number],
     )
 
+    specialist.sync_to_airtable
+
     { specialist: specialist }
   end
 end

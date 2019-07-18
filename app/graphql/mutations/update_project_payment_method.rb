@@ -29,6 +29,8 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
     if user.accepted_project_payment_terms_at.nil? && args[:accept_terms]
       user.accepted_project_payment_terms_at = DateTime.now.utc
     end
+
+    user.sync_to_airtable
     
     if user.save
       {

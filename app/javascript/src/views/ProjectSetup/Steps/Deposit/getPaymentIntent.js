@@ -6,7 +6,6 @@ export default gql`
       ... on User {
         id
         paymentMethod {
-          id
           last4
           brand
           expMonth

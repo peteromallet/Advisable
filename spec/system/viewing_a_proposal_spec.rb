@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 describe 'Accepting a proposal' do
-  let(:application) { create(:application, status: 'Proposed') }
+  let(:user) { create(:user, project_payment_method: "Bank Transfer") }
+  let(:project) { create(:project, user: user )}
+  let(:application) { create(:application, status: 'Proposed', project: project) }
 
   before :each do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
