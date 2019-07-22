@@ -102,14 +102,6 @@ class Types::QueryType < Types::BaseType
     end
   end
 
-  field :payment, Types::Payment, "Fetch a payment record by its uid", null: true do
-    argument :id, ID, required: true
-  end
-
-  def payment(id: )
-    Payment.find_by_uid(id)
-  end
-
   field :viewer, Types::ViewerUnion, "Get the current viewer", null: true
 
   def viewer

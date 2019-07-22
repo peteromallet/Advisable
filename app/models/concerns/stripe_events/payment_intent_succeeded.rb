@@ -7,28 +7,13 @@ class StripeEvents::PaymentIntentSucceeded < StripeEvents::BaseEvent
       # Mark the deposit as paid
       project.deposit_paid += payment_intent.amount
       project.save(validate: false)
+      project.sync_to_airtable
 
-      # Fetch the customers existing payment methods
-      payment_methods = Stripe::PaymentMethod.list(
-        customer: project.user.stripe_customer_id,
-        type: "card"
+      # Attach the payment method
+      Users::AttachPaymentMethod.call(
+        user: project.user,
+        payment_method_id: payment_intent.payment_method
       )
-
-      # Check if we have already attached this payment method to their account
-      existing = payment_methods.find do |pm|
-        pm.card.exp_month == payment_method.card.exp_month &&
-        pm.card.exp_year == payment_method.card.exp_year &&
-        pm.card.last4 == payment_method.card.last4
-      end
-
-      # If the payment method hasn't been attached before then attach it and
-      # mark it as the default payment method for invoicing.
-      if existing.nil?
-        Users::AttachPaymentMethod.call(
-          user: project.user,
-          payment_method_id: payment_intent.payment_method
-        )
-      end
     end
   end
 

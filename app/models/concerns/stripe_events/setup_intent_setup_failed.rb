@@ -1,3 +1,6 @@
+# Handler for the stripe setup_intent.setup_failed webhook. This is fired when
+# the setup flow for adding a payment method fails. All we do in this case is
+# update the setup_intent_status to 'failed' so that the front end can respond.
 class StripeEvents::SetupIntentSetupFailed < StripeEvents::BaseEvent
   def process
     return true if user.nil?

@@ -64,7 +64,7 @@ class Types::ProjectType < Types::BaseType
         project: object.uid
       }
     }, {
-      idempotency_key: "deposit_#{object.uid}"
+      # idempotency_key: "deposit_#{object.uid}"
     })
     
     object.update_columns(deposit_payment_intent_id: intent.id)
