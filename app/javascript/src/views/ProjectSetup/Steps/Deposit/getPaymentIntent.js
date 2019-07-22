@@ -19,9 +19,6 @@ export default gql`
       depositOwed
       depositPaymentIntent {
         secret
-        lastPaymentError {
-          code
-        }
       }
     }
   }

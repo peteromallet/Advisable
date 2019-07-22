@@ -15,6 +15,7 @@ export const user = (fields = {}) => {
       completedTutorials: [],
       talkSignature: "1234",
       createdAt: new Date().toISOString(),
+      paymentMethod: null,
       projectPaymentMethod: "Bank Transfer",
       customer: {
         __typename: "Customer",
@@ -67,6 +68,12 @@ export const project = (fields = {}) => {
       optionalCharacteristics: ["Optional characteristic"],
       estimatedBudget: "€10,000",
       remote: true,
+      acceptedTerms: true,
+      depositOwed: 0,
+      depositPaymentIntent: {
+        __typename: "PaymentIntent",
+        secret: "secret1234",
+      },
     },
     fields
   );

@@ -4,7 +4,7 @@ import { Text } from "@advisable/donut";
 import React, { Fragment } from "react";
 import Loading from "src/components/Loading";
 
-const GET_DEPOSIT = gql`
+export const GET_DEPOSIT = gql`
   query getProject($id: ID!) {
     project(id: $id) {
       id
@@ -31,6 +31,7 @@ const PaymentPending = ({ id, client, onSuccess }) => {
         const { project } = response.data;
         if (project.depositOwed === 0) {
           onSuccess();
+          return;
         }
 
         setSeconds(seconds + 2);

@@ -80,6 +80,7 @@ const renderApp = (config = defaultConfig) => {
         mount: node => {},
       }),
     }),
+    handleCardPayment: () => Promise.resolve({ error: null }),
     handleCardSetup: (secret, card, details) =>
       Promise.resolve({ setupIntent: {} }),
   };
