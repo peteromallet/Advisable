@@ -4,7 +4,7 @@ import { Select, Wrapper, SelectWrapper, Arrows } from "./styles.js";
 import InputLabel from "src/components/InputLabel";
 import InputError from "src/components/InputError";
 import InputDescription from "src/components/InputDescription";
-import { extractSpacingProps } from 'src/components/Spacing';
+import { extractSpacingProps } from "src/components/Spacing";
 
 class SelectComponent extends React.Component {
   componentWillMount() {
@@ -12,12 +12,12 @@ class SelectComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.setFirstOption()
+    this.setFirstOption();
   }
 
   componentDidUpdate({ options }) {
     if (options.length !== this.props.options.length) {
-      this.setFirstOption()
+      this.setFirstOption();
     }
   }
 
@@ -25,8 +25,8 @@ class SelectComponent extends React.Component {
     // If there is no placeholder or value we manually fire a change event
     // so that the first option is set
     if (!this.props.placeholder && !this.props.value) {
-      const event = new Event('change', { bubbles: true  });
-      this.select.dispatchEvent(event)
+      const event = new Event("change", { bubbles: true });
+      this.select.dispatchEvent(event);
     }
   }
 
@@ -42,7 +42,7 @@ class SelectComponent extends React.Component {
       onFocus,
       onBlur,
       error,
-      description
+      description,
     } = this.props;
 
     // Placeholder value is an empty string
@@ -87,11 +87,12 @@ class SelectComponent extends React.Component {
           <Select
             name={name}
             value={finalValue}
-            ref={c => this.select = c}
+            ref={c => (this.select = c)}
             defaultValue={defaultValue}
             onChange={onChange}
             onFocus={onFocus}
             onBlur={onBlur}
+            data-testid={this.props["data-testid"]}
           >
             {placeholderMarkup}
             {optionsMarkup}

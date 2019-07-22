@@ -10,7 +10,7 @@ import Loading from "../../../components/Loading";
 import TextField from "../../../components/TextField";
 import { invoiceSettingsValidation } from "./validationSchema";
 
-const GET_DATA = gql`
+export const GET_DATA = gql`
   query invoiceSettings {
     viewer {
       ... on User {
@@ -188,6 +188,7 @@ const InvoiceSettings = ({ data, match, setValue, history, values }) => {
                   placeholder="Country"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
+                  data-testid="country-select"
                   value={formik.values.address.country}
                   options={countries.map(c => ({
                     value: c.id,
