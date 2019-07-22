@@ -56,10 +56,15 @@ let Booking = ({ data, match, history, location, client }) => {
   });
 
   const addNewTaskToCache = task => {
-    const newData = data;
+    const newData = client.readQuery({
+      query: GET_ACTIVE_APPLICATION,
+      variables: {
+        id: applicationId,
+      },
+    });
     newData.application.tasks.push(task);
     client.writeQuery({
-      query: getActiveApplication,
+      query: GET_ACTIVE_APPLICATION,
       data: newData,
       variables: {
         id: applicationId,
@@ -70,16 +75,22 @@ let Booking = ({ data, match, history, location, client }) => {
   };
 
   const handleDeleteTask = task => {
+    const newData = client.readQuery({
+      query: GET_ACTIVE_APPLICATION,
+      variables: {
+        id: applicationId,
+      },
+    });
     history.push(match.url);
     client.writeQuery({
-      query: getActiveApplication,
+      query: GET_ACTIVE_APPLICATION,
       variables: {
         id: applicationId,
       },
       data: {
-        ...data,
+        ...newData,
         application: {
-          ...data.application,
+          ...newData.application,
           tasks: tasks.filter(t => {
             return t.id !== task.id;
           }),

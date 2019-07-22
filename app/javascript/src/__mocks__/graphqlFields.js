@@ -15,6 +15,13 @@ export const user = (fields = {}) => {
       completedTutorials: [],
       talkSignature: "1234",
       createdAt: new Date().toISOString(),
+      projectPaymentMethod: "Bank Transfer",
+      customer: {
+        __typename: "Customer",
+        id: "cus_123",
+        name: null,
+        email: null,
+      },
       country: {
         __typename: "Country",
         id: 1,
@@ -116,6 +123,7 @@ export const specialist = (fields = {}) => {
       createdAt: new Date().toISOString(),
       city: "Dublin",
       reviewsCount: 0,
+      hasSetupPayments: true,
       ratings: {
         __typename: "Ratings",
         overall: 5.0,

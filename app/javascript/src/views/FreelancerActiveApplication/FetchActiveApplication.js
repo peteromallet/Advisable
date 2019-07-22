@@ -47,6 +47,13 @@ const FetchActiveApplication = ({ location, history, match, data, client }) => {
   };
 
   const addNewTaskToCache = task => {
+    let newData = client.readQuery({
+      query: FETCH_APPLICATION,
+      variables: {
+        id: application.airtableId,
+      },
+    });
+
     // Add the task to the application queries list of tasks
     client.writeQuery({
       query: FETCH_APPLICATION,
@@ -54,9 +61,10 @@ const FetchActiveApplication = ({ location, history, match, data, client }) => {
         id: application.airtableId,
       },
       data: {
+        ...newData,
         application: {
-          ...data.application,
-          tasks: [...data.application.tasks, task],
+          ...newData.application,
+          tasks: [...newData.application.tasks, task],
         },
       },
     });
@@ -67,7 +75,13 @@ const FetchActiveApplication = ({ location, history, match, data, client }) => {
 
   const handleDeleteTask = task => {
     history.push(match.url);
-    const newData = data;
+    let newData = client.readQuery({
+      query: FETCH_APPLICATION,
+      variables: {
+        id: application.airtableId,
+      },
+    });
+
     newData.application.tasks = data.application.tasks.filter(t => {
       return t.id !== task.id;
     });

@@ -4,7 +4,7 @@ import { compose, withApollo, graphql } from "react-apollo";
 import Loading from "../Loading";
 import PaymentMethodForm from "../PaymentMethodForm";
 
-const CREATE_SETUP_INTENT = gql`
+export const CREATE_SETUP_INTENT = gql`
   mutation setupIntent {
     createSetupIntent(input: {}) {
       secret
@@ -12,7 +12,7 @@ const CREATE_SETUP_INTENT = gql`
   }
 `;
 
-const GET_SETUP_INTENT_STATUS = gql`
+export const GET_SETUP_INTENT_STATUS = gql`
   query setupIntentStatus {
     viewer {
       ... on User {

@@ -63,8 +63,8 @@ const PaymentMethodForm = ({
   };
 
   const formikInitialValues = {
-    name: get(data, "viewer.customer.name", ""),
-    email: get(data, "viewer.customer.email", ""),
+    name: get(data, "viewer.customer.name") || "",
+    email: get(data, "viewer.customer.email") || "",
     cardholder: get(
       data,
       "viewer.paymentMethod.name",
@@ -124,6 +124,7 @@ const PaymentMethodForm = ({
             type="submit"
             styling="primary"
             loading={formik.isSubmitting}
+            aria-label={buttonLabel || "Continue"}
           >
             {buttonLabel || "Continue"}
           </Button>

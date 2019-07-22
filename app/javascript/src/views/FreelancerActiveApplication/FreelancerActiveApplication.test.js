@@ -57,6 +57,7 @@ test("Freelancer can create a task", async () => {
         },
         result: {
           data: {
+            viewer: specialist,
             application,
           },
         },
@@ -232,6 +233,7 @@ test("Freelancer can mark a task as complete", async () => {
         },
         result: {
           data: {
+            viewer: specialist,
             application,
           },
         },

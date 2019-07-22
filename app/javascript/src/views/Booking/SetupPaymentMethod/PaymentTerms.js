@@ -8,7 +8,12 @@ import { Card, Box, Link, Text } from "@advisable/donut";
 import { paymentTermsValidation } from "./validationSchema";
 import UPDATE_PROJECT_PAYMENT_METHOD from "./updateProjectPaymentMethod";
 
-const PaymentTerms = ({ updateProjectPaymentMethod, values }) => {
+const PaymentTerms = ({
+  history,
+  match,
+  updateProjectPaymentMethod,
+  values,
+}) => {
   const handleSubmit = async formikValues => {
     let input = {
       ...values,
@@ -20,10 +25,13 @@ const PaymentTerms = ({ updateProjectPaymentMethod, values }) => {
         input,
       },
     });
+
+    let { applicationId } = match.params;
+    history.replace(`/manage/${applicationId}`);
   };
 
   let initialValues = {
-    acceptTerms: undefined,
+    acceptTerms: null,
     exceptionalTerms: "",
   };
 
@@ -75,16 +83,20 @@ const PaymentTerms = ({ updateProjectPaymentMethod, values }) => {
               <Box mb="s">
                 <Radio
                   name="acceptTerms"
-                  onChange={() => formik.setFieldValue("acceptTerms", true)}
+                  value="true"
                   checked={formik.values.acceptTerms === true}
+                  onChange={() => {
+                    formik.setFieldValue("acceptTerms", true);
+                  }}
                   label="I accept these payment terms"
                 />
               </Box>
               <Box mb="l">
                 <Radio
                   name="acceptTerms"
-                  onChange={() => formik.setFieldValue("acceptTerms", false)}
+                  value="false"
                   checked={formik.values.acceptTerms === false}
+                  onChange={() => formik.setFieldValue("acceptTerms", false)}
                   label="Request exceptional payment terms (not recommended)"
                   description="This option may result in delays to your project commencement."
                 />
@@ -111,9 +123,11 @@ const PaymentTerms = ({ updateProjectPaymentMethod, values }) => {
               <Button
                 block
                 size="l"
+                type="submit"
                 styling="primary"
                 isLoading={formik.isSubmitting}
                 disabled={!formik.isValid}
+                aria-label="Complete Setup"
               >
                 Complete Setup
               </Button>

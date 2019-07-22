@@ -12,7 +12,6 @@ export const GET_PAYMENT_METHOD = gql`
       ... on User {
         id
         paymentMethod {
-          id
           last4
           brand
           expMonth

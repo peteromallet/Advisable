@@ -4,7 +4,7 @@ import { fireEvent, cleanup } from "@testing-library/react";
 import VIEWER from "../graphql/queries/viewer";
 import renderApp from "../testHelpers/renderApp";
 import generateType from "../__mocks__/graphqlFields";
-import { getActiveApplication as GET_ACTIVE_APPLICATION } from "../graphql/queries/applications";
+import GET_ACTIVE_APPLICATION from "../views/Booking/getActiveApplication";
 import {
   createTask as CREATE_TASK,
   updateTaskName as UPDATE_TASK_NAME,
@@ -17,6 +17,7 @@ afterEach(cleanup);
 jest.setTimeout(10000);
 
 test("Renders the manage view for a specialist", async () => {
+  let viewer = generateType.user();
   const { findByText } = renderApp({
     route: "/manage/rec1234",
     graphQLMocks: [
@@ -26,7 +27,7 @@ test("Renders the manage view for a specialist", async () => {
         },
         result: {
           data: {
-            viewer: generateType.user(),
+            viewer,
           },
         },
       },
@@ -39,6 +40,7 @@ test("Renders the manage view for a specialist", async () => {
         },
         result: {
           data: {
+            viewer,
             application: generateType.application({
               id: "rec1234",
               airtableId: "rec1234",
@@ -80,6 +82,7 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
         },
         result: {
           data: {
+            viewer: generateType.user(),
             application: generateType.application({
               id: "rec1234",
               airtableId: "rec1234",
@@ -126,6 +129,7 @@ test("Does not render a tutorial video if the user has completed it", async () =
         },
         result: {
           data: {
+            viewer: generateType.user(),
             application: generateType.application({
               id: "rec1234",
               airtableId: "rec1234",
@@ -177,6 +181,7 @@ test("The client can change the project type", async () => {
         },
         result: {
           data: {
+            viewer: generateType.user(),
             application: generateType.application({
               id: "rec1234",
               airtableId: "rec1234",
@@ -246,6 +251,8 @@ test("The client can add a task", async () => {
     specialist,
   });
 
+  let viewer = generateType.user();
+
   const { findByText, findByLabelText, getByTestId } = renderApp({
     route: "/manage/rec1234",
     graphQLMocks: [
@@ -255,7 +262,7 @@ test("The client can add a task", async () => {
         },
         result: {
           data: {
-            viewer: generateType.user(),
+            viewer,
           },
         },
       },
@@ -268,6 +275,7 @@ test("The client can add a task", async () => {
         },
         result: {
           data: {
+            viewer,
             application: generateType.application({
               id: "rec1234",
               airtableId: "rec1234",
