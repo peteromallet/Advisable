@@ -17,6 +17,9 @@ export default gql`
     project(id: $id) {
       id
       depositOwed
+      user {
+        id
+      }
       depositPaymentIntent {
         secret
       }

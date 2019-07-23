@@ -5,6 +5,7 @@ describe Mutations::UpdateCustomer do
   let(:query) { %|
     mutation {
       updateCustomer(input: {
+        user: #{user.uid},
         name: "Company Name",
         email: "test@test.com",
       }) {
@@ -34,25 +35,5 @@ describe Mutations::UpdateCustomer do
     }).and_return(customer)
     
     AdvisableSchema.execute(query, context: context)
-  end
-
-  context 'when not logged in' do
-    let(:context) {{ current_user: nil }}
-
-    it 'returns an error' do
-      response = AdvisableSchema.execute(query, context: context)
-      error = response["data"]["updateCustomer"]["errors"][0]["code"]
-      expect(error).to eq("notAuthorized")
-    end
-  end
-
-  context 'when logged in as a specialist' do
-    let(:context) {{ current_user: create(:specialist) }}
-
-    it 'returns an error' do
-      response = AdvisableSchema.execute(query, context: context)
-      error = response["data"]["updateCustomer"]["errors"][0]["code"]
-      expect(error).to eq("notAuthorized")
-    end
   end
 end
