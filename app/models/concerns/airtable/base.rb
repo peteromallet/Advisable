@@ -22,11 +22,12 @@ class Airtable::Base < Airrecord::Table
     end
 
     # Sync can be called on any class that inherits from Airtable::Base
-    # to sync all records from airtable
+    # to sync all records from airtable.
+    # We filter the query to only fetch records that have been modified within
+    # the last day.
     def sync(report = nil)
-      all.each do |r|
-        r.sync(report)
-      end
+      records = all(filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 1")
+      records.each { |r| r.sync(report) }
     end
 
     # The sync_with method tells the class which ActiveRecord model to sync
