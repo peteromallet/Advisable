@@ -5,7 +5,7 @@ import generateTypes from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
 import CREATE_TASK from "../../graphql/mutations/createTask";
 import GET_TASK from "../../graphql/queries/taskDetails";
-import FETCH_APPLICATION from "../../graphql/queries/freelancerActiveApplication";
+import FETCH_APPLICATION from "./fetchApplication";
 import SUBMIT_TASK from "../../components/TaskDrawer/submitTask";
 import {
   updateTaskName as UPDATE_TASK_NAME,
@@ -57,7 +57,6 @@ test("Freelancer can create a task", async () => {
         },
         result: {
           data: {
-            viewer: specialist,
             application,
           },
         },
