@@ -15,8 +15,16 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'LinkedIn URL', to: :linkedin
   sync_column 'Biography', to: :bio
   sync_column 'Application Stage', to: :application_stage
+  sync_column 'Bank Holder Name', to: :bank_holder_name
+  sync_column 'Bank Currency', to: :bank_currency
+  sync_column 'VAT Number', to: :vat_number
 
   sync_data do |specialist|
+    # sync the bank holder address
+    if self['Bank Holder Address']
+      specialist.bank_holder_address = Address.parse(self['Bank Holder Address']).to_h
+    end
+
     # to prevent making more requests than we need, first check if there is
     # an existing country record
     country_airtable_id = fields["Country"].try(:first)
@@ -67,6 +75,13 @@ class Airtable::Specialist < Airtable::Base
     self['Account Created'] = specialist.has_account? ? "Yes" : nil
     self['Country'] = [specialist.country.try(:airtable_id)]
     self["Phone Number"] = specialist.phone_number
+    self['Bank Holder Name'] = specialist.bank_holder_name
+    self['Bank Currency'] = specialist.bank_currency
+    self['VAT Number'] = specialist.vat_number
+    
+    if specialist.bank_holder_address
+      self['Bank Holder Address'] = Address.new(specialist.bank_holder_address).to_s
+    end
 
     if specialist.remote
       self['Remote OK'] = "Yes, I'm happy to work remote"

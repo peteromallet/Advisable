@@ -19,6 +19,7 @@ query Application($id: ID!) {
       remote
       user {
         country {
+          id
           name
         }
       }

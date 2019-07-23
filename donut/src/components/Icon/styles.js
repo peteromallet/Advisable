@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { space, color } from "styled-system";
 
 export const Icon = styled.span`
+  ${space}
+  ${color}
   display: inline-flex;
 
   svg {

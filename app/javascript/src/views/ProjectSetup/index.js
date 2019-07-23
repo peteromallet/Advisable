@@ -7,7 +7,7 @@ import NotFound from "src/views/NotFound";
 import Header from "src/components/Header";
 import Loading from "src/components/Loading";
 import Progress from "./Progress";
-import FETCH_PROJECT from "./fetchProject.graphql";
+import FETCH_PROJECT from "./fetchProject";
 import { stepsForProject, currentStep } from "./Steps";
 import { Container, Step, StepHeading } from "./styles";
 

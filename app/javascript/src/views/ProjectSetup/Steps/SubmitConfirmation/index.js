@@ -7,12 +7,12 @@ import illustration from "./illustration.png";
 
 const SubmitConfirmation = ({ project, match, history, client }) => {
   useEffect(() => {
-    if (project.depositOwed !== 0) {
-      history.replace("deposit");
-    }
-
     if (project.acceptedTerms === false) {
       history.replace("terms");
+    }
+
+    if (project.depositOwed !== 0) {
+      history.replace("deposit");
     }
   }, []);
 

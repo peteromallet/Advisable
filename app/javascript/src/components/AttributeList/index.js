@@ -5,13 +5,10 @@ import colors from "../../colors";
 const Container = styled.ul``;
 
 const Item = styled.li`
-  display: flex;
   font-size: 14px;
   padding: 16px 0;
   margin-top: -1px;
   line-height: 18px;
-  align-items: center;
-  justify-content: space-between;
   border-top: 1px solid ${colors.neutral.s2};
   border-bottom: 1px solid ${colors.neutral.s2};
 
@@ -19,6 +16,12 @@ const Item = styled.li`
     text-decoration: none;
     color: ${colors.blue.base};
   }
+`;
+
+const Contents = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Label = styled.span`
@@ -37,10 +40,13 @@ const AttributeList = ({ children }) => {
   return <Container>{children}</Container>;
 };
 
-const ListItem = ({ label, value }) => (
+const ListItem = ({ label, value, children }) => (
   <Item>
-    <Label>{label}</Label>
-    <Value>{value}</Value>
+    <Contents>
+      <Label>{label}</Label>
+      <Value>{value}</Value>
+    </Contents>
+    {children}
   </Item>
 );
 

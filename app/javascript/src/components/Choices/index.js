@@ -1,8 +1,7 @@
 import React from "react";
-import { Field } from "formik";
-import Flex from "src/components/Flex";
+import { Text } from "@advisable/donut";
 import InputError from "src/components/InputError";
-import { Choices, Choice } from "./styles";
+import { Choices, Choice, Circle } from "./styles";
 
 export default ({ choices, name, value, onChange, error }) => (
   <React.Fragment>
@@ -18,8 +17,13 @@ export default ({ choices, name, value, onChange, error }) => (
             checked={value === choice.value}
           />
           <label htmlFor={choice.value}>
-            <strong>{choice.name}</strong>
-            <small>{choice.description}</small>
+            <Circle />
+            <Text size="xs" color="neutral.8" weight="medium" mb="xxs">
+              {choice.name}
+            </Text>
+            <Text size="xs" color="neutral.5" lineHeight="xs">
+              {choice.description}
+            </Text>
           </label>
         </Choice>
       ))}

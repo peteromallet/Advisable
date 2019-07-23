@@ -16,6 +16,13 @@ describe "Project setup flow" do
 
   before :each do
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
+    intent = double(Stripe::PaymentIntent, id: '1234', client_secret: "1234", last_payment_error: nil)
+    allow(Stripe::PaymentIntent).to receive(:create).and_return(intent)
+    invoice_settings = OpenStruct.new(default_payment_method: nil)
+    customer = double(Stripe::Customer, id: '1234', name: "Test", email: "")
+    allow(customer).to receive(:invoice_settings).and_return(invoice_settings)
+    allow(Stripe::Customer).to receive(:create).and_return(customer)
+    allow(Stripe::Customer).to receive(:retrieve).and_return(customer)
   end
 
   describe "company overview step" do
@@ -176,13 +183,6 @@ describe "Project setup flow" do
   end
 
   describe "deposit step" do
-    before :each do
-      source = double(Stripe::Source, id: 'src_123', status: 'chargeable')
-      allow(Stripe::Source).to receive(:retrieve).and_return(source)
-      charge = double(Stripe::Charge, id: "ch_12")
-      allow(Stripe::Charge).to receive(:create).and_return(charge)
-    end
-
     context "when terms have not been accepted" do
       it "redirects to the terms" do
         project.update_attributes(accepted_terms: false)

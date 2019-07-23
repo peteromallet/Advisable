@@ -1,74 +1,205 @@
 class Types::SpecialistType < Types::BaseType
-  field :id, ID, null: false
-  field :airtable_id, String, null: false
-  field :first_name, String, null: true
-  field :last_name, String, null: true
-  field :name, String, null: true
-  field :city, String, null: true
-  field :bio, String, null: true
-  field :confirmed, Boolean, null: false
-  field :country, Types::CountryType, null: true
-  field :travel_availability, String, null: true
-  field :linkedin, String, null: true
-  field :phone_number, String, null: true
-  field :image, Types::AttachmentType, null: true
-  field :skills, [String, null: true], null: true
-  field :ratings, Types::Ratings, null: false
-  field :reviews, [Types::Review], null: false
-  field :reviewsCount, Integer, null: true
-  field :remote, Boolean, null: true
-  field :previous_projects, [Types::PreviousProject], null: false
-  field :has_account, Boolean, null: false
+  description <<~HEREDOC
+    Represents a freelancer. The Specialist type is also a type of viewer. It
+    will be returned for the viewer query when the freelancer is logged in.
+  HEREDOC
 
-  field :completed_tutorials, [String], null: false do
-    authorize :is_specialist
-  end
-
-  field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
-    authorize :is_specialist
-  end
-
-  field :applications, [Types::ApplicationType], null: true do
-    authorize :is_specialist
-    argument :status, [String], required: false
-  end
-
-  field :email, String, null: true do
-    authorize :is_admin, :is_specialist, :is_applicant_of_user_project
-  end
-
-  field :talk_signature, String, null: false do
-    authorize :is_specialist
+  field :id, ID, null: false do
+    description "The unique ID for the specialist"
   end
 
   def id
     object.uid
   end
 
-  def talk_signature
-    user_id = context[:current_user].uid
-    OpenSSL::HMAC.hexdigest('SHA256', ENV["TALKJS_SECRET"], user_id)
+  field :airtable_id, String, null: false do
+    description "The airtable ID for the specialist"
+  end
+
+  field :first_name, String, null: true do
+    description "The specialists first name"
+  end
+
+  field :last_name, String, null: true do
+    description "The specialists last name"
+  end
+
+  field :name, String, null: true do
+    description "The specailists full name"
   end
 
   def name
     "#{object.first_name} #{object.last_name}"
   end
 
+  field :city, String, null: true do
+    description "The specialists city"
+  end
+
+  field :bio, String, null: true do
+    description <<~HEREDOC
+      A short bio text for the specialist. This is used to prefill the intro
+      text when applying for applications.
+    HEREDOC
+  end
+
+  field :confirmed, Boolean, null: false do
+    description "Wether or not the specialists account has been confirmed"
+  end
+
+  field :travel_availability, String, null: true do
+    description "Wether or not the specailist is willing to travel for work"
+  end
+
+  field :linkedin, String, null: true do
+    description "The specialists linkedin URL"
+  end
+
+  field :phone_number, String, null: true do
+    description "The phone number for the specialist"
+  end
+
+  field :image, Types::AttachmentType, null: true do
+    description "The specialists profile image"
+  end
+
+  field :skills, [String, null: true], null: true do
+    description "A list of skills that the specialist possesses"
+  end
+
   def skills
     object.skills.map(&:name)
+  end
+
+  field :ratings, Types::Ratings, null: false do
+    description "The combined ratings for the specialist based on previous work"
+  end
+
+  # Eventually the reviews and reviewsCount fields should be combined into
+  # some kind of Connection type to support pagination and where the count
+  # would be a field of the connection type.
+  field :reviews, [Types::Review], null: false do
+    description "A list of reviews for the specialist"
+  end
+
+  field :reviewsCount, Integer, null: true do
+    description "The amount of reviews a specialist has"
+  end
+
+  field :remote, Boolean, null: true do
+    description "Wether or not the specialist will work remotely"
+  end
+
+  field :previous_projects, [Types::PreviousProject], null: false do
+    description <<~HEREDOC
+      list of the specialists previous projects. These can either be projects
+      that happened on Advisable or off platform projects that the specialist
+      has provided.
+    HEREDOC
   end
 
   def previous_projects
     ::PreviousProject.for_specialist(object)
   end
 
+  field :has_account, Boolean, null: false do
+    description "Wether or not the specialist has created their account yet"
+  end
+
   def has_account
     object.has_account?
+  end
+
+  field :completed_tutorials, [String], null: false do
+    authorize :is_specialist
+    description <<~HEREDOC
+      An array of tutorial ID's that the user has completed. This is used to
+      track when to show onboarding flows for certain features.
+    HEREDOC
+  end
+
+  field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
+    authorize :is_specialist
+    description "The timestamp for when the specialist record was created"
+  end
+
+  # Eventually the applications field should be updated to support pagination
+  # using a connection type.
+  field :applications, [Types::ApplicationType], null: true do
+    authorize :is_specialist
+    argument :status, [String], required: false
+    description <<~HEREDOC
+      The specialists applications. This can be filtered by passing an array of
+      statuses.
+    HEREDOC
   end
 
   def applications(status: nil)
     applications = object.applications.order(created_at: :desc)
     applications = applications.where(status: status) if status.present?
     applications
+  end
+
+  field :email, String, null: true do
+    authorize :is_admin, :is_specialist, :is_applicant_of_user_project
+    description "The specialists email address"
+  end
+  
+  field :talk_signature, String, null: false do
+    authorize :is_specialist
+    description "A unique signature used to for identification with talkjs"
+  end
+  
+  def talk_signature
+    user_id = context[:current_user].uid
+    OpenSSL::HMAC.hexdigest('SHA256', ENV["TALKJS_SECRET"], user_id)
+  end
+
+  field :country, Types::CountryType, null: true do
+    description "The specialists country"
+  end
+
+  # The specialist country is an association to a record in the countries table,
+  # however, the CountryType expects an object from the 'countries' gem. We
+  # use the records name to retrieve this.
+  def country
+    return nil unless object.country.present?
+    ISO3166::Country.find_country_by_name(object.country.name)
+  end
+
+  field :has_setup_payments, Boolean, null: false do
+    authorize :is_specialist
+    description <<~HEREDOC
+      Wether or not the specialist has provided their bank information so that
+      they can be paid.
+    HEREDOC
+  end
+
+  field :bank_holder_name, String, null: true do
+    authorize :is_specialist
+    description <<~HEREDOC
+      The full name or company name of the bank account holder.
+    HEREDOC
+  end
+
+  field :bank_holder_address, Types::AddressType, null: true do
+    authorize :is_specialist
+    description <<~HEREDOC
+      The address of the bank accound holder.
+    HEREDOC
+  end
+
+  field :bank_currency, String, null: true do
+    authorize :is_specialist
+    description <<~HEREDOC
+      The currency of the specialists bank account.
+    HEREDOC
+  end
+
+  field :vat_number, String, null: true do
+    authorize :is_specialist
+    description <<~HEREDOC
+      The specialists VAT number
+    HEREDOC
   end
 end
