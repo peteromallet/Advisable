@@ -15,6 +15,14 @@ export const user = (fields = {}) => {
       completedTutorials: [],
       talkSignature: "1234",
       createdAt: new Date().toISOString(),
+      paymentMethod: null,
+      projectPaymentMethod: "Bank Transfer",
+      customer: {
+        __typename: "Customer",
+        id: "cus_123",
+        name: null,
+        email: null,
+      },
       country: {
         __typename: "Country",
         id: 1,
@@ -29,8 +37,10 @@ export const country = (fields = {}) => {
   return merge(
     {
       __typename: "Country",
-      id: uniqueId("country"),
+      id: "IE",
+      eu: true,
       name: "Ireland",
+      states: ["Dublin", "Cork", "Galway", "Limerick"],
     },
     fields
   );
@@ -58,6 +68,12 @@ export const project = (fields = {}) => {
       optionalCharacteristics: ["Optional characteristic"],
       estimatedBudget: "€10,000",
       remote: true,
+      acceptedTerms: true,
+      depositOwed: 0,
+      depositPaymentIntent: {
+        __typename: "PaymentIntent",
+        secret: "secret1234",
+      },
     },
     fields
   );
@@ -116,6 +132,7 @@ export const specialist = (fields = {}) => {
       createdAt: new Date().toISOString(),
       city: "Dublin",
       reviewsCount: 0,
+      hasSetupPayments: true,
       ratings: {
         __typename: "Ratings",
         overall: 5.0,

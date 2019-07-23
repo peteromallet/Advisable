@@ -5,6 +5,7 @@ import NotFound from "./views/NotFound";
 import Header from "./components/Header";
 import Loading from "./components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import Settings from "./views/Settings";
 
 const Applicant = lazy(() => import("./views/Applicant"));
 const Proposal = lazy(() => import("./views/Proposal"));
@@ -73,6 +74,7 @@ const ApplicationRoutes = () => {
             path="/invites/:applicationId/apply"
             component={ApplicationFlow}
           />
+          <AuthenticatedRoute path="/settings" component={Settings} />
           <Route component={NotFound} />
         </Switch>
       </Suspense>

@@ -5,6 +5,12 @@ export default gql`
   ${taskFields}
 
   query application($id: ID!) {
+    viewer {
+      ... on Specialist {
+        id
+        hasSetupPayments
+      }
+    }
     application(id: $id) {
       id
       status

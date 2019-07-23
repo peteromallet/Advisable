@@ -73,6 +73,18 @@ const renderApp = (config = defaultConfig) => {
     addListener: () => {},
     removeListener: () => {},
   });
+
+  window.stripe = {
+    elements: () => ({
+      create: el => ({
+        mount: node => {},
+      }),
+    }),
+    handleCardPayment: () => Promise.resolve({ error: null }),
+    handleCardSetup: (secret, card, details) =>
+      Promise.resolve({ setupIntent: {} }),
+  };
+
   localStorage.setItem("authToken", "token");
 
   const history = createMemoryHistory({ initialEntries: [config.route] });

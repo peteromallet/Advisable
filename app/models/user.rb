@@ -22,6 +22,35 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def invoice_settings
+    {
+      name: invoice_name,
+      company_name: invoice_company_name,
+      vat_number: vat_number,
+      address: address
+    }
+  end
+
+  def stripe_customer_id
+    return self[:stripe_customer_id] if self[:stripe_customer_id]
+    customer = Stripe::Customer.create({
+      email: email,
+      name: company_name,
+      metadata: {
+        user_id: uid,
+      }
+    })
+    update_columns(stripe_customer_id: customer.id)
+    customer.id
+  end
+
+  def stripe_customer
+    Stripe::Customer.retrieve({
+      id: stripe_customer_id,
+      expand: ['invoice_settings.default_payment_method']
+    })
+  end
+
   # company name is both a column on the users table and an attribute of the
   # users associated "client" record. We are leaning towards deprecating the
   # user "company_name" column and so this method provide a bridge between

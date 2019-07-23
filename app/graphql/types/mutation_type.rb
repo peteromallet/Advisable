@@ -18,8 +18,6 @@ class Types::MutationType < GraphQL::Schema::Object
   
   field :update_availability, mutation: Mutations::UpdateAvailability
 
-  field :create_payment, mutation: Mutations::CreatePayment
-
   field :create_project, mutation: Mutations::CreateProject
   field :update_project, mutation: Mutations::UpdateProject
   field :confirm_project, mutation: Mutations::ConfirmProject
@@ -47,4 +45,9 @@ class Types::MutationType < GraphQL::Schema::Object
   field :request_to_start, mutation: Mutations::RequestToStart
 
   field :complete_tutorial, mutation: Mutations::CompleteTutorial
+  field :update_customer, mutation: Mutations::UpdateCustomer
+  field :update_project_payment_method, mutation: Mutations::UpdateProjectPaymentMethod
+  field :create_setup_intent, mutation: Mutations::CreateSetupIntent
+
+  field :update_payment_settings, mutation: Mutations::UpdatePaymentSettings
 end

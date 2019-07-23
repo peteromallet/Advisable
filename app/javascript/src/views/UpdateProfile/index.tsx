@@ -7,6 +7,7 @@ import Introduction from "./Introduction";
 import Skills from "./Skills";
 import Location from "./Location";
 import References from "./References";
+import PaymentSettings from "./PaymentSettings";
 
 // The navigation for a freelancers profile works differently on mobile compared
 // to desktop. On desktop the navigation is always present in the sidebar,
@@ -27,6 +28,7 @@ const UpdateProfile = ({ match }) => {
           <Route path="/profile/skills" component={Skills} />
           <Route path="/profile/location" component={Location} />
           <Route path="/profile/references" component={References} />
+          <Route path="/profile/payments" component={PaymentSettings} />
           {/* If we are on desktop then redirect user to /profile/introduction
             if their URL is exactly /profile */}
           {!isMobile && (

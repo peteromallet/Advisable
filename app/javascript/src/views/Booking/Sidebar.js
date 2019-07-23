@@ -1,6 +1,7 @@
 import React from "react";
 import { get } from "lodash";
 import { Mutation } from "react-apollo";
+import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "react-stickynode";
 import Button from "../../components/Button";
@@ -20,7 +21,7 @@ import ProjectTypeModal from "../../components/ProjectTypeModal";
 import ProjectMonthlyLimit from "../../components/ProjectMonthlyLimit";
 import SET_PROJECT_TYPE from "./setProjectType";
 
-export default ({ data, tutorial }) => {
+const Sidebar = ({ data, history, tutorial }) => {
   const isMobile = useMobile();
   const { t } = useTranslation();
   const application = data.application;
@@ -31,6 +32,10 @@ export default ({ data, tutorial }) => {
 
   const handleEditMonthlyLimit = () => {
     setMonthlyLimitModal(true);
+  };
+
+  const handleEditPayment = () => {
+    history.push("/settings/payments");
   };
 
   return (
@@ -151,6 +156,19 @@ export default ({ data, tutorial }) => {
                   </>
                 }
               />
+
+              <AttributeList.Item
+                label="Payment Method"
+                value={
+                  <>
+                    {get(data, "viewer.projectPaymentMethod")}
+                    <br />
+                    <Button onClick={handleEditPayment} styling="plainSubtle">
+                      Edit
+                    </Button>
+                  </>
+                }
+              ></AttributeList.Item>
             </AttributeList>
           </Padding>
           <Padding bottom="xl">
@@ -163,3 +181,5 @@ export default ({ data, tutorial }) => {
     </Layout.Sidebar>
   );
 };
+
+export default withRouter(Sidebar);

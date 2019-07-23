@@ -8,6 +8,7 @@ query {
       confirmed
       companyName
       country {
+        id
         name
       }
     }

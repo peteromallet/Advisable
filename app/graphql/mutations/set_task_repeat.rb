@@ -14,18 +14,9 @@ class Mutations::SetTaskRepeat < Mutations::BaseMutation
 
   def resolve(**args)
     task = Task.find_by_uid!(args[:id])
+    task.update_attributes(repeat: args[:repeat])
+    task.sync_to_airtable
 
-    task.assign_attributes(repeat: args[:repeat])
-
-    if task.save
-      task.sync_to_airtable
-      return { task: task }
-    end
-
-    return {
-      errors: [{
-        code: "tasks.failedToSetRepeating"
-      }]
-    }
+    { task: task }
   end
 end

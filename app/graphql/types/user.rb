@@ -6,7 +6,6 @@ class Types::User < Types::BaseType
   field :last_name, String, null: true
   field :title, String, null: true
   field :company_name, String, null: true
-  field :country, Types::CountryType, null: true
   field :projects, [Types::ProjectType], null: true
   field :confirmed, Boolean, null: false
   field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
@@ -32,6 +31,48 @@ class Types::User < Types::BaseType
   field :applications, [Types::ApplicationType], null: true do
     authorize :is_user
     argument :status, [String], required: false
+  end
+
+  field :project_payment_method, String, null: true do
+    authorize :is_user
+  end
+
+  field :invoice_settings, Types::InvoiceSettingsType, null: true do
+    authorize :is_user
+  end
+
+  field :country, Types::CountryType, null: true
+
+  # The users country is an association to a record in the countries table,
+  # however, the CountryType expects an object from the 'countries' gem. We
+  # use the records name to retrieve this.
+  def country
+    return nil unless object.country.present?
+    ISO3166::Country.find_country_by_name(object.country.name)
+  end
+
+  field :setup_intent_status, String, null: true do
+    authorize :is_user
+  end
+
+  # The customer field returns information from the users stripe customer
+  # object.
+  field :customer, Types::CustomerType, null: true do
+    authorize :is_user
+  end
+
+  def customer
+    Stripe::Customer.retrieve(object.stripe_customer_id)
+  end
+
+  # The paymentMethod field returns the users default payment method from
+  # stripe.
+  field :payment_method, Types::PaymentMethodType, null: true do
+    authorize :is_user
+  end
+
+  def payment_method
+    object.stripe_customer.invoice_settings.default_payment_method
   end
 
   def id

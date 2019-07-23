@@ -1,6 +1,6 @@
 import * as React from "react";
 import Icon from "../Icon";
-import { NavigationMenuItem as Container } from "./styles"; 
+import { NavigationMenuItem as Container } from "./styles";
 
 interface Props {
   to: string;
@@ -11,10 +11,10 @@ interface Props {
 const NavigationMenuItem = ({ children, icon, ...props }: Props) => {
   return (
     <Container {...props}>
-      {icon && <Icon icon={icon} height={20} />}
+      {icon && <Icon icon={icon} height={20} strokeWidth={2} />}
       {children}
     </Container>
-  )
-}
+  );
+};
 
-export default NavigationMenuItem
+export default NavigationMenuItem;

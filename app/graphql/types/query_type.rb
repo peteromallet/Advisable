@@ -102,14 +102,6 @@ class Types::QueryType < Types::BaseType
     end
   end
 
-  field :payment, Types::Payment, "Fetch a payment record by its uid", null: true do
-    argument :id, ID, required: true
-  end
-
-  def payment(id: )
-    Payment.find_by_uid(id)
-  end
-
   field :viewer, Types::ViewerUnion, "Get the current viewer", null: true
 
   def viewer
@@ -162,5 +154,21 @@ class Types::QueryType < Types::BaseType
 
   def task(id: )
     Task.find_by_uid!(id)
+  end
+
+  field :countries, [Types::CountryType], null: false
+
+  def countries
+    ISO3166::Country.all.sort
+  end
+
+  field :currencies, [Types::CurrencyType], null: false do
+    description 'A list of all currencies'
+  end
+
+  def currencies
+    Money::Currency.all.sort_by do |c|
+      c.name
+    end
   end
 end
