@@ -91,6 +91,7 @@ test("User is redirected to setup without project payment method", async () => {
           query: UPDATE_CUSTOMER,
           variables: {
             input: {
+              user: user.id,
               name: "test",
               email: "test@test.com",
             },

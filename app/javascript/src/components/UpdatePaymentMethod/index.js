@@ -2,6 +2,7 @@ import React from "react";
 import gql from "graphql-tag";
 import { compose, withApollo, graphql } from "react-apollo";
 import Loading from "../Loading";
+import useViewer from "../../hooks/useViewer";
 import PaymentMethodForm from "../PaymentMethodForm";
 
 export const CREATE_SETUP_INTENT = gql`
@@ -25,6 +26,7 @@ export const GET_SETUP_INTENT_STATUS = gql`
 
 const UpdatePaymentMethod = ({ createSetupIntent, client, onSuccess }) => {
   let timer = React.useRef(null);
+  let viewer = useViewer();
   let [secret, setSecret] = React.useState(null);
 
   React.useEffect(() => {
@@ -73,7 +75,12 @@ const UpdatePaymentMethod = ({ createSetupIntent, client, onSuccess }) => {
     onSuccess();
   };
 
-  return <PaymentMethodForm handleCardDetails={handleCardDetails} />;
+  return (
+    <PaymentMethodForm
+      handleCardDetails={handleCardDetails}
+      userId={viewer.id}
+    />
+  );
 };
 
 export default compose(

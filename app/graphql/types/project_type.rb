@@ -22,9 +22,7 @@ class Types::ProjectType < Types::BaseType
   field :remote, Boolean, null: true
   field :applications_open, Boolean, null: false
   
-  field :deposit_payment_intent, Types::PaymentIntentType, null: false do
-    authorize :is_client, :is_admin
-  end
+  field :deposit_payment_intent, Types::PaymentIntentType, null: true
 
   field :applications, [Types::ApplicationType, null: true], null: true do
     argument :status, [String], required: false

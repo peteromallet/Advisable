@@ -79,6 +79,7 @@ const Deposit = ({ data, project, history }) => {
     useNewCard || Boolean(paymentMethod) === false ? (
       <PaymentMethodForm
         buttonLabel="Complete Setup"
+        userId={data.project.user.id}
         handleCardDetails={handleCardDetails}
       />
     ) : (
