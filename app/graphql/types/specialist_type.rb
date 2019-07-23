@@ -111,7 +111,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :completed_tutorials, [String], null: false do
-    authorize :is_specialist
+    authorize :is_specialist, :is_admin
     description <<~HEREDOC
       An array of tutorial ID's that the user has completed. This is used to
       track when to show onboarding flows for certain features.
@@ -119,14 +119,14 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
-    authorize :is_specialist
+    authorize :is_specialist, :is_admin
     description "The timestamp for when the specialist record was created"
   end
 
   # Eventually the applications field should be updated to support pagination
   # using a connection type.
   field :applications, [Types::ApplicationType], null: true do
-    authorize :is_specialist
+    authorize :is_specialist, :is_admin
     argument :status, [String], required: false
     description <<~HEREDOC
       The specialists applications. This can be filtered by passing an array of
@@ -167,8 +167,8 @@ class Types::SpecialistType < Types::BaseType
     ISO3166::Country.find_country_by_name(object.country.name)
   end
 
-  field :has_setup_payments, Boolean, null: false do
-    authorize :is_specialist
+  field :has_setup_payments, Boolean, null: true do
+    authorize :is_specialist, :is_admin
     description <<~HEREDOC
       Wether or not the specialist has provided their bank information so that
       they can be paid.
@@ -176,28 +176,28 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :bank_holder_name, String, null: true do
-    authorize :is_specialist
+    authorize :is_specialist, :is_admin
     description <<~HEREDOC
       The full name or company name of the bank account holder.
     HEREDOC
   end
 
   field :bank_holder_address, Types::AddressType, null: true do
-    authorize :is_specialist
+    authorize :is_specialist, :is_admin
     description <<~HEREDOC
       The address of the bank accound holder.
     HEREDOC
   end
 
   field :bank_currency, String, null: true do
-    authorize :is_specialist
+    authorize :is_specialist, :is_admin
     description <<~HEREDOC
       The currency of the specialists bank account.
     HEREDOC
   end
 
   field :vat_number, String, null: true do
-    authorize :is_specialist
+    authorize :is_specialist, :is_admin
     description <<~HEREDOC
       The specialists VAT number
     HEREDOC
