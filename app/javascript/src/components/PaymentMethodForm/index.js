@@ -22,6 +22,7 @@ import validationSchema from "./validationSchema";
 // - formikBag: The formikBag from the underlying formik component.
 const PaymentMethodForm = ({
   data,
+  userId,
   buttonLabel,
   initialValues,
   updateCustomer,
@@ -45,6 +46,7 @@ const PaymentMethodForm = ({
     await updateCustomer({
       variables: {
         input: {
+          user: userId,
           name: values.name,
           email: values.email,
         },

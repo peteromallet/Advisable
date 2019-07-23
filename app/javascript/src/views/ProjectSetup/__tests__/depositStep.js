@@ -12,6 +12,7 @@ afterEach(cleanup);
 test("User can complete deposit step", async () => {
   let user = generateTypes.user();
   let project = generateTypes.project({
+    user: user,
     airtableId: "rec1234",
     status: "Brief Pending Confirmation",
     depositOwed: 25000,
@@ -63,6 +64,7 @@ test("User can complete deposit step", async () => {
           query: UPDATE_CUSTOMER,
           variables: {
             input: {
+              user: user.id,
               name: "Test Corp",
               email: "test@test.com",
             },
