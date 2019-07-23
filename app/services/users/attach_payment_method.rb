@@ -27,10 +27,4 @@ class Users::AttachPaymentMethod < ApplicationService
       }
     })
   end
-
-  private
-
-  def payment_method
-    Stripe::PaymentMethod.retrieve(payment_method_id)
-  end
 end

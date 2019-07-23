@@ -112,6 +112,15 @@ describe TaskPolicy do
     end
   end
 
+  describe '#update_flexible_estimate' do
+    it 'calls #update_estimate' do
+      user = task.application.project.user
+      policy = TaskPolicy.new(user, task)
+      expect(policy).to receive(:update_estimate)
+      policy.update_flexible_estimate
+    end
+  end
+
   context "#set_repeating" do
     it 'returns true for the client' do
       policy = TaskPolicy.new(task.application.project.user, task)

@@ -52,7 +52,7 @@ class TaskPolicy < BasePolicy
   # attributes that were updated. e.g update_name is called if the name attribute
   # is changed
   def update_flexible_estimate
-    upate_estimate
+    update_estimate
   end
 
   def update_description
