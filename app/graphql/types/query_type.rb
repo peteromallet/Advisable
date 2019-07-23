@@ -54,18 +54,6 @@ class Types::QueryType < Types::BaseType
     ::BookingRejectionReason.all
   end
 
-  field :booking, Types::Booking, description: "Find a booking by ID", null: true do
-    argument :id, ID, required: true
-  end
-
-  def booking(id: )
-    begin
-      ::Booking.find_by_airtable_id(id)
-    rescue Airrecord::Error => er
-      GraphQL::ExecutionError.new("Could not find booking #{id}")
-    end
-  end
-
   field :application, Types::ApplicationType, description: "Get an application record by its airtable ID", null: true do
     argument :id, ID, required: true
   end
