@@ -8,7 +8,7 @@ import TaskDrawer from "../../components/TaskDrawer";
 import FixedTutorial from "../../components/Tutorial/FixedProjectTutorial";
 import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
 import Sidebar from "./Sidebar";
-import FETCH_APPLICATION from "../../graphql/queries/freelancerActiveApplication";
+import FETCH_APPLICATION from "./fetchApplication";
 import useTutorial from "../../hooks/useTutorial";
 import Tasks from "./Tasks";
 import SetupPayments from "./SetupPayments";
@@ -26,7 +26,7 @@ const FetchActiveApplication = ({ location, history, match, data, client }) => {
     autoStart: true,
   });
 
-  let hasSetupPayments = get(data, "viewer.hasSetupPayments");
+  let hasSetupPayments = get(data, "application.specialist.hasSetupPayments");
   if (!hasSetupPayments) {
     return <SetupPayments data={data} />;
   }
