@@ -1,7 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    Indirizzo (0.1.7)
     actioncable (5.2.0)
       actionpack (= 5.2.0)
       nio4r (~> 2.0)
@@ -335,7 +334,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  Indirizzo
   administrate
   airrecord (~> 1.0.2)
   attr_encrypted (~> 3.0.0)
