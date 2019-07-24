@@ -15,7 +15,7 @@ describe Types::SpecialistType do
     let(:query) { %|
       {
         specialist(id: #{specialist.airtable_id}) {
-          applications(status: ["Applied", "Invited To Apply"]) {
+          applications(status: ["Applied", "Invited To Apply"], salesStatus: ["Open"]) {
             id
           }
         }

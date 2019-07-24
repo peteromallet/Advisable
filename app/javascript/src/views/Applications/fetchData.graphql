@@ -4,7 +4,7 @@ query {
       id
       email
       airtableId
-      invitations: applications(status: ["Invited To Apply"]) {
+      invitations: applications(status: ["Invited To Apply"], salesStatus: ["Open"]) {
         id
         status
         airtableId
@@ -22,7 +22,7 @@ query {
         "Interview Scheduled",
         "Interview Completed",
         "Proposed"
-      ]) {
+      ], salesStatus: ["Open"]) {
         id
         airtableId
         status
