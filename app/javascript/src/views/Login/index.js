@@ -1,23 +1,20 @@
 // Renders the login page
 import { Formik } from "formik";
+import { Card, Text, Link } from "@advisable/donut";
 import React, { useState } from "react";
 import queryString from "query-string";
 import { Redirect } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { useTranslation } from "react-i18next";
 import Loading from "src/components/Loading";
-import Link from "src/components/Link";
-import Text from "src/components/Text";
 import Button from "src/components/Button";
-import Heading from "src/components/Heading";
 import FieldRow from "src/components/FieldRow";
 import TextField from "src/components/TextField";
-import Padding from "src/components/Spacing/Padding";
 import useScrollRestore from "src/utilities/useScrollRestore";
 import VIEWER from "../../graphql/queries/viewer";
 import validationSchema from "./validationSchema";
-import { Container, Card, Error, SignupLinks, SignupLink } from "./styles";
-import LOGIN from "./login.graphql";
+import { Container, Error, SignupLinks, SignupLink } from "./styles";
+import LOGIN from "./login";
 
 const Login = ({ location }) => {
   useScrollRestore();
@@ -44,11 +41,18 @@ const Login = ({ location }) => {
                 fill="#173FCD"
               />
             </svg>
-            <Card>
-              <Heading center marginBottom="xs">
+            <Card padding="l">
+              <Text
+                mb="xs"
+                as="h3"
+                size="xl"
+                color="neutral.9"
+                weight="semibold"
+                textAlign="center"
+              >
                 Welcome back!
-              </Heading>
-              <Text center marginBottom="xl">
+              </Text>
+              <Text size="xs" textAlign="center" color="neutral.5" mb="l">
                 Please sign in to your account
               </Text>
               <Mutation mutation={LOGIN}>
@@ -60,18 +64,21 @@ const Login = ({ location }) => {
                       password: "",
                     }}
                     onSubmit={async (values, formikBag) => {
-                      const { data } = await login({
+                      const { data, errors } = await login({
                         variables: {
                           input: values,
                         },
                       });
 
                       if (data.login.token) {
-                        localStorage.setItem("authToken", data.login.token);
+                        window.localStorage.setItem(
+                          "authToken",
+                          data.login.token
+                        );
                         let { from } = location.state || {
                           from: { pathname: "/" },
                         };
-                        window.location = from.pathname;
+                        window.location.replace(from.pathname);
                         return;
                       }
 
@@ -118,13 +125,14 @@ const Login = ({ location }) => {
                           block
                           styling="primary"
                           marginTop="s"
+                          aria-label="Login"
                         >
                           Login
                         </Button>
                         {error && <Error>{t(`errors.${error}`)}</Error>}
 
-                        <Text size="s" marginTop="l" center>
-                          <Link styling="subtle" to="/reset_password">
+                        <Text size="xs" mt="m" textAlign="center">
+                          <Link to="/reset_password">
                             Forgot your password?
                           </Link>
                         </Text>
@@ -135,11 +143,16 @@ const Login = ({ location }) => {
               </Mutation>
             </Card>
 
-            <Padding top="xl" bottom="s">
-              <Text size="s" weight="semibold" center>
-                Don't have an account?
-              </Text>
-            </Padding>
+            <Text
+              size="s"
+              mt="l"
+              mb="s"
+              weight="medium"
+              color="neutral.5"
+              textAlign="center"
+            >
+              Don't have an account?
+            </Text>
             <SignupLinks>
               <SignupLink href="https://advisable.com/apply-to-be-a-client/">
                 Apply to be a client

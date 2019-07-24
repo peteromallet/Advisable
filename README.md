@@ -53,6 +53,10 @@ $ foreman
 $ ./bin/webpacker-dev-server
 ```
 
+## Stripe Webhooks
+
+In the event that you need to test stripe webhooks you can use [Ultrahook](http://www.ultrahook.com/) to forward webhooks to localhost.
+
 ## Background Jobs
 
 Background jobs are stored in a redis queue and processed by sidekiq. You can
@@ -66,12 +70,16 @@ $ bundle exec sidekiq
 
 ## Frontend Structure
 
-The frontend codebase follows a certain folder structure.
+The front-end codebase is located at /app/javascript/src. This covers 99% of the
+front-end for the app. The frontend codebase follows a certain folder structure.
 
 - `/components`: This is all global components are defined. Global components are components that are used in mulitple places throughout the application. A component can be defined as a single file, or as a folder with an `index.js` file inside that exports the entire component.
-- `/views`: All of the various views in the application are defined here. A view folder can contain multiple sub folders:
-  - `/components`: Any components that are specific to the parent view.
-  - `/containers`: Components that are used to fetch and send data for the given view.
+- `/views`: All of the various views in the application are defined here.
+
+## Donut
+
+Donut is the design system for Advisable. The source code for it can be found
+at /donut/src.
 
 ## Environment variables
 

@@ -74,6 +74,14 @@ const renderApp = (config = defaultConfig) => {
     removeListener: () => {},
   });
 
+  Object.defineProperty(window, "localStorage", {
+    value: {
+      setItem: jest.fn(),
+      getItem: jest.fn(),
+      clear: jest.fn(),
+    },
+  });
+
   window.stripe = {
     elements: () => ({
       create: el => ({
@@ -84,8 +92,6 @@ const renderApp = (config = defaultConfig) => {
     handleCardSetup: (secret, card, details) =>
       Promise.resolve({ setupIntent: {} }),
   };
-
-  localStorage.setItem("authToken", "token");
 
   const history = createMemoryHistory({ initialEntries: [config.route] });
   const cache = new InMemoryCache({ fragmentMatcher });
