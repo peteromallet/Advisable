@@ -130,14 +130,16 @@ class Types::SpecialistType < Types::BaseType
   field :applications, [Types::ApplicationType], null: true do
     authorize :is_specialist, :is_admin
     argument :status, [String], required: false
+    argument :sales_status, [String], required: false
     description <<~HEREDOC
       The specialists applications. This can be filtered by passing an array of
       statuses.
     HEREDOC
   end
 
-  def applications(status: nil)
-    applications = object.applications.by_sales_status("Open").order(created_at: :desc)
+  def applications(status: nil, sales_status: nil)
+    applications = object.applications.order(created_at: :desc)
+    applications = applications.by_sales_status(sales_status) if sales_status.present?
     applications = applications.where(status: status) if status.present?
     applications
   end
