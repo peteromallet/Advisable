@@ -8,10 +8,6 @@ class Application < ApplicationRecord
   has_many :tasks
   has_many :references, class_name: 'ApplicationReference'
   has_one :interview
-  has_one :proposal, -> { where(status: 'Proposed') }, class_name: 'Booking'
-  has_one :offer,
-    -> { where(status: %w[Offered Declined Accepted Complete]) },
-    class_name: 'Booking'
   validates :airtable_id, presence: true
 
   scope :accepted_fees, -> { where(accepts_fee: true) }
