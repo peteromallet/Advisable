@@ -124,7 +124,9 @@ class Types::SpecialistType < Types::BaseType
   end
 
   # Eventually the applications field should be updated to support pagination
-  # using a connection type.
+  # using a connection type. By default we use the 'by_sales_status' scope
+  # to only fetch applications where the associated project sales_status is
+  # "Open"
   field :applications, [Types::ApplicationType], null: true do
     authorize :is_specialist, :is_admin
     argument :status, [String], required: false
@@ -135,7 +137,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   def applications(status: nil)
-    applications = object.applications.order(created_at: :desc)
+    applications = object.applications.by_sales_status("Open").order(created_at: :desc)
     applications = applications.where(status: status) if status.present?
     applications
   end
