@@ -1,3 +1,4 @@
+# Marks a given tutorial as completed
 class Mutations::CompleteTutorial < Mutations::BaseMutation
   argument :tutorial, String, required: true
 
