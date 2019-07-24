@@ -20,6 +20,12 @@ class Application < ApplicationRecord
   scope :rejected, -> { where(status: "Application Rejected") }
   scope :not_hidden, -> { where(hidden: [nil, false]) }
 
+  # Filters a collection of application based on its associated projects
+  # sales status column.
+  scope :by_sales_status, -> (status) {
+    joins(:project).where(projects: { sales_status: status })
+  }
+
   # Filters out any applications that are in a final state.
   scope :not_final, -> {
     where.not(
