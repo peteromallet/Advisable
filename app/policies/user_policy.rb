@@ -10,6 +10,7 @@ class UserPolicy < BasePolicy
   # Checks if the viewer ( as a specialist ) has applied to any of the users
   # projects
   def is_candidate_for_user_project
+    return false unless user.present?
     user.projects.where(user: record).any?
   end
 end
