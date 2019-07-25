@@ -19,14 +19,18 @@ import { useMobile } from "../../components/Breakpoint";
 import TalkModal from "../../components/TalkModal";
 import ProjectTypeModal from "../../components/ProjectTypeModal";
 import ProjectMonthlyLimit from "../../components/ProjectMonthlyLimit";
+import StopWorkingModal from "./StopWorkingModal";
 import SET_PROJECT_TYPE from "./setProjectType";
+
+const TALK_MODAL = "TALK_MODAL";
+const STOP_WORKING_MODAL = "STOP_WORKING_MODAL";
 
 const Sidebar = ({ data, history, tutorial }) => {
   const isMobile = useMobile();
   const { t } = useTranslation();
   const application = data.application;
   const specialist = application.specialist;
-  const [talkModal, setTalkModal] = React.useState(false);
+  const [modal, setModal] = React.useState(null);
   const [projectTypeModal, setProjectTypeModal] = React.useState(false);
   const [monthlyLimitModal, setMonthlyLimitModal] = React.useState(false);
 
@@ -55,21 +59,39 @@ const Sidebar = ({ data, history, tutorial }) => {
             {specialist.country && `, ${specialist.country.name}`}
           </Text>
           <TalkModal
-            isOpen={talkModal}
-            onClose={() => setTalkModal(false)}
+            isOpen={modal === TALK_MODAL}
+            onClose={() => setModal(null)}
             conversationId={application.id}
             participants={[application.specialist]}
           />
 
           <Padding top="xl">
-            <Button
-              block
-              icon="message-circle"
-              styling="primary"
-              onClick={() => setTalkModal(true)}
-            >
-              Message {specialist.firstName}
-            </Button>
+            <Padding bottom="s">
+              <Button
+                block
+                icon="message-circle"
+                styling="primary"
+                onClick={() => setModal(TALK_MODAL)}
+              >
+                Message {specialist.firstName}
+              </Button>
+            </Padding>
+            {application.status === "Working" && (
+              <>
+                <StopWorkingModal
+                  application={application}
+                  onClose={() => setModal(null)}
+                  isOpen={modal === STOP_WORKING_MODAL}
+                />
+                <Button
+                  block
+                  icon="pause-circle"
+                  onClick={() => setModal(STOP_WORKING_MODAL)}
+                >
+                  Stop Working
+                </Button>
+              </>
+            )}
           </Padding>
           <Padding top="xl" bottom="xl">
             <AttributeList>

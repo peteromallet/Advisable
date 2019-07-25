@@ -22,7 +22,11 @@ const tutorials = {
 let Booking = ({ data, match, history, location, client }) => {
   if (data.loading) return <Loading />;
   if (!data.application) return <NotFound />;
-  if (data.application.status !== "Working") return <NotFound />;
+  let status = get(data, "application.status");
+  if (["Working", "Stopped Working"].indexOf(status) === -1) {
+    return <NotFound />;
+  }
+
   let application = data.application;
   let specialist = get(data, "application.specialist");
   const tutorial = useTutorial(tutorials[application.projectType], {
