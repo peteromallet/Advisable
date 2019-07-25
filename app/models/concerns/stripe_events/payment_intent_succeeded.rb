@@ -22,7 +22,7 @@ class StripeEvents::PaymentIntentSucceeded < StripeEvents::BaseEvent
   # We store the payment type inside of the payment intent metadata in stripe.
   # e.g Deposit payments will have a payment type of 'deposit'
   def payment_type
-    payment_intent.metadata.payment_type
+    payment_intent.metadata.try(:payment_type)
   end
 
   def payment_intent
