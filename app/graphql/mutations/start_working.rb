@@ -10,7 +10,9 @@ class Mutations::StartWorking < Mutations::BaseMutation
     application = Application.find_by_airtable_id!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
     return true if policy.is_client
-    return false, { errors: [{ code: "not_authorized" }] }
+    raise APIError::NotAuthorized.new(
+      "You do not have permission to execute this mutation"
+    )
   end
 
   def resolve(**args)

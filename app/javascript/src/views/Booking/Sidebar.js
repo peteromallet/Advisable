@@ -70,7 +70,6 @@ const Sidebar = ({ data, history, tutorial }) => {
               <Button
                 block
                 icon="message-circle"
-                styling="primary"
                 onClick={() => setModal(TALK_MODAL)}
               >
                 Message {specialist.firstName}

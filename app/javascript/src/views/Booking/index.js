@@ -1,5 +1,6 @@
 import * as React from "react";
 import { get } from "lodash";
+import { Box } from "@advisable/donut";
 import { graphql, withApollo } from "react-apollo";
 import { matchPath } from "react-router-dom";
 import NotFound from "../NotFound";
@@ -13,6 +14,7 @@ import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial"
 import useTutorial from "../../hooks/useTutorial";
 import GET_ACTIVE_APPLICATION from "./getActiveApplication";
 import SetupPaymentMethod from "./SetupPaymentMethod";
+import StoppedWorkingNotice from "./StoppedWorkingNotice";
 
 const tutorials = {
   Fixed: "fixedProjects",
@@ -117,6 +119,14 @@ let Booking = ({ data, match, history, location, client }) => {
       <Layout>
         <Sidebar data={data} tutorial={tutorial} />
         <Layout.Main>
+          {status === "Stopped Working" && (
+            <Box mb="m">
+              <StoppedWorkingNotice
+                firstName={specialist.firstName}
+                application={data.application}
+              />
+            </Box>
+          )}
           <Tasks
             onSelectTask={openTask}
             onNewTask={addNewTaskToCache}

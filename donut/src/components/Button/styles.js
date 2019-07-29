@@ -32,6 +32,7 @@ const APPEARANCES = {
     margin-left: -8px;
     background: transparent;
   `,
+  outline: css``,
 };
 
 const INTENT = {
@@ -89,6 +90,9 @@ const INTENT = {
         color: ${colors.blue.N4};
       }
     `,
+  },
+  outline: {
+    default: css``,
   },
 };
 

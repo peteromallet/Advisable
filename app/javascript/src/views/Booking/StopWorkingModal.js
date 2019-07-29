@@ -53,7 +53,7 @@ const StopWorkingModal = ({ isOpen, onClose, application, stopWorking }) => {
         >
           Are you sure you want to stop working with {name}?
         </Text>
-        <Text size="s" color="neutral.5" lineHeight="s" mb="l">
+        <Text size="xs" color="neutral.5" lineHeight="s" mb="l">
           You wont be able to add or edit any tasks. Don't worry though, If you
           want to start working with {name} again you will be able to restart
           this project when you need.
@@ -67,7 +67,7 @@ const StopWorkingModal = ({ isOpen, onClose, application, stopWorking }) => {
                 onBlur={formik.handleBlur}
                 value={formik.values.reason}
                 onChange={formik.handleChange}
-                label="Let us know why you are stopping this work?"
+                label="Let us know why you are stopping this work"
                 placeholder={`What is your reason for stopping your work with ${name}`}
               />
               <Box mt="l" display="flex">
