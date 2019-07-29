@@ -1,6 +1,6 @@
 import React from "react";
 import Icon from "../Icon";
-import { Button as ButtonStyles } from "./styles";
+import { Button as ButtonStyles, Loading, Dot } from "./styles";
 
 // Renders a button.. obviously
 //
@@ -12,7 +12,14 @@ import { Button as ButtonStyles } from "./styles";
 // - icon: Accepts any icon string for feather-icons.
 const Button = ({ children, icon, loading, ...rest }) => {
   return (
-    <ButtonStyles {...rest} isLoading={loading ? true : undefined}>
+    <ButtonStyles {...rest} isLoading={loading} data-loading={loading || null}>
+      {loading && (
+        <Loading>
+          <Dot />
+          <Dot />
+          <Dot />
+        </Loading>
+      )}
       {icon && <Icon icon={icon} width={20} />}
       {children}
     </ButtonStyles>

@@ -1,7 +1,5 @@
 import React from "react";
-import gql from "graphql-tag";
-import { graphql } from "react-apollo";
-import { Text, Button } from "@advisable/donut";
+import { Text } from "@advisable/donut";
 import Notice from "../../components/Notice";
 
 const StoppedWorkingNotice = ({ client }) => {
