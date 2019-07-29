@@ -1,11 +1,10 @@
 import React from "react";
 import { graphql } from "react-apollo";
-import Header from "../../components/Header";
 import Layout from "../../components/Layout";
 import Empty from "./Empty";
 import Manage from "./Manage";
 import Loading from "./Loading";
-import FETCH_DATA from "./fetchData.graphql";
+import FETCH_DATA from "./fetchData";
 
 const ActiveTalent = ({ data, history }) => {
   const handleClick = application => {

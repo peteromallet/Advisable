@@ -1,10 +1,10 @@
 import React from "react";
 import Icon from "../Icon";
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from "./styles";
+import { Tabs as TabStyles, TabList, Tab, TabPanels, TabPanel } from "./styles";
 
-const Component = ({ tabListProps, children }) => {
+const Tabs = ({ tabListProps, children }) => {
   return (
-    <Tabs>
+    <TabStyles>
       <TabList {...tabListProps}>
         {React.Children.map(children, child => {
           return (
@@ -21,12 +21,12 @@ const Component = ({ tabListProps, children }) => {
           return <TabPanel>{child.props.children}</TabPanel>;
         })}
       </TabPanels>
-    </Tabs>
+    </TabStyles>
   );
 };
 
-Component.Tab = ({ children }) => {
+Tabs.Tab = ({ children }) => {
   return children;
 };
 
-export default Component;
+export default Tabs;
