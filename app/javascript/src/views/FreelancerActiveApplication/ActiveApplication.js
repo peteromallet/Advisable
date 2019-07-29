@@ -18,7 +18,7 @@ const tutorials = {
   Flexible: "flexibleProjects",
 };
 
-const FetchActiveApplication = ({ location, history, match, data, client }) => {
+const ActiveApplication = ({ location, history, match, data, client }) => {
   const application = data.application;
 
   const tutorial = useTutorial(tutorials[application.projectType], {
@@ -117,4 +117,4 @@ const FetchActiveApplication = ({ location, history, match, data, client }) => {
   );
 };
 
-export default FetchActiveApplication;
+export default ActiveApplication;

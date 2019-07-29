@@ -1,7 +1,6 @@
 import React from "react";
 import { graphql } from "react-apollo";
 import Layout from "../../components/Layout";
-import Empty from "./Empty";
 import Manage from "./Manage";
 import Loading from "./Loading";
 import FETCH_DATA from "./fetchData";
@@ -21,7 +20,6 @@ const ActiveTalent = ({ data, history }) => {
             applications={data.viewer.applications}
           />
         )}
-        {!data.loading && data.viewer.applications.length === 0 && <Empty />}
       </Layout.Main>
     </Layout>
   );

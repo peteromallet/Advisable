@@ -3,6 +3,7 @@ import { filter } from "lodash";
 import { Text, Tabs } from "@advisable/donut";
 import TalentCard from "./TalentCard";
 import { Cards } from "./styles";
+import Empty from "./Empty";
 import EmptyState from "../../components/EmptyState";
 
 export default ({ onClick, applications }) => {
@@ -24,6 +25,7 @@ export default ({ onClick, applications }) => {
                 onClick={() => onClick(application)}
               />
             ))}
+            {active.length === 0 && <Empty />}
           </Cards>
         </Tabs.Tab>
         <Tabs.Tab title="Finished">
