@@ -2,6 +2,7 @@
 // application
 import React from "react";
 import { get } from "lodash";
+import { Box } from "@advisable/donut";
 import { matchPath } from "react-router-dom";
 import Layout from "../../components/Layout";
 import TaskDrawer from "../../components/TaskDrawer";
@@ -12,6 +13,7 @@ import FETCH_APPLICATION from "./fetchApplication";
 import useTutorial from "../../hooks/useTutorial";
 import Tasks from "./Tasks";
 import SetupPayments from "./SetupPayments";
+import StoppedWorkingNotice from "./StoppedWorkingNotice";
 
 const tutorials = {
   Fixed: "fixedProjects",
@@ -26,6 +28,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
     autoStart: true,
   });
 
+  const status = get(data, "application.status");
   let hasSetupPayments = get(data, "application.specialist.hasSetupPayments");
   if (!hasSetupPayments) {
     return <SetupPayments data={data} />;
@@ -107,6 +110,11 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
       />
       <Sidebar data={data} tutorial={tutorial} />
       <Layout.Main>
+        {status === "Stopped Working" && (
+          <Box mb="m">
+            <StoppedWorkingNotice />
+          </Box>
+        )}
         <Tasks
           application={application}
           onClick={handleTaskClick}

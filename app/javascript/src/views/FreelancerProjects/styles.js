@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Skeleton from "../../components/Skeleton";
 
 export const Cards = styled.div`
+  padding-top: 30px;
+
   &::after {
     content: "";
     clear: both;
