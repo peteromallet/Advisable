@@ -240,7 +240,7 @@ const EditTask = ({
         </VerticalLayout.Content>
         <VerticalLayout.Footer style={{ background: "white" }}>
           <Padding size="l">
-            {showStatusNotice && (
+            {!readOnly && showStatusNotice && (
               <StageDescription isClient={isClient} task={task} />
             )}
             {!readOnly && (

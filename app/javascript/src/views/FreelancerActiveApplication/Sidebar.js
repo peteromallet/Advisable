@@ -38,7 +38,6 @@ const Component = ({ data, tutorial }) => {
           <Button
             block
             icon="message-circle"
-            styling="primary"
             onClick={() => setTalkModal(true)}
           >
             Message {application.project.user.firstName}

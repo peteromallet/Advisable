@@ -111,6 +111,7 @@ let Booking = ({ data, match, history, location, client }) => {
       <TaskDrawer
         isClient
         showStatusNotice
+        readOnly={application.status !== "Working"}
         onClose={() => closeTask()}
         onDeleteTask={handleDeleteTask}
         onCreateRepeatingTask={addNewTaskToCache}

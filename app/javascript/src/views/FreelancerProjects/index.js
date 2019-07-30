@@ -1,4 +1,3 @@
-// Loads the active projects view for freelancers.
 import React from "react";
 import { get } from "lodash";
 import { useQuery } from "react-apollo";

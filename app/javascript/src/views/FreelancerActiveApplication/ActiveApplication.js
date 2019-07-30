@@ -104,6 +104,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
       <TaskDrawer
         isClient={false}
         showStatusNotice
+        readOnly={application.status !== "Working"}
         onClose={() => closeTask()}
         onDeleteTask={handleDeleteTask}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
@@ -112,7 +113,9 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
       <Layout.Main>
         {status === "Stopped Working" && (
           <Box mb="m">
-            <StoppedWorkingNotice />
+            <StoppedWorkingNotice
+              client={get(data, "application.project.user.companyName")}
+            />
           </Box>
         )}
         <Tasks
