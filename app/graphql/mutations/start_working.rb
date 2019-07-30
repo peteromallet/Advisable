@@ -4,7 +4,6 @@ class Mutations::StartWorking < Mutations::BaseMutation
   argument :monthly_limit, Int, required: false
 
   field :application, Types::ApplicationType, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     application = Application.find_by_airtable_id!(args[:application])
@@ -19,8 +18,5 @@ class Mutations::StartWorking < Mutations::BaseMutation
     application = Application.find_by_airtable_id!(args[:application])
     application = Applications::StartWorking.call(application: application, project_type: args[:project_type], monthly_limit: args[:monthly_limit])
     { application: application }
-
-    rescue Service::Error => e
-      return { errors: [e] }
   end
 end
