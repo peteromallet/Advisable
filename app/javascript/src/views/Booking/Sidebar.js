@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash";
 import { Mutation } from "react-apollo";
-import { withRouter } from "react-router-dom";
+import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "../../components/Sticky";
 import Button from "../../components/Button";
@@ -25,7 +25,7 @@ import SET_PROJECT_TYPE from "./setProjectType";
 const TALK_MODAL = "TALK_MODAL";
 const STOP_WORKING_MODAL = "STOP_WORKING_MODAL";
 
-const Sidebar = ({ data, history, tutorial }) => {
+const Sidebar = ({ data, history, tutorial, match }) => {
   const isMobile = useMobile();
   const { t } = useTranslation();
   const application = data.application;
@@ -77,15 +77,21 @@ const Sidebar = ({ data, history, tutorial }) => {
             </Padding>
             {application.status === "Working" && (
               <>
-                <StopWorkingModal
-                  application={application}
-                  onClose={() => setModal(null)}
-                  isOpen={modal === STOP_WORKING_MODAL}
+                <Route
+                  path={`${match.path}/stop`}
+                  render={route => (
+                    <StopWorkingModal
+                      isOpen
+                      application={application}
+                      onClose={() => history.replace(match.url)}
+                    />
+                  )}
                 />
                 <Button
                   block
                   icon="pause-circle"
-                  onClick={() => setModal(STOP_WORKING_MODAL)}
+                  aria-label="Stop Working"
+                  onClick={() => history.replace(`${match.url}/stop`)}
                 >
                   Stop Working
                 </Button>

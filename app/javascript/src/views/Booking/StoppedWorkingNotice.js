@@ -5,7 +5,7 @@ import { Box, Text, Button } from "@advisable/donut";
 import Modal from "../../components/Modal";
 import Notice from "../../components/Notice";
 
-const RESUME_WORKING = gql`
+export const RESUME_WORKING = gql`
   mutation startWorking($input: StartWorkingInput!) {
     startWorking(input: $input) {
       application {
@@ -45,6 +45,7 @@ const StoppedWorkingNotice = ({ firstName, application, resumeWorking }) => {
             loading={loading}
             appearance="primary"
             onClick={handleResume}
+            aria-label="Resume Project"
           >
             Resume Project
           </Button>
@@ -60,7 +61,11 @@ const StoppedWorkingNotice = ({ firstName, application, resumeWorking }) => {
           action any more tasks for this project until you start working with
           them again.
         </Text>
-        <Button type="button" onClick={() => setModal(true)}>
+        <Button
+          type="button"
+          aria-label="Resume Project"
+          onClick={() => setModal(true)}
+        >
           Resume Project
         </Button>
       </Notice>

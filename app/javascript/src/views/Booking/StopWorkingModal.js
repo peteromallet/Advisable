@@ -77,6 +77,7 @@ const StopWorkingModal = ({ isOpen, onClose, application, stopWorking }) => {
                     type="submit"
                     intent="success"
                     appearance="primary"
+                    aria-label="Stop Working"
                     loading={formik.isSubmitting}
                   >
                     Stop Working
