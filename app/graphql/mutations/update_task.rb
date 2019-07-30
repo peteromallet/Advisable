@@ -19,6 +19,13 @@ class Mutations::UpdateTask < Mutations::BaseMutation
   def resolve(**args)
     task = Task.find_by_uid!(args[:id])
 
+    if task.application.status === 'Stopped Working'
+      raise APIError::InvalidRequest.new(
+        "applicationStatusNotWorking",
+        "Application status is 'Stopped Working'",
+      )
+    end
+
     {
       task: Tasks::Update.call(
         task: task,

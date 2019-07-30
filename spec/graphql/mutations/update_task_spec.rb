@@ -270,4 +270,15 @@ describe Mutations::UpdateTask do
       end
     end
   end
+
+  context "when the application status is 'Stopped Working'" do
+    let(:application) { create(:application, status: "Stopped Working") }
+    let(:task) { create(:task, application: application) }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("applicationStatusNotWorking")
+    end
+  end
 end
