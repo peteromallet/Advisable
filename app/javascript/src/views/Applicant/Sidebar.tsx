@@ -1,15 +1,13 @@
 import * as React from "react";
 import { get } from "lodash";
 import { Route } from "react-router-dom";
-import Sticky from "react-stickynode";
+import Sticky from "../../components/Sticky";
 import { Text, Padding } from "../../../../../donut/src";
 import Avatar from "../../components/Avatar";
 import Layout from "../../components/Layout";
-import currency from "../../utilities/currency";
 import { FadeIn } from "../../components/Animation";
 import StarRating from "../../components/StarRating";
 import FeaturedBadge from "../../components/FeaturedBadge";
-import AttributeList from "../../components/AttributeList";
 import CandidateActions from "../../components/CandidateActions";
 import { useMobile } from "../../components/Breakpoint";
 import ProposalActions from "./ProposalActions";
@@ -23,7 +21,7 @@ export default ({ data, match }) => {
 
   return (
     <Layout.Sidebar size="m">
-      <Sticky top={98} enabled={!isMobile}>
+      <Sticky offset={98} enabled={!isMobile}>
         <FadeIn duration="500ms">
           <Padding bottom="m">
             <Avatar

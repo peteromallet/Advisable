@@ -3,7 +3,7 @@ import React from "react";
 import get from "lodash/get";
 import filter from "lodash/filter";
 import countBy from "lodash/countBy";
-import Sticky from "react-stickynode";
+import Sticky from "../../../components/Sticky";
 import Icon from "src/components/Icon";
 import pluralize from "src/utilities/pluralize";
 import useScrollRestore from "src/utilities/useScrollRestore";
@@ -69,7 +69,7 @@ export default ({ match, data }) => {
 
   return (
     <Layout.Sidebar>
-      <Sticky enabled={!isMobile} top={98}>
+      <Sticky enabled={!isMobile} offset={98}>
         <ProjectTitle>{data.project.primarySkill}</ProjectTitle>
         <TotalApplicants>
           {pluralize(filtered.length, "Applicant", "Applicants")}

@@ -4236,7 +4236,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.0.0, classnames@^2.2.5:
+classnames@^2.2.5:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -10772,13 +10772,6 @@ raf-schd@^4.0.0:
   resolved "https://registry.yarnpkg.com/raf-schd/-/raf-schd-4.0.1.tgz#e72f29a96de260dead719f34c29e56fdc1c1473e"
   integrity sha512-/QTXV4+Tf81CmJgTZac47N63ZzKmaVe+1cQX/grCFeLrs4Mcc6oq+KJfbF3tFjeS1NF91lmTvgmwYjk02UTo9A==
 
-raf@^3.0.0:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
-  integrity sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==
-  dependencies:
-    performance-now "^2.1.0"
-
 raf@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.0.tgz#a28876881b4bc2ca9117d4138163ddb80f781575"
@@ -11129,16 +11122,6 @@ react-spring@^8.0.25:
   dependencies:
     "@babel/runtime" "^7.3.1"
     prop-types "^15.5.8"
-
-react-stickynode@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/react-stickynode/-/react-stickynode-2.1.1.tgz#1d5160641c72b1a954c872b26130919cb1ce4a78"
-  integrity sha512-yzY1mE8QYCdrg4zpmHYfe5ZaE4VF63VpbgboLntdKnQG98bNlGDXDY9vpt/3O4uIEoddeL0zBtXU2I0LyLMzFw==
-  dependencies:
-    classnames "^2.0.0"
-    prop-types "^15.6.0"
-    shallowequal "^1.0.0"
-    subscribe-ui-event "^2.0.0"
 
 react-stripe-elements@^3.0.0:
   version "3.0.0"
@@ -12056,7 +12039,7 @@ shallow-equal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallow-equal/-/shallow-equal-1.1.0.tgz#cc022f030dcba0d1c198abf658a3c6c744e171ca"
   integrity sha512-0SW1nWo1hnabO62SEeHsl8nmTVVEzguVWZCj5gaQrgWAxz/BaCja4OWdJBWLVPDxdtE/WU7c98uUCCXyPHSCvw==
 
-shallowequal@1.1.0, shallowequal@^1.0.0, shallowequal@^1.1.0:
+shallowequal@1.1.0, shallowequal@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
@@ -12392,6 +12375,11 @@ stealthy-require@^1.1.1:
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
 
+stickybits@^3.6.6:
+  version "3.6.6"
+  resolved "https://registry.yarnpkg.com/stickybits/-/stickybits-3.6.6.tgz#ce042cbeaecfcc84cda602be6f5bc99b63e2964c"
+  integrity sha512-+++I84+V+IqRXCDIgSn7tGHXF1BtsPn/Nb3Ve3ZEH2NnTauorHyUFbKTW+nycobxtsGQMnl5V0WdHxGTDdmp+A==
+
 store2@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/store2/-/store2-2.7.1.tgz#22070b7dc04748a792fc6912a58ab99d3a21d788"
@@ -12651,15 +12639,6 @@ stylis@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.0.tgz#016fa239663d77f868fef5b67cf201c4b7c701e1"
   integrity sha512-pP7yXN6dwMzAR29Q0mBrabPCe0/mNO1MSr93bhay+hcZondvMMTpeGyd8nbhYJdyperNT2DRxONQuUGcJr5iPw==
-
-subscribe-ui-event@^2.0.0:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/subscribe-ui-event/-/subscribe-ui-event-2.0.5.tgz#f276d8eae3f82b640e69d7b9d55f7334f9ec67ec"
-  integrity sha512-1DasqBzDgTbkj2Yu0F8atPB6ouvvM5EdUm6zPONO8IZXVr97ommJFTp1yX/HMW5qYw/nc0huJ7r6VkeqixAdgA==
-  dependencies:
-    eventemitter3 "^3.0.0"
-    lodash "^4.17.10"
-    raf "^3.0.0"
 
 supports-color@6.1.0, supports-color@^6.1.0:
   version "6.1.0"

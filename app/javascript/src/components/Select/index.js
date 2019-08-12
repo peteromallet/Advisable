@@ -7,9 +7,9 @@ import InputDescription from "src/components/InputDescription";
 import { extractSpacingProps } from "src/components/Spacing";
 
 class SelectComponent extends React.Component {
-  componentWillMount() {
-    this.id = this.props.id || uniqueID("Select");
-  }
+  state = {
+    id: this.props.id || uniqueID("Select"),
+  };
 
   componentDidMount() {
     this.setFirstOption();
@@ -82,7 +82,7 @@ class SelectComponent extends React.Component {
 
     return (
       <Wrapper block={block} {...extractSpacingProps(this.props)}>
-        {label && <InputLabel htmlFor={this.id}>{label}</InputLabel>}
+        {label && <InputLabel htmlFor={this.state.id}>{label}</InputLabel>}
         <SelectWrapper block={block}>
           <Select
             name={name}
