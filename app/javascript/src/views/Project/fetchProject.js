@@ -27,9 +27,6 @@ export default gql`
         availability
         introduction
         referencesRequested
-        proposal {
-          id
-        }
         questions {
           question
           answer

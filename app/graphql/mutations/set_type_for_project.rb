@@ -1,5 +1,7 @@
 # Due to how graphql-ruby expects classes to end in "Type" we have to use the
-# awkward name SetTypeForProject rather than SetProjectType.
+# awkward name SetTypeForProject rather than SetProjectType. A better name might
+# be SetProjectTypeForAplication as we are actually modifying the application
+# record in this case.
 class Mutations::SetTypeForProject < Mutations::BaseMutation
   argument :application, ID, required: true
   argument :project_type, String, required: true

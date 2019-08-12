@@ -1,7 +1,7 @@
 // Renders the projects view for a user.
 import React from "react";
 import { Query } from "react-apollo";
-import PROJECTS from "./projects.graphql";
+import PROJECTS from "./getProjects";
 import { Redirect } from "react-router-dom";
 import Heading from "../../components/Heading";
 import Loading from "../../components/Loading";
