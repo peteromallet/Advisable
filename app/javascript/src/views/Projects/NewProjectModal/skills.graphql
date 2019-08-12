@@ -1,7 +1,0 @@
-query {
-  skills {
-    id
-    value: name
-    label: name
-  }
-}

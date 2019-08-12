@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Mutation, compose } from "react-apollo";
+import { flowRight as compose } from "lodash";
+import { Mutation } from "react-apollo";
 import { Heading, Text, Button, Padding } from "../../../components";
 import AddPreviousProjectModal from "../../../components/AddPreviousProjectModal";
 import NoReferences from "./NoReferences";

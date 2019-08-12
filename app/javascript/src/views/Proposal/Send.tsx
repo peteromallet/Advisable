@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
+import { flowRight as compose } from "lodash";
 import { Redirect } from "react-router-dom";
-import { compose, graphql } from "react-apollo";
+import { graphql } from "react-apollo";
 import Text from "../../components/Text";
 import Card from "../../components/Card";
 import Button from "../../components/Button";

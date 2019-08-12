@@ -3,7 +3,8 @@
 
 import * as React from "react";
 import { Formik, Form } from "formik";
-import { compose, graphql } from "react-apollo";
+import { flowRight as compose } from "lodash";
+import { graphql } from "react-apollo";
 import Card from "../../../components/Card";
 import Button from "../../../components/Button";
 import Loading from "../../../components/Loading";
@@ -61,7 +62,11 @@ let Introduction = ({ data, mutate }) => {
                     description="A well structured bio demonstrates your experience and expertise by referencing past projects and achievements, including notable clients or numeric results. You will have a chance to customize this each time you apply for a project."
                   />
                 </FieldRow>
-                <Button type="submit" loading={formik.isSubmitting} styling="green">
+                <Button
+                  type="submit"
+                  loading={formik.isSubmitting}
+                  styling="green"
+                >
                   Save Changes
                 </Button>
               </Form>

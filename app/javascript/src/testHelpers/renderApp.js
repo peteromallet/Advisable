@@ -3,7 +3,7 @@ import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { I18nextProvider } from "react-i18next";
 import { render } from "@testing-library/react";
-import { MockedProvider } from "react-apollo/test-utils";
+import { MockedProvider } from "@apollo/react-testing";
 import {
   InMemoryCache,
   IntrospectionFragmentMatcher,

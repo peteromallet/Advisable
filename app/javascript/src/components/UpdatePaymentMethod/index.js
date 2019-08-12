@@ -1,6 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
-import { compose, withApollo, graphql } from "react-apollo";
+import { flowRight as compose } from "lodash";
+import { withApollo, graphql } from "react-apollo";
 import Loading from "../Loading";
 import useViewer from "../../hooks/useViewer";
 import PaymentMethodForm from "../PaymentMethodForm";

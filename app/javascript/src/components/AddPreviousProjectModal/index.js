@@ -1,7 +1,8 @@
 // Renders the modal for adding a previous project reference.
 import { Formik } from "formik";
 import React, { useState } from "react";
-import { graphql, compose } from "react-apollo";
+import { graphql } from "react-apollo";
+import { flowRight as compose } from "lodash";
 import Modal from "src/components/Modal";
 import Loading from "src/components/Loading";
 import ClientDetails from "./ClientDetails";
