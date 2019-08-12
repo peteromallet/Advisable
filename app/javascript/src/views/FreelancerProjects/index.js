@@ -1,31 +1,36 @@
 // Loads the active projects view for freelancers.
 import React from "react";
-import { graphql } from "react-apollo";
+import { get } from "lodash";
+import { useQuery } from "react-apollo";
 import Layout from "../../components/Layout";
 import Empty from "./Empty";
 import Loading from "./Loading";
+import FETCH_DATA from "./fetchData";
 import ActiveApplications from "./ActiveApplications";
-import FETCH_DATA from "./fetchData.graphql";
 
-const FreelancerProjects = ({ data, history }) => {
+const FreelancerProjects = ({ history }) => {
+  const { loading, data } = useQuery(FETCH_DATA);
+
   const handleClick = application => {
     history.push(`/clients/${application.airtableId}`);
   };
 
+  const applications = get(data, "viewer.applications") || [];
+
   return (
     <Layout>
       <Layout.Main>
-        {data.loading && <Loading />}
-        {!data.loading && data.viewer.applications.length > 0 && (
+        {loading && <Loading />}
+        {!loading && applications.length > 0 && (
           <ActiveApplications
             onClick={handleClick}
-            applications={data.viewer.applications}
+            applications={applications}
           />
         )}
-        {!data.loading && data.viewer.applications.length === 0 && <Empty />}
+        {!loading && applications.length === 0 && <Empty />}
       </Layout.Main>
     </Layout>
   );
 };
 
-export default graphql(FETCH_DATA)(FreelancerProjects);
+export default FreelancerProjects;
