@@ -12,7 +12,7 @@ import SuggestedSelect from "src/components/SuggestedSelect";
 import { NewProjectChoice } from "./styles";
 import fetchSkills from "./skills.graphql";
 import createProject from "./createProject.graphql";
-import fetchProjects from "../projects.graphql";
+import fetchProjects from "../getProjects";
 import calendly from "src/utilities/calendly";
 
 const getSelectedOption = (skills, id) => {
@@ -56,9 +56,7 @@ const NewProjectModal = ({ isOpen, onClose, data, mutate }) => {
               return;
             }
 
-            window.location = `/project_setup/${
-              project.airtableId
-            }/company_overview`;
+            window.location = `/project_setup/${project.airtableId}/company_overview`;
           }}
           render={formik => {
             if (formik.isSubmitting) {

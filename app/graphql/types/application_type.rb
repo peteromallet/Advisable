@@ -17,8 +17,6 @@ class Types::ApplicationType < Types::BaseType
   field :monthly_limit, Int, null: true
   field :questions, [Types::ApplicationQuestionType, null: true], null: true
   field :project, Types::ProjectType, null: false
-  field :proposal, Types::Booking, null: true
-  field :offer, Types::Booking, null: true
   field :referral_url, String, null: true
   field :accepts_fee, Boolean, null: true
   field :accepts_terms, Boolean, null: true

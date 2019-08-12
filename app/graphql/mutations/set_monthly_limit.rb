@@ -1,3 +1,5 @@
+# Sets the monthly limit for an application. This and the setProjectType 
+# mutation could probably be combined into some kind of updateBooking mutation.
 class Mutations::SetMonthlyLimit < Mutations::BaseMutation
   argument :application, ID, required: true
   argument :monthly_limit, Int, required: false

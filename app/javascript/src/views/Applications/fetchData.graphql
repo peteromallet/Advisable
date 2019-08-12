@@ -35,15 +35,6 @@ query {
             companyName
           }
         }
-        offer {
-          id
-          status
-          airtableId
-        }
-        proposal {
-          id
-          airtableId
-        }
         interview {
           id
           airtableId

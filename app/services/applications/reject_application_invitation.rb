@@ -9,6 +9,7 @@ class Applications::RejectApplicationInvitation < ApplicationService
   def call
     application.status = 'Invitation Rejected'
     application.invitation_rejection_reason = reason
+
     if application.save
       application.sync_to_airtable
       return application
@@ -16,11 +17,4 @@ class Applications::RejectApplicationInvitation < ApplicationService
 
     raise Service::Error.new("applications.failedToReject")
   end
-
-  private
-
-  def airtable_record
-    @airtable_record ||= Airtable::Application.find(application.airtable_id)
-  end
-
 end

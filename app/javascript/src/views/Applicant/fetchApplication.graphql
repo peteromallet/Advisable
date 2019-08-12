@@ -17,10 +17,6 @@ query project($projectID: ID!, $applicationID: ID!) {
       introduction
       projectType
       monthlyLimit
-      proposal {
-        id
-        airtableId
-      }
       questions {
         question
         answer

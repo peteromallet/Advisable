@@ -1,3 +1,6 @@
+# DEPRECATED
+# Booking records have been deprecated. A booking is now represented by an
+# application record with a status of 'Working'.
 class Booking < ApplicationRecord
   include Airtable::Syncable
   validates :status, inclusion: { in: ["Proposal Started", "Proposed", "Offered", "Accepted", "Declined", "Complete"] }, allow_nil: true
