@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { space, layout } from "styled-system";
 import theme from "../../theme";
 
-const ELEVATION = {
+export const ELEVATION = {
   s: css`
     box-shadow: 0 1px 2px ${rgba(theme.colors.neutral[8], 0.1)};
   `,

@@ -1,9 +1,7 @@
-// Loads the active projects view for freelancers.
 import React from "react";
 import { get } from "lodash";
 import { useQuery } from "react-apollo";
 import Layout from "../../components/Layout";
-import Empty from "./Empty";
 import Loading from "./Loading";
 import FETCH_DATA from "./fetchData";
 import ActiveApplications from "./ActiveApplications";
@@ -21,13 +19,12 @@ const FreelancerProjects = ({ history }) => {
     <Layout>
       <Layout.Main>
         {loading && <Loading />}
-        {!loading && applications.length > 0 && (
+        {!loading && (
           <ActiveApplications
             onClick={handleClick}
             applications={applications}
           />
         )}
-        {!loading && applications.length === 0 && <Empty />}
       </Layout.Main>
     </Layout>
   );

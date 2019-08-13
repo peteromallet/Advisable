@@ -16,7 +16,11 @@ const ActiveTasks = ({ onSelectTask, onNewTask, application }) => {
       isClient
       tasks={tasks}
       onClickTask={onSelectTask}
-      lastRow={<NewTask onCreate={onNewTask} application={application} />}
+      lastRow={
+        application.status === "Working" && (
+          <NewTask onCreate={onNewTask} application={application} />
+        )
+      }
     />
   );
 };

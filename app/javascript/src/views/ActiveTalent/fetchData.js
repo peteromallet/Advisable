@@ -3,12 +3,9 @@ import gql from "graphql-tag";
 export default gql`
   {
     viewer {
-      ... on Specialist {
+      ... on User {
         id
-        applications(
-          status: ["Working", "Stopped Working"]
-          salesStatus: ["Open", "Won"]
-        ) {
+        applications(status: ["Working", "Stopped Working"]) {
           id
           status
           airtableId
@@ -18,9 +15,12 @@ export default gql`
           project {
             id
             primarySkill
-            user {
-              id
-              companyName
+          }
+          specialist {
+            id
+            name
+            image {
+              url
             }
           }
         }

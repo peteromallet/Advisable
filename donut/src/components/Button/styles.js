@@ -1,5 +1,5 @@
 import { space } from "styled-system";
-import styled, { css } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import { darken, lighten, rgba } from "polished";
 import colors from "../../colors";
 import Icon from "../Icon/styles";
@@ -32,6 +32,7 @@ const APPEARANCES = {
     margin-left: -8px;
     background: transparent;
   `,
+  outline: css``,
 };
 
 const INTENT = {
@@ -68,11 +69,12 @@ const INTENT = {
       color: white;
       background: ${colors.blue.N5};
 
-      &:hover:not(:disabled) {
+      &:hover:not(:disabled):not([data-loading]) {
         background: ${darken(0.1, colors.blue.N5)};
       }
 
-      &:active:not(:disabled) {
+      &:active:not(:disabled),
+      &[data-loading] {
         background: ${lighten(0.1, colors.blue.N5)};
       }
     `,
@@ -90,11 +92,63 @@ const INTENT = {
       }
     `,
   },
+  outline: {
+    default: css``,
+  },
 };
+
+const loadingDot = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+`;
+
+export const Loading = styled.div`
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Dot = styled.div`
+  opacity: 0;
+  width: 5px;
+  height: 5px;
+  margin: 0 4px;
+  background: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: ${loadingDot} 1s infinite;
+
+  &:nth-child(2) {
+    animation-delay: 100ms;
+  }
+  &:nth-child(3) {
+    animation-delay: 200ms;
+  }
+`;
 
 const disabledStyling = css`
   opacity: 0.5;
   cursor: default;
+`;
+
+const loadingStyling = css`
+  cursor: default;
+  color: transparent;
 `;
 
 export const Button = styled.button`
@@ -105,6 +159,7 @@ export const Button = styled.button`
   cursor: pointer;
   appearance: none;
   font-weight: 600;
+  position: relative;
   border-radius: 8px;
   align-items: center;
   display: inline-flex;
@@ -114,14 +169,15 @@ export const Button = styled.button`
 
   ${space}
 
-  ${props => props.disabled && disabledStyling};
-
   ${Icon} {
     margin-right: 8px;
   }
 
   ${props => APPEARANCES[props.appearance]};
   ${props => INTENT[props.appearance][props.intent]};
+
+  ${props => props.isLoading && loadingStyling};
+  ${props => props.disabled && disabledStyling};
 `;
 
 export default Button;
