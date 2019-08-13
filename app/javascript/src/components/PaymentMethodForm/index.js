@@ -1,6 +1,6 @@
 import React from "react";
-import { get } from "lodash";
-import { compose, graphql } from "react-apollo";
+import { get, flowRight as compose } from "lodash";
+import { graphql } from "react-apollo";
 import { Box, Text } from "@advisable/donut";
 import { Formik, Form } from "formik";
 import TextField from "../TextField";

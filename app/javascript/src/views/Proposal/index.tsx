@@ -1,5 +1,6 @@
 import * as React from "react";
-import { compose, graphql } from "react-apollo";
+import { flowRight as compose } from "lodash";
+import { graphql } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "../../components/Layout";
 import Rate from "./Rate";

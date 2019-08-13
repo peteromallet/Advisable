@@ -3,7 +3,7 @@ import { get } from "lodash";
 import { Mutation } from "react-apollo";
 import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Sticky from "react-stickynode";
+import Sticky from "../../components/Sticky";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
 import Modal from "../../components/Modal";
@@ -40,7 +40,7 @@ const Sidebar = ({ data, history, tutorial }) => {
 
   return (
     <Layout.Sidebar size="m">
-      <Sticky top={98} enabled={!isMobile}>
+      <Sticky offset={98} enabled={!isMobile}>
         <FadeIn duration="500ms">
           <Padding bottom="l">
             <Avatar

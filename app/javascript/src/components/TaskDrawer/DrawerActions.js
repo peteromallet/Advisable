@@ -1,6 +1,6 @@
 import React from "react";
-import { reduce } from "lodash";
-import { compose, graphql } from "react-apollo";
+import { reduce, flowRight as compose } from "lodash";
+import { graphql } from "react-apollo";
 import { useTranslation } from "react-i18next";
 import Text from "../Text";
 import Tooltip from "../Tooltip";

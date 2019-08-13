@@ -1,8 +1,7 @@
 import React from "react";
 import { get } from "lodash";
-import { graphql } from "react-apollo";
+import { useQuery } from "react-apollo";
 import { Redirect } from "react-router-dom";
-
 import Loading from "src/components/Loading";
 import Project from "./Project";
 import NotFound from "../NotFound";
@@ -38,18 +37,24 @@ const redirectError = (error, location) => {
   return redirect;
 };
 
-const ProjectContainer = ({ data, match, location, ...rest }) => {
+const ProjectContainer = ({ match, location, ...rest }) => {
+  const { loading, error, data } = useQuery(FETCH_PROJECT, {
+    variables: {
+      id: match.params.projectId,
+    },
+  });
+
   const statusParam = get(match.params, "status");
   const project = get(data, "project");
-  if (data.loading) return <Loading />;
+  if (loading) return <Loading />;
 
   // If there is an error check that the API hasn't returned redirect
   // instructions. This is a rare case where we want to redirect users
   // to either signup or login based on wether the project client has
   // an account
-  if (data.error && data.error.graphQLErrors.length > 0) {
-    let error = data.error.graphQLErrors[0];
-    let redirect = redirectError(error, location);
+  if (error && error.graphQLErrors.length > 0) {
+    let theError = error.graphQLErrors[0];
+    let redirect = redirectError(theError, location);
     if (redirect) {
       return <Redirect to={redirect} />;
     }
@@ -74,10 +79,4 @@ const ProjectContainer = ({ data, match, location, ...rest }) => {
   return <Project data={data} match={match} location={location} {...rest} />;
 };
 
-export default graphql(FETCH_PROJECT, {
-  options: props => ({
-    variables: {
-      id: props.match.params.projectId,
-    },
-  }),
-})(ProjectContainer);
+export default ProjectContainer;

@@ -1,6 +1,6 @@
 // Renders the projects view for a user.
 import React from "react";
-import { Query } from "react-apollo";
+import { useQuery } from "react-apollo";
 import PROJECTS from "./getProjects";
 import { Redirect } from "react-router-dom";
 import Heading from "../../components/Heading";
@@ -15,6 +15,7 @@ import useViewer from "../../hooks/useViewer";
 export default () => {
   useScrollRestore();
   const viewer = useViewer();
+  const query = useQuery(PROJECTS);
 
   if (viewer.__typename !== "User") {
     return <Redirect to="/" />;
@@ -26,13 +27,11 @@ export default () => {
         <Heading level={2}>Your projects</Heading>
         <Divider marginTop="l" marginBottom="xl" />
         <Projects>
-          <Query query={PROJECTS}>
-            {query => {
-              if (query.loading) return <Loading />;
-
-              return <ProjectsList projects={query.data.viewer.projects} />;
-            }}
-          </Query>
+          {query.loading ? (
+            <Loading />
+          ) : (
+            <ProjectsList projects={query.data.viewer.projects} />
+          )}
         </Projects>
       </Layout.Main>
     </Layout>

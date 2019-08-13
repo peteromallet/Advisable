@@ -1,8 +1,8 @@
 // Renders the drawer for a task
 import * as React from "react";
-import { get, filter } from "lodash";
+import { get, filter, flowRight as compose } from "lodash";
 import { withRouter } from "react-router-dom";
-import { Query, graphql, compose } from "react-apollo";
+import { Query, graphql } from "react-apollo";
 import Drawer from "../Drawer";
 import { TaskDrawer } from "./styles";
 import EditTask from "./EditTask";

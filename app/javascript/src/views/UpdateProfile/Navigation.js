@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sticky from "react-stickynode";
+import Sticky from "../../components/Sticky";
 import { useBreakpoint } from "@advisable/donut";
 
 import Layout from "../../components/Layout";
@@ -10,7 +10,7 @@ const Navigation = () => {
 
   return (
     <Layout.Sidebar size="s">
-      <Sticky enabled={mobileAndUp} top={98}>
+      <Sticky enabled={mobileAndUp} offset={98}>
         <NavigationMenu>
           <NavigationMenu.Item to="/profile/introduction" icon="user">
             Introduction

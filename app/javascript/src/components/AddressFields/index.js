@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
-import { find, get } from "lodash";
-import { compose, graphql } from "react-apollo";
+import { find, get, flowRight as compose } from "lodash";
+import { graphql } from "react-apollo";
 import { connect, Field } from "formik";
 import { Box } from "@advisable/donut";
 import Select from "../Select";

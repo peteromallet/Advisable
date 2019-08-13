@@ -1,7 +1,7 @@
 import React from "react";
-import { get } from "lodash";
+import { get, flowRight as compose } from "lodash";
 import gql from "graphql-tag";
-import { compose, graphql } from "react-apollo";
+import { graphql } from "react-apollo";
 import { Formik, Form } from "formik";
 import { Box, Card, Text, Button, Skeleton } from "@advisable/donut";
 import Modal from "../../../components/Modal";

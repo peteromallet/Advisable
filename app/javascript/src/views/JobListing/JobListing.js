@@ -1,5 +1,5 @@
 import React from "react";
-import Sticky from "react-stickynode";
+import Sticky from "../../components/Sticky";
 import {
   Text,
   Card,
@@ -17,23 +17,21 @@ let JobListing = ({ application, history }) => {
   const isMobile = useScreenSize("small");
   const { project } = application;
 
-  const gotoApply =() => {
-    let url = `/invites/${application.airtableId}/apply`
+  const gotoApply = () => {
+    let url = `/invites/${application.airtableId}/apply`;
     // Set an allowApply key on the location state. We then use this inside of
     // the ApplicationFlow to determine wether or not to allow an application
     // with a status of "Application Rejceted" to view the application flow.
-    history.push(url, { allowApply: true })
-  }
+    history.push(url, { allowApply: true });
+  };
 
   return (
     <Layout>
       {!isMobile && (
         <Layout.Sidebar>
-          <Sticky top={97}>
+          <Sticky offset={98}>
             <Padding bottom="xs">
-              <Heading level={4}>
-                {project.primarySkill} project
-              </Heading>
+              <Heading level={4}>{project.primarySkill} project</Heading>
             </Padding>
             <Padding bottom="l">
               <Text size="xs">
@@ -43,7 +41,11 @@ let JobListing = ({ application, history }) => {
             <Padding bottom="xl">
               <ProjectAttributes project={project} />
             </Padding>
-            <Actions stack={true} onApply={gotoApply} application={application} />
+            <Actions
+              stack={true}
+              onApply={gotoApply}
+              application={application}
+            />
           </Sticky>
         </Layout.Sidebar>
       )}
@@ -81,7 +83,11 @@ let JobListing = ({ application, history }) => {
 
         {isMobile && (
           <BottomBar>
-            <Actions fullWidth={true} application={application} onApply={gotoApply} />
+            <Actions
+              fullWidth={true}
+              application={application}
+              onApply={gotoApply}
+            />
           </BottomBar>
         )}
       </Layout.Main>
