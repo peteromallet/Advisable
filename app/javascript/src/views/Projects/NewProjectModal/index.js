@@ -1,8 +1,9 @@
 import React from "react";
 import find from "lodash/find";
+import gql from "graphql-tag";
 import { Formik } from "formik";
 import { Padding } from "@advisable/donut";
-import { graphql, compose } from "react-apollo";
+import { useMutation, useQuery } from "react-apollo";
 import Text from "../../../components/Text";
 import Modal from "../../../components/Modal";
 import Loading from "../../../components/Loading";
@@ -10,10 +11,19 @@ import FieldRow from "src/components/FieldRow";
 import Heading from "../../../components/Heading";
 import SuggestedSelect from "src/components/SuggestedSelect";
 import { NewProjectChoice } from "./styles";
-import fetchSkills from "./skills.graphql";
-import createProject from "./createProject.graphql";
-import fetchProjects from "../getProjects";
+import GET_PROJECTS from "../getProjects";
+import CREATE_PROJECT from "./createProject";
 import calendly from "src/utilities/calendly";
+
+const GET_SKILLS = gql`
+  query {
+    skills {
+      id
+      value: name
+      label: name
+    }
+  }
+`;
 
 const getSelectedOption = (skills, id) => {
   if (!id) return null;
@@ -31,7 +41,12 @@ const openCalendly = project => {
   );
 };
 
-const NewProjectModal = ({ isOpen, onClose, data, mutate }) => {
+const NewProjectModal = ({ isOpen, onClose }) => {
+  const { data } = useQuery(GET_SKILLS);
+  const [mutate] = useMutation(CREATE_PROJECT, {
+    refetchQueries: [{ query: GET_PROJECTS }],
+  });
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <Padding size="l">
@@ -132,15 +147,4 @@ const NewProjectModal = ({ isOpen, onClose, data, mutate }) => {
   );
 };
 
-export default compose(
-  graphql(fetchSkills),
-  graphql(createProject, {
-    options: props => ({
-      refetchQueries: [
-        {
-          query: fetchProjects,
-        },
-      ],
-    }),
-  })
-)(NewProjectModal);
+export default NewProjectModal;

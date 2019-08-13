@@ -8,8 +8,7 @@ import {
   ProjectCard,
   NewProject,
   ProjectTitle,
-  ProjectStatus,
-  ProjectDescription
+  ProjectDescription,
 } from "./styles";
 
 export default ({ projects }) => {

@@ -1,6 +1,6 @@
 // Renders the sidebar in the freelancer active application view.
 import React from "react";
-import Sticky from "react-stickynode";
+import Sticky from "../../components/Sticky";
 import { useTranslation } from "react-i18next";
 import Back from "../../components/Back";
 import Text from "../../components/Text";
@@ -22,7 +22,7 @@ const Component = ({ data, tutorial }) => {
 
   return (
     <Layout.Sidebar>
-      <Sticky top={98} enabled={!isMobile}>
+      <Sticky offset={98} enabled={!isMobile}>
         <Padding bottom="xl">
           <Back to="/clients">All Clients</Back>
         </Padding>

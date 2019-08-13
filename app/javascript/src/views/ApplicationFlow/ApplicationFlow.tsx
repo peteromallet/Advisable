@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sticky from "react-stickynode";
+import Sticky from "../../components/Sticky";
 import { isEmpty, filter } from "lodash";
 import { RouteComponentProps } from "react-router";
 import { Switch, Route, Redirect } from "react-router-dom";
@@ -44,7 +44,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
   // Various parts of this flow need to act differently based on wether the user
   // is applying or updating an existing application.
   const isApplying = application.status === "Invited To Apply";
- 
+
   // STEPS defines all of the various steps inside the application flow.
   // Note how each step returns true if isApplying is false. This is to allow
   // the user to jump between steps when they are updating an existing
@@ -58,7 +58,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
       component: Overview,
       isComplete:
         !isApplying ||
-        Boolean(application.introduction && application.availability)
+        Boolean(application.introduction && application.availability),
     },
     {
       name: "Application Questions",
@@ -69,7 +69,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
       isComplete:
         !isApplying ||
         filter(application.questions, q => !isEmpty(q.answer)).length >=
-          application.project.questions.length
+          application.project.questions.length,
     },
     {
       name: "References",
@@ -79,7 +79,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
       isComplete:
         !isApplying ||
         skipped.indexOf("References") !== -1 ||
-        !isEmpty(application.previousProjects)
+        !isEmpty(application.previousProjects),
     },
     {
       name: "Payment terms",
@@ -90,8 +90,8 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
         !isApplying ||
         Boolean(
           application.rate && application.acceptsFee && application.acceptsTerms
-        )
-    }
+        ),
+    },
   ];
 
   // On mobile we dont want to show the main content inside of a card and so
@@ -108,7 +108,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
     <Layout>
       {!isMobile && (
         <Layout.Sidebar>
-          <Sticky top={97}>
+          <Sticky offset={98}>
             <Padding bottom="s">
               <Back to={`/invites/${match.params.applicationId}`}>
                 View project details
@@ -137,7 +137,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
                     isDisabled={previousStep ? !previousStep.isComplete : false}
                     to={{
                       ...location,
-                      pathname: `/invites/${applicationId}/apply${step.to}`
+                      pathname: `/invites/${applicationId}/apply${step.to}`,
                     }}
                   >
                     {step.name}
@@ -174,9 +174,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
                       />
                     ) : (
                       <Redirect
-                        to={`/invites/${applicationId}/apply${
-                          previousStep.path
-                        }`}
+                        to={`/invites/${applicationId}/apply${previousStep.path}`}
                       />
                     )
                   }

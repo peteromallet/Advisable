@@ -1,5 +1,6 @@
 import * as React from "react";
-import { compose, graphql } from "react-apollo";
+import { flowRight as compose } from "lodash";
+import { graphql } from "react-apollo";
 import { Formik, Form, FormikProps } from "formik";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import {

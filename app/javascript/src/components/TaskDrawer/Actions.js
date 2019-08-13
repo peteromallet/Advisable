@@ -1,5 +1,6 @@
 import * as React from "react";
-import { compose, graphql } from "react-apollo";
+import { flowRight as compose } from "lodash";
+import { graphql } from "react-apollo";
 import Button from "../Button";
 import Padding from "../Spacing/Padding";
 import { Text } from "@advisable/donut";
