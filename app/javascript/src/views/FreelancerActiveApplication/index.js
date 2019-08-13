@@ -5,7 +5,7 @@ import { get } from "lodash";
 import { Query } from "react-apollo";
 import Loading from "./Loading";
 import NotFound from "../NotFound";
-import FetchActiveApplication from "./FetchActiveApplication";
+import ActiveApplication from "./ActiveApplication";
 import FETCH_APPLICATION from "./fetchApplication";
 
 const Component = props => {
@@ -17,7 +17,7 @@ const Component = props => {
         if (query.loading) return <Loading />;
         if (!query.loading && !get(query, "data.application"))
           return <NotFound />;
-        return <FetchActiveApplication {...query} {...props} />;
+        return <ActiveApplication {...query} {...props} />;
       }}
     </Query>
   );

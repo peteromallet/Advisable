@@ -25,7 +25,6 @@ export const TabList = styled(ReachTabList)`
   z-index: 2;
   position: relative;
   border-bottom: 1px solid ${colors.neutral[1]};
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 `;
 
 // Additional styles for the tab when it is selected.
@@ -56,7 +55,7 @@ export const Tab = styled(ReachTab)`
   background: transparent;
   color: ${colors.neutral[4]};
   font-family: poppins, sans-serif;
-  border-bottom: 1px solid transparent;
+  border-bottom: 2px solid transparent;
   transition: color 300ms;
 
   &:hover {

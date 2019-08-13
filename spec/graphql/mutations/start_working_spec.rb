@@ -13,9 +13,6 @@ describe Mutations::StartWorking do
           id
           status
         }
-        errors {
-          code
-        }
       }
     }
   |}
@@ -50,8 +47,8 @@ describe Mutations::StartWorking do
       }
   
       it "returns a not_authorized error" do
-        errors = response["data"]["startWorking"]["errors"]
-        expect(errors[0]["code"]).to eq("not_authorized")
+        error = response["errors"][0]["extensions"]["code"]
+        expect(error).to eq("notAuthorized")
       end
     end
   end
@@ -66,19 +63,8 @@ describe Mutations::StartWorking do
     }
 
     it "returns a not_authorized error" do
-      errors = response["data"]["startWorking"]["errors"]
-      expect(errors[0]["code"]).to eq("not_authorized")
-    end
-  end
-
-  context "when a Service::Error is thrown" do
-    it "includes it in the response" do
-      error = Service::Error.new("service_error")
-      allow(Applications::StartWorking).to receive(:call).and_raise(error)
-      context = { current_user: application.project.user }
-      response = AdvisableSchema.execute(query, context: context)
-      errors = response["data"]["startWorking"]["errors"]
-      expect(errors[0]["code"]).to eq("service_error")
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("notAuthorized")
     end
   end
 end

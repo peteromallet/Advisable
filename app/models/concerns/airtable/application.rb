@@ -19,6 +19,7 @@ class Airtable::Application < Airtable::Base
   sync_column 'Applied At', to: :applied_at
   sync_column 'Project Type', to: :project_type
   sync_column 'Monthly Limit', to: :monthly_limit
+  sync_column 'Stopped Working Reason', to: :stopped_working_reason
 
   sync_data do |application|
     application.status = status_to_sync
@@ -110,5 +111,6 @@ class Airtable::Application < Airtable::Base
     self['References Requested'] = application.references_requested ? "Yes" : nil
     self['Project Type'] = application.project_type
     self['Monthly Limit'] = application.monthly_limit
+    self['Stopped Working Reason'] = application.stopped_working_reason
   end
 end

@@ -89,15 +89,15 @@ const Component = ({
             onClose={onClose}
             isOpen={Boolean(taskId)}
             actions={
-              query.loading ? (
-                []
-              ) : (
-                <DrawerActions
-                  isClient={isClient}
-                  task={query.data.task}
-                  onDelete={() => setPrompt(DELETE_PROMPT)}
-                />
-              )
+              query.loading
+                ? []
+                : !readOnly && (
+                    <DrawerActions
+                      isClient={isClient}
+                      task={query.data.task}
+                      onDelete={() => setPrompt(DELETE_PROMPT)}
+                    />
+                  )
             }
           >
             <TaskDrawer>

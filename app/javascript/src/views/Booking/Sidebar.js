@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash";
 import { Mutation } from "react-apollo";
-import { withRouter } from "react-router-dom";
+import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "../../components/Sticky";
 import Button from "../../components/Button";
@@ -19,14 +19,18 @@ import { useMobile } from "../../components/Breakpoint";
 import TalkModal from "../../components/TalkModal";
 import ProjectTypeModal from "../../components/ProjectTypeModal";
 import ProjectMonthlyLimit from "../../components/ProjectMonthlyLimit";
+import StopWorkingModal from "./StopWorkingModal";
 import SET_PROJECT_TYPE from "./setProjectType";
 
-const Sidebar = ({ data, history, tutorial }) => {
+const TALK_MODAL = "TALK_MODAL";
+const STOP_WORKING_MODAL = "STOP_WORKING_MODAL";
+
+const Sidebar = ({ data, history, tutorial, match }) => {
   const isMobile = useMobile();
   const { t } = useTranslation();
   const application = data.application;
   const specialist = application.specialist;
-  const [talkModal, setTalkModal] = React.useState(false);
+  const [modal, setModal] = React.useState(null);
   const [projectTypeModal, setProjectTypeModal] = React.useState(false);
   const [monthlyLimitModal, setMonthlyLimitModal] = React.useState(false);
 
@@ -55,21 +59,44 @@ const Sidebar = ({ data, history, tutorial }) => {
             {specialist.country && `, ${specialist.country.name}`}
           </Text>
           <TalkModal
-            isOpen={talkModal}
-            onClose={() => setTalkModal(false)}
+            isOpen={modal === TALK_MODAL}
+            onClose={() => setModal(null)}
             conversationId={application.id}
             participants={[application.specialist]}
           />
 
           <Padding top="xl">
-            <Button
-              block
-              icon="message-circle"
-              styling="primary"
-              onClick={() => setTalkModal(true)}
-            >
-              Message {specialist.firstName}
-            </Button>
+            <Padding bottom="s">
+              <Button
+                block
+                icon="message-circle"
+                onClick={() => setModal(TALK_MODAL)}
+              >
+                Message {specialist.firstName}
+              </Button>
+            </Padding>
+            {application.status === "Working" && (
+              <>
+                <Route
+                  path={`${match.path}/stop`}
+                  render={route => (
+                    <StopWorkingModal
+                      isOpen
+                      application={application}
+                      onClose={() => history.replace(match.url)}
+                    />
+                  )}
+                />
+                <Button
+                  block
+                  icon="pause-circle"
+                  aria-label="Stop Working"
+                  onClick={() => history.replace(`${match.url}/stop`)}
+                >
+                  Stop Working
+                </Button>
+              </>
+            )}
           </Padding>
           <Padding top="xl" bottom="xl">
             <AttributeList>

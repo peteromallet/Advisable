@@ -2,6 +2,7 @@
 // application
 import React from "react";
 import { get } from "lodash";
+import { Box } from "@advisable/donut";
 import { matchPath } from "react-router-dom";
 import Layout from "../../components/Layout";
 import TaskDrawer from "../../components/TaskDrawer";
@@ -12,13 +13,14 @@ import FETCH_APPLICATION from "./fetchApplication";
 import useTutorial from "../../hooks/useTutorial";
 import Tasks from "./Tasks";
 import SetupPayments from "./SetupPayments";
+import StoppedWorkingNotice from "./StoppedWorkingNotice";
 
 const tutorials = {
   Fixed: "fixedProjects",
   Flexible: "flexibleProjects",
 };
 
-const FetchActiveApplication = ({ location, history, match, data, client }) => {
+const ActiveApplication = ({ location, history, match, data, client }) => {
   const application = data.application;
 
   const tutorial = useTutorial(tutorials[application.projectType], {
@@ -26,6 +28,7 @@ const FetchActiveApplication = ({ location, history, match, data, client }) => {
     autoStart: true,
   });
 
+  const status = get(data, "application.status");
   let hasSetupPayments = get(data, "application.specialist.hasSetupPayments");
   if (!hasSetupPayments) {
     return <SetupPayments data={data} />;
@@ -101,12 +104,20 @@ const FetchActiveApplication = ({ location, history, match, data, client }) => {
       <TaskDrawer
         isClient={false}
         showStatusNotice
+        readOnly={application.status !== "Working"}
         onClose={() => closeTask()}
         onDeleteTask={handleDeleteTask}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
       <Sidebar data={data} tutorial={tutorial} />
       <Layout.Main>
+        {status === "Stopped Working" && (
+          <Box mb="m">
+            <StoppedWorkingNotice
+              client={get(data, "application.project.user.companyName")}
+            />
+          </Box>
+        )}
         <Tasks
           application={application}
           onClick={handleTaskClick}
@@ -117,4 +128,4 @@ const FetchActiveApplication = ({ location, history, match, data, client }) => {
   );
 };
 
-export default FetchActiveApplication;
+export default ActiveApplication;

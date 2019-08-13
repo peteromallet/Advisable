@@ -17,7 +17,11 @@ const ActiveTasks = ({ onClick, onCreate, application }) => {
     <TaskList
       tasks={tasks}
       onClickTask={onClick}
-      lastRow={<NewTask onCreate={onCreate} application={application} />}
+      lastRow={
+        application.status === "Working" && (
+          <NewTask onCreate={onCreate} application={application} />
+        )
+      }
     />
   );
 };
