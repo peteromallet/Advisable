@@ -6,11 +6,15 @@ export const invoiceSettingsValidation = countries =>
     name: Yup.string().required("Please enter your full name."),
     companyName: Yup.string().required("Please enter your company name."),
     address: Yup.object().shape({
-      line1: Yup.string().required("Required"),
-      city: Yup.string().required("Required"),
+      line1: Yup.string().required("Line 1 is required"),
+      city: Yup.string().required("City is required"),
+      country: Yup.string().required("Country is required"),
     }),
     vatNumber: Yup.string().when("address.country", {
-      is: code => find(countries, { id: code }).eu,
+      is: code => {
+        const country = find(countries, { id: code });
+        return country ? country.eu : false;
+      },
       then: Yup.string().required("Please provide your VAT ID"),
     }),
   });
