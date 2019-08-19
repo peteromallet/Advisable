@@ -190,6 +190,10 @@ const InvoiceSettings = ({ data, match, setValue, history, values }) => {
                   onChange={formik.handleChange}
                   data-testid="country-select"
                   value={formik.values.address.country}
+                  error={
+                    get(formik, "touched.address.country") &&
+                    get(formik, "errors.address.country")
+                  }
                   options={countries.map(c => ({
                     value: c.id,
                     label: c.name,
@@ -220,7 +224,7 @@ const InvoiceSettings = ({ data, match, setValue, history, values }) => {
               </Box>
             )}
             <Box pt="s">
-              <Button block size="l" styling="primary">
+              <Button block size="l" styling="primary" type="submit">
                 Continue
               </Button>
             </Box>
