@@ -125,7 +125,7 @@ const PaymentTerms = ({
                 size="l"
                 type="submit"
                 styling="primary"
-                isLoading={formik.isSubmitting}
+                loading={formik.isSubmitting}
                 disabled={!formik.isValid}
                 aria-label="Complete Setup"
               >
