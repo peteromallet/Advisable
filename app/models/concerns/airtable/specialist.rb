@@ -18,11 +18,23 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'Bank Holder Name', to: :bank_holder_name
   sync_column 'Bank Currency', to: :bank_currency
   sync_column 'VAT Number', to: :vat_number
+  sync_column 'Estimated Number of Freelance Projects', to: :number_of_projects
 
   sync_data do |specialist|
     # sync the bank holder address
     if self['Bank Holder Address']
       specialist.bank_holder_address = Address.parse(self['Bank Holder Address']).to_h
+    end
+
+    # sync the Freelancing Status column
+    freelancing_status = fields["Freelancing Status"]
+    specialist.primarily_freelance = freelancing_status.try(:include?, "Yes")
+
+    # sync the typical hourly rate. We store the horuly rate as a minor currency
+    # e.g $46.54 is stored as the int 4654
+    hourly_rate = fields['Typical Hourly Rate']
+    if hourly_rate
+      specialist.hourly_rate = hourly_rate * 100
     end
 
     # to prevent making more requests than we need, first check if there is
@@ -78,6 +90,11 @@ class Airtable::Specialist < Airtable::Base
     self['Bank Holder Name'] = specialist.bank_holder_name
     self['Bank Currency'] = specialist.bank_currency
     self['VAT Number'] = specialist.vat_number
+    self['Estimated Number of Freelance Projects'] = specialist.number_of_projects
+
+    if specialist.hourly_rate
+      self['Typical Hourly Rate'] = specialist.hourly_rate / 100.0
+    end
     
     if specialist.bank_holder_address
       self['Bank Holder Address'] = Address.new(specialist.bank_holder_address).to_s
@@ -87,6 +104,18 @@ class Airtable::Specialist < Airtable::Base
       self['Remote OK'] = "Yes, I'm happy to work remote"
     else
       self['Remote OK'] = "No, I only work with clients in person"
+    end
+
+    if specialist.primarily_freelance == true
+      self['Freelancing Status'] = "Yes, freelancing is my primary occupation"
+    end
+
+    if specialist.primarily_freelance == false
+      self['Freelancing Status'] = "No, I freelance alongside a full-time job"
+    end
+
+    if specialist.primarily_freelance.nil?
+      self['Freelancing Status'] = nil
     end
   end
 

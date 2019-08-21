@@ -33,9 +33,7 @@ export const Circle = styled.div`
 
 export const Value = styled.div`
   font-size: 15px;
-  font-weight: 500;
-  color: ${colors.neutral.s10};
-  letter-spacing: -0.01rem;
+  color: ${colors.neutral.s8};
 `;
 
 const borderedStyling = css`

@@ -21,6 +21,12 @@ class APIError < GraphQL::ExecutionError
   end
 end
 
+class APIError::NotAuthenticated < APIError
+  def initialize(message)
+    super("NOT_AUTHENTICATED", "notAuthenticated", message)
+  end
+end
+
 class APIError::NotAuthorized < APIError
   def initialize(message)
     super("NOT_AUTHORIZED", "notAuthorized", message)

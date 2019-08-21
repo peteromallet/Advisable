@@ -206,4 +206,16 @@ class Types::SpecialistType < Types::BaseType
       The specialists VAT number
     HEREDOC
   end
+
+  field :primarily_freelance, Boolean, null: true do
+    description "Wether or not the freelancers occupation is primarily freelancing"
+  end
+
+  field :number_of_projects, String, null: true do
+    description "The number of projects the freelancer has completed"
+  end
+
+  field :hourly_rate, Int, null: true do
+    description "The typical hourly rate for this freelancer"
+  end
 end

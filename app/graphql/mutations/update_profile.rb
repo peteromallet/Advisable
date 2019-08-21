@@ -1,5 +1,7 @@
 class Mutations::UpdateProfile < Mutations::BaseMutation
-  argument :id, ID, required: true
+  argument :primarily_freelance, Boolean, required: false
+  argument :hourly_rate, Int, required: false
+  argument :number_of_projects, String, required: false
   argument :bio, String, required: false
   argument :skills, [String], required: false
   argument :city, String, required: false
@@ -7,19 +9,28 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
   argument :remote, Boolean, required: false
 
   field :specialist, Types::SpecialistType, null: true
-  field :errors, [Types::Error], null: true
+
+  def authorized?(**args)
+    if !context[:current_user]
+      raise APIError::NotAuthenticated.new("You are not logged in")
+    end
+
+    if context[:current_user].is_a?(User)
+      raise APIError::NotAuthenticated.new("You are logged in as a user")
+    end
+
+    true
+  end
 
   def resolve(**args)
-    specialist = Specialist.find_by_airtable_id!(args[:id])
-
     {
       specialist: Specialists::UpdateProfile.call(
-        specialist: specialist,
+        specialist: context[:current_user],
         attributes: args.except(:id)
       )
     }
 
     rescue Service::Error => e
-      return { errors: [e] }
+      raise APIError::InvalidRequest.new("failedToUpdate", e.message)
   end
 end

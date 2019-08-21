@@ -26,7 +26,7 @@ class Specialists::UpdateProfile < ApplicationService
   # Select only the attributes we want to pass through to active record
   # assign_atttributes call
   def assignable_attributes
-    attributes.slice(:bio, :city, :remote)
+    attributes.slice(:bio, :city, :remote, :primarily_freelance, :hourly_rate, :number_of_projects)
   end
 
   # Update the specialists skills if a skills attribute was passed.

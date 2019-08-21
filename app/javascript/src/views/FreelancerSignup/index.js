@@ -1,11 +1,12 @@
 import React from "react";
 import { useTheme, Box } from "@advisable/donut";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Logo from "../../components/Logo";
 import { Container, Main, Sidebar, Content } from "./styles";
 import Skills from "./Skills";
 import Confirm from "./Confirm";
 import AccountDetails from "./AccountDetails";
+import FreelancingPreferences from "./FreelancingPreferences";
 
 const STEPS = [
   {
@@ -23,7 +24,11 @@ const STEPS = [
   },
   {
     path: "/preferences",
-    component: () => <>Freelancing preferences</>,
+    component: FreelancingPreferences,
+  },
+  {
+    path: "/profile",
+    component: () => <>Build profile</>,
   },
 ];
 

@@ -11,10 +11,14 @@ class Specialist < ApplicationRecord
   has_many :specialist_skills
   has_many :off_platform_projects
   has_many :skills, through: :specialist_skills
-  attr_encrypted :phone_number, key: [ENV["ENCRYPTION_KEY"]].pack("H*")
+  attr_encrypted :phone_number, key: [ENV['ENCRYPTION_KEY']].pack('H*')
 
-  register_tutorial "fixedProjects"
-  register_tutorial "flexibleProjects"
+  validates :number_of_projects,
+            inclusion: { in: %w[1-5 5-20 20+ None], message: 'is invalid' },
+            allow_nil: true
+
+  register_tutorial 'fixedProjects'
+  register_tutorial 'flexibleProjects'
 
   def name
     "#{first_name} #{last_name}"

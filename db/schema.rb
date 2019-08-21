@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_25_105541) do
+ActiveRecord::Schema.define(version: 2019_08_21_101814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -327,6 +327,9 @@ ActiveRecord::Schema.define(version: 2019_07_25_105541) do
     t.jsonb "bank_holder_address", default: {}
     t.string "bank_currency"
     t.string "vat_number"
+    t.boolean "primarily_freelance"
+    t.string "number_of_projects"
+    t.integer "hourly_rate"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
