@@ -2,7 +2,6 @@ import React from "react";
 import { get } from "lodash";
 import Menu from "./Menu";
 import Text from "../../Text";
-import Padding from "../../Padding";
 import FieldError from "../../FieldError";
 import {
   Autocomplete as AutocompleteStyles,
@@ -20,6 +19,7 @@ const AutocompleteMobile = props => {
     onChange,
     label,
     error,
+    description,
     initalSelectedItem,
   } = props;
 
@@ -45,6 +45,11 @@ const AutocompleteMobile = props => {
       <Label as="label" size="xs" weight="medium" color="neutral.N7">
         {label}
       </Label>
+      {description && (
+        <Text mb="xs" mt="-4px" size="xs" lineHeight="xs" color="neutral.5">
+          {description}
+        </Text>
+      )}
       {props.multiple && (
         <Tags>
           {selected.map(item => (

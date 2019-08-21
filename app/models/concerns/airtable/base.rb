@@ -121,7 +121,11 @@ class Airtable::Base < Airrecord::Table
         self[field] = value
       end
 
-      id ? save : create
+      if id.present?
+        save
+      else
+        create
+      end
 
       if record.airtable_id.blank?
         record.update_attributes(airtable_id: id)

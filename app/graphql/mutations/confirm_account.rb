@@ -14,6 +14,6 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
     }
 
     rescue Service::Error => e
-      return { errors: [e] }
+      raise APIError::InvalidRequest.new(e.code, e.message)
   end
 end

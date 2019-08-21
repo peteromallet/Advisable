@@ -6,6 +6,7 @@ import colors from "../../colors";
 
 export const Label = styled(Text)`
   display: block;
+  font-weight: 500;
   margin-bottom: 8px;
 `;
 

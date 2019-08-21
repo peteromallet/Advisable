@@ -10,9 +10,14 @@ import { Button as ButtonStyles, Loading, Dot } from "./styles";
 // - intent: 'default', 'success', 'danger'. The intent prop dtermins the
 // coloring for the button.
 // - icon: Accepts any icon string for feather-icons.
-const Button = ({ children, icon, loading, ...rest }) => {
+const Button = ({ children, icon, iconRight, loading, size, ...rest }) => {
   return (
-    <ButtonStyles {...rest} isLoading={loading} data-loading={loading || null}>
+    <ButtonStyles
+      {...rest}
+      size={size}
+      isLoading={loading}
+      data-loading={loading || null}
+    >
       {loading && (
         <Loading>
           <Dot />
@@ -22,6 +27,7 @@ const Button = ({ children, icon, loading, ...rest }) => {
       )}
       {icon && <Icon icon={icon} width={20} />}
       {children}
+      {iconRight && <Icon icon={iconRight} width={20} />}
     </ButtonStyles>
   );
 };

@@ -29,7 +29,7 @@ export default (props: RouteComponentProps<Params>): React.ReactNode => {
 
   return (
     <React.Fragment>
-      <BaseStyling lightBackground={isMobile} />
+      <BaseStyling background={isMobile && "light"} />
       <Query query={FETCH_APPLICATION} variables={{ id: applicationId }}>
         {query => {
           if (query.loading) return <Loading />;

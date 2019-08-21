@@ -11,6 +11,7 @@ import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
 import InterviewRequest from "./views/InterviewRequest";
 import ApplicationRoutes from "./ApplicationRoutes";
+import FreelancerSignup from "./views/FreelancerSignup";
 
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
@@ -49,7 +50,7 @@ const Routes = () => {
           path="/interview_request/:interviewID"
           component={InterviewRequest}
         />
-
+        <Route path="/freelancers/signup" component={FreelancerSignup} />
         <Route component={ApplicationRoutes} />
       </Switch>
     </Suspense>

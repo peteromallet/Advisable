@@ -11,5 +11,6 @@ export { default as Provider } from "./components/Provider";
 export { default as Skeleton } from "./components/Skeleton";
 export { default as Autocomplete } from "./components/Autocomplete";
 export { default as useBreakpoint } from "./hooks/useBreakpoint";
+export { default as useTheme } from "./hooks/useTheme";
 
 export { default as theme } from "./theme";

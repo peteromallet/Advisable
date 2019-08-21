@@ -4,11 +4,21 @@ import { darken, lighten, rgba } from "polished";
 import colors from "../../colors";
 import Icon from "../Icon/styles";
 
+const HEIGHTS = {
+  m: 36,
+  l: 46,
+};
+
+const PADDING = {
+  m: "0 16px",
+  l: "0 28px",
+};
+
 const APPEARANCES = {
   default: css`
-    height: 36px;
+    height: ${props => HEIGHTS[props.size || "m"]}px;
     line-height: 1;
-    padding: 0 16px;
+    padding: ${props => PADDING[props.size || "m"]};
     background: ${rgba(colors.neutral.N2, 0.7)};
 
     &:hover:not(:disabled) {
@@ -20,9 +30,9 @@ const APPEARANCES = {
     }
   `,
   primary: css`
-    height: 36px;
+    height: ${props => HEIGHTS[props.size || "m"]}px;
     line-height: 1;
-    padding: 0 16px;
+    padding: ${props => PADDING[props.size || "m"]};
     font-weight: 600;
   `,
   minimal: css`
@@ -151,26 +161,36 @@ const loadingStyling = css`
   color: transparent;
 `;
 
+const FONT_SIZES = {
+  m: 14,
+  l: 16,
+};
+
 export const Button = styled.button`
   margin: 0;
   border: none;
   outline: none;
-  font-size: 14px;
+  font-size: ${props => FONT_SIZES[props.size || "m"]}px;
   cursor: pointer;
   appearance: none;
-  font-weight: 600;
+  font-weight: 500;
   position: relative;
   border-radius: 8px;
   align-items: center;
   display: inline-flex;
   text-decoration: none;
   justify-content: center;
+  letter-spacing: 0.05rem;
   width: ${props => props.width};
 
   ${space}
 
-  ${Icon} {
+  ${Icon}:first-child {
     margin-right: 8px;
+  }
+
+  ${Icon}:last-child {
+    margin-left: 8px;
   }
 
   ${props => APPEARANCES[props.appearance]};

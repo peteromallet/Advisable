@@ -1,6 +1,7 @@
 import React from "react";
 import { Manager, Reference, Popper } from "react-popper";
 import useComponentSize from "@rehooks/component-size";
+import Text from "../../Text";
 import FieldError from "../../FieldError";
 import Menu from "./Menu";
 import {
@@ -21,6 +22,7 @@ const AutocompleteDesktop = props => {
     onChange,
     multiple,
     placeholder,
+    description,
     value,
   } = props;
 
@@ -68,6 +70,17 @@ const AutocompleteDesktop = props => {
                 >
                   {label}
                 </Label>
+                {description && (
+                  <Text
+                    mb="xs"
+                    mt="-4px"
+                    size="xs"
+                    lineHeight="xs"
+                    color="neutral.5"
+                  >
+                    {description}
+                  </Text>
+                )}
                 <Reference>
                   {popperRef => (
                     <div ref={popperRef.ref}>

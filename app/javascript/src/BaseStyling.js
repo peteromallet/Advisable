@@ -1,6 +1,12 @@
 // This file defines the base styling for the application
 import { createGlobalStyle } from "styled-components";
 
+const BACKGROUNDS = {
+  default: "#EFF2FD",
+  light: "#F6F8FF",
+  white: "#FFFFFF",
+};
+
 export default createGlobalStyle`
   /* @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700'); */
   @import url("https://use.typekit.net/yuq4swo.css");
@@ -70,9 +76,4 @@ export default createGlobalStyle`
     border-collapse: collapse;
     border-spacing: 0;
   }
-
-  body {
-    background-color: ${props => (props.lightBackground ? "#F6F8FF" : "#EFF2FD")};
-  }
-
 `;

@@ -53,6 +53,7 @@ const lineHeights = {
 };
 
 export default {
+  background: "default",
   responsiveProp: prop => {
     if (!isObject(prop)) return prop;
     let propForBreakpoint = find(prop, (_, breakpoint) => {
@@ -71,6 +72,7 @@ export default {
       "rgba(255, 255, 255, 0.7)",
       "rgba(255, 255, 255, 0.8)",
       "rgba(255, 255, 255, 0.9)",
+      "rgba(255, 255, 255, 1)",
     ],
     neutral: [
       "#F4F6FD",
