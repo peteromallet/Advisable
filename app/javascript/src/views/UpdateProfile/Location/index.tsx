@@ -2,7 +2,7 @@
 // settings
 import * as React from "react";
 import { Formik, Form } from "formik";
-import { flowRight as compose } from "lodash";
+import { flowRight as compose, get } from "lodash";
 import { graphql } from "react-apollo";
 import Text from "../../../components/Text";
 import Card from "../../../components/Card";
@@ -44,7 +44,7 @@ let Location = ({ profileQuery, countriesQuery, mutate }) => {
       initialValues={{
         city: profileQuery.viewer.city,
         remote: profileQuery.viewer.remote,
-        country: profileQuery.viewer.country.id,
+        country: get(profileQuery.viewer, "country.id"),
       }}
     >
       {formik => (
