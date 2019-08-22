@@ -12,9 +12,6 @@ module Advisable
     config.load_defaults 6.0
     config.active_job.queue_adapter = :sidekiq
 
-    config.eager_load_paths << Rails.root.join('app/models/concerns/airtable')
-    config.eager_load_paths << Rails.root.join('app/models/concerns/fields')
-
     config.action_mailer.default_url_options = { host: ENV["ORIGIN"] }
     config.action_mailer.asset_host = ENV["ORIGIN"]
 
