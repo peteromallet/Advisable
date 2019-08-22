@@ -10,6 +10,7 @@ class Specialists::UpdateProfile < ApplicationService
 
   def call
     specialist.assign_attributes(assignable_attributes)
+    attach_avatar
     update_skills
     update_country
 
@@ -27,6 +28,11 @@ class Specialists::UpdateProfile < ApplicationService
   # assign_atttributes call
   def assignable_attributes
     attributes.slice(:bio, :city, :remote, :primarily_freelance, :hourly_rate, :number_of_projects)
+  end
+
+  def attach_avatar
+    return unless attributes[:avatar]
+    specialist.avatar.attach(attributes[:avatar])
   end
 
   # Update the specialists skills if a skills attribute was passed.

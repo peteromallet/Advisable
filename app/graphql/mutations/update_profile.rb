@@ -7,6 +7,7 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
   argument :city, String, required: false
   argument :country, ID, required: false
   argument :remote, Boolean, required: false
+  argument :avatar, String, required: false
 
   field :specialist, Types::SpecialistType, null: true
 

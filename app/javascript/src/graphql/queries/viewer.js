@@ -30,6 +30,7 @@ export const viewerFields = gql`
       confirmed
       talkSignature
       completedTutorials
+      avatar
       image {
         url
       }

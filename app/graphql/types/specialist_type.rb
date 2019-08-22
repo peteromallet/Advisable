@@ -63,6 +63,14 @@ class Types::SpecialistType < Types::BaseType
     description "The specialists profile image"
   end
 
+  field :avatar, String, null: true do
+    description "The specialists avatar"
+  end
+
+  def avatar
+    Rails.application.routes.url_helpers.rails_blob_url(object.avatar, host: ENV["ORIGIN"])
+  end
+
   field :skills, [String, null: true], null: true do
     description "A list of skills that the specialist possesses"
   end
