@@ -73,7 +73,7 @@ class Airtable::Specialist < Airtable::Base
     self['Specialist Skills'] = specialist.skills.map(&:airtable_id).uniq
     self['City'] = specialist.city
     self['Account Created'] = specialist.has_account? ? "Yes" : nil
-    self['Country'] = [specialist.country.try(:airtable_id)]
+    self['Country'] = [specialist.country.try(:airtable_id)].compact
     self["Phone Number"] = specialist.phone_number
     self['Bank Holder Name'] = specialist.bank_holder_name
     self['Bank Currency'] = specialist.bank_currency
