@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe Mutations::UpdateProfile do
   let(:skill) { create(:skill) }
-  let(:country) { create(:country) }
+  let!(:country) { create(:country, name: "Ireland") }
   let(:specialist) {
     create(:specialist, {
       bio: nil,
@@ -19,7 +19,7 @@ describe Mutations::UpdateProfile do
         bio: "This is the bio",
         skills: ["#{skill.name}"],
         city: "Dublin",
-        country: "#{country.uid}",
+        country: "IE",
         remote: true
       }) {
         specialist {

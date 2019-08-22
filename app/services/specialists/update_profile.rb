@@ -40,6 +40,7 @@ class Specialists::UpdateProfile < ApplicationService
   def update_country
     return unless attributes[:country]
     cntry = ISO3166::Country.new(attributes[:country])
+    return unless cntry
     country = Country.find_by_name(cntry.name)
     specialist.country = country
   end

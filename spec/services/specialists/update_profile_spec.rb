@@ -49,7 +49,7 @@ describe Specialists::UpdateProfile do
     country = create(:country, name: "Germany")
     Specialists::UpdateProfile.call(
       specialist: specialist,
-      attributes: { country: country.uid }
+      attributes: { country: "DE" }
     )
     expect(specialist.reload.country).to eq(country)
   end
