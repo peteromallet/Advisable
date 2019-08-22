@@ -1,5 +1,5 @@
 class ApplicationReference < ApplicationRecord
-  include UID
+  include Uid
   uid_prefix 'ref'
 
   belongs_to :application

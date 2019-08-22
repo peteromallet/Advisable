@@ -9,17 +9,7 @@ Bundler.require(*Rails.groups)
 module Advisable
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
-    config.active_job.queue_adapter = :sidekiq
-
-    config.eager_load_paths << Rails.root.join('app/models/concerns/airtable')
-    config.eager_load_paths << Rails.root.join('app/models/concerns/fields')
-
-
-    config.action_mailer.default_url_options = { host: ENV["ORIGIN"] }
-    config.action_mailer.asset_host = ENV["ORIGIN"]
-
-    config.middleware.use Rack::Attack
+    config.load_defaults 6.0
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

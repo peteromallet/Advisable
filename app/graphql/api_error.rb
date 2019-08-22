@@ -15,19 +15,19 @@
 # @example
 #   raise APIError.new("NOT_AUTHORIZED", "notAuthorized", "Viewer does not have permission to execute this mutation.")
 #
-class APIError < GraphQL::ExecutionError
+class ApiError < GraphQL::ExecutionError
   def initialize(type, code, message, extensions: {})
     super(message, extensions: extensions.merge({ type: type, code: code }).as_json)
   end
 end
 
-class APIError::NotAuthenticated < APIError
+class ApiError::NotAuthenticated < ApiError
   def initialize(message)
     super("NOT_AUTHENTICATED", "notAuthenticated", message)
   end
 end
 
-class APIError::NotAuthorized < APIError
+class ApiError::NotAuthorized < ApiError
   def initialize(message)
     super("NOT_AUTHORIZED", "notAuthorized", message)
   end
@@ -40,7 +40,7 @@ end
 # @example
 #   raise APIError::InvalidRequest.new("Application status must be 'Working'", "applicationStatusNotWorking")
 #
-class APIError::InvalidRequest < APIError
+class ApiError::InvalidRequest < ApiError
   def initialize(code, message)
     super("INVALID_REQUEST", code, message)
   end

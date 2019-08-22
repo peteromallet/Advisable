@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-  include UID
+  include Uid
   include Airtable::Syncable
   belongs_to :application
 

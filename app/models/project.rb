@@ -1,5 +1,5 @@
 class Project < ApplicationRecord
-  include UID
+  include Uid
   include Airtable::Syncable
   has_many :applications
   has_many :bookings, through: :applications

@@ -26,7 +26,7 @@ as well as a link to its edit page.
   <div>
     <script>
       function login() {
-        window.sessionStorage.setItem("authToken", "<%= Accounts::JWT.call(page.resource) %>")
+        window.sessionStorage.setItem("authToken", "<%= Accounts::Jwt.call(page.resource) %>")
         window.open("<%= ENV["ORIGIN"] %>");
       }
     </script>

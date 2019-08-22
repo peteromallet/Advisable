@@ -3,7 +3,7 @@ FactoryBot.define do
     specialist
     project
     association :reviewable, factory: :application
-    comment "Comment"
+    comment { "Comment" }
     ratings {{
       overall: 5
     }}

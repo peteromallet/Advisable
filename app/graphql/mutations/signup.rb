@@ -15,7 +15,7 @@ class Mutations::Signup < Mutations::BaseMutation
       password_confirmation: args[:password_confirmation]
     )
 
-    token = Accounts::JWT.call(account)
+    token = Accounts::Jwt.call(account)
     { token: token }
 
     rescue Service::Error => e

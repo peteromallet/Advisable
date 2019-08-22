@@ -68,7 +68,7 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     end
 
     context[:current_user] = account
-    token = Accounts::JWT.call(account)
+    token = Accounts::Jwt.call(account)
 
     {
       token: token,

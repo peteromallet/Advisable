@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Accounts::Authenticate do
   it 'returns the authenticated user' do
     user = create(:user)
-    jwt = Accounts::JWT.call(user)
+    jwt = Accounts::Jwt.call(user)
     expect(Accounts::Authenticate.call(jwt)).to eq(user)
   end
 

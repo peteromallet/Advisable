@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     rescue ActionController::UnknownFormat
       render status: 404, json: { error: "Not Found" }
   end
-
+  
   protected
 
   def current_user

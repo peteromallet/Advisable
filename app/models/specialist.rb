@@ -1,5 +1,5 @@
 class Specialist < ApplicationRecord
-  include UID
+  include Uid
   include Account
   include Airtable::Syncable
   belongs_to :country, required: false
@@ -11,6 +11,9 @@ class Specialist < ApplicationRecord
   has_many :specialist_skills
   has_many :off_platform_projects
   has_many :skills, through: :specialist_skills
+
+  has_one_attached :avatar
+
   attr_encrypted :phone_number, key: [ENV['ENCRYPTION_KEY']].pack('H*')
 
   validates :number_of_projects,
