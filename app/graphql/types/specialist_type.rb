@@ -68,6 +68,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   def avatar
+    return unless object.avatar
     Rails.application.routes.url_helpers.rails_blob_url(object.avatar, host: ENV["ORIGIN"])
   end
 
