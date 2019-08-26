@@ -1,4 +1,4 @@
-# Service object to update a specialists profile. This is primarily
+j# Service object to update a specialists profile. This is primarily
 # used by the graphql update_profile mutation.
 class Specialists::UpdateProfile < ApplicationService
   attr_accessor :specialist, :attributes
@@ -11,6 +11,7 @@ class Specialists::UpdateProfile < ApplicationService
   def call
     specialist.assign_attributes(assignable_attributes)
     attach_avatar
+    attach_resume
     update_skills
     update_country
 
@@ -27,12 +28,27 @@ class Specialists::UpdateProfile < ApplicationService
   # Select only the attributes we want to pass through to active record
   # assign_atttributes call
   def assignable_attributes
-    attributes.slice(:bio, :city, :remote, :primarily_freelance, :hourly_rate, :number_of_projects)
+    attributes.slice(
+      :bio,
+      :city,
+      :remote,
+      :website,
+      :linkedin,
+      :public_use,
+      :hourly_rate,
+      :number_of_projects,
+      :primarily_freelance,
+    )
   end
 
   def attach_avatar
     return unless attributes[:avatar]
     specialist.avatar.attach(attributes[:avatar])
+  end
+
+  def attach_resume
+    return unless attributes[:resume]
+    specialist.resume.attach(attributes[:resume])
   end
 
   # Update the specialists skills if a skills attribute was passed.

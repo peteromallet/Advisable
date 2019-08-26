@@ -6,6 +6,7 @@ import Logo from "../../components/Logo";
 import { Container, Main, Sidebar, Content } from "./styles";
 import Skills from "./Skills";
 import Confirm from "./Confirm";
+import WorkHistory from "./WorkHistory";
 import BuildProfile from "./BuildProfile";
 import AccountDetails from "./AccountDetails";
 import FreelancingPreferences from "./FreelancingPreferences";
@@ -32,6 +33,10 @@ const STEPS = [
   {
     path: "/profile",
     component: BuildProfile,
+  },
+  {
+    path: "/work",
+    component: WorkHistory,
   },
 ];
 

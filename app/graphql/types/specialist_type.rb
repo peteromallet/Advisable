@@ -55,12 +55,24 @@ class Types::SpecialistType < Types::BaseType
     description "The specialists linkedin URL"
   end
 
+  field :website, String, null: true do
+    description "The specialists portfolio"
+  end
+
   field :phone_number, String, null: true do
     description "The phone number for the specialist"
   end
 
   field :image, Types::AttachmentType, null: true do
     description "The specialists profile image"
+  end
+
+  field :resume, Types::AttachmentType, null: true do
+    description "The specialists resume"
+  end
+
+  def resume
+    object.resume.attached? ? object.resume : nil
   end
 
   field :avatar, String, null: true do
@@ -226,5 +238,9 @@ class Types::SpecialistType < Types::BaseType
 
   field :hourly_rate, Int, null: true do
     description "The typical hourly rate for this freelancer"
+  end
+
+  field :public_use, Boolean, null: false do
+    description "Wether or not the specialist is ok with being used publicly"
   end
 end

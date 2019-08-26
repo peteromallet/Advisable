@@ -59,7 +59,7 @@ const FileUpload = ({ label, onChange, preview }) => {
   return (
     <FileUploadStyles>
       <FileUploader>
-        <Preview>{preview(file)}</Preview>
+        {preview && <Preview>{preview(file)}</Preview>}
         <Info uploading={uploading}>
           <MainText>{mainText}</MainText>
           <SubText>png, jpg. 500x500px</SubText>

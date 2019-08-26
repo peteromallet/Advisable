@@ -13,6 +13,7 @@ class Specialist < ApplicationRecord
   has_many :skills, through: :specialist_skills
 
   has_one_attached :avatar
+  has_one_attached :resume
 
   attr_encrypted :phone_number, key: [ENV['ENCRYPTION_KEY']].pack('H*')
 

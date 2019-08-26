@@ -7,8 +7,11 @@ export default gql`
         id
         bio
         name
-        avatar
         city
+        avatar
+        website
+        publicUse
+        linkedin
         country {
           id
         }

@@ -8,6 +8,10 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
   argument :country, ID, required: false
   argument :remote, Boolean, required: false
   argument :avatar, String, required: false
+  argument :linkedin, String, required: false
+  argument :website, String, required: false
+  argument :resume, String, required: false
+  argument :public_use, Boolean, required: false
 
   field :specialist, Types::SpecialistType, null: true
 

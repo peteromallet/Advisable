@@ -26,6 +26,11 @@ class Airtable::Specialist < Airtable::Base
       specialist.bank_holder_address = Address.parse(self['Bank Holder Address']).to_h
     end
 
+    # Sync 'Okay To Use Publicly'
+    if self['Okay To Use Publicly']
+      specialist.public_use = self['Okay To Use Publicly'].include?("Yes")
+    end
+
     # sync the Freelancing Status column
     freelancing_status = fields["Freelancing Status"]
     specialist.primarily_freelance = freelancing_status.try(:include?, "Yes")
@@ -116,6 +121,10 @@ class Airtable::Specialist < Airtable::Base
 
     if specialist.primarily_freelance.nil?
       self['Freelancing Status'] = nil
+    end
+
+    if specialist.public_use != nil
+      self['Okay To Use Publicly'] = specialist.public_use ? "Yes" : "No"
     end
   end
 

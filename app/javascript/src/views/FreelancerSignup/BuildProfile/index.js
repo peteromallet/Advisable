@@ -6,6 +6,7 @@ import { Button, Text, Box } from "@advisable/donut";
 import { useQuery, useMutation } from "react-apollo";
 import Select from "../../../components/Select";
 import Avatar from "../../../components/Avatar";
+import Checkbox from "../../../components/Checkbox";
 import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
@@ -19,7 +20,7 @@ const GET_COUNTRIES = gql`
   }
 `;
 
-const BuildProfile = ({ specialist }) => {
+const BuildProfile = ({ history, specialist }) => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);
 
   const countriesQuery = useQuery(GET_COUNTRIES);
@@ -33,6 +34,8 @@ const BuildProfile = ({ specialist }) => {
         input: values,
       },
     });
+
+    history.push("/freelancers/signup/work");
   };
 
   const initialValues = {
@@ -40,6 +43,7 @@ const BuildProfile = ({ specialist }) => {
     bio: specialist.bio,
     city: specialist.city,
     country: get(specialist, "country.id"),
+    publicUse: specialist.publicUse,
   };
 
   if (countriesQuery.loading) {
@@ -90,7 +94,7 @@ const BuildProfile = ({ specialist }) => {
             />
           </Box>
           <Text mb="xs">Where are you based?</Text>
-          <Box mb="l" display="flex">
+          <Box mb="m" display="flex">
             <Box flex={1} pr="xxs">
               <TextField
                 name="city"
@@ -109,6 +113,14 @@ const BuildProfile = ({ specialist }) => {
                 options={countriesQuery.data.countries}
               />
             </Box>
+          </Box>
+          <Box mb="l">
+            <Checkbox
+              name="publicUse"
+              label="I’m okay with Advisable using my profile to promote me publicly on advisable.com"
+              onChange={formik.handleChange}
+              value={formik.values.publicUse}
+            />
           </Box>
           <Button
             size="l"
