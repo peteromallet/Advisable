@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import { useMutation } from "react-apollo";
 import { Redirect } from "react-router-dom";
 import { Text, Box, Button } from "@advisable/donut";
+import queryString from "query-string";
 import useViewer from "../../../hooks/useViewer";
 import VIEWER from "../../../graphql/queries/viewer";
 import TextField from "../../../components/TextField";
@@ -42,11 +43,16 @@ const AccountDetails = ({ history, location }) => {
   };
 
   const handleSubmit = async values => {
+    const queryParams = queryString.parse(location.search);
     const response = await signup({
       variables: {
         input: {
           ...values,
           skills,
+          pid: get(queryParams, "pid"),
+          campaignName: get(queryParams, "utm_campaign"),
+          campaignSource: get(queryParams, "utm_source"),
+          referrer: get(queryParams, "rid"),
         },
       },
     });
@@ -56,7 +62,6 @@ const AccountDetails = ({ history, location }) => {
     }
 
     const token = response.data.createFreelancerAccount.token;
-    console.log(token);
     window.localStorage.setItem("authToken", token);
     history.replace("/freelancers/signup/confirm");
   };

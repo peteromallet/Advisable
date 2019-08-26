@@ -24,6 +24,22 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     description "An array of skills"
   end
 
+  argument :pid, String, required: false do
+    description "The project ID that they are signing up for."
+  end
+
+  argument :campaign_name, String, required: false do
+    description "The name of the campaign they signed up from"
+  end
+
+  argument :campaign_source, String, required: false do
+    description "The source of the campaign they signed up from"
+  end
+
+  argument :referrer, String, required: false do
+    description "The rerrer they signed up from"
+  end
+
   field :token, String, null: false
   field :viewer, Types::ViewerUnion, null: false
 
@@ -44,6 +60,10 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
       last_name: args[:last_name],
       email: args[:email],
       password: args[:password],
+      pid: args[:pid],
+      referrer: args[:referrer],
+      campaign_name: args[:campaign_name],
+      campaign_source: args[:campaign_source],
     )
 
     unless account.valid?
@@ -63,6 +83,7 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     account.skills = skills
 
     if account.save
+      create_application_record(account, args[:pid])
       account.sync_to_airtable
       account.send_confirmation_email
     end
@@ -74,5 +95,21 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
       token: token,
       viewer: account
     }
+  end
+
+  private
+
+  # When a freelancer signs up, they may have come from a campaign that passed
+  # a pid (project ID) as a query param. This can be sent with the signup
+  # mutation to create an application record for that project.
+  def create_application_record(specialist, pid)
+    return unless pid
+    project = Project.find_by_airtable_id(pid)
+    return unless project.present?
+    application = specialist.applications.create(
+      project: project,
+      status: "Invited To Apply"
+    )
+    application.sync_to_airtable
   end
 end

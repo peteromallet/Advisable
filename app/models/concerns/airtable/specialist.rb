@@ -19,6 +19,10 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'Bank Currency', to: :bank_currency
   sync_column 'VAT Number', to: :vat_number
   sync_column 'Estimated Number of Freelance Projects', to: :number_of_projects
+  sync_column 'PID', to: :pid
+  sync_column 'Campaign Name', to: :campaign_name
+  sync_column 'Campaign Source', to: :campaign_source
+  sync_column 'Referrer', to: :referrer
 
   sync_data do |specialist|
     # sync the bank holder address
@@ -87,6 +91,8 @@ class Airtable::Specialist < Airtable::Base
   push_data do |specialist|
     self['Biography'] = specialist.bio
     self['Email Address'] = specialist.email
+    self['First Name'] = specialist.first_name
+    self['Last Name'] = specialist.last_name
     self['Specialist Skills'] = specialist.skills.map(&:airtable_id).uniq
     self['City'] = specialist.city
     self['Account Created'] = specialist.has_account? ? "Yes" : nil
@@ -126,6 +132,11 @@ class Airtable::Specialist < Airtable::Base
     if specialist.public_use != nil
       self['Okay To Use Publicly'] = specialist.public_use ? "Yes" : "No"
     end
+
+    self['PID'] = specialist.pid if specialist.pid
+    self['Campaign Name'] = specialist.campaign_name if specialist.campaign_name
+    self['Campaign Source'] = specialist.campaign_source if specialist.campaign_source
+    self['Referrer'] = specialist.referrer if specialist.referrer
   end
 
   private

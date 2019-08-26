@@ -46,9 +46,10 @@ const Skills = ({ history, location }) => {
   // navigates back to the skills step, we can read their previously selected
   // skills from the location state.
   const handleSubmit = values => {
-    history.replace(location.pathname, { skills: values.skills });
+    const state = { skills: values.skills };
+    history.replace(`/freelancers/signup${location.search}`, state);
     // Continue to the account details step and pass the state.
-    history.push("/freelancers/signup/account", { skills: values.skills });
+    history.push(`/freelancers/signup/account${location.search}`, state);
   };
 
   if (skillsQuery.loading) {

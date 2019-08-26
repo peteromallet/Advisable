@@ -41,7 +41,7 @@ const STEPS = [
 ];
 
 // Renders the freelancer signup flow.
-const FreelancerSignup = () => {
+const FreelancerSignup = ({ location }) => {
   const { updateTheme } = useTheme();
   const { loading, data } = useQuery(GET_SPECIALIST);
 
