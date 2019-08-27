@@ -15,7 +15,7 @@ const OpenProject = ({ project }) => {
   });
 
   return (
-    <Box position="absolute" bottom={20} left={20} right={20}>
+    <Box position="absolute" bottom={30} left={30} right={30}>
       <animated.div style={props}>
         <Card padding="m" borderRadius={12} elevation="l">
           <Box display="flex" alignItems="center">

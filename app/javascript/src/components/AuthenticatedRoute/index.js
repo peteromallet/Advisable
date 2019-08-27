@@ -12,7 +12,7 @@ const AuthenticatedRoute = ({
   freelancerRoute,
   ...rest
 }) => {
-  const viewer = useViewer();
+  const { __typename, accountStatus, ...viewer } = useViewer();
 
   return (
     <Route
@@ -31,6 +31,11 @@ const AuthenticatedRoute = ({
               }}
             />
           );
+        }
+
+        // Redirect to specialist setup if their accountStatus is 'Started'
+        if (__typename === "Specialist" && accountStatus === "Started") {
+          return <Redirect to="/freelancers/signup/work" />;
         }
 
         // if the viewer still needs to confirm their account then render the

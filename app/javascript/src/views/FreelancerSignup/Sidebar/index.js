@@ -5,7 +5,6 @@ import Testimonial from "./Testimonial";
 import OpenProject from "./OpenProject";
 
 const Sidebar = ({ specialist }) => {
-  console.log(specialist);
   const invite = get(specialist, "invitations[0]");
 
   return (

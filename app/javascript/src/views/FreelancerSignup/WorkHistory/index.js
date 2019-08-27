@@ -5,9 +5,11 @@ import { useMutation } from "react-apollo";
 import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
+import COMPLETE_SETUP from "../completeSetup";
 
 const WorkHistory = ({ specialist, history }) => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);
+  const [completeSetup] = useMutation(COMPLETE_SETUP);
 
   const handleSubmit = async values => {
     const { data, errors } = await updateProfile({
@@ -16,6 +18,7 @@ const WorkHistory = ({ specialist, history }) => {
       },
     });
 
+    await completeSetup({ variables: { input: {} } });
     history.push("/");
   };
 

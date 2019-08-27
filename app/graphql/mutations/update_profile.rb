@@ -28,12 +28,12 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
   end
 
   def resolve(**args)
-    {
-      specialist: Specialists::UpdateProfile.call(
-        specialist: context[:current_user],
-        attributes: args.except(:id)
-      )
-    }
+    specialist = Specialists::UpdateProfile.call(
+      specialist: context[:current_user],
+      attributes: args.except(:id)
+    )
+
+    { specialist: specialist }
 
     rescue Service::Error => e
       raise APIError::InvalidRequest.new("failedToUpdate", e.message)

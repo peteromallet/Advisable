@@ -46,9 +46,3 @@ export const Stars = styled.div`
   margin: 0 auto 12px auto;
   background: url(${stars}) no-repeat center / cover;
 `;
-
-export const OpenProject = styled.div`
-  left: 20px;
-  bottom: 20px;
-  position: absolute;
-`;

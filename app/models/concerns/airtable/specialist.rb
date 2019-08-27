@@ -23,6 +23,7 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'Campaign Name', to: :campaign_name
   sync_column 'Campaign Source', to: :campaign_source
   sync_column 'Referrer', to: :referrer
+  sync_column "Application Stage", to: :account_status
 
   sync_data do |specialist|
     # sync the bank holder address
@@ -102,6 +103,7 @@ class Airtable::Specialist < Airtable::Base
     self['Bank Currency'] = specialist.bank_currency
     self['VAT Number'] = specialist.vat_number
     self['Estimated Number of Freelance Projects'] = specialist.number_of_projects
+    self['Application Stage'] = specialist.account_status
 
     if specialist.hourly_rate
       self['Typical Hourly Rate'] = specialist.hourly_rate / 100.0

@@ -3,7 +3,6 @@ import { get } from "lodash";
 import gql from "graphql-tag";
 import { Formik, Form } from "formik";
 import { useQuery } from "react-apollo";
-import { Redirect } from "react-router-dom";
 import {
   Text,
   Box,
@@ -13,7 +12,6 @@ import {
   Skeleton,
 } from "@advisable/donut";
 import validationSchema from "./validationSchema";
-import useViewer from "../../../hooks/useViewer";
 
 const SKILLS = gql`
   query {
@@ -27,12 +25,6 @@ const SKILLS = gql`
 // Renders the freelancer signup flow.
 const Skills = ({ history, location }) => {
   const skillsQuery = useQuery(SKILLS);
-  const viewer = useViewer();
-
-  // Redirect to the confirmation step if there is already a user logged in
-  if (Boolean(viewer)) {
-    return <Redirect to="/freelancers/signup/confirm" />;
-  }
 
   const initialValues = {
     skills: get(location.state, "skills") || [],

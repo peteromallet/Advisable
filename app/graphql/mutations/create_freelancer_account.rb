@@ -56,6 +56,7 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     end
 
     account = Specialist.new(
+      account_status: "Started",
       first_name: args[:first_name],
       last_name: args[:last_name],
       email: args[:email],

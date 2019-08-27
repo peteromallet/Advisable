@@ -29,6 +29,7 @@ export const viewerFields = gql`
       lastName
       confirmed
       talkSignature
+      accountStatus
       completedTutorials
       avatar
       image {

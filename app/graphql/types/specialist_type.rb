@@ -243,4 +243,9 @@ class Types::SpecialistType < Types::BaseType
   field :public_use, Boolean, null: true do
     description "Wether or not the specialist is ok with being used publicly"
   end
+
+  field :account_status, String, null: true do
+    authorize :is_specialist
+    description "The account status for the specialist"
+  end
 end

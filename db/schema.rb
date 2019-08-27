@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_26_095426) do
+ActiveRecord::Schema.define(version: 2019_08_27_104122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -357,6 +357,7 @@ ActiveRecord::Schema.define(version: 2019_08_26_095426) do
     t.string "campaign_name"
     t.string "campaign_source"
     t.string "referrer"
+    t.string "account_status"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
