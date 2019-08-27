@@ -93,7 +93,7 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
 
     {
       token: token,
-      viewer: account
+      viewer: account.reload
     }
   end
 

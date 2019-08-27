@@ -3,9 +3,10 @@ import { useQuery } from "react-apollo";
 import { useTheme, Box } from "@advisable/donut";
 import { Switch, Route } from "react-router-dom";
 import Logo from "../../components/Logo";
-import { Container, Main, Sidebar, Content } from "./styles";
+import { Container, Main, Content } from "./styles";
 import Skills from "./Skills";
 import Confirm from "./Confirm";
+import Sidebar from "./Sidebar";
 import WorkHistory from "./WorkHistory";
 import BuildProfile from "./BuildProfile";
 import AccountDetails from "./AccountDetails";
@@ -43,7 +44,7 @@ const STEPS = [
 // Renders the freelancer signup flow.
 const FreelancerSignup = ({ location }) => {
   const { updateTheme } = useTheme();
-  const { loading, data } = useQuery(GET_SPECIALIST);
+  const { loading, data, errors } = useQuery(GET_SPECIALIST);
 
   React.useLayoutEffect(() => {
     updateTheme({ background: "white" });
@@ -74,7 +75,7 @@ const FreelancerSignup = ({ location }) => {
           </Switch>
         </Content>
       </Main>
-      <Sidebar>sidebar</Sidebar>
+      <Sidebar specialist={data.viewer} />
     </Container>
   );
 };

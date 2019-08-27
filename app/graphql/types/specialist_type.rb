@@ -240,7 +240,7 @@ class Types::SpecialistType < Types::BaseType
     description "The typical hourly rate for this freelancer"
   end
 
-  field :public_use, Boolean, null: false do
+  field :public_use, Boolean, null: true do
     description "Wether or not the specialist is ok with being used publicly"
   end
 end

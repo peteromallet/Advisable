@@ -52,6 +52,11 @@ const lineHeights = {
   xxxxl: "36px",
 };
 
+const boxShadow = {
+  s: "0 1px 2px red",
+  m: "0 5px 10px red",
+};
+
 export default {
   background: "default",
   responsiveProp: prop => {
@@ -86,15 +91,15 @@ export default {
       "#03071A",
     ],
     blue: [
-      "#E0E7FF",
-      "#CAD6FF",
-      "#A3B7FF",
-      "#6B8CFF",
+      "#D7F5FA",
+      "#ABF0FF",
+      "#5ACEFF",
+      "#4B93FF",
       "#2555FF",
-      "#1944DC",
-      "#1232A6",
-      "#0A2172",
-      "#051448",
+      "#162AD8",
+      "#091AAE",
+      "#000B71",
+      "#000744",
     ],
     red: [
       "#FFECEE",
@@ -113,4 +118,5 @@ export default {
   fontWeights,
   lineHeights,
   breakpoints,
+  boxShadow,
 };

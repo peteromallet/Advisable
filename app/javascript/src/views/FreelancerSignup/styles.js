@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { theme } from "@advisable/donut";
 
 export const Container = styled.div`
   display: flex;
+  padding-right: 40%;
 `;
 
 export const Main = styled.div`
@@ -14,7 +14,7 @@ export const Sidebar = styled.div`
   width: 40%;
   flex-shrink: 0;
   min-height: 100vh;
-  background: ${theme.colors.neutral[0]};
+  background: #f6f8ff;
 `;
 
 export const Content = styled.div`
