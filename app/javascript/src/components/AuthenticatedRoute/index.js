@@ -2,6 +2,7 @@
 // authenticated user to view the route. If the viewer is not authenticated it
 // will redirect to the Login view.
 import React from "react";
+import { get } from "lodash";
 import { Route, Redirect } from "react-router-dom";
 import PendingConfirmation from "./PendingConfirmation";
 import useViewer from "../../hooks/useViewer";
@@ -12,7 +13,9 @@ const AuthenticatedRoute = ({
   freelancerRoute,
   ...rest
 }) => {
-  const { __typename, accountStatus, ...viewer } = useViewer();
+  const viewer = useViewer();
+  const __typename = get(viewer, "__typename");
+  const accountStatus = get(viewer, "accountStatus");
 
   return (
     <Route

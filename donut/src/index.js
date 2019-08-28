@@ -5,6 +5,7 @@ export { default as Icon } from "./components/Icon";
 export { default as Text } from "./components/Text";
 export { default as Flex } from "./components/Flex";
 export { default as Tabs } from "./components/Tabs";
+export { default as Alert } from "./components/Alert";
 export { default as Button } from "./components/Button";
 export { default as Padding } from "./components/Padding";
 export { default as Provider } from "./components/Provider";
