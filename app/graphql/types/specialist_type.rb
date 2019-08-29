@@ -80,8 +80,12 @@ class Types::SpecialistType < Types::BaseType
   end
 
   def avatar
-    return unless object.avatar.attached?
-    Rails.application.routes.url_helpers.rails_blob_url(object.avatar, host: ENV["ORIGIN"])
+    if object.avatar.attached?
+      return Rails.application.routes.url_helpers.rails_blob_url(object.avatar, host: ENV["ORIGIN"])
+    end
+
+    # Fallback to the airtable image if they have not uploaded an avatar
+    object.image.try(:[], "url")
   end
 
   field :skills, [String, null: true], null: true do

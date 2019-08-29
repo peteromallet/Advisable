@@ -14,7 +14,7 @@ import TextField from "../../../components/TextField";
 import Padding from "../../../components/Spacing/Padding";
 import { useNotifications } from "../../../components/Notifications";
 import FETCH_PROFILE from "../fetchProfile.graphql";
-import UPDATE_PROFILE from "../updateProfile.graphql";
+import UPDATE_PROFILE from "../updateProfile";
 
 let Introduction = ({ data, mutate }) => {
   const notifications = useNotifications();

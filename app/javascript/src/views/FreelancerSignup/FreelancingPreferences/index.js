@@ -60,22 +60,27 @@ const FreelancingPreferences = ({ history }) => {
                 name="primarilyFreelance"
                 label="Yes, freelancing is my primary occupation."
                 checked={formik.values.primarilyFreelance === true}
-                onChange={() =>
-                  formik.setFieldValue("primarilyFreelance", true)
-                }
+                onChange={() => {
+                  formik.setFieldTouched("primarilyFreelance", true);
+                  formik.setFieldValue("primarilyFreelance", true);
+                }}
               />
             </Box>
             <Radio
               name="primarilyFreelance"
               label="No, I freelance alongside a full-time job."
               checked={formik.values.primarilyFreelance === false}
-              onChange={() => formik.setFieldValue("primarilyFreelance", false)}
+              onChange={() => {
+                formik.setFieldTouched("primarilyFreelance", true);
+                formik.setFieldValue("primarilyFreelance", false);
+              }}
             />
-            {formik.errors.primarilyFreelance && (
-              <Text size="xs" color="red.5" mt="xs" lineHeight="xs">
-                {formik.errors.primarilyFreelance}
-              </Text>
-            )}
+            {formik.touched.primarilyFreelance &&
+              formik.errors.primarilyFreelance && (
+                <Text size="xs" color="red.5" mt="xs" lineHeight="xs">
+                  {formik.errors.primarilyFreelance}
+                </Text>
+              )}
           </Box>
 
           <Box mb="l">
@@ -86,7 +91,10 @@ const FreelancingPreferences = ({ history }) => {
               name="numberOfProjects"
               onChange={formik.handleChange}
               value={formik.values.numberOfProjects}
-              error={formik.errors.numberOfProjects}
+              error={
+                formik.touched.numberOfProjects &&
+                formik.errors.numberOfProjects
+              }
               choices={[
                 { name: "1-5", value: "1-5" },
                 { name: "5-20", value: "5-20" },

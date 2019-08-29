@@ -5,6 +5,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Navigation from "./Navigation";
 import Introduction from "./Introduction";
 import Skills from "./Skills";
+import Profile from "./Profile";
 import Location from "./Location";
 import References from "./References";
 import PaymentSettings from "./PaymentSettings";
@@ -24,6 +25,7 @@ const UpdateProfile = ({ match }) => {
       <Route path={match.path} component={Navigation} exact={isMobile} />
       <Layout.Main>
         <Switch>
+          <Route path="/profile" exact component={Profile} />
           <Route path="/profile/introduction" component={Introduction} />
           <Route path="/profile/skills" component={Skills} />
           <Route path="/profile/location" component={Location} />

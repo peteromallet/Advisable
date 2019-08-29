@@ -4,7 +4,7 @@ import { Alert, Box, Card, Text, Button } from "@advisable/donut";
 
 const OnHold = ({ invitation, history }) => {
   const apply = () => {
-    history.push(`/invites/${invitation.airtableId}/apply`);
+    history.push(`/invites/${invitation.airtableId}`);
   };
 
   return (

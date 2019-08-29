@@ -105,7 +105,7 @@ class Types::QueryType < Types::BaseType
   field :skills, [Types::Skill], "Returns a list of skills", null: false
  
   def skills
-    Rails.cache.fetch("airtable_active_skills", expires_in: 2.minutes) do
+    Rails.cache.fetch("airtable_active_skills", expires_in: 10.minutes) do
       Airtable::Skill.active.map do |s|
         OpenStruct.new(airtable_id: s.id, name: s.fields["Name"])
       end

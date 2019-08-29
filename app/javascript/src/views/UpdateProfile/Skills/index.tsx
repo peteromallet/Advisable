@@ -14,7 +14,7 @@ import { useNotifications } from "../../../components/Notifications";
 import { SpecialistType } from "../../../types";
 import FETCH_SKILLS from "./fetchSkills.graphql";
 import FETCH_PROFILE from "../fetchProfile.graphql";
-import UPDATE_PROFILE from "../updateProfile.graphql";
+import UPDATE_PROFILE from "../updateProfile";
 
 interface Option {
   id: string;
