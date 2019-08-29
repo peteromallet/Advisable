@@ -61,7 +61,7 @@ const FreelancerSignup = ({ location }) => {
   const viewer = get(data, "viewer");
 
   return (
-    <Container>
+    <Box pr={{ _: 0, m: "40%" }}>
       <Main>
         <Content>
           <Box mt="l" mb="xxl" position="relative">
@@ -124,7 +124,7 @@ const FreelancerSignup = ({ location }) => {
         </Content>
       </Main>
       <Sidebar specialist={data.viewer} />
-    </Container>
+    </Box>
   );
 };
 

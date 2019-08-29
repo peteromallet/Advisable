@@ -3,18 +3,6 @@ import specialist from "./specialist.jpg";
 import trustpilot from "./trustpilot.png";
 import stars from "./stars.png";
 
-export const Sidebar = styled.div`
-  top: 0;
-  right: 0;
-  width: 40%;
-  display: flex;
-  flex-shrink: 0;
-  position: fixed;
-  min-height: 100vh;
-  background: #f6f8ff;
-  align-items: center;
-`;
-
 export const Avatar = styled.div`
   width: 80px;
   height: 80px;
