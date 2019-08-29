@@ -10,7 +10,7 @@ import {
   Label,
   Tags,
 } from "../styles";
-import Downshift from "../Downshift";
+import Downshift, { stateChangeTypes } from "../Downshift";
 import Tag from "../Tag";
 
 const AutocompleteDesktop = props => {
@@ -33,12 +33,27 @@ const AutocompleteDesktop = props => {
   const handleStateChange = popper => (changes, downshift) => {
     popper.scheduleUpdate();
 
+    if (
+      [stateChangeTypes.clickItem, stateChangeTypes.keyDownEnter].indexOf(
+        changes.type
+      ) > -1
+    ) {
+      downshift.setState({
+        inputValue: "",
+        isOpen: false,
+      });
+    }
+
     if (changes.hasOwnProperty("highlightedIndex")) {
       if (listRef.current !== null) {
         listRef.current.scrollToItem(changes.highlightedIndex);
       }
     }
   };
+
+  const filtleredOptions = options.filter(option => {
+    return value.indexOf(option.value) === -1;
+  });
 
   return (
     <Manager>
@@ -116,7 +131,7 @@ const AutocompleteDesktop = props => {
                   isMax={props.isMax}
                   width={inputSize.width}
                   downshift={downshift}
-                  options={options}
+                  options={filtleredOptions}
                 />
               </AutocompleteStyles>
             )}

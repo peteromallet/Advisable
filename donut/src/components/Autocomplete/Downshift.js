@@ -2,6 +2,8 @@ import React from "react";
 import { find } from "lodash";
 import Downshift from "downshift";
 
+export const stateChangeTypes = Downshift.stateChangeTypes;
+
 const DownshiftMulti = props => {
   const stateReducer = (state, changes) => {
     switch (changes.type) {
