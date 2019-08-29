@@ -2,21 +2,17 @@ import React from "react";
 import gql from "graphql-tag";
 import { useMutation } from "react-apollo";
 import Loading from "../../../components/Loading";
-import VIEWER from "../../../graphql/queries/viewer";
+import VIEWER, { viewerFields } from "../../../graphql/queries/viewer";
 import { useNotifications } from "../../../components/Notifications";
 
 const CONFIRM = gql`
+  ${viewerFields}
+
   mutation ConfirmAccount($input: ConfirmAccountInput!) {
     confirmAccount(input: $input) {
+      token
       viewer {
-        ... on User {
-          id
-          confirmed
-        }
-        ... on Specialist {
-          id
-          confirmed
-        }
+        ...ViewerFields
       }
       errors {
         code
@@ -50,7 +46,7 @@ const ConfirmAccount = ({ token, email, history }) => {
   }, []);
 
   const confirmAccount = async () => {
-    const { errors } = await confirm({
+    const { errors, data } = await confirm({
       variables: {
         input: {
           token,
@@ -59,10 +55,13 @@ const ConfirmAccount = ({ token, email, history }) => {
       },
     });
 
+    console.log(data);
+
     if (errors) {
       notifications.notify("Failed to confirm your account. Please try again.");
       history.replace("/freelancers/signup/confirm");
     } else {
+      window.localStorage.setItem("authToken", data.confirmAccount.token);
       history.replace("/freelancers/signup/preferences");
     }
   };

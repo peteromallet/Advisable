@@ -4,7 +4,7 @@ import { useQuery } from "react-apollo";
 import { useTheme, Box } from "@advisable/donut";
 import { Switch, Route, Redirect, matchPath } from "react-router-dom";
 import Logo from "../../components/Logo";
-import { Container, Main, Content } from "./styles";
+import { Main, Content } from "./styles";
 import Skills from "./Skills";
 import Confirm from "./Confirm";
 import Sidebar from "./Sidebar";
@@ -27,7 +27,6 @@ const STEPS = [
   {
     path: "/confirm",
     component: Confirm,
-    authRequired: true,
   },
   {
     path: "/preferences",
@@ -104,9 +103,9 @@ const FreelancerSignup = ({ location }) => {
                     // if it doesn't require auth but there is a viewer and
                     // their accountStatus is Started then redirect to the
                     // confirmation step
-                    if (Boolean(viewer) && viewer.accountStatus === "Started") {
-                      return <Redirect to="/freelancers/signup/confirm" />;
-                    }
+                    // if (Boolean(viewer) && viewer.accountStatus === "Started") {
+                    //   return <Redirect to="/freelancers/signup/confirm" />;
+                    // }
                   }
 
                   // If there is a viewer and their accountStatus is not

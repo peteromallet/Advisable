@@ -10,7 +10,7 @@ const Confirm = props => {
   const viewer = useViewer();
   const { t: token, email } = queryString.parse(props.location.search);
 
-  if (viewer.confirmed) {
+  if (viewer && viewer.confirmed) {
     return <Redirect to="/freelancers/signup/preferences" />;
   }
 
