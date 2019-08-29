@@ -18,16 +18,22 @@ export default ({ choices, name, value, onChange, error }) => (
           />
           <label htmlFor={choice.value}>
             <Circle />
-            <Text size="xs" color="neutral.8" weight="medium" mb="xxs">
+            <Text size="xs" color="neutral.8" weight="medium">
               {choice.name}
             </Text>
-            <Text size="xs" color="neutral.5" lineHeight="xs">
-              {choice.description}
-            </Text>
+            {choice.description && (
+              <Text size="xs" color="neutral.5" lineHeight="xs" mt="xxs">
+                {choice.description}
+              </Text>
+            )}
           </label>
         </Choice>
       ))}
     </Choices>
-    {error && <InputError>{error}</InputError>}
+    {error && (
+      <Text size="xs" color="red.5" mt="xs" lineHeight="xs">
+        {error}
+      </Text>
+    )}
   </React.Fragment>
 );

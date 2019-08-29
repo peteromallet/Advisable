@@ -33,12 +33,12 @@ const ConfirmationPending = () => {
 
   return (
     <>
-      <Text as="h2" size="xxxl" weight="semibold" color="blue.9" mb="s">
+      <Text as="h2" size="xxxl" weight="semibold" color="neutral.9" mb="s">
         Confirm your account
       </Text>
-      <Text size="s" color="neutral.5" lineHeight="m">
+      <Text size="s" color="neutral.7" lineHeight="m">
         Please click the confirmation link in the email that we have sent to{" "}
-        <Text as="span" color="neutral.9" weight="medium">
+        <Text as="span" color="blue.7" weight="medium">
           {viewer.email}
         </Text>
         . If you do not receive the confirmation message within a few minutes
@@ -46,10 +46,10 @@ const ConfirmationPending = () => {
       </Text>
       {!resent && (
         <>
-          <Text size="s" weight="medium" color="neurtal.5" mt="l" mb="xxs">
+          <Text size="s" color="neutral.4" mt="l">
             Didn't receive an email?
           </Text>
-          <Button appearance="minimal" intent="success" onClick={resend}>
+          <Button intent="success" onClick={resend} appearance="minimal">
             Resend confirmation email
           </Button>
         </>

@@ -2,7 +2,7 @@ import React from "react";
 import { get } from "lodash";
 import { useQuery } from "react-apollo";
 import { useTheme, Box } from "@advisable/donut";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, matchPath } from "react-router-dom";
 import Logo from "../../components/Logo";
 import { Container, Main, Content } from "./styles";
 import Skills from "./Skills";
@@ -64,8 +64,27 @@ const FreelancerSignup = ({ location }) => {
     <Container>
       <Main>
         <Content>
-          <Box mt="l" mb="xxl">
+          <Box mt="l" mb="xxl" position="relative">
             <Logo />
+            <Box display="flex" position="absolute" right={0} top={15}>
+              {STEPS.map(step => (
+                <Box
+                  ml="xxs"
+                  width={6}
+                  height={6}
+                  key={step.path}
+                  borderRadius="50%"
+                  bg={
+                    matchPath(location.pathname, {
+                      path: `/freelancers/signup${step.path}`,
+                      exact: step.exact,
+                    })
+                      ? "blue.4"
+                      : "neutral.1"
+                  }
+                />
+              ))}
+            </Box>
           </Box>
           <Switch>
             {STEPS.map(step => (

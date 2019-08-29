@@ -3,10 +3,10 @@ import styled, { css } from "styled-components";
 import Text from "../Text/styles";
 import FieldError from "../FieldError/styles";
 import colors from "../../colors";
+import theme from "../../theme";
 
 export const Label = styled(Text)`
   display: block;
-  font-weight: 500;
   margin-bottom: 8px;
 `;
 
@@ -25,9 +25,13 @@ export const Input = styled.input`
   outline: none;
   font-size: 16px;
   padding: 0 12px;
-  font-weight: 500;
+  font-weight: 400;
   border-radius: 8px;
-  background: rgba(29, 39, 75, 0.06);
+  background: ${rgba(theme.colors.neutral[1], 0.7)};
+
+  &::placeholder {
+    color: ${theme.colors.neutral[3]};
+  }
 `;
 
 export const Menu = styled.div`
@@ -106,12 +110,12 @@ export const Tags = styled.div`
 export const Tag = styled.div`
   height: 28px;
   display: inline-flex;
-  border-radius: 4px;
+  border-radius: 8px;
   margin-right: 8px;
   margin-bottom: 8px;
   align-items: center;
-  color: ${colors.blue.N7};
-  background: ${colors.blue.N1};
+  color: ${theme.colors.blue[7]};
+  background: ${theme.colors.blue[0]};
 `;
 
 export const TagName = styled.div`
@@ -121,6 +125,7 @@ export const TagName = styled.div`
 `;
 
 export const RemoveTag = styled.button`
+  opacity: 0.6;
   padding: 0;
   width: 30px;
   height: 100%;
@@ -131,12 +136,13 @@ export const RemoveTag = styled.button`
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  background: ${rgba(colors.blue.N3, 0.4)};
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: ${rgba(theme.colors.blue[1], 0.6)};
+  transition: opacity 150ms;
 
   &:hover {
-    background: ${rgba(colors.blue.N3, 0.6)};
+    opacity: 1;
   }
 `;
 

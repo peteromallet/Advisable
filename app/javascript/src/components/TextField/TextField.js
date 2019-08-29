@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import uniqueID from "lodash/uniqueId";
+import { Text } from "@advisable/donut";
 import {
   Wrapper,
   InputContainer,
@@ -10,10 +11,8 @@ import {
   Prefix,
   InputBackdrop,
 } from "./styles";
-import InputError from "src/components/InputError";
 import InputLabel from "src/components/InputLabel";
 import InputSubLabel from "src/components/InputSubLabel";
-import InputDescription from "src/components/InputDescription";
 import { extractSpacingProps } from "src/components/Spacing";
 
 const TextField = ({
@@ -133,8 +132,16 @@ const TextField = ({
         <InputBackdrop />
         {(charCount || maxLength) && <CharCount>{characterCount}</CharCount>}
       </InputContainer>
-      {error && <InputError>{error}</InputError>}
-      {description && <InputDescription>{description}</InputDescription>}
+      {error && (
+        <Text size="xs" color="red.5" mt="xs">
+          {error}
+        </Text>
+      )}
+      {description && (
+        <Text size="xxs" color="neutral.7" lineHeight="xs" mt="xs">
+          {description}
+        </Text>
+      )}
     </Wrapper>
   );
 };

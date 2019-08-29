@@ -2,6 +2,7 @@ import styled from "styled-components";
 import InputLabel from "src/components/InputLabel";
 import InputDescription from "src/components/InputDescription";
 import { withSpacing } from "src/components/Spacing";
+import { theme } from "@advisable/donut";
 import tick from "./tick.svg";
 
 export const Wrapper = withSpacing(styled.div`
@@ -23,11 +24,11 @@ export const Box = styled.span`
   width: 18px;
   height: 18px;
   display: block;
-  border-radius: 6px;
+  border-radius: 4px;
   position: absolute;
-  border: 2px solid #b7bdd5;
   transform: translateY(-50%);
   transition: border-color 200ms;
+  border: 2px solid ${theme.colors.neutral[2]};
 `;
 
 export const Input = styled.input`
@@ -38,12 +39,8 @@ export const Input = styled.input`
   clip: rect(1px, 1px, 1px, 1px);
 
   &:checked + ${InputLabel} ${Box} {
-    border-color: #173fcd;
+    border-color: ${theme.colors.blue[5]};
     background: url(${tick}) no-repeat center;
-  }
-
-  &:focus + ${InputLabel} ${Box} {
-    border-color: #173fcd;
   }
 `;
 

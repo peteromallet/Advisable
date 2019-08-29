@@ -16,6 +16,7 @@ const Button = ({ children, icon, iconRight, loading, size, ...rest }) => {
       {...rest}
       size={size}
       isLoading={loading}
+      iconRight={iconRight}
       data-loading={loading || null}
     >
       {loading && (
@@ -25,9 +26,9 @@ const Button = ({ children, icon, iconRight, loading, size, ...rest }) => {
           <Dot />
         </Loading>
       )}
-      {icon && <Icon icon={icon} width={20} />}
+      {icon && <Icon mr="xs" icon={icon} width={20} />}
       {children}
-      {iconRight && <Icon icon={iconRight} width={20} />}
+      {iconRight && <Icon ml="xs" icon={iconRight} width={20} />}
     </ButtonStyles>
   );
 };

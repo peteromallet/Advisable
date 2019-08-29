@@ -22,12 +22,12 @@ const OnHold = () => {
             mb="s"
             size="xxl"
             weight="medium"
-            color="blue.7"
+            color="neutral.9"
             textAlign="center"
           >
             We are looking for projects that we think are suitable for you
           </Text>
-          <Text textAlign="center" size="m" lineHeight="m" color="neutral.6">
+          <Text textAlign="center" size="m" lineHeight="m" color="neutral.7">
             We will let you know once we find a suitable project. To make sure
             we know which projects to inform you about, please make sure your
             profile is detailed and up to date.

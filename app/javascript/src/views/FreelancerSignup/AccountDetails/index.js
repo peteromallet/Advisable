@@ -68,13 +68,14 @@ const AccountDetails = ({ history, location }) => {
 
   return (
     <>
-      <Text as="h2" size="xxxl" weight="semibold" color="blue.9" mb="s">
+      <Text as="h2" size="xxxl" weight="semibold" color="neutral.9" mb="s">
         Create your account
       </Text>
-      <Text size="s" color="neutral.5" lineHeight="m">
-        Create your Advisable freelancer account below.
+      <Text size="s" color="neutral.7" lineHeight="m">
+        Create your Advisable freelancer account below so that you can apply to
+        client projects.
       </Text>
-      <Box bg="neutral.0" width="100%" height="1px" my="l" />
+      <Box bg="neutral.1" width="100%" height="1px" my="l" />
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
@@ -128,7 +129,7 @@ const AccountDetails = ({ history, location }) => {
               value={formik.values.password}
               error={formik.touched.password && formik.errors.password}
             />
-            <Box bg="neutral.0" width="100%" height="1px" my="l" />
+            <Box bg="neutral.1" width="100%" height="1px" my="l" />
             <Button
               size="l"
               type="submit"

@@ -9,4 +9,6 @@ const Text = ({ children, size, weight, ...rest }) => {
   );
 };
 
+Text.Styles = TextStyles;
+
 export default Text;

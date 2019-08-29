@@ -1,11 +1,12 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Button, Text, Box } from "@advisable/donut";
+import { Button, Text, Box, Icon } from "@advisable/donut";
 import { useMutation } from "react-apollo";
 import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
 import COMPLETE_SETUP from "../completeSetup";
+import validationSchema from "./validationSchema";
 
 const WorkHistory = ({ specialist, history }) => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);
@@ -29,18 +30,21 @@ const WorkHistory = ({ specialist, history }) => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+    >
       {formik => (
         <Form>
-          <Text as="h2" size="xxxl" weight="semibold" color="blue.9" mb="s">
+          <Text as="h2" size="xxxl" weight="semibold" color="neutral.9" mb="s">
             Work history
           </Text>
-          <Text size="s" color="neutral.5" lineheight="m">
-            build your profile. this information will be shared with clients
-            when you apply to projects. you can update your profile in your user
-            settings.
+          <Text size="s" color="neutral.7" lineHeight="m">
+            This information will be shared with clients when you apply to
+            projects. You can update your profile in your user settings.
           </Text>
-          <Box bg="neutral.0" width="100%" height="1px" my="l" />
+          <Box bg="neutral.1" width="100%" height="1px" my="l" />
           <Box mb="m">
             <TextField
               name="linkedin"
@@ -49,6 +53,7 @@ const WorkHistory = ({ specialist, history }) => {
               onChange={formik.handleChange}
               label="Linkedin URL (Recommended)"
               placeholder="https://linkedin.com/..."
+              error={formik.touched.linkedin && formik.errors.linkedin}
             />
           </Box>
           <Box mb="m">
@@ -59,15 +64,27 @@ const WorkHistory = ({ specialist, history }) => {
               onChange={formik.handleChange}
               label="Website/Porfolio"
               placeholder="https://"
+              error={formik.touched.website && formik.errors.website}
             />
           </Box>
-          <Box mb="m">
+          <Text size="s" color="neutral.8" mb="xs" weight="medium">
+            Resume
+          </Text>
+          <Box mb="l">
             <FileUpload
               label="Upload your resume"
+              preview={() => {
+                return <Icon icon="upload-cloud" ml="xs" color="neutral.6" />;
+              }}
               onChange={blob => {
                 formik.setFieldValue("resume", blob.signed_id);
               }}
             />
+            {formik.errors.resume && (
+              <Text size="xs" color="red.5" mt="xs">
+                {formik.errors.resume}
+              </Text>
+            )}
           </Box>
           <Button
             size="l"
@@ -77,7 +94,7 @@ const WorkHistory = ({ specialist, history }) => {
             iconRight="arrow-right"
             loading={formik.isSubmitting}
           >
-            continue
+            Continue
           </Button>
         </Form>
       )}

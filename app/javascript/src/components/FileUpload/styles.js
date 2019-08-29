@@ -1,4 +1,4 @@
-import { darken } from "polished";
+import { darken, rgba } from "polished";
 import styled, { css } from "styled-components";
 import { theme } from "@advisable/donut";
 
@@ -17,10 +17,10 @@ export const FileUploader = styled.div`
   padding-left: 12px;
   border-radius: 12px;
   align-items: center;
-  background: ${theme.colors.neutral[0]};
+  background: ${rgba(theme.colors.neutral[1], 0.7)};
 
   &:hover {
-    background: ${darken(0.01, theme.colors.neutral[0])};
+    background: ${rgba(theme.colors.neutral[1], 0.8)};
   }
 
   input {
@@ -42,7 +42,7 @@ export const MainText = styled.span`
   font-size: 15px;
   font-weight: 500;
   margin-bottom: 4px;
-  color: ${theme.colors.blue[5]};
+  color: ${theme.colors.neutral[8]};
   transition: color 300ms, transform 300ms;
 `;
 
@@ -50,7 +50,7 @@ export const SubText = styled.span`
   display: block;
   font-size: 13px;
   font-weight: 400;
-  color: ${theme.colors.neutral[4]};
+  color: ${theme.colors.neutral[5]};
   transition: color 300ms, transform 300ms;
 `;
 
@@ -89,5 +89,5 @@ export const ProgressBar = styled.div.attrs(props => ({
   height: 100%;
   position: absolute;
   transition: width 100ms;
-  background: ${theme.colors.neutral[1]};
+  background: ${theme.colors.neutral[2]};
 `;

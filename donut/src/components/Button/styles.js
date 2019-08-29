@@ -2,6 +2,7 @@ import { space } from "styled-system";
 import styled, { keyframes, css } from "styled-components";
 import { darken, lighten, rgba } from "polished";
 import colors from "../../colors";
+import theme from "../../theme";
 import Icon from "../Icon/styles";
 
 const HEIGHTS = {
@@ -11,7 +12,7 @@ const HEIGHTS = {
 
 const PADDING = {
   m: "0 16px",
-  l: "0 28px",
+  l: "0 24px",
 };
 
 const APPEARANCES = {
@@ -33,7 +34,7 @@ const APPEARANCES = {
     height: ${props => HEIGHTS[props.size || "m"]}px;
     line-height: 1;
     padding: ${props => PADDING[props.size || "m"]};
-    font-weight: 600;
+    font-weight: 500;
   `,
   minimal: css`
     outline: none;
@@ -77,13 +78,16 @@ const INTENT = {
     `,
     success: css`
       color: white;
-      background: ${colors.blue.N5};
+      background: ${theme.colors.blue[4]};
 
       &:hover:not(:disabled):not([data-loading]) {
-        background: ${darken(0.1, colors.blue.N5)};
+        background: ${darken(0.1, theme.colors.blue[4])};
       }
 
-      &:active:not(:disabled),
+      &:active:not(:disabled):not([data-loading]) {
+        background: ${darken(0.2, theme.colors.blue[4])};
+      }
+
       &[data-loading] {
         background: ${lighten(0.1, colors.blue.N5)};
       }
@@ -91,7 +95,7 @@ const INTENT = {
   },
   minimal: {
     success: css`
-      color: ${colors.blue.N5};
+      color: ${theme.colors.blue[6]};
 
       &:hover:not(:disabled) {
         color: ${colors.blue.N6};
@@ -162,7 +166,7 @@ const loadingStyling = css`
 `;
 
 const FONT_SIZES = {
-  m: 14,
+  m: 15,
   l: 16,
 };
 
@@ -173,25 +177,18 @@ export const Button = styled.button`
   font-size: ${props => FONT_SIZES[props.size || "m"]}px;
   cursor: pointer;
   appearance: none;
-  font-weight: 500;
+  font-weight: 400;
   position: relative;
-  border-radius: 8px;
+  border-radius: 12px;
   align-items: center;
   display: inline-flex;
   text-decoration: none;
   justify-content: center;
-  letter-spacing: 0.05rem;
+  transition: background 150ms;
   width: ${props => props.width};
+  font-family: "Poppins", sans-serif;
 
   ${space}
-
-  ${Icon}:first-child {
-    margin-right: 8px;
-  }
-
-  ${Icon}:last-child {
-    margin-left: 8px;
-  }
 
   ${props => APPEARANCES[props.appearance]};
   ${props => INTENT[props.appearance][props.intent]};

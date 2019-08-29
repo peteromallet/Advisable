@@ -10,6 +10,7 @@ import Checkbox from "../../../components/Checkbox";
 import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
+import validationSchema from "./validationSchema";
 
 const GET_COUNTRIES = gql`
   {
@@ -51,19 +52,25 @@ const BuildProfile = ({ history, specialist }) => {
   }
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+    >
       {formik => (
         <Form>
-          <Text as="h2" size="xxxl" weight="semibold" color="blue.9" mb="s">
+          <Text as="h2" size="xxxl" weight="semibold" color="neutral.9" mb="s">
             Build your profile
           </Text>
-          <Text size="s" color="neutral.5" lineHeight="m">
-            Build your profile. This information will be shared with clients
-            when you apply to projects. You can update your profile in your user
-            settings.
+          <Text size="s" color="neutral.7" lineHeight="m">
+            This information will be shared with clients when you apply to
+            projects. You can update your profile in your user settings.
           </Text>
-          <Box bg="neutral.0" width="100%" height="1px" my="l" />
+          <Box bg="neutral.1" width="100%" height="1px" my="l" />
           <Box mb="m">
+            <Text size="s" color="neutral.8" mb="xs" weight="medium">
+              Proile photo
+            </Text>
             <FileUpload
               onChange={blob => {
                 formik.setFieldValue("avatar", blob.signed_id);
@@ -91,9 +98,12 @@ const BuildProfile = ({ history, specialist }) => {
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               placeholder="Write a short introduction"
+              error={formik.touched.bio && formik.errors.bio}
             />
           </Box>
-          <Text mb="xs">Where are you based?</Text>
+          <Text color="neutral.8" weight="medium" mb="xs">
+            Where are you based?
+          </Text>
           <Box mb="m" display="flex">
             <Box flex={1} pr="xxs">
               <TextField
@@ -102,6 +112,7 @@ const BuildProfile = ({ history, specialist }) => {
                 value={formik.values.city}
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
+                error={formik.touched.city && formik.errors.city}
               />
             </Box>
             <Box flex={1} pl="xxs">
@@ -111,6 +122,7 @@ const BuildProfile = ({ history, specialist }) => {
                 value={formik.values.country}
                 onChange={formik.handleChange}
                 options={countriesQuery.data.countries}
+                error={formik.touched.country && formik.errors.country}
               />
             </Box>
           </Box>

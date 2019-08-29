@@ -18,7 +18,13 @@ const OnHold = ({ invitation, history }) => {
         accepted to Advisable, please apply to the project below.
       </Alert>
       <Card padding="xl" borderRadius={8} elevation="m">
-        <Text mb="s" size="xxl" lineHeight="xxl" weight="medium" color="blue.8">
+        <Text
+          mb="s"
+          size="xxl"
+          lineHeight="xxl"
+          weight="medium"
+          color="neutral.9"
+        >
           Good news! We found a project that might be suitable for you.
         </Text>
         <Text size="m" lineHeight="m" color="neutral.7">
@@ -26,7 +32,7 @@ const OnHold = ({ invitation, history }) => {
           get accepted to Advisable and get priority access to projects, please
           apply below.
         </Text>
-        <Box height={1} bg="neutral.0" my="l" />
+        <Box height={1} bg="neutral.1" my="l" />
         <Text size="l" weight="medium" mb="xxs">
           {invitation.project.primarySkill}
         </Text>
