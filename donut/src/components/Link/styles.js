@@ -6,13 +6,14 @@ import theme from "../../theme";
 export const LinkStyles = styled(Link)`
   ${space}
 
+  font-weight: 400;
   display: inline-block;
   text-decoration: none;
-  color: ${theme.colors.blue[5]};
+  transition: color 200ms;
+  color: ${theme.colors.blue[6]};
 
   &:hover {
-    text-decoration: underline;
-    color: ${theme.colors.blue[6]};
+    color: ${theme.colors.blue[8]};
   }
 `;
 

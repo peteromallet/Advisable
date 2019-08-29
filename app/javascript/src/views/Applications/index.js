@@ -2,8 +2,8 @@
 import { get } from "lodash";
 import * as React from "react";
 import { useQuery } from "react-apollo";
+import { Box, Alert } from "@advisable/donut";
 import Layout from "../../components/Layout";
-import OnHold from "./OnHold";
 import FETCH_DATA from "./fetchData.js";
 import OpenApplications from "./OpenApplications";
 import ApplicationInvitations from "./ApplicationInvitations";
@@ -18,20 +18,30 @@ const Applications = ({ history }) => {
   const invitations = get(data, "viewer.invitations");
   const applications = get(data, "viewer.applications");
   const viewer = get(data, "viewer");
-
-  if (get(viewer, "accountStatus") === "On Hold") {
-    return <OnHold invitations={invitations} />;
-  }
+  const onHold = get(viewer, "accountStatus") === "On Hold";
 
   return (
     <Layout>
       <Layout.Main>
+        {onHold && (
+          <Box mb="l">
+            <Alert
+              mb="m"
+              icon="refresh-ccw"
+              title="Your account is currently on hold"
+            >
+              We evaluate and accept freelancers as they apply for projects.
+            </Alert>
+          </Box>
+        )}
         <ApplicationInvitations
+          onHold={onHold}
           loading={loading}
           onViewInvitation={handleViewInvitation}
           applications={loading ? [] : invitations}
         />
         <OpenApplications
+          onHold={onHold}
           loading={loading}
           specialist={viewer}
           applications={loading ? [] : applications}
