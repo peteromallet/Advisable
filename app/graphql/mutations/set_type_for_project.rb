@@ -23,7 +23,7 @@ class Mutations::SetTypeForProject < Mutations::BaseMutation
     end
 
     ap = Application.find_by_airtable_id(application)
-    ap.update_attributes(project_type: project_type, monthly_limit: monthly_limit)
+    ap.update(project_type: project_type, monthly_limit: monthly_limit)
     ap.sync_to_airtable
     { application: ap }
   end

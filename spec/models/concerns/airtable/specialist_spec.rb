@@ -80,7 +80,7 @@ describe Airtable::Specialist do
 
     context "when the specialist has an account" do
       it "sets 'Account Created' to 'Yes'" do
-        specialist.update_attributes(password: "testing123")
+        specialist.update(password: "testing123")
         expect { airtable.push(specialist) }.to change {
           airtable.fields['Account Created']
         }.from(nil).to("Yes")

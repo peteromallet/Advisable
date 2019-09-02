@@ -34,7 +34,7 @@ class Mutations::StopWorking < Mutations::BaseMutation
       )
     end
 
-    application.update_attributes(
+    application.update(
       status: "Stopped Working",
       stopped_working_reason: args[:reason]
     )

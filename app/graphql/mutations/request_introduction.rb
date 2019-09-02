@@ -9,7 +9,7 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
 
   def resolve(**args)
     application = Application.find_by_airtable_id(args[:application_id])
-    application.project.user.update_attributes(availability: args[:availability])
+    application.project.user.update(availability: args[:availability])
 
     interview = application.interviews.new(
       user: application.project.user,
@@ -27,7 +27,7 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
   private
 
   def update_application_status(application)
-    application.update_attributes(status: 'Application Accepted')
+    application.update(status: 'Application Accepted')
     application.sync_to_airtable
     Webhook.process(application)
   end

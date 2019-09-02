@@ -124,7 +124,6 @@ class Airtable::Base < Airrecord::Table
 
       begin
         retry_count += 1
-        record.reload
         instance_exec(record, &self.class.push_block) if self.class.push_block
 
         additional_fields.each do |field, value|

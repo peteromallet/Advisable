@@ -200,15 +200,6 @@ describe Airtable::Application do
       end
     end
 
-    context "when the status has not been changed" do
-      it "doesn't sync the 'Application Status' column" do
-        application.reload
-        expect { airtable.push(application) }.not_to change {
-          airtable.fields['Application Status']
-        }
-      end
-    end
-
     context "when the introduction has been changed" do
       it "syncs the 'One Line Overview' column" do
         application.reload

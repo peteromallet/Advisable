@@ -10,7 +10,7 @@ class Interviews::RequestMoreTimes < ApplicationService
       raise Service::Error.new("interview.not_requested")
     end
 
-    if interview.update_attributes(status: "Need More Time Options")
+    if interview.update(status: "Need More Time Options")
       interview.sync_to_airtable
     end
 

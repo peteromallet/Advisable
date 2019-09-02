@@ -177,6 +177,7 @@ class Airtable::Specialist < Airtable::Base
       skill.sync_to_airtable # add the skill to airtable
     end
 
+    record.reload
     return true
   end
 
