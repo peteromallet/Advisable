@@ -42,8 +42,8 @@ describe Mutations::ConfirmAccount do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query)
-      error = response["data"]["confirmAccount"]["errors"][0]
-      expect(error["code"]).to eq("accounts.already_confirmed")
+      error = response["errors"][0]
+      expect(error["extensions"]["code"]).to eq("accounts.already_confirmed")
     end
   end
 
@@ -52,8 +52,8 @@ describe Mutations::ConfirmAccount do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query)
-      error = response["data"]["confirmAccount"]["errors"][0]
-      expect(error["code"]).to eq("accounts.invalid_token")
+      error = response["errors"][0]
+      expect(error["extensions"]["code"]).to eq("accounts.invalid_token")
     end
   end
 end

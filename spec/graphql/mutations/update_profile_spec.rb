@@ -15,7 +15,6 @@ describe Mutations::UpdateProfile do
   let(:query) { %|
     mutation {
       updateProfile(input: {
-        id: "#{specialist.airtable_id}",
         bio: "This is the bio",
         skills: ["#{skill.name}"],
         city: "Dublin",
@@ -31,15 +30,14 @@ describe Mutations::UpdateProfile do
             name
           }
         }
-        errors {
-          code
-        }
       }
     }  
   |}
 
   let(:response) {
-    AdvisableSchema.execute(query)
+    AdvisableSchema.execute(query, context: {
+      current_user: specialist
+    })
   }
 
   before :each do
@@ -78,8 +76,8 @@ describe Mutations::UpdateProfile do
     end
 
     it "returns an error" do
-      error = response["data"]["updateProfile"]["errors"][0]
-      expect(error["code"]).to eq("service_error")
+      error = response["errors"][0]["extensions"]
+      expect(error["code"]).to eq("failedToUpdate")
     end
   end
 end

@@ -9,11 +9,6 @@ describe Airtable::Specialist do
       "Application Stage" => "Applied"
     }, id: specialist.airtable_id) }
 
-    it 'saves the application stage' do
-      expect { airtable.sync }.to change { specialist.reload.application_stage }
-        .from(nil).to("Applied")
-    end
-
     it 'triggers the application_stage_changed webhook event' do
       expect(WebhookEvent).to receive(:trigger).with(
         "specialists.application_stage_changed",

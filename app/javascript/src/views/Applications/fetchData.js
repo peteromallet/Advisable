@@ -7,7 +7,7 @@ export default gql`
         id
         email
         airtableId
-        accountStatus
+        applicationStage
         invitations: applications(
           status: ["Invited To Apply"]
           salesStatus: ["Open"]

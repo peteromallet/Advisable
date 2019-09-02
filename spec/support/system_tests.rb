@@ -9,15 +9,12 @@ RSpec.configure do |config|
       Capybara::Selenium::Driver.new(app,
         browser: :chrome,
         options: options,
-        driver_opts: {
-          # log_path: './tmp/chrome.log',
-          # verbose:  true
-        }
       )
     end
 
-    # driven_by :selenium_chrome_headless
+    
+    driven_by :selenium_chrome_headless
     # driven_by :selenium_chrome
-    driven_by :chrome
+    # driven_by :chrome
   end
 end

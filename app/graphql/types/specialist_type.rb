@@ -248,7 +248,7 @@ class Types::SpecialistType < Types::BaseType
     description "Wether or not the specialist is ok with being used publicly"
   end
 
-  field :account_status, String, null: true do
+  field :application_stage, String, null: true do
     authorize :is_specialist
     description "The account status for the specialist"
   end

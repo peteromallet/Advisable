@@ -15,7 +15,7 @@ const AuthenticatedRoute = ({
 }) => {
   const viewer = useViewer();
   const __typename = get(viewer, "__typename");
-  const accountStatus = get(viewer, "accountStatus");
+  const applicationStage = get(viewer, "applicationStage");
 
   return (
     <Route
@@ -36,8 +36,8 @@ const AuthenticatedRoute = ({
           );
         }
 
-        // Redirect to specialist setup if their accountStatus is 'Started'
-        if (__typename === "Specialist" && accountStatus === "Started") {
+        // Redirect to specialist setup if their applicationStage is 'Started'
+        if (__typename === "Specialist" && applicationStage === "Started") {
           return <Redirect to="/freelancers/signup/work" />;
         }
 

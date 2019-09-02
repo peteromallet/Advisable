@@ -1,4 +1,4 @@
-# The APIError should be used to throw errors in our graphql API. It ensures
+# The ApiError should be used to throw errors in our graphql API. It ensures
 # that each error will have a CODE which clients can use to determine what to
 # do with the error.
 # 
@@ -6,14 +6,14 @@
 # @param [String] code The error code for the error. This is can be used as a
 # key in i18n libraries to display errors to users. This should be a camelCase
 # string.
-# @param [String] message The message for the error. An APIError message should
+# @param [String] message The message for the error. An ApiError message should
 # never be displayed to users. It is provided to give devlopers more context
 # as to what went wrong. Use the error code and additional extension properties
 # to display errors to users.
 # @param [Hash] extensions Any additional extensions to be added to the error.
 #
 # @example
-#   raise APIError.new("NOT_AUTHORIZED", "notAuthorized", "Viewer does not have permission to execute this mutation.")
+#   raise ApiError.new("NOT_AUTHORIZED", "notAuthorized", "Viewer does not have permission to execute this mutation.")
 #
 class ApiError < GraphQL::ExecutionError
   def initialize(type, code, message, extensions: {})
@@ -38,7 +38,7 @@ end
 # not complete for some reason.
 # 
 # @example
-#   raise APIError::InvalidRequest.new("Application status must be 'Working'", "applicationStatusNotWorking")
+#   raise ApiError::InvalidRequest.new("Application status must be 'Working'", "applicationStatusNotWorking")
 #
 class ApiError::InvalidRequest < ApiError
   def initialize(code, message)

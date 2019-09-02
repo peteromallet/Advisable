@@ -3,11 +3,11 @@ class Mutations::CompleteSetup < Mutations::BaseMutation
 
   def authorized?(**args)
     if !context[:current_user]
-      raise APIError::NotAuthenticated.new("You are not logged in")
+      raise ApiError::NotAuthenticated.new("You are not logged in")
     end
 
     if context[:current_user].is_a?(User)
-      raise APIError::NotAuthenticated.new("You are logged in as a user")
+      raise ApiError::NotAuthenticated.new("You are logged in as a user")
     end
 
     true
@@ -16,14 +16,14 @@ class Mutations::CompleteSetup < Mutations::BaseMutation
   def resolve(**args)
     specialist = context[:current_user]
 
-    if specialist.account_status != "Started"
-      raise APIError::InvalidRequest.new(
-        "invlaidAccountStatus", 
-        "The account status must be 'Started' but it is #{speicalist.account_status}"
+    if specialist.application_stage != "Started"
+      raise ApiError::InvalidRequest.new(
+        "invlaidapplicationStage", 
+        "The account status must be 'Started' but it is #{speicalist.application_stage}"
       )
     end
 
-    specialist.account_status = "On Hold"
+    specialist.application_stage = "On Hold"
     specialist.save
     specialist.sync_to_airtable
 

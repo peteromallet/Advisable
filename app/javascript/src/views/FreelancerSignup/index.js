@@ -102,16 +102,16 @@ const FreelancerSignup = ({ location }) => {
                     }
                   } else {
                     // if it doesn't require auth but there is a viewer and
-                    // their accountStatus is Started then redirect to the
+                    // their applicationStage is Started then redirect to the
                     // confirmation step
-                    // if (Boolean(viewer) && viewer.accountStatus === "Started") {
+                    // if (Boolean(viewer) && viewer.applicationStage === "Started") {
                     //   return <Redirect to="/freelancers/signup/confirm" />;
                     // }
                   }
 
-                  // If there is a viewer and their accountStatus is not
+                  // If there is a viewer and their applicationStage is not
                   // 'Started' then redirect to the root path.
-                  if (Boolean(viewer) && viewer.accountStatus !== "Started") {
+                  if (Boolean(viewer) && viewer.applicationStage !== "Started") {
                     return <Redirect to="/" />;
                   }
 

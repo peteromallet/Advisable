@@ -17,11 +17,11 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
 
   def authorized?(**args)
     if !context[:current_user]
-      raise APIError::NotAuthenticated.new("You are not logged in")
+      raise ApiError::NotAuthenticated.new("You are not logged in")
     end
 
     if context[:current_user].is_a?(User)
-      raise APIError::NotAuthenticated.new("You are logged in as a user")
+      raise ApiError::NotAuthenticated.new("You are logged in as a user")
     end
 
     true
@@ -36,6 +36,6 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
     { specialist: specialist }
 
     rescue Service::Error => e
-      raise APIError::InvalidRequest.new("failedToUpdate", e.message)
+      raise ApiError::InvalidRequest.new("failedToUpdate", e.message)
   end
 end

@@ -19,7 +19,7 @@ class Mutations::StopWorking < Mutations::BaseMutation
     application = Application.find_by_uid!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
     return true if policy.is_client
-    raise APIError::NotAuthorized.new(
+    raise ApiError::NotAuthorized.new(
       "You do not have permission to execute this mutation"
     )
   end
@@ -28,7 +28,7 @@ class Mutations::StopWorking < Mutations::BaseMutation
     application = Application.find_by_uid!(args[:application])
 
     if application.status != "Working"
-      raise APIError::InvalidRequest.new(
+      raise ApiError::InvalidRequest.new(
         "applicationStatusNotWorking",
         "The application status must be 'Working'."
       )

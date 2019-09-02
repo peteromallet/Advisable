@@ -20,7 +20,7 @@ class Mutations::UpdateTask < Mutations::BaseMutation
     task = Task.find_by_uid!(args[:id])
 
     if task.application.status === 'Stopped Working'
-      raise APIError::InvalidRequest.new(
+      raise ApiError::InvalidRequest.new(
         "applicationStatusNotWorking",
         "Application status is 'Stopped Working'",
       )

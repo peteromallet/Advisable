@@ -10,7 +10,7 @@ export const SpecialistFields = gql`
     website
     publicUse
     linkedin
-    accountStatus
+    applicationStage
     country {
       id
     }

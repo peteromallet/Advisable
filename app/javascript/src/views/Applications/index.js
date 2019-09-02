@@ -18,7 +18,7 @@ const Applications = ({ history }) => {
   const invitations = get(data, "viewer.invitations");
   const applications = get(data, "viewer.applications");
   const viewer = get(data, "viewer");
-  const onHold = get(viewer, "accountStatus") === "On Hold";
+  const onHold = get(viewer, "applicationStage") === "On Hold";
 
   return (
     <Layout>
