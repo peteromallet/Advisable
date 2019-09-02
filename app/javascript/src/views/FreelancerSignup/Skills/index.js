@@ -3,6 +3,7 @@ import { get } from "lodash";
 import gql from "graphql-tag";
 import { Formik, Form } from "formik";
 import { useQuery } from "react-apollo";
+import { Redirect } from "react-router-dom";
 import { Text, Box, Link, Button, Autocomplete } from "@advisable/donut";
 import validationSchema from "./validationSchema";
 
@@ -16,8 +17,12 @@ const SKILLS = gql`
 `;
 
 // Renders the freelancer signup flow.
-const Skills = ({ history, location }) => {
+const Skills = ({ history, location, specialist }) => {
   const skillsQuery = useQuery(SKILLS);
+
+  if (Boolean(specialist)) {
+    return <Redirect to="/freelancers/signup/preferences" />;
+  }
 
   const initialValues = {
     skills: get(location.state, "skills") || [],

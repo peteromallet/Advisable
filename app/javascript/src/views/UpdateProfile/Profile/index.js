@@ -84,7 +84,7 @@ const Profile = () => {
 
                   return <Avatar url={profilePhoto} name={data.viewer.name} />;
                 }}
-                label="Upload a project photo"
+                label="Upload a profile photo"
               />
             </Box>
             <Box height={1} bg="neutral.1" my="l" />

@@ -85,7 +85,7 @@ const BuildProfile = ({ history, specialist }) => {
                   <Avatar name={specialist.name} url={profilePhoto} size="m" />
                 );
               }}
-              label="Upload a project photo"
+              label="Upload a profile photo"
             />
           </Box>
           <Box mb="m">

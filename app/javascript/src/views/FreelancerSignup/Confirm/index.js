@@ -1,13 +1,12 @@
 import React from "react";
 import queryString from "query-string";
 import { Redirect } from "react-router-dom";
-import useViewer from "../../../hooks/useViewer";
 import ConfirmAccount from "./ConfirmAccount";
 import ConfirmationPending from "./ConfirmationPending";
 
 // Renders the freelancer signup flow.
 const Confirm = props => {
-  const viewer = useViewer();
+  const viewer = props.specialist;
   const { t: token, email } = queryString.parse(props.location.search);
 
   if (viewer && viewer.confirmed) {

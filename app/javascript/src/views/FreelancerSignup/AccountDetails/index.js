@@ -1,19 +1,19 @@
 import React from "react";
 import { get } from "lodash";
 import { Formik, Form } from "formik";
+import queryString from "query-string";
 import { useMutation } from "react-apollo";
 import { Redirect } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Text, Box, Button } from "@advisable/donut";
-import queryString from "query-string";
-import useViewer from "../../../hooks/useViewer";
 import VIEWER from "../../../graphql/queries/viewer";
 import TextField from "../../../components/TextField";
 import validationSchema from "./validationSchema";
 import CREATE_FREELANCER_ACCOUNT from "./createFreelancerAccount";
 
 // Renders the first two steps of the signup flow.
-const AccountDetails = ({ history, location }) => {
-  const viewer = useViewer();
+const AccountDetails = ({ specialist, history, location }) => {
+  const { t } = useTranslation();
   const skills = get(location.state, "skills") || [];
   const [signup] = useMutation(CREATE_FREELANCER_ACCOUNT, {
     update(cache, response) {
@@ -25,7 +25,7 @@ const AccountDetails = ({ history, location }) => {
   });
 
   // Redirect to the confirmation step if there is already a user logged in
-  if (Boolean(viewer)) {
+  if (Boolean(specialist)) {
     return <Redirect to="/freelancers/signup/confirm" />;
   }
 
@@ -42,9 +42,9 @@ const AccountDetails = ({ history, location }) => {
     password: "",
   };
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values, formik) => {
     const queryParams = queryString.parse(location.search);
-    const response = await signup({
+    const { data, errors } = await signup({
       variables: {
         input: {
           ...values,
@@ -57,13 +57,19 @@ const AccountDetails = ({ history, location }) => {
       },
     });
 
-    if (response.errors) {
-      console.log(response);
-    }
+    if (errors) {
+      let error = errors[0];
+      let code = get(error, "extensions.code");
 
-    const token = response.data.createFreelancerAccount.token;
-    window.localStorage.setItem("authToken", token);
-    history.replace("/freelancers/signup/confirm");
+      if (code === "emailTaken") {
+        formik.setFieldError("email", t("errors.emailTaken"));
+        formik.setSubmitting(false);
+      }
+    } else {
+      const token = data.createFreelancerAccount.token;
+      window.localStorage.setItem("authToken", token);
+      history.replace("/freelancers/signup/confirm");
+    }
   };
 
   return (
