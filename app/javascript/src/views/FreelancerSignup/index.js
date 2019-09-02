@@ -66,23 +66,24 @@ const FreelancerSignup = ({ location }) => {
           <Box mt="l" mb="xxl" position="relative">
             <Logo />
             <Box display="flex" position="absolute" right={0} top={15}>
-              {STEPS.map(step => (
-                <Box
-                  ml="xxs"
-                  width={6}
-                  height={6}
-                  key={step.path}
-                  borderRadius="50%"
-                  bg={
-                    matchPath(location.pathname, {
-                      path: `/freelancers/signup${step.path}`,
-                      exact: step.exact,
-                    })
-                      ? "blue.4"
-                      : "neutral.1"
-                  }
-                />
-              ))}
+              {STEPS.map(step => {
+                const isActive = matchPath(location.pathname, {
+                  path: `/freelancers/signup${step.path}`,
+                  exact: step.exact,
+                });
+
+                return (
+                  <Box
+                    ml="xxs"
+                    width={isActive ? 8 : 6}
+                    height={6}
+                    key={step.path}
+                    borderRadius={3}
+                    bg={isActive ? "blue.3" : "neutral.1"}
+                    css="transition: width 300ms; background 300ms;"
+                  />
+                );
+              })}
             </Box>
           </Box>
           <Switch>
