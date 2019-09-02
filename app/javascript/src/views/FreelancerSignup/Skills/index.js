@@ -9,7 +9,7 @@ import validationSchema from "./validationSchema";
 
 const SKILLS = gql`
   query {
-    skills {
+    skills(local: true) {
       value: name
       label: name
     }
@@ -41,6 +41,8 @@ const Skills = ({ history, location, specialist }) => {
     // Continue to the account details step and pass the state.
     history.push(`/freelancers/signup/account${location.search}`, state);
   };
+
+  console.log(skillsQuery);
 
   return (
     <>

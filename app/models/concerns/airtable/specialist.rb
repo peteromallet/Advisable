@@ -141,6 +141,45 @@ class Airtable::Specialist < Airtable::Base
     self['Referrer'] = specialist.referrer if specialist.referrer
   end
 
+  # handle_airtable_error is called when airtable responds with an error during
+  # the push process. IF the error code returned is ROW_DOES_NOT_EXIST then
+  # this could be due to a duplicate skill record so we pass on to the
+  # handle_duplicate_skill method.
+  def handle_airtable_error(e, record)
+    if e.message.include?("ROW_DOES_NOT_EXIST")
+      # extract the id of the record that could not be found from the error
+      id = e.message[/(rec\w*)/, 1]
+      # get the postgres skill that represents this skill
+      skill = Skill.find_by_airtable_id(id)
+      # pass on to the handle_duplicate_skill method if the skill exists
+      return handle_duplicate_skill(skill, record) if skill
+      # otherwise reraise the error, its a different kind of missing record.
+      # possibly a country association or something..
+      return false
+    end
+
+    return false
+  end
+
+  # When the airtable API responds with RECORD_DOES_NOT_EXIST it is likely
+  # due to a duplicate skill that has been removed from airtable. This method
+  # will handle duplicate skills before retrying to sync the record
+  def handle_duplicate_skill(skill, record)
+    other = Skill.where.not(id: skill.id).where(original: nil).find_by_name(skill.name)
+
+    if other
+      skill.update(original: other)
+      record.specialist_skills.find_by(skill: skill).update(skill: other)
+    else
+      # The skill may have existed in airtable before so we need to clear
+      # out any existing airtable_id.
+      skill.airtable_id = nil
+      skill.sync_to_airtable # add the skill to airtable
+    end
+
+    return true
+  end
+
   private
 
   def specialist_skills
