@@ -65,6 +65,7 @@ class Types::SpecialistType < Types::BaseType
 
   field :image, Types::AttachmentType, null: true do
     description "The specialists profile image"
+    deprecation_reason "Use the avatar field instead"
   end
 
   field :resume, Types::AttachmentType, null: true do

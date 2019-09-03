@@ -137,6 +137,8 @@ export const specialist = (fields = {}) => {
         __typename: "Ratings",
         overall: 5.0,
       },
+      applicationStage: "Accepted",
+      avatar: null,
       image: null,
       country: {
         __typename: "Country",
