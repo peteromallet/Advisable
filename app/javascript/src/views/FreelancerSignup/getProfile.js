@@ -10,6 +10,7 @@ export const SpecialistFields = gql`
     website
     publicUse
     linkedin
+    confirmed
     applicationStage
     country {
       id

@@ -17,6 +17,7 @@ const Button = ({ children, icon, iconRight, loading, size, ...rest }) => {
       size={size}
       isLoading={loading}
       iconRight={iconRight}
+      aria-label={children}
       data-loading={loading || null}
     >
       {loading && (

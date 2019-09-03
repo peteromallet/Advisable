@@ -12,7 +12,7 @@ import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
 
-const GET_COUNTRIES = gql`
+export const GET_COUNTRIES = gql`
   {
     countries {
       value: id
@@ -119,6 +119,7 @@ const BuildProfile = ({ history, specialist }) => {
               <Select
                 name="country"
                 placeholder="Country"
+                data-testid="country"
                 value={formik.values.country}
                 onChange={formik.handleChange}
                 options={countriesQuery.data.countries}

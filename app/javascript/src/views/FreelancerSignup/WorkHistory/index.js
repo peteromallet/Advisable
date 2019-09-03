@@ -94,7 +94,7 @@ const WorkHistory = ({ specialist, history }) => {
             iconRight="arrow-right"
             loading={formik.isSubmitting}
           >
-            Continue
+            Complete Setup
           </Button>
         </Form>
       )}

@@ -129,6 +129,9 @@ export const specialist = (fields = {}) => {
       email: "specialist@test.com",
       completedTutorials: [],
       talkSignature: "1234",
+      hourlyRate: 45,
+      numberOfProjects: null,
+      primarilyFreelance: null,
       createdAt: new Date().toISOString(),
       city: "Dublin",
       reviewsCount: 0,
@@ -137,6 +140,8 @@ export const specialist = (fields = {}) => {
         __typename: "Ratings",
         overall: 5.0,
       },
+      publicUse: null,
+      website: null,
       applicationStage: "Accepted",
       avatar: null,
       image: null,
@@ -173,11 +178,14 @@ export const task = (fields = {}) => {
 };
 
 export const skill = (fields = {}) => {
-  return merge({
-    __typename: "Skill",
-    id: uniqueId("skill"),
-    name: "Skill",
-  });
+  return merge(
+    {
+      __typename: "Skill",
+      id: uniqueId("skill"),
+      name: "Skill",
+    },
+    fields
+  );
 };
 
 export const industry = (fields = {}) => {

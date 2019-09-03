@@ -5,7 +5,7 @@ import Loading from "../../../components/Loading";
 import VIEWER, { viewerFields } from "../../../graphql/queries/viewer";
 import { useNotifications } from "../../../components/Notifications";
 
-const CONFIRM = gql`
+export const CONFIRM = gql`
   ${viewerFields}
 
   mutation ConfirmAccount($input: ConfirmAccountInput!) {
@@ -54,8 +54,6 @@ const ConfirmAccount = ({ token, email, history }) => {
         },
       },
     });
-
-    console.log(data);
 
     if (errors) {
       notifications.notify("Failed to confirm your account. Please try again.");

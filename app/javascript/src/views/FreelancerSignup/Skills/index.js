@@ -7,7 +7,7 @@ import { Redirect } from "react-router-dom";
 import { Text, Box, Link, Button, Autocomplete } from "@advisable/donut";
 import validationSchema from "./validationSchema";
 
-const SKILLS = gql`
+export const GET_SKILLS = gql`
   query {
     skills(local: true) {
       value: name
@@ -18,7 +18,7 @@ const SKILLS = gql`
 
 // Renders the freelancer signup flow.
 const Skills = ({ history, location, specialist }) => {
-  const skillsQuery = useQuery(SKILLS);
+  const skillsQuery = useQuery(GET_SKILLS);
 
   if (Boolean(specialist)) {
     return <Redirect to="/freelancers/signup/preferences" />;
@@ -41,8 +41,6 @@ const Skills = ({ history, location, specialist }) => {
     // Continue to the account details step and pass the state.
     history.push(`/freelancers/signup/account${location.search}`, state);
   };
-
-  console.log(skillsQuery);
 
   return (
     <>

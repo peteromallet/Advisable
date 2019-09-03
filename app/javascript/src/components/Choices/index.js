@@ -1,6 +1,5 @@
 import React from "react";
 import { Text } from "@advisable/donut";
-import InputError from "src/components/InputError";
 import { Choices, Choice, Circle } from "./styles";
 
 export default ({ choices, name, value, onChange, error }) => (
