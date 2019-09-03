@@ -80,4 +80,22 @@ describe Mutations::UpdateProfile do
       expect(error["code"]).to eq("failedToUpdate")
     end
   end
+
+  context "when there is no viewer" do
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: { current_user: nil })
+      error_code = response["errors"][0]["extensions"]["code"]
+      expect(error_code).to eq("notAuthenticated")
+    end
+  end
+
+  context "when there is a User logged in" do
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: {
+        current_user: create(:user)
+      })
+      error_code = response["errors"][0]["extensions"]["code"]
+      expect(error_code).to eq("notAuthenticated")
+    end
+  end
 end

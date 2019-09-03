@@ -18,6 +18,7 @@ describe 'Accepting a proposal' do
     find(:label, text: "Flexible").click
     fill_in "monthlyLimit", with: "65"
     click_on "Continue"
-    expect(page).to have_content('Add a task')
+    sleep 2
+    expect(page).to have_content("Active Tasks")
   end
 end

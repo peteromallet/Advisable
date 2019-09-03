@@ -74,11 +74,6 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
           "This email is already being used by another account"
         )
       end
-
-      raise ApiError::InvalidRequest.new(
-        "invalidAccountDetails",
-        account.errors.full_messages.first
-      )
     end
 
     account.skills = skills

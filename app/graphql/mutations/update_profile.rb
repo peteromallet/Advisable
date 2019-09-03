@@ -1,3 +1,4 @@
+# Updates a specialists profile
 class Mutations::UpdateProfile < Mutations::BaseMutation
   argument :primarily_freelance, Boolean, required: false
   argument :hourly_rate, Int, required: false
