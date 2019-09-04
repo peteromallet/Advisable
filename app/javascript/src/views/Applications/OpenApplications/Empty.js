@@ -34,7 +34,7 @@ const Empty = props => {
           <Box mb="s">
             <Link to="/profile">Update your profile →</Link>
           </Box>
-          <Link target="_blank" to={props.featuredURL}>
+          <Link target="_blank" as="a" href={props.featuredURL}>
             Become a featured freelancer →
           </Link>
         </Box>
