@@ -36,6 +36,9 @@ module Account
     def create_confirmation_token
       token = Token.new
       self.confirmation_digest = Token.digest(token)
+      # eventually this shouldnt be stored in the DB. We have stored it for now
+      # so that we can manually resend confirmation emails.
+      self.confirmation_token = token
       save(validate: false)
       token
     end
