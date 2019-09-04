@@ -12,11 +12,11 @@ const Navigation = () => {
     <Layout.Sidebar size="s">
       <Sticky enabled={mobileAndUp} offset={98}>
         <NavigationMenu>
-          <NavigationMenu.Item to="/profile" icon="user">
+          <NavigationMenu.Item to="/profile" icon="user" exact>
             Introduction
           </NavigationMenu.Item>
           <NavigationMenu.Item to="/profile/references" icon="award">
-            References
+            Previous Projects
           </NavigationMenu.Item>
           <NavigationMenu.Item to="/profile/location" icon="map-pin">
             Location
