@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export default gql`
   {
-    skills {
+    skills(local: true) {
       value: name
       label: name
     }

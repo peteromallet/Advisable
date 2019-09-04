@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get, sortBy } from "lodash";
 import { Formik, Form } from "formik";
 import { useQuery, useMutation } from "react-apollo";
 import { Box, Card, Text, Autocomplete, Button } from "@advisable/donut";
@@ -108,7 +108,7 @@ const Profile = () => {
               description="Add up to 10 skill’s that you have used in previously completed projects."
               label="What type of projects are you looking for?"
               placeholder="e.g Online Marketing"
-              options={data.skills}
+              options={sortBy(data.skills, ["label"])}
               onBlur={formik.handleBlur}
               value={formik.values.skills}
               error={formik.touched.skills && formik.errors.skills}

@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get, sortBy } from "lodash";
 import gql from "graphql-tag";
 import { Formik, Form } from "formik";
 import { useQuery } from "react-apollo";
@@ -78,7 +78,7 @@ const Skills = ({ history, location, specialist }) => {
                   description="Add up to 10 skill’s that you have used in previously completed projects."
                   label="What type of projects are you looking for?"
                   placeholder="e.g Online Marketing"
-                  options={skillsQuery.data.skills}
+                  options={sortBy(skillsQuery.data.skills, ["label"])}
                   onBlur={formik.handleBlur}
                   value={formik.values.skills}
                   error={formik.touched.skills && formik.errors.skills}
