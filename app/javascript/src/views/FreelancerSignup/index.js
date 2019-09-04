@@ -1,9 +1,11 @@
+// Renders the freelancer signup flow.
 import React from "react";
 import { get } from "lodash";
 import { useQuery } from "react-apollo";
 import { useTheme, Box } from "@advisable/donut";
 import { Switch, Route, Redirect, matchPath } from "react-router-dom";
 import Logo from "../../components/Logo";
+import Loading from "../../components/Loading";
 import { Main, Content } from "./styles";
 import Skills from "./Skills";
 import Confirm from "./Confirm";
@@ -14,6 +16,9 @@ import AccountDetails from "./AccountDetails";
 import FreelancingPreferences from "./FreelancingPreferences";
 import GET_SPECIALIST from "./getProfile";
 
+// Each of the steps is defined in the STEPS array below. Each step must have
+// a path and a component key. It can also have 'exact' which will be passed
+// to the react router route component.
 const STEPS = [
   {
     path: "/",
@@ -31,7 +36,8 @@ const STEPS = [
   {
     path: "/preferences",
     component: FreelancingPreferences,
-    authRequired: true,
+    authRequired: true, // everything after the confirmation step requires the
+    // user to be authenticated so we set the 'authRequired' key to true.
   },
   {
     path: "/profile",
@@ -48,14 +54,16 @@ const STEPS = [
 // Renders the freelancer signup flow.
 const FreelancerSignup = ({ location }) => {
   const { updateTheme } = useTheme();
-  const { loading, data, errors } = useQuery(GET_SPECIALIST);
+  const { loading, data } = useQuery(GET_SPECIALIST);
 
+  // Throughout this flow we want the background to be completely white. We
+  // can achieve this by updating the theme using a React effect.
   React.useLayoutEffect(() => {
     updateTheme({ background: "white" });
     return () => updateTheme({ background: "default" });
   }, []);
 
-  if (loading) return <>loading...</>;
+  if (loading) return <Loading />;
 
   const viewer = get(data, "viewer");
 
@@ -100,18 +108,14 @@ const FreelancerSignup = ({ location }) => {
                       // redirect to first step
                       return <Redirect to="/freelancers/signup" />;
                     }
-                  } else {
-                    // if it doesn't require auth but there is a viewer and
-                    // their applicationStage is Started then redirect to the
-                    // confirmation step
-                    // if (Boolean(viewer) && viewer.applicationStage === "Started") {
-                    //   return <Redirect to="/freelancers/signup/confirm" />;
-                    // }
                   }
 
                   // If there is a viewer and their applicationStage is not
                   // 'Started' then redirect to the root path.
-                  if (Boolean(viewer) && viewer.applicationStage !== "Started") {
+                  if (
+                    Boolean(viewer) &&
+                    viewer.applicationStage !== "Started"
+                  ) {
                     return <Redirect to="/" />;
                   }
 

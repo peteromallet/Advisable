@@ -25,8 +25,8 @@ class Airtable::Base < Airrecord::Table
     # to sync all records from airtable.
     # We filter the query to only fetch records that have been modified within
     # the last day.
-    def sync(report = nil)
-      records = all(filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 1")
+    def sync(report = nil, filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 1")
+      records = all(filter: filter)
       records.each { |r| r.sync(report) }
     end
 
@@ -144,8 +144,11 @@ class Airtable::Base < Airrecord::Table
         # method which can then be used to handle the error before attempting to
         # retry the sync
         rescue Airrecord::Error => e
-          retry if retry_count <= retry_limit && handle_airtable_error(e, record)
-          raise e
+          if retry_count <= retry_limit && handle_airtable_error(e, record)
+            retry
+          else
+            raise e
+          end
       end
     end
   end

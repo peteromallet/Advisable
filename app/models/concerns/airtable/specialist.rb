@@ -1,7 +1,6 @@
 class Airtable::Specialist < Airtable::Base
   self.table_name = "Specialists"
 
-  has_many :specialist_skills, class: 'SpecialistSkill', column: "Specialist Skills"
   belongs_to :country, class: "Airtable::Country", column: "Country"
 
   # Tells which active record model to sync data with.
@@ -152,7 +151,7 @@ class Airtable::Specialist < Airtable::Base
       # get the postgres skill that represents this skill
       skill = Skill.find_by_airtable_id(id)
       # pass on to the handle_duplicate_skill method if the skill exists
-      return handle_duplicate_skill(skill, record) if skill
+      return handle_duplicate_skill(skill, record) if skill.present?
       # otherwise reraise the error, its a different kind of missing record.
       # possibly a country association or something..
       return false
