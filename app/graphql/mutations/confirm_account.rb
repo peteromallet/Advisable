@@ -8,10 +8,12 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
 
   def resolve(**args)
     account = Account.find_by_email!(args[:email])
+    account = Accounts::Confirm.call(account: account, token: args[:token])
+    context[:current_user] = account
 
     {
       token: Accounts::Jwt.call(account),
-      viewer: Accounts::Confirm.call(account: account, token: args[:token])
+      viewer: account
     }
 
     rescue Service::Error => e

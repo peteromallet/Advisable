@@ -60,7 +60,7 @@ const ConfirmAccount = ({ token, email, history }) => {
       history.replace("/freelancers/signup/confirm");
     } else {
       window.localStorage.setItem("authToken", data.confirmAccount.token);
-      history.replace("/freelancers/signup/preferences");
+      window.location = "/freelancers/signup/preferences";
     }
   };
 
