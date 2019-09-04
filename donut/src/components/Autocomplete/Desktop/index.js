@@ -98,7 +98,7 @@ const AutocompleteDesktop = props => {
                 )}
                 <Reference>
                   {popperRef => (
-                    <div ref={popperRef.ref}>
+                    <>
                       {multiple && (
                         <Tags>
                           {downshift.selected.map(item => (
@@ -111,16 +111,18 @@ const AutocompleteDesktop = props => {
                           ))}
                         </Tags>
                       )}
-                      <Input
-                        {...downshift.getInputProps({
-                          ref: inputRef,
-                          placeholder,
-                          onBlur,
-                          onFocus: downshift.openMenu,
-                          onClick: downshift.openMenu,
-                        })}
-                      />
-                    </div>
+                      <div ref={popperRef.ref}>
+                        <Input
+                          {...downshift.getInputProps({
+                            ref: inputRef,
+                            placeholder,
+                            onBlur,
+                            onFocus: downshift.openMenu,
+                            onClick: downshift.openMenu,
+                          })}
+                        />
+                      </div>
+                    </>
                   )}
                 </Reference>
                 {error && <FieldError>{error}</FieldError>}

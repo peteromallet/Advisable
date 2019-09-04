@@ -5,7 +5,7 @@ const Tag = ({ children, onRemove }) => {
   return (
     <TagStyles>
       <TagName>{children}</TagName>
-      <RemoveTag onClick={onRemove}>
+      <RemoveTag type="button" onClick={onRemove}>
         <svg
           width="12"
           height="13"

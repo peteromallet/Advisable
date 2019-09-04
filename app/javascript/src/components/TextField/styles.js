@@ -26,7 +26,7 @@ export const InputBackdrop = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 1;
   position: absolute;
   border-radius: 8px;
   border: 2px solid transparent;
@@ -37,7 +37,7 @@ export const InputBackdrop = styled.div`
 export const Input = styled.input`
   padding: 0;
   width: 100%;
-  z-index: 20;
+  z-index: 2;
   border: none;
   outline: none;
   box-shadow: none;

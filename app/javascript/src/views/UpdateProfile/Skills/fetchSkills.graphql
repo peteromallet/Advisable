@@ -1,5 +1,5 @@
 query {
-  skills {
+  skills(local: true) {
     id
     value: name
     label: name
