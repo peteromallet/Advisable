@@ -10,16 +10,10 @@ afterEach(cleanup);
 
 test("Continues to the confirmation step", async () => {
   const skills = [
-    generateTypes.skill({ value: "Testing", label: "Testing" }),
     generateTypes.skill({ value: "Marketing", label: "Marketing" }),
   ];
 
-  const {
-    debug,
-    findByPlaceholderText,
-    findByText,
-    getByLabelText,
-  } = renderApp({
+  const { findByPlaceholderText, findByText, getByLabelText } = renderApp({
     route: "/freelancers/signup",
     graphQLMocks: [
       {
@@ -61,7 +55,7 @@ test("Continues to the confirmation step", async () => {
               lastName: "Doe",
               email: "john@doe.com",
               password: "testing123",
-              skills: ["Testing"],
+              skills: ["Marketing"],
             },
           },
         },

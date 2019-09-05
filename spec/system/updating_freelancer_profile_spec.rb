@@ -6,7 +6,7 @@ describe "Freelancer profile" do
       specialist = create(:specialist)
       allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
       authenticate_as(specialist)
-      visit "/profile/introduction"
+      visit "/profile"
       fill_in "bio", with: "This is the bio, testing 123"
       click_on "Save Changes"
       expect(page).to have_content("Your profile has been updated")
