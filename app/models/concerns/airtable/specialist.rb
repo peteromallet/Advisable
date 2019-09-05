@@ -138,6 +138,20 @@ class Airtable::Specialist < Airtable::Base
     self['Campaign Name'] = specialist.campaign_name if specialist.campaign_name
     self['Campaign Source'] = specialist.campaign_source if specialist.campaign_source
     self['Referrer'] = specialist.referrer if specialist.referrer
+
+    # We only want to try and sync their avatar if they have uplodated one.
+    # We also check to see if the filename in airtable is different to the
+    # filename for our version as if they are the same then its probably the
+    # same image and there is no need to reset it.
+    if specialist.avatar.attached?
+      airtable_image_filename = self['Image'].try(:first).try(:[], "filename")
+      if airtable_image_filename != specialist.avatar.filename.to_s
+        self['Image'] = [{
+          url: specialist.avatar.service_url,
+          filename: specialist.avatar.filename.to_s,
+        }]
+      end
+    end
   end
 
   # handle_airtable_error is called when airtable responds with an error during
