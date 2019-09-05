@@ -2,7 +2,7 @@ import React from "react";
 import { get, sortBy } from "lodash";
 import { Formik, Form } from "formik";
 import { useQuery, useMutation } from "react-apollo";
-import { Box, Card, Text, Autocomplete, Button } from "@advisable/donut";
+import { Box, Card, Text, Link, Autocomplete, Button } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Avatar from "../../../components/Avatar";
 import Checkbox from "../../../components/Checkbox";
@@ -117,6 +117,13 @@ const Profile = () => {
                 formik.setFieldValue("skills", skills);
               }}
             />
+            {formik.values.skills.length >= 10 && (
+              <Text mt="m" size="s" lineHeight="s">
+                You can't add more than 10 primary skills. If you want to add
+                more skills to your profile, you can do so by{" "}
+                <Link to="/profile/references">adding a previous project.</Link>
+              </Text>
+            )}
             <Box height={1} bg="neutral.1" my="l" />
             <TextField
               prefix="$"
