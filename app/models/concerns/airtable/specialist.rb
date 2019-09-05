@@ -152,6 +152,17 @@ class Airtable::Specialist < Airtable::Base
         }]
       end
     end
+
+    # We do the same thing for the resume that we do for the image
+    if specialist.resume.attached?
+      airtable_filename = self['Resume'].try(:first).try(:[], "filename")
+      if airtable_filename != specialist.resume.filename.to_s
+        self['Resume'] = [{
+          url: specialist.resume.service_url,
+          filename: specialist.resume.filename.to_s,
+        }]
+      end
+    end
   end
 
   # handle_airtable_error is called when airtable responds with an error during
