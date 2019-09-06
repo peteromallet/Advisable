@@ -72,6 +72,11 @@ class Airtable::Base < Airrecord::Table
     end
   end
 
+  # returns the active record model to sync data to
+  def model
+    @model ||= self.class.sync_model.find_or_initialize_by(airtable_id: id)
+  end
+
   # You can call sync on an instance of any class that inherits from
   # Airtable::Base to sync that individual record.
   # You can pass an instance of Airtable::SyncReport to capture any
@@ -159,11 +164,6 @@ class Airtable::Base < Airrecord::Table
   # retry to sync the record.
   def handle_airtable_error(e, record)
     false
-  end
-
-  # returns the active record model to sync data to
-  def model
-    @model ||= self.class.sync_model.find_or_initialize_by(airtable_id: id)
   end
 
   private

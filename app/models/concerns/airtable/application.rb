@@ -5,8 +5,6 @@ class Airtable::Application < Airtable::Base
 
   sync_with ::Application
   sync_column 'Score', to: :score
-  sync_column 'Accepts Fee', to: :accepts_fee
-  sync_column 'Accepts terms', to: :accepts_terms
   sync_column 'Hourly Rate For Project', to: :rate
   sync_column 'Available To Start', to: :availability
   sync_column 'One Line Overview', to: :introduction
