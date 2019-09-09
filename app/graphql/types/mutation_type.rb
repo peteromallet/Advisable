@@ -28,6 +28,7 @@ class Types::MutationType < GraphQL::Schema::Object
   field :login, mutation: Mutations::Login
   field :signup, mutation: Mutations::Signup
   field :confirm_account, mutation: Mutations::ConfirmAccount
+  field :create_freelancer_account, mutation: Mutations::CreateFreelancerAccount
   field :resend_confirmation_email, mutation: Mutations::ResendConfirmationEmail
   field :request_password_reset, mutation: Mutations::RequestPasswordReset
   field :reset_password, mutation: Mutations::ResetPassword
@@ -51,4 +52,5 @@ class Types::MutationType < GraphQL::Schema::Object
   field :create_setup_intent, mutation: Mutations::CreateSetupIntent
 
   field :update_payment_settings, mutation: Mutations::UpdatePaymentSettings
+  field :complete_setup, mutation: Mutations::CompleteSetup
 end

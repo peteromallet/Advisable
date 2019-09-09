@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import colors from "../../colors";
+import { theme } from "@advisable/donut";
 import InputDescription from "../InputDescription";
 
 export const Radio = styled.div`
@@ -33,19 +33,17 @@ export const Circle = styled.div`
 
 export const Value = styled.div`
   font-size: 15px;
-  font-weight: 500;
-  color: ${colors.neutral.s10};
-  letter-spacing: -0.01rem;
+  color: ${theme.colors.neutral[8]};
 `;
 
 const borderedStyling = css`
   padding: 16px;
   border-radius: 8px;
   padding-left: 42px;
-  border: 1px solid ${colors.neutral.s2};
+  border: 1px solid ${theme.colors.neutral[2]};
 
   &:hover {
-    border-color: ${colors.neutral.s3};
+    border-color: ${theme.colors.neutral[3]};
   }
 
   ${Circle} {
@@ -57,7 +55,7 @@ export const Label = styled.label`
   display: block;
   cursor: pointer;
   position: relative;
-  padding-left: 28px;
+  padding-left: 26px;
 
   &:hover ${Circle} {
     background-color: #f0f2f7;
@@ -76,8 +74,8 @@ export const Input = styled.input`
   pointer-events: none;
 
   &:checked + ${Label} ${Circle} {
-    border-color: ${colors.blue.base};
-    background-color: ${colors.blue.base};
+    border-color: ${theme.colors.blue[5]};
+    background-color: ${theme.colors.blue[5]};
   }
 
   &:checked + ${Label} ${Circle}::after {

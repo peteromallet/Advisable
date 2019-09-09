@@ -6,7 +6,7 @@ class Mutations::UpdateAvailability < Mutations::BaseMutation
 
   def resolve(**args)
     user = ::User.find_by_airtable_id(args[:id])
-    user.update_attributes(availability: args[:availability])
+    user.update(availability: args[:availability])
 
     return { user: user }
   end

@@ -33,12 +33,20 @@ module Account
       confirmed_at.present?
     end
 
+    def create_confirmation_token
+      token = Token.new
+      self.confirmation_digest = Token.digest(token)
+      # eventually this shouldnt be stored in the DB. We have stored it for now
+      # so that we can manually resend confirmation emails.
+      self.confirmation_token = token
+      save(validate: false)
+      token
+    end
+
     # Sets the confirmation digest and sends the user a confirmation email with
     # instructions to confirm their account.
     def send_confirmation_email
-      token = Token.new
-      self.confirmation_digest = Token.digest(token)
-      save(validate: false)
+      token = create_confirmation_token
       AccountMailer.confirm(uid: uid, token: token).deliver_later
     end
 
@@ -49,7 +57,7 @@ module Account
       return unless email.present?
       existing = Account.find_by_email(email.downcase)
       return if persisted? && existing == self
-      errors.add(:email, "email_taken") if existing.present?
+      errors.add(:email, :taken, message: "email_taken") if existing.present?
     end
   end
 

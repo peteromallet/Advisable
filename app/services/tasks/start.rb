@@ -18,7 +18,7 @@ class Tasks::Start < ApplicationService
       raise Service::Error.new("tasks.dueDateRequired")
     end
 
-    if task.update_attributes(stage: "Working")
+    if task.update(stage: "Working")
       task.sync_to_airtable
       WebhookEvent.trigger("tasks.started", WebhookEvent::Task.data(task))
       return task

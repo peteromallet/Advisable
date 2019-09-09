@@ -16,7 +16,7 @@ class Mutations::SetMonthlyLimit < Mutations::BaseMutation
 
   def resolve(**args)
     application = Application.find_by_airtable_id(args[:application])
-    application.update_attributes(monthly_limit: args[:monthly_limit])
+    application.update(monthly_limit: args[:monthly_limit])
     application.sync_to_airtable
     { application: application }
   end

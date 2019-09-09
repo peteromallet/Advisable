@@ -1,6 +1,7 @@
 import React from "react";
 import { Manager, Reference, Popper } from "react-popper";
 import useComponentSize from "@rehooks/component-size";
+import Text from "../../Text";
 import FieldError from "../../FieldError";
 import Menu from "./Menu";
 import {
@@ -9,7 +10,7 @@ import {
   Label,
   Tags,
 } from "../styles";
-import Downshift from "../Downshift";
+import Downshift, { stateChangeTypes } from "../Downshift";
 import Tag from "../Tag";
 
 const AutocompleteDesktop = props => {
@@ -21,6 +22,7 @@ const AutocompleteDesktop = props => {
     onChange,
     multiple,
     placeholder,
+    description,
     value,
   } = props;
 
@@ -31,12 +33,27 @@ const AutocompleteDesktop = props => {
   const handleStateChange = popper => (changes, downshift) => {
     popper.scheduleUpdate();
 
+    if (
+      [stateChangeTypes.clickItem, stateChangeTypes.keyDownEnter].indexOf(
+        changes.type
+      ) > -1
+    ) {
+      downshift.setState({
+        inputValue: "",
+        isOpen: false,
+      });
+    }
+
     if (changes.hasOwnProperty("highlightedIndex")) {
       if (listRef.current !== null) {
         listRef.current.scrollToItem(changes.highlightedIndex);
       }
     }
   };
+
+  const filtleredOptions = options.filter(option => {
+    return value.indexOf(option.value) === -1;
+  });
 
   return (
     <Manager>
@@ -61,16 +78,27 @@ const AutocompleteDesktop = props => {
               <AutocompleteStyles {...downshift.getRootProps()}>
                 <Label
                   as="label"
-                  size="xs"
-                  weight="medium"
-                  color="neutral.N7"
+                  fontSize="s"
+                  color="neutral.8"
+                  fontWeight="medium"
                   {...downshift.getLabelProps()}
                 >
                   {label}
                 </Label>
+                {description && (
+                  <Text
+                    mb="s"
+                    mt="-4px"
+                    fontSize="xs"
+                    lineHeight="xs"
+                    color="neutral.6"
+                  >
+                    {description}
+                  </Text>
+                )}
                 <Reference>
                   {popperRef => (
-                    <div ref={popperRef.ref}>
+                    <>
                       {multiple && (
                         <Tags>
                           {downshift.selected.map(item => (
@@ -83,16 +111,18 @@ const AutocompleteDesktop = props => {
                           ))}
                         </Tags>
                       )}
-                      <Input
-                        {...downshift.getInputProps({
-                          ref: inputRef,
-                          placeholder,
-                          onBlur,
-                          onFocus: downshift.openMenu,
-                          onClick: downshift.openMenu,
-                        })}
-                      />
-                    </div>
+                      <div ref={popperRef.ref}>
+                        <Input
+                          {...downshift.getInputProps({
+                            ref: inputRef,
+                            placeholder,
+                            onBlur,
+                            onFocus: downshift.openMenu,
+                            onClick: downshift.openMenu,
+                          })}
+                        />
+                      </div>
+                    </>
                   )}
                 </Reference>
                 {error && <FieldError>{error}</FieldError>}
@@ -103,7 +133,7 @@ const AutocompleteDesktop = props => {
                   isMax={props.isMax}
                   width={inputSize.width}
                   downshift={downshift}
-                  options={options}
+                  options={filtleredOptions}
                 />
               </AutocompleteStyles>
             )}

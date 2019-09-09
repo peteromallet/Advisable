@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { theme } from "@advisable/donut";
 
 const hidden = css`
   top: 0;
@@ -12,11 +13,11 @@ const hidden = css`
 `;
 
 export default styled.label`
-  color: #323a57;
   display: block;
-  font-size: 14px;
+  line-height: 1;
+  font-size: 15px;
   font-weight: 500;
-  line-height: 18px;
   padding-bottom: 8px;
+  color: ${theme.colors.neutral[8]};
   ${props => props.hidden && hidden};
 `;

@@ -27,6 +27,6 @@ class Accounts::Login < ApplicationService
   end
 
   def token
-    Accounts::JWT.call(account)
+    Accounts::Jwt.call(account)
   end
 end

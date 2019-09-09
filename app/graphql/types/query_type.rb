@@ -102,10 +102,13 @@ class Types::QueryType < Types::BaseType
     Country.all.order(name: :asc)
   end
 
-  field :skills, [Types::Skill], "Returns a list of skills", null: false
+  field :skills, [Types::Skill], "Returns a list of skills", null: false do
+    argument :local, Boolean, required: false
+  end
  
-  def skills
-    Rails.cache.fetch("airtable_active_skills", expires_in: 2.minutes) do
+  def skills(local: false)
+    return Skill.where(active: true, original: nil) if local
+    Rails.cache.fetch("airtable_active_skills", expires_in: 10.minutes) do
       Airtable::Skill.active.map do |s|
         OpenStruct.new(airtable_id: s.id, name: s.fields["Name"])
       end

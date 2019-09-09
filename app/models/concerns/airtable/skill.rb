@@ -16,7 +16,12 @@ class Airtable::Skill < Airtable::Base
   sync_column 'Name', to: :name
 
   sync_data do |skill|
-    skill.category = fields['Category'].try(:first)
-    skill.profile = fields['Profile Skill'] == 'Yes'
+    skill.category = self['Category'].try(:first)
+    skill.profile = self['Profile Skill'] == 'Yes'
+    skill.active = self['Active'].try(:include?, "Yes")
+  end
+
+  push_data do |skill|
+    self['Name'] = skill.name
   end
 end

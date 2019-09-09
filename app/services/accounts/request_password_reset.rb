@@ -13,7 +13,7 @@ class Accounts::RequestPasswordReset < ApplicationService
 
   def call
     has_account?
-    account.update_attributes({
+    account.update({
       reset_digest: Token.digest(token),
       reset_sent_at: Time.zone.now
     })

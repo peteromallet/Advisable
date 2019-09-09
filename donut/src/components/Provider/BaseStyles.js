@@ -1,5 +1,10 @@
 import { createGlobalStyle } from "styled-components";
 
+const BACKGROUND = {
+  default: "#F4F6FD",
+  white: "#FFFFFF",
+};
+
 const BaseStyles = createGlobalStyle`
   @import url("https://use.typekit.net/yuq4swo.css");
 
@@ -17,6 +22,10 @@ const BaseStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-weight: normal;
+  }
+
+  body {
+    background: ${props => BACKGROUND[props.theme.background]} !important;
   }
 `;
 

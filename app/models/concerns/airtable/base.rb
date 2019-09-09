@@ -25,8 +25,8 @@ class Airtable::Base < Airrecord::Table
     # to sync all records from airtable.
     # We filter the query to only fetch records that have been modified within
     # the last day.
-    def sync(report = nil)
-      records = all(filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 1")
+    def sync(report = nil, filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 1")
+      records = all(filter: filter)
       records.each { |r| r.sync(report) }
     end
 
@@ -72,6 +72,11 @@ class Airtable::Base < Airrecord::Table
     end
   end
 
+  # returns the active record model to sync data to
+  def model
+    @model ||= self.class.sync_model.find_or_initialize_by(airtable_id: id)
+  end
+
   # You can call sync on an instance of any class that inherits from
   # Airtable::Base to sync that individual record.
   # You can pass an instance of Airtable::SyncReport to capture any
@@ -108,30 +113,57 @@ class Airtable::Base < Airrecord::Table
 
   # The push method describes how data should be pushed to airtable. This is
   # not the only place where data is pushed to airtable, we also push data
-  # in graphql mutations and service classes.
+  # in graphql mutations and service classes, however, most of these are being
+  # converted to use the sync_to_airtable method from the Syncable module which
+  # uses push
   def push(record, additional_fields={})
     if id && id != record.try(:airtable_id)
       raise "Airtable ID does not match"
     end
 
     ActiveRecord::Base.transaction do
-      instance_exec(record, &self.class.push_block) if self.class.push_block
+      # we keep track of how many times the push has been retried if any errors
+      # are thrown. We limit retries to 5.
+      retry_count = 0
+      retry_limit = 5
 
-      additional_fields.each do |field, value|
-        self[field] = value
-      end
+      begin
+        retry_count += 1
+        instance_exec(record, &self.class.push_block) if self.class.push_block
 
-      id ? save : create
+        additional_fields.each do |field, value|
+          self[field] = value
+        end
 
-      if record.airtable_id.blank?
-        record.update_attributes(airtable_id: id)
+        if id.present?
+          save
+        else
+          create
+        end
+
+        if record.airtable_id.blank?
+          record.update(airtable_id: id)
+        end
+
+        # When airtable response with an error we call the handle_airtable_error
+        # method which can then be used to handle the error before attempting to
+        # retry the sync
+        rescue Airrecord::Error => e
+          if retry_count <= retry_limit && handle_airtable_error(e, record)
+            retry
+          else
+            raise e
+          end
       end
     end
   end
 
-  # returns the active record model to sync data to
-  def model
-    @model ||= self.class.sync_model.find_or_initialize_by(airtable_id: id)
+  # By default the handle_airtable_error method simply return false. The
+  # handle_airatble_error method can be overridden inside of Airtable classes
+  # to handle errors. If the handle_airtable_error method returns true it will
+  # retry to sync the record.
+  def handle_airtable_error(e, record)
+    false
   end
 
   private

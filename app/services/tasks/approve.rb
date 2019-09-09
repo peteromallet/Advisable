@@ -10,7 +10,7 @@ class Tasks::Approve < ApplicationService
       raise Service::Error.new("tasks.statusNotSubmitted")
     end
 
-    if task.update_attributes(stage: "Approved")
+    if task.update(stage: "Approved")
       task.sync_to_airtable
       WebhookEvent.trigger("tasks.approved", WebhookEvent::Task.data(task))
       return task

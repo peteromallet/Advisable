@@ -1,4 +1,4 @@
 class Industry < ApplicationRecord
-  include UID
+  include Uid
   validates :name, presence: true
 end

@@ -14,7 +14,7 @@ class Projects::Confirm < ApplicationService
       raise Service::Error.new("project.deposit_not_paid")
     end
 
-    if project.update_attributes(status: "Brief Confirmed")
+    if project.update(status: "Brief Confirmed")
       project.sync_to_airtable
       return project
     end

@@ -2,18 +2,39 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_25_105541) do
+ActiveRecord::Schema.define(version: 2019_09_04_141405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
 
   create_table "application_references", force: :cascade do |t|
     t.string "uid"
@@ -285,6 +306,9 @@ ActiveRecord::Schema.define(version: 2019_07_25_105541) do
     t.string "category"
     t.boolean "profile"
     t.string "uid"
+    t.bigint "original_id"
+    t.boolean "active"
+    t.index ["original_id"], name: "index_skills_on_original_id"
   end
 
   create_table "specialist_skills", force: :cascade do |t|
@@ -327,6 +351,16 @@ ActiveRecord::Schema.define(version: 2019_07_25_105541) do
     t.jsonb "bank_holder_address", default: {}
     t.string "bank_currency"
     t.string "vat_number"
+    t.boolean "primarily_freelance"
+    t.string "number_of_projects"
+    t.integer "hourly_rate"
+    t.string "website"
+    t.boolean "public_use"
+    t.string "pid"
+    t.string "campaign_name"
+    t.string "campaign_source"
+    t.string "referrer"
+    t.string "confirmation_token"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
@@ -379,6 +413,7 @@ ActiveRecord::Schema.define(version: 2019_07_25_105541) do
     t.string "exceptional_project_payment_terms"
     t.string "stripe_setup_intent_id"
     t.string "setup_intent_status"
+    t.string "confirmation_token"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
   end
@@ -426,6 +461,7 @@ ActiveRecord::Schema.define(version: 2019_07_25_105541) do
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "users"
   add_foreign_key "reviews", "specialists"
+  add_foreign_key "skills", "skills", column: "original_id"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "countries"

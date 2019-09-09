@@ -18,7 +18,7 @@ class Tasks::Assign < ApplicationService
       raise Service::Error.new("tasks.alreadyAssigned")
     end
 
-    if task.update_attributes(stage: "Assigned")
+    if task.update(stage: "Assigned")
       task.sync_to_airtable
       WebhookEvent.trigger("tasks.assigned", WebhookEvent::Task.data(task))
       return task

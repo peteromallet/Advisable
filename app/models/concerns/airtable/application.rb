@@ -5,8 +5,6 @@ class Airtable::Application < Airtable::Base
 
   sync_with ::Application
   sync_column 'Score', to: :score
-  sync_column 'Accepts Fee', to: :accepts_fee
-  sync_column 'Accepts terms', to: :accepts_terms
   sync_column 'Hourly Rate For Project', to: :rate
   sync_column 'Available To Start', to: :availability
   sync_column 'One Line Overview', to: :introduction
@@ -82,7 +80,7 @@ class Airtable::Application < Airtable::Base
   end
 
   push_data do |application|
-    self['Application Status'] = application.status if application.saved_change_to_status?
+    self['Application Status'] = application.status
     self['One Line Overview'] = application.introduction if application.saved_change_to_introduction?
     self['Available To Start'] = application.availability if application.saved_change_to_availability?
     self['Invitation Rejected Reason'] = application.invitation_rejection_reason if application.saved_change_to_invitation_rejection_reason?
@@ -102,8 +100,15 @@ class Airtable::Application < Airtable::Base
     self['References - Off Platform Projects'] = references_off_platform_project_ids
 
     self['Hourly Rate For Project'] = application.rate.try(:to_f) if application.saved_change_to_rate?
-    self['Accepts Terms'] = application.accepts_terms ? "Yes" : "No"
-    self['Accepts Fee'] = application.accepts_fee ? "Yes" : "No"
+
+    self['Accepts Terms'] = nil if application.accepts_terms.nil?
+    self['Accepts Terms'] = "Yes" if application.accepts_terms == true
+    self['Accepts Terms'] = "No" if application.accepts_terms == false
+
+    self['Accepts Fee'] = nil if application.accepts_fee.nil?
+    self['Accepts Fee'] = "Yes" if application.accepts_fee == true
+    self['Accepts Fee'] = "No" if application.accepts_fee == false
+
     self['Applied At'] = application.applied_at
     self['Rejected Reason'] = application.rejection_reason
     self['Proposal Comment'] = application.proposal_comment
@@ -112,5 +117,7 @@ class Airtable::Application < Airtable::Base
     self['Project Type'] = application.project_type
     self['Monthly Limit'] = application.monthly_limit
     self['Stopped Working Reason'] = application.stopped_working_reason
+    self['Expert'] = [application.specialist.try(:airtable_id)].compact
+    self['Client Project'] = [application.project.try(:airtable_id)].compact
   end
 end

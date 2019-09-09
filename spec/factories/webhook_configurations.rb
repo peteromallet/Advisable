@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :webhook_configuration do
-    name "Test webhook config"
-    url "http://localhost:3000/test"
-    type "WebhookConfiguration::Application"
+    name { "Test webhook config" }
+    url { "http://localhost:3000/test" }
+    type { "WebhookConfiguration::Application" }
     criteria {
       [
         {

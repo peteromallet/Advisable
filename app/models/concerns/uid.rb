@@ -1,6 +1,6 @@
 # Generates a UID for any model that includes UID
 # If a model includes the UID module it is expected to have a uid column
-module UID
+module Uid
   extend ActiveSupport::Concern
   CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -14,7 +14,7 @@ module UID
     #
     # == example
     # class Deposit < ApplicationRecord
-    #   include UID
+    #   include Uid
     #   uid_prefix 'de'
     # end
     def self.uid_prefix(prefix)
