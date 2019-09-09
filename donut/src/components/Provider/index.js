@@ -8,6 +8,8 @@ import { ThemeProvider } from "styled-components";
 import theme from "../../theme";
 
 const DonutProvider = ({ children }) => {
+  const [currentTheme, setTheme] = React.useState(theme);
+
   // Iterate through the breakpoints and build up an object determining which
   // breakpoints are active. This object will have a key of the breakpoint name
   // and a boolean value to indicate wether the breakpoint is active or not.
@@ -25,11 +27,12 @@ const DonutProvider = ({ children }) => {
 
   const context = {
     breakpoints,
+    setTheme,
   };
 
   return (
     <Context.Provider value={context}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={currentTheme}>
         <>
           <BaseStyles />
           {children}

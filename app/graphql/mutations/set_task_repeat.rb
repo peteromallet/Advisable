@@ -14,7 +14,7 @@ class Mutations::SetTaskRepeat < Mutations::BaseMutation
 
   def resolve(**args)
     task = Task.find_by_uid!(args[:id])
-    task.update_attributes(repeat: args[:repeat])
+    task.update(repeat: args[:repeat])
     task.sync_to_airtable
 
     { task: task }

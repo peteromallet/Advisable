@@ -28,7 +28,7 @@ ActiveRecord::Migration.maintain_test_schema!
 
 # If there is a specific chromedriver version specified then use that
 if ENV["CHROMEDRIVER_VERSION"]
-  Chromedriver.set_version ENV["CHROMEDRIVER_VERSION"]
+  Webdrivers::Chromedriver.required_version = ENV["CHROMEDRIVER_VERSION"]
 end
 
 # configure shoulda matchers

@@ -1,5 +1,5 @@
 class Application < ApplicationRecord
-  include UID
+  include Uid
   include Airtable::Syncable
   belongs_to :specialist
   belongs_to :project
@@ -8,7 +8,6 @@ class Application < ApplicationRecord
   has_many :tasks
   has_many :references, class_name: 'ApplicationReference'
   has_one :interview
-  validates :airtable_id, presence: true
 
   scope :accepted_fees, -> { where(accepts_fee: true) }
   scope :accepted_terms, -> { where(accepts_terms: true) }

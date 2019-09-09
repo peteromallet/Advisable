@@ -27,7 +27,7 @@ const fontSizes = {
   l: 18,
   xl: 20,
   xxl: 24,
-  xxxl: 28,
+  xxxl: 32,
   xxxxl: 32,
 };
 
@@ -48,11 +48,87 @@ const lineHeights = {
   l: "24px",
   xl: "26px",
   xxl: "28px",
-  xxxl: "32px",
+  xxxl: "34px",
   xxxxl: "36px",
 };
 
+const boxShadow = {
+  s: "0 1px 2px red",
+  m: "0 5px 10px red",
+};
+
+const colors = {
+  white: [
+    "rgba(255, 255, 255, 0.1)",
+    "rgba(255, 255, 255, 0.2)",
+    "rgba(255, 255, 255, 0.3)",
+    "rgba(255, 255, 255, 0.4)",
+    "rgba(255, 255, 255, 0.5)",
+    "rgba(255, 255, 255, 0.6)",
+    "rgba(255, 255, 255, 0.7)",
+    "rgba(255, 255, 255, 0.8)",
+    "rgba(255, 255, 255, 0.9)",
+    "rgba(255, 255, 255, 1)",
+  ],
+  neutral: [
+    "#F8F9FF",
+    "#E9EAEF",
+    "#C1C2C8",
+    "#A6A7AC",
+    "#8B8C90",
+    "#6F7074",
+    "#545559",
+    "#38393D",
+    "#1D1E21",
+  ],
+  blue: [
+    "#E6F8FF",
+    "#B6E1FF",
+    "#85BFFF",
+    "#5590FF",
+    "#2555FF",
+    "#0425E8",
+    "#0712AE",
+    "#080776",
+    "#0A0540",
+  ],
+  green: [
+    "#EAFAFB",
+    "#B0E8DE",
+    "#75D7C2",
+    "#3BC5A5",
+    "#00B388",
+    "#019678",
+    "#027967",
+    "#025C52",
+    "#02403C",
+  ],
+  yellow: [
+    "#FFF5ED",
+    "#FFDEBD",
+    "#FFCC8C",
+    "#FFBF5C",
+    "#FFB72B",
+    "#EF9504",
+    "#B66B06",
+    "#7F4606",
+    "#492605",
+  ],
+  red: [
+    "#FFF1F4",
+    "#FAC1C1",
+    "#F5928D",
+    "#F0625A",
+    "#EB3226",
+    "#CF2012",
+    "#A31A0D",
+    "#771409",
+    "#4A0D05",
+  ],
+};
+
 export default {
+  background: "default",
   responsiveProp: prop => {
     if (!isObject(prop)) return prop;
     let propForBreakpoint = find(prop, (_, breakpoint) => {
@@ -60,55 +136,11 @@ export default {
     });
     return propForBreakpoint || prop.default || prop.all;
   },
-  colors: {
-    white: [
-      "rgba(255, 255, 255, 0.1)",
-      "rgba(255, 255, 255, 0.2)",
-      "rgba(255, 255, 255, 0.3)",
-      "rgba(255, 255, 255, 0.4)",
-      "rgba(255, 255, 255, 0.5)",
-      "rgba(255, 255, 255, 0.6)",
-      "rgba(255, 255, 255, 0.7)",
-      "rgba(255, 255, 255, 0.8)",
-      "rgba(255, 255, 255, 0.9)",
-    ],
-    neutral: [
-      "#F4F6FD",
-      "#DBDEE8",
-      "#BBBEC9",
-      "#999CA9",
-      "#717484",
-      "#4A4C5E",
-      "#24283A",
-      "#101425",
-      "#03071A",
-    ],
-    blue: [
-      "#E0E7FF",
-      "#CAD6FF",
-      "#A3B7FF",
-      "#6B8CFF",
-      "#2555FF",
-      "#1944DC",
-      "#1232A6",
-      "#0A2172",
-      "#051448",
-    ],
-    red: [
-      "#FFECEE",
-      "#FFD6DB",
-      "#FFB0BA",
-      "#FF7787",
-      "#FF3F56",
-      "#D7283D",
-      "#AC1B2C",
-      "#7D0D1A",
-      "#4B030C",
-    ],
-  },
+  colors,
   space,
   fontSizes,
   fontWeights,
   lineHeights,
   breakpoints,
+  boxShadow,
 };

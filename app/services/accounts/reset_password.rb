@@ -17,7 +17,7 @@ class Accounts::ResetPassword < ApplicationService
   def call
     validate_token
     check_reset_expired
-    account.update_attributes(
+    account.update(
       password: password,
       password_confirmation: password_confirmation,
       reset_sent_at: nil,

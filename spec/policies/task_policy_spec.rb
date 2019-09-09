@@ -6,7 +6,7 @@ describe TaskPolicy do
   describe '#update_due_date' do
     it 'returns true if the user is an admin' do
       user = task.application.project.user
-      user.update_attributes(permissions: ["admin"])
+      user.update(permissions: ["admin"])
       policy = TaskPolicy.new(user, task)
       expect(policy.update_due_date).to be_truthy
     end
@@ -57,7 +57,7 @@ describe TaskPolicy do
   describe '#update_estimate' do
     it 'returns true if the user is an admin' do
       user = task.application.project.user
-      user.update_attributes(permissions: ["admin"])
+      user.update(permissions: ["admin"])
       policy = TaskPolicy.new(user, task)
       expect(policy.update_estimate).to be_truthy
     end

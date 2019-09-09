@@ -1,6 +1,6 @@
 # Returns a JWT for a given account.
 # @param account The account that the JWT should represent.
-class Accounts::JWT < ApplicationService
+class Accounts::Jwt < ApplicationService
   attr_reader :account
 
   def initialize(account)

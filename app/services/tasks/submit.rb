@@ -15,7 +15,7 @@ class Tasks::Submit < ApplicationService
       raise Service::Error.new("tasks.notSubmittable")
     end
     
-    if task.update_attributes(stage: "Submitted", hours_worked: hours_worked)
+    if task.update(stage: "Submitted", hours_worked: hours_worked)
       task.sync_to_airtable
       WebhookEvent.trigger("tasks.submitted", WebhookEvent::Task.data(task))
       return task

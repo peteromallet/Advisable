@@ -145,7 +145,7 @@ const Login = ({ location }) => {
         <SignupLink href="https://advisable.com/apply-to-be-a-client/">
           Apply to be a client
         </SignupLink>
-        <SignupLink href="https://advisable.com/apply-to-be-a-specialist/">
+        <SignupLink href="/freelancers/signup">
           Apply to be a specialist
         </SignupLink>
       </SignupLinks>

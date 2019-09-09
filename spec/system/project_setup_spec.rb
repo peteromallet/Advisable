@@ -48,7 +48,7 @@ describe "Project setup flow" do
 
     context "when there is no company description" do
       it "redirects to the company overview step" do
-        project.update_attributes(company_description: nil)
+        project.update(company_description: nil)
         authenticate_as project.user
         visit "/project_setup/#{project.airtable_id}/project_overview"
         expect(page).to have_content("Company Overview")
@@ -67,7 +67,7 @@ describe "Project setup flow" do
 
     context "when there is no description" do
       it "redirects to the project overview step" do
-        project.update_attributes(description: nil)
+        project.update(description: nil)
         authenticate_as project.user
         visit "/project_setup/#{project.airtable_id}/goals"
         expect(page).to have_content("Project Overview")
@@ -86,7 +86,7 @@ describe "Project setup flow" do
 
     context "when there are no goals" do
       it "redirects to the goals step" do
-        project.update_attributes(goals: [])
+        project.update(goals: [])
         authenticate_as project.user
         visit "/project_setup/#{project.airtable_id}/specialist_overview"
         expect(page).to have_content("Goals")
@@ -105,7 +105,7 @@ describe "Project setup flow" do
 
     context "when there is no specialist overview" do
       it "redirects to the specialist overview step" do
-        project.update_attributes(specialist_description: nil)
+        project.update(specialist_description: nil)
         authenticate_as project.user
         visit "/project_setup/#{project.airtable_id}/must_have"
         expect(page).to have_content("Specialist Overview")
@@ -124,7 +124,7 @@ describe "Project setup flow" do
 
     context "when there are no required characteristics" do
       it "redirects to the specialist overview step" do
-        project.update_attributes(required_characteristics: [])
+        project.update(required_characteristics: [])
         authenticate_as project.user
         visit "/project_setup/#{project.airtable_id}/nice_to_have"
         expect(page).to have_content("Must-have Characteristics")
@@ -143,7 +143,7 @@ describe "Project setup flow" do
 
     context "when there are no required characteristics" do
       it "redirects to the specialist overview step" do
-        project.update_attributes(required_characteristics: [])
+        project.update(required_characteristics: [])
         authenticate_as project.user
         visit "/project_setup/#{project.airtable_id}/nice_to_have"
         expect(page).to have_content("Must-have Characteristics")
@@ -162,7 +162,7 @@ describe "Project setup flow" do
 
     context "when the proejct does not require a deposit" do
       it "progresses to the confirm step" do
-        project.update_attributes(deposit: 0)
+        project.update(deposit: 0)
         authenticate_as project.user
         visit "/project_setup/#{project.airtable_id}/terms"
         check "acceptedTerms"
@@ -174,7 +174,7 @@ describe "Project setup flow" do
 
     context "when there are no questions" do
       it "redirects to the questions step" do
-        project.update_attributes(questions: [])
+        project.update(questions: [])
         authenticate_as project.user
         visit "/project_setup/#{project.airtable_id}/terms"
         expect(page).to have_content("Questions")
@@ -185,7 +185,7 @@ describe "Project setup flow" do
   describe "deposit step" do
     context "when terms have not been accepted" do
       it "redirects to the terms" do
-        project.update_attributes(accepted_terms: false)
+        project.update(accepted_terms: false)
         authenticate_as project.user
         visit "/project_setup/#{project.airtable_id}/deposit"
         expect(page).to have_content("Terms")

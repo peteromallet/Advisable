@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  include UID
+  include Uid
   include Account
   include Airtable::Syncable
   airtable_class Airtable::ClientContact

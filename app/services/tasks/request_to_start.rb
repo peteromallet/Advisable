@@ -22,7 +22,7 @@ class Tasks::RequestToStart < ApplicationService
       raise Service::Error.new("tasks.cantRequestToStart", message: "Application status is not 'Working'")
     end
 
-    if task.update_attributes(stage: "Requested To Start")
+    if task.update(stage: "Requested To Start")
       task.sync_to_airtable
       WebhookEvent.trigger("tasks.requested_to_start", WebhookEvent::Task.data(task))
       return task

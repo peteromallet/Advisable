@@ -25,7 +25,7 @@ describe Accounts::Signup do
         new_user = create(:user, password: nil)
         expect {
           Accounts::Signup.call(airtable_id: new_user.airtable_id, email: user.email, password: "testing123", password_confirmation: "testing123")
-        }.to raise_error(Service::Error, 'email_taken')
+        }.to raise_error(Service::Error, 'users.email_taken')
       end
     end
 
@@ -35,7 +35,7 @@ describe Accounts::Signup do
         new_user = create(:user, password: nil)
         expect {
           Accounts::Signup.call(airtable_id: new_user.airtable_id, email: specialist.email, password: "testing123", password_confirmation: "testing123")
-        }.to raise_error(Service::Error, 'email_taken')
+        }.to raise_error(Service::Error, 'users.email_taken')
       end
     end
   end

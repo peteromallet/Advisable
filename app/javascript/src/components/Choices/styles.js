@@ -1,3 +1,4 @@
+import { rgba } from "polished";
 import styled from "styled-components";
 import { theme } from "@advisable/donut";
 
@@ -12,7 +13,7 @@ export const Choices = styled.div`
 
 export const Circle = styled.span`
   top: 50%;
-  left: 20px;
+  left: 16px;
   width: 18px;
   height: 18px;
   margin-right: 8px;
@@ -73,22 +74,22 @@ export const Choice = styled.div`
 
   label {
     width: 100%;
-    display: block;
+    display: flex;
     cursor: pointer;
     border-radius: 8px;
     position: relative;
-    padding: 14px 15px 16px 54px;
+    align-items: center;
+    padding: 14px 15px 16px 46px;
     border: 2px solid transparent;
-    background: rgba(29, 39, 75, 0.06);
+    background: ${rgba(theme.colors.neutral[1], 0.7)};
 
     &:hover {
-      background: rgba(29, 39, 75, 0.1);
+      background: ${rgba(theme.colors.neutral[1], 0.8)};
     }
   }
 
   input:checked + label {
-    background-color: #ecf1fa;
-    border-color: ${theme.colors.blue[5]};
+    border-color: ${theme.colors.neutral[2]};
 
     ${Circle} {
       border-color: #173fcd;

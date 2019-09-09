@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_PASSWORD"])
     )
   end
+
   mount Sidekiq::Web, at: "/sidekiq"
 
   namespace :admin do
@@ -37,5 +38,7 @@ Rails.application.routes.draw do
 
   # match every other route to the frontend codebase
   root 'application#frontend'
-  get '*path', to: 'application#frontend'
+  get '*path', to: 'application#frontend', constraints: lambda { |req|
+    req.path.exclude? "rails/active_storage"
+  }
 end

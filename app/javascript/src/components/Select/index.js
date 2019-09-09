@@ -1,8 +1,8 @@
 import React from "react";
 import uniqueID from "lodash/uniqueId";
+import { Text } from "@advisable/donut";
 import { Select, Wrapper, SelectWrapper, Arrows } from "./styles.js";
 import InputLabel from "src/components/InputLabel";
-import InputError from "src/components/InputError";
 import InputDescription from "src/components/InputDescription";
 import { extractSpacingProps } from "src/components/Spacing";
 
@@ -99,7 +99,11 @@ class SelectComponent extends React.Component {
           </Select>
           <Arrows />
         </SelectWrapper>
-        {error && <InputError>{error}</InputError>}
+        {error && (
+          <Text size="xs" color="red.5" mt="xs">
+            {error}
+          </Text>
+        )}
         {description && <InputDescription>{description}</InputDescription>}
       </Wrapper>
     );

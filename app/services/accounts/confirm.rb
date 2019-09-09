@@ -20,6 +20,7 @@ class Accounts::Confirm < ApplicationService
     validate_token
     account.confirmed_at = DateTime.now
     account.confirmation_digest = nil
+    account.confirmation_token = nil
     account.save(validate: false)
     account
   end

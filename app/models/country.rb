@@ -1,5 +1,5 @@
 class Country < ApplicationRecord
-  include UID
+  include Uid
   has_many :specialists
   validates_presence_of :name
   validates_presence_of :currency

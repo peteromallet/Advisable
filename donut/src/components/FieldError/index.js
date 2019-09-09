@@ -3,7 +3,7 @@ import { FieldError as FieldErrorStyles } from "./styles";
 
 const FieldError = ({ children }) => {
   return (
-    <FieldErrorStyles size="xs" color="red.N6">
+    <FieldErrorStyles fontSize="xs" color="red.6">
       {children}
     </FieldErrorStyles>
   );

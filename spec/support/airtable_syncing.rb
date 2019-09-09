@@ -1,7 +1,5 @@
 RSpec.shared_examples "airtable syncing" do
-  subject {
-    described_class.new({}, id: "rec_1")
-  }
+  let(:factory) { described_class.sync_model.to_s.underscore }
 
   it "has a table_name" do
     expect(described_class.table_name).to_not be_nil
@@ -11,8 +9,79 @@ RSpec.shared_examples "airtable syncing" do
     expect(described_class.sync_model).to be < ActiveRecord::Base
   end
 
-  describe "after_sync" do
-    
+  describe "self.base_key" do
+    it 'returns the AIRTABLE_DATABASE_KEY' do
+      expect(described_class.base_key).to eq(ENV["AIRTABLE_DATABASE_KEY"])
+    end
+  end
+
+  describe "self.sync" do
+    it "calls sync on each record returned by #all" do
+      a = described_class.new({})
+      b = described_class.new({})
+      allow(described_class).to receive(:all).and_return([a, b])
+      expect(a).to receive(:sync)
+      expect(b).to receive(:sync)
+      described_class.sync
+    end
+
+    it "can pass through a filter" do
+      filter = "TEST"
+      expect(described_class).to receive(:all).with(filter: filter).and_return([])
+      described_class.sync(filter: filter)
+    end
+
+    it "accepts a report object and passes it to each #sync call" do
+      report = OpenStruct.new
+      record = described_class.new({})
+      expect(described_class).to receive(:all).and_return([record])
+      expect(record).to receive(:sync).with(report)
+      described_class.sync(report)
+    end
+  end
+
+  describe "#model" do
+    it "returns the active record model with matching airtable id" do
+      active_record_model = create(factory)
+      record = described_class.new({}, id: active_record_model.airtable_id)
+      expect(record.model).to eq(active_record_model)
+    end
+  end
+
+  describe "#sync" do
+    # Generate a test for each of the column_hash attributes.
+    described_class.columns_hash.each do |column, attribute|
+      it "syncs the '#{column}' column to the '#{attribute}' attribute" do
+        active_record_model = build(factory, { attribute => nil })
+        active_record_model.save(validate: false)
+        record = described_class.new({
+          column => "test"
+        }, id: active_record_model.airtable_id)
+        allow(record).to receive(:model).and_return(active_record_model)
+        expect(active_record_model).to receive("#{attribute}=").with("test")
+        record.sync
+      end
+    end
+
+    it "calls Webhook.process" do
+      active_record_model = create(factory)
+      record = described_class.new({}, id: active_record_model.airtable_id)
+      allow(record).to receive(:model).and_return(active_record_model)
+      allow(active_record_model).to receive(:save).and_return(true)
+      expect(Webhook).to receive(:process).with(active_record_model)
+      record.sync
+    end
+
+    context "when the model fails to save" do
+      it "logs a warning" do
+        active_record_model = create(factory)
+        record = described_class.new({}, id: active_record_model.airtable_id)
+        allow(record).to receive(:model).and_return(active_record_model)
+        allow(active_record_model).to receive(:save).and_return(false)
+        expect(Rails.logger).to receive(:warn).with(/Failed to sync/)
+        record.sync
+      end
+    end
   end
 end
 

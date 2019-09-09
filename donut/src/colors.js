@@ -1,3 +1,4 @@
+// DONT USE THESE. instead use the colors from inside theme.js
 const COLORS = {
   white: {
     N1: "rgba(255, 255, 255, 0.1)",

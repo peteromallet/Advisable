@@ -1,7 +1,6 @@
 class Airtable::Specialist < Airtable::Base
   self.table_name = "Specialists"
 
-  has_many :specialist_skills, class: 'SpecialistSkill', column: "Specialist Skills"
   belongs_to :country, class: "Airtable::Country", column: "Country"
 
   # Tells which active record model to sync data with.
@@ -18,11 +17,32 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'Bank Holder Name', to: :bank_holder_name
   sync_column 'Bank Currency', to: :bank_currency
   sync_column 'VAT Number', to: :vat_number
+  sync_column 'Estimated Number of Freelance Projects', to: :number_of_projects
+  sync_column 'PID', to: :pid
+  sync_column 'Campaign Name', to: :campaign_name
+  sync_column 'Campaign Source', to: :campaign_source
+  sync_column 'Referrer', to: :referrer
 
   sync_data do |specialist|
     # sync the bank holder address
     if self['Bank Holder Address']
       specialist.bank_holder_address = Address.parse(self['Bank Holder Address']).to_h
+    end
+
+    # Sync 'Okay To Use Publicly'
+    if self['Okay To Use Publicly']
+      specialist.public_use = self['Okay To Use Publicly'].include?("Yes")
+    end
+
+    # sync the Freelancing Status column
+    freelancing_status = fields["Freelancing Status"]
+    specialist.primarily_freelance = freelancing_status.try(:include?, "Yes")
+
+    # sync the typical hourly rate. We store the horuly rate as a minor currency
+    # e.g $46.54 is stored as the int 4654
+    hourly_rate = fields['Typical Hourly Rate']
+    if hourly_rate
+      specialist.hourly_rate = hourly_rate * 100
     end
 
     # to prevent making more requests than we need, first check if there is
@@ -52,6 +72,7 @@ class Airtable::Specialist < Airtable::Base
 
   # After the syncing process has been complete
   after_sync do |specialist|
+    specialist.saved_change_to_application_stage
     # Deteremine wether or not the specialist record was just created for the
     # first time.
     new_record = specialist.created_at == specialist.updated_at
@@ -70,6 +91,8 @@ class Airtable::Specialist < Airtable::Base
   push_data do |specialist|
     self['Biography'] = specialist.bio
     self['Email Address'] = specialist.email
+    self['First Name'] = specialist.first_name
+    self['Last Name'] = specialist.last_name
     self['Specialist Skills'] = specialist.skills.map(&:airtable_id).uniq
     self['City'] = specialist.city
     self['Account Created'] = specialist.has_account? ? "Yes" : nil
@@ -78,6 +101,12 @@ class Airtable::Specialist < Airtable::Base
     self['Bank Holder Name'] = specialist.bank_holder_name
     self['Bank Currency'] = specialist.bank_currency
     self['VAT Number'] = specialist.vat_number
+    self['Estimated Number of Freelance Projects'] = specialist.number_of_projects
+    self['Application Stage'] = specialist.application_stage
+
+    if specialist.hourly_rate
+      self['Typical Hourly Rate'] = specialist.hourly_rate / 100.0
+    end
     
     if specialist.bank_holder_address
       self['Bank Holder Address'] = Address.new(specialist.bank_holder_address).to_s
@@ -88,6 +117,92 @@ class Airtable::Specialist < Airtable::Base
     else
       self['Remote OK'] = "No, I only work with clients in person"
     end
+
+    if specialist.primarily_freelance == true
+      self['Freelancing Status'] = "Yes, freelancing is my primary occupation"
+    end
+
+    if specialist.primarily_freelance == false
+      self['Freelancing Status'] = "No, I freelance alongside a full-time job"
+    end
+
+    if specialist.primarily_freelance.nil?
+      self['Freelancing Status'] = nil
+    end
+
+    if specialist.public_use != nil
+      self['Okay To Use Publicly'] = specialist.public_use ? "Yes" : "No"
+    end
+
+    self['PID'] = specialist.pid if specialist.pid
+    self['Campaign Name'] = specialist.campaign_name if specialist.campaign_name
+    self['Campaign Source'] = specialist.campaign_source if specialist.campaign_source
+    self['Referrer'] = specialist.referrer if specialist.referrer
+
+    # We only want to try and sync their avatar if they have uplodated one.
+    # We also check to see if the filename in airtable is different to the
+    # filename for our version as if they are the same then its probably the
+    # same image and there is no need to reset it.
+    if specialist.avatar.attached?
+      airtable_image_filename = self['Image'].try(:first).try(:[], "filename")
+      if airtable_image_filename != specialist.avatar.filename.to_s
+        self['Image'] = [{
+          url: specialist.avatar.service_url,
+          filename: specialist.avatar.filename.to_s,
+        }]
+      end
+    end
+
+    # We do the same thing for the resume that we do for the image
+    if specialist.resume.attached?
+      airtable_filename = self['Resume'].try(:first).try(:[], "filename")
+      if airtable_filename != specialist.resume.filename.to_s
+        self['Resume'] = [{
+          url: specialist.resume.service_url,
+          filename: specialist.resume.filename.to_s,
+        }]
+      end
+    end
+  end
+
+  # handle_airtable_error is called when airtable responds with an error during
+  # the push process. IF the error code returned is ROW_DOES_NOT_EXIST then
+  # this could be due to a duplicate skill record so we pass on to the
+  # handle_duplicate_skill method.
+  def handle_airtable_error(e, record)
+    if e.message.include?("ROW_DOES_NOT_EXIST")
+      # extract the id of the record that could not be found from the error
+      id = e.message[/(rec\w*)/, 1]
+      # get the postgres skill that represents this skill
+      skill = Skill.find_by_airtable_id(id)
+      # pass on to the handle_duplicate_skill method if the skill exists
+      return handle_duplicate_skill(skill, record) if skill.present?
+      # otherwise reraise the error, its a different kind of missing record.
+      # possibly a country association or something..
+      return false
+    end
+
+    return false
+  end
+
+  # When the airtable API responds with RECORD_DOES_NOT_EXIST it is likely
+  # due to a duplicate skill that has been removed from airtable. This method
+  # will handle duplicate skills before retrying to sync the record
+  def handle_duplicate_skill(skill, record)
+    other = Skill.where.not(id: skill.id).where(original: nil).find_by_name(skill.name)
+
+    if other
+      skill.update(original: other)
+      record.specialist_skills.find_by(skill: skill).update(skill: other)
+    else
+      # The skill may have existed in airtable before so we need to clear
+      # out any existing airtable_id.
+      skill.airtable_id = nil
+      skill.sync_to_airtable # add the skill to airtable
+    end
+
+    record.reload
+    return true
   end
 
   private

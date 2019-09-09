@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :client do
-    name "Apple"
+    name { "Apple" }
     sequence(:airtable_id) { |n| "rec_client_#{n}" }
 
     after(:create) do |client|

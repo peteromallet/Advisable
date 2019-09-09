@@ -2,6 +2,7 @@
 // authenticated user to view the route. If the viewer is not authenticated it
 // will redirect to the Login view.
 import React from "react";
+import { get } from "lodash";
 import { Route, Redirect } from "react-router-dom";
 import PendingConfirmation from "./PendingConfirmation";
 import useViewer from "../../hooks/useViewer";
@@ -13,6 +14,8 @@ const AuthenticatedRoute = ({
   ...rest
 }) => {
   const viewer = useViewer();
+  const __typename = get(viewer, "__typename");
+  const applicationStage = get(viewer, "applicationStage");
 
   return (
     <Route
@@ -31,6 +34,11 @@ const AuthenticatedRoute = ({
               }}
             />
           );
+        }
+
+        // Redirect to specialist setup if their applicationStage is 'Started'
+        if (__typename === "Specialist" && applicationStage === "Started") {
+          return <Redirect to="/freelancers/signup/work" />;
         }
 
         // if the viewer still needs to confirm their account then render the

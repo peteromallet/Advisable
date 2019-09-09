@@ -1,9 +1,9 @@
 class Payment < ApplicationRecord
-  include UID
+  include Uid
   belongs_to :project
 
   after_initialize :set_currency
-  after_initialize :set_status, on: :create
+  after_initialize :set_status
 
   scope :captured, -> { where(status: "captured") }
 
