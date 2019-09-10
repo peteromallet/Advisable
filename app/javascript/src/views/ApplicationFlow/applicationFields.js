@@ -10,6 +10,7 @@ export default gql`
     airtableId
     introduction
     availability
+    trialProgram
     questions {
       answer
       question

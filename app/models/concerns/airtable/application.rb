@@ -27,6 +27,10 @@ class Airtable::Application < Airtable::Base
     application.references_requested = fields['References Requested'] == 'Yes'
     application.hidden = fields['Application Hidden'] == 'Yes'
 
+    if self['Trial Program']
+      application.trial_program = self['Trial Program'].include?("Yes")
+    end
+
     specialist_id = fields["Expert"].try(:first)
     if specialist_id
       specialist = ::Specialist.find_by_airtable_id(specialist_id)
@@ -88,6 +92,7 @@ class Airtable::Application < Airtable::Base
     self['Answer 2'] = application.questions.try(:second).try(:[], "answer") if application.saved_change_to_questions?
     self['Question 1'] = application.questions.try(:first).try(:[], "question") if application.saved_change_to_questions?
     self['Question 2'] = application.questions.try(:second).try(:[], "question") if application.saved_change_to_questions?
+    self['Trial Program'] = application.trial_program ? "Yes" : "No"
 
     references_project_ids = application.references.where(project_type: "Project").map do |r|
       r.project.airtable_id

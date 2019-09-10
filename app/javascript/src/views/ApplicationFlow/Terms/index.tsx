@@ -23,6 +23,7 @@ interface Values {
   rate: number;
   acceptsFee: boolean;
   acceptsTerms: boolean;
+  trialProgram: boolean;
 }
 
 const Terms = ({
@@ -76,6 +77,7 @@ const Terms = ({
         rate: parseFloat(application.rate) || "",
         acceptsFee: application.acceptsFee,
         acceptsTerms: application.acceptsTerms,
+        trialProgram: application.trialProgram || false,
       }}
     >
       {(formik: FormikProps<Values>) => (
@@ -161,6 +163,39 @@ const Terms = ({
                       Advisable's freelancer agreement.
                     </Link>
                   </span>
+                }
+              />
+            </FieldRow>
+            <FieldRow>
+              <Checkbox
+                name="trialProgram"
+                value={formik.values.trialProgram}
+                onChange={formik.handleChange}
+                label={
+                  <>
+                    I aggree to participate in{" "}
+                    <Tooltip
+                      size="l"
+                      content={
+                        <Text colour="white" size="xs">
+                          This means that we offer a guaranteed trial to work
+                          with you of up to 8 hours to the client for a project
+                          you spec out. As long as the client agrees that you
+                          adhered to Advisable's professional standards, you'll
+                          get paid for this trial period even if the client
+                          doesn't use your output or want to continue working
+                          with you after it.
+                        </Text>
+                      }
+                    >
+                      <Link href="#">
+                        Advisable's Guaranteed Trial Programme.
+                      </Link>
+                    </Tooltip>
+                  </>
+                }
+                error={
+                  formik.touched.trialProgram && formik.errors.trialProgram
                 }
               />
             </FieldRow>
