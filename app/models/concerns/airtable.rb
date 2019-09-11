@@ -1,6 +1,6 @@
 module Airtable
   def self.sync
-    Rails.application.eager_load!
+    Zeitwerk::Loader.eager_load_all
     report = Airtable::SyncReport.new
 
     started_at = DateTime.now
