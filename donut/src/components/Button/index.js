@@ -1,6 +1,6 @@
 import React from "react";
 import Icon from "../Icon";
-import { Button as ButtonStyles, Loading, Dot } from "./styles";
+import { Button as ButtonStyles, ButtonText, Loading, Dot } from "./styles";
 
 // Renders a button.. obviously
 //
@@ -27,9 +27,13 @@ const Button = ({ children, icon, iconRight, loading, size, ...rest }) => {
           <Dot />
         </Loading>
       )}
-      {icon && <Icon mr="xs" icon={icon} width={20} />}
-      {children}
-      {iconRight && <Icon ml="xs" icon={iconRight} width={20} />}
+      {icon && <Icon icon={icon} width={20} />}
+      {children && (
+        <ButtonText hasIcon={Boolean(icon)} hasRightIcon={Boolean(iconRight)}>
+          {children}
+        </ButtonText>
+      )}
+      {iconRight && <Icon icon={iconRight} width={20} />}
     </ButtonStyles>
   );
 };

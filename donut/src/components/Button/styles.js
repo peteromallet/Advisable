@@ -197,4 +197,9 @@ export const Button = styled.button`
   ${props => props.disabled && disabledStyling};
 `;
 
+export const ButtonText = styled.span`
+  ${props => props.hasIcon && { paddingLeft: 8 }};
+  ${props => props.hasRightIcon && { paddingRight: 8 }};
+`;
+
 export default Button;
