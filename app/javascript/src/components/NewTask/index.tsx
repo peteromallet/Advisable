@@ -17,6 +17,7 @@ const Component = ({ application, onCreate, mutate }) => {
       stage: "Not Assigned",
       dueDate: null,
       estimate: null,
+      trial: false,
       hoursWorked: null,
       flexibleEstimate: null,
       description: null,
@@ -25,9 +26,11 @@ const Component = ({ application, onCreate, mutate }) => {
       application: {
         __typename: "Application",
         id: application.id,
+        trialProgram: application.trialProgram || false,
         airtableId: application.airtableId,
         rate: "0",
         status: application.status,
+        trialTask: application.trialTask || null,
         projectType: application.projectType,
         specialist: {
           __typename: "Specialist",

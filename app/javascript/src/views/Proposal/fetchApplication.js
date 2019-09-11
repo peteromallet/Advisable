@@ -10,6 +10,10 @@ export default gql`
       proposalComment
       projectType
       monthlyLimit
+      trialTask {
+        id
+        stage
+      }
       tasks {
         id
         name

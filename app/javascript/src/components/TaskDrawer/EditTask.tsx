@@ -11,6 +11,7 @@ import DueDate from "./DueDate";
 import Actions from "./Actions";
 import Estimate from "./Estimate";
 import Description from "./Description";
+import TaskActions from "./TaskActions";
 import {
   TaskDetails,
   Confirmation,
@@ -239,6 +240,7 @@ const EditTask = ({
           </Scrollable>
         </VerticalLayout.Content>
         <VerticalLayout.Footer style={{ background: "white" }}>
+          {!readOnly && <TaskActions task={task} isClient={isClient} />}
           <Padding size="l">
             {!readOnly && showStatusNotice && (
               <StageDescription isClient={isClient} task={task} />

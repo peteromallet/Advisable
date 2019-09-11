@@ -42,7 +42,7 @@ const fontWeights = {
 // Line heights
 const lineHeights = {
   xxs: "14px",
-  xs: "16px",
+  xs: "17px",
   s: "19px",
   m: "22px",
   l: "24px",

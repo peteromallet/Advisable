@@ -5,6 +5,7 @@ export default gql`
     id
     name
     stage
+    trial
     dueDate
     estimate
     hoursWorked
@@ -12,5 +13,13 @@ export default gql`
     description
     createdAt
     repeat
+    application {
+      id
+      trialProgram
+      trialTask {
+        id
+        stage
+      }
+    }
   }
 `;

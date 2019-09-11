@@ -1,18 +1,10 @@
 import * as React from "react";
 import * as moment from "moment";
-import { Task as TaskType } from "../../types";
 import { Task, Title, Detail, TaskContent, Prompt } from "./styles";
 import Icon from "../Icon";
 import TaskStatus from "../TaskStatus";
 import { hoursLabel, hoursDisplay } from "../../utilities/tasks";
-
-interface Props {
-  task: TaskType;
-  isClient?: boolean;
-  onClick: () => void;
-  hideStatus?: boolean;
-  showPromptForTask?: (task: TaskType) => boolean;
-}
+import TrialIndicator from "./TrialIndicator";
 
 const shouldShowPrompt = (isClient, task) => {
   if (task.stage === "Quote Requested" && !isClient) return true;
@@ -21,13 +13,7 @@ const shouldShowPrompt = (isClient, task) => {
   if (task.stage === "Submitted" && isClient) return true;
 };
 
-export default ({
-  task,
-  hideStatus,
-  onClick,
-  isClient,
-  showPromptForTask,
-}: Props) => {
+export default ({ task, hideStatus, onClick, isClient, showPromptForTask }) => {
   let showPrompt = shouldShowPrompt(isClient, task);
 
   if (showPromptForTask) {
@@ -37,6 +23,7 @@ export default ({
   return (
     <Task onClick={onClick} showPrompt={showPrompt}>
       {showPrompt && <Prompt />}
+      {task.trial && <TrialIndicator />}
       <TaskContent>
         <Title>{task.name || "Untitled"}</Title>
         {task.dueDate && (

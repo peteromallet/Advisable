@@ -6,6 +6,7 @@ class Application < ApplicationRecord
   has_many :bookings
   has_many :interviews
   has_many :tasks
+  has_one :trial_task, -> { where(trial: true) }, class_name: "Task"
   has_many :references, class_name: 'ApplicationReference'
   has_one :interview
 

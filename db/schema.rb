@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_10_101930) do
+ActiveRecord::Schema.define(version: 2019_09_10_115653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -380,6 +380,7 @@ ActiveRecord::Schema.define(version: 2019_09_10_101930) do
     t.string "repeat"
     t.integer "flexible_estimate"
     t.integer "hours_worked"
+    t.boolean "trial"
     t.index ["airtable_id"], name: "index_tasks_on_airtable_id"
     t.index ["application_id"], name: "index_tasks_on_application_id"
     t.index ["uid"], name: "index_tasks_on_uid"

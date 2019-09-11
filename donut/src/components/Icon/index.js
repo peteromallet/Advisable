@@ -7,6 +7,7 @@ const Icon = ({ icon, strokeWidth, color, width, height, ...props }) => {
     "stroke-width": strokeWidth,
     width,
     height,
+    fill: props.fill || "none",
   };
 
   const html = {

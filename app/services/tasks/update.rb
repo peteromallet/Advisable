@@ -8,7 +8,8 @@ class Tasks::Update < ApplicationService
   end
 
   def call
-    task.assign_attributes(attributes)
+    task.assign_attributes(attributes.except(:trial))
+    set_trial(attributes[:trial])
     changes_allowed?
 
     # If the stage is "Quote Requested" and the estimate has changed then set
@@ -43,6 +44,16 @@ class Tasks::Update < ApplicationService
 
   def is_specialist?
     user.is_a?(Specialist)
+  end
+
+  def set_trial(trial)
+    existing = task.application.trial_task
+
+    if trial == true && existing && existing != task
+      task.application.trial_task.update(trial: false)
+    end
+
+    task.trial = trial
   end
 
   def changes_allowed?
