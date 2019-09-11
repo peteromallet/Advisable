@@ -1,10 +1,10 @@
 import React from "react";
-import { uniqueId, find } from "lodash";
+import { uniqueId, filter, find } from "lodash";
 import Desktop from "./Desktop";
 import Mobile from "./Mobile";
 import useBreakpoint from "../../hooks/useBreakpoint";
 
-const Autocomplete = ({ options: selectOptions, ...rest }) => {
+const Autocomplete = ({ options: selectOptions, value, ...rest }) => {
   // Wether or not we are on mobile
   const isMobile = useBreakpoint("s");
 
@@ -18,10 +18,18 @@ const Autocomplete = ({ options: selectOptions, ...rest }) => {
     }))
   );
 
-  // Use the value prop to find the initially selected item. This may be null
-  const selectedItem = find(options, { value: rest.value });
+  let filteredValue = value;
 
-  let isMax = rest.multiple && rest.max && rest.value.length >= rest.max;
+  if (rest.multiple) {
+    filteredValue = filter(value, v => {
+      return find(options, { value: v });
+    });
+  }
+
+  // Use the value prop to find the initially selected item. This may be null
+  const selectedItem = find(options, { value: filteredValue });
+
+  let isMax = rest.multiple && rest.max && filteredValue.length >= rest.max;
 
   // If on mobile then load the mobile experience
   if (isMobile) {
@@ -30,6 +38,7 @@ const Autocomplete = ({ options: selectOptions, ...rest }) => {
         options={options}
         initalSelectedItem={selectedItem}
         isMax={isMax}
+        value={filteredValue}
         {...rest}
       />
     );
@@ -41,6 +50,7 @@ const Autocomplete = ({ options: selectOptions, ...rest }) => {
       options={options}
       initalSelectedItem={selectedItem}
       isMax={isMax}
+      value={filteredValue}
       {...rest}
     />
   );
