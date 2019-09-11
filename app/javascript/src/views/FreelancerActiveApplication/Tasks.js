@@ -8,14 +8,14 @@ import CompletedTasks from "./CompletedTasks";
 const Tasks = props => {
   return (
     <Card elevation={1}>
-      <Text as="h4" size="l" padding="m" weight="medium" color="neutral.9">
+      <Text as="h4" size="xl" padding="m" weight="medium" color="neutral.9">
         My Tasks
       </Text>
       <Tabs tabListProps={{ pl: "m" }}>
-        <Tabs.Tab title="Active Tasks" icon="list">
+        <Tabs.Tab title="Active Tasks">
           <ActiveTasks {...props} />
         </Tabs.Tab>
-        <Tabs.Tab title="Completed Tasks" icon="check-square">
+        <Tabs.Tab title="Completed Tasks">
           <CompletedTasks {...props} />
         </Tabs.Tab>
       </Tabs>

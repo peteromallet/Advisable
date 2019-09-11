@@ -39,19 +39,22 @@ export const Row = styled.div`
   display: flex;
   margin-top: -1px;
   user-select: none;
-  padding: 15px 30px;
+  padding: 10px 30px;
   position: relative;
   align-items: center;
+  min-height: 60px;
   border-top: 1px solid #eceff8;
   border-bottom: 1px solid #eceff8;
 
-  ${props => props.showPrompt && css`
-    padding-left: 55px;
-  `}
+  ${props =>
+    props.showPrompt &&
+    css`
+      padding-left: 55px;
+    `}
 
   @media (max-width: 900px) {
     display: block;
-    padding-left: ${props => props.showPrompt ? "45px" : "20px"};
+    padding-left: ${props => (props.showPrompt ? "45px" : "20px")};
     padding-right: 20px;
   }
 `;

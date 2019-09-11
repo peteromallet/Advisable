@@ -23,8 +23,8 @@ const TrialIndicator = () => {
     >
       <Box
         mr="xs"
-        width={30}
-        height={30}
+        width={28}
+        height={28}
         bg="blue.0"
         display="flex"
         borderRadius="50%"

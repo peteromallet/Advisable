@@ -73,7 +73,7 @@ export const TaskDetails = styled.div`
   height: 70px;
   display: flex;
   align-items: center;
-  margin: 0 8px 30px 8px;
+  margin: 0 8px 0 8px;
   border-top: 1px solid #ebeef5;
   border-bottom: 1px solid #ebeef5;
 `;
@@ -177,7 +177,7 @@ export const DetailValue = styled.span`
   color: ${colors.neutral.s9};
   font-size: 15px;
   font-weight: 500;
-  
+
   @media (max-width: 900px) {
     font-size: 13px;
   }
@@ -289,9 +289,11 @@ export const SavingIndicator = styled.div`
   transition: opacity 200ms, height 300ms;
   height: 0px;
 
-  ${props => props.isSaving && css`
-    opacity: 1;
-    height: 24px;
-    transition: opacity 200ms, height 300ms;
-  `}
-`
+  ${props =>
+    props.isSaving &&
+    css`
+      opacity: 1;
+      height: 24px;
+      transition: opacity 200ms, height 300ms;
+    `}
+`;

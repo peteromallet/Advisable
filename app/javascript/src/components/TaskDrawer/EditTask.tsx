@@ -12,6 +12,7 @@ import Actions from "./Actions";
 import Estimate from "./Estimate";
 import Description from "./Description";
 import TaskActions from "./TaskActions";
+import TaskDetailRows from "./TaskDetailRows";
 import {
   TaskDetails,
   Confirmation,
@@ -228,14 +229,17 @@ const EditTask = ({
                   }}
                 />
               </TaskDetails>
-              <Description
-                readOnly={descriptionReadOnly}
-                value={attributes.description}
-                onBlur={handleBlurWithSave("description")}
-                onFocus={handleFocus("description")}
-                onChange={handleChangeWithTimeout("description")}
-                isFocused={editAllowed && focusedElement === "description"}
-              />
+              <TaskDetailRows task={task} />
+              <div style={{ marginTop: 30 }}>
+                <Description
+                  readOnly={descriptionReadOnly}
+                  value={attributes.description}
+                  onBlur={handleBlurWithSave("description")}
+                  onFocus={handleFocus("description")}
+                  onChange={handleChangeWithTimeout("description")}
+                  isFocused={editAllowed && focusedElement === "description"}
+                />
+              </div>
             </Padding>
           </Scrollable>
         </VerticalLayout.Content>
