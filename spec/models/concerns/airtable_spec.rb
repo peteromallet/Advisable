@@ -3,7 +3,7 @@ require "rails_helper"
 describe Airtable do
   describe "self.sync" do
     it "calls #sync on each descendant of Airtable::Base" do
-      Rails.application.eager_load!
+      Zeitwerk::Loader.eager_load_all
       Airtable::Base.descendants.each do |table|
         expect(table).to receive(:sync)
       end
