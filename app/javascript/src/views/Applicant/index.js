@@ -8,17 +8,27 @@ import NotFound from "../NotFound";
 import Proposal from "./Proposal";
 import Sidebar from "./Sidebar";
 import ApplicationDetails from "./ApplicationDetails";
+import handleAuthError from "../../utilities/handleAuthError";
 
-const Applicant = ({ data, match, history }) => {
+const Applicant = ({ data, match, history, location }) => {
   React.useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [match.params.applicationID]);
 
   if (data.loading) return <Loading />;
 
+  if (data.error) {
+    const error = data.error.graphQLErrors[0];
+    let redirect = handleAuthError(error, location);
+
+    if (redirect) {
+      return <Redirect to={redirect} />;
+    }
+  }
+
   if (!data.project) {
-    return <NotFound />
-  } 
+    return <NotFound />;
+  }
 
   if (data.project.application.status === "Working") {
     return <Redirect to={`/manage/${data.project.application.airtableId}`} />;

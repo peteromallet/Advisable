@@ -8,34 +8,7 @@ import NotFound from "../NotFound";
 import FETCH_PROJECT from "./fetchProject";
 import ScheduleSetupCall from "./ScheduleSetupCall";
 import STATUSES from "./statuses";
-
-// Returns the redirect location for a graphql error based off of its error code
-const redirectError = (error, location) => {
-  let redirect;
-
-  if (error.message === "signupRequired") {
-    redirect = {
-      pathname: error.extensions.redirect,
-      search: `?email=${encodeURIComponent(error.extensions.email)}`,
-      state: {
-        from: location,
-        notice: "projects.signupRequired",
-      },
-    };
-  }
-
-  if (error.message === "authenticationRequired") {
-    redirect = {
-      pathname: error.extensions.redirect,
-      search: `?email=${encodeURIComponent(error.extensions.email)}`,
-      state: {
-        from: location,
-      },
-    };
-  }
-
-  return redirect;
-};
+import handleAuthError from "../../utilities/handleAuthError";
 
 const ProjectContainer = ({ match, location, ...rest }) => {
   const { loading, error, data } = useQuery(FETCH_PROJECT, {
@@ -54,7 +27,7 @@ const ProjectContainer = ({ match, location, ...rest }) => {
   // an account
   if (error && error.graphQLErrors.length > 0) {
     let theError = error.graphQLErrors[0];
-    let redirect = redirectError(theError, location);
+    let redirect = handleAuthError(theError, location);
     if (redirect) {
       return <Redirect to={redirect} />;
     }

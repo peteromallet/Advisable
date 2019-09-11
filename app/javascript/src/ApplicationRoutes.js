@@ -34,7 +34,7 @@ const ApplicationRoutes = () => {
         <Switch>
           <AuthenticatedRoute exact path="/messages" component={Messages} />
           {/* Client routes */}
-          <AuthenticatedRoute
+          <Route
             component={Applicant}
             path="/projects/:projectID/applications/:applicationID"
           />
