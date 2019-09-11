@@ -39,7 +39,7 @@ const AutocompleteDesktop = props => {
       ) > -1
     ) {
       downshift.setState({
-        inputValue: "",
+        inputValue: props.multiple ? "" : changes.inputValue,
         isOpen: false,
       });
     }
@@ -51,9 +51,12 @@ const AutocompleteDesktop = props => {
     }
   };
 
-  const filtleredOptions = options.filter(option => {
-    return value.indexOf(option.value) === -1;
-  });
+  let filteredOptions = options;
+  if (props.multiple) {
+    filteredOptions = options.filter(option => {
+      return value.indexOf(option.value) === -1;
+    });
+  }
 
   return (
     <Manager>
@@ -133,7 +136,7 @@ const AutocompleteDesktop = props => {
                   isMax={props.isMax}
                   width={inputSize.width}
                   downshift={downshift}
-                  options={filtleredOptions}
+                  options={filteredOptions}
                 />
               </AutocompleteStyles>
             )}
