@@ -25,7 +25,7 @@ class Airtable::Base < Airrecord::Table
     # to sync all records from airtable.
     # We filter the query to only fetch records that have been modified within
     # the last day.
-    def sync(report = nil, filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 2")
+    def sync(report = nil, filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 3")
       records = all(filter: filter)
       records.each { |r| r.sync(report) }
     end
