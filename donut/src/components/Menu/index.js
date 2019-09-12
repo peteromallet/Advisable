@@ -4,8 +4,16 @@ import Text from "../Text";
 import MenuContext from "./context";
 import { StyledMenu, StyledMenuItem } from "./styles";
 
-const Menu = ({ items, trigger, placement, children, width, ...props }) => {
-  const menu = useMenuState({ placement });
+const Menu = ({
+  state,
+  items,
+  trigger,
+  placement,
+  children,
+  width,
+  ...props
+}) => {
+  const menu = state || useMenuState({ placement });
 
   return (
     <MenuContext.Provider value={menu}>
@@ -21,7 +29,7 @@ const Menu = ({ items, trigger, placement, children, width, ...props }) => {
   );
 };
 
-const MenuItem = ({ title, description, ...props }) => {
+const MenuItem = React.forwardRef(({ title, description, ...props }, ref) => {
   const menu = useContext(MenuContext);
 
   let onClick;
@@ -32,7 +40,7 @@ const MenuItem = ({ title, description, ...props }) => {
   }
 
   return (
-    <StyledMenuItem {...menu} {...props} onClick={onClick}>
+    <StyledMenuItem ref={ref} {...menu} {...props} onClick={onClick}>
       {title}
       {description && (
         <Text
@@ -47,7 +55,7 @@ const MenuItem = ({ title, description, ...props }) => {
       )}
     </StyledMenuItem>
   );
-};
+});
 
 Menu.Item = MenuItem;
 

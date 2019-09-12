@@ -24,6 +24,12 @@ const UPDATE = gql`
 const MarkAsTrial = ({ task }) => {
   const [update, { loading }] = useMutation(UPDATE);
 
+  const trialTask = task.application.trialTask;
+  const allowedStages = ["Not Assigned", "Quote Requested", "QuoteProvided"];
+  if (trialTask || allowedStages.indexOf(task.stage) === -1) {
+    return null;
+  }
+
   const handleClick = async () => {
     await update({
       variables: {
@@ -49,8 +55,8 @@ const MarkAsTrial = ({ task }) => {
         </Link>
       </Text>
       <Button
+        size="s"
         type="button"
-        intent="success"
         loading={loading}
         appearance="primary"
         onClick={handleClick}

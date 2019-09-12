@@ -1,12 +1,81 @@
 import React from "react";
+import gql from "graphql-tag";
 import { Menu } from "@advisable/donut";
 import { useMutation } from "react-apollo";
 import { useTranslation } from "react-i18next";
+import { MenuItem } from "reakit/Menu";
+import { useDialogState, DialogDisclosure } from "reakit/Dialog";
+import { Text, Button, Box } from "@advisable/donut";
+import { DrawerModal } from "../Drawer";
 import UPDATE_TASK from "./setTaskTrial";
 
-const ToggleTrial = ({ isClient, task }) => {
+const ToggleWithConfirmation = React.forwardRef(
+  ({ trialTask, title, handleUpdate, ...props }, ref) => {
+    const dialog = useDialogState();
+
+    return (
+      <>
+        <DialogDisclosure
+          ref={ref}
+          title={title}
+          {...dialog}
+          {...props}
+          as={Menu.Item}
+        />
+        <DrawerModal
+          dialog={dialog}
+          aria-label="You can only have one trial task. Marking this as a trial task will remove your existing trial offer."
+        >
+          <Box padding="l">
+            <Text textAlign="center">
+              <Text mb="xs" fontWeight="medium">
+                You can only have one trial task
+              </Text>
+              <Text mb="l" size="xs" lineHeight="xs" color="neutral.7">
+                Marking this as a trial task will remove the existing trial
+                offer from the task "{trialTask.name}"
+              </Text>
+              <Button
+                onClick={handleUpdate}
+                appearance="primary"
+                intent="success"
+                size="s"
+                mr="xxs"
+              >
+                Okay
+              </Button>
+              <Button onClick={dialog.hide} size="s" ml="xxs">
+                Cancel
+              </Button>
+            </Text>
+          </Box>
+        </DrawerModal>
+      </>
+    );
+  }
+);
+
+const ToggleTrial = ({ onToggle, task, menu }) => {
   const { t } = useTranslation();
-  const [updateTask] = useMutation(UPDATE_TASK);
+  const [updateTask] = useMutation(UPDATE_TASK, {
+    // We need to manually update the cache to update any existing trialTask
+    update(cache) {
+      if (task.application.trialTask) {
+        cache.writeFragment({
+          id: `Task:${task.application.trialTask.id}`,
+          fragment: gql`
+            fragment task on Task {
+              trial
+            }
+          `,
+          data: {
+            __typename: "Task",
+            trial: false,
+          },
+        });
+      }
+    },
+  });
 
   const trialTask = task.application.trialTask;
   const allowedStages = ["Not Assigned", "Quote Requested", "QuoteProvided"];
@@ -14,9 +83,7 @@ const ToggleTrial = ({ isClient, task }) => {
     return null;
   }
 
-  const handleClick = (_, menu) => {
-    menu.hide();
-
+  const handleUpdate = () => {
     const trial = !task.trial;
     const optimisticResponse = {
       __typename: "Mutation",
@@ -52,6 +119,8 @@ const ToggleTrial = ({ isClient, task }) => {
         optimisticResponse,
       });
     }
+
+    onToggle();
   };
 
   let title;
@@ -61,7 +130,21 @@ const ToggleTrial = ({ isClient, task }) => {
     title = t("actions.markTaskAsTrial");
   }
 
-  return <Menu.Item title={title} onClick={handleClick} />;
+  return (
+    <>
+      {trialTask && trialTask.id !== task.id ? (
+        <MenuItem
+          {...menu}
+          title={title}
+          trialTask={trialTask}
+          as={ToggleWithConfirmation}
+          handleUpdate={handleUpdate}
+        />
+      ) : (
+        <Menu.Item title={title} onClick={handleUpdate} />
+      )}
+    </>
+  );
 };
 
 export default ToggleTrial;

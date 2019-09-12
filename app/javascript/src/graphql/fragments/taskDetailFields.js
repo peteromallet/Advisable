@@ -16,6 +16,11 @@ export default gql`
         id
         firstName
       }
+      trialTask {
+        id
+        stage
+        name
+      }
       project {
         id
         currency

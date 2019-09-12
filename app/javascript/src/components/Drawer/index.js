@@ -5,8 +5,8 @@ import Div100vh from "react-div-100vh";
 import { Button } from "@advisable/donut";
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { useMobile } from "../../components/Breakpoint";
-import IconButton from "../../components/IconButton";
 import { Container, Backdrop, Drawer, Actions } from "./styles";
+export { default as DrawerModal } from "./DrawerModal";
 
 export default ({ isOpen, onClose, children, actions }) => {
   const isMobile = useMobile();

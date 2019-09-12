@@ -3,16 +3,21 @@ import styled, { keyframes, css } from "styled-components";
 import { darken, lighten, rgba } from "polished";
 import colors from "../../colors";
 import theme from "../../theme";
-import Icon from "../Icon/styles";
 
 const HEIGHTS = {
+  s: 32,
   m: 36,
   l: 46,
 };
 
 const PADDING = {
+  s: "0 14px",
   m: "0 16px",
   l: "0 24px",
+};
+
+const BORDER_RADIUS = {
+  s: "8px",
 };
 
 const APPEARANCES = {
@@ -74,7 +79,15 @@ const INTENT = {
   primary: {
     default: css`
       color: white;
-      background: ${colors.neutral.N6};
+      background: ${theme.colors.blue[7]};
+
+      &:hover:not(:disabled) {
+        background: ${theme.colors.blue[8]};
+      }
+
+      &:active:not(:disabled) {
+        opacity: 0.8;
+      }
     `,
     success: css`
       color: white;
@@ -166,6 +179,7 @@ const loadingStyling = css`
 `;
 
 const FONT_SIZES = {
+  s: 14,
   m: 15,
   l: 16,
 };
@@ -173,20 +187,23 @@ const FONT_SIZES = {
 export const Button = styled.button`
   margin: 0;
   border: none;
-  outline: none;
   font-size: ${props => FONT_SIZES[props.size || "m"]}px;
   cursor: pointer;
   appearance: none;
   font-weight: 400;
   position: relative;
-  border-radius: 12px;
+  border-radius: ${props => BORDER_RADIUS[props.size] || "12px"};
   align-items: center;
   display: inline-flex;
   text-decoration: none;
   justify-content: center;
-  transition: background 150ms;
+  transition: background 80ms;
   width: ${props => props.width};
   font-family: "Poppins", sans-serif;
+
+  &:focus {
+    outline: none;
+  }
 
   ${space}
 
