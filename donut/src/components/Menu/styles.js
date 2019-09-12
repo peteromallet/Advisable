@@ -1,23 +1,24 @@
 import { rgba } from "polished";
 import styled from "styled-components";
 import theme from "../../theme";
-import { Menu as ReakitMenu } from "reakit/menu";
+import { Menu as ReakitMenu, MenuItem as ReakitMenuItem } from "reakit/menu";
 
-export const MenuList = styled(ReakitMenu)`
+export const StyledMenu = styled(ReakitMenu)`
   padding: 8px;
   color: white;
   border: none;
   outline: none;
-  max-width: 260px;
   user-select: none;
-  border-radius: 12px;
+  position: absolute;
   white-space: normal;
+  border-radius: 12px;
   font-family: poppins, sans-serif;
-  background: ${theme.colors.blue[8]};
-  box-shadow: 0px 4px 40px ${rgba(theme.colors.blue[8], 0.1)};
+  background: ${theme.colors.neutral[8]};
+  width: ${props => props.width || "250px"};
+  box-shadow: 0px 4px 40px ${rgba(theme.colors.neutral[8], 0.2)};
 `;
 
-export const MenuItemStyles = styled.button`
+export const StyledMenuItem = styled(ReakitMenuItem)`
   margin: 0;
   width: 100%;
   color: white;
@@ -28,13 +29,16 @@ export const MenuItemStyles = styled.button`
   appearance: none;
   font-size: 14px;
   font-weight: 500;
-  padding: 8px 12px;
+  padding: 6px 12px;
   border-radius: 8px;
   background: transparent;
   font-family: poppins, sans-serif;
-  transition: background-color 100ms;
 
   &:focus {
-    background: ${theme.colors.blue[4]};
+    background: ${theme.colors.neutral[6]};
+  }
+
+  &[disabled] {
+    color: ${theme.colors.neutral[3]};
   }
 `;

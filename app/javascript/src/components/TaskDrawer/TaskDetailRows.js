@@ -32,12 +32,20 @@ const TaskDetailRows = ({ task }) => {
   let details = [];
 
   if (task.repeat) {
-    details.push(<Row icon="refresh-cw">This is a repeating task</Row>);
+    details.push(
+      <Row key="repeat" icon="refresh-cw">
+        This is a repeating task
+      </Row>
+    );
   }
 
   if (task.trial) {
     details.push(
-      <Row icon="star" iconProps={{ fill: "currentColor", strokeWidth: 0 }}>
+      <Row
+        key="trial"
+        icon="star"
+        iconProps={{ fill: "currentColor", strokeWidth: 0 }}
+      >
         This task has been offered as a guaranteed trial
       </Row>
     );

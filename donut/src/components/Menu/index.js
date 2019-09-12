@@ -1,48 +1,53 @@
-import React from "react";
-import {
-  useMenuState,
-  MenuDisclosure,
-  MenuItem as ReakitMenuItem,
-} from "reakit/menu";
+import React, { useContext } from "react";
+import { useMenuState, MenuDisclosure } from "reakit/menu";
 import Text from "../Text";
+import MenuContext from "./context";
+import { StyledMenu, StyledMenuItem } from "./styles";
 
-import { MenuList, MenuItemStyles } from "./styles";
-
-const Menu = ({ items, trigger, ...props }) => {
-  const menu = useMenuState();
+const Menu = ({ items, trigger, placement, children, width, ...props }) => {
+  const menu = useMenuState({ placement });
 
   return (
-    <>
+    <MenuContext.Provider value={menu}>
       <MenuDisclosure {...menu}>
         {disclosureProps =>
           React.cloneElement(React.Children.only(trigger), disclosureProps)
         }
       </MenuDisclosure>
-      <MenuList {...menu} {...props}>
-        {items.map((item, i) => (
-          <ReakitMenuItem {...menu} key={i}>
-            {itemProps =>
-              React.cloneElement(React.Children.only(item), itemProps)
-            }
-          </ReakitMenuItem>
-        ))}
-      </MenuList>
-    </>
+      <StyledMenu {...menu} {...props} width={width}>
+        {children}
+      </StyledMenu>
+    </MenuContext.Provider>
   );
 };
 
-const MenuItem = React.forwardRef(({ title, description, ...props }, ref) => {
+const MenuItem = ({ title, description, ...props }) => {
+  const menu = useContext(MenuContext);
+
+  let onClick;
+  if (props.onClick) {
+    onClick = e => {
+      props.onClick(e, menu);
+    };
+  }
+
   return (
-    <MenuItemStyles ref={ref} {...props}>
+    <StyledMenuItem {...menu} {...props} onClick={onClick}>
       {title}
       {description && (
-        <Text mt="xxs" fontSize="xxs" lineHeight="xxs" color="white.8">
+        <Text
+          mt="xxs"
+          fontSize="xxs"
+          lineHeight="xxs"
+          fontWeight={300}
+          color="white.7"
+        >
           {description}
         </Text>
       )}
-    </MenuItemStyles>
+    </StyledMenuItem>
   );
-});
+};
 
 Menu.Item = MenuItem;
 

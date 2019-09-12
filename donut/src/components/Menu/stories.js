@@ -11,15 +11,10 @@ storiesOf("Menu", module).add("Basic", () =>
         <Menu
           aria-label="Task actions"
           trigger={<Button type="button" icon="more-horizontal" />}
-          items={[
-            <Menu.Item title="Delete" />,
-            <Menu.Item title="Mark as trial task" />,
-            <Menu.Item
-              title="Mark as repeating"
-              description="You will have the opportunity to repeat this task every month."
-            />,
-          ]}
-        />
+        >
+          <Menu.Item title="First" onClick={() => alert("First")} />
+          <Menu.Item title="Second" onClick={() => alert("Second")} />
+        </Menu>
       </div>
     );
   })

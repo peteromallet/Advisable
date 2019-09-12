@@ -1,4 +1,5 @@
 export { default as Box } from "./components/Box";
+export { default as Menu } from "./components/Menu";
 export { default as Link } from "./components/Link";
 export { default as Card } from "./components/Card";
 export { default as Icon } from "./components/Icon";
