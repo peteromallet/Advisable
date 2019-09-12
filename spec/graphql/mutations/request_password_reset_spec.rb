@@ -63,16 +63,6 @@ describe Mutations::RequestPasswordReset do
     end
   end
 
-  context "when the account hasnt set a password" do
-    let(:user) { create(:user, reset_sent_at: nil, reset_digest: nil, password: nil) }
-
-    it "returns an error" do
-      response = AdvisableSchema.execute(query, context: {})
-      error = response["data"]["requestPasswordReset"]["errors"][0]
-      expect(error["code"]).to eq("request_password_reset.account_not_found")
-    end
-  end
-
   context "when the account is a specialist" do
     let(:user) { create(:specialist, reset_sent_at: nil, reset_digest: nil, password: nil) }
 
