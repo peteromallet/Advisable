@@ -35,8 +35,6 @@ class Accounts::RequestPasswordReset < ApplicationService
       raise Service::Error.new("request_password_reset.application_required")
       return
     end
-
-    raise Service::Error.new("request_password_reset.account_not_found")
   end
 
   def token
