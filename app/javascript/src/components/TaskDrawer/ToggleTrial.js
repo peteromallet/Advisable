@@ -8,6 +8,12 @@ const ToggleTrial = ({ isClient, task }) => {
   const { t } = useTranslation();
   const [updateTask] = useMutation(UPDATE_TASK);
 
+  const trialTask = task.application.trialTask;
+  const allowedStages = ["Not Assigned", "Quote Requested", "QuoteProvided"];
+  if (trialTask && allowedStages.indexOf(trialTask.stage) === -1) {
+    return null;
+  }
+
   const handleClick = (_, menu) => {
     menu.hide();
 
