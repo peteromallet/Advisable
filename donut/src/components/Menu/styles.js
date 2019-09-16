@@ -27,7 +27,7 @@ export const StyledMenuItem = styled(ReakitMenuItem)`
   display: block;
   text-align: left;
   appearance: none;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   padding: 6px 12px;
   border-radius: 8px;

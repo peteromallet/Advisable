@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useMutation } from "react-apollo";
-import { Box, Button, Text, Link } from "@advisable/donut";
+import { Box, Card, Button, Text, Link } from "@advisable/donut";
 
 const UPDATE = gql`
   mutation updateTask($input: UpdateTaskInput!) {
@@ -30,23 +30,33 @@ const MarkAsTrial = ({ task }) => {
     return null;
   }
 
-  const handleClick = async () => {
+  const setTrial = value => async () => {
     await update({
       variables: {
         input: {
           id: task.id,
-          trial: true,
+          trial: value,
+        },
+      },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateTask: {
+          __typeName: "UpdateTaskPayload",
+          task: {
+            ...task,
+            trial: value,
+          },
         },
       },
     });
   };
 
   return (
-    <Box m="m" p="m" borderRadius={12} bg="neutral.0">
-      <Text fontSize="s" fontWeight="medium" mb="xs">
+    <Box mt="m" p="m" borderRadius={12} bg="neutral.0">
+      <Text fontSize="xs" fontWeight="medium" mb="xxs">
         Would you like to mark this as a guaranteed trial task?
       </Text>
-      <Text size="xs" lineHeight="xs" mb="s">
+      <Text size="xxs" lineHeight="xs" mb="s" color="neutral.7">
         Proposing a trial task increases your chance of closing a client. You
         will be paid for work completed during this trial as long as you adhere
         to{" "}
@@ -55,13 +65,13 @@ const MarkAsTrial = ({ task }) => {
         </Link>
       </Text>
       <Button
-        size="s"
+        size="xs"
         type="button"
-        loading={loading}
         appearance="primary"
-        onClick={handleClick}
+        loading={loading}
+        onClick={setTrial(true)}
       >
-        Create trial task
+        Mark as trial
       </Button>
     </Box>
   );

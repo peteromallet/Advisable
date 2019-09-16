@@ -11,7 +11,7 @@ import DueDate from "./DueDate";
 import Actions from "./Actions";
 import Estimate from "./Estimate";
 import Description from "./Description";
-import TaskActions from "./TaskActions";
+import MarkAsTrial from "./TaskActions/MarkAsTrial.js";
 import TaskDetailRows from "./TaskDetailRows";
 import {
   TaskDetails,
@@ -230,7 +230,10 @@ const EditTask = ({
                 />
               </TaskDetails>
               <TaskDetailRows task={task} isClient={isClient} />
-              <div style={{ marginTop: 30 }}>
+              {!readOnly && !isClient && !task.application.trialTask && (
+                <MarkAsTrial task={task} isClient={isClient} />
+              )}
+              <div style={{ marginTop: 16 }}>
                 <Description
                   readOnly={descriptionReadOnly}
                   value={attributes.description}
@@ -244,7 +247,6 @@ const EditTask = ({
           </Scrollable>
         </VerticalLayout.Content>
         <VerticalLayout.Footer style={{ background: "white" }}>
-          {!readOnly && <TaskActions task={task} isClient={isClient} />}
           <Padding size="l">
             {!readOnly && showStatusNotice && (
               <StageDescription isClient={isClient} task={task} />

@@ -14,17 +14,17 @@ const Row = ({ icon, children, iconProps, tooltip }) => (
     <Box
       bg="neutral.1"
       borderRadius="50%"
-      width={18}
-      height={18}
+      width={20}
+      height={20}
       mr="xs"
       display="flex"
       alignItems="center"
       justifyContent="center"
     >
-      <Icon icon={icon} color="neutral.6" width={12} {...iconProps} />
+      <Icon icon={icon} color="blue.6" width={12} {...iconProps} />
     </Box>
     <Box flex={1}>
-      <Text fontSize="xs" color="neutral.7" py="xxs">
+      <Text fontSize="xs" color="neutral.6" py="xs">
         {children}
       </Text>
     </Box>

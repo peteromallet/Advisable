@@ -4,6 +4,7 @@ import colors from "../../colors";
 import { Status } from "../Status/styles";
 import { Menu } from "../Menu/styles";
 import { Icon } from "../Icon/styles";
+import { theme } from "@advisable/donut";
 
 const placeholderColor = color => css`
   &::-webkit-input-placeholder {
@@ -46,36 +47,38 @@ export const Title = styled.textarea`
   height: auto;
   outline: none;
   overflow: auto;
-  color: #0a163f;
   font-size: 21px;
   font-weight: 500;
   line-height: 24px;
   border-radius: 6px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+  letter-spacing: -0.035rem;
+  font-family: poppins, sans-serif;
+  color: ${theme.colors.neutral[9]};
   border: 2px solid transparent;
   transition: border-color 200ms;
 
   &:not([readonly]) {
     &:hover {
-      background: #f5f6f9;
+      background: ${theme.colors.neutral[0]};
     }
 
     &:focus {
-      background: #f5f6f9;
+      background: ${theme.colors.neutral[0]};
       border: 2px solid ${colors.blue.base};
     }
   }
 
-  ${placeholderColor(colors.neutral.s5)}
+  ${placeholderColor(theme.colors.neutral[3])}
 `;
 
 export const TaskDetails = styled.div`
-  height: 70px;
+  height: 64px;
   display: flex;
   align-items: center;
   margin: 0 8px 0 8px;
-  border-top: 1px solid #ebeef5;
-  border-bottom: 1px solid #ebeef5;
+  border-top: 1px solid ${theme.colors.neutral[1]};
+  border-bottom: 1px solid ${theme.colors.neutral[1]};
 `;
 
 export const Detail = styled.button`
@@ -85,9 +88,10 @@ export const Detail = styled.button`
   appearance: none;
   margin-left: -8px;
   padding-left: 55px;
+  padding-right: 12px;
   position: relative;
   margin-right: 60px;
-  border-radius: 6px;
+  border-radius: 12px;
   line-height: 18px;
   background: transparent;
 
@@ -104,7 +108,7 @@ export const Detail = styled.button`
     css`
       &:hover {
         cursor: pointer;
-        background: #f5f6f9;
+        background: ${theme.colors.neutral[0]};
       }
     `}
 `;
@@ -142,8 +146,8 @@ export const DetailIcon = styled.div`
   border-radius: 50%;
   align-items: center;
   justify-content: center;
-  color: ${colors.blue.base};
-  background: ${rgba(colors.blue.base, 0.075)};
+  color: ${theme.colors.blue[5]};
+  background: ${theme.colors.blue[1]};
   transform: translateY(-50%);
 
   ${Icon} {
@@ -166,17 +170,16 @@ export const DetailIcon = styled.div`
 `;
 
 export const DetailLabel = styled.h5`
-  color: #7f87a5;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.005em;
-  text-transform: uppercase;
+  line-height: 1;
+  font-size: 12px;
+  font-weight: 400;
+  color: ${theme.colors.neutral[4]};
 `;
 
 export const DetailValue = styled.span`
-  color: ${colors.neutral.s9};
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
+  color: ${theme.colors.neutral[8]};
 
   @media (max-width: 900px) {
     font-size: 13px;
@@ -184,7 +187,8 @@ export const DetailValue = styled.span`
 `;
 
 export const DetailPlaceholder = styled(DetailValue)`
-  color: ${colors.neutral.s4};
+  font-weight: 400;
+  color: ${theme.colors.neutral[3]};
 `;
 
 export const Label = styled.label`
@@ -200,26 +204,26 @@ export const Description = styled.textarea`
   padding: 8px;
   border: none;
   resize: none;
-  height: auto;
   outline: none;
   overflow: auto;
   color: #0a163f;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 18px;
   border-radius: 6px;
-  margin-bottom: 16px;
+  background: transparent;
   border: 2px solid transparent;
+  font-family: poppins, sans-serif;
   transition: border-color 200ms;
-  ${placeholderColor(colors.neutral.s5)}
+  ${placeholderColor(theme.colors.neutral[4])}
 
   &:not([readonly]) {
     &:hover {
-      background: #f5f6f9;
+      background: ${theme.colors.neutral[0]};
     }
 
     &:focus {
-      background: #f5f6f9;
+      background: ${theme.colors.neutral[0]};
       border: 2px solid ${colors.blue.base};
     }
   }

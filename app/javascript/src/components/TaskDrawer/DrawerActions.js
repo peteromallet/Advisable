@@ -23,7 +23,15 @@ const Actions = props => {
       <Menu
         state={menu}
         aria-label="Task actions"
-        trigger={<Button type="button" icon="more-horizontal" />}
+        trigger={
+          <Button
+            borderTopRightRadius={0}
+            borderBottomRightRadius={0}
+            type="button"
+            size="s"
+            icon="more-horizontal"
+          />
+        }
       >
         {!props.isClient && (
           <ToggleTrial menu={menu} {...props} onToggle={menu.hide} />

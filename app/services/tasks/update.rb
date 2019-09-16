@@ -9,7 +9,7 @@ class Tasks::Update < ApplicationService
 
   def call
     task.assign_attributes(attributes.except(:trial))
-    set_trial(attributes[:trial])
+    set_trial(attributes[:trial]) if attributes.key?(:trial)
     changes_allowed?
 
     # If the stage is "Quote Requested" and the estimate has changed then set
