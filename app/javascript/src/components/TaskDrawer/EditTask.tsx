@@ -229,7 +229,7 @@ const EditTask = ({
                   }}
                 />
               </TaskDetails>
-              <TaskDetailRows task={task} />
+              <TaskDetailRows task={task} isClient={isClient} />
               <div style={{ marginTop: 30 }}>
                 <Description
                   readOnly={descriptionReadOnly}
