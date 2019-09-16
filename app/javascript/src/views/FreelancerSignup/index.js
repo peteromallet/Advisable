@@ -32,6 +32,10 @@ const STEPS = [
   {
     path: "/confirm",
     component: Confirm,
+    // some users still need to confirm their account, however, their account
+    // status is not 'Started'. Because of this we want to allow them to enter
+    // the flow and then be redirected out after confirming their account
+    allowAnyAccountStatus: true,
   },
   {
     path: "/preferences",
@@ -113,6 +117,7 @@ const FreelancerSignup = ({ location }) => {
                   // If there is a viewer and their applicationStage is not
                   // 'Started' then redirect to the root path.
                   if (
+                    !step.allowAnyAccountStatus &&
                     Boolean(viewer) &&
                     viewer.applicationStage !== "Started"
                   ) {
