@@ -19,6 +19,7 @@ export default gql`
       trialTask {
         id
         stage
+        name
       }
     }
   }

@@ -13,11 +13,13 @@ export default gql`
       trialTask {
         id
         stage
+        name
       }
       tasks {
         id
         name
         stage
+        trial
         dueDate
         description
         estimate

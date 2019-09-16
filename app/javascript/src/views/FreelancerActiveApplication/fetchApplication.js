@@ -12,6 +12,11 @@ export default gql`
       airtableId
       projectType
       monthlyLimit
+      trialTask {
+        id
+        stage
+        name
+      }
       project {
         id
         currency
