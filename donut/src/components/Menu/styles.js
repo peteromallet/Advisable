@@ -1,7 +1,7 @@
 import { rgba } from "polished";
 import styled from "styled-components";
 import theme from "../../theme";
-import { Menu as ReakitMenu, MenuItem as ReakitMenuItem } from "reakit/menu";
+import { Menu as ReakitMenu, MenuItem as ReakitMenuItem } from "reakit";
 
 export const StyledMenu = styled(ReakitMenu)`
   padding: 8px;

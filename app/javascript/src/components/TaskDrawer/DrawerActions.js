@@ -1,5 +1,5 @@
 import React from "react";
-import { useMenuState, useMenu } from "reakit/menu";
+import { useMenuState, useMenu } from "reakit";
 import { Box, Menu, Button } from "@advisable/donut";
 import DeleteTask from "./DeleteTask";
 import ToggleTrial from "./ToggleTrial";

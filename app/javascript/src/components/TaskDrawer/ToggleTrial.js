@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import { Menu } from "@advisable/donut";
 import { useMutation } from "react-apollo";
 import { useTranslation } from "react-i18next";
-import { MenuItem } from "reakit/Menu";
+import { MenuItem } from "reakit";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Text, Button, Box } from "@advisable/donut";
 import { DrawerModal } from "../Drawer";

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useMenuState, MenuDisclosure } from "reakit/menu";
+import { useMenuState, MenuDisclosure } from "reakit";
 import Text from "../Text";
 import MenuContext from "./context";
 import { StyledMenu, StyledMenuItem } from "./styles";
