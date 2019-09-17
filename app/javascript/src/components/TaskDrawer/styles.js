@@ -279,25 +279,45 @@ export const StageDescription = styled.div`
   }
 `;
 
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+`;
+
 export const SavingIndicator = styled.div`
-  padding: 0;
-  opacity: 0;
-  width: 100%;
-  color: ${colors.neutral.s7};
+  right: 20px;
+  z-index: 9;
+  bottom: 20px;
+  padding: 6px 8px;
+  position: fixed;
   display: flex;
   font-size: 12px;
   font-weight: 500;
   align-items: center;
+  border-radius: 6px;
   justify-content: center;
-  background-color: ${colors.neutral.s1};
-  transition: opacity 200ms, height 300ms;
-  height: 0px;
+  color: ${theme.colors.blue[7]};
+  background-color: ${theme.colors.blue[1]};
+  transition: opacity 200ms, transform 300ms;
+
+  opacity: 0;
+  transform: translateX(100%);
+
+  svg {
+    margin-right: 4px;
+    animation: ${spin} 500ms infinite linear;
+  }
 
   ${props =>
     props.isSaving &&
     css`
       opacity: 1;
-      height: 24px;
-      transition: opacity 200ms, height 300ms;
+      transform: translateX(0);
+      transition: opacity 200ms, transform 300ms;
     `}
 `;
