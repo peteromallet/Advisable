@@ -49,6 +49,10 @@ class Tasks::Update < ApplicationService
   def set_trial(trial)
     existing = task.application.trial_task
 
+    if existing.present? && existing.stage.in?(["Assigned", "Working", "Submitted", "Approved", "Paid"])
+      raise Service::Error.new("tasks.applicationHasActiveTrialTask")
+    end
+
     if trial == true && existing && existing != task
       task.application.trial_task.update(trial: false)
     end

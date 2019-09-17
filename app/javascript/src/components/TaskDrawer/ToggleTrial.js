@@ -78,7 +78,12 @@ const ToggleTrial = ({ onToggle, task, menu }) => {
   });
 
   const trialTask = task.application.trialTask;
-  const allowedStages = ["Not Assigned", "Quote Requested", "QuoteProvided"];
+  const allowedStages = [
+    "Not Assigned",
+    "Quote Requested",
+    "QuoteProvided",
+    "Requested To Start",
+  ];
   if (trialTask && allowedStages.indexOf(trialTask.stage) === -1) {
     return null;
   }
