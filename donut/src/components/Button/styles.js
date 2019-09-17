@@ -34,13 +34,13 @@ const FONT_SIZES = {
 const APPEARANCES = {
   default: css`
     line-height: 1;
-    color: ${theme.colors.neutral[5]};
+    color: ${theme.colors.neutral[7]};
     background: ${theme.colors.neutral[1]};
     padding: ${props => PADDING[props.size || "m"]};
     height: ${props => HEIGHTS[props.size || "m"]}px;
 
     &:hover:not(:disabled) {
-      color: ${theme.colors.neutral[6]};
+      color: ${theme.colors.neutral[8]};
       background: ${theme.colors.neutral[2]};
     }
 

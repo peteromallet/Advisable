@@ -1,28 +1,41 @@
 import React from "react";
-import Tooltip from "../Tooltip";
 import { useTranslation } from "react-i18next";
-import { Box, Icon, Text } from "@advisable/donut";
+import { Tooltip, Box, Icon, Text, Link } from "@advisable/donut";
 
 const TrialIndicator = ({ isClient }) => {
   const { t } = useTranslation();
 
   return (
     <Tooltip
+      interactable
       content={
-        <Box padding="xs">
-          <Text fontSize="xs" mb="xs" color="white.9">
+        <>
+          <Text fontSize="xs" mb="xs" color="white.9" lineHeight="xs">
             {t(
               `trialProgram.tooltip.title.${isClient ? "client" : "freelancer"}`
             )}
           </Text>
-          <Text fontSize="xxs" lineHeight="xxs" color="white.8">
+          <Text fontSize="xxs" lineHeight="xs" color="white.8" mb="s">
             {t(
               `trialProgram.tooltip.description.${
                 isClient ? "client" : "freelancer"
               }`
             )}
           </Text>
-        </Box>
+          <Link
+            as="a"
+            target="_blank"
+            onClick={e => e.stopPropagation()}
+            href={
+              isClient
+                ? "https://advisable.com/client-trial"
+                : "https://advisable.com/freelancer-trial"
+            }
+          >
+            Read more information
+            <Icon icon="arrow-right" width={16} ml="xxs" />
+          </Link>
+        </>
       }
     >
       <Box

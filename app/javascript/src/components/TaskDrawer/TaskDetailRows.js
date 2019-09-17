@@ -1,6 +1,6 @@
 import React from "react";
-import Tooltip from "../Tooltip";
-import { Box, Text, Icon } from "@advisable/donut";
+import { useTranslation } from "react-i18next";
+import { Box, Text, Icon, Link, Tooltip } from "@advisable/donut";
 
 const Row = ({ icon, children, iconProps, tooltip }) => (
   <Box
@@ -30,10 +30,19 @@ const Row = ({ icon, children, iconProps, tooltip }) => (
     </Box>
     {tooltip && (
       <Box>
-        <Tooltip content={tooltip}>
-          <Text fontSize="xs" color="neutral.4">
-            More info
-          </Text>
+        <Tooltip content={tooltip} placement="bottom-end" interactable>
+          <Box display="flex" alignItems="center">
+            <Icon
+              mr="xxs"
+              width={18}
+              color="neutral.4"
+              strokeWidth={1.5}
+              icon="help-circle"
+            />
+            <Text fontSize="xs" color="neutral.4">
+              More info
+            </Text>
+          </Box>
         </Tooltip>
       </Box>
     )}
@@ -42,6 +51,7 @@ const Row = ({ icon, children, iconProps, tooltip }) => (
 
 const TaskDetailRows = ({ isClient, task }) => {
   let details = [];
+  const { t } = useTranslation();
 
   if (task.repeat) {
     details.push(
@@ -60,12 +70,18 @@ const TaskDetailRows = ({ isClient, task }) => {
         tooltip={
           isClient && (
             <>
-              Advisable offers clients a risk-free trial period of up to 8 hours
-              when working with a new freelancer. If you're not entirely
-              satisfied during this period, you will not be charged for any work
-              done and we will find you a replacement freelancer free of charge.
-              The only requirement is that you provide us with feedback as per
-              Advisable's Professional Standards.
+              <Text fontSize="xxs" lineHeight="xs" color="white.8" mb="xs">
+                {t(`trialProgram.tooltip.description.client`)}
+              </Text>
+              <Link
+                as="a"
+                target="_blank"
+                onClick={e => e.stopPropagation()}
+                href={"https://advisable.com/client-trial"}
+              >
+                Read more information
+                <Icon icon="arrow-right" width={16} ml="xxs" />
+              </Link>
             </>
           )
         }
