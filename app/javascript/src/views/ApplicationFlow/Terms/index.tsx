@@ -181,10 +181,16 @@ const Terms = ({
                           This means that we offer a guaranteed trial to work
                           with you of up to 8 hours to the client for a project
                           you spec out. As long as the client agrees that you
-                          adhered to Advisable's professional standards, you'll
-                          get paid for this trial period even if the client
-                          doesn't use your output or want to continue working
-                          with you after it.
+                          adhered to{" "}
+                          <Link
+                            href="https://advisable.com/professional-standards"
+                            target="_blank"
+                          >
+                            Advisable's professional standards
+                          </Link>
+                          , you'll get paid for this trial period even if the
+                          client doesn't use your output or want to continue
+                          working with you after it.
                         </Text>
                       }
                     >

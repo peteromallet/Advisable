@@ -7,6 +7,7 @@ export default gql`
       airtableId
       status
       rate
+      trialProgram
       proposalComment
       projectType
       monthlyLimit

@@ -120,6 +120,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
           </Box>
         )}
         <Tasks
+          isClient={false}
           application={application}
           onClick={handleTaskClick}
           onCreate={addNewTaskToCache}

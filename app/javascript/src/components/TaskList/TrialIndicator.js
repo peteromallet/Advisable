@@ -1,22 +1,26 @@
 import React from "react";
 import Tooltip from "../Tooltip";
+import { useTranslation } from "react-i18next";
 import { Box, Icon, Text } from "@advisable/donut";
 
-const TrialIndicator = () => {
+const TrialIndicator = ({ isClient }) => {
+  const { t } = useTranslation();
+
   return (
     <Tooltip
       content={
         <Box padding="xs">
-          <Text fontSize="xs" mb="xs">
-            This is a risk-free trial task
+          <Text fontSize="xs" mb="xs" color="white.9">
+            {t(
+              `trialProgram.tooltip.title.${isClient ? "client" : "freelancer"}`
+            )}
           </Text>
           <Text fontSize="xxs" lineHeight="xxs" color="white.8">
-            Advisable offers clients a risk-free trial period of up to 8 hours
-            when working with a new freelancer. If you're not entirely satisfied
-            during this period, you will not be charged for any work done and we
-            will find you a replacement freelancer free of charge. The only
-            requirement is that you provide us with feedback as per Advisable's
-            Professional Standards.
+            {t(
+              `trialProgram.tooltip.description.${
+                isClient ? "client" : "freelancer"
+              }`
+            )}
           </Text>
         </Box>
       }

@@ -45,7 +45,7 @@ const MarkAsTrial = ({ task }) => {
       optimisticResponse: {
         __typename: "Mutation",
         updateTask: {
-          __typeName: "UpdateTaskPayload",
+          __typename: "UpdateTaskPayload",
           task: {
             ...task,
             trial: value,
@@ -61,12 +61,11 @@ const MarkAsTrial = ({ task }) => {
         Would you like to mark this as a guaranteed trial task?
       </Text>
       <Text size="xxs" lineHeight="xs" mb="s" color="neutral.7">
-        Proposing a trial task increases your chance of closing a client. You
-        will be paid for work completed during this trial as long as you adhere
-        to{" "}
-        <Link href="#" as="a">
-          Advisable's Professional Standards.
-        </Link>
+        Proposing a trial task increases your chance of closing a client. It
+        gives the client a chance to work with you risk-free: they don't pay
+        unless they want to continue working with you after. However, you will
+        be paid for work completed during this trial as long as you adhere to
+        Advisable's Professional Standards. You can see full details here.
       </Text>
       <Button
         size="xs"
@@ -75,7 +74,7 @@ const MarkAsTrial = ({ task }) => {
         loading={loading}
         onClick={setTrial(true)}
       >
-        Mark as trial
+        Set as trial task
       </Button>
     </Box>
   );

@@ -23,7 +23,7 @@ export default ({ task, hideStatus, onClick, isClient, showPromptForTask }) => {
   return (
     <Task onClick={onClick} showPrompt={showPrompt}>
       {showPrompt && <Prompt />}
-      {task.trial && <TrialIndicator />}
+      {task.trial && <TrialIndicator isClient={isClient} />}
       <TaskContent>
         <Title>{task.name || "Untitled"}</Title>
         {task.dueDate && (

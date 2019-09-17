@@ -1,7 +1,7 @@
 {
   "actions": {
     "deleteTask": "Delete task",
-    "markTaskAsTrial": "Mark as trial task",
+    "markTaskAsTrial": "Set as trial task",
     "removeTaskTrial": "Remove task trial",
     "removeTaskRepeat": "Remove task repeat",
     "repeatTask": {
@@ -18,6 +18,18 @@
     "account_already_exists": "This account already exists",
     "authentication": {
       "failed": "Invalid login credentials, please try again."
+    }
+  },
+  "trialProgram": {
+    "tooltip": {
+      "title": {
+        "client": "This is a risk-free trial task",
+        "freelancer": "This is a guaranteed trial task"
+      },
+      "description": {
+        "client": "Advisable offers clients a risk-free trial period of up to 8 hours when working with a new freelancer. If you're not entirely satisfied during this period, you will not be charged for any work completed and we will find you a replacement freelancer free of charge. The only requirement is that you provide us with feedback as per Advisable's Professional Standards.",
+        "freelancer": "Advisable offers clients a trial period of up to 8 hours when working with a new freelancer. You will be paid for work completed during this trial as long as the client agrees you adhered to Advisable's Professional Standards."
+      }
     }
   },
   "proposals": {
