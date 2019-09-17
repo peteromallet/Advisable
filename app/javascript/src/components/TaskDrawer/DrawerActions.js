@@ -33,7 +33,7 @@ const Actions = props => {
           />
         }
       >
-        {!props.isClient && (
+        {!props.isClient && props.task.application.trialProgram && (
           <ToggleTrial menu={menu} {...props} onToggle={menu.hide} />
         )}
         <ToggleRepeating {...props} />

@@ -24,6 +24,10 @@ const UPDATE = gql`
 const MarkAsTrial = ({ task }) => {
   const [update, { loading }] = useMutation(UPDATE);
 
+  if (!task.application.trialProgram) {
+    return null;
+  }
+
   const trialTask = task.application.trialTask;
   const allowedStages = ["Not Assigned", "Quote Requested", "QuoteProvided"];
   if (trialTask || allowedStages.indexOf(task.stage) === -1) {

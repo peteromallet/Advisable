@@ -11,7 +11,7 @@ import DueDate from "./DueDate";
 import Actions from "./Actions";
 import Estimate from "./Estimate";
 import Description from "./Description";
-import MarkAsTrial from "./TaskActions/MarkAsTrial.js";
+import MarkAsTrial from "./MarkAsTrial.js";
 import TaskDetailRows from "./TaskDetailRows";
 import {
   TaskDetails,

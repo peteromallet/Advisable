@@ -12,6 +12,7 @@ export default gql`
       status
       airtableId
       projectType
+      trialProgram
       specialist {
         id
         firstName

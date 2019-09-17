@@ -105,9 +105,9 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
       <TaskDrawer
         isClient={false}
         showStatusNotice
-        readOnly={application.status !== "Working"}
         onClose={() => closeTask()}
         onDeleteTask={handleDeleteTask}
+        readOnly={application.status !== "Working"}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
       <Sidebar data={data} tutorial={tutorial} />
