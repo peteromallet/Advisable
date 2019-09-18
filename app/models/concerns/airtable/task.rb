@@ -14,8 +14,8 @@ class Airtable::Task < Airtable::Base
   sync_association "Application", to: :application
 
   sync_data do |task|
-    application.trial = true if fields['Trial'] == 'Yes'
-    application.trial = false if fields['Trial'] == 'No'
+    task.trial = true if fields['Trial'] == 'Yes'
+    task.trial = false if fields['Trial'] == 'No'
   end
 
   push_data do |task|
