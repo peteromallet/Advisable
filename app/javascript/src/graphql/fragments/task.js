@@ -13,14 +13,5 @@ export default gql`
     description
     createdAt
     repeat
-    application {
-      id
-      trialProgram
-      trialTask {
-        id
-        stage
-        name
-      }
-    }
   }
 `;

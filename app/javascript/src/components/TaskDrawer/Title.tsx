@@ -30,9 +30,13 @@ export default ({ value, ...props }) => {
 
   React.useEffect(() => {
     if (!value || value === "") {
-      setTimeout(() => ref.current.focus(), 50);
+      setTimeout(() => {
+        if (ref.current) {
+          ref.current.focus();
+        }
+      }, 50);
     }
-  }, []);
+  }, [ref.current]);
 
   const handleChange = e => {
     calculateRows();
@@ -61,4 +65,3 @@ export default ({ value, ...props }) => {
     />
   );
 };
-

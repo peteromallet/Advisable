@@ -85,7 +85,7 @@ const EditTask = ({
   showStatusNotice,
 }) => {
   const [attributes, setAttributes] = React.useState({
-    name: task.name || "",
+    name: task.name || undefined,
     description: task.description || "",
     dueDate: task.dueDate || null,
     estimate: task.estimate || null,
@@ -125,7 +125,7 @@ const EditTask = ({
     handleBlur(attribute)();
 
     const value = attributes[attribute];
-    if (task[attribute] !== value) {
+    if ((task[attribute] || undefined) !== value) {
       clearTimeout(timer);
       onSave(attribute, { [attribute]: value });
     }

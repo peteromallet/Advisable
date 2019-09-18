@@ -169,8 +169,8 @@ const Terms = ({
                 value={formik.values.trialProgram}
                 onChange={formik.handleChange}
                 label={
-                  <>
-                    I aggree to participate in{" "}
+                  <span>
+                    I agree to participate in{" "}
                     <Tooltip
                       interactable
                       content={
@@ -198,7 +198,7 @@ const Terms = ({
                         Advisable's Guaranteed Trial Programme.
                       </Link>
                     </Tooltip>
-                  </>
+                  </span>
                 }
                 error={
                   formik.touched.trialProgram && formik.errors.trialProgram

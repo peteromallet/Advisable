@@ -189,7 +189,7 @@ test("Freelancer can create a task", async () => {
   expect(quote).toBeInTheDocument();
 });
 
-test("Freelancer can mark a task as complete", async () => {
+test.only("Freelancer can mark a task as complete", async () => {
   const user = generateTypes.user();
   const project = generateTypes.project({ user });
   const specialist = generateTypes.specialist();
@@ -210,7 +210,7 @@ test("Freelancer can mark a task as complete", async () => {
   });
   task.application = application;
 
-  const { findByText, findByLabelText, getByLabelText, debug } = renderApp({
+  const { findByText, findByLabelText, getByLabelText } = renderApp({
     route: "/clients/rec1234/tasks/tas_1234",
     graphQLMocks: [
       {
@@ -232,7 +232,6 @@ test("Freelancer can mark a task as complete", async () => {
         },
         result: {
           data: {
-            viewer: specialist,
             application,
           },
         },
@@ -246,7 +245,10 @@ test("Freelancer can mark a task as complete", async () => {
         },
         result: {
           data: {
-            task,
+            task: {
+              ...task,
+              application,
+            },
           },
         },
       },

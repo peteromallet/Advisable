@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { ScrollableContainer, ScrollInner } from "./styles";
 import { extractSpacingProps } from "src/components/Spacing";
 
@@ -8,6 +8,7 @@ export default ({ children, height, ...props }) => {
   const scrollRef = useRef(null);
 
   const setShadows = el => {
+    if (!el) return;
     const { scrollTop, clientHeight, scrollHeight } = el;
     setBottomShadow(scrollTop + clientHeight < scrollHeight);
     setTopShadow(scrollTop > 0);
@@ -19,7 +20,7 @@ export default ({ children, height, ...props }) => {
     });
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTimeout(() => setShadows(scrollRef.current), 10);
     scrollRef.current.addEventListener("scroll", handleScroll);
     return () => scrollRef.current.removeEventListener("scroll", handleScroll);

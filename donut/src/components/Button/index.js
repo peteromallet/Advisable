@@ -19,7 +19,7 @@ const Button = React.forwardRef(
         size={size}
         isLoading={loading}
         iconRight={iconRight}
-        aria-label={children}
+        aria-label={rest["aria-label"] || children}
         data-loading={loading || null}
       >
         {loading && (

@@ -92,6 +92,8 @@ export const application = (fields = {}) => {
       comment: "comment",
       hidden: false,
       monthlyLimit: null,
+      trialProgram: true,
+      trialTask: null,
       referencesRequested: false,
       projectType: "Fixed",
       referralUrl: "https//advisable.com",
@@ -163,6 +165,7 @@ export const task = (fields = {}) => {
     {
       __typename: "Task",
       id: uniqueId("task"),
+      trial: false,
       name: null,
       stage: "Not Assigned",
       dueDate: null,
