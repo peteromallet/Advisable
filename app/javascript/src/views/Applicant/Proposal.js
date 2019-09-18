@@ -15,6 +15,7 @@ import SkeletonText from "../../components/SkeletonText";
 import SkeletonHeading from "../../components/SkeletonHeading";
 import { Padding } from "../../components/Spacing";
 import FETCH_PROPOSAL from "./fetchProposal.graphql";
+import renderLineBreaks from "../../utilities/renderLineBreaks";
 
 const Loaded = ({ data }) => {
   const { t } = useTranslation();
@@ -68,7 +69,7 @@ const Loaded = ({ data }) => {
       {application.proposalComment && (
         <Padding left="xl" right="xl" bottom="m">
           <Message title={`Message from ${specialist.firstName}`}>
-            {application.proposalComment}
+            {renderLineBreaks(application.proposalComment)}
           </Message>
         </Padding>
       )}
