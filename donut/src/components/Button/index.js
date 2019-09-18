@@ -1,6 +1,6 @@
 import React from "react";
 import Icon from "../Icon";
-import { Button as ButtonStyles, Loading, Dot } from "./styles";
+import { Button as ButtonStyles, ButtonText, Loading, Dot } from "./styles";
 
 // Renders a button.. obviously
 //
@@ -10,29 +10,36 @@ import { Button as ButtonStyles, Loading, Dot } from "./styles";
 // - intent: 'default', 'success', 'danger'. The intent prop dtermins the
 // coloring for the button.
 // - icon: Accepts any icon string for feather-icons.
-const Button = ({ children, icon, iconRight, loading, size, ...rest }) => {
-  return (
-    <ButtonStyles
-      {...rest}
-      size={size}
-      isLoading={loading}
-      iconRight={iconRight}
-      aria-label={children}
-      data-loading={loading || null}
-    >
-      {loading && (
-        <Loading>
-          <Dot />
-          <Dot />
-          <Dot />
-        </Loading>
-      )}
-      {icon && <Icon mr="xs" icon={icon} width={20} />}
-      {children}
-      {iconRight && <Icon ml="xs" icon={iconRight} width={20} />}
-    </ButtonStyles>
-  );
-};
+const Button = React.forwardRef(
+  ({ children, icon, iconRight, loading, size, ...rest }, ref) => {
+    return (
+      <ButtonStyles
+        {...rest}
+        ref={ref}
+        size={size}
+        isLoading={loading}
+        iconRight={iconRight}
+        aria-label={rest["aria-label"] || children}
+        data-loading={loading || null}
+      >
+        {loading && (
+          <Loading>
+            <Dot />
+            <Dot />
+            <Dot />
+          </Loading>
+        )}
+        {icon && <Icon icon={icon} width={20} />}
+        {children && (
+          <ButtonText hasIcon={Boolean(icon)} hasRightIcon={Boolean(iconRight)}>
+            {children}
+          </ButtonText>
+        )}
+        {iconRight && <Icon icon={iconRight} width={20} />}
+      </ButtonStyles>
+    );
+  }
+);
 
 Button.defaultProps = {
   intent: "default",

@@ -6,7 +6,7 @@ import NoTasks from "./NoTasks";
 
 // Renders the freelancer's active tasks inside the freelancer active project
 // view.
-const ActiveTasks = ({ onClick, onCreate, application }) => {
+const ActiveTasks = ({ isClient, onClick, onCreate, application }) => {
   let tasks = filter(application.tasks, t => t.stage !== "Approved");
 
   if (tasks.length === 0) {
@@ -16,6 +16,7 @@ const ActiveTasks = ({ onClick, onCreate, application }) => {
   return (
     <TaskList
       tasks={tasks}
+      isClient={isClient}
       onClickTask={onClick}
       lastRow={
         application.status === "Working" && (

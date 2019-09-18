@@ -21,7 +21,7 @@ class Applications::Update < ApplicationService
   def permitted_attributes
     attributes.slice(
       :introduction, :availability, :rate, :accepts_fee, :accepts_terms,
-      :project_type, :monthly_limit
+      :project_type, :monthly_limit, :trial_program
     )
   end
 

@@ -7,8 +7,6 @@ import LOGIN from "../login";
 afterEach(cleanup);
 
 test("User can login", async () => {
-  window.location.replace = jest.fn();
-
   let { findByLabelText } = renderApp({
     route: "/login",
     graphQLMocks: [
@@ -57,5 +55,4 @@ test("User can login", async () => {
     "authToken",
     "jwt1234"
   );
-  expect(window.location.replace).toHaveBeenCalled();
 });

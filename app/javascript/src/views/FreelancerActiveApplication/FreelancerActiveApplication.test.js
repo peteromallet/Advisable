@@ -169,7 +169,6 @@ test("Freelancer can create a task", async () => {
   fireEvent.click(createButton);
   const name = await findByTestId("nameField");
   fireEvent.change(name, { target: { value: "Task name here" } });
-  fireEvent.blur(name);
   const estimate = getByLabelText("Estimate");
   fireEvent.click(estimate);
   const flexible = getByLabelText("Flexible");
@@ -210,7 +209,7 @@ test("Freelancer can mark a task as complete", async () => {
   });
   task.application = application;
 
-  const { findByText, findByLabelText, getByLabelText, debug } = renderApp({
+  const { findByText, findByLabelText, getByLabelText } = renderApp({
     route: "/clients/rec1234/tasks/tas_1234",
     graphQLMocks: [
       {
@@ -232,7 +231,6 @@ test("Freelancer can mark a task as complete", async () => {
         },
         result: {
           data: {
-            viewer: specialist,
             application,
           },
         },
@@ -246,7 +244,10 @@ test("Freelancer can mark a task as complete", async () => {
         },
         result: {
           data: {
-            task,
+            task: {
+              ...task,
+              application,
+            },
           },
         },
       },

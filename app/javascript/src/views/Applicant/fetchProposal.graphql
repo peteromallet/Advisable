@@ -20,6 +20,7 @@ query project($id: ID!) {
       id
       name
       stage
+      trial
       dueDate
       estimate
     }

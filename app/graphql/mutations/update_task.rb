@@ -5,6 +5,7 @@ class Mutations::UpdateTask < Mutations::BaseMutation
   argument :dueDate, GraphQL::Types::ISO8601DateTime, required: false
   argument :estimate, Int, required: false
   argument :flexible_estimate, Int, required: false
+  argument :trial, Boolean, required: false
 
   field :task, Types::TaskType, null: true
   field :errors, [Types::Error], null: true
@@ -26,12 +27,16 @@ class Mutations::UpdateTask < Mutations::BaseMutation
       )
     end
 
+    task = Tasks::Update.call(
+      task: task,
+      attributes: args.except(:id),
+      user: context[:current_user]
+    )
+
+    task.application.reload
+
     {
-      task: Tasks::Update.call(
-        task: task,
-        attributes: args.except(:id),
-        user: context[:current_user]
-      )
+      task: task
     }
 
     rescue Service::Error => e

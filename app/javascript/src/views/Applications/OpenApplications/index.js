@@ -21,7 +21,7 @@ const OpenApplications = props => {
     <React.Fragment>
       {props.onHold && (
         <Text color="neutral.9" mb="m" size="l" weight="medium">
-          We're currently evaluation the projects you've applied for
+          We're currently evaluating the projects you've applied for
         </Text>
       )}
       {props.applications.map(application => (

@@ -44,22 +44,24 @@ export const Tab = styled(ReachTab)`
   padding: 0;
   border: none;
   outline: none;
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 400;
   cursor: pointer;
   appearance: none;
   margin-right: 20px;
   margin-bottom: -1px;
   align-items: center;
   display: inline-flex;
-  padding-bottom: 12px;
+  padding-bottom: 10px;
   background: transparent;
+  letter-spacing: 0.02rem;
   color: ${colors.neutral[4]};
   font-family: poppins, sans-serif;
   border-bottom: 2px solid transparent;
   transition: color 300ms;
 
   &:hover {
-    color: ${colors.neutral[8]};
+    color: ${colors.neutral[7]};
   }
 
   ${props => props.isSelected && selectedTab};

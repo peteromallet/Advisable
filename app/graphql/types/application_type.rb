@@ -22,6 +22,8 @@ class Types::ApplicationType < Types::BaseType
   field :accepts_terms, Boolean, null: true
   field :has_more_projects, Boolean, null: false
   field :interview, Types::Interview, null: true
+  field :trial_program, Boolean, null: true
+  field :trial_task, Types::TaskType, null: true
  
   field :proposal_comment, String, null: true do
     authorize :read

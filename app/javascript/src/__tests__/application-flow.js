@@ -8,7 +8,7 @@ import generateTypes from "../__mocks__/graphqlFields";
 afterEach(cleanup);
 
 test("Submitting the overview step continues to the questions step", async () => {
-  const { findByLabelText, getByText, findByText } = renderApp({
+  const { findByLabelText, getByText, findByText, debug } = renderApp({
     route: "/invites/rec1234/apply",
     graphQLMocks: [
       // Mock the initial viewer request so that we have an unauthenticated user
@@ -69,6 +69,7 @@ test("Submitting the overview step continues to the questions step", async () =>
                 availablity: "2 - 4 Weeks",
                 introduction: "Introduction",
                 specialist: generateTypes.specialist(),
+                previousProjects: [],
                 project: generateTypes.project({
                   questions: ["This is the first question?"],
                 }),

@@ -281,4 +281,60 @@ describe Mutations::UpdateTask do
       expect(error).to eq("applicationStatusNotWorking")
     end
   end
+
+  context "when the trial argument is passed" do
+    let(:task) { create(:task, trial: false) }
+    let(:input) { %|
+      {
+        id: #{task.uid},
+        trial: true
+      }
+    |}
+
+    context "and the specialist is logged in" do
+      let(:context) {{ current_user: task.application.specialist }}
+
+      it "sets the trial" do
+        expect {
+          response = AdvisableSchema.execute(query, context: context)
+        }.to change {
+          task.reload.trial
+        }.from(false).to(true)
+      end
+
+      context "and the application has an existing trial task" do
+        let!(:trial) { create(:task, application: task.application, trial: true) }
+
+        it "toggles the other trial task to false" do
+          expect {
+            response = AdvisableSchema.execute(query, context: context)
+          }.to change {
+            trial.reload.trial
+          }.from(true).to(false)
+        end
+      end
+
+      context "and the application has an existing trial task that is in progress" do
+        let!(:trial) { create(:task, application: task.application, trial: true, stage: "Working") }
+
+        it "Returns an error" do
+          response = AdvisableSchema.execute(query, context: context)
+          error = response["data"]["updateTask"]["errors"][0]["code"]
+          expect(error).to eq("tasks.applicationHasActiveTrialTask")
+        end
+      end
+    end
+
+    context "and the user is logged in" do
+      let(:context) {{ current_user: task.application.project.user }}
+
+      it "does not set the trial" do
+        expect {
+          response = AdvisableSchema.execute(query, context: context)
+        }.to_not change {
+          task.reload.trial
+        }
+      end
+    end
+  end
 end

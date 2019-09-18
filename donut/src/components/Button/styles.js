@@ -3,31 +3,50 @@ import styled, { keyframes, css } from "styled-components";
 import { darken, lighten, rgba } from "polished";
 import colors from "../../colors";
 import theme from "../../theme";
-import Icon from "../Icon/styles";
 
 const HEIGHTS = {
+  xs: 28,
+  s: 32,
   m: 36,
   l: 46,
 };
 
 const PADDING = {
+  xs: "0 12px",
+  s: "0 14px",
   m: "0 16px",
   l: "0 24px",
 };
 
+const BORDER_RADIUS = {
+  xs: "7px",
+  s: "8px",
+  m: "10px",
+};
+
+const FONT_SIZES = {
+  xs: 12,
+  s: 14,
+  m: 14,
+  l: 16,
+};
+
 const APPEARANCES = {
   default: css`
-    height: ${props => HEIGHTS[props.size || "m"]}px;
     line-height: 1;
+    color: ${theme.colors.neutral[7]};
+    background: ${theme.colors.neutral[1]};
     padding: ${props => PADDING[props.size || "m"]};
-    background: ${rgba(colors.neutral.N2, 0.7)};
+    height: ${props => HEIGHTS[props.size || "m"]}px;
 
     &:hover:not(:disabled) {
-      background: ${rgba(colors.neutral.N2, 1)};
+      color: ${theme.colors.neutral[8]};
+      background: ${theme.colors.neutral[2]};
     }
 
     &:active:not(:disabled) {
-      background: ${rgba(colors.neutral.N2, 0.6)};
+      opacity: 0.75;
+      background: ${theme.colors.neutral[2]};
     }
   `,
   primary: css`
@@ -48,17 +67,7 @@ const APPEARANCES = {
 
 const INTENT = {
   default: {
-    default: css`
-      color: ${colors.neutral.N6};
-
-      &:hover:not(:disabled) {
-        color: ${colors.neutral.N8};
-      }
-
-      &:active:not(:disabled) {
-        color: ${colors.neutral.N5};
-      }
-    `,
+    default: css``,
     success: css`
       color: ${colors.blue.N6};
 
@@ -74,18 +83,26 @@ const INTENT = {
   primary: {
     default: css`
       color: white;
-      background: ${colors.neutral.N6};
+      background: ${theme.colors.neutral[7]};
+
+      &:hover:not(:disabled) {
+        background: ${theme.colors.neutral[8]};
+      }
+
+      &:active:not(:disabled) {
+        opacity: 0.8;
+      }
     `,
     success: css`
       color: white;
-      background: ${theme.colors.blue[4]};
+      background: ${theme.colors.blue[5]};
 
       &:hover:not(:disabled):not([data-loading]) {
-        background: ${darken(0.1, theme.colors.blue[4])};
+        background: ${darken(0.1, theme.colors.blue[5])};
       }
 
       &:active:not(:disabled):not([data-loading]) {
-        background: ${darken(0.2, theme.colors.blue[4])};
+        background: ${darken(0.2, theme.colors.blue[5])};
       }
 
       &[data-loading] {
@@ -165,36 +182,39 @@ const loadingStyling = css`
   color: transparent;
 `;
 
-const FONT_SIZES = {
-  m: 15,
-  l: 16,
-};
-
 export const Button = styled.button`
   margin: 0;
   border: none;
-  outline: none;
   font-size: ${props => FONT_SIZES[props.size || "m"]}px;
   cursor: pointer;
   appearance: none;
-  font-weight: 400;
+  font-weight: 500;
   position: relative;
-  border-radius: 12px;
+  border-radius: ${props => BORDER_RADIUS[props.size] || "12px"};
   align-items: center;
   display: inline-flex;
   text-decoration: none;
   justify-content: center;
-  transition: background 150ms;
+  transition: background 80ms;
   width: ${props => props.width};
   font-family: "Poppins", sans-serif;
 
-  ${space}
+  &:focus {
+    outline: none;
+  }
 
   ${props => APPEARANCES[props.appearance]};
   ${props => INTENT[props.appearance][props.intent]};
 
   ${props => props.isLoading && loadingStyling};
   ${props => props.disabled && disabledStyling};
+
+  ${space}
+`;
+
+export const ButtonText = styled.span`
+  ${props => props.hasIcon && { paddingLeft: 8 }};
+  ${props => props.hasRightIcon && { paddingRight: 8 }};
 `;
 
 export default Button;

@@ -11,7 +11,7 @@ import {
 import App from "../App";
 import i18n from "./i18next.js";
 import introspectionQueryResultData from "../fragmentTypes.json";
-import "jest-dom/extend-expect";
+import "@testing-library/jest-dom/extend-expect";
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData,

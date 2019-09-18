@@ -11,6 +11,8 @@ import DueDate from "./DueDate";
 import Actions from "./Actions";
 import Estimate from "./Estimate";
 import Description from "./Description";
+import MarkAsTrial from "./MarkAsTrial.js";
+import TaskDetailRows from "./TaskDetailRows";
 import {
   TaskDetails,
   Confirmation,
@@ -83,7 +85,7 @@ const EditTask = ({
   showStatusNotice,
 }) => {
   const [attributes, setAttributes] = React.useState({
-    name: task.name || "",
+    name: task.name || undefined,
     description: task.description || "",
     dueDate: task.dueDate || null,
     estimate: task.estimate || null,
@@ -123,7 +125,7 @@ const EditTask = ({
     handleBlur(attribute)();
 
     const value = attributes[attribute];
-    if (task[attribute] !== value) {
+    if ((task[attribute] || undefined) !== value) {
       clearTimeout(timer);
       onSave(attribute, { [attribute]: value });
     }
@@ -146,7 +148,7 @@ const EditTask = ({
     updateField(attribute, value);
     clearTimeout(timer);
     timer = setTimeout(() => {
-      if (task[attribute] !== value) {
+      if ((task[attribute] || undefined) !== value) {
         onSave(attribute, { [attribute]: value });
       }
     }, 1000);
@@ -227,14 +229,20 @@ const EditTask = ({
                   }}
                 />
               </TaskDetails>
-              <Description
-                readOnly={descriptionReadOnly}
-                value={attributes.description}
-                onBlur={handleBlurWithSave("description")}
-                onFocus={handleFocus("description")}
-                onChange={handleChangeWithTimeout("description")}
-                isFocused={editAllowed && focusedElement === "description"}
-              />
+              <TaskDetailRows task={task} isClient={isClient} />
+              {!readOnly && !isClient && !task.application.trialTask && (
+                <MarkAsTrial task={task} isClient={isClient} />
+              )}
+              <div style={{ marginTop: 16 }}>
+                <Description
+                  readOnly={descriptionReadOnly}
+                  value={attributes.description}
+                  onBlur={handleBlurWithSave("description")}
+                  onFocus={handleFocus("description")}
+                  onChange={handleChangeWithTimeout("description")}
+                  isFocused={editAllowed && focusedElement === "description"}
+                />
+              </div>
             </Padding>
           </Scrollable>
         </VerticalLayout.Content>
@@ -247,7 +255,18 @@ const EditTask = ({
               <Actions setPrompt={setPrompt} isClient={isClient} task={task} />
             )}
           </Padding>
-          <SavingIndicator isSaving={isSaving}>Saving...</SavingIndicator>
+          <SavingIndicator isSaving={isSaving}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path stroke="currentColor" d="M13 7a6 6 0 11-6-6" />
+            </svg>
+            Saving...
+          </SavingIndicator>
         </VerticalLayout.Footer>
       </VerticalLayout>
     </>

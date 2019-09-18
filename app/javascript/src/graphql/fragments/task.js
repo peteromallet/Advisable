@@ -5,6 +5,7 @@ export default gql`
     id
     name
     stage
+    trial
     dueDate
     estimate
     hoursWorked

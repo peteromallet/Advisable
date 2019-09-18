@@ -64,4 +64,5 @@ export interface Task {
   hoursWorked?: number;
   dueDate?: string;
   description?: string;
+  trial?: boolean;
 }

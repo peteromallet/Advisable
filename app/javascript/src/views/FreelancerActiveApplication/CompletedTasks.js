@@ -3,7 +3,7 @@ import { filter } from "lodash";
 import { Text } from "@advisable/donut";
 import TaskList from "../../components/TaskList";
 
-const CompletedTasks = ({ application, onClick }) => {
+const CompletedTasks = ({ isClient, application, onClick }) => {
   let tasks = filter(application.tasks, { stage: "Approved" });
 
   if (tasks.length === 0) {
@@ -14,7 +14,7 @@ const CompletedTasks = ({ application, onClick }) => {
     );
   }
 
-  return <TaskList tasks={tasks} onClickTask={onClick} />;
+  return <TaskList tasks={tasks} isClient={isClient} onClickTask={onClick} />;
 };
 
 export default CompletedTasks;

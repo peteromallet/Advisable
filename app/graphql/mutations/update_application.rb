@@ -15,6 +15,7 @@ class Mutations::UpdateApplication < Mutations::BaseMutation
   argument :accepts_terms, Boolean, required: false
   argument :project_type, String, required: false
   argument :monthly_limit, Int, required: false
+  argument :trial_program, Boolean, required: false
 
   field :application, Types::ApplicationType, null: true
   field :errors, [Types::Error], null: true

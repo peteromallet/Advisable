@@ -2,19 +2,13 @@ import * as React from "react";
 import { createPortal } from "react-dom";
 import { useTransition } from "react-spring";
 import Div100vh from "react-div-100vh";
+import { Button } from "@advisable/donut";
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { useMobile } from "../../components/Breakpoint";
-import IconButton from "../../components/IconButton";
 import { Container, Backdrop, Drawer, Actions } from "./styles";
+export { default as DrawerModal } from "./DrawerModal";
 
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-  actions: any;
-}
-
-export default ({ isOpen, onClose, children, actions }: Props) => {
+export default ({ isOpen, onClose, children, actions }) => {
   const isMobile = useMobile();
   const drawerRef = React.useRef(null);
 
@@ -95,8 +89,9 @@ export default ({ isOpen, onClose, children, actions }: Props) => {
                     <Div100vh>
                       <Actions>
                         {actions}
-                        <IconButton
+                        <Button
                           icon="x"
+                          size="s"
                           aria-label="Close Drawer"
                           onClick={onClose}
                         />

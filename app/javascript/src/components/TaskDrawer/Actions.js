@@ -2,6 +2,7 @@ import * as React from "react";
 import { flowRight as compose } from "lodash";
 import { graphql } from "react-apollo";
 import Button from "../Button";
+import { Button as DonutButton } from "@advisable/donut";
 import Padding from "../Spacing/Padding";
 import { Text } from "@advisable/donut";
 import ButtonGroup from "../ButtonGroup";
@@ -130,15 +131,17 @@ const Component = ({
     stage === "Not Assigned"
   ) {
     actions.push(
-      <Button
-        styling="primary"
+      <DonutButton
+        size="s"
+        intent="success"
+        appearance="primary"
         key="requestToStart"
-        disabled={!hasNameAndDescription || loading}
         onClick={handleRequestToStart}
+        disabled={!hasNameAndDescription || loading}
         loading={loading === "REQUEST_TO_START" ? true : undefined}
       >
         Request to Start Working
-      </Button>
+      </DonutButton>
     );
 
     if (!hasName || !hasDescription) {

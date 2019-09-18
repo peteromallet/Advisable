@@ -2,6 +2,7 @@ import styled, { css, keyframes } from "styled-components";
 import { Icon } from "../Icon/styles";
 import { Status } from "../Status/styles";
 import colors from "../../colors";
+import { theme } from "@advisable/donut";
 
 export const Title = styled.h5`
   color: #0a153d;
@@ -39,19 +40,22 @@ export const Row = styled.div`
   display: flex;
   margin-top: -1px;
   user-select: none;
-  padding: 15px 30px;
+  padding: 10px 30px;
   position: relative;
   align-items: center;
+  min-height: 60px;
   border-top: 1px solid #eceff8;
   border-bottom: 1px solid #eceff8;
 
-  ${props => props.showPrompt && css`
-    padding-left: 55px;
-  `}
+  ${props =>
+    props.showPrompt &&
+    css`
+      padding-left: 55px;
+    `}
 
   @media (max-width: 900px) {
     display: block;
-    padding-left: ${props => props.showPrompt ? "45px" : "20px"};
+    padding-left: ${props => (props.showPrompt ? "45px" : "20px")};
     padding-right: 20px;
   }
 `;
@@ -88,27 +92,25 @@ export const TaskList = styled.div``;
 
 const promptAnimation = keyframes`
   0% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 0.5;
+    opacity: 1;
+    transform: scale(0.5);
   }
 
   100% {
     opacity: 0;
+    transform: scale(1);
   }
 `;
 
 export const Prompt = styled.div`
   top: 50%;
-  width: 6px;
+  width: 8px;
   left: 30px;
-  height: 6px;
+  height: 8px;
   border-radius: 50%;
   position: absolute;
   transform: translateY(-50%);
-  background: ${colors.blue.base};
+  background: ${theme.colors.blue[5]};
 
   @media (max-width: 900px) {
     left: 20px;
@@ -116,13 +118,13 @@ export const Prompt = styled.div`
 
   &::before {
     content: "";
-    top: -3px;
-    left: -3px;
-    width: 10px;
-    height: 10px;
+    top: -4px;
+    left: -4px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     position: absolute;
-    border: 1px solid ${colors.blue.base};
+    border: 1px solid ${theme.colors.blue[5]};
     animation: ${promptAnimation} 2s infinite;
   }
 `;

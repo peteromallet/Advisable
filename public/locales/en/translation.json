@@ -1,10 +1,35 @@
 {
+  "actions": {
+    "deleteTask": "Delete task",
+    "markTaskAsTrial": "Set as trial task",
+    "removeTaskTrial": "Remove task trial",
+    "removeTaskRepeat": "Remove task repeat",
+    "repeatTask": {
+      "title": "Create repeating task",
+      "description": {
+        "client": "You will have the opportunity to repeat this task every month.",
+        "specialist": "{{task.application.project.user.companyName}} will have the opportunity to repeat this task every month."
+      }
+    }
+  },
   "errors": {
     "emailTaken": "This email address is already associated with an existing account.",
     "account_not_found": "Your account could not be found. You must first go through our application process.",
     "account_already_exists": "This account already exists",
     "authentication": {
       "failed": "Invalid login credentials, please try again."
+    }
+  },
+  "trialProgram": {
+    "tooltip": {
+      "title": {
+        "client": "This is a risk-free trial task",
+        "freelancer": "This is a guaranteed trial task"
+      },
+      "description": {
+        "client": "Advisable offers clients a risk-free trial period of up to 8 hours when working with a new freelancer. If you're not entirely satisfied during this period, you will not be charged for any work completed and we will find you a replacement freelancer free of charge. The only requirement is that you provide us with feedback as per Advisable's Professional Standards.",
+        "freelancer": "Advisable offers clients a trial period of up to 8 hours when working with a new freelancer. You will be paid for work completed during this trial as long as the client agrees you adhered to Advisable's Professional Standards."
+      }
     }
   },
   "proposals": {
@@ -28,18 +53,6 @@
   },
   "tasks": {
     "title": "{{firstName}}'s tasks",
-    "actions": {
-      "setRepeating": {
-        "client": {
-          "title": "Create repeating task",
-          "description": "You will have the opportunity to repeat this task every month."
-        },
-        "specialist": {
-          "title": "Create repeating task",
-          "description": "{{task.application.project.user.companyName}} will have the opportunity to repeat this task every month."
-        }
-      }
-    },
     "stageDescriptions": {
       "client": {
         "nameAndDescriptionRequired": "This task can not be assigned until it has a name and a description.",
