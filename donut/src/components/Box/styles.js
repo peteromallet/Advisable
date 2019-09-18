@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { space, border, layout, color, flex, position } from "styled-system";
+import { space, border, layout, color, flexbox, position } from "styled-system";
 
 const Box = styled.div`
-  ${flex}
+  ${flexbox}
   ${color}
   ${space}
   ${layout}

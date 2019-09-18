@@ -8,7 +8,6 @@ afterEach(cleanup);
 
 test("User can login", async () => {
   let user = fields.user({ projects: [] });
-  window.location.replace = jest.fn();
 
   let { findByText } = renderApp({
     route: "/login",

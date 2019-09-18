@@ -54,7 +54,8 @@ class Tasks::Update < ApplicationService
     end
 
     if trial == true && existing && existing != task
-      task.application.trial_task.update(trial: false)
+      existing.update(trial: false)
+      existing.sync_to_airtable
     end
 
     task.trial = trial

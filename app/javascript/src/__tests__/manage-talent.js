@@ -342,7 +342,6 @@ test("The client can add a task", async () => {
   fireEvent.click(createButton);
   const name = getByTestId("nameField");
   fireEvent.change(name, { target: { value: "This is a new task" } });
-  fireEvent.blur(name);
   const close = await findByLabelText("Close Drawer");
   fireEvent.click(close);
   expect(await findByText("This is a new task")).toBeInTheDocument();

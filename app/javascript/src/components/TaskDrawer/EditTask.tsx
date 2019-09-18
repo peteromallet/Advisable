@@ -148,7 +148,7 @@ const EditTask = ({
     updateField(attribute, value);
     clearTimeout(timer);
     timer = setTimeout(() => {
-      if (task[attribute] !== value) {
+      if ((task[attribute] || undefined) !== value) {
         onSave(attribute, { [attribute]: value });
       }
     }, 1000);

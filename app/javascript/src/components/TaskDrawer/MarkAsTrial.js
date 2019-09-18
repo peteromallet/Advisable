@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import { useMutation } from "react-apollo";
 import { Box, Button, Text, Link } from "@advisable/donut";
 
-const UPDATE = gql`
+export const UPDATE_TASK = gql`
   mutation updateTask($input: UpdateTaskInput!) {
     updateTask(input: $input) {
       task {
@@ -22,7 +22,7 @@ const UPDATE = gql`
 `;
 
 const MarkAsTrial = ({ task }) => {
-  const [update, { loading }] = useMutation(UPDATE);
+  const [update, { loading }] = useMutation(UPDATE_TASK);
 
   if (!task.application.trialProgram) {
     return null;

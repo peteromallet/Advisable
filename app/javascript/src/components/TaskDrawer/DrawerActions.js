@@ -1,5 +1,5 @@
 import React from "react";
-import { useMenuState, useMenu } from "reakit";
+import { useMenuState } from "reakit";
 import { Box, Menu, Button } from "@advisable/donut";
 import DeleteTask from "./DeleteTask";
 import ToggleTrial from "./ToggleTrial";
@@ -25,11 +25,12 @@ const Actions = props => {
         aria-label="Task actions"
         trigger={
           <Button
+            size="s"
+            type="button"
+            icon="more-horizontal"
             borderTopRightRadius={0}
             borderBottomRightRadius={0}
-            type="button"
-            size="s"
-            icon="more-horizontal"
+            aria-label="Open task actions menu"
           />
         }
       >

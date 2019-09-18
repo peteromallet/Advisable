@@ -65,7 +65,18 @@ const animating = css`
   transition: opacity 200ms;
 `;
 
-const StyledTooltip = styled(ReakitTooltip)`
+// Because we are using custom component below e.g styled(ReakitTooltip) instead
+// of styled.div, styled-components will pass all props through. This emits a
+// warning for the interactable prop as it isn't a valid html prop. This simple
+// wrapper component just extracts the prop and doesn't pass it to the
+// underlying component.
+// The only downside of this is that it breaks the styled-components 'as'
+// prop
+const ExtractedReakitTooltip = ({ interactable, ...props }) => (
+  <ReakitTooltip {...props} />
+);
+
+const StyledTooltip = styled(ExtractedReakitTooltip)`
   opacity: 0;
   cursor: default;
   z-index: 999999;

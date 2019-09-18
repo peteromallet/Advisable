@@ -169,7 +169,6 @@ test("Freelancer can create a task", async () => {
   fireEvent.click(createButton);
   const name = await findByTestId("nameField");
   fireEvent.change(name, { target: { value: "Task name here" } });
-  fireEvent.blur(name);
   const estimate = getByLabelText("Estimate");
   fireEvent.click(estimate);
   const flexible = getByLabelText("Flexible");
@@ -189,7 +188,7 @@ test("Freelancer can create a task", async () => {
   expect(quote).toBeInTheDocument();
 });
 
-test.only("Freelancer can mark a task as complete", async () => {
+test("Freelancer can mark a task as complete", async () => {
   const user = generateTypes.user();
   const project = generateTypes.project({ user });
   const specialist = generateTypes.specialist();
