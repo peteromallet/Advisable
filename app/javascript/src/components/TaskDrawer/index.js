@@ -1,4 +1,8 @@
 // Renders the drawer for a task
+// The trask drawer component heavily relys on apollo client caching.
+// Alot of the UX expects that tasks associated application record is
+// preloaded. This component should eventually be rewritten as it has
+// become very bloated from when it was a simple task drawer.
 import * as React from "react";
 import { get, filter, flowRight as compose } from "lodash";
 import { withRouter } from "react-router-dom";

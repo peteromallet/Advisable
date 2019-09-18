@@ -5,6 +5,7 @@ export const taskFields = gql`
     id
     name
     stage
+    trial
     dueDate
     estimate
     hoursWorked

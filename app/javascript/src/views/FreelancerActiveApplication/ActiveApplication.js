@@ -77,7 +77,6 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
   };
 
   const handleDeleteTask = task => {
-    history.push(match.url);
     let newData = client.readQuery({
       query: FETCH_APPLICATION,
       variables: {
@@ -96,6 +95,8 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
         id: application.airtableId,
       },
     });
+
+    history.push(match.url);
   };
 
   return (
@@ -104,9 +105,9 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
       <TaskDrawer
         isClient={false}
         showStatusNotice
-        readOnly={application.status !== "Working"}
         onClose={() => closeTask()}
         onDeleteTask={handleDeleteTask}
+        readOnly={application.status !== "Working"}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
       <Sidebar data={data} tutorial={tutorial} />
@@ -119,6 +120,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
           </Box>
         )}
         <Tasks
+          isClient={false}
           application={application}
           onClick={handleTaskClick}
           onCreate={addNewTaskToCache}

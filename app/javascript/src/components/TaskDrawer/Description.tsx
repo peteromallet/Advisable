@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Label, Description } from "./styles";
+import { Description } from "./styles";
 
 export default props => {
   const ref = React.useRef(null);
   const [rows, setRows] = React.useState(1);
 
-  const LINE_HEIGHT = 20;
+  const LINE_HEIGHT = 18;
   const calculateRows = () => {
     const el = ref.current;
     const previousRows = el.rows;
@@ -33,18 +33,15 @@ export default props => {
   };
 
   return (
-    <>
-      <Label>Description</Label>
-      <Description
-        type="text"
-        name="description"
-        {...props}
-        ref={ref}
-        rows={rows}
-        value={props.value}
-        onChange={handleChange}
-        placeholder={props.readOnly ? "No Description" : "Add a description..."}
-      />
-    </>
+    <Description
+      type="text"
+      name="description"
+      {...props}
+      ref={ref}
+      rows={rows}
+      value={props.value}
+      onChange={handleChange}
+      placeholder={props.readOnly ? "No Description" : "Add a description..."}
+    />
   );
 };

@@ -34,7 +34,11 @@ const ProposalActions = ({ application, specialist, history }) => {
       />
       <ButtonGroup fullWidth stack>
         <Button onClick={() => setModal("ACCEPT")} styling="green">
-          Start working with {specialist.firstName}
+          {application.trialTask ? (
+            <>Start risk-free trial with {specialist.firstName}</>
+          ) : (
+            <>Start working with {specialist.firstName}</>
+          )}
         </Button>
         <Button onClick={() => setModal("REJECT")}>Reject application</Button>
       </ButtonGroup>

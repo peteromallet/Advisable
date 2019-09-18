@@ -44,6 +44,7 @@ export const Input = styled.input`
   appearance: none;
   font-weight: 500;
   background: transparent;
+  font-family: poppins, sans-serif;
   line-height: ${props => heights[props.size || "default"]};
   height: ${props => heights[props.size || "default"]};
   font-size: ${props => fontSizes[props.size || "default"]};
@@ -114,4 +115,5 @@ Textarea = styled(Textarea)`
   padding: 10px 0;
   overflow: auto;
   line-height: 18px;
+  font-family: poppins, sans-serif;
 `;

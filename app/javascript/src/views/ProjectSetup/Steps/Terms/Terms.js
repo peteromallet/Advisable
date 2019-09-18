@@ -38,7 +38,7 @@ const Terms = ({ project, formik }) => {
         <Text size="s" weight="bold" colour="dark" marginBottom="xs">
           Engage with the process
         </Text>
-        <Text size="s" marginBottom="xl">
+        <Text size="s" marginBottom="l">
           Our freelancers are in high-demand. In submitting this brief, you
           commit to engaging with the recruitment process in a professional
           manner and adhering to the{" "}
@@ -70,7 +70,7 @@ const Terms = ({ project, formik }) => {
         <Text size="s" weight="bold" colour="dark" marginBottom="xs">
           Engage with the process
         </Text>
-        <Text size="s" marginBottom="xl">
+        <Text size="s" marginBottom="l">
           Our freelancers are in high-demand. In submitting this brief, you
           commit to engaging with the recruitment process in a professional
           manner and adhering to the{" "}
@@ -101,6 +101,17 @@ const Terms = ({ project, formik }) => {
         Key terms include:
       </Text>
       {terms}
+      <Text size="s" weight="bold" colour="dark" marginBottom="xs">
+        Advisable Risk-Free Trial Programme
+      </Text>
+      <Text size="s" marginBottom="xl">
+        Advisable offers clients a risk-free trial period of up to 8 hours when
+        working with a new freelancer. If you're not entirely satisfied during
+        this period, you will not be charged for any work completed and we will
+        find you a replacement freelancer free of charge. The only requirement
+        is that you provide us with feedback as per Advisable's Professional
+        Standards
+      </Text>
       <Checkbox
         marginBottom="xl"
         name="acceptedTerms"

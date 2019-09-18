@@ -15,6 +15,7 @@ import SkeletonText from "../../components/SkeletonText";
 import SkeletonHeading from "../../components/SkeletonHeading";
 import { Padding } from "../../components/Spacing";
 import FETCH_PROPOSAL from "./fetchProposal.graphql";
+import renderLineBreaks from "../../utilities/renderLineBreaks";
 
 const Loaded = ({ data }) => {
   const { t } = useTranslation();
@@ -33,9 +34,7 @@ const Loaded = ({ data }) => {
     <>
       <Padding left="xl" right="xl" top="xl" bottom="l">
         <Back
-          to={`/projects/${project.airtableId}/applications/${
-            data.application.airtableId
-          }`}
+          to={`/projects/${project.airtableId}/applications/${data.application.airtableId}`}
         >
           Back to application
         </Back>
@@ -70,7 +69,7 @@ const Loaded = ({ data }) => {
       {application.proposalComment && (
         <Padding left="xl" right="xl" bottom="m">
           <Message title={`Message from ${specialist.firstName}`}>
-            {application.proposalComment}
+            {renderLineBreaks(application.proposalComment)}
           </Message>
         </Padding>
       )}
@@ -80,6 +79,7 @@ const Loaded = ({ data }) => {
         </Text>
       </Padding>
       <TaskDrawer
+        isClient
         readOnly
         hideStatus
         taskId={selectedTask}
@@ -87,6 +87,7 @@ const Loaded = ({ data }) => {
       />
       <Padding bottom="l">
         <TaskList
+          isClient
           hideStatus
           tasks={application.tasks}
           onClickTask={handleSelectTask}

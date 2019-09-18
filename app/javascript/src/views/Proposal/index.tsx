@@ -11,6 +11,7 @@ import ProjectType from "./ProjectType";
 import Sidebar from "./Sidebar";
 import Loading from "./Loading";
 import FETCH_APPLICATION from "./fetchApplication";
+import Notfound from "../NotFound";
 
 const Proposals = ({ fetchApplication }) => {
   if (fetchApplication.loading) {
@@ -18,6 +19,7 @@ const Proposals = ({ fetchApplication }) => {
   }
 
   const application = fetchApplication.application;
+  if (!application) return <Notfound />;
   const urlPrefix = `/applications/${application.airtableId}/proposal`;
 
   return (

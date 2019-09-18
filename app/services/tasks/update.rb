@@ -8,7 +8,8 @@ class Tasks::Update < ApplicationService
   end
 
   def call
-    task.assign_attributes(attributes)
+    task.assign_attributes(attributes.except(:trial))
+    set_trial(attributes[:trial]) if attributes.key?(:trial)
     changes_allowed?
 
     # If the stage is "Quote Requested" and the estimate has changed then set
@@ -43,6 +44,21 @@ class Tasks::Update < ApplicationService
 
   def is_specialist?
     user.is_a?(Specialist)
+  end
+
+  def set_trial(trial)
+    existing = task.application.trial_task
+
+    if existing.present? && existing.stage.in?(["Assigned", "Working", "Submitted", "Approved", "Paid"])
+      raise Service::Error.new("tasks.applicationHasActiveTrialTask")
+    end
+
+    if trial == true && existing && existing != task
+      existing.update(trial: false)
+      existing.sync_to_airtable
+    end
+
+    task.trial = trial
   end
 
   def changes_allowed?

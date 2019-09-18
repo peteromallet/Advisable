@@ -17,6 +17,9 @@ query project($projectID: ID!, $applicationID: ID!) {
       introduction
       projectType
       monthlyLimit
+      trialTask {
+        id
+      }
       questions {
         question
         answer

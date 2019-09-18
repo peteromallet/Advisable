@@ -21,9 +21,7 @@ const Alert = ({ title, icon, children, ...props }) => {
               {title}
             </Text>
           )}
-          <Text size="s" lineHeight="s">
-            {children}
-          </Text>
+          {children}
         </Box>
       </Box>
     </AlertStyles>

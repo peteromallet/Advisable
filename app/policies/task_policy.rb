@@ -61,6 +61,11 @@ class TaskPolicy < BasePolicy
     ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)
   end
 
+  def update_trial
+    return true if has_permission?("admin")
+    is_specialist
+  end
+
   def delete
     return true if has_permission?("admin")
     ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)

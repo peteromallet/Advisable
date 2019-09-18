@@ -7,13 +7,20 @@ export default gql`
       airtableId
       status
       rate
+      trialProgram
       proposalComment
       projectType
       monthlyLimit
+      trialTask {
+        id
+        stage
+        name
+      }
       tasks {
         id
         name
         stage
+        trial
         dueDate
         description
         estimate

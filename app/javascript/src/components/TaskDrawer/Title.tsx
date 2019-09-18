@@ -2,7 +2,7 @@ import * as React from "react";
 import { Title } from "./styles";
 
 export default ({ value, ...props }) => {
-  const ref = React.useRef(null)
+  const ref = React.useRef(null);
   const [rows, setRows] = React.useState(1);
 
   const LINE_HEIGHT = 24;
@@ -26,19 +26,29 @@ export default ({ value, ...props }) => {
     if (props.isFocused) {
       ref.current.focus();
     }
-  }, [props.isFocused])
+  }, [props.isFocused]);
+
+  React.useEffect(() => {
+    if (!value || value === "") {
+      setTimeout(() => {
+        if (ref.current) {
+          ref.current.focus();
+        }
+      }, 50);
+    }
+  }, [ref.current]);
 
   const handleChange = e => {
-    calculateRows()
-    props.onChange(e.target.value)
-  }
-  
+    calculateRows();
+    props.onChange(e.target.value);
+  };
+
   const handleKeyDown = e => {
     if (e.keyCode === 13) {
       e.preventDefault();
-      ref.current.blur()
+      ref.current.blur();
     }
-  }
+  };
 
   return (
     <Title
@@ -53,5 +63,5 @@ export default ({ value, ...props }) => {
       onBlur={props.onBlur}
       placeholder="Add a task name..."
     />
-  )
-}
+  );
+};

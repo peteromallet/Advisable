@@ -1,8 +1,10 @@
 import * as React from "react";
+import { Button as DonutButton } from "@advisable/donut";
 import { withApollo } from "react-apollo";
 import { matchPath } from "react-router";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
+import Modal from "../../components/Modal";
 import Button from "../../components/Button";
 import Notice from "../../components/Notice";
 import ButtonGroup from "../../components/ButtonGroup";
@@ -16,6 +18,7 @@ import FETCH_APPLICATION from "./fetchApplication";
 import { hasCompleteTasksStep } from "./validationSchema";
 
 const Tasks = ({ application, match, location, history, client }) => {
+  const [confirmModal, setConfirmModal] = React.useState(false);
   const isMobile = useMobile();
   const onSelectTask = task => {
     history.push(`${match.url}/${task.id}`);
@@ -40,7 +43,6 @@ const Tasks = ({ application, match, location, history, client }) => {
   };
 
   const handleDeleteTask = task => {
-    history.push(match.url);
     const newData = client.readQuery(applicationQuery);
     newData.application.tasks = application.tasks.filter(t => {
       return t.id !== task.id;
@@ -49,6 +51,7 @@ const Tasks = ({ application, match, location, history, client }) => {
       ...applicationQuery,
       data: newData,
     });
+    history.push(match.url);
   };
 
   const taskMatch = matchPath(location.pathname, {
@@ -56,6 +59,14 @@ const Tasks = ({ application, match, location, history, client }) => {
   });
 
   const handleContinue = () => {
+    if (application.trialProgram && !application.trialTask) {
+      setConfirmModal(true);
+    } else {
+      nextStep();
+    }
+  };
+
+  const nextStep = () => {
     history.push("send");
   };
 
@@ -93,6 +104,31 @@ const Tasks = ({ application, match, location, history, client }) => {
         taskId={taskMatch ? taskMatch.params.taskId : null}
         onDeleteTask={handleDeleteTask}
       />
+      <Modal isOpen={confirmModal} onClose={() => setConfirmModal(false)}>
+        <Padding size="l">
+          <Padding bottom="s">
+            <Heading level={3}>You haven't proposed a trial task</Heading>
+          </Padding>
+          <Padding bottom="m">
+            <Text size="s">
+              Proposing a guaranteed trial task increases your chance of closing
+              a client. To set one of your tasks as a trial task, click into the
+              task and click "Set as trial task"
+            </Text>
+          </Padding>
+          <DonutButton
+            appearance="primary"
+            intent="success"
+            onClick={nextStep}
+            mr="xs"
+          >
+            Continue without trial task
+          </DonutButton>
+          <DonutButton onClick={() => setConfirmModal(false)}>
+            Cancel
+          </DonutButton>
+        </Padding>
+      </Modal>
       {hasTasks && !canContinue && (
         <Padding size="l">
           <Notice icon="alert-triangle">

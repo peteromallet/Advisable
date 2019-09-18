@@ -7,7 +7,8 @@ export const LinkStyles = styled(Link)`
   ${space}
 
   font-weight: 400;
-  display: inline-block;
+  align-items: center;
+  display: inline-flex;
   text-decoration: none;
   transition: color 200ms;
   color: ${theme.colors.blue[6]};
