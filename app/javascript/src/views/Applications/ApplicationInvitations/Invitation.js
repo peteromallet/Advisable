@@ -1,31 +1,22 @@
 import * as React from "react";
-import { ApplicationType } from "../../../types";
+import { Text } from "@advisable/donut";
 import LineClamp from "../../../components/LineClamp";
-import {
-  Invitation,
-  Background,
-  Content,
-  Title,
-  Rate,
-  Description,
-  Button
-} from "./styles";
+import { Invitation, Background, Content, Description, Button } from "./styles";
 
-interface Props {
-  application: ApplicationType;
-  onViewInvitation: (id: string) => void;
-}
-
-const InvitationComponent = ({ application, onViewInvitation }: Props) => {
+const InvitationComponent = ({ application, onViewInvitation }) => {
   const handleView = () => {
-    onViewInvitation(application.airtableId)
-  }
+    onViewInvitation(application.airtableId);
+  };
 
   return (
     <Invitation onClick={handleView}>
       <Content>
-        <Title>{application.project.primarySkill}</Title>
-        <Rate>{application.project.estimatedBudget}</Rate>
+        <Text fontSize="xl" color="white.9" mb="xs" fontWeight="medium">
+          {application.project.primarySkill}
+        </Text>
+        <Text mb="s" fontSize="xs" color="white.7" lineHeight="xs">
+          {application.project.industry} {application.project.companyType}
+        </Text>
         <Description>
           <LineClamp maxHeight={70}>
             {application.project.companyDescription}

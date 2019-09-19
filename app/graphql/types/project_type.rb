@@ -21,6 +21,8 @@ class Types::ProjectType < Types::BaseType
   field :estimated_budget, String, null: true
   field :remote, Boolean, null: true
   field :applications_open, Boolean, null: false
+  field :industry, String, null: true
+  field :company_type, String, null: true
   
   field :deposit_payment_intent, Types::PaymentIntentType, null: true
 
