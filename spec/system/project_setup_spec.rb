@@ -171,15 +171,6 @@ describe "Project setup flow" do
         expect(page).to have_current_path("/projects/#{project.airtable_id}/applied")
       end
     end
-
-    context "when there are no questions" do
-      it "redirects to the questions step" do
-        project.update(questions: [])
-        authenticate_as project.user
-        visit "/project_setup/#{project.airtable_id}/terms"
-        expect(page).to have_content("Questions")
-      end
-    end
   end
 
   describe "deposit step" do

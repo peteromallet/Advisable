@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Mutation } from "react-apollo";
 import { Formik } from "formik";
 import Button from "src/components/Button";
@@ -12,14 +12,7 @@ export default ({ project, match, history }) => {
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/questions`);
 
-  useEffect(() => {
-    if (project.questions.length === 0) {
-      history.replace("questions");
-    }
-  }, []);
-
   const isLastStep = project.depositOwed === 0;
-  const hasDeposit = project.depositOwed > 0;
 
   return (
     <Mutation mutation={UPDATE_PROJECT}>
