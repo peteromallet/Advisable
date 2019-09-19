@@ -4,10 +4,8 @@ import React, { Fragment, useEffect } from "react";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
 import TextField from "src/components/TextField";
-import InputError from "src/components/InputError";
 import { Mobile } from "src/components/Breakpoint";
 import ButtonGroup from "src/components/ButtonGroup";
-import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
 export default ({ project, match, history }) => {
@@ -37,7 +35,6 @@ export default ({ project, match, history }) => {
           </Text>
           <Formik
             initialValues={{ questions: project.questions || [] }}
-            validationSchema={validationSchema}
             onSubmit={async values => {
               const id = match.params.projectID;
               await mutate({
@@ -70,11 +67,6 @@ export default ({ project, match, history }) => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                 />
-                {formik.submitCount > 0 && formik.errors.questions && (
-                  <InputError marginBottom="l">
-                    {formik.errors.questions}
-                  </InputError>
-                )}
                 <Mobile>
                   {isMobile => (
                     <ButtonGroup fullWidth={isMobile}>
