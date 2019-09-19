@@ -1,37 +1,18 @@
 import * as React from "react";
 import Sticky from "../../components/Sticky";
 import { isEmpty, filter } from "lodash";
-import { RouteComponentProps } from "react-router";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Back from "../../components/Back";
 import Steps from "../../components/Steps";
 import { useScreenSize } from "../../utilities/screenSizes";
-import { Layout, Heading, Text, Padding, Card } from "../../components";
+import { Text } from "@advisable/donut";
+import { Layout, Heading, Padding, Card } from "../../components";
 import Terms from "./Terms";
 import Overview from "./Overview";
 import Questions from "./Questions";
 import References from "./References";
-import { ApplicationType } from "../../types";
 
-interface Params {
-  applicationId: string;
-}
-
-interface Props extends RouteComponentProps<Params> {
-  application: ApplicationType;
-}
-
-interface StepType {
-  exact?: boolean; // wether the route should be an exact match
-  name: string; // The name for the step to be displayed in the sidebar
-  to: string; // The link to go to the step, used in the sidebar
-  path: string; // the path for the route
-  component: any; // the component for the step route
-  hidden?: boolean; // Wether or not the step should be hidden
-  isComplete?: boolean; // wether or not the step has been complete
-}
-
-const ApplicationFlow = ({ application, match, location }: Props) => {
+const ApplicationFlow = ({ application, match, location }) => {
   const isMobile = useScreenSize("small");
   const applicationId = match.params.applicationId;
 
@@ -39,7 +20,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
   // variable is an array of step names to keep track of the steps that have
   // been skipped.
   const [skipped, setSkipped] = React.useState([]);
-  const skipStep = (step: StepType) => setSkipped([...skipped, step.name]);
+  const skipStep = step => setSkipped([...skipped, step.name]);
 
   // Various parts of this flow need to act differently based on wether the user
   // is applying or updating an existing application.
@@ -49,7 +30,7 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
   // Note how each step returns true if isApplying is false. This is to allow
   // the user to jump between steps when they are updating an existing
   // application.
-  const STEPS: StepType[] = [
+  const STEPS = [
     {
       exact: true,
       name: "Overview",
@@ -99,10 +80,8 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
   let ContentContainer = isMobile ? "div" : Card;
 
   // Iterate through the STEPS and filter our any where hidden is true.
-  const activeSteps: StepType[] = filter(
-    STEPS,
-    (step: StepType) => !step.hidden
-  );
+  const activeSteps = filter(STEPS, step => !step.hidden);
+  const { project } = application;
 
   return (
     <Layout>
@@ -114,17 +93,32 @@ const ApplicationFlow = ({ application, match, location }: Props) => {
                 View project details
               </Back>
             </Padding>
-            <Padding bottom="m">
-              <Heading level={4}>
-                Applying to {application.project.primarySkill} project
-              </Heading>
-            </Padding>
-            <Padding bottom="l">
-              <Text size="xs">{application.project.companyDescription}</Text>
-            </Padding>
-            <Padding bottom="l">
-              <Text size="xs">{application.project.description}</Text>
-            </Padding>
+            <Text
+              as="h4"
+              fontSize="xl"
+              color="blue.9"
+              lineHeight="m"
+              fontWeight="medium"
+            >
+              Applying to {application.project.primarySkill} project
+            </Text>
+            {(project.industry || project.companyType) && (
+              <Text
+                mt="xs"
+                fontSize="s"
+                lineHeight="s"
+                color="neutral.6"
+                fontWeight="medium"
+              >
+                {project.industry} {project.companyType}
+              </Text>
+            )}
+            <Text pt="s" pb="m" fontSize="xs" lineHeight="xs" color="neutral.7">
+              {application.project.companyDescription}
+            </Text>
+            <Text pb="m" fontSize="xs" lineHeight="xs" color="neutral.7">
+              {application.project.description}
+            </Text>
             <Steps>
               {activeSteps.map((step, i) => {
                 const previousStep = STEPS[i - 1];

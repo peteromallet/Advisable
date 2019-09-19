@@ -60,6 +60,8 @@ export default gql`
       airtableId
       primarySkill
       description
+      industry
+      companyType
       applicationsOpen
       companyDescription
       specialistDescription

@@ -54,7 +54,7 @@ const loadingAnimation = keyframes`
 export const LoadingTile = styled.div`
   height: 220px;
   border-radius: 6px;
-  background: #3C466A;
+  background: #3c466a;
   animation: ${loadingAnimation} 0.6s linear infinite alternate;
 
   @media (min-width: 800px) {
@@ -70,33 +70,17 @@ export const LoadingTile = styled.div`
   }
 `;
 
-export const Title = styled.h4`
-  color: white;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 22px;
-  margin-bottom: 6px;
-  letter-spacing: -0.01em;
-`;
-
-export const Rate = styled.p`
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 20px;
-  letter-spacing: -0.01em;
-  color: inherit;
-`;
-
 export const Description = styled.p`
   width: 100%;
   height: 70px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 17px;
   position: relative;
   margin-bottom: 20px;
   white-space: normal;
-  color: inherit;
+  color: white;
+  /* color: inherit; */
 `;
 
 export const Button = styled.button`
@@ -124,7 +108,7 @@ export const Button = styled.button`
 
 export const Content = styled.div`
   width: 100%;
-  height: 220px;
+  height: 260px;
   padding: 20px;
   transition: transform 300ms;
   transform: translate3d(0, 0, 0);
