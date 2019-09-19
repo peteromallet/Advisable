@@ -17,6 +17,8 @@ export default gql`
           airtableId
           project {
             id
+            industry
+            companyType
             primarySkill
             estimatedBudget
             companyDescription
@@ -39,6 +41,8 @@ export default gql`
           appliedAt
           project {
             id
+            industry
+            companyType
             primarySkill
             user {
               id

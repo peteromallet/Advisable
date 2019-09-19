@@ -1,7 +1,7 @@
 import React from "react";
 import Sticky from "../../components/Sticky";
+import { Text } from "@advisable/donut";
 import {
-  Text,
   Card,
   List,
   Layout,
@@ -30,14 +30,29 @@ let JobListing = ({ application, history }) => {
       {!isMobile && (
         <Layout.Sidebar>
           <Sticky offset={98}>
-            <Padding bottom="xs">
-              <Heading level={4}>{project.primarySkill} project</Heading>
-            </Padding>
-            <Padding bottom="l">
-              <Text size="xs">
-                You have been invited to apply for a new project
+            <Text
+              as="h4"
+              fontSize={22}
+              lineHeight="l"
+              color="blue.9"
+              fontWeight="semibold"
+            >
+              {project.primarySkill} project
+            </Text>
+            {(project.industry || project.companyType) && (
+              <Text
+                mb="s"
+                fontSize="m"
+                lineHeight="s"
+                mt="xs"
+                color="neutral.8"
+              >
+                {project.industry} {project.companyType}
               </Text>
-            </Padding>
+            )}
+            <Text mt="s" mb="l" size="xs" lineHeight="xs" color="neutral.7">
+              You have been invited to apply for a new project
+            </Text>
             <Padding bottom="xl">
               <ProjectAttributes project={project} />
             </Padding>
@@ -52,13 +67,18 @@ let JobListing = ({ application, history }) => {
       <Layout.Main>
         <Card>
           <Padding size="xl">
-            <Heading level={2}>{project.primarySkill}</Heading>
-            <Padding bottom="l">
-              <Text>{project.user.companyName}</Text>
-            </Padding>
-            <Padding bottom="xl">
-              <Text>{project.companyDescription}</Text>
-            </Padding>
+            <Text
+              as="h2"
+              color="blue.9"
+              fontSize="xxl"
+              fontWeight="semibold"
+              mb="xs"
+            >
+              {project.primarySkill}
+            </Text>
+            <Text lineHeight="m" color="neutral.7" mb="l">
+              {project.companyDescription}
+            </Text>
             {isMobile && (
               <Padding bottom="xl">
                 <ProjectAttributes project={project} />

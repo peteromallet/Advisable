@@ -1,18 +1,14 @@
 import { get } from "lodash";
 import * as React from "react";
+import { Text } from "@advisable/donut";
 import * as moment from "moment-timezone";
 import { Link } from "react-router-dom";
-import Text from "../../../components/Text";
 import Icon from "../../../components/Icon";
 import Button from "../../../components/Button";
 import Padding from "../../../components/Spacing/Padding";
 import ApplicationStatus from "../../../components/ApplicationStatus";
 import { ApplicationType } from "../../../types";
 import { Card, Notice } from "./styles";
-
-interface Props {
-  application: ApplicationType;
-}
 
 const INFORMATION = {
   Applied: ({ application }) => (
@@ -49,7 +45,8 @@ const INFORMATION = {
       return (
         <React.Fragment>
           <Text size="s">
-            You have accepted an offer from {application.project.user.companyName}
+            You have accepted an offer from{" "}
+            {application.project.user.companyName}
           </Text>
           <Button
             as={Link}
@@ -157,16 +154,22 @@ const INFORMATION = {
   },
 };
 
-const Application = ({ application }: Props) => {
+const Application = ({ application }) => {
   const InfoComponent = INFORMATION[application.status];
+  const { project } = application;
 
   return (
     <Card>
       <Padding size="m">
-        <Text weight="semibold" colour="dark">
+        <Text weight="semibold" colour="blue.9">
           {application.project.primarySkill}
         </Text>
-        <Text size="xs">
+        {(project.industry || project.companyType) && (
+          <Text mt="xxs" fontSize="xs" color="neutral.7">
+            {project.industry} {project.companyType}
+          </Text>
+        )}
+        <Text size="xxs" color="neutral.6" mt="xs">
           {application.appliedAt && (
             <span>Applied {moment(application.appliedAt).fromNow()}</span>
           )}
