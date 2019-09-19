@@ -60,6 +60,8 @@ export const project = (fields = {}) => {
       description: "desription",
       applicationCount: 0,
       status: "Brief Confirmed",
+      industry: "Testing",
+      companyType: "Startup",
       clientReferralUrl: "https://advisable.com",
       companyDescription: "company description",
       specialistDescription: "specialist description",

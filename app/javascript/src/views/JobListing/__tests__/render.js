@@ -1,7 +1,7 @@
-import renderApp from "../testHelpers/renderApp";
-import viewer from "../graphql/queries/viewer";
-import { getApplicationInvitation } from "../graphql/queries/applications";
-import generateTypes from "../__mocks__/graphqlFields";
+import renderApp from "../../../testHelpers/renderApp";
+import viewer from "../../../graphql/queries/viewer";
+import GET_PROJECT from "../fetchProject";
+import generateTypes from "../../../__mocks__/graphqlFields";
 
 test("Renders the view for an application invitation", async () => {
   const { findByText } = renderApp({
@@ -19,7 +19,7 @@ test("Renders the view for an application invitation", async () => {
       },
       {
         request: {
-          query: getApplicationInvitation,
+          query: GET_PROJECT,
           variables: {
             id: "rec1234",
           },
@@ -61,7 +61,7 @@ test("when the project is closed it renders the applications closed view", async
       },
       {
         request: {
-          query: getApplicationInvitation,
+          query: GET_PROJECT,
           variables: {
             id: "rec1234",
           },
