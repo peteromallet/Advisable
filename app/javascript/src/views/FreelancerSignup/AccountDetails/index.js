@@ -25,7 +25,7 @@ const AccountDetails = ({ specialist, history, location }) => {
   });
 
   // Redirect to the confirmation step if there is already a user logged in
-  if (Boolean(specialist)) {
+  if (specialist) {
     return <Redirect to="/freelancers/signup/confirm" />;
   }
 
@@ -39,6 +39,7 @@ const AccountDetails = ({ specialist, history, location }) => {
     firstName: "",
     lastName: "",
     email: "",
+    phone: "",
     password: "",
   };
 
@@ -112,6 +113,18 @@ const AccountDetails = ({ specialist, history, location }) => {
                   error={formik.touched.lastName && formik.errors.lastName}
                 />
               </Box>
+            </Box>
+            <Box mb="s">
+              <TextField
+                type="tel"
+                name="phone"
+                label="Contact number"
+                placeholder="Contact number"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.phone}
+                error={formik.touched.phone && formik.errors.phone}
+              />
             </Box>
             <Box mb="s">
               <TextField
