@@ -53,6 +53,7 @@ test("Continues to the confirmation step", async () => {
             input: {
               firstName: "John",
               lastName: "Doe",
+              phone: "0861234567",
               email: "john@doe.com",
               password: "testing123",
               skills: ["Marketing"],
@@ -88,6 +89,8 @@ test("Continues to the confirmation step", async () => {
   fireEvent.change(firstName, { target: { value: "John" } });
   const lastName = await findByPlaceholderText("Last name");
   fireEvent.change(lastName, { target: { value: "Doe" } });
+  const phone = await findByPlaceholderText("Contact number");
+  fireEvent.change(phone, { target: { value: "0861234567" } });
   const email = await findByPlaceholderText("Email address");
   fireEvent.change(email, { target: { value: "john@doe.com" } });
   const password = await findByPlaceholderText("Password");
