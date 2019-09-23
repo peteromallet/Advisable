@@ -27,6 +27,7 @@ import {
   updateTaskEstimate as UPDATE_ESTIMATE,
   updateTaskDescription as UPDATE_DESCRIPTION,
 } from "../../graphql/mutations/tasks";
+import TaskDrawerErrorBoundary from "./ErrorBoundary";
 
 const DELETE_PROMPT = "DELETE_PROMPT";
 const APPROVE_PROMPT = "APPROVE_PROMPT";
@@ -104,83 +105,85 @@ const Component = ({
                   )
             }
           >
-            <TaskDrawer>
-              {query.loading && (
-                <Padding size="l">
-                  <Padding bottom="l">
-                    <SkeletonHeading />
+            <TaskDrawerErrorBoundary>
+              <TaskDrawer>
+                {query.loading && (
+                  <Padding size="l">
+                    <Padding bottom="l">
+                      <SkeletonHeading />
+                    </Padding>
+                    <SkeletonText />
                   </Padding>
-                  <SkeletonText />
-                </Padding>
-              )}
+                )}
 
-              {prompt === DELETE_PROMPT && (
-                <DeletePrompt
-                  task={task}
-                  onClose={() => setPrompt(null)}
-                  onDelete={handleDelete}
-                />
-              )}
+                {prompt === DELETE_PROMPT && (
+                  <DeletePrompt
+                    task={task}
+                    onClose={() => setPrompt(null)}
+                    onDelete={handleDelete}
+                  />
+                )}
 
-              {prompt === ASSIGN_PROMPT && (
-                <AssignPrompt
-                  task={task}
-                  onClose={() => setPrompt(null)}
-                  onAssign={() => setPrompt(null)}
-                />
-              )}
+                {prompt === ASSIGN_PROMPT && (
+                  <AssignPrompt
+                    task={task}
+                    onClose={() => setPrompt(null)}
+                    onAssign={() => setPrompt(null)}
+                  />
+                )}
 
-              {prompt === APPROVE_PROMPT && (
-                <ApprovePrompt
-                  task={task}
-                  onClose={() => setPrompt(null)}
-                  onApprove={() => {
-                    if (Boolean(task.repeat)) {
-                      setPrompt(REPEAT_PROMPT);
-                    } else {
+                {prompt === APPROVE_PROMPT && (
+                  <ApprovePrompt
+                    task={task}
+                    onClose={() => setPrompt(null)}
+                    onApprove={() => {
+                      if (Boolean(task.repeat)) {
+                        setPrompt(REPEAT_PROMPT);
+                      } else {
+                        setPrompt(null);
+                      }
+                    }}
+                  />
+                )}
+
+                {prompt === SUBMIT_PROMPT && (
+                  <SubmitPrompt
+                    task={task}
+                    onClose={() => setPrompt(null)}
+                    onSubmit={() => {
                       setPrompt(null);
-                    }
-                  }}
-                />
-              )}
+                    }}
+                  />
+                )}
 
-              {prompt === SUBMIT_PROMPT && (
-                <SubmitPrompt
-                  task={task}
-                  onClose={() => setPrompt(null)}
-                  onSubmit={() => {
-                    setPrompt(null);
-                  }}
-                />
-              )}
+                {prompt === REPEAT_PROMPT && (
+                  <RepeatPrompt
+                    task={task}
+                    onClose={() => setPrompt(null)}
+                    onRepeat={task => {
+                      history.replace(task.id);
+                      if (onCreateRepeatingTask) {
+                        onCreateRepeatingTask(task);
+                      }
+                      setPrompt(null);
+                    }}
+                  />
+                )}
 
-              {prompt === REPEAT_PROMPT && (
-                <RepeatPrompt
-                  task={task}
-                  onClose={() => setPrompt(null)}
-                  onRepeat={task => {
-                    history.replace(task.id);
-                    if (onCreateRepeatingTask) {
-                      onCreateRepeatingTask(task);
-                    }
-                    setPrompt(null);
-                  }}
-                />
-              )}
-
-              {!query.loading && (
-                <EditTask
-                  isSaving={isSaving}
-                  readOnly={readOnly}
-                  isClient={isClient}
-                  hideStatus={hideStatus}
-                  onSave={handleSave}
-                  task={query.data.task}
-                  setPrompt={setPrompt}
-                  showStatusNotice={showStatusNotice}
-                />
-              )}
-            </TaskDrawer>
+                {!query.loading && (
+                  <EditTask
+                    isSaving={isSaving}
+                    readOnly={readOnly}
+                    isClient={isClient}
+                    hideStatus={hideStatus}
+                    onSave={handleSave}
+                    task={query.data.task}
+                    setPrompt={setPrompt}
+                    showStatusNotice={showStatusNotice}
+                  />
+                )}
+              </TaskDrawer>
+            </TaskDrawerErrorBoundary>
           </Drawer>
         );
       }}
