@@ -6,16 +6,16 @@ import ButtonGroup from "../../../components/ButtonGroup";
 import Heading from "../../../components/Heading";
 import Padding from "../../../components/Spacing/Padding";
 
-interface Props {
-  onSkip: () => void;
-  openAddReferenceModal: (open: boolean) => void;
-}
-
-const ConfirmationModal = ({ isOpen, onClose, openAddReferenceModal, onSkip }) => {
+const ConfirmationModal = ({
+  isOpen,
+  onClose,
+  openAddReferenceModal,
+  onSkip,
+}) => {
   const handleAdd = () => {
-    onClose()
+    onClose();
     openAddReferenceModal();
-  }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -30,7 +30,9 @@ const ConfirmationModal = ({ isOpen, onClose, openAddReferenceModal, onSkip }) =
           </Text>
         </Padding>
         <ButtonGroup>
-          <Button styling="primary" onClick={handleAdd}>Add a project</Button>
+          <Button styling="primary" onClick={handleAdd}>
+            Add a project
+          </Button>
           <Button onClick={onSkip}>Continue without references</Button>
         </ButtonGroup>
       </Padding>
@@ -38,7 +40,7 @@ const ConfirmationModal = ({ isOpen, onClose, openAddReferenceModal, onSkip }) =
   );
 };
 
-const NoReferences = ({ openAddReferenceModal, onSkip }: Props) => {
+const NoReferences = ({ openAddReferenceModal, onSkip }) => {
   const [confirm, setConfirm] = React.useState(false);
 
   return (
@@ -59,7 +61,7 @@ const NoReferences = ({ openAddReferenceModal, onSkip }: Props) => {
           Add a previous project
         </Button>
       </Padding>
-      <Button size="s" styling="plainSubtle" onClick={() => setConfirm(true)}>
+      <Button size="s" styling="plainSubtle" onClick={onSkip}>
         I don't want to provide references
       </Button>
 

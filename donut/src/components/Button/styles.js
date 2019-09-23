@@ -179,7 +179,7 @@ const disabledStyling = css`
 
 const loadingStyling = css`
   cursor: default;
-  color: transparent;
+  color: transparent !important;
 `;
 
 export const Button = styled.button`
@@ -206,8 +206,8 @@ export const Button = styled.button`
   ${props => APPEARANCES[props.appearance]};
   ${props => INTENT[props.appearance][props.intent]};
 
-  ${props => props.isLoading && loadingStyling};
   ${props => props.disabled && disabledStyling};
+  ${props => props.isLoading && loadingStyling};
 
   ${space}
 `;
