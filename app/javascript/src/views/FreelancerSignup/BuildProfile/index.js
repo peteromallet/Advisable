@@ -44,7 +44,7 @@ const BuildProfile = ({ history, specialist }) => {
     bio: specialist.bio,
     city: specialist.city,
     country: get(specialist, "country.id"),
-    publicUse: specialist.publicUse,
+    publicUse: specialist.publicUse === null ? true : specialist.publicUse,
   };
 
   if (countriesQuery.loading) {
