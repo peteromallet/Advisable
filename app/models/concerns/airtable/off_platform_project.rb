@@ -22,6 +22,9 @@ class Airtable::OffPlatformProject < Airtable::Base
     pull_specialist(off_platform_project)
     off_platform_project.confidential = fields['Okay with naming client'] != 'Yes'
 
+    off_platform_project.public_use = true if self["Public Use"] == "Yes"
+    off_platform_project.public_use = false if self["Public Use"] == "No"
+
     skills = off_platform_project.skills.map(&:airtable_id)
     skills_required = fields['Skills Required'] || []
     skills_required.each do |skill_id|
@@ -55,6 +58,11 @@ class Airtable::OffPlatformProject < Airtable::Base
     self["Validated By Client"] = project.validated_by_client ? "Yes" : 'No'
     self["Validation Explanation"] = project.validation_explanation
     self["Company Type"] = project.company_type
+    
+    unless project.public_use.nil?
+      self["Public Use"] = "Yes" if project.public_use == true
+      self["Public Use"] = "No" if project.public_use == false
+    end
   end
 
   private

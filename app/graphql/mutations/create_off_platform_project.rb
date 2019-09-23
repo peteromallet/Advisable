@@ -9,6 +9,7 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
   argument :contact_email, String, required: true
   argument :company_type, String, required: true
   argument :description, String, required: true
+  argument :public_use, Boolean, required: true
   argument :validation_method, String, required: true
   argument :validation_url, String, required: true
   argument :validation_explanation, String, required: true

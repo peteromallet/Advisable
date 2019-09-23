@@ -24,6 +24,7 @@ const blankProject = {
   contactName: "",
   contactEmail: "",
   companyType: "",
+  publicUse: true,
   contactJobTitle: "",
   validationMethod: "Client",
   validationUrl: "",
