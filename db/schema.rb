@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_19_085211) do
+ActiveRecord::Schema.define(version: 2019_09_23_150020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,15 @@ ActiveRecord::Schema.define(version: 2019_09_19_085211) do
     t.string "uid"
     t.string "stopped_working_reason"
     t.boolean "trial_program"
+    t.datetime "invited_to_apply_at"
+    t.datetime "invitation_rejected_at"
+    t.datetime "application_rejected_at"
+    t.datetime "application_accepted_at"
+    t.datetime "interview_scheduled_at"
+    t.datetime "interview_completed_at"
+    t.datetime "proposal_sent_at"
+    t.datetime "started_working_at"
+    t.datetime "stopped_working_at"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
@@ -204,6 +213,8 @@ ActiveRecord::Schema.define(version: 2019_09_19_085211) do
     t.string "validation_status"
     t.boolean "validated_by_client"
     t.string "validation_explanation"
+    t.string "company_type"
+    t.boolean "public_use"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
   end

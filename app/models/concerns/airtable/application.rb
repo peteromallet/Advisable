@@ -18,6 +18,17 @@ class Airtable::Application < Airtable::Base
   sync_column 'Project Type', to: :project_type
   sync_column 'Monthly Limit', to: :monthly_limit
   sync_column 'Stopped Working Reason', to: :stopped_working_reason
+  sync_column 'Application Status - Invited To Apply - Timestamp', to: :invited_to_apply_at
+  sync_column 'Application Status - Invitation Rejected - Timestamp', to: :invitation_rejected_at
+  sync_column 'Application Status - Application Rejected - Timestamp', to: :application_rejected_at
+  sync_column 'Application Status - Application Accepted - Timestamp', to: :application_accepted_at
+  sync_column 'Application Status - Interview Scheduled - Timestamp', to: :interview_scheduled_at
+  sync_column 'Application Status - Interview Completed - Timestamp', to: :interview_completed_at
+  sync_column 'Application Status - Proposed - Timestamp', to: :proposal_sent_at
+  sync_column 'Application Status - Working - Timestamp', to: :started_working_at
+  sync_column 'Application Status - Stopped Working - Timestamp', to: :stopped_working_at
+
+
 
   sync_data do |application|
     application.status = status_to_sync
