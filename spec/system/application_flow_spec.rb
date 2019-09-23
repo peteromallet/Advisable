@@ -94,6 +94,7 @@ describe 'Application flow' do
         visit "/invites/#{application.airtable_id}/apply/references"
         find('span', text: "#{project.primary_skill} at #{project.client_name}").click
         click_on 'Next'
+        click_on "Continue With 1 Reference"
         expect(page).to have_content("Including Advisable's fee")
       end
 

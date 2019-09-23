@@ -32,10 +32,11 @@ const Actions = ({
           <Divider />
           <Padding size="xl">
             <Button
-              loading={isSubmitting ? true : undefined}
-              aria-label={label}
-              styling="green"
               size="l"
+              type="submit"
+              styling="green"
+              aria-label={label}
+              loading={isSubmitting ? true : undefined}
             >
               {label}
             </Button>
