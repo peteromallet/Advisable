@@ -2,13 +2,13 @@ import React from "react";
 import Flex from "src/components/Flex";
 import Modal from "src/components/Modal";
 import Button from "src/components/Button";
+import Select from "src/components/Select";
 import FieldRow from "src/components/FieldRow";
 import StepDots from "src/components/StepDots";
 import Checkbox from "src/components/Checkbox";
 import TextField from "src/components/TextField";
 import { useMobile } from "src/components/Breakpoint";
 import { Text, Autocomplete } from "@advisable/donut";
-import SuggestedSelect from "src/components/SuggestedSelect";
 import validationSchema from "./validationSchema";
 
 const ClientDetails = ({ formik, industries, skills }) => {
@@ -43,6 +43,27 @@ const ClientDetails = ({ formik, industries, skills }) => {
               onChange={formik.handleChange}
               value={formik.values.confidential}
               description="If checked the client’s name will be hidden and the industry will be named instead. e.g Financial Services Company"
+            />
+          </FieldRow>
+          <FieldRow>
+            <Select
+              name="companyType"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.companyType}
+              label="What type of company is this?"
+              error={formik.submitCount > 0 && formik.errors.companyType}
+              options={[
+                "Individual Entrepreneur",
+                "Small Business",
+                "Medium-Sized Business",
+                "Startup",
+                "Growth-Stage Startup",
+                "Major Corporation",
+                "Non-Profit",
+                "Education Institution",
+                "Government",
+              ]}
             />
           </FieldRow>
           <FieldRow>

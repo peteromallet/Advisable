@@ -23,6 +23,7 @@ const blankProject = {
   description: "",
   contactName: "",
   contactEmail: "",
+  companyType: "",
   contactJobTitle: "",
   validationMethod: "Client",
   validationUrl: "",

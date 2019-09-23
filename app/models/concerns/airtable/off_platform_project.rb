@@ -16,6 +16,7 @@ class Airtable::OffPlatformProject < Airtable::Base
   sync_column 'Validation Method', to: :validation_method
   sync_column 'Validated By Client', to: :validated_by_client
   sync_column 'Validation Explanation', to: :validation_explanation
+  sync_column 'Company Type', to: :company_type
 
   sync_data do |off_platform_project|
     pull_specialist(off_platform_project)
@@ -53,6 +54,7 @@ class Airtable::OffPlatformProject < Airtable::Base
     self["Advisable Validation Status"] = project.validation_status
     self["Validated By Client"] = project.validated_by_client ? "Yes" : 'No'
     self["Validation Explanation"] = project.validation_explanation
+    self["Company Type"] = project.company_type
   end
 
   private
