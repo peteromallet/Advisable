@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import { rgba } from "polished";
-import tick from './tick.svg'
+import tick from "./tick.svg";
 
 const companyName = project => {
   if (project.__typename === "Project") return project.user.companyName;
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   margin-bottom: 8px;
   position: relative;
   user-select: none;
-`
+`;
 
 const Label = styled.label`
   padding: 20px;
@@ -46,7 +46,7 @@ const Checkbox = styled.div`
   border-radius: 10px;
   transform: translateY(-50%);
   border: 2px solid ${rgba("#222842", 0.27)};
-`
+`;
 
 const Title = styled.span`
   color: #323a57;
@@ -66,18 +66,23 @@ const Input = styled.input`
   height: 1px;
   overflow: hidden;
   position: absolute;
-  clip: rect(1px,1px,1px,1px);
+  clip: rect(1px, 1px, 1px, 1px);
 
   &:checked + ${Label} ${Checkbox} {
-    border-color: #173FCD;
-    background: #173FCD url(${tick}) no-repeat center;
+    border-color: #173fcd;
+    background: #173fcd url(${tick}) no-repeat center;
   }
-`
+`;
 
 const PreviousProject = ({ project, onChange, checked }) => {
   return (
     <Wrapper>
-      <Input type="checkbox" id={project.airtableId} onChange={onChange} checked={checked} />
+      <Input
+        type="checkbox"
+        id={project.airtableId}
+        onChange={onChange}
+        checked={checked}
+      />
       <Label htmlFor={project.airtableId}>
         <Checkbox />
         <Title>{title(project)}</Title>

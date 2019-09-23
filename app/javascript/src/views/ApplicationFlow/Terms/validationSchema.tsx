@@ -16,7 +16,7 @@ const validationSchema = Yup.object().shape({
   ),
   trialProgram: Yup.boolean().oneOf(
     [true],
-    "You must aggree to participate in our guaranteed trial program"
+    "You must agree to participate in our guaranteed trial program"
   ),
 });
 
