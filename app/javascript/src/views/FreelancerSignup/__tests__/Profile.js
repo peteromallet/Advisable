@@ -63,7 +63,7 @@ test("Continues to the work history step", async () => {
               bio: "Bio",
               city: "Dublin",
               country: "IE",
-              publicUse: null,
+              publicUse: true,
             },
           },
         },

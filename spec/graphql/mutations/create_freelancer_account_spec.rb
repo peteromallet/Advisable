@@ -12,6 +12,7 @@ describe Mutations::CreateFreelancerAccount do
         firstName: "Test",
         lastName: "Account",
         email: "#{email}",
+        phone: "0861234567",
         password: "testing123",
         skills: ["#{skill_name}"],
         pid: "#{project.try(:airtable_id)}",
@@ -83,5 +84,29 @@ describe Mutations::CreateFreelancerAccount do
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("emailTaken")
     end
+  end
+
+  it "sets the first_name" do
+    AdvisableSchema.execute(query)
+    specialist = Specialist.last
+    expect(specialist.first_name).to eq("Test")
+  end
+
+  it "sets the last_name" do
+    AdvisableSchema.execute(query)
+    specialist = Specialist.last
+    expect(specialist.last_name).to eq("Account")
+  end
+
+  it "sets the email" do
+    AdvisableSchema.execute(query)
+    specialist = Specialist.last
+    expect(specialist.email).to eq(email)
+  end
+
+  it "sets the phone_number" do
+    AdvisableSchema.execute(query)
+    specialist = Specialist.last
+    expect(specialist.phone_number).to eq("0861234567")
   end
 end

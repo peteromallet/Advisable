@@ -16,6 +16,10 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     description "The freelancers email address"
   end
 
+  argument :phone, String, required: false do
+    description "The freelancers phone number"
+  end
+
   argument :password, String, required: true do
     description "The account password"
   end
@@ -60,6 +64,7 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
       first_name: args[:first_name],
       last_name: args[:last_name],
       email: args[:email],
+      phone_number: args[:phone],
       password: args[:password],
       pid: args[:pid],
       referrer: args[:referrer],
