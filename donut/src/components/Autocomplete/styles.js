@@ -37,30 +37,40 @@ export const Input = styled.input`
 export const Menu = styled.div`
   width: 100%;
   background: white;
-  border-radius: 4px;
-  max-height: 200px;
-  overflow-y: scroll;
+  border-radius: 8px;
+  max-height: 160px;
+  overflow: hidden;
   top: calc(100% + 8px);
-  box-shadow: 0 2px 8px ${rgba(colors.neutral.N8, 0.1)},
-    0 16px 60px ${rgba(colors.neutral.N8, 0.15)};
+  box-shadow: 0 2px 8px ${rgba(theme.colors.neutral[9], 0.1)},
+    0 16px 60px ${rgba(theme.colors.neutral[9], 0.15)};
 `;
 
 const highlightedItemStyles = css`
-  color: ${colors.neutral.N9};
-  background: ${colors.neutral.N1};
+  color: ${theme.colors.neutral[9]};
+  background: ${theme.colors.neutral[0]};
 `;
 
 export const MenuItem = styled.div`
-  font-size: 15px;
-  font-weight: 500;
-  padding: 0 12px;
-  height: 38px;
+  height: 32px;
   display: flex;
   cursor: pointer;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 500;
   align-items: center;
-  color: ${colors.neutral.N6};
+  color: ${theme.colors.neutral[7]};
 
   ${props => props.highlighted && highlightedItemStyles};
+
+  &:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
 
   &[disabled] {
     opacity: 0.5;
