@@ -108,7 +108,7 @@ const FreelancerSignup = ({ location }) => {
                   // If the step required authenticated user
                   if (step.authRequired) {
                     // and there is no viewer
-                    if (!Boolean(viewer)) {
+                    if (!viewer) {
                       // redirect to first step
                       return <Redirect to="/freelancers/signup" />;
                     }
