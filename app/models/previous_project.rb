@@ -60,7 +60,11 @@ class PreviousProject
       # we have specified to include them
       unless opts.fetch(:include_validation_failed, false)
         results = results.select do |reference|
-          reference.project.validation_status != "Validation Failed"
+          if reference.project.is_a?(OffPlatformProject)
+            next reference.project.validation_status != "Validation Failed"
+          end
+          
+          true
         end
       end
 
