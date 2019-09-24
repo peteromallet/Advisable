@@ -57,10 +57,7 @@ const ApplicationFlow = ({ application, match, location }) => {
       to: "/references",
       path: "/references",
       component: References,
-      isComplete:
-        !isApplying ||
-        skipped.indexOf("References") !== -1 ||
-        !isEmpty(application.previousProjects),
+      isComplete: !isApplying || skipped.indexOf("References") !== -1,
     },
     {
       name: "Payment terms",

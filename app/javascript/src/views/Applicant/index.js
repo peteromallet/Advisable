@@ -1,25 +1,31 @@
 import React from "react";
-import { graphql } from "react-apollo";
+import { useQuery } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "src/components/Layout";
 import Loading from "src/components/Loading";
-import FETCH_APPLICATION from "./fetchApplication.graphql";
 import NotFound from "../NotFound";
-import Proposal from "./Proposal";
-import Sidebar from "./Sidebar";
-import ApplicationDetails from "./ApplicationDetails";
 import handleAuthError from "../../utilities/handleAuthError";
+import Sidebar from "./Sidebar";
+import Proposal from "./Proposal";
+import FETCH_APPLICATION from "./fetchApplication";
+import ApplicationDetails from "./ApplicationDetails";
 
-const Applicant = ({ data, match, history, location }) => {
+const Applicant = ({ match, history, location }) => {
+  const { loading, data, error } = useQuery(FETCH_APPLICATION, {
+    variables: {
+      projectID: match.params.projectID,
+      applicationID: match.params.applicationID,
+    },
+  });
+
   React.useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [match.params.applicationID]);
 
-  if (data.loading) return <Loading />;
+  if (loading) return <Loading />;
 
-  if (data.error) {
-    const error = data.error.graphQLErrors[0];
-    let redirect = handleAuthError(error, location);
+  if (error) {
+    let redirect = handleAuthError(error.graphQLErrors[0], location);
 
     if (redirect) {
       return <Redirect to={redirect} />;
@@ -52,11 +58,4 @@ const Applicant = ({ data, match, history, location }) => {
   );
 };
 
-export default graphql(FETCH_APPLICATION, {
-  options: props => ({
-    variables: {
-      projectID: props.match.params.projectID,
-      applicationID: props.match.params.applicationID,
-    },
-  }),
-})(Applicant);
+export default Applicant;

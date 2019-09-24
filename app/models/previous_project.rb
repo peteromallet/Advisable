@@ -32,8 +32,14 @@ class PreviousProject
     end
 
     # Returns an array of PreviousProject instances for a given specialist
-    def for_specialist(specialist)
+    def for_specialist(specialist, opts = {})
       off_platform = specialist.off_platform_projects
+
+      # Filter out any off platform projects that have failed validation unless
+      # we have specified to include them
+      unless opts.fetch(:include_validation_failed, false)
+        off_platform = off_platform.where.not(validation_status: "Validation Failed")
+      end
 
       on_platform = specialist_platform_projects(specialist)
       results = (off_platform + on_platform).map do |project|
@@ -45,9 +51,17 @@ class PreviousProject
       end.reverse
     end
 
-    def for_application(application)
+    def for_application(application, opts = {})
       results = application.references.map do |reference|
         new(project: reference.project, specialist: application.specialist)
+      end
+
+      # Filter out any off platform projects that have failed validation unless
+      # we have specified to include them
+      unless opts.fetch(:include_validation_failed, false)
+        results = results.select do |reference|
+          reference.project.validation_status != "Validation Failed"
+        end
       end
 
       results.sort_by do |previous_project|
