@@ -10,11 +10,13 @@ describe Mutations::CreateOffPlatformProject do
   let(:requirements) { "Requirements" }
   let(:results) { "results" }
   let(:contact_name) { "Jane Doe" }
+  let(:company_type) { "Startup" }
   let(:contact_job_title) { "CEO" }
   let(:contact_email) { "contact@advisable.com" }
   let(:can_contact) { true }
   let(:description) { "description" }
   let(:validation_method) { "URL" }
+  let(:public_use) { true }
   let(:validation_url) { "https://advisable.com" }
   let(:validation_explanation) { "It validates it" }
 
@@ -26,6 +28,8 @@ describe Mutations::CreateOffPlatformProject do
         confidential: #{confidential},
         industry: "#{industry}",
         skills: #{skills},
+        companyType: "#{company_type}",
+        publicUse: #{public_use},
         contactName: "#{contact_name}",
         contactJobTitle: "#{contact_job_title}",
         contactEmail: "#{contact_email}",

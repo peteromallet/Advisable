@@ -37,6 +37,8 @@ describe Airtable::OffPlatformProject do
         contact_last_name: "Doe",
         contact_job_title: "CEO",
         client_name: "Test Inc.",
+        company_type: "Startup",
+        public_use: false,
         client_description: "Client Description",
         description: "Description",
         results: "Results",
@@ -60,6 +62,8 @@ describe Airtable::OffPlatformProject do
       expect(airtable).to receive(:[]=).with("Client Contact Last Name", "Doe")
       expect(airtable).to receive(:[]=).with("Client Contact Job Title", "CEO")
       expect(airtable).to receive(:[]=).with("Client Name", "Test Inc.")
+      expect(airtable).to receive(:[]=).with("Company Type", "Startup")
+      expect(airtable).to receive(:[]=).with("Public Use", "No")
       expect(airtable).to receive(:[]=).with("Client Description", project.client_description) 
       expect(airtable).to receive(:[]=).with("Project Description", project.description)
       expect(airtable).to receive(:[]=).with("Results Description", project.results)
