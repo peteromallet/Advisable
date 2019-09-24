@@ -4,6 +4,7 @@ import Modal from "src/components/Modal";
 import Button from "src/components/Button";
 import FieldRow from "src/components/FieldRow";
 import StepDots from "src/components/StepDots";
+import Checkbox from "src/components/Checkbox";
 import TextField from "src/components/TextField";
 import { useMobile } from "src/components/Breakpoint";
 import { Text } from "@advisable/donut";
@@ -34,6 +35,12 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
               error={formik.touched.description && formik.errors.description}
             />
           </FieldRow>
+          <Checkbox
+            name="publicUse"
+            label="It is okay for Advisable to use anonymised details of this project publicly to promote me"
+            onChange={formik.handleChange}
+            value={formik.values.publicUse}
+          />
         </form>
       </Modal.Body>
       <Modal.Footer>
