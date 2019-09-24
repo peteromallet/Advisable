@@ -42,7 +42,7 @@ const openCalendly = project => {
 };
 
 const NewProjectModal = ({ isOpen, onClose }) => {
-  const { data } = useQuery(GET_SKILLS);
+  const { data, loading } = useQuery(GET_SKILLS);
   const [mutate] = useMutation(CREATE_PROJECT, {
     refetchQueries: [{ query: GET_PROJECTS }],
   });
@@ -81,7 +81,7 @@ const NewProjectModal = ({ isOpen, onClose }) => {
             return (
               <form onSubmit={formik.handleSubmit}>
                 <FieldRow>
-                  {data.loading ? (
+                  {loading ? (
                     <Loading />
                   ) : (
                     <SuggestedSelect
