@@ -14,11 +14,11 @@ export const hoursLabel = task => {
 // displays the estimate or hours worked for a task.
 export const hoursDisplay = task => {
   if (hasBeenSubmitted(task)) {
-    return pluralize(task.hoursWorked, "hour", "hours");
+    return pluralize(task.hoursWorked || 0, "hour", "hours");
   }
 
-  if (Boolean(task.flexibleEstimate)) {
-    return `${task.estimate}-${task.flexibleEstimate} hours`;
+  if (task.flexibleEstimate) {
+    return `${task.estimate || 0}-${task.flexibleEstimate || 0} hours`;
   }
 
   return pluralize(task.estimate, "hour", "hours");
