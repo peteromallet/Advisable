@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_23_150020) do
+ActiveRecord::Schema.define(version: 2019_09_23_160928) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -310,6 +310,21 @@ ActiveRecord::Schema.define(version: 2019_09_23_150020) do
     t.index ["project_type", "project_id"], name: "index_reviews_on_project_type_and_project_id"
     t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id"
     t.index ["specialist_id"], name: "index_reviews_on_specialist_id"
+  end
+
+  create_table "sales_people", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "username"
+    t.boolean "active"
+    t.boolean "out_of_office"
+    t.string "slack"
+    t.string "calendly_url"
+    t.string "asana_id"
+    t.string "airtable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "skills", force: :cascade do |t|
