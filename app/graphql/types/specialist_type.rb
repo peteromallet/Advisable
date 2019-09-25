@@ -121,10 +121,14 @@ class Types::SpecialistType < Types::BaseType
       that happened on Advisable or off platform projects that the specialist
       has provided.
     HEREDOC
+    
+    argument :include_validation_failed, Boolean, required: false
   end
 
-  def previous_projects
-    ::PreviousProject.for_specialist(object)
+  def previous_projects(include_validation_failed: false)
+    ::PreviousProject.for_specialist(object, {
+      include_validation_failed: include_validation_failed
+    })
   end
 
   field :has_account, Boolean, null: false do

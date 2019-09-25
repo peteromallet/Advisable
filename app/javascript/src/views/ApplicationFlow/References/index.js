@@ -47,6 +47,7 @@ const References = ({
       },
     });
 
+    skipStep();
     history.push({
       ...location,
       pathname: `/invites/${applicationId}/apply/terms`,
