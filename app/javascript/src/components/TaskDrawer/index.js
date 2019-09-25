@@ -4,11 +4,11 @@
 // preloaded. This component should eventually be rewritten as it has
 // become very bloated from when it was a simple task drawer.
 import * as React from "react";
-import { get, filter, flowRight as compose } from "lodash";
 import { withRouter } from "react-router-dom";
-import { Query, graphql } from "react-apollo";
+import { useQuery, useMutation } from "react-apollo";
+import { get, filter } from "lodash";
 import Drawer from "../Drawer";
-import { TaskDrawer } from "./styles";
+import { TaskDrawer as TaskDrawerStyles } from "./styles";
 import EditTask from "./EditTask";
 import { Padding } from "../Spacing";
 import SkeletonText from "../SkeletonText";
@@ -21,7 +21,6 @@ import RepeatPrompt from "./RepeatPrompt";
 import DeletePrompt from "./DeletePrompt";
 import ApprovePrompt from "./ApprovePrompt";
 import {
-  deleteTask as DELETE_TASK,
   updateTaskName as UPDATE_NAME,
   updateTaskDueDate as UPDATE_DUE_DATE,
   updateTaskEstimate as UPDATE_ESTIMATE,
@@ -35,7 +34,7 @@ const REPEAT_PROMPT = "REPEAT_PROMPT";
 const ASSIGN_PROMPT = "ASSIGN_PROMPT";
 const SUBMIT_PROMPT = "SUBMIT_PROMPT";
 
-const Component = ({
+const TaskDrawer = ({
   taskId,
   onClose,
   history,
@@ -44,14 +43,24 @@ const Component = ({
   hideStatus,
   onDeleteTask,
   showStatusNotice,
-  updateName,
-  updateDueDate,
-  updateEstimate,
-  updateDescription,
   onCreateRepeatingTask,
 }) => {
+  const query = useQuery(FETCH_TASK, {
+    variables: { id: taskId },
+    skip: !taskId,
+  });
   const [prompt, setPrompt] = React.useState(null);
   const [saving, setSaving] = React.useState({});
+  const [updateName] = useMutation(UPDATE_NAME);
+  const [updateDueDate] = useMutation(UPDATE_DUE_DATE);
+  const [updateEstimate] = useMutation(UPDATE_ESTIMATE);
+  const [updateDescription] = useMutation(UPDATE_DESCRIPTION);
+
+  React.useEffect(() => {
+    if (query.error) {
+      onClose();
+    }
+  }, [onClose, query.error]);
 
   if (!taskId) return null;
 
@@ -66,7 +75,7 @@ const Component = ({
   const handleSave = async (attr, fields) => {
     setSaving(s => ({ ...s, [attr]: true }));
     const mutation = mutations[attr];
-    const r = await mutation({
+    await mutation({
       variables: {
         input: {
           id: taskId,
@@ -83,120 +92,107 @@ const Component = ({
   };
 
   const isSaving = filter(saving, loading => loading).length > 0;
+  const task = get(query, "data.task");
+
+  if (!task) return null;
 
   return (
-    <Query query={FETCH_TASK} variables={{ id: taskId }}>
-      {query => {
-        const task = get(query, "data.task");
+    <Drawer
+      onClose={onClose}
+      isOpen={Boolean(taskId)}
+      actions={
+        query.loading
+          ? []
+          : !readOnly && (
+              <DrawerActions
+                isClient={isClient}
+                task={task}
+                onDelete={() => setPrompt(DELETE_PROMPT)}
+              />
+            )
+      }
+    >
+      <TaskDrawerErrorBoundary>
+        <TaskDrawerStyles>
+          {query.loading && (
+            <Padding size="l">
+              <Padding bottom="l">
+                <SkeletonHeading />
+              </Padding>
+              <SkeletonText />
+            </Padding>
+          )}
 
-        return (
-          <Drawer
-            onClose={onClose}
-            isOpen={Boolean(taskId)}
-            actions={
-              query.loading
-                ? []
-                : !readOnly && (
-                    <DrawerActions
-                      isClient={isClient}
-                      task={query.data.task}
-                      onDelete={() => setPrompt(DELETE_PROMPT)}
-                    />
-                  )
-            }
-          >
-            <TaskDrawerErrorBoundary>
-              <TaskDrawer>
-                {query.loading && (
-                  <Padding size="l">
-                    <Padding bottom="l">
-                      <SkeletonHeading />
-                    </Padding>
-                    <SkeletonText />
-                  </Padding>
-                )}
+          {prompt === DELETE_PROMPT && (
+            <DeletePrompt
+              task={task}
+              onClose={() => setPrompt(null)}
+              onDelete={handleDelete}
+            />
+          )}
 
-                {prompt === DELETE_PROMPT && (
-                  <DeletePrompt
-                    task={task}
-                    onClose={() => setPrompt(null)}
-                    onDelete={handleDelete}
-                  />
-                )}
+          {prompt === ASSIGN_PROMPT && (
+            <AssignPrompt
+              task={task}
+              onClose={() => setPrompt(null)}
+              onAssign={() => setPrompt(null)}
+            />
+          )}
 
-                {prompt === ASSIGN_PROMPT && (
-                  <AssignPrompt
-                    task={task}
-                    onClose={() => setPrompt(null)}
-                    onAssign={() => setPrompt(null)}
-                  />
-                )}
+          {prompt === APPROVE_PROMPT && (
+            <ApprovePrompt
+              task={task}
+              onClose={() => setPrompt(null)}
+              onApprove={() => {
+                if (task.repeat) {
+                  setPrompt(REPEAT_PROMPT);
+                } else {
+                  setPrompt(null);
+                }
+              }}
+            />
+          )}
 
-                {prompt === APPROVE_PROMPT && (
-                  <ApprovePrompt
-                    task={task}
-                    onClose={() => setPrompt(null)}
-                    onApprove={() => {
-                      if (Boolean(task.repeat)) {
-                        setPrompt(REPEAT_PROMPT);
-                      } else {
-                        setPrompt(null);
-                      }
-                    }}
-                  />
-                )}
+          {prompt === SUBMIT_PROMPT && (
+            <SubmitPrompt
+              task={task}
+              onClose={() => setPrompt(null)}
+              onSubmit={() => {
+                setPrompt(null);
+              }}
+            />
+          )}
 
-                {prompt === SUBMIT_PROMPT && (
-                  <SubmitPrompt
-                    task={task}
-                    onClose={() => setPrompt(null)}
-                    onSubmit={() => {
-                      setPrompt(null);
-                    }}
-                  />
-                )}
+          {prompt === REPEAT_PROMPT && (
+            <RepeatPrompt
+              task={task}
+              onClose={() => setPrompt(null)}
+              onRepeat={task => {
+                history.replace(task.id);
+                if (onCreateRepeatingTask) {
+                  onCreateRepeatingTask(task);
+                }
+                setPrompt(null);
+              }}
+            />
+          )}
 
-                {prompt === REPEAT_PROMPT && (
-                  <RepeatPrompt
-                    task={task}
-                    onClose={() => setPrompt(null)}
-                    onRepeat={task => {
-                      history.replace(task.id);
-                      if (onCreateRepeatingTask) {
-                        onCreateRepeatingTask(task);
-                      }
-                      setPrompt(null);
-                    }}
-                  />
-                )}
-
-                {!query.loading && (
-                  <EditTask
-                    isSaving={isSaving}
-                    readOnly={readOnly}
-                    isClient={isClient}
-                    hideStatus={hideStatus}
-                    onSave={handleSave}
-                    task={query.data.task}
-                    setPrompt={setPrompt}
-                    showStatusNotice={showStatusNotice}
-                  />
-                )}
-              </TaskDrawer>
-            </TaskDrawerErrorBoundary>
-          </Drawer>
-        );
-      }}
-    </Query>
+          {!query.loading && (
+            <EditTask
+              task={task}
+              isSaving={isSaving}
+              readOnly={readOnly}
+              isClient={isClient}
+              onSave={handleSave}
+              setPrompt={setPrompt}
+              hideStatus={hideStatus}
+              showStatusNotice={showStatusNotice}
+            />
+          )}
+        </TaskDrawerStyles>
+      </TaskDrawerErrorBoundary>
+    </Drawer>
   );
 };
 
-export default withRouter(
-  compose(
-    graphql(UPDATE_NAME, { name: "updateName" }),
-    graphql(DELETE_TASK, { name: "deleteTask" }),
-    graphql(UPDATE_DUE_DATE, { name: "updateDueDate" }),
-    graphql(UPDATE_ESTIMATE, { name: "updateEstimate" }),
-    graphql(UPDATE_DESCRIPTION, { name: "updateDescription" })
-  )(Component)
-);
+export default withRouter(TaskDrawer);
