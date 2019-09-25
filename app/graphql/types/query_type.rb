@@ -63,7 +63,10 @@ class Types::QueryType < Types::BaseType
     application = Application.find_by_uid(id) if application.nil?
     return application if application.present?
 
-    GraphQL::ExecutionError.new("Could not find application #{id}")
+    raise ApiError::InvalidRequest.new(
+      "recordNotFound",
+      "Could not find application with id '#{id}'",
+    )
   end
 
   field :interview, Types::Interview, description: "Fetch an interview record by its airtable ID", null: true do
