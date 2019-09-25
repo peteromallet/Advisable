@@ -34,7 +34,7 @@ jobs: # a collection of steps
 
       - run:
           name: Bundle Install
-          command: bundle check || bundle install
+          command: bundle check --path vendor/bundle || bundle install --deployment
 
       # Store bundle cache
       - save_cache:
@@ -81,6 +81,5 @@ jobs: # a collection of steps
       - store_test_results:
           path: test_results
       # See https://circleci.com/docs/2.0/deployment-integrations/ for example deploy configs
-
-      - store_artifacts:
-          path: ./tmp/chrome.log
+      # - store_artifacts:
+      #     path: ./tmp/chrome.log
