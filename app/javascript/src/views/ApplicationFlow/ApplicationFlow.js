@@ -60,7 +60,7 @@ const ApplicationFlow = ({ application, match, location }) => {
       isComplete:
         !isApplying ||
         skipped.indexOf("References") !== -1 ||
-        !isEmpty(application.previousProjects),
+        application.previousProjects.length > 0,
     },
     {
       name: "Payment terms",

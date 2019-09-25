@@ -11,6 +11,7 @@ FactoryBot.define do
     description { "A description" }
     requirements { "Requirements" }
     results { "Results" }
+    validation_status { "Pending" }
     primary_skill { "Ruby on Rails" }
     confidential { false }
   end
