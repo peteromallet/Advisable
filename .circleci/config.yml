@@ -9,6 +9,7 @@ jobs: # a collection of steps
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
           BUNDLE_PATH: vendor/bundle
+          BUNDLER_VERSION: 2.0.2
           PGHOST: 127.0.0.1
           PGUSER: advisable
           RAILS_ENV: test
@@ -31,6 +32,10 @@ jobs: # a collection of steps
           keys:
             - rails-bundle-v2-{{ checksum "Gemfile.lock" }}
             - rails-bundle-v2-
+
+      - run:
+          name: Install bundler version
+          command: gem install bundler
 
       - run:
           name: Bundle Install
