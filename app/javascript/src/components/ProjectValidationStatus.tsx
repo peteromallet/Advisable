@@ -11,19 +11,28 @@ const STATUSES = {
     label: "Verification Pending",
     icon: "refresh-cw",
     styling: "yellow",
-    tooltip: "Advisable is working to verify with the client that this project happened. "
+    tooltip:
+      "Advisable is working to verify with the client that this project happened.",
+  },
+  "In Progress": {
+    label: "Verification In Progress",
+    icon: "refresh-cw",
+    styling: "yellow",
+    tooltip: "Advisable is in the process of verifying this project",
   },
   Validated: {
     label: "Verified",
     icon: "check",
     styling: "green",
-    tooltip: "This is a project that either happened on Advisable or Advisable has verified that it happened with a 3rd party. "
+    tooltip:
+      "This is a project that either happened on Advisable or Advisable has verified that it happened with a 3rd party.",
   },
   "Validation Failed": {
     label: "Unverified",
     icon: "alert-circle",
-    tooltip: "This project didn't happen on Advisable and we weren't able to verify with a 3rd party that it happened."
-  }
+    tooltip:
+      "This project didn't happen on Advisable and we weren't able to verify with a 3rd party that it happened.",
+  },
 };
 
 const ProjectValidationStatus = ({ status }) => {

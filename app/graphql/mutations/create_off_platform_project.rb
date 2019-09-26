@@ -24,6 +24,9 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
         specialist: specialist,
         attributes: args.except(:specialist_id),
       )
+
+      SpecialistMailer.verify_project(project.uid).deliver_later
+
       return {
         previous_project: PreviousProject.new(
           specialist: project.specialist,

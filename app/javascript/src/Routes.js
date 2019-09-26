@@ -15,16 +15,12 @@ import FreelancerSignup from "./views/FreelancerSignup";
 
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
-
-const MessageActions = () => {
-  return <div>testing</div>;
-};
+const VerifyProject = lazy(() => import("./views/VerifyProject"));
 
 const Routes = () => {
   return (
     <Suspense fallback={<Loading />}>
       <Switch>
-        <Route path="/testing" component={MessageActions} />
         <AuthenticatedRoute exact path="/" component={RootPath} />
         <Route path="/login" component={Login} />
         <Route
@@ -51,6 +47,7 @@ const Routes = () => {
           component={InterviewRequest}
         />
         <Route path="/freelancers/signup" component={FreelancerSignup} />
+        <Route path="/verify_project/:id" component={VerifyProject} />
         <Route component={ApplicationRoutes} />
       </Switch>
     </Suspense>

@@ -1,0 +1,17 @@
+Hi <%= @specialist.first_name %>,<br />
+<br />
+Thanks for adding the <%= @project.primary_skill %> project with <%= @project.client_name %> to Advisable.<br />
+<br />
+Please forward this email to <%= @project.contact_name %> from <%= @project.client_name %> in order for them to validate this project.<br />
+<br />
+They'll need to validate this project at the following URL:<br />
+<br />
+<%=root_url%>verify_project/<%= @project.uid %><br />
+<br />
+You can also copy and paste this link to share with them anywhere.<br />
+<br />
+If you're having any issues, please email hello@advisable.com.<br />
+<br />
+Thanks,<br />
+<br />
+Advisable Team

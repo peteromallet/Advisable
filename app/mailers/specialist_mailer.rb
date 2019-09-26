@@ -4,4 +4,14 @@ class SpecialistMailer < ApplicationMailer
     @token = token
     mail(to: @account.email, subject: "Account Confirmation")
   end
+
+  def verify_project(uid)
+    @project = OffPlatformProject.find_by_uid(uid)
+    @specialist = @project.specialist
+
+    mail(
+      to: @specialist.email,
+      subject: "Validation Required: #{@project.primary_skill} with #{@project.client_name}"
+    )
+  end
 end
