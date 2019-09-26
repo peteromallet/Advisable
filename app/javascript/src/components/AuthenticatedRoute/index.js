@@ -38,7 +38,7 @@ const AuthenticatedRoute = ({
 
         // Redirect to specialist setup if their applicationStage is 'Started'
         if (__typename === "Specialist" && applicationStage === "Started") {
-          return <Redirect to="/freelancers/signup/work" />;
+          return <Redirect to="/freelancers/signup/preferences" />;
         }
 
         // if the viewer still needs to confirm their account then render the
