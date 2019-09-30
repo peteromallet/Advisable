@@ -21,15 +21,7 @@ class OffPlatformProjects::Create < ApplicationService
   private
 
   def set_validation_status
-    unless ["Client", "None"].include?(project.validation_method)
-      project.validated_by_client = true
-    end
-
-    if project.validation_method == "None"
-      project.validation_status = "Validation Failed"
-    else
-      project.validation_status = "Pending"
-    end
+    project.validation_status = "Pending"
   end
 
   def associate_skills

@@ -1,66 +1,52 @@
 import React from "react";
-import { Text, Padding } from "@advisable/donut";
+import { Text, Box } from "@advisable/donut";
 import Flex from "src/components/Flex";
 import Modal from "src/components/Modal";
 import Button from "src/components/Button";
-import Notice from "src/components/Notice";
-import Select from "src/components/Select";
-import FieldGroup from "src/components/FieldGroup";
 import StepDots from "src/components/StepDots";
-import URLFields from "./URLFields";
-import ClientFields from "./ClientFields";
+import TextField from "src/components/TextField";
 import { useMobile } from "src/components/Breakpoint";
 import validationSchema from "./validationSchema";
-
-const validationOptions = [
-  { value: "Client", label: "I want you to contact the client" },
-  {
-    value: "URL",
-    label: "I can share a link that proves that this project happened",
-  },
-  {
-    value: "None",
-    label: "I can't prove that this project happened",
-  },
-];
 
 const ProjectReference = ({ formik, gotoPreviousStep }) => {
   let isMobile = useMobile();
 
   return (
-    <React.Fragment>
+    <>
       <Modal.Header>
         <Text size="l" weight="semibold">
-          Project Validation
+          Project Contact
+        </Text>
+        <Text size="s" lineHeight="s" mt="xs">
+          We will need someone from {formik.values.clientName} to validate this
+          project. You will receive an email after adding this project to begin
+          the validation process.
         </Text>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={formik.handleSubmit}>
-          <Padding bottom="s">
-            <FieldGroup>
-              <Select
-                name="validationMethod"
-                onBlur={formik.handleBlur}
-                options={validationOptions}
-                onChange={formik.handleChange}
-                value={formik.values.validationMethod}
-                label="How do you want to validate this project?"
-              />
-            </FieldGroup>
-          </Padding>
-          {formik.values.validationMethod === "Client" && (
-            <ClientFields formik={formik} />
-          )}
-          {formik.values.validationMethod === "URL" && (
-            <URLFields formik={formik} />
-          )}
-          {formik.values.validationMethod === "None" && (
-            <Notice icon="info">
-              If you can't validate a project, we can use the data to figure out
-              which projects to invite you to but we can't display it on your
-              profile or use it as validation
-            </Notice>
-          )}
+          <Box mb="m">
+            <TextField
+              name="contactName"
+              placeholder="Contact name"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.contactName}
+              label="What was the name of your contact with this client?"
+              error={formik.touched.contactName && formik.errors.contactName}
+            />
+          </Box>
+          <TextField
+            name="contactJobTitle"
+            placeholder="Contact job title"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.contactJobTitle}
+            label="What was their job title?"
+            error={
+              formik.touched.contactJobTitle && formik.errors.contactJobTitle
+            }
+          />
         </form>
       </Modal.Body>
       <Modal.Footer>
@@ -95,7 +81,7 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
           </Flex.Item>
         </Flex>
       </Modal.Footer>
-    </React.Fragment>
+    </>
   );
 };
 

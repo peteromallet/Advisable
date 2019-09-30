@@ -10,10 +10,11 @@ export { default as withNotifications } from "./withNotifications";
 export const NotificationsProvider = ({ children }) => {
   const [queue, setQueue] = React.useState([]);
 
-  const notify = content => {
+  const notify = (content, opts = {}) => {
     const id = uniqueId("notification");
+    const duration = opts["duration"] || 3000;
     setQueue(items => [...items, { id, content }]);
-    setTimeout(() => remove(id), 3000);
+    setTimeout(() => remove(id), duration);
   };
 
   const remove = id => {
@@ -28,7 +29,7 @@ export const NotificationsProvider = ({ children }) => {
     {
       from: { transform: "translate3d(100%, 0, 0)", opacity: 0 },
       enter: { transform: "translate3d(0, 0, 0)", opacity: 1 },
-      leave: { transform: "translate3d(100%, 0, 0)", opacity: 0 }
+      leave: { transform: "translate3d(100%, 0, 0)", opacity: 0 },
     }
   );
 

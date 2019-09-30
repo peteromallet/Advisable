@@ -21,14 +21,10 @@ const blankProject = {
   industry: "",
   skills: [],
   description: "",
-  contactName: "",
-  contactEmail: "",
   companyType: "",
   publicUse: true,
+  contactName: "",
   contactJobTitle: "",
-  validationMethod: "Client",
-  validationUrl: "",
-  validationExplanation: "",
 };
 
 const AddPreviousProjectModal = ({
@@ -37,6 +33,7 @@ const AddPreviousProjectModal = ({
   onClose, // a function that should be called to close the modal.
   data, // The resulting data from the graphql call to fetch skills and inudstries
   createProject, // The mutation that should be called to create the project
+  onCreate = () => {},
 }) => {
   // Use react state to keep track of the overall state.
   const [values, setValues] = useState(blankProject);
@@ -59,6 +56,7 @@ const AddPreviousProjectModal = ({
 
       setStepIndex(0);
       formikBag.resetForm(blankProject);
+      onCreate();
       onClose();
     } else {
       formikBag.setTouched({});
