@@ -4,6 +4,7 @@ import { useMutation } from "react-apollo";
 import { Text, Button } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import VALIDATE_PROJECT from "./validateProject";
+import createValidationSchema from "./validationSchema";
 
 const VerifyProject = ({ project, match }) => {
   const [validate] = useMutation(VALIDATE_PROJECT);
@@ -38,7 +39,11 @@ const VerifyProject = ({ project, match }) => {
         with the personal LinkedIn account of {contactName}. We'll then send the
         details to this email address for validation.
       </Text>
-      <Formik onSubmit={handleSubmit} initialValues={{ email: "" }}>
+      <Formik
+        onSubmit={handleSubmit}
+        initialValues={{ email: "" }}
+        validationSchema={createValidationSchema(contactName)}
+      >
         {formik => (
           <Form>
             <TextField
@@ -50,6 +55,7 @@ const VerifyProject = ({ project, match }) => {
               onBlur={formik.handleBlur}
               value={formik.values.email}
               onChange={formik.handleChange}
+              error={formik.submitCount > 0 && formik.errors.email}
             />
             <Button
               mt="m"
