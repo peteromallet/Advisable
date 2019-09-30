@@ -1,29 +1,28 @@
 import React from "react";
 import Flex from "src/components/Flex";
 import Modal from "src/components/Modal";
-import Button from "src/components/Button";
 import Select from "src/components/Select";
-import FieldRow from "src/components/FieldRow";
 import StepDots from "src/components/StepDots";
 import Checkbox from "src/components/Checkbox";
 import TextField from "src/components/TextField";
 import { useMobile } from "src/components/Breakpoint";
-import { Text, Autocomplete } from "@advisable/donut";
+import { Text, Autocomplete, Button, Box } from "@advisable/donut";
 import validationSchema from "./validationSchema";
 
 const ClientDetails = ({ formik, industries, skills }) => {
-  let isMobile = useMobile();
+  const isMobile = useMobile();
+  const industry = formik.values.industry;
 
   return (
     <React.Fragment>
       <Modal.Header>
-        <Text size="l" weight="semibold">
+        <Text size="l" weight="medium">
           Client Details
         </Text>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={formik.handleSubmit}>
-          <FieldRow>
+          <Box mb="m">
             <TextField
               autoFocus
               name="clientName"
@@ -34,18 +33,8 @@ const ClientDetails = ({ formik, industries, skills }) => {
               value={formik.values.clientName}
               error={formik.submitCount > 0 && formik.errors.clientName}
             />
-          </FieldRow>
-          <FieldRow>
-            <Checkbox
-              name="confidential"
-              label="This client is confidential"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.confidential}
-              description="If checked the client’s name will be hidden and the industry will be named instead. e.g Financial Services Company"
-            />
-          </FieldRow>
-          <FieldRow>
+          </Box>
+          <Box mb="m">
             <Select
               name="companyType"
               onBlur={formik.handleBlur}
@@ -65,8 +54,8 @@ const ClientDetails = ({ formik, industries, skills }) => {
                 "Government",
               ]}
             />
-          </FieldRow>
-          <FieldRow>
+          </Box>
+          <Box mb="m">
             <Autocomplete
               name="industry"
               placeholder="e.g Financial Services"
@@ -80,8 +69,8 @@ const ClientDetails = ({ formik, industries, skills }) => {
                 formik.setFieldValue("industry", selection.value);
               }}
             />
-          </FieldRow>
-          <FieldRow>
+          </Box>
+          <Box mb="m">
             <Autocomplete
               max={5}
               multiple
@@ -96,7 +85,16 @@ const ClientDetails = ({ formik, industries, skills }) => {
                 formik.setFieldValue("skills", skills);
               }}
             />
-          </FieldRow>
+          </Box>
+          <Checkbox
+            name="confidential"
+            label="This client is confidential"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.confidential}
+            description={`If checked the client’s name will be hidden and the industry will be named instead. e.g '${industry ||
+              "Financial Services"} Company'`}
+          />
         </form>
       </Modal.Body>
       <Modal.Footer>
@@ -108,7 +106,13 @@ const ClientDetails = ({ formik, industries, skills }) => {
             </Flex.Item>
           )}
           <Flex.Item style={{ width: isMobile ? "100%" : "120px" }}>
-            <Button block onClick={formik.submitForm} size="l" styling="green">
+            <Button
+              width="100%"
+              onClick={formik.submitForm}
+              appearance="primary"
+              intent="success"
+              iconRight="arrow-right"
+            >
               Next
             </Button>
           </Flex.Item>

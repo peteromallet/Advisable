@@ -1,8 +1,7 @@
 import React from "react";
-import { Text, Box } from "@advisable/donut";
+import { Text, Box, Button } from "@advisable/donut";
 import Flex from "src/components/Flex";
 import Modal from "src/components/Modal";
-import Button from "src/components/Button";
 import StepDots from "src/components/StepDots";
 import TextField from "src/components/TextField";
 import { useMobile } from "src/components/Breakpoint";
@@ -14,10 +13,10 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
   return (
     <>
       <Modal.Header>
-        <Text size="l" weight="semibold">
+        <Text size="l" weight="medium">
           Project Contact
         </Text>
-        <Text size="s" lineHeight="s" mt="xs">
+        <Text size="s" lineHeight="s" mt="xxs" color="neutral.7">
           We will need someone from {formik.values.clientName} to validate this
           project. You will receive an email after adding this project to begin
           the validation process.
@@ -53,11 +52,9 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
         <Flex align="center">
           <Flex.Item style={{ width: isMobile ? "50%" : "120px" }}>
             <Button
-              block
-              margin-right="m"
+              width="100%"
+              appearance="outlined"
               onClick={gotoPreviousStep}
-              styling="outlined"
-              size="l"
             >
               Back
             </Button>
@@ -69,12 +66,11 @@ const ProjectReference = ({ formik, gotoPreviousStep }) => {
           )}
           <Flex.Item style={{ width: isMobile ? "50%" : "120px" }}>
             <Button
-              block
+              width="100%"
+              intent="success"
+              appearance="primary"
               loading={formik.isSubmitting}
-              marginLeft="m"
               onClick={formik.submitForm}
-              size="l"
-              styling="green"
             >
               Complete
             </Button>

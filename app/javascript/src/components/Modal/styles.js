@@ -39,7 +39,7 @@ export const Window = styled.div`
   margin: 0 auto;
   overflow: hidden;
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   position: relative;
   flex-direction: column;
   max-height: calc(100vh - 60px);
@@ -89,7 +89,7 @@ export const ModalHeader = styled.div`
   display: flex;
   flex-shrink: 0;
   padding: 20px 50px 20px 30px;
-  border-bottom: 1px solid #e4e5eb;
+  border-bottom: 1px solid #eff1fa;
 `;
 
 export const ModalBody = styled.div`
@@ -100,7 +100,7 @@ export const ModalBody = styled.div`
 
 export const ModalFooter = styled.div`
   padding: 20px 30px;
-  border-top: 1px solid #e4e5eb;
+  border-top: 1px solid #eff1fa;
 `;
 
 export const CloseModal = styled.button`
@@ -111,10 +111,12 @@ export const CloseModal = styled.button`
   height: 30px;
   border: none;
   display: block;
+  color: #8a8d9f;
   cursor: pointer;
   position: absolute;
   border-radius: 50%;
-  background: #f1f3fd;
+  background: #f8f9ff;
+
   svg {
     top: 50%;
     left: 50%;

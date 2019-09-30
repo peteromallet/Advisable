@@ -31,7 +31,7 @@ export const InputBackdrop = styled.div`
   border-radius: 8px;
   border: 2px solid transparent;
   transition: border-color 200ms;
-  background: ${rgba(theme.colors.neutral[1], 0.7)};
+  background: ${theme.colors.neutral[1]};
 `;
 
 export const Input = styled.input`
@@ -45,7 +45,6 @@ export const Input = styled.input`
   font-weight: 500;
   background: transparent;
   font-family: poppins, sans-serif;
-  line-height: ${props => heights[props.size || "default"]};
   height: ${props => heights[props.size || "default"]};
   font-size: ${props => fontSizes[props.size || "default"]};
 
@@ -55,16 +54,16 @@ export const Input = styled.input`
   }
 
   &::-webkit-input-placeholder {
-    color: #8c92ae;
+    color: #acaec1;
   }
   &::-moz-placeholder {
-    color: #8c92ae;
+    color: #acaec1;
   }
   &:-ms-input-placeholder {
-    color: #8c92ae;
+    color: #acaec1;
   }
   &:-moz-placeholder {
-    color: #8c92ae;
+    color: #acaec1;
   }
 
   &:focus + ${InputBackdrop} {

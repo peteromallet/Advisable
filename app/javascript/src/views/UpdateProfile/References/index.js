@@ -1,10 +1,9 @@
 import * as React from "react";
 import { get } from "lodash";
 import { graphql } from "react-apollo";
-import Text from "../../../components/Text";
+import { Text } from "@advisable/donut";
 import Button from "../../../components/Button";
 import Loading from "../../../components/Loading";
-import Heading from "../../../components/Heading";
 import Padding from "../../../components/Spacing/Padding";
 import PreviousProjects from "../../../components/PreviousProjects";
 import AddPreviousProjectModal from "../../../components/AddPreviousProjectModal";
@@ -22,10 +21,12 @@ const References = ({ data }) => {
   return (
     <React.Fragment>
       <Padding bottom="s">
-        <Heading level={2}>Previous Projects</Heading>
+        <Text as="h2" fontSize="xxl" fontWeight="semibold">
+          Previous Projects
+        </Text>
       </Padding>
       <Padding bottom="m">
-        <Text size="xs">
+        <Text fontSize="s" lineHeight="s" color="neutral.7">
           Previous projects are one of the most effective ways to validate your
           skills and experience. Advisable uses them to decide who to invite to
           our platform, which projects to invite them to and gives you the

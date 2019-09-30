@@ -1,13 +1,12 @@
 import React from "react";
 import Flex from "src/components/Flex";
 import Modal from "src/components/Modal";
-import Button from "src/components/Button";
 import FieldRow from "src/components/FieldRow";
 import StepDots from "src/components/StepDots";
 import Checkbox from "src/components/Checkbox";
 import TextField from "src/components/TextField";
 import { useMobile } from "src/components/Breakpoint";
-import { Text } from "@advisable/donut";
+import { Text, Button } from "@advisable/donut";
 import validationSchema from "./validationSchema";
 
 const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
@@ -15,7 +14,7 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
   return (
     <React.Fragment>
       <Modal.Header>
-        <Text size="l" weight="semibold">
+        <Text size="l" weight="medium">
           Project Overview
         </Text>
       </Modal.Header>
@@ -26,7 +25,7 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
               multiline
               name="description"
               minRows={8}
-              placeholder="Please provide as specific information as possible about the results of this project. Include URLs and examples of work where possible."
+              placeholder="Project overview..."
               description="Please provide as specific information as possible about the results of this project. Include URLs and examples of work where possible."
               label="Please provide the problem the client had, an overview of the project, how you approached it and the results you achieved"
               onBlur={formik.handleBlur}
@@ -47,11 +46,9 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
         <Flex align="center">
           <Flex.Item style={{ width: isMobile ? "50%" : "120px" }}>
             <Button
-              block
-              margin-right="m"
+              width="100%"
+              appearance="outlined"
               onClick={gotoPreviousStep}
-              styling="outlined"
-              size="l"
             >
               Back
             </Button>
@@ -63,11 +60,11 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
           )}
           <Flex.Item style={{ width: isMobile ? "50%" : "120px" }}>
             <Button
-              block
+              width="100%"
+              intent="success"
+              appearance="primary"
+              iconRight="arrow-right"
               onClick={formik.submitForm}
-              marginLeft="m"
-              size="l"
-              styling="green"
             >
               Next
             </Button>
