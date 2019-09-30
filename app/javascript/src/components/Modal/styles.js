@@ -88,7 +88,7 @@ export const ModalContainer = styled.div`
 export const ModalHeader = styled.div`
   display: flex;
   flex-shrink: 0;
-  padding: 25px 50px 25px 30px;
+  padding: 20px 50px 20px 30px;
   border-bottom: 1px solid #e4e5eb;
 `;
 
@@ -99,7 +99,7 @@ export const ModalBody = styled.div`
 `;
 
 export const ModalFooter = styled.div`
-  padding: 25px 30px;
+  padding: 20px 30px;
   border-top: 1px solid #e4e5eb;
 `;
 
