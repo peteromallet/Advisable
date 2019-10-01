@@ -9,7 +9,7 @@ import ClientDetails from "./ClientDetails";
 import ProjectDetails from "./ProjectDetails";
 import Reference from "./Reference";
 import FETCH_DATA from "./fetchData";
-import CREATE_OFF_PLATFORM_PROJECT from "./createOffPlatformProject.graphql";
+import CREATE_OFF_PLATFORM_PROJECT from "./createOffPlatformProject";
 
 // Build an array of components for each step in the form. Each of these steps
 // are just components that are imported above.
