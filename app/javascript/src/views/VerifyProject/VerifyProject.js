@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "react-apollo";
-import { Text, Button, Box } from "@advisable/donut";
+import { Text, Button, Box, NumberedList } from "@advisable/donut";
 import Checkbox from "../../components/Checkbox";
 import TextField from "../../components/TextField";
 import VALIDATE_PROJECT from "./validateProject";
@@ -37,11 +37,21 @@ const VerifyProject = ({ project, match }) => {
       >
         Verify {project.primarySkill} project with {project.specialist.name}
       </Text>
-      <Text size="s" lineHeight="s" mb="l">
-        To validate this project, please enter a corporate email address for{" "}
-        {contactName} from {project.clientName} or an email address associated
-        with the personal LinkedIn account of {contactName}. We'll then send the
-        details to this email address for validation.
+      <Text size="s" lineHeight="s">
+        To validate this project, please enter your email address. This should
+        be either:
+      </Text>
+      <NumberedList my="m" fontSize="xs">
+        <NumberedList.Item>
+          {project.clientName} corporate email address for {contactName}
+        </NumberedList.Item>
+        <NumberedList.Item>
+          An email address associated with the personal LinkedIn account of{" "}
+          {contactName}
+        </NumberedList.Item>
+      </NumberedList>
+      <Text size="s" lineHeight="s" mb="m">
+        We’ll then send the details to this email address for validation.
       </Text>
       <Formik
         onSubmit={handleSubmit}
