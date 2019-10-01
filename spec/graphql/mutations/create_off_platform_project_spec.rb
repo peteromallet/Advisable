@@ -12,13 +12,9 @@ describe Mutations::CreateOffPlatformProject do
   let(:contact_name) { "Jane Doe" }
   let(:company_type) { "Startup" }
   let(:contact_job_title) { "CEO" }
-  let(:contact_email) { "contact@advisable.com" }
   let(:can_contact) { true }
   let(:description) { "description" }
-  let(:validation_method) { "URL" }
   let(:public_use) { true }
-  let(:validation_url) { "https://advisable.com" }
-  let(:validation_explanation) { "It validates it" }
 
   let(:query) { %|
     mutation {
@@ -32,11 +28,7 @@ describe Mutations::CreateOffPlatformProject do
         publicUse: #{public_use},
         contactName: "#{contact_name}",
         contactJobTitle: "#{contact_job_title}",
-        contactEmail: "#{contact_email}",
         description: "#{description}",
-        validationMethod: "#{validation_method}",
-        validationUrl: "#{validation_url}",
-        validationExplanation: "#{validation_explanation}",
       }) {
         previousProject {
           project {
