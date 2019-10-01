@@ -43,6 +43,7 @@ const statusActions = {
           }}
         >
           <Button
+            align="left"
             width="100%"
             intent="success"
             icon="phone-call"
@@ -52,6 +53,7 @@ const statusActions = {
             Request Call
           </Button>
           <Button
+            align="left"
             icon="trash"
             width="100%"
             onClick={() => setModal(REJECT_MODAL)}
@@ -106,6 +108,7 @@ const statusActions = {
           >
             <Button
               width="100%"
+              align="left"
               intent="success"
               icon="user-check"
               appearance="primary"
@@ -115,6 +118,7 @@ const statusActions = {
             </Button>
             <Button
               width="100%"
+              align="left"
               icon="message-circle"
               onClick={() => setModal(TALK_MODAL)}
             >
@@ -133,6 +137,7 @@ const statusActions = {
           <Button
             width="100%"
             icon="award"
+            align="left"
             disabled={application.referencesRequested}
             onClick={() => setModal(REQUEST_REFERENCES_MODAL)}
           >
@@ -141,6 +146,7 @@ const statusActions = {
           <Button
             icon="trash"
             width="100%"
+            align="left"
             onClick={() => setModal(REJECT_MODAL)}
           >
             Provide Feedback
@@ -175,7 +181,8 @@ const statusActions = {
           onClose={() => setModal(null)}
         />
         <RequestReferences
-          application={application}
+          name={application.specialist.name}
+          applicationId={application.airtableId}
           isOpen={modal === REQUEST_REFERENCES_MODAL}
           onClose={() => setModal(null)}
         />
@@ -197,17 +204,17 @@ const statusActions = {
             <Button
               as={Link}
               width="100%"
+              align="left"
               intent="success"
               icon="file-text"
               appearance="primary"
-              to={`/projects/${projectId}/applications/${
-                application.airtableId
-              }/proposal`}
+              to={`/projects/${projectId}/applications/${application.airtableId}/proposal`}
             >
               View Proposal
             </Button>
             <Button
               width="100%"
+              align="left"
               icon="message-circle"
               onClick={() => setModal(TALK_MODAL)}
             >
@@ -227,6 +234,7 @@ const statusActions = {
           <Button
             width="100%"
             icon="award"
+            align="left"
             disabled={application.referencesRequested}
             onClick={() => setModal(REQUEST_REFERENCES_MODAL)}
           >
@@ -235,6 +243,7 @@ const statusActions = {
           <Button
             icon="trash"
             width="100%"
+            align="left"
             onClick={() => setModal(REJECT_PROPOSAL_MODAL)}
           >
             Provide Feedback

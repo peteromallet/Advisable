@@ -57,6 +57,7 @@ const Modal = ({
               >
                 <WindowContainer size={size} style={props}>
                   <Window
+                    role="dialog"
                     className="ModalWindow"
                     {...extractSpacingProps(componentProps)}
                   >

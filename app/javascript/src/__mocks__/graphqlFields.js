@@ -72,6 +72,7 @@ export const project = (fields = {}) => {
       remote: true,
       acceptedTerms: true,
       depositOwed: 0,
+      applications: [],
       depositPaymentIntent: {
         __typename: "PaymentIntent",
         secret: "secret1234",
@@ -104,6 +105,7 @@ export const application = (fields = {}) => {
       acceptsFee: true,
       acceptsTerms: true,
       proposal: null,
+      hasMoreProjects: false,
       proposalComment: "",
       questions: [
         {

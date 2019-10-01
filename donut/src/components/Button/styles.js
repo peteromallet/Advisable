@@ -209,6 +209,7 @@ export const Button = styled.button`
   transition: background 80ms;
   width: ${props => props.width};
   font-family: "Poppins", sans-serif;
+  justify-content: ${props => props["data-align"] || "center"};
 
   &:focus {
     outline: none;
@@ -218,7 +219,7 @@ export const Button = styled.button`
   ${props => INTENT[props.appearance][props.intent]};
 
   ${props => props.disabled && disabledStyling};
-  ${props => props.isLoading && loadingStyling};
+  ${props => props["data-loading"] && loadingStyling};
 
   ${space}
 `;
