@@ -9,7 +9,10 @@ import createValidationSchema from "./validationSchema";
 
 const VerifyProject = ({ project, match }) => {
   const [validate] = useMutation(VALIDATE_PROJECT);
-  const contactName = `${project.contactFirstName} ${project.contactLastName}`;
+  let contactName = project.contactFirstName;
+  if (project.contactLastName) {
+    contactName += ` ${project.contactLastName}`;
+  }
 
   const handleSubmit = async values => {
     await validate({
@@ -43,7 +46,10 @@ const VerifyProject = ({ project, match }) => {
       <Formik
         onSubmit={handleSubmit}
         initialValues={{ email: "", accept: false }}
-        validationSchema={createValidationSchema(project)}
+        validationSchema={createValidationSchema(
+          project.specialist.name,
+          contactName
+        )}
       >
         {formik => (
           <Form>
