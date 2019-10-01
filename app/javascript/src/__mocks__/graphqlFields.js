@@ -193,6 +193,23 @@ export const skill = (fields = {}) => {
   );
 };
 
+export const offPlatformProject = (fields = {}) => {
+  return merge(
+    {
+      __typename: "OffPlatformProject",
+      id: uniqueId("opp_"),
+      clientName: "Test Inc",
+      primarySkill: "Testing",
+      contactEmail: null,
+      validationStatus: "Pending",
+      contactFirstName: "Thomas",
+      contactLastName: "Cullen",
+      specialist: null,
+    },
+    fields
+  );
+};
+
 export const industry = (fields = {}) => {
   return merge({
     __typename: "Industry",
@@ -210,4 +227,5 @@ export default {
   industry,
   application,
   specialist,
+  offPlatformProject,
 };

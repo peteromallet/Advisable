@@ -19,7 +19,6 @@ class Mutations::VerifyOffPlatformProject < Mutations::BaseMutation
 
   def resolve(id:, email:)
     project = OffPlatformProject.find_by_uid!(id)
-    puts project
     project.update(validation_status: "In Progress", contact_email: email)
     project.sync_to_airtable
 
