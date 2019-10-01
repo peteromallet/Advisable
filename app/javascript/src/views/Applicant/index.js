@@ -1,4 +1,5 @@
 import React from "react";
+import { get } from "lodash";
 import { useQuery } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "src/components/Layout";
@@ -29,6 +30,10 @@ const Applicant = ({ match, history, location }) => {
 
     if (redirect) {
       return <Redirect to={redirect} />;
+    }
+
+    if (get(error, "graphQLErrors[0].extensions.code") === "notFound") {
+      return <NotFound />;
     }
   }
 
