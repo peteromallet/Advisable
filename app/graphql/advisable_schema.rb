@@ -3,8 +3,8 @@ class AdvisableSchema < GraphQL::Schema
   query Types::QueryType
   mutation Types::MutationType
 
-  rescue_from(ActiveRecord::RecordNotFound) do
-    "Not found"
+  rescue_from(ActiveRecord::RecordNotFound) do |e|
+    raise ApiError::InvalidRequest.new("notFound", "Resouce was not found")
   end
 
   def self.unauthorized_field(error)

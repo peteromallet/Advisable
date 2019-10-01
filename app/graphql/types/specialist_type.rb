@@ -55,6 +55,12 @@ class Types::SpecialistType < Types::BaseType
     description "The specialists linkedin URL"
   end
 
+  def linkedin
+    url = object.linkedin
+    return nil if url.nil?
+    url.starts_with?("http") ? url : "https://#{url}"
+  end
+
   field :website, String, null: true do
     description "The specialists portfolio"
   end
