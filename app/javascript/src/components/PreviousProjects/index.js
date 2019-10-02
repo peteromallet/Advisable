@@ -8,7 +8,7 @@ import Heading from "../Heading";
 import { Padding } from "../Spacing";
 import PreviousProjectsModal from "../PreviousProjectsModal";
 
-export default ({
+const PreviousProjects = ({
   loading,
   title,
   showValidationStatus,
@@ -64,3 +64,5 @@ export default ({
     </Card>
   );
 };
+
+export default PreviousProjects;

@@ -1,5 +1,6 @@
 class Types::OffPlatformProject < Types::BaseType
   field :id, ID, null: false
+  field :uid, String, null: false
   field :airtable_id, String, null: false
   field :specialist, Types::SpecialistType, null: false
   field :industry, String, null: false
@@ -20,6 +21,10 @@ class Types::OffPlatformProject < Types::BaseType
 
   def id
     object.airtable_id
+  end
+
+  def uid
+    object.uid
   end
 
   def airtable_id

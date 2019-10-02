@@ -26,7 +26,7 @@ const ProjectDetails = ({ skills, formik, gotoPreviousStep }) => {
               name="description"
               minRows={8}
               placeholder="Project overview..."
-              description="Please provide as specific information as possible about the results of this project. Include URLs and examples of work where possible."
+              description={`This will be need to be validated by ${formik.values.clientName} and will be seen by potential clients when you’re applying for projects on Advisable. Please provide as specific information as possible about the results of this project. Include URLs and examples of work where possible.`}
               label="Please provide the problem the client had, an overview of the project, how you approached it and the results you achieved"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}

@@ -20,6 +20,7 @@ export default gql`
             }
             ... on OffPlatformProject {
               id
+              uid
               airtableId
               description
               primarySkill
@@ -28,6 +29,8 @@ export default gql`
               skills
               primarySkill
               industry
+              contactFirstName
+              contactLastName
               validationStatus
             }
           }

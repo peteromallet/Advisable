@@ -2,7 +2,7 @@ import * as React from "react";
 import clipboard from "clipboard-polyfill";
 import { CopyURL as Wrapper } from "./styles";
 
-const CopyURL = ({ children }) => {
+const CopyURL = ({ bg, children }) => {
   const inputRef = React.useRef(null);
   const [copied, setCopied] = React.useState(false);
 
@@ -17,7 +17,7 @@ const CopyURL = ({ children }) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper bg={bg}>
       <input ref={inputRef} value={children} onClick={handleClick} readOnly />
       {copied && <span>Copied to clipboard</span>}
       <button type="button" onClick={handleCopy}>
