@@ -15,7 +15,7 @@ const Menu = ({ popper, width, listRef, options, downshift, max, isMax }) => {
   const { getItemProps, highlightedIndex, selected } = downshift;
 
   let items = filterItems(downshift, options);
-  let listHeight = items.length < 5 ? items.length * 32 : 160;
+  let listHeight = items.length < 5 ? items.length * 32 : 224;
 
   return createPortal(
     <div

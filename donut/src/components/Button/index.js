@@ -11,14 +11,14 @@ import { Button as ButtonStyles, ButtonText, Loading, Dot } from "./styles";
 // coloring for the button.
 // - icon: Accepts any icon string for feather-icons.
 const Button = React.forwardRef(
-  ({ children, icon, iconRight, loading, size, ...rest }, ref) => {
+  ({ children, icon, iconRight, loading, size, align, ...rest }, ref) => {
     return (
       <ButtonStyles
         {...rest}
         ref={ref}
         size={size}
-        isLoading={loading}
-        iconRight={iconRight}
+        data-align={align}
+        data-right-icon={Boolean(iconRight)}
         aria-label={rest["aria-label"] || children}
         data-loading={loading || null}
       >

@@ -1,12 +1,12 @@
 import React from "react";
-import { times} from "lodash";
+import { times } from "lodash";
 import styled, { css } from "styled-components";
 
 const Container = styled.div`
   width: 100%;
   display: flex;
   align-content: center;
-  justify-content: center;
+  justify-content: ${props => props.justify || "center"};
 `;
 
 const Dot = styled.div`
@@ -16,15 +16,17 @@ const Dot = styled.div`
   border-radius: 3px;
   background: #d3d9e9;
 
-  ${props => props.active && css`
-    background-color: #00CDB4;
-  `}
+  ${props =>
+    props.active &&
+    css`
+      background-color: #00cdb4;
+    `}
 `;
 
-export default ({ total, current }) => {
+export default ({ total, current, justify }) => {
   const dots = times(total, i => {
-    return <Dot key={i} active={current === i + 1} />
+    return <Dot key={i} active={current === i + 1} />;
   });
 
-  return <Container>{dots}</Container>
-}
+  return <Container justify={justify}>{dots}</Container>;
+};

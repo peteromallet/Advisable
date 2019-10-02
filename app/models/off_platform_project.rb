@@ -1,9 +1,11 @@
 class OffPlatformProject < ApplicationRecord
+  include Uid
   include Airtable::Syncable
   belongs_to :specialist
   has_many :reviews, as: :project
   has_many :project_skills, as: :project
   has_many :skills, through: :project_skills
+  uid_prefix "opp"
 
   scope :validated, -> { where(validation_status: "Validated" )}
 

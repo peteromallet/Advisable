@@ -14,9 +14,9 @@ const hidden = css`
 
 export default styled.label`
   display: block;
-  line-height: 1;
   font-size: 15px;
   font-weight: 500;
+  line-height: 17px;
   padding-bottom: 8px;
   color: ${theme.colors.neutral[8]};
   ${props => props.hidden && hidden};

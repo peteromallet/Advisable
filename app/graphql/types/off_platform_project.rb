@@ -6,6 +6,7 @@ class Types::OffPlatformProject < Types::BaseType
   field :contact_first_name, String, null: true
   field :contact_last_name, String, null: true
   field :contact_job_title, String, null: true
+  field :contact_email, String, null: true
   field :client_name, String, null: true
   field :description, String, null: true
   field :client_description, String, null: true
@@ -23,6 +24,12 @@ class Types::OffPlatformProject < Types::BaseType
 
   def airtable_id
     object.airtable_id
+  end
+
+  # Only show the contact email if the validation status is in progress
+  def contact_email
+    return object.contact_email if object.validation_status == "In Progress"
+    nil
   end
 
   def client_name

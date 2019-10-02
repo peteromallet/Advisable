@@ -1,10 +1,9 @@
 import * as React from "react";
 import { Formik } from "formik";
-import { Box, Text, Button } from "@advisable/donut";
 import { useMutation } from "react-apollo";
 import FETCH_APPLICATION from "../fetchApplication.js";
 import UPDATE_APPLICATION from "../updateApplication.js";
-import Modal from "../../../components/Modal";
+import { useNotifications } from "../../../components/Notifications";
 import AddPreviousProjectModal from "../../../components/AddPreviousProjectModal";
 import NoReferences from "./NoReferences";
 import PreviousProjects from "./PreviousProjects";
@@ -23,6 +22,7 @@ const References = ({
   location,
 }) => {
   const { applicationId } = match.params;
+  const notifications = useNotifications();
   const [modal, setModal] = React.useState(null);
   const { previousProjects } = application.specialist;
   const [updateApplication, { loading }] = useMutation(UPDATE_APPLICATION);
@@ -69,6 +69,13 @@ const References = ({
     });
   };
 
+  const handleNewProject = () => {
+    notifications.notify(
+      "We have sent an email with details on how to validate this project. In the meantime, you can add more references.",
+      { duration: 4000 }
+    );
+  };
+
   const initialValues = {
     references: application.previousProjects.map(r => r.project.airtableId),
   };
@@ -80,6 +87,7 @@ const References = ({
           <AddPreviousProjectModal
             isOpen={modal === PREVIOUS_PROJECT_MODAL}
             onClose={() => setModal(null)}
+            onCreate={handleNewProject}
             specialistId={application.specialist.airtableId}
             mutationUpdate={(proxy, response) => {
               const previousProject =

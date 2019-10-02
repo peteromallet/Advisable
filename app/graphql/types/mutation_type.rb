@@ -53,4 +53,5 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :update_payment_settings, mutation: Mutations::UpdatePaymentSettings
   field :complete_setup, mutation: Mutations::CompleteSetup
+  field :verify_off_platform_project, mutation: Mutations::VerifyOffPlatformProject
 end

@@ -25,12 +25,12 @@ export const Input = styled.input`
   outline: none;
   font-size: 16px;
   padding: 0 12px;
-  font-weight: 400;
+  font-weight: 500;
   border-radius: 8px;
-  background: ${rgba(theme.colors.neutral[1], 0.7)};
+  background: ${theme.colors.neutral[1]};
 
   &::placeholder {
-    color: ${theme.colors.neutral[3]};
+    color: ${theme.colors.neutral[4]};
   }
 `;
 
@@ -38,7 +38,7 @@ export const Menu = styled.div`
   width: 100%;
   background: white;
   border-radius: 8px;
-  max-height: 160px;
+  max-height: 224px;
   overflow: hidden;
   top: calc(100% + 8px);
   box-shadow: 0 2px 8px ${rgba(theme.colors.neutral[9], 0.1)},
@@ -115,14 +115,15 @@ export const MobileContainerSearch = styled.div`
 
 export const Tags = styled.div`
   display: block;
+  margin-top: 4px;
 `;
 
 export const Tag = styled.div`
   height: 28px;
   display: inline-flex;
   border-radius: 8px;
+  margin-top: 8px;
   margin-right: 8px;
-  margin-bottom: 8px;
   align-items: center;
   color: ${theme.colors.blue[7]};
   background: ${theme.colors.blue[0]};

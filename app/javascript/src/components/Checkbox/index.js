@@ -1,9 +1,10 @@
 import React from "react";
 import uniqueId from "lodash/uniqueId";
+import { Text } from "@advisable/donut";
 import { extractSpacingProps } from "src/components/Spacing";
 import InputLabel from "src/components/InputLabel";
 import InputDescription from "src/components/InputDescription";
-import { Wrapper, Error, Input, Box } from "./styles";
+import { Wrapper, Input, Box } from "./styles";
 
 const Checkbox = ({
   error,
@@ -33,7 +34,11 @@ const Checkbox = ({
         {label || children}
         {description && <InputDescription>{description}</InputDescription>}
       </InputLabel>
-      {error && <Error>{error}</Error>}
+      {error && (
+        <Text size="xs" color="red.5" mt="xs">
+          {error}
+        </Text>
+      )}
     </Wrapper>
   );
 };

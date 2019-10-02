@@ -165,4 +165,12 @@ class Types::QueryType < Types::BaseType
       c.name
     end
   end
+
+  field :off_platform_project, Types::OffPlatformProject, null: false do
+    argument :id, ID, required: true
+  end
+
+  def off_platform_project(id:)
+    OffPlatformProject.find_by_uid!(id)
+  end
 end
