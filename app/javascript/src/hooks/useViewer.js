@@ -1,12 +1,13 @@
 import { useContext } from "react";
+import { get } from "lodash";
 import context from "../applicationContext";
 
 const useViewer = () => {
   const app = useContext(context);
   return {
     ...app.viewer,
-    isClient: app.viewer.__typename === "User",
-    isSpecialist: app.viewer.__typename === "Specialist",
+    isClient: get(app, "viewer.__typename") === "User",
+    isSpecialist: get(app, "viewer.__typename") === "Specialist",
   };
 };
 
