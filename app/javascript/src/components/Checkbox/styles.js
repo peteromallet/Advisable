@@ -28,7 +28,7 @@ export const Box = styled.span`
   position: absolute;
   transform: translateY(-50%);
   transition: border-color 200ms;
-  border: 2px solid ${theme.colors.neutral[2]};
+  border: 2px solid ${theme.colors.neutral[3]};
 `;
 
 export const Input = styled.input`

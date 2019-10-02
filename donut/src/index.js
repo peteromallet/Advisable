@@ -12,6 +12,7 @@ export { default as Tooltip } from "./components/Tooltip";
 export { default as Padding } from "./components/Padding";
 export { default as Provider } from "./components/Provider";
 export { default as Skeleton } from "./components/Skeleton";
+export { default as NumberedList } from "./components/NumberedList";
 export { default as Autocomplete } from "./components/Autocomplete";
 export { default as useBreakpoint } from "./hooks/useBreakpoint";
 export { default as useTheme } from "./hooks/useTheme";

@@ -62,7 +62,18 @@ const APPEARANCES = {
     margin-left: -8px;
     background: transparent;
   `,
-  outline: css``,
+  outlined: css`
+    line-height: 1;
+    background: white;
+    color: ${theme.colors.neutral[7]};
+    padding: ${props => PADDING[props.size || "m"]};
+    height: ${props => HEIGHTS[props.size || "m"]}px;
+    border: 1px solid ${theme.colors.neutral[2]};
+
+    &:hover {
+      border-color: ${theme.colors.neutral[3]};
+    }
+  `,
 };
 
 const INTENT = {
@@ -123,7 +134,7 @@ const INTENT = {
       }
     `,
   },
-  outline: {
+  outlined: {
     default: css``,
   },
 };
@@ -198,6 +209,7 @@ export const Button = styled.button`
   transition: background 80ms;
   width: ${props => props.width};
   font-family: "Poppins", sans-serif;
+  justify-content: ${props => props["data-align"] || "center"};
 
   &:focus {
     outline: none;
@@ -207,7 +219,7 @@ export const Button = styled.button`
   ${props => INTENT[props.appearance][props.intent]};
 
   ${props => props.disabled && disabledStyling};
-  ${props => props.isLoading && loadingStyling};
+  ${props => props["data-loading"] && loadingStyling};
 
   ${space}
 `;

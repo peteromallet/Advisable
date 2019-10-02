@@ -72,6 +72,7 @@ export const project = (fields = {}) => {
       remote: true,
       acceptedTerms: true,
       depositOwed: 0,
+      applications: [],
       depositPaymentIntent: {
         __typename: "PaymentIntent",
         secret: "secret1234",
@@ -104,6 +105,7 @@ export const application = (fields = {}) => {
       acceptsFee: true,
       acceptsTerms: true,
       proposal: null,
+      hasMoreProjects: false,
       proposalComment: "",
       questions: [
         {
@@ -193,6 +195,28 @@ export const skill = (fields = {}) => {
   );
 };
 
+export const offPlatformProject = (fields = {}) => {
+  return merge(
+    {
+      __typename: "OffPlatformProject",
+      id: uniqueId("opp_"),
+      airtableId: "rec123",
+      clientName: "Test Inc",
+      primarySkill: "Testing",
+      contactEmail: null,
+      description: "testing",
+      confidential: false,
+      skills: ["Testing"],
+      industry: "Testing",
+      validationStatus: "Pending",
+      contactFirstName: "Thomas",
+      contactLastName: "Cullen",
+      specialist: null,
+    },
+    fields
+  );
+};
+
 export const industry = (fields = {}) => {
   return merge({
     __typename: "Industry",
@@ -210,4 +234,5 @@ export default {
   industry,
   application,
   specialist,
+  offPlatformProject,
 };

@@ -50,6 +50,12 @@ const AutocompleteMobile = props => {
           {description}
         </Text>
       )}
+      <Input
+        value={get(initalSelectedItem, "label", "")}
+        onFocus={handleFocus}
+        placeholder={placeholder}
+        readOnly
+      />
       {props.multiple && (
         <Tags>
           {selected.map(item => (
@@ -62,12 +68,6 @@ const AutocompleteMobile = props => {
           ))}
         </Tags>
       )}
-      <Input
-        value={get(initalSelectedItem, "label", "")}
-        onFocus={handleFocus}
-        placeholder={placeholder}
-        readOnly
-      />
       {error && <FieldError>{error}</FieldError>}
       {open && (
         <Menu

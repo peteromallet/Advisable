@@ -1,5 +1,7 @@
+import { rgba } from "polished";
 import styled from "styled-components";
 import arrows from "./arrows.svg";
+import { theme } from "@advisable/donut";
 import { withSpacing } from "src/components/Spacing";
 
 export const Wrapper = withSpacing(styled.div`
@@ -26,7 +28,7 @@ export const Select = styled.select`
   border-radius: 8px;
   padding: 0 35px 0 12px;
   box-sizing: border-box;
-  background: rgba(29, 39, 75, 0.06);
+  background: ${theme.colors.neutral[1]};
 
   &:hover {
     border-color: #aabcd4;
