@@ -199,6 +199,7 @@ export const offPlatformProject = (fields = {}) => {
   return merge(
     {
       __typename: "OffPlatformProject",
+      uid: uniqueId("opp_"),
       id: uniqueId("opp_"),
       airtableId: "rec123",
       clientName: "Test Inc",

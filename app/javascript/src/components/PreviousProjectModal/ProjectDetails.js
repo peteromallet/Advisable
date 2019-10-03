@@ -1,10 +1,13 @@
-import React, { Fragment } from "react";
-import Text from "src/components/Text";
+import React from "react";
+import { Text, Box } from "@advisable/donut";
 import Modal from "src/components/Modal";
 import Review from "src/components/Review";
 import Heading from "src/components/Heading";
 import Spacing from "src/components/Spacing";
 import ProjectValidationStatus from "src/components/ProjectValidationStatus";
+import ProjectValidationPrompt from "src/components/ProjectValidationPrompt";
+import renderLineBreaks from "../../utilities/renderLineBreaks";
+import useViewer from "../../hooks/useViewer";
 
 const companyName = project => {
   if (project.__typename === "Project") return project.user.companyName;
@@ -15,7 +18,8 @@ const title = project => {
   return `${project.primarySkill} at ${companyName(project)}`;
 };
 
-export default ({ previousProject }) => {
+const ProjectDetails = ({ previousProject }) => {
+  const viewer = useViewer();
   const { project, reviews } = previousProject;
 
   const clientDescription =
@@ -31,12 +35,17 @@ export default ({ previousProject }) => {
   return (
     <React.Fragment>
       <Modal.Header>
-        <Heading paddingBottom="xs" level={2}>
+        <Text mb="xs" as="h2" fontSize="xl" fontWeight="medium">
           {title(project)}
-        </Heading>
+        </Text>
         <ProjectValidationStatus status={project.validationStatus} />
       </Modal.Header>
       <Modal.Body>
+        {viewer.isSpecialist && project.validationStatus === "Pending" && (
+          <Box mb="m">
+            <ProjectValidationPrompt project={project} />
+          </Box>
+        )}
         <Spacing paddingBottom="s">
           {clientDescription && (
             <>
@@ -57,14 +66,14 @@ export default ({ previousProject }) => {
           )}
 
           <Heading level={6}>Project Description</Heading>
-          <Text size="s" marginBottom="l">
-            {project.description}
+          <Text fontSize="s" lineHeight="s" color="neutral.7">
+            {renderLineBreaks(project.description)}
           </Text>
 
           {project.results && (
             <>
               <Heading level={6}>Results</Heading>
-              <Text size="s" marginBottom="l">
+              <Text size="s" mt="l" marginBottom="l">
                 {project.results}
               </Text>
             </>
@@ -82,3 +91,5 @@ export default ({ previousProject }) => {
     </React.Fragment>
   );
 };
+
+export default ProjectDetails;

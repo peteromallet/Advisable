@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Text from "src/components/Text";
+import { truncate } from "lodash";
+import { Text, Box } from "@advisable/donut";
 import Button from "src/components/Button";
 import Review from "src/components/Review";
 import Spacing, { Padding } from "src/components/Spacing";
@@ -7,6 +8,8 @@ import Divider from "src/components/Divider";
 import PreviousProjectModal from "src/components/PreviousProjectModal";
 import ProjectValidationStatus from "src/components/ProjectValidationStatus";
 import { ProjectTitle } from "./styles";
+import ProjectValidationPrompt from "../ProjectValidationPrompt";
+import useViewer from "../../hooks/useViewer";
 
 const companyName = project => {
   if (project.__typename === "Project") return project.user.companyName;
@@ -17,9 +20,9 @@ const title = project => {
   return `${project.primarySkill} at ${companyName(project)}`;
 };
 
-export default ({ previousProject, specialistId }) => {
+const PreviousProject = ({ previousProject, specialistId }) => {
   const [isOpen, setOpen] = useState(false);
-
+  const viewer = useViewer();
   const { project, reviews } = previousProject;
 
   const openProject = e => {
@@ -37,15 +40,24 @@ export default ({ previousProject, specialistId }) => {
         specialistId={specialistId}
       />
       <Padding size="xl">
-        <Padding bottom="xs">
-          <Text size="l" weight="semibold">
-            <ProjectTitle href="#" onClick={openProject}>
-              {title(project)}
-            </ProjectTitle>
-          </Text>
-        </Padding>
-        <Text marginBottom="l" size="s">
-          {project.description}
+        <Text fontSize="l" fontWeight="medium" mb="xs" color="blue.5">
+          <ProjectTitle href="#" onClick={openProject}>
+            {title(project)}
+          </ProjectTitle>
+        </Text>
+
+        <Spacing marginBottom="m">
+          <ProjectValidationStatus status={project.validationStatus} />
+        </Spacing>
+
+        {viewer.isSpecialist && project.validationStatus === "Pending" && (
+          <Box mb="m">
+            <ProjectValidationPrompt project={project} />
+          </Box>
+        )}
+
+        <Text mb="l" fontSize="s" lineHeight="s" color="neutral.7">
+          {truncate(project.description, { length: 380, separator: " " })}
         </Text>
 
         {reviews.length > 0 && (
@@ -60,10 +72,6 @@ export default ({ previousProject, specialistId }) => {
           </Spacing>
         )}
 
-        <Spacing marginBottom="xl">
-          <ProjectValidationStatus status={project.validationStatus} />
-        </Spacing>
-
         <Button styling="outlined" onClick={openProject}>
           View project details
         </Button>
@@ -72,3 +80,5 @@ export default ({ previousProject, specialistId }) => {
     </React.Fragment>
   );
 };
+
+export default PreviousProject;
