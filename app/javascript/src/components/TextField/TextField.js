@@ -23,8 +23,8 @@ const TextField = ({
   multiline,
   block,
   onChange,
-  onBlur,
-  onFocus,
+  onBlur = () => {},
+  onFocus = () => {},
   label,
   error,
   labelHidden,
@@ -44,6 +44,7 @@ const TextField = ({
   ...props
 }) => {
   const input = useRef(null);
+  const [focused, setFocused] = useState(false);
   const [rows, setRows] = useState(props.minRows);
   const [id, _] = useState(props.id || uniqueID("TextField"));
 
@@ -97,6 +98,16 @@ const TextField = ({
     }
   };
 
+  const handleFocus = e => {
+    setFocused(true);
+    onFocus(e);
+  };
+
+  const handleBlur = e => {
+    setFocused(false);
+    onBlur(e);
+  };
+
   return (
     <Wrapper block={block} {...extractSpacingProps(props)}>
       {label && (
@@ -105,7 +116,7 @@ const TextField = ({
         </InputLabel>
       )}
       {subLabel && <InputSubLabel>{subLabel}</InputSubLabel>}
-      <InputContainer onClick={handleClick}>
+      <InputContainer onClick={handleClick} isFocused={focused}>
         {prefix && <Prefix size={size}>{prefix}</Prefix>}
         <Component
           size={size}
@@ -116,8 +127,8 @@ const TextField = ({
           name={name}
           style={style}
           value={value}
-          onBlur={onBlur}
-          onFocus={onFocus}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           autoComplete="off"
           onChange={handleChange}
           placeholder={placeholder}
@@ -129,7 +140,7 @@ const TextField = ({
           onKeyPress={onKeyPress}
           onKeyDown={onKeyDown}
         />
-        <InputBackdrop />
+        {/* <InputBackdrop /> */}
         {(charCount || maxLength) && <CharCount>{characterCount}</CharCount>}
       </InputContainer>
       {error && (

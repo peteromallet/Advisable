@@ -1,5 +1,5 @@
 import { rgba } from "polished";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import MaskedInput from "react-text-mask";
 import { withSpacing } from "src/components/Spacing";
 import { theme } from "@advisable/donut";
@@ -17,8 +17,8 @@ const fontSizes = {
 };
 
 const heights = {
-  default: "40px",
-  s: "34px",
+  default: "36px",
+  s: "30px",
 };
 
 export const InputBackdrop = styled.div`
@@ -29,7 +29,6 @@ export const InputBackdrop = styled.div`
   z-index: 1;
   position: absolute;
   border-radius: 8px;
-  border: 2px solid transparent;
   transition: border-color 200ms;
   background: ${theme.colors.neutral[1]};
 `;
@@ -81,16 +80,29 @@ export const Prefix = styled.div`
   font-size: ${props => fontSizes[props.size || "default"]};
 `;
 
+const focusedStyles = css`
+  border-color: ${theme.colors.blue[5]};
+
+  &:hover {
+    border-color: ${theme.colors.blue[5]};
+  }
+`;
+
 export const InputContainer = styled.div`
   display: flex;
+  cursor: text;
+  padding: 0 12px;
+  border-radius: 8px;
   position: relative;
   align-items: center;
-  padding: 0 12px;
-  cursor: text;
+  border: 2px solid transparent;
+  background: ${theme.colors.neutral[1]};
 
-  &:hover ${InputBackdrop} {
-    border-color: #e0e4ef;
+  &:hover {
+    border-color: ${theme.colors.neutral[2]};
   }
+
+  ${props => props.isFocused && focusedStyles}
 `;
 
 export const CharCount = styled.span`
