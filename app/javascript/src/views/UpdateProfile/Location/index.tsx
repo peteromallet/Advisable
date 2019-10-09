@@ -27,10 +27,7 @@ let Location = ({ profileQuery, countriesQuery, mutate }) => {
   const handleSubmit = async (values, formikBag) => {
     await mutate({
       variables: {
-        input: {
-          id: profileQuery.viewer.airtableId,
-          ...values,
-        },
+        input: values,
       },
     });
 
