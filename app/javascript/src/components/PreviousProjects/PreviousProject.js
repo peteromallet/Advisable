@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { truncate } from "lodash";
+import { get, truncate } from "lodash";
 import { Text, Box } from "@advisable/donut";
 import Button from "src/components/Button";
 import Review from "src/components/Review";
@@ -50,7 +50,7 @@ const PreviousProject = ({ previousProject, specialistId }) => {
           <ProjectValidationStatus status={project.validationStatus} />
         </Spacing>
 
-        {viewer.isSpecialist && project.validationStatus === "Pending" && (
+        {get(viewer, "isSpecialist") && project.validationStatus === "Pending" && (
           <Box mb="m">
             <ProjectValidationPrompt project={project} />
           </Box>
