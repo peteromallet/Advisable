@@ -1,4 +1,5 @@
 import React from "react";
+import { get } from "lodash";
 import { Text, Box } from "@advisable/donut";
 import Modal from "src/components/Modal";
 import Review from "src/components/Review";
@@ -41,7 +42,7 @@ const ProjectDetails = ({ previousProject }) => {
         <ProjectValidationStatus status={project.validationStatus} />
       </Modal.Header>
       <Modal.Body>
-        {viewer.isSpecialist && project.validationStatus === "Pending" && (
+        {get(viewer, "isSpecialist") && project.validationStatus === "Pending" && (
           <Box mb="m">
             <ProjectValidationPrompt project={project} />
           </Box>

@@ -31,6 +31,13 @@ export default (props: RouteComponentProps<Params>): React.ReactNode => {
   });
 
   if (query.loading) return <Loading />;
+
+  if (
+    get(query.error, "graphQLErrors[0].extensions.code") === "recordNotFound"
+  ) {
+    return <NotFound />;
+  }
+
   if (!query.data.application) return <NotFound />;
   let application: ApplicationType = query.data.application;
 
