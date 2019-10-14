@@ -167,4 +167,12 @@ class Types::QueryType < Types::BaseType
   def off_platform_project(id:)
     OffPlatformProject.find_by_uid!(id)
   end
+
+  field :specialists, [Types::SpecialistType], null: false do
+    argument :skill, String, required: true
+  end
+
+  def specialists(skill:)
+    Specialists::Search.call(skill: skill)
+  end
 end
