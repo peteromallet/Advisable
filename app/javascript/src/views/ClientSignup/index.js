@@ -1,27 +1,33 @@
 import React from "react";
 import queryString from "query-string";
-import { useQuery } from "react-apollo";
-import { useLocation } from "react-router-dom";
-import Loading from "../../components/Loading";
-import GET_DATA from "./getData";
+import { useLocation, useHistory } from "react-router-dom";
 import Criteria from "./Criteria";
 import Searching from "./Searching";
 
 const ClientSignup = () => {
+  const history = useHistory();
   const location = useLocation();
-  const { loading, data } = useQuery(GET_DATA);
+  const [results, updateResults] = React.useState(null);
 
-  if (loading) {
-    return <Loading />;
-  }
+  const handleSearch = search => {
+    updateResults(null);
+    history.push({
+      pathname: location.pathname,
+      search: queryString.stringify(search),
+    });
+  };
 
   const { skill } = queryString.parse(location.search);
 
-  if (skill) {
-    return <Searching />;
+  if (skill && results === null) {
+    return <Searching updateResults={updateResults} />;
   }
 
-  return <Criteria {...data} />;
+  if (skill && results) {
+    return <>{JSON.stringify(results)}</>;
+  }
+
+  return <Criteria onSubmit={handleSearch} />;
 };
 
 export default ClientSignup;

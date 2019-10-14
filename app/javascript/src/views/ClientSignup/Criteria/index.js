@@ -1,30 +1,27 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import queryString from "query-string";
-import { useHistory, useLocation } from "react-router-dom";
+import { useQuery } from "react-apollo";
 import { Box, Text, Autocomplete, Button, useTheme } from "@advisable/donut";
 import Logo from "../../../components/Logo";
 import Select from "../../../components/Select";
 import Checkbox from "../../../components/Checkbox";
+import Loading from "../../../components/Loading";
 import Testimonials from "../Testimonials";
 import validationSchema from "./validationSchema";
+import GET_DATA from "./getData";
 
-const Criteria = ({ skills, industries }) => {
+const Criteria = ({ onSubmit }) => {
   const theme = useTheme();
-  const history = useHistory();
-  const location = useLocation();
+  const { loading, data } = useQuery(GET_DATA);
 
   React.useLayoutEffect(() => {
     theme.updateTheme({ background: "white" });
     return () => theme.updateTheme({ background: "default" });
   }, []);
 
-  const handleSubmit = values => {
-    history.replace({
-      pathname: location.pathname,
-      search: queryString.stringify(values),
-    });
-  };
+  if (loading) {
+    return <Loading />;
+  }
 
   const initialValues = {
     skill: "",
@@ -55,7 +52,7 @@ const Criteria = ({ skills, industries }) => {
           specialist for you.
         </Text>
         <Formik
-          onSubmit={handleSubmit}
+          onSubmit={onSubmit}
           initialValues={initialValues}
           validationSchema={validationSchema}
         >
@@ -67,7 +64,7 @@ const Criteria = ({ skills, industries }) => {
                   value={formik.values.skill}
                   placeholder="Search for a skill"
                   label="What skill are you looking for?"
-                  options={skills}
+                  options={data.skills}
                   error={formik.submitCount > 0 && formik.errors.skill}
                   onChange={skill => {
                     formik.setFieldValue("skill", skill.value);
@@ -80,10 +77,8 @@ const Criteria = ({ skills, industries }) => {
                   placeholder="Industry"
                   value={formik.values.industry}
                   label="What industry are you in?"
-                  options={industries}
-                  onBlur={() => {
-                    formik.setFieldTouched("industry", true);
-                  }}
+                  options={data.industries}
+                  error={formik.submitCount > 0 && formik.errors.industry}
                   onChange={industry => {
                     formik.setFieldTouched("industry", true);
                     formik.setFieldValue("industry", industry.value);
@@ -105,7 +100,17 @@ const Criteria = ({ skills, industries }) => {
                   onChange={formik.handleChange}
                   value={formik.values.companyType}
                   label="What type of company are you?"
-                  options={[{ label: "Test", value: "Test" }]}
+                  options={[
+                    "Individual Entrepreneur",
+                    "Small Business",
+                    "Medium-Sized Business",
+                    "Startup",
+                    "Growth-Stage Startup",
+                    "Major Corporation",
+                    "Non-Profit",
+                    "Education Institution",
+                    "Government",
+                  ]}
                 />
               </Box>
               <Box mb="xl">
