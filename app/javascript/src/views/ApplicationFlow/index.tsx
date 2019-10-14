@@ -8,7 +8,6 @@ import ApplicationFlow from "./ApplicationFlow";
 import ApplicationSent from "./ApplicationSent";
 import FETCH_APPLICATION from "./fetchApplication.js";
 import { RouteComponentProps } from "react-router";
-import { ApplicationType } from "../../types";
 import ApplicationsClosed from "../ApplicationsClosed";
 
 type Params = {
@@ -32,14 +31,17 @@ export default (props: RouteComponentProps<Params>): React.ReactNode => {
 
   if (query.loading) return <Loading />;
 
-  if (
-    get(query.error, "graphQLErrors[0].extensions.code") === "recordNotFound"
-  ) {
-    return <NotFound />;
+  if (query.error) {
+    const code = get(query.error, "graphQLErrors[0].extensions.code");
+    if (code === "recordNotFound") {
+      return <NotFound />;
+    } else {
+      throw query.error.graphQLErrors[0].message;
+    }
   }
 
-  if (!query.data.application) return <NotFound />;
-  let application: ApplicationType = query.data.application;
+  const application = get(query, "data.application");
+  if (!application) return <NotFound />;
 
   const open = get(application, "project.applicationsOpen");
   if (!open) return <ApplicationsClosed />;
