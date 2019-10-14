@@ -4,7 +4,7 @@ const { environment } = require("@rails/webpacker");
 const typescript = require("./loaders/typescript");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
-const version = require("./currentCommit");
+const version = require("./buildVersion");
 
 dotenv.config({ silent: true });
 

@@ -1,4 +1,4 @@
-const version = require("./currentCommit");
+const version = require("./buildVersion");
 const RollbarSourceMapPlugin = require("rollbar-sourcemap-webpack-plugin");
 
 process.env.NODE_ENV = process.env.NODE_ENV || "production";
