@@ -125,14 +125,14 @@ const FreelancerSignup = ({ location }) => {
                   }
 
                   const Component = step.component;
-                  return <Component {...route} specialist={data.viewer} />;
+                  return <Component {...route} specialist={viewer} />;
                 }}
               />
             ))}
           </Switch>
         </Content>
       </Main>
-      <Sidebar specialist={data.viewer} />
+      <Sidebar specialist={viewer} />
     </Box>
   );
 };
