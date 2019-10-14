@@ -8,13 +8,12 @@ const version = require("./buildVersion");
 
 dotenv.config({ silent: true });
 
-process.env.BUILD_TIME = new Date().getTime();
+process.env.BUILD_TIME = version;
 
 const environmentVariables = lodash.merge(
   JSON.parse(JSON.stringify(process.env)),
   {
     CODE_VERSION: version,
-    ROLLBAR_CLIENT_TOKEN: process.env.ROLLBAR_CLIENT_TOKEN,
   }
 );
 
