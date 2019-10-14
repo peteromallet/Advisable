@@ -57,6 +57,7 @@
     "react-textarea-autosize": "^6.1.0",
     "react-window": "^1.8.3",
     "reakit": "^1.0.0-beta.6",
+    "rollbar": "^2.13.0",
     "stickybits": "^3.6.6",
     "styled-components": "^4.3.2",
     "styled-system": "^5.0.12",
@@ -83,6 +84,7 @@
     "jest": "^24.9.0",
     "jest-transform-graphql": "^2.1.0",
     "prettier": "^1.18.2",
+    "rollbar-sourcemap-webpack-plugin": "^2.5.1",
     "waait": "^1.0.5",
     "webpack-dev-server": "^3.7.2"
   },
