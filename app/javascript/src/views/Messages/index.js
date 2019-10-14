@@ -15,7 +15,7 @@ const Messages = ({ location }) => {
   const talkSession = useTalkSession();
 
   React.useEffect(() => {
-    talkSession.syncThemeForLocalDev("/talkjs.css");
+    // talkSession.syncThemeForLocalDev("/talkjs.css");
     var inbox = talkSession.createInbox({
       showChatHeader: false,
       showFeedHeader: false,
