@@ -10,7 +10,7 @@ environment.plugins.prepend(
   new RollbarSourceMapPlugin({
     accessToken: process.env.ROLLBAR_TOKEN,
     version: version,
-    publicPath: environment.config.output.publicPath,
+    publicPath: `${process.env.ORIGIN}/packs`,
   })
 );
 
