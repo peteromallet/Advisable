@@ -63,6 +63,7 @@
     "styled-system": "^5.0.12",
     "talkjs": "^0.9.1",
     "text-mask-addons": "^3.8.0",
+    "rollbar-sourcemap-webpack-plugin": "^2.5.1",
     "ts-loader": "^6.0.4",
     "typescript": "3.4.5",
     "yup": "^0.27.0"
@@ -84,7 +85,6 @@
     "jest": "^24.9.0",
     "jest-transform-graphql": "^2.1.0",
     "prettier": "^1.18.2",
-    "rollbar-sourcemap-webpack-plugin": "^2.5.1",
     "waait": "^1.0.5",
     "webpack-dev-server": "^3.7.2"
   },
