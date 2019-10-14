@@ -1,5 +1,17 @@
-process.env.NODE_ENV = process.env.NODE_ENV || 'production'
+const version = require("./buildVersion");
+const RollbarSourceMapPlugin = require("rollbar-sourcemap-webpack-plugin");
 
-const environment = require('./environment')
+process.env.NODE_ENV = process.env.NODE_ENV || "production";
 
-module.exports = environment.toWebpackConfig()
+const environment = require("./environment");
+
+environment.plugins.prepend(
+  "Rollbar sourcemaps",
+  new RollbarSourceMapPlugin({
+    accessToken: process.env.ROLLBAR_TOKEN,
+    version: version,
+    publicPath: `${process.env.ORIGIN}/packs`,
+  })
+);
+
+module.exports = environment.toWebpackConfig();
