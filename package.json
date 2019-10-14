@@ -57,11 +57,13 @@
     "react-textarea-autosize": "^6.1.0",
     "react-window": "^1.8.3",
     "reakit": "^1.0.0-beta.6",
+    "rollbar": "^2.13.0",
     "stickybits": "^3.6.6",
     "styled-components": "^4.3.2",
     "styled-system": "^5.0.12",
     "talkjs": "^0.9.1",
     "text-mask-addons": "^3.8.0",
+    "rollbar-sourcemap-webpack-plugin": "^2.5.1",
     "ts-loader": "^6.0.4",
     "typescript": "3.4.5",
     "yup": "^0.27.0"

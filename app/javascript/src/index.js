@@ -1,6 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Root from "./Root";
+import rollbar from "./rollbar";
+
+window.Rollbar = rollbar;
 
 // Polyfll for Object.entries
 if (!Object.entries) {
