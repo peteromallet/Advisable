@@ -5,6 +5,7 @@ export default gql`
     specialists(skill: $skill) {
       id
       name
+      hourlyRate
     }
   }
 `;

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import queryString from "query-string";
 import { useQuery } from "react-apollo";
-import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Box, Text, useTheme } from "@advisable/donut";
 import Logo from "../../../components/Logo";
 import SearchingIndicator from "../../../components/SearchingIndicator";
@@ -11,13 +10,12 @@ import SEARCH from "./search";
 
 const SECONDS = 4;
 
-const Searching = ({ updateResults }) => {
+const Searching = ({ search }) => {
   const theme = useTheme();
-  const location = useLocation();
+  const history = useHistory();
   const [seconds, setSeconds] = React.useState(0);
-  const { skill } = queryString.parse(location.search);
   const { loading, data } = useQuery(SEARCH, {
-    variables: { skill },
+    variables: search,
   });
 
   useInterval(() => {
@@ -26,9 +24,14 @@ const Searching = ({ updateResults }) => {
 
   useEffect(() => {
     if (!loading && seconds > SECONDS) {
-      updateResults(data);
+      history.push({
+        pathname: "/clients/signup/price_range",
+        state: {
+          results: data.specialists,
+        },
+      });
     }
-  }, [seconds, loading, updateResults, data]);
+  }, [seconds, loading, data, history]);
 
   React.useLayoutEffect(() => {
     theme.updateTheme({ background: "white" });

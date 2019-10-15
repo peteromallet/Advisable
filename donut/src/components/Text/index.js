@@ -10,5 +10,6 @@ const Text = ({ children, size, weight, ...rest }) => {
 };
 
 Text.Styles = TextStyles;
+Text.Styled = TextStyles;
 
 export default Text;

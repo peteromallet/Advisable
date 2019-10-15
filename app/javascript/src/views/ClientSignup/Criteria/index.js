@@ -8,18 +8,28 @@ import Checkbox from "../../../components/Checkbox";
 import Loading from "../../../components/Loading";
 import Testimonials from "../Testimonials";
 import validationSchema from "./validationSchema";
+import Searching from "./Searching";
 import GET_DATA from "./getData";
 
-const Criteria = ({ onSubmit }) => {
+const Criteria = () => {
   const theme = useTheme();
-  const { loading, data } = useQuery(GET_DATA);
+  const formData = useQuery(GET_DATA);
+  const [search, setSearch] = React.useState(null);
 
   React.useLayoutEffect(() => {
     theme.updateTheme({ background: "white" });
     return () => theme.updateTheme({ background: "default" });
   }, []);
 
-  if (loading) {
+  const handleSubmit = values => {
+    setSearch(values);
+  };
+
+  if (search) {
+    return <Searching search={search} />;
+  }
+
+  if (formData.loading) {
     return <Loading />;
   }
 
@@ -52,7 +62,7 @@ const Criteria = ({ onSubmit }) => {
           specialist for you.
         </Text>
         <Formik
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
           initialValues={initialValues}
           validationSchema={validationSchema}
         >
@@ -64,7 +74,7 @@ const Criteria = ({ onSubmit }) => {
                   value={formik.values.skill}
                   placeholder="Search for a skill"
                   label="What skill are you looking for?"
-                  options={data.skills}
+                  options={formData.data.skills}
                   error={formik.submitCount > 0 && formik.errors.skill}
                   onChange={skill => {
                     formik.setFieldValue("skill", skill.value);
@@ -77,7 +87,7 @@ const Criteria = ({ onSubmit }) => {
                   placeholder="Industry"
                   value={formik.values.industry}
                   label="What industry are you in?"
-                  options={data.industries}
+                  options={formData.data.industries}
                   error={formik.submitCount > 0 && formik.errors.industry}
                   onChange={industry => {
                     formik.setFieldTouched("industry", true);
