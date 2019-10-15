@@ -1,10 +1,12 @@
 import React from "react";
-import { get, sortBy } from "lodash";
+import Rollbar from "rollbar";
 import gql from "graphql-tag";
+import { get, sortBy } from "lodash";
 import { Formik, Form } from "formik";
 import { useQuery } from "react-apollo";
 import { Redirect } from "react-router-dom";
 import { Text, Box, Link, Button, Autocomplete } from "@advisable/donut";
+import Loading from "../../../components/Loading";
 import validationSchema from "./validationSchema";
 
 export const GET_SKILLS = gql`
@@ -18,15 +20,19 @@ export const GET_SKILLS = gql`
 
 // Renders the freelancer signup flow.
 const Skills = ({ history, location, specialist }) => {
-  const skillsQuery = useQuery(GET_SKILLS);
+  const { loading, data, error } = useQuery(GET_SKILLS);
 
-  if (Boolean(specialist)) {
+  if (specialist) {
     return <Redirect to="/freelancers/signup/preferences" />;
   }
 
   const initialValues = {
     skills: get(location.state, "skills") || [],
   };
+
+  if (error) {
+    Rollbar.debug(error.message);
+  }
 
   // We want to store the skills in the location state so that they are
   // persisted accross browser refreshes and navigation. They are not actually
@@ -67,8 +73,8 @@ const Skills = ({ history, location, specialist }) => {
       >
         {formik => (
           <Form>
-            {skillsQuery.loading ? (
-              <>loading...</>
+            {loading ? (
+              <Loading />
             ) : (
               <>
                 <Autocomplete
@@ -78,7 +84,7 @@ const Skills = ({ history, location, specialist }) => {
                   description="Add up to 10 skill’s that you have used in previously completed projects."
                   label="What type of projects are you looking for?"
                   placeholder="e.g Online Marketing"
-                  options={sortBy(skillsQuery.data.skills, ["label"])}
+                  options={sortBy(data.skills, ["label"])}
                   onBlur={formik.handleBlur}
                   value={formik.values.skills}
                   error={formik.touched.skills && formik.errors.skills}
