@@ -51,12 +51,14 @@ const PaymentSettings = ({ data, updateProjectPaymentMethod }) => {
   let notificaitons = useNotifications();
   const [paymentMethodModal, setPaymentMethodModal] = React.useState(false);
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values, formik) => {
     await updateProjectPaymentMethod({
       variables: {
         input: values,
       },
     });
+
+    formik.setSubmitting(false);
 
     notificaitons.notify("Your payment preferences have been updated");
   };

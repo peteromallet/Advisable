@@ -15,10 +15,12 @@ const UpdatePaymentSettingsForm = ({
   updatePaymentSettings,
   onSuccess,
 }) => {
-  const handleSubmit = async values => {
+  const handleSubmit = async (values, formikBag) => {
     await updatePaymentSettings({
       variables: { input: values },
     });
+
+    formikBag.setSubmitting(false);
 
     if (onSuccess) onSuccess();
   };

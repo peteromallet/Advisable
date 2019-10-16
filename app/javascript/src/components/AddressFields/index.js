@@ -13,6 +13,7 @@ const GET_DATA = gql`
       id
       eu
       name
+      code
       states
     }
   }
@@ -20,7 +21,11 @@ const GET_DATA = gql`
 
 const AddressFields = ({ label, name, formik, data }) => {
   let countries = get(data, "countries");
-  let country = find(countries, { id: get(formik.values, `${name}.country`) });
+  const countryValue = get(formik.values, `${name}.country`);
+  let country = find(countries, c => {
+    return c.code === countryValue || c.name === countryValue;
+  });
+  console.log(country);
 
   if (data.loading) return <>loading...</>;
 
@@ -98,7 +103,7 @@ const AddressFields = ({ label, name, formik, data }) => {
               <Select
                 {...field}
                 options={countries.map(c => ({
-                  value: c.id,
+                  value: c.code || c.name,
                   label: c.name,
                 }))}
               />

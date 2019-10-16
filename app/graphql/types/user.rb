@@ -43,14 +43,6 @@ class Types::User < Types::BaseType
 
   field :country, Types::CountryType, null: true
 
-  # The users country is an association to a record in the countries table,
-  # however, the CountryType expects an object from the 'countries' gem. We
-  # use the records name to retrieve this.
-  def country
-    return nil unless object.country.present?
-    ISO3166::Country.find_country_by_name(object.country.name)
-  end
-
   field :setup_intent_status, String, null: true do
     authorize :is_user
   end
