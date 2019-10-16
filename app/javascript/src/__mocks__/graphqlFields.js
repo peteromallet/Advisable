@@ -37,8 +37,9 @@ export const country = (fields = {}) => {
   return merge(
     {
       __typename: "Country",
-      id: "IE",
+      id: "cou_1234",
       eu: true,
+      code: "IE",
       name: "Ireland",
       states: ["Dublin", "Cork", "Galway", "Limerick"],
     },

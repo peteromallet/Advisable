@@ -61,6 +61,7 @@ class Specialists::UpdateProfile < ApplicationService
   # Update the country if it was passed
   def update_country
     country = Country.find_by_uid(attributes[:country])
+    country = Country.find_by_name(attributes[:country]) if country.nil?
     specialist.country = country
   end
 end
