@@ -28,6 +28,9 @@ describe Mutations::CreateFreelancerAccount do
   before :each do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
+    project = double(Airtable::Project)
+    allow(project).to receive(:sync)
+    allow(Airtable::Project).to receive(:find).and_return(project)
   end
 
   it "Creates a new specialist" do
