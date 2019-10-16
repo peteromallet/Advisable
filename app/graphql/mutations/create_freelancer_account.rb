@@ -84,8 +84,8 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     account.skills = skills
 
     if account.save
-      create_application_record(account, args[:pid])
       account.sync_to_airtable
+      create_application_record(account, args[:pid])
       account.send_confirmation_email
     end
 
@@ -106,6 +106,7 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
   def create_application_record(specialist, pid)
     return unless pid
     project = Project.find_by_airtable_id(pid)
+    project = Airtable::Project.find(pid).sync if project.nil?
     return unless project.present?
     application = specialist.applications.create(
       project: project,
