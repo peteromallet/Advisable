@@ -198,6 +198,12 @@ class Types::SpecialistType < Types::BaseType
     description "The specialists country"
   end
 
+  field :location, String, null: true
+  
+  def location
+    "#{object.city}, #{country.try(:name)}"
+  end
+
   field :has_setup_payments, Boolean, null: true do
     authorize :is_specialist, :is_admin
     description <<~HEREDOC

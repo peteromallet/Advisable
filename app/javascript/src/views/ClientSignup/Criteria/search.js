@@ -5,6 +5,11 @@ export default gql`
     specialists(skill: $skill) {
       id
       name
+      firstName
+      hourlyRate
+      avatar
+      bio
+      location
       hourlyRate
     }
   }
