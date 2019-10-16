@@ -25,6 +25,7 @@ export const GET_DATA = gql`
     countries {
       id
       eu
+      code
       name
       states
     }
@@ -57,13 +58,19 @@ const InvoiceSettings = ({ data, match, setValue, history, values }) => {
   };
 
   let hasSelectedEUCountry = formik => {
-    let country = find(countries, { id: formik.values.address.country });
+    const countryValue = formik.values.address.country;
+    let country = find(countries, c => {
+      return c.code === countryValue || c.name === countryValue;
+    });
     if (!country) return false;
     return country.eu;
   };
 
   let countryStates = formik => {
-    let country = find(countries, { id: formik.values.address.country });
+    const countryValue = formik.values.address.country;
+    let country = find(countries, c => {
+      return c.code === countryValue || c.name === countryValue;
+    });
     if (!country) return [];
     return country.states;
   };
@@ -195,7 +202,7 @@ const InvoiceSettings = ({ data, match, setValue, history, values }) => {
                     get(formik, "errors.address.country")
                   }
                   options={countries.map(c => ({
-                    value: c.id,
+                    value: c.code || c.name,
                     label: c.name,
                   }))}
                 />

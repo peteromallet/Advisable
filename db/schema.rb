@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_26_083737) do
+ActiveRecord::Schema.define(version: 2019_10_16_082746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,8 @@ ActiveRecord::Schema.define(version: 2019_09_26_083737) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "uid"
+    t.boolean "eu"
+    t.string "alpha2"
   end
 
   create_table "industries", force: :cascade do |t|
@@ -391,6 +393,7 @@ ActiveRecord::Schema.define(version: 2019_09_26_083737) do
     t.string "campaign_source"
     t.string "referrer"
     t.string "confirmation_token"
+    t.decimal "average_score"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 

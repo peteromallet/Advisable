@@ -13,6 +13,7 @@ const GET_DATA = gql`
     countries {
       id
       eu
+      code
       name
       states
     }
@@ -21,27 +22,15 @@ const GET_DATA = gql`
 
 const InvoiceSettingsFields = ({ data, formik }) => {
   let countries = get(data, "countries", []);
-
-  let hasSelectedEUCountry = formik => {
-    let country = find(countries, {
-      id: get(formik.values, "invoiceSettings.address.country"),
-    });
-    if (!country) return false;
-    return country.eu;
-  };
-
-  let countryStates = formik => {
-    let country = find(countries, {
-      id: get(formik.values, "invoiceSettings.address.country"),
-    });
-    if (!country) return [];
-    return country.states;
-  };
+  const countryValue = get(formik.values, "invoiceSettings.address.country");
+  const country = find(countries, c => {
+    return c.code === countryValue || c.name === countryValue;
+  });
 
   if (data.loading) return <Loading />;
 
   const required = errorMessage => value => {
-    if (!Boolean(value)) return errorMessage;
+    if (!value) return errorMessage;
   };
 
   return (
@@ -125,14 +114,14 @@ const InvoiceSettingsFields = ({ data, formik }) => {
             )}
           />
         </Box>
-        {countryStates(formik).length > 0 && (
+        {country && country.states.length > 0 && (
           <Box width="100%" ml="xxs">
             <Select
               name="invoiceSettings.address.state"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value={get(formik.values, "invoiceSettings.address.state")}
-              options={countryStates(formik).map(s => ({
+              options={country.states.map(s => ({
                 value: s,
                 label: s,
               }))}
@@ -149,7 +138,7 @@ const InvoiceSettingsFields = ({ data, formik }) => {
             onChange={formik.handleChange}
             value={get(formik.values, "invoiceSettings.address.country")}
             options={countries.map(c => ({
-              value: c.id,
+              value: c.code || c.name,
               label: c.name,
             }))}
           />
@@ -164,7 +153,7 @@ const InvoiceSettingsFields = ({ data, formik }) => {
           />
         </Box>
       </Box>
-      {hasSelectedEUCountry(formik) && (
+      {country && country.eu && (
         <Box mb="m">
           <Field
             name="invoiceSettings.vatNumber"
