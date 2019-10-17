@@ -10,6 +10,11 @@ class Application < ApplicationRecord
   has_many :references, class_name: 'ApplicationReference'
   has_one :interview
 
+  # Every time a project is created, updated or destroyed we want to update the
+  # associated specialists project count.
+  after_save :update_specialist_project_count
+  after_destroy :update_specialist_project_count
+
   scope :accepted_fees, -> { where(accepts_fee: true) }
   scope :accepted_terms, -> { where(accepts_terms: true) }
   scope :featured, -> { where(featured: true) }
@@ -41,5 +46,13 @@ class Application < ApplicationRecord
 
   def questions
     self[:questions] || []
+  end
+
+  private
+
+  # Update the associated specialists project count
+  def update_specialist_project_count
+    return unless specialist.present?
+    specialist.update_project_count
   end
 end

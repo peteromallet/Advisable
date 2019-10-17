@@ -3,10 +3,10 @@ import { truncate } from "lodash";
 import { Box, Text, Button } from "@advisable/donut";
 import { StyledSpecialist } from "./styles";
 import Avatar from "../../../components/Avatar";
-import StarRating from "../../../components/StarRating";
-import currency from "../../../utilities/currency";
+import LineClamp from "../../../components/LineClamp";
 import TagCloud from "./TagCloud";
 import SpecialistModal from "./SpecialistModal";
+import SpecialistAttributes from "./SpecialistAttributes";
 
 const Specialist = ({ specialist, onSelect, isSelected }) => {
   const [viewMore, setViewMore] = React.useState(false);
@@ -22,32 +22,9 @@ const Specialist = ({ specialist, onSelect, isSelected }) => {
       <Text color="neutral.6" fontSize="xs">
         {truncate(specialist.location, { length: 40 })}
       </Text>
-      <Box my="m" display="flex">
-        <Box pr="s" borderRight="1px solid" borderColor="neutral.2">
-          <Text fontWeight="medium" color="neutral.9" mb="xxs">
-            {currency(specialist.hourlyRate, { format: "$0" })}
-          </Text>
-          <Text fontSize="xxs" color="neutral.5">
-            Per Hour
-          </Text>
-        </Box>
-        <Box px="s" borderRight="1px solid" borderColor="neutral.2">
-          <Text fontWeight="medium" color="neutral.9" mb="xxs">
-            12
-          </Text>
-          <Text fontSize="xxs" color="neutral.5">
-            Projects
-          </Text>
-        </Box>
-        <Box pl="s">
-          <StarRating showNumber={false} size="s" rating={4} />
-          <Text fontSize="xxs" color="neutral.5" mt="1px">
-            4 Reviews
-          </Text>
-        </Box>
-      </Box>
+      <SpecialistAttributes specialist={specialist} />
       <Text fontSize="xxs" lineHeight="xs" color="neutral.6" mb="m">
-        {truncate(specialist.bio, { length: 210 })}
+        <LineClamp maxHeight={100}>{specialist.bio}</LineClamp>
       </Text>
       <TagCloud maxRows={2} tags={specialist.skills} />
       <Box position="absolute" bottom={25} left={25} right={25} display="flex">

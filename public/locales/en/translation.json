@@ -102,7 +102,7 @@
     "resultsSubHeading": "Here are {{count}} of the best. Select any specialists that you are interested in and we'll invite them to apply once your project is live."
   },
   "companyTypes": {
-    "Individual Entrepreneur_prural": "individual entrepreneurs",
+    "Individual Entrepreneur_plural": "individual entrepreneurs",
     "Small Business_plural": "small businesses",
     "Medium-Sized Business_plural": "medium-sized businesses",
     "Startup_plural": "startups",
@@ -111,5 +111,11 @@
     "Non-Profit_plural": "non-profits",
     "Education Institution_plural": "education institutions",
     "Government_plural": "governments"
+  },
+  "nouns": {
+    "review": "review",
+    "review_plural": "reviews",
+    "reviewCount": "{{count}} review",
+    "reviewCount_plural": "{{count}} reviews"
   }
 }

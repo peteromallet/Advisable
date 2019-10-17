@@ -7,7 +7,7 @@ class Specialists::Search < ApplicationService
   end
 
   def call
-    specialists = by_skills + by_projects + by_off_platform_projects
+    specialists = (by_skills + by_projects + by_off_platform_projects).uniq
     specialists.sort_by { |s| s.average_score || 0 }.reverse
   end
 

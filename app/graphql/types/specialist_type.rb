@@ -137,6 +137,12 @@ class Types::SpecialistType < Types::BaseType
     })
   end
 
+  field :previous_projects_count, Int, null: false
+
+  def previous_projects_count
+    object.project_count || 0
+  end
+
   field :has_account, Boolean, null: false do
     description "Wether or not the specialist has created their account yet"
   end

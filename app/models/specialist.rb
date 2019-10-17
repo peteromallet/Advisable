@@ -43,4 +43,9 @@ class Specialist < ApplicationRecord
     return false if bank_currency.blank?
     true
   end
+
+  def update_project_count
+    self.project_count = PreviousProject.for_specialist(self).count
+    save(validate: false)
+  end
 end

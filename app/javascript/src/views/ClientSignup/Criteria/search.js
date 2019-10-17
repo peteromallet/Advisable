@@ -12,6 +12,11 @@ export default gql`
       location
       hourlyRate
       skills
+      previousProjectsCount
+      reviewsCount
+      ratings {
+        overall
+      }
     }
   }
 `;
