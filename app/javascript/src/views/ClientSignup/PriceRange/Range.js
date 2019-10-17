@@ -1,17 +1,19 @@
 import React from "react";
 import { minBy, maxBy } from "lodash";
 import { Box, Icon, Text } from "@advisable/donut";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import currency from "../../../utilities/currency";
 import { StyledRange, StyledRangeTitle, StyledRangeIcon } from "./styles";
 
 const Range = ({ name, icon, specialists }) => {
   const history = useHistory();
+  const location = useLocation();
 
   const handleClick = () => {
     history.push({
       pathname: "/clients/signup/specialists",
       state: {
+        ...location.state,
         results: specialists,
       },
     });

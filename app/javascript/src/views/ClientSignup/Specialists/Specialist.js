@@ -5,8 +5,12 @@ import { StyledSpecialist } from "./styles";
 import Avatar from "../../../components/Avatar";
 import StarRating from "../../../components/StarRating";
 import currency from "../../../utilities/currency";
+import TagCloud from "./TagCloud";
+import SpecialistModal from "./SpecialistModal";
 
 const Specialist = ({ specialist, onSelect, isSelected }) => {
+  const [viewMore, setViewMore] = React.useState(false);
+
   return (
     <StyledSpecialist>
       <Box mb="m">
@@ -37,14 +41,15 @@ const Specialist = ({ specialist, onSelect, isSelected }) => {
         </Box>
         <Box pl="s">
           <StarRating showNumber={false} size="s" rating={4} />
-          <Text fontSize="xxs" color="neutral.5">
+          <Text fontSize="xxs" color="neutral.5" mt="1px">
             4 Reviews
           </Text>
         </Box>
       </Box>
-      <Text fontSize="xxs" lineHeight="xs" color="neutral.6">
-        {truncate(specialist.bio, { length: 280 })}
+      <Text fontSize="xxs" lineHeight="xs" color="neutral.6" mb="m">
+        {truncate(specialist.bio, { length: 250 })}
       </Text>
+      <TagCloud maxRows={2} tags={specialist.skills} />
       <Box position="absolute" bottom={25} left={25} right={25} display="flex">
         <Box width="50%" pr="xxs">
           <Button
@@ -58,7 +63,17 @@ const Specialist = ({ specialist, onSelect, isSelected }) => {
           </Button>
         </Box>
         <Box width="50%" pl="xxs">
-          <Button width="100%" icon="user" appearance="outlined">
+          <SpecialistModal
+            isOpen={viewMore}
+            onClose={() => setViewMore(null)}
+            specialist={specialist}
+          />
+          <Button
+            width="100%"
+            icon="user"
+            appearance="outlined"
+            onClick={() => setViewMore(true)}
+          >
             View
           </Button>
         </Box>

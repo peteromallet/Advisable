@@ -14,7 +14,7 @@ export const StyledRange = styled(Card.Styled)`
   margin-bottom: 12px;
   border-radius: 12px;
   align-items: center;
-  transition: transform 300ms, box-shadow 200ms;
+  transition: transform 200ms, box-shadow 200ms;
 
   &:hover {
     z-index: 3;

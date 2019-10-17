@@ -201,7 +201,7 @@ class Types::SpecialistType < Types::BaseType
   field :location, String, null: true
   
   def location
-    "#{object.city}, #{country.try(:name)}"
+    "#{object.city}, #{object.country.try(:name)}"
   end
 
   field :has_setup_payments, Boolean, null: true do

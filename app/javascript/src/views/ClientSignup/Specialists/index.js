@@ -1,15 +1,20 @@
 import React from "react";
 import { get } from "lodash";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 import { Box, Text, Button } from "@advisable/donut";
 import { SlideInUp } from "../../../components/Animations";
+import Logo from "../../../components/Logo";
 import SearchingIndicator from "../../../components/SearchingIndicator";
-import { useLocation } from "react-router-dom";
-import SideScroller from "./SideScroller";
+import Heading from "./Heading";
 import Specialist from "./Specialist";
-import { StyledSpecialist } from "./styles";
+import SideScroller from "./SideScroller";
+import { Header, StyledSpecialist } from "./styles";
 
 const Specailists = () => {
+  const { t } = useTranslation();
   const location = useLocation();
+  const search = get(location, "state.search");
   const specialists = get(location, "state.results");
   const [selected, updateSelected] = React.useState([]);
 
@@ -21,23 +26,25 @@ const Specailists = () => {
     }
   };
 
+  const handleContinue = () => {};
+
   return (
     <>
-      <Box maxWidth={700} ml="xxl">
-        <Text
-          as="h2"
-          mb="xs"
-          fontSize="xxl"
-          lineHeight="xl"
-          fontWeight="medium"
+      <Header>
+        <Logo />
+        <Button
+          onClick={handleContinue}
+          appearance="primary"
+          intent="success"
+          iconRight="arrow-right"
         >
-          We have 285 Facebook Marketing specialists with experience working
-          with Architecture startups
-        </Text>
+          Continue
+        </Button>
+      </Header>
+      <Box maxWidth={700} ml="xxl">
+        <Heading search={search} results={specialists} />
         <Text size="s" color="neutral.7" lineHeight="s">
-          Here are {specialists.length} of the best. Select any specialists that
-          you are interested in and we'll invite them to apply once your project
-          is live.
+          {t("clientSignup.resultsSubHeading", { count: specialists.length })}
         </Text>
       </Box>
       <SideScroller>

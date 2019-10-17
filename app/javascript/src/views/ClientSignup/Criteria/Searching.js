@@ -27,11 +27,12 @@ const Searching = ({ search }) => {
       history.push({
         pathname: "/clients/signup/price_range",
         state: {
+          search,
           results: data.specialists,
         },
       });
     }
-  }, [seconds, loading, data, history]);
+  }, [search, seconds, loading, data, history]);
 
   React.useLayoutEffect(() => {
     theme.updateTheme({ background: "white" });

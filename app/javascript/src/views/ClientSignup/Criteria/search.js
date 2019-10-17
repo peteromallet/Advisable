@@ -11,6 +11,7 @@ export default gql`
       bio
       location
       hourlyRate
+      skills
     }
   }
 `;

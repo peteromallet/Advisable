@@ -39,7 +39,12 @@ export const StyledSideScrollerInner = styled.div`
   /* scroll-padding: 60px; */
   padding-top: 30px;
   padding-bottom: 40px;
+  scrollbar-width: none !important;
   /* scroll-snap-type: x mandatory; */
+
+  &::-moz-scrollbar {
+    display: none;
+  }
 
   &::-webkit-scrollbar {
     display: none;
