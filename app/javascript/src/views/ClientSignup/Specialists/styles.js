@@ -3,7 +3,7 @@ import { Card } from "@advisable/donut";
 
 export const StyledSpecialist = styled(Card.Styled)`
   width: 320px;
-  height: 480px;
+  height: 470px;
   padding: 25px;
   margin-right: 28px;
   border-radius: 12px;
@@ -17,7 +17,7 @@ export const Header = styled.div`
   display: flex;
   padding: 0 20px;
   background: white;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0px 1px 2px rgba(23, 23, 34, 0.08);

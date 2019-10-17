@@ -3,15 +3,16 @@ import styled from "styled-components";
 import { theme } from "@advisable/donut";
 
 const Tag = styled.div`
-  height: 20px;
+  height: 22px;
   margin-right: 4px;
   margin-bottom: 4px;
   display: inline-flex;
   color: ${theme.colors.yellow[7]};
   background: ${theme.colors.yellow[0]};
-  border-radius: 6px;
-  padding: 0 8px;
-  font-size: 12px;
+  border-radius: 8px;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 400;
   align-items: center;
 `;
 
@@ -25,7 +26,7 @@ const TagCloud = ({ tags, maxRows }) => {
     if (!maxRows) return;
     if (min >= max) return;
 
-    if (ref.current.offsetHeight <= maxRows * 24) {
+    if (ref.current.offsetHeight <= maxRows * 26) {
       setMin(midPoint);
     } else {
       setMax(midPoint);

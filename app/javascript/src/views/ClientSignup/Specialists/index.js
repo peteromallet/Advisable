@@ -7,6 +7,7 @@ import { SlideInUp } from "../../../components/Animations";
 import Logo from "../../../components/Logo";
 import SearchingIndicator from "../../../components/SearchingIndicator";
 import Heading from "./Heading";
+import EmailModal from "./EmailModal";
 import Specialist from "./Specialist";
 import SideScroller from "./SideScroller";
 import { Header, StyledSpecialist } from "./styles";
@@ -17,6 +18,7 @@ const Specailists = () => {
   const search = get(location, "state.search");
   const specialists = get(location, "state.results");
   const [selected, updateSelected] = React.useState([]);
+  const [emailModal, setEmailModal] = React.useState(false);
 
   const toggleSelected = id => {
     if (selected.indexOf(id) > -1) {
@@ -26,10 +28,11 @@ const Specailists = () => {
     }
   };
 
-  const handleContinue = () => {};
+  const handleContinue = () => setEmailModal(true);
 
   return (
     <>
+      <EmailModal isOpen={emailModal} onClose={() => setEmailModal(false)} />
       <Header>
         <Logo />
         <Button
@@ -43,7 +46,7 @@ const Specailists = () => {
       </Header>
       <Box maxWidth={700} ml="xxl">
         <Heading search={search} results={specialists} />
-        <Text size="s" color="neutral.7" lineHeight="s">
+        <Text size="s" color="neutral.6" lineHeight="s">
           {t("clientSignup.resultsSubHeading", { count: specialists.length })}
         </Text>
       </Box>
@@ -75,6 +78,7 @@ const Specailists = () => {
                 intent="success"
                 appearance="primary"
                 iconRight="arrow-right"
+                onClick={handleContinue}
               >
                 Continue
               </Button>

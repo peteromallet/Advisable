@@ -47,7 +47,7 @@ const Specialist = ({ specialist, onSelect, isSelected }) => {
         </Box>
       </Box>
       <Text fontSize="xxs" lineHeight="xs" color="neutral.6" mb="m">
-        {truncate(specialist.bio, { length: 250 })}
+        {truncate(specialist.bio, { length: 210 })}
       </Text>
       <TagCloud maxRows={2} tags={specialist.skills} />
       <Box position="absolute" bottom={25} left={25} right={25} display="flex">
