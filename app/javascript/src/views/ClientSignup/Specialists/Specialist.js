@@ -42,8 +42,8 @@ const Specialist = ({ specialist, onSelect, isSelected }) => {
         <Box width="50%" pl="xxs">
           <SpecialistModal
             isOpen={viewMore}
+            specialistId={specialist.id}
             onClose={() => setViewMore(null)}
-            specialist={specialist}
           />
           <Button
             width="100%"

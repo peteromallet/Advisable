@@ -133,7 +133,9 @@ class Types::QueryType < Types::BaseType
   end
 
   def specialist(id: )
-    Specialist.find_by_airtable_id!(id)
+    specialist = Specialist.find_by_uid(id)
+    specialist = Specialist.find_by_airtable_id!(id) if specialist.nil?
+    specialist
   end
 
   field :industries, [Types::IndustryType], null: false

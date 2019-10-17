@@ -56,11 +56,13 @@ const PreviousProject = ({ previousProject, specialistId }) => {
           </Box>
         )}
 
-        <Text mb="l" fontSize="s" lineHeight="s" color="neutral.7">
-          {truncate(project.description, { length: 380, separator: " " })}
-        </Text>
+        {project.description && (
+          <Text mb="l" fontSize="s" lineHeight="s" color="neutral.7">
+            {truncate(project.description, { length: 380, separator: " " })}
+          </Text>
+        )}
 
-        {reviews.length > 0 && (
+        {reviews && reviews.length > 0 && (
           <Spacing paddingBottom="xl">
             {reviews.map(review => (
               <Review
