@@ -40,35 +40,30 @@ const Searching = ({ search }) => {
   }, []);
 
   return (
-    <Box paddingRight={{ _: null, l: 550 }}>
-      <Box maxWidth={600} margin="0 auto" px="m">
-        <Box py="xl">
-          <Logo />
-        </Box>
-
-        <Box
-          padding="xl"
-          borderRadius={12}
-          border="1px solid"
-          textAlign="center"
-          borderColor="neutral.1"
-        >
-          <Box mt="m" mb="xl">
-            <SearchingIndicator />
-          </Box>
-
-          <Text fontSize="m" color="neutral.9" mb="xxs" fontWeight="medium">
-            Looking for specialists...
-          </Text>
-
-          <Text fontSize="s" lineHeight="s" color="neutral.7">
-            Please wait while we find specialists matching your criteria. This
-            should only take a few seconds.
-          </Text>
-        </Box>
+    <Box maxWidth={600} margin="0 auto" px="m">
+      <Box py="xl">
+        <Logo />
       </Box>
-      <Box display={{ _: "none", l: "block" }}>
-        <Testimonials />
+
+      <Box
+        padding="xl"
+        borderRadius={12}
+        border="1px solid"
+        textAlign="center"
+        borderColor="neutral.1"
+      >
+        <Box mt="m" mb="xl">
+          <SearchingIndicator />
+        </Box>
+
+        <Text fontSize="m" color="neutral.9" mb="xxs" fontWeight="medium">
+          Looking for specialists...
+        </Text>
+
+        <Text fontSize="s" lineHeight="s" color="neutral.7">
+          Please wait while we find specialists matching your criteria. This
+          should only take a few seconds.
+        </Text>
       </Box>
     </Box>
   );
