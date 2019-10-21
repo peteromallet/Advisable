@@ -5,10 +5,10 @@ import { Status as Wrapper } from "./styles";
 const Status = ({ children, icon, styling }) => {
   return (
     <Wrapper styling={styling}>
-      {icon && <Icon height={16} icon={icon} />}
+      {icon && <Icon height={14} strokeWidth={1.5} icon={icon} />}
       {children}
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Status
+export default Status;

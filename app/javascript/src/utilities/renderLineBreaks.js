@@ -3,6 +3,8 @@ import React from "react";
 // Takes a given string and splits it up into multiple react fragments
 // when ever there is a line break.
 const renderLineBreaks = content => {
+  if (!content) return null;
+
   return content
     .replace(/<br\s\/>/g, "\n")
     .split("\n")

@@ -9,6 +9,10 @@ const Text = ({ children, size, weight, ...rest }) => {
   );
 };
 
+Text.defaultProps = {
+  fontWeight: "regular",
+};
+
 Text.Styles = TextStyles;
 Text.Styled = TextStyles;
 
