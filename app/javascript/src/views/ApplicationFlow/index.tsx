@@ -36,7 +36,7 @@ export default (props: RouteComponentProps<Params>): React.ReactNode => {
     if (code === "recordNotFound") {
       return <NotFound />;
     } else {
-      throw query.error.graphQLErrors[0].message;
+      throw query.error.message;
     }
   }
 
