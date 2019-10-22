@@ -47,6 +47,8 @@ class Specialists::Search < ApplicationService
   def filter_company_type(query)
     return query if company_type.nil?
     joined = query.left_outer_joins(:off_platform_projects, :projects)
-    joined.where(off_platform_projects: { company_type: company_type })
+    joined.where(off_platform_projects: { company_type: company_type }).or(
+      joined.where(projects: { company_type: company_type })
+    )
   end
 end
