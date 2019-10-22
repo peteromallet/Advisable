@@ -10,10 +10,15 @@ class Application < ApplicationRecord
   has_many :references, class_name: 'ApplicationReference'
   has_one :interview
 
-  # Every time a project is created, updated or destroyed we want to update the
-  # associated specialists project count.
+  # Every time an application is created, updated or destroyed we want to update
+  # the associated specialists project count.
   after_save :update_specialist_project_count
   after_destroy :update_specialist_project_count
+
+  # Every time an application is created, updated or destroyed we want to update
+  # the assoicated specialists average_score.
+  after_save :update_specialist_average_score
+  after_destroy :update_specialist_average_score
 
   scope :accepted_fees, -> { where(accepts_fee: true) }
   scope :accepted_terms, -> { where(accepts_terms: true) }
@@ -54,5 +59,10 @@ class Application < ApplicationRecord
   def update_specialist_project_count
     return unless specialist.present?
     specialist.update_project_count
+  end
+
+  def update_specialist_average_score
+    return unless specialist.present?
+    specialist.update(average_score: specialist.applications.average(:score))
   end
 end
