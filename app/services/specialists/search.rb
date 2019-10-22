@@ -1,9 +1,10 @@
 # Calculates the average ratings for a specialist from their reviews.
 class Specialists::Search < ApplicationService
-  attr_accessor :skill
+  attr_accessor :skill, :industry
 
-  def initialize(skill:)
+  def initialize(skill:, industry:)
     @skill = skill
+    @industry = industry
   end
 
   def call
@@ -14,14 +15,28 @@ class Specialists::Search < ApplicationService
   private
 
   def by_skills
-    Specialist.joins(:skills).where(skills: { name: skill })
+    query = Specialist.joins(:skills).where(skills: { name: skill })
+    query = filter_industry(query)
+    query
   end
 
   def by_projects
-    Specialist.joins(projects: :skills).where(projects: { skills: { name: skill }})
+    query = Specialist.joins(projects: :skills).where(projects: { skills: { name: skill }})
+    query = filter_industry(query)
+    query
   end
 
   def by_off_platform_projects
-    Specialist.joins(off_platform_projects: :skills).where(off_platform_projects: { skills: { name: skill }})
+    query = Specialist.joins(off_platform_projects: :skills).where(off_platform_projects: { skills: { name: skill }})
+    query = filter_industry(query)
+    query
+  end
+
+  def filter_industry(query)
+    return query if industry.nil?
+    joined = query.left_outer_joins(:off_platform_projects, :projects)
+    joined.where(off_platform_projects: { industry: industry }).or(
+      joined.where(projects: { industry: industry })
+    )
   end
 end

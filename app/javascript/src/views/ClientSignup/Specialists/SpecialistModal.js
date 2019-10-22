@@ -103,37 +103,50 @@ const SpecialistModal = ({ isOpen, onClose, specialistId }) => {
                   />
                 </Box>
                 <Text
-                  color="neutral.9"
-                  fontSize="xl"
-                  fontWeight="medium"
                   mb="xxs"
+                  fontSize="xxl"
+                  color="neutral.9"
+                  fontWeight="semibold"
+                  letterSpacing="-0.02rem"
                 >
                   {specialist.name}
                 </Text>
-                <Text color="neutral.6" fontSize="xs">
+                <Text color="neutral.6" fontSize="s" letterSpacing="-0.015rem">
                   {specialist.location}
                 </Text>
                 <SpecialistAttributes specialist={specialist} />
-                <Text fontSize="xs" lineHeight="s" color="neutral.6" mb="m">
-                  {specialist.bio}
+                <Text
+                  mb="m"
+                  fontSize={15}
+                  fontWeight={400}
+                  color="neutral.7"
+                  lineHeight={1.35}
+                  letterSpacing="-0.01rem"
+                >
+                  We offer breakfast daily, included in the room price, help to
+                  plan tours and make. {specialist.bio}
                 </Text>
                 <TagCloud tags={specialist.skills} />
               </Box>
-              <Text
-                as="h4"
-                pl="l"
-                fontSize="xl"
-                color="neutral.8"
-                letterSpacing="-0.03rem"
-                fontWeight="semibold"
-              >
-                Previous Projects
-              </Text>
-              <PreviousProjects
-                showValidationStatus={false}
-                specialistId={specialist.airtableId}
-                previousProjects={specialist.previousProjects}
-              />
+              {specialist.previousProjects.length > 0 && (
+                <>
+                  <Text
+                    as="h4"
+                    pl="l"
+                    fontSize="xl"
+                    color="neutral.8"
+                    letterSpacing="-0.03rem"
+                    fontWeight="semibold"
+                  >
+                    Previous Projects
+                  </Text>
+                  <PreviousProjects
+                    showValidationStatus={false}
+                    specialistId={specialist.airtableId}
+                    previousProjects={specialist.previousProjects}
+                  />
+                </>
+              )}
             </Box>
           )}
         </Scrollable>

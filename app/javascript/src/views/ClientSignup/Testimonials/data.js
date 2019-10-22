@@ -9,7 +9,7 @@ const TESTIMONIALS = [
     name: "Yolanda Taylor",
     role: "Managing Director",
     company: "Prio Wealth",
-    content: "Advisable made it all easy",
+    content: "Advisable made it all easy.",
     logo: prioWealth,
   },
   {
@@ -17,7 +17,7 @@ const TESTIMONIALS = [
     role: "VP of Marketing",
     company: "TravelPerk",
     content:
-      "Advisable found us the precise marketing specialist we needed, almost over night",
+      "Advisable found us the precise marketing specialist we needed, almost over night.",
     logo: travelPerk,
   },
   {
@@ -40,7 +40,7 @@ const TESTIMONIALS = [
     name: "Serena Li",
     role: "Senior Research Manager",
     company: "Babbel",
-    content: "Highly efficient to find the right candidate",
+    content: "Highly efficient to find the right candidate.",
     logo: babbel,
   },
 ];

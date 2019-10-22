@@ -172,9 +172,10 @@ class Types::QueryType < Types::BaseType
 
   field :specialists, [Types::SpecialistType], null: false do
     argument :skill, String, required: true
+    argument :industry, String, required: false
   end
 
-  def specialists(skill:)
-    Specialists::Search.call(skill: skill)
+  def specialists(skill:, industry: nil)
+    Specialists::Search.call(skill: skill, industry: industry)
   end
 end
