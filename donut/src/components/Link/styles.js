@@ -1,10 +1,13 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 import { space } from "styled-system";
 import theme from "../../theme";
 
-export const LinkStyles = styled(Link)`
-  ${space}
+// There is some funky stuff going on with the new release of react-router-dom
+// not playing nicely with styled-components as prop. Because of this we have
+// added a .External sub component to use non react router links.
+const styles = css`
+  ${space};
 
   font-weight: 400;
   align-items: center;
@@ -16,6 +19,14 @@ export const LinkStyles = styled(Link)`
   &:hover {
     color: ${theme.colors.blue[8]};
   }
+`;
+
+export const LinkStyles = styled(Link)`
+  ${styles}
+`;
+
+LinkStyles.External = styled.a`
+  ${styles}
 `;
 
 export default LinkStyles;
