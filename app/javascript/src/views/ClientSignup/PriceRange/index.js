@@ -10,7 +10,7 @@ const PriceRange = () => {
   const location = useLocation();
   const history = useHistory();
   const results = get(location, "state.results");
-  const byPriceRange = groupByPriceRange(results);
+  const byPriceRange = groupByPriceRange(results.nodes);
 
   React.useEffect(() => {
     if (results.length < 6) {

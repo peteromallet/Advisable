@@ -267,3 +267,18 @@ class Types::SpecialistType < Types::BaseType
     description "The account status for the specialist"
   end
 end
+
+
+class Types::SpecialistEdgeType < GraphQL::Types::Relay::BaseEdge
+  node_type(Types::SpecialistType)
+end
+
+class Types::SpecialistConnection < GraphQL::Types::Relay::BaseConnection
+  edge_type(Types::SpecialistEdgeType)
+
+  field :total_count, Integer, null: false
+
+  def total_count
+    object.nodes.size
+  end
+end

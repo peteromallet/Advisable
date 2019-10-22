@@ -16,7 +16,7 @@ const Specailists = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const search = get(location, "state.search");
-  const specialists = get(location, "state.results");
+  const results = get(location, "state.results");
   const [selected, updateSelected] = React.useState([]);
   const [emailModal, setEmailModal] = React.useState(false);
 
@@ -45,13 +45,13 @@ const Specailists = () => {
         </Button>
       </Header>
       <Box maxWidth={700} ml="xxl">
-        <Heading search={search} results={specialists} />
+        <Heading search={search} results={results} />
         <Text size="s" color="neutral.6" lineHeight="s">
-          {t("clientSignup.resultsSubHeading", { count: specialists.length })}
+          {t("clientSignup.resultsSubHeading", { count: results.nodes.length })}
         </Text>
       </Box>
       <SideScroller>
-        {specialists.map((specialist, i) => (
+        {results.nodes.map((specialist, i) => (
           <SlideInUp key={specialist.id} duration="300ms" delay={`${i * 40}ms`}>
             <Specialist
               specialist={specialist}

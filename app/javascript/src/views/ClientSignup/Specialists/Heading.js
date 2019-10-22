@@ -16,7 +16,7 @@ const Heading = ({ search, results }) => {
     translationKey = "clientSignup.resultsHeading";
   }
 
-  let text = t(translationKey, { ...search });
+  let text = t(translationKey, { ...search, total: results.totalCount });
 
   return (
     <Text as="h2" mb="xs" fontSize="xxl" lineHeight="xl" fontWeight="medium">

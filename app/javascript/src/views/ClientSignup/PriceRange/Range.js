@@ -14,7 +14,10 @@ const Range = ({ name, icon, specialists }) => {
       pathname: "/clients/signup/specialists",
       state: {
         ...location.state,
-        results: specialists,
+        results: {
+          ...location.state.results,
+          nodes: specialists,
+        },
       },
     });
   };

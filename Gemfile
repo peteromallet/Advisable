@@ -61,6 +61,8 @@ gem 'nanoid'
 gem "aws-sdk-s3", require: false
 gem 'image_processing', '~> 1.2'
 
+gem 'kaminari'
+
 
 group :development, :test do
   gem 'pry'

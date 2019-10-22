@@ -170,12 +170,28 @@ class Types::QueryType < Types::BaseType
     OffPlatformProject.find_by_uid!(id)
   end
 
-  field :specialists, [Types::SpecialistType], null: false do
+  field :specialists, Types::SpecialistConnection, null: false, max_page_size: 25 do
+    description <<~HEREDOC
+      Returns a list of specialists that match a given search criteria.
+    HEREDOC
+
     argument :skill, String, required: true do
-      description "Filters specialists by a given skill"
+      description "Filters specialists by a given skill."
     end
-    argument :industry, String, required: false
-    argument :company_type, String, required: false
+
+    argument :industry, String, required: false do
+      description <<~HEREDOC
+        If provided will only return specialists that have previous projects
+        working in the given industry.
+      HEREDOC
+    end
+
+    argument :company_type, String, required: false do
+      description <<~HEREDOC
+        If provided will only return specialists that have previous projects
+        working with the given company type.
+      HEREDOC
+    end
   end
 
   def specialists(skill:, industry: nil, company_type: nil)

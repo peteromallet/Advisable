@@ -95,10 +95,10 @@
     }
   },
   "clientSignup": {
-    "resultsHeading": "We have N {{skill, lowercase}} specialists.",
-    "resultsHeadingWithType": "We have N {{skill, lowercase}} specialists with experience working with $t(companyTypes.{{companyType}}_plural).",
-    "resultsHeadingWithIndustry": "We have N {{skill, lowercase}} specialists with experience working with {{industry, lowercase}} companies.",
-    "resultsHeadingWithIndustryAndType": "We have N {{skill, lowercase}} specialists with experience working with {{industry, lowercase}} $t(companyTypes.{{companyType}}_plural).",
+    "resultsHeading": "We have {{total}} {{skill, lowercase}} specialists.",
+    "resultsHeadingWithType": "We have {{total}} {{skill, lowercase}} specialists with experience working with $t(companyTypes.{{companyType}}_plural).",
+    "resultsHeadingWithIndustry": "We have {{total}} {{skill, lowercase}} specialists with experience working with {{industry, lowercase}} companies.",
+    "resultsHeadingWithIndustryAndType": "We have {{total}} {{skill, lowercase}} specialists with experience working with {{industry, lowercase}} $t(companyTypes.{{companyType}}_plural).",
     "resultsSubHeading": "Here are {{count}} of the best. Select any specialists that you are interested in and we'll invite them to apply once your project is live."
   },
   "companyTypes": {
