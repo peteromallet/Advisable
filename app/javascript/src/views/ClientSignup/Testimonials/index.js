@@ -7,7 +7,7 @@ import useInterval from "../../../hooks/useInterval";
 import StarRating from "./StarRating";
 import trustpilot from "./trustpilot.png";
 
-const DELAY = 3000;
+const DELAY = 4000;
 
 const Testimonials = () => {
   const [current, setCurrent] = React.useState(0);
@@ -104,6 +104,7 @@ const Testimonials = () => {
           right={0}
           bottom={0}
           css={`
+            background-size: cover;
             background-image: url(${background});
           `}
         />
