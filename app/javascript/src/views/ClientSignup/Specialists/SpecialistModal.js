@@ -23,7 +23,10 @@ const GET_DATA = gql`
       bio
       location
       hourlyRate
-      skills
+      skills(projectSkills: true) {
+        name
+        verified
+      }
       previousProjectsCount
       reviewsCount
       ratings {
@@ -126,7 +129,10 @@ const SpecialistModal = ({ isOpen, onClose, specialistId }) => {
                   We offer breakfast daily, included in the room price, help to
                   plan tours and make. {specialist.bio}
                 </Text>
-                <TagCloud tags={specialist.skills} />
+                <TagCloud
+                  tags={specialist.skills}
+                  name={specialist.firstName}
+                />
               </Box>
               {specialist.previousProjects.length > 0 && (
                 <>

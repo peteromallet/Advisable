@@ -19,7 +19,7 @@ const StyledTooltipReference = styled(TooltipReference)`
 const TooltipContent = styled.div`
   color: white;
   font-size: 14px;
-  max-width: 360px;
+  max-width: 320px;
   padding: 12px 14px;
   line-height: 20px;
   border-radius: 12px;
@@ -104,6 +104,8 @@ const Tooltip = ({
     unstable_animated: 200,
     placement,
   });
+
+  if (!content) return children;
 
   return (
     <StyledTooltipReference {...tooltip}>

@@ -26,7 +26,11 @@ const Specialist = ({ specialist, onSelect, isSelected }) => {
       <Text fontSize="xxs" lineHeight="xs" color="neutral.6" mb="m">
         <LineClamp maxHeight={100}>{specialist.bio}</LineClamp>
       </Text>
-      <TagCloud maxRows={2} tags={specialist.skills} />
+      <TagCloud
+        maxRows={2}
+        tags={specialist.skills}
+        name={specialist.firstName}
+      />
       <Box position="absolute" bottom={25} left={25} right={25} display="flex">
         <Box width="50%" pr="xxs">
           <Button

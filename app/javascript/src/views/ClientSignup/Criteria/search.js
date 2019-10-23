@@ -13,7 +13,10 @@ export default gql`
         bio
         location
         hourlyRate
-        skills
+        skills(projectSkills: true) {
+          name
+          verified
+        }
         previousProjectsCount
         reviewsCount
         ratings {

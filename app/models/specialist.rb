@@ -7,9 +7,15 @@ class Specialist < ApplicationRecord
 
   has_many :applications
   has_many :projects, through: :applications
+  # Successful applications are applications that are either working or stopped working
+  has_many :successful_applications, -> { where(status: ["Working", "Stopped Working"])}, class_name: "Application"
+  has_many :successful_projects, through: :successful_applications, source: :project
+  has_many :project_skills, through: :successful_projects, source: :skills
 
-  has_many :specialist_skills
   has_many :off_platform_projects
+  has_many :off_platform_project_skills, through: :off_platform_projects, source: :skills
+  
+  has_many :specialist_skills
   has_many :skills, through: :specialist_skills
 
   has_one_attached :avatar

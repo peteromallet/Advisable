@@ -128,6 +128,18 @@ const colors = {
     "#771409",
     "#4A0D05",
   ],
+  orange: [
+    "#FFF8F1",
+    "#FFF2E7",
+    "#FFE2C8",
+    "#FFC693",
+    "#FFA552",
+    "#FF7A00",
+    "#DF6B00",
+    "#AD5300",
+    "#783A00",
+    "#3F1E00",
+  ],
 };
 
 export default {

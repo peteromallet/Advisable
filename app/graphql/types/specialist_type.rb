@@ -94,12 +94,34 @@ class Types::SpecialistType < Types::BaseType
     object.image.try(:[], "url")
   end
 
-  field :skills, [String, null: true], null: true do
+  field :skills, [Types::SpecialistSkillType, null: true], null: true do
     description "A list of skills that the specialist possesses"
+    argument :project_skills, Boolean, required: false
   end
 
-  def skills
-    object.skills.map(&:name)
+  # Specialist can have skills from multiple places:
+  # - Direct skills they have added to their profile. Associated via
+  # SpecialistSkill records.
+  # - Skills associated to projects that they have worked on
+  # - Skills associated to off platform projects they have added
+  # By default the skills field will only show direct skills, however, you can
+  # include project skills by specifying the project_skills argument.
+  def skills(project_skills: false)
+    records = begin
+      if project_skills
+        (
+          object.skills +
+          object.project_skills +
+          object.off_platform_project_skills
+        ).uniq
+      else
+        object.skills
+      end
+    end
+
+    records.map do |skill|
+      OpenStruct.new(specialist: object, skill: skill)
+    end
   end
 
   field :ratings, Types::Ratings, null: false do
