@@ -1,0 +1,2 @@
+class ProjectContent < ApplicationRecord
+end
