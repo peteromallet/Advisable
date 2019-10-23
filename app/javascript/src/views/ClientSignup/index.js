@@ -6,12 +6,14 @@ import PriceRange from "./PriceRange";
 import Specialists from "./Specialists";
 import Testimonials from "./Testimonials";
 
+// Renders the various stages of the client signup flow.
 const ClientSignup = () => {
   const location = useLocation();
   const isResultsPath = matchPath(location.pathname, {
     path: "/clients/signup/specialists",
   });
 
+  // We don't want the testimonials sidebar to show on the final 'results' view.
   const showTestimonials = !isResultsPath;
 
   return (
