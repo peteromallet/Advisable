@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_16_082746) do
+ActiveRecord::Schema.define(version: 2019_10_23_090929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,6 +159,41 @@ ActiveRecord::Schema.define(version: 2019_10_16_082746) do
     t.string "alpha2"
   end
 
+  create_table "featured_specialist_contents", force: :cascade do |t|
+    t.string "airtable_id"
+    t.string "name"
+    t.jsonb "skill"
+    t.string "specialist"
+    t.string "specialist_skills"
+    t.text "featured_biography"
+    t.integer "featured_specialist_score"
+    t.string "featured_specialist_status"
+    t.string "specialist_id"
+    t.string "skill_id"
+    t.string "micro_niche_description"
+    t.string "companies_worked_with"
+    t.string "examples_of_services"
+    t.string "specialist_image"
+    t.string "specialist_city"
+    t.string "specialist_country"
+    t.jsonb "page_skills"
+    t.datetime "featured_specialist_status_applied"
+    t.datetime "featured_specialist_status_reviewed"
+    t.datetime "featured_specialist_status_posted"
+    t.datetime "featured_specialist_status_rejected"
+    t.jsonb "secondary_skills"
+    t.integer "micro_niche_rating"
+    t.integer "featured_biography_character_length"
+    t.string "name_of_freelancers_with_high_score"
+    t.string "edited"
+    t.integer "number_of_pages_featured_on"
+    t.string "first_30_characters"
+    t.string "specialist_image_real"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["airtable_id"], name: "index_featured_specialist_contents_on_airtable_id"
+  end
+
   create_table "industries", force: :cascade do |t|
     t.string "name"
     t.string "uid"
@@ -237,6 +272,41 @@ ActiveRecord::Schema.define(version: 2019_10_16_082746) do
     t.index ["project_id"], name: "index_payments_on_project_id"
     t.index ["source_id"], name: "index_payments_on_source_id"
     t.index ["uid"], name: "index_payments_on_uid"
+  end
+
+  create_table "project_contents", force: :cascade do |t|
+    t.string "airtable_id"
+    t.string "project_id"
+    t.text "project_description"
+    t.string "specialist_review_comment"
+    t.string "specialist_image"
+    t.integer "specialist_review_score"
+    t.string "specialist_id"
+    t.string "specialist_first_name"
+    t.string "specialist_last_name"
+    t.string "client_industry"
+    t.string "client_contact_first_name"
+    t.string "client_contact_last_name"
+    t.string "client_name"
+    t.string "client_contact_job_title"
+    t.string "okay_with_naming_client"
+    t.jsonb "skills_required"
+    t.jsonb "pages_featured_on"
+    t.integer "featured_project_score"
+    t.string "suitable_for_freelancers_page"
+    t.string "client_logo"
+    t.string "project_type"
+    t.jsonb "primary_skill"
+    t.integer "specialist_review_comment_length"
+    t.string "okay_to_use_publicly"
+    t.string "specialist_city"
+    t.string "specialist_country"
+    t.string "our_talent_page"
+    t.integer "project_description_length"
+    t.string "status"
+    t.string "specialist_image_real"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "project_skills", force: :cascade do |t|
@@ -394,6 +464,7 @@ ActiveRecord::Schema.define(version: 2019_10_16_082746) do
     t.string "referrer"
     t.string "confirmation_token"
     t.decimal "average_score"
+    t.integer "project_count"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
