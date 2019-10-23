@@ -11,13 +11,6 @@ const DELAY = 4000;
 
 const Testimonials = () => {
   const [current, setCurrent] = React.useState(0);
-  const [imageLoaded, setImageLoaded] = React.useState(false);
-
-  React.useEffect(() => {
-    const img = new Image();
-    img.onload = () => setImageLoaded(true);
-    img.src = background;
-  }, []);
 
   const { resetInterval } = useInterval(() => {
     if (current === TESTIMONIALS.length - 1) {
@@ -95,20 +88,18 @@ const Testimonials = () => {
           ))}
         </Logos>
       </Box>
-      {imageLoaded && (
-        <Box
-          zIndex={1}
-          position="absolute"
-          top={0}
-          left={0}
-          right={0}
-          bottom={0}
-          css={`
-            background-size: cover;
-            background-image: url(${background});
-          `}
-        />
-      )}
+      <Box
+        zIndex={1}
+        position="absolute"
+        top={0}
+        left={0}
+        right={0}
+        bottom={0}
+        css={`
+          background-size: cover;
+          background-image: url(${background});
+        `}
+      />
     </Box>
   );
 };
