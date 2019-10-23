@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { useLocation, Redirect } from "react-router-dom";
 import { Box, Text, Button } from "@advisable/donut";
 import { SlideInUp } from "../../../components/Animations";
 import Logo from "../../../components/Logo";
@@ -19,6 +19,10 @@ const Specailists = () => {
   const results = get(location, "state.results");
   const [selected, updateSelected] = React.useState([]);
   const [emailModal, setEmailModal] = React.useState(false);
+
+  if (!results) {
+    return <Redirect to="/clients/signup" />;
+  }
 
   const toggleSelected = id => {
     if (selected.indexOf(id) > -1) {

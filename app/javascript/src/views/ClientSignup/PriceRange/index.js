@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, Redirect } from "react-router-dom";
 import { Box, Text } from "@advisable/donut";
 import Logo from "../../../components/Logo";
 import groupByPriceRange from "./groupByPriceRange";
@@ -10,7 +10,11 @@ const PriceRange = () => {
   const location = useLocation();
   const history = useHistory();
   const results = get(location, "state.results");
-  const byPriceRange = groupByPriceRange(results.nodes);
+  const byPriceRange = results ? groupByPriceRange(results.nodes) : [];
+
+  if (!results) {
+    return <Redirect to="/clients/signup" />;
+  }
 
   React.useEffect(() => {
     if (results.length < 6) {

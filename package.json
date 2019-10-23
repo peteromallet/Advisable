@@ -2,7 +2,7 @@
   "name": "advisable",
   "private": true,
   "dependencies": {
-    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-react": "^7.6.3",
     "@babel/preset-typescript": "^7.3.3",
     "@rails/activestorage": "^6.0.0-alpha",
     "@rails/webpacker": "4.0.7",
