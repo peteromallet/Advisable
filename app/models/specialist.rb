@@ -15,7 +15,7 @@ class Specialist < ApplicationRecord
   has_many :off_platform_projects
   has_many :off_platform_project_skills, through: :off_platform_projects, source: :skills
   
-  has_many :specialist_skills
+  has_many :specialist_skills, dependent: :destroy
   has_many :skills, through: :specialist_skills
 
   has_one_attached :avatar

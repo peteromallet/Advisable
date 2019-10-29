@@ -10,20 +10,21 @@ const PriceRange = () => {
   const location = useLocation();
   const history = useHistory();
   const results = get(location, "state.results");
-  const byPriceRange = results ? groupByPriceRange(results.nodes) : [];
-
-  if (!results) {
-    return <Redirect to="/clients/signup" />;
-  }
 
   React.useEffect(() => {
-    if (results.length < 6) {
+    if (results.nodes.length <= 6) {
       history.replace({
         pathname: "/clients/signup/specialists",
         state: location.state,
       });
     }
   }, [history, location, results]);
+
+  const byPriceRange = results ? groupByPriceRange(results.nodes) : [];
+
+  if (!results) {
+    return <Redirect to="/clients/signup" />;
+  }
 
   return (
     <Box maxWidth={600} margin="0 auto" px="m">
