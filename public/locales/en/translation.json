@@ -16,6 +16,7 @@
     "emailTaken": "This email address is already associated with an existing account.",
     "account_not_found": "Your account could not be found. You must first go through our application process.",
     "account_already_exists": "This account already exists",
+    "somethingWentWrong": "Something went wrong and your request was not processed correctly. Please try again."
     "authentication": {
       "failed": "Invalid login credentials, please try again."
     }

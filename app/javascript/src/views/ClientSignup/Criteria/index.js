@@ -21,14 +21,18 @@ const Criteria = () => {
   }, []);
 
   const handleSubmit = values => {
-    let searchInput = { skill: values.skill };
+    let searchInput = {
+      skill: values.skill,
+      industry: values.industry,
+      companyType: values.companyType,
+    };
 
     if (values.industryRequired) {
-      searchInput.industry = values.industry;
+      searchInput.industryRequired = true;
     }
 
     if (values.companyTypeRequired) {
-      searchInput.companyType = values.companyType;
+      searchInput.companyTypeRequired = true;
     }
 
     setSearch(searchInput);

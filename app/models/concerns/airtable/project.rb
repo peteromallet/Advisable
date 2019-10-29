@@ -73,7 +73,7 @@ class Airtable::Project < Airtable::Base
   end
 
   push_data do |project|
-    self['Client Contacts'] = [project.user.airtable_id] if project.saved_change_to_user_id?
+    self['Client Contacts'] = [project.user.try(:airtable_id)].compact
     self['Project Stage'] = project.status if !project.status.blank? && project.saved_change_to_status?
     self['Deposit Amount Required'] = project.deposit / 100.0 if project.saved_change_to_deposit?
     self['Deposit Amount Paid'] = project.deposit_paid / 100.0
@@ -89,6 +89,15 @@ class Airtable::Project < Airtable::Base
     self['Accepted Terms'] = project.accepted_terms if project.saved_change_to_accepted_terms_at?
     self['Skills Required'] = project.skills.map(&:airtable_id).uniq
     self['Primary Skill Required'] = project.primary_skill
+    self['Type of Company'] = project.company_type
+
+    # we currently store the industry in postgres as plain text but we need to
+    # setup the association in Airtable.
+    if project.industry.present?
+      self['Industry'] = [Industry.find_by_name(project.industry).try(:airtable_id)].compact
+    else
+      self['Industry'] = []
+    end
   end
 
   private

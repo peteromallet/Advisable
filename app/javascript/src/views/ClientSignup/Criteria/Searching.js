@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { Box, Text, useTheme } from "@advisable/donut";
 import Logo from "../../../components/Logo";
 import SearchingIndicator from "../../../components/SearchingIndicator";
-import Testimonials from "../Testimonials";
 import useInterval from "../../../hooks/useInterval";
 import SEARCH from "./search";
 
@@ -14,9 +13,18 @@ const Searching = ({ search }) => {
   const theme = useTheme();
   const history = useHistory();
   const [seconds, setSeconds] = React.useState(0);
-  const { loading, data } = useQuery(SEARCH, {
-    variables: search,
-  });
+
+  const variables = { skill: search.skill };
+
+  if (search.industryRequired) {
+    variables.industry = search.industry;
+  }
+
+  if (search.companyTypeRequired) {
+    variables.companyType = search.companyType;
+  }
+
+  const { loading, data } = useQuery(SEARCH, { variables });
 
   useInterval(() => {
     setSeconds(seconds + 1);

@@ -1,11 +1,20 @@
 import * as Yup from "yup";
 import React from "react";
+import { get } from "lodash";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
+import { useMutation } from "react-apollo";
 import { Formik, Form } from "formik";
 import { Box, Text, Button } from "@advisable/donut";
+import CREATE_ACCOUNT from "../createAccount";
 import Modal from "../../../components/Modal";
 import TextField from "../../../components/TextField";
 
 const EmailModal = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
+  const location = useLocation();
+  const [createAccount] = useMutation(CREATE_ACCOUNT);
+
   const initialValues = {
     email: "",
   };
@@ -15,6 +24,32 @@ const EmailModal = ({ isOpen, onClose }) => {
       .email("Please enter a valid email address")
       .required("Please enter your email address"),
   });
+
+  const handleSubmit = async (values, formik) => {
+    const response = await createAccount({
+      variables: {
+        input: {
+          skill: get(location, "state.search.skill"),
+          industry: get(location, "state.search.industry"),
+          companyType: get(location, "state.search.companyType"),
+          email: values.email,
+        },
+      },
+    });
+
+    if (response.errors) {
+      if (get(response.errors, "[0].extensions.code") === "emailTaken") {
+        formik.setFieldError("email", t("errors.emailTaken"));
+      } else {
+        formik.setStatus("errors.somethingWentWrong");
+      }
+
+      formik.setSubmitting(false);
+    } else {
+      const project = response.data.createUserAccount.project;
+      console.log(project);
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -27,6 +62,7 @@ const EmailModal = ({ isOpen, onClose }) => {
           your email to save your details so far.
         </Text>
         <Formik
+          onSubmit={handleSubmit}
           initialValues={initialValues}
           validationSchema={validationSchema}
         >
@@ -44,10 +80,16 @@ const EmailModal = ({ isOpen, onClose }) => {
                   error={formik.submitCount > 0 && formik.errors.email}
                 />
               </Box>
+              {formik.status && (
+                <Text color="red.6" fontSize="s" mb="m">
+                  {t(formik.status)}
+                </Text>
+              )}
               <Button
                 appearance="primary"
                 intent="success"
                 iconRight="arrow-right"
+                loading={formik.isSubmitting}
               >
                 Continue
               </Button>
