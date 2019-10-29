@@ -1,6 +1,8 @@
 import React from "react";
+import queryString from "query-string";
 import { Formik, Form } from "formik";
 import { useQuery } from "react-apollo";
+import { useLocation } from "react-router-dom";
 import { Box, Text, Autocomplete, Button, useTheme } from "@advisable/donut";
 import Logo from "../../../components/Logo";
 import Select from "../../../components/Select";
@@ -14,6 +16,8 @@ const Criteria = () => {
   const theme = useTheme();
   const formData = useQuery(GET_DATA);
   const [search, setSearch] = React.useState(null);
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search);
 
   React.useLayoutEffect(() => {
     theme.updateTheme({ background: "white" });
@@ -47,10 +51,10 @@ const Criteria = () => {
   }
 
   const initialValues = {
-    skill: "",
+    skill: queryParams.skill || "",
     industry: "",
     industryRequired: false,
-    companyType: "",
+    companyType: "Growth-Stage Startup",
     companyTypeRequired: false,
   };
 
