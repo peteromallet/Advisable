@@ -46,6 +46,11 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
   private
 
   def create_user(email: )
+    domain = email.split("@").last
+    if BlacklistedDomain.where(domain: domain).any?
+      raise ApiError::InvalidRequest.new("nonCorporateEmail", "The email #{email} is not allowed")
+    end
+
     user = User.new(email: email)
 
     unless user.valid?

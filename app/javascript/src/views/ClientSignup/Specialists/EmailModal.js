@@ -40,8 +40,11 @@ const EmailModal = ({ selected, isOpen, onClose }) => {
     formik.setSubmitting(false);
 
     if (response.errors) {
-      if (get(response.errors, "[0].extensions.code") === "emailTaken") {
+      const code = get(response.errors, "[0].extensions.code");
+      if (code === "emailTaken") {
         formik.setFieldError("email", t("errors.emailTaken"));
+      } else if (code === "nonCorporateEmail") {
+        formik.setFieldError("email", t("errors.nonCorporateEmail"));
       } else {
         formik.setStatus("errors.somethingWentWrong");
       }
