@@ -57,7 +57,7 @@ const EmailModal = ({ selected, isOpen, onClose }) => {
       if (selected.length > 0) {
         url += `&specialists=${selected.join(",")}`;
       }
-      window.location = url;
+      window.location.replace(url);
     }
   };
 

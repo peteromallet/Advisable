@@ -23,7 +23,7 @@ const Range = ({ name, icon, specialists }) => {
   };
 
   return (
-    <StyledRange onClick={handleClick}>
+    <StyledRange onClick={handleClick} aria-label={name}>
       <StyledRangeIcon>
         <Icon width={20} icon={icon} strokeWidth={1.6} color="blue.5" />
       </StyledRangeIcon>

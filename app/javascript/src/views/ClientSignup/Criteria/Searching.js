@@ -7,7 +7,7 @@ import SearchingIndicator from "../../../components/SearchingIndicator";
 import useInterval from "../../../hooks/useInterval";
 import SEARCH from "./search";
 
-const SECONDS = 4;
+const SECONDS = 3;
 
 const Searching = ({ search }) => {
   const theme = useTheme();
@@ -24,7 +24,7 @@ const Searching = ({ search }) => {
     variables.companyType = search.companyType;
   }
 
-  const { loading, data } = useQuery(SEARCH, { variables });
+  const { loading, data, error } = useQuery(SEARCH, { variables });
 
   useInterval(() => {
     setSeconds(seconds + 1);
