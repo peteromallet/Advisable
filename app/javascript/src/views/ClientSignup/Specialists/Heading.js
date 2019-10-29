@@ -7,19 +7,19 @@ const Heading = ({ search, results }) => {
 
   let translationKey;
   if (search.industryRequired && search.companyTypeRequired) {
-    translationKey = "clientSignup.resultsHeadingWithIndustryAndType";
+    translationKey = "clientSignup.resultsSubHeadingWithIndustryAndType";
   } else if (search.industryRequired) {
-    translationKey = "clientSignup.resultsHeadingWithIndustry";
+    translationKey = "clientSignup.resultsSubHeadingWithIndustry";
   } else if (search.companyTypeRequired) {
-    translationKey = "clientSignup.resultsHeadingWithType";
+    translationKey = "clientSignup.resultsSubHeadingWithType";
   } else {
-    translationKey = "clientSignup.resultsHeading";
+    translationKey = "clientSignup.resultsSubHeading";
   }
 
-  let text = t(translationKey, { ...search, total: results.totalCount });
+  let text = t(translationKey, { ...search, count: results.nodes.length });
 
   return (
-    <Text as="h2" mb="xs" fontSize="xxl" lineHeight="xl" fontWeight="medium">
+    <Text fontSize="s" lineHeight="s" color="neutral.7">
       {text}
     </Text>
   );

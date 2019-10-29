@@ -40,7 +40,7 @@ const Specialist = ({ specialist, onSelect, isSelected }) => {
             appearance={isSelected ? "primary" : "default"}
             intent="success"
           >
-            {isSelected ? "Invited" : "Invite"}
+            {isSelected ? "Added" : "Add"}
           </Button>
         </Box>
         <Box width="50%" pl="xxs">

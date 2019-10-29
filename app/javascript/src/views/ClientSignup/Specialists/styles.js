@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Card } from "@advisable/donut";
 
 export const StyledSpecialist = styled(Card.Styled)`
-  width: 320px;
+  width: 100%;
   height: 470px;
   padding: 25px;
   margin-right: 28px;

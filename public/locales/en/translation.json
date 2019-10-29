@@ -95,11 +95,11 @@
     }
   },
   "clientSignup": {
-    "resultsHeading": "We have {{total}} {{skill, lowercase}} specialists.",
-    "resultsHeadingWithType": "We have {{total}} {{skill, lowercase}} specialists with experience working with $t(companyTypes.{{companyType}}_plural).",
-    "resultsHeadingWithIndustry": "We have {{total}} {{skill, lowercase}} specialists with experience working with {{industry, lowercase}} companies.",
-    "resultsHeadingWithIndustryAndType": "We have {{total}} {{skill, lowercase}} specialists with experience working with {{industry, lowercase}} $t(companyTypes.{{companyType}}_plural).",
-    "resultsSubHeading": "Here are {{count}} of the best. Select any specialists that you are interested in and we'll invite them to apply once your project is live."
+    "resultsHeading": "Help us refine your search",
+    "resultsSubHeadingWithType": "Here are {{count}} {{skill, lowercase}} specialists with experience working with $t(companyTypes.{{companyType}}_plural). In order to help us refine our search, please select any specialists that you are interested in. Once your project is live, we’ll then invite them and others like them to apply.",
+    "resultsSubHeadingWithIndustry": "Here are {{count}} {{skill, lowercase}} specialists with experience working with {{industry, lowercase}} companies. In order to help us refine our search, please select any specialists that you are interested in. Once your project is live, we’ll then invite them and others like them to apply.",
+    "resultsSubHeadingWithIndustryAndType": "Here are {{count}} {{skill, lowercase}} specialists with experience working with {{industry, lowercase}} $t(companyTypes.{{companyType}}_plural). In order to help us refine our search, please select any specialists that you are interested in. Once your project is live, we’ll then invite them and others like them to apply.",
+    "resultsSubHeading": "Here are {{count}} {{skill, lowercase}} specialists that we think are a good fit for what you’re looking for. In order to help us refine our search, please select any specialists that you are interested in. Once your project is live, we’ll then invite them and others like them to apply."
   },
   "companyTypes": {
     "Individual Entrepreneur_plural": "individual entrepreneurs",

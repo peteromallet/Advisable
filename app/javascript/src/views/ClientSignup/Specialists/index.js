@@ -48,11 +48,17 @@ const Specailists = () => {
           Continue
         </Button>
       </Header>
-      <Box maxWidth={700} ml="xxl">
-        <Heading search={search} results={results} />
-        <Text size="s" color="neutral.6" lineHeight="s">
-          {t("clientSignup.resultsSubHeading", { count: results.nodes.length })}
+      <Box maxWidth={800} ml="xxl">
+        <Text
+          as="h2"
+          mb="xs"
+          fontSize="xxl"
+          lineHeight="xl"
+          fontWeight="semibold"
+        >
+          {t("clientSignup.resultsHeading")}
         </Text>
+        <Heading search={search} results={results} />
       </Box>
       <SideScroller>
         {results.nodes.map((specialist, i) => (
@@ -90,6 +96,17 @@ const Specailists = () => {
           </StyledSpecialist>
         </SlideInUp>
       </SideScroller>
+      <Box ml="xxl">
+        <Text fontSize="s" fontWeight="medium" mb="xxs">
+          Don't see anyone you like?
+        </Text>
+        <Text fontSize="xs" color="neutral.7" mb="s">
+          Don’t worry, we’ll handpick the perfect specialist for you.
+        </Text>
+        <Button appearance="outlined" onClick={handleContinue} mb="l">
+          Skip
+        </Button>
+      </Box>
     </>
   );
 };
