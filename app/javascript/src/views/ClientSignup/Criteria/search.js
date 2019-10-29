@@ -6,6 +6,7 @@ export default gql`
       totalCount
       nodes {
         id
+        airtableId
         name
         firstName
         hourlyRate

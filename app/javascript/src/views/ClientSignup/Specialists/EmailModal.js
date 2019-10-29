@@ -10,7 +10,7 @@ import CREATE_ACCOUNT from "../createAccount";
 import Modal from "../../../components/Modal";
 import TextField from "../../../components/TextField";
 
-const EmailModal = ({ isOpen, onClose }) => {
+const EmailModal = ({ selected, isOpen, onClose }) => {
   const { t } = useTranslation();
   const location = useLocation();
   const [createAccount] = useMutation(CREATE_ACCOUNT);
@@ -37,17 +37,24 @@ const EmailModal = ({ isOpen, onClose }) => {
       },
     });
 
+    formik.setSubmitting(false);
+
     if (response.errors) {
       if (get(response.errors, "[0].extensions.code") === "emailTaken") {
         formik.setFieldError("email", t("errors.emailTaken"));
       } else {
         formik.setStatus("errors.somethingWentWrong");
       }
-
-      formik.setSubmitting(false);
     } else {
       const project = response.data.createUserAccount.project;
-      console.log(project);
+      let url = "https://advisable.com/apply-to-be-a-client/";
+      url += `?pid=${project.airtableId}`;
+      url += `&email=${encodeURIComponent(values.email)}`;
+      url += `&skill=${get(location, "state.search.skill")}`;
+      if (selected.length > 0) {
+        url += `&specialists=${selected.join(",")}`;
+      }
+      window.location = url;
     }
   };
 

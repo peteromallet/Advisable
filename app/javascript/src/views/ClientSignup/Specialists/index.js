@@ -36,7 +36,11 @@ const Specailists = () => {
 
   return (
     <>
-      <EmailModal isOpen={emailModal} onClose={() => setEmailModal(false)} />
+      <EmailModal
+        isOpen={emailModal}
+        onClose={() => setEmailModal(false)}
+        selected={selected}
+      />
       <Header>
         <Logo />
         <Button
@@ -66,7 +70,7 @@ const Specailists = () => {
             <Specialist
               specialist={specialist}
               onSelect={toggleSelected}
-              isSelected={selected.indexOf(specialist.id) > -1}
+              isSelected={selected.indexOf(specialist.airtableId) > -1}
             />
           </SlideInUp>
         ))}

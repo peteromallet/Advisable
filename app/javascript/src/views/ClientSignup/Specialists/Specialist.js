@@ -36,7 +36,7 @@ const Specialist = ({ specialist, onSelect, isSelected }) => {
           <Button
             width="100%"
             icon={isSelected ? "check" : "plus"}
-            onClick={() => onSelect(specialist.id)}
+            onClick={() => onSelect(specialist.airtableId)}
             appearance={isSelected ? "primary" : "default"}
             intent="success"
           >
