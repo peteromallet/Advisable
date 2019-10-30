@@ -144,7 +144,7 @@ const TextField = ({
         {(charCount || maxLength) && <CharCount>{characterCount}</CharCount>}
       </InputContainer>
       {error && (
-        <Text size="xs" color="red.5" mt="xs">
+        <Text size="xs" lineHeight="xs" color="red.5" mt="xs">
           {error}
         </Text>
       )}

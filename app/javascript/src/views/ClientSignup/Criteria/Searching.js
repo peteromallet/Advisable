@@ -36,6 +36,7 @@ const Searching = ({ search }) => {
         pathname: "/clients/signup/price_range",
         state: {
           search,
+          selected: [],
           results: data.specialists,
         },
       });

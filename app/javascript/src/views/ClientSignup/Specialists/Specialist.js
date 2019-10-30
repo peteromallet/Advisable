@@ -1,7 +1,7 @@
 import React from "react";
 import { truncate } from "lodash";
 import { Box, Text, Button } from "@advisable/donut";
-import { StyledSpecialist } from "./styles";
+import { StyledSpecialist } from "../styles";
 import Avatar from "../../../components/Avatar";
 import LineClamp from "../../../components/LineClamp";
 import TagCloud from "./TagCloud";

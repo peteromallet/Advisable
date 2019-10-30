@@ -1,46 +1,55 @@
 import React from "react";
 import { get } from "lodash";
 import { useTranslation } from "react-i18next";
-import { useLocation, Redirect } from "react-router-dom";
+import { useLocation, useHistory, Redirect } from "react-router-dom";
 import { Box, Text, Button } from "@advisable/donut";
 import { SlideInUp } from "../../../components/Animations";
 import Logo from "../../../components/Logo";
 import SearchingIndicator from "../../../components/SearchingIndicator";
+import { Header, StyledSpecialist } from "../styles";
 import Heading from "./Heading";
-import EmailModal from "./EmailModal";
 import Specialist from "./Specialist";
 import SideScroller from "./SideScroller";
-import { Header, StyledSpecialist } from "./styles";
 
 const Specailists = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const history = useHistory();
   const search = get(location, "state.search");
   const results = get(location, "state.results");
-  const [selected, updateSelected] = React.useState([]);
-  const [emailModal, setEmailModal] = React.useState(false);
 
   if (!results) {
     return <Redirect to="/clients/signup" />;
   }
 
+  const selected = get(location, "state.selected") || [];
+
   const toggleSelected = id => {
+    let nextSelected;
     if (selected.indexOf(id) > -1) {
-      updateSelected(selected.filter(s => s !== id));
+      nextSelected = selected.filter(s => s !== id);
     } else {
-      updateSelected([...selected, id]);
+      nextSelected = [...selected, id];
     }
+
+    history.replace({
+      pathname: location.pathname,
+      state: {
+        ...location.state,
+        selected: nextSelected,
+      },
+    });
   };
 
-  const handleContinue = () => setEmailModal(true);
+  const handleContinue = () => {
+    history.push({
+      pathname: "/clients/signup/save",
+      state: location.state,
+    });
+  };
 
   return (
     <>
-      <EmailModal
-        isOpen={emailModal}
-        onClose={() => setEmailModal(false)}
-        selected={selected}
-      />
       <Header>
         <Logo />
         <Button
