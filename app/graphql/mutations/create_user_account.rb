@@ -16,8 +16,12 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     description "The type of company"
   end
 
-  argument :email, String, required: false do
+  argument :email, String, required: true do
     description "Their email"
+  end
+
+  argument :specialists, [ID], required: false, default_value: [] do
+    description "Any specialist airtable_id's that they are interested in working with"
   end
 
   # Currently we don't have full account signups in app. i.e setting the user
@@ -29,16 +33,22 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     skill = Skill.find_by_name!(args[:skill])
     industry = Industry.find_by_name!(args[:industry])
 
+    if args[:specialists].count > 10
+      raise ApiError::InvalidRequest.new("tooManySpecialists", "You can not select more than 10 specialists")
+    end
+
     ActiveRecord::Base.transaction do
       user = create_user(email: args[:email])
       client = create_client(user: user)
       project = create_project(user: user, skill: skill, industry: industry, company_type: args[:company_type])
+      create_applications(project, args[:specialists])
       
       user.sync_to_airtable
       # Currently we dont have a relationship between clients and client
       # contacts so we set the 'Client Contacts' column while calling sync.
       client.sync_to_airtable({ "Client Contacts" => [user.airtable_id].compact })
       project.sync_to_airtable
+      project.applications.each(&:sync_to_airtable)
       return { project: project }
     end
   end
@@ -89,6 +99,14 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     end
     
     project.skills << skill
+    project.save
     project
+  end
+
+  def create_applications(project, specialists)
+    specialists.each do |specialist_id|
+      specialist = Specialist.find_by_airtable_id!(specialist_id)
+      project.applications.create(specialist: specialist, status: "To Be Invited")
+    end
   end
 end

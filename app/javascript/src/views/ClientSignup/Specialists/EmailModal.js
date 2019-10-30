@@ -33,6 +33,7 @@ const EmailModal = ({ selected, isOpen, onClose }) => {
           industry: get(location, "state.search.industry"),
           companyType: get(location, "state.search.companyType"),
           email: values.email,
+          specialists: selected,
         },
       },
     });
