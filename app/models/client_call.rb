@@ -1,5 +1,5 @@
 class ClientCall < ApplicationRecord
-  belongs_to :project
-  belongs_to :sales_person
-  belongs_to :user
+  belongs_to :project, required: false
+  belongs_to :sales_person, required: false
+  belongs_to :user, required: false
 end
