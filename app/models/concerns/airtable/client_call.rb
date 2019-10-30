@@ -20,7 +20,7 @@ class Airtable::ClientCall < Airtable::Base
     client_call.cancelled = false if self['Cancelled'].try(:include?, "No")
 
     user_id = fields["Client Contact"].try(:first)
-    if user_id && client_call.user.try(:airtable_id) != user_id
+    if user_id
       user = ::User.find_by_airtable_id(user_id)
       user = Airtable::ClientContact.find(user_id).sync if user.nil?
       client_call.user = user
