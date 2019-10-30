@@ -3,6 +3,7 @@ import { get } from "lodash";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { useMutation } from "react-apollo";
+import { motion, AnimatePresence } from "framer-motion";
 import { Box, Card, Text, Button } from "@advisable/donut";
 import { Header } from "../styles";
 import Logo from "../../../components/Logo";
@@ -13,8 +14,11 @@ const SaveSearch = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const [createAccount, { data }] = useMutation(CREATE_ACCOUNT);
+  const [a, setA] = React.useState(false);
 
   const handleSubmit = async (values, formik) => {
+    setA(true);
+    return;
     const response = await createAccount({
       variables: {
         input: {
@@ -66,36 +70,55 @@ const SaveSearch = () => {
       <Header>
         <Logo />
       </Header>
-      <Box maxWidth={500} margin="50px auto">
-        <Card padding="l">
-          {data ? (
-            <>
-              <Text
-                fontSize="xxl"
-                fontWeight="semibold"
-                letterSpacing="-0.03rem"
-                color="neutral.9"
-                mb="xs"
-              >
-                Tell us more
-              </Text>
-              <Text fontSize="s" color="neutral.7" lineHeight="s" mb="l">
-                Great! We think we’ll have the perfect person for this project
-                but we need to know a little bit more about your project first.
-              </Text>
-              <Button
-                intent="success"
-                appearance="primary"
-                iconRight="arrow-right"
-                onClick={handleContinue}
-              >
-                Setup Project
-              </Button>
-            </>
+      <Box maxWidth={500} margin="50px auto" position="relative">
+        <AnimatePresence>
+          {a ? (
+            <motion.div
+              key="done"
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ ease: "easeOut", duration: 0.25 }}
+            >
+              <Card padding="l">
+                <Text
+                  fontSize="xxl"
+                  fontWeight="semibold"
+                  letterSpacing="-0.03rem"
+                  color="neutral.9"
+                  mb="xs"
+                >
+                  Tell us more
+                </Text>
+                <Text fontSize="s" color="neutral.7" lineHeight="s" mb="l">
+                  Great! We think we’ll have the perfect person for this project
+                  but we need to know a little bit more about your project
+                  first.
+                </Text>
+                <Button
+                  intent="success"
+                  appearance="primary"
+                  iconRight="arrow-right"
+                  onClick={handleContinue}
+                >
+                  Setup Project
+                </Button>
+              </Card>
+            </motion.div>
           ) : (
-            <Form onSubmit={handleSubmit} />
+            <motion.div
+              key="save"
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 60, position: "absolute" }}
+              transition={{ ease: "easeOut", duration: 0.25 }}
+            >
+              <Card padding="l">
+                <Form onSubmit={handleSubmit} />
+              </Card>
+            </motion.div>
           )}
-        </Card>
+        </AnimatePresence>
       </Box>
     </>
   );
