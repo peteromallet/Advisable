@@ -1,11 +1,11 @@
 import React from "react";
 import { Text, Box } from "@advisable/donut";
-import background from "./bg.png";
+import { Sidebar } from "./styles";
+import StarRating from "./StarRating";
+import trustpilot from "./trustpilot.png";
 import { Quotes, Quote, Logos, Logo } from "./styles";
 import TESTIMONIALS from "./data";
 import useInterval from "../../../hooks/useInterval";
-import StarRating from "./StarRating";
-import trustpilot from "./trustpilot.png";
 
 const DELAY = 4000;
 
@@ -26,17 +26,7 @@ const Testimonials = () => {
   };
 
   return (
-    <Box
-      top={0}
-      right={0}
-      bg="blue.4"
-      width={550}
-      height="100vh"
-      position="fixed"
-      overflow="hidden"
-      display="flex"
-      alignItems="center"
-    >
+    <Sidebar>
       <StarRating />
       <Box
         position="absolute"
@@ -88,19 +78,7 @@ const Testimonials = () => {
           ))}
         </Logos>
       </Box>
-      <Box
-        zIndex={1}
-        position="absolute"
-        top={0}
-        left={0}
-        right={0}
-        bottom={0}
-        css={`
-          background-size: cover;
-          background-image: url(${background});
-        `}
-      />
-    </Box>
+    </Sidebar>
   );
 };
 

@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import { theme } from "@advisable/donut";
 import TESTIMONIALS from "./data";
+import background from "./bg.png";
 
 export const Quotes = styled.div`
   display: flex;
@@ -64,4 +66,21 @@ export const StyledStar = styled.div`
   align-items: center;
   display: inline-flex;
   justify-content: center;
+`;
+
+export const Sidebar = styled.div`
+  top: 0;
+  right: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 550px;
+  height: 100vh;
+  display: flex;
+  position: fixed;
+  overflow: hidden;
+  align-items: center;
+  background-size: cover;
+  background-image: url(${background});
+  background-color: ${theme.colors.blue[4]};
 `;
