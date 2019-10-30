@@ -70,6 +70,10 @@ class Airtable::Project < Airtable::Base
     project.deposit = (fields["Deposit Amount Required"].to_f * 100).to_i
     project.remote = true if fields['Remote OK'].try(:include?, "Yes")
     project.remote = false if fields['Remote OK'].try(:include?, "No")
+    project.industry_experience_required = false if fields['Industry Experience Required'].try(:include?, "No")
+    project.industry_experience_required = true if fields['Industry Experience Required'].try(:include?, "Yes")
+    project.company_type_experience_required = false if fields['Company Type Experience Required'].try(:include?, "No")
+    project.company_type_experience_required = true if fields['Company Type Experience Required'].try(:include?, "Yes")
   end
 
   push_data do |project|
@@ -90,6 +94,10 @@ class Airtable::Project < Airtable::Base
     self['Skills Required'] = project.skills.map(&:airtable_id).uniq
     self['Primary Skill Required'] = project.primary_skill
     self['Type of Company'] = project.company_type
+    self['Industry Experience Required'] = 'Yes' if project.industry_experience_required
+    self['Industry Experience Required'] = 'No' if project.industry_experience_required == false
+    self['Company Type Experience Required'] = 'Yes' if project.company_type_experience_required
+    self['Company Type Experience Required'] = 'No' if project.company_type_experience_required == false
 
     # we currently store the industry in postgres as plain text but we need to
     # setup the association in Airtable.

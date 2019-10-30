@@ -31,7 +31,15 @@ const EmailModal = ({ selected, isOpen, onClose }) => {
         input: {
           skill: get(location, "state.search.skill"),
           industry: get(location, "state.search.industry"),
+          industryExperienceRequired: get(
+            location,
+            "state.search.industryRequired"
+          ),
           companyType: get(location, "state.search.companyType"),
+          companyTypeExperienceRequired: get(
+            location,
+            "state.search.companyTypeRequired"
+          ),
           email: values.email,
           specialists: selected,
         },

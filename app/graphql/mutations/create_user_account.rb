@@ -12,8 +12,16 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     description "The industry"
   end
 
+  argument :industry_experience_required, Boolean, required: false do
+    description "Wether or not industry experience is required for the project"
+  end
+
   argument :company_type, String, required: true do
     description "The type of company"
+  end
+
+  argument :company_type_experience_required, Boolean, required: false do
+    description "Wether or not experience with the type of company is required for the project"
   end
 
   argument :email, String, required: true do
@@ -40,7 +48,15 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     ActiveRecord::Base.transaction do
       user = create_user(email: args[:email])
       client = create_client(user: user)
-      project = create_project(user: user, skill: skill, industry: industry, company_type: args[:company_type])
+      project = create_project({
+        user: user,
+        skill: skill,
+        industry: industry,
+        company_type: args[:company_type],
+        industry_experience_required: args[:industry_experience_required],
+        company_type_experience_required: args[:company_type_experience_required]
+      })
+
       create_applications(project, args[:specialists])
       
       user.sync_to_airtable
@@ -85,13 +101,15 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     client
   end
 
-  def create_project(user:, skill:, industry:, company_type:)
+  def create_project(user:, skill:, industry:, company_type:, industry_experience_required:, company_type_experience_required:)
     project = Project.new(
       user: user,
       name: skill.name,
       industry: industry.name,
       primary_skill: skill.name,
-      company_type: company_type
+      company_type: company_type,
+      industry_experience_required: industry_experience_required,
+      company_type_experience_required: company_type_experience_required
     )
 
     unless project.valid?
