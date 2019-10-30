@@ -14,11 +14,10 @@ const SaveSearch = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const [createAccount, { data }] = useMutation(CREATE_ACCOUNT);
-  const [a, setA] = React.useState(false);
+
+  console.log(data);
 
   const handleSubmit = async (values, formik) => {
-    setA(true);
-    return;
     const response = await createAccount({
       variables: {
         input: {
@@ -72,7 +71,7 @@ const SaveSearch = () => {
       </Header>
       <Box maxWidth={500} margin="50px auto" position="relative">
         <AnimatePresence>
-          {a ? (
+          {get(data, "createUserAccount") ? (
             <motion.div
               key="done"
               initial={{ opacity: 0, y: 60 }}

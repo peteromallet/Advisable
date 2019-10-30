@@ -1,5 +1,6 @@
 import React from "react";
 import { get } from "lodash";
+import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useLocation, useHistory, Redirect } from "react-router-dom";
 import { Box, Text, Button } from "@advisable/donut";
@@ -75,13 +76,18 @@ const Specailists = () => {
       </Box>
       <SideScroller>
         {results.nodes.map((specialist, i) => (
-          <SlideInUp key={specialist.id} duration="300ms" delay={`${i * 40}ms`}>
+          <motion.div
+            key={specialist.id}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ease: "easeOut", delay: i * 0.15 }}
+          >
             <Specialist
               specialist={specialist}
               onSelect={toggleSelected}
               isSelected={selected.indexOf(specialist.airtableId) > -1}
             />
-          </SlideInUp>
+          </motion.div>
         ))}
         <SlideInUp>
           <StyledSpecialist css="display: flex; align-items: center;">
