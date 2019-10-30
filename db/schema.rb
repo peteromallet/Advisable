@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_23_090929) do
+ActiveRecord::Schema.define(version: 2019_10_30_135354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,12 @@ ActiveRecord::Schema.define(version: 2019_10_23_090929) do
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
   end
 
+  create_table "blacklisted_domains", force: :cascade do |t|
+    t.string "domain"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "booking_rejection_reasons", force: :cascade do |t|
     t.string "name"
     t.string "airtable_id"
@@ -131,6 +137,27 @@ ActiveRecord::Schema.define(version: 2019_10_23_090929) do
     t.index ["rejection_reason_id"], name: "index_bookings_on_rejection_reason_id"
   end
 
+  create_table "client_calls", force: :cascade do |t|
+    t.string "airtable_id"
+    t.integer "duration"
+    t.bigint "project_id", null: false
+    t.datetime "call_time"
+    t.string "phone_number"
+    t.string "email"
+    t.string "event_type"
+    t.string "calendly_id"
+    t.boolean "cancelled"
+    t.bigint "sales_person_id", null: false
+    t.string "type_of_call"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["airtable_id"], name: "index_client_calls_on_airtable_id"
+    t.index ["project_id"], name: "index_client_calls_on_project_id"
+    t.index ["sales_person_id"], name: "index_client_calls_on_sales_person_id"
+    t.index ["user_id"], name: "index_client_calls_on_user_id"
+  end
+
   create_table "client_users", force: :cascade do |t|
     t.bigint "client_id"
     t.bigint "user_id"
@@ -145,6 +172,7 @@ ActiveRecord::Schema.define(version: 2019_10_23_090929) do
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "domain"
     t.index ["airtable_id"], name: "index_clients_on_airtable_id"
   end
 
@@ -199,6 +227,7 @@ ActiveRecord::Schema.define(version: 2019_10_23_090929) do
     t.string "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "airtable_id"
     t.index ["uid"], name: "index_industries_on_uid"
   end
 
@@ -363,6 +392,8 @@ ActiveRecord::Schema.define(version: 2019_10_23_090929) do
     t.string "uid"
     t.string "industry"
     t.string "company_type"
+    t.boolean "industry_experience_required"
+    t.boolean "company_type_experience_required"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -554,6 +585,9 @@ ActiveRecord::Schema.define(version: 2019_10_23_090929) do
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
   add_foreign_key "bookings", "applications"
+  add_foreign_key "client_calls", "projects"
+  add_foreign_key "client_calls", "sales_people"
+  add_foreign_key "client_calls", "users"
   add_foreign_key "client_users", "clients"
   add_foreign_key "client_users", "users"
   add_foreign_key "interviews", "applications"
