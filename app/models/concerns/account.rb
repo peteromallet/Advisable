@@ -57,7 +57,7 @@ module Account
       return unless email.present?
       existing = Account.find_by_email(email.downcase)
       return if persisted? && existing == self
-      errors.add(:email, :taken, message: "email_taken") if existing.present?
+      errors.add(:email, :taken) if existing.present?
     end
   end
 
