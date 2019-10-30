@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_30_135354) do
+ActiveRecord::Schema.define(version: 2019_10_30_152837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,16 +140,16 @@ ActiveRecord::Schema.define(version: 2019_10_30_135354) do
   create_table "client_calls", force: :cascade do |t|
     t.string "airtable_id"
     t.integer "duration"
-    t.bigint "project_id", null: false
+    t.bigint "project_id"
     t.datetime "call_time"
     t.string "phone_number"
     t.string "email"
     t.string "event_type"
     t.string "calendly_id"
     t.boolean "cancelled"
-    t.bigint "sales_person_id", null: false
+    t.bigint "sales_person_id"
     t.string "type_of_call"
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["airtable_id"], name: "index_client_calls_on_airtable_id"
