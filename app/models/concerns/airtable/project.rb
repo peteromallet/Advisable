@@ -41,7 +41,7 @@ class Airtable::Project < Airtable::Base
     # Sync the project owner username
     owner_id = fields['Owner'].try(:first)
     if owner_id
-      owner = Airtable::SalesPeople.find(owner_id)
+      owner = Airtable::SalesPerson.find(owner_id)
       project.owner = owner['Username']
     end
 
