@@ -8,6 +8,7 @@ FactoryBot.define do
     confirmed_at { 1.day.ago }
     bank_holder_name { "Jane Doe" }
     bank_currency { "EUR" }
+    hourly_rate { 200 }
     sequence(:uid) { "spe_#{SecureRandom.hex[0..14]}" }
     sequence(:airtable_id) { |id| "specialist_#{id}" }
     sequence(:email) { |n| "specialist_#{n}@test.com" }
