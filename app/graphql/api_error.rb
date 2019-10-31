@@ -38,7 +38,7 @@ end
 # not complete for some reason.
 # 
 # @example
-#   raise ApiError::InvalidRequest.new("Application status must be 'Working'", "applicationStatusNotWorking")
+#   raise ApiError::InvalidRequest.new("applicationStatusNotWorking", "Application status must be 'Working'")
 #
 class ApiError::InvalidRequest < ApiError
   def initialize(code, message)

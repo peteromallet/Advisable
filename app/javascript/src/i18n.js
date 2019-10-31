@@ -24,6 +24,11 @@ i18n
     load: "languageOnly",
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
+      format: function(value, format, lng) {
+        if (format === "lowercase") return value.toLowerCase();
+        if (format === "uppercase") return value.toUpperCase();
+        return value;
+      },
     },
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",

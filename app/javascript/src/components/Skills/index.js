@@ -19,7 +19,9 @@ const Skill = styled.div`
 export default ({ skills, ...props }) => {
   return (
     <Spacing {...props}>
-      {skills.map((skill, i) => <Skill key={i}>{skill}</Skill>)}
+      {skills.map((skill, i) => (
+        <Skill key={i}>{skill.name}</Skill>
+      ))}
     </Spacing>
   );
 };

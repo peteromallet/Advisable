@@ -30,6 +30,7 @@ class Airtable::Project < Airtable::Base
   sync_column 'Lost - Timestamp', to: :lost_at
   sync_column 'Plain Text Industry', to: :industry
   sync_column 'Type of Company', to: :company_type
+  sync_column 'Plain Text Industry', to: :industry
 
   # sync_data is used to sync more complicated parts of the airtable record that
   # dont fit into a simple column mapping like above. It takes the ActiveRecord
@@ -69,10 +70,14 @@ class Airtable::Project < Airtable::Base
     project.deposit = (fields["Deposit Amount Required"].to_f * 100).to_i
     project.remote = true if fields['Remote OK'].try(:include?, "Yes")
     project.remote = false if fields['Remote OK'].try(:include?, "No")
+    project.industry_experience_required = false if fields['Industry Experience Required'].try(:include?, "No")
+    project.industry_experience_required = true if fields['Industry Experience Required'].try(:include?, "Yes")
+    project.company_type_experience_required = false if fields['Company Type Experience Required'].try(:include?, "No")
+    project.company_type_experience_required = true if fields['Company Type Experience Required'].try(:include?, "Yes")
   end
 
   push_data do |project|
-    self['Client Contacts'] = [project.user.airtable_id] if project.saved_change_to_user_id?
+    self['Client Contacts'] = [project.user.try(:airtable_id)].compact
     self['Project Stage'] = project.status if !project.status.blank? && project.saved_change_to_status?
     self['Deposit Amount Required'] = project.deposit / 100.0 if project.saved_change_to_deposit?
     self['Deposit Amount Paid'] = project.deposit_paid / 100.0
@@ -88,6 +93,19 @@ class Airtable::Project < Airtable::Base
     self['Accepted Terms'] = project.accepted_terms if project.saved_change_to_accepted_terms_at?
     self['Skills Required'] = project.skills.map(&:airtable_id).uniq
     self['Primary Skill Required'] = project.primary_skill
+    self['Type of Company'] = project.company_type
+    self['Industry Experience Required'] = 'Yes' if project.industry_experience_required
+    self['Industry Experience Required'] = 'No' if project.industry_experience_required == false
+    self['Company Type Experience Required'] = 'Yes' if project.company_type_experience_required
+    self['Company Type Experience Required'] = 'No' if project.company_type_experience_required == false
+
+    # we currently store the industry in postgres as plain text but we need to
+    # setup the association in Airtable.
+    if project.industry.present?
+      self['Industry'] = [Industry.find_by_name(project.industry).try(:airtable_id)].compact
+    else
+      self['Industry'] = []
+    end
   end
 
   private

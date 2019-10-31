@@ -82,7 +82,9 @@ export default gql`
             name
           }
           linkedin
-          skills
+          skills {
+            name
+          }
         }
       }
       applications(status: ["Applied"]) {

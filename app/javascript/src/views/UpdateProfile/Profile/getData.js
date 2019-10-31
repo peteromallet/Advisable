@@ -12,7 +12,9 @@ export default gql`
         bio
         name
         avatar
-        skills
+        skills {
+          name
+        }
         hourlyRate
         publicUse
       }

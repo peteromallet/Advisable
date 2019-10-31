@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { StarRating } from "src/components/StarRating/styles";
+import { theme } from "@advisable/donut";
 
 export const Review = styled.div`
   padding: 20px;
@@ -42,7 +42,7 @@ export const TotalRating = styled.div`
 `;
 
 export const Ratings = styled.div`
-  padding-bottom: 20px;
+  padding-bottom: 16px;
 
   &::after {
     content: "";
@@ -69,10 +69,10 @@ export const Rating = styled.div`
   strong {
     flex-grow: 1;
     font-size: 14px;
-    color: #0a1745;
-    font-weight: 500;
     margin-top: 5px;
+    font-weight: 500;
     margin-bottom: 5px;
+    color: ${theme.colors.neutral[7]};
   }
 
   @media screen and (max-width: 750px) {
@@ -80,11 +80,4 @@ export const Rating = styled.div`
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
-`;
-
-export const ReviewComment = styled.p`
-  color: #272f4b;
-  font-size: 15px;
-  line-height: 20px;
-  font-style: italic;
 `;

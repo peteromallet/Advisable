@@ -82,6 +82,18 @@ const renderApp = (config = defaultConfig) => {
     },
   });
 
+  global.IntersectionObserver = class IntersectionObserver {
+    constructor() {}
+
+    observe() {
+      return null;
+    }
+
+    unobserve() {
+      return null;
+    }
+  };
+
   window.stripe = {
     elements: () => ({
       create: el => ({

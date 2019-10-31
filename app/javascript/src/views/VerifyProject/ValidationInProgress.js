@@ -14,9 +14,9 @@ const ValidationInProgress = ({ project }) => {
 
       <Text fontSize="s" lineHeight="s">
         If this was incorrect or you haven’t received this email, please email{" "}
-        <Link as="a" href="mailto:hello@advisable.com">
+        <Link.External href="mailto:hello@advisable.com">
           hello@advisable.com
-        </Link>
+        </Link.External>
         .
       </Text>
     </>

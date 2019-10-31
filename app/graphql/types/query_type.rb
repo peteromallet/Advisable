@@ -133,7 +133,9 @@ class Types::QueryType < Types::BaseType
   end
 
   def specialist(id: )
-    Specialist.find_by_airtable_id!(id)
+    specialist = Specialist.find_by_uid(id)
+    specialist = Specialist.find_by_airtable_id!(id) if specialist.nil?
+    specialist
   end
 
   field :industries, [Types::IndustryType], null: false
@@ -166,5 +168,37 @@ class Types::QueryType < Types::BaseType
 
   def off_platform_project(id:)
     OffPlatformProject.find_by_uid!(id)
+  end
+
+  field :specialists, Types::SpecialistConnection, null: false, max_page_size: 25 do
+    description <<~HEREDOC
+      Returns a list of specialists that match a given search criteria.
+    HEREDOC
+
+    argument :skill, String, required: true do
+      description "Filters specialists by a given skill."
+    end
+
+    argument :industry, String, required: false do
+      description <<~HEREDOC
+        If provided will only return specialists that have previous projects
+        working in the given industry.
+      HEREDOC
+    end
+
+    argument :company_type, String, required: false do
+      description <<~HEREDOC
+        If provided will only return specialists that have previous projects
+        working with the given company type.
+      HEREDOC
+    end
+  end
+
+  def specialists(skill:, industry: nil, company_type: nil)
+    Specialists::Search.call(
+      skill: skill,
+      industry: industry,
+      company_type: company_type
+    )
   end
 end

@@ -25,7 +25,9 @@ describe Mutations::UpdateProfile do
           bio
           city
           remote
-          skills
+          skills {
+            name
+          }
           country {
             name
           }
@@ -66,7 +68,7 @@ describe Mutations::UpdateProfile do
 
   it "updates the skills" do
     skills = response["data"]["updateProfile"]["specialist"]["skills"]
-    expect(skills).to eq([skill.name])
+    expect(skills).to eq([{"name" => skill.name}])
   end
 
   context "when a Service::Error is thrown" do

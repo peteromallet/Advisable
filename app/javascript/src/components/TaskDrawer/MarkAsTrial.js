@@ -69,13 +69,12 @@ const MarkAsTrial = ({ task }) => {
       </Text>
       <Box mb="s">
         <Text size="xs">
-          <Link
-            as="a"
+          <Link.External
             href="https://advisable.com/freelancer-trial"
             target="_blank"
           >
             Read more details
-          </Link>
+          </Link.External>
         </Text>
       </Box>
       <Button

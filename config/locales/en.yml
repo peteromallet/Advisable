@@ -1,12 +1,11 @@
 en:
-  errors:
-    format: "%{message}"
   activerecord:
     errors:
       models:
         user:
           attributes:
             email:
-              taken: "users.email_taken"
-              invalid: "users.invalid_email"
-              minimum: "users.password_too_short"
+              taken: "is already being used by another account"
+              invalid: "is not a valid email"
+            password:
+              minimum: "is too short"

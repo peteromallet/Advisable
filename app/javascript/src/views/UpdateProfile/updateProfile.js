@@ -6,7 +6,9 @@ export default gql`
       specialist {
         id
         bio
-        skills
+        skills {
+          name
+        }
       }
     }
   }

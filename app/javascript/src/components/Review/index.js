@@ -1,23 +1,23 @@
 import React from "react";
-import Text from "src/components/Text";
-import Heading from "src/components/Heading";
+import { Text } from "@advisable/donut";
 import StarRating from "src/components/StarRating";
 import {
-  Review,
+  Review as StyledReview,
   ReviewHeader,
   TotalRating,
-  ReviewComment,
   Ratings,
-  Rating
+  Rating,
 } from "./styles";
 
-export default ({ review, companyName }) => {
+const Review = ({ review, companyName }) => {
   return (
-    <Review>
+    <StyledReview>
       <ReviewHeader>
         <TotalRating>{review.ratings.overall.toFixed(1)}</TotalRating>
-        <Heading level="5">{review.name}</Heading>
-        <Text size="s">
+        <Text as="h5" fontWeight="medium" mb="xxs">
+          {review.name}
+        </Text>
+        <Text size="xs" color="neutral.6">
           {review.role} at {companyName}
         </Text>
       </ReviewHeader>
@@ -65,7 +65,13 @@ export default ({ review, companyName }) => {
           </Rating>
         )}
       </Ratings>
-      {review.comment && <ReviewComment>"{review.comment}"</ReviewComment>}
-    </Review>
+      {review.comment && (
+        <Text fontSize="xs" lineHeight="s" color="neutral.7" fontStyle="italic">
+          "{review.comment}"
+        </Text>
+      )}
+    </StyledReview>
   );
 };
+
+export default Review;
