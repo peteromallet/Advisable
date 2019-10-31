@@ -37,6 +37,7 @@ const SaveSearchForm = ({ onSubmit }) => {
         onSubmit={onSubmit}
         initialValues={initialValues}
         validationSchema={validationSchema}
+        validateOnBlur={false}
       >
         {formik => (
           <Form>

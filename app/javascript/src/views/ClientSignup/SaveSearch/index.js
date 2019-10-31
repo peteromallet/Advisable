@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { useMutation } from "react-apollo";
 import { motion, AnimatePresence } from "framer-motion";
-import { Box, Card, Text, Button } from "@advisable/donut";
+import { Box, Card, Text, Button, Link } from "@advisable/donut";
 import { Header } from "../styles";
 import Logo from "../../../components/Logo";
 import CREATE_ACCOUNT from "./createAccount";
@@ -42,7 +42,20 @@ const SaveSearch = () => {
     if (response.errors) {
       const code = get(response.errors, "[0].extensions.code");
       if (code === "emailTaken") {
-        formik.setFieldError("email", t("errors.emailTaken"));
+        formik.setFieldError(
+          "email",
+          <>
+            {t("errors.emailTaken")}
+            <Text fontSize="xs" mt="xs">
+              <Link
+                to={`/login?email=${encodeURIComponent(values.email)}`}
+                variant="subtle"
+              >
+                Click here to sign in
+              </Link>
+            </Text>
+          </>
+        );
       } else if (code === "nonCorporateEmail") {
         formik.setFieldError("email", t("errors.nonCorporateEmail"));
       } else {
