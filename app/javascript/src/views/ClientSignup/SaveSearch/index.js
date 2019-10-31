@@ -13,9 +13,8 @@ import Form from "./Form";
 const SaveSearch = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const [email, setEmail] = React.useState(null);
   const [createAccount, { data }] = useMutation(CREATE_ACCOUNT);
-
-  console.log(data);
 
   const handleSubmit = async (values, formik) => {
     const response = await createAccount({
@@ -49,14 +48,17 @@ const SaveSearch = () => {
       } else {
         formik.setStatus("errors.somethingWentWrong");
       }
+    } else {
+      setEmail(values.email);
     }
   };
 
   const handleContinue = () => {
     const project = data.createUserAccount.project;
+    const selected = location.state.selected;
     let url = "https://advisable.com/apply-to-be-a-client/";
     url += `?pid=${project.airtableId}`;
-    url += `&email=${encodeURIComponent(values.email)}`;
+    url += `&email=${encodeURIComponent(email)}`;
     url += `&skill=${get(location, "state.search.skill")}`;
     if (selected.length > 0) {
       url += `&specialists=${selected.join(",")}`;
