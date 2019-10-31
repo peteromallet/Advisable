@@ -69,7 +69,7 @@ const SaveSearch = () => {
   const handleContinue = () => {
     const project = data.createUserAccount.project;
     const selected = location.state.selected;
-    let url = "https://advisable.com/apply-to-be-a-client/";
+    let url = "http://advisable.com/clients/signup/complete";
     url += `?pid=${project.airtableId}`;
     url += `&email=${encodeURIComponent(email)}`;
     url += `&skill=${get(location, "state.search.skill")}`;
