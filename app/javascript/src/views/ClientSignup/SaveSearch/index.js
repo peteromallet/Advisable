@@ -122,7 +122,7 @@ const SaveSearch = () => {
           ) : (
             <motion.div
               key="save"
-              initial={{ opacity: 0, y: 60 }}
+              initial={{ opacity: 0, y: 60, position: "static" }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 60, position: "absolute" }}
               transition={{ ease: "easeOut", duration: 0.25 }}

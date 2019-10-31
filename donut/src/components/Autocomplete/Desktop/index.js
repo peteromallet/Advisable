@@ -75,7 +75,7 @@ const AutocompleteDesktop = props => {
             options={options}
             multiple={multiple}
             onChange={onChange}
-            initialInputValue={value}
+            initialInputValue={props.multiple ? null : value}
             onStateChange={handleStateChange(popper)}
           >
             {downshift => (

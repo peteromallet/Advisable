@@ -1,11 +1,11 @@
 import { times } from "lodash";
-import { fireEvent, cleanup, within, wait } from "@testing-library/react";
+import { fireEvent, cleanup, wait } from "@testing-library/react";
 import renderApp from "../../testHelpers/renderApp";
 import generateTypes from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
 import GET_DATA from "./Criteria/getData";
 import SEARCH from "./Criteria/search";
-import CREATE_ACCOUNT from "./createAccount";
+import CREATE_ACCOUNT from "./SaveSearch/createAccount";
 
 afterEach(cleanup);
 
@@ -67,6 +67,8 @@ test("Criteria step", async () => {
             nodes: times(25, t =>
               generateTypes.specialist({
                 id: `spe_${t}`,
+                airtableId: `recSpecialist${t}`,
+                hourlyRate: t * 10,
               })
             ),
           },
@@ -80,8 +82,9 @@ test("Criteria step", async () => {
           input: {
             skill: skill.name,
             industry: industry.name,
-            companyType: "Individual Entrepreneur",
+            companyType: "Growth-Stage Startup",
             email: "test@test.com",
+            specialists: ["recSpecialist0", "recSpecialist1"],
           },
         },
       },
@@ -121,8 +124,9 @@ test("Criteria step", async () => {
   fireEvent.click(next);
   const email = await app.findByLabelText("Email Address");
   fireEvent.change(email, { target: { value: "test@test.com" } });
-  const modal = app.getByRole("dialog");
-  const btn = await within(modal).findByLabelText("Continue");
+  const btn = await app.findByLabelText("Continue");
   fireEvent.click(btn);
   await wait();
+  const more = await app.findByText("Tell us more");
+  expect(more).toBeInTheDocument();
 });
