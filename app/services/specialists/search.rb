@@ -16,21 +16,21 @@ class Specialists::Search < ApplicationService
   private
 
   def by_skills
-    query = Specialist.joins(:skills).where(skills: { name: skill })
+    query = Specialist.joins(:skills).where(skills: { name: skill }).where.not(hourly_rate: nil)
     query = filter_industry(query)
     query = filter_company_type(query)
     query
   end
 
   def by_projects
-    query = Specialist.joins(projects: :skills).where(projects: { skills: { name: skill }})
+    query = Specialist.joins(projects: :skills).where(projects: { skills: { name: skill }}).where.not(hourly_rate: nil)
     query = filter_industry(query)
     query = filter_company_type(query)
     query
   end
 
   def by_off_platform_projects
-    query = Specialist.joins(off_platform_projects: :skills).where(off_platform_projects: { skills: { name: skill }})
+    query = Specialist.joins(off_platform_projects: :skills).where(off_platform_projects: { skills: { name: skill }}).where.not(hourly_rate: nil)
     query = filter_industry(query)
     query = filter_company_type(query)
     query
