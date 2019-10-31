@@ -28,12 +28,12 @@ const Profile = () => {
     avatar: null,
     hourlyRate: get(data, "viewer.hourlyRate") / 100.0,
     publicUse: get(data, "viewer.publicUse"),
-    skills: get(data, "viewer.skills") || [],
+    skills: (get(data, "viewer.skills") || []).map(s => s.name),
   };
 
   React.useEffect(() => {
     setProfilePhoto(get(data, "viewer.avatar"));
-  }, [loading]);
+  }, [loading, data]);
 
   const handleSubmit = async (values, formik) => {
     let input = {

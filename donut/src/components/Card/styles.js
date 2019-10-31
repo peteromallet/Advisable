@@ -23,6 +23,7 @@ export const Card = styled.div`
   )}
 
   background: white;
+  border-radius: 2px;
 
   ${props => ELEVATION[props.elevation || "m"]};
 `;

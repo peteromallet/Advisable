@@ -133,6 +133,7 @@ export const specialist = (fields = {}) => {
       firstName: "Test",
       lastName: "Specialist",
       confirmed: true,
+      location: "Berlin, Germany",
       email: "specialist@test.com",
       completedTutorials: [],
       talkSignature: "1234",
@@ -159,7 +160,20 @@ export const specialist = (fields = {}) => {
       },
       linkedin: "https://linkedin.com",
       previousProjects: [],
-      skills: ["Testing"],
+      skills: [],
+      previousProjectsCount: 0,
+    },
+    fields
+  );
+};
+
+export const specialistSkill = (fields = {}) => {
+  return merge(
+    {
+      __typename: "SpecialistSkill",
+      id: uniqueId("ski_"),
+      name: "Testing",
+      verified: false,
     },
     fields
   );

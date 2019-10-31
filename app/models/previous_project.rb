@@ -82,7 +82,7 @@ class PreviousProject
       Project.joins(applications: [:specialist])
         .where(
           applications: {
-            status: ["Working"],
+            status: ["Working", "Stopped Working"],
             specialists: { id: specialist.id },
           },
         )

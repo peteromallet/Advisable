@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :skills
     resources :specialists
     resources :users
+    resources :blacklisted_domains
     resources :webhook_events
     resources :webhook_configurations
     resources :webhooks, only: [:index, :show]

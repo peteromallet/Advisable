@@ -2,14 +2,18 @@ import React from "react";
 import { StarRating, Star, Number } from "./styles";
 
 const SIZES = {
+  s: {
+    width: 16,
+    height: 16,
+  },
   m: {
     width: 18,
-    height: 16
+    height: 16,
   },
   l: {
     width: 20,
-    height: 18
-  }
+    height: 18,
+  },
 };
 
 const Icon = ({ filled, size }) => {
@@ -60,7 +64,7 @@ const StarRatingComponent = ({ rating, size, showNumber }) => {
 };
 
 StarRatingComponent.defaultProps = {
-  showNumber: true
+  showNumber: true,
 };
 
 export default StarRatingComponent;

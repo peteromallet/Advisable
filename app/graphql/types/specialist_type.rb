@@ -94,12 +94,34 @@ class Types::SpecialistType < Types::BaseType
     object.image.try(:[], "url")
   end
 
-  field :skills, [String, null: true], null: true do
+  field :skills, [Types::SpecialistSkillType, null: true], null: true do
     description "A list of skills that the specialist possesses"
+    argument :project_skills, Boolean, required: false
   end
 
-  def skills
-    object.skills.map(&:name)
+  # Specialist can have skills from multiple places:
+  # - Direct skills they have added to their profile. Associated via
+  # SpecialistSkill records.
+  # - Skills associated to projects that they have worked on
+  # - Skills associated to off platform projects they have added
+  # By default the skills field will only show direct skills, however, you can
+  # include project skills by specifying the project_skills argument.
+  def skills(project_skills: false)
+    records = begin
+      if project_skills
+        (
+          object.skills +
+          object.project_skills +
+          object.off_platform_project_skills
+        ).uniq
+      else
+        object.skills
+      end
+    end
+
+    records.map do |skill|
+      OpenStruct.new(specialist: object, skill: skill)
+    end
   end
 
   field :ratings, Types::Ratings, null: false do
@@ -135,6 +157,12 @@ class Types::SpecialistType < Types::BaseType
     ::PreviousProject.for_specialist(object, {
       include_validation_failed: include_validation_failed
     })
+  end
+
+  field :previous_projects_count, Int, null: false
+
+  def previous_projects_count
+    object.project_count || 0
   end
 
   field :has_account, Boolean, null: false do
@@ -198,6 +226,12 @@ class Types::SpecialistType < Types::BaseType
     description "The specialists country"
   end
 
+  field :location, String, null: true
+  
+  def location
+    "#{object.city}, #{object.country.try(:name)}"
+  end
+
   field :has_setup_payments, Boolean, null: true do
     authorize :is_specialist, :is_admin
     description <<~HEREDOC
@@ -253,5 +287,20 @@ class Types::SpecialistType < Types::BaseType
   field :application_stage, String, null: true do
     authorize :is_specialist
     description "The account status for the specialist"
+  end
+end
+
+
+class Types::SpecialistEdgeType < GraphQL::Types::Relay::BaseEdge
+  node_type(Types::SpecialistType)
+end
+
+class Types::SpecialistConnection < GraphQL::Types::Relay::BaseConnection
+  edge_type(Types::SpecialistEdgeType)
+
+  field :total_count, Integer, null: false
+
+  def total_count
+    object.nodes.size
   end
 end

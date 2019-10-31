@@ -1,0 +1,8 @@
+import * as Yup from "yup";
+
+const validationSchema = Yup.object({
+  skill: Yup.string().required("Please select a skill"),
+  industry: Yup.string().required("Please provide what industry are in"),
+});
+
+export default validationSchema;

@@ -33,6 +33,7 @@ const fontSizes = {
 
 // Font weights
 const fontWeights = {
+  light: 300,
   regular: 400,
   medium: 500,
   semibold: 600,
@@ -126,6 +127,18 @@ const colors = {
     "#A31A0D",
     "#771409",
     "#4A0D05",
+  ],
+  orange: [
+    "#FFF8F1",
+    "#FFF2E7",
+    "#FFE2C8",
+    "#FFC693",
+    "#FFA552",
+    "#FF7A00",
+    "#DF6B00",
+    "#AD5300",
+    "#783A00",
+    "#3F1E00",
   ],
 };
 

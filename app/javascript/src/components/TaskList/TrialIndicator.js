@@ -22,8 +22,7 @@ const TrialIndicator = ({ isClient }) => {
               }`
             )}
           </Text>
-          <Link
-            as="a"
+          <Link.External
             target="_blank"
             onClick={e => e.stopPropagation()}
             href={
@@ -34,7 +33,7 @@ const TrialIndicator = ({ isClient }) => {
           >
             Read more information
             <Icon icon="arrow-right" width={16} ml="xxs" />
-          </Link>
+          </Link.External>
         </>
       }
     >

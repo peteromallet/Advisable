@@ -1,0 +1,2 @@
+class BlacklistedDomain < ApplicationRecord
+end
