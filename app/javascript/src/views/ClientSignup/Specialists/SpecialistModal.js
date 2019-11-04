@@ -126,8 +126,7 @@ const SpecialistModal = ({ isOpen, onClose, specialistId }) => {
                   lineHeight={1.35}
                   letterSpacing="-0.01rem"
                 >
-                  We offer breakfast daily, included in the room price, help to
-                  plan tours and make. {specialist.bio}
+                  {specialist.bio}
                 </Text>
                 <TagCloud
                   tags={specialist.skills}
