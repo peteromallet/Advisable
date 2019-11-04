@@ -4,7 +4,9 @@ query {
       id
       airtableId
       bio
-      skills
+      skills {
+        name
+      }
       city
       remote
       country {

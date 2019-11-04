@@ -98,6 +98,7 @@ class Airtable::Project < Airtable::Base
     self['Industry Experience Required'] = 'No' if project.industry_experience_required == false
     self['Company Type Experience Required'] = 'Yes' if project.company_type_experience_required
     self['Company Type Experience Required'] = 'No' if project.company_type_experience_required == false
+    self['Project Status'] = project.sales_status
 
     # we currently store the industry in postgres as plain text but we need to
     # setup the association in Airtable.

@@ -105,9 +105,11 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     project = Project.new(
       user: user,
       name: skill.name,
+      status: "Project Created",
       industry: industry.name,
       primary_skill: skill.name,
       company_type: company_type,
+      sales_status: "Pending",
       industry_experience_required: industry_experience_required,
       company_type_experience_required: company_type_experience_required
     )
