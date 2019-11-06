@@ -13,12 +13,14 @@ const STATUSES = {
     styling: "yellow",
     tooltip:
       "Advisable is working to verify with the client that this project happened.",
+    hideForClients: true,
   },
   "In Progress": {
     label: "Verification In Progress",
     icon: "refresh-cw",
     styling: "yellow",
     tooltip: "Advisable is in the process of verifying this project",
+    hideForClients: true,
   },
   Validated: {
     label: "Verified",
@@ -35,8 +37,11 @@ const STATUSES = {
   },
 };
 
-const ProjectValidationStatus = ({ status }) => {
+const ProjectValidationStatus = ({ status, isClient = false }) => {
   const config = STATUSES[status || "Validated"];
+
+  if (config.hideForClients && isClient) return null;
+
   return (
     <Tooltip content={config.tooltip}>
       <Status icon={config.icon} styling={config.styling}>
