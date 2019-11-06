@@ -37,8 +37,8 @@ class Types::ProjectType < Types::BaseType
   # we are moving the industry data from the project to the client contact
   # record so first check for it there before falling back to the project.
   def industry
-    if object.client_contact.try(:industry)
-      return object.client_contact.industry.name
+    if object.user.try(:industry)
+      return object.user.industry.name
     end
 
     object.industry
@@ -47,7 +47,7 @@ class Types::ProjectType < Types::BaseType
   # we are moving the company type data from the project to the client contact
   # record so first check for it there before falling back to the project.
   def company_type
-    object.client_contact.try(:company_type) || object.company_type
+    object.user.try(:company_type) || object.company_type
   end
 
   # The applications for a project are filtered to only include the top 3
