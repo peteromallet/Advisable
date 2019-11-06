@@ -31,7 +31,13 @@ export default ({ data, match }) => {
             />
           </Padding>
           <Padding bottom="xxs">
-            <Text size="l" as="h3" weight="semibold" color="neutral.N9">
+            <Text
+              size="xxl"
+              as="h3"
+              fontWeight="semibold"
+              color="neutral.N9"
+              letterSpacing="-0.01rem"
+            >
               {specialist.name}
             </Text>
           </Padding>
