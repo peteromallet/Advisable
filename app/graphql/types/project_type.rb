@@ -34,6 +34,22 @@ class Types::ProjectType < Types::BaseType
     argument :id, ID, required: true
   end
 
+  # we are moving the industry data from the project to the client contact
+  # record so first check for it there before falling back to the project.
+  def industry
+    if object.client_contact.try(:industry)
+      return object.client_contact.industry.name
+    end
+
+    object.industry
+  end
+
+  # we are moving the company type data from the project to the client contact
+  # record so first check for it there before falling back to the project.
+  def company_type
+    object.client_contact.try(:company_type) || object.company_type
+  end
+
   # The applications for a project are filtered to only include the top 3
   # candidates plus any applications that have been rejected or featured.
   def applications(status: nil)
