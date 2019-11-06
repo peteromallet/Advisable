@@ -1,4 +1,6 @@
 import * as React from "react";
+import { get } from "lodash";
+import useViewer from "../../hooks/useViewer";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import StarRating from "../StarRating";
@@ -20,6 +22,7 @@ const title = project => {
 };
 
 export default ({ specialistId, previousProject }) => {
+  const viewer = useViewer();
   const [isOpen, setOpen] = React.useState(false);
   const isMobile = useMobile();
   const { project, reviews } = previousProject;
@@ -40,7 +43,10 @@ export default ({ specialistId, previousProject }) => {
         <Flex align="center">
           {!isMobile && (
             <Spacing paddingRight="s">
-              <ProjectValidationStatus status={project.validationStatus} />
+              <ProjectValidationStatus
+                isClient={get(viewer, "isClient")}
+                status={project.validationStatus}
+              />
             </Spacing>
           )}
           {reviews.length > 0 && (

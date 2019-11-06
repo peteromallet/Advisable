@@ -51,7 +51,10 @@ const PreviousProject = ({
 
         {showValidationStatus && (
           <Spacing marginBottom="m">
-            <ProjectValidationStatus status={project.validationStatus} />
+            <ProjectValidationStatus
+              isClient={get(viewer, "isClient")}
+              status={project.validationStatus}
+            />
           </Spacing>
         )}
 
@@ -60,7 +63,6 @@ const PreviousProject = ({
             <ProjectValidationPrompt project={project} />
           </Box>
         )}
-
         {project.description && (
           <Text
             mb="l"
@@ -72,7 +74,6 @@ const PreviousProject = ({
             {truncate(project.description, { length: 380, separator: " " })}
           </Text>
         )}
-
         {reviews && reviews.length > 0 && (
           <Spacing paddingBottom="xl">
             {reviews.map(review => (
@@ -84,7 +85,6 @@ const PreviousProject = ({
             ))}
           </Spacing>
         )}
-
         <Button size="s" appearance="outlined" onClick={openProject}>
           View project details
         </Button>

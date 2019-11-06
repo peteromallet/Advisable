@@ -39,7 +39,10 @@ const ProjectDetails = ({ previousProject }) => {
         <Text mb="xs" as="h2" fontSize="xl" fontWeight="medium">
           {title(project)}
         </Text>
-        <ProjectValidationStatus status={project.validationStatus} />
+        <ProjectValidationStatus
+          isClient={get(viewer, "isClient")}
+          status={project.validationStatus}
+        />
       </Modal.Header>
       <Modal.Body>
         {get(viewer, "isSpecialist") && project.validationStatus === "Pending" && (
