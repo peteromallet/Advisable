@@ -20,12 +20,11 @@ const GET_DATA = gql`
 `;
 
 const AddressFields = ({ label, name, formik, data }) => {
-  let countries = get(data, "countries");
+  let countries = get(data, "countries") || [];
   const countryValue = get(formik.values, `${name}.country`);
   let country = find(countries, c => {
     return c.code === countryValue || c.name === countryValue;
   });
-  console.log(country);
 
   if (data.loading) return <>loading...</>;
 
