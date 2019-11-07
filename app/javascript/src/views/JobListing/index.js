@@ -17,7 +17,7 @@ let JobListingContainer = ({ history, match }) => {
   if (loading) return <Loading />;
 
   if (error) {
-    const code = error.graphQLErrors[0].extensions.code;
+    const code = get(error, "graphQLErrors[0].extensions.code");
     if (code === "recordNotFound") {
       return <NotFound />;
     }
