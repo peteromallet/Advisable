@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_30_152837) do
+ActiveRecord::Schema.define(version: 2019_11_06_142629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -550,8 +550,11 @@ ActiveRecord::Schema.define(version: 2019_10_30_152837) do
     t.string "stripe_setup_intent_id"
     t.string "setup_intent_status"
     t.string "confirmation_token"
+    t.string "company_type"
+    t.bigint "industry_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
+    t.index ["industry_id"], name: "index_users_on_industry_id"
   end
 
   create_table "webhook_configurations", force: :cascade do |t|
@@ -605,4 +608,5 @@ ActiveRecord::Schema.define(version: 2019_10_30_152837) do
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "countries"
   add_foreign_key "users", "countries"
+  add_foreign_key "users", "industries"
 end

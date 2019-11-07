@@ -46,13 +46,17 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     end
 
     ActiveRecord::Base.transaction do
-      user = create_user(email: args[:email])
+      user = create_user({
+        email: args[:email],
+        industry: industry,
+        company_type: args[:company_type],
+      })
+      
       client = create_client(user: user)
+
       project = create_project({
         user: user,
         skill: skill,
-        industry: industry,
-        company_type: args[:company_type],
         industry_experience_required: args[:industry_experience_required],
         company_type_experience_required: args[:company_type_experience_required]
       })
@@ -71,13 +75,13 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
 
   private
 
-  def create_user(email: )
+  def create_user(email: , industry:, company_type:)
     domain = email.split("@").last
     if BlacklistedDomain.where(domain: domain).any?
       raise ApiError::InvalidRequest.new("nonCorporateEmail", "The email #{email} is not allowed")
     end
 
-    user = User.new(email: email)
+    user = User.new(email: email, industry: industry, company_type: company_type)
 
     unless user.valid?
       if user.errors.added?(:email, :taken)
@@ -101,14 +105,12 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     client
   end
 
-  def create_project(user:, skill:, industry:, company_type:, industry_experience_required:, company_type_experience_required:)
+  def create_project(user:, skill:, industry_experience_required:, company_type_experience_required:)
     project = Project.new(
       user: user,
       name: skill.name,
       status: "Project Created",
-      industry: industry.name,
       primary_skill: skill.name,
-      company_type: company_type,
       sales_status: "Pending",
       industry_experience_required: industry_experience_required,
       company_type_experience_required: company_type_experience_required
