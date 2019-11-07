@@ -12,6 +12,8 @@ class Airtable::ClientContact < Airtable::Base
   sync_column 'Invoice Name', to: :invoice_name
   sync_column 'Invoice Company Name', to: :invoice_company_name
   sync_column 'VAT Number', to: :vat_number
+  sync_column 'Type of Company', to: :company_type
+  sync_association 'Industry', to: :industry
 
   sync_data do |user|
     # sync the address
@@ -38,6 +40,8 @@ class Airtable::ClientContact < Airtable::Base
     self['Invoice Name'] = user.invoice_name
     self['Invoice Company Name'] = user.invoice_company_name
     self['VAT Number'] = user.vat_number
+    self['Industry'] = [user.industry.try(:airtable_id)].compact
+    self['Type of Company'] = user.company_type
     
     if user.address
       self['Address'] = Address.new(user.address).to_s

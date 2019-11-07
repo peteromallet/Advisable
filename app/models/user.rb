@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :applications, through: :projects
   has_one :client_user
   has_one :client, through: :client_user
+  belongs_to :industry, required: false
   belongs_to :country, required: false
 
   before_save :remove_past_availabililty
