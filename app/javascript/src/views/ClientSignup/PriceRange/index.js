@@ -21,16 +21,16 @@ const PriceRange = () => {
     );
   }
 
-  if (results.nodes.length <= 6) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/clients/signup/specialists",
-          state: location.state,
-        }}
-      />
-    );
-  }
+  // if (results.nodes.length <= 6) {
+  //   return (
+  //     <Redirect
+  //       to={{
+  //         pathname: "/clients/signup/specialists",
+  //         state: location.state,
+  //       }}
+  //     />
+  //   );
+  // }
 
   const byPriceRange = results ? groupByPriceRange(results.nodes) : [];
 
