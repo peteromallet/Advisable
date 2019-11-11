@@ -35,6 +35,7 @@ const Specailists = () => {
 
     history.replace({
       pathname: location.pathname,
+      search: location.search,
       state: {
         ...location.state,
         selected: nextSelected,
@@ -45,6 +46,7 @@ const Specailists = () => {
   const handleContinue = () => {
     history.push({
       pathname: "/clients/signup/save",
+      search: location.search,
       state: location.state,
     });
   };

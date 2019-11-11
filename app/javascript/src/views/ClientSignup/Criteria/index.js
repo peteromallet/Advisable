@@ -43,7 +43,7 @@ const Criteria = () => {
   };
 
   if (search) {
-    return <Searching search={search} />;
+    return <Searching queryParams={location.search} search={search} />;
   }
 
   if (formData.loading) {

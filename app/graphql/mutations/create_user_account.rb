@@ -32,6 +32,12 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     description "Any specialist airtable_id's that they are interested in working with"
   end
 
+  argument :campaign_name, String, required: false
+  argument :campaign_source, String, required: false
+  argument :pid, String, required: false
+  argument :rid, String, required: false
+  argument :gclid, String, required: false
+
   # Currently we don't have full account signups in app. i.e setting the user
   # password at the time of creating their account. For now the API only needs
   # to return the project record that is created.
@@ -50,6 +56,11 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
         email: args[:email],
         industry: industry,
         company_type: args[:company_type],
+        campaign_name: args[:campaign_name],
+        campaign_source: args[:campaign_source],
+        pid: args[:pid],
+        rid: args[:rid],
+        gclid: args[:gclid],
       })
       
       client = create_client(user: user)
@@ -75,13 +86,22 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
 
   private
 
-  def create_user(email: , industry:, company_type:)
+  def create_user(email: , industry:, company_type:, campaign_name:, campaign_source:, pid:, rid:, gclid:)
     domain = email.split("@").last
     if BlacklistedDomain.where(domain: domain).any?
       raise ApiError::InvalidRequest.new("nonCorporateEmail", "The email #{email} is not allowed")
     end
 
-    user = User.new(email: email, industry: industry, company_type: company_type)
+    user = User.new(
+      email: email,
+      industry: industry,
+      company_type: company_type,
+      campaign_name: campaign_name,
+      campaign_source: campaign_source,
+      pid: pid,
+      rid: rid,
+      gclid: gclid,
+    )
 
     unless user.valid?
       if user.errors.added?(:email, :taken)
