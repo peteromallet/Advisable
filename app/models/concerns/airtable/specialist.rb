@@ -137,7 +137,7 @@ class Airtable::Specialist < Airtable::Base
     self['PID'] = specialist.pid if specialist.pid
     self['Campaign Name'] = specialist.campaign_name if specialist.campaign_name
     self['Campaign Source'] = specialist.campaign_source if specialist.campaign_source
-    self['Referrer'] = specialist.referrer if specialist.referrer
+    self['Referrer'] = JSON.parse(specialist.referrer) if specialist.referrer
 
     # We only want to try and sync their avatar if they have uplodated one.
     # We also check to see if the filename in airtable is different to the
