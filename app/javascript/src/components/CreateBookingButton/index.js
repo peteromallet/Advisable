@@ -1,11 +1,12 @@
 import React from "react";
 import { Button } from "@advisable/donut";
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import CreateBookingModal from "../CreateBookingModal";
 
 // Renders a button which when clicked will open the "start working" modal to
 // convert an application into a booking.
-const CreateBookingButton = ({ history, application }) => {
+const CreateBookingButton = ({ application }) => {
+  const history = useHistory();
   const [isOpen, setOpen] = React.useState(false);
 
   return (
@@ -29,4 +30,4 @@ const CreateBookingButton = ({ history, application }) => {
   );
 };
 
-export default withRouter(CreateBookingButton);
+export default CreateBookingButton;
