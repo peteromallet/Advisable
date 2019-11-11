@@ -62,7 +62,7 @@ const Specailists = () => {
           Continue
         </Button>
       </Header>
-      <Box maxWidth={800} ml="xxl">
+      <Box maxWidth={800} ml={{ _: "m", l: "xxl" }}>
         <Text
           as="h2"
           mb="xs"
@@ -115,7 +115,7 @@ const Specailists = () => {
           </StyledSpecialist>
         </SlideInUp>
       </SideScroller>
-      <Box ml="xxl">
+      <Box ml={{ _: "m", l: "xxl" }}>
         <Text fontSize="s" fontWeight="medium" mb="xxs">
           Don't see anyone you like?
         </Text>
