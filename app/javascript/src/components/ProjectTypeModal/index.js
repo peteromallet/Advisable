@@ -2,14 +2,12 @@
 // a new booking.
 import * as React from "react";
 import { Formik, Field } from "formik";
-import { Box, Text, Checkbox } from "@advisable/donut";
+import { Box, Text, Checkbox, Button } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Modal from "../Modal";
 import Radio from "../Radio";
-import Button from "../Button";
 import TextField from "../TextField";
 import ButtonGroup from "../ButtonGroup";
-import Padding from "../Spacing/Padding";
 import validationSchema from "./validationSchema";
 
 const numberMask = createNumberMask({
@@ -58,9 +56,11 @@ const ProjectTypeModal = ({ isOpen, onClose, application, onSubmit }) => {
         >
           {formik => (
             <form onSubmit={formik.handleSubmit}>
+              {console.log(formik.values)}
               <Box mb="xs">
                 <Field
                   as={Radio}
+                  type="radio"
                   label="Projects - Predefined Projects"
                   value="Fixed"
                   name="projectType"
@@ -77,6 +77,7 @@ const ProjectTypeModal = ({ isOpen, onClose, application, onSubmit }) => {
               <Box mb="m">
                 <Field
                   as={Radio}
+                  type="radio"
                   label="Flexible - Monthly Limit"
                   value="Flexible"
                   name="projectType"
@@ -139,7 +140,8 @@ const ProjectTypeModal = ({ isOpen, onClose, application, onSubmit }) => {
                 <ButtonGroup fullWidth>
                   <Button
                     type="submit"
-                    styling="primary"
+                    intent="success"
+                    appearance="primary"
                     disabled={!formik.isValid}
                     loading={formik.isSubmitting}
                     aria-label="Continue"

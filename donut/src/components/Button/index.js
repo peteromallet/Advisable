@@ -2,6 +2,12 @@ import React from "react";
 import Icon from "../Icon";
 import { Button as ButtonStyles, ButtonText, Loading, Dot } from "./styles";
 
+const ICON_SIZES = {
+  l: 22,
+  m: 20,
+  s: 18,
+};
+
 // Renders a button.. obviously
 //
 // == Props ==
@@ -29,13 +35,13 @@ const Button = React.forwardRef(
             <Dot />
           </Loading>
         )}
-        {icon && <Icon icon={icon} width={20} />}
+        {icon && <Icon icon={icon} width={ICON_SIZES[size]} />}
         {children && (
           <ButtonText hasIcon={Boolean(icon)} hasRightIcon={Boolean(iconRight)}>
             {children}
           </ButtonText>
         )}
-        {iconRight && <Icon icon={iconRight} width={20} />}
+        {iconRight && <Icon icon={iconRight} width={ICON_SIZES[size]} />}
       </ButtonStyles>
     );
   }

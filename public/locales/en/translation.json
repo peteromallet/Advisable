@@ -119,5 +119,15 @@
     "review_plural": "reviews",
     "reviewCount": "{{count}} review",
     "reviewCount_plural": "{{count}} reviews"
+  },
+  "projectTypes": {
+    "Fixed": {
+      "label": "Projects - Predefined Projects",
+      "clientDescription": "Your freelancer is working on predefined projects, with set deliverables and timelines. You are charged when each task is assigned. All live tasks are marked \"Working\"."
+    },
+    "Flexible": {
+      "label": "Flexible - Monthly Limit",
+      "clientDescription": "Your freelancer is working up to a maximum monthly limit of hours. You are charged 50% of these hours up front, then retrospectively for each timesheet your freelancer submits within this limit."
+    }
   }
 }

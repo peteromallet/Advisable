@@ -1,12 +1,11 @@
 import React from "react";
 import { get } from "lodash";
 import { Mutation } from "react-apollo";
+import { Button, Tooltip, Box, Icon } from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "../../components/Sticky";
-import Button from "../../components/Button";
 import Text from "../../components/Text";
-import Modal from "../../components/Modal";
 import Avatar from "../../components/Avatar";
 import Layout from "../../components/Layout";
 import Heading from "../../components/Heading";
@@ -18,12 +17,10 @@ import AttributeList from "../../components/AttributeList";
 import { useMobile } from "../../components/Breakpoint";
 import TalkModal from "../../components/TalkModal";
 import ProjectTypeModal from "../../components/ProjectTypeModal";
-import ProjectMonthlyLimit from "../../components/ProjectMonthlyLimit";
 import StopWorkingModal from "./StopWorkingModal";
 import SET_PROJECT_TYPE from "./setProjectType";
 
 const TALK_MODAL = "TALK_MODAL";
-const STOP_WORKING_MODAL = "STOP_WORKING_MODAL";
 
 const Sidebar = ({ data, history, tutorial, match }) => {
   const isMobile = useMobile();
@@ -32,11 +29,6 @@ const Sidebar = ({ data, history, tutorial, match }) => {
   const specialist = application.specialist;
   const [modal, setModal] = React.useState(null);
   const [projectTypeModal, setProjectTypeModal] = React.useState(false);
-  const [monthlyLimitModal, setMonthlyLimitModal] = React.useState(false);
-
-  const handleEditMonthlyLimit = () => {
-    setMonthlyLimitModal(true);
-  };
 
   const handleEditPayment = () => {
     history.push("/settings/payments");
@@ -68,7 +60,8 @@ const Sidebar = ({ data, history, tutorial, match }) => {
           <Padding top="xl">
             <Padding bottom="s">
               <Button
-                block
+                width="100%"
+                appearance="outlined"
                 icon="message-circle"
                 onClick={() => setModal(TALK_MODAL)}
               >
@@ -88,7 +81,8 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                   )}
                 />
                 <Button
-                  block
+                  width="100%"
+                  appearance="outlined"
                   icon="pause-circle"
                   aria-label="Stop Working"
                   onClick={() => history.replace(`${match.url}/stop`)}
@@ -108,37 +102,18 @@ const Sidebar = ({ data, history, tutorial, match }) => {
               )}
 
               {application.projectType === "Flexible" && (
-                <>
-                  <Modal
-                    isOpen={monthlyLimitModal}
-                    onClose={() => setMonthlyLimitModal(false)}
-                  >
-                    <Padding size="xl">
-                      <ProjectMonthlyLimit
-                        applicationId={application.airtableId}
-                        onUpdate={() => setMonthlyLimitModal(false)}
-                        initialValues={{
-                          monthlyLimit: application.monthlyLimit,
-                        }}
-                      />
-                    </Padding>
-                  </Modal>
-                  <AttributeList.Item
-                    label="Monthly Limit"
-                    value={
-                      <>
-                        {application.monthlyLimit} hours
-                        <br />
-                        <Button
-                          onClick={handleEditMonthlyLimit}
-                          styling="plainSubtle"
-                        >
-                          Edit
-                        </Button>
-                      </>
-                    }
-                  />
-                </>
+                <AttributeList.Item
+                  label="Monthly Limit"
+                  action={
+                    <Button
+                      size="s"
+                      icon="edit"
+                      onClick={() => setProjectTypeModal(true)}
+                    />
+                  }
+                >
+                  {application.monthlyLimit} hours
+                </AttributeList.Item>
               )}
 
               <Mutation mutation={SET_PROJECT_TYPE}>
@@ -148,7 +123,7 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                     onClose={() => setProjectTypeModal(false)}
                     application={application}
                     onSubmit={async values => {
-                      const { data } = await setProjectType({
+                      await setProjectType({
                         variables: {
                           input: {
                             application: application.airtableId,
@@ -158,7 +133,6 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                         },
                       });
 
-                      const a = data.setTypeForProject.application;
                       setProjectTypeModal(false);
                     }}
                   />
@@ -167,35 +141,43 @@ const Sidebar = ({ data, history, tutorial, match }) => {
 
               <AttributeList.Item
                 label="Project Type"
-                value={
-                  <>
-                    <span data-testid="projectType">
-                      {application.projectType}
-                    </span>
-                    <br />
-                    <Button
-                      styling="plainSubtle"
-                      aria-label="Edit project type"
-                      onClick={() => setProjectTypeModal(true)}
-                    >
-                      Edit
-                    </Button>
-                  </>
+                action={
+                  <Button
+                    size="s"
+                    icon="edit"
+                    aria-label="Edit project type"
+                    onClick={() => setProjectTypeModal(true)}
+                  />
                 }
-              />
+              >
+                <Tooltip
+                  content={t(
+                    `projectTypes.${application.projectType}.clientDescription`
+                  )}
+                >
+                  <Box display="flex" alignItems="center">
+                    <Icon
+                      mr="xxs"
+                      width={16}
+                      height={16}
+                      color="neutral.6"
+                      icon="help-circle"
+                    />
+                    <div data-testid="projectType">
+                      {t(`projectTypes.${application.projectType}.label`)}
+                    </div>
+                  </Box>
+                </Tooltip>
+              </AttributeList.Item>
 
               <AttributeList.Item
                 label="Payment Method"
-                value={
-                  <>
-                    {get(data, "viewer.projectPaymentMethod")}
-                    <br />
-                    <Button onClick={handleEditPayment} styling="plainSubtle">
-                      Edit
-                    </Button>
-                  </>
+                action={
+                  <Button onClick={handleEditPayment} icon="edit" size="s" />
                 }
-              ></AttributeList.Item>
+              >
+                {get(data, "viewer.projectPaymentMethod")}
+              </AttributeList.Item>
             </AttributeList>
           </Padding>
           <Padding bottom="xl">

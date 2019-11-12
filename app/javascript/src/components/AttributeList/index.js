@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { theme } from "@advisable/donut";
 import colors from "../../colors";
 
 const Container = styled.ul``;
@@ -9,6 +10,7 @@ const Item = styled.li`
   padding: 16px 0;
   margin-top: -1px;
   line-height: 18px;
+  position: relative;
   border-top: 1px solid ${colors.neutral.s2};
   border-bottom: 1px solid ${colors.neutral.s2};
 
@@ -18,35 +20,36 @@ const Item = styled.li`
   }
 `;
 
-const Contents = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
 const Label = styled.span`
-  color: ${colors.neutral.s8};
+  display: block;
+  font-size: 13px;
   font-weight: 500;
   padding-right: 12px;
+  color: ${theme.colors.neutral[5]};
 `;
 
-const Value = styled.span`
-  color: ${colors.neutral.s10};
+const Value = styled.div`
+  display: block;
   font-weight: 500;
-  text-align: right;
+  color: ${colors.neutral.s10};
+`;
+
+const Action = styled.div`
+  top: 20px;
+  right: 0;
+  position: absolute;
 `;
 
 const AttributeList = ({ children }) => {
   return <Container>{children}</Container>;
 };
 
-const ListItem = ({ label, value, children }) => (
+const ListItem = ({ label, value, action, children }) => (
   <Item>
-    <Contents>
-      <Label>{label}</Label>
-      <Value>{value}</Value>
-    </Contents>
-    {children}
+    <Label>{label}</Label>
+    <Action>{action}</Action>
+    <Value>{value}</Value>
+    <Value>{children}</Value>
   </Item>
 );
 
