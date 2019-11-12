@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Formik, Form } from "formik";
-import { flowRight as compose } from "lodash";
+import { Formik, Form, Field } from "formik";
 import { graphql } from "react-apollo";
+import { useTranslation } from "react-i18next";
+import { flowRight as compose } from "lodash";
+import { Box, Text, Checkbox, NumberedList, Button } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Card from "../../components/Card";
-import Text from "../../components/Text";
-import Button from "../../components/Button";
 import TextField from "../../components/TextField";
 import ButtonGroup from "../../components/ButtonGroup";
 import Radio from "../../components/Radio";
@@ -22,6 +22,7 @@ const numberMask = createNumberMask({
 
 const ProjectType = ({ history, application, updateApplication }) => {
   const isMobile = useMobile();
+  const { t } = useTranslation();
 
   const handleSubmit = async values => {
     const response = await updateApplication({
@@ -45,13 +46,12 @@ const ProjectType = ({ history, application, updateApplication }) => {
   const initialValues = {
     projectType: application.projectType || "",
     monthlyLimit: application.monthlyLimit || undefined,
+    accept: false,
   };
-
-  const isInitialValid = projectTypeValidationSchema.isValidSync(initialValues);
 
   const handleLimitChange = formik => e => {
     let value = e.target.value;
-    if (Boolean(value)) {
+    if (value) {
       value = value.replace(" hours", "");
       value = value.replace(/\,/g, "");
       value = Number(value);
@@ -67,12 +67,12 @@ const ProjectType = ({ history, application, updateApplication }) => {
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
-        isInitialValid={isInitialValid}
+        isInitialValid={projectTypeValidationSchema.isValidSync(initialValues)}
         validationSchema={projectTypeValidationSchema}
       >
         {formik => (
           <Form>
-            <Padding size="l">
+            <Padding size="xl">
               <Padding bottom="s">
                 <Heading level={3}>Project Type</Heading>
               </Padding>
@@ -83,29 +83,38 @@ const ProjectType = ({ history, application, updateApplication }) => {
                 </Text>
               </Padding>
               <Padding bottom="m">
-                <Radio
+                <Field
+                  as={Radio}
+                  type="radio"
                   name="projectType"
                   value="Fixed"
-                  label="Fixed"
                   data-testid="fixed"
-                  onChange={formik.handleChange}
-                  checked={formik.values.projectType === "Fixed"}
-                  description="I want to work with them on one big project or a number of smaller tasks"
+                  onChange={e => {
+                    formik.setFieldValue("accept", false);
+                    formik.handleChange(e);
+                  }}
+                  label={t("projectTypes.Fixed.label")}
+                  description={t("projectTypes.Fixed.proposalDescription")}
                 />
               </Padding>
               <Padding bottom="xl">
-                <Radio
+                <Field
+                  as={Radio}
+                  type="radio"
                   name="projectType"
                   value="Flexible"
-                  label="Flexible"
                   data-testid="flexible"
-                  onChange={formik.handleChange}
-                  checked={formik.values.projectType === "Flexible"}
-                  description="I want to work with them flexibly with monthly limits"
+                  onChange={e => {
+                    formik.setFieldValue("accept", false);
+                    formik.handleChange(e);
+                  }}
+                  label={t("projectTypes.Flexible.label")}
+                  description={t("projectTypes.Flexible.proposalDescription")}
                 />
               </Padding>
               {formik.values.projectType === "Flexible" && (
-                <Padding bottom="xl">
+                <>
+                  <Box mb="l" height={1} bg="neutral.1" />
                   <TextField
                     autoFocus
                     name="monthlyLimit"
@@ -118,15 +127,62 @@ const ProjectType = ({ history, application, updateApplication }) => {
                       formik.touched.monthlyLimit && formik.errors.monthlyLimit
                     }
                   />
-                </Padding>
+                </>
+              )}
+              {formik.values.projectType === "Fixed" && (
+                <>
+                  <Box mb="l" height={1} bg="neutral.1" />
+                  <Text mb="m" fontSize="s">
+                    In order to guarantee payment, the following terms must be
+                    followed:
+                  </Text>
+                  <NumberedList mb="l">
+                    <NumberedList.Item>
+                      I will only start working when a project has been assigned
+                      to me by a client.
+                    </NumberedList.Item>
+                    <NumberedList.Item>
+                      As soon as I start working, I will mark the project as
+                      &quot;working&quot; to ensure accurate tracking.
+                    </NumberedList.Item>
+                    <NumberedList.Item>
+                      Upon completion, I will mark a project as “submitted” in
+                      order for my payment to be approved.
+                    </NumberedList.Item>
+                  </NumberedList>
+                  <Field as={Checkbox} type="checkbox" name="accept">
+                    I agree to follow these payment terms
+                  </Field>
+                  <Box my="l" height={1} bg="neutral.1" />
+                </>
+              )}
+
+              {formik.values.projectType === "Flexible" && (
+                <>
+                  <Box my="l" height={1} bg="neutral.1" />
+                  <Text mb="m" fontSize="s">
+                    In order to guarantee payment, the following terms must be
+                    followed:
+                  </Text>
+                  <NumberedList mb="l">
+                    <NumberedList.Item>
+                      I will submit my hours for approval on a weekly basis
+                    </NumberedList.Item>
+                  </NumberedList>
+                  <Field as={Checkbox} type="checkbox" name="accept">
+                    I agree to follow these payment terms
+                  </Field>
+                  <Box my="l" height={1} bg="neutral.1" />
+                </>
               )}
               <ButtonGroup fullWidth={isMobile}>
                 <Button
                   type="submit"
+                  intent="success"
+                  appearance="primary"
                   aria-label="Continue"
                   disabled={!formik.isValid}
                   loading={formik.isSubmitting}
-                  styling="primary"
                 >
                   Continue
                 </Button>

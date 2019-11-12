@@ -7,9 +7,9 @@ import {
   StyledCheckboxText,
 } from "./styles";
 
-const Checkbox = ({ children, ...props }) => {
+const Checkbox = ({ children, m, mx, my, mt, mr, mb, ml, ...props }) => {
   return (
-    <StyledCheckbox>
+    <StyledCheckbox m={m} mx={mx} my={my} mt={mt} mr={mr} mb={mb} ml={ml}>
       <StyledCheckboxInput
         {...props}
         role="checkbox"
