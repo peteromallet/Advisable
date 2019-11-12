@@ -19,7 +19,7 @@ export default ({ onNewTask, application }: Props) => {
         <img src={illustration} width={300} />
         <Padding bottom="xs">
           <Text weight="semibold" colour="dark">
-            No active tasks
+            No active projects
           </Text>
         </Padding>
         <Padding bottom="l">
@@ -30,8 +30,8 @@ export default ({ onNewTask, application }: Props) => {
               margin: "0 auto",
             }}
           >
-            You have no active tasks with {firstName}. Add a task to assign work
-            to {firstName}
+            You must now assign a project in order for {firstName} to start
+            work.
           </Text>
         </Padding>
         <NewTask onCreate={onNewTask} application={application} />

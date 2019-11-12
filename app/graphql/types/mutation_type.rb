@@ -14,7 +14,6 @@ class Types::MutationType < GraphQL::Schema::Object
   field :reject_application_invitation, mutation: Mutations::RejectApplicationInvitation
   field :update_application, mutation: Mutations::UpdateApplication
   field :submit_application, mutation: Mutations::SubmitApplication
-  field :set_monthly_limit, mutation: Mutations::SetMonthlyLimit
   field :set_type_for_project, mutation: Mutations::SetTypeForProject
   
   field :update_availability, mutation: Mutations::UpdateAvailability
