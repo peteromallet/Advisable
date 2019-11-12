@@ -23,8 +23,14 @@ const Range = ({ name, icon, specialists }) => {
     });
   };
 
-  const cheapest = minBy(specialists, "hourlyRate");
-  const dearest = maxBy(specialists, "hourlyRate");
+  const withinLimits = n => {
+    if (n < 5000) return 5000;
+    if (n > 25000) return 25000;
+    return n;
+  };
+
+  const cheapest = withinLimits(minBy(specialists, "hourlyRate").hourlyRate);
+  const dearest = withinLimits(maxBy(specialists, "hourlyRate").hourlyRate);
 
   return (
     <StyledRange onClick={handleClick} aria-label={name}>
@@ -37,13 +43,13 @@ const Range = ({ name, icon, specialists }) => {
         </StyledRangeTitle>
         {cheapest && dearest && (
           <Text size="xs" color="neutral.7">
-            {currency(cheapest.hourlyRate, {
-              format: "$0",
-            })}
-            {" - "}
-            {currency(dearest.hourlyRate, {
-              format: "$0",
-            })}
+            {currency(cheapest, { format: "$0" })}
+            {cheapest !== dearest && (
+              <>
+                {" - "}
+                {currency(dearest, { format: "$0" })}
+              </>
+            )}
             <Text fontSize="xxs" as="span" color="neutral.6">
               {" /hour"}
             </Text>

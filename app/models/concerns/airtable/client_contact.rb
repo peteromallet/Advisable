@@ -13,6 +13,11 @@ class Airtable::ClientContact < Airtable::Base
   sync_column 'Invoice Company Name', to: :invoice_company_name
   sync_column 'VAT Number', to: :vat_number
   sync_column 'Type of Company', to: :company_type
+  sync_column 'Campaign Name', to: :campaign_name
+  sync_column 'Campaign Source', to: :campaign_source
+  sync_column 'PID', to: :pid
+  sync_column 'RID', to: :rid
+  sync_column 'gclid', to: :gclid
   sync_association 'Industry', to: :industry
 
   sync_data do |user|
@@ -42,6 +47,12 @@ class Airtable::ClientContact < Airtable::Base
     self['VAT Number'] = user.vat_number
     self['Industry'] = [user.industry.try(:airtable_id)].compact
     self['Type of Company'] = user.company_type
+
+    self['PID'] = user.pid
+    self['Campaign Name'] = user.campaign_name
+    self['Campaign Source'] = user.campaign_source
+    self['RID'] = user.rid
+    self['gclid'] = user.gclid
     
     if user.address
       self['Address'] = Address.new(user.address).to_s

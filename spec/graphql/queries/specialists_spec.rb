@@ -28,6 +28,15 @@ describe 'specialists root query' do
     expect(nodes).not_to include({ "id" => s2.uid })
   end
 
+  it "excludes specialists with an average_score below 65" do
+    s2 = create(:specialist, average_score: 55)
+    s2.skills << skill
+    response = AdvisableSchema.execute(query)
+    nodes = response["data"]["specialists"]["nodes"]
+    expect(nodes).to include({ "id" => specialist.uid })
+    expect(nodes).not_to include({ "id" => s2.uid })
+  end
+
   context "when an industry is provided" do
     let(:query_args) { "skill: \"#{skill.name}\", industry: \"Marketing\""}
 

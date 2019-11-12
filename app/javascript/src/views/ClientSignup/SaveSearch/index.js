@@ -1,5 +1,6 @@
 import React from "react";
 import { get } from "lodash";
+import queryString from "query-string";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { useMutation } from "react-apollo";
@@ -15,6 +16,7 @@ const SaveSearch = () => {
   const location = useLocation();
   const [email, setEmail] = React.useState(null);
   const [createAccount, { data }] = useMutation(CREATE_ACCOUNT);
+  const queryParams = queryString.parse(location.search);
 
   const handleSubmit = async (values, formik) => {
     const response = await createAccount({
@@ -33,6 +35,11 @@ const SaveSearch = () => {
           ),
           email: values.email,
           specialists: location.state.selected,
+          campaignName: get(queryParams, "utm_campaign"),
+          campaignSource: get(queryParams, "utm_source"),
+          pid: get(queryParams, "pid"),
+          rid: get(queryParams, "rid"),
+          gclid: get(queryParams, "gclid"),
         },
       },
     });
