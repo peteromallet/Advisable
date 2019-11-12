@@ -15,6 +15,7 @@ const PriceRange = () => {
       <Redirect
         to={{
           pathname: "/clients/signup/save",
+          search: location.search,
           state: location.state,
         }}
       />
@@ -26,6 +27,7 @@ const PriceRange = () => {
       <Redirect
         to={{
           pathname: "/clients/signup/specialists",
+          search: location.search,
           state: location.state,
         }}
       />

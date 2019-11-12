@@ -9,7 +9,7 @@ import SEARCH from "./search";
 
 const SECONDS = 3;
 
-const Searching = ({ search }) => {
+const Searching = ({ search, queryParams }) => {
   const theme = useTheme();
   const history = useHistory();
   const [seconds, setSeconds] = React.useState(0);
@@ -34,6 +34,7 @@ const Searching = ({ search }) => {
     if (!loading && seconds > SECONDS) {
       history.push({
         pathname: "/clients/signup/price_range",
+        search: queryParams,
         state: {
           search,
           selected: [],
@@ -41,7 +42,7 @@ const Searching = ({ search }) => {
         },
       });
     }
-  }, [search, seconds, loading, data, history]);
+  }, [search, seconds, loading, data, history, queryParams]);
 
   React.useLayoutEffect(() => {
     theme.updateTheme({ background: "white" });

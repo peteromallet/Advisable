@@ -17,7 +17,7 @@ const SpecialistAttributes = ({ specialist }) => {
           Per Hour
         </Text>
       </Box>
-      <Box px="s" borderRight="1px solid" borderColor="neutral.2">
+      <Box px="s">
         <Text fontWeight="medium" color="neutral.9" mb="xxs">
           {specialist.previousProjectsCount}
         </Text>
@@ -25,16 +25,18 @@ const SpecialistAttributes = ({ specialist }) => {
           Projects
         </Text>
       </Box>
-      <Box pl="s">
-        <StarRating
-          showNumber={false}
-          size="s"
-          rating={specialist.ratings.overall}
-        />
-        <Text fontSize="xxs" color="neutral.5" mt="1px">
-          {t("nouns.reviewCount", { count: specialist.reviewsCount || 0 })}
-        </Text>
-      </Box>
+      {specialist.ratings.overall > 0 && (
+        <Box pl="s" borderLeft="1px solid" borderColor="neutral.2">
+          <StarRating
+            showNumber={false}
+            size="s"
+            rating={specialist.ratings.overall}
+          />
+          <Text fontSize="xxs" color="neutral.5" mt="1px">
+            {t("nouns.reviewCount", { count: specialist.reviewsCount || 0 })}
+          </Text>
+        </Box>
+      )}
     </Box>
   );
 };

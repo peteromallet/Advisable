@@ -35,6 +35,7 @@ const Specailists = () => {
 
     history.replace({
       pathname: location.pathname,
+      search: location.search,
       state: {
         ...location.state,
         selected: nextSelected,
@@ -45,6 +46,7 @@ const Specailists = () => {
   const handleContinue = () => {
     history.push({
       pathname: "/clients/signup/save",
+      search: location.search,
       state: location.state,
     });
   };
@@ -62,7 +64,7 @@ const Specailists = () => {
           Continue
         </Button>
       </Header>
-      <Box maxWidth={800} ml="xxl">
+      <Box maxWidth={800} ml={{ _: "m", l: "xxl" }}>
         <Text
           as="h2"
           mb="xs"
@@ -115,7 +117,7 @@ const Specailists = () => {
           </StyledSpecialist>
         </SlideInUp>
       </SideScroller>
-      <Box ml="xxl">
+      <Box ml={{ _: "m", l: "xxl" }}>
         <Text fontSize="s" fontWeight="medium" mb="xxs">
           Don't see anyone you like?
         </Text>

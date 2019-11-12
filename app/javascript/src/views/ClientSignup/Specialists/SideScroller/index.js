@@ -19,6 +19,7 @@ const SideScroller = ({ children }) => {
 
   const handleScroll = React.useCallback(
     e => {
+      if (!scroller.current) return;
       clearTimeout(timer.current);
       timer.current = setTimeout(() => {
         setCurrent(Math.ceil(scroller.current.scrollLeft / cardWidth));

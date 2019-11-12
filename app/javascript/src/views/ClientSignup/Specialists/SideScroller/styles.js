@@ -14,6 +14,10 @@ export const StyledSideScroller = styled.div`
     width: 100px;
     position: absolute;
     pointer-events: none;
+
+    @media (max-width: 800px) {
+      display: none;
+    }
   }
 
   &::before {
@@ -91,10 +95,11 @@ export const StyledSideScrollerInner = styled.div`
   }
 
   @media (max-width: 800px) {
+    grid-gap: 10px;
     grid-template-columns:
-      10px
-      repeat(var(--count), calc(100% - 170px))
-      20px;
+      0px
+      repeat(var(--count), calc(100% - 50px))
+      10px;
   }
 
   &:before,
