@@ -8,6 +8,7 @@ import Button from "../../../components/Button";
 import Select from "../../../components/Select";
 import Loading from "../../../components/Loading";
 import TextField from "../../../components/TextField";
+import AddressFields from "../../../components/AddressFields";
 import { invoiceSettingsValidation } from "./validationSchema";
 
 export const GET_DATA = gql`
@@ -63,15 +64,6 @@ const InvoiceSettings = ({ data, match, setValue, history, values }) => {
     });
     if (!country) return false;
     return country.eu;
-  };
-
-  let countryStates = formik => {
-    const countryValue = formik.values.address.country;
-    let country = find(countries, c => {
-      return c.code === countryValue || c.name === countryValue;
-    });
-    if (!country) return [];
-    return country.states;
   };
 
   const handleSubmit = values => {
@@ -135,86 +127,12 @@ const InvoiceSettings = ({ data, match, setValue, history, values }) => {
               />
             </Box>
 
-            <Box mb="xs">
-              <TextField
+            <Box mb="s">
+              <AddressFields
+                formik={formik}
+                name="address"
                 label="Company Address"
-                name="address.line1"
-                placeholder="Line 1"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.address.line1}
-                error={
-                  get(formik, "touched.address.line1") &&
-                  get(formik, "errors.address.line1")
-                }
               />
-            </Box>
-            <Box mb="xs">
-              <TextField
-                name="address.line2"
-                placeholder="Line 2"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.address.line2}
-              />
-            </Box>
-            <Box mb="xs" display="flex">
-              <Box width="100%" mr="xxs">
-                <TextField
-                  name="address.city"
-                  placeholder="City"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.address.city}
-                  error={
-                    get(formik, "touched.address.city") &&
-                    get(formik, "errors.address.city")
-                  }
-                />
-              </Box>
-              {countryStates(formik).length > 0 && (
-                <Box width="100%" ml="xxs">
-                  <Select
-                    name="address.state"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.address.state}
-                    options={countryStates(formik).map(s => ({
-                      value: s,
-                      label: s,
-                    }))}
-                  />
-                </Box>
-              )}
-            </Box>
-            <Box mb="m" display="flex">
-              <Box width="100%" mr="xxs">
-                <Select
-                  name="address.country"
-                  placeholder="Country"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  data-testid="country-select"
-                  value={formik.values.address.country}
-                  error={
-                    get(formik, "touched.address.country") &&
-                    get(formik, "errors.address.country")
-                  }
-                  options={countries.map(c => ({
-                    value: c.code || c.name,
-                    label: c.name,
-                  }))}
-                />
-              </Box>
-              <Box width="100%" ml="xxs">
-                <TextField
-                  name="address.postcode"
-                  placeholder="Postcode"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.address.postcode}
-                />
-              </Box>
             </Box>
             {hasSelectedEUCountry(formik) && (
               <Box mb="m">

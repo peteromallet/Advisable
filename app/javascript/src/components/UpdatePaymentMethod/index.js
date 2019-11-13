@@ -34,7 +34,7 @@ const UpdatePaymentMethod = ({ createSetupIntent, client, onSuccess }) => {
     createSetupIntent().then(r => {
       setSecret(r.data.createSetupIntent.secret);
     });
-  }, []);
+  }, [createSetupIntent]);
 
   if (!secret) {
     return <Loading />;
@@ -80,6 +80,7 @@ const UpdatePaymentMethod = ({ createSetupIntent, client, onSuccess }) => {
     <PaymentMethodForm
       handleCardDetails={handleCardDetails}
       userId={viewer.id}
+      buttonLabel="Add Card"
     />
   );
 };

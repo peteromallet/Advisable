@@ -25,6 +25,13 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
       user.billing_email = args[:invoice_settings][:billing_email]
       user.vat_number = args[:invoice_settings][:vat_number]
       user.address = args[:invoice_settings][:address].try(:to_h)
+
+      Stripe::Customer.update(
+        user.stripe_customer_id, {
+          name: user.invoice_company_name,
+          email: user.billing_email
+        }
+      )
     end
 
     if user.accepted_project_payment_terms_at.nil? && args[:accept_terms]

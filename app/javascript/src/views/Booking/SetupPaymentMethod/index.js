@@ -31,7 +31,7 @@ const SetupPaymentMethod = props => {
   ];
 
   return (
-    <Box maxWidth={550} px="xs" mx="auto" mt="xxl" mb="xl">
+    <Box maxWidth={540} px="xs" mx="auto" mt="xxl" mb="xl">
       <Switch>
         {STEPS.map(step => {
           const Component = step.component;

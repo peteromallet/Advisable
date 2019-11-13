@@ -1,6 +1,6 @@
 import React from "react";
 import { get, flowRight as compose } from "lodash";
-import { graphql } from "react-apollo";
+import { graphql, useQuery, useMutation } from "react-apollo";
 import { Formik, Form, Field } from "formik";
 import {
   Box,
@@ -17,11 +17,13 @@ import { useNotifications } from "../../../components/Notifications";
 import UpdatePaymentMethod from "../../../components/UpdatePaymentMethod";
 import InvoiceSettingsFields from "../../../components/InvoiceSettingsFields";
 import CardPaymentSettings from "./CardPaymentSettings";
-import UPDATE_PROJECT_PAYMENT_METHOD from "./updateProjectPaymentMethod";
+import UPDATE_PAYMENT_INFO from "./updateProjectPaymentMethod";
 import GET_PAYMENT_SETTINGS from "./getPaymentSettings";
 
-const PaymentSettings = ({ data, updateProjectPaymentMethod }) => {
+const PaymentSettings = () => {
   let notificaitons = useNotifications();
+  const { data, loading, refetch } = useQuery(GET_PAYMENT_SETTINGS);
+  const [updateProjectPaymentMethod] = useMutation(UPDATE_PAYMENT_INFO);
   const [paymentMethodModal, setPaymentMethodModal] = React.useState(false);
 
   const handleSubmit = async (values, formik) => {
@@ -62,7 +64,7 @@ const PaymentSettings = ({ data, updateProjectPaymentMethod }) => {
     },
   };
 
-  if (data.loading) {
+  if (loading) {
     return (
       <Card p="l">
         <Skeleton width={120} height={20} mb="l" />
@@ -168,6 +170,7 @@ const PaymentSettings = ({ data, updateProjectPaymentMethod }) => {
           </Form>
         )}
       </Formik>
+
       <Modal
         isOpen={paymentMethodModal}
         onClose={() => setPaymentMethodModal(false)}
@@ -176,7 +179,7 @@ const PaymentSettings = ({ data, updateProjectPaymentMethod }) => {
           <UpdatePaymentMethod
             onSuccess={() => {
               setPaymentMethodModal(false);
-              data.refetch();
+              refetch();
             }}
           />
         </Box>
@@ -185,7 +188,4 @@ const PaymentSettings = ({ data, updateProjectPaymentMethod }) => {
   );
 };
 
-export default compose(
-  graphql(GET_PAYMENT_SETTINGS),
-  graphql(UPDATE_PROJECT_PAYMENT_METHOD, { name: "updateProjectPaymentMethod" })
-)(PaymentSettings);
+export default PaymentSettings;

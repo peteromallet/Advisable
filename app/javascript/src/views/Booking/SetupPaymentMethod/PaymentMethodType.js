@@ -2,7 +2,7 @@ import React from "react";
 import { get } from "lodash";
 import Avatar from "../../../components/Avatar";
 import { Card, Box, Text, Icon } from "@advisable/donut";
-import { Option, OptionIcon, OptionChevron } from "./styles";
+import { Option, OptionChevron } from "./styles";
 
 const PaymentMethodType = ({ match, setValue, history, specialist }) => {
   const handleOption = value => {
@@ -22,10 +22,16 @@ const PaymentMethodType = ({ match, setValue, history, specialist }) => {
           />
         </Box>
         <Text textAlign="center" px="xl" pt="xxl" pb="l">
-          <Text size="l" weight="medium" color="blue.8" py="s" lineHeight="s">
+          <Text
+            fontSize="l"
+            fontWeight="semibold"
+            color="blue.8"
+            py="s"
+            lineHeight="s"
+          >
             It look’s like you haven’t added a project payment method yet
           </Text>
-          <Text size="xs" color="neutral.6" lineHeight="xs">
+          <Text fontSize="xs" color="neutral.6" lineHeight="xs">
             Before you start working with {specialist.firstName}, we need to
             know how to collect payment for them. Please select your preferred
             project payment method below.
@@ -33,13 +39,10 @@ const PaymentMethodType = ({ match, setValue, history, specialist }) => {
         </Text>
       </Box>
       <Option onClick={() => handleOption("Card")}>
-        <OptionIcon>
-          <Icon icon="credit-card" color="blue.5" />
-        </OptionIcon>
-        <Text size="s" mb="xxs" weight="medium" color="blue.8">
+        <Text fontSize="s" mb="xxs" fontWeight="medium" color="blue.8">
           Pay with card
         </Text>
-        <Text size="xxs" color="neutral.5">
+        <Text fontSize="xs" color="neutral.5">
           We will collect payment by charging your card
         </Text>
         <OptionChevron>
@@ -47,13 +50,10 @@ const PaymentMethodType = ({ match, setValue, history, specialist }) => {
         </OptionChevron>
       </Option>
       <Option onClick={() => handleOption("Bank Transfer")}>
-        <OptionIcon>
-          <Icon icon="dollar-sign" color="blue.5" />
-        </OptionIcon>
-        <Text size="s" mb="xxs" weight="medium" color="blue.8">
+        <Text fontSize="s" mb="xxs" fontWeight="medium" color="blue.8">
           Pay via bank transfer
         </Text>
-        <Text size="xxs" color="neutral.5">
+        <Text fontSize="xs" color="neutral.5">
           We will collect payment via invoice
         </Text>
         <OptionChevron>
