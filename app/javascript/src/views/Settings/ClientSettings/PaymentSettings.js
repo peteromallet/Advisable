@@ -1,51 +1,24 @@
 import React from "react";
 import { get, flowRight as compose } from "lodash";
-import gql from "graphql-tag";
 import { graphql } from "react-apollo";
-import { Formik, Form } from "formik";
-import { Box, Card, Text, Button, Skeleton } from "@advisable/donut";
+import { Formik, Form, Field } from "formik";
+import {
+  Box,
+  Card,
+  Link,
+  Text,
+  Button,
+  Skeleton,
+  Radio,
+  RadioGroup,
+} from "@advisable/donut";
 import Modal from "../../../components/Modal";
-import Choices from "../../../components/Choices";
 import { useNotifications } from "../../../components/Notifications";
 import UpdatePaymentMethod from "../../../components/UpdatePaymentMethod";
+import InvoiceSettingsFields from "../../../components/InvoiceSettingsFields";
 import CardPaymentSettings from "./CardPaymentSettings";
-import TransferPaymentSettings from "./TransferPaymentSettings";
 import UPDATE_PROJECT_PAYMENT_METHOD from "./updateProjectPaymentMethod";
-
-const GET_PAYMENT_SETTINGS = gql`
-  query getPaymentSettings {
-    viewer {
-      ... on User {
-        id
-        projectPaymentMethod
-        name
-        companyName
-        country {
-          id
-        }
-        invoiceSettings {
-          name
-          companyName
-          vatNumber
-          address {
-            line1
-            line2
-            city
-            state
-            country
-            postcode
-          }
-        }
-        paymentMethod {
-          brand
-          last4
-          expMonth
-          expYear
-        }
-      }
-    }
-  }
-`;
+import GET_PAYMENT_SETTINGS from "./getPaymentSettings";
 
 const PaymentSettings = ({ data, updateProjectPaymentMethod }) => {
   let notificaitons = useNotifications();
@@ -72,6 +45,7 @@ const PaymentSettings = ({ data, updateProjectPaymentMethod }) => {
         "viewer.invoiceSettings.companyName",
         get(data, "viewer.companyName")
       ),
+      billingEmail: get(data, "viewer.invoiceSettings.billingEmail"),
       vatNumber: get(data, "viewer.invoiceSettings.vatNumber"),
       address: {
         line1: get(data, "viewer.invoiceSettings.address.line1"),
@@ -101,7 +75,14 @@ const PaymentSettings = ({ data, updateProjectPaymentMethod }) => {
 
   return (
     <Card p="l">
-      <Text as="h1" size="xl" weight="medium" color="blue.8" mb="l">
+      <Text
+        mb="l"
+        as="h1"
+        fontSize="xxl"
+        color="blue.9"
+        fontWeight="semibold"
+        letterSpacing="-0.015em"
+      >
         Payment Preferences
       </Text>
       <Formik
@@ -111,43 +92,71 @@ const PaymentSettings = ({ data, updateProjectPaymentMethod }) => {
       >
         {formik => (
           <Form>
-            <Text size="s" weight="medium" color="neutral.8" mb="xxs">
-              What is your preferred project payment method?
+            <Text
+              mb="xxs"
+              fontSize="l"
+              color="neutral.7"
+              fontWeight="semibold"
+              letterSpacing="-0.01rem"
+            >
+              Payment Method
             </Text>
-            <Text size="xs" color="neutral.5" mb="s">
+            <Text fontSize="s" color="neutral.7" mb="s">
               This is what we will use to collect payment for the freelancers
               you work with.
             </Text>
-            <Box mb="l">
-              <Choices
+            <RadioGroup>
+              <Field
+                as={Radio}
+                type="radio"
+                value="Card"
                 name="paymentMethod"
-                onChange={formik.handleChange}
-                value={formik.values.paymentMethod}
-                choices={[
-                  {
-                    name: "Payments via card",
-                    value: "Card",
-                    description:
-                      "We will collect payment by charging your card",
-                  },
-                  {
-                    name: "Payments via bank transfer",
-                    value: "Bank Transfer",
-                    description:
-                      "We will collect payment by sending you an invoice",
-                  },
-                ]}
+                label="Payments via card"
+                description="We will collect payment by charging your card"
               />
-            </Box>
+              <Field
+                as={Radio}
+                type="radio"
+                value="Bank Transfer"
+                name="paymentMethod"
+                label="Payments via bank transfer"
+                disabled={!data.viewer.bankTransfersEnabled}
+                description="We will collect payment by sending you an invoice"
+              />
+            </RadioGroup>
+            {!data.viewer.bankTransfersEnabled && (
+              <Text fontSize="xs" color="neutral.7" mt="m">
+                Please contact{" "}
+                <Link href="mailto:payments@advisable.com">
+                  payments@advisable.com
+                </Link>{" "}
+                to enable bank transfers for larger payments.
+              </Text>
+            )}
+            <Box height={1} bg="neutral.1" my="l" />
+
             {formik.values.paymentMethod === "Card" && (
               <CardPaymentSettings
                 paymentMethod={data.viewer.paymentMethod}
                 openCardModal={() => setPaymentMethodModal(true)}
               />
             )}
-            {formik.values.paymentMethod === "Bank Transfer" && (
-              <TransferPaymentSettings formik={formik} />
-            )}
+
+            <Text
+              fontSize="l"
+              fontWeight="semibold"
+              color="neutral.7"
+              mb="xxs"
+              letterSpacing="-0.01rem"
+            >
+              Invoice Settings
+            </Text>
+            <Text fontSize="s" color="neutral.7" mb="s">
+              The information below will be used to generate your invoice
+            </Text>
+
+            <InvoiceSettingsFields formik={formik} />
+
             <Button
               appearance="primary"
               intent="success"

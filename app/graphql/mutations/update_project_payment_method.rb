@@ -22,6 +22,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
     if args[:invoice_settings]
       user.invoice_name = args[:invoice_settings][:name]
       user.invoice_company_name = args[:invoice_settings][:company_name]
+      user.billing_email = args[:invoice_settings][:billing_email]
       user.vat_number = args[:invoice_settings][:vat_number]
       user.address = args[:invoice_settings][:address].try(:to_h)
     end

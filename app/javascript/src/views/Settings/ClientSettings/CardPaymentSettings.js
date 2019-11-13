@@ -7,10 +7,10 @@ const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
     <Box mb="l">
       {Boolean(paymentMethod) && (
         <>
-          <Text size="s" weight="medium" color="neutral.8" mb="xxs">
+          <Text fontSize="m" fontWeight="medium" color="neutral.9" mb="xxs">
             Card Details
           </Text>
-          <Text size="xs" color="neutral.5" mb="s">
+          <Text fontSize="s" color="neutral.8" mb="s">
             This card will be charged in order to collect payment for
             freelancers.
           </Text>
@@ -27,19 +27,27 @@ const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
         </>
       )}
 
-      {!Boolean(paymentMethod) && (
+      {!paymentMethod && (
         <>
-          <Text size="s" weight="medium" color="neutral.8" mb="xxs">
+          <Text
+            mb="xxs"
+            fontSize="l"
+            color="neutral.7"
+            fontWeight="semibold"
+            letterSpacing="-0.01rem"
+          >
             Card Details
           </Text>
-          <Text size="xs" color="neutral.5" mb="s">
+          <Text fontSize="s" color="neutral.7" mb="s">
             You have not added any card details yet.
           </Text>
-          <Button type="button" intent="success" onClick={openCardModal}>
+          <Button type="button" appearance="primary" onClick={openCardModal}>
             Add a card
           </Button>
         </>
       )}
+
+      <Box height={1} bg="neutral.1" my="l" />
     </Box>
   );
 };

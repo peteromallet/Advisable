@@ -12,6 +12,8 @@ class User < ApplicationRecord
   belongs_to :industry, required: false
   belongs_to :country, required: false
 
+  serialize :available_payment_methods, Array
+
   before_save :remove_past_availabililty
 
   attribute :availability, :datetime, default: [], array: true
@@ -27,6 +29,7 @@ class User < ApplicationRecord
     {
       name: invoice_name,
       company_name: invoice_company_name,
+      billing_email: billing_email,
       vat_number: vat_number,
       address: address
     }

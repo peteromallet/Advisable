@@ -12,6 +12,8 @@ class Types::User < Types::BaseType
     argument :exclude_conflicts, Boolean, required: false, description: 'Exclude any times that conflict with scheduled interviews'
   end
 
+  field :bank_transfers_enabled, Boolean, null: true
+
   field :talk_signature, String, null: false do
     authorize :is_user
   end

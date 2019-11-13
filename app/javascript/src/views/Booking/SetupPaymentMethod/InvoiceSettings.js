@@ -27,7 +27,6 @@ export const GET_DATA = gql`
       eu
       code
       name
-      states
     }
   }
 `;

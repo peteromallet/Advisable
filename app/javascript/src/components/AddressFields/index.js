@@ -1,120 +1,93 @@
 import React from "react";
 import gql from "graphql-tag";
-import { find, get, flowRight as compose } from "lodash";
+import { get, flowRight as compose } from "lodash";
 import { graphql } from "react-apollo";
 import { connect, Field } from "formik";
 import { Box } from "@advisable/donut";
 import Select from "../Select";
 import TextField from "../TextField";
 
+export const addressFieldsFragment = gql`
+  fragment AddressFieldsFragment on Country {
+    id
+    name
+    code
+  }
+`;
+
 const GET_DATA = gql`
   query getCountries {
     countries {
-      id
-      eu
-      name
-      code
-      states
+      ...AddressFieldsFragment
     }
   }
+
+  ${addressFieldsFragment}
 `;
 
 const AddressFields = ({ label, name, formik, data }) => {
   let countries = get(data, "countries") || [];
-  const countryValue = get(formik.values, `${name}.country`);
-  let country = find(countries, c => {
-    return c.code === countryValue || c.name === countryValue;
-  });
 
   if (data.loading) return <>loading...</>;
 
   return (
     <>
-      <Box mb="xs">
+      <Box mb="xxs">
         <Field
+          label={label}
+          as={TextField}
           name={`${name}.line1`}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label={label}
-              placeholder="line 1"
-              error={
-                get(formik.touched, `${name}.line1`) &&
-                get(formik.errors, `${name}.line1`)
-              }
-            />
-          )}
+          placeholder="line 1"
+          error={
+            get(formik.touched, `${name}.line1`) &&
+            get(formik.errors, `${name}.line1`)
+          }
         />
       </Box>
-      <Box mb="xs">
+      <Box mb="xxs">
         <Field
+          as={TextField}
           name={`${name}.line2`}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              placeholder="line 2"
-              error={
-                get(formik.touched, `${name}.line2`) &&
-                get(formik.errors, `${name}.line2`)
-              }
-            />
-          )}
+          placeholder="line 2"
+          error={
+            get(formik.touched, `${name}.line2`) &&
+            get(formik.errors, `${name}.line2`)
+          }
         />
       </Box>
-      <Box mb="xs" display="flex">
+      <Box mb="xxs" display="flex">
         <Box width="100%" mr="xxs">
           <Field
+            as={TextField}
             name={`${name}.city`}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                placeholder="City"
-                error={
-                  get(formik.touched, `${name}.city`) &&
-                  get(formik.errors, `${name}.city`)
-                }
-              />
-            )}
+            placeholder="City"
+            error={
+              get(formik.touched, `${name}.city`) &&
+              get(formik.errors, `${name}.city`)
+            }
           />
         </Box>
-        {country && country.states.length > 0 && (
-          <Box width="100%" ml="xxs">
-            <Field
-              name={`${name}.state`}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={country.states.map(s => ({
-                    value: s,
-                    label: s,
-                  }))}
-                />
-              )}
-            />
-          </Box>
-        )}
+        <Box width="100%">
+          <Field as={TextField} name={`${name}.state`} placeholder="County" />
+        </Box>
       </Box>
       <Box mb="xs" display="flex">
         <Box width="100%" mr="xxs">
           <Field
+            as={Select}
             name={`${name}.country`}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={countries.map(c => ({
-                  value: c.code || c.name,
-                  label: c.name,
-                }))}
-              />
-            )}
+            options={countries.map((c, i) => ({
+              key: i,
+              value: c.code || c.name,
+              label: c.name,
+            }))}
           />
         </Box>
-        <Box width="100%" ml="xxs">
+        <Box width="100%">
           <Field
+            as={TextField}
+            placeholder="Postcode"
             name={`${name}.postcode`}
-            render={({ field }) => (
-              <TextField {...field} placeholder="Postcode" />
-            )}
           />
         </Box>
       </Box>
