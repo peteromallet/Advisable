@@ -40,7 +40,7 @@ const BookingTypeForm = ({
 
   const initial = {
     projectType: "",
-    monthlyLimit: "",
+    monthlyLimit: undefined,
     acceptCharges: false,
     acceptUpfrontCharges: false,
     ...initialValues,
@@ -139,7 +139,8 @@ const BookingTypeForm = ({
                   mask={numberMask}
                   placeholder="Monthly limit"
                   subLabel={
-                    rate && `${firstName} charges ${currency(rate)} per hour`
+                    rate &&
+                    `${firstName} charges ${currency(rate * 100)} per hour`
                   }
                   label="Set a monthly hour cap (to 200-hour max)"
                   onChange={handleLimitChange(formik)}

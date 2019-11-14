@@ -9,7 +9,13 @@ const InvoiceSettings = ({ nextStep }) => {
   const [updatePaymentMethod] = useMutation(UPDATE_PAYMENT_METHOD);
 
   const initialValues = {
-    invoiceSettings: {},
+    invoiceSettings: {
+      name: "",
+      companyName: "",
+      billingEmail: "",
+      address: {},
+      vatNumber: "",
+    },
   };
 
   const handleSubmit = async (values, formik) => {

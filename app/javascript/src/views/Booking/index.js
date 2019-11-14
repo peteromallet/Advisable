@@ -8,13 +8,11 @@ import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import TaskDrawer from "../../components/TaskDrawer";
 import Tasks from "./Tasks";
-import BookingSetup from "./BookingSetup";
 import Sidebar from "./Sidebar";
 import FixedTutorial from "../../components/Tutorial/FixedProjectTutorial";
 import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
 import useTutorial from "../../hooks/useTutorial";
 import GET_ACTIVE_APPLICATION from "./getActiveApplication";
-import SetupPaymentMethod from "./SetupPaymentMethod";
 import StoppedWorkingNotice from "./StoppedWorkingNotice";
 
 const tutorials = {
@@ -36,13 +34,6 @@ let Booking = ({ data, match, history, location, client }) => {
     client,
     autoStart: true,
   });
-
-  // If the user has not setup their project payment method then render the
-  // SetupPaymentMethod component.
-  let projectPaymentMethod = get(data, "viewer.projectPaymentMethod");
-  if (!projectPaymentMethod) {
-    return <SetupPaymentMethod specialist={specialist} />;
-  }
 
   const TutorialComponent =
     tutorial.name === "flexibleProjects" ? FlexibleTutorial : FixedTutorial;

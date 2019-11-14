@@ -49,37 +49,29 @@ const InvoiceSettingsFields = ({ data, formik }) => {
     <>
       <Box mb="s">
         <Field
+          as={TextField}
+          label="Full Name"
+          placeholder="Full Name"
           name="invoiceSettings.name"
           validate={required("Please provide your full name")}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Full Name"
-              placeholder="Full Name"
-              error={
-                get(formik.touched, "invoiceSettings.name") &&
-                get(formik.errors, "invoiceSettings.name")
-              }
-            />
-          )}
+          error={
+            get(formik.touched, "invoiceSettings.name") &&
+            get(formik.errors, "invoiceSettings.name")
+          }
         />
       </Box>
 
       <Box mb="s">
         <Field
+          as={TextField}
           name="invoiceSettings.companyName"
           validate={required("Please provide your company name")}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Company Name"
-              placeholder="Company Name"
-              error={
-                get(formik.touched, "invoiceSettings.companyName") &&
-                get(formik.errors, "invoiceSettings.companyName")
-              }
-            />
-          )}
+          label="Company Name"
+          placeholder="Company Name"
+          error={
+            get(formik.touched, "invoiceSettings.companyName") &&
+            get(formik.errors, "invoiceSettings.companyName")
+          }
         />
       </Box>
 
@@ -108,19 +100,15 @@ const InvoiceSettingsFields = ({ data, formik }) => {
       {country && country.eu && (
         <Box mb="m">
           <Field
+            as={TextField}
             name="invoiceSettings.vatNumber"
             validate={required("Please provide your VAT number")}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="VAT Number"
-                placeholder="VAT Number"
-                error={
-                  get(formik.touched, "invoiceSettings.vatNumber") &&
-                  get(formik.errors, "invoiceSettings.vatNumber")
-                }
-              />
-            )}
+            label="VAT Number"
+            placeholder="VAT Number"
+            error={
+              get(formik.touched, "invoiceSettings.vatNumber") &&
+              get(formik.errors, "invoiceSettings.vatNumber")
+            }
           />
         </Box>
       )}

@@ -19,7 +19,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
     user.project_payment_method = args[:payment_method] if args.has_key?(:payment_method)
     user.exceptional_project_payment_terms = args[:exceptional_terms] if args.has_key?(:exceptional_terms)
 
-    if args.has_key?([:invoice_settings])
+    if args.has_key?(:invoice_settings)
       user.invoice_name = args[:invoice_settings][:name]
       user.invoice_company_name = args[:invoice_settings][:company_name]
       user.billing_email = args[:invoice_settings][:billing_email]
@@ -29,7 +29,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
       Stripe::Customer.update(
         user.stripe_customer_id, {
           name: user.invoice_company_name,
-          email: user.billing_email
+          email: user.email
         }
       )
     end
