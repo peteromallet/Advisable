@@ -19,6 +19,10 @@ class Tasks::Start < ApplicationService
     end
 
     if task.update(stage: "Working")
+      if task.application.project_type == "Fixed"
+        Tasks::CreateInvoiceItem.call(task: task)
+      end
+
       task.sync_to_airtable
       WebhookEvent.trigger("tasks.started", WebhookEvent::Task.data(task))
       return task

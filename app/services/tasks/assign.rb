@@ -19,9 +19,6 @@ class Tasks::Assign < ApplicationService
     end
 
     if task.update(stage: "Assigned")
-      if task.application.project_type == "Fixed"
-        Tasks::CreateInvoiceItem.call(task: task)
-      end
 
       task.sync_to_airtable
       WebhookEvent.trigger("tasks.assigned", WebhookEvent::Task.data(task))
