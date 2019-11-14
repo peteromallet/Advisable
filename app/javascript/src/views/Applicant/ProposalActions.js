@@ -3,7 +3,6 @@ import { withRouter } from "react-router";
 import Button from "../../components/Button";
 import ButtonGroup from "../../components/ButtonGroup";
 import RejectProposalModal from "../../components/RejectProposalModal";
-import CreateBookingModal from "../../components/CreateBookingModal";
 
 const ProposalActions = ({ application, specialist, history }) => {
   const [modal, setModal] = React.useState(null);
@@ -16,15 +15,6 @@ const ProposalActions = ({ application, specialist, history }) => {
 
   return (
     <>
-      <CreateBookingModal
-        isOpen={modal === "ACCEPT"}
-        application={application}
-        firstName={specialist.firstName}
-        onClose={() => setModal(null)}
-        onCreate={app => {
-          history.replace(`/manage/${app.airtableId}`);
-        }}
-      />
       <RejectProposalModal
         isOpen={modal === "REJECT"}
         application={application}
@@ -33,7 +23,10 @@ const ProposalActions = ({ application, specialist, history }) => {
         onClose={() => setModal(null)}
       />
       <ButtonGroup fullWidth stack>
-        <Button onClick={() => setModal("ACCEPT")} styling="green">
+        <Button
+          onClick={() => history.push(`/book/${application.airtableId}`)}
+          styling="green"
+        >
           {application.trialTask ? (
             <>Start risk-free trial with {specialist.firstName}</>
           ) : (

@@ -7,6 +7,7 @@ export default gql`
     updateProjectPaymentMethod(input: $input) {
       user {
         id
+        paymentsSetup
         projectPaymentMethod
       }
     }

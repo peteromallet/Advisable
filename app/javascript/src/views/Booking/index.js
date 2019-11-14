@@ -8,6 +8,7 @@ import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import TaskDrawer from "../../components/TaskDrawer";
 import Tasks from "./Tasks";
+import BookingSetup from "./BookingSetup";
 import Sidebar from "./Sidebar";
 import FixedTutorial from "../../components/Tutorial/FixedProjectTutorial";
 import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";

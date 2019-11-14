@@ -43,6 +43,10 @@ class Types::User < Types::BaseType
     authorize :is_user
   end
 
+  field :payments_setup, Boolean, null: true do
+    authorize :is_user
+  end
+
   field :country, Types::CountryType, null: true
 
   field :setup_intent_status, String, null: true do

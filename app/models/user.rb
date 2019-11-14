@@ -65,6 +65,21 @@ class User < ApplicationRecord
     self[:company_name]
   end
 
+  def payment_method
+    stripe_customer.invoice_settings.default_payment_method
+  end
+
+  # Updates the payments_setup column to either true or false depending on
+  # wether enough payment information has been provided.
+  def update_payments_setup
+    setup = true
+    setup = false if project_payment_method.nil?
+    setup = false if project_payment_method == "Card" && payment_method.nil?
+    setup = false if invoice_settings[:name].nil?
+    update(payments_setup: setup)
+    setup
+  end
+
   private
 
   # Called before the client record is saved to clean up any availability

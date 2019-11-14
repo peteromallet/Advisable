@@ -29,15 +29,16 @@ export const StyledRadioToggle = styled.div`
   transition: background 200ms;
 
   &::before {
-    top: 50%;
-    left: 50%;
+    top: 2px;
+    left: 2px;
     content: "";
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     position: absolute;
     border-radius: 50%;
+    box-sizing: border-box;
     background: ${theme.colors.blue[4]};
-    transform: translate(-50%, -50%) scale(0);
+    transform: scale(0);
     transition: transform 200ms;
   }
 `;
@@ -79,7 +80,7 @@ const notDisabledStyles = css`
     border-color: ${theme.colors.blue[5]};
 
     &:before {
-      transform: translate(-50%, -50%) scale(1);
+      transform: scale(1);
     }
   }
 

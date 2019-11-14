@@ -1,6 +1,6 @@
 # The updateCustomer mutation is used to update the users Stripe customer data.
 class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
-  argument :payment_method, String, required: true
+  argument :payment_method, String, required: false
   argument :accept_terms, Boolean, required: false
   argument :exceptional_terms, String, required: false
   argument :invoice_settings, Types::InvoiceSettingsInput, required: false
@@ -16,10 +16,10 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
 
   def resolve(**args)
     user = context[:current_user]
-    user.project_payment_method = args[:payment_method]
-    user.exceptional_project_payment_terms = args[:exceptional_terms]
+    user.project_payment_method = args[:payment_method] if args.has_key?(:payment_method)
+    user.exceptional_project_payment_terms = args[:exceptional_terms] if args.has_key?(:exceptional_terms)
 
-    if args[:invoice_settings]
+    if args.has_key?([:invoice_settings])
       user.invoice_name = args[:invoice_settings][:name]
       user.invoice_company_name = args[:invoice_settings][:company_name]
       user.billing_email = args[:invoice_settings][:billing_email]
@@ -38,6 +38,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
       user.accepted_project_payment_terms_at = DateTime.now.utc
     end
 
+    user.update_payments_setup
     user.sync_to_airtable
     
     if user.save

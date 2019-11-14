@@ -5,7 +5,6 @@ import { Text, Padding, Flex, Button } from "@advisable/donut";
 import { Link } from "react-router-dom";
 import useMobile from "src/utilities/useMobile";
 import RejectModal from "src/components/RejectModal";
-import CreateBookingModal from "./CreateBookingModal";
 import RequestReferences from "src/components/RequestReferences";
 import RequestIntroduction from "src/components/RequestIntroduction";
 import RejectProposalModal from "src/components/RejectProposalModal";
@@ -17,7 +16,6 @@ const TALK_MODAL = "TALK_MODAL";
 const REQUEST_INTRODUCTION = "REQUEST_INTRODUCTION";
 const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
 const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
-const CREATE_BOOKING_MODAL = "CREATE_BOOKING_MODAL";
 
 const statusActions = {
   Applied: ({ application, stack, modal, setModal }) => {
@@ -85,12 +83,6 @@ const statusActions = {
           isOpen={modal === REQUEST_REFERENCES_MODAL}
           onClose={() => setModal(null)}
         />
-        <CreateBookingModal
-          onClose={() => setModal(null)}
-          application={application}
-          isOpen={modal === CREATE_BOOKING_MODAL}
-          onCreate={b => history.push(`/manage/${b.airtableId}`)}
-        />
         <TalkModal
           isOpen={modal === TALK_MODAL}
           onClose={() => setModal(null)}
@@ -112,7 +104,7 @@ const statusActions = {
               intent="success"
               icon="user-check"
               appearance="primary"
-              onClick={() => setModal(CREATE_BOOKING_MODAL)}
+              onClick={() => history.push(`/book/${application.airtableId}`)}
             >
               Start working with {application.specialist.firstName}
             </Button>
