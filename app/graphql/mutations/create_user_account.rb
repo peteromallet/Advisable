@@ -148,7 +148,7 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
   def create_applications(project, specialists)
     specialists.each do |specialist_id|
       specialist = Specialist.find_by_airtable_id!(specialist_id)
-      project.applications.create(specialist: specialist, status: "To Be Invited")
+      project.applications.create(specialist: specialist, status: "Selected By Client")
     end
   end
 end
