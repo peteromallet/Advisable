@@ -16,10 +16,8 @@ import VideoButton from "../../components/VideoButton";
 import AttributeList from "../../components/AttributeList";
 import { useMobile } from "../../components/Breakpoint";
 import TalkModal from "../../components/TalkModal";
-import ProjectTypeModal from "../../components/ProjectTypeModal";
+import ProjectTypeModal from "./ProjectTypeModal";
 import StopWorkingModal from "./StopWorkingModal";
-import SET_PROJECT_TYPE from "./setProjectType";
-
 const TALK_MODAL = "TALK_MODAL";
 
 const Sidebar = ({ data, history, tutorial, match }) => {
@@ -116,28 +114,14 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                 </AttributeList.Item>
               )}
 
-              <Mutation mutation={SET_PROJECT_TYPE}>
-                {setProjectType => (
-                  <ProjectTypeModal
-                    isOpen={projectTypeModal}
-                    onClose={() => setProjectTypeModal(false)}
-                    application={application}
-                    onSubmit={async values => {
-                      await setProjectType({
-                        variables: {
-                          input: {
-                            application: application.airtableId,
-                            projectType: values.projectType,
-                            monthlyLimit: values.monthlyLimit,
-                          },
-                        },
-                      });
-
-                      setProjectTypeModal(false);
-                    }}
-                  />
-                )}
-              </Mutation>
+              <ProjectTypeModal
+                isOpen={projectTypeModal}
+                onClose={() => setProjectTypeModal(false)}
+                application={application}
+                afterSubmit={() => {
+                  setProjectTypeModal(false);
+                }}
+              />
 
               <AttributeList.Item
                 label="Project Type"

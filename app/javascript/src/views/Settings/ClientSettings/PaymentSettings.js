@@ -1,6 +1,6 @@
 import React from "react";
-import { get, flowRight as compose } from "lodash";
-import { graphql, useQuery, useMutation } from "react-apollo";
+import { get } from "lodash";
+import { useQuery, useMutation } from "react-apollo";
 import { Formik, Form, Field } from "formik";
 import {
   Box,
