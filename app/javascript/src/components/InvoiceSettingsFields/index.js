@@ -9,7 +9,7 @@ import Loading from "../Loading";
 import TextField from "../TextField";
 import AddressFields from "../AddressFields";
 
-const GET_DATA = gql`
+export const GET_DATA = gql`
   query getCountries {
     countries {
       id

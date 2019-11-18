@@ -37,7 +37,7 @@ const AddressFields = ({ label, name, formik, data }) => {
           label={label}
           as={TextField}
           name={`${name}.line1`}
-          placeholder="line 1"
+          placeholder="Line 1"
           error={
             get(formik.touched, `${name}.line1`) &&
             get(formik.errors, `${name}.line1`)
@@ -48,7 +48,7 @@ const AddressFields = ({ label, name, formik, data }) => {
         <Field
           as={TextField}
           name={`${name}.line2`}
-          placeholder="line 2"
+          placeholder="Line 2"
           error={
             get(formik.touched, `${name}.line2`) &&
             get(formik.errors, `${name}.line2`)

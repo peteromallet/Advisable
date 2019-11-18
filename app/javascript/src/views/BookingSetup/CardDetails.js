@@ -6,7 +6,7 @@ import Loading from "../../components/Loading";
 import PaymentMethod from "../../components/PaymentMethod";
 import UpdatePaymentMethod from "../../components/UpdatePaymentMethod";
 
-const GET_PAYMENT_METHOD = gql`
+export const GET_PAYMENT_METHOD = gql`
   query paymentMethod {
     viewer {
       ... on User {

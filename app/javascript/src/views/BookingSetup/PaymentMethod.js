@@ -1,5 +1,7 @@
 import React from "react";
+import * as Yup from "yup";
 import { useMutation } from "react-apollo";
+import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import {
   Card,
@@ -12,7 +14,12 @@ import {
 } from "@advisable/donut";
 import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
 
+const validationSchema = Yup.object({
+  paymentMethod: Yup.string().required("Please select a payment method"),
+});
+
 const PaymentMethod = ({ data, nextStep }) => {
+  const history = useHistory();
   const [updatePaymentMethod] = useMutation(UPDATE_PAYMENT_METHOD);
   const specialist = data.application.specialist;
 
@@ -29,7 +36,7 @@ const PaymentMethod = ({ data, nextStep }) => {
       },
     });
 
-    nextStep();
+    history.push(`/book/${data.application.airtableId}/card_details`);
   };
 
   return (
@@ -52,7 +59,11 @@ const PaymentMethod = ({ data, nextStep }) => {
           how to collect payment for them. Please select your preferred project
           payment method below.
         </Text>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
           {formik => (
             <Form>
               <RadioGroup mb="l">
@@ -82,6 +93,13 @@ const PaymentMethod = ({ data, nextStep }) => {
                   </Link.External>{" "}
                   to enable bank transfers for larger payments.
                 </Text>
+              )}
+              {formik.errors.paymentMethod ? (
+                <Text color="red.6" mb="l">
+                  {formik.errors.paymentMethod}
+                </Text>
+              ) : (
+                undefined
               )}
               <Button
                 size="l"

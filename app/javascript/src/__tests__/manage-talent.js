@@ -9,8 +9,7 @@ import {
   createTask as CREATE_TASK,
   updateTaskName as UPDATE_TASK_NAME,
 } from "../graphql/mutations/tasks";
-import SET_PROJECT_TYPE from "../views/Booking/setProjectType";
-import SET_MONTHLY_LIMIT from "../components/ProjectMonthlyLimit/setMonthlyLimit";
+import SET_PROJECT_TYPE from "../views/Booking/ProjectTypeModal/setProjectType";
 
 jest.mock("nanoid/generate");
 afterEach(cleanup);
@@ -146,18 +145,12 @@ test("Does not render a tutorial video if the user has completed it", async () =
     ],
   });
 
-  await findByText("Active Tasks"); // wait for page to load
+  await findByText("Active Projects"); // wait for page to load
   expect(queryByText("tutorials.fixedProjects.heading")).toBeNull();
 });
 
 test("The client can change the project type", async () => {
-  const {
-    findByText,
-    findByLabelText,
-    getByText,
-    getByLabelText,
-    getByTestId,
-  } = renderApp({
+  const { findByText, getByText, getByLabelText, getByTestId } = renderApp({
     route: "/manage/rec1234",
     graphQLMocks: [
       {
@@ -223,14 +216,22 @@ test("The client can change the project type", async () => {
     ],
   });
 
-  await findByText("Active Tasks"); // wait for page to load
+  await findByText("Active Projects"); // wait for page to load
   const button = getByLabelText("Edit project type");
   fireEvent.click(button);
   const flexible = getByTestId("flexible");
   fireEvent.click(flexible);
   const limit = getByLabelText("Set a monthly hour cap (to 200-hour max)");
   fireEvent.change(limit, { target: { value: "100" } });
-  const submit = getByLabelText("Continue");
+  let checkbox = getByLabelText(
+    "I accept that I will be charged 50% of the monthly limit immediately"
+  );
+  fireEvent.click(checkbox);
+  checkbox = getByLabelText(
+    "I consent to being charged for all hours I approve within the monthly limit I have specified, until I stop working with Test"
+  );
+  fireEvent.click(checkbox);
+  const submit = getByLabelText("Update Project Type");
   fireEvent.click(submit);
   await wait(0);
   await wait(0);
@@ -338,7 +339,7 @@ test("The client can add a task", async () => {
     ],
   });
 
-  const createButton = await findByText("Add a task");
+  const createButton = await findByText("Add a project");
   fireEvent.click(createButton);
   const name = getByTestId("nameField");
   fireEvent.change(name, { target: { value: "This is a new task" } });

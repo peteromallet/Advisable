@@ -22,7 +22,7 @@ const optionsForApplication = application => {
     "I want someone with more relevant experience",
     "I want someone cheaper",
     "I didn't like their answers",
-    "They just don't seem like a good fit"
+    "They just don't seem like a good fit",
   ];
 
   if (application.status === "Applied") {
@@ -40,7 +40,7 @@ const PLACEHOLDERS = {
   "I didn't like their answers":
     "Please describe information you felt was missing in these answers.",
   "They just don't seem like a good fit":
-    "Please describe what a better candidate would look like."
+    "Please describe what a better candidate would look like.",
 };
 
 // Renders the correct content for the selected option. This is required because for the
@@ -56,8 +56,8 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
         <React.Fragment>
           <Text size="s" marginBottom="m" marginTop="m">
             We encourage you to talk to relevant candidates as they come in.
-            This ensures that they’re still available and lets us calibrate
-            the search ASAP.
+            This ensures that they’re still available and lets us calibrate the
+            search ASAP.
           </Text>
           <Button onClick={onRequestCall} size="l" type="button" primary>
             Request Call
@@ -105,23 +105,35 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
   }
 };
 
-const RejectModal = ({ application, isOpen, onClose, notifications, onRequestCall }) => {
+const RejectModal = ({
+  application,
+  isOpen,
+  onClose,
+  notifications,
+  onRequestCall,
+}) => {
   const specialist = application.specialist;
+
+  const initialValues = {
+    rejectionReason: "",
+    rejectionReasonComment: "",
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <Mutation mutation={REJECT}>
         {reject => (
           <Formik
+            initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={async values => {
               await reject({
                 variables: {
                   input: {
                     id: application.airtableId,
-                    ...values
-                  }
-                }
+                    ...values,
+                  },
+                },
               });
 
               notifications.notify(`${specialist.name} has been declined`);
@@ -145,7 +157,11 @@ const RejectModal = ({ application, isOpen, onClose, notifications, onRequestCal
                     placeholder="Select reason for rejection"
                     options={optionsForApplication(application)}
                   />
-                  <SelectedOption formik={formik} onClose={onClose} onRequestCall={onRequestCall} />
+                  <SelectedOption
+                    formik={formik}
+                    onClose={onClose}
+                    onRequestCall={onRequestCall}
+                  />
                 </Container>
               </form>
             )}

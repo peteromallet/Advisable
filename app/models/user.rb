@@ -76,6 +76,7 @@ class User < ApplicationRecord
     setup = false if project_payment_method.nil?
     setup = false if project_payment_method == "Card" && payment_method.nil?
     setup = false if invoice_settings[:name].nil?
+    setup = false if accepted_project_payment_terms_at.nil?
     update(payments_setup: setup)
     setup
   end

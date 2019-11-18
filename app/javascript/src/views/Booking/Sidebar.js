@@ -116,11 +116,8 @@ const Sidebar = ({ data, history, tutorial, match }) => {
 
               <ProjectTypeModal
                 isOpen={projectTypeModal}
-                onClose={() => setProjectTypeModal(false)}
                 application={application}
-                afterSubmit={() => {
-                  setProjectTypeModal(false);
-                }}
+                onClose={() => setProjectTypeModal(false)}
               />
 
               <AttributeList.Item

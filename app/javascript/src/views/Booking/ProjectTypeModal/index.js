@@ -7,8 +7,10 @@ import Modal from "../../../components/Modal";
 import BookingTypeForm from "../../../components/BookingTypeForm";
 import SET_PROJECT_TYPE from "./setProjectType";
 
-const ProjectTypeModal = ({ isOpen, onClose, application, afterSubmit }) => {
-  const [setProjectType] = useMutation(SET_PROJECT_TYPE);
+const ProjectTypeModal = ({ isOpen, onClose, application }) => {
+  const [setProjectType] = useMutation(SET_PROJECT_TYPE, {
+    onCompleted: onClose,
+  });
 
   const initialValues = {
     projectType: application.projectType,
@@ -27,8 +29,6 @@ const ProjectTypeModal = ({ isOpen, onClose, application, afterSubmit }) => {
         },
       },
     });
-
-    afterSubmit();
   };
 
   return (
@@ -47,7 +47,7 @@ const ProjectTypeModal = ({ isOpen, onClose, application, afterSubmit }) => {
           initialValues={initialValues}
           firstName={application.specialist.firstName}
           hourlyRate={application.rate}
-          buttonLabel="Change Project Type"
+          buttonLabel="Update Project Type"
           onSubmit={handleSubmit}
         />
       </Box>
