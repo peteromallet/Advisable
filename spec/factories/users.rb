@@ -6,6 +6,7 @@ FactoryBot.define do
     password { "testing123" }
     company_name { "Test Company" }
     confirmed_at { 2.weeks.ago }
+    stripe_customer_id { "cus_1234" }
     sequence(:uid) { "use_#{SecureRandom.hex[0..14]}" }
     sequence(:airtable_id) { |n| "rec_#{n}" }
     sequence(:email) { |n| "users#{n}@test.com" }

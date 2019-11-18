@@ -33,16 +33,32 @@ describe Applications::RejectApplicationInvitation do
     }.from(nil).to(project_type)
   end
 
-  it "sets the monthly limit" do
-    expect {
+  context "when project type is 'Flexible" do
+    before :each do
+      allow(Applications::FlexibleInvoice).to receive(:call)
+    end
+
+    it "sets the monthly limit" do
+      expect {
+        Applications::StartWorking.call(
+          application: application,
+          project_type: "Flexible",
+          monthly_limit: monthly_limit
+        )
+      }.to change {
+        application.reload.monthly_limit
+      }.from(nil).to(monthly_limit)
+    end
+
+    it "calls the FlexibleInvoice service" do
+      expect(Applications::FlexibleInvoice).to receive(:call)
+
       Applications::StartWorking.call(
         application: application,
-        project_type: project_type,
+        project_type: "Flexible",
         monthly_limit: monthly_limit
       )
-    }.to change {
-      application.monthly_limit
-    }.from(nil).to(monthly_limit)
+    end
   end
 
   it 'syncs with airtable' do

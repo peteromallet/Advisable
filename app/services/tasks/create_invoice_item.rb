@@ -6,12 +6,13 @@ class Tasks::CreateInvoiceItem < ApplicationService
   end
 
   def call
-    return if task.application.project_type != "Fixed"
+    if task.application.project_type != "Fixed"
+      raise Service::Error.new("Can't create an invoice for a #{task.application.project_type} project")
+    end
 
-    invoice_item = Stripe::InvoiceItem.create({
-      customer: customer_id,
+    invoice_item = Users::AddInvoiceItem.call({
+      user: task.application.project.user,
       amount: amount.to_i,
-      currency: "usd",
       description: "#{task.name} + #{task.application.specialist.name}"
     })
 
@@ -21,10 +22,7 @@ class Tasks::CreateInvoiceItem < ApplicationService
   private
 
   def amount
-    (task.estimate * task.application.rate) * 100
-  end
-
-  def customer_id
-    task.application.project.user.stripe_customer_id
+    quote = task.flexible_estimate || task.estimate
+    (quote * task.application.rate) * 100
   end
 end

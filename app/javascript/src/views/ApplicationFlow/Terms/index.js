@@ -2,7 +2,7 @@ import * as React from "react";
 import { Box, Link, Text, Tooltip, Icon } from "@advisable/donut";
 import { graphql } from "react-apollo";
 import { flowRight as compose } from "lodash";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import {
   Heading,
@@ -96,10 +96,13 @@ const Terms = ({
               />
             </FieldRow>
             <FieldRow>
-              <Checkbox
+              <Field
+                as={Checkbox}
+                type="checkbox"
                 name="acceptsFee"
-                value={formik.values.acceptsFee}
-                onChange={formik.handleChange}
+                onChange={e => {
+                  formik.setFieldValue(e.target.name, e.target.checked);
+                }}
                 description={
                   <Tooltip
                     content={
@@ -142,10 +145,13 @@ const Terms = ({
               />
             </FieldRow>
             <FieldRow>
-              <Checkbox
+              <Field
+                type="checkbox"
+                as={Checkbox}
                 name="acceptsTerms"
-                value={formik.values.acceptsTerms}
-                onChange={formik.handleChange}
+                onChange={e =>
+                  formik.setFieldValue(e.target.name, e.target.checked)
+                }
                 error={
                   formik.touched.acceptsTerms && formik.errors.acceptsTerms
                 }
@@ -164,10 +170,13 @@ const Terms = ({
               />
             </FieldRow>
             <FieldRow>
-              <Checkbox
+              <Field
+                as={Checkbox}
+                type="checkbox"
                 name="trialProgram"
-                value={formik.values.trialProgram}
-                onChange={formik.handleChange}
+                onChange={e =>
+                  formik.setFieldValue(e.target.name, e.target.checked)
+                }
                 label={
                   <span>
                     I agree to participate in{" "}

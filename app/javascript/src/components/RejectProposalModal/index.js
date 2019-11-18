@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
-import { graphql } from "react-apollo";
+import { useMutation } from "react-apollo";
 import Text from "src/components/Text";
 import Modal from "src/components/Modal";
 import Select from "src/components/Select";
@@ -9,7 +9,7 @@ import Heading from "src/components/Heading";
 import { Padding } from "src/components/Spacing";
 import TextField from "src/components/TextField";
 import ButtonGroup from "src/components/ButtonGroup";
-import { withNotifications } from "src/components/Notifications";
+import { useNotifications } from "src/components/Notifications";
 import REJECT_PROPOSAL from "./rejectProposal.graphql";
 import validationSchema from "./validationSchema";
 
@@ -32,81 +32,93 @@ const RejectProposalModal = ({
   specialist,
   application,
   onReject,
-  mutate,
-  notifications,
-}) => (
-  <Modal isOpen={isOpen} onClose={onClose}>
-    <Formik
-      validationSchema={validationSchema}
-      onSubmit={async values => {
-        await mutate({
-          variables: {
-            input: {
-              id: application.airtableId,
-              reason: values.reason,
-              comment: values.comment,
-            },
-          },
-        });
+}) => {
+  const notifications = useNotifications();
+  const [mutate] = useMutation(REJECT_PROPOSAL);
 
-        if (onReject) {
-          onReject();
-        }
+  const initialValues = {
+    reason: "",
+    comment: "",
+  };
 
-        notifications.notify(`
-                    ${specialist.firstName}'s application has been rejected
-                  `);
-      }}
-      render={formik => (
-        <form onSubmit={formik.handleSubmit}>
-          <Padding size="xl">
-            <Padding bottom="s">
-              <Heading level={3}>Reject {specialist.name}</Heading>
-            </Padding>
-            <Padding bottom="l">
-              <Text size="s">
-                Please provide feedback by selecting a reason for rejection
-              </Text>
-            </Padding>
-            <Padding bottom="m">
-              <Select
-                block
-                name="reason"
-                onChange={formik.handleChange}
-                value={formik.values.reason}
-                placeholder="Select reason for rejection"
-                options={REASONS}
-                error={formik.errors.reason}
-              />
-            </Padding>
-            <Padding bottom="m">
-              <TextField
-                multiline
-                name="comment"
-                value={formik.values.comment}
-                onChange={formik.handleChange}
-                placeholder="Let us know why you are declining this proposal..."
-              />
-            </Padding>
-            <ButtonGroup fullWidth>
-              <Button
-                type="submit"
-                theme="danger"
-                styling="primary"
-                loading={formik.isSubmitting}
-                disabled={formik.isSubmitting}
-              >
-                Reject Applicant
-              </Button>
-              <Button type="button" onClick={onClose}>
-                Cancel
-              </Button>
-            </ButtonGroup>
-          </Padding>
-        </form>
-      )}
-    />
-  </Modal>
-);
+  const handleSubmit = async values => {
+    await mutate({
+      variables: {
+        input: {
+          id: application.airtableId,
+          reason: values.reason,
+          comment: values.comment,
+        },
+      },
+    });
 
-export default graphql(REJECT_PROPOSAL)(withNotifications(RejectProposalModal));
+    if (onReject) {
+      onReject();
+    }
+
+    notifications.notify(
+      `${specialist.firstName}'s application has been rejected`
+    );
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <Formik
+        onSubmit={handleSubmit}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+      >
+        {formik => (
+          <form onSubmit={formik.handleSubmit}>
+            <Padding size="xl">
+              <Padding bottom="s">
+                <Heading level={3}>Reject {specialist.name}</Heading>
+              </Padding>
+              <Padding bottom="l">
+                <Text size="s">
+                  Please provide feedback by selecting a reason for rejection
+                </Text>
+              </Padding>
+              <Padding bottom="m">
+                <Select
+                  block
+                  name="reason"
+                  onChange={formik.handleChange}
+                  value={formik.values.reason}
+                  placeholder="Select reason for rejection"
+                  options={REASONS}
+                  error={formik.errors.reason}
+                />
+              </Padding>
+              <Padding bottom="m">
+                <TextField
+                  multiline
+                  name="comment"
+                  value={formik.values.comment}
+                  onChange={formik.handleChange}
+                  placeholder="Let us know why you are declining this proposal..."
+                />
+              </Padding>
+              <ButtonGroup fullWidth>
+                <Button
+                  type="submit"
+                  theme="danger"
+                  styling="primary"
+                  loading={formik.isSubmitting}
+                  disabled={formik.isSubmitting}
+                >
+                  Reject Applicant
+                </Button>
+                <Button type="button" onClick={onClose}>
+                  Cancel
+                </Button>
+              </ButtonGroup>
+            </Padding>
+          </form>
+        )}
+      </Formik>
+    </Modal>
+  );
+};
+
+export default RejectProposalModal;
