@@ -40,9 +40,9 @@ const BuildProfile = ({ history, specialist }) => {
   };
 
   const initialValues = {
-    avatar: null,
-    bio: specialist.bio,
-    city: specialist.city,
+    avatar: undefined,
+    bio: specialist.bio || "",
+    city: specialist.city || "",
     country: get(specialist, "country.id"),
     publicUse: specialist.publicUse === null ? true : specialist.publicUse,
   };
