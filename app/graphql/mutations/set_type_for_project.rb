@@ -25,7 +25,7 @@ class Mutations::SetTypeForProject < Mutations::BaseMutation
     ap = Application.find_by_airtable_id(application)
     ap.update(project_type: project_type, monthly_limit: monthly_limit)
 
-    if project_type == "Flexible" && ap.saved_change_to_monthly_limit?
+    if project_type == "Flexible" && (ap.saved_change_to_project_type? || ap.saved_change_to_monthly_limit?)
       Applications::FlexibleInvoice.call(application: ap)
     end
 
