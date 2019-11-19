@@ -12,17 +12,10 @@ class Tasks::CreateInvoiceItem < ApplicationService
 
     invoice_item = Users::AddInvoiceItem.call({
       user: task.application.project.user,
-      amount: amount.to_i,
+      amount: (task.cost * 100).to_i,
       description: "#{task.name} + #{task.application.specialist.name}"
     })
 
     task.update(stripe_invoice_id: invoice_item.id)
-  end
-
-  private
-
-  def amount
-    quote = task.flexible_estimate || task.estimate
-    (quote * task.application.rate) * 100
   end
 end

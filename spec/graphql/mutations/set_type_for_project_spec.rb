@@ -3,13 +3,14 @@ require 'rails_helper'
 describe Mutations::SetTypeForProject do
   let(:application) { create(:application, project_type: "Flexible", monthly_limit: nil) }
   let(:project_type) { "Fixed" }
+  let(:monthly_limit) { 400 }
 
   let(:query) { %|
     mutation {
       setTypeForProject(input: {
         application: #{application.airtable_id},
         projectType: #{project_type},
-        monthlyLimit: 400
+        monthlyLimit: #{monthly_limit}
       }) {
         application {
           id
@@ -50,6 +51,27 @@ describe Mutations::SetTypeForProject do
       response = AdvisableSchema.execute(query, context: context)
       error = response["data"]["setTypeForProject"]["errors"][0]["code"]
       expect(error).to eq("invalidProjectType")
+    end
+  end
+
+  context "When setting the project type to 'Flexible'" do
+    let(:application) { create(:application, project_type: "Fixed", monthly_limit: monthly_limit) }
+    let(:project_type) { "Flexible" }
+
+    it "calls the flexible invoice service" do
+      expect(Applications::FlexibleInvoice).to receive(:call)
+      AdvisableSchema.execute(query, context: context)
+    end
+  end
+
+  context "When only updating the monthly limit" do
+    let(:application) { create(:application, project_type: "Flexible", monthly_limit: 100) }
+    let(:project_type) { "Flexible" }
+    let(:monthly_limit) { 400 }
+
+    it "calls the flexible invoice service" do
+      expect(Applications::FlexibleInvoice).to receive(:call)
+      AdvisableSchema.execute(query, context: context)
     end
   end
 

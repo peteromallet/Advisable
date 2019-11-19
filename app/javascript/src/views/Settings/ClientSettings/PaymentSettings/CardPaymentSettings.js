@@ -1,13 +1,19 @@
 import React from "react";
 import { Box, Text, Button } from "@advisable/donut";
-import PaymentMethod from "../../../components/PaymentMethod";
+import PaymentMethod from "../../../../components/PaymentMethod";
 
 const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
   return (
     <Box mb="l">
       {Boolean(paymentMethod) && (
         <>
-          <Text fontSize="m" fontWeight="medium" color="neutral.9" mb="xxs">
+          <Text
+            mb="xxs"
+            fontSize="l"
+            color="neutral.7"
+            fontWeight="semibold"
+            letterSpacing="-0.01rem"
+          >
             Card Details
           </Text>
           <Text fontSize="s" color="neutral.8" mb="s">

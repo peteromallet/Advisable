@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Applications::RejectApplicationInvitation do
-  let(:application) { create(:application, status: "Applied") }
+  let(:application) { create(:application, status: "Applied", project_type: nil) }
   let(:project_type) { "Fixed" }
   let(:monthly_limit) { 150 }
 

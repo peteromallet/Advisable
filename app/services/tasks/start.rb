@@ -25,9 +25,8 @@ class Tasks::Start < ApplicationService
 
       task.sync_to_airtable
       WebhookEvent.trigger("tasks.started", WebhookEvent::Task.data(task))
-      return task
     end
 
-    raise Service::Error.new(task.errors.full_messages.first)
+    return task
   end
 end

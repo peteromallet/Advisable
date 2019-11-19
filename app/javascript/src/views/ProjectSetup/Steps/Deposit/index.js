@@ -44,9 +44,8 @@ const Deposit = ({ data, project, history }) => {
       }
     );
 
-    setLoading(false);
-
     if (error) {
+      setLoading(false);
     } else {
       setPending(true);
     }

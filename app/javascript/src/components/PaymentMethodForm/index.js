@@ -28,6 +28,11 @@ const PaymentMethodForm = ({
     const elements = stripe.elements();
     card.current = elements.create("card");
     card.current.mount(elementsRef.current);
+    return () => {
+      if (card.current.unmount) {
+        card.current.unmount();
+      }
+    };
   }, [stripe]);
 
   const handleSubmit = async (values, formikBag) => {
@@ -41,6 +46,7 @@ const PaymentMethodForm = ({
       },
       formikBag
     );
+
     formikBag.setSubmitting(false);
   };
 

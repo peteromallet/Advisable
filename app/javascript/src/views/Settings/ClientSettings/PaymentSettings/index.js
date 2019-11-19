@@ -12,10 +12,10 @@ import {
   Radio,
   RadioGroup,
 } from "@advisable/donut";
-import Modal from "../../../components/Modal";
-import { useNotifications } from "../../../components/Notifications";
-import UpdatePaymentMethod from "../../../components/UpdatePaymentMethod";
-import InvoiceSettingsFields from "../../../components/InvoiceSettingsFields";
+import Modal from "../../../../components/Modal";
+import { useNotifications } from "../../../../components/Notifications";
+import UpdatePaymentMethod from "../../../../components/UpdatePaymentMethod";
+import InvoiceSettingsFields from "../../../../components/InvoiceSettingsFields";
 import CardPaymentSettings from "./CardPaymentSettings";
 import UPDATE_PAYMENT_INFO from "./updateProjectPaymentMethod";
 import GET_PAYMENT_SETTINGS from "./getPaymentSettings";
@@ -26,14 +26,12 @@ const PaymentSettings = () => {
   const [updateProjectPaymentMethod] = useMutation(UPDATE_PAYMENT_INFO);
   const [paymentMethodModal, setPaymentMethodModal] = React.useState(false);
 
-  const handleSubmit = async (values, formik) => {
+  const handleSubmit = async values => {
     await updateProjectPaymentMethod({
       variables: {
         input: values,
       },
     });
-
-    formik.setSubmitting(false);
 
     notificaitons.notify("Your payment preferences have been updated");
   };
@@ -47,19 +45,19 @@ const PaymentSettings = () => {
         "viewer.invoiceSettings.companyName",
         get(data, "viewer.companyName")
       ),
-      billingEmail: get(data, "viewer.invoiceSettings.billingEmail"),
-      vatNumber: get(data, "viewer.invoiceSettings.vatNumber"),
+      billingEmail: get(data, "viewer.invoiceSettings.billingEmail") || "",
+      vatNumber: get(data, "viewer.invoiceSettings.vatNumber") || "",
       address: {
-        line1: get(data, "viewer.invoiceSettings.address.line1"),
-        line2: get(data, "viewer.invoiceSettings.address.line2"),
-        city: get(data, "viewer.invoiceSettings.address.city"),
-        state: get(data, "viewer.invoiceSettings.address.state"),
+        line1: get(data, "viewer.invoiceSettings.address.line1") || "",
+        line2: get(data, "viewer.invoiceSettings.address.line2") || "",
+        city: get(data, "viewer.invoiceSettings.address.city") || "",
+        state: get(data, "viewer.invoiceSettings.address.state") || "",
         country: get(
           data,
           "viewer.invoiceSettings.address.country",
           get(data, "viewer.country.id")
         ),
-        postcode: get(data, "viewer.invoiceSettings.address.postcode", ""),
+        postcode: get(data, "viewer.invoiceSettings.address.postcode") || "",
       },
     },
   };
@@ -129,9 +127,9 @@ const PaymentSettings = () => {
             {!data.viewer.bankTransfersEnabled && (
               <Text fontSize="xs" color="neutral.7" mt="m">
                 Please contact{" "}
-                <Link href="mailto:payments@advisable.com">
+                <Link.External href="mailto:payments@advisable.com">
                   payments@advisable.com
-                </Link>{" "}
+                </Link.External>{" "}
                 to enable bank transfers for larger payments.
               </Text>
             )}

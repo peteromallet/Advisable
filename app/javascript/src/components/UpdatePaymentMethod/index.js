@@ -49,8 +49,8 @@ const UpdatePaymentMethod = ({ createSetupIntent, client, onSuccess }) => {
         });
 
         if (r.data.viewer.setupIntentStatus === "succeeded") {
-          resolve();
           clearTimeout(timer.current);
+          resolve();
         }
       }, 1000);
     });

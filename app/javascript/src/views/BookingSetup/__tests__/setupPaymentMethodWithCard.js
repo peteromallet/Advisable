@@ -1,5 +1,5 @@
 import renderApp from "../../../testHelpers/renderApp";
-import { fireEvent, cleanup, wait } from "@testing-library/react";
+import { fireEvent, cleanup } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../../Booking/getActiveApplication";
@@ -13,7 +13,7 @@ import graphqlFields from "../../../__mocks__/graphqlFields";
 afterEach(cleanup);
 jest.setTimeout(10000);
 
-test("User is redirected to setup without project payment method", async () => {
+test("User can complete booking setup", async () => {
   let user = generateTypes.user({
     paymentsSetup: false,
     projectPaymentMethod: null,

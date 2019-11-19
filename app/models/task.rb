@@ -8,4 +8,10 @@ class Task < ApplicationRecord
     Task.where("due_date >= ?", date.beginning_of_day)
         .where("due_date <= ?", date.end_of_day)
   end
+
+  # Returns the cost of the task
+  def cost
+    quote = flexible_estimate || estimate
+    quote * application.rate
+  end
 end
