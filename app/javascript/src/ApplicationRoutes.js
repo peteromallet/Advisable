@@ -9,6 +9,7 @@ import Settings from "./views/Settings";
 
 const Applicant = lazy(() => import("./views/Applicant"));
 const Proposal = lazy(() => import("./views/Proposal"));
+const BookingSetup = lazy(() => import("./views/BookingSetup"));
 const Applications = lazy(() => import("./views/Applications"));
 const FreelancerProjects = lazy(() => import("./views/FreelancerProjects"));
 const UpdateProfile = lazy(() => import("./views/UpdateProfile"));
@@ -45,6 +46,10 @@ const ApplicationRoutes = () => {
           <Route path="/projects/:projectId/:status?" component={Project} />
           <AuthenticatedRoute path="/projects" component={Projects} />
           <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
+          <AuthenticatedRoute
+            path="/book/:applicationId"
+            component={BookingSetup}
+          />
           <AuthenticatedRoute
             path="/manage/:applicationId"
             component={Booking}

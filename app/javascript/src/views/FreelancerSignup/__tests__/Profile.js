@@ -59,7 +59,6 @@ test("Continues to the work history step", async () => {
           query: UPDATE_PROFILE,
           variables: {
             input: {
-              avatar: null,
               bio: "Bio",
               city: "Dublin",
               country: "IE",

@@ -65,7 +65,7 @@ class SelectComponent extends React.Component {
       } else {
         return (
           <option
-            key={option.value}
+            key={option.key || option.value}
             value={option.value}
             disabled={option.disabled}
           >

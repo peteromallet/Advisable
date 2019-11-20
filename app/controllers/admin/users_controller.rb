@@ -20,7 +20,7 @@ module Admin
 
     def resource_params
       params.require(:user).permit(*dashboard.permitted_attributes,
-        permissions: []
+        permissions: [],
       )
     end
   end

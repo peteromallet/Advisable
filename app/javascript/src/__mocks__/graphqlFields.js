@@ -16,7 +16,17 @@ export const user = (fields = {}) => {
       talkSignature: "1234",
       createdAt: new Date().toISOString(),
       paymentMethod: null,
+      paymentsSetup: true,
+      bankTransfersEnabled: true,
       projectPaymentMethod: "Bank Transfer",
+      invoiceSettings: {
+        __typename: "InvoiceSettings",
+        name: "Test Account",
+        companyName: "Test Inc",
+        billingEmail: "test@test.com",
+        vatNumber: "1234",
+        address: null,
+      },
       customer: {
         __typename: "Customer",
         id: "cus_123",

@@ -19,6 +19,7 @@ class Tasks::Assign < ApplicationService
     end
 
     if task.update(stage: "Assigned")
+
       task.sync_to_airtable
       WebhookEvent.trigger("tasks.assigned", WebhookEvent::Task.data(task))
       return task

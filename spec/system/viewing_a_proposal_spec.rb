@@ -7,6 +7,7 @@ describe 'Accepting a proposal' do
 
   before :each do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
+    allow(Applications::FlexibleInvoice).to receive(:call)
   end
 
   it 'accepts the proposal' do
@@ -15,10 +16,11 @@ describe 'Accepting a proposal' do
     visit "/projects/#{project.airtable_id}/applications/#{application.airtable_id}/proposal"
 
     click_on "Start working with #{application.specialist.first_name}"
-    find(:label, text: "Flexible").click
+    find(:label, text: "Flexible - Monthly Limit").click
     fill_in "monthlyLimit", with: "65"
+    find(:label, text: /I accept that I will be charged/).click
+    find(:label, text: /I consent to being charged for/).click
     click_on "Continue"
-    sleep 2
-    expect(page).to have_content("Active Tasks")
+    expect(page).to have_content("Active Projects")
   end
 end

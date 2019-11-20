@@ -1,8 +1,7 @@
 import React from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import { useMutation } from "react-apollo";
-import { Text, Button, Box, NumberedList } from "@advisable/donut";
-import Checkbox from "../../components/Checkbox";
+import { Text, Button, Box, NumberedList, Checkbox } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import VALIDATE_PROJECT from "./validateProject";
 import createValidationSchema from "./validationSchema";
@@ -64,8 +63,8 @@ const VerifyProject = ({ project, match }) => {
         {formik => (
           <Form>
             <Box mb="s">
-              <TextField
-                autoFocus
+              <Field
+                as={TextField}
                 type="email"
                 name="email"
                 label="Email Address"
@@ -73,16 +72,18 @@ const VerifyProject = ({ project, match }) => {
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
                 onChange={formik.handleChange}
-                error={formik.submitCount > 0 && formik.errors.email}
+                error={formik.submitCount > 0 ? formik.errors.email : undefined}
               />
             </Box>
-            <Checkbox
+            <Field
+              as={Checkbox}
               name="accept"
-              value={formik.values.accept}
-              onChange={formik.handleChange}
-              error={formik.submitCount > 0 && formik.errors.accept}
-              label="I consent to be contacted to verify this project at the above email address."
-            />
+              type="checkbox"
+              error={formik.submitCount > 0 ? formik.errors.accept : undefined}
+            >
+              I consent to be contacted to verify this project at the above
+              email address.
+            </Field>
             <Button
               mt="m"
               intent="success"

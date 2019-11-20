@@ -14,14 +14,14 @@ export default ({ onNewTask, application, onSelectTask }) => {
         {t("tasks.title", application.specialist)}
       </Text>
       <Tabs tabListProps={{ pl: "m" }}>
-        <Tabs.Tab title="Active Tasks" icon="list">
+        <Tabs.Tab title="Active Projects" icon="list">
           <ActiveTasks
             onNewTask={onNewTask}
             application={application}
             onSelectTask={onSelectTask}
           />
         </Tabs.Tab>
-        <Tabs.Tab title="Completed Tasks" icon="check-square">
+        <Tabs.Tab title="Completed Projects" icon="check-square">
           <CompletedTasks
             onNewTask={onNewTask}
             application={application}

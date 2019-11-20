@@ -13,6 +13,7 @@ export const StyledNumberedListItem = styled.li`
   position: relative;
   padding-left: 24px;
   margin-bottom: 12px;
+  color: ${theme.colors.neutral[8]};
   ${space}
 `;
 

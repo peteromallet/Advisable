@@ -14,9 +14,13 @@ class Applications::StartWorking < ApplicationService
 
     application.status = "Working"
     application.project_type = project_type
-    application.monthly_limit = monthly_limit
+    application.monthly_limit = monthly_limit if project_type == "Flexible"
 
     if application.save
+      if project_type == "Flexible"
+        Applications::FlexibleInvoice.call(application: application)
+      end
+
       application.sync_to_airtable
       Webhook.process(application)
       return application

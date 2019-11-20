@@ -1,3 +1,5 @@
+// DEPRECATED: You should use the checkbox component inside of the donut
+// component lib instead.
 import React from "react";
 import uniqueId from "lodash/uniqueId";
 import { Text } from "@advisable/donut";

@@ -13,7 +13,7 @@ import LinkStyles from "../Link/styles";
 const StyledTooltipReference = styled(TooltipReference)`
   outline: none;
   cursor: default;
-  display: inline-block;
+  display: inline-flex;
 `;
 
 const TooltipContent = styled.div`

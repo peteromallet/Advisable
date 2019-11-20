@@ -9,6 +9,7 @@ export const rateValidationSchema = Yup.object().shape({
 
 export const projectTypeValidationSchema = Yup.object().shape({
   projectType: Yup.string().required("Please select a project type"),
+  accept: Yup.boolean().oneOf([true]),
   monthlyLimit: Yup.number().when("projectType", {
     is: "Flexible",
     then: Yup.number()

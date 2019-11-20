@@ -98,6 +98,7 @@ const renderApp = (config = defaultConfig) => {
     elements: () => ({
       create: el => ({
         mount: node => {},
+        unmount: () => {},
       }),
     }),
     handleCardPayment: () => Promise.resolve({ error: null }),

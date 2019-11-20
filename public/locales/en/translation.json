@@ -54,31 +54,31 @@
     }
   },
   "tasks": {
-    "title": "{{firstName}}'s tasks",
+    "title": "{{firstName}}'s projects",
     "stageDescriptions": {
       "client": {
-        "nameAndDescriptionRequired": "This task can not be assigned until it has a name and a description.",
+        "nameAndDescriptionRequired": "This project can not be assigned until it has a name and a description.",
         "requestedToStart": {
-          "title": "{{task.application.specialist.firstName}} has requested to start working on this task.",
-          "description": "Assign the task to them if you are happy for them to begin working on this task."
+          "title": "{{task.application.specialist.firstName}} has requested to start working on this project.",
+          "description": "Assign the task to them if you are happy for them to begin working on this project."
         },
-        "quoteRequested": "A quote has been requested for this task",
-        "quoteProvided": "{{task.application.specialist.firstName}} has provided a quote for this task. If you are happy to proceed you can assign the task to them.",
-        "assigned": "This task has been assigned and is waiting for {{task.application.specialist.firstName}} to start it.",
-        "working": "{{task.application.specialist.firstName}} is working on this task.",
-        "submitted": "{{task.application.specialist.firstName}} has submitted this task for your approval.",
-        "approved": "This task has been completed"
+        "quoteRequested": "A quote has been requested for this project",
+        "quoteProvided": "{{task.application.specialist.firstName}} has provided a quote for this project. If you are happy to proceed you can assign the project to them.",
+        "assigned": "This project has been assigned and is waiting for {{task.application.specialist.firstName}} to start it.",
+        "working": "{{task.application.specialist.firstName}} is working on this project.",
+        "submitted": "{{task.application.specialist.firstName}} has submitted this project for your approval.",
+        "approved": "This project has been completed"
       },
       "specialist": {
-        "quoteRequested": "The client has requested a quote for this task. You should not start work on this task until it is assigned to you.",
-        "quoteProvided": "You have provided a quote for this task. You should not start work on this task until it is assigned to you.",
-        "assigned": "{{task.application.project.user.companyName}} has assigned this task to you and is ready for you to begin working on it.",
-        "working": "You have marked this task as in progress. Once you have completed the task you can submit it for approval.",
-        "submitted": "You have marked this task as complete.",
-        "estimateRequiredToStart": "You must provide a quote for this task before you can start working on it.",
-        "dueDateRequiredToStart": "You must provide a due date for this task before you can start working on it.",
-        "approved": "This task has been completed",
-        "requestedToStart": "You have requested to start working on this task. You should not start working on it until it has been assigned to you."
+        "quoteRequested": "The client has requested a quote for this project. You should not start work on this project until it is assigned to you.",
+        "quoteProvided": "You have provided a quote for this project. You should not start work on this project until it is assigned to you.",
+        "assigned": "{{task.application.project.user.companyName}} has assigned this project to you and is ready for you to begin working on it.",
+        "working": "You have marked this project as in progress. Once you have completed the project you can submit it for approval.",
+        "submitted": "You have marked this project as complete.",
+        "estimateRequiredToStart": "You must provide a quote for this project before you can start working on it.",
+        "dueDateRequiredToStart": "You must provide a due date for this project before you can start working on it.",
+        "approved": "This project has been completed",
+        "requestedToStart": "You have requested to start working on this project. You should not start working on it until it has been assigned to you."
       }
     }
   },
@@ -119,5 +119,17 @@
     "review_plural": "reviews",
     "reviewCount": "{{count}} review",
     "reviewCount_plural": "{{count}} reviews"
+  },
+  "projectTypes": {
+    "Fixed": {
+      "label": "Projects - Predefined Projects",
+      "clientDescription": "Your freelancer is working on predefined projects, with set deliverables and timelines. You are charged when each task is assigned. All live tasks are marked \"Working\".",
+      "proposalDescription": "I want to propose one or more predefined projects, with clear deliverables and estimated timelines."
+    },
+    "Flexible": {
+      "label": "Flexible - Monthly Limit",
+      "clientDescription": "Your freelancer is working up to a maximum monthly limit of hours. You are charged 50% of these hours up front, then retrospectively for each timesheet your freelancer submits within this limit.",
+      "proposalDescription": "I want to propose a maximum monthly budget and work flexibly within that hourly limit."
+    }
   }
 }

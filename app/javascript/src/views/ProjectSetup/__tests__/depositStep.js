@@ -4,7 +4,6 @@ import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_PROJECT from "../fetchProject";
 import GET_PAYMENT_INTENT from "../Steps/Deposit/getPaymentIntent";
-import UPDATE_CUSTOMER from "../../../components/PaymentMethodForm/updateCustomer";
 import { GET_DEPOSIT } from "../Steps/Deposit/PaymentPending";
 
 afterEach(cleanup);
@@ -61,27 +60,6 @@ test("User can complete deposit step", async () => {
       },
       {
         request: {
-          query: UPDATE_CUSTOMER,
-          variables: {
-            input: {
-              user: user.id,
-              name: "Test Corp",
-              email: "test@test.com",
-            },
-          },
-        },
-        result: {
-          data: {
-            __typename: "Mutation",
-            updateCustomer: {
-              __typename: "UpdateCustomerPayload",
-              customer: user.customer,
-            },
-          },
-        },
-      },
-      {
-        request: {
           query: GET_DEPOSIT,
           variables: {
             id: "rec1234",
@@ -99,10 +77,6 @@ test("User can complete deposit step", async () => {
     ],
   });
 
-  let companyName = await findByLabelText("Company Name");
-  fireEvent.change(companyName, { target: { value: "Test Corp" } });
-  let email = await findByLabelText("Email");
-  fireEvent.change(email, { target: { value: "test@test.com" } });
   let cardholder = await findByLabelText("Cardholder Name");
   fireEvent.change(cardholder, { target: { value: "John Doe" } });
   let complete = await findByLabelText("Complete Setup");

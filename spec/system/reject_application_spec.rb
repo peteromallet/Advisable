@@ -12,11 +12,9 @@ describe 'Rejecting an application' do
     authenticate_as project.user
     visit "/projects/#{project.airtable_id}"
     click_on 'Provide Feedback'
-    within '.ModalWindow' do
-      select 'I want someone cheaper', from: "rejectionReason"
-      fill_in 'rejectionReasonComment', with: 'We are looking for someone who charges < €80 an hour'
-      click_on 'Reject'
-    end
+    select 'I want someone cheaper', from: "rejectionReason"
+    fill_in 'rejectionReasonComment', with: 'We are looking for someone who charges < €80 an hour'
+    click_on 'Reject'
     expect(page).to_not have_content(application.introduction)
     expect(application.reload.status).to eq('Application Rejected')
     expect(application.reload.rejection_reason).to eq('I want someone cheaper')
