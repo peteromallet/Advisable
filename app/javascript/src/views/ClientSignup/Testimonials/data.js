@@ -6,18 +6,11 @@ import babbel from "./babbel.png";
 
 const TESTIMONIALS = [
   {
-    name: "Yolanda Taylor",
-    role: "Managing Director",
-    company: "Prio Wealth",
-    content: "Advisable made it all easy.",
-    logo: prioWealth,
-  },
-  {
     name: "Gideon Pridor",
     role: "VP of Marketing",
     company: "TravelPerk",
     content:
-      "Advisable found us the precise marketing specialist we needed, almost over night.",
+      "Advisable found us the precise freelancer we needed, almost over night.",
     logo: travelPerk,
   },
   {
@@ -25,23 +18,32 @@ const TESTIMONIALS = [
     role: "CEO",
     company: "PracticeWise",
     content:
-      "A great partner and source for professional, highly qualified project talent.",
+      "A great partner and source for professional, highly qualified freelance talent.",
     logo: practisewise,
+  },
+  {
+    name: "Serena Li",
+    role: "Senior Research Manager",
+    company: "Babbel",
+    content:
+      "Advisable helped us identify great freelancers multiple times. Would definitely recommend!",
+    logo: babbel,
+  },
+  {
+    name: "Yolanda Taylor",
+    role: "Managing Director",
+    company: "Prio Wealth",
+    content:
+      "We worked with an Advisable freelancer for social media help and he was excellent.",
+    logo: prioWealth,
   },
   {
     name: "Chris Reed",
     role: "Head Of Business Development",
     company: "Protect Line",
     content:
-      "Who knows how long this search would have taken using traditional methods?",
+      "After a simple selection process we have found a perfect contractor.",
     logo: protectLine,
-  },
-  {
-    name: "Serena Li",
-    role: "Senior Research Manager",
-    company: "Babbel",
-    content: "Highly efficient to find the right candidate.",
-    logo: babbel,
   },
 ];
 
