@@ -15,6 +15,7 @@ class UserDashboard < Administrate::BaseDashboard
     email: Field::String,
     country: Field::BelongsTo,
     projects: Field::HasMany,
+    bank_transfers_enabled: Field::Boolean,
     permissions: PermissionsField,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -40,6 +41,7 @@ class UserDashboard < Administrate::BaseDashboard
     :last_name,
     :email,
     :country,
+    :bank_transfers_enabled,
     :permissions,
     :projects,
     :created_at,
@@ -55,6 +57,7 @@ class UserDashboard < Administrate::BaseDashboard
     :email,
     :country,
     :permissions,
+    :bank_transfers_enabled
   ].freeze
 
   # Overwrite this method to customize how clients are displayed

@@ -12,6 +12,8 @@ class User < ApplicationRecord
   belongs_to :industry, required: false
   belongs_to :country, required: false
 
+  serialize :available_payment_methods, Array
+
   before_save :remove_past_availabililty
 
   attribute :availability, :datetime, default: [], array: true
@@ -27,6 +29,7 @@ class User < ApplicationRecord
     {
       name: invoice_name,
       company_name: invoice_company_name,
+      billing_email: billing_email,
       vat_number: vat_number,
       address: address
     }
@@ -60,6 +63,22 @@ class User < ApplicationRecord
   def company_name
     return client.name if client.present?
     self[:company_name]
+  end
+
+  def payment_method
+    stripe_customer.invoice_settings.default_payment_method
+  end
+
+  # Updates the payments_setup column to either true or false depending on
+  # wether enough payment information has been provided.
+  def update_payments_setup
+    setup = true
+    setup = false if project_payment_method.nil?
+    setup = false if project_payment_method == "Card" && payment_method.nil?
+    setup = false if invoice_settings[:name].nil?
+    setup = false if accepted_project_payment_terms_at.nil?
+    update(payments_setup: setup)
+    setup
   end
 
   private

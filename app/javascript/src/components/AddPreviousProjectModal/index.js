@@ -55,7 +55,7 @@ const AddPreviousProjectModal = ({
       });
 
       setStepIndex(0);
-      formikBag.resetForm(blankProject);
+      formikBag.resetForm({ values: blankProject });
       onCreate();
       onClose();
     } else {

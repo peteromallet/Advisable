@@ -45,6 +45,7 @@ describe Mutations::UpdateProjectPaymentMethod do
 
   before :each do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
+    allow(Stripe::Customer).to receive(:update)
   end
 
   let(:context) { { current_user: user} }

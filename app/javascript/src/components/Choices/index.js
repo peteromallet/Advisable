@@ -3,7 +3,7 @@ import { Text } from "@advisable/donut";
 import { Choices, Choice, Circle } from "./styles";
 
 export default ({ choices, name, value, onChange, error }) => (
-  <React.Fragment>
+  <>
     <Choices>
       {choices.map(choice => (
         <Choice key={choice.value}>
@@ -34,5 +34,5 @@ export default ({ choices, name, value, onChange, error }) => (
         {error}
       </Text>
     )}
-  </React.Fragment>
+  </>
 );

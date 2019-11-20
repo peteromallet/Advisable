@@ -75,7 +75,7 @@ const Component = ({ application, onCreate, mutate }) => {
           <NewTaskIcon>
             <Icon icon="plus" strokeWidth={2} />
           </NewTaskIcon>
-          Add a task
+          Add a project
         </NewTask>
       )}
     </ApolloConsumer>

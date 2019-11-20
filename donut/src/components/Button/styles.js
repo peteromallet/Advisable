@@ -64,7 +64,7 @@ const APPEARANCES = {
   `,
   outlined: css`
     line-height: 1;
-    background: white;
+    background: transparent;
     color: ${theme.colors.neutral[7]};
     padding: ${props => PADDING[props.size || "m"]};
     height: ${props => HEIGHTS[props.size || "m"]}px;

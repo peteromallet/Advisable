@@ -54,6 +54,7 @@ const borderedStyling = css`
 export const Label = styled.label`
   display: block;
   cursor: pointer;
+  font-weight: 500;
   position: relative;
   padding-left: 26px;
 

@@ -165,7 +165,7 @@ test("Freelancer can create a task", async () => {
     ],
   });
 
-  const createButton = await findByText("Add a task");
+  const createButton = await findByText("Add a project");
   fireEvent.click(createButton);
   const name = await findByTestId("nameField");
   fireEvent.change(name, { target: { value: "Task name here" } });

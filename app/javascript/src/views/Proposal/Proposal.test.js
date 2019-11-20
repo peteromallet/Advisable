@@ -81,7 +81,7 @@ test("Rate step continues to the project type step", async () => {
   fireEvent.change(rate, { target: { value: "75" } });
   let button = getByLabelText("Continue");
   fireEvent.click(button);
-  const flexible = await findByText("Flexible");
+  const flexible = await findByText("Project Type");
   expect(flexible).toBeInTheDocument();
 });
 

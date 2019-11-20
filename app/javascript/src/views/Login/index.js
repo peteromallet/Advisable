@@ -1,5 +1,5 @@
 // Renders the login page
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import queryString from "query-string";
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
@@ -79,10 +79,12 @@ const Login = ({ location }) => {
             setError(data.login.errors[0].code);
             formikBag.setSubmitting(false);
           }}
-          render={formik => (
+        >
+          {formik => (
             <form onSubmit={formik.handleSubmit}>
               <FieldRow>
-                <TextField
+                <Field
+                  as={TextField}
                   name="email"
                   label="Email"
                   placeholder="Email"
@@ -96,7 +98,8 @@ const Login = ({ location }) => {
                 />
               </FieldRow>
               <FieldRow>
-                <TextField
+                <Field
+                  as={TextField}
                   type="password"
                   name="password"
                   label="Password"
@@ -128,7 +131,7 @@ const Login = ({ location }) => {
               </Text>
             </form>
           )}
-        />
+        </Formik>
       </Card>
 
       <Text
