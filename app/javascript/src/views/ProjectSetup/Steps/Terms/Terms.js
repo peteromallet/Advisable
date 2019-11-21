@@ -1,7 +1,8 @@
 import React from "react";
+import { Field } from "formik";
 import Text from "src/components/Text";
 import Link from "src/components/Link";
-import Checkbox from "src/components/Checkbox";
+import { Box, Checkbox } from "@advisable/donut";
 
 const Terms = ({ project, formik }) => {
   const hasDeposit = project.depositOwed > 0;
@@ -112,15 +113,16 @@ const Terms = ({ project, formik }) => {
         is that you provide us with feedback as per Advisable's Professional
         Standards
       </Text>
-      <Checkbox
-        marginBottom="xl"
-        name="acceptedTerms"
-        label="I accept these terms"
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-        value={formik.values.acceptedTerms}
-        error={formik.errors.acceptedTerms}
-      />
+      <Box mb="xl">
+        <Field
+          type="checkbox"
+          as={Checkbox}
+          name="acceptedTerms"
+          error={formik.errors.acceptedTerms}
+        >
+          I accept these terms
+        </Field>
+      </Box>
     </>
   );
 };
