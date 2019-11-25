@@ -47,6 +47,7 @@ module.exports = function(api) {
     plugins: [
       require("babel-plugin-macros"),
       require("babel-plugin-styled-components").default,
+      require("@babel/plugin-proposal-optional-chaining").default,
       require("@babel/plugin-syntax-dynamic-import").default,
       isTestEnv && require("babel-plugin-dynamic-import-node"),
       require("@babel/plugin-transform-destructuring").default,
