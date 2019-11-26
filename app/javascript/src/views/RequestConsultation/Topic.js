@@ -1,8 +1,10 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useMutation } from "react-apollo";
+import { useParams, useLocation } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { Box, Text, Button, Radio, RadioGroup } from "@advisable/donut";
 import TextField from "../../components/TextField";
+import REQUEST_CONSULTATION from "./requestConsultation";
 
 const commaSeparated = skills => {
   if (skills.length === 1) return skills;
@@ -12,14 +14,28 @@ const commaSeparated = skills => {
 };
 
 const Topic = ({ data, nextStep }) => {
+  const { specialistId } = useParams();
   const location = useLocation();
+  const [requestConsultation] = useMutation(REQUEST_CONSULTATION);
 
   const initialValues = {
     topic: undefined,
     customTopic: "",
   };
 
-  const handleSubmit = async values => {};
+  const handleSubmit = async values => {
+    await requestConsultation({
+      variables: {
+        input: {
+          ...location.state,
+          specialist: specialistId,
+          topic: values.topic === "OTHER" ? values.customTopic : values.topic,
+        },
+      },
+    });
+
+    nextStep();
+  };
 
   return (
     <>
@@ -131,7 +147,12 @@ const Topic = ({ data, nextStep }) => {
                 />
               </Box>
             )}
-            <Button appearance="primary" intent="success" onClick={nextStep}>
+            <Button
+              type="submit"
+              appearance="primary"
+              intent="success"
+              loading={formik.isSubmitting}
+            >
               Continue
             </Button>
           </Form>

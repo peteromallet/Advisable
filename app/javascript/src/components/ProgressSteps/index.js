@@ -23,25 +23,28 @@ const ProgressSteps = ({ steps }) => {
 
   return (
     <StyledProgressSteps>
-      {steps.map((step, index) => (
-        <StyledProgressStepsStep
-          key={step.url}
-          isActive={isActive(index)}
-          isDisabled={isDisabled(index)}
-          isComplete={isComplete(index)}
-        >
-          <NavLink
-            to={{
-              ...location,
-              pathname: step.url,
-            }}
-            onClick={handleClick(index)}
-            aria-current="step"
+      {steps.map((step, index) => {
+        if (!step.label) return null;
+        return (
+          <StyledProgressStepsStep
+            key={step.url}
+            isActive={isActive(index)}
+            isDisabled={isDisabled(index)}
+            isComplete={isComplete(index)}
           >
-            {step.label}
-          </NavLink>
-        </StyledProgressStepsStep>
-      ))}
+            <NavLink
+              to={{
+                ...location,
+                pathname: step.url,
+              }}
+              onClick={handleClick(index)}
+              aria-current="step"
+            >
+              {step.label}
+            </NavLink>
+          </StyledProgressStepsStep>
+        );
+      })}
     </StyledProgressSteps>
   );
 };

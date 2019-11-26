@@ -41,7 +41,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   end
 
   def specialist(specialist_id)
-    @specialist ||= Specialist.find_by_airtable_id!(specialist_id)
+    @specialist ||= Specialist.find_by_uid_or_airtable_id!(specialist_id)
   end
 
   def user(**args)

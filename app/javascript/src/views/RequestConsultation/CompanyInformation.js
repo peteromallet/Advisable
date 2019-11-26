@@ -6,7 +6,8 @@ import { Box, Text, Button } from "@advisable/donut";
 import TextField from "../../components/TextField";
 
 const validationSchema = Yup.object({
-  name: Yup.string().required("Please enter your full name"),
+  firstName: Yup.string().required("Please enter your first name"),
+  lastName: Yup.string().required("Please enter your last name"),
   email: Yup.string()
     .required("Please enter your email")
     .email(),
@@ -17,7 +18,8 @@ const CompanyInformation = ({ data, nextStep }) => {
   const location = useLocation();
 
   const initialValues = {
-    name: location.state.name || "",
+    firstName: location.state.firstName || "",
+    lastName: location.state.lastName || "",
     email: location.state.email || "",
     company: location.state.company || "",
   };
@@ -57,14 +59,29 @@ const CompanyInformation = ({ data, nextStep }) => {
       >
         {formik => (
           <Form>
-            <Box mb="m">
-              <Field
-                name="name"
-                as={TextField}
-                label="Full Name"
-                placeholder="Full Name"
-                error={formik.touched.name ? formik.errors.name : null}
-              />
+            <Box mb="m" display="flex">
+              <Box mr="xxs">
+                <Field
+                  name="firstName"
+                  as={TextField}
+                  label="First Name"
+                  placeholder="First Name "
+                  error={
+                    formik.touched.firstName ? formik.errors.firstName : null
+                  }
+                />
+              </Box>
+              <Box ml="xxs">
+                <Field
+                  name="lastName"
+                  as={TextField}
+                  label="Last Name"
+                  placeholder="Last Name"
+                  error={
+                    formik.touched.lastName ? formik.errors.lastName : null
+                  }
+                />
+              </Box>
             </Box>
             <Box mb="m">
               <Field

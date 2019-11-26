@@ -11,6 +11,7 @@ const RequestConsultationSkills = ({ data, nextStep }) => {
     history.replace({
       ...location,
       state: {
+        ...location.state,
         skills,
       },
     });
@@ -41,7 +42,12 @@ const RequestConsultationSkills = ({ data, nextStep }) => {
         tags={data.specialist.skills.map(s => s.name)}
         onChange={skills => handleSkillsUpdate(skills)}
       />
-      <Button appearance="primary" intent="success" onClick={nextStep}>
+      <Button
+        disabled={(location.state?.skills || []).length < 1}
+        appearance="primary"
+        intent="success"
+        onClick={nextStep}
+      >
         Continue
       </Button>
     </>

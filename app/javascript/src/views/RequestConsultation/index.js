@@ -20,6 +20,7 @@ import fetchSpecialist from "./fetchSpecialist";
 import Availability from "./Availability";
 import CompanyInformation from "./CompanyInformation";
 import Sidebar from "./Sidebar";
+import Complete from "./Complete";
 
 export const STEPS = [
   {
@@ -42,6 +43,10 @@ export const STEPS = [
     path: "/consultation/:specialistId/topic",
     component: Topic,
   },
+  {
+    path: "/consultation/:specialistId/sent",
+    component: Complete,
+  },
 ];
 
 const RequestConsultation = () => {
@@ -51,6 +56,10 @@ const RequestConsultation = () => {
   const { data, loading, error } = useQuery(fetchSpecialist, {
     variables: { id: specialistId },
   });
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   if (error?.graphQLErrors[0].extensions.code === "notFound") {
     return <NotFound />;
@@ -80,37 +89,48 @@ const RequestConsultation = () => {
       <Box width="100%" position="relative">
         <AnimatePresence initial={false}>
           <Switch location={location} key={location.pathname}>
-            {STEPS.map((step, i) => {
-              const Component = step.component;
-
-              return (
-                <Route
-                  key={step.path}
-                  path={step.path}
-                  render={route => (
-                    <motion.div
-                      transition={{
-                        type: "spring",
-                        stiffness: 300,
-                        damping: 30,
-                      }}
-                      initial={{ opacity: 0, y: 100 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ position: "absolute", opacity: 0, y: -50 }}
-                    >
-                      <Card padding="l" elevation="m">
-                        <Component
-                          {...route}
-                          data={data}
-                          nextStep={handleNextStep(i)}
-                        />
-                      </Card>
-                    </motion.div>
-                  )}
-                />
-              );
-            })}
-            <Redirect to={generatePath(STEPS[0].path, { specialistId })} />
+            {STEPS.map((step, i) => (
+              <Route
+                key={step.path}
+                path={step.path}
+                render={route => (
+                  <motion.div
+                    key={step.path}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 30,
+                    }}
+                    initial={{ opacity: 0, y: 100 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{
+                      position: "absolute",
+                      opacity: 0,
+                      y: -80,
+                    }}
+                  >
+                    <Card padding="l" elevation="m">
+                      <step.component
+                        {...route}
+                        data={data}
+                        nextStep={handleNextStep(i)}
+                      />
+                    </Card>
+                  </motion.div>
+                )}
+              />
+            ))}
+            <Route
+              render={() => {
+                return (
+                  <motion.div exit={{}}>
+                    <Redirect
+                      to={generatePath(STEPS[0].path, { specialistId })}
+                    />
+                  </motion.div>
+                );
+              }}
+            />
           </Switch>
         </AnimatePresence>
       </Box>
