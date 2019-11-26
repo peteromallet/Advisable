@@ -1,17 +1,19 @@
 class Users::AddInvoiceItem < ApplicationService
-  attr_reader :user, :amount, :description
+  attr_reader :user, :unit_amount, :description, :quantity
   
-  def initialize(user:, amount:, description: )
+  def initialize(user:, unit_amount:, description:, quantity:)
     @user = user
-    @amount = amount
+    @unit_amount = unit_amount
     @description = description
+    @quantity = quantity
   end
 
   def call
     item = Stripe::InvoiceItem.create({
       customer: user.stripe_customer_id,
-      amount: amount,
+      unit_amount: unit_amount,
       currency: "usd",
+      quantity: quantity,
       invoice: existing_invoice_id,
       description: description
     })

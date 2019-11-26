@@ -14,4 +14,9 @@ class Task < ApplicationRecord
     quote = flexible_estimate || estimate
     quote * application.rate
   end
+
+  # Returns the amount of hours that should be invoiced for the task
+  def invoice_hours
+    (flexible_estimate || estimate).ceil
+  end
 end

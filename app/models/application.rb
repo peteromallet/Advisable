@@ -53,6 +53,12 @@ class Application < ApplicationRecord
     self[:questions] || []
   end
 
+  # Returns the application rate as cents
+  def invoice_rate
+    return 0 if rate.nil?
+    (rate * 100).ceil
+  end
+
   private
 
   # Update the associated specialists project count
