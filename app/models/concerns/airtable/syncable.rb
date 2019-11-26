@@ -7,6 +7,12 @@ module Airtable::Syncable
     def airtable_class(klass)
       @airtable = klass
     end
+
+    def find_by_uid_or_airtable_id!(id)
+      record = find_by_uid(id)
+      record = find_by_airtable_id!(id) if record.nil?
+      record
+    end
   end
 
   # Adds functionality to push a record to airtable. This should be included

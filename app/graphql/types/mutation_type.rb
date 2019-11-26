@@ -55,4 +55,5 @@ class Types::MutationType < GraphQL::Schema::Object
   field :verify_off_platform_project, mutation: Mutations::VerifyOffPlatformProject
 
   field :create_consultation, mutation: Mutations::CreateConsultation
+  field :decline_consultation, mutation: Mutations::DeclineConsultation
 end

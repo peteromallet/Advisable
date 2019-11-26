@@ -181,8 +181,8 @@ ActiveRecord::Schema.define(version: 2019_11_21_112029) do
     t.bigint "specialist_id", null: false
     t.bigint "user_id", null: false
     t.string "status"
-    t.datetime "requested_time"
     t.string "topic"
+    t.jsonb "skills"
     t.string "airtable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -12,23 +12,32 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
 
   def resolve(**args)
     ActiveRecord::Base.transaction do
-
-
-      {
-        consultation: create_consultation(**args)
-      }
+      consultation = create_consultation(**args)
+      { consultation: consultation }
     end
   end
 
   private
 
   def create_consultation(**args)
+    if args[:skills].empty?
+      raise ApiError::InvalidRequest.new("consultation.noSkills", "You must provide a list of skills")
+    end
+
+    skill_ids = args[:skills].map do |skill|
+      Skill.find_by_name!(skill).airtable_id
+    end
+
     consultation = Consultation.create(
       user: user(**args),
       specialist: specialist(args[:specialist]),
       status: "Request Started",
+      skills: skill_ids,
       topic: args[:topic],
     )
+
+    consultation.sync_to_airtable
+    consultation
   end
 
   def specialist(specialist_id)
