@@ -8,16 +8,9 @@ class Applications::FlexibleInvoice < ApplicationService
   def call
     Users::AddInvoiceItem.call({
       user: application.project.user,
-      amount: amount.to_i,
+      unit_amount: application.invoice_rate,
+      quantity: (application.monthly_limit / 2.0).ceil,
       description: "50% of monthly limit + #{application.specialist.name}"
     })
-  end
-
-  private
-
-  def amount
-    return 0 if application.rate.nil?
-    hours = (application.monthly_limit / 2.0)
-    (hours * application.rate) * 100
   end
 end

@@ -12,13 +12,14 @@ describe Users::AddInvoiceItem do
   it "Creates a stripe invoice_item" do
     expect(Stripe::InvoiceItem).to receive(:create).with({
       customer: user.stripe_customer_id,
-      amount: 1000,
+      unit_amount: 1000,
+      quantity: 10,
       currency: "usd",
       invoice: "inv_1234",
       description: "description"
     })
 
-    Users::AddInvoiceItem.call(user: user, amount: 1000, description: "description")
+    Users::AddInvoiceItem.call(user: user, unit_amount: 1000, quantity: 10, description: "description")
   end
 
   context "when there is no existing draft invoice" do
@@ -32,7 +33,7 @@ describe Users::AddInvoiceItem do
         collection_method: "send_invoice"
       })
 
-      Users::AddInvoiceItem.call(user: user, amount: 1000, description: "description")
+      Users::AddInvoiceItem.call(user: user, unit_amount: 1000, quantity: 1, description: "description")
     end
   end
 end

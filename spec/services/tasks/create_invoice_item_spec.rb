@@ -8,7 +8,8 @@ describe Tasks::CreateInvoiceItem do
 
     expect(Users::AddInvoiceItem).to receive(:call).with({
       user: task.application.project.user,
-      amount: (task.cost * 100).to_i,
+      unit_amount: task.application.invoice_rate,
+      quantity: task.invoice_hours,
       description: "#{task.name} + #{task.application.specialist.name}"
     }).and_return(invoice_item)
 
