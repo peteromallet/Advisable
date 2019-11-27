@@ -199,4 +199,12 @@ class Types::QueryType < Types::BaseType
       company_type: company_type
     )
   end
+
+  field :consultation, Types::ConsultationType, null: true do
+    argument :id, ID, required: true
+  end
+
+  def consultation(id:)
+    Consultation.find_by_uid_or_airtable_id!(id)
+  end
 end

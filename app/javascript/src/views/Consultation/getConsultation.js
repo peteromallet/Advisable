@@ -1,0 +1,22 @@
+import gql from "graphql-tag";
+
+const getConsultation = gql`
+  query consultation($id: ID!) {
+    consultation(id: $id) {
+      id
+      topic
+      status
+      user {
+        id
+        name
+        companyName
+      }
+      specialist {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export default getConsultation;

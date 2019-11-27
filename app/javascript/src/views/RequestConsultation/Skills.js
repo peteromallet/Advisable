@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Text, Button } from "@advisable/donut";
+import { Box, Text, RoundedButton } from "@advisable/donut";
 import TagSelect from "../../components/TagSelect";
 
 const RequestConsultationSkills = ({ data, nextStep }) => {
@@ -37,19 +37,17 @@ const RequestConsultationSkills = ({ data, nextStep }) => {
         aesthetic reasons it should span more than one line.
       </Text>
       <TagSelect
-        mb="l"
         selected={location.state?.skills || []}
         tags={data.specialist.skills.map(s => s.name)}
         onChange={skills => handleSkillsUpdate(skills)}
       />
-      <Button
-        disabled={(location.state?.skills || []).length < 1}
-        appearance="primary"
-        intent="success"
+      <Box height={1} bg="neutral.1" mt="xl" mb="l" />
+      <RoundedButton
         onClick={nextStep}
+        disabled={(location.state?.skills || []).length < 1}
       >
         Continue
-      </Button>
+      </RoundedButton>
     </>
   );
 };

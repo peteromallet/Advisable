@@ -13,7 +13,11 @@ const ProgressSteps = ({ steps }) => {
 
   const isComplete = index => index < currentIndex;
   const isActive = index => index === currentIndex;
-  const isDisabled = index => index > currentIndex;
+  const isDisabled = index => {
+    const step = steps[index];
+    if (step.disabled) return true;
+    return index > currentIndex;
+  };
 
   const handleClick = index => e => {
     if (isDisabled(index)) {

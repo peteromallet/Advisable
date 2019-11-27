@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Box, Text, Button } from "@advisable/donut";
+import { Box, Text, RoundedButton } from "@advisable/donut";
 import AvailabilityInput from "../../components/Availability";
 
 const Availability = ({ data, nextStep }) => {
@@ -16,6 +16,8 @@ const Availability = ({ data, nextStep }) => {
       },
     });
   };
+
+  const selectedAvailability = location.state?.availability || [];
 
   return (
     <>
@@ -38,13 +40,16 @@ const Availability = ({ data, nextStep }) => {
       </Text>
       <Box height={300} mb="l">
         <AvailabilityInput
-          selected={location.state?.availability || []}
+          selected={selectedAvailability}
           onSelect={handleAvailabilityChange}
         />
       </Box>
-      <Button appearance="primary" intent="success" onClick={nextStep}>
+      <RoundedButton
+        onClick={nextStep}
+        disabled={selectedAvailability.length === 0}
+      >
         Continue
-      </Button>
+      </RoundedButton>
     </>
   );
 };

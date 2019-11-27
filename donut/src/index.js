@@ -9,6 +9,7 @@ export { default as Tabs } from "./components/Tabs";
 export { default as Radio } from "./components/Radio";
 export { default as Alert } from "./components/Alert";
 export { default as Button } from "./components/Button";
+export { default as RoundedButton } from "./components/RoundedButton";
 export { default as Tooltip } from "./components/Tooltip";
 export { default as Padding } from "./components/Padding";
 export { default as Provider } from "./components/Provider";

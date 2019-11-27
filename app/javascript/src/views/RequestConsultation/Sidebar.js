@@ -5,9 +5,8 @@ import Avatar from "../../components/Avatar";
 import StarRating from "../../components/StarRating";
 import ProgressSteps from "../../components/ProgressSteps";
 import pluralize from "../../utilities/pluralize";
-import { STEPS } from "./index";
 
-const Sidebar = ({ data }) => {
+const Sidebar = ({ steps, data }) => {
   const { specialistId } = useParams();
 
   return (
@@ -41,9 +40,10 @@ const Sidebar = ({ data }) => {
       </Text>
       <Box height={1} bg="neutral.2" my="l" />
       <ProgressSteps
-        steps={STEPS.map(step => ({
+        steps={steps.map(step => ({
           label: step.label,
           url: generatePath(step.path, { specialistId }),
+          disabled: step.disabled,
         }))}
       />
     </>

@@ -56,4 +56,5 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :create_consultation, mutation: Mutations::CreateConsultation
   field :decline_consultation, mutation: Mutations::DeclineConsultation
+  field :accept_consultation, mutation: Mutations::AcceptConsultation
 end

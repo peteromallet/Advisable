@@ -1,10 +1,19 @@
+import * as Yup from "yup";
 import React from "react";
 import { useMutation } from "react-apollo";
 import { useParams, useLocation } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Box, Text, Button, Radio, RadioGroup } from "@advisable/donut";
+import { Box, Text, RoundedButton, Radio, RadioGroup } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import REQUEST_CONSULTATION from "./requestConsultation";
+
+const validationSchema = Yup.object({
+  topic: Yup.string().required(),
+  customTopic: Yup.string().when("topic", {
+    is: "OTHER",
+    then: Yup.string().required(),
+  }),
+});
 
 const commaSeparated = skills => {
   if (skills.length === 1) return skills;
@@ -58,7 +67,12 @@ const Topic = ({ data, nextStep }) => {
         consultation with {data.specialist.firstName}. This is for us to share
         with {data.specialist.firstName} when requesting their time.
       </Text>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik
+        onSubmit={handleSubmit}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        isInitialValid={validationSchema.isValidSync(initialValues)}
+      >
         {formik => (
           <Form>
             <RadioGroup mb={formik.values.topic === "OTHER" ? "m" : "xl"}>
@@ -147,14 +161,13 @@ const Topic = ({ data, nextStep }) => {
                 />
               </Box>
             )}
-            <Button
+            <RoundedButton
               type="submit"
-              appearance="primary"
-              intent="success"
+              disabled={!formik.isValid}
               loading={formik.isSubmitting}
             >
               Continue
-            </Button>
+            </RoundedButton>
           </Form>
         )}
       </Formik>

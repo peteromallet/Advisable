@@ -10,11 +10,11 @@ export const StyledTagSelect = styled.div`
 
 const selectedStyles = css`
   color: white;
-  background: ${theme.colors.blue[5]};
+  background: ${theme.colors.blue[8]};
 
   &:hover {
     color: white;
-    background: ${theme.colors.blue[5]};
+    background: ${theme.colors.blue[8]};
   }
 `;
 

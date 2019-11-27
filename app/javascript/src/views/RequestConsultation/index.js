@@ -6,6 +6,7 @@ import {
   Switch,
   Route,
   Redirect,
+  matchPath,
   useHistory,
   useLocation,
   generatePath,
@@ -22,33 +23,6 @@ import CompanyInformation from "./CompanyInformation";
 import Sidebar from "./Sidebar";
 import Complete from "./Complete";
 
-export const STEPS = [
-  {
-    label: "Skills",
-    path: "/consultation/:specialistId/skills",
-    component: Skills,
-  },
-  {
-    label: "Company Details",
-    path: "/consultation/:specialistId/details",
-    component: CompanyInformation,
-  },
-  {
-    label: "Availability",
-    path: "/consultation/:specialistId/availability",
-    component: Availability,
-  },
-  {
-    label: "Topic",
-    path: "/consultation/:specialistId/topic",
-    component: Topic,
-  },
-  {
-    path: "/consultation/:specialistId/sent",
-    component: Complete,
-  },
-];
-
 const RequestConsultation = () => {
   const history = useHistory();
   const location = useLocation();
@@ -56,6 +30,43 @@ const RequestConsultation = () => {
   const { data, loading, error } = useQuery(fetchSpecialist, {
     variables: { id: specialistId },
   });
+
+  const isComplete = Boolean(
+    matchPath(location.pathname, {
+      path: "/consultation/:specialistId/sent",
+    })
+  );
+
+  const STEPS = [
+    {
+      label: "Skills",
+      path: "/request_consultation/:specialistId/skills",
+      component: Skills,
+      disabled: isComplete,
+    },
+    {
+      label: "company details",
+      path: "/request_consultation/:specialistId/details",
+      component: CompanyInformation,
+      disabled: isComplete,
+    },
+    {
+      label: "availability",
+      path: "/request_consultation/:specialistId/availability",
+      component: Availability,
+      disabled: isComplete,
+    },
+    {
+      label: "topic",
+      path: "/request_consultation/:specialistId/topic",
+      component: Topic,
+      disabled: isComplete,
+    },
+    {
+      path: "/request_consultation/:specialistId/sent",
+      component: Complete,
+    },
+  ];
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -70,9 +81,7 @@ const RequestConsultation = () => {
   const handleNextStep = index => nextLocation => {
     const nextStep = STEPS[index + 1];
     if (nextStep) {
-      const nextPath = generatePath(nextStep.path, {
-        specialistId,
-      });
+      const nextPath = generatePath(nextStep.path, { specialistId });
       history.push({
         ...location,
         pathname: nextPath,
@@ -81,10 +90,22 @@ const RequestConsultation = () => {
     }
   };
 
+  const handlePreviousStep = index => nextLocation => {
+    const previousStep = STEPS[index - 1];
+    if (previousStep) {
+      const previousPath = generatePath(previousStep.path, { specialistId });
+      history.push({
+        ...location,
+        pathname: previousPath,
+        ...nextLocation,
+      });
+    }
+  };
+
   return (
     <Box maxWidth={960} margin="0 auto" py="l" display="flex">
       <Box width={250} mr="l" flexShrink={0}>
-        <Sidebar data={data} />
+        <Sidebar steps={STEPS} data={data} />
       </Box>
       <Box width="100%" position="relative">
         <AnimatePresence initial={false}>
@@ -114,6 +135,7 @@ const RequestConsultation = () => {
                         {...route}
                         data={data}
                         nextStep={handleNextStep(i)}
+                        previousStep={handlePreviousStep(i)}
                       />
                     </Card>
                   </motion.div>

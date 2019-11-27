@@ -27,6 +27,7 @@ const FreelancerActiveApplication = lazy(() =>
   import("./views/FreelancerActiveApplication")
 );
 const RequestConsultation = lazy(() => import("./views/RequestConsultation"));
+const Consultation = lazy(() => import("./views/Consultation"));
 
 const ApplicationRoutes = () => {
   return (
@@ -56,10 +57,11 @@ const ApplicationRoutes = () => {
             component={Booking}
           />
           <Route
-            path="/consultation/:specialistId"
+            path="/request_consultation/:specialistId"
             component={RequestConsultation}
           />
           {/* Freelancer Routes */}
+          <Route path="/consultations/:id" component={Consultation} />
           <AuthenticatedRoute
             exact
             path="/applications"

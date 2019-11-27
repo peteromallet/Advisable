@@ -47,12 +47,17 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   def user(**args)
     @user ||= begin
       user = User.find_by_email(args[:email])
-      return user if user.present?
+
+      if user.present?
+        user.update(availability: args[:availability])
+        return user
+      end
 
       user = User.create(
         first_name: args[:first_name],
         last_name: args[:last_name],
         email: args[:email],
+        availability: args[:availability],
         company_name: args[:company],
       )
       

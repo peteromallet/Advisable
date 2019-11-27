@@ -2,7 +2,7 @@ import React from "react";
 import * as Yup from "yup";
 import { useLocation } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Box, Text, Button } from "@advisable/donut";
+import { Box, Text, RoundedButton } from "@advisable/donut";
 import TextField from "../../components/TextField";
 
 const validationSchema = Yup.object({
@@ -42,8 +42,8 @@ const CompanyInformation = ({ data, nextStep }) => {
         mb="xs"
         as="h2"
         fontSize="xxl"
-        fontWeight="semibold"
         color="blue.8"
+        fontWeight="semibold"
         letterSpacing="-0.025em"
       >
         Company Information
@@ -60,7 +60,7 @@ const CompanyInformation = ({ data, nextStep }) => {
         {formik => (
           <Form>
             <Box mb="m" display="flex">
-              <Box mr="xxs">
+              <Box mr="xxs" width="100%">
                 <Field
                   name="firstName"
                   as={TextField}
@@ -71,7 +71,7 @@ const CompanyInformation = ({ data, nextStep }) => {
                   }
                 />
               </Box>
-              <Box ml="xxs">
+              <Box ml="xxs" width="100%">
                 <Field
                   name="lastName"
                   as={TextField}
@@ -92,7 +92,7 @@ const CompanyInformation = ({ data, nextStep }) => {
                 error={formik.touched.email ? formik.errors.email : null}
               />
             </Box>
-            <Box mb="l">
+            <Box mb="xl">
               <Field
                 name="company"
                 as={TextField}
@@ -101,9 +101,7 @@ const CompanyInformation = ({ data, nextStep }) => {
                 error={formik.touched.company ? formik.errors.company : null}
               />
             </Box>
-            <Button type="submit" intent="success" appearance="primary">
-              Continue
-            </Button>
+            <RoundedButton type="submit">Continue</RoundedButton>
           </Form>
         )}
       </Formik>
