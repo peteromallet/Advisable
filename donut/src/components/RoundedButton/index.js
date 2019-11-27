@@ -3,13 +3,19 @@
 // TODO: Eventually all buttons should be moved over to use this component and
 // it should simply be renamed to Button.
 import React from "react";
-import { StyledButton, Loading } from "./styles";
+import {
+  StyledButton,
+  StyledButtonPrefix,
+  StyledButtonSuffix,
+  Loading,
+} from "./styles";
 
-const Button = ({ children, loading, disabled, ...props }) => {
+const Button = ({ children, loading, disabled, prefix, suffix, ...props }) => {
   return (
     <StyledButton
       isLoading={loading}
       aria-label={children}
+      data-loading={loading}
       disabled={loading || disabled}
       {...props}
     >
@@ -25,7 +31,9 @@ const Button = ({ children, loading, disabled, ...props }) => {
           </svg>
         </Loading>
       )}
+      {prefix && <StyledButtonPrefix>{prefix}</StyledButtonPrefix>}
       {children}
+      {suffix && <StyledButtonSuffix>{suffix}</StyledButtonSuffix>}
     </StyledButton>
   );
 };

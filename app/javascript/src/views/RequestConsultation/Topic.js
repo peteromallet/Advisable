@@ -3,7 +3,14 @@ import React from "react";
 import { useMutation } from "react-apollo";
 import { useParams, useLocation } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Box, Text, RoundedButton, Radio, RadioGroup } from "@advisable/donut";
+import {
+  Icon,
+  Box,
+  Text,
+  RoundedButton,
+  Radio,
+  RadioGroup,
+} from "@advisable/donut";
 import TextField from "../../components/TextField";
 import REQUEST_CONSULTATION from "./requestConsultation";
 
@@ -163,8 +170,10 @@ const Topic = ({ data, nextStep }) => {
             )}
             <RoundedButton
               type="submit"
+              width={["100%", "auto"]}
               disabled={!formik.isValid}
               loading={formik.isSubmitting}
+              suffix={<Icon icon="arrow-right" />}
             >
               Continue
             </RoundedButton>

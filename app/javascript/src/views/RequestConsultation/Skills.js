@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Box, Text, RoundedButton } from "@advisable/donut";
+import { Box, Text, RoundedButton, Icon } from "@advisable/donut";
 import TagSelect from "../../components/TagSelect";
 
 const RequestConsultationSkills = ({ data, nextStep }) => {
@@ -41,9 +41,11 @@ const RequestConsultationSkills = ({ data, nextStep }) => {
         tags={data.specialist.skills.map(s => s.name)}
         onChange={skills => handleSkillsUpdate(skills)}
       />
-      <Box height={1} bg="neutral.1" mt="xl" mb="l" />
+      <Box height={1} bg="neutral.1" mt="xl" mb={["m", "l"]} />
       <RoundedButton
         onClick={nextStep}
+        width={["100%", "auto"]}
+        suffix={<Icon icon="arrow-right" />}
         disabled={(location.state?.skills || []).length < 1}
       >
         Continue

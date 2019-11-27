@@ -19,21 +19,26 @@ const selectedStyles = css`
 `;
 
 export const StyledTagSelectTag = styled.div`
-  height: 30px;
+  height: 36px;
   cursor: pointer;
   padding: 0 16px;
-  font-size: 14px;
+  font-size: 15px;
   margin-top: 8px;
   margin-left: 8px;
   font-weight: 400;
   user-select: none;
   align-items: center;
-  border-radius: 15px;
+  border-radius: 20px;
   display: inline-flex;
   vertical-align: baseline;
   color: ${theme.colors.blue[7]};
   background: ${theme.colors.blue[0]};
   transition: background 100ms;
+
+  @media (min-width: ${theme.breakpoints.s}) {
+    height: 30px;
+    font-size: 14px;
+  }
 
   &:hover {
     color: ${theme.colors.blue[8]};

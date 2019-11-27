@@ -1,6 +1,6 @@
 import { lighten, darken } from "polished";
 import styled, { css, keyframes } from "styled-components";
-import { space } from "styled-system";
+import { space, layout } from "styled-system";
 import theme from "../../theme";
 
 const spin = keyframes`
@@ -18,7 +18,10 @@ export const Loading = styled.div`
   left: 50%;
   width: 18px;
   height: 18px;
+  display: flex;
   position: absolute;
+  align-items: center;
+  justify-content: center;
   transform: translate(-50%, -50%);
   animation: ${spin} 700ms infinite linear;
 `;
@@ -43,29 +46,44 @@ const VARIANTS = {
 
 export const StyledButton = styled.button`
   ${space}
+  ${layout}
 
   border: none;
   color: white;
-  height: 40px;
   outline: none;
   line-height: 1;
   cursor: pointer;
-  font-size: 15px;
-  padding: 0 25px;
+  font-size: 16px;
   appearance: none;
   font-weight: 500;
   user-select: none;
+  line-height: 16px;
   position: relative;
-  border-radius: 20px;
+  padding: 16px 20px;
+  border-radius: 30px;
   align-items: center;
   display: inline-flex;
   font-family: poppins;
+  justify-content: center;
   letter-spacing: -0.01em;
-  width: ${props => props.width};
   background: ${theme.colors.blue[5]};
   transition: background 100ms, color 100ms;
 
-  &:disabled {
+  @media (min-width: ${theme.breakpoints.s}) {
+    font-size: 15px;
+    padding: 12px 20px;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &[data-loading="true"] {
+    cursor: default;
+  }
+
+  &:not([data-loading="true"]):disabled {
     opacity: 0.4;
     cursor: default;
   }
@@ -80,6 +98,18 @@ export const StyledButton = styled.button`
 
   ${props => VARIANTS[props.variant || "primary"]}
   ${props => props.isLoading && { color: "transparent" }}
+`;
+
+export const StyledButtonPrefix = styled.div`
+  margin-right: 8px;
+  align-items: center;
+  display: inline-flex;
+`;
+
+export const StyledButtonSuffix = styled.div`
+  margin-left: 8px;
+  align-items: center;
+  display: inline-flex;
 `;
 
 export default StyledButton;

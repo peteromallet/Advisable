@@ -103,8 +103,19 @@ const RequestConsultation = () => {
   };
 
   return (
-    <Box maxWidth={960} margin="0 auto" py="l" display="flex">
-      <Box width={250} mr="l" flexShrink={0}>
+    <Box
+      width="94%"
+      maxWidth={960}
+      margin="0 auto"
+      py={["s", "m", "l"]}
+      display="flex"
+    >
+      <Box
+        width={250}
+        mr="l"
+        flexShrink={0}
+        display={{ _: "none", l: "block" }}
+      >
         <Sidebar steps={STEPS} data={data} />
       </Box>
       <Box width="100%" position="relative">
@@ -130,7 +141,7 @@ const RequestConsultation = () => {
                       y: -80,
                     }}
                   >
-                    <Card padding="l" elevation="m">
+                    <Card padding={["m", "l"]} elevation="m">
                       <step.component
                         {...route}
                         data={data}

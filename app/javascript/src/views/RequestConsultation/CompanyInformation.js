@@ -2,7 +2,7 @@ import React from "react";
 import * as Yup from "yup";
 import { useLocation } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Box, Text, RoundedButton } from "@advisable/donut";
+import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
 import TextField from "../../components/TextField";
 
 const validationSchema = Yup.object({
@@ -101,7 +101,14 @@ const CompanyInformation = ({ data, nextStep }) => {
                 error={formik.touched.company ? formik.errors.company : null}
               />
             </Box>
-            <RoundedButton type="submit">Continue</RoundedButton>
+            <RoundedButton
+              width={["100%", "auto"]}
+              suffix={<Icon icon="arrow-right" />}
+              loading={formik.isSubmitting}
+              type="submit"
+            >
+              Continue
+            </RoundedButton>
           </Form>
         )}
       </Formik>

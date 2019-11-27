@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Box, Text, RoundedButton } from "@advisable/donut";
+import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
 import AvailabilityInput from "../../components/Availability";
 
 const Availability = ({ data, nextStep }) => {
@@ -46,6 +46,8 @@ const Availability = ({ data, nextStep }) => {
       </Box>
       <RoundedButton
         onClick={nextStep}
+        width={["100%", "auto"]}
+        suffix={<Icon icon="arrow-right" />}
         disabled={selectedAvailability.length === 0}
       >
         Continue
