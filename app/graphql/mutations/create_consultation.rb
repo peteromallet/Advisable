@@ -5,7 +5,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   argument :email, String, required: true
   argument :company, String, required: true
   argument :availability, [String], required: true
-  argument :skills, [String], required: true
+  argument :skill, String, required: true
   argument :topic, String, required: true
 
   field :consultation, Types::ConsultationType, null: true
@@ -20,19 +20,13 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   private
 
   def create_consultation(**args)
-    if args[:skills].empty?
-      raise ApiError::InvalidRequest.new("consultation.noSkills", "You must provide a list of skills")
-    end
-
-    skill_ids = args[:skills].map do |skill|
-      Skill.find_by_name!(skill).airtable_id
-    end
+    skill_id = Skill.find_by_name!(args[:skill]).airtable_id
 
     consultation = Consultation.create(
       user: user(**args),
       specialist: specialist(args[:specialist]),
       status: "Request Started",
-      skills: skill_ids,
+      skills: [skill_id],
       topic: args[:topic],
     )
 

@@ -7,12 +7,12 @@ const RequestConsultationSkills = ({ data, nextStep }) => {
   const history = useHistory();
   const location = useLocation();
 
-  const handleSkillsUpdate = skills => {
+  const handleSkillUpdate = skill => {
     history.replace({
       ...location,
       state: {
         ...location.state,
-        skills,
+        skill,
       },
     });
   };
@@ -37,16 +37,17 @@ const RequestConsultationSkills = ({ data, nextStep }) => {
         aesthetic reasons it should span more than one line.
       </Text>
       <TagSelect
-        selected={location.state?.skills || []}
+        multiple={false}
+        selected={location.state?.skill}
         tags={data.specialist.skills.map(s => s.name)}
-        onChange={skills => handleSkillsUpdate(skills)}
+        onChange={skill => handleSkillUpdate(skill)}
       />
       <Box height={1} bg="neutral.1" mt="xl" mb={["m", "l"]} />
       <RoundedButton
         onClick={nextStep}
         width={["100%", "auto"]}
         suffix={<Icon icon="arrow-right" />}
-        disabled={(location.state?.skills || []).length < 1}
+        disabled={!location.state?.skill}
       >
         Continue
       </RoundedButton>

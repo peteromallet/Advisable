@@ -1,15 +1,27 @@
 import React from "react";
 import { StyledTagSelect, StyledTagSelectTag } from "./styles";
 
-const TagSelect = ({ tags, onChange, selected, ...props }) => {
-  const isSelected = tag => selected.indexOf(tag) > -1;
+const TagSelect = ({ tags, multiple, onChange, selected, ...props }) => {
+  const isSelected = tag => {
+    if (multiple) {
+      return selected.indexOf(tag) > -1;
+    }
+
+    return selected === tag;
+  };
 
   const handleSelect = tag => () => {
-    if (isSelected(tag)) {
-      onChange(selected.filter(t => t !== tag));
-    } else {
-      onChange([...selected, tag]);
+    if (multiple) {
+      if (isSelected(tag)) {
+        onChange(selected.filter(t => t !== tag));
+      } else {
+        onChange([...selected, tag]);
+      }
+
+      return;
     }
+
+    onChange(tag);
   };
 
   return (
@@ -35,6 +47,10 @@ const TagSelect = ({ tags, onChange, selected, ...props }) => {
       ))}
     </StyledTagSelect>
   );
+};
+
+TagSelect.defaultProps = {
+  multiple: true,
 };
 
 export default TagSelect;
