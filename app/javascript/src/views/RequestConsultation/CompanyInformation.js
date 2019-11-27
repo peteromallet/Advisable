@@ -18,10 +18,10 @@ const CompanyInformation = ({ data, nextStep }) => {
   const location = useLocation();
 
   const initialValues = {
-    firstName: location.state.firstName || "",
-    lastName: location.state.lastName || "",
-    email: location.state.email || "",
-    company: location.state.company || "",
+    firstName: location.state?.firstName || "",
+    lastName: location.state?.lastName || "",
+    email: location.state?.email || "",
+    company: location.state?.company || "",
   };
 
   const handleSubmit = async values => {

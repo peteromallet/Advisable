@@ -1,5 +1,6 @@
 // Renders the steps for requesting a consultation with a specialist.
 import React from "react";
+import queryString from "query-string";
 import { useQuery } from "react-apollo";
 import {
   useParams,
@@ -30,6 +31,7 @@ const RequestConsultation = () => {
   const { data, loading, error } = useQuery(fetchSpecialist, {
     variables: { id: specialistId },
   });
+  const queryParams = queryString.parse(location.search);
 
   const isComplete = Boolean(
     matchPath(location.pathname, {
@@ -158,7 +160,16 @@ const RequestConsultation = () => {
                 return (
                   <motion.div exit={{}}>
                     <Redirect
-                      to={generatePath(STEPS[0].path, { specialistId })}
+                      to={{
+                        pathname: generatePath(STEPS[0].path, { specialistId }),
+                        state: {
+                          skill: queryParams.skill,
+                          firstName: queryParams.firstName,
+                          lastName: queryParams.lastName,
+                          email: queryParams.email,
+                          company: queryParams.company,
+                        },
+                      }}
                     />
                   </motion.div>
                 );
