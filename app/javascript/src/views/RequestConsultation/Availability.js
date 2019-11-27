@@ -40,17 +40,33 @@ const Availability = ({ data, nextStep }) => {
         {specialist.name}. The more times you select, the easier it'll be for us
         to find a time that suits them.
       </Text>
-      <Box height={300} mb="l">
+      <Box height={300}>
         <AvailabilityInput
           selected={selectedAvailability}
           onSelect={handleAvailabilityChange}
         />
       </Box>
+      {selectedAvailability.length < 6 && (
+        <Box
+          p="xs"
+          mt="xs"
+          fontSize="s"
+          bg="neutral.0"
+          display="flex"
+          borderRadius={8}
+          color="neutral.7"
+          alignItems="center"
+        >
+          <Icon icon="info" width={20} color="neutral.6" mr="xs" />
+          Please select at least 3 available times
+        </Box>
+      )}
       <RoundedButton
+        mt="xl"
         onClick={nextStep}
         width={["100%", "auto"]}
         suffix={<Icon icon="arrow-right" />}
-        disabled={selectedAvailability.length === 0}
+        disabled={selectedAvailability.length < 6}
       >
         Continue
       </RoundedButton>
