@@ -8,6 +8,7 @@ import pluralize from "../../utilities/pluralize";
 
 const Sidebar = ({ steps, data }) => {
   const { specialistId } = useParams();
+  const rating = data.specialist.ratings?.overall || 0;
 
   return (
     <>
@@ -31,10 +32,7 @@ const Sidebar = ({ steps, data }) => {
       <Text color="neutral.6" letterSpacing="-0.02em" mb="xs">
         {data.specialist.location}
       </Text>
-      <StarRating
-        showNumber={false}
-        rating={data.specialist.ratings?.overall || 0}
-      />
+      {rating > 0 && <StarRating showNumber={false} rating={rating} />}
       <Text color="neutral.5" fontSize="xxs" mb="m">
         {pluralize(data.specialist.reviewsCount || 0, "review", "reviews")}
       </Text>

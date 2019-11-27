@@ -53,6 +53,11 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
         return user
       end
 
+      specialist = Specialist.find_by_email(args[:email])
+      if specialist.present?
+        raise ApiError::InvalidRequest.new("emailBelongsToFreelancer", "This email belongs to a freelancer account")
+      end
+
       user = User.create(
         first_name: args[:first_name],
         last_name: args[:last_name],
@@ -63,6 +68,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
       
       domain = user.email.split("@").last
       client = Client.create(name: args[:company], domain: domain)
+      client.users << user
       user.sync_to_airtable
       # Currently we dont have a relationship between clients and client
       # contacts so we set the 'Client Contacts' column while calling sync.

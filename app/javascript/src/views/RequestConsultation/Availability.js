@@ -6,6 +6,7 @@ import AvailabilityInput from "../../components/Availability";
 const Availability = ({ data, nextStep }) => {
   const history = useHistory();
   const location = useLocation();
+  const specialist = data.specialist;
 
   const handleAvailabilityChange = availability => {
     history.replace({
@@ -35,8 +36,9 @@ const Availability = ({ data, nextStep }) => {
         Availability
       </Text>
       <Text color="neutral.8" lineHeight="s" mb="l">
-        This is some sub text to support the required action for this step. For
-        aesthetic reasons it should span more than one line.
+        Select the times you will be availabile for a consultation with{" "}
+        {specialist.name}. The more times you select, the easier it'll be for us
+        to find a time that suits them.
       </Text>
       <Box height={300} mb="l">
         <AvailabilityInput
