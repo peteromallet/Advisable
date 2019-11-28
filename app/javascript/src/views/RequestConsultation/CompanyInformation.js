@@ -47,15 +47,24 @@ const CompanyInformation = ({ nextStep, previousStepURL }) => {
       const error = response.errors[0].extensions.code;
       if (error === "emailBelongsToFreelancer") {
         formik.setFieldError("email", "This email belongs to a freelancer");
-        return;
       }
+
+      return;
     }
 
+    // Continue to the next step and pass the consultation id in the route
+    // state. This makes the step routes much easier. i.e they are all prefixed
+    // with request_consultation/:specialistId/[step] and don't need to have the
+    // consultation id embeded.
     const consultation = response.data?.createConsultation.consultation;
-    nextStep({
-      specialistId: params.specialistId,
-      consultationId: consultation.id,
-    });
+    nextStep(
+      {
+        specialistId: params.specialistId,
+      },
+      {
+        consultationId: consultation.id,
+      }
+    );
   };
 
   return (

@@ -1,28 +1,34 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "react-apollo";
 import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
+import { useParams, useLocation, Redirect } from "react-router-dom";
 import Loading from "../../components/Loading";
 import AvailabilityInput from "../../components/Availability";
 import UPDATE_AVAILABILITY from "./updateAvailability";
 import GET_CONSULTATION from "./getConsultation";
 
-const Availability = ({ nextStep }) => {
+const Availability = ({ nextStep, previousStepURL }) => {
   const params = useParams();
+  const location = useLocation();
   const [availability, setAvailability] = React.useState([]);
   const [updateAvailability, updateAvailabilityMutation] = useMutation(
     UPDATE_AVAILABILITY
   );
 
   const { data, loading } = useQuery(GET_CONSULTATION, {
-    variables: { id: params.consultationId },
+    variables: { id: location.state?.consultationId },
+    skip: !location.state?.consultationId,
   });
-
-  const user = data?.consultation.user;
 
   React.useEffect(() => {
     if (!loading) setAvailability(user.availability);
   }, [loading, user]);
+
+  if (!location.state?.consultationId) {
+    return <Redirect to={previousStepURL(params)} />;
+  }
+
+  const user = data?.consultation.user;
 
   if (loading) return <Loading />;
 

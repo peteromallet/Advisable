@@ -36,7 +36,7 @@ const RequestConsultation = () => {
 
   const isComplete = Boolean(
     matchPath(location.pathname, {
-      path: "/request_consultation/:specialistId/:consultationId/sent",
+      path: "/request_consultation/:specialistId/sent",
     })
   );
 
@@ -55,18 +55,18 @@ const RequestConsultation = () => {
     },
     {
       label: "Availability",
-      path: "/request_consultation/:specialistId/:consultationId/availability",
+      path: "/request_consultation/:specialistId/availability",
       component: Availability,
       disabled: isComplete,
     },
     {
       label: "Topic",
-      path: "/request_consultation/:specialistId/:consultationId/topic",
+      path: "/request_consultation/:specialistId/topic",
       component: Topic,
       disabled: isComplete,
     },
     {
-      path: "/request_consultation/:specialistId/:consultationId/sent",
+      path: "/request_consultation/:specialistId/sent",
       component: Complete,
     },
   ];
