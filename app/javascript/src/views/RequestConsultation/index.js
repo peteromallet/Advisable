@@ -80,27 +80,22 @@ const RequestConsultation = () => {
 
   if (loading) return <Loading />;
 
-  const handleNextStep = index => nextLocation => {
-    const nextStep = STEPS[index + 1];
-    if (nextStep) {
-      const nextPath = generatePath(nextStep.path, { specialistId });
-      history.push({
-        ...location,
-        pathname: nextPath,
-        ...nextLocation,
-      });
+  const buildStepLocation = (step, params, state) => {
+    const pathname = generatePath(step.path, params || {});
+    return { ...location, pathname, state: state || location.state };
+  };
+
+  const handleStepURL = index => (params, state) => {
+    const step = STEPS[index];
+    if (step) {
+      return buildStepLocation(step, params, state);
     }
   };
 
-  const handlePreviousStep = index => nextLocation => {
-    const previousStep = STEPS[index - 1];
-    if (previousStep) {
-      const previousPath = generatePath(previousStep.path, { specialistId });
-      history.push({
-        ...location,
-        pathname: previousPath,
-        ...nextLocation,
-      });
+  const gotoStep = index => (params, state) => {
+    const nextStep = STEPS[index];
+    if (nextStep) {
+      history.push(buildStepLocation(nextStep, params, state));
     }
   };
 
@@ -147,8 +142,10 @@ const RequestConsultation = () => {
                       <step.component
                         {...route}
                         data={data}
-                        nextStep={handleNextStep(i)}
-                        previousStep={handlePreviousStep(i)}
+                        nextStep={gotoStep(i + 1)}
+                        nextStepURL={handleStepURL(i + 1)}
+                        previousStep={gotoStep(i - 1)}
+                        previousStepURL={handleStepURL(i - 1)}
                       />
                     </Card>
                   </motion.div>

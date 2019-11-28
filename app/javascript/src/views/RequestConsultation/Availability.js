@@ -1,9 +1,10 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
 import AvailabilityInput from "../../components/Availability";
 
 const Availability = ({ data, nextStep }) => {
+  const params = useParams();
   const history = useHistory();
   const location = useLocation();
   const specialist = data.specialist;
@@ -63,8 +64,8 @@ const Availability = ({ data, nextStep }) => {
       )}
       <RoundedButton
         mt="xl"
-        onClick={nextStep}
         width={["100%", "auto"]}
+        onClick={() => nextStep(params)}
         suffix={<Icon icon="arrow-right" />}
         disabled={selectedAvailability.length < 6}
       >

@@ -1,9 +1,10 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { Box, Text, RoundedButton, Icon } from "@advisable/donut";
 import TagSelect from "../../components/TagSelect";
 
 const RequestConsultationSkills = ({ data, nextStep }) => {
+  const params = useParams();
   const history = useHistory();
   const location = useLocation();
 
@@ -44,8 +45,8 @@ const RequestConsultationSkills = ({ data, nextStep }) => {
       />
       <Box height={1} bg="neutral.1" mt="xl" mb={["m", "l"]} />
       <RoundedButton
-        onClick={nextStep}
         width={["100%", "auto"]}
+        onClick={() => nextStep(params, location.state)}
         suffix={<Icon icon="arrow-right" />}
         disabled={!location.state?.skill}
       >

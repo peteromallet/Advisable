@@ -1,6 +1,6 @@
 import React from "react";
 import * as Yup from "yup";
-import { useLocation } from "react-router-dom";
+import { useParams, useLocation, Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
 import TextField from "../../components/TextField";
@@ -14,8 +14,13 @@ const validationSchema = Yup.object({
   company: Yup.string().required("Please enter your company name"),
 });
 
-const CompanyInformation = ({ data, nextStep }) => {
+const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
+  const params = useParams();
   const location = useLocation();
+
+  if (!location.state?.skill) {
+    return <Redirect to={previousStepURL(params)} />;
+  }
 
   const initialValues = {
     firstName: location.state?.firstName || "",
@@ -25,11 +30,9 @@ const CompanyInformation = ({ data, nextStep }) => {
   };
 
   const handleSubmit = async values => {
-    nextStep({
-      state: {
-        ...location.state,
-        ...values,
-      },
+    nextStep(params, {
+      ...location.state,
+      ...values,
     });
   };
 
