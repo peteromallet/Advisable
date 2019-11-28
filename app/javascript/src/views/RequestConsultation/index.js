@@ -27,15 +27,16 @@ import Complete from "./Complete";
 const RequestConsultation = () => {
   const history = useHistory();
   const location = useLocation();
-  const { specialistId } = useParams();
+  const params = useParams();
   const { data, loading, error } = useQuery(fetchSpecialist, {
-    variables: { id: specialistId },
+    variables: { id: params.specialistId },
   });
+
   const queryParams = queryString.parse(location.search);
 
   const isComplete = Boolean(
     matchPath(location.pathname, {
-      path: "/consultation/:specialistId/sent",
+      path: "/request_consultation/:specialistId/:consultationId/sent",
     })
   );
 
@@ -47,25 +48,25 @@ const RequestConsultation = () => {
       disabled: isComplete,
     },
     {
-      label: "company details",
+      label: "Company Details",
       path: "/request_consultation/:specialistId/details",
       component: CompanyInformation,
       disabled: isComplete,
     },
     {
-      label: "availability",
-      path: "/request_consultation/:specialistId/availability",
+      label: "Availability",
+      path: "/request_consultation/:specialistId/:consultationId/availability",
       component: Availability,
       disabled: isComplete,
     },
     {
-      label: "topic",
-      path: "/request_consultation/:specialistId/topic",
+      label: "Topic",
+      path: "/request_consultation/:specialistId/:consultationId/topic",
       component: Topic,
       disabled: isComplete,
     },
     {
-      path: "/request_consultation/:specialistId/sent",
+      path: "/request_consultation/:specialistId/:consultationId/sent",
       component: Complete,
     },
   ];
@@ -158,7 +159,7 @@ const RequestConsultation = () => {
                   <motion.div exit={{}}>
                     <Redirect
                       to={{
-                        pathname: generatePath(STEPS[0].path, { specialistId }),
+                        pathname: generatePath(STEPS[0].path, params),
                         state: {
                           skill: queryParams.skill,
                           firstName: queryParams.firstName,

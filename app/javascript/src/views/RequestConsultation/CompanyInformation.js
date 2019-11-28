@@ -1,9 +1,11 @@
 import React from "react";
 import * as Yup from "yup";
+import { useMutation } from "react-apollo";
 import { useParams, useLocation, Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
 import TextField from "../../components/TextField";
+import CREATE_CONSULTATION from "./createConsultation";
 
 const validationSchema = Yup.object({
   firstName: Yup.string().required("Please enter your first name"),
@@ -14,9 +16,10 @@ const validationSchema = Yup.object({
   company: Yup.string().required("Please enter your company name"),
 });
 
-const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
+const CompanyInformation = ({ nextStep, previousStepURL }) => {
   const params = useParams();
   const location = useLocation();
+  const [createConsultation] = useMutation(CREATE_CONSULTATION);
 
   if (!location.state?.skill) {
     return <Redirect to={previousStepURL(params)} />;
@@ -29,10 +32,29 @@ const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
     company: location.state?.company || "",
   };
 
-  const handleSubmit = async values => {
-    nextStep(params, {
-      ...location.state,
-      ...values,
+  const handleSubmit = async (values, formik) => {
+    const response = await createConsultation({
+      variables: {
+        input: {
+          skill: location.state.skill,
+          specialist: params.specialistId,
+          ...values,
+        },
+      },
+    });
+
+    if (response.errors) {
+      const error = response.errors[0].extensions.code;
+      if (error === "emailBelongsToFreelancer") {
+        formik.setFieldError("email", "This email belongs to a freelancer");
+        return;
+      }
+    }
+
+    const consultation = response.data?.createConsultation.consultation;
+    nextStep({
+      specialistId: params.specialistId,
+      consultationId: consultation.id,
     });
   };
 

@@ -5,7 +5,7 @@ class Mutations::UpdateAvailability < Mutations::BaseMutation
   field :user, Types::User, null: true
 
   def resolve(**args)
-    user = ::User.find_by_airtable_id(args[:id])
+    user = ::User.find_by_uid_or_airtable_id!(args[:id])
     user.update(availability: args[:availability])
 
     return { user: user }

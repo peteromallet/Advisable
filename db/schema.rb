@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_21_112029) do
+ActiveRecord::Schema.define(version: 2019_11_28_143611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,7 +186,9 @@ ActiveRecord::Schema.define(version: 2019_11_21_112029) do
     t.string "airtable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "interview_id"
     t.index ["airtable_id"], name: "index_consultations_on_airtable_id"
+    t.index ["interview_id"], name: "index_consultations_on_interview_id"
     t.index ["specialist_id"], name: "index_consultations_on_specialist_id"
     t.index ["uid"], name: "index_consultations_on_uid"
     t.index ["user_id"], name: "index_consultations_on_user_id"
@@ -618,6 +620,7 @@ ActiveRecord::Schema.define(version: 2019_11_21_112029) do
   add_foreign_key "client_calls", "users"
   add_foreign_key "client_users", "clients"
   add_foreign_key "client_users", "users"
+  add_foreign_key "consultations", "interviews"
   add_foreign_key "consultations", "specialists"
   add_foreign_key "consultations", "users"
   add_foreign_key "interviews", "applications"

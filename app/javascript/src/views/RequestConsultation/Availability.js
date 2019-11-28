@@ -1,25 +1,45 @@
 import React from "react";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useQuery, useMutation } from "react-apollo";
 import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
+import Loading from "../../components/Loading";
 import AvailabilityInput from "../../components/Availability";
+import UPDATE_AVAILABILITY from "./updateAvailability";
+import GET_CONSULTATION from "./getConsultation";
 
-const Availability = ({ data, nextStep }) => {
+const Availability = ({ nextStep }) => {
   const params = useParams();
-  const history = useHistory();
-  const location = useLocation();
-  const specialist = data.specialist;
+  const [availability, setAvailability] = React.useState([]);
+  const [updateAvailability, updateAvailabilityMutation] = useMutation(
+    UPDATE_AVAILABILITY
+  );
 
-  const handleAvailabilityChange = availability => {
-    history.replace({
-      ...location,
-      state: {
-        ...location.state,
-        availability,
+  const { data, loading } = useQuery(GET_CONSULTATION, {
+    variables: { id: params.consultationId },
+  });
+
+  const user = data?.consultation.user;
+
+  React.useEffect(() => {
+    if (!loading) setAvailability(user.availability);
+  }, [loading, user]);
+
+  if (loading) return <Loading />;
+
+  const specialist = data.consultation.specialist;
+
+  const handleSubmit = async () => {
+    await updateAvailability({
+      variables: {
+        input: {
+          id: user.id,
+          availability: availability,
+        },
       },
     });
-  };
 
-  const selectedAvailability = location.state?.availability || [];
+    nextStep(params);
+  };
 
   return (
     <>
@@ -42,12 +62,9 @@ const Availability = ({ data, nextStep }) => {
         to find a time that suits them.
       </Text>
       <Box height={300}>
-        <AvailabilityInput
-          selected={selectedAvailability}
-          onSelect={handleAvailabilityChange}
-        />
+        <AvailabilityInput selected={availability} onSelect={setAvailability} />
       </Box>
-      {selectedAvailability.length < 6 && (
+      {availability.length < 6 && (
         <Box
           p="xs"
           mt="xs"
@@ -64,10 +81,11 @@ const Availability = ({ data, nextStep }) => {
       )}
       <RoundedButton
         mt="xl"
+        onClick={handleSubmit}
         width={["100%", "auto"]}
-        onClick={() => nextStep(params)}
         suffix={<Icon icon="arrow-right" />}
-        disabled={selectedAvailability.length < 6}
+        disabled={availability.length < 6}
+        loading={updateAvailabilityMutation.loading}
       >
         Continue
       </RoundedButton>

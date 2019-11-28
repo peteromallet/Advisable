@@ -1,13 +1,13 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
-import { useParams, generatePath } from "react-router-dom";
+import { useLocation, useParams, generatePath } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import StarRating from "../../components/StarRating";
 import ProgressSteps from "../../components/ProgressSteps";
 import pluralize from "../../utilities/pluralize";
 
 const Sidebar = ({ steps, data }) => {
-  const { specialistId } = useParams();
+  const params = useParams();
   const rating = data.specialist.ratings?.overall || 0;
 
   return (
@@ -40,7 +40,10 @@ const Sidebar = ({ steps, data }) => {
       <ProgressSteps
         steps={steps.map(step => ({
           label: step.label,
-          url: generatePath(step.path, { specialistId }),
+          url: generatePath(step.path, {
+            ...params,
+            consultationId: params.consultationId || "undefined",
+          }),
           disabled: step.disabled,
         }))}
       />

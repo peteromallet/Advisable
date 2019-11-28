@@ -4,9 +4,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   argument :last_name, String, required: true
   argument :email, String, required: true
   argument :company, String, required: true
-  argument :availability, [String], required: true
   argument :skill, String, required: true
-  argument :topic, String, required: true
 
   field :consultation, Types::ConsultationType, null: true
 
@@ -21,13 +19,25 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
 
   def create_consultation(**args)
     skill_id = Skill.find_by_name!(args[:skill]).airtable_id
+    user = user(**args)
+    specialist_record = specialist(args[:specialist])
+
+    consultation = user.consultations.find_by(
+      specialist: specialist_record,
+      status: "Request Started"
+    )
+
+    if consultation.present?
+      consultation.update(skills: [skill_id])
+      consultation.sync_to_airtable
+      return consultation
+    end
 
     consultation = Consultation.create(
       user: user(**args),
-      specialist: specialist(args[:specialist]),
+      specialist: specialist_record,
       status: "Request Started",
       skills: [skill_id],
-      topic: args[:topic],
     )
 
     consultation.sync_to_airtable
@@ -41,11 +51,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   def user(**args)
     @user ||= begin
       user = User.find_by_email(args[:email])
-
-      if user.present?
-        user.update(availability: args[:availability])
-        return user
-      end
+      return user if user.present?
 
       specialist = Specialist.find_by_email(args[:email])
       if specialist.present?
@@ -56,7 +62,6 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
         first_name: args[:first_name],
         last_name: args[:last_name],
         email: args[:email],
-        availability: args[:availability],
         company_name: args[:company],
       )
       

@@ -1,37 +1,35 @@
 import * as Yup from "yup";
 import React from "react";
 import { useMutation } from "react-apollo";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
 import TextField from "../../components/TextField";
-import REQUEST_CONSULTATION from "./requestConsultation";
+import SEND from "./sendRequest";
 
 const validationSchema = Yup.object({
   topic: Yup.string().required(),
 });
 
 const Topic = ({ data, nextStep }) => {
-  const { specialistId } = useParams();
-  const location = useLocation();
-  const [requestConsultation] = useMutation(REQUEST_CONSULTATION);
+  const params = useParams();
+  const [sendRequest] = useMutation(SEND);
 
   const initialValues = {
     topic: "",
   };
 
   const handleSubmit = async values => {
-    await requestConsultation({
+    await sendRequest({
       variables: {
         input: {
-          ...location.state,
-          specialist: specialistId,
+          consultation: params.consultationId,
           topic: values.topic,
         },
       },
     });
 
-    nextStep({ specialistId });
+    nextStep(params);
   };
 
   return (

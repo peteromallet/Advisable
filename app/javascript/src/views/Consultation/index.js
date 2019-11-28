@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@advisable/donut";
 import { useQuery } from "react-apollo";
-import { useParams } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import Loading from "../../components/Loading";
 import GET_CONSULTATION from "./getConsultation";
 import PendingConsultation from "./PendingConsultation";
@@ -21,6 +21,14 @@ const Consultation = () => {
   switch (status) {
     case "Specialist Rejected": {
       content = <DeclinedConsultation data={data} />;
+      break;
+    }
+    case "Accepted By Specialist": {
+      content = (
+        <Redirect
+          to={`/interview_request/${data.consultation.interview.airtableId}`}
+        />
+      );
       break;
     }
     default: {
