@@ -112,6 +112,6 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
       project: project,
       status: "Invited To Apply"
     )
-    application.sync_to_airtable
+    application.sync_to_airtable({ "Source" => "new-signup" })
   end
 end
