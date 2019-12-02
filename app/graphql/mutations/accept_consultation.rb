@@ -24,6 +24,7 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
       skills: skill_records,
       sales_status: "Open",
       status: "Project Created",
+      service_type: "Consultation",
       primary_skill: skill_records.first.name,
       name: "#{user.company_name} - #{skill_records.first.name}"
     })

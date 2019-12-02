@@ -32,10 +32,14 @@ const Sidebar = ({ steps, data }) => {
       <Text color="neutral.6" letterSpacing="-0.02em" mb="xs">
         {data.specialist.location}
       </Text>
-      {rating > 0 && <StarRating showNumber={false} rating={rating} />}
-      <Text color="neutral.5" fontSize="xxs" mb="m">
-        {pluralize(data.specialist.reviewsCount || 0, "review", "reviews")}
-      </Text>
+      {rating > 0 && (
+        <>
+          <StarRating showNumber={false} rating={rating} />
+          <Text color="neutral.5" fontSize="xxs" mb="m">
+            {pluralize(data.specialist.reviewsCount || 0, "review", "reviews")}
+          </Text>
+        </>
+      )}
       <Box height={1} bg="neutral.2" my="l" />
       <ProgressSteps
         steps={steps.map(step => ({

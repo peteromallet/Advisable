@@ -81,6 +81,19 @@ const RequestConsultation = () => {
 
   if (loading) return <Loading />;
 
+  if (queryParams.consultation) {
+    return (
+      <Redirect
+        to={{
+          pathname: generatePath(STEPS[2].path, params),
+          state: {
+            consultationId: queryParams.consultation,
+          },
+        }}
+      />
+    );
+  }
+
   const buildStepLocation = (step, params, state) => {
     const pathname = generatePath(step.path, params || {});
     return { ...location, pathname, state: state || location.state };

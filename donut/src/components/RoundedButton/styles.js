@@ -52,7 +52,6 @@ export const StyledButton = styled.button`
   color: white;
   outline: none;
   line-height: 1;
-  cursor: pointer;
   font-size: 16px;
   appearance: none;
   font-weight: 500;
