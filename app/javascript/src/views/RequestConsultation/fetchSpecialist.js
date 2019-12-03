@@ -12,7 +12,7 @@ const fetchSpecialist = gql`
       ratings {
         overall
       }
-      skills(projectSkills: true) {
+      skills(projectSkills: true, limit: 10) {
         id
         name
       }
