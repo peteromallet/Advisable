@@ -13,7 +13,7 @@ class Airtable::Consultation < Airtable::Base
     self['Specialist'] = [consultation.specialist.try(:airtable_id)].compact
     self['Client Contact'] = [consultation.user.try(:airtable_id)].compact
     self['Reason For Consultation'] = consultation.topic
-    self['Skills'] = consultation.skills
+    self['Skills'] = [consultation.skill.try(:airtable_id)].compact
     self['Consultation Status'] = consultation.status
   end
 end

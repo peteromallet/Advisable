@@ -11,6 +11,7 @@ export const user = (fields = {}) => {
       email: "test@test.com",
       airtableId: "airtableid",
       confirmed: true,
+      availability: [],
       companyName: "Test Corp",
       completedTutorials: [],
       talkSignature: "1234",
@@ -244,11 +245,29 @@ export const offPlatformProject = (fields = {}) => {
 };
 
 export const industry = (fields = {}) => {
-  return merge({
-    __typename: "Industry",
-    id: uniqueId("industry"),
-    name: "Industry",
-  });
+  return merge(
+    {
+      __typename: "Industry",
+      id: uniqueId("industry"),
+      name: "Industry",
+    },
+    fields
+  );
+};
+
+export const consultation = (fields = {}) => {
+  return merge(
+    {
+      __typename: "Consultation",
+      id: uniqueId("con"),
+      status: "Request Started",
+      topic: "Consultation topic",
+      user: null,
+      specialist: null,
+      interview: null,
+    },
+    fields
+  );
 };
 
 export default {
@@ -260,5 +279,7 @@ export default {
   industry,
   application,
   specialist,
+  consultation,
+  specialistSkill,
   offPlatformProject,
 };

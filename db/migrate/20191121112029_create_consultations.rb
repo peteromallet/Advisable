@@ -6,7 +6,7 @@ class CreateConsultations < ActiveRecord::Migration[6.0]
       t.belongs_to :user, null: false, foreign_key: true
       t.string :status
       t.string :topic
-      t.jsonb :skills
+      t.belongs_to :skill, null: true, foreign_key: true
       t.string :airtable_id, index: true
 
       t.timestamps

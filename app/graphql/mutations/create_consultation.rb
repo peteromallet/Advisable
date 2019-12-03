@@ -18,7 +18,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   private
 
   def create_consultation(**args)
-    skill_id = Skill.find_by_name!(args[:skill]).airtable_id
+    skill = Skill.find_by_name!(args[:skill])
     user = user(**args)
     specialist_record = specialist(args[:specialist])
 
@@ -28,7 +28,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
     )
 
     if consultation.present?
-      consultation.update(skills: [skill_id])
+      consultation.update(skill: skill)
       consultation.sync_to_airtable
       return consultation
     end
@@ -37,7 +37,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
       user: user(**args),
       specialist: specialist_record,
       status: "Request Started",
-      skills: [skill_id],
+      skill: skill,
     )
 
     consultation.sync_to_airtable

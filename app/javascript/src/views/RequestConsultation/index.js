@@ -140,16 +140,24 @@ const RequestConsultation = () => {
                   <motion.div
                     key={step.path}
                     transition={{
-                      type: "spring",
-                      stiffness: 300,
                       damping: 30,
+                      stiffness: 300,
+                      type: "spring",
                     }}
-                    initial={{ opacity: 0, y: 100 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{
-                      position: "absolute",
+                    initial={{
+                      y: 100,
                       opacity: 0,
+                      position: "static",
+                    }}
+                    animate={{
+                      y: 0,
+                      opacity: 1,
+                      position: "static",
+                    }}
+                    exit={{
                       y: -80,
+                      opacity: 0,
+                      position: "absolute",
                     }}
                   >
                     <Card padding={["m", "l"]} elevation="m">

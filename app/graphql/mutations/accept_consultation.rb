@@ -6,6 +6,7 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
   def resolve(**args)
     ActiveRecord::Base.transaction do
       consultation = Consultation.find_by_uid_or_airtable_id!(args[:consultation])
+
       project = create_project(consultation)
       application = create_application(project, consultation.specialist)
       interview = create_interview(application)
@@ -19,21 +20,22 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
 
   def create_project(consultation)
     user = consultation.user
-    skill_records = skills(consultation)
-    project = user.projects.create({
-      skills: skill_records,
+    project = Project.create({
+      user: user,
+      skills: [consultation.skill],
       sales_status: "Open",
       status: "Project Created",
       service_type: "Consultation",
-      primary_skill: skill_records.first.name,
-      name: "#{user.company_name} - #{skill_records.first.name}"
+      primary_skill: consultation.skill.name,
+      name: "#{user.company_name} - #{consultation.skill.name}"
     })
     project.sync_to_airtable
     project
   end
 
   def create_application(project, specialist)
-    application = project.applications.create({
+    application = Application.create({
+      project: project,
       status: "Applied",
       specialist: specialist
     })
@@ -48,11 +50,5 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
     })
     interview.sync_to_airtable
     interview
-  end
-
-  def skills(consultation)
-    @skills ||= consultation.skills.map do |c|
-      Skill.find_by_airtable_id(c)
-    end
   end
 end

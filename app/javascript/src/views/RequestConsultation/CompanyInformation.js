@@ -16,7 +16,7 @@ const validationSchema = Yup.object({
   company: Yup.string().required("Please enter your company name"),
 });
 
-const CompanyInformation = ({ nextStep, previousStepURL }) => {
+const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
   const params = useParams();
   const location = useLocation();
   const [createConsultation] = useMutation(CREATE_CONSULTATION);
@@ -62,6 +62,8 @@ const CompanyInformation = ({ nextStep, previousStepURL }) => {
         specialistId: params.specialistId,
       },
       {
+        ...location.state,
+        ...values,
         consultationId: consultation.id,
       }
     );
@@ -83,12 +85,12 @@ const CompanyInformation = ({ nextStep, previousStepURL }) => {
         Company Information
       </Text>
       <Text color="neutral.8" lineHeight="s" mb="l">
-        This is some sub text to support the required action for this step. For
-        aesthetic reasons it should span more than one line.
+        Please provide some basic information so we can get back to you when{" "}
+        {data.specialist.firstName} responds.
       </Text>
       <Formik
-        initialValues={initialValues}
         onSubmit={handleSubmit}
+        initialValues={initialValues}
         validationSchema={validationSchema}
       >
         {formik => (

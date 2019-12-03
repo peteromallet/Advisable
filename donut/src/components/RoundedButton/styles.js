@@ -70,7 +70,7 @@ export const StyledButton = styled.button`
 
   @media (min-width: ${theme.breakpoints.s}) {
     font-size: 15px;
-    padding: 12px 20px;
+    padding: 10px 20px;
   }
 
   svg {

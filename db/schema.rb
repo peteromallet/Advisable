@@ -182,13 +182,14 @@ ActiveRecord::Schema.define(version: 2019_11_28_143611) do
     t.bigint "user_id", null: false
     t.string "status"
     t.string "topic"
-    t.jsonb "skills"
+    t.bigint "skill_id"
     t.string "airtable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "interview_id"
     t.index ["airtable_id"], name: "index_consultations_on_airtable_id"
     t.index ["interview_id"], name: "index_consultations_on_interview_id"
+    t.index ["skill_id"], name: "index_consultations_on_skill_id"
     t.index ["specialist_id"], name: "index_consultations_on_specialist_id"
     t.index ["uid"], name: "index_consultations_on_uid"
     t.index ["user_id"], name: "index_consultations_on_user_id"
@@ -621,6 +622,7 @@ ActiveRecord::Schema.define(version: 2019_11_28_143611) do
   add_foreign_key "client_users", "clients"
   add_foreign_key "client_users", "users"
   add_foreign_key "consultations", "interviews"
+  add_foreign_key "consultations", "skills"
   add_foreign_key "consultations", "specialists"
   add_foreign_key "consultations", "users"
   add_foreign_key "interviews", "applications"

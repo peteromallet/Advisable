@@ -8,6 +8,8 @@ export default gql`
     user {
       id
       name
+      firstName
+      lastName
       companyName
       availability
     }

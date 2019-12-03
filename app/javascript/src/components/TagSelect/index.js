@@ -36,10 +36,14 @@ const TagSelect = ({ tags, multiple, onChange, selected, ...props }) => {
             <svg width={12} height={12} fill="none">
               <path d="M1 5.8L4.5 9 13 1" stroke="currentColor" />
             </svg>
-          ) : (
+          ) : multiple ? (
             <svg width={12} height={12} fill="none">
               <path d="M5.5 0h1v12h-1V0z" fill="currentColor" />
               <path d="M0 6.5v-1h12v1H0z" fill="currentColor" />
+            </svg>
+          ) : (
+            <svg width="12" height="12" fill="none" viewBox="0 0 12 12">
+              <circle cx="6" cy="6" r="5.5" stroke="currentColor"></circle>
             </svg>
           )}
           {tag}

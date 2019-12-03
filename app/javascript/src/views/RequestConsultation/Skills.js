@@ -34,8 +34,8 @@ const RequestConsultationSkills = ({ data, nextStep }) => {
         Which of {data.specialist.firstName}’s skills are you interested in?
       </Text>
       <Text color="neutral.8" lineHeight="s" mb="l">
-        This is some sub text to support the required action for this step. For
-        aesthetic reasons it should span more than one line.
+        Please select which skill you are interested in talking to{" "}
+        {data.specialist.firstName} about in a 30 minute consultation.
       </Text>
       <TagSelect
         multiple={false}

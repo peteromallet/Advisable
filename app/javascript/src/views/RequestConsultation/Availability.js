@@ -15,10 +15,12 @@ const Availability = ({ nextStep, previousStepURL }) => {
     UPDATE_AVAILABILITY
   );
 
-  const { data, loading } = useQuery(GET_CONSULTATION, {
+  const { data, loading, error } = useQuery(GET_CONSULTATION, {
     variables: { id: location.state?.consultationId },
     skip: !location.state?.consultationId,
   });
+
+  const user = data?.consultation.user;
 
   React.useEffect(() => {
     if (!loading) setAvailability(user.availability);
@@ -27,8 +29,6 @@ const Availability = ({ nextStep, previousStepURL }) => {
   if (!location.state?.consultationId) {
     return <Redirect to={previousStepURL(params)} />;
   }
-
-  const user = data?.consultation.user;
 
   if (loading) return <Loading />;
 

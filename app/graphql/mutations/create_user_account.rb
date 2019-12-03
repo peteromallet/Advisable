@@ -111,6 +111,7 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
       raise ApiError::InvalidRequest.new("resourceInvalid", user.errors.full_messages.first)
     end
 
+    user.save
     user
   end
 
@@ -122,6 +123,7 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
       raise ApiError::InvalidRequest.new("resourceInvalid", client.errors.full_messages.first)
     end
 
+    client.save
     client
   end
 
