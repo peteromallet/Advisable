@@ -97,6 +97,7 @@ class Types::SpecialistType < Types::BaseType
   field :skills, [Types::SpecialistSkillType, null: true], null: true do
     description "A list of skills that the specialist possesses"
     argument :project_skills, Boolean, required: false
+    argument :limit, Int, required: false
   end
 
   # Specialist can have skills from multiple places:
@@ -106,7 +107,7 @@ class Types::SpecialistType < Types::BaseType
   # - Skills associated to off platform projects they have added
   # By default the skills field will only show direct skills, however, you can
   # include project skills by specifying the project_skills argument.
-  def skills(project_skills: false)
+  def skills(project_skills: false, limit: nil)
     records = begin
       if project_skills
         (
@@ -119,7 +120,8 @@ class Types::SpecialistType < Types::BaseType
       end
     end
 
-    records.map do |skill|
+    sorted = records.sort_by { |s| [s.projects_count, s.specialists_count] }.reverse!
+    sorted[0..(limit || sorted.count + 1) - 1].map do |skill|
       OpenStruct.new(specialist: object, skill: skill)
     end
   end
