@@ -5,15 +5,23 @@ class Airtable::Consultation < Airtable::Base
   sync_with ::Consultation
   sync_column 'Reason For Consultation', to: :topic
   sync_column 'Consultation Status', to: :status
-  sync_column 'Skills', to: :skills
   sync_association 'Specialist', to: :specialist
-  sync_association 'Client Contact', to: :client_contact
+  sync_association 'Skill', to: :skill
+
+  sync_data do |consultation|
+    user_id = fields['Client Contact'].try(:first)
+    if user_id
+      user = ::User.find_by_airtable_id(user_id)
+      user = Airtable::ClientContact.find(user_id).sync if user.nil?
+      consultation.user = user
+    end
+  end
 
   push_data do |consultation|
     self['Specialist'] = [consultation.specialist.try(:airtable_id)].compact
     self['Client Contact'] = [consultation.user.try(:airtable_id)].compact
     self['Reason For Consultation'] = consultation.topic
-    self['Skills'] = [consultation.skill.try(:airtable_id)].compact
+    self['Skill'] = [consultation.skill.try(:airtable_id)].compact
     self['Consultation Status'] = consultation.status
   end
 end
