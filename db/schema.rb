@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_28_143611) do
+ActiveRecord::Schema.define(version: 2019_12_03_100122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -580,6 +580,7 @@ ActiveRecord::Schema.define(version: 2019_11_28_143611) do
     t.boolean "bank_transfers_enabled", default: false
     t.string "billing_email"
     t.boolean "payments_setup", default: false
+    t.string "time_zone"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"

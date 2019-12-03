@@ -39,7 +39,7 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
       status: "Applied",
       specialist: specialist
     })
-    application.sync_to_airtable
+    application.sync_to_airtable({ "Source" => "consultation-request" })
     application
   end
 

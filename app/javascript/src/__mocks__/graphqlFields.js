@@ -151,6 +151,7 @@ export const specialist = (fields = {}) => {
       hourlyRate: 45,
       numberOfProjects: null,
       primarilyFreelance: null,
+      phoneNumber: null,
       createdAt: new Date().toISOString(),
       city: "Dublin",
       reviewsCount: 0,
@@ -270,6 +271,23 @@ export const consultation = (fields = {}) => {
   );
 };
 
+export const interview = (fields = {}) => {
+  return merge(
+    {
+      __typename: "Inerview",
+      id: uniqueId("int"),
+      airtableId: uniqueId("rec"),
+      availability: [],
+      timeZone: "Dublin/Ireland",
+      status: "Call Requested",
+      startsAt: null,
+      application: null,
+      user: null,
+    },
+    fields
+  );
+};
+
 export default {
   user,
   task,
@@ -277,6 +295,7 @@ export default {
   country,
   project,
   industry,
+  interview,
   application,
   specialist,
   consultation,

@@ -7,7 +7,7 @@ import SelectTime from "./SelectTime";
 import InterviewConfirmed from "./InterviewConfirmed";
 import MoreTimesRequested from "./MoreTimesRequested";
 import ConfirmInterviewRequest from "./ConfirmInterviewRequest";
-import FETCH_INTERVIEW from "./fetchInterview.graphql";
+import FETCH_INTERVIEW from "./fetchInterview.js";
 import NotFound from "src/views/NotFound";
 import { Container } from "./styles";
 
@@ -28,7 +28,7 @@ class InterviewRequest extends Component {
           const { interview } = query.data;
 
           if (!interview) {
-            return <NotFound />
+            return <NotFound />;
           }
 
           return (

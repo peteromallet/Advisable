@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import Text from "src/components/Text";
 import Icon from "src/components/Icon";
 import Heading from "src/components/Heading";
-import illustration from "./illustration";
+import illustration from "./illustration.png";
 import { Centered, Event } from "./styles";
 
 export default ({ clientName, startsAt, timeZone }) => {

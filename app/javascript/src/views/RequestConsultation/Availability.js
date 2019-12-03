@@ -43,6 +43,7 @@ const Availability = ({ nextStep, previousStepURL }) => {
         input: {
           id: user.id,
           availability: availability,
+          timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         },
       },
     });
@@ -84,7 +85,7 @@ const Availability = ({ nextStep, previousStepURL }) => {
         {availability.length < 6 && (
           <Box
             p="xs"
-            mt="xs"
+            mb="s"
             fontSize="s"
             bg="neutral.0"
             display="flex"

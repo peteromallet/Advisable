@@ -13,7 +13,8 @@ const ISO_FORMAT = "YYYY-MM-DDTHH:mm:ss[Z]";
 
 class SelectTime extends Component {
   state = {
-    timeZone: this.props.timeZone
+    timeZone:
+      this.props.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone,
   };
 
   render() {
