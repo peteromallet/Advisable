@@ -153,7 +153,6 @@ export const Hour = styled.span`
 export const TimeCell = styled.div`
   padding: 2px;
   position: relative;
-  touch-action: none;
   height: ${DESKTOP_CELL_HEIGHT}px;
   border-bottom: 1px solid #DFE2EC;
   border-left: 1px solid #dfe2ec;

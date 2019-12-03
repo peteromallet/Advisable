@@ -6,6 +6,7 @@ class Types::User < Types::BaseType
   field :last_name, String, null: true
   field :title, String, null: true
   field :company_name, String, null: true
+  field :time_zone, String, null: true
   field :projects, [Types::ProjectType], null: true
   field :confirmed, Boolean, null: false
   field :availability, [GraphQL::Types::ISO8601DateTime], null: false do

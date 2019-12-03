@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_14_173537) do
+ActiveRecord::Schema.define(version: 2019_12_03_100122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,6 +174,25 @@ ActiveRecord::Schema.define(version: 2019_11_14_173537) do
     t.datetime "updated_at", null: false
     t.string "domain"
     t.index ["airtable_id"], name: "index_clients_on_airtable_id"
+  end
+
+  create_table "consultations", force: :cascade do |t|
+    t.string "uid"
+    t.bigint "specialist_id", null: false
+    t.bigint "user_id", null: false
+    t.string "status"
+    t.string "topic"
+    t.bigint "skill_id"
+    t.string "airtable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "interview_id"
+    t.index ["airtable_id"], name: "index_consultations_on_airtable_id"
+    t.index ["interview_id"], name: "index_consultations_on_interview_id"
+    t.index ["skill_id"], name: "index_consultations_on_skill_id"
+    t.index ["specialist_id"], name: "index_consultations_on_specialist_id"
+    t.index ["uid"], name: "index_consultations_on_uid"
+    t.index ["user_id"], name: "index_consultations_on_user_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -561,6 +580,7 @@ ActiveRecord::Schema.define(version: 2019_11_14_173537) do
     t.boolean "bank_transfers_enabled", default: false
     t.string "billing_email"
     t.boolean "payments_setup", default: false
+    t.string "time_zone"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"
@@ -602,6 +622,10 @@ ActiveRecord::Schema.define(version: 2019_11_14_173537) do
   add_foreign_key "client_calls", "users"
   add_foreign_key "client_users", "clients"
   add_foreign_key "client_users", "users"
+  add_foreign_key "consultations", "interviews"
+  add_foreign_key "consultations", "skills"
+  add_foreign_key "consultations", "specialists"
+  add_foreign_key "consultations", "users"
   add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "users"
   add_foreign_key "matches", "projects"

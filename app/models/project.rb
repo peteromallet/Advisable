@@ -6,7 +6,7 @@ class Project < ApplicationRecord
   has_many :reviews, as: :project
   has_many :project_skills, as: :project
   has_many :skills, through: :project_skills
-  validates :service_type, inclusion: { in: %w(Assisted Self-Service) }, allow_nil: true
+  validates :service_type, inclusion: { in: %w(Assisted Self-Service Consultation) }, allow_nil: true
   belongs_to :user, required: false
   validates :name, presence: true
 
