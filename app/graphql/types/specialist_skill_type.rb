@@ -9,11 +9,11 @@ class Types::SpecialistSkillType < Types::BaseType
   field :verified, Boolean, null: false
 
   def id
-    object.skill.uid
+    skill.uid
   end
 
   def name
-    object.skill.name
+    skill.name
   end
 
   def verified

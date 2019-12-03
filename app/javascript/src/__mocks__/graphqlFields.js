@@ -11,6 +11,7 @@ export const user = (fields = {}) => {
       email: "test@test.com",
       airtableId: "airtableid",
       confirmed: true,
+      availability: [],
       companyName: "Test Corp",
       completedTutorials: [],
       talkSignature: "1234",
@@ -150,6 +151,7 @@ export const specialist = (fields = {}) => {
       hourlyRate: 45,
       numberOfProjects: null,
       primarilyFreelance: null,
+      phoneNumber: null,
       createdAt: new Date().toISOString(),
       city: "Dublin",
       reviewsCount: 0,
@@ -244,11 +246,46 @@ export const offPlatformProject = (fields = {}) => {
 };
 
 export const industry = (fields = {}) => {
-  return merge({
-    __typename: "Industry",
-    id: uniqueId("industry"),
-    name: "Industry",
-  });
+  return merge(
+    {
+      __typename: "Industry",
+      id: uniqueId("industry"),
+      name: "Industry",
+    },
+    fields
+  );
+};
+
+export const consultation = (fields = {}) => {
+  return merge(
+    {
+      __typename: "Consultation",
+      id: uniqueId("con"),
+      status: "Request Started",
+      topic: "Consultation topic",
+      user: null,
+      specialist: null,
+      interview: null,
+    },
+    fields
+  );
+};
+
+export const interview = (fields = {}) => {
+  return merge(
+    {
+      __typename: "Inerview",
+      id: uniqueId("int"),
+      airtableId: uniqueId("rec"),
+      availability: [],
+      timeZone: "Dublin/Ireland",
+      status: "Call Requested",
+      startsAt: null,
+      application: null,
+      user: null,
+    },
+    fields
+  );
 };
 
 export default {
@@ -258,7 +295,10 @@ export default {
   country,
   project,
   industry,
+  interview,
   application,
   specialist,
+  consultation,
+  specialistSkill,
   offPlatformProject,
 };

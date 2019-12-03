@@ -10,6 +10,7 @@ breakpoints.xl = breakpoints[3];
 
 // Spacing
 const space = [0, 4, 8, 16, 20, 32, 40, 60, 80, 100];
+space.none = space[0];
 space.xxs = space[1];
 space.xs = space[2];
 space.s = space[3];

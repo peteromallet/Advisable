@@ -11,4 +11,9 @@ class Types::Interview < Types::BaseType
   def id
     object.airtable_id
   end
+
+  def time_zone
+    return object.time_zone if object.time_zone.present?
+    object.user.try(:time_zone)
+  end
 end

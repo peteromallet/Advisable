@@ -133,9 +133,7 @@ class Types::QueryType < Types::BaseType
   end
 
   def specialist(id: )
-    specialist = Specialist.find_by_uid(id)
-    specialist = Specialist.find_by_airtable_id!(id) if specialist.nil?
-    specialist
+    Specialist.find_by_uid_or_airtable_id!(id)
   end
 
   field :industries, [Types::IndustryType], null: false
@@ -200,5 +198,13 @@ class Types::QueryType < Types::BaseType
       industry: industry,
       company_type: company_type
     )
+  end
+
+  field :consultation, Types::ConsultationType, null: true do
+    argument :id, ID, required: true
+  end
+
+  def consultation(id:)
+    Consultation.find_by_uid_or_airtable_id!(id)
   end
 end

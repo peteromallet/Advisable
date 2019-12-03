@@ -1,3 +1,4 @@
+// DEPRECATED: Use RoundedButton instead.
 import React from "react";
 import Icon from "../Icon";
 import { Button as ButtonStyles, ButtonText, Loading, Dot } from "./styles";
