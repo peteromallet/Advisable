@@ -1,15 +1,12 @@
 import sortBy from "lodash/sortBy";
 import filter from "lodash/filter";
 import moment from "moment-timezone";
-import { Link } from "react-router-dom";
 import React, { Fragment, Component } from "react";
 import Text from "src/components/Text";
 import Back from "src/components/Back";
 import Heading from "src/components/Heading";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
 import { Times, Time } from "./styles";
-
-const ISO_FORMAT = "YYYY-MM-DDTHH:mm:ss[Z]";
 
 class SelectTime extends Component {
   state = {
