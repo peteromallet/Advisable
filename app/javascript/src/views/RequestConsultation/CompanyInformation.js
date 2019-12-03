@@ -70,7 +70,7 @@ const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
   };
 
   return (
-    <>
+    <Box padding={["m", "l"]}>
       <Text fontSize="s" fontWeight="medium" mb="xs" color="neutral.5">
         Step 2
       </Text>
@@ -148,7 +148,7 @@ const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
           </Form>
         )}
       </Formik>
-    </>
+    </Box>
   );
 };
 

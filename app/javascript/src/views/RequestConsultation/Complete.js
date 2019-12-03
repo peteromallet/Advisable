@@ -8,7 +8,7 @@ const Complete = () => {
   const email = location.state.email;
 
   return (
-    <Box textAlign="center" maxWidth={500} mx="auto" py="m">
+    <Box textAlign="center" maxWidth={500} mx="auto" py="xxl">
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}

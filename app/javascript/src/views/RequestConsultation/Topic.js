@@ -38,7 +38,7 @@ const Topic = ({ data, previousStepURL, nextStep }) => {
   };
 
   return (
-    <>
+    <Box padding={["m", "l"]}>
       <Text fontSize="s" fontWeight="medium" mb="xs" color="neutral.5">
         Step 4
       </Text>
@@ -88,7 +88,7 @@ const Topic = ({ data, previousStepURL, nextStep }) => {
           </Form>
         )}
       </Formik>
-    </>
+    </Box>
   );
 };
 

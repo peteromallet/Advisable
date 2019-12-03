@@ -13,7 +13,7 @@ import {
   generatePath,
 } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Box, Card } from "@advisable/donut";
+import { Box, Card, useTheme, useBreakpoint } from "@advisable/donut";
 import NotFound from "../NotFound";
 import Loading from "../../components/Loading";
 import Topic from "./Topic";
@@ -25,12 +25,21 @@ import Sidebar from "./Sidebar";
 import Complete from "./Complete";
 
 const RequestConsultation = () => {
+  const theme = useTheme();
+  const params = useParams();
   const history = useHistory();
   const location = useLocation();
-  const params = useParams();
   const { data, loading, error } = useQuery(fetchSpecialist, {
     variables: { id: params.specialistId },
   });
+
+  const mediumAndUp = useBreakpoint("mUp");
+  React.useEffect(() => {
+    if (!mediumAndUp) {
+      theme.updateTheme({ background: "white" });
+    }
+    return () => theme.updateTheme({ background: "default" });
+  }, []);
 
   const queryParams = queryString.parse(location.search);
 
@@ -115,15 +124,15 @@ const RequestConsultation = () => {
 
   return (
     <Box
-      width="94%"
+      width="100%"
+      display="flex"
       maxWidth={960}
       margin="0 auto"
-      py={["s", "m", "l"]}
-      display="flex"
+      py={["none", "m", "l"]}
     >
       <Box
-        width={250}
         mr="l"
+        width={250}
         flexShrink={0}
         display={{ _: "none", l: "block" }}
       >
@@ -145,22 +154,25 @@ const RequestConsultation = () => {
                       type: "spring",
                     }}
                     initial={{
-                      y: 100,
+                      y: mediumAndUp ? 100 : 0,
+                      x: mediumAndUp ? 0 : 100,
                       opacity: 0,
                       position: "static",
                     }}
                     animate={{
                       y: 0,
+                      x: 0,
                       opacity: 1,
                       position: "static",
                     }}
                     exit={{
-                      y: -80,
+                      y: mediumAndUp ? -80 : 0,
+                      x: mediumAndUp ? 0 : -80,
                       opacity: 0,
                       position: "absolute",
                     }}
                   >
-                    <Card padding={["m", "l"]} elevation="m">
+                    <Card elevation={["none", "m", "m"]}>
                       <step.component
                         {...route}
                         data={data}
