@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_03_100122) do
+ActiveRecord::Schema.define(version: 2019_12_04_074807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,8 +178,8 @@ ActiveRecord::Schema.define(version: 2019_12_03_100122) do
 
   create_table "consultations", force: :cascade do |t|
     t.string "uid"
-    t.bigint "specialist_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "specialist_id"
+    t.bigint "user_id"
     t.string "status"
     t.string "topic"
     t.bigint "skill_id"
@@ -460,6 +460,8 @@ ActiveRecord::Schema.define(version: 2019_12_03_100122) do
     t.string "uid"
     t.bigint "original_id"
     t.boolean "active"
+    t.integer "projects_count", default: 0
+    t.integer "specialists_count", default: 0
     t.index ["original_id"], name: "index_skills_on_original_id"
   end
 
