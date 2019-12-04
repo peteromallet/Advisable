@@ -101,13 +101,14 @@ class Airtable::Base < Airrecord::Table
         if self.class.after_sync_block
           instance_exec(model, &self.class.after_sync_block)
         end
-      else
-        message = "Failed to sync #{record_type} #{id} \n#{model.errors.full_messages}"
-        Rails.logger.warn(message)
-        report.failed(id, record_type, model.errors.full_messages) if report
+
+        return model
       end
 
-      model
+      message = "Failed to sync #{record_type} #{id} \n#{model.errors.full_messages}"
+      Rails.logger.warn(message)
+      report.failed(id, record_type, model.errors.full_messages) if report
+      return nil
     end
   end
 
