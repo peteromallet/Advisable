@@ -38,7 +38,7 @@ export const StyledCheckboxToggle = styled.div`
 `;
 
 export const StyledCheckboxContent = styled.div`
-  padding-left: 8px;
+  padding-left: 12px;
 `;
 
 export const StyledCheckboxText = styled.p`

@@ -11,7 +11,7 @@ export const StyledBackdrop = styled(motion.div)`
   bottom: 0;
   z-index: 50;
   position: fixed;
-  background: ${rgba(theme.colors.neutral[2], 0.8)};
+  background: ${rgba(theme.colors.neutral[2], 0.9)};
   ${"" /* Override the display prop that reakit tries to set so that we can handle exit animations */}
   display: block !important;
   pointer-events: ${props => (props.hidden ? "none" : "all")};
@@ -43,7 +43,7 @@ export const StyledWindow = styled(motion.div)`
   margin: auto;
   background: white;
   transform-style: preserve-3d;
-  max-width: ${props => props.width || "500px"};
+  max-width: ${props => props.width || 500}px;
   box-shadow: 0 8px 30px ${rgba(theme.colors.neutral[9], 0.1)};
   ${props => props.isMobile && StyledWindowMobile};
 `;

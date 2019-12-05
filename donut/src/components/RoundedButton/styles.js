@@ -50,17 +50,21 @@ export const StyledButton = styled.button`
 
   border: none;
   color: white;
+  height: 48px;
   outline: none;
+  line-height: 1;
   font-size: 16px;
+  padding: 0 20px;
   appearance: none;
   font-weight: 500;
   user-select: none;
-  line-height: 16px;
   position: relative;
   border-radius: 30px;
   align-items: center;
+  white-space: nowrap;
   display: inline-flex;
   font-family: poppins;
+  vertical-align: middle;
   justify-content: center;
   letter-spacing: -0.01em;
   background: ${theme.colors.blue[5]};
@@ -68,9 +72,7 @@ export const StyledButton = styled.button`
 
   @media (min-width: ${theme.breakpoints.s}) {
     height: 38px;
-    line-height: 38px;
     font-size: 15px;
-    padding: 0 20px;
   }
 
   svg {

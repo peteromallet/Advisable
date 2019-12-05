@@ -34,25 +34,21 @@ const References = ({ data }) => {
           Previous Projects
         </Text>
       </Padding>
-      <Padding bottom="m">
-        <Text fontSize="s" lineHeight="s" color="neutral.7">
-          Previous projects are one of the most effective ways to validate your
-          skills and experience. Advisable uses them to decide who to invite to
-          our platform, which projects to invite them to and gives you the
-          opportunity to share them with clients when you’re applying for
-          projects
-        </Text>
-      </Padding>
+      <Text fontSize="s" lineHeight="s" color="neutral.7" mb="l">
+        Previous projects are one of the most effective ways to validate your
+        skills and experience. Advisable uses them to decide who to invite to
+        our platform, which projects to invite them to and gives you the
+        opportunity to share them with clients when you’re applying for projects
+      </Text>
 
       <Padding bottom="xl">
-        <RoundedButton mr="m" onClick={handleAddProject}>
+        <RoundedButton mr="xs" onClick={handleAddProject}>
           Add a previous project
         </RoundedButton>
         <RoundedButton
           onClick={modal.show}
           as={Modal.Disclose}
-          // prefix={<Icon icon="plus" />}
-          prefix={<Box css="width: 20px; height: 20px;" bg="red.5" />}
+          prefix={<Icon icon="plus" />}
         >
           Add a previous project
         </RoundedButton>
