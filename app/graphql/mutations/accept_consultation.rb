@@ -27,6 +27,7 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
       status: "Project Created",
       service_type: "Consultation",
       primary_skill: consultation.skill.name,
+      owner: "peteromalley",
       name: "#{user.company_name} - #{consultation.skill.name}"
     })
     project.sync_to_airtable
