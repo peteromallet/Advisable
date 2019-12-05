@@ -19,8 +19,8 @@ const Send = ({ application }) => {
         <Padding bottom="l">
           <Text size="s" style={{ maxWidth: 380, margin: "0 auto" }}>
             Your proposal has been sent to{" "}
-            {application.project.user.companyName}. Some text about what the
-            freelancer should expect to happen next.
+            {application.project.user.companyName}. We'll try to get a response
+            from them ASAP.
           </Text>
         </Padding>
         <Padding bottom="m">
@@ -31,4 +31,4 @@ const Send = ({ application }) => {
   );
 };
 
-export default Send
+export default Send;
