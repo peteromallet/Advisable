@@ -51,14 +51,12 @@ export const StyledButton = styled.button`
   border: none;
   color: white;
   outline: none;
-  line-height: 1;
   font-size: 16px;
   appearance: none;
   font-weight: 500;
   user-select: none;
   line-height: 16px;
   position: relative;
-  padding: 16px 20px;
   border-radius: 30px;
   align-items: center;
   display: inline-flex;
@@ -69,8 +67,10 @@ export const StyledButton = styled.button`
   transition: background 100ms, color 100ms;
 
   @media (min-width: ${theme.breakpoints.s}) {
+    height: 38px;
+    line-height: 38px;
     font-size: 15px;
-    padding: 10px 20px;
+    padding: 0 20px;
   }
 
   svg {

@@ -1,16 +1,25 @@
 import * as React from "react";
 import { get } from "lodash";
 import { graphql } from "react-apollo";
-import { Text } from "@advisable/donut";
+import {
+  Box,
+  Text,
+  RoundedButton,
+  Modal,
+  useModal,
+  Icon,
+} from "@advisable/donut";
 import Button from "../../../components/Button";
 import Loading from "../../../components/Loading";
 import Padding from "../../../components/Spacing/Padding";
 import PreviousProjects from "../../../components/PreviousProjects";
+import PreviousProjectForm from "../../../components/PreviousProjectForm";
 import AddPreviousProjectModal from "../../../components/AddPreviousProjectModal";
 import PREVIOUS_PROJECTS from "./previousProjects";
 
 const References = ({ data }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
+  const modal = useModal();
 
   if (data.loading) return <Loading />;
 
@@ -36,10 +45,19 @@ const References = ({ data }) => {
       </Padding>
 
       <Padding bottom="xl">
-        <Button styling="primary" onClick={handleAddProject}>
+        <RoundedButton mr="m" onClick={handleAddProject}>
           Add a previous project
-        </Button>
+        </RoundedButton>
+        <RoundedButton
+          onClick={modal.show}
+          as={Modal.Disclose}
+          // prefix={<Icon icon="plus" />}
+          prefix={<Box css="width: 20px; height: 20px;" bg="red.5" />}
+        >
+          Add a previous project
+        </RoundedButton>
       </Padding>
+      <PreviousProjectForm modal={modal} />
       <AddPreviousProjectModal
         isOpen={modalOpen}
         specialistId={data.viewer.airtableId}
