@@ -96,6 +96,11 @@ class Airtable::Project < Airtable::Base
     self['Company Type Experience Required'] = 'Yes' if project.company_type_experience_required
     self['Company Type Experience Required'] = 'No' if project.company_type_experience_required == false
     self['Project Status'] = project.sales_status
+
+    if project.owner
+      owner = SalesPerson.find_by_username(project.owner)
+      self['Owner'] = [owner.try(:airtable_id)].compact
+    end
   end
 
   private
