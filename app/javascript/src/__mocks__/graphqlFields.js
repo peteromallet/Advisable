@@ -15,6 +15,7 @@ export const user = (fields = {}) => {
       companyName: "Test Corp",
       completedTutorials: [],
       talkSignature: "1234",
+      timeZone: "Europe/Dublin",
       createdAt: new Date().toISOString(),
       paymentMethod: null,
       paymentsSetup: true,
