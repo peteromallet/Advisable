@@ -1,4 +1,5 @@
 class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
+  # TODO: Eventually the specialist ID should be removed and this mutation should expect a specialist to be logged in.
   argument :specialist_id, ID, required: true
   argument :client_name, String, required: true
   argument :confidential, Boolean, required: false

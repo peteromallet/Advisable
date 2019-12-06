@@ -6,10 +6,9 @@ import {
   Text,
   RoundedButton,
   Modal,
-  useModal,
+  useRoutedModal,
   Icon,
 } from "@advisable/donut";
-import Button from "../../../components/Button";
 import Loading from "../../../components/Loading";
 import Padding from "../../../components/Spacing/Padding";
 import PreviousProjects from "../../../components/PreviousProjects";
@@ -19,7 +18,7 @@ import PREVIOUS_PROJECTS from "./previousProjects";
 
 const References = ({ data }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
-  const modal = useModal();
+  const modal = useRoutedModal("/profile/references/new_project/client");
 
   if (data.loading) return <Loading />;
 
@@ -53,7 +52,9 @@ const References = ({ data }) => {
           Add a previous project
         </RoundedButton>
       </Padding>
+
       <PreviousProjectForm modal={modal} />
+
       <AddPreviousProjectModal
         isOpen={modalOpen}
         specialistId={data.viewer.airtableId}

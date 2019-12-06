@@ -10,6 +10,7 @@ import {
 import { AnimatePresence } from "framer-motion";
 import { StyledBackdrop, StyledWindowContainer, StyledWindow } from "./styles";
 import useBreakpoint from "../../hooks/useBreakpoint";
+export { default as useRoutedModal } from "./useRoutedModal";
 
 export const useModal = useDialogState;
 
@@ -60,7 +61,7 @@ const Modal = ({ modal, label, children, backdrop, ...props }) => {
             <StyledWindow
               {...props}
               isMobile={isMobile}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              transition={{ type: "spring", damping: 35, stiffness: 100 }}
               initial={{
                 y: 80,
                 opacity: 0,
@@ -75,9 +76,9 @@ const Modal = ({ modal, label, children, backdrop, ...props }) => {
               }}
               exit={{
                 y: 80,
+                scale: 1,
                 opacity: 0,
-                rotateX: isMobile ? 0 : -15,
-                scale: isMobile ? 1 : 0.9,
+                rotateX: 0,
               }}
             >
               {children}
