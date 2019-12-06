@@ -5,6 +5,7 @@ export default gql`
     updateAvailability(input: $input) {
       user {
         id
+        timeZone
         availability
       }
     }

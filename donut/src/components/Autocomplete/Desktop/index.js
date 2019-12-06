@@ -78,69 +78,73 @@ const AutocompleteDesktop = props => {
             initialInputValue={props.multiple ? undefined : value}
             onStateChange={handleStateChange(popper)}
           >
-            {downshift => (
-              <AutocompleteStyles {...downshift.getRootProps()}>
-                <Label
-                  as="label"
-                  fontSize="s"
-                  color="neutral.8"
-                  fontWeight="medium"
-                  {...downshift.getLabelProps()}
-                >
-                  {label}
-                </Label>
-                {description && (
-                  <Text
-                    mb="s"
-                    mt="-4px"
-                    fontSize="xs"
-                    lineHeight="xs"
-                    color="neutral.6"
+            {downshift => {
+              const inputProps = {
+                ...downshift.getInputProps({
+                  ref: inputRef,
+                  placeholder,
+                  onBlur,
+                  onFocus: downshift.openMenu,
+                  onClick: downshift.openMenu,
+                }),
+              };
+
+              return (
+                <AutocompleteStyles {...downshift.getRootProps()}>
+                  <Label
+                    as="label"
+                    fontSize="s"
+                    color="neutral.8"
+                    fontWeight="medium"
+                    {...downshift.getLabelProps()}
                   >
-                    {description}
-                  </Text>
-                )}
-                <Reference>
-                  {popperRef => (
-                    <>
-                      <div ref={popperRef.ref}>
-                        <Input
-                          {...downshift.getInputProps({
-                            ref: inputRef,
-                            placeholder,
-                            onBlur,
-                            onFocus: downshift.openMenu,
-                            onClick: downshift.openMenu,
-                          })}
-                        />
-                      </div>
-                      {multiple && (
-                        <Tags>
-                          {downshift.selected.map(item => (
-                            <Tag
-                              key={item.value}
-                              onRemove={() => downshift.remove(item)}
-                            >
-                              {item.label}
-                            </Tag>
-                          ))}
-                        </Tags>
-                      )}
-                    </>
+                    {label}
+                  </Label>
+                  {description && (
+                    <Text
+                      mb="s"
+                      mt="-4px"
+                      fontSize="xs"
+                      lineHeight="xs"
+                      color="neutral.6"
+                    >
+                      {description}
+                    </Text>
                   )}
-                </Reference>
-                {error && <FieldError>{error}</FieldError>}
-                <Menu
-                  max={props.max}
-                  popper={popper}
-                  listRef={listRef}
-                  isMax={props.isMax}
-                  width={inputSize.width}
-                  downshift={downshift}
-                  options={filteredOptions}
-                />
-              </AutocompleteStyles>
-            )}
+                  <Reference>
+                    {popperRef => (
+                      <>
+                        <div ref={popperRef.ref}>
+                          <Input {...inputProps} value={inputProps.value} />
+                        </div>
+                        {multiple && (
+                          <Tags>
+                            {downshift.selected.map(item => (
+                              <Tag
+                                key={item.value}
+                                onRemove={() => downshift.remove(item)}
+                              >
+                                {item.label}
+                              </Tag>
+                            ))}
+                          </Tags>
+                        )}
+                      </>
+                    )}
+                  </Reference>
+                  {error && <FieldError>{error}</FieldError>}
+                  <Menu
+                    max={props.max}
+                    popper={popper}
+                    listRef={listRef}
+                    isMax={props.isMax}
+                    width={inputSize.width}
+                    downshift={downshift}
+                    options={filteredOptions}
+                  />
+                </AutocompleteStyles>
+              );
+            }}
           </Downshift>
         )}
       </Popper>

@@ -12,6 +12,7 @@ export default gql`
       lastName
       companyName
       availability
+      timeZone
     }
     specialist {
       id
