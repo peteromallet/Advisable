@@ -74,14 +74,6 @@ const renderApp = (config = defaultConfig) => {
     removeListener: () => {},
   });
 
-  Object.defineProperty(window, "localStorage", {
-    value: {
-      setItem: jest.fn(),
-      getItem: jest.fn(),
-      clear: jest.fn(),
-    },
-  });
-
   global.IntersectionObserver = class IntersectionObserver {
     constructor() {}
 
