@@ -4,6 +4,6 @@ module AuthenticationHelper
   def authenticate_as(user)
     visit '/login'
     jwt = Accounts::Jwt.call(user)
-    Capybara.execute_script("localStorage.setItem('authToken', '#{jwt}')")
+    Capybara.current_session.driver.browser.manage.add_cookie(:name => "authToken", :value => jwt)
   end
 end

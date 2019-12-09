@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { fireEvent, cleanup } from "@testing-library/react";
 import wait from "waait";
 import renderApp from "../../../testHelpers/renderApp";
@@ -5,6 +6,11 @@ import VIEWER from "../../../graphql/queries/viewer";
 import LOGIN from "../login";
 
 afterEach(cleanup);
+
+jest.mock("js-cookie", () => ({
+  get: jest.fn(),
+  set: jest.fn(),
+}));
 
 test("User can login", async () => {
   let { findByLabelText } = renderApp({
@@ -51,8 +57,5 @@ test("User can login", async () => {
   let login = await findByLabelText("Login");
   fireEvent.click(login);
   await wait(1000);
-  expect(window.localStorage.setItem).toHaveBeenCalledWith(
-    "authToken",
-    "jwt1234"
-  );
+  expect(Cookies.set).toHaveBeenCalledWith("authToken", "jwt1234");
 });
