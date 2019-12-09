@@ -2,6 +2,7 @@ import React from "react";
 import { Box } from "@advisable/donut";
 import { useQuery } from "react-apollo";
 import { useParams, Redirect } from "react-router-dom";
+import NotFound from "../NotFound";
 import Loading from "../../components/Loading";
 import GET_CONSULTATION from "./getConsultation";
 import PendingConsultation from "./PendingConsultation";
@@ -14,6 +15,10 @@ const Consultation = () => {
   });
 
   if (loading) return <Loading />;
+
+  if (error?.graphQLErrors[0].extensions.code === "notFound") {
+    return <NotFound>Could not find the consultation "{id}"</NotFound>;
+  }
 
   const status = data.consultation.status;
 
