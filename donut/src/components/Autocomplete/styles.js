@@ -34,6 +34,12 @@ export const Input = styled.input`
   }
 `;
 
+export const StyledMenuContainer = styled.div`
+  &[data-placement="bottom"] {
+    padding-top: 8px;
+  }
+`;
+
 export const Menu = styled.div`
   width: 100%;
   background: white;
@@ -116,30 +122,15 @@ export const MobileContainerSearch = styled.div`
 
 export const Tags = styled.div`
   display: block;
-  margin-top: 4px;
-`;
-
-const primaryTagStyles = css`
-  color: white;
-  background: ${theme.colors.blue[7]};
-`;
-
-export const Tag = styled.div`
-  height: 32px;
-  margin-top: 8px;
-  margin-right: 8px;
-  align-items: center;
-  border-radius: 16px;
-  display: inline-flex;
-  color: ${theme.colors.blue[7]};
-  background: ${theme.colors.blue[0]};
-  ${props => props.isPrimary && primaryTagStyles};
 `;
 
 export const TagName = styled.div`
   padding: 0 8px;
   font-size: 14px;
   font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:first-child {
     padding-left: 16px;
@@ -176,7 +167,7 @@ export const Primary = styled.button`
 export const RemoveTag = styled.button`
   opacity: 0.6;
   padding: 0;
-  width: 30px;
+  width: 36px;
   height: 100%;
   border: none;
   outline: none;
@@ -185,6 +176,7 @@ export const RemoveTag = styled.button`
   display: inline-flex;
   align-items: center;
   cursor: pointer;
+  color: ${theme.colors.blue[7]};
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
   background: ${rgba(theme.colors.blue[1], 0.6)};
@@ -192,6 +184,38 @@ export const RemoveTag = styled.button`
 
   &:hover {
     opacity: 1;
+  }
+`;
+
+export const Tag = styled.div`
+  height: 32px;
+  margin-top: 8px;
+  margin-right: 8px;
+  align-items: center;
+  border-radius: 16px;
+  display: inline-flex;
+  color: ${theme.colors.blue[7]};
+  background: ${theme.colors.blue[0]};
+  transition: background-color 300ms;
+  ${props => props.onClick && StyledClickableTag}
+  ${props => props.isPrimary && StyledPrimaryTag}
+`;
+
+const StyledClickableTag = css`
+  cursor: pointer;
+
+  &:hover ${Primary} {
+    color: ${theme.colors.neutral[4]};
+  }
+`;
+
+const StyledPrimaryTag = css`
+  color: white;
+  background: ${theme.colors.blue[7]};
+
+  ${RemoveTag} {
+    color: white;
+    background: rgba(255, 255, 255, 0.3);
   }
 `;
 

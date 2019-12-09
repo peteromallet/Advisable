@@ -6,6 +6,7 @@ export const stateChangeTypes = Downshift.stateChangeTypes;
 
 const DownshiftMulti = props => {
   const stateReducer = (state, changes) => {
+    console.log(changes.type);
     switch (changes.type) {
       case Downshift.stateChangeTypes.keyDownEnter:
       case Downshift.stateChangeTypes.clickItem:
@@ -22,22 +23,20 @@ const DownshiftMulti = props => {
 
   const removeItem = (item, downshift) => {
     const next = props.value.filter(i => i !== item.value);
+    props.onChange(next, downshift);
 
     if (props.onPrimaryChange && props.primary === item.value) {
       props.onPrimaryChange(next[0]);
     }
-
-    props.onChange(next, downshift);
   };
 
   const addSelectedItem = (item, downshift) => {
     const next = props.value.concat(item.value);
+    props.onChange(next, downshift);
 
     if (props.onPrimaryChange && props.primary === null) {
       props.onPrimaryChange(item.value);
     }
-
-    props.onChange(next, downshift);
   };
 
   const handleSelection = (selectedItem, downshift) => {
@@ -48,7 +47,7 @@ const DownshiftMulti = props => {
         addSelectedItem(selectedItem, downshift);
       }
     } else {
-      props.onChange(selectedItem, downshift);
+      props.onChange(selectedItem.value, downshift);
     }
   };
 

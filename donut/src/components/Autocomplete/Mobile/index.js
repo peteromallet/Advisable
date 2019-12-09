@@ -23,6 +23,7 @@ const AutocompleteMobile = props => {
     initalSelectedItem,
     primary,
     onPrimaryChange,
+    formatLabel,
   } = props;
 
   const [open, setOpen] = React.useState(false);
@@ -69,7 +70,7 @@ const AutocompleteMobile = props => {
               }
               onRemove={handleRemoveItem(item, props.value, onChange)}
             >
-              {item.label}
+              {formatLabel(item)}
             </Tag>
           ))}
         </Tags>
@@ -87,6 +88,7 @@ const AutocompleteMobile = props => {
           options={options}
           initalSelectedItem
           onChange={handleChange}
+          formatLabel={formatLabel}
         />
       )}
     </AutocompleteStyles>

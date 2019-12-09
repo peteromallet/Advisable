@@ -3,7 +3,7 @@ import { isArray } from "lodash";
 import { MenuItem as MenuItemStyles } from "./styles";
 
 const MenuItem = ({ index, data, style }) => {
-  const { items, getItemProps, highlightedIndex, selected } = data;
+  const { items, getItemProps, highlightedIndex, selected, formatLabel } = data;
   const item = items[index];
 
   let isSelected;
@@ -39,7 +39,7 @@ const MenuItem = ({ index, data, style }) => {
           />
         </svg>
       )}
-      {item.label}
+      {formatLabel(item)}
     </MenuItemStyles>
   );
 };
