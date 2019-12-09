@@ -69,6 +69,7 @@
     "text-mask-addons": "^3.8.0",
     "ts-loader": "^6.2.1",
     "typescript": "3.7.2",
+    "webpack-bundle-analyzer": "^3.6.0",
     "yup": "^0.27.0"
   },
   "devDependencies": {
@@ -86,7 +87,6 @@
     "jest-transform-graphql": "^2.1.0",
     "prettier": "^1.19.1",
     "waait": "^1.0.5",
-    "webpack-bundle-analyzer": "^3.6.0",
     "webpack-dev-server": "^3.7.2"
   },
   "scripts": {
