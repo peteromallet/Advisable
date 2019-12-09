@@ -1,5 +1,6 @@
 // Renders the login page
 import React from "react";
+import Cookies from "js-cookie";
 import get from "lodash/get";
 import { Formik } from "formik";
 import queryString from "query-string";
@@ -71,7 +72,7 @@ const Signup = ({ location, match }) => {
                       });
 
                       if (data.signup.token) {
-                        localStorage.setItem("authToken", data.signup.token);
+                        Cookies.set("authToken", data.signup.token);
                         let { from } = location.state || {
                           from: { pathname: "/" },
                         };

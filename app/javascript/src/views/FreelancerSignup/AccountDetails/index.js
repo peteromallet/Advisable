@@ -1,5 +1,6 @@
 import React from "react";
 import { get } from "lodash";
+import Cookies from "js-cookie";
 import { Formik, Form } from "formik";
 import queryString from "query-string";
 import { useMutation } from "react-apollo";
@@ -68,7 +69,7 @@ const AccountDetails = ({ specialist, history, location }) => {
       }
     } else {
       const token = data.createFreelancerAccount.token;
-      window.localStorage.setItem("authToken", token);
+      Cookies.set("authToken", token);
       history.replace("/freelancers/signup/confirm");
     }
   };

@@ -3,6 +3,7 @@
 // will redirect to the Login view.
 import React from "react";
 import { get } from "lodash";
+import Cookies from "js-cookie";
 import { Route, Redirect } from "react-router-dom";
 import PendingConfirmation from "./PendingConfirmation";
 import useViewer from "../../hooks/useViewer";
@@ -23,8 +24,8 @@ const AuthenticatedRoute = ({
       render={props => {
         // If there is no user then clear out any token and redirect immediately
         if (!viewer) {
+          Cookies.remove("authToken");
           window.sessionStorage.removeItem("authToken");
-          window.localStorage.removeItem("authToken");
 
           return (
             <Redirect

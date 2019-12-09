@@ -1,4 +1,5 @@
 // Renders the primary header for the app
+import Cookies from "js-cookie";
 import { Query } from "react-apollo";
 import { withRouter } from "react-router-dom";
 import React, { Fragment } from "react";
@@ -15,7 +16,7 @@ const Header = () => {
   const [navOpen, setNavOpen] = React.useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
+    Cookies.remove("authToken");
     sessionStorage.removeItem("authToken");
     window.location = "/login";
   };

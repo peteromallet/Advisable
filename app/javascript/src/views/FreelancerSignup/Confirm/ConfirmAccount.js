@@ -1,5 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
+import Cookies from "js-cookie";
+
 import { useMutation } from "react-apollo";
 import Loading from "../../../components/Loading";
 import VIEWER, { viewerFields } from "../../../graphql/queries/viewer";
@@ -59,7 +61,7 @@ const ConfirmAccount = ({ token, email, history }) => {
       notifications.notify("Failed to confirm your account. Please try again.");
       history.replace("/freelancers/signup/confirm");
     } else {
-      window.localStorage.setItem("authToken", data.confirmAccount.token);
+      Cookies.set("authToken", data.confirmAccount.token);
       window.location = "/freelancers/signup/preferences";
     }
   };

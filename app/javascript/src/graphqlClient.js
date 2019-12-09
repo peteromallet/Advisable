@@ -1,4 +1,5 @@
 import Rollbar from "rollbar";
+import Cookies from "js-cookie";
 import { ApolloLink } from "apollo-link";
 import { onError } from "apollo-link-error";
 import { ApolloClient } from "apollo-client";
@@ -27,7 +28,7 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token =
-    sessionStorage?.getItem("authToken") || localStorage?.getItem("authToken");
+    sessionStorage?.getItem("authToken") || Cookies.get("authToken");
   const additionalHeaders = {
     authorization: token ? `Bearer ${token}` : "",
   };
