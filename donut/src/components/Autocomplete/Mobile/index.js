@@ -21,6 +21,8 @@ const AutocompleteMobile = props => {
     error,
     description,
     initalSelectedItem,
+    primary,
+    onPrimaryChange,
   } = props;
 
   const [open, setOpen] = React.useState(false);
@@ -61,6 +63,10 @@ const AutocompleteMobile = props => {
           {selected.map(item => (
             <Tag
               key={item.value}
+              isPrimary={primary === item.value}
+              onSelectPrimary={
+                onPrimaryChange && (() => onPrimaryChange(item.value))
+              }
               onRemove={handleRemoveItem(item, props.value, onChange)}
             >
               {item.label}

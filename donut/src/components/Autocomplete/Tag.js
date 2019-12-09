@@ -1,11 +1,28 @@
 import React from "react";
-import { Tag as TagStyles, TagName, RemoveTag } from "./styles";
+import { Tag as TagStyles, TagName, RemoveTag, Primary } from "./styles";
 
-const Tag = ({ children, onRemove }) => {
+const Tag = ({ children, onRemove, isPrimary, onSelectPrimary }) => {
+  const removeRef = React.useRef(null);
+  const handleTagClick = e => {
+    if (e.target !== removeRef.current) {
+      onSelectPrimary();
+    }
+  };
+
   return (
-    <TagStyles>
+    <TagStyles isPrimary={isPrimary} onClick={handleTagClick}>
+      {onSelectPrimary && (
+        <Primary isPrimary={isPrimary} onClick={onSelectPrimary}>
+          <svg width="14" height="13" fill="none" viewBox="0 0 14 13">
+            <path
+              fill="currentColor"
+              d="M7 0l1.975 4.282 4.682.555-3.462 3.201.92 4.625L7 10.36l-4.114 2.303.918-4.625L.343 4.837l4.682-.555L7 0z"
+            ></path>
+          </svg>
+        </Primary>
+      )}
       <TagName>{children}</TagName>
-      <RemoveTag type="button" onClick={onRemove}>
+      <RemoveTag type="button" onClick={onRemove} ref={removeRef}>
         <svg
           width="12"
           height="13"

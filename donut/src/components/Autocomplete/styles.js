@@ -37,7 +37,7 @@ export const Input = styled.input`
 export const Menu = styled.div`
   width: 100%;
   background: white;
-  border-radius: 8px;
+  border-radius: 2px;
   max-height: 224px;
   overflow: hidden;
   top: calc(100% + 8px);
@@ -51,14 +51,15 @@ const highlightedItemStyles = css`
 `;
 
 export const MenuItem = styled.div`
-  height: 32px;
+  height: 36px;
   display: flex;
   cursor: pointer;
   padding: 0 12px;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   align-items: center;
-  color: ${theme.colors.neutral[7]};
+  letter-spacing: -0.015em;
+  color: ${theme.colors.neutral[8]};
 
   ${props => props.highlighted && highlightedItemStyles};
 
@@ -118,21 +119,58 @@ export const Tags = styled.div`
   margin-top: 4px;
 `;
 
+const primaryTagStyles = css`
+  color: white;
+  background: ${theme.colors.blue[7]};
+`;
+
 export const Tag = styled.div`
-  height: 28px;
-  display: inline-flex;
-  border-radius: 8px;
+  height: 32px;
   margin-top: 8px;
   margin-right: 8px;
   align-items: center;
+  border-radius: 16px;
+  display: inline-flex;
   color: ${theme.colors.blue[7]};
   background: ${theme.colors.blue[0]};
+  ${props => props.isPrimary && primaryTagStyles};
 `;
 
 export const TagName = styled.div`
   padding: 0 8px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
+
+  &:first-child {
+    padding-left: 16px;
+  }
+`;
+
+export const Primary = styled.button`
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-left: 4px;
+  appearance: none;
+  background: white;
+  border-radius: 50%;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  color: ${theme.colors.neutral[3]};
+
+  &:hover {
+    color: ${theme.colors.neutral[4]};
+  }
+
+  ${props =>
+    props.isPrimary &&
+    css`
+      color: ${theme.colors.blue[5]} !important;
+    `}
 `;
 
 export const RemoveTag = styled.button`
@@ -147,8 +185,8 @@ export const RemoveTag = styled.button`
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
   background: ${rgba(theme.colors.blue[1], 0.6)};
   transition: opacity 150ms;
 
