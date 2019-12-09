@@ -5,6 +5,8 @@ const typescript = require("./loaders/typescript");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 const version = require("./buildVersion");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 dotenv.config({ silent: true });
 
@@ -22,16 +24,21 @@ environment.plugins.prepend(
   new webpack.EnvironmentPlugin(environmentVariables)
 );
 
+if (process.env.ANALYSE_BUNDLE === "true") {
+  environment.plugins.append("BundleAnalyzer", new BundleAnalyzerPlugin());
+}
+
+// Prevent momentjs from importing all of its locales. This is used in the created-react-app config.
+// https://github.com/facebook/create-react-app/blob/a0030fcf2df5387577ced165198f1f0264022fbd/packages/react-scripts/config/webpack.config.prod.js#L350-L355
+environment.plugins.append(
+  "Ignore moment locales",
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+);
+
 environment.loaders.append("graphql", {
   test: /\.(graphql|gql)$/,
   exclude: /node_modules/,
   loader: "graphql-tag/loader",
-});
-
-environment.loaders.append("bundle", {
-  test: /\.bundle\.js$/,
-  exclude: /node_modules/,
-  loader: "bundle-loader",
 });
 
 environment.config.merge({
@@ -41,6 +48,8 @@ environment.config.merge({
     },
   },
 });
+
+environment.splitChunks();
 
 environment.loaders.append("typescript", typescript);
 module.exports = environment;
