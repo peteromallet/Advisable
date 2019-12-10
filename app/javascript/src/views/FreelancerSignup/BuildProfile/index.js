@@ -1,12 +1,11 @@
 import React from "react";
 import { get } from "lodash";
 import gql from "graphql-tag";
-import { Formik, Form } from "formik";
-import { Button, Text, Box } from "@advisable/donut";
+import { Formik, Form, Field } from "formik";
+import { Button, Text, Box, Checkbox } from "@advisable/donut";
 import { useQuery, useMutation } from "react-apollo";
 import Select from "../../../components/Select";
 import Avatar from "../../../components/Avatar";
-import Checkbox from "../../../components/Checkbox";
 import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
@@ -128,12 +127,10 @@ const BuildProfile = ({ history, specialist }) => {
             </Box>
           </Box>
           <Box mb="l">
-            <Checkbox
-              name="publicUse"
-              label="I’m okay with Advisable using my profile to promote me publicly on advisable.com"
-              onChange={formik.handleChange}
-              value={formik.values.publicUse}
-            />
+            <Field as={Checkbox} type="checkbox" name="publicUse">
+              I’m okay with Advisable using my profile to promote me publicly on
+              advisable.com
+            </Field>
           </Box>
           <Button
             size="l"
