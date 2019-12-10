@@ -5,6 +5,8 @@ class OffPlatformProject < ApplicationRecord
   has_many :reviews, as: :project
   has_many :project_skills, as: :project
   has_many :skills, through: :project_skills
+  has_many :project_industries, as: :project
+  has_many :industries, through: :project_industries
   uid_prefix "opp"
 
   scope :validated, -> { where(validation_status: "Validated" )}

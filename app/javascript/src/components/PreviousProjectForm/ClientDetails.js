@@ -18,7 +18,12 @@ const ClientDetails = ({ next }) => {
   };
 
   return (
-    <Formik onSubmit={next} initialValues={initialValues}>
+    <Formik
+      onSubmit={next}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      isInitialValid={false}
+    >
       {formik => (
         <form onSubmit={formik.handleSubmit}>
           <StepDots total={4} current={1} justify="left" mb="xs" />
@@ -64,7 +69,7 @@ const ClientDetails = ({ next }) => {
               ]}
             />
           </Box>
-          <Checkbox mb="xl">
+          <Field as={Checkbox} type="checkbox" name="confidential" mb="xl">
             <Text fontSize="s" fontWeight="medium" color="neutral.9" mb="xxs">
               This client is confidential
             </Text>
@@ -72,8 +77,13 @@ const ClientDetails = ({ next }) => {
               If checked this client’s name will be hidden and then industry
               will be named instead e.g ‘Financial Services Company’
             </Text>
-          </Checkbox>
-          <RoundedButton type="submit" suffix={<Icon icon="arrow-right" />}>
+          </Field>
+          <RoundedButton
+            type="submit"
+            disabled={!formik.isValid}
+            loading={formik.isSubmitting}
+            suffix={<Icon icon="arrow-right" />}
+          >
             Continue
           </RoundedButton>
         </form>

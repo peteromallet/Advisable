@@ -1,7 +1,7 @@
 import { rgba } from "polished";
 import { space } from "styled-system";
 import { motion } from "framer-motion";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import theme from "../../theme";
 
 export const StyledBackdrop = styled(motion.div)`
@@ -17,7 +17,7 @@ export const StyledBackdrop = styled(motion.div)`
   pointer-events: ${props => (props.hidden ? "none" : "all")};
 `;
 
-export const StyledWindowContainer = styled.div`
+export const StyledModalWindowContainer = styled.div`
   top: 0;
   left: 0;
   right: 0;
@@ -35,6 +35,30 @@ export const StyledWindowContainer = styled.div`
 
 const StyledWindowContainerMobile = css`
   padding: 0;
+`;
+
+const spin = keyframes`
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(359deg);
+  }
+`;
+
+export const StyledModalLoading = styled.div`
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  color: ${theme.colors.neutral[5]};
+  animation: ${spin} 700ms infinite linear;
 `;
 
 export const StyledWindow = styled(motion.div)`

@@ -12,7 +12,6 @@ const useRoutedModal = path => {
 
   useEffect(() => {
     return history.listen(e => {
-      console.log("Event", history.action);
       if (history.action === "PUSH") {
         setRoutes([...routes, location]);
       }
@@ -38,8 +37,6 @@ const useRoutedModal = path => {
       // }
     });
   }, [routes, setRoutes]);
-
-  console.log(routes);
 
   useEffect(() => {
     if (location.pathname === initialLocation.current?.pathname) {

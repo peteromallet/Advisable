@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_04_074807) do
+ActiveRecord::Schema.define(version: 2019_12_10_111715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -301,6 +301,7 @@ ActiveRecord::Schema.define(version: 2019_12_04_074807) do
     t.string "company_type"
     t.boolean "public_use"
     t.string "uid"
+    t.string "goal"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
   end
@@ -355,6 +356,17 @@ ActiveRecord::Schema.define(version: 2019_12_04_074807) do
     t.string "specialist_image_real"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "project_industries", force: :cascade do |t|
+    t.bigint "industry_id"
+    t.string "project_type"
+    t.bigint "project_id"
+    t.boolean "primary"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["industry_id"], name: "index_project_industries_on_industry_id"
+    t.index ["project_type", "project_id"], name: "index_project_industries_on_project_type_and_project_id"
   end
 
   create_table "project_skills", force: :cascade do |t|
@@ -634,6 +646,7 @@ ActiveRecord::Schema.define(version: 2019_12_04_074807) do
   add_foreign_key "matches", "specialists"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
+  add_foreign_key "project_industries", "industries"
   add_foreign_key "project_skills", "skills"
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "users"

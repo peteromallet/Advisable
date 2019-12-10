@@ -24,6 +24,7 @@ const AutocompleteMobile = props => {
     primary,
     onPrimaryChange,
     formatLabel,
+    ...rest
   } = props;
 
   const [open, setOpen] = React.useState(false);
@@ -44,7 +45,7 @@ const AutocompleteMobile = props => {
   };
 
   return (
-    <AutocompleteStyles>
+    <AutocompleteStyles {...rest}>
       <Label as="label" size="xs" weight="medium" color="neutral.N7">
         {label}
       </Label>

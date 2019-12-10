@@ -1,37 +1,61 @@
 class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
   # TODO: Eventually the specialist ID should be removed and this mutation should expect a specialist to be logged in.
-  argument :specialist_id, ID, required: true
+  argument :specialist, ID, required: true
   argument :client_name, String, required: true
   argument :confidential, Boolean, required: false
-  argument :industry, String, required: true
+  argument :industries, [String], required: true
+  argument :primaryIndustry, String, required: true
   argument :skills, [String], required: true
+  argument :primarySkill, String, required: true
   argument :contact_name, String, required: true
   argument :contact_job_title, String, required: true
   argument :company_type, String, required: true
   argument :description, String, required: true
+  argument :goal, String, required: true
   argument :public_use, Boolean, required: true
 
   field :previous_project, Types::PreviousProject, null: true
   field :errors, [Types::Error], null: true
 
   def resolve(**args)
-    begin
-      specialist = Specialist.find_by_airtable_id!(args[:specialist_id])
-      project = OffPlatformProjects::Create.call(
-        specialist: specialist,
-        attributes: args.except(:specialist_id),
+    specialist = Specialist.find_by_uid_or_airtable_id!(args[:specialist])
+    project = specialist.off_platform_projects.new({
+      client_name: args[:client_name],
+      confidential: args[:confidential],
+      contact_name: args[:contact_name],
+      contact_job_title: args[:contact_job_title],
+      company_type: args[:company_type],
+      description: args[:description],
+      goal: args[:goal],
+      public_use: args[:public_use],
+    })
+
+    args[:skills].each do |skill|
+      project.project_skills << ProjectSkill.new(
+        skill: Skill.find_by_name!(skill),
       )
-
-      SpecialistMailer.verify_project(project.uid).deliver_later
-
-      return {
-        previous_project: PreviousProject.new(
-          specialist: project.specialist,
-          project: project
-        )
-      }
-    rescue Service::Error => e
-      return { errors: [e] }
     end
+
+    args[:industries].each do |industry|
+      project.project_industries << ProjectIndustry.new(
+        industry: Industry.find_by_name!(industry),
+        primary: args[:primary_industry] == industry
+      )
+    end
+
+    project.industry = args[:primary_industry]
+    project.primary_skill = args[:primary_skill]
+
+    project.save
+    project.sync_to_airtable
+
+    SpecialistMailer.verify_project(project.uid).deliver_later
+
+    {
+      previous_project: PreviousProject.new(
+        specialist: project.specialist,
+        project: project
+      )
+    }
   end
 end

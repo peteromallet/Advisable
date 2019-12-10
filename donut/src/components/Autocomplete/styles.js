@@ -1,4 +1,5 @@
 import { rgba } from "polished";
+import { space } from "styled-system";
 import styled, { css } from "styled-components";
 import Text from "../Text/styles";
 import FieldError from "../FieldError/styles";
@@ -11,6 +12,7 @@ export const Label = styled(Text)`
 `;
 
 export const Autocomplete = styled.div`
+  ${space}
   position: relative;
 
   ${FieldError} {

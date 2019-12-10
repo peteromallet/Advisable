@@ -5,7 +5,7 @@ const Tag = ({ children, onRemove, isPrimary, onSelectPrimary }) => {
   return (
     <TagStyles isPrimary={isPrimary}>
       {onSelectPrimary && (
-        <Primary isPrimary={isPrimary} onClick={onSelectPrimary}>
+        <Primary type="button" isPrimary={isPrimary} onClick={onSelectPrimary}>
           <svg width="14" height="13" fill="none" viewBox="0 0 14 13">
             <path
               fill="currentColor"

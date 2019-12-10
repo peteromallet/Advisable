@@ -1,20 +1,49 @@
 import React from "react";
 import * as Yup from "yup";
-import { Formik, Field } from "formik";
+import { Formik, Form, Field } from "formik";
 import StepDots from "../StepDots";
-import { Box, Text, RoundedButton, Icon } from "@advisable/donut";
+import { Box, Text, RoundedButton, Icon, Autocomplete } from "@advisable/donut";
 
-const IndustryAndSkills = ({ next }) => {
-  const initialValues = {};
+const validationSchema = Yup.object({
+  industries: Yup.array().min(1, "Please select at lease one industry"),
+  skills: Yup.array().min(1, "Please select at lease one skill"),
+});
+
+const IndustryAndSkills = ({ data, values, next }) => {
+  const initialValues = {
+    industries: [],
+    primaryIndustry: undefined,
+    skills: [],
+    primarySkill: undefined,
+  };
+
+  const handleSubmit = values => {
+    next(values);
+  };
+
+  const industryOptions = data.industries.map(industry => ({
+    value: industry.name,
+    label: industry.name,
+  }));
+
+  const skillOptions = data.skills.map(skill => ({
+    value: skill.name,
+    label: skill.name,
+  }));
 
   return (
-    <Formik onSubmit={next} initialValues={initialValues}>
+    <Formik
+      isInitialValid={false}
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+    >
       {formik => (
-        <form onSubmit={formik.handleSubmit}>
+        <Form>
           <StepDots total={4} current={2} justify="left" mb="xs" />
           <Text
-            mb="xs"
             as="h2"
+            mb="xl"
             fontSize="xxl"
             color="blue.9"
             fontWeight="semibold"
@@ -22,15 +51,96 @@ const IndustryAndSkills = ({ next }) => {
           >
             Add Previous Project
           </Text>
-          <Text fontSize="s" lineHeight="s" color="neutral.7" mb="l">
-            Previous projects are one of the most effective ways to validate
-            your skills. Advisable uses them to decide what projects to invite
-            you to.
-          </Text>
-          <RoundedButton type="submit" suffix={<Icon icon="arrow-right" />}>
+          <Autocomplete
+            mb="l"
+            multiple
+            max={3}
+            options={industryOptions}
+            placeholder="e.g Financial Services"
+            label="What industries does Acme Corp work in?"
+            error={formik.touched.industries && formik.errors.industries}
+            primary={formik.values.primaryIndustry}
+            onPrimaryChange={primary => {
+              setTimeout(() => {
+                formik.setFieldValue("primaryIndustry", primary);
+              }, 5);
+            }}
+            value={formik.values.industries}
+            onChange={industries => {
+              formik.handleChange({
+                target: {
+                  name: "industries",
+                  value: industries,
+                },
+              });
+            }}
+            description={
+              formik.values.primaryIndustry && (
+                <>
+                  You have selected{" "}
+                  <Text
+                    fontWeight="medium"
+                    color="neutral.7"
+                    as="span"
+                    fontSize="xs"
+                  >
+                    {formik.values.primaryIndustry}
+                  </Text>{" "}
+                  as the primary industry. The primary industry is the industry
+                  that best describes ${values.clientName}’s industry.
+                </>
+              )
+            }
+          />
+          <Autocomplete
+            max={5}
+            multiple
+            options={skillOptions}
+            placeholder="e.g Facebook Marketing"
+            label="What skills did you use for this project?"
+            error={formik.touched.skills && formik.errors.skills}
+            primary={formik.values.primarySkill}
+            onPrimaryChange={primary => {
+              setTimeout(() => {
+                formik.setFieldValue("primarySkill", primary);
+              }, 5);
+            }}
+            value={formik.values.skills}
+            onChange={skills => {
+              formik.handleChange({
+                target: {
+                  name: "skills",
+                  value: skills,
+                },
+              });
+            }}
+            description={
+              formik.values.primarySkill && (
+                <>
+                  You have selected{" "}
+                  <Text
+                    fontWeight="medium"
+                    color="neutral.7"
+                    as="span"
+                    fontSize="xs"
+                  >
+                    {formik.values.primarySkill}
+                  </Text>{" "}
+                  as the primary skill. The primary skill is the skill that you
+                  used to most throughout this project.
+                </>
+              )
+            }
+          />
+          <Box height={1} bg="neutral.1" mt="xl" mb="l" />
+          <RoundedButton
+            type="submit"
+            disabled={!formik.isValid}
+            suffix={<Icon icon="arrow-right" />}
+          >
             Continue
           </RoundedButton>
-        </form>
+        </Form>
       )}
     </Formik>
   );

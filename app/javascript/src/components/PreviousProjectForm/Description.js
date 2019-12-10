@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { Formik, Field } from "formik";
 import StepDots from "../StepDots";
@@ -7,7 +7,22 @@ import TextField from "../TextField";
 import { Box, Text, RoundedButton, Icon } from "@advisable/donut";
 
 const Description = ({ values, next }) => {
-  const initialValues = {};
+  const initialValues = {
+    goal: "Generate Leads",
+    description: "",
+  };
+
+  const [otherGoal, setOtherGoal] = useState(false);
+
+  const handleGoalChange = formik => e => {
+    if (e.target.value === "Other") {
+      setOtherGoal(true);
+      formik.setFieldValue("goal", "");
+    } else {
+      setOtherGoal(false);
+      formik.handleChange(e);
+    }
+  };
 
   return (
     <Formik onSubmit={next} initialValues={initialValues}>
@@ -29,8 +44,31 @@ const Description = ({ values, next }) => {
               as={Select}
               name="goal"
               label="What was your primary goal for this project?"
-              options={["Generate Leads"]}
+              onChange={handleGoalChange(formik)}
+              value={otherGoal ? "Other" : formik.values.goal}
+              options={[
+                "Generate Leads",
+                "Launch product",
+                "Rebrand/reposition",
+                "Increase brand awareness",
+                "Improve conversion",
+                "Improve retention",
+                "Increase web traffic",
+                "Other",
+              ]}
             />
+            {otherGoal && (
+              <Box mt="xs">
+                <Field
+                  autoFocus
+                  multiline
+                  minRows={3}
+                  name="goal"
+                  maxLength={100}
+                  as={TextField}
+                />
+              </Box>
+            )}
           </Box>
           <Box mb="l">
             <Field

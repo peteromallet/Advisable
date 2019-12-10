@@ -8,13 +8,18 @@ import {
 } from "reakit/Dialog";
 
 import { AnimatePresence } from "framer-motion";
-import { StyledBackdrop, StyledWindowContainer, StyledWindow } from "./styles";
+import {
+  StyledWindow,
+  StyledBackdrop,
+  StyledModalLoading,
+  StyledModalWindowContainer,
+} from "./styles";
 import useBreakpoint from "../../hooks/useBreakpoint";
 export { default as useRoutedModal } from "./useRoutedModal";
 
 export const useModal = useDialogState;
 
-const Modal = ({ modal, label, children, backdrop, ...props }) => {
+const Modal = ({ modal, label, children, backdrop, loading, ...props }) => {
   const ref = useRef(null);
   const mediumAndUp = useBreakpoint("mUp");
   const isMobile = !mediumAndUp;
@@ -52,12 +57,26 @@ const Modal = ({ modal, label, children, backdrop, ...props }) => {
         ref={ref}
         {...modal}
         aria-label={label}
-        as={StyledWindowContainer}
+        as={StyledModalWindowContainer}
         onClick={handleContainerClick}
+        hideOnClickOutside={false}
         isMobile={isMobile}
       >
         <AnimatePresence>
-          {modal.visible && (
+          {modal.visible && loading && (
+            <StyledModalLoading>
+              <svg width="32" height="32" fill="none" viewBox="0 0 32 32">
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M31 16c0 8.284-6.716 15-15 15-8.284 0-15-6.716-15-15C1 7.716 7.716 1 16 1"
+                ></path>
+              </svg>
+            </StyledModalLoading>
+          )}
+          {modal.visible && !loading && (
             <StyledWindow
               {...props}
               isMobile={isMobile}
@@ -92,6 +111,7 @@ const Modal = ({ modal, label, children, backdrop, ...props }) => {
 
 Modal.defaultProps = {
   backdrop: true,
+  loading: false,
 };
 
 Modal.Disclosure = DialogDisclosure;

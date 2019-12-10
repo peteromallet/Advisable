@@ -13,18 +13,12 @@ import Loading from "../../../components/Loading";
 import Padding from "../../../components/Spacing/Padding";
 import PreviousProjects from "../../../components/PreviousProjects";
 import PreviousProjectForm from "../../../components/PreviousProjectForm";
-import AddPreviousProjectModal from "../../../components/AddPreviousProjectModal";
 import PREVIOUS_PROJECTS from "./previousProjects";
 
 const References = ({ data }) => {
-  const [modalOpen, setModalOpen] = React.useState(false);
   const modal = useRoutedModal("/profile/references/new_project/client");
 
   if (data.loading) return <Loading />;
-
-  const handleAddProject = () => {
-    setModalOpen(true);
-  };
 
   return (
     <React.Fragment>
@@ -41,9 +35,6 @@ const References = ({ data }) => {
       </Text>
 
       <Padding bottom="xl">
-        <RoundedButton mr="xs" onClick={handleAddProject}>
-          Add a previous project
-        </RoundedButton>
         <RoundedButton
           onClick={modal.show}
           as={Modal.Disclose}
@@ -53,12 +44,9 @@ const References = ({ data }) => {
         </RoundedButton>
       </Padding>
 
-      <PreviousProjectForm modal={modal} />
-
-      <AddPreviousProjectModal
-        isOpen={modalOpen}
-        specialistId={data.viewer.airtableId}
-        onClose={() => setModalOpen(false)}
+      <PreviousProjectForm
+        modal={modal}
+        specialist={data.viewer.id}
         mutationUpdate={(proxy, response) => {
           const data = proxy.readQuery({ query: PREVIOUS_PROJECTS });
           const project =
