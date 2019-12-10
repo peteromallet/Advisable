@@ -1,11 +1,18 @@
 import React from "react";
 import { get, sortBy } from "lodash";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import { useQuery, useMutation } from "react-apollo";
-import { Box, Card, Text, Link, Autocomplete, Button } from "@advisable/donut";
+import {
+  Box,
+  Card,
+  Text,
+  Link,
+  Autocomplete,
+  Button,
+  Checkbox,
+} from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Avatar from "../../../components/Avatar";
-import Checkbox from "../../../components/Checkbox";
 import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
 import { useNotifications } from "../../../components/Notifications";
@@ -139,12 +146,10 @@ const Profile = () => {
             />
             <Box height={1} bg="neutral.1" my="l" />
             <Box mb="l">
-              <Checkbox
-                name="publicUse"
-                label="I’m okay with Advisable using my profile to promote me publicly on advisable.com"
-                onChange={formik.handleChange}
-                value={formik.values.publicUse}
-              />
+              <Field as={Checkbox} type="checkbox" name="publicUse">
+                I’m okay with Advisable using my profile to promote me publicly
+                on advisable.com
+              </Field>
             </Box>
             <Button
               type="submit"
