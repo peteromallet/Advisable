@@ -15,10 +15,15 @@ import GET_DATA from "./getData";
 import CREATE_PROJECT from "./createOffPlatformProject";
 import useScrollRestore from "../../utilities/useScrollRestore";
 
-const PreviousProjectForm = ({ modal, specialist, mutationUpdate }) => {
+const PreviousProjectForm = ({
+  modal,
+  specialist,
+  mutationUpdate,
+  pathPrefix,
+}) => {
   const history = useHistory();
   const { pathname } = useLocation();
-  const STEPS = useMemo(() => buildSteps(pathname), []);
+  const STEPS = useMemo(() => buildSteps(pathPrefix), []);
   const [createProject] = useMutation(CREATE_PROJECT, {
     update: mutationUpdate,
   });

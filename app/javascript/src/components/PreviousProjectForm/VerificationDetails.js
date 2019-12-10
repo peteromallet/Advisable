@@ -67,9 +67,8 @@ const VerificationDetails = ({ values, next }) => {
             disabled={!formik.isValid}
             loading={formik.isSubmitting}
             type="submit"
-            suffix={<Icon icon="arrow-right" />}
           >
-            Add Project
+            Add Previous Project
           </RoundedButton>
         </form>
       )}
