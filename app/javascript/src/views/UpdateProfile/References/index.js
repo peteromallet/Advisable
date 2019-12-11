@@ -19,6 +19,7 @@ const References = ({ data }) => {
   });
 
   if (data.loading) return <Loading />;
+  console.log(data);
 
   return (
     <>

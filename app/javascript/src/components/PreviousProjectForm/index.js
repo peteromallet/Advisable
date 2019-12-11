@@ -20,6 +20,7 @@ const PreviousProjectForm = ({
   specialist,
   mutationUpdate,
   pathPrefix,
+  onSuccess,
 }) => {
   const history = useHistory();
   const { pathname } = useLocation();
@@ -50,6 +51,7 @@ const PreviousProjectForm = ({
       });
 
       modal.hide();
+      onSuccess();
     } else {
       setValues({ ...values, ...nextValues });
       const nextPath = STEPS[currentIndex + 1];
@@ -96,6 +98,7 @@ const PreviousProjectForm = ({
 
 PreviousProjectForm.defaultProps = {
   mutationUpdate: () => {},
+  onSuccess: () => {},
 };
 
 PreviousProjectForm.propTypes = {

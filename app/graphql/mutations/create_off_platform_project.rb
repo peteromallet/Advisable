@@ -28,6 +28,7 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
       description: args[:description],
       goal: args[:goal],
       public_use: args[:public_use],
+      validation_status: "Pending",
     })
 
     args[:skills].each do |skill|

@@ -1,11 +1,9 @@
 import React from "react";
-import { Box, Text, Button } from "@advisable/donut";
-import Modal from "../../../components/Modal";
+import { Box, Text, Button, Modal } from "@advisable/donut";
 
 const ConfirmationModal = ({
+  modal,
   formik,
-  isOpen,
-  onClose,
   onSubmit,
   loading,
   onAddReference,
@@ -14,7 +12,7 @@ const ConfirmationModal = ({
   const noOfSelectedProjects = formik.values.references.length;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal modal={modal}>
       <Box padding="l">
         <Text fontSize="xl" color="blue.9" mb="xs" fontWeight="medium">
           {noOfSelectedProjects === 0 ? (
@@ -39,7 +37,12 @@ const ConfirmationModal = ({
         )}
 
         {noOfSelectedProjects === 0 && noOfAvailableProjects > 0 && (
-          <Button mr="xs" type="button" onClick={onClose} appearance="primary">
+          <Button
+            mr="xs"
+            type="button"
+            onClick={modal.hide}
+            appearance="primary"
+          >
             Cancel
           </Button>
         )}

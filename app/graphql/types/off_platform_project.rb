@@ -3,7 +3,7 @@ class Types::OffPlatformProject < Types::BaseType
   field :uid, String, null: false
   field :airtable_id, String, null: false
   field :specialist, Types::SpecialistType, null: false
-  field :industry, String, null: false
+  field :industry, String, null: true
   field :contact_first_name, String, null: true
   field :contact_last_name, String, null: true
   field :contact_job_title, String, null: true
