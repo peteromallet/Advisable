@@ -50,22 +50,18 @@ const PreviousProjectForm = ({
         },
       });
 
+      if (onSuccess) onSuccess();
       modal.hide();
-      onSuccess();
     } else {
       setValues({ ...values, ...nextValues });
       const nextPath = STEPS[currentIndex + 1];
-      if (nextPath) {
-        history.push(nextPath.path);
-      }
+      history.push(nextPath.path);
     }
   };
 
   const back = () => {
     const previous = STEPS[currentIndex - 1];
-    if (previous) {
-      history.push(previous.path);
-    }
+    history.push(previous.path);
   };
 
   return (
@@ -98,7 +94,6 @@ const PreviousProjectForm = ({
 
 PreviousProjectForm.defaultProps = {
   mutationUpdate: () => {},
-  onSuccess: () => {},
 };
 
 PreviousProjectForm.propTypes = {

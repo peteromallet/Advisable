@@ -12,7 +12,7 @@ const ConfirmationModal = ({
   const noOfSelectedProjects = formik.values.references.length;
 
   return (
-    <Modal modal={modal}>
+    <Modal modal={modal} label="Are you sure?">
       <Box padding="l">
         <Text fontSize="xl" color="blue.9" mb="xs" fontWeight="medium">
           {noOfSelectedProjects === 0 ? (

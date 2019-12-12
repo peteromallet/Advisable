@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik, Field } from "formik";
 import StepDots from "../StepDots";
 import TextField from "../TextField";
-import { Box, Text, RoundedButton, Icon, Checkbox } from "@advisable/donut";
+import { Box, Text, RoundedButton, Checkbox, Icon } from "@advisable/donut";
 
 const validationSchema = Yup.object({
   contactName: Yup.string().required(
@@ -14,11 +14,12 @@ const validationSchema = Yup.object({
   ),
 });
 
-const VerificationDetails = ({ values, next }) => {
+const VerificationDetails = ({ values, next, back }) => {
   const initialValues = {
     publicUse: true,
     contactName: "",
     contactJobTitle: "",
+    ...values,
   };
 
   return (
@@ -26,7 +27,7 @@ const VerificationDetails = ({ values, next }) => {
       onSubmit={next}
       initialValues={initialValues}
       validationSchema={validationSchema}
-      isInitialValid={false}
+      validateOnMount
     >
       {formik => (
         <form onSubmit={formik.handleSubmit}>
@@ -63,6 +64,15 @@ const VerificationDetails = ({ values, next }) => {
               publicly to promote me
             </Field>
           </Box>
+          <RoundedButton
+            mr="xs"
+            type="button"
+            onClick={back}
+            variant="secondary"
+            prefix={<Icon icon="arrow-left" />}
+          >
+            Back
+          </RoundedButton>
           <RoundedButton
             disabled={!formik.isValid}
             loading={formik.isSubmitting}

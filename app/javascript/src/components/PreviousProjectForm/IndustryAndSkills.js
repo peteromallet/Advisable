@@ -2,6 +2,7 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import StepDots from "../StepDots";
+import { motion } from "framer-motion";
 import { Box, Text, RoundedButton, Icon, Autocomplete } from "@advisable/donut";
 
 const validationSchema = Yup.object({
@@ -9,12 +10,13 @@ const validationSchema = Yup.object({
   skills: Yup.array().min(1, "Please select at lease one skill"),
 });
 
-const IndustryAndSkills = ({ data, values, next }) => {
+const IndustryAndSkills = ({ data, values, next, back }) => {
   const initialValues = {
     industries: [],
     primaryIndustry: undefined,
     skills: [],
     primarySkill: undefined,
+    ...values
   };
 
   const handleSubmit = values => {
@@ -33,7 +35,7 @@ const IndustryAndSkills = ({ data, values, next }) => {
 
   return (
     <Formik
-      isInitialValid={false}
+      validateOnMount
       onSubmit={handleSubmit}
       initialValues={initialValues}
       validationSchema={validationSchema}
@@ -133,6 +135,18 @@ const IndustryAndSkills = ({ data, values, next }) => {
             }
           />
           <Box height={1} bg="neutral.1" mt="xl" mb="l" />
+          <RoundedButton
+            mr="xs"
+            type="button"
+            onClick={back}
+            as={motion.button}
+            variant="secondary"
+            prefix={<Icon icon="arrow-left" />}
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 100, opacity: 1 }}
+          >
+            Back
+          </RoundedButton>
           <RoundedButton
             type="submit"
             disabled={!formik.isValid}

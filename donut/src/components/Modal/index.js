@@ -57,6 +57,7 @@ const Modal = ({ modal, label, children, backdrop, loading, ...props }) => {
         ref={ref}
         {...modal}
         aria-label={label}
+        tabIndex={loading ? 0 : null}
         as={StyledModalWindowContainer}
         onClick={handleContainerClick}
         hideOnClickOutside={false}

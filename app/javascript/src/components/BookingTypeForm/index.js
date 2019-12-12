@@ -79,10 +79,10 @@ const BookingTypeForm = ({
 
   return (
     <Formik
+      validateOnMount
       onSubmit={handleSubmit}
       initialValues={initial}
       validationSchema={validation}
-      isInitialValid={validation.isValidSync(initial)}
     >
       {formik => (
         <Form>

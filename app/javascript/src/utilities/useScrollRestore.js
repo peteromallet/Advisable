@@ -6,7 +6,7 @@ export default (selector, dependents = []) => {
   useLayoutEffect(() => {
     if (selector) {
       const el = document.querySelector(selector);
-      if (el) el.scrollTo(0, 0);
+      if (el && el.strollTo) el.scrollTo(0, 0);
     } else {
       window.scrollTo(0, 0);
     }

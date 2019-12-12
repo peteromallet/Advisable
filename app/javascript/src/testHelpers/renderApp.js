@@ -67,6 +67,10 @@ jest.mock("talkjs", () => {
 });
 
 const renderApp = (config = defaultConfig) => {
+  return renderComponent(<App />, config);
+};
+
+export const renderComponent = (component, config = {}) => {
   window.scrollTo = () => {};
   window.matchMedia = () => ({
     matches: false,
@@ -113,9 +117,7 @@ const renderApp = (config = defaultConfig) => {
     ...render(
       <MockedProvider mocks={config.graphQLMocks} cache={cache}>
         <Router history={history}>
-          <I18nextProvider i18n={i18n}>
-            <App />
-          </I18nextProvider>
+          <I18nextProvider i18n={i18n}>{component}</I18nextProvider>
         </Router>
       </MockedProvider>
     ),

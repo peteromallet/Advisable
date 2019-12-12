@@ -30,6 +30,8 @@ const StepDots = ({ total, current, justify, ...props }) => {
         active={isCurrent}
         animate={{
           width: isCurrent ? 10 : 6,
+        }}
+        style={{
           backgroundColor: isCurrent
             ? theme.colors.blue[8]
             : theme.colors.neutral[2],

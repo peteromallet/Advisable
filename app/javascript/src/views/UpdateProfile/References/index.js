@@ -1,13 +1,7 @@
 import * as React from "react";
 import { get } from "lodash";
 import { graphql } from "react-apollo";
-import {
-  Text,
-  RoundedButton,
-  Modal,
-  useRoutedModal,
-  Icon,
-} from "@advisable/donut";
+import { Text, RoundedButton, useRoutedModal, Icon } from "@advisable/donut";
 import Loading from "../../../components/Loading";
 import PreviousProjects from "../../../components/PreviousProjects";
 import PreviousProjectForm from "../../../components/PreviousProjectForm";
@@ -19,7 +13,6 @@ const References = ({ data }) => {
   });
 
   if (data.loading) return <Loading />;
-  console.log(data);
 
   return (
     <>
@@ -33,12 +26,7 @@ const References = ({ data }) => {
         opportunity to share them with clients when you’re applying for projects
       </Text>
 
-      <RoundedButton
-        mb="xl"
-        onClick={modal.show}
-        as={Modal.Disclose}
-        prefix={<Icon icon="plus" />}
-      >
+      <RoundedButton mb="xl" onClick={modal.show} prefix={<Icon icon="plus" />}>
         Add a previous project
       </RoundedButton>
 

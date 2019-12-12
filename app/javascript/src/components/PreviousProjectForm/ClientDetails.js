@@ -10,11 +10,12 @@ const validationSchema = Yup.object({
   clientName: Yup.string().required("Please enter the clients name"),
 });
 
-const ClientDetails = ({ next }) => {
+const ClientDetails = ({ next, values }) => {
   const initialValues = {
     clientName: "",
     companyType: "Individual Entrepreneur",
     confidential: false,
+    ...values,
   };
 
   return (
@@ -22,7 +23,7 @@ const ClientDetails = ({ next }) => {
       onSubmit={next}
       initialValues={initialValues}
       validationSchema={validationSchema}
-      isInitialValid={false}
+      validateOnMount
     >
       {formik => (
         <form onSubmit={formik.handleSubmit}>

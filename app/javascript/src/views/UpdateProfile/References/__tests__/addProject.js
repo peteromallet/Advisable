@@ -3,10 +3,12 @@ import viewer from "../../../../graphql/queries/viewer";
 import renderApp from "../../../../testHelpers/renderApp";
 import generateTypes from "../../../../__mocks__/graphqlFields";
 import GET_PROJECTS from "../previousProjects";
-import FETCH_DATA from "../../../../components/AddPreviousProjectModal/fetchData";
-import CREATE_PROJECT from "../../../../components/AddPreviousProjectModal/createOffPlatformProject";
+import FETCH_DATA from "../../../../components/PreviousProjectForm/getData";
+import CREATE_PROJECT from "../../../../components/PreviousProjectForm/createOffPlatformProject";
 
 afterEach(cleanup);
+
+jest.setTimeout(10000);
 
 test("Adds a previous project", async () => {
   const specialist = generateTypes.specialist();
@@ -43,20 +45,8 @@ test("Adds a previous project", async () => {
       },
       result: {
         data: {
-          skills: [
-            {
-              ...skill,
-              value: skill.name,
-              label: skill.name,
-            },
-          ],
-          industries: [
-            {
-              ...industry,
-              value: industry.name,
-              label: industry.name,
-            },
-          ],
+          skills: [skill],
+          industries: [industry],
         },
       },
     },
@@ -67,14 +57,17 @@ test("Adds a previous project", async () => {
           input: {
             clientName: "Test inc",
             confidential: false,
-            industry: industry.name,
+            industries: [industry.name],
+            primaryIndustry: industry.name,
             skills: [skill.name],
+            primarySkill: skill.name,
             description: "testing",
             companyType: "Individual Entrepreneur",
             publicUse: true,
             contactName: "Test Person",
             contactJobTitle: "CEO",
-            specialistId: specialist.airtableId,
+            goal: "Generate Leads",
+            specialist: specialist.id,
           },
         },
       },
@@ -105,27 +98,29 @@ test("Adds a previous project", async () => {
 
   const button = await findByLabelText("Add a previous project");
   fireEvent.click(button);
-  const clientName = await findByLabelText("What was the client's name?");
+  const clientName = await findByLabelText("Client Name");
   fireEvent.change(clientName, { target: { value: "Test inc" } });
+  let next = await findByLabelText("Continue");
+  fireEvent.click(next);
   const industryField = await findByPlaceholderText("e.g Financial Services");
   fireEvent.click(industryField);
   fireEvent.keyDown(industryField, { key: "ArrowDown" });
   fireEvent.keyDown(industryField, { key: "Enter" });
-  const skillField = await findByPlaceholderText("Search for a skill...");
+  const skillField = await findByPlaceholderText("e.g Facebook Marketing");
   fireEvent.click(skillField);
   fireEvent.keyDown(skillField, { key: "ArrowDown" });
   fireEvent.keyDown(skillField, { key: "Enter" });
-  let next = await findByLabelText("Next");
+  next = await findByLabelText("Continue");
   fireEvent.click(next);
   const overview = await findByPlaceholderText("Project overview...");
   fireEvent.change(overview, { target: { value: "testing" } });
-  next = await findByLabelText("Next");
+  next = await findByLabelText("Continue");
   fireEvent.click(next);
-  const contactName = await findByPlaceholderText("Contact name");
+  const contactName = await findByPlaceholderText("Contact Name");
   fireEvent.change(contactName, { target: { value: "Test Person" } });
-  const role = await findByPlaceholderText("Contact job title");
+  const role = await findByPlaceholderText("e.g Head of Marketing");
   fireEvent.change(role, { target: { value: "CEO" } });
-  const complete = await findByLabelText("Complete");
+  const complete = await findByLabelText("Add Previous Project");
   fireEvent.click(complete);
   const project = await findByText("Testing at Test inc");
   expect(project).toBeInTheDocument();

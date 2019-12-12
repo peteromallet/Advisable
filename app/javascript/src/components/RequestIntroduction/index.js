@@ -1,12 +1,10 @@
-import React, { Fragment } from "react";
+import React from "react";
 import filter from "lodash/filter";
-import remove from "lodash/remove";
 import { Formik } from "formik";
 import moment from "moment-timezone";
 import { Query, Mutation } from "react-apollo";
 import Modal from "src/components/Modal";
 import Text from "src/components/Text";
-import Flex from "src/components/Flex";
 import Loading from "src/components/Loading";
 import Spacing from "src/components/Spacing";
 import Heading from "src/components/Heading";
@@ -14,7 +12,6 @@ import Button from "src/components/Button";
 import { withNotifications } from "src/components/Notifications";
 import { Mobile } from "src/components/Breakpoint";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
-import ButtonGroup from "src/components/ButtonGroup";
 import Availability from "src/components/Availability";
 import { Form, Header, Body, Footer } from "./styles";
 import validationSchema from "./validationSchema";
@@ -24,8 +21,8 @@ import FETCH_AVAILABILITY from "./fetchAvailability.graphql";
 
 class RequestIntroductionModal extends React.Component {
   state = {
-    submitted: false
-  }
+    submitted: false,
+  };
 
   render() {
     const notifications = this.props.notifications;
@@ -51,32 +48,28 @@ class RequestIntroductionModal extends React.Component {
                 const initialValues = {
                   availability:
                     query.data.application.project.user.availability,
-                  timeZone: moment.tz.guess() || "Europe/Dublin"
+                  timeZone: moment.tz.guess() || "Europe/Dublin",
                 };
 
                 return (
                   <Mutation mutation={REQUEST_INTRO}>
                     {requestIntroduction => (
                       <Formik
+                        validateOnMount
                         initialValues={initialValues}
                         validationSchema={validationSchema}
-                        isInitialValid={validationSchema.isValidSync(
-                          initialValues
-                        )}
                         onSubmit={async values => {
                           await requestIntroduction({
                             variables: {
                               input: {
                                 applicationId: application.airtableId,
-                                ...values
-                              }
-                            }
+                                ...values,
+                              },
+                            },
                           });
 
                           notifications.notify(
-                            `An interview request has been sent to ${
-                              specialist.name
-                            }`
+                            `An interview request has been sent to ${specialist.name}`
                           );
 
                           this.props.onClose();
@@ -85,17 +78,13 @@ class RequestIntroductionModal extends React.Component {
                           <Form
                             style={{
                               height: isMobile ? "100%" : 600,
-                              maxHeight: "100%"
+                              maxHeight: "100%",
                             }}
                             onSubmit={formik.handleSubmit}
                           >
                             <Header>
                               <Heading marginBottom="xs">Request Call</Heading>
-                              <Text
-                                size={"s"}
-                                marginBottom="l"
-                                block
-                              >
+                              <Text size={"s"} marginBottom="l" block>
                                 Select the times you will be available for a
                                 call with {specialist.name}. The more times you
                                 select, the easier it’ll be for us to find a
@@ -111,9 +100,12 @@ class RequestIntroductionModal extends React.Component {
                             <Body>
                               <Availability
                                 timeZone={formik.values.timeZone}
-                                selected={filter(formik.values.availability, t => {
-                                  return moment(t).isAfter(moment(), 'day')
-                                })}
+                                selected={filter(
+                                  formik.values.availability,
+                                  t => {
+                                    return moment(t).isAfter(moment(), "day");
+                                  }
+                                )}
                                 onSelect={times => {
                                   formik.setFieldValue("availability", times);
                                 }}
@@ -125,7 +117,9 @@ class RequestIntroductionModal extends React.Component {
                                 paddingTop="l"
                                 paddingBottom="l"
                               >
-                                  {this.state.submitted && !isMobile && formik.errors.availability && (
+                                {this.state.submitted &&
+                                  !isMobile &&
+                                  formik.errors.availability && (
                                     <Text size="s" marginBottom="s">
                                       {formik.errors.availability}
                                     </Text>
@@ -138,19 +132,19 @@ class RequestIntroductionModal extends React.Component {
                                     type="submit"
                                     block={isMobile}
                                     loading={formik.isSubmitting}
-                                    onClick={() => this.setState({ submitted: true })}
+                                    onClick={() =>
+                                      this.setState({ submitted: true })
+                                    }
                                   >
                                     Request Call
                                   </Button>
                                 )}
 
-                                {isMobile &&
-                                  !formik.isValid && (
-                                    <Text size="s" center>
-                                      Select at least 3 available times
-                                    </Text>
-                                  )}
-
+                                {isMobile && !formik.isValid && (
+                                  <Text size="s" center>
+                                    Select at least 3 available times
+                                  </Text>
+                                )}
                               </Spacing>
                             </Footer>
                           </Form>

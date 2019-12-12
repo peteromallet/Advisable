@@ -19,29 +19,32 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
 
   def resolve(**args)
     specialist = Specialist.find_by_uid_or_airtable_id!(args[:specialist])
-    project = specialist.off_platform_projects.new({
-      client_name: args[:client_name],
-      confidential: args[:confidential],
-      contact_name: args[:contact_name],
-      contact_job_title: args[:contact_job_title],
-      company_type: args[:company_type],
-      description: args[:description],
-      goal: args[:goal],
-      public_use: args[:public_use],
-      validation_status: "Pending",
-    })
+    project =
+      specialist.off_platform_projects.new(
+        {
+          client_name: args[:client_name],
+          confidential: args[:confidential],
+          contact_name: args[:contact_name],
+          contact_job_title: args[:contact_job_title],
+          company_type: args[:company_type],
+          description: args[:description],
+          goal: args[:goal],
+          public_use: args[:public_use],
+          validation_status: 'Pending'
+        }
+      )
 
     args[:skills].each do |skill|
-      project.project_skills << ProjectSkill.new(
-        skill: Skill.find_by_name!(skill),
-      )
+      project.project_skills <<
+        ProjectSkill.new(skill: Skill.find_by_name!(skill))
     end
 
     args[:industries].each do |industry|
-      project.project_industries << ProjectIndustry.new(
-        industry: Industry.find_by_name!(industry),
-        primary: args[:primary_industry] == industry
-      )
+      project.project_industries <<
+        ProjectIndustry.new(
+          industry: Industry.find_by_name!(industry),
+          primary: args[:primary_industry] == industry
+        )
     end
 
     project.industry = args[:primary_industry]
@@ -53,10 +56,8 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
     SpecialistMailer.verify_project(project.uid).deliver_later
 
     {
-      previous_project: PreviousProject.new(
-        specialist: project.specialist,
-        project: project
-      )
+      previous_project:
+        PreviousProject.new(specialist: project.specialist, project: project)
     }
   end
 end
