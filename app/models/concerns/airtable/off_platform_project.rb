@@ -1,5 +1,5 @@
 class Airtable::OffPlatformProject < Airtable::Base
-  self.table_name = "Off-Platform Projects"
+  self.table_name = 'Off-Platform Projects'
 
   sync_with ::OffPlatformProject
   sync_column 'Client Industry', to: :industry
@@ -18,61 +18,106 @@ class Airtable::OffPlatformProject < Airtable::Base
   sync_column 'Validation Explanation', to: :validation_explanation
   sync_column 'Company Type', to: :company_type
 
-  sync_data do |off_platform_project|
-    pull_specialist(off_platform_project)
-    off_platform_project.confidential = fields['Okay with naming client'] != 'Yes'
+  sync_data do |opp|
+    pull_specialist(opp)
+    opp.confidential = fields['Okay with naming client'] != 'Yes'
 
-    off_platform_project.public_use = true if self["Public Use"] == "Yes"
-    off_platform_project.public_use = false if self["Public Use"] == "No"
-
-    skills = off_platform_project.skills.map(&:airtable_id)
-    skills_required = fields['Skills Required'] || []
-    skills_required.each do |skill_id|
-      unless skills.include?(skill_id)
-        skill = ::Skill.find_by_airtable_id(skill_id)
-        skill = Airtable::Skill.find(skill_id).sync unless skill.present?
-        off_platform_project.project_skills.new(skill: skill)
-      end
-    end
+    opp.public_use = true if self['Public Use'] == 'Yes'
+    opp.public_use = false if self['Public Use'] == 'No'
+    sync_skills(opp)
+    sync_industries(opp)
   end
 
   push_data do |project|
-    self["Client Industry"] = project.industry
-    self["Client Contact First Name"] = project.contact_first_name
-    self["Client Contact Last Name"] = project.contact_last_name
-    self["Client Contact Job Title"] = project.contact_job_title
-    self["Client Name"] = project.client_name
-    self["Client Description"] = project.client_description
-    self["Project Description"] = project.description
-    self["Results Description"] = project.results
-    self["Primary Skill Required"] = project.primary_skill
-    self["Specialist Requirement Description"] = project.requirements
-    self["Client Contact Email Address"] = project.contact_email
-    self["Validation Method"] = project.validation_method
-    self["Validation URL"] = project.validation_url
-    self["Okay with naming client"] = project.confidential ? "No" : "Yes"
-    self["Okay To Contact"] = project.can_contact ? "Yes" : "No"
-    self["Specialist"] = [project.specialist.try(:airtable_id)]
-    self["Skills Required"] = project.skills.map(&:airtable_id)
-    self["Advisable Validation Status"] = project.validation_status
-    self["Validated By Client"] = project.validated_by_client ? "Yes" : 'No'
-    self["Validation Explanation"] = project.validation_explanation
-    self["Company Type"] = project.company_type
-    
+    self['Client Industry'] = project.industry
+    self['Industries'] = project.industries.map(&:airtable_id).compact
+    self['Client Contact First Name'] = project.contact_first_name
+    self['Client Contact Last Name'] = project.contact_last_name
+    self['Client Contact Job Title'] = project.contact_job_title
+    self['Client Name'] = project.client_name
+    self['Client Description'] = project.client_description
+    self['Project Description'] = project.description
+    self['Results Description'] = project.results
+    self['Primary Skill Required'] = project.primary_skill
+    self['Specialist Requirement Description'] = project.requirements
+    self['Client Contact Email Address'] = project.contact_email
+    self['Validation Method'] = project.validation_method
+    self['Validation URL'] = project.validation_url
+    self['Okay with naming client'] = project.confidential ? 'No' : 'Yes'
+    self['Okay To Contact'] = project.can_contact ? 'Yes' : 'No'
+    self['Specialist'] = [project.specialist.try(:airtable_id)]
+    self['Skills Required'] = project.skills.map(&:airtable_id)
+    self['Advisable Validation Status'] = project.validation_status
+    self['Validated By Client'] = project.validated_by_client ? 'Yes' : 'No'
+    self['Validation Explanation'] = project.validation_explanation
+    self['Company Type'] = project.company_type
+
     unless project.public_use.nil?
-      self["Public Use"] = "Yes" if project.public_use == true
-      self["Public Use"] = "No" if project.public_use == false
+      self['Public Use'] = 'Yes' if project.public_use == true
+      self['Public Use'] = 'No' if project.public_use == false
     end
   end
 
   private
-  
+
   # Setup the specialist relationship for the off_platform_project
   def pull_specialist(off_platform_project)
-    airtable_id = fields["Specialist"].try(:first)
+    airtable_id = fields['Specialist'].try(:first)
     return unless airtable_id
     specialist = ::Specialist.find_by_airtable_id(airtable_id)
     specialist = Airtable::Specialist.find(airtable_id).sync if specialist.nil?
     off_platform_project.specialist = specialist
+  end
+
+  # Syncs the projects skills from airtable
+  # Currently an off platform project has a skills association and a
+  # primary_skill string column. The primary_skill column will eventually
+  # be deprecated in favour of the skills association. For this reason
+  # we also track which skill is the primary skill by setting the
+  # ProjectSkill's primary attribute to true or false.
+  def sync_skills(opp)
+    skills_required = fields['Skills Required'] || []
+
+    skills_required.each do |skill_id|
+      skill = ::Skill.find_by_airtable_id(skill_id)
+      skill = Airtable::Skill.find(skill_id).sync unless skill.present?
+      next if skill.nil?
+      project_skill = opp.project_skills.find_by_skill_id(skill.id)
+
+      if project_skill.present?
+        project_skill.update(
+          primary: project_skill.skill.name == fields['Primary Skill Required']
+        )
+      else
+        opp.project_skills.new(skill: skill)
+      end
+    end
+  end
+
+  # Syncs the projects industry from airtable
+  # Currently an off platform project has an industries association and a
+  # client_industry string column. The client_industry column will eventually
+  # be deprecated in favour of the industries association. For this reason
+  # we also track which industry is the primary industry by setting the
+  # ProjectIndustry's primary attribute to true or false.
+  def sync_industries(opp)
+    industries = fields['Industries'] || []
+
+    industries.each do |industry_id|
+      industry = ::Industry.find_by_airtable_id(industry_id)
+      unless industry.present?
+        industry = Airtable::Industry.find(industry_id).sync
+      end
+      next if industry.nil?
+      project_industry = opp.project_industries.find_by_industry_id(industry.id)
+
+      if project_industry.present?
+        project_industry.update(
+          primary: project_industry.industry.name == fields['Client Industry']
+        )
+      else
+        opp.project_industries.new(industry: industry)
+      end
+    end
   end
 end

@@ -36,7 +36,10 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
 
     args[:skills].each do |skill|
       project.project_skills <<
-        ProjectSkill.new(skill: Skill.find_by_name!(skill))
+        ProjectSkill.new(
+          skill: Skill.find_by_name!(skill),
+          primary: args[:primary_skill] == skill
+        )
     end
 
     args[:industries].each do |industry|

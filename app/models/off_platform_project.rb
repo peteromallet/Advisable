@@ -7,9 +7,9 @@ class OffPlatformProject < ApplicationRecord
   has_many :skills, through: :project_skills
   has_many :project_industries, as: :project
   has_many :industries, through: :project_industries
-  uid_prefix "opp"
+  uid_prefix 'opp'
 
-  scope :validated, -> { where(validation_status: "Validated" )}
+  scope :validated, -> { where(validation_status: 'Validated') }
 
   # Every time a project is created, updated or destroyed we want to update the
   # associated specialists project count.
@@ -21,8 +21,8 @@ class OffPlatformProject < ApplicationRecord
   end
 
   def contact_name=(name)
-    self.contact_first_name = name.split(" ").try(:[], 0)
-    self.contact_last_name = name.split(" ").try(:[], 1)
+    self.contact_first_name = name.split(' ').try(:[], 0)
+    self.contact_last_name = name.split(' ').try(:[], 1)
   end
 
   private
