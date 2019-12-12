@@ -6,10 +6,9 @@ const useRoutedModal = (path, config) => {
   const modal = useDialogState();
   const history = useHistory();
   const location = useLocation();
-  const initialLocation = useRef(null);
 
   useEffect(() => {
-    if (location.pathname === initialLocation.current?.pathname) {
+    if (location.pathname === config.returnLocation) {
       modal.hide();
     }
 
@@ -21,7 +20,6 @@ const useRoutedModal = (path, config) => {
   const routedModal = {
     ...modal,
     show: () => {
-      initialLocation.current = location;
       history.push(path);
       modal.show();
     },

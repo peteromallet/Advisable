@@ -16,7 +16,7 @@ const IndustryAndSkills = ({ data, values, next, back }) => {
     primaryIndustry: undefined,
     skills: [],
     primarySkill: undefined,
-    ...values
+    ...values,
   };
 
   const handleSubmit = values => {
@@ -81,15 +81,15 @@ const IndustryAndSkills = ({ data, values, next, back }) => {
                 <>
                   You have selected{" "}
                   <Text
-                    fontWeight="medium"
-                    color="neutral.7"
                     as="span"
                     fontSize="xs"
+                    color="neutral.7"
+                    fontWeight="medium"
                   >
                     {formik.values.primaryIndustry}
                   </Text>{" "}
                   as the primary industry. The primary industry is the industry
-                  that best describes ${values.clientName}’s industry.
+                  that best describes {values.clientName}’s industry.
                 </>
               )
             }
