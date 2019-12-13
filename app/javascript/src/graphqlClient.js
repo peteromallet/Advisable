@@ -45,16 +45,21 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
-    graphQLErrors.map(({ message, path }) =>
-      Rollbar.debug(`[GraphQL error]: Message: ${message}, Path: ${path}`)
-    );
+const errorLink = onError(
+  ({ graphQLErrors, networkError, operation, response }) => {
+    if (graphQLErrors)
+      graphQLErrors.map(({ message, path }) =>
+        Rollbar.debug(`[GraphQL error]: Message: ${message}, Path: ${path}`, {
+          operation,
+          response,
+        })
+      );
 
-  if (networkError) {
-    Rollbar.debug(`[Network error]: ${networkError}`);
+    if (networkError) {
+      Rollbar.debug(`[Network error]: ${networkError}`);
+    }
   }
-});
+);
 
 const client = new ApolloClient({
   cache,

@@ -20,7 +20,7 @@ export const GET_SKILLS = gql`
 
 // Renders the freelancer signup flow.
 const Skills = ({ history, location, specialist }) => {
-  const { loading, data, error } = useQuery(GET_SKILLS);
+  const { loading, data } = useQuery(GET_SKILLS);
 
   if (specialist) {
     return <Redirect to="/freelancers/signup/preferences" />;
@@ -29,10 +29,6 @@ const Skills = ({ history, location, specialist }) => {
   const initialValues = {
     skills: get(location.state, "skills") || [],
   };
-
-  if (error) {
-    Rollbar.debug(error.message);
-  }
 
   // We want to store the skills in the location state so that they are
   // persisted accross browser refreshes and navigation. They are not actually
