@@ -103,7 +103,8 @@ describe Mutations::CreateOffPlatformProject do
     end
 
     it 'sets the skills' do
-      expect(project['skills']).to eq(skills)
+      expect(project['skills']).to include(skills[0])
+      expect(project['skills']).to include(skills[1])
     end
 
     it 'sets the contactFirstName' do
