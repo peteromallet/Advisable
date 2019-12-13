@@ -1,4 +1,5 @@
 import React from "react";
+import { repeat } from "lodash";
 import { cleanup, fireEvent, wait } from "@testing-library/react";
 import mockData from "../../../__mocks__/graphqlFields";
 import { useRoutedModal } from "../../../../../../donut/src";
@@ -15,6 +16,7 @@ const specialist = mockData.specialist();
 const onSuccess = jest.fn();
 
 test("Can create a project", async () => {
+  const description = repeat("description", 50);
   const comp = renderComponent(<Test />, {
     route: "/testing/new_project/client",
     graphQLMocks: [
@@ -40,7 +42,7 @@ test("Can create a project", async () => {
               primaryIndustry: industry.name,
               skills: [skill.name],
               primarySkill: skill.name,
-              description: "testing",
+              description: description,
               companyType: "Individual Entrepreneur",
               publicUse: true,
               contactName: "Test Person",
@@ -107,7 +109,7 @@ test("Can create a project", async () => {
   const goalOther = comp.getByPlaceholderText(goalOtherPlaceholder);
   fireEvent.change(goalOther, { target: { value: "Custom goal" } });
   const overview = await comp.findByPlaceholderText("Project overview...");
-  fireEvent.change(overview, { target: { value: "testing" } });
+  fireEvent.change(overview, { target: { value: description } });
   next = await comp.findByLabelText("Continue");
   fireEvent.click(next);
 

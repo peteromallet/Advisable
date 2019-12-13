@@ -1,3 +1,4 @@
+import { repeat } from "lodash";
 import { cleanup, fireEvent } from "@testing-library/react";
 import viewer from "../../../../graphql/queries/viewer";
 import renderApp from "../../../../testHelpers/renderApp";
@@ -14,6 +15,7 @@ test("Adds a previous project", async () => {
   const specialist = generateTypes.specialist();
   const skill = generateTypes.skill();
   const industry = generateTypes.industry();
+  const description = repeat("description", 50);
 
   const apiMocks = [
     {
@@ -61,7 +63,7 @@ test("Adds a previous project", async () => {
             primaryIndustry: industry.name,
             skills: [skill.name],
             primarySkill: skill.name,
-            description: "testing",
+            description: description,
             companyType: "Individual Entrepreneur",
             publicUse: true,
             contactName: "Test Person",
@@ -113,7 +115,7 @@ test("Adds a previous project", async () => {
   next = await findByLabelText("Continue");
   fireEvent.click(next);
   const overview = await findByPlaceholderText("Project overview...");
-  fireEvent.change(overview, { target: { value: "testing" } });
+  fireEvent.change(overview, { target: { value: description } });
   next = await findByLabelText("Continue");
   fireEvent.click(next);
   const contactName = await findByPlaceholderText("Contact Name");
