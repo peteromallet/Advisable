@@ -36,6 +36,11 @@ const PaymentMethod = ({ data, nextStep }) => {
       },
     });
 
+    if (values.paymentMethod === "Bank Transfer") {
+      history.push(`/book/${data.application.airtableId}/invoice_settings`);
+      return;
+    }
+
     history.push(`/book/${data.application.airtableId}/card_details`);
   };
 
@@ -60,8 +65,8 @@ const PaymentMethod = ({ data, nextStep }) => {
           payment method below.
         </Text>
         <Formik
-          initialValues={initialValues}
           onSubmit={handleSubmit}
+          initialValues={initialValues}
           validationSchema={validationSchema}
         >
           {formik => (
