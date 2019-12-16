@@ -93,7 +93,7 @@ const Criteria = () => {
                 options={formData.data.skills}
                 error={formik.submitCount > 0 && formik.errors.skill}
                 onChange={skill => {
-                  formik.setFieldValue("skill", skill.value);
+                  formik.setFieldValue("skill", skill);
                 }}
               />
             </Box>
@@ -107,7 +107,7 @@ const Criteria = () => {
                 error={formik.submitCount > 0 && formik.errors.industry}
                 onChange={industry => {
                   formik.setFieldTouched("industry", true);
-                  formik.setFieldValue("industry", industry.value);
+                  formik.setFieldValue("industry", industry);
                 }}
               />
             </Box>

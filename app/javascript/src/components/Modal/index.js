@@ -1,3 +1,4 @@
+// DEPRECATED: Please use the Modal component from Donut instead.
 import React from "react";
 import ReactDOM from "react-dom";
 import Div100vh from "react-div-100vh";

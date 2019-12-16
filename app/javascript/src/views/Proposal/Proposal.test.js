@@ -160,6 +160,8 @@ test("Project type step continues to the tasks step", async () => {
     "Set suggested monthly hour cap (to 200-hour max)"
   );
   fireEvent.change(limit, { target: { value: "155" } });
+  const accept = getByLabelText("I agree", { exact: false });
+  fireEvent.click(accept);
   const cont = getByLabelText("Continue");
   fireEvent.click(cont);
   const el = await findByText("Project Tasks");

@@ -24,10 +24,9 @@ const Autocomplete = ({ options: selectOptions, value, ...rest }) => {
     filteredValue = filter(value, v => {
       return find(options, { value: v });
     });
+  } else {
+    filteredValue = find(options, { value });
   }
-
-  // Use the value prop to find the initially selected item. This may be null
-  const selectedItem = find(options, { value: filteredValue });
 
   let isMax = rest.multiple && rest.max && filteredValue.length >= rest.max;
 
@@ -36,7 +35,7 @@ const Autocomplete = ({ options: selectOptions, value, ...rest }) => {
     return (
       <Mobile
         options={options}
-        initalSelectedItem={selectedItem}
+        initalSelectedItem={filteredValue}
         isMax={isMax}
         value={filteredValue}
         {...rest}
@@ -48,12 +47,16 @@ const Autocomplete = ({ options: selectOptions, value, ...rest }) => {
   return (
     <Desktop
       options={options}
-      initalSelectedItem={selectedItem}
+      initalSelectedItem={filteredValue}
       isMax={isMax}
       value={filteredValue}
       {...rest}
     />
   );
+};
+
+Autocomplete.defaultProps = {
+  formatLabel: item => item.label,
 };
 
 export default Autocomplete;

@@ -73,10 +73,10 @@ const PaymentTerms = ({ nextStep }) => {
       </Text>
 
       <Formik
+        validateOnMount
         onSubmit={handleSubmit}
         initialValues={initialValues}
         validationSchema={validationSchema}
-        isInitialValid={validationSchema.isValidSync(initialValues)}
       >
         {formik => (
           <Form>
