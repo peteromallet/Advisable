@@ -5,6 +5,7 @@ import { useQuery } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "src/components/Layout";
 import Loading from "src/components/Loading";
+import AccessDenied from "src/components/AccessDenied";
 import NotFound from "../NotFound";
 import handleAuthError from "../../utilities/handleAuthError";
 import Sidebar from "./Sidebar";
@@ -37,7 +38,9 @@ const Applicant = ({ match, history, location }) => {
       return <NotFound />;
     }
 
-    Rollbar.debug(error.message);
+    if (error?.graphQLErrors[0].code === "invalidPermissions") {
+      return <AccessDenied />;
+    }
   }
 
   if (!data.project) {
