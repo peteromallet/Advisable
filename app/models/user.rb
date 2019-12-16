@@ -73,16 +73,21 @@ class User < ApplicationRecord
   # Updates the payments_setup column to either true or false depending on
   # wether enough payment information has been provided.
   def update_payments_setup
-    setup = true
-    setup = false if project_payment_method.nil?
-    setup = false if project_payment_method == "Card" && payment_method.nil?
-    setup = false if invoice_settings[:name].nil?
-    setup = false if accepted_project_payment_terms_at.nil?
+    setup = are_payments_setup
     update(payments_setup: setup)
     setup
   end
 
   private
+
+  def are_payments_setup
+    return false if project_payment_method.nil?
+    return false if project_payment_method == "Card" && payment_method.nil?
+    return false if invoice_settings[:name].nil?
+    return false if accepted_project_payment_terms_at.nil?
+    true
+  end
+
 
   # Called before the client record is saved to clean up any availability
   # in the past.
