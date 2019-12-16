@@ -21,7 +21,7 @@ describe 'Accept interview request' do
 
     visit "/interview_request/#{interview.airtable_id}"
     click_on user.availability[0].strftime("%A")
-    click_on "10:00am - 10:30am"
+    find_all("a[class^=styles__Time]").first
     fill_in "phoneNumber", with: "0861234567"
     click_on "Confirm Call"
     expect(page).to have_content("has been scheduled!")

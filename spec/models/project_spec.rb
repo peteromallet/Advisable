@@ -21,6 +21,22 @@ describe Project do
     end
   end
 
+  describe '#accepted_terms=' do
+    it 'sets accepted_terms_at to the current time' do
+      project = create(:project, accepted_terms_at: nil)
+      project.accepted_terms = true
+      expect(project.accepted_terms_at).to be_within(1.second).of(DateTime.now)
+    end
+
+    context 'when accepted_terms_at is already set' do
+      it 'does not change the accepted_terms_at' do
+        project = create(:project, accepted_terms_at: 5.days.ago)
+        project.accepted_terms = true
+        expect(project.accepted_terms_at).to be_within(1.second).of(5.days.ago)
+      end
+    end
+  end
+
   describe "#deposit_paid" do
     context "when there is no deposit_paid" do
       it "returns 0" do
