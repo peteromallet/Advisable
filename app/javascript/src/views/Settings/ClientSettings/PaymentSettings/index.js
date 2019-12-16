@@ -85,11 +85,7 @@ const PaymentSettings = () => {
       >
         Payment Preferences
       </Text>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        isInitialValid={true}
-      >
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {formik => (
           <Form>
             <Text
@@ -160,7 +156,6 @@ const PaymentSettings = () => {
             <Button
               appearance="primary"
               intent="success"
-              disabled={!formik.isValid}
               loading={formik.isSubmitting}
             >
               Save Changes

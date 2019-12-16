@@ -231,8 +231,8 @@ test("Topic step sends the consultation", async () => {
   const textarea = await app.findByPlaceholderText(
     "What would you like to talk about..."
   );
-  const btn = app.getByLabelText("Continue");
   fireEvent.change(textarea, { target: { value: "Testing" } });
+  const btn = app.getByLabelText("Continue");
   fireEvent.click(btn);
   const header = await app.findByText(
     "Check your email to confirm your request"

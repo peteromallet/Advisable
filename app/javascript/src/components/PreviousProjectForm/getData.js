@@ -2,14 +2,13 @@ import gql from "graphql-tag";
 
 export default gql`
   query {
-    skills {
+    skills(local: true) {
       id
-      value: name
-      label: name
+      name
     }
     industries {
-      value: name
-      label: name
+      id
+      name
     }
   }
 `;

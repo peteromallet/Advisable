@@ -1,16 +1,14 @@
 import * as React from "react";
 import { Formik } from "formik";
 import { useMutation } from "react-apollo";
+import { useRoutedModal, useModal } from "@advisable/donut";
 import FETCH_APPLICATION from "../fetchApplication.js";
 import UPDATE_APPLICATION from "../updateApplication.js";
 import { useNotifications } from "../../../components/Notifications";
-import AddPreviousProjectModal from "../../../components/AddPreviousProjectModal";
+import PreviousProjectForm from "../../../components/PreviousProjectForm";
 import NoReferences from "./NoReferences";
 import PreviousProjects from "./PreviousProjects";
 import ConfirmationModal from "./ConfirmationModal";
-
-const PREVIOUS_PROJECT_MODAL = "PREVIOUS_PROJECT_MODAL";
-const CONFIRM_SUBMISSION = "CONFIRM_SUBMISSION";
 
 const References = ({
   application,
@@ -23,13 +21,19 @@ const References = ({
 }) => {
   const { applicationId } = match.params;
   const notifications = useNotifications();
-  const [modal, setModal] = React.useState(null);
+  const confirmationModal = useModal();
   const { previousProjects } = application.specialist;
   const [updateApplication, { loading }] = useMutation(UPDATE_APPLICATION);
+  const projectModal = useRoutedModal(
+    `/invites/${applicationId}/apply/references/new_project/client`,
+    {
+      returnLocation: `/invites/${applicationId}/apply/references`,
+    }
+  );
 
   const handleSubmit = async (values, formik) => {
     if (values.references.length <= 1) {
-      setModal(CONFIRM_SUBMISSION);
+      confirmationModal.show();
       formik.setSubmitting(false);
       return;
     }
@@ -84,11 +88,20 @@ const References = ({
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
       {formik => (
         <>
-          <AddPreviousProjectModal
-            isOpen={modal === PREVIOUS_PROJECT_MODAL}
-            onClose={() => setModal(null)}
-            onCreate={handleNewProject}
-            specialistId={application.specialist.airtableId}
+          <ConfirmationModal
+            formik={formik}
+            loading={loading}
+            modal={confirmationModal}
+            onAddReference={projectModal.show}
+            onSubmit={() => submit(formik.values)}
+            noOfAvailableProjects={previousProjects.length}
+          />
+
+          <PreviousProjectForm
+            modal={projectModal}
+            specialist={application.specialist.airtableId}
+            pathPrefix={`/invites/${applicationId}/apply/references`}
+            onSuccess={handleNewProject}
             mutationUpdate={(proxy, response) => {
               const previousProject =
                 response.data.createOffPlatformProject.previousProject;
@@ -109,16 +122,6 @@ const References = ({
             }}
           />
 
-          <ConfirmationModal
-            formik={formik}
-            loading={loading}
-            onAddReference={() => setModal(PREVIOUS_PROJECT_MODAL)}
-            onClose={() => setModal(null)}
-            isOpen={modal === CONFIRM_SUBMISSION}
-            onSubmit={() => submit(formik.values)}
-            noOfAvailableProjects={previousProjects.length}
-          />
-
           {previousProjects.length > 0 ? (
             <PreviousProjects
               steps={steps}
@@ -126,15 +129,15 @@ const References = ({
               currentStep={currentStep}
               onBack={goBack}
               formik={formik}
-              onAdd={() => setModal(PREVIOUS_PROJECT_MODAL)}
+              onAdd={projectModal.show}
               initialValues={{}}
               previousProjects={previousProjects}
               onSubmit={handleSubmit}
             />
           ) : (
             <NoReferences
-              onSkip={() => setModal(CONFIRM_SUBMISSION)}
-              openAddReferenceModal={() => setModal(PREVIOUS_PROJECT_MODAL)}
+              onSkip={confirmationModal.show}
+              openAddReferenceModal={projectModal.show}
             />
           )}
         </>

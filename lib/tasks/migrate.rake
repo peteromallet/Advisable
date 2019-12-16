@@ -1,3 +1,2 @@
 namespace :migrate do
-
 end

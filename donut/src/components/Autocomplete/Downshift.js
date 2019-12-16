@@ -23,11 +23,19 @@ const DownshiftMulti = props => {
   const removeItem = (item, downshift) => {
     const next = props.value.filter(i => i !== item.value);
     props.onChange(next, downshift);
+
+    if (props.onPrimaryChange && props.primary === item.value) {
+      props.onPrimaryChange(next[0]);
+    }
   };
 
   const addSelectedItem = (item, downshift) => {
     const next = props.value.concat(item.value);
     props.onChange(next, downshift);
+
+    if (props.onPrimaryChange && !props.primary) {
+      props.onPrimaryChange(item.value);
+    }
   };
 
   const handleSelection = (selectedItem, downshift) => {
@@ -38,7 +46,7 @@ const DownshiftMulti = props => {
         addSelectedItem(selectedItem, downshift);
       }
     } else {
-      props.onChange(selectedItem, downshift);
+      props.onChange(selectedItem.value, downshift);
     }
   };
 

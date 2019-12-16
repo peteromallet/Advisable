@@ -54,7 +54,7 @@ test("Submitting the overview step continues to the questions step", async () =>
             input: {
               id: "rec1234",
               introduction: "Introduction",
-              availability: "2 - 4 Weeks",
+              availability: "2 - 4 weeks",
             },
           },
         },

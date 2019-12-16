@@ -6,7 +6,6 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
-import References from "./views/References";
 import ProjectSetup from "./views/ProjectSetup";
 import Availability from "./views/Availability";
 import InterviewRequest from "./views/InterviewRequest";
@@ -38,10 +37,6 @@ const Routes = () => {
           exact
           path="/clients/:userID/availability"
           component={Availability}
-        />
-        <Route
-          path="/specialists/:specialistID/references"
-          component={References}
         />
         <Route
           path="/interview_request/:interviewID"

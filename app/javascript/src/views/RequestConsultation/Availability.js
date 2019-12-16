@@ -68,7 +68,7 @@ const Availability = ({ nextStep, previousStepURL }) => {
       flex="1 1 0%"
     >
       <Formik
-        isInitialValid={false}
+        validateOnMount
         onSubmit={handleSubmit}
         initialValues={initialValues}
         validationSchmea={validationSchmea}

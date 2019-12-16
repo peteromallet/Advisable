@@ -19,8 +19,8 @@ export const StyledCheckboxInput = styled.input`
 `;
 
 export const StyledCheckboxToggle = styled.div`
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
   position: relative;
   border-radius: 6px;
@@ -38,21 +38,33 @@ export const StyledCheckboxToggle = styled.div`
 `;
 
 export const StyledCheckboxContent = styled.div`
-  padding-left: 8px;
+  padding-left: 12px;
 `;
 
-export const StyledCheckboxText = styled.p`
+export const StyledCheckboxText = styled.div`
   font-size: 15px;
   line-height: 18px;
   color: ${theme.colors.neutral[8]};
 `;
 
-export const StyledCheckbox = styled.label`
-  ${space};
-  cursor: pointer;
-  user-select: none;
+export const StyledCheckboxInner = styled.div`
+  padding: 8px;
+  margin: -8px;
+  border-radius: 12px;
   align-items: center;
   display: inline-flex;
+  transition: background-color 200ms;
+`;
+
+export const StyledCheckbox = styled.label`
+  ${space};
+  display: block;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover ${StyledCheckboxInner} {
+    background: ${theme.colors.neutral[0]};
+  }
 
   &:hover ${StyledCheckboxInput}:not(:checked) + ${StyledCheckboxToggle} {
     background: ${darken(0.015, theme.colors.neutral[0])};

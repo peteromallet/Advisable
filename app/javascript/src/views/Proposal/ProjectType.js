@@ -65,9 +65,9 @@ const ProjectType = ({ history, application, updateApplication }) => {
   return (
     <Card>
       <Formik
+        validateOnMount
         onSubmit={handleSubmit}
         initialValues={initialValues}
-        isInitialValid={projectTypeValidationSchema.isValidSync(initialValues)}
         validationSchema={projectTypeValidationSchema}
       >
         {formik => (

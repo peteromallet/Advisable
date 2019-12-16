@@ -85,6 +85,7 @@ class SelectComponent extends React.Component {
         {label && <InputLabel htmlFor={this.state.id}>{label}</InputLabel>}
         <SelectWrapper block={block}>
           <Select
+            id={this.state.id}
             name={name}
             value={finalValue}
             ref={c => (this.select = c)}

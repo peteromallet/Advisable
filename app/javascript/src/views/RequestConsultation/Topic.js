@@ -8,7 +8,7 @@ import TextField from "../../components/TextField";
 import SEND from "./sendRequest";
 
 const validationSchema = Yup.object({
-  topic: Yup.string().required(),
+  topic: Yup.string().required("Please provide a topic"),
 });
 
 const Topic = ({ data, previousStepURL, nextStep }) => {
@@ -62,7 +62,6 @@ const Topic = ({ data, previousStepURL, nextStep }) => {
         onSubmit={handleSubmit}
         initialValues={initialValues}
         validationSchema={validationSchema}
-        isInitialValid={validationSchema.isValidSync(initialValues)}
       >
         {formik => (
           <Form>

@@ -80,6 +80,6 @@ test("Shows form to add card when user has no card", async () => {
   });
 
   await app.findByText("Add payment method");
-  const cardHolder = app.getByLabelText("Cardholder Name");
+  const cardHolder = await app.findByLabelText("Cardholder Name");
   expect(cardHolder).toBeInTheDocument();
 });

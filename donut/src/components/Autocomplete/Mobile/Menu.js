@@ -16,7 +16,14 @@ import {
 } from "../styles";
 
 const AutocompleteMobileMenu = props => {
-  const { options, placeholder, onChange, onClose, initalSelectedItem } = props;
+  const {
+    options,
+    placeholder,
+    onChange,
+    onClose,
+    initalSelectedItem,
+    formatLabel,
+  } = props;
   let portalRoot = getPortalTarget();
 
   return createPortal(
@@ -67,6 +74,7 @@ const AutocompleteMobileMenu = props => {
                 getItemProps: downshift.getItemProps,
                 highlightedIndex: downshift.highlightedIndex,
                 selected: downshift.selected,
+                formatLabel,
               }}
             >
               {MenuItem}

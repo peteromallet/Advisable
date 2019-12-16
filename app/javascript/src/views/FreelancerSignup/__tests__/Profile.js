@@ -85,7 +85,7 @@ test("Continues to the work history step", async () => {
   const city = getByPlaceholderText("City");
   fireEvent.change(city, { target: { value: "Dublin" } });
   const country = getByTestId("country");
-  fireEvent.change(country, { target: { value: country } });
+  fireEvent.change(country, { target: { value: "IE" } });
   const button = getByLabelText("Continue");
   fireEvent.click(button);
   const header = await findByText("Work history");

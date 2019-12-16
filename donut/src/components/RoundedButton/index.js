@@ -10,32 +10,35 @@ import {
   Loading,
 } from "./styles";
 
-const Button = ({ children, loading, disabled, prefix, suffix, ...props }) => {
-  return (
-    <StyledButton
-      isLoading={loading}
-      aria-label={children}
-      data-loading={loading}
-      disabled={loading || disabled}
-      {...props}
-    >
-      {loading && (
-        <Loading>
-          <svg width="18" height="18" fill="none" viewBox="0 0 18 18">
-            <path
-              stroke="#fff"
-              strokeWidth="2"
-              strokeLinecap="round"
-              d="M17 9a8 8 0 11-8-8"
-            />
-          </svg>
-        </Loading>
-      )}
-      {prefix && <StyledButtonPrefix>{prefix}</StyledButtonPrefix>}
-      {children}
-      {suffix && <StyledButtonSuffix>{suffix}</StyledButtonSuffix>}
-    </StyledButton>
-  );
-};
+const Button = React.forwardRef(
+  ({ children, loading, disabled, prefix, suffix, ...props }, ref) => {
+    return (
+      <StyledButton
+        ref={ref}
+        isLoading={loading}
+        aria-label={children}
+        data-loading={loading}
+        disabled={loading || disabled}
+        {...props}
+      >
+        {loading && (
+          <Loading>
+            <svg width="18" height="18" fill="none" viewBox="0 0 18 18">
+              <path
+                stroke="#fff"
+                strokeWidth="2"
+                strokeLinecap="round"
+                d="M17 9a8 8 0 11-8-8"
+              />
+            </svg>
+          </Loading>
+        )}
+        {prefix && <StyledButtonPrefix>{prefix}</StyledButtonPrefix>}
+        {children}
+        {suffix && <StyledButtonSuffix>{suffix}</StyledButtonSuffix>}
+      </StyledButton>
+    );
+  }
+);
 
 export default Button;

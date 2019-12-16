@@ -139,7 +139,7 @@ const RequestConsultation = () => {
         <Sidebar steps={STEPS} data={data} />
       </Box>
       <Box width="100%" position="relative">
-        <AnimatePresence initial={false}>
+        <>
           <Switch location={location} key={location.pathname}>
             {STEPS.map((step, i) => (
               <Route
@@ -207,7 +207,7 @@ const RequestConsultation = () => {
               }}
             />
           </Switch>
-        </AnimatePresence>
+        </>
       </Box>
     </Box>
   );

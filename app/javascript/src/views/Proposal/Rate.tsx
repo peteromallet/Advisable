@@ -53,14 +53,12 @@ const Rate = ({ history, application, updateApplication }: Props) => {
     return currency(parseFloat(rate) * 100.0);
   };
 
-  const isInitialValid = rateValidationSchema.isValidSync(initialValues);
-
   return (
     <Card>
       <Formik
+        validateOnMount
         onSubmit={handleSubmit}
         initialValues={initialValues}
-        isInitialValid={isInitialValid}
         validationSchema={rateValidationSchema}
       >
         {formik => (

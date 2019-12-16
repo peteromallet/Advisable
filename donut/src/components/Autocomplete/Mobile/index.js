@@ -21,6 +21,10 @@ const AutocompleteMobile = props => {
     error,
     description,
     initalSelectedItem,
+    primary,
+    onPrimaryChange,
+    formatLabel,
+    ...rest
   } = props;
 
   const [open, setOpen] = React.useState(false);
@@ -41,7 +45,7 @@ const AutocompleteMobile = props => {
   };
 
   return (
-    <AutocompleteStyles>
+    <AutocompleteStyles {...rest}>
       <Label as="label" size="xs" weight="medium" color="neutral.N7">
         {label}
       </Label>
@@ -61,9 +65,13 @@ const AutocompleteMobile = props => {
           {selected.map(item => (
             <Tag
               key={item.value}
+              isPrimary={primary === item.value}
+              onSelectPrimary={
+                onPrimaryChange && (() => onPrimaryChange(item.value))
+              }
               onRemove={handleRemoveItem(item, props.value, onChange)}
             >
-              {item.label}
+              {formatLabel(item)}
             </Tag>
           ))}
         </Tags>
@@ -81,6 +89,7 @@ const AutocompleteMobile = props => {
           options={options}
           initalSelectedItem
           onChange={handleChange}
+          formatLabel={formatLabel}
         />
       )}
     </AutocompleteStyles>
