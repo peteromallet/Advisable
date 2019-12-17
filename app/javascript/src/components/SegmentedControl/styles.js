@@ -1,5 +1,6 @@
-import { darken, lighten } from "polished";
-import styled, { css } from "styled-components";
+import { darken } from "polished";
+import styled from "styled-components";
+import { space } from "styled-system";
 import colors from "../../colors";
 
 export const SegmentedControlRadio = styled.div`
@@ -40,6 +41,7 @@ export const SegmentedControlRadio = styled.div`
 `;
 
 export const SegmentedControl = styled.div`
+  ${space}
   display: inline-flex;
 
   ${SegmentedControlRadio}:first-child label {

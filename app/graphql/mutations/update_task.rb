@@ -6,6 +6,7 @@ class Mutations::UpdateTask < Mutations::BaseMutation
   argument :estimate, Int, required: false
   argument :flexible_estimate, Int, required: false
   argument :trial, Boolean, required: false
+  argument :pricing_type, String, required: false
 
   field :task, Types::TaskType, null: true
   field :errors, [Types::Error], null: true
@@ -14,7 +15,7 @@ class Mutations::UpdateTask < Mutations::BaseMutation
     task = Task.find_by_uid!(args[:id])
     policy = TaskPolicy.new(context[:current_user], task)
     return true if policy.is_specialist_or_client
-    return false, { errors: [{ code: "not_authorized" }] }
+    return false, { errors: [{ code: 'not_authorized' }] }
   end
 
   def resolve(**args)
@@ -22,24 +23,20 @@ class Mutations::UpdateTask < Mutations::BaseMutation
 
     if task.application.status === 'Stopped Working'
       raise ApiError::InvalidRequest.new(
-        "applicationStatusNotWorking",
-        "Application status is 'Stopped Working'",
-      )
+              'applicationStatusNotWorking',
+              "Application status is 'Stopped Working'"
+            )
     end
 
-    task = Tasks::Update.call(
-      task: task,
-      attributes: args.except(:id),
-      user: context[:current_user]
-    )
+    task =
+      Tasks::Update.call(
+        task: task, attributes: args.except(:id), user: context[:current_user]
+      )
 
     task.application.reload
 
-    {
-      task: task
-    }
-
-    rescue Service::Error => e
-      return { errors: [e] }
+    { task: task }
+  rescue Service::Error => e
+    return { errors: [e] }
   end
 end

@@ -1,4 +1,5 @@
 import pluralize from "./pluralize";
+import currency from "./currency";
 
 // Returns true if the task stage is submitted or any stage after
 export const hasBeenSubmitted = task => {
@@ -18,8 +19,21 @@ export const hoursDisplay = task => {
   }
 
   if (task.flexibleEstimate) {
-    return `${task.estimate || 0}-${task.flexibleEstimate || 0} hours`;
+    return `${task.estimate || 0} - ${task.flexibleEstimate || 0} hours`;
   }
 
   return pluralize(task.estimate, "hour", "hours");
+};
+
+// Displays the quote given for a task
+export const displayTaskQuote = task => {
+  if (task.pricingType === "Fixed") {
+    let quote = currency(task.estimate);
+    if (task.flexibleEstimate) {
+      quote += ` - ${currency(task.flexibleEstimate)}`;
+    }
+    return quote;
+  }
+
+  return hoursDisplay(task);
 };

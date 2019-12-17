@@ -1,7 +1,7 @@
 import Dinero from "dinero.js";
 
 const defaultOptions = {
-  format: "$0,0.00",
+  format: "$0,0",
 };
 
 export default (amount = 0, options = {}) => {

@@ -8,6 +8,7 @@ class Types::TaskType < Types::BaseType
   field :trial, Boolean, null: true
   field :hours_worked, Int, null: true
   field :flexible_estimate, Int, null: true
+  field :pricing_type, String, null: true
   field :due_date, GraphQL::Types::ISO8601DateTime, null: true
   field :description, String, null: true
   field :application, Types::ApplicationType, null: false

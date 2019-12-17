@@ -9,6 +9,7 @@ export default gql`
     dueDate
     estimate
     hoursWorked
+    pricingType
     flexibleEstimate
     description
     createdAt

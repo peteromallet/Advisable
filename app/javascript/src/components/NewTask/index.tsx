@@ -23,6 +23,7 @@ const Component = ({ application, onCreate, mutate }) => {
       description: null,
       createdAt: new Date().toISOString(),
       repeat: null,
+      pricingType: "Hourly",
       application: {
         __typename: "Application",
         id: application.id,
