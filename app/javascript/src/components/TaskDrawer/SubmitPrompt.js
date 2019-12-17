@@ -8,6 +8,7 @@ import Heading from "../Heading";
 import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
 import SUBMIT_TASK from "./submitTask";
+import currency from "../../utilities/currency";
 import { Confirmation, ConfirmationContainer } from "./styles";
 
 // The submit prompt can have two steps. First we show a prompt where the user
@@ -19,7 +20,7 @@ const HOURS_WORKED = "HOURS_WORKED";
 const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
   const [loading, setLoading] = React.useState(false);
   const [step, setStep] = React.useState(CONFIRM_APPROVED);
-  const [hours, setHours] = React.useState(
+  const [estimate, setCost] = React.useState(
     (Number(task.estimate) + Number(task.flexibleEstimate || task.estimate)) / 2
   );
 
@@ -37,13 +38,15 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
       variables: {
         input: {
           task: task.id,
-          hoursWorked: parseInt(hours),
+          hoursWorked: parseInt(estimate),
         },
       },
     });
     setLoading(false);
     onSubmit(response.data.submitTask.task);
   };
+
+  const isFixedPricing = task.pricingType === "Fixed";
 
   return (
     <Confirmation>
@@ -81,27 +84,44 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
           <>
             <Padding bottom="s">
               <Text weight="semibold" colour="dark">
-                How many hours did this take you?
+                {isFixedPricing ? (
+                  <>How much did this project cost?</>
+                ) : (
+                  <>How many hours did this take you?</>
+                )}
               </Text>
             </Padding>
             <Padding bottom="l">
               <Text size="s">
-                This task had a flexible estimate, how many hours did you end up
-                spending on the task?
+                {isFixedPricing ? (
+                  <>
+                    This task had a flexible estimate, how much did it end up
+                    costing?
+                  </>
+                ) : (
+                  <>
+                    This task had a flexible estimate, how many hours did you
+                    end up spending on the task?
+                  </>
+                )}
               </Text>
             </Padding>
             <Padding bottom="m">
-              <Heading size="m">{hours}</Heading>
-              <Text>Hours</Text>
+              <Heading size="m">
+                {isFixedPricing ? currency(estimate) : estimate}
+              </Heading>
+              <Text>
+                {task.pricingType === "Fixed" ? "Cost" : "Hours Worked"}
+              </Text>
             </Padding>
             <Padding bottom="xl">
               <Slider
                 labelHidden
-                value={hours}
-                label="Hours Worked"
+                value={estimate}
                 min={task.estimate}
                 max={task.flexibleEstimate}
-                onChange={e => setHours(e.target.value)}
+                step={isFixedPricing ? "5000" : "1"}
+                onChange={e => setCost(e.target.value)}
               />
             </Padding>
             <ButtonGroup fullWidth>
