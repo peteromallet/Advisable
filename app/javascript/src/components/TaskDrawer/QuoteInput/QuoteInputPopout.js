@@ -95,7 +95,6 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
               { label: "Fixed", value: "Fixed" },
             ]}
           />
-          {console.log(formik.values)}
           <Text as="label" fontSize="s" htmlFor="amount" fontWeight="medium">
             {CONTENT[`${formik.values.estimateType}`].label}
           </Text>
