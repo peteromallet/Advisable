@@ -9,7 +9,6 @@ import {
   Textarea,
   CharCount,
   Prefix,
-  InputBackdrop,
 } from "./styles";
 import InputLabel from "src/components/InputLabel";
 import InputSubLabel from "src/components/InputSubLabel";

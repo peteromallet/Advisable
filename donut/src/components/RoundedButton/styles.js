@@ -1,6 +1,6 @@
 import { lighten, darken } from "polished";
 import styled, { css, keyframes } from "styled-components";
-import { space, layout } from "styled-system";
+import { space, layout, variant } from "styled-system";
 import theme from "../../theme";
 
 const spin = keyframes`
@@ -44,16 +44,33 @@ const VARIANTS = {
   `,
 };
 
+const buttonSize = variant({
+  prop: "size",
+  variants: {
+    s: {
+      height: 32,
+      fontSize: 14,
+    },
+    m: {
+      height: 38,
+      fontSize: 15,
+    },
+    l: {
+      height: 48,
+      fontSize: 16,
+    },
+  },
+});
+
 export const StyledButton = styled.button`
   ${space}
   ${layout}
+  ${buttonSize}
 
   border: none;
   color: white;
-  height: 48px;
   outline: none;
   line-height: 1;
-  font-size: 16px;
   padding: 0 20px;
   appearance: none;
   font-weight: 500;
@@ -69,11 +86,6 @@ export const StyledButton = styled.button`
   letter-spacing: -0.01em;
   background: ${theme.colors.blue[5]};
   transition: background 100ms, color 100ms;
-
-  @media (min-width: ${theme.breakpoints.s}) {
-    height: 38px;
-    font-size: 15px;
-  }
 
   svg {
     width: 20px;

@@ -9,7 +9,7 @@ import {
   StyledCheckboxText,
 } from "./styles";
 
-const Checkbox = ({ children, m, mx, my, mt, mr, mb, ml, ...props }) => {
+const Checkbox = ({ children, m, mx, my, mt, mr, mb, ml, size, ...props }) => {
   const checkVariants = {
     checked: { scale: 1 },
     unchecked: { scale: 0 },
@@ -24,7 +24,7 @@ const Checkbox = ({ children, m, mx, my, mt, mr, mb, ml, ...props }) => {
           type="checkbox"
           aria-checked={props.checked}
         />
-        <StyledCheckboxToggle aria-hidden="true">
+        <StyledCheckboxToggle aria-hidden="true" size={size}>
           <motion.svg
             width={14}
             height={14}
@@ -47,6 +47,10 @@ const Checkbox = ({ children, m, mx, my, mt, mr, mb, ml, ...props }) => {
       </StyledCheckboxInner>
     </StyledCheckbox>
   );
+};
+
+Checkbox.defaultProps = {
+  size: "m",
 };
 
 export default Checkbox;

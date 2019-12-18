@@ -41,4 +41,8 @@ const Button = React.forwardRef(
   }
 );
 
+Button.defaultProps = {
+  size: "m",
+};
+
 export default Button;

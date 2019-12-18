@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Form, Field } from "formik";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { Box, Checkbox, RoundedButton, Text } from "@advisable/donut";
@@ -60,7 +60,7 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
 
   const handleSubmit = async values => {
     onSubmit({
-      ...values,
+      estimateType: values.estimateType,
       estimate: values.estimate ? Number(values.estimate) : undefined,
       flexibleEstimate: values.flexibleEstimate
         ? Number(values.flexibleEstimate)
@@ -78,7 +78,7 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
       {({ isSubmitting, ...formik }) => (
         <Form>
           <Field
-            mb="s"
+            mb="m"
             name="estimateType"
             as={SegmentedControl}
             onChange={handleChangePricingType(formik)}
@@ -87,12 +87,13 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
               { label: "Fixed", value: "Fixed" },
             ]}
           />
-          <InputLabel htmlFor="amount">
+          <Text as="label" fontSize="s" htmlFor="amount" fontWeight="medium">
             {CONTENT[`${formik.values.estimateType}`].label}
-          </InputLabel>
-          <Box display="flex" alignItems="center">
+          </Text>
+          <Box pt="xs" display="flex" alignItems="center">
             <Box width="100%">
               <Field
+                size="s"
                 id="estimate"
                 name="estimate"
                 as={TextField}
@@ -113,6 +114,7 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
                 </Text>
                 <Box width="100%">
                   <Field
+                    size="s"
                     as={TextField}
                     name="flexibleEstimate"
                     autoFocus
@@ -139,6 +141,7 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
             as={Checkbox}
             mt="s"
             mb="l"
+            size="s"
             type="checkbox"
             name="isFlexible"
             onChange={handleToggleFlexible(formik)}
@@ -147,13 +150,19 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
           </Field>
           <RoundedButton
             mr="xs"
+            size="s"
             type="submit"
             loading={isSubmitting}
             disabled={!formik.isValid}
           >
-            Save
+            Save Quote
           </RoundedButton>
-          <RoundedButton type="button" variant="secondary" onClick={onCancel}>
+          <RoundedButton
+            type="button"
+            size="s"
+            variant="secondary"
+            onClick={onCancel}
+          >
             Cancel
           </RoundedButton>
         </Form>

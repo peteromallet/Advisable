@@ -1,8 +1,8 @@
 import { rgba } from "polished";
-import styled, { css } from "styled-components";
-import MaskedInput from "react-text-mask";
-import { withSpacing } from "src/components/Spacing";
 import { theme } from "@advisable/donut";
+import MaskedInput from "react-text-mask";
+import styled, { css } from "styled-components";
+import { withSpacing } from "src/components/Spacing";
 
 export let Wrapper = styled.div`
   position: relative;
@@ -20,18 +20,6 @@ const heights = {
   default: "36px",
   s: "30px",
 };
-
-export const InputBackdrop = styled.div`
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  position: absolute;
-  border-radius: 8px;
-  transition: border-color 200ms;
-  background: ${theme.colors.neutral[1]};
-`;
 
 export const Input = styled.input`
   padding: 0;
@@ -63,10 +51,6 @@ export const Input = styled.input`
   }
   &:-moz-placeholder {
     color: #acaec1;
-  }
-
-  &:focus + ${InputBackdrop} {
-    border: 2px solid ${rgba("#173fcd", 0.9)} !important;
   }
 `;
 
