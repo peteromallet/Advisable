@@ -9,7 +9,6 @@ import VerticalLayout from "../VerticalLayout";
 import Title from "./Title";
 import DueDate from "./DueDate";
 import Actions from "./Actions";
-import Estimate from "./Estimate";
 import QuoteInput from "./QuoteInput";
 import Description from "./Description";
 import MarkAsTrial from "./MarkAsTrial.js";

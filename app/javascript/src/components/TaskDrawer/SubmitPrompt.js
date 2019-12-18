@@ -37,10 +37,10 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
   const submit = async () => {
     setLoading(true);
 
-    let finalCost = parseInt(estimate);
+    let finalCost = Number(estimate);
 
     if (!isFixedPricing) {
-      finalCost = task.application.rate * parseInt(estimate) * 100;
+      finalCost = task.application.rate * Number(estimate) * 100;
     }
 
     const response = await submitTask({
