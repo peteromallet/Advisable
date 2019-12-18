@@ -16,11 +16,6 @@ import QuoteInputPopout from "./QuoteInputPopout";
 const QuoteInput = ({ task, readOnly, onSubmit }) => {
   const popover = usePopoverState({ placement: "bottom-start" });
 
-  const handleSubmit = async values => {
-    await onSubmit(values);
-    popover.hide();
-  };
-
   return (
     <>
       <PopoverDisclosure
@@ -62,7 +57,7 @@ const QuoteInput = ({ task, readOnly, onSubmit }) => {
             <QuoteInputPopout
               task={task}
               onCancel={popover.hide}
-              onSubmit={handleSubmit}
+              onSuccess={popover.hide}
             />
           )}
         </Card>

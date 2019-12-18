@@ -1,10 +1,11 @@
 import * as Yup from "yup";
 import React from "react";
+import { useMutation } from "react-apollo";
 import { Formik, Form, Field } from "formik";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { Box, Checkbox, RoundedButton, Text } from "@advisable/donut";
 import TextField from "../../TextField";
-import InputLabel from "../../InputLabel";
+import UPDATE_ESTIMATE from "./updateEstimate";
 import SegmentedControl from "../../SegmentedControl";
 import priceInputProps from "../../../utilities/priceInputProps";
 import QuoteInputPriceCalcuation from "./QuoteInputPriceCalculation";
@@ -35,14 +36,14 @@ const validationSchema = Yup.object({
   }),
 });
 
-const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
+const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
+  const [updateEstimate] = useMutation(UPDATE_ESTIMATE);
+
   const initialValues = {
     isFlexible: Boolean(task.flexibleEstimate),
-    estimate: task.estimate ? task.estimate.toString() : undefined,
+    estimate: task.estimate ? task.estimate : undefined,
     estimateType: task.estimateType || "Hourly",
-    flexibleEstimate: task.flexibleEstimate
-      ? task.flexibleEstimate.toString()
-      : undefined,
+    flexibleEstimate: task.flexibleEstimate ? task.flexibleEstimate : undefined,
   };
 
   const handleChangePricingType = formik => e => {
@@ -52,20 +53,27 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
   };
 
   const handleToggleFlexible = formik => e => {
-    formik.handleChange(e);
-    if (e.target.checked) {
+    if (formik.values.isFlexible) {
       formik.setFieldValue("flexibleEstimate", undefined);
     }
+    formik.handleChange(e);
   };
 
   const handleSubmit = async values => {
-    onSubmit({
-      estimateType: values.estimateType,
-      estimate: values.estimate ? Number(values.estimate) : undefined,
-      flexibleEstimate: values.flexibleEstimate
-        ? Number(values.flexibleEstimate)
-        : undefined,
+    await updateEstimate({
+      variables: {
+        input: {
+          id: task.id,
+          estimateType: values.estimateType,
+          estimate: values.estimate ? Number(values.estimate) : undefined,
+          flexibleEstimate: values.flexibleEstimate
+            ? Number(values.flexibleEstimate)
+            : null,
+        },
+      },
     });
+
+    onSuccess();
   };
 
   return (
@@ -87,6 +95,7 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
               { label: "Fixed", value: "Fixed" },
             ]}
           />
+          {console.log(formik.values)}
           <Text as="label" fontSize="s" htmlFor="amount" fontWeight="medium">
             {CONTENT[`${formik.values.estimateType}`].label}
           </Text>
