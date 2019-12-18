@@ -25,6 +25,17 @@ export const hoursDisplay = task => {
   return pluralize(task.estimate, "hour", "hours");
 };
 
+export const hoursCost = task => {
+  const rate = task.application.rate;
+  let output = currency(rate * task.estimate * 100);
+
+  if (task.flexibleEstimate) {
+    output += ` - ${currency(rate * task.flexibleEstimate * 100)}`;
+  }
+
+  return output;
+};
+
 // Displays the quote given for a task
 export const displayTaskQuote = task => {
   if (task.estimateType === "Fixed") {

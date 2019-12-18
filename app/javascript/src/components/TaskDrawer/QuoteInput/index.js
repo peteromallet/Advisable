@@ -2,7 +2,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Icon, Card } from "@advisable/donut";
 import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
-import { hoursLabel, displayTaskQuote } from "../../../utilities/tasks";
+import {
+  hoursLabel,
+  displayTaskQuote,
+  hoursCost,
+} from "../../../utilities/tasks";
 import {
   Detail,
   DetailIcon,
@@ -34,7 +38,10 @@ const QuoteInput = ({ task, readOnly, onSubmit }) => {
         </DetailIcon>
         <DetailLabel>{hoursLabel(task)}</DetailLabel>
         {task.estimate ? (
-          <DetailValue>{displayTaskQuote(task)}</DetailValue>
+          <DetailValue>
+            {displayTaskQuote(task)}
+            {task.estimateType === "Hourly" && ` / ${hoursCost(task)}`}
+          </DetailValue>
         ) : (
           <DetailPlaceholder>+ Add estimate</DetailPlaceholder>
         )}
