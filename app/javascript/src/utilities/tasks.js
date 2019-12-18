@@ -8,14 +8,14 @@ export const hasBeenSubmitted = task => {
 
 // When a task has been submitted we want to dispay "Hours Worked" instead of "Quote".
 export const hoursLabel = task => {
-  if (hasBeenSubmitted(task)) return "Hours Worked";
+  if (hasBeenSubmitted(task)) return "Cost";
   return "Quote";
 };
 
 // displays the estimate or hours worked for a task.
 export const hoursDisplay = task => {
   if (hasBeenSubmitted(task)) {
-    return pluralize(task.hoursWorked || 0, "hour", "hours");
+    return currency(task.finalCost);
   }
 
   if (task.flexibleEstimate) {
@@ -27,7 +27,7 @@ export const hoursDisplay = task => {
 
 // Displays the quote given for a task
 export const displayTaskQuote = task => {
-  if (task.pricingType === "Fixed") {
+  if (task.estimateType === "Fixed") {
     let quote = currency(task.estimate);
     if (task.flexibleEstimate) {
       quote += ` - ${currency(task.flexibleEstimate)}`;

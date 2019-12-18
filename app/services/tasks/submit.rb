@@ -1,23 +1,26 @@
 class Tasks::Submit < ApplicationService
-  attr_reader :task, :hours_worked
+  attr_reader :task, :final_cost
 
-  def initialize(task:, hours_worked:)
+  def initialize(task:, final_cost:)
     @task = task
-    @hours_worked = hours_worked
+    @final_cost = final_cost
   end
 
   def call
     if task.application.status != 'Working'
-      raise Service::Error.new("tasks.notSubmittable", message: "Application status is not 'Working'")
+      raise Service::Error.new(
+              'tasks.notSubmittable',
+              message: "Application status is not 'Working'"
+            )
     end
 
     unless allowed_stages.include?(task.stage)
-      raise Service::Error.new("tasks.notSubmittable")
+      raise Service::Error.new('tasks.notSubmittable')
     end
-    
-    if task.update(stage: "Submitted", hours_worked: hours_worked)
+
+    if task.update(stage: 'Submitted', final_cost: final_cost)
       task.sync_to_airtable
-      WebhookEvent.trigger("tasks.submitted", WebhookEvent::Task.data(task))
+      WebhookEvent.trigger('tasks.submitted', WebhookEvent::Task.data(task))
       return task
     end
 
@@ -28,8 +31,8 @@ class Tasks::Submit < ApplicationService
 
   # returns an array of stages that the task can be submitted from.
   def allowed_stages
-    flexible = task.application.project_type == "Flexible"
-    stages = ['Working']
+    flexible = task.application.project_type == 'Flexible'
+    stages = %w[Working]
     stages << 'Not Assigned' if flexible
     stages
   end

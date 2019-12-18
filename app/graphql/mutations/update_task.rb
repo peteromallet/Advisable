@@ -6,7 +6,7 @@ class Mutations::UpdateTask < Mutations::BaseMutation
   argument :estimate, Int, required: false
   argument :flexible_estimate, Int, required: false
   argument :trial, Boolean, required: false
-  argument :pricing_type, String, required: false
+  argument :estimate_type, String, required: false
 
   field :task, Types::TaskType, null: true
   field :errors, [Types::Error], null: true

@@ -62,7 +62,7 @@ export const updateTaskEstimate = gql`
       task {
         id
         estimate
-        pricingType
+        estimateType
         flexibleEstimate
         stage # changing the estimate can change the stage
       }

@@ -8,7 +8,7 @@ export const taskFields = gql`
     trial
     dueDate
     estimate
-    hoursWorked
+    finalCost
     flexibleEstimate
     description
     createdAt

@@ -59,7 +59,7 @@ class TaskPolicy < BasePolicy
     update_estimate
   end
 
-  def update_pricing_type
+  def update_estimate_type
     update_estimate
   end
 

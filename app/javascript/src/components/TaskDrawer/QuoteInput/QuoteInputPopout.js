@@ -1,3 +1,4 @@
+import * as Yup from "yup";
 import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
@@ -6,6 +7,7 @@ import TextField from "../../TextField";
 import InputLabel from "../../InputLabel";
 import SegmentedControl from "../../SegmentedControl";
 import priceInputProps from "../../../utilities/priceInputProps";
+import QuoteInputPriceCalcuation from "./QuoteInputPriceCalculation";
 
 const hourMask = createNumberMask({ prefix: "" });
 
@@ -24,12 +26,20 @@ const CONTENT = {
   },
 };
 
-const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
-  const [isFlexible, setIsFlexible] = useState(Boolean(task.flexibleEstimate));
+const validationSchema = Yup.object({
+  isFlexible: Yup.boolean(),
+  estimate: Yup.number().required(),
+  flexibleEstimate: Yup.number().when("isFlexible", {
+    is: true,
+    then: Yup.number().required(),
+  }),
+});
 
+const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
   const initialValues = {
+    isFlexible: Boolean(task.flexibleEstimate),
     estimate: task.estimate ? task.estimate.toString() : undefined,
-    pricingType: task.pricingType || "Hourly",
+    estimateType: task.estimateType || "Hourly",
     flexibleEstimate: task.flexibleEstimate
       ? task.flexibleEstimate.toString()
       : undefined,
@@ -41,9 +51,9 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
     formik.setFieldValue("flexibleEstimate", undefined);
   };
 
-  const handleToggleFlexible = formik => () => {
-    setIsFlexible(!isFlexible);
-    if (isFlexible) {
+  const handleToggleFlexible = formik => e => {
+    formik.handleChange(e);
+    if (e.target.checked) {
       formik.setFieldValue("flexibleEstimate", undefined);
     }
   };
@@ -59,12 +69,17 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      validateOnMount
+    >
       {({ isSubmitting, ...formik }) => (
         <Form>
           <Field
             mb="s"
-            name="pricingType"
+            name="estimateType"
             as={SegmentedControl}
             onChange={handleChangePricingType(formik)}
             options={[
@@ -73,7 +88,7 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
             ]}
           />
           <InputLabel htmlFor="amount">
-            {CONTENT[`${formik.values.pricingType}`].label}
+            {CONTENT[`${formik.values.estimateType}`].label}
           </InputLabel>
           <Box display="flex" alignItems="center">
             <Box width="100%">
@@ -82,16 +97,16 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
                 name="estimate"
                 as={TextField}
                 mask={hourMask}
-                autoFocus={formik.values.pricingType !== "Fixed"}
+                autoFocus={formik.values.estimateType !== "Fixed"}
                 placeholder={
-                  CONTENT[`${formik.values.pricingType}`].amountPlaceholder
+                  CONTENT[`${formik.values.estimateType}`].amountPlaceholder
                 }
-                {...(formik.values.pricingType === "Fixed"
+                {...(formik.values.estimateType === "Fixed"
                   ? priceInputProps(formik, "estimate")
                   : {})}
               />
             </Box>
-            {isFlexible && (
+            {formik.values.isFlexible && (
               <>
                 <Text px="xs" color="neutral.6">
                   to
@@ -102,12 +117,12 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
                     name="flexibleEstimate"
                     autoFocus
                     mask={hourMask}
-                    prefix={formik.values.pricingType === "Fixed" && "$"}
+                    prefix={formik.values.estimateType === "Fixed" && "$"}
                     placeholder={
-                      CONTENT[`${formik.values.pricingType}`]
+                      CONTENT[`${formik.values.estimateType}`]
                         .flexibleAmountPlaceholder
                     }
-                    {...(formik.values.pricingType === "Fixed"
+                    {...(formik.values.estimateType === "Fixed"
                       ? priceInputProps(formik, "flexibleEstimate")
                       : {})}
                   />
@@ -115,18 +130,30 @@ const QuoteInputPopout = ({ onSubmit, onCancel, task }) => {
               </>
             )}
           </Box>
-          <Checkbox
+          <QuoteInputPriceCalcuation
+            task={task}
+            isFlexible={formik.values.isFlexible}
+            {...formik.values}
+          />
+          <Field
+            as={Checkbox}
             mt="s"
             mb="l"
-            checked={isFlexible}
+            type="checkbox"
+            name="isFlexible"
             onChange={handleToggleFlexible(formik)}
           >
-            {CONTENT[`${formik.values.pricingType}`].flexibleToggle}
-          </Checkbox>
-          <RoundedButton type="submit" loading={isSubmitting} mr="xs">
+            {CONTENT[`${formik.values.estimateType}`].flexibleToggle}
+          </Field>
+          <RoundedButton
+            mr="xs"
+            type="submit"
+            loading={isSubmitting}
+            disabled={!formik.isValid}
+          >
             Save
           </RoundedButton>
-          <RoundedButton variant="secondary" onClick={onCancel}>
+          <RoundedButton type="button" variant="secondary" onClick={onCancel}>
             Cancel
           </RoundedButton>
         </Form>

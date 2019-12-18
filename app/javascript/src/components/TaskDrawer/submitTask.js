@@ -6,7 +6,7 @@ export default gql`
       task {
         id
         stage
-        hoursWorked
+        finalCost
       }
       errors {
         code

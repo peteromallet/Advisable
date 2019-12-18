@@ -32,21 +32,28 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
     }
   };
 
+  const isFixedPricing = task.estimateType === "Fixed";
+
   const submit = async () => {
     setLoading(true);
+
+    let finalCost = parseInt(estimate);
+
+    if (!isFixedPricing) {
+      finalCost = task.application.rate * parseInt(estimate) * 100;
+    }
+
     const response = await submitTask({
       variables: {
         input: {
           task: task.id,
-          hoursWorked: parseInt(estimate),
+          finalCost: finalCost,
         },
       },
     });
     setLoading(false);
     onSubmit(response.data.submitTask.task);
   };
-
-  const isFixedPricing = task.pricingType === "Fixed";
 
   return (
     <Confirmation>
@@ -111,7 +118,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
                 {isFixedPricing ? currency(estimate) : estimate}
               </Heading>
               <Text>
-                {task.pricingType === "Fixed" ? "Cost" : "Hours Worked"}
+                {task.estimateType === "Fixed" ? "Cost" : "Hours Worked"}
               </Text>
             </Padding>
             <Padding bottom="xl">

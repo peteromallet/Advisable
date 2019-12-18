@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { Icon, Card } from "@advisable/donut";
 import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
 import { hoursLabel, displayTaskQuote } from "../../../utilities/tasks";
@@ -22,7 +23,12 @@ const QuoteInput = ({ task, readOnly, onSubmit }) => {
 
   return (
     <>
-      <PopoverDisclosure as={Detail} readOnly={readOnly} {...popover}>
+      <PopoverDisclosure
+        as={Detail}
+        disabled={readOnly}
+        readOnly={readOnly}
+        {...popover}
+      >
         {task.stage === "Quote Requested" && (
           <ArrowPrompt>
             <Icon icon="arrow-up" strokeWidth={2} />
@@ -39,21 +45,27 @@ const QuoteInput = ({ task, readOnly, onSubmit }) => {
         )}
       </PopoverDisclosure>
       <Popover
-        as={Card}
         {...popover}
-        padding="m"
-        width="100%"
-        elevation="l"
-        maxWidth={320}
         aria-label="Quote"
+        style={{ width: "100%", maxWidth: 320, outline: "none" }}
       >
-        {popover.visible && (
-          <QuoteInputPopout
-            onCancel={popover.hide}
-            onSubmit={handleSubmit}
-            task={task}
-          />
-        )}
+        <Card
+          padding="m"
+          elevation="xl"
+          as={motion.div}
+          animate={{
+            y: popover.visible ? 0 : 20,
+            opacity: popover.visible ? 1 : 0,
+          }}
+        >
+          {popover.visible && (
+            <QuoteInputPopout
+              task={task}
+              onCancel={popover.hide}
+              onSubmit={handleSubmit}
+            />
+          )}
+        </Card>
       </Popover>
     </>
   );
