@@ -29,7 +29,7 @@ const CONTENT = {
 
 const validationSchema = Yup.object({
   isFlexible: Yup.boolean(),
-  estimate: Yup.number().required(),
+  estimate: Yup.string().required(),
   flexibleEstimate: Yup.number().when("isFlexible", {
     is: true,
     then: Yup.number()
@@ -171,6 +171,7 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
             type="submit"
             loading={isSubmitting}
             disabled={!formik.isValid}
+            aria-label="Save Quote"
           >
             Save Quote
           </RoundedButton>

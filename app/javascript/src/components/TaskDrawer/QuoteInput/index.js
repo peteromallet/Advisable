@@ -26,6 +26,7 @@ const QuoteInput = ({ task, readOnly, onSubmit }) => {
         as={Detail}
         disabled={readOnly}
         readOnly={readOnly}
+        aria-label="Set estimate"
         {...popover}
       >
         {task.stage === "Quote Requested" && (
