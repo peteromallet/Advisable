@@ -39,7 +39,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
 
     let finalCost = Number(estimate);
 
-    if (!isFixedPricing) {
+    if (isFixedPricing) {
       finalCost = task.application.rate * Number(estimate) * 100;
     }
 
@@ -126,6 +126,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
                 labelHidden
                 value={estimate}
                 min={task.estimate}
+                label="Hours Worked"
                 max={task.flexibleEstimate}
                 step={isFixedPricing ? "5000" : "1"}
                 onChange={e => setCost(e.target.value)}

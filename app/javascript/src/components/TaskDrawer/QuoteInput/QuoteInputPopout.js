@@ -32,7 +32,9 @@ const validationSchema = Yup.object({
   estimate: Yup.number().required(),
   flexibleEstimate: Yup.number().when("isFlexible", {
     is: true,
-    then: Yup.number().required(),
+    then: Yup.number()
+      .required("Field is required")
+      .min(Yup.ref("estimate"), "Value must be greater than ${min}"),
   }),
 });
 
@@ -60,7 +62,7 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
   };
 
   const handleSubmit = async values => {
-    await updateEstimate({
+    const r = await updateEstimate({
       variables: {
         input: {
           id: task.id,
@@ -140,11 +142,17 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
               </>
             )}
           </Box>
-          <QuoteInputPriceCalcuation
-            task={task}
-            isFlexible={formik.values.isFlexible}
-            {...formik.values}
-          />
+          {formik.errors.flexibleEstimate ? (
+            <Text color="red.6" mt="xs" fontSize="xs" lineHeight="xs">
+              {formik.errors.flexibleEstimate}
+            </Text>
+          ) : (
+            <QuoteInputPriceCalcuation
+              task={task}
+              isFlexible={formik.values.isFlexible}
+              {...formik.values}
+            />
+          )}
           <Field
             as={Checkbox}
             mt="s"
@@ -156,6 +164,7 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
           >
             {CONTENT[`${formik.values.estimateType}`].flexibleToggle}
           </Field>
+
           <RoundedButton
             mr="xs"
             size="s"

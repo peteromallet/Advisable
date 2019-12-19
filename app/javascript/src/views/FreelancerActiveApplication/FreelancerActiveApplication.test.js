@@ -31,6 +31,7 @@ test("Freelancer can create a task", async () => {
   });
 
   const {
+    getByText,
     findByText,
     getByLabelText,
     getByPlaceholderText,
@@ -169,22 +170,22 @@ test("Freelancer can create a task", async () => {
   fireEvent.click(createButton);
   const name = await findByTestId("nameField");
   fireEvent.change(name, { target: { value: "Task name here" } });
-  const estimate = getByLabelText("Estimate");
+  const estimate = getByText("Add estimate", { exact: false });
   fireEvent.click(estimate);
-  const flexible = getByLabelText("Flexible");
+  const flexible = getByLabelText("Flexible", { exact: false });
   fireEvent.click(flexible);
-  const from = getByLabelText("Hours Estimate");
+  const from = getByPlaceholderText("10 Hours");
   fireEvent.change(from, { target: { value: 10 } });
-  const to = getByLabelText("Flexible Hours Estimate");
+  const to = getByPlaceholderText("20 Hours");
   fireEvent.change(to, { target: { value: 20 } });
-  const save = getByLabelText("Save Estimate");
+  const save = getByLabelText("Save Quote");
   fireEvent.click(save);
   const description = getByPlaceholderText("Add a description...");
   fireEvent.change(description, { target: { value: "Description here" } });
   fireEvent.blur(description);
   const close = getByLabelText("Close Drawer");
   fireEvent.click(close);
-  const quote = await findByText("10-20 hours");
+  const quote = await findByText("10 - 20 hours");
   expect(quote).toBeInTheDocument();
 });
 
@@ -198,6 +199,7 @@ test("Freelancer can mark a task as complete", async () => {
     stage: "Working",
     estimate: 10,
     flexibleEstimate: 20,
+    estimateType: "Hourly",
   });
 
   const application = generateTypes.application({

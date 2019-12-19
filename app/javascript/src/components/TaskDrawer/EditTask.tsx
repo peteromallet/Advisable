@@ -224,19 +224,6 @@ const EditTask = ({
                     onSave("estimate", values);
                   }}
                 />
-                {/* <Estimate
-                  task={task}
-                  readOnly={estimateReadOnly}
-                  isClient={isClient}
-                  onClick={handleFocus("estimate")}
-                  onClose={handleBlur("estimate")}
-                  isOpen={editAllowed && focusedElement === "estimate"}
-                  onChange={values => {
-                    updateField("estimate", values.estimate);
-                    updateField("flexibleEstimate", values.flexibleEstimate);
-                    onSave("estimate", values);
-                  }}
-                /> */}
               </TaskDetails>
               <TaskDetailRows task={task} isClient={isClient} />
               {!readOnly && !isClient && !task.application.trialTask && (

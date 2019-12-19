@@ -206,6 +206,7 @@ export const task = (fields = {}) => {
       repeat: null,
       finalCost: null,
       flexibleEstimate: null,
+      estimateType: "Hourly",
       createdAt: new Date().toISOString(),
     },
     fields
