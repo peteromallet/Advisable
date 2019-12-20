@@ -48,4 +48,8 @@ class Task < ApplicationRecord
   def invoice_hours
     (flexible_estimate || estimate).ceil
   end
+
+  def fixed_estimate?
+    estimate_type == 'Fixed'
+  end
 end
