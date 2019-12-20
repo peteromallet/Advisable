@@ -9,7 +9,7 @@ import VerticalLayout from "../VerticalLayout";
 import Title from "./Title";
 import DueDate from "./DueDate";
 import Actions from "./Actions";
-import Estimate from "./Estimate";
+import QuoteInput from "./QuoteInput";
 import Description from "./Description";
 import MarkAsTrial from "./MarkAsTrial.js";
 import TaskDetailRows from "./TaskDetailRows";
@@ -215,14 +215,10 @@ const EditTask = ({
                   onChange={handleChange("dueDate")}
                   isOpen={editAllowed && focusedElement === "dueDate"}
                 />
-                <Estimate
+                <QuoteInput
                   task={task}
                   readOnly={estimateReadOnly}
-                  isClient={isClient}
-                  onClick={handleFocus("estimate")}
-                  onClose={handleBlur("estimate")}
-                  isOpen={editAllowed && focusedElement === "estimate"}
-                  onChange={values => {
+                  onSubmit={values => {
                     updateField("estimate", values.estimate);
                     updateField("flexibleEstimate", values.flexibleEstimate);
                     onSave("estimate", values);

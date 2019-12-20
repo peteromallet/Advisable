@@ -8,7 +8,8 @@ export default gql`
     trial
     dueDate
     estimate
-    hoursWorked
+    finalCost
+    estimateType
     flexibleEstimate
     description
     createdAt

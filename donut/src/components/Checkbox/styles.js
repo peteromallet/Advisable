@@ -1,6 +1,6 @@
 import { darken } from "polished";
 import styled from "styled-components";
-import { space } from "styled-system";
+import { space, variant } from "styled-system";
 import theme from "../../theme";
 
 export const StyledCheckboxInput = styled.input`
@@ -19,8 +19,6 @@ export const StyledCheckboxInput = styled.input`
 `;
 
 export const StyledCheckboxToggle = styled.div`
-  width: 18px;
-  height: 18px;
   flex-shrink: 0;
   position: relative;
   border-radius: 6px;
@@ -28,6 +26,22 @@ export const StyledCheckboxToggle = styled.div`
   background: ${theme.colors.neutral[0]};
   border: 2px solid ${theme.colors.neutral[3]};
   transition: background 200ms;
+
+  ${variant({
+    prop: "size",
+    variants: {
+      s: {
+        width: 16,
+        height: 16,
+        marginRight: "xs",
+      },
+      m: {
+        width: 18,
+        height: 18,
+        marginRight: "xs",
+      },
+    },
+  })}
 
   svg {
     top: 50%;
@@ -37,9 +51,7 @@ export const StyledCheckboxToggle = styled.div`
   }
 `;
 
-export const StyledCheckboxContent = styled.div`
-  padding-left: 12px;
-`;
+export const StyledCheckboxContent = styled.div``;
 
 export const StyledCheckboxText = styled.div`
   font-size: 15px;
