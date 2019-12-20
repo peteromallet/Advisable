@@ -1,10 +1,11 @@
 import * as React from "react";
 import * as moment from "moment";
-import { Task, Title, Detail, TaskContent, Prompt } from "./styles";
+import { Task, Title, Detail, TaskContent } from "./styles";
 import Icon from "../Icon";
 import TaskStatus from "../TaskStatus";
 import { hoursLabel, displayTaskQuote } from "../../utilities/tasks";
 import TrialIndicator from "./TrialIndicator";
+import Prompt from "./Prompt";
 
 const shouldShowPrompt = (isClient, task) => {
   if (task.stage === "Quote Requested" && !isClient) return true;

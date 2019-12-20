@@ -1,12 +1,11 @@
 import * as React from "react";
-import { Button as DonutButton } from "@advisable/donut";
+import { Button as DonutButton, Notice } from "@advisable/donut";
 import { withApollo } from "react-apollo";
 import { matchPath } from "react-router";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button";
-import Notice from "../../components/Notice";
 import ButtonGroup from "../../components/ButtonGroup";
 import Heading from "../../components/Heading";
 import NewTask from "../../components/NewTask";
@@ -131,7 +130,7 @@ const Tasks = ({ application, match, location, history, client }) => {
       </Modal>
       {hasTasks && !canContinue && (
         <Padding size="l">
-          <Notice icon="alert-triangle">
+          <Notice icon="alert-triangle" title="More details required">
             Please add a name and description for each task to continue
           </Notice>
         </Padding>
