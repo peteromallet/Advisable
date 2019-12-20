@@ -3,7 +3,7 @@ import * as moment from "moment";
 import { Task, Title, Detail, TaskContent, Prompt } from "./styles";
 import Icon from "../Icon";
 import TaskStatus from "../TaskStatus";
-import { hoursLabel, hoursDisplay } from "../../utilities/tasks";
+import { hoursLabel, displayTaskQuote } from "../../utilities/tasks";
 import TrialIndicator from "./TrialIndicator";
 
 const shouldShowPrompt = (isClient, task) => {
@@ -38,7 +38,7 @@ export default ({ task, hideStatus, onClick, isClient, showPromptForTask }) => {
           <Detail>
             <Icon height={17} icon="clock" />
             <span>
-              {hoursLabel(task)}: <strong>{hoursDisplay(task)}</strong>
+              {hoursLabel(task)}: <strong>{displayTaskQuote(task)}</strong>
             </span>
           </Detail>
         )}

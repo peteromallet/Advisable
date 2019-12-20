@@ -10,13 +10,19 @@ const elevation = variant({
       boxShadow: "none",
     },
     s: {
-      boxShadow: `0 1px 2px ${rgba(theme.colors.neutral[8], 0.1)};`,
+      boxShadow: `0 1px 2px ${rgba(theme.colors.neutral[8], 0.1)}`,
     },
     m: {
-      boxShadow: `0 5px 10px -5px ${rgba(theme.colors.neutral[8], 0.1)};`,
+      boxShadow: `0 5px 10px -5px ${rgba(theme.colors.neutral[8], 0.1)}`,
     },
     l: {
-      boxShadow: `0px 20px 80px rgba(26, 35, 67, 0.12);`,
+      boxShadow: `0px 20px 80px rgba(26, 35, 67, 0.12)`,
+    },
+    xl: {
+      boxShadow: `0 8px 60px ${rgba(
+        theme.colors.neutral[9],
+        0.2
+      )}, 0 2px 8px ${rgba(theme.colors.neutral[9], 0.1)}`,
     },
   },
 });
@@ -24,6 +30,7 @@ const elevation = variant({
 export const Card = styled.div`
   ${compose(space, layout, border, elevation)}
 
+  outline: none;
   background: white;
   border-radius: 2px;
 `;

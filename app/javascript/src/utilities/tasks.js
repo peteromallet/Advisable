@@ -1,4 +1,5 @@
 import pluralize from "./pluralize";
+import currency from "./currency";
 
 // Returns true if the task stage is submitted or any stage after
 export const hasBeenSubmitted = task => {
@@ -7,19 +8,43 @@ export const hasBeenSubmitted = task => {
 
 // When a task has been submitted we want to dispay "Hours Worked" instead of "Quote".
 export const hoursLabel = task => {
-  if (hasBeenSubmitted(task)) return "Hours Worked";
+  if (hasBeenSubmitted(task)) return "Cost";
   return "Quote";
 };
 
 // displays the estimate or hours worked for a task.
 export const hoursDisplay = task => {
   if (hasBeenSubmitted(task)) {
-    return pluralize(task.hoursWorked || 0, "hour", "hours");
+    return currency(task.finalCost);
   }
 
   if (task.flexibleEstimate) {
-    return `${task.estimate || 0}-${task.flexibleEstimate || 0} hours`;
+    return `${task.estimate || 0} - ${task.flexibleEstimate || 0} hours`;
   }
 
   return pluralize(task.estimate, "hour", "hours");
+};
+
+export const hoursCost = task => {
+  const rate = task.application.rate;
+  let output = currency(rate * task.estimate * 100);
+
+  if (task.flexibleEstimate) {
+    output += ` - ${currency(rate * task.flexibleEstimate * 100)}`;
+  }
+
+  return output;
+};
+
+// Displays the quote given for a task
+export const displayTaskQuote = task => {
+  if (task.estimateType === "Fixed") {
+    let quote = currency(task.estimate);
+    if (task.flexibleEstimate) {
+      quote += ` - ${currency(task.flexibleEstimate)}`;
+    }
+    return quote;
+  }
+
+  return hoursDisplay(task);
 };

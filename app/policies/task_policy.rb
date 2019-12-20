@@ -19,29 +19,33 @@ class TaskPolicy < BasePolicy
   end
 
   def update_name
-    return true if has_permission?("admin")
+    return true if has_permission?('admin')
     return false if user.nil?
-    ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)
+    ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(record.stage)
   end
 
   # Wether or not the current user has permission to update the due date for
   # a task.
   def update_due_date
     return false if user.nil?
-    return true if has_permission?("admin")
-    return true if ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)
-    return true if task.stage == "Assigned" && is_specialist
+    return true if has_permission?('admin')
+    if ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(
+         record.stage
+       )
+      return true
+    end
+    return true if task.stage == 'Assigned' && is_specialist
     false
   end
 
   # Wether or not the current user has permission to update the estimate for a
   # task.
   def update_estimate
-    return true if has_permission?("admin")
+    return true if has_permission?('admin')
     return false if user.nil?
-    return true if ["Not Assigned", "Quote Requested"].include?(record.stage)
-    return true if task.stage == "Quote Provided" && is_specialist 
-    return true if task.stage == "Assigned" && is_specialist
+    return true if ['Not Assigned', 'Quote Requested'].include?(record.stage)
+    return true if task.stage == 'Quote Provided' && is_specialist
+    return true if task.stage == 'Assigned' && is_specialist
     false
   end
 
@@ -55,24 +59,28 @@ class TaskPolicy < BasePolicy
     update_estimate
   end
 
+  def update_estimate_type
+    update_estimate
+  end
+
   def update_description
-    return true if has_permission?("admin")
+    return true if has_permission?('admin')
     return false if user.nil?
-    ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)
+    ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(record.stage)
   end
 
   def update_trial
-    return true if has_permission?("admin")
+    return true if has_permission?('admin')
     is_specialist
   end
 
   def delete
-    return true if has_permission?("admin")
-    ["Not Assigned", "Quote Requested", "Quote Provided"].include?(record.stage)
+    return true if has_permission?('admin')
+    ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(record.stage)
   end
 
   def set_repeating
-    is_client || is_specialist || has_permission?("admin")
+    is_client || is_specialist || has_permission?('admin')
   end
 
   private

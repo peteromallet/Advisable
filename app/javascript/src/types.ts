@@ -61,7 +61,7 @@ export interface Task {
   stage: string;
   estimate?: number;
   flexibleEstimate?: number;
-  hoursWorked?: number;
+  finalCost?: number;
   dueDate?: string;
   description?: string;
   trial?: boolean;
