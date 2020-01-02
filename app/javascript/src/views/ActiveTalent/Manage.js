@@ -12,7 +12,14 @@ export default ({ onClick, applications }) => {
 
   return (
     <>
-      <Text as="h1" weight="semibold" size="xxl" mb="m" color="neutral.9">
+      <Text
+        as="h1"
+        mb="m"
+        fontSize="xxl"
+        color="neutral.8"
+        fontWeight="semibold"
+        letterSpacing="-0.03em"
+      >
         Manage Talent
       </Text>
       <Tabs>
