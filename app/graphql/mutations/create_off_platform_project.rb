@@ -9,6 +9,7 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
   argument :primarySkill, String, required: true
   argument :contact_name, String, required: true
   argument :contact_job_title, String, required: true
+  argument :contact_relationship, String, required: true
   argument :company_type, String, required: true
   argument :description, String, required: true
   argument :goal, String, required: true
@@ -26,6 +27,7 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
           confidential: args[:confidential],
           contact_name: args[:contact_name],
           contact_job_title: args[:contact_job_title],
+          contact_relationship: args[:contact_relationship],
           company_type: args[:company_type],
           description: args[:description],
           goal: args[:goal],

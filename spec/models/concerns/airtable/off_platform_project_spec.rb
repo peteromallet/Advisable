@@ -74,6 +74,10 @@ describe Airtable::OffPlatformProject do
       expect(airtable).to receive(:[]=).with('Client Contact Job Title', 'CEO')
       expect(airtable).to receive(:[]=).with('Client Name', 'Test Inc.')
       expect(airtable).to receive(:[]=).with('Company Type', 'Startup')
+      expect(airtable).to receive(:[]=).with(
+        'Contact Relationship',
+        project.contact_relationship
+      )
       expect(airtable).to receive(:[]=).with('Public Use', 'No')
       expect(airtable).to receive(:[]=).with(
         'Client Description',
