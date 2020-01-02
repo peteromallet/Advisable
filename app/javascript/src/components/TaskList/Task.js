@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as moment from "moment";
+import { Text } from "@advisable/donut";
 import { Task, Title, Detail, TaskContent } from "./styles";
 import Icon from "../Icon";
 import TaskStatus from "../TaskStatus";
@@ -14,7 +15,14 @@ const shouldShowPrompt = (isClient, task) => {
   if (task.stage === "Submitted" && isClient) return true;
 };
 
-export default ({ task, hideStatus, onClick, isClient, showPromptForTask }) => {
+export default ({
+  task,
+  hideStatus,
+  onClick,
+  isClient,
+  showPromptForTask,
+  notice,
+}) => {
   let showPrompt = shouldShowPrompt(isClient, task);
 
   if (showPromptForTask) {
@@ -42,6 +50,11 @@ export default ({ task, hideStatus, onClick, isClient, showPromptForTask }) => {
               {hoursLabel(task)}: <strong>{displayTaskQuote(task)}</strong>
             </span>
           </Detail>
+        )}
+        {notice && (
+          <Text fontSize="xs" color="orange.7" mb="xxs">
+            {notice}
+          </Text>
         )}
       </TaskContent>
       {!hideStatus && <TaskStatus isClient={true}>{task.stage}</TaskStatus>}

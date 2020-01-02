@@ -77,6 +77,16 @@ const Tasks = ({ application, match, location, history, client }) => {
     return !Boolean(task.name) || !Boolean(task.description);
   };
 
+  const noticeForTask = task => {
+    if (!task.name) {
+      return "Please provide a name for this task to continue.";
+    }
+
+    if (!task.description) {
+      return "Please provide a description for this task to continue.";
+    }
+  };
+
   return (
     <Card>
       <Padding size="l">
@@ -96,6 +106,7 @@ const Tasks = ({ application, match, location, history, client }) => {
         onClickTask={onSelectTask}
         showPromptForTask={showPromptForTask}
         lastRow={<NewTask onCreate={handleNewTask} application={application} />}
+        notice={noticeForTask}
       />
       <TaskDrawer
         hideStatus
@@ -128,22 +139,17 @@ const Tasks = ({ application, match, location, history, client }) => {
           </DonutButton>
         </Padding>
       </Modal>
-      {hasTasks && !canContinue && (
-        <Padding size="l">
-          <Notice icon="alert-triangle" title="More details required">
-            Please add a name and description for each task to continue
-          </Notice>
-        </Padding>
-      )}
-      {canContinue && (
-        <Padding size="l">
-          <ButtonGroup fullWidth={isMobile}>
-            <Button styling="primary" onClick={handleContinue}>
-              Continue
-            </Button>
-          </ButtonGroup>
-        </Padding>
-      )}
+      <Padding size="l">
+        <ButtonGroup fullWidth={isMobile}>
+          <Button
+            styling="primary"
+            onClick={handleContinue}
+            disabled={!canContinue}
+          >
+            Continue
+          </Button>
+        </ButtonGroup>
+      </Padding>
     </Card>
   );
 };

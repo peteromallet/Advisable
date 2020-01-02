@@ -207,7 +207,7 @@ export const Description = styled.textarea`
   outline: none;
   overflow: auto;
   color: #0a163f;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 18px;
   border-radius: 6px;
