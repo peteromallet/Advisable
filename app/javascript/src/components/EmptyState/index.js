@@ -7,11 +7,11 @@ export default ({ icon, heading, text }) => (
   <Wrapper>
     {icon && <Icon icon={icon} width={30} height={30} />}
     {heading && (
-      <Text as="h3" size="l" weight="medium" mb="xs">
+      <Text as="h3" size="m" fontWeight="semibold" mb="xs">
         {heading}
       </Text>
     )}
-    <Text size="s" color="neutral.5" lineHeight="m">
+    <Text size="s" color="neutral.7" lineHeight="m">
       {text}
     </Text>
   </Wrapper>
