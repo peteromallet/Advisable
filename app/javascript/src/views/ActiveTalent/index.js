@@ -14,7 +14,7 @@ const ActiveTalent = ({ data, history }) => {
     <Layout>
       <Layout.Main>
         {data.loading && <Loading />}
-        {!data.loading && data.viewer.applications.length > 0 && (
+        {!data.loading && (
           <Manage
             onClick={handleClick}
             applications={data.viewer.applications}
