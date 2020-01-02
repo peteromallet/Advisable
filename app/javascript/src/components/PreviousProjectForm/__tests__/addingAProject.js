@@ -47,6 +47,7 @@ test("Can create a project", async () => {
               publicUse: true,
               contactName: "Test Person",
               contactJobTitle: "CEO",
+              contactRelationship: "They managed the project",
               goal: "Custom goal",
               specialist: specialist.id,
             },
