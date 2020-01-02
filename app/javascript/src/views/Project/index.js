@@ -8,6 +8,7 @@ import NotFound from "../NotFound";
 import FETCH_PROJECT from "./fetchProject";
 import ScheduleSetupCall from "./ScheduleSetupCall";
 import STATUSES from "./statuses";
+import AccessDenied from "../../components/AccessDenied";
 import handleAuthError from "../../utilities/handleAuthError";
 
 const ProjectContainer = ({ match, location, ...rest }) => {
@@ -30,6 +31,10 @@ const ProjectContainer = ({ match, location, ...rest }) => {
     let redirect = handleAuthError(theError, location);
     if (redirect) {
       return <Redirect to={redirect} />;
+    }
+
+    if (theError.code.match(/invalidPermissions/)) {
+      return <AccessDenied />;
     }
   }
 
