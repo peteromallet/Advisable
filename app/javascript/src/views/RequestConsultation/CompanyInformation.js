@@ -38,6 +38,10 @@ const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
         input: {
           skill: location.state.skill,
           specialist: params.specialistId,
+          utmSource: location.state?.utmSource,
+          utmCampaign: location.state?.utmCampaign,
+          utmMedium: location.state?.utmMedium,
+          gclid: location.state?.gclid,
           ...values,
         },
       },
