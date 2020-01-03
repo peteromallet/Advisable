@@ -47,15 +47,9 @@ export const Row = styled.div`
   border-top: 1px solid #eceff8;
   border-bottom: 1px solid #eceff8;
 
-  ${props =>
-    props.showPrompt &&
-    css`
-      padding-left: 55px;
-    `}
-
   @media (max-width: 900px) {
     display: block;
-    padding-left: ${props => (props.showPrompt ? "45px" : "20px")};
+    padding-left: 20px;
     padding-right: 20px;
   }
 `;
@@ -92,39 +86,23 @@ export const TaskList = styled.div``;
 
 const promptAnimation = keyframes`
   0% {
-    opacity: 1;
-    transform: scale(0.5);
+    transform: translateX(-8px) translateY(-50%);
   }
 
+  50% {
+    transform: translateX(0) translateY(-50%);
+  }
+  
   100% {
-    opacity: 0;
-    transform: scale(1);
+    transform: translateX(-8px) translateY(-50%);
   }
 `;
 
-export const Prompt = styled.div`
+export const StyledTaskPrompt = styled.div`
   top: 50%;
-  width: 8px;
-  left: 30px;
-  height: 8px;
-  border-radius: 50%;
+  left: 8px;
+  color: #ff7a00;
   position: absolute;
   transform: translateY(-50%);
-  background: ${theme.colors.blue[5]};
-
-  @media (max-width: 900px) {
-    left: 20px;
-  }
-
-  &::before {
-    content: "";
-    top: -4px;
-    left: -4px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    position: absolute;
-    border: 1px solid ${theme.colors.blue[5]};
-    animation: ${promptAnimation} 2s infinite;
-  }
+  animation: ${promptAnimation} 1s infinite;
 `;

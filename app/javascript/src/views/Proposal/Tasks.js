@@ -1,12 +1,11 @@
 import * as React from "react";
-import { Button as DonutButton } from "@advisable/donut";
+import { Button as DonutButton, Notice } from "@advisable/donut";
 import { withApollo } from "react-apollo";
 import { matchPath } from "react-router";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button";
-import Notice from "../../components/Notice";
 import ButtonGroup from "../../components/ButtonGroup";
 import Heading from "../../components/Heading";
 import NewTask from "../../components/NewTask";
@@ -78,6 +77,16 @@ const Tasks = ({ application, match, location, history, client }) => {
     return !Boolean(task.name) || !Boolean(task.description);
   };
 
+  const noticeForTask = task => {
+    if (!task.name) {
+      return "Please provide a name for this task to continue.";
+    }
+
+    if (!task.description) {
+      return "Please provide a description for this task to continue.";
+    }
+  };
+
   return (
     <Card>
       <Padding size="l">
@@ -97,6 +106,7 @@ const Tasks = ({ application, match, location, history, client }) => {
         onClickTask={onSelectTask}
         showPromptForTask={showPromptForTask}
         lastRow={<NewTask onCreate={handleNewTask} application={application} />}
+        notice={noticeForTask}
       />
       <TaskDrawer
         hideStatus
@@ -129,22 +139,17 @@ const Tasks = ({ application, match, location, history, client }) => {
           </DonutButton>
         </Padding>
       </Modal>
-      {hasTasks && !canContinue && (
-        <Padding size="l">
-          <Notice icon="alert-triangle">
-            Please add a name and description for each task to continue
-          </Notice>
-        </Padding>
-      )}
-      {canContinue && (
-        <Padding size="l">
-          <ButtonGroup fullWidth={isMobile}>
-            <Button styling="primary" onClick={handleContinue}>
-              Continue
-            </Button>
-          </ButtonGroup>
-        </Padding>
-      )}
+      <Padding size="l">
+        <ButtonGroup fullWidth={isMobile}>
+          <Button
+            styling="primary"
+            onClick={handleContinue}
+            disabled={!canContinue}
+          >
+            Continue
+          </Button>
+        </ButtonGroup>
+      </Padding>
     </Card>
   );
 };
