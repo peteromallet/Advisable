@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_18_101840) do
+ActiveRecord::Schema.define(version: 2020_01_02_091917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 2019_12_18_101840) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "interview_id"
+    t.string "source"
     t.index ["airtable_id"], name: "index_consultations_on_airtable_id"
     t.index ["interview_id"], name: "index_consultations_on_interview_id"
     t.index ["skill_id"], name: "index_consultations_on_skill_id"
@@ -302,6 +303,7 @@ ActiveRecord::Schema.define(version: 2019_12_18_101840) do
     t.boolean "public_use"
     t.string "uid"
     t.string "goal"
+    t.string "contact_relationship"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
   end
@@ -598,6 +600,7 @@ ActiveRecord::Schema.define(version: 2019_12_18_101840) do
     t.string "billing_email"
     t.boolean "payments_setup", default: false
     t.string "time_zone"
+    t.string "campaign_medium"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"

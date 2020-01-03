@@ -6,6 +6,11 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   argument :company, String, required: true
   argument :skill, String, required: true
 
+  argument :utm_source, String, required: false
+  argument :utm_campaign, String, required: false
+  argument :utm_medium, String, required: false
+  argument :gclid, String, required: false
+
   field :consultation, Types::ConsultationType, null: true
 
   def resolve(**args)
@@ -22,10 +27,10 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
     user = user(**args)
     specialist_record = specialist(args[:specialist])
 
-    consultation = user.consultations.find_by(
-      specialist: specialist_record,
-      status: "Request Started"
-    )
+    consultation =
+      user.consultations.find_by(
+        specialist: specialist_record, status: 'Request Started'
+      )
 
     if consultation.present?
       consultation.update(skill: skill)
@@ -33,12 +38,14 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
       return consultation
     end
 
-    consultation = Consultation.create(
-      user: user(**args),
-      specialist: specialist_record,
-      status: "Request Started",
-      skill: skill,
-    )
+    consultation =
+      Consultation.create(
+        user: user(**args),
+        specialist: specialist_record,
+        status: 'Request Started',
+        skill: skill,
+        source: args[:utm_source]
+      )
 
     consultation.sync_to_airtable
     consultation
@@ -49,30 +56,41 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   end
 
   def user(**args)
-    @user ||= begin
-      user = User.find_by_email(args[:email])
-      return user if user.present?
+    @user ||=
+      begin
+        user = User.find_by_email(args[:email])
+        return user if user.present?
 
-      specialist = Specialist.find_by_email(args[:email])
-      if specialist.present?
-        raise ApiError::InvalidRequest.new("emailBelongsToFreelancer", "This email belongs to a freelancer account")
+        specialist = Specialist.find_by_email(args[:email])
+        if specialist.present?
+          raise ApiError::InvalidRequest.new(
+                  'emailBelongsToFreelancer',
+                  'This email belongs to a freelancer account'
+                )
+        end
+
+        user =
+          User.create(
+            first_name: args[:first_name],
+            last_name: args[:last_name],
+            email: args[:email],
+            company_name: args[:company],
+            campaign_source: args[:utm_source],
+            campaign_name: args[:utm_campaign],
+            campaign_medium: args[:campaign_medium],
+            gclid: args[:gclid]
+          )
+
+        domain = user.email.split('@').last
+        client = Client.create(name: args[:company], domain: domain)
+        client.users << user
+        user.sync_to_airtable
+        # Currently we dont have a relationship between clients and client
+        # contacts so we set the 'Client Contacts' column while calling sync.
+        client.sync_to_airtable(
+          { 'Client Contacts' => [user.airtable_id].compact }
+        )
+        user
       end
-
-      user = User.create(
-        first_name: args[:first_name],
-        last_name: args[:last_name],
-        email: args[:email],
-        company_name: args[:company],
-      )
-      
-      domain = user.email.split("@").last
-      client = Client.create(name: args[:company], domain: domain)
-      client.users << user
-      user.sync_to_airtable
-      # Currently we dont have a relationship between clients and client
-      # contacts so we set the 'Client Contacts' column while calling sync.
-      client.sync_to_airtable({ "Client Contacts" => [user.airtable_id].compact })
-      user
-    end
   end
 end
