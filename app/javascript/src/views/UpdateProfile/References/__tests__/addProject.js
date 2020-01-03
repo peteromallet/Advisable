@@ -68,6 +68,7 @@ test("Adds a previous project", async () => {
             publicUse: true,
             contactName: "Test Person",
             contactJobTitle: "CEO",
+            contactRelationship: "They managed the project",
             goal: "Generate Leads",
             specialist: specialist.id,
           },
