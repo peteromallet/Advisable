@@ -16,6 +16,7 @@ class Airtable::OffPlatformProject < Airtable::Base
   sync_column 'Validation Method', to: :validation_method
   sync_column 'Validated By Client', to: :validated_by_client
   sync_column 'Validation Explanation', to: :validation_explanation
+  sync_column 'Contact Relationship', to: :contact_relationship
   sync_column 'Company Type', to: :company_type
 
   sync_data do |opp|
@@ -51,6 +52,7 @@ class Airtable::OffPlatformProject < Airtable::Base
     self['Validated By Client'] = project.validated_by_client ? 'Yes' : 'No'
     self['Validation Explanation'] = project.validation_explanation
     self['Company Type'] = project.company_type
+    self['Contact Relationship'] = project.contact_relationship
 
     unless project.public_use.nil?
       self['Public Use'] = 'Yes' if project.public_use == true

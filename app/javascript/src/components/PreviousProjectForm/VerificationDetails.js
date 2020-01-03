@@ -2,6 +2,7 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik, Field } from "formik";
 import StepDots from "../StepDots";
+import Select from "../Select";
 import TextField from "../TextField";
 import { Box, Text, RoundedButton, Checkbox, Icon } from "@advisable/donut";
 
@@ -14,11 +15,18 @@ const validationSchema = Yup.object({
   ),
 });
 
+const RELATIONSHIPS = [
+  "They managed the project",
+  "They worked on the project with me",
+  "They worked at the company but not the project",
+];
+
 const VerificationDetails = ({ values, next, back }) => {
   const initialValues = {
     publicUse: true,
     contactName: "",
     contactJobTitle: "",
+    contactRelationship: RELATIONSHIPS[0],
     ...values,
   };
 
@@ -56,6 +64,14 @@ const VerificationDetails = ({ values, next, back }) => {
               name="contactJobTitle"
               label="What was their job title?"
               placeholder="e.g Head of Marketing"
+            />
+          </Box>
+          <Box mb="m">
+            <Field
+              as={Select}
+              name="contactRelationship"
+              label="What was your relationship to them for this project?"
+              options={RELATIONSHIPS}
             />
           </Box>
           <Box mb="xl">

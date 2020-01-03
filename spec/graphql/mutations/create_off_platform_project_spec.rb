@@ -24,6 +24,7 @@ describe Mutations::CreateOffPlatformProject do
   let(:can_contact) { true }
   let(:description) { 'description' }
   let(:public_use) { true }
+  let(:contact_relationship) { 'They managed the project' }
 
   let(:query) do
     <<~GRAPHQL
@@ -41,6 +42,7 @@ describe Mutations::CreateOffPlatformProject do
         contactName: \"#{contact_name}\",
         contactJobTitle: \"#{contact_job_title}\",
         description: \"#{description}\",
+        contactRelationship: \"#{contact_relationship}\",
         goal: \"#{goal}\"
       }) {
         previousProject {
