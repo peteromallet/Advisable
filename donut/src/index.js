@@ -24,3 +24,5 @@ export { default as useBreakpoint } from "./hooks/useBreakpoint";
 export { default as useTheme } from "./hooks/useTheme";
 export { default as theme } from "./theme";
 export { default as extractSpacingProps } from "./utilities/extractSpacingProps";
+
+export { default as Notice } from "./components/Notice";

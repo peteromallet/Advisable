@@ -15,6 +15,7 @@ type Props = {
   hideStatus?: boolean;
   lastRow?: React.ReactNode;
   isClient?: boolean;
+  notice: (task: Task) => {};
   onClickTask: (task: Task) => void;
   showPromptForTask?: (task: Task) => boolean;
 };
@@ -34,6 +35,7 @@ const TaskList = (props: Props) => {
         <Task
           key={task.id}
           task={task}
+          notice={props.notice(task)}
           isClient={props.isClient}
           hideStatus={props.hideStatus}
           onClick={() => props.onClickTask(task)}
@@ -43,6 +45,10 @@ const TaskList = (props: Props) => {
       {props.lastRow && <Row>{props.lastRow}</Row>}
     </Container>
   );
+};
+
+TaskList.defaultProps = {
+  notice: () => {},
 };
 
 export default TaskList;
