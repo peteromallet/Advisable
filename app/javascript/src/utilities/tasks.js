@@ -38,6 +38,10 @@ export const hoursCost = task => {
 
 // Displays the quote given for a task
 export const displayTaskQuote = task => {
+  if (hasBeenSubmitted(task)) {
+    return currency(task.finalCost);
+  }
+
   if (task.estimateType === "Fixed") {
     let quote = currency(task.estimate);
     if (task.flexibleEstimate) {
