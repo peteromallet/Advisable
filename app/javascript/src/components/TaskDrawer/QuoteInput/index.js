@@ -6,6 +6,7 @@ import {
   hoursLabel,
   displayTaskQuote,
   hoursCost,
+  hasBeenSubmitted,
 } from "../../../utilities/tasks";
 import {
   Detail,
@@ -41,7 +42,9 @@ const QuoteInput = ({ task, readOnly, onSubmit }) => {
         {task.estimate ? (
           <DetailValue>
             {displayTaskQuote(task)}
-            {task.estimateType === "Hourly" && ` / ${hoursCost(task)}`}
+            {task.estimateType === "Hourly" &&
+              !hasBeenSubmitted(task) &&
+              ` / ${hoursCost(task)}`}
           </DetailValue>
         ) : (
           <DetailPlaceholder>+ Add estimate</DetailPlaceholder>
