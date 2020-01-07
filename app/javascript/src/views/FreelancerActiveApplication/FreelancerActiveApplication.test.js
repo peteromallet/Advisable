@@ -208,6 +208,7 @@ test("Freelancer can mark a task as complete", async () => {
     project,
     specialist,
     tasks: [task],
+    rate: 50,
   });
   task.application = application;
 
@@ -259,7 +260,7 @@ test("Freelancer can mark a task as complete", async () => {
           variables: {
             input: {
               task: "tas_1234",
-              finalCost: 18,
+              finalCost: 90000,
             },
           },
         },
@@ -272,7 +273,7 @@ test("Freelancer can mark a task as complete", async () => {
               task: {
                 ...task,
                 stage: "Submitted",
-                finalCost: 18,
+                finalCost: 90000,
               },
             },
           },

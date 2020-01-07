@@ -10,6 +10,7 @@ export const taskFields = gql`
     estimate
     finalCost
     flexibleEstimate
+    estimateType
     description
     createdAt
     repeat
