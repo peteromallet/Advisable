@@ -12,6 +12,7 @@ const Range = ({ name, icon, specialists }) => {
   const handleClick = () => {
     history.push({
       pathname: "/clients/signup/specialists",
+      search: location.search,
       state: {
         ...location.state,
         selected: [],
