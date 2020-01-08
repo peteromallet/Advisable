@@ -24,6 +24,7 @@ export default gql`
         dueDate
         description
         estimate
+        estimateType
         repeat
       }
       specialist {
