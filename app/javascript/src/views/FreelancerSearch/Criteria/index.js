@@ -62,11 +62,11 @@ const FreelancerSearchCriteria = () => {
     <Box display="flex">
       <Box maxWidth={500} flexShrink={0}>
         <Text
-          mb="xs"
+          mb="xxs"
           color="blue.9"
-          fontSize={40}
+          fontSize={32}
           fontWeight="bold"
-          letterSpacing="-0.02em"
+          letterSpacing="-0.025em"
           lineHeight="36px"
         >
           Find the Perfect Freelancer

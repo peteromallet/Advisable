@@ -9,6 +9,10 @@ export { default as Flex } from "./components/Flex";
 export { default as Tabs } from "./components/Tabs";
 export { default as Radio } from "./components/Radio";
 export { default as Alert } from "./components/Alert";
+
+export { default as Circle } from "./components/Circle";
+export * from "./components/Circle/styles";
+
 export { default as Modal, useModal, useRoutedModal } from "./components/Modal";
 export * from "./components/Modal/styles";
 export { default as Button } from "./components/Button";

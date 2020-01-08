@@ -5,6 +5,7 @@ import { useLocation, useHistory, Link as RouterLink } from "react-router-dom";
 import { Box, Text, Icon, Link, RoundedButton } from "@advisable/donut";
 import Loading from "./Loading";
 import QUERY from "./searchQuery";
+import NoResults from "./NoResults";
 import SpecialistCard from "../../../components/SpecialistCard";
 
 const Results = () => {
@@ -30,6 +31,11 @@ const Results = () => {
   }
 
   if (loading) return <Loading />;
+
+  if (data.specialists.nodes.length === 0) {
+    return <NoResults />;
+  }
+
   return (
     <Box>
       <Link variant="subtle" mb="xs" to="/freelancer_search">
