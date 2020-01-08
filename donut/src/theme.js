@@ -1,4 +1,5 @@
 import find from "lodash/find";
+import { rgba } from "polished";
 import isObject from "lodash/isObject";
 
 // Breakpoints
@@ -143,6 +144,11 @@ const colors = {
   ],
 };
 
+const shadows = {
+  m: `0 4px 12px ${rgba(colors.blue[9], 0.1)}`,
+  l: `0 8px 20px ${rgba(colors.blue[9], 0.2)}`,
+};
+
 export default {
   background: "default",
   responsiveProp: prop => {
@@ -159,4 +165,5 @@ export default {
   lineHeights,
   breakpoints,
   boxShadow,
+  shadows,
 };

@@ -8,7 +8,7 @@ import Attributes from "./Attributes";
 import SpecialistModal from "./SpecialistModal";
 import { StyledSpecialistCard } from "./styles";
 
-const SpecialistCard = ({ specialist, ...props }) => {
+const SpecialistCard = ({ specialist, footer, ...props }) => {
   const specialistModal = useModal();
 
   return (
@@ -42,6 +42,7 @@ const SpecialistCard = ({ specialist, ...props }) => {
         name={specialist.firstName}
       />
       <SpecialistModal modal={specialistModal} specialistId={specialist.id} />
+      {footer && <Box mt="s">{footer}</Box>}
     </StyledSpecialistCard>
   );
 };

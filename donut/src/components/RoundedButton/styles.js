@@ -42,6 +42,21 @@ const VARIANTS = {
       background: ${lighten(0.02, theme.colors.neutral[1])};
     }
   `,
+
+  subtle: css`
+    color: ${theme.colors.blue[7]};
+    background: ${theme.colors.blue[0]};
+
+    &:not(:disabled):hover {
+      color: ${theme.colors.blue[8]};
+      background: ${darken(0.02, theme.colors.blue[0])};
+    }
+
+    &:not(:disabled):active {
+      color: ${theme.colors.blue[8]};
+      background: ${lighten(0.005, theme.colors.blue[0])};
+    }
+  `,
 };
 
 const buttonSize = variant({

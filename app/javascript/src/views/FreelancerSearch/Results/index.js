@@ -6,6 +6,7 @@ import { Box, Text, Icon, Link, RoundedButton } from "@advisable/donut";
 import Loading from "./Loading";
 import QUERY from "./searchQuery";
 import NoResults from "./NoResults";
+import SelectionBar from "./SelectionBar";
 import SpecialistCard from "../../../components/SpecialistCard";
 
 const Results = () => {
@@ -36,6 +37,25 @@ const Results = () => {
     return <NoResults />;
   }
 
+  const selectedFreelancers = location.state.freelancers || [];
+
+  const handleClickFreelancer = specialist => e => {
+    let nextSelected;
+    if (selectedFreelancers.indexOf(specialist.id) > -1) {
+      nextSelected = selectedFreelancers.filter(s => s !== specialist.id);
+    } else {
+      nextSelected = [...selectedFreelancers, specialist.id];
+    }
+
+    history.replace({
+      ...location,
+      state: {
+        ...location.state,
+        freelancers: nextSelected,
+      },
+    });
+  };
+
   return (
     <Box>
       <Link variant="subtle" mb="xs" to="/freelancer_search">
@@ -64,12 +84,40 @@ const Results = () => {
             initial={{ opacity: 0, y: 30 }}
             transition={{ delay: (i + 1) * 0.14 }}
           >
-            <SpecialistCard specialist={s} elevation="l" mx={10} mb={20} />
+            <SpecialistCard
+              mx={10}
+              mb={20}
+              specialist={s}
+              elevation={selectedFreelancers.indexOf(s.id) > -1 ? "l" : "m"}
+              border="2px solid white"
+              borderColor={selectedFreelancers.indexOf(s.id) > -1 && "blue.6"}
+              footer={
+                <RoundedButton
+                  onClick={handleClickFreelancer(s)}
+                  variant={
+                    selectedFreelancers.indexOf(s.id) > -1
+                      ? "primary"
+                      : "subtle"
+                  }
+                  prefix={
+                    <Icon
+                      icon={
+                        selectedFreelancers.indexOf(s.id) > -1
+                          ? "check"
+                          : "plus"
+                      }
+                    />
+                  }
+                >
+                  {selectedFreelancers.indexOf(s.id) > -1 ? "Added" : "Add"}
+                </RoundedButton>
+              }
+            />
           </Box>
         ))}
       </Box>
       <Box height={1} width={200} bg="neutral.2" my="xl" mx="auto" />
-      <Box maxWidth={500} mx="auto" textAlign="center" mb="l">
+      <Box maxWidth={500} mx="auto" textAlign="center" mb="xxl">
         <Text mb="xs" fontWeight="semibold">
           Don’t see anyone you like?
         </Text>
@@ -90,6 +138,7 @@ const Results = () => {
           Request a call
         </RoundedButton>
       </Box>
+      <SelectionBar />
     </Box>
   );
 };
