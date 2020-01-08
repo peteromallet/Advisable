@@ -81,6 +81,7 @@ export const StyledButton = styled.button`
   white-space: nowrap;
   display: inline-flex;
   font-family: poppins;
+  text-decoration: none;
   vertical-align: middle;
   justify-content: center;
   letter-spacing: -0.01em;

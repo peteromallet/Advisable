@@ -26,6 +26,7 @@ const BaseStyles = createGlobalStyle`
 
   body {
     background: ${props => BACKGROUND[props.theme.background]} !important;
+    transition: background-color 400ms;
   }
 `;
 

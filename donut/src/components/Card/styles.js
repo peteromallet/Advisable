@@ -27,7 +27,7 @@ const elevation = variant({
   },
 });
 
-export const Card = styled.div`
+export const StyledCard = styled.div`
   ${compose(space, layout, border, elevation)}
 
   outline: none;
@@ -35,4 +35,4 @@ export const Card = styled.div`
   border-radius: 2px;
 `;
 
-export default Card;
+export default StyledCard;
