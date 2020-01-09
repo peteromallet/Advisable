@@ -24,17 +24,14 @@ const SelectionBar = () => {
         y: selected.length === 0 ? 60 : 0,
       }}
     >
-      <Box height={60} display="flex" alignItems="center">
-        <Box width="100%" px="m">
-          You have selected {selected.length} freelancer's
-        </Box>
+      <Box height={60} display="flex" alignItems="center" px={90}>
+        <Box width="100%">You have selected {selected.length} freelancer's</Box>
         <RoundedButton
           as={Link}
           to={{
             ...location,
             pathname: "/freelancer_search/availability",
           }}
-          mr="m"
           suffix={<Icon icon="arrow-right" />}
         >
           Continue
