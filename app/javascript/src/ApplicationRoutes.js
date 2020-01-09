@@ -61,7 +61,10 @@ const ApplicationRoutes = () => {
             path="/request_consultation/:specialistId"
             component={RequestConsultation}
           />
-          <Route path="/freelancer_search" component={FreelancerSearch} />
+          <AuthenticatedRoute
+            path="/freelancer_search"
+            component={FreelancerSearch}
+          />
           {/* Freelancer Routes */}
           <Route path="/consultations/:id" component={Consultation} />
           <AuthenticatedRoute

@@ -65,14 +65,20 @@ const buttonSize = variant({
     s: {
       height: 32,
       fontSize: 14,
+      paddingLeft: 20,
+      paddingRight: 20,
     },
     m: {
       height: 38,
       fontSize: 15,
+      paddingLeft: 20,
+      paddingRight: 20,
     },
     l: {
       height: 48,
       fontSize: 16,
+      paddingLeft: 28,
+      paddingRight: 28,
     },
   },
 });
@@ -86,7 +92,6 @@ export const StyledButton = styled.button`
   color: white;
   outline: none;
   line-height: 1;
-  padding: 0 20px;
   appearance: none;
   font-weight: 500;
   user-select: none;
