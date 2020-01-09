@@ -1,4 +1,5 @@
 import React from "react";
+import Sent from "./Sent";
 import Topic from "./Topic";
 import Results from "./Results";
 import Criteria from "./Criteria";
@@ -16,6 +17,7 @@ const FreelancerSearch = () => {
           component={Availability}
         />
         <Route path="/freelancer_search/topic" component={Topic} />
+        <Route path="/freelancer_search/sent" component={Sent} />
         <Route path="/freelancer_search" component={Criteria} />
       </Switch>
     </Box>

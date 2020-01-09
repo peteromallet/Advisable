@@ -1,10 +1,11 @@
 class Mutations::RequestConsultations < Mutations::BaseMutation
   argument :skill, String, required: true
+  argument :topic, String, required: true
   argument :specialists, [ID], required: true
 
   field :consultations, [Types::ConsultationType], null: true
 
-  def authorized?(specialists:, skill:)
+  def authorized?(specialists:, skill:, topic:)
     return true if context[:current_user].present?
 
     if context[:current_user].nil?
@@ -19,7 +20,7 @@ class Mutations::RequestConsultations < Mutations::BaseMutation
     end
   end
 
-  def resolve(specialists:, skill:)
+  def resolve(specialists:, skill:, topic:)
     ActiveRecord::Base.transaction do
       consultations =
         specialists.map do |id|
@@ -28,7 +29,8 @@ class Mutations::RequestConsultations < Mutations::BaseMutation
               user: context[:current_user],
               specialist: Specialist.find_by_uid_or_airtable_id!(id),
               skill: Skill.find_by_name!(skill),
-              status: 'Request Started'
+              status: 'Request Completed',
+              topic: topic
             )
 
           consultation.sync_to_airtable

@@ -3,12 +3,14 @@ import { Box, Text, Card, RoundedButton, Icon } from "@advisable/donut";
 import { Formik, Form, Field } from "formik";
 import TextField from "../../../components/TextField";
 import { useMutation } from "react-apollo";
+import REQUEST_CONSULTATIONS from "./requestConsultations";
 import { useLocation, useHistory, Redirect } from "react-router-dom";
 
 const Topic = () => {
   const history = useHistory();
   const location = useLocation();
   const selected = location.state?.freelancers || [];
+  const [requestConsultations] = useMutation(REQUEST_CONSULTATIONS);
 
   if (selected.length === 0) {
     return <Redirect to="/freelancer_search/results" />;
@@ -18,7 +20,19 @@ const Topic = () => {
     topic: "",
   };
 
-  const handleSubmit = async values => {};
+  const handleSubmit = async values => {
+    await requestConsultations({
+      variables: {
+        input: {
+          specialists: location.state.freelancers,
+          skill: location.state.search.skill,
+          topic: values.topic,
+        },
+      },
+    });
+
+    history.push("/freelancer_search/sent");
+  };
 
   return (
     <Box maxWidth={700} mx="auto">
