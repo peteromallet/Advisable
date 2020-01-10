@@ -72,7 +72,7 @@ const Availability = () => {
         Availability
       </Text>
       <Text lineHeight="s" color="neutral.8" mb="l">
-        Select the times you will be availabile for a consultation. The more
+        Select the times you will be available for a consultation. The more
         times you select, the easier it'll be for us to find a time that suits
         them.
       </Text>
@@ -108,7 +108,6 @@ const Availability = () => {
                 />
               </Box>
 
-              {console.log("A", formik)}
               <RoundedButton
                 type="submit"
                 width={["100%", "auto"]}

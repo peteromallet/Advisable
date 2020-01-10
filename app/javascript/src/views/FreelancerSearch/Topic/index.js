@@ -32,7 +32,7 @@ const Topic = () => {
       },
     });
 
-    history.push({ pathname: "/freelancer_search/sent", state: nil });
+    history.push({ pathname: "/freelancer_search/sent", state: null });
   };
 
   return (

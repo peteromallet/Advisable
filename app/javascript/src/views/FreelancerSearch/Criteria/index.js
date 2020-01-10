@@ -9,7 +9,6 @@ import {
   Autocomplete,
   RoundedButton,
 } from "@advisable/donut";
-import gql from "graphql-tag";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
@@ -18,19 +17,7 @@ import Select from "../../../components/Select";
 import Loading from "../../../components/Loading";
 import Images from "./Images";
 import validationSchema from "./validationSchema";
-
-const DATA = gql`
-  {
-    skills {
-      label: name
-      value: name
-    }
-    industries {
-      label: name
-      value: name
-    }
-  }
-`;
+import DATA from "./getData";
 
 const FreelancerSearchCriteria = () => {
   const { updateTheme } = useTheme();

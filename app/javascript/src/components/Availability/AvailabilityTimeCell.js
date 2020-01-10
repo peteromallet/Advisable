@@ -1,3 +1,4 @@
+import moment from "moment";
 import { uniqueId } from "lodash";
 import React, { Component } from "react";
 import { TimeCell } from "./styles";
@@ -7,7 +8,7 @@ class AvailabilityTimeCell extends Component {
     firstTouch: null,
     lastTouch: null,
     touchTimer: 0,
-  }
+  };
 
   componentDidMount() {
     this.id = uniqueId("time");
@@ -34,38 +35,46 @@ class AvailabilityTimeCell extends Component {
   };
 
   handleTouchStart = e => {
-    e.preventDefault()
+    e.preventDefault();
 
     const position = {
       x: e.touches[0].clientX,
-      y: e.touches[0].clientY
-    }
-    this.setState({ firstTouch: position, lastTouch: position })
-  }
+      y: e.touches[0].clientY,
+    };
+    this.setState({ firstTouch: position, lastTouch: position });
+  };
 
   handleTouchMove = e => {
     const position = {
       x: e.touches[0].clientX,
-      y: e.touches[0].clientY
-    }
-    this.setState({ lastTouch: position })
-  }
+      y: e.touches[0].clientY,
+    };
+    this.setState({ lastTouch: position });
+  };
 
   handleTouchEnd = e => {
-    e.preventDefault()
+    e.preventDefault();
     if (!this.state.firstTouch || !this.state.lastTouch) return;
-    const xDiff = Math.abs(this.state.lastTouch.x - this.state.firstTouch.x)
-    const yDiff = Math.abs(this.state.lastTouch.y - this.state.firstTouch.y)
+    const xDiff = Math.abs(this.state.lastTouch.x - this.state.firstTouch.x);
+    const yDiff = Math.abs(this.state.lastTouch.y - this.state.firstTouch.y);
     if (xDiff < 8 && yDiff < 8) {
-      this.props.onTap(this.props.cell)
+      this.props.onTap(this.props.cell);
     }
-    this.setState({ firstTouch: null, lastTouch: null })
-  }
+    this.setState({ firstTouch: null, lastTouch: null });
+  };
 
   get disabled() {
     const day = this.props.time.day();
     const isWeekend = day === 6 || day === 0; // 6 = Saturday, 0 = Sunday
     return isWeekend;
+  }
+
+  get label() {
+    const time = this.props.time;
+    const plusHour = moment(time).add(1, "hour");
+    return `${time.format("ha")} to ${plusHour.format("ha")} on ${time.format(
+      "Do MMMM YYYY"
+    )}`;
   }
 
   render() {
@@ -78,8 +87,9 @@ class AvailabilityTimeCell extends Component {
         onTouchEnd={this.handleTouchEnd}
         onTouchMove={this.handleTouchMove}
         isSelected={this.props.isSelected}
+        aria-label={this.label}
         isHighlighted={this.props.isHighlighted}
-        ref={c => this.cell = c}
+        ref={c => (this.cell = c)}
       >
         {!this.disabled && (
           <div>

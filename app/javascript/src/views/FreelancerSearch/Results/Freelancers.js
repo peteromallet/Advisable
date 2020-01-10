@@ -70,6 +70,7 @@ const Freelancers = ({ data }) => {
               borderColor={selectedFreelancers.indexOf(s.id) > -1 && "blue.6"}
               footer={
                 <RoundedButton
+                  aria-label={`Select ${s.name}`}
                   onClick={handleClickFreelancer(s)}
                   variant={
                     selectedFreelancers.indexOf(s.id) > -1 ? "dark" : "subtle"
