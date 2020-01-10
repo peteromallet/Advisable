@@ -1,4 +1,5 @@
 import React from "react";
+import RequestCallButton from "../RequestCallButton";
 import { useLocation, Link as RouterLink } from "react-router-dom";
 import { Circle, Box, Text, Icon, RoundedButton } from "@advisable/donut";
 
@@ -27,9 +28,7 @@ const NoResults = () => {
       >
         Make another search
       </RoundedButton>
-      <RoundedButton variant="secondary" prefix={<Icon icon="phone" />}>
-        Request a call
-      </RoundedButton>
+      <RequestCallButton>Request a call</RequestCallButton>
     </Box>
   );
 };

@@ -5,9 +5,16 @@ import Results from "./Results";
 import Criteria from "./Criteria";
 import Availability from "./Availability";
 import { Box } from "@advisable/donut";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
+import useViewer from "../../hooks/useViewer";
 
 const FreelancerSearch = () => {
+  const viewer = useViewer();
+
+  if (viewer.__typename !== "User") {
+    return <Redirect to="/" />;
+  }
+
   return (
     <Box maxWidth={1100} mx="auto" py="xl">
       <Switch>

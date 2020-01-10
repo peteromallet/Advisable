@@ -7,6 +7,7 @@ import Loading from "./Loading";
 import QUERY from "./searchQuery";
 import NoResults from "./NoResults";
 import SelectionBar from "./SelectionBar";
+import RequestCallButton from "../RequestCallButton";
 import SpecialistCard from "../../../components/SpecialistCard";
 
 const Results = () => {
@@ -87,6 +88,7 @@ const Results = () => {
             <SpecialistCard
               mx={10}
               mb={20}
+              height={470}
               specialist={s}
               elevation={selectedFreelancers.indexOf(s.id) > -1 ? "l" : "m"}
               border="2px solid white"
@@ -134,9 +136,7 @@ const Results = () => {
         >
           Make another search
         </RoundedButton>
-        <RoundedButton variant="secondary" prefix={<Icon icon="phone" />}>
-          Request a call
-        </RoundedButton>
+        <RequestCallButton>Request a call</RequestCallButton>
       </Box>
       <SelectionBar />
     </Box>

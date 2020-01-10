@@ -11,20 +11,20 @@ const SelectionBar = () => {
     <Box
       left="0"
       bottom="-20px"
-      height={80}
+      height={100}
       width="100%"
       bg="white.9"
       position="fixed"
-      boxShadow="l"
+      boxShadow="0 10px 50px rgba(0, 0, 0, 0.2)"
       as={motion.div}
       animate={{
-        y: selected.length === 0 ? 60 : 0,
+        y: selected.length === 0 ? 80 : 0,
       }}
       initial={{
-        y: selected.length === 0 ? 60 : 0,
+        y: selected.length === 0 ? 80 : 0,
       }}
     >
-      <Box height={60} display="flex" alignItems="center" px={90}>
+      <Box height={80} display="flex" alignItems="center" px={90}>
         <Box width="100%">You have selected {selected.length} freelancer's</Box>
         <RoundedButton
           as={Link}
