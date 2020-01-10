@@ -42,7 +42,20 @@ const VARIANTS = {
       background: ${lighten(0.02, theme.colors.neutral[1])};
     }
   `,
+  dark: css`
+    color: white;
+    background: ${theme.colors.blue[8]};
 
+    &:not(:disabled):hover {
+      color: white;
+      background: ${darken(0.02, theme.colors.blue[7])};
+    }
+
+    &:not(:disabled):active {
+      color: white;
+      background: ${lighten(0.02, theme.colors.blue[7])};
+    }
+  `,
   subtle: css`
     color: ${theme.colors.blue[7]};
     background: ${theme.colors.blue[0]};

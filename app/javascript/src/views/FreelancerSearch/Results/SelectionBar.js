@@ -28,6 +28,7 @@ const SelectionBar = () => {
         <Box width="100%">You have selected {selected.length} freelancer's</Box>
         <RoundedButton
           as={Link}
+          size="l"
           to={{
             ...location,
             pathname: "/freelancer_search/availability",
