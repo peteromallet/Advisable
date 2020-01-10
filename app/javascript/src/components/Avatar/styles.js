@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { space, border } from "styled-system";
 
 const sizes = {
   s: "30px",
@@ -17,6 +18,9 @@ const shadow = css`
 `;
 
 export const Avatar = styled.div`
+  ${space}
+  ${border}
+  
   width: ${props => sizes[props.size || "m"]};
   height: ${props => sizes[props.size || "m"]};
   color: ${props => (props.url ? "transparent" : "#0064FF")};

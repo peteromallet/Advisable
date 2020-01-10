@@ -67,7 +67,7 @@ const Availability = () => {
         color="blue.9"
         fontSize="xxl"
         fontWeight="bold"
-        letterSpacing="-0.01em"
+        letterSpacing="-0.015em"
       >
         Availability
       </Text>

@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Text, Card, RoundedButton, Icon } from "@advisable/donut";
-import { Formik, Form, Field } from "formik";
-import TextField from "../../../components/TextField";
 import { useMutation } from "react-apollo";
+import { Formik, Form, Field } from "formik";
 import REQUEST_CONSULTATIONS from "./requestConsultations";
 import { useLocation, useHistory, Redirect } from "react-router-dom";
+import { Box, Text, Card, RoundedButton, Icon } from "@advisable/donut";
+import TextField from "../../../components/TextField";
+import validationSchema from "./validationSchema";
 
 const Topic = () => {
   const history = useHistory();
@@ -31,7 +32,7 @@ const Topic = () => {
       },
     });
 
-    history.push("/freelancer_search/sent");
+    history.push({ pathname: "/freelancer_search/sent", state: nil });
   };
 
   return (
@@ -52,7 +53,11 @@ const Topic = () => {
         requesting their time.
       </Text>
       <Card padding="m">
-        <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+        <Formik
+          onSubmit={handleSubmit}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+        >
           {formik => (
             <Form>
               <Box mb="l">
@@ -63,6 +68,7 @@ const Topic = () => {
                   name="topic"
                   as={TextField}
                   placeholder="What would you like to talk about..."
+                  error={formik.touched.topic && formik.errors.topic}
                 />
               </Box>
               <RoundedButton

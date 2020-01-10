@@ -6,8 +6,6 @@ class Mutations::RequestConsultations < Mutations::BaseMutation
   field :consultations, [Types::ConsultationType], null: true
 
   def authorized?(specialists:, skill:, topic:)
-    return true if context[:current_user].present?
-
     if context[:current_user].nil?
       raise ApiError::NotAuthenticated.new('You are not logged in')
     end
@@ -18,6 +16,8 @@ class Mutations::RequestConsultations < Mutations::BaseMutation
               'You are logged in as a specialist'
             )
     end
+
+    true
   end
 
   def resolve(specialists:, skill:, topic:)

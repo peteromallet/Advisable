@@ -111,7 +111,11 @@ const Freelancers = ({ data }) => {
         </RoundedButton>
         <RequestCallButton>Request a call</RequestCallButton>
       </Box>
-      <SelectionBar />
+      <SelectionBar
+        specialists={data.specialists.nodes.filter(
+          s => selectedFreelancers.indexOf(s.id) > -1
+        )}
+      />
     </>
   );
 };
