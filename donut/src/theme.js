@@ -20,6 +20,11 @@ space.l = space[5];
 space.xl = space[6];
 space.xxl = space[7];
 
+const fonts = {
+  body: "poppins, sans-serif",
+  heading: "metropolis, poppins, sans-serif",
+};
+
 // Font sizes
 const fontSizes = {
   xxs: 12,
@@ -40,6 +45,7 @@ const fontWeights = {
   medium: 500,
   semibold: 600,
   bold: 700,
+  extraBold: 800,
 };
 
 // Line heights
@@ -75,14 +81,14 @@ const colors = {
   ],
   neutral: [
     "#F8F9FF",
-    "#EFF1FA",
-    "#DBDDEC",
-    "#C8CAD9",
-    "#ACAEC1",
-    "#8A8D9F",
-    "#636577",
-    "#414251",
-    "#292A37",
+    "#F2F3F8",
+    "#E8EAF1",
+    "#DEE0E8",
+    "#CFD1DA",
+    "#B6B8C0",
+    "#92949D",
+    "#6A6C75",
+    "#40424A",
     "#171722",
   ],
   blue: [
@@ -94,7 +100,7 @@ const colors = {
     "#0425E8",
     "#0621C3",
     "#05138F",
-    "#010B69",
+    "#00155D",
     "#01073D",
   ],
   green: [
@@ -160,6 +166,7 @@ export default {
   },
   colors,
   space,
+  fonts,
   fontSizes,
   fontWeights,
   lineHeights,

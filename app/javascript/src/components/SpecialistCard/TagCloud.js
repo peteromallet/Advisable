@@ -7,11 +7,11 @@ const Tag = styled.div`
   margin-right: 4px;
   margin-bottom: 4px;
   display: inline-flex;
-  color: ${theme.colors.orange[8]};
-  background: ${theme.colors.orange[0]};
-  border-radius: 8px;
+  color: ${theme.colors.blue[8]};
+  background: ${theme.colors.neutral[1]};
+  border-radius: 15px;
   padding: 0 10px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   align-items: center;
   vertical-align: top;
@@ -26,12 +26,13 @@ const Circle = styled.span`
   width: 14px;
   height: 14px;
   color: white;
-  margin-right: 4px;
+  margin-left: -4px;
+  margin-right: 6px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: ${theme.colors.orange[5]};
+  background: ${theme.colors.blue[5]};
 `;
 
 const TagCloud = ({ tags, maxRows, name }) => {
@@ -57,30 +58,31 @@ const TagCloud = ({ tags, maxRows, name }) => {
   return (
     <Box ref={ref}>
       {trimmed.map((tag, i) => (
-        <Tag key={i}>
-          <Tooltip
-            content={
-              tag.verified && (
-                <>
-                  <Text size="xs" fontWeight="medium" mb="xxs" color="white">
-                    Verified Skill
-                  </Text>
-                  <Text size="xxs" lineHeight="xs" color="white">
-                    This means that {name} has completed a project with the
-                    skill "{tag.name}"
-                  </Text>
-                </>
-              )
-            }
-          >
+        <Tooltip
+          key={i}
+          content={
+            tag.verified && (
+              <>
+                <Text size="xs" fontWeight="medium" mb="xxs" color="white">
+                  Verified Skill
+                </Text>
+                <Text size="xxs" lineHeight="xs" color="white">
+                  This means that {name} has completed a project with the skill
+                  "{tag.name}"
+                </Text>
+              </>
+            )
+          }
+        >
+          <Tag>
             {tag.verified && (
               <Circle>
                 <Icon width={8} strokeWidth={4} icon="check" />
               </Circle>
             )}
             {tag.name}
-          </Tooltip>
-        </Tag>
+          </Tag>
+        </Tooltip>
       ))}
       {maxRows && <Tag>+ {rest.length}</Tag>}
     </Box>

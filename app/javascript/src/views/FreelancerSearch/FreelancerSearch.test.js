@@ -193,3 +193,73 @@ test("User can search for freelancers and request consultations with them", asyn
   );
   expect(header).toBeInTheDocument();
 });
+
+test("Going directly to resuts redirects back to criteria step", async () => {
+  const day1 = getNextAvailableDate(moment().add(1, "day"));
+  const day2 = getNextAvailableDate(moment(day1).add(1, "days"));
+  const day3 = getNextAvailableDate(moment(day2).add(1, "days"));
+
+  const user = mockData.user({
+    availability: [
+      day1.toISOString(),
+      moment(day1.add(30, "minutes").toISOString()),
+      day2.toISOString(),
+      moment(day2.add(30, "minutes").toISOString()),
+      day3.toISOString(),
+      moment(day3.add(30, "minutes").toISOString()),
+    ],
+  });
+
+  const skill = mockData.skill({ name: "Marketing" });
+  const industry = mockData.industry({ name: "Finance" });
+  const specialists = [
+    mockData.specialist({ name: "Tom" }),
+    mockData.specialist({ name: "Bob" }),
+    mockData.specialist({ name: "Jane" }),
+    mockData.specialist({ name: "Frank" }),
+  ];
+
+  const graphQLMocks = [
+    {
+      request: {
+        query: VIEWER,
+      },
+      result: {
+        data: {
+          viewer: user,
+        },
+      },
+    },
+    {
+      request: {
+        query: GET_DATA,
+      },
+      result: {
+        data: {
+          skills: [
+            {
+              ...skill,
+              label: skill.name,
+              value: skill.name,
+            },
+          ],
+          industries: [
+            {
+              ...industry,
+              label: industry.name,
+              value: industry.name,
+            },
+          ],
+        },
+      },
+    },
+  ];
+
+  const app = renderApp({
+    route: "/freelancer_search/results",
+    graphQLMocks,
+  });
+
+  const header = await app.findByText("Find the Perfect Freelancer");
+  expect(header).toBeInTheDocument();
+});

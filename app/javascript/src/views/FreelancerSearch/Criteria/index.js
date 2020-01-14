@@ -54,15 +54,16 @@ const FreelancerSearchCriteria = () => {
           initial={{ y: 40, opacity: 0 }}
         >
           <Text
-            color="blue.9"
-            fontSize={28}
+            mb="xs"
+            fontSize={38}
+            color="blue.8"
             fontWeight="bold"
-            letterSpacing="-0.022em"
-            lineHeight="36px"
+            lineHeight="32px"
+            letterSpacing="-0.03em"
           >
             Find the Perfect Freelancer
           </Text>
-          <Text fontSize="m" color="neutral.8" lineHeight="s" mb="l">
+          <Text fontSize="m" color="neutral.8" lineHeight="m" mb="l">
             Let us know what you are looking for so that we can find the perfect
             freelancer for you.
           </Text>

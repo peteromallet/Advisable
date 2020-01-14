@@ -12,8 +12,10 @@ import {
   StyledWindow,
   StyledBackdrop,
   StyledModalLoading,
+  StyledModalCloseButton,
   StyledModalWindowContainer,
 } from "./styles";
+import Icon from "../Icon";
 import useBreakpoint from "../../hooks/useBreakpoint";
 export { default as useRoutedModal } from "./useRoutedModal";
 
@@ -102,6 +104,13 @@ const Modal = ({ modal, label, children, backdrop, loading, ...props }) => {
               }}
             >
               {children}
+              <StyledModalCloseButton
+                type="button"
+                onClick={modal.hide}
+                aria-label="Close modal"
+              >
+                <Icon width={20} height={20} icon="x" />
+              </StyledModalCloseButton>
             </StyledWindow>
           )}
         </AnimatePresence>

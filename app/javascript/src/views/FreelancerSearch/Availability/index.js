@@ -3,6 +3,7 @@ import {
   Box,
   Text,
   Card,
+  Link,
   Autocomplete,
   RoundedButton,
   Icon,
@@ -61,10 +62,20 @@ const Availability = () => {
 
   return (
     <Box maxWidth={700} mx="auto">
+      <Link
+        mb="xs"
+        to={{
+          ...location,
+          pathname: "/freelancer_search/results",
+        }}
+      >
+        <Icon mr="xxs" width={16} height={16} icon="arrow-left" />
+        Back
+      </Link>
       <Text
         as="h1"
         mb="xs"
-        color="blue.9"
+        color="blue.8"
         fontSize="xxl"
         fontWeight="bold"
         letterSpacing="-0.015em"

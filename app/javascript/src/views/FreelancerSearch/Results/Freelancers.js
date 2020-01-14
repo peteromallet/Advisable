@@ -32,20 +32,21 @@ const Freelancers = ({ data }) => {
   return (
     <>
       <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }}>
-        <Link variant="subtle" mb="xs" to="/freelancer_search">
+        <Link mb="xs" to="/freelancer_search">
           <Icon icon="arrow-left" width={16} height={16} mr="xxs" /> Back
         </Link>
         <Text
           as="h2"
           mb="xxs"
+          color="blue.8"
           fontSize="xxl"
           lineHeight="xl"
           fontWeight="semibold"
-          letterSpacing="-0.02em"
+          letterSpacing="-0.025em"
         >
           We found {data.specialists.nodes.length} {search.skill} freelancers
         </Text>
-        <Text mb="l" color="neutral.7">
+        <Text mb="l" color="neutral.8" letterSpacing="-0.01em">
           Please select the freelancers you would like to request a consultation
           with.
         </Text>
@@ -58,7 +59,7 @@ const Freelancers = ({ data }) => {
             width="33.3333%"
             animate={{ opacity: 1, y: 0 }}
             initial={{ opacity: 0, y: 30 }}
-            transition={{ delay: (i + 1) * 0.14 }}
+            transition={{ delay: (i + 1) * 0.2 }}
           >
             <SpecialistCard
               mx={10}
@@ -69,24 +70,28 @@ const Freelancers = ({ data }) => {
               border="2px solid white"
               borderColor={selectedFreelancers.indexOf(s.id) > -1 && "blue.6"}
               footer={
-                <RoundedButton
-                  aria-label={`Select ${s.name}`}
-                  onClick={handleClickFreelancer(s)}
-                  variant={
-                    selectedFreelancers.indexOf(s.id) > -1 ? "dark" : "subtle"
-                  }
-                  prefix={
-                    <Icon
-                      icon={
-                        selectedFreelancers.indexOf(s.id) > -1
-                          ? "check"
-                          : "plus"
-                      }
-                    />
-                  }
-                >
-                  {selectedFreelancers.indexOf(s.id) > -1 ? "Added" : "Add"}
-                </RoundedButton>
+                <Box position="absolute" bottom={20} left={20}>
+                  <RoundedButton
+                    aria-label={`Select ${s.name}`}
+                    onClick={handleClickFreelancer(s)}
+                    variant={
+                      selectedFreelancers.indexOf(s.id) > -1
+                        ? "primary"
+                        : "dark"
+                    }
+                    prefix={
+                      <Icon
+                        icon={
+                          selectedFreelancers.indexOf(s.id) > -1
+                            ? "check"
+                            : "plus"
+                        }
+                      />
+                    }
+                  >
+                    {selectedFreelancers.indexOf(s.id) > -1 ? "Added" : "Add"}
+                  </RoundedButton>
+                </Box>
               }
             />
           </Box>

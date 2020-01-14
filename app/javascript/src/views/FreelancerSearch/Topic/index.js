@@ -3,7 +3,7 @@ import { useMutation } from "react-apollo";
 import { Formik, Form, Field } from "formik";
 import REQUEST_CONSULTATIONS from "./requestConsultations";
 import { useLocation, useHistory, Redirect } from "react-router-dom";
-import { Box, Text, Card, RoundedButton, Icon } from "@advisable/donut";
+import { Box, Link, Text, Card, RoundedButton, Icon } from "@advisable/donut";
 import TextField from "../../../components/TextField";
 import validationSchema from "./validationSchema";
 
@@ -37,10 +37,20 @@ const Topic = () => {
 
   return (
     <Box maxWidth={700} mx="auto">
+      <Link
+        mb="xs"
+        to={{
+          ...location,
+          pathname: "/freelancer_search/availability",
+        }}
+      >
+        <Icon mr="xxs" width={16} height={16} icon="arrow-left" />
+        Back
+      </Link>
       <Text
         as="h1"
         mb="xs"
-        color="blue.9"
+        color="blue.8"
         fontSize="xxl"
         fontWeight="bold"
         letterSpacing="-0.02em"

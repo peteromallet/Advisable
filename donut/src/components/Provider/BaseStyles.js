@@ -6,8 +6,6 @@ const BACKGROUND = {
 };
 
 const BaseStyles = createGlobalStyle`
-  @import url("https://use.typekit.net/yuq4swo.css");
-
   html, body {
     font-size: 16px;
     box-sizing: border-box;
