@@ -10,7 +10,7 @@ const Freelancers = ({ data }) => {
   const history = useHistory();
   const location = useLocation();
   const search = location.state?.search;
-  const selectedFreelancers = location.state.freelancers || [];
+  const selectedFreelancers = location.state?.freelancers || [];
 
   const handleClickFreelancer = specialist => e => {
     let nextSelected;

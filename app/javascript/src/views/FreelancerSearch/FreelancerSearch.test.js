@@ -160,13 +160,11 @@ test("User can search for freelancers and request consultations with them", asyn
 
   const skillInput = await app.findByPlaceholderText("Search for a skill");
   fireEvent.click(skillInput);
-  fireEvent.change(skillInput, { target: { value: skill.name } });
   fireEvent.keyDown(skillInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillInput, { key: "Enter" });
 
   const industryInput = app.getByPlaceholderText("Industry");
   fireEvent.click(industryInput);
-  fireEvent.change(industryInput, { target: { value: industry.name } });
   fireEvent.keyDown(industryInput, { key: "ArrowDown" });
   fireEvent.keyDown(industryInput, { key: "Enter" });
 
@@ -195,29 +193,9 @@ test("User can search for freelancers and request consultations with them", asyn
 });
 
 test("Going directly to resuts redirects back to criteria step", async () => {
-  const day1 = getNextAvailableDate(moment().add(1, "day"));
-  const day2 = getNextAvailableDate(moment(day1).add(1, "days"));
-  const day3 = getNextAvailableDate(moment(day2).add(1, "days"));
-
-  const user = mockData.user({
-    availability: [
-      day1.toISOString(),
-      moment(day1.add(30, "minutes").toISOString()),
-      day2.toISOString(),
-      moment(day2.add(30, "minutes").toISOString()),
-      day3.toISOString(),
-      moment(day3.add(30, "minutes").toISOString()),
-    ],
-  });
-
+  const user = mockData.user();
   const skill = mockData.skill({ name: "Marketing" });
   const industry = mockData.industry({ name: "Finance" });
-  const specialists = [
-    mockData.specialist({ name: "Tom" }),
-    mockData.specialist({ name: "Bob" }),
-    mockData.specialist({ name: "Jane" }),
-    mockData.specialist({ name: "Frank" }),
-  ];
 
   const graphQLMocks = [
     {

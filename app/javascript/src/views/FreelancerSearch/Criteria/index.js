@@ -4,7 +4,6 @@ import {
   Text,
   Icon,
   Card,
-  useTheme,
   Checkbox,
   Autocomplete,
   RoundedButton,
@@ -20,7 +19,6 @@ import validationSchema from "./validationSchema";
 import DATA from "./getData";
 
 const FreelancerSearchCriteria = () => {
-  const { updateTheme } = useTheme();
   const { data, loading } = useQuery(DATA);
   const history = useHistory();
 

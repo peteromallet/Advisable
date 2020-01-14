@@ -15,7 +15,6 @@ const Button = React.forwardRef(
     return (
       <StyledButton
         ref={ref}
-        isLoading={loading}
         aria-label={children}
         data-loading={loading}
         disabled={loading || disabled}

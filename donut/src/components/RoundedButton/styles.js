@@ -143,8 +143,11 @@ export const StyledButton = styled.button`
     background: ${theme.colors.blue[6]};
   }
 
+  &:[data-loading] {
+    color: transparent;
+  }
+
   ${props => VARIANTS[props.variant || "primary"]}
-  ${props => props.isLoading && { color: "transparent" }}
 `;
 
 export const StyledButtonPrefix = styled.div`

@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "react-apollo";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, Redirect } from "react-router-dom";
 import Loading from "./Loading";
 import QUERY from "./searchQuery";
 import NoResults from "./NoResults";
@@ -21,7 +21,7 @@ const Results = () => {
   });
 
   if (!location.state?.search) {
-    history.replace("/freelancer_search");
+    return <Redirect to="/freelancer_search" />;
   }
 
   if (error) {
