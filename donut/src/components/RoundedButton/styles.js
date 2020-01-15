@@ -128,6 +128,7 @@ export const StyledButton = styled.button`
 
   &[data-loading="true"] {
     cursor: default;
+    color: transparent;
   }
 
   &:not([data-loading="true"]):disabled {
@@ -141,10 +142,6 @@ export const StyledButton = styled.button`
 
   &:not(:disabled):active {
     background: ${theme.colors.blue[6]};
-  }
-
-  &:[data-loading] {
-    color: transparent;
   }
 
   ${props => VARIANTS[props.variant || "primary"]}

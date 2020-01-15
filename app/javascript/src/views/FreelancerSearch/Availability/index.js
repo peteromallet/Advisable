@@ -82,7 +82,7 @@ const Availability = () => {
       >
         Availability
       </Text>
-      <Text lineHeight="s" color="neutral.8" mb="l">
+      <Text lineHeight="s" color="neutral.8" mb="m">
         Select the times you will be available for a consultation. The more
         times you select, the easier it'll be for us to find a time that suits
         them.
@@ -104,7 +104,7 @@ const Availability = () => {
               />
               <Box
                 my="m"
-                height={["100%", 280]}
+                height={280}
                 display="flex"
                 flexShrink={1}
                 flexGrow={1}

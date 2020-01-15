@@ -5,9 +5,13 @@ import theme from "../../theme";
 const size = variant({
   prop: "size",
   variants: {
-    xs: {
+    xxs: {
       width: 20,
       height: 20,
+    },
+    xs: {
+      width: 30,
+      height: 30,
     },
     s: {
       width: 40,

@@ -30,39 +30,45 @@ const Freelancers = ({ data }) => {
   };
 
   return (
-    <>
+    <Box>
       <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }}>
         <Link mb="xs" to="/freelancer_search">
           <Icon icon="arrow-left" width={16} height={16} mr="xxs" /> Back
         </Link>
         <Text
           as="h2"
-          mb="xxs"
+          mb="xs"
           color="blue.8"
-          fontSize="xxl"
-          lineHeight="xl"
+          fontSize="26px"
+          lineHeight="24px"
           fontWeight="semibold"
-          letterSpacing="-0.025em"
+          letterSpacing="-0.035em"
         >
           We found {data.specialists.nodes.length} {search.skill} freelancers
         </Text>
-        <Text mb="l" color="neutral.8" letterSpacing="-0.01em">
+        <Text
+          mb="l"
+          fontSize="l"
+          lineHeight="s"
+          color="neutral.8"
+          letterSpacing="-0.01em"
+        >
           Please select the freelancers you would like to request a consultation
           with.
         </Text>
       </motion.div>
-      <Box display="flex" flexWrap="wrap" ml="-10px" mr="-10px">
+      <Box flexWrap="wrap" display="flex" ml="-10px" mr="-10px">
         {data.specialists.nodes.map((s, i) => (
           <Box
             as={motion.div}
             key={s.id}
-            width="33.3333%"
             animate={{ opacity: 1, y: 0 }}
             initial={{ opacity: 0, y: 30 }}
+            width={{ _: "100%", s: "50%", l: "33.3333%" }}
             transition={{ delay: (i + 1) * 0.2 }}
           >
             <SpecialistCard
-              mx={10}
+              mx="10px"
               mb={20}
               height={470}
               specialist={s}
@@ -122,7 +128,7 @@ const Freelancers = ({ data }) => {
           s => selectedFreelancers.indexOf(s.id) > -1
         )}
       />
-    </>
+    </Box>
   );
 };
 
