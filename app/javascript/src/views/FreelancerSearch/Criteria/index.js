@@ -3,7 +3,6 @@ import {
   Box,
   Text,
   Icon,
-  Card,
   Checkbox,
   Autocomplete,
   RoundedButton,
