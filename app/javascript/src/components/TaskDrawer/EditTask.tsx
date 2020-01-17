@@ -1,4 +1,5 @@
 import * as React from "react";
+import Div100vh from "react-div-100vh";
 import TaskStatus from "../TaskStatus";
 import Text from "../Text";
 import Button from "../Button";
@@ -188,83 +189,89 @@ const EditTask = ({
           </ConfirmationContainer>
         </Confirmation>
       )}
-      <VerticalLayout>
-        <VerticalLayout.Header>
-          <Padding left="m" right="m">
-            {!hideStatus && <TaskStatus>{task.stage}</TaskStatus>}
-            <Title
-              data-testid="nameField"
-              onBlur={handleBlurWithSave("name")}
-              readOnly={titleReadOnly}
-              value={attributes.name}
-              onFocus={handleFocus("name")}
-              onChange={handleChangeWithTimeout("name")}
-              isFocused={editAllowed && focusedElement === "name"}
-            />
-          </Padding>
-        </VerticalLayout.Header>
-        <VerticalLayout.Content style={{ flexDirection: "column" }}>
-          <Scrollable>
-            <Padding left="m" bottom="m" right="m">
-              <TaskDetails>
-                <DueDate
-                  readOnly={dueDateReadOnly}
-                  value={attributes.dueDate}
-                  onClick={handleFocus("dueDate")}
-                  onClose={handleBlur("dueDate")}
-                  onChange={handleChange("dueDate")}
-                  isOpen={editAllowed && focusedElement === "dueDate"}
-                />
-                <QuoteInput
-                  task={task}
-                  readOnly={estimateReadOnly}
-                  onSubmit={values => {
-                    updateField("estimate", values.estimate);
-                    updateField("flexibleEstimate", values.flexibleEstimate);
-                    onSave("estimate", values);
-                  }}
-                />
-              </TaskDetails>
-              <TaskDetailRows task={task} isClient={isClient} />
-              {!readOnly && !isClient && !task.application.trialTask && (
-                <MarkAsTrial task={task} isClient={isClient} />
-              )}
-              <div style={{ marginTop: 16 }}>
-                <Description
-                  readOnly={descriptionReadOnly}
-                  value={attributes.description}
-                  onBlur={handleBlurWithSave("description")}
-                  onFocus={handleFocus("description")}
-                  onChange={handleChangeWithTimeout("description")}
-                  isFocused={editAllowed && focusedElement === "description"}
-                />
-              </div>
+      <Div100vh style={{ height: "calc(100rvh - 60px)" }}>
+        <VerticalLayout>
+          <VerticalLayout.Header>
+            <Padding left="m" right="m">
+              {!hideStatus && <TaskStatus>{task.stage}</TaskStatus>}
+              <Title
+                data-testid="nameField"
+                onBlur={handleBlurWithSave("name")}
+                readOnly={titleReadOnly}
+                value={attributes.name}
+                onFocus={handleFocus("name")}
+                onChange={handleChangeWithTimeout("name")}
+                isFocused={editAllowed && focusedElement === "name"}
+              />
             </Padding>
-          </Scrollable>
-        </VerticalLayout.Content>
-        <VerticalLayout.Footer style={{ background: "white" }}>
-          <Padding size="l">
-            {!readOnly && showStatusNotice && (
-              <StageDescription isClient={isClient} task={task} />
-            )}
-            {!readOnly && (
-              <Actions setPrompt={setPrompt} isClient={isClient} task={task} />
-            )}
-          </Padding>
-          <SavingIndicator isSaving={isSaving}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              fill="none"
-              viewBox="0 0 14 14"
-            >
-              <path stroke="currentColor" d="M13 7a6 6 0 11-6-6" />
-            </svg>
-            Saving...
-          </SavingIndicator>
-        </VerticalLayout.Footer>
-      </VerticalLayout>
+          </VerticalLayout.Header>
+          <VerticalLayout.Content style={{ flexDirection: "column" }}>
+            <Scrollable>
+              <Padding left="m" bottom="m" right="m">
+                <TaskDetails>
+                  <DueDate
+                    readOnly={dueDateReadOnly}
+                    value={attributes.dueDate}
+                    onClick={handleFocus("dueDate")}
+                    onClose={handleBlur("dueDate")}
+                    onChange={handleChange("dueDate")}
+                    isOpen={editAllowed && focusedElement === "dueDate"}
+                  />
+                  <QuoteInput
+                    task={task}
+                    readOnly={estimateReadOnly}
+                    onSubmit={values => {
+                      updateField("estimate", values.estimate);
+                      updateField("flexibleEstimate", values.flexibleEstimate);
+                      onSave("estimate", values);
+                    }}
+                  />
+                </TaskDetails>
+                <TaskDetailRows task={task} isClient={isClient} />
+                {!readOnly && !isClient && !task.application.trialTask && (
+                  <MarkAsTrial task={task} isClient={isClient} />
+                )}
+                <div style={{ marginTop: 16 }}>
+                  <Description
+                    readOnly={descriptionReadOnly}
+                    value={attributes.description}
+                    onBlur={handleBlurWithSave("description")}
+                    onFocus={handleFocus("description")}
+                    onChange={handleChangeWithTimeout("description")}
+                    isFocused={editAllowed && focusedElement === "description"}
+                  />
+                </div>
+              </Padding>
+            </Scrollable>
+          </VerticalLayout.Content>
+          <VerticalLayout.Footer style={{ background: "white" }}>
+            <Padding size="l">
+              {!readOnly && showStatusNotice && (
+                <StageDescription isClient={isClient} task={task} />
+              )}
+              {!readOnly && (
+                <Actions
+                  setPrompt={setPrompt}
+                  isClient={isClient}
+                  task={task}
+                />
+              )}
+            </Padding>
+            <SavingIndicator isSaving={isSaving}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path stroke="currentColor" d="M13 7a6 6 0 11-6-6" />
+              </svg>
+              Saving...
+            </SavingIndicator>
+          </VerticalLayout.Footer>
+        </VerticalLayout>
+      </Div100vh>
     </>
   );
 };
