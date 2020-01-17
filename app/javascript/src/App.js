@@ -6,13 +6,13 @@ import { NotificationsProvider } from "./components/Notifications";
 
 const App = () => {
   return (
-    <RootErrorBoundary>
-      <ApplicationProvider>
+    <ApplicationProvider>
+      <RootErrorBoundary>
         <NotificationsProvider>
           <Routes />
         </NotificationsProvider>
-      </ApplicationProvider>
-    </RootErrorBoundary>
+      </RootErrorBoundary>
+    </ApplicationProvider>
   );
 };
 
