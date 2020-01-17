@@ -89,7 +89,12 @@ const SpecialistModal = ({ modal, specialistId }) => {
   const specialist = get(data, "specialist");
 
   return (
-    <Modal modal={modal} label="Specialist details" loading={loading}>
+    <Modal
+      width={700}
+      modal={modal}
+      label="Specialist details"
+      loading={loading}
+    >
       <Box overflowY="auto">
         <Scrollable>
           {!specialist ? (

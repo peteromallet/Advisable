@@ -12,11 +12,6 @@ export const StyledSpecialistName = styled.h4`
 
 export const StyledSpecialistCard = styled(StyledCard)`
   position: relative;
-
-  &:hover ${StyledSpecialistName} {
-    cursor: pointer;
-    color: ${theme.colors.blue[6]};
-  }
 `;
 
 export default StyledSpecialistCard;

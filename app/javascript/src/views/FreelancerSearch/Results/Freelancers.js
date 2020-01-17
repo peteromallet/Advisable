@@ -70,34 +70,30 @@ const Freelancers = ({ data }) => {
             <SpecialistCard
               mx="10px"
               mb={20}
-              height={470}
+              height={480}
               specialist={s}
               elevation={selectedFreelancers.indexOf(s.id) > -1 ? "l" : "m"}
               border="2px solid white"
               borderColor={selectedFreelancers.indexOf(s.id) > -1 && "blue.6"}
-              footer={
-                <Box position="absolute" bottom={20} left={20}>
-                  <RoundedButton
-                    aria-label={`Select ${s.name}`}
-                    onClick={handleClickFreelancer(s)}
-                    variant={
-                      selectedFreelancers.indexOf(s.id) > -1
-                        ? "primary"
-                        : "dark"
-                    }
-                    prefix={
-                      <Icon
-                        icon={
-                          selectedFreelancers.indexOf(s.id) > -1
-                            ? "check"
-                            : "plus"
-                        }
-                      />
-                    }
-                  >
-                    {selectedFreelancers.indexOf(s.id) > -1 ? "Added" : "Add"}
-                  </RoundedButton>
-                </Box>
+              action={
+                <RoundedButton
+                  aria-label={`Select ${s.name}`}
+                  onClick={handleClickFreelancer(s)}
+                  variant={
+                    selectedFreelancers.indexOf(s.id) > -1 ? "primary" : "dark"
+                  }
+                  prefix={
+                    <Icon
+                      icon={
+                        selectedFreelancers.indexOf(s.id) > -1
+                          ? "check"
+                          : "plus"
+                      }
+                    />
+                  }
+                >
+                  {selectedFreelancers.indexOf(s.id) > -1 ? "Added" : "Add"}
+                </RoundedButton>
               }
             />
           </Box>

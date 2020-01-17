@@ -1,13 +1,20 @@
 import React from "react";
 import { truncate } from "lodash";
-import { Avatar, Box, Text, Icon, useModal } from "@advisable/donut";
+import {
+  Avatar,
+  Box,
+  Text,
+  Icon,
+  useModal,
+  RoundedButton,
+} from "@advisable/donut";
 import LineClamp from "../LineClamp";
 import TagCloud from "./TagCloud";
 import Attributes from "./Attributes";
 import SpecialistModal from "./SpecialistModal";
 import { StyledSpecialistCard, StyledSpecialistName } from "./styles";
 
-const SpecialistCard = ({ specialist, footer, ...props }) => {
+const SpecialistCard = ({ specialist, action, ...props }) => {
   const specialistModal = useModal();
 
   return (
@@ -54,7 +61,21 @@ const SpecialistCard = ({ specialist, footer, ...props }) => {
         name={specialist.firstName}
       />
       <SpecialistModal modal={specialistModal} specialistId={specialist.id} />
-      {footer && <Box mt="m">{footer}</Box>}
+      <Box position="absolute" bottom={20} left={20}>
+        {action && (
+          <Box display="inline-block" mr="xs">
+            {action}
+          </Box>
+        )}
+        <RoundedButton
+          aria-label={`View ${specialist.name}`}
+          onClick={specialistModal.show}
+          variant="subtle"
+          prefix={<Icon icon="external-link" />}
+        >
+          View More
+        </RoundedButton>
+      </Box>
     </StyledSpecialistCard>
   );
 };

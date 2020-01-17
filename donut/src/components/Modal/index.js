@@ -21,7 +21,15 @@ export { default as useRoutedModal } from "./useRoutedModal";
 
 export const useModal = useDialogState;
 
-const Modal = ({ modal, label, children, backdrop, loading, ...props }) => {
+const Modal = ({
+  modal,
+  label,
+  children,
+  backdrop,
+  loading,
+  width,
+  ...props
+}) => {
   const ref = useRef(null);
   const mediumAndUp = useBreakpoint("mUp");
   const isMobile = !mediumAndUp;
@@ -82,6 +90,7 @@ const Modal = ({ modal, label, children, backdrop, loading, ...props }) => {
           {modal.visible && !loading && (
             <StyledWindow
               {...props}
+              width={width}
               isMobile={isMobile}
               transition={{ type: "spring", damping: 35, stiffness: 100 }}
               initial={{
