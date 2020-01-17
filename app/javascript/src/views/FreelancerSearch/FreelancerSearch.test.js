@@ -31,11 +31,17 @@ test("User can search for freelancers and request consultations with them", asyn
   const user = mockData.user({
     availability: [
       day1.toISOString(),
-      moment(day1.add(30, "minutes").toISOString()),
+      moment(day1)
+        .add(30, "minutes")
+        .toISOString(),
       day2.toISOString(),
-      moment(day2.add(30, "minutes").toISOString()),
+      moment(day2)
+        .add(30, "minutes")
+        .toISOString(),
       day3.toISOString(),
-      moment(day3.add(30, "minutes").toISOString()),
+      moment(day3)
+        .add(30, "minutes")
+        .toISOString(),
     ],
   });
 
