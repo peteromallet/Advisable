@@ -58,7 +58,7 @@ test("Can link back to a particular consultation via query params", async () => 
   });
 
   const header = await app.findByText(
-    "Select the times you will be availabile",
+    "Select the times you will be available",
     { exact: false }
   );
 

@@ -1,5 +1,4 @@
 import React from "react";
-import { Helmet } from "react-helmet";
 import BaseStyles from "./BaseStyles";
 import Context from "./context";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -34,9 +33,6 @@ const DonutProvider = ({ children }) => {
     <Context.Provider value={context}>
       <ThemeProvider theme={currentTheme}>
         <>
-          <Helmet>
-            <link rel="stylesheet" href="https://use.typekit.net/yuq4swo.css" />
-          </Helmet>
           <BaseStyles />
           {children}
         </>
