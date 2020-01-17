@@ -45,8 +45,6 @@ test("User can search for freelancers and request consultations with them", asyn
     ],
   });
 
-  console.log("ASDFASDF", user.availability);
-
   const skill = mockData.skill({ name: "Marketing" });
   const industry = mockData.industry({ name: "Finance" });
   const specialists = [

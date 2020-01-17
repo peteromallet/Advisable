@@ -5,6 +5,7 @@ export default gql`
     viewer {
       ... on User {
         id
+        timeZone
         availability
       }
     }
