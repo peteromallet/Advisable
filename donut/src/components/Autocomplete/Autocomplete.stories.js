@@ -1,7 +1,7 @@
 import React from "react";
 import find from "lodash/find";
 import sortBy from "lodash/sortBy";
-import { withKnobs, text } from "@storybook/addon-knobs";
+import { withKnobs } from "@storybook/addon-knobs";
 import Text from "../Text";
 import Card from "../Card";
 import Autocomplete from "./";

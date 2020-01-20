@@ -1,4 +1,3 @@
-# Calculates the average ratings for a specialist from their reviews.
 class Specialists::Search < ApplicationService
   attr_accessor :skill, :industry, :company_type
 
@@ -16,21 +15,37 @@ class Specialists::Search < ApplicationService
   private
 
   def by_skills
-    query = Specialist.joins(:skills).where("average_score >= ?", 65.0).where(skills: { name: skill }).where.not(hourly_rate: nil)
+    query =
+      Specialist.joins(:skills).where('average_score >= ?', 65.0).where(
+        skills: { name: skill }
+      )
+        .where
+        .not(hourly_rate: nil)
     query = filter_industry(query)
     query = filter_company_type(query)
     query
   end
 
   def by_projects
-    query = Specialist.joins(projects: :skills).where("average_score >= ?", 65.0).where(projects: { skills: { name: skill }}).where.not(hourly_rate: nil)
+    query =
+      Specialist.joins(projects: :skills).where('average_score >= ?', 65.0)
+        .where(projects: { skills: { name: skill } })
+        .where
+        .not(hourly_rate: nil)
     query = filter_industry(query)
     query = filter_company_type(query)
     query
   end
 
   def by_off_platform_projects
-    query = Specialist.joins(off_platform_projects: :skills).where("average_score >= ?", 65.0).where(off_platform_projects: { skills: { name: skill }}).where.not(hourly_rate: nil)
+    query =
+      Specialist.joins(off_platform_projects: :skills).where(
+        'average_score >= ?',
+        65.0
+      )
+        .where(off_platform_projects: { skills: { name: skill } })
+        .where
+        .not(hourly_rate: nil)
     query = filter_industry(query)
     query = filter_company_type(query)
     query

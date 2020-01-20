@@ -76,3 +76,18 @@ const StyledWindowMobile = css`
   max-width: 100%;
   min-height: 100%;
 `;
+
+export const StyledModalCloseButton = styled.button`
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  outline: none;
+  border-radius: 50%;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  color: ${theme.colors.neutral[5]};
+  border: 1px solid ${theme.colors.neutral[2]};
+`;

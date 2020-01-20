@@ -6,10 +6,7 @@ class Mutations::SendConsultationRequest < Mutations::BaseMutation
 
   def resolve(**args)
     consultation = Consultation.find_by_uid_or_airtable_id!(args[:consultation])
-    consultation.update(
-      status: "Request Completed",
-      topic: args[:topic]
-    )
+    consultation.update(status: 'Request Completed', topic: args[:topic])
 
     consultation.sync_to_airtable
     { consultation: consultation }

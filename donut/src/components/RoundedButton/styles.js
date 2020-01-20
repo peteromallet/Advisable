@@ -42,6 +42,34 @@ const VARIANTS = {
       background: ${lighten(0.02, theme.colors.neutral[1])};
     }
   `,
+  dark: css`
+    color: white;
+    background: ${theme.colors.blue[8]};
+
+    &:not(:disabled):hover {
+      color: white;
+      background: ${darken(0.02, theme.colors.blue[7])};
+    }
+
+    &:not(:disabled):active {
+      color: white;
+      background: ${lighten(0.02, theme.colors.blue[7])};
+    }
+  `,
+  subtle: css`
+    color: ${theme.colors.blue[7]};
+    background: ${theme.colors.blue[0]};
+
+    &:not(:disabled):hover {
+      color: ${theme.colors.blue[8]};
+      background: ${darken(0.02, theme.colors.blue[0])};
+    }
+
+    &:not(:disabled):active {
+      color: ${theme.colors.blue[8]};
+      background: ${lighten(0.005, theme.colors.blue[0])};
+    }
+  `,
 };
 
 const buttonSize = variant({
@@ -50,14 +78,20 @@ const buttonSize = variant({
     s: {
       height: 32,
       fontSize: 14,
+      paddingLeft: 20,
+      paddingRight: 20,
     },
     m: {
       height: 38,
       fontSize: 15,
+      paddingLeft: 20,
+      paddingRight: 20,
     },
     l: {
       height: 48,
       fontSize: 16,
+      paddingLeft: 28,
+      paddingRight: 28,
     },
   },
 });
@@ -71,7 +105,6 @@ export const StyledButton = styled.button`
   color: white;
   outline: none;
   line-height: 1;
-  padding: 0 20px;
   appearance: none;
   font-weight: 500;
   user-select: none;
@@ -81,6 +114,7 @@ export const StyledButton = styled.button`
   white-space: nowrap;
   display: inline-flex;
   font-family: poppins;
+  text-decoration: none;
   vertical-align: middle;
   justify-content: center;
   letter-spacing: -0.01em;
@@ -94,6 +128,7 @@ export const StyledButton = styled.button`
 
   &[data-loading="true"] {
     cursor: default;
+    color: transparent;
   }
 
   &:not([data-loading="true"]):disabled {
@@ -110,7 +145,6 @@ export const StyledButton = styled.button`
   }
 
   ${props => VARIANTS[props.variant || "primary"]}
-  ${props => props.isLoading && { color: "transparent" }}
 `;
 
 export const StyledButtonPrefix = styled.div`

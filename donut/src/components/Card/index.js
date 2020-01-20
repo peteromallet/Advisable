@@ -1,10 +1,10 @@
-import Card from "./styles";
+import StyledCard from "./styles";
 
-Card.defaultProps = {
+StyledCard.defaultProps = {
   borderRadius: 2,
   elevation: "m",
 };
 
-Card.Styled = Card;
+StyledCard.Styled = StyledCard;
 
-export default Card;
+export default StyledCard;

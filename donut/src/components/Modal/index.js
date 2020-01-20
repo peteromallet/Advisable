@@ -12,14 +12,24 @@ import {
   StyledWindow,
   StyledBackdrop,
   StyledModalLoading,
+  StyledModalCloseButton,
   StyledModalWindowContainer,
 } from "./styles";
+import Icon from "../Icon";
 import useBreakpoint from "../../hooks/useBreakpoint";
 export { default as useRoutedModal } from "./useRoutedModal";
 
 export const useModal = useDialogState;
 
-const Modal = ({ modal, label, children, backdrop, loading, ...props }) => {
+const Modal = ({
+  modal,
+  label,
+  children,
+  backdrop,
+  loading,
+  width,
+  ...props
+}) => {
   const ref = useRef(null);
   const mediumAndUp = useBreakpoint("mUp");
   const isMobile = !mediumAndUp;
@@ -80,6 +90,7 @@ const Modal = ({ modal, label, children, backdrop, loading, ...props }) => {
           {modal.visible && !loading && (
             <StyledWindow
               {...props}
+              width={width}
               isMobile={isMobile}
               transition={{ type: "spring", damping: 35, stiffness: 100 }}
               initial={{
@@ -102,6 +113,13 @@ const Modal = ({ modal, label, children, backdrop, loading, ...props }) => {
               }}
             >
               {children}
+              <StyledModalCloseButton
+                type="button"
+                onClick={modal.hide}
+                aria-label="Close modal"
+              >
+                <Icon width={20} height={20} icon="x" />
+              </StyledModalCloseButton>
             </StyledWindow>
           )}
         </AnimatePresence>

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
-import { space } from "styled-system";
+import { space, typography } from "styled-system";
 import theme from "../../theme";
 
 const VARIANTS = {
@@ -24,9 +24,9 @@ const VARIANTS = {
 // not playing nicely with styled-components as prop. Because of this we have
 // added a .External sub component to use non react router links.
 const styles = css`
-  ${space};
+  ${space}
+  ${typography}
 
-  font-weight: 400;
   align-items: center;
   display: inline-flex;
   text-decoration: none;

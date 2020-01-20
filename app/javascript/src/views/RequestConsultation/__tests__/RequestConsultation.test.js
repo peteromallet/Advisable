@@ -142,7 +142,7 @@ test("company details step continues to availability", async () => {
   fireEvent.change(company, { target: { value: "Testing" } });
   fireEvent.click(btn);
   const header = await app.findByText(
-    "Select the times you will be availabile",
+    "Select the times you will be available",
     { exact: false }
   );
 
