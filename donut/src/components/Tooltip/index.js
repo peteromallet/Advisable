@@ -37,11 +37,6 @@ const TooltipContent = styled.div`
   }
 `;
 
-const PADDING = {
-  "bottom-start": "10px 0 0 0",
-  "bottom-end": "10px 0 0 0",
-};
-
 const TRANSFORM_ORIGIN = {
   "bottom-start": "10% 0",
   "bottom-end": "90% 0",
@@ -82,7 +77,6 @@ const StyledTooltip = styled(ExtractedReakitTooltip)`
   z-index: 999999;
   visibility: hidden;
   display: block !important;
-  padding: ${props => PADDING[props.placement]};
 
   ${props => props.visible && openStyling};
   ${props => props.unstable_animating && animating};
@@ -96,11 +90,12 @@ const StyledTooltip = styled(ExtractedReakitTooltip)`
 const Tooltip = ({
   children,
   content,
-  placement = "bottom-start",
+  gutter,
   interactable,
+  placement = "bottom-start",
 }) => {
   const tooltip = useTooltipState({
-    unstable_gutter: 0,
+    gutter: gutter || 0,
     unstable_animated: 200,
     placement,
   });
@@ -108,12 +103,12 @@ const Tooltip = ({
   if (!content) return children;
 
   return (
-    <StyledTooltipReference {...tooltip}>
-      {children}
+    <>
+      <StyledTooltipReference {...tooltip}>{children}</StyledTooltipReference>
       <StyledTooltip interactable={interactable} {...tooltip}>
         <TooltipContent>{content}</TooltipContent>
       </StyledTooltip>
-    </StyledTooltipReference>
+    </>
   );
 };
 

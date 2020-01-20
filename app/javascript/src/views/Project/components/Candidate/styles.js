@@ -116,12 +116,12 @@ export const MoreInfo = styled.div`
   width: 100%;
 `;
 
-export const CandidateWrapper = styled.div.attrs({
-  style: ({ height, opacity }) => ({
-    opacity: opacity,
-    height: `${height}px`,
-  }),
-})`
+export const CandidateWrapper = styled.div.attrs(props => ({
+  style: {
+    opacity: props.opacity,
+    height: `${props.height}px`,
+  },
+}))`
   box-sizing: border-box;
   padding-bottom: 20px;
 `;

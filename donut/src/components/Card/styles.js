@@ -13,7 +13,7 @@ const elevation = variant({
       boxShadow: `0 1px 2px ${rgba(theme.colors.neutral[8], 0.1)}`,
     },
     m: {
-      boxShadow: `0 5px 10px -5px ${rgba(theme.colors.neutral[8], 0.1)}`,
+      boxShadow: `0px 16px 40px rgba(5, 12, 37, 0.06), 0px 4px 8px rgba(12, 18, 46, 0.05)`,
     },
     l: {
       boxShadow: `0px 20px 80px rgba(26, 35, 67, 0.12)`,
@@ -27,7 +27,7 @@ const elevation = variant({
   },
 });
 
-export const Card = styled.div`
+export const StyledCard = styled.div`
   ${compose(space, layout, border, elevation)}
 
   outline: none;
@@ -35,4 +35,4 @@ export const Card = styled.div`
   border-radius: 2px;
 `;
 
-export default Card;
+export default StyledCard;

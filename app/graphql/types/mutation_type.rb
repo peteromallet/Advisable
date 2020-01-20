@@ -5,24 +5,27 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :request_introduction, mutation: Mutations::RequestIntroduction
   field :accept_interview_request, mutation: Mutations::AcceptInterviewRequest
-  field :request_more_interview_times, mutation: Mutations::RequestMoreInterviewTimes
+  field :request_more_interview_times,
+        mutation: Mutations::RequestMoreInterviewTimes
   field :resend_interview_request, mutation: Mutations::ResendInterviewRequest
   field :request_references, mutation: Mutations::RequestReferences
 
   field :reject_proposal, mutation: Mutations::RejectProposal
   field :reject_application, mutation: Mutations::RejectApplication
-  field :reject_application_invitation, mutation: Mutations::RejectApplicationInvitation
+  field :reject_application_invitation,
+        mutation: Mutations::RejectApplicationInvitation
   field :update_application, mutation: Mutations::UpdateApplication
   field :submit_application, mutation: Mutations::SubmitApplication
   field :set_type_for_project, mutation: Mutations::SetTypeForProject
-  
+
   field :update_availability, mutation: Mutations::UpdateAvailability
 
   field :create_project, mutation: Mutations::CreateProject
   field :update_project, mutation: Mutations::UpdateProject
   field :confirm_project, mutation: Mutations::ConfirmProject
   field :convert_to_self_service, mutation: Mutations::ConvertToSelfService
-  field :create_off_platform_project, mutation: Mutations::CreateOffPlatformProject
+  field :create_off_platform_project,
+        mutation: Mutations::CreateOffPlatformProject
 
   field :login, mutation: Mutations::Login
   field :signup, mutation: Mutations::Signup
@@ -47,15 +50,18 @@ class Types::MutationType < GraphQL::Schema::Object
   field :request_to_start, mutation: Mutations::RequestToStart
 
   field :complete_tutorial, mutation: Mutations::CompleteTutorial
-  field :update_project_payment_method, mutation: Mutations::UpdateProjectPaymentMethod
+  field :update_project_payment_method,
+        mutation: Mutations::UpdateProjectPaymentMethod
   field :create_setup_intent, mutation: Mutations::CreateSetupIntent
 
   field :update_payment_settings, mutation: Mutations::UpdatePaymentSettings
   field :complete_setup, mutation: Mutations::CompleteSetup
-  field :verify_off_platform_project, mutation: Mutations::VerifyOffPlatformProject
+  field :verify_off_platform_project,
+        mutation: Mutations::VerifyOffPlatformProject
 
   field :create_consultation, mutation: Mutations::CreateConsultation
   field :decline_consultation, mutation: Mutations::DeclineConsultation
   field :accept_consultation, mutation: Mutations::AcceptConsultation
   field :send_consultation_request, mutation: Mutations::SendConsultationRequest
+  field :request_consultations, mutation: Mutations::RequestConsultations
 end

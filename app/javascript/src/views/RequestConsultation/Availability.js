@@ -95,7 +95,7 @@ const Availability = ({ nextStep, previousStepURL }) => {
                 Availability
               </Text>
               <Text color="neutral.8" lineHeight="s" mb="m">
-                Select the times you will be availabile for a consultation with{" "}
+                Select the times you will be available for a consultation with{" "}
                 {specialist.name}. The more times you select, the easier it'll
                 be for us to find a time that suits them.
               </Text>

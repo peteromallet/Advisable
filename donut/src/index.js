@@ -2,14 +2,23 @@ export { default as Box } from "./components/Box";
 export { default as Menu } from "./components/Menu";
 export { default as Link } from "./components/Link";
 export { default as Card } from "./components/Card";
+export * from "./components/Card/styles";
 export { default as Icon } from "./components/Icon";
 export { default as Text } from "./components/Text";
 export { default as Flex } from "./components/Flex";
 export { default as Tabs } from "./components/Tabs";
 export { default as Radio } from "./components/Radio";
 export { default as Alert } from "./components/Alert";
+
+export { default as Avatar } from "./components/Avatar";
+export * from "./components/Avatar/styles";
+
+export { default as Circle } from "./components/Circle";
+export * from "./components/Circle/styles";
+
 export { default as Modal, useModal, useRoutedModal } from "./components/Modal";
 export * from "./components/Modal/styles";
+
 export { default as Button } from "./components/Button";
 export { default as RoundedButton } from "./components/RoundedButton";
 export { default as Tooltip } from "./components/Tooltip";

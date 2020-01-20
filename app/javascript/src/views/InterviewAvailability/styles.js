@@ -1,10 +1,6 @@
 import styled from "styled-components";
 
-export const Form = styled.form.attrs({
-  style: props => ({
-    height: `${props.height}px`
-  })
-})`
+export const Form = styled.form`
   width: 100%;
   height: 100%;
   display: flex;

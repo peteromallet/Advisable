@@ -1,5 +1,4 @@
 import React from "react";
-import reduce from "lodash/reduce";
 import BaseStyles from "./BaseStyles";
 import Context from "./context";
 import useMediaQuery from "../../hooks/useMediaQuery";
