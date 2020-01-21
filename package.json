@@ -24,8 +24,6 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "body-scroll-lock": "^2.6.1",
     "clipboard-polyfill": "^2.8.1",
-    "date-fns": "^2.9.0",
-    "date-fns-tz": "^1.0.9",
     "dinero.js": "^1.6.0",
     "dotenv": "^8.2.0",
     "downshift": "^3.4.8",
