@@ -43,6 +43,7 @@
     "js-cookie": "^2.2.0",
     "linkifyjs": "^2.1.8",
     "lodash": "^4.17.11",
+    "luxon": "^1.21.3",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.25",
     "nanoid": "^2.1.10",

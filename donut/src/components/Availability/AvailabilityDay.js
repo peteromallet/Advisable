@@ -1,5 +1,4 @@
 import React from "react";
-import { format } from "date-fns";
 import Box from "../Box";
 import Text from "../Text";
 import Circle from "../Circle";
@@ -19,10 +18,10 @@ const AvailabilityDay = ({ date, style, availability, onClick }) => {
         hasAvailability={hasAvailability}
       >
         <Text fontSize="xs" color="neutral.7" mb="xxs">
-          {format(date, "EEEEEE")}
+          {date.toFormat("EEE")}
         </Text>
         <Text fontSize="l" fontWeight="medium" color="blue.8">
-          {format(date, "dd")}
+          {date.toFormat("dd")}
         </Text>
         {hasAvailability && (
           <Circle mt="12px" width={6} height={6} bg="blue.5" />

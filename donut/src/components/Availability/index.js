@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { DateTime } from "luxon";
 import { format, addDays, isSameMonth, isSameDay, parseISO } from "date-fns";
 import { VariableSizeList as List } from "react-window";
 import useComponentSize from "@rehooks/component-size";
@@ -14,8 +15,8 @@ import AvailabilityModal from "./AvailabilityModal";
 const Availability = ({ value }) => {
   const ref = useRef(null);
   const size = useComponentSize(ref);
-  const [month, setMonth] = React.useState(new Date());
   const [selectedDay, selectDay] = React.useState(null);
+  const [month, setMonth] = React.useState(DateTime.local().startOf("month"));
 
   // We use react-window to render a large list of scrolling records. This
   // needs to be told how wide each item is. The first item is a spacer item
@@ -27,9 +28,9 @@ const Availability = ({ value }) => {
   };
 
   const handleItemsRendered = item => {
-    const date = addDays(new Date(), item.visibleStartIndex);
-    if (!isSameMonth(month, date)) {
-      setMonth(date);
+    const date = DateTime.local().plus({ days: item.visibleStartIndex });
+    if (!month.hasSame(date, "month")) {
+      setMonth(date.startOf("month"));
     }
   };
 
@@ -39,7 +40,9 @@ const Availability = ({ value }) => {
 
   const availabilityForDate = date => {
     if (date === null) return [];
-    return value.filter(v => isSameDay(parseISO(v), date));
+    return value.filter(v => {
+      return DateTime.fromISO(v).hasSame(date, "day");
+    });
   };
 
   return (
@@ -49,7 +52,7 @@ const Availability = ({ value }) => {
         initialAvailability={availabilityForDate(selectedDay)}
       />
       <Text ml="20px" mb="s" fontSize="l" fontWeight="semibold">
-        {format(month, "MMMM yyyy")}
+        {month.toFormat("MMMM yyyy")}
       </Text>
       <List
         height={90}
@@ -66,7 +69,7 @@ const Availability = ({ value }) => {
             return <Box style={item.style} />;
           }
 
-          const date = addDays(new Date(), item.index);
+          const date = DateTime.local().plus({ days: item.index });
 
           return (
             <AvailabilityDay
