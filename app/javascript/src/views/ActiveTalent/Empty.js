@@ -1,6 +1,6 @@
 // Loads the empty state for the manage talent view
 import React from "react";
-import { Link } from "reat-router-dom";
+import { Link } from "react-router-dom";
 import { Text, RoundedButton } from "@advisable/donut";
 import { Padding } from "../../components/Spacing";
 import illustration from "./illustration.png";
