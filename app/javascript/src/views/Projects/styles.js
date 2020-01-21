@@ -1,7 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Status } from "../../components/Status/styles";
-import plus from "./plus.svg";
 
 export const Projects = styled.div`
   &::after {
@@ -79,43 +78,6 @@ export const ProjectCardPlaceholder = styled.div`
   padding: 40px;
   border-radius: 4px;
   border: 1px solid #d9dce9;
-`;
-
-export const NewProject = styled.div`
-  height: 280px;
-  color: #7781a3;
-  font-size: 14px;
-  cursor: pointer;
-  font-weight: 500;
-  border-radius: 4px;
-  text-align: center;
-  padding-top: 165px;
-  position: relative;
-  border: 2px dashed #cdd3e5;
-
-  &::before {
-    top: 85px;
-    left: calc(50% - 30px);
-    content: "";
-    width: 60px;
-    height: 60px;
-    display: block;
-    position: absolute;
-    border-radius: 30px;
-    transition: 300ms transform, 300ms box-shadow;
-    background: white url(${plus}) no-repeat center;
-    box-shadow: 0px 2px 10px rgba(21, 37, 94, 0.05);
-  }
-
-  &:hover {
-    color: #535f86;
-    border-color: #b8bfd5;
-
-    &::before {
-      transform: translateY(-1px);
-      box-shadow: 0px 2px 50px rgba(21, 37, 94, 0.1);
-    }
-  }
 `;
 
 export const ProjectTitle = styled.h4`
