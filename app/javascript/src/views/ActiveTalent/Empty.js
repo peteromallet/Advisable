@@ -1,13 +1,11 @@
 // Loads the empty state for the manage talent view
 import React from "react";
+import { Link } from "reat-router-dom";
 import { Text, RoundedButton } from "@advisable/donut";
 import { Padding } from "../../components/Spacing";
-import NewProjectModal from "../Projects/NewProjectModal";
 import illustration from "./illustration.png";
 
 export default () => {
-  const [modal, setModal] = React.useState(null);
-
   return (
     <div style={{ textAlign: "center" }}>
       <Padding top="xl" bottom="xl">
@@ -22,13 +20,9 @@ export default () => {
           project with a freelancer you will be able to manage their work from
           here.
         </Text>
-        <RoundedButton onClick={() => setModal("NEW_PROJECT")}>
+        <RoundedButton as={Link} to="/freelancer_search">
           Create a project
         </RoundedButton>
-        <NewProjectModal
-          isOpen={modal === "NEW_PROJECT"}
-          onClose={() => setModal(null)}
-        />
       </div>
     </div>
   );
