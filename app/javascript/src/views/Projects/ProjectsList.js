@@ -1,28 +1,15 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import Text from "../../components/Text";
 import Status from "../../components/Status";
 import pluralize from "../../utilities/pluralize";
-import NewProjectModal from "./NewProjectModal";
-import {
-  Tile,
-  ProjectCard,
-  NewProject,
-  ProjectTitle,
-  ProjectDescription,
-} from "./styles";
+import NewProject from "./NewProject";
+import { Tile, ProjectCard, ProjectTitle, ProjectDescription } from "./styles";
 
-export default ({ projects }) => {
-  const [newProjectModal, setNewProjectModal] = useState(false);
+const ProjectsList = ({ projects }) => {
   return (
     <Fragment>
-      <NewProjectModal
-        isOpen={newProjectModal}
-        onClose={() => setNewProjectModal(false)}
-      />
       <Tile>
-        <NewProject onClick={() => setNewProjectModal(true)}>
-          Start a new project
-        </NewProject>
+        <NewProject />
       </Tile>
       {projects.map(project => (
         <Tile key={project.id}>
@@ -39,3 +26,5 @@ export default ({ projects }) => {
     </Fragment>
   );
 };
+
+export default ProjectsList;
