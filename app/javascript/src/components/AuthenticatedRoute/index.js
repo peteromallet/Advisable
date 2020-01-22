@@ -10,12 +10,22 @@ import useViewer from "../../hooks/useViewer";
 const AuthenticatedRoute = ({
   render,
   component: Component,
+  specialistOnly = false,
+  clientOnly = false,
   freelancerRoute,
   ...rest
 }) => {
   const viewer = useViewer();
   const __typename = get(viewer, "__typename");
   const applicationStage = get(viewer, "applicationStage");
+
+  if (specialistOnly && __typename !== "Specialist") {
+    return <Redirect to="/" />;
+  }
+
+  if (clientOnly && __typename !== "User") {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Route

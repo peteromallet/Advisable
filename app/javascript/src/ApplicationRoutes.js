@@ -69,6 +69,7 @@ const ApplicationRoutes = () => {
           <Route path="/consultations/:id" component={Consultation} />
           <AuthenticatedRoute
             exact
+            specialistOnly
             path="/applications"
             component={Applications}
           />
