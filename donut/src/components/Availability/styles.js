@@ -28,4 +28,25 @@ export const StyledAvailabilityDay = styled.div`
     props.hasAvailability ? theme.colors.blue[1] : theme.colors.neutral[1]};
 `;
 
+export const FormLayout = styled.form`
+  flex: 1 1 0%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const FormLayoutHeader = styled.div`
+  flex-shrink: 0;
+`;
+
+export const FormLayoutContent = styled.div`
+  height: 100%;
+  flex-grow: 1;
+  min-height: 1px;
+`;
+
+export const FormLayoutFooter = styled.div`
+  flex-shrink: 0;
+`;
+
 export default StyledAvailability;

@@ -14,7 +14,7 @@ const AvailabilityModal = ({ initialAvailability, selectedDay }) => {
   }, [selectedDay]);
 
   return (
-    <Modal modal={modal} padding="l" label="Select availability">
+    <Modal modal={modal} preventBodyScroll={false} label="Select availability">
       {selectedDay && (
         <AvailabilityForm
           selectedDay={selectedDay}

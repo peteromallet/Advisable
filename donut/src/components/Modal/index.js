@@ -28,6 +28,7 @@ const Modal = ({
   backdrop,
   loading,
   width,
+  preventBodyScroll,
   ...props
 }) => {
   const ref = useRef(null);
@@ -72,6 +73,7 @@ const Modal = ({
         onClick={handleContainerClick}
         hideOnClickOutside={false}
         isMobile={isMobile}
+        preventBodyScroll={preventBodyScroll}
       >
         <AnimatePresence>
           {modal.visible && loading && (

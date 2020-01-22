@@ -1,10 +1,10 @@
 import React from "react";
 import { times } from "lodash";
-import Div100vh from "react-div-100vh";
-import { Formik, Form, Field } from "formik";
+import { Formik, Field } from "formik";
 import { DateTime } from "luxon";
 import Box from "../Box";
 import Text from "../Text";
+import VerticalLayout from "../VerticalLayout";
 
 const AvailabilityFormTimes = ({ selectedDay, formik }) => {
   const dateISO = selectedDay.toISOWeekDate();
@@ -14,7 +14,7 @@ const AvailabilityFormTimes = ({ selectedDay, formik }) => {
     const t = start.plus({ minutes: 30 * n });
 
     return (
-      <Box key={n}>
+      <Box key={n} px="xs" py="s">
         <Field
           type="checkbox"
           id={`time-${n}`}
@@ -53,17 +53,27 @@ const AvailabilityForm = ({ initialAvailability, selectedDay }) => {
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {formik => (
-        <Form>
-          <Div100vh>
-            <Text>{selectedDay.toFormat("cccc, dd MMM yyyy")}</Text>
-            <Field as="select" name="timeZone">
-              <option>Europe/Dublin</option>
-              <option>America/Chicago</option>
-              <option>America/New_York</option>
-            </Field>
+        <form onSubmit={formik.handleSubmit} style={{ height: "100%" }}>
+          <VerticalLayout
+            header={
+              <Box>
+                <Text>{selectedDay.toFormat("cccc, dd MMM yyyy")}</Text>
+                <Field as="select" name="timeZone">
+                  <option>Europe/Dublin</option>
+                  <option>America/Chicago</option>
+                  <option>America/New_York</option>
+                </Field>
+              </Box>
+            }
+            footer={
+              <Box>
+                <button>Save</button>
+              </Box>
+            }
+          >
             <AvailabilityFormTimes selectedDay={selectedDay} formik={formik} />
-          </Div100vh>
-        </Form>
+          </VerticalLayout>
+        </form>
       )}
     </Formik>
   );
