@@ -4,6 +4,8 @@ import theme from "../../theme";
 
 export const StyledAvailability = styled.div`
   ${space}
+
+  width: 100%;
 `;
 
 export const StyledAvailabilityScrollContainer = styled.div`
@@ -19,34 +21,71 @@ export const StyledAvailabilityScrollContainer = styled.div`
 export const StyledAvailabilityDay = styled.div`
   width: 50px;
   display: flex;
+  user-select: none;
   padding-top: 16px;
   border-radius: 8px;
   align-items: center;
   flex-direction: column;
+  opacity: ${props => (props.disabled ? 0.4 : 1)};
   height: ${props => (props.hasAvailability ? "90px" : "70px")};
   background: ${props =>
     props.hasAvailability ? theme.colors.blue[1] : theme.colors.neutral[1]};
 `;
 
-export const FormLayout = styled.form`
-  flex: 1 1 0%;
-  height: 100%;
+export const StyledAvailabilityFormButton = styled.button`
+  width: 100%;
+  border: none;
+  padding: 10px 0;
+  appearance: none;
+  border-radius: 30px;
+  color: ${theme.colors.blue[8]};
+  background: ${theme.colors.blue[1]};
+`;
+
+export const StyledTimeCheckbox = styled.div`
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 50%;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  border: 2px solid ${theme.colors.neutral[3]};
+  transition: background-color 200ms, border-color 200ms;
+
+  svg {
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 200ms, transform 200ms;
+  }
+`;
+
+export const StyledTime = styled.label`
+  width: 100%;
   display: flex;
-  flex-direction: column;
-`;
+  user-select: none;
+  padding: 16px 20px;
+  position: relative;
+  align-items: center;
+  color: ${theme.colors.neutral[9]};
+  text-transform: lowercase;
 
-export const FormLayoutHeader = styled.div`
-  flex-shrink: 0;
-`;
+  input {
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    position: absolute;
+  }
 
-export const FormLayoutContent = styled.div`
-  height: 100%;
-  flex-grow: 1;
-  min-height: 1px;
-`;
+  input:checked + ${StyledTimeCheckbox} {
+    border-color: ${theme.colors.blue[7]};
+    background-color: ${theme.colors.blue[7]};
 
-export const FormLayoutFooter = styled.div`
-  flex-shrink: 0;
+    svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 `;
 
 export default StyledAvailability;

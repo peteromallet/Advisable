@@ -6,7 +6,9 @@ import {
   Link,
   Autocomplete,
   RoundedButton,
+  Availability as MobileAvailability,
   Icon,
+  useBreakpoint,
 } from "@advisable/donut";
 import { Formik, Form, Field } from "formik";
 import { useQuery, useMutation } from "react-apollo";
@@ -27,6 +29,7 @@ const Availability = () => {
   const selected = location.state?.freelancers || [];
   const { data, loading } = useQuery(GET_AVAILABILITY);
   const [updateAvailability] = useMutation(UPDATE_AVAILABILITY);
+  const sUp = useBreakpoint("sUp");
 
   if (selected.length === 0) {
     return <Redirect to="/freelancer_search/results" />;
@@ -109,14 +112,24 @@ const Availability = () => {
                 flexShrink={1}
                 flexGrow={1}
               >
-                <AvailabilityInput
-                  selected={formik.values.availability}
-                  timeZone={formik.values.timeZone}
-                  onSelect={a => {
-                    formik.setFieldTouched("availability", true);
-                    formik.setFieldValue("availability", a);
-                  }}
-                />
+                {sUp ? (
+                  <AvailabilityInput
+                    selected={formik.values.availability}
+                    timeZone={formik.values.timeZone}
+                    onSelect={a => {
+                      formik.setFieldTouched("availability", true);
+                      formik.setFieldValue("availability", a);
+                    }}
+                  />
+                ) : (
+                  <MobileAvailability
+                    value={formik.values.availability}
+                    onChange={a => {
+                      formik.setFieldTouched("availability", true);
+                      formik.setFieldValue("availability", a);
+                    }}
+                  />
+                )}
               </Box>
 
               <RoundedButton

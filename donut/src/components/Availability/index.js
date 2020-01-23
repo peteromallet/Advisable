@@ -11,7 +11,18 @@ import Text from "../Text";
 import AvailabilityDay from "./AvailabilityDay";
 import AvailabilityModal from "./AvailabilityModal";
 
-const Availability = ({ value }) => {
+// Replaces the availability for a given date by first filtering out the
+// existing availability for a given date and then spreading the new
+// availability into a new array.
+const replaceAvailabilityForDate = (existing, date, availability) => {
+  const filtered = existing.filter(
+    v => !DateTime.fromISO(v).hasSame(date, "day")
+  );
+
+  return [...filtered, ...availability];
+};
+
+const Availability = ({ value, onChange }) => {
   const ref = useRef(null);
   const size = useComponentSize(ref);
   const [selectedDay, selectDay] = React.useState(null);
@@ -44,11 +55,46 @@ const Availability = ({ value }) => {
     });
   };
 
+  const setAvailabilityForDay = (date, availability) => {
+    const nextValue = replaceAvailabilityForDate(value, date, availability);
+    onChange(nextValue);
+    selectDay(null);
+  };
+
+  const setAvailabilityForWeek = (date, availability) => {
+    let currentDay = 0;
+    let nextValue = value;
+    while (
+      ["Saturday", "Sunday"].indexOf(
+        date.plus({ days: currentDay }).toFormat("EEEE")
+      ) === -1
+    ) {
+      nextValue = replaceAvailabilityForDate(
+        nextValue,
+        date.plus({ days: currentDay }),
+        availability.map(a => {
+          return DateTime.fromISO(a)
+            .plus({ days: currentDay })
+            .toUTC()
+            .toISO();
+        })
+      );
+
+      currentDay += 1;
+    }
+
+    console.log(nextValue);
+    onChange(nextValue);
+    selectDay(null);
+  };
+
   return (
     <StyledAvailability ref={ref}>
       <AvailabilityModal
         selectedDay={selectedDay}
         initialAvailability={availabilityForDate(selectedDay)}
+        setAvailabilityForDay={setAvailabilityForDay}
+        setAvailabilityForWeek={setAvailabilityForWeek}
       />
       <Text ml="20px" mb="s" fontSize="l" fontWeight="semibold">
         {month.toFormat("MMMM yyyy")}

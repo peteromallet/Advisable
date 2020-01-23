@@ -1,0 +1,29 @@
+import React from "react";
+import Icon from "../Icon";
+import { StyledSelect, StyledSelectInput, StyledSelectArrow } from "./styles";
+
+const Select = ({ children, placeholder, value, ...props }) => {
+  const placeholderSelected = placeholder && !value;
+
+  return (
+    <StyledSelect>
+      <StyledSelectInput
+        placeholderSelected={placeholderSelected}
+        value={value}
+        {...props}
+      >
+        {placeholder && (
+          <option value="" disabled selected={placeholderSelected}>
+            {placeholder}
+          </option>
+        )}
+        {children}
+      </StyledSelectInput>
+      <StyledSelectArrow>
+        <Icon icon="chevron-down" width={20} height={20} />
+      </StyledSelectArrow>
+    </StyledSelect>
+  );
+};
+
+export default Select;

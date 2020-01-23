@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Portal } from "reakit/Portal";
 import {
   useDialogState,
@@ -28,7 +28,6 @@ const Modal = ({
   backdrop,
   loading,
   width,
-  preventBodyScroll,
   ...props
 }) => {
   const ref = useRef(null);
@@ -68,12 +67,12 @@ const Modal = ({
         ref={ref}
         {...modal}
         aria-label={label}
-        tabIndex={loading ? 0 : null}
-        as={StyledModalWindowContainer}
-        onClick={handleContainerClick}
-        hideOnClickOutside={false}
         isMobile={isMobile}
-        preventBodyScroll={preventBodyScroll}
+        hideOnClickOutside={false}
+        tabIndex={loading ? 0 : null}
+        onClick={handleContainerClick}
+        as={StyledModalWindowContainer}
+        preventBodyScroll={false}
       >
         <AnimatePresence>
           {modal.visible && loading && (

@@ -5,6 +5,10 @@ import Circle from "../Circle";
 import { StyledAvailabilityDay } from "./styles";
 
 const AvailabilityDay = ({ date, style, availability, onClick }) => {
+  const dayOfWeek = date.toFormat("EEEE");
+  const isWeekend = dayOfWeek === "Saturday" || dayOfWeek === "Sunday";
+  const isWeekday = !isWeekend;
+
   const handleClick = () => {
     onClick(date);
   };
@@ -14,8 +18,12 @@ const AvailabilityDay = ({ date, style, availability, onClick }) => {
   return (
     <Box style={style}>
       <StyledAvailabilityDay
-        onClick={handleClick}
+        disabled={isWeekend}
+        aria-label={`Set availability for ${date.toFormat(
+          "EEEE, dd MMMM YYYY"
+        )}`}
         hasAvailability={hasAvailability}
+        onClick={isWeekday ? handleClick : null}
       >
         <Text fontSize="xs" color="neutral.7" mb="xxs">
           {date.toFormat("EEE")}

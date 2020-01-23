@@ -12,9 +12,11 @@ export const StyledVerticalLayoutHeader = styled.div`
 `;
 
 export const StyledVerticalLayoutContent = styled.div`
+  height: 0;
   flex-grow: 1;
   flex-shrink: 1;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 `;
 
 export const StyledVerticalLayoutFooter = styled.div`
