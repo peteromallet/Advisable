@@ -20,8 +20,6 @@ export const availabilityInput = () => {
     "2020-01-17T15:30:00Z",
   ]);
 
-  console.log(availability);
-
   return (
     <Card py="xxl">
       <Availability value={availability} onChange={setAvailability} />
