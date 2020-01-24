@@ -5,15 +5,9 @@ import { Formik, Field } from "formik";
 import Icon from "../Icon";
 import Box from "../Box";
 import Text from "../Text";
-import Select from "../Select";
+import RoundedButton from "../RoundedButton";
 import VerticalLayout from "../VerticalLayout";
-import InputDecorations from "../Input/InputDecorations";
-import TIMEZONES from "./timezones";
-import {
-  StyledAvailabilityFormButton,
-  StyledTime,
-  StyledTimeCheckbox,
-} from "./styles";
+import { StyledTime, StyledTimeCheckbox } from "./styles";
 
 const AvailabilityFormTimes = ({ selectedDay, formik }) => {
   const dateISO = selectedDay.toISOWeekDate();
@@ -48,10 +42,10 @@ const AvailabilityFormTimes = ({ selectedDay, formik }) => {
 };
 
 const AvailabilityForm = ({
+  timeZone,
   initialAvailability,
   selectedDay,
   setAvailabilityForDay,
-  setAvailabilityForWeek,
 }) => {
   const scrollRef = React.useRef(null);
 
@@ -72,21 +66,13 @@ const AvailabilityForm = ({
       .toISO();
   });
 
-  const localTimeZone = DateTime.local().zoneName;
-
   const initialValues = {
-    timeZone: localTimeZone,
+    timeZone,
     availability: asLuxonISOs,
   };
 
   const handleSubmit = values => {
     setAvailabilityForDay(selectedDay, values.availability);
-  };
-
-  const createHandlerForSetWeek = formik => {
-    return () => {
-      setAvailabilityForWeek(selectedDay, formik.values.availability);
-    };
   };
 
   return (
@@ -98,46 +84,19 @@ const AvailabilityForm = ({
               <Box padding="m" boxShadow="s">
                 <Text
                   fontSize="xxl"
-                  mb="xs"
                   color="neutral.9"
                   fontWeight="semibold"
                   letterSpacing="-0.02em"
                 >
                   {selectedDay.toFormat("cccc, dd MMM yyyy")}
                 </Text>
-                <Text color="neutral.7" mb="m" letterSpacing="-0.01em">
-                  Select the times you available.
-                </Text>
-                <InputDecorations
-                  prefix={<label htmlFor="timezone">Timezone</label>}
-                >
-                  <Field as={Select} name="timeZone" id="timezone">
-                    {TIMEZONES.map(t => (
-                      <option key={t}>{t}</option>
-                    ))}
-                  </Field>
-                </InputDecorations>
               </Box>
             }
             footer={
-              <Box px="m" py="xs" boxShadow="s" display="flex">
-                <Box width="100%" mr="xxs">
-                  <StyledAvailabilityFormButton type="Submit">
-                    <Icon width={20} height={20} icon="plus" />
-                    <br />
-                    Add for {selectedDay.toFormat("dd MMM")}
-                  </StyledAvailabilityFormButton>
-                </Box>
-                <Box width="100%" ml="xxs">
-                  <StyledAvailabilityFormButton
-                    type="button"
-                    onClick={createHandlerForSetWeek(formik)}
-                  >
-                    <Icon width={20} height={20} icon="calendar" />
-                    <br />
-                    Add for the week
-                  </StyledAvailabilityFormButton>
-                </Box>
+              <Box padding="m" boxShadow="s">
+                <RoundedButton size="l" type="Submit" width="100%">
+                  Set availability for {selectedDay.toFormat("dd MMM")}
+                </RoundedButton>
               </Box>
             }
           >

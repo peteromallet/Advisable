@@ -32,16 +32,6 @@ export const StyledAvailabilityDay = styled.div`
     props.hasAvailability ? theme.colors.blue[1] : theme.colors.neutral[1]};
 `;
 
-export const StyledAvailabilityFormButton = styled.button`
-  width: 100%;
-  border: none;
-  padding: 10px 0;
-  appearance: none;
-  border-radius: 30px;
-  color: ${theme.colors.blue[8]};
-  background: ${theme.colors.blue[1]};
-`;
-
 export const StyledTimeCheckbox = styled.div`
   width: 20px;
   height: 20px;

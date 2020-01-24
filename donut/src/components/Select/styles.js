@@ -1,8 +1,11 @@
 import styled, { css } from "styled-components";
+import { space } from "styled-system";
 import StyledInput from "../Input/styles";
 import theme from "../../theme";
 
 export const StyledSelect = styled.div`
+  ${space}
+
   position: relative;
   width: ${props => props.width || "100%"};
 `;

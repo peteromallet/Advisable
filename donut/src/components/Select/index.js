@@ -1,12 +1,13 @@
 import React from "react";
 import Icon from "../Icon";
+import extractSpacingProps from "../../utilities/extractSpacingProps";
 import { StyledSelect, StyledSelectInput, StyledSelectArrow } from "./styles";
 
 const Select = ({ children, placeholder, value, ...props }) => {
   const placeholderSelected = placeholder && !value;
 
   return (
-    <StyledSelect>
+    <StyledSelect {...extractSpacingProps(props)}>
       <StyledSelectInput
         placeholderSelected={placeholderSelected}
         value={value}

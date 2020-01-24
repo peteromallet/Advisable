@@ -3,10 +3,10 @@ import Modal, { useModal } from "../Modal";
 import AvailabilityForm from "./AvailabilityForm";
 
 const AvailabilityModal = ({
-  initialAvailability,
+  timeZone,
   selectedDay,
+  initialAvailability,
   setAvailabilityForDay,
-  setAvailabilityForWeek,
 }) => {
   const modal = useModal();
 
@@ -19,13 +19,13 @@ const AvailabilityModal = ({
   }, [selectedDay]);
 
   return (
-    <Modal modal={modal} label="Select availability">
+    <Modal modal={modal} label="Select availability" showCloseButton={false}>
       {selectedDay && (
         <AvailabilityForm
+          timeZone={timeZone}
           selectedDay={selectedDay}
           initialAvailability={initialAvailability}
           setAvailabilityForDay={setAvailabilityForDay}
-          setAvailabilityForWeek={setAvailabilityForWeek}
         />
       )}
     </Modal>

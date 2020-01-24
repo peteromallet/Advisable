@@ -22,7 +22,7 @@ const replaceAvailabilityForDate = (existing, date, availability) => {
   return [...filtered, ...availability];
 };
 
-const Availability = ({ value, onChange }) => {
+const Availability = ({ value, onChange, timeZone }) => {
   const ref = useRef(null);
   const size = useComponentSize(ref);
   const [selectedDay, selectDay] = React.useState(null);
@@ -61,40 +61,13 @@ const Availability = ({ value, onChange }) => {
     selectDay(null);
   };
 
-  const setAvailabilityForWeek = (date, availability) => {
-    let currentDay = 0;
-    let nextValue = value;
-    while (
-      ["Saturday", "Sunday"].indexOf(
-        date.plus({ days: currentDay }).toFormat("EEEE")
-      ) === -1
-    ) {
-      nextValue = replaceAvailabilityForDate(
-        nextValue,
-        date.plus({ days: currentDay }),
-        availability.map(a => {
-          return DateTime.fromISO(a)
-            .plus({ days: currentDay })
-            .toUTC()
-            .toISO();
-        })
-      );
-
-      currentDay += 1;
-    }
-
-    console.log(nextValue);
-    onChange(nextValue);
-    selectDay(null);
-  };
-
   return (
     <StyledAvailability ref={ref}>
       <AvailabilityModal
+        timeZone={timeZone}
         selectedDay={selectedDay}
         initialAvailability={availabilityForDate(selectedDay)}
         setAvailabilityForDay={setAvailabilityForDay}
-        setAvailabilityForWeek={setAvailabilityForWeek}
       />
       <Text ml="20px" mb="s" fontSize="l" fontWeight="semibold">
         {month.toFormat("MMMM yyyy")}

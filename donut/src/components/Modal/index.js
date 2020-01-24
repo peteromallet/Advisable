@@ -28,6 +28,7 @@ const Modal = ({
   backdrop,
   loading,
   width,
+  showCloseButton = true,
   ...props
 }) => {
   const ref = useRef(null);
@@ -114,13 +115,15 @@ const Modal = ({
               }}
             >
               {children}
-              <StyledModalCloseButton
-                type="button"
-                onClick={modal.hide}
-                aria-label="Close modal"
-              >
-                <Icon width={20} height={20} icon="x" />
-              </StyledModalCloseButton>
+              {showCloseButton ? (
+                <StyledModalCloseButton
+                  type="button"
+                  onClick={modal.hide}
+                  aria-label="Close modal"
+                >
+                  <Icon width={20} height={20} icon="x" />
+                </StyledModalCloseButton>
+              ) : null}
             </StyledWindow>
           )}
         </AnimatePresence>
