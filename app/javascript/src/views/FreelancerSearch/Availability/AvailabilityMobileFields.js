@@ -6,6 +6,7 @@ import {
   Availability,
   RoundedButton,
   Icon,
+  Text,
 } from "@advisable/donut";
 import ZONES from "../../../data/timezones";
 
@@ -33,6 +34,11 @@ const AvailabilityMobileFields = ({ formik }) => {
       >
         Continue
       </RoundedButton>
+      {formik.values.availability.length < 6 ? (
+        <Text mt="s">
+          Please select at least 6 times that you will be available for a call.
+        </Text>
+      ) : null}
     </>
   );
 };
