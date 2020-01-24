@@ -26,6 +26,7 @@ export default gql`
       }
     }
     specialist {
+      id
       bio
       airtableId
       previousProjects {
