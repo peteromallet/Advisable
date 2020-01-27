@@ -1,28 +1,25 @@
 import React from "react";
+import { withKnobs, text } from "@storybook/addon-knobs";
+
 import Availability from "./";
 import Card from "../Card";
 
 export default {
   title: "Availability",
+  decorators: [withKnobs],
 };
 
 export const availabilityInput = () => {
-  const [availability, setAvailability] = React.useState([
-    "2020-01-17T09:00:00Z",
-    "2020-01-17T09:30:00Z",
-    "2020-01-17T10:00:00Z",
-    "2020-01-17T10:30:00Z",
-    "2020-01-17T11:00:00Z",
-    "2020-01-17T11:30:00Z",
-    "2020-01-17T14:00:00Z",
-    "2020-01-17T14:30:00Z",
-    "2020-01-17T15:00:00Z",
-    "2020-01-17T15:30:00Z",
-  ]);
+  const timeZone = text("Time Zone", "Europe/Dublin");
+  const [availability, setAvailability] = React.useState([]);
 
   return (
     <Card py="xxl">
-      <Availability value={availability} onChange={setAvailability} />
+      <Availability
+        timeZone={timeZone}
+        value={availability}
+        onChange={setAvailability}
+      />
     </Card>
   );
 };

@@ -84,6 +84,8 @@ export const StyledModalCloseButton = styled.button`
   height: 40px;
   display: flex;
   outline: none;
+  appearance: none;
+  background: white;
   border-radius: 50%;
   position: absolute;
   align-items: center;
