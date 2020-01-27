@@ -151,6 +151,7 @@ const colors = {
 };
 
 const shadows = {
+  s: `0 2px 6px ${rgba(colors.blue[9], 0.15)}`,
   m: `0 4px 12px ${rgba(colors.blue[9], 0.1)}`,
   l: `0 8px 20px ${rgba(colors.blue[9], 0.2)}`,
 };

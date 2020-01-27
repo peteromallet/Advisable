@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Portal } from "reakit/Portal";
 import {
   useDialogState,
@@ -28,6 +28,7 @@ const Modal = ({
   backdrop,
   loading,
   width,
+  showCloseButton = true,
   ...props
 }) => {
   const ref = useRef(null);
@@ -67,11 +68,12 @@ const Modal = ({
         ref={ref}
         {...modal}
         aria-label={label}
-        tabIndex={loading ? 0 : null}
-        as={StyledModalWindowContainer}
-        onClick={handleContainerClick}
-        hideOnClickOutside={false}
         isMobile={isMobile}
+        hideOnClickOutside={false}
+        tabIndex={loading ? 0 : null}
+        onClick={handleContainerClick}
+        as={StyledModalWindowContainer}
+        preventBodyScroll={false}
       >
         <AnimatePresence>
           {modal.visible && loading && (
@@ -113,13 +115,15 @@ const Modal = ({
               }}
             >
               {children}
-              <StyledModalCloseButton
-                type="button"
-                onClick={modal.hide}
-                aria-label="Close modal"
-              >
-                <Icon width={20} height={20} icon="x" />
-              </StyledModalCloseButton>
+              {showCloseButton ? (
+                <StyledModalCloseButton
+                  type="button"
+                  onClick={modal.hide}
+                  aria-label="Close modal"
+                >
+                  <Icon width={20} height={20} icon="x" />
+                </StyledModalCloseButton>
+              ) : null}
             </StyledWindow>
           )}
         </AnimatePresence>

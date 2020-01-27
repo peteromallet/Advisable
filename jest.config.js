@@ -1,6 +1,6 @@
 module.exports = {
   verbose: true,
-  roots: ["app/javascript/src"],
+  roots: ["app/javascript/src", "donut/src"],
   testEnvironment: "jest-environment-jsdom-fifteen",
   setupFilesAfterEnv: ["<rootDir>/app/javascript/src/testHelpers/setup.js"],
   moduleDirectories: ["node_modules", "app/javascript"],

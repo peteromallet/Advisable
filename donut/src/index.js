@@ -9,12 +9,16 @@ export { default as Flex } from "./components/Flex";
 export { default as Tabs } from "./components/Tabs";
 export { default as Radio } from "./components/Radio";
 export { default as Alert } from "./components/Alert";
+export { default as Availability } from "./components/Availability";
 
 export { default as Avatar } from "./components/Avatar";
 export * from "./components/Avatar/styles";
 
 export { default as Circle } from "./components/Circle";
 export * from "./components/Circle/styles";
+
+export { default as Select } from "./components/Select";
+export * from "./components/Select/styles";
 
 export { default as Modal, useModal, useRoutedModal } from "./components/Modal";
 export * from "./components/Modal/styles";
@@ -33,5 +37,8 @@ export { default as useBreakpoint } from "./hooks/useBreakpoint";
 export { default as useTheme } from "./hooks/useTheme";
 export { default as theme } from "./theme";
 export { default as extractSpacingProps } from "./utilities/extractSpacingProps";
+
+export { default as VerticalLayout } from "./components/VerticalLayout";
+export * from "./components/VerticalLayout/styles";
 
 export { default as Notice } from "./components/Notice";

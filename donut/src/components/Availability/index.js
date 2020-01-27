@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { format, addDays, isSameMonth, isSameDay, parseISO } from "date-fns";
+import { DateTime } from "luxon";
 import { VariableSizeList as List } from "react-window";
 import useComponentSize from "@rehooks/component-size";
 import {
@@ -11,11 +11,22 @@ import Text from "../Text";
 import AvailabilityDay from "./AvailabilityDay";
 import AvailabilityModal from "./AvailabilityModal";
 
-const Availability = ({ value }) => {
+// Replaces the availability for a given date by first filtering out the
+// existing availability for a given date and then spreading the new
+// availability into a new array.
+const replaceAvailabilityForDate = (existing, date, availability) => {
+  const filtered = existing.filter(
+    v => !DateTime.fromISO(v).hasSame(date, "day")
+  );
+
+  return [...filtered, ...availability];
+};
+
+const Availability = ({ value, onChange, timeZone }) => {
   const ref = useRef(null);
   const size = useComponentSize(ref);
-  const [month, setMonth] = React.useState(new Date());
   const [selectedDay, selectDay] = React.useState(null);
+  const [month, setMonth] = React.useState(DateTime.local().startOf("month"));
 
   // We use react-window to render a large list of scrolling records. This
   // needs to be told how wide each item is. The first item is a spacer item
@@ -27,9 +38,9 @@ const Availability = ({ value }) => {
   };
 
   const handleItemsRendered = item => {
-    const date = addDays(new Date(), item.visibleStartIndex);
-    if (!isSameMonth(month, date)) {
-      setMonth(date);
+    const date = DateTime.local().plus({ days: item.visibleStartIndex });
+    if (!month.hasSame(date, "month")) {
+      setMonth(date.startOf("month"));
     }
   };
 
@@ -39,17 +50,27 @@ const Availability = ({ value }) => {
 
   const availabilityForDate = date => {
     if (date === null) return [];
-    return value.filter(v => isSameDay(parseISO(v), date));
+    return value.filter(v => {
+      return DateTime.fromISO(v).hasSame(date, "day");
+    });
+  };
+
+  const setAvailabilityForDay = (date, availability) => {
+    const nextValue = replaceAvailabilityForDate(value, date, availability);
+    onChange(nextValue);
+    selectDay(null);
   };
 
   return (
     <StyledAvailability ref={ref}>
       <AvailabilityModal
+        timeZone={timeZone}
         selectedDay={selectedDay}
         initialAvailability={availabilityForDate(selectedDay)}
+        setAvailabilityForDay={setAvailabilityForDay}
       />
       <Text ml="20px" mb="s" fontSize="l" fontWeight="semibold">
-        {format(month, "MMMM yyyy")}
+        {month.toFormat("MMMM yyyy")}
       </Text>
       <List
         height={90}
@@ -66,7 +87,7 @@ const Availability = ({ value }) => {
             return <Box style={item.style} />;
           }
 
-          const date = addDays(new Date(), item.index);
+          const date = DateTime.local().plus({ days: item.index });
 
           return (
             <AvailabilityDay
