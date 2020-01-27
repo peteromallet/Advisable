@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Root from "./Root";
 import rollbar from "./rollbar";
+import * as Sentry from "@sentry/browser";
 
 window.Rollbar = rollbar;
 
@@ -16,6 +17,13 @@ if (!Object.entries) {
 
     return resArray;
   };
+}
+
+if (process.env.SENTRY_DSN) {
+  Sentry.init({
+    dsn: `${process.env.SENTRY_DSN}`,
+    environment: process.env.SENTRY_ENVIRONMENT,
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {

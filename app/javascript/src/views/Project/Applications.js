@@ -1,7 +1,6 @@
 import React from "react";
 import { filter } from "lodash";
 import Layout from "../../components/Layout";
-import SimpleErrorBoundary from "../../components/SimpleErrorBoundary";
 import Candidate from "./components/Candidate";
 import NoApplicants from "./components/NoCandidates";
 import useScrollRestore from "src/utilities/useScrollRestore";
@@ -18,9 +17,11 @@ const Applications = ({ data, match }) => {
       {applications.length > 0 ? (
         <div>
           {applications.map(application => (
-            <SimpleErrorBoundary key={application.id}>
-              <Candidate project={data.project} application={application} />
-            </SimpleErrorBoundary>
+            <Candidate
+              key={application.id}
+              project={data.project}
+              application={application}
+            />
           ))}
         </div>
       ) : (

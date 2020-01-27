@@ -34,6 +34,7 @@ const Applications = ({ history }) => {
             </Alert>
           </Box>
         )}
+        <button onClick={() => asdf()}>Break</button>
         <ApplicationInvitations
           onHold={onHold}
           loading={loading}

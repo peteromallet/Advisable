@@ -1,6 +1,7 @@
-import React, { useState } from "react";
 import { get } from "lodash";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import * as Sentry from "@sentry/browser";
 import {
   CurrentUserWrapper,
   CurrentUserToggle,
@@ -27,11 +28,23 @@ const CurrentUser = ({ user, onLogout }) => {
           },
         },
       });
+
+      Sentry.configureScope(scope => {
+        scope.setUser({
+          id: user.id,
+          email: user.email,
+          username: user.name,
+        });
+      });
     } else {
       Rollbar.configure({
         payload: {
           environment: process.env.ROLLBAR_ENV,
         },
+      });
+
+      Sentry.configureScope(scope => {
+        scope.setUser(null);
       });
     }
   });
