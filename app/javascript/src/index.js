@@ -19,9 +19,9 @@ if (!Object.entries) {
   };
 }
 
-if (process.env.SENTRY_DSN) {
+if (process.env.SENTRY_FRONTEND_DSN) {
   Sentry.init({
-    dsn: `${process.env.SENTRY_DSN}`,
+    dsn: `${process.env.SENTRY_FRONTEND_DSN}`,
     environment: process.env.SENTRY_ENVIRONMENT,
   });
 }
