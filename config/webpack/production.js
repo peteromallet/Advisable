@@ -17,7 +17,11 @@ if (process.env.ROLLBAR_TOKEN) {
   );
 }
 
-if (process.env.SENTRY_AUTH_TOKEN) {
+if (
+  process.env.SENTRY_ORG &&
+  process.env.SENTRY_PROJECT &&
+  process.env.SENTRY_AUTH_TOKEN
+) {
   environment.plugins.prepend(
     "Sentry",
     new SentryWebpackPlugin({
