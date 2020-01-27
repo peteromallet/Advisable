@@ -59,7 +59,7 @@ const IndustryAndSkills = ({ data, values, next, back }) => {
             max={3}
             options={industryOptions}
             placeholder="e.g Financial Services"
-            label="What industries does Acme Corp work in?"
+            label={`What industries does ${formik.values.clientName} work in?`}
             error={formik.touched.industries && formik.errors.industries}
             primary={formik.values.primaryIndustry}
             onPrimaryChange={primary => {
@@ -89,7 +89,7 @@ const IndustryAndSkills = ({ data, values, next, back }) => {
                     {formik.values.primaryIndustry}
                   </Text>{" "}
                   as the primary industry. The primary industry is the industry
-                  that best describes {values.clientName}’s industry.
+                  that best describes {formik.values.clientName}’s industry.
                 </>
               )
             }
