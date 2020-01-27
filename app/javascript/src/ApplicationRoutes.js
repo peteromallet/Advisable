@@ -86,7 +86,11 @@ const ApplicationRoutes = () => {
             path="/clients/:applicationId"
             component={FreelancerActiveApplication}
           />
-          <AuthenticatedRoute path="/profile" component={UpdateProfile} />
+          <AuthenticatedRoute
+            specialistOnly
+            path="/profile"
+            component={UpdateProfile}
+          />
           <Route exact path="/invites/:applicationId" component={JobListing} />
           <Route
             path="/invites/:applicationId/apply"
