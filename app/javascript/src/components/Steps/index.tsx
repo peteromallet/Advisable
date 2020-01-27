@@ -1,13 +1,21 @@
 import * as React from "react";
 import { Steps as Wrapper } from "./styles";
-import Step from "./Step"
+import Step from "./Step";
 
 const Steps = ({ children }) => {
-  return (
-    <Wrapper>{children}</Wrapper>
-  )
-}
+  let count = 0;
 
-Steps.Step = Step
+  return (
+    <Wrapper>
+      {React.Children.map(children, child => {
+        if (child === null) return null;
+        count += 1;
+        return React.cloneElement(child, { number: count });
+      })}
+    </Wrapper>
+  );
+};
+
+Steps.Step = Step;
 
 export default Steps;

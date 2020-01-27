@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_02_091917) do
+ActiveRecord::Schema.define(version: 2020_01_27_081945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 2020_01_02_091917) do
     t.datetime "proposal_sent_at"
     t.datetime "started_working_at"
     t.datetime "stopped_working_at"
+    t.string "billing_cycle"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"

@@ -9,6 +9,7 @@ export default gql`
         rate
         projectType
         monthlyLimit
+        billingCycle
       }
       errors {
         code

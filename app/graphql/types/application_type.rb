@@ -24,7 +24,8 @@ class Types::ApplicationType < Types::BaseType
   field :interview, Types::Interview, null: true
   field :trial_program, Boolean, null: true
   field :trial_task, Types::TaskType, null: true
- 
+  field :billing_cycle, String, null: true
+
   field :proposal_comment, String, null: true do
     authorize :read
   end
@@ -73,6 +74,7 @@ class Types::ApplicationType < Types::BaseType
   # have included in their application
   def has_more_projects
     return false if object.references.empty?
-    object.references.count < ::PreviousProject.for_specialist(object.specialist).count
+    object.references.count <
+      ::PreviousProject.for_specialist(object.specialist).count
   end
 end

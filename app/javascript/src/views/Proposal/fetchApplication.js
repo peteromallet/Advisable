@@ -11,6 +11,7 @@ export default gql`
       proposalComment
       projectType
       monthlyLimit
+      billingCycle
       trialTask {
         id
         stage

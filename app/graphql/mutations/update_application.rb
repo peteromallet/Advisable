@@ -16,33 +16,30 @@ class Mutations::UpdateApplication < Mutations::BaseMutation
   argument :project_type, String, required: false
   argument :monthly_limit, Int, required: false
   argument :trial_program, Boolean, required: false
+  argument :billing_cycle, String, required: false
 
   field :application, Types::ApplicationType, null: true
   field :errors, [Types::Error], null: true
 
   def resolve(**args)
-    begin
-      {
-        application: Applications::Update.call(
-          id: args[:id],
-          attributes: attributes(args)
-        )
-      }
-    rescue Service::Error => e
-      return { errors: [e] }
-    end
+    {
+      application:
+        Applications::Update.call(id: args[:id], attributes: attributes(args))
+    }
+  rescue Service::Error => e
+    return { errors: [e] }
   end
 
   private
 
   def attributes(args)
-    args.except(:id, :questions).merge({
-      questions: (args[:questions] || []).map do |question|
-        {
-          question: question.question,
-          answer: question.answer
-        }
-      end
-    })
+    args.except(:id, :questions).merge(
+      {
+        questions:
+          (args[:questions] || []).map do |question|
+            { question: question.question, answer: question.answer }
+          end
+      }
+    )
   end
 end

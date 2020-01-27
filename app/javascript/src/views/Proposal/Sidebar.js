@@ -1,19 +1,12 @@
 import * as React from "react";
-import Text from "../../components/Text";
+import { Box, Text } from "@advisable/donut";
 import Back from "../../components/Back";
 import Steps from "../../components/Steps";
 import Layout from "../../components/Layout";
-import Heading from "../../components/Heading";
-import { Padding } from "../../components/Spacing";
 import { useMobile } from "../../components/Breakpoint";
-import { ApplicationType } from "../../types";
 import { hasCompleteTasksStep } from "./validationSchema";
 
-interface Props {
-  application: ApplicationType;
-}
-
-let SideBar = (props: any) => {
+const SideBar = props => {
   const isMobile = useMobile();
   const { application } = props;
 
@@ -29,49 +22,54 @@ let SideBar = (props: any) => {
 
   return (
     <Layout.Sidebar>
-      <Padding bottom="m">
+      <Box pb="m">
         <Back to="/applications">All Applications</Back>
-      </Padding>
-      <Padding bottom="s">
-        <Heading level={4}>
-          Proposal for "{application.project.primarySkill}" with{" "}
-          {application.project.user.companyName}
-        </Heading>
-      </Padding>
-      <Padding bottom="l">
-        <Text size="s">
-          Send {application.project.user.companyName} a proposal to start
-          working together.
-        </Text>
-      </Padding>
+      </Box>
+      <Text
+        as="h4"
+        mb="xs"
+        fontSize="l"
+        lineHeight="m"
+        color="blue.9"
+        fontWeight="semibold"
+      >
+        Proposal for "{application.project.primarySkill}" with{" "}
+        {application.project.user.companyName}
+      </Text>
+      <Text fontSize="s" mb="m" lineHeight="m" color="neutral.8">
+        Send {application.project.user.companyName} a proposal to start working
+        together.
+      </Text>
       {!isMobile && (
         <Steps>
-          <Steps.Step
-            exact
-            number={1}
-            to={{ pathname: ratePath }}
-            isComplete={hasRate}
-          >
+          <Steps.Step exact to={{ pathname: ratePath }} isComplete={hasRate}>
             Hourly Rate
           </Steps.Step>
           <Steps.Step
             exact
-            number={2}
             to={{ pathname: projectTypePath }}
             isComplete={hasProjectType}
           >
-            Project Type
+            Booking Type
           </Steps.Step>
+          {application.projectType === "Flexible" ? (
+            <Steps.Step
+              to={{ pathname: `${urlPrefix}/billing_cycle` }}
+              isComplete={Boolean(application.billingCycle)}
+            >
+              Billing Cycle
+            </Steps.Step>
+          ) : null}
+          {application.projectType === "Fixed" ? (
+            <Steps.Step
+              to={{ pathname: tasksPath }}
+              isDisabled={!hasRate}
+              isComplete={hasCompleteTasksStep(application)}
+            >
+              Projects
+            </Steps.Step>
+          ) : null}
           <Steps.Step
-            number={3}
-            to={{ pathname: tasksPath }}
-            isDisabled={!hasRate}
-            isComplete={hasCompleteTasksStep(application)}
-          >
-            Project Tasks
-          </Steps.Step>
-          <Steps.Step
-            number={4}
             to={{ pathname: sendPath }}
             isDisabled={!hasCompleteTasksStep(application)}
             isComplete={isSent}

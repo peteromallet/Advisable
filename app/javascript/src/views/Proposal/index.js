@@ -1,6 +1,5 @@
 import * as React from "react";
-import { flowRight as compose } from "lodash";
-import { graphql } from "react-apollo";
+import { useQuery } from "react-apollo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "../../components/Layout";
 import Rate from "./Rate";
@@ -10,15 +9,22 @@ import Tasks from "./Tasks";
 import ProjectType from "./ProjectType";
 import Sidebar from "./Sidebar";
 import Loading from "./Loading";
+import BillingCycle from "./BillingCycle";
 import FETCH_APPLICATION from "./fetchApplication";
 import Notfound from "../NotFound";
 
-const Proposals = ({ fetchApplication }) => {
-  if (fetchApplication.loading) {
+const Proposals = ({ match }) => {
+  const { data, loading } = useQuery(FETCH_APPLICATION, {
+    variables: {
+      id: match.params.applicationId,
+    },
+  });
+
+  if (loading) {
     return <Loading />;
   }
 
-  const application = fetchApplication.application;
+  const application = data.application;
   if (!application) return <Notfound />;
   const urlPrefix = `/applications/${application.airtableId}/proposal`;
 
@@ -43,6 +49,12 @@ const Proposals = ({ fetchApplication }) => {
             render={props => <Tasks application={application} {...props} />}
           />
           <Route
+            path={`${urlPrefix}/billing_cycle`}
+            render={props => (
+              <BillingCycle application={application} {...props} />
+            )}
+          />
+          <Route
             path={`${urlPrefix}/send`}
             render={props => <Send application={application} {...props} />}
           />
@@ -57,13 +69,4 @@ const Proposals = ({ fetchApplication }) => {
   );
 };
 
-export default compose(
-  graphql(FETCH_APPLICATION, {
-    name: "fetchApplication",
-    options: (props: any) => ({
-      variables: {
-        id: props.match.params.applicationId,
-      },
-    }),
-  })
-)(Proposals);
+export default Proposals;
