@@ -1,11 +1,15 @@
 import React from "react";
-import { graphql } from "react-apollo";
+import { useQuery } from "react-apollo";
+import { useHistory } from "react-router-dom";
 import Layout from "../../components/Layout";
 import Manage from "./Manage";
 import Loading from "./Loading";
 import FETCH_DATA from "./fetchData";
 
-const ActiveTalent = ({ data, history }) => {
+const ActiveTalent = () => {
+  const history = useHistory()
+  const { data, loading } = useQuery(FETCH_DATA);
+
   const handleClick = application => {
     history.push(`/manage/${application.airtableId}`);
   };
@@ -13,8 +17,7 @@ const ActiveTalent = ({ data, history }) => {
   return (
     <Layout>
       <Layout.Main>
-        {data.loading && <Loading />}
-        {!data.loading && (
+        {loading ? <Loading /> : (
           <Manage
             onClick={handleClick}
             applications={data.viewer.applications}
@@ -25,4 +28,4 @@ const ActiveTalent = ({ data, history }) => {
   );
 };
 
-export default graphql(FETCH_DATA)(ActiveTalent);
+export default ActiveTalent;
