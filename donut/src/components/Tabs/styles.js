@@ -24,7 +24,7 @@ export const TabList = styled(ReachTabList)`
 
   z-index: 2;
   position: relative;
-  border-bottom: 1px solid ${colors.neutral[1]};
+  border-bottom: 1px solid ${colors.neutral[2]};
 `;
 
 // Additional styles for the tab when it is selected.
@@ -44,7 +44,7 @@ export const Tab = styled(ReachTab)`
   padding: 0;
   border: none;
   outline: none;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
   cursor: pointer;
   appearance: none;
@@ -54,8 +54,8 @@ export const Tab = styled(ReachTab)`
   display: inline-flex;
   padding-bottom: 10px;
   background: transparent;
-  letter-spacing: 0.02rem;
-  color: ${colors.neutral[4]};
+  letter-spacing: -0.01rem;
+  color: ${colors.neutral[7]};
   font-family: poppins, sans-serif;
   border-bottom: 2px solid transparent;
   transition: color 300ms;
