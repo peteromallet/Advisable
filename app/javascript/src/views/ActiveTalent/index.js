@@ -7,7 +7,7 @@ import Loading from "./Loading";
 import FETCH_DATA from "./fetchData";
 
 const ActiveTalent = () => {
-  const history = useHistory()
+  const history = useHistory();
   const { data, loading } = useQuery(FETCH_DATA);
 
   const handleClick = application => {
@@ -17,7 +17,9 @@ const ActiveTalent = () => {
   return (
     <Layout>
       <Layout.Main>
-        {loading ? <Loading /> : (
+        {loading ? (
+          <Loading />
+        ) : (
           <Manage
             onClick={handleClick}
             applications={data.viewer.applications}
