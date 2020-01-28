@@ -2,7 +2,6 @@ import React from "react";
 import filter from "lodash/filter";
 import Candidate from "../components/Candidate";
 import NoApplicants from "../components/NoCandidates";
-import SimpleErrorBoundary from "src/components/SimpleErrorBoundary";
 
 const Applicants = ({ data, status, emptyStateText, emptyStateSubText }) => {
   const applications = filter(data.project.applications, { status });
@@ -12,9 +11,11 @@ const Applicants = ({ data, status, emptyStateText, emptyStateSubText }) => {
       {applications.length > 0 ? (
         <div>
           {applications.map(application => (
-            <SimpleErrorBoundary key={application.id}>
-              <Candidate project={data.project} application={application} />
-            </SimpleErrorBoundary>
+            <Candidate
+              key={application.id}
+              project={data.project}
+              application={application}
+            />
           ))}
         </div>
       ) : (
