@@ -1,16 +1,15 @@
 // Loads the empty state for the manage talent view
 import React from "react";
 import { Link } from "react-router-dom";
-import { Text, RoundedButton } from "@advisable/donut";
-import { Padding } from "../../components/Spacing";
+import { Box, Text, RoundedButton } from "@advisable/donut";
 import illustration from "./illustration.png";
 
 export default () => {
   return (
     <div style={{ textAlign: "center" }}>
-      <Padding top="xl" bottom="xl">
+      <Box py="xl">
         <img src={illustration} width={250} alt="" />
-      </Padding>
+      </Box>
       <div style={{ maxWidth: 460, margin: "0 auto" }}>
         <Text fontWeight="semibold" color="neutral.8" mb="xs">
           No active bookings
