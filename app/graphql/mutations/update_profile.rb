@@ -18,25 +18,24 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
 
   def authorized?(**args)
     if !context[:current_user]
-      raise ApiError::NotAuthenticated.new("You are not logged in")
+      raise ApiError::NotAuthenticated.new('You are not logged in')
     end
 
     if context[:current_user].is_a?(User)
-      raise ApiError::NotAuthenticated.new("You are logged in as a user")
+      raise ApiError::NotAuthenticated.new('You are logged in as a user')
     end
 
     true
   end
 
   def resolve(**args)
-    specialist = Specialists::UpdateProfile.call(
-      specialist: context[:current_user],
-      attributes: args.except(:id)
-    )
+    specialist =
+      Specialists::UpdateProfile.call(
+        specialist: context[:current_user], attributes: args.except(:id)
+      )
 
     { specialist: specialist }
-
-    rescue Service::Error => e
-      raise ApiError::InvalidRequest.new("failedToUpdate", e.message)
+  rescue Service::Error => e
+    raise ApiError::InvalidRequest.new('failedToUpdate', e.message)
   end
 end
