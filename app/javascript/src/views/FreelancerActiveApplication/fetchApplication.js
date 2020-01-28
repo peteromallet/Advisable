@@ -13,6 +13,7 @@ export default gql`
       projectType
       monthlyLimit
       trialProgram
+      billingCycle
       trialTask {
         id
         stage

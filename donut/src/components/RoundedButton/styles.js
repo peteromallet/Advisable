@@ -89,7 +89,7 @@ const buttonSize = variant({
     },
     l: {
       height: 48,
-      fontSize: 16,
+      fontSize: 17,
       paddingLeft: 28,
       paddingRight: 28,
     },

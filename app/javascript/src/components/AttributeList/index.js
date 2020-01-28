@@ -7,7 +7,7 @@ const Container = styled.ul``;
 
 const Item = styled.li`
   font-size: 14px;
-  padding: 16px 0;
+  padding: 14px 0;
   margin-top: -1px;
   line-height: 18px;
   position: relative;
@@ -22,16 +22,18 @@ const Item = styled.li`
 
 const Label = styled.span`
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   padding-right: 12px;
-  color: ${theme.colors.neutral[5]};
+  letter-spacing: -0.01em;
+  color: ${theme.colors.neutral[7]};
 `;
 
 const Value = styled.div`
   display: block;
+  font-size: 15px;
   font-weight: 500;
-  color: ${colors.neutral.s10};
+  color: ${theme.colors.neutral[9]};
 `;
 
 const Action = styled.div`

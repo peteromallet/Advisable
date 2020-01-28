@@ -2,7 +2,7 @@ class Applications::Update < ApplicationService
   attr_reader :application, :attributes
 
   def initialize(id:, attributes:)
-    @application = Application.find_by_airtable_id!(id)
+    @application = Application.find_by_uid_or_airtable_id!(id)
     @attributes = attributes
   rescue ActiveRecord::RecordNotFound => e
     raise Service::Error.new(:record_not_found)
