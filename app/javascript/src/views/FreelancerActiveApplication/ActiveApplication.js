@@ -4,7 +4,6 @@ import React from "react";
 import { get } from "lodash";
 import { Box } from "@advisable/donut";
 import { matchPath } from "react-router-dom";
-import Layout from "../../components/Layout";
 import TaskDrawer from "../../components/TaskDrawer";
 import FixedTutorial from "../../components/Tutorial/FixedProjectTutorial";
 import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
@@ -100,7 +99,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
   };
 
   return (
-    <Layout>
+    <>
       <TutorialComponent tutorial={tutorial} />
       <TaskDrawer
         isClient={false}
@@ -110,23 +109,27 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
         readOnly={application.status !== "Working"}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
-      <Sidebar data={data} tutorial={tutorial} />
-      <Layout.Main>
-        {status === "Stopped Working" && (
-          <Box mb="m">
-            <StoppedWorkingNotice
-              client={get(data, "application.project.user.companyName")}
-            />
-          </Box>
-        )}
-        <Tasks
-          isClient={false}
-          application={application}
-          onClick={handleTaskClick}
-          onCreate={addNewTaskToCache}
-        />
-      </Layout.Main>
-    </Layout>
+      <Box display={{ m: "flex" }} maxWidth="1200px" mt="l" mx="auto">
+        <Box maxWidth={{ m: "340px" }} width="100%" flexShrink="0">
+          <Sidebar data={data} tutorial={tutorial} />
+        </Box>
+        <Box flexShrink="1" width="100%" ml={{ m: "40px" }}>
+          {status === "Stopped Working" && (
+            <Box mb="m">
+              <StoppedWorkingNotice
+                client={get(data, "application.project.user.companyName")}
+              />
+            </Box>
+          )}
+          <Tasks
+            isClient={false}
+            application={application}
+            onClick={handleTaskClick}
+            onCreate={addNewTaskToCache}
+          />
+        </Box>
+      </Box>
+    </>
   );
 };
 

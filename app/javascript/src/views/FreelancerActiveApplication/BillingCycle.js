@@ -17,16 +17,10 @@ const BillingCycle = ({ application }) => {
       <AttributeList.Item
         label="Billing Cycle"
         value={application.billingCycle}
-        action={
-          <RoundedButton
-            size="s"
-            mt="-4px"
-            mr="-4px"
-            variant="secondary"
-            onClick={modal.show}
-          >
-            <Icon icon="edit" />
-          </RoundedButton>
+        actions={
+          <AttributeList.Action onClick={modal.show}>
+            <Icon icon="settings" />
+          </AttributeList.Action>
         }
       >
         <Text fontSize="xs" lineHeight="xs" mt="xs" mb="s" color="neutral.8">
