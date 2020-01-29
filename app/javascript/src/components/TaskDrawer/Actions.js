@@ -161,7 +161,7 @@ const Component = ({
     }
   }
 
-  if (isClient && stage === "Not Assigned") {
+  if (isClient && stage === "Not Assigned" && isFixed) {
     if (!hasQuote) {
       actions.push(
         <Button

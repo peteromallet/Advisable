@@ -10,6 +10,7 @@ import { StageDescription } from "./styles";
 const FOR_CLIENT = {
   "Not Assigned": ({ t, task }) => {
     if (task.name && task.description) return null;
+    if (task.application.projectType === "Flexible") return null;
 
     return (
       <Padding bottom="m">
