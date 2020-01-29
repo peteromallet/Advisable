@@ -25,5 +25,16 @@ export default gql`
         }
       }
     }
+
+    viewer {
+      ... on User {
+        id
+        companyType
+        industry {
+          id
+          name
+        }
+      }
+    }
   }
 `;

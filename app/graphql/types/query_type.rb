@@ -184,19 +184,34 @@ class Types::QueryType < Types::BaseType
       HEREDOC
     end
 
+    argument :industry_required, Boolean, required: false do
+      description <<~HEREDOC
+        Wether or not to filter specialists by industry
+      HEREDOC
+    end
+
     argument :company_type, String, required: false do
       description <<~HEREDOC
         If provided will only return specialists that have previous projects
         working with the given company type.
       HEREDOC
     end
+
+    argument :company_type_required, Boolean, required: false do
+      description <<~HEREDOC
+        Wether or not to filter specialists by company type
+      HEREDOC
+    end
   end
 
-  def specialists(skill:, industry: nil, company_type: nil)
+  def specialists(**args)
     Specialists::Search.call(
-      skill: skill,
-      industry: industry,
-      company_type: company_type
+      skill: args[:skill],
+      industry: args[:industry],
+      industry_required: args[:industry_required],
+      company_type: args[:company_type],
+      company_type_required: args[:company_type_required],
+      user: context[:current_user],
     )
   end
 

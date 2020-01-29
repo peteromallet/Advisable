@@ -15,8 +15,10 @@ const Results = () => {
     skip: Boolean(!search),
     variables: {
       skill: search?.skill,
-      industry: search?.industryRequired ? search?.industry : null,
-      companyType: search?.companyTypeRequired ? search?.companyType : null,
+      industry: search?.industry,
+      industryRequired: search?.industryRequired,
+      companyType: search?.companyType,
+      companyTypeRequired: search?.companyTypeRequired,
     },
   });
 

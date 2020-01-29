@@ -38,7 +38,7 @@ describe 'specialists root query' do
   end
 
   context "when an industry is provided" do
-    let(:query_args) { "skill: \"#{skill.name}\", industry: \"Marketing\""}
+    let(:query_args) { "skill: \"#{skill.name}\", industry: \"Marketing\", industryRequired: true"}
 
     context "and the specialist does not have industry experience" do
       it "does not include the specialist" do
@@ -69,7 +69,7 @@ describe 'specialists root query' do
   end
 
   context "when company_type is provided" do
-    let(:query_args) { "skill: \"#{skill.name}\", companyType: \"Start-up\""}
+    let(:query_args) { "skill: \"#{skill.name}\", companyType: \"Start-up\", companyTypeRequired: true"}
 
     context "and the specialist does not have experience with that company type" do
       it "does not include the specialist" do

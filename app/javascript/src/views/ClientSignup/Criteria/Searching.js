@@ -18,10 +18,12 @@ const Searching = ({ search, queryParams }) => {
 
   if (search.industryRequired) {
     variables.industry = search.industry;
+    variables.industryRequired = search.industryRequired;
   }
 
   if (search.companyTypeRequired) {
     variables.companyType = search.companyType;
+    variables.companyTypeRequired = search.companyTypeRequired;
   }
 
   const { loading, data, error } = useQuery(SEARCH, { variables });
