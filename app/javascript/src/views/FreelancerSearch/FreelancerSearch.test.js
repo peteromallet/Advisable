@@ -28,7 +28,10 @@ test("User can search for freelancers and request consultations with them", asyn
   const day2 = getNextAvailableDate(moment(day1).add(1, "days"));
   const day3 = getNextAvailableDate(moment(day2).add(1, "days"));
 
+  const skill = mockData.skill({ name: "Marketing" });
+  const industry = mockData.industry({ name: "Finance" });
   const user = mockData.user({
+    industry,
     availability: [
       day1.toISOString(),
       moment(day1)
@@ -45,8 +48,6 @@ test("User can search for freelancers and request consultations with them", asyn
     ],
   });
 
-  const skill = mockData.skill({ name: "Marketing" });
-  const industry = mockData.industry({ name: "Finance" });
   const specialists = [
     mockData.specialist({ name: "Tom" }),
     mockData.specialist({ name: "Bob" }),
@@ -71,6 +72,7 @@ test("User can search for freelancers and request consultations with them", asyn
       },
       result: {
         data: {
+          viewer: user,
           skills: [
             {
               ...skill,
@@ -93,12 +95,15 @@ test("User can search for freelancers and request consultations with them", asyn
         query: SEARCH,
         variables: {
           skill: skill.name,
-          industry: null,
-          companyType: null,
+          industry: industry.name,
+          industryRequired: false,
+          companyType: "Startup",
+          companyTypeRequired: false,
         },
       },
       result: {
         data: {
+          viewer: user,
           specialists: {
             __typename: "SpecialistConnection",
             totalCount: 0,
@@ -199,9 +204,9 @@ test("User can search for freelancers and request consultations with them", asyn
 });
 
 test("Going directly to resuts redirects back to criteria step", async () => {
-  const user = mockData.user();
   const skill = mockData.skill({ name: "Marketing" });
   const industry = mockData.industry({ name: "Finance" });
+  const user = mockData.user({ industry });
 
   const graphQLMocks = [
     {
@@ -220,6 +225,7 @@ test("Going directly to resuts redirects back to criteria step", async () => {
       },
       result: {
         data: {
+          viewer: user,
           skills: [
             {
               ...skill,

@@ -32,8 +32,6 @@ const Results = () => {
 
   if (loading) return <Loading />;
 
-  console.log(data);
-
   if (data.specialists.nodes.length === 0) {
     return <NoResults />;
   }
