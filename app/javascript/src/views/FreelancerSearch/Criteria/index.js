@@ -23,7 +23,7 @@ import DATA from "./getData";
 const FreelancerSearchCriteria = () => {
   const history = useHistory();
   const theme = useTheme();
-  const { data, loading } = useQuery(DATA);
+  const { data, loading, error } = useQuery(DATA);
   const isDesktop = useBreakpoint("mUp");
 
   React.useEffect(() => {
@@ -35,9 +35,9 @@ const FreelancerSearchCriteria = () => {
 
   const initialValues = {
     skill: "",
-    industry: "",
+    industry: data.viewer?.industry?.name || "",
     industryRequired: false,
-    companyType: "Growth-Stage Startup",
+    companyType: data.viewer?.companyType || "Growth-Stage Startup",
     companyTypeRequired: false,
   };
 

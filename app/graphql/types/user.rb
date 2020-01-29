@@ -14,6 +14,8 @@ class Types::User < Types::BaseType
   end
 
   field :bank_transfers_enabled, Boolean, null: true
+  field :industry, Types::IndustryType, null: true
+  field :company_type, String, null: true
 
   field :talk_signature, String, null: false do
     authorize :is_user
