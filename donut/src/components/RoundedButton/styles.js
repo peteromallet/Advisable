@@ -73,7 +73,7 @@ const VARIANTS = {
 };
 
 const buttonSize = variant({
-  prop: "size",
+  prop: "buttonSize",
   variants: {
     s: {
       height: 32,
@@ -96,10 +96,26 @@ const buttonSize = variant({
   },
 });
 
+const textAlign = variant({
+  prop: "align",
+  variants: {
+    left: {
+      justifyContent: "flex-start",
+    },
+    center: {
+      justifyContent: "center",
+    },
+    right: {
+      justifyContent: "flex-end",
+    },
+  },
+});
+
 export const StyledButton = styled.button`
   ${space}
   ${layout}
   ${buttonSize}
+  ${textAlign}
 
   border: none;
   color: white;
@@ -116,7 +132,6 @@ export const StyledButton = styled.button`
   font-family: poppins;
   text-decoration: none;
   vertical-align: middle;
-  justify-content: center;
   letter-spacing: -0.01em;
   background: ${theme.colors.blue[5]};
   transition: background 100ms, color 100ms;

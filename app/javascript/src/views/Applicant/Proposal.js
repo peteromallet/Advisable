@@ -73,26 +73,30 @@ const Loaded = ({ data }) => {
           </Message>
         </Padding>
       )}
-      <Padding top="m" left="xl" bottom="m">
-        <Text weight="semibold" colour="dark">
-          Suggested tasks
-        </Text>
-      </Padding>
-      <TaskDrawer
-        isClient
-        readOnly
-        hideStatus
-        taskId={selectedTask}
-        onClose={() => setSelectedTask(null)}
-      />
-      <Padding bottom="l">
-        <TaskList
-          isClient
-          hideStatus
-          tasks={application.tasks}
-          onClickTask={handleSelectTask}
-        />
-      </Padding>
+      {application.tasks.length > 0 && (
+        <>
+          <Padding top="m" left="xl" bottom="m">
+            <Text weight="semibold" colour="dark">
+              Suggested tasks
+            </Text>
+          </Padding>
+          <TaskDrawer
+            isClient
+            readOnly
+            hideStatus
+            taskId={selectedTask}
+            onClose={() => setSelectedTask(null)}
+          />
+          <Padding bottom="l">
+            <TaskList
+              isClient
+              hideStatus
+              tasks={application.tasks}
+              onClickTask={handleSelectTask}
+            />
+          </Padding>
+        </>
+      )}
     </>
   );
 };

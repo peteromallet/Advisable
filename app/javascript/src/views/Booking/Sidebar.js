@@ -9,6 +9,7 @@ import {
   Box,
   Icon,
   Circle,
+  RoundedButton,
 } from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -74,17 +75,18 @@ const Sidebar = ({ data, history, tutorial, match }) => {
         participants={[application.specialist]}
       />
 
-      <Padding top="xl">
-        <Padding bottom="s">
-          <Button
-            width="100%"
-            appearance="outlined"
-            icon="message-circle"
-            onClick={() => setModal(TALK_MODAL)}
-          >
-            Message {specialist.firstName}
-          </Button>
-        </Padding>
+      <Box mt="l">
+        <RoundedButton
+          mb="xs"
+          size="l"
+          width="100%"
+          variant="dark"
+          onClick={() => setModal(TALK_MODAL)}
+          prefix={<Icon icon="message-circle" />}
+        >
+          Message {specialist.firstName}
+        </RoundedButton>
+
         {application.status === "Working" && (
           <>
             <Route
@@ -97,20 +99,20 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                 />
               )}
             />
-            <Button
+            <RoundedButton
+              size="l"
               width="100%"
-              appearance="outlined"
-              icon="pause-circle"
-              aria-label="Stop Working"
+              variant="dark"
+              prefix={<Icon icon="pause-circle" />}
               onClick={() => history.replace(`${match.url}/stop`)}
             >
               Stop Working
-            </Button>
+            </RoundedButton>
           </>
         )}
-      </Padding>
+      </Box>
 
-      <Box mt="xl" mb="m">
+      <Box mt="l" mb="m">
         <AttributeList>
           {application.rate && (
             <AttributeList.Item
@@ -179,11 +181,23 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                 color="neutral.8"
                 letterSpacing="-0.005em"
               >
-                Want to work on a project basis and assign projects to{" "}
-                {application.specialist.firstName}?
+                {application.projectType === "Flexible"
+                  ? `
+                Want to work on a project basis and assign projects to ${application.specialist.firstName}?
+                `
+                  : `
+                Want ${application.specialist.firstName} to work flexibly and submit hours after work is completed?
+                `}
               </Text>
-              <Link.External mt="s" fontSize="xs" href="#">
-                Switch to project basis
+              <Link.External
+                mt="s"
+                fontSize="xs"
+                href="#"
+                onClick={() => setProjectTypeModal(true)}
+              >
+                {application.projectType === "Flexible"
+                  ? "Switch to a project basis"
+                  : "Switch to Flexible"}
               </Link.External>
             </Box>
           </AttributeList.Item>

@@ -11,13 +11,14 @@ import {
 } from "./styles";
 
 const Button = React.forwardRef(
-  ({ children, loading, disabled, prefix, suffix, ...props }, ref) => {
+  ({ children, loading, disabled, prefix, suffix, size, ...props }, ref) => {
     return (
       <StyledButton
         ref={ref}
         aria-label={children}
         data-loading={loading}
         disabled={loading || disabled}
+        buttonSize={size}
         {...props}
       >
         {loading && (
@@ -42,6 +43,7 @@ const Button = React.forwardRef(
 
 Button.defaultProps = {
   size: "m",
+  align: "center",
 };
 
 export default Button;

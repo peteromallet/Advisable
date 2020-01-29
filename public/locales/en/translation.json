@@ -122,7 +122,7 @@
   },
   "projectTypes": {
     "Fixed": {
-      "label": "Projects - Predefined Projects",
+      "label": "Project Basis",
       "clientDescription": "Your freelancer is working on predefined projects, with set deliverables and timelines. You are charged when each task is assigned. All live tasks are marked \"Working\".",
       "proposalDescription": "I want to propose one or more predefined projects, with clear deliverables and estimated timelines."
     },
