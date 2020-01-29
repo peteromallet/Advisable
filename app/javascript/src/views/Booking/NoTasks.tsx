@@ -17,24 +17,28 @@ export default ({ onNewTask, application }: Props) => {
     <Card>
       <Padding size="xxl" style={{ textAlign: "center" }}>
         <img src={illustration} width={300} />
-        <Padding bottom="xs">
-          <Text weight="semibold" colour="dark">
-            No active projects
-          </Text>
-        </Padding>
-        <Padding bottom="l">
-          <Text
-            size="s"
-            style={{
-              maxWidth: "300px",
-              margin: "0 auto",
-            }}
-          >
-            You must now assign a project in order for {firstName} to start
-            work.
-          </Text>
-        </Padding>
-        <NewTask onCreate={onNewTask} application={application} />
+        {application.projectType !== "Flexible" && (
+          <>
+            <Padding bottom="xs">
+              <Text weight="semibold" colour="dark">
+                No active projects
+              </Text>
+            </Padding>
+            <Padding bottom="l">
+              <Text
+                size="s"
+                style={{
+                  maxWidth: "300px",
+                  margin: "0 auto",
+                }}
+              >
+                You must now assign a project in order for {firstName} to start
+                work.
+              </Text>
+            </Padding>
+            <NewTask onCreate={onNewTask} application={application} />
+          </>
+        )}
       </Padding>
     </Card>
   );

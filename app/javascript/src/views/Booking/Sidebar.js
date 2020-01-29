@@ -1,17 +1,20 @@
 import React from "react";
 import { get } from "lodash";
-import { Mutation } from "react-apollo";
-import { Button, Tooltip, Box, Icon } from "@advisable/donut";
+import {
+  Text,
+  Link,
+  Avatar,
+  Button,
+  Tooltip,
+  Box,
+  Icon,
+  Circle,
+} from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "../../components/Sticky";
-import Text from "../../components/Text";
-import Avatar from "../../components/Avatar";
-import Layout from "../../components/Layout";
-import Heading from "../../components/Heading";
 import currency from "../../utilities/currency";
 import { Padding } from "../../components/Spacing";
-import { FadeIn } from "../../components/Animation";
 import VideoButton from "../../components/VideoButton";
 import AttributeList from "../../components/AttributeList";
 import { useMobile } from "../../components/Breakpoint";
@@ -33,142 +36,166 @@ const Sidebar = ({ data, history, tutorial, match }) => {
   };
 
   return (
-    <Layout.Sidebar size="m">
-      <Sticky offset={98} enabled={!isMobile}>
-        <FadeIn duration="500ms">
-          <Padding bottom="l">
-            <Avatar
-              size="l"
-              name={specialist.name}
-              url={get(specialist, "image.url")}
+    <Sticky offset={98} enabled={!isMobile}>
+      <Avatar
+        mb="m"
+        size="xl"
+        name={specialist.name}
+        url={specialist?.image?.url}
+      />
+      <Text
+        as="h3"
+        mb="xs"
+        fontSize="xxl"
+        color="blue.9"
+        fontWeight="semibold"
+        letterSpacing="-0.01em"
+      >
+        {specialist.name}
+      </Text>
+      <Box display="flex" alignItems="center">
+        <Icon
+          mr="xxs"
+          width={16}
+          height={16}
+          icon="map-pin"
+          strokewidth={1.5}
+          color="neutral.7"
+        />
+        <Text color="neutral.7" letterSpacing="-0.015em">
+          {specialist.city}
+          {specialist.country && `, ${specialist.country.name}`}
+        </Text>
+      </Box>
+      <TalkModal
+        isOpen={modal === TALK_MODAL}
+        onClose={() => setModal(null)}
+        conversationId={application.id}
+        participants={[application.specialist]}
+      />
+
+      <Padding top="xl">
+        <Padding bottom="s">
+          <Button
+            width="100%"
+            appearance="outlined"
+            icon="message-circle"
+            onClick={() => setModal(TALK_MODAL)}
+          >
+            Message {specialist.firstName}
+          </Button>
+        </Padding>
+        {application.status === "Working" && (
+          <>
+            <Route
+              path={`${match.path}/stop`}
+              render={route => (
+                <StopWorkingModal
+                  isOpen
+                  application={application}
+                  onClose={() => history.replace(match.url)}
+                />
+              )}
             />
-          </Padding>
-          <Heading level={3}>{specialist.name}</Heading>
-          <Text size="xs">
-            {specialist.city}
-            {specialist.country && `, ${specialist.country.name}`}
-          </Text>
-          <TalkModal
-            isOpen={modal === TALK_MODAL}
-            onClose={() => setModal(null)}
-            conversationId={application.id}
-            participants={[application.specialist]}
+            <Button
+              width="100%"
+              appearance="outlined"
+              icon="pause-circle"
+              aria-label="Stop Working"
+              onClick={() => history.replace(`${match.url}/stop`)}
+            >
+              Stop Working
+            </Button>
+          </>
+        )}
+      </Padding>
+
+      <Box mt="xl" mb="m">
+        <AttributeList>
+          {application.rate && (
+            <AttributeList.Item
+              label="Hourly Rate"
+              value={currency(parseFloat(application.rate) * 100.0)}
+            />
+          )}
+
+          {application.projectType === "Flexible" && (
+            <AttributeList.Item
+              label="Monthly Limit"
+              value={`${application.monthlyLimit} hours`}
+              actions={
+                <AttributeList.Action onClick={() => setProjectTypeModal(true)}>
+                  <Icon icon="settings" />
+                </AttributeList.Action>
+              }
+            />
+          )}
+
+          <AttributeList.Item
+            label="Payment Method"
+            value={data?.viewer.projectPaymentMethod}
+            actions={
+              <AttributeList.Action onClick={handleEditPayment}>
+                <Icon icon="settings" />
+              </AttributeList.Action>
+            }
           />
 
-          <Padding top="xl">
-            <Padding bottom="s">
-              <Button
-                width="100%"
-                appearance="outlined"
-                icon="message-circle"
-                onClick={() => setModal(TALK_MODAL)}
+          <ProjectTypeModal
+            isOpen={projectTypeModal}
+            application={application}
+            onClose={() => setProjectTypeModal(false)}
+          />
+
+          <AttributeList.Item
+            label="Project Type"
+            value={
+              <Tooltip
+                placement="bottom-end"
+                content={t(
+                  `projectTypes.${application.projectType}.clientDescription`
+                )}
               >
-                Message {specialist.firstName}
-              </Button>
-            </Padding>
-            {application.status === "Working" && (
-              <>
-                <Route
-                  path={`${match.path}/stop`}
-                  render={route => (
-                    <StopWorkingModal
-                      isOpen
-                      application={application}
-                      onClose={() => history.replace(match.url)}
-                    />
-                  )}
-                />
-                <Button
-                  width="100%"
-                  appearance="outlined"
-                  icon="pause-circle"
-                  aria-label="Stop Working"
-                  onClick={() => history.replace(`${match.url}/stop`)}
-                >
-                  Stop Working
-                </Button>
-              </>
-            )}
-          </Padding>
-          <Padding top="xl" bottom="xl">
-            <AttributeList>
-              {Boolean(application.rate) && (
-                <AttributeList.Item
-                  label="Hourly Rate"
-                  value={currency(parseFloat(application.rate) * 100.0)}
-                />
-              )}
-
-              {application.projectType === "Flexible" && (
-                <AttributeList.Item
-                  label="Monthly Limit"
-                  action={
-                    <Button
-                      size="s"
-                      icon="edit"
-                      onClick={() => setProjectTypeModal(true)}
-                    />
-                  }
-                >
-                  {application.monthlyLimit} hours
-                </AttributeList.Item>
-              )}
-
-              <ProjectTypeModal
-                isOpen={projectTypeModal}
-                application={application}
-                onClose={() => setProjectTypeModal(false)}
-              />
-
-              <AttributeList.Item
-                label="Project Type"
-                action={
-                  <Button
-                    size="s"
-                    icon="edit"
-                    aria-label="Edit project type"
-                    onClick={() => setProjectTypeModal(true)}
+                <Box display="flex" alignItems="center">
+                  <Icon
+                    mt="2px"
+                    mr="4px"
+                    width={16}
+                    height={16}
+                    color="neutral.7"
+                    icon="help-circle"
                   />
-                }
+                  <span>
+                    {t(`projectTypes.${application.projectType}.label`)}
+                  </span>
+                </Box>
+              </Tooltip>
+            }
+          >
+            <Box mt="s" px="s" py="12px" bg="neutral.2" borderRadius="12px">
+              <Text
+                fontSize="xs"
+                lineHeight="xs"
+                color="neutral.8"
+                letterSpacing="-0.005em"
               >
-                <Tooltip
-                  content={t(
-                    `projectTypes.${application.projectType}.clientDescription`
-                  )}
-                >
-                  <Box display="flex" alignItems="center">
-                    <Icon
-                      mr="xxs"
-                      width={16}
-                      height={16}
-                      color="neutral.6"
-                      icon="help-circle"
-                    />
-                    <div data-testid="projectType">
-                      {t(`projectTypes.${application.projectType}.label`)}
-                    </div>
-                  </Box>
-                </Tooltip>
-              </AttributeList.Item>
+                Want to work on a project basis and assign projects to{" "}
+                {application.specialist.firstName}?
+              </Text>
+              <Link.External mt="s" fontSize="xs" href="#">
+                Switch to project basis
+              </Link.External>
+            </Box>
+          </AttributeList.Item>
+        </AttributeList>
+      </Box>
 
-              <AttributeList.Item
-                label="Payment Method"
-                action={
-                  <Button onClick={handleEditPayment} icon="edit" size="s" />
-                }
-              >
-                {get(data, "viewer.projectPaymentMethod")}
-              </AttributeList.Item>
-            </AttributeList>
-          </Padding>
-          <Padding bottom="xl">
-            <VideoButton onClick={tutorial.start}>
-              {t(`tutorials.${tutorial.name}.prompt`)}
-            </VideoButton>
-          </Padding>
-        </FadeIn>
-      </Sticky>
-    </Layout.Sidebar>
+      <Padding bottom="xl">
+        <VideoButton onClick={tutorial.start}>
+          {t(`tutorials.${tutorial.name}.prompt`)}
+        </VideoButton>
+      </Padding>
+    </Sticky>
   );
 };
 

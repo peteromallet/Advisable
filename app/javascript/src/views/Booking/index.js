@@ -1,8 +1,8 @@
 import * as React from "react";
 import { get } from "lodash";
 import { Box } from "@advisable/donut";
-import { graphql, withApollo } from "react-apollo";
 import { matchPath } from "react-router-dom";
+import { graphql, withApollo } from "react-apollo";
 import NotFound from "../NotFound";
 import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
@@ -109,9 +109,12 @@ let Booking = ({ data, match, history, location, client }) => {
         onCreateRepeatingTask={addNewTaskToCache}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
-      <Layout>
-        <Sidebar data={data} tutorial={tutorial} />
-        <Layout.Main>
+
+      <Box display={{ m: "flex" }} maxWidth="1200px" mt="l" mx="auto">
+        <Box maxWidth={{ m: "340px" }} width="100%" flexShrink="0">
+          <Sidebar data={data} tutorial={tutorial} />
+        </Box>
+        <Box flexShrink="1" width="100%" ml={{ m: "40px" }}>
           {status === "Stopped Working" && (
             <Box mb="m">
               <StoppedWorkingNotice
@@ -125,8 +128,8 @@ let Booking = ({ data, match, history, location, client }) => {
             onNewTask={addNewTaskToCache}
             application={data.application}
           />
-        </Layout.Main>
-      </Layout>
+        </Box>
+      </Box>
     </>
   );
 };

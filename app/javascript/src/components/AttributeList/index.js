@@ -1,60 +1,83 @@
 import React from "react";
 import styled from "styled-components";
-import { theme } from "@advisable/donut";
-import colors from "../../colors";
+import { Box, Text, theme } from "@advisable/donut";
 
-const Container = styled.ul``;
+const StyledAttributeList = styled.ul``;
 
-const Item = styled.li`
-  font-size: 14px;
-  padding: 14px 0;
+const StyledAttributeListItem = styled.li`
+  display: flex;
+  padding: 12px 0;
   margin-top: -1px;
-  line-height: 18px;
+  min-height: 50px;
   position: relative;
-  border-top: 1px solid ${colors.neutral.s2};
-  border-bottom: 1px solid ${colors.neutral.s2};
+  flex-direction: column;
+  justify-content: center;
+  border-top: 1px solid ${theme.colors.neutral[2]};
+  border-bottom: 1px solid ${theme.colors.neutral[2]};
 
-  a {
-    text-decoration: none;
-    color: ${colors.blue.base};
+  &:first-child {
+    border-top: none;
+  }
+
+  &:last-child {
+    border-bottom: none;
   }
 `;
 
-const Label = styled.span`
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  padding-right: 12px;
-  letter-spacing: -0.01em;
-  color: ${theme.colors.neutral[7]};
-`;
+const StyledAttributeListItemAction = styled.button`
+  width: 28px;
+  height: 28px;
+  border: none;
+  outline: none;
+  display: flex;
+  appearance: none;
+  margin-left: 8px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  color: ${theme.colors.neutral[6]};
+  background: ${theme.colors.neutral[2]};
 
-const Value = styled.div`
-  display: block;
-  font-size: 15px;
-  font-weight: 500;
-  color: ${theme.colors.neutral[9]};
-`;
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 
-const Action = styled.div`
-  top: 20px;
-  right: 0;
-  position: absolute;
+  &:hover {
+    color: ${theme.colors.neutral[7]};
+    background: ${theme.colors.neutral[3]};
+  }
 `;
 
 const AttributeList = ({ children }) => {
-  return <Container>{children}</Container>;
+  return <StyledAttributeList>{children}</StyledAttributeList>;
 };
 
-const ListItem = ({ label, value, action, children }) => (
-  <Item>
-    <Label>{label}</Label>
-    <Action>{action}</Action>
-    <Value>{value}</Value>
-    <Value>{children}</Value>
-  </Item>
+const ListItem = ({ label, value, actions, children }) => (
+  <StyledAttributeListItem>
+    <Box display="flex" alignItems="center">
+      <Box>
+        <Text fontSize="s" color="neutral.7" letterSpacing="-0.01em">
+          {label}
+        </Text>
+      </Box>
+      <Box flex={1} textAlign="right">
+        <Text
+          fontSize="s"
+          color="blue.9"
+          fontWeight="medium"
+          letterSpacing="-0.01em"
+        >
+          {value}
+        </Text>
+      </Box>
+      <Box>{actions}</Box>
+    </Box>
+    {children}
+  </StyledAttributeListItem>
 );
 
 AttributeList.Item = ListItem;
+AttributeList.Action = StyledAttributeListItemAction;
 
 export default AttributeList;
