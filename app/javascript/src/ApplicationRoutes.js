@@ -47,7 +47,11 @@ const ApplicationRoutes = () => {
             component={InterviewAvailability}
           />
           <Route path="/projects/:projectId/:status?" component={Project} />
-          <AuthenticatedRoute path="/projects" component={Projects} />
+          <AuthenticatedRoute
+            clientOnly
+            path="/projects"
+            component={Projects}
+          />
           <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
           <AuthenticatedRoute
             path="/book/:applicationId"
