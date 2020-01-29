@@ -8,11 +8,11 @@ const ELEVATIONS = {
     box-shadow: 0 2px 6px -2px ${rgba(colors.neutral.s4, 0.5)};
   `,
   2: css`
-   box-shadow: 0 6px 18px -6px ${rgba(colors.neutral.s4, 0.6)};
+    box-shadow: 0 6px 18px -6px ${rgba(colors.neutral.s4, 0.6)};
   `,
   3: css`
     box-shadow: 0 10px 25px -10px ${rgba(colors.neutral.s4, 0.6)};
-   `
+  `,
 };
 
 export const Card = styled.div`
@@ -39,7 +39,7 @@ export const Card = styled.div`
     `};
 
   ${props => ELEVATIONS[props.elevation]};
-  
+
   ${props =>
     props.hoverElevation &&
     css`

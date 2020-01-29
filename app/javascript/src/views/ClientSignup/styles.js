@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Card } from "@advisable/donut";
+import { StyledCard } from "@advisable/donut";
 
-export const StyledSpecialist = styled(Card.Styled)`
+export const StyledSpecialist = styled(StyledCard)`
   width: 100%;
   height: 470px;
   padding: 25px;

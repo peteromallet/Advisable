@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { StyledNewProject, StyledNewProjectIcon } from "./styles";
 import { Icon } from "@advisable/donut";
+import { StyledNewProject, StyledNewProjectIcon } from "./styles";
 
 const NewProject = () => {
   return (

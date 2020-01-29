@@ -1,15 +1,13 @@
 // Renders the card for an active booking in the manage talent view
 import React from "react";
-import { get } from "lodash";
-import { Card, Avatar, Box, Text } from "@advisable/donut";
-import { TalentCard } from "./styles";
+import { Card, Avatar, Text } from "@advisable/donut";
+import { TalentCard as StyledTalentCard } from "./styles";
 import Status from "../../../components/Status";
-import { Padding } from "../../../components/Spacing";
 import pluralize from "../../../utilities/pluralize";
 
-const Component = ({ onClick, application }) => {
+const TalentCard = ({ onClick, application }) => {
   return (
-    <TalentCard>
+    <StyledTalentCard>
       <Card onClick={onClick} padding="xl">
         <Avatar
           mb="m"
@@ -17,7 +15,7 @@ const Component = ({ onClick, application }) => {
           mx="auto"
           display="inline-block"
           name={application.specialist.name}
-          url={get(application.specialist.image, "url")}
+          url={application.specialist.image?.url}
         />
         <Text
           fontSize="l"
@@ -33,8 +31,8 @@ const Component = ({ onClick, application }) => {
         </Text>
         <Status>{pluralize(application.tasks.length, "Task", "Tasks")}</Status>
       </Card>
-    </TalentCard>
+    </StyledTalentCard>
   );
 };
 
-export default Component;
+export default TalentCard;
