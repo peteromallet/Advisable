@@ -1,10 +1,13 @@
+import React from "react";
 import StyledCard from "./styles";
 
-StyledCard.defaultProps = {
-  borderRadius: 2,
+const Card = props => {
+  return <StyledCard {...props} />;
+};
+
+Card.defaultProps = {
+  borderRadius: "2px",
   elevation: "m",
 };
 
-StyledCard.Styled = StyledCard;
-
-export default StyledCard;
+export default Card;

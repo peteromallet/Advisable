@@ -11,6 +11,15 @@ export { default as Radio } from "./components/Radio";
 export { default as Alert } from "./components/Alert";
 export { default as Availability } from "./components/Availability";
 
+export { default as Error } from "./components/Error";
+export * from "./components/Error/styles";
+
+export { default as Input } from "./components/Input";
+export * from "./components/Input/styles";
+
+export { default as Label } from "./components/Label";
+export * from "./components/Label/styles";
+
 export { default as Avatar } from "./components/Avatar";
 export * from "./components/Avatar/styles";
 

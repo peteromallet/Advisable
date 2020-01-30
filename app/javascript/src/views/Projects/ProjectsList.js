@@ -1,29 +1,38 @@
-import React, { Fragment } from "react";
-import Text from "../../components/Text";
+import React from "react";
+import { Box, Text } from "@advisable/donut";
 import Status from "../../components/Status";
 import pluralize from "../../utilities/pluralize";
 import NewProject from "./NewProject";
-import { Tile, ProjectCard, ProjectTitle, ProjectDescription } from "./styles";
+import { ProjectCard, ProjectDescription } from "./styles";
 
 const ProjectsList = ({ projects }) => {
   return (
-    <Fragment>
-      <Tile>
+    <Box flexWrap="wrap" display="flex" ml="-10px" mr="-10px">
+      <Box width={[1, 1 / 2, 1 / 3]} px={10} pb="m">
         <NewProject />
-      </Tile>
+      </Box>
       {projects.map(project => (
-        <Tile key={project.id}>
+        <Box width={[1, 1 / 2, 1 / 3]} key={project.id} px={10} pb="m">
           <ProjectCard to={`/projects/${project.airtableId}`}>
-            <ProjectTitle>{project.primarySkill}</ProjectTitle>
-            <Text size="s" marginBottom="l">
+            <Text
+              as="h4"
+              mb="xxs"
+              fontSize="l"
+              color="blue.9"
+              fontWeight="semibold"
+              letterSpacing="-0.015em"
+            >
+              {project.primarySkill}
+            </Text>
+            <Text fontSize="s" color="neutral.7" marginBottom="l">
               {pluralize(project.applicationCount, "Candidate", "Candidates")}
             </Text>
             <Status>{project.status}</Status>
             <ProjectDescription>{project.description}</ProjectDescription>
           </ProjectCard>
-        </Tile>
+        </Box>
       ))}
-    </Fragment>
+    </Box>
   );
 };
 

@@ -36,7 +36,6 @@ export const StyledNewProject = styled(StyledCard)`
   font-size: 16px;
   cursor: pointer;
   font-weight: 400;
-  border-radius: 2px;
   text-align: center;
   position: relative;
   display: inline-flex;
@@ -46,10 +45,13 @@ export const StyledNewProject = styled(StyledCard)`
   justify-content: center;
   letter-spacing: -0.01em;
   color: ${theme.colors.neutral[8]};
+  box-shadow: ${theme.shadows.m};
+  transition: box-shadow 200ms;
 
   &:hover {
     color: ${theme.colors.blue[8]};
     border-color: ${theme.colors.neutral[4]};
+    box-shadow: ${theme.shadows.l};
 
     ${StyledNewProjectIcon} {
       &::before {

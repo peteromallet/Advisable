@@ -1,39 +1,32 @@
 // Renders the projects view for a user.
 import React from "react";
 import { useQuery } from "react-apollo";
-import PROJECTS from "./getProjects";
-import { Redirect } from "react-router-dom";
-import Heading from "../../components/Heading";
-import Loading from "../../components/Loading";
-import Divider from "../../components/Divider";
-import Layout from "../../components/Layout";
+import { Box, Text } from "@advisable/donut";
 import useScrollRestore from "../../utilities/useScrollRestore";
-import { Projects } from "./styles";
+import Loading from "./Loading";
+import PROJECTS from "./getProjects";
 import ProjectsList from "./ProjectsList";
-import useViewer from "../../hooks/useViewer";
 
-export default () => {
+const Projects = () => {
   useScrollRestore();
-  const viewer = useViewer();
-  const query = useQuery(PROJECTS);
-
-  if (viewer.__typename !== "User") {
-    return <Redirect to="/" />;
-  }
+  const { loading, data } = useQuery(PROJECTS);
 
   return (
-    <Layout>
-      <Layout.Main>
-        <Heading level={2}>Your projects</Heading>
-        <Divider marginTop="l" marginBottom="xl" />
-        <Projects>
-          {query.loading ? (
-            <Loading />
-          ) : (
-            <ProjectsList projects={query.data.viewer.projects} />
-          )}
-        </Projects>
-      </Layout.Main>
-    </Layout>
+    <Box maxWidth={1100} mx="auto" pt="xl">
+      <Text
+        as="h2"
+        fontSize="28px"
+        fontWeight="semibold"
+        color="blue.9"
+        letterSpacing="-0.03em"
+      >
+        Your projects
+      </Text>
+      <Box height={1} bg="neutral.2" mt="l" mb="l" />
+
+      {loading ? <Loading /> : <ProjectsList projects={data.viewer.projects} />}
+    </Box>
   );
 };
+
+export default Projects;

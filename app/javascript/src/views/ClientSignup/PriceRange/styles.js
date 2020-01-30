@@ -1,13 +1,13 @@
 import { rgba } from "polished";
 import styled from "styled-components";
-import { Card, Text, theme } from "@advisable/donut";
+import { StyledCard, Text, theme } from "@advisable/donut";
 
 export const StyledRangeTitle = styled(Text.Styled)`
   color: ${theme.colors.neutral[9]};
   transition: color 200ms;
 `;
 
-export const StyledRange = styled(Card.Styled)`
+export const StyledRange = styled(StyledCard)`
   display: flex;
   padding: 12px;
   cursor: pointer;

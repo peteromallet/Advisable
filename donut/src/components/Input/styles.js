@@ -3,8 +3,6 @@ import { space } from "styled-system";
 import theme from "../../theme";
 
 export const StyledInput = styled.input`
-  ${space}
-
   margin: 0;
   outline: none;
   font-size: 16px;
@@ -15,6 +13,8 @@ export const StyledInput = styled.input`
   width: ${props => props.width || "100%"};
   border: 1px solid ${theme.colors.neutral[1]};
   transition: border-color 200ms, box-shadow 200ms;
+
+  ${space}
 
   &::placeholder {
     color: ${theme.colors.neutral[6]};
