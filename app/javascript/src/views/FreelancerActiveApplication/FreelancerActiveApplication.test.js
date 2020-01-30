@@ -7,6 +7,7 @@ import CREATE_TASK from "../../graphql/mutations/createTask";
 import GET_TASK from "../../graphql/queries/taskDetails";
 import FETCH_APPLICATION from "./fetchApplication";
 import SUBMIT_TASK from "../../components/TaskDrawer/submitTask";
+import UPDATE_BILLING_CYCLE from "../../components/BillingCycleSelection/updateBillingCycle";
 import {
   updateTaskName as UPDATE_TASK_NAME,
   updateTaskEstimate as UPDATE_TASK_ESTIMATE,
@@ -294,4 +295,198 @@ test("Freelancer can mark a task as complete", async () => {
     "tasks.stageDescriptions.specialist.submitted"
   );
   expect(notice).toBeInTheDocument();
+});
+
+test("Freelancer can change their billing type from weekly to monthly", async () => {
+  const user = generateTypes.user();
+  const project = generateTypes.project({ user });
+  const specialist = generateTypes.specialist();
+
+  const application = generateTypes.application({
+    id: "rec1324",
+    rate: 50,
+    tasks: [],
+    airtableId: "rec1234",
+    projectType: "Flexible",
+    billingCycle: "Weekly",
+    project,
+    specialist,
+  });
+
+  const graphQLMocks = [
+    {
+      request: {
+        query: VIEWER,
+      },
+      result: {
+        data: {
+          viewer: specialist,
+        },
+      },
+    },
+    {
+      request: {
+        query: FETCH_APPLICATION,
+        variables: {
+          id: "rec1234",
+        },
+      },
+      result: {
+        data: {
+          application,
+        },
+      },
+    },
+    {
+      request: {
+        query: UPDATE_BILLING_CYCLE,
+        variables: {
+          input: {
+            id: "rec123",
+            billingCycle: "Monthly",
+          },
+        },
+      },
+      result: {
+        data: {
+          __typename: "Mutation",
+          updateApplication: {
+            __typename: "UpdateApplicationPayload",
+            application: {
+              ...application,
+              billingCycle: "Monthly",
+            },
+          },
+        },
+      },
+    },
+  ];
+
+  const app = renderApp({
+    route: "/clients/rec1234/tasks/tas_1234",
+    graphQLMocks,
+  });
+
+  const btn = await app.findByLabelText("Change billing cycle");
+  fireEvent.click(btn);
+  const monthly = app.getByLabelText("Monthly - Last Friday of every month", {
+    exact: false,
+  });
+  fireEvent.click(monthly);
+  fireEvent.click(app.getByLabelText("Save Changes"));
+});
+
+test("Shows notice if stopped working", async () => {
+  const user = generateTypes.user();
+  const project = generateTypes.project({ user });
+  const specialist = generateTypes.specialist();
+
+  const application = generateTypes.application({
+    id: "rec1324",
+    rate: 50,
+    tasks: [],
+    airtableId: "rec1234",
+    projectType: "Flexible",
+    billingCycle: "Weekly",
+    status: "Stopped Working",
+    project,
+    specialist,
+  });
+
+  const graphQLMocks = [
+    {
+      request: {
+        query: VIEWER,
+      },
+      result: {
+        data: {
+          viewer: specialist,
+        },
+      },
+    },
+    {
+      request: {
+        query: FETCH_APPLICATION,
+        variables: {
+          id: "rec1234",
+        },
+      },
+      result: {
+        data: {
+          application,
+        },
+      },
+    },
+  ];
+
+  const app = renderApp({
+    route: "/clients/rec1234/tasks/tas_1234",
+    graphQLMocks,
+  });
+
+  const notice = await app.findByText("You have stopped working with", {
+    exact: false,
+  });
+  expect(notice).toBeInTheDocument();
+});
+
+test("Freelancer can view completed tasks", async () => {
+  const user = generateTypes.user();
+  const project = generateTypes.project({ user });
+  const specialist = generateTypes.specialist();
+
+  const task = generateTypes.task({
+    id: "tas_1234",
+    stage: "Approved",
+    name: "A completed task",
+    estimate: 10,
+    flexibleEstimate: 20,
+    estimateType: "Hourly",
+  });
+
+  const application = generateTypes.application({
+    id: "rec1324",
+    airtableId: "rec1234",
+    project,
+    specialist,
+    tasks: [task],
+    rate: 50,
+  });
+
+  task.application = application;
+
+  const app = renderApp({
+    route: "/clients/rec1234/tasks/tas_1234",
+    graphQLMocks: [
+      {
+        request: {
+          query: VIEWER,
+        },
+        result: {
+          data: {
+            viewer: specialist,
+          },
+        },
+      },
+      {
+        request: {
+          query: FETCH_APPLICATION,
+          variables: {
+            id: "rec1234",
+          },
+        },
+        result: {
+          data: {
+            application,
+          },
+        },
+      },
+    ],
+  });
+
+  const taskName = await app.findByText("A completed task");
+  expect(taskName).not.toBeVisible();
+  const tab = app.getByText("Completed Tasks");
+  fireEvent.click(tab);
+  expect(app.getByText("A completed task")).toBeVisible();
 });

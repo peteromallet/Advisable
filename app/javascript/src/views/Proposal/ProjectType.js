@@ -7,13 +7,13 @@ import {
   Box,
   Icon,
   Text,
+  Radio,
   Checkbox,
   NumberedList,
   RoundedButton,
 } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import TextField from "../../components/TextField";
-import Radio from "../../components/Radio";
 import { projectTypeValidationSchema } from "./validationSchema";
 import UPDATE_APPLICATION from "./updateApplication.js";
 
@@ -53,7 +53,7 @@ const BookingType = ({ history, application }) => {
 
   const initialValues = {
     projectType: application.projectType || "",
-    monthlyLimit: application.monthlyLimit || undefined,
+    monthlyLimit: application.monthlyLimit || null,
     accept: false,
   };
 
@@ -73,7 +73,6 @@ const BookingType = ({ history, application }) => {
   return (
     <Card padding="l">
       <Formik
-        validateOnMount
         onSubmit={handleSubmit}
         initialValues={initialValues}
         validationSchema={projectTypeValidationSchema}
@@ -104,9 +103,12 @@ const BookingType = ({ history, application }) => {
                   formik.setFieldValue("accept", false);
                   formik.handleChange(e);
                 }}
-                label={t("projectTypes.Fixed.label")}
-                description={t("projectTypes.Fixed.proposalDescription")}
-              />
+              >
+                <Text fontWeight="medium">{t("projectTypes.Fixed.label")}</Text>
+                <Text fontSize="s" color="neutral.8" lineHeight="xs">
+                  {t("projectTypes.Fixed.proposalDescription")}
+                </Text>
+              </Field>
             </Box>
             <Box marginBottom="xl">
               <Field
@@ -119,9 +121,14 @@ const BookingType = ({ history, application }) => {
                   formik.setFieldValue("accept", false);
                   formik.handleChange(e);
                 }}
-                label={t("projectTypes.Flexible.label")}
-                description={t("projectTypes.Flexible.proposalDescription")}
-              />
+              >
+                <Text fontWeight="medium">
+                  {t("projectTypes.Flexible.label")}
+                </Text>
+                <Text fontSize="s" color="neutral.8" lineHeight="xs">
+                  {t("projectTypes.Flexible.proposalDescription")}
+                </Text>
+              </Field>
             </Box>
             {formik.values.projectType === "Flexible" && (
               <>

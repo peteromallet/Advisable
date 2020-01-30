@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, RoundedButton, Icon, useModal, Modal } from "@advisable/donut";
+import { Text, Icon, useModal, Modal } from "@advisable/donut";
 import AttributeList from "../../components/AttributeList";
 import BillingCycleSelection from "../../components/BillingCycleSelection";
 
@@ -8,7 +8,7 @@ const BillingCycle = ({ application }) => {
 
   return (
     <>
-      <Modal modal={modal} padding="l">
+      <Modal modal={modal} padding="l" label="Update billing cycle">
         <BillingCycleSelection
           application={application}
           onSuccess={modal.hide}
@@ -18,7 +18,10 @@ const BillingCycle = ({ application }) => {
         label="Billing Cycle"
         value={application.billingCycle}
         actions={
-          <AttributeList.Action onClick={modal.show}>
+          <AttributeList.Action
+            onClick={modal.show}
+            aria-label="Change billing cycle"
+          >
             <Icon icon="settings" />
           </AttributeList.Action>
         }

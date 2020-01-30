@@ -113,6 +113,7 @@ export const application = (fields = {}) => {
       trialTask: null,
       referencesRequested: false,
       projectType: "Fixed",
+      billingCycle: null,
       referralUrl: "https//advisable.com",
       introduction: "Application Introduction",
       availability: "2 - 4 Weeks",

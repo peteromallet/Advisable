@@ -10,13 +10,15 @@ export const rateValidationSchema = Yup.object().shape({
 export const projectTypeValidationSchema = Yup.object().shape({
   projectType: Yup.string().required("Please select a project type"),
   accept: Yup.boolean().oneOf([true]),
-  monthlyLimit: Yup.number().when("projectType", {
-    is: "Flexible",
-    then: Yup.number()
-      .required("Please suggest a monthly limit")
-      .min(1, "Monthly limit cannot be 0")
-      .max(200, "Monthly limit cannot exceed 200 hours"),
-  }),
+  monthlyLimit: Yup.number()
+    .nullable()
+    .when("projectType", {
+      is: "Flexible",
+      then: Yup.number()
+        .required("Please suggest a monthly limit")
+        .min(1, "Monthly limit cannot be 0")
+        .max(200, "Monthly limit cannot exceed 200 hours"),
+    }),
 });
 
 export const hasCompleteTasksStep = application => {
