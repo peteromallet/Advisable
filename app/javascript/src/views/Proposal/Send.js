@@ -4,7 +4,7 @@ import { useMutation } from "react-apollo";
 import { useHistory } from "react-router-dom";
 import { Box, Text, Card, RoundedButton } from "@advisable/donut";
 import TextField from "../../components/TextField";
-import SEND_PROPOSAL from "./sendProposal.graphql";
+import SEND_PROPOSAL from "./sendProposal.js";
 
 const Send = ({ application }) => {
   const history = useHistory();

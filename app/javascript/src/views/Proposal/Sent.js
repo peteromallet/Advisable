@@ -2,7 +2,7 @@ import * as React from "react";
 import { Card, Text, Link, Box } from "@advisable/donut";
 import illustration from "./illustration.png";
 
-const Send = ({ application }) => {
+const ProposalSent = ({ application }) => {
   const proposalUrl = `/applications/${application.airtableId}/proposal`;
 
   return (
@@ -25,4 +25,4 @@ const Send = ({ application }) => {
   );
 };
 
-export default Send;
+export default ProposalSent;

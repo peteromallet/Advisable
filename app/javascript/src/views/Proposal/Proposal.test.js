@@ -4,6 +4,7 @@ import generateTypes from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
 import GET_APPLICATION from "./fetchApplication";
 import UPDATE_APPLICATION from "./updateApplication";
+import SEND_PROPOSAL from "./sendProposal";
 
 jest.mock("nanoid/generate");
 afterEach(cleanup);
@@ -332,4 +333,81 @@ test("Freelancer can set billing cycle", async () => {
   fireEvent.click(cont);
   const el = await app.findByText("Include a short message");
   expect(el).toBeInTheDocument();
+});
+
+test("Freelancer can send the proposal", async () => {
+  const user = generateTypes.user({ companyName: "Test Inc" });
+  const project = generateTypes.project({ user, primarySkill: "Testing" });
+  const specialist = generateTypes.specialist();
+  const application = generateTypes.application({
+    id: "rec123",
+    airtableId: "rec123",
+    status: "Application Accepted",
+    rate: "75",
+    projectType: "Flexible",
+    monthlyLimit: 155,
+    billingCycle: "Monthly",
+    tasks: [],
+    project,
+    specialist,
+  });
+
+  const app = renderApp({
+    route: "/applications/rec123/proposal/send",
+    graphQLMocks: [
+      {
+        request: {
+          query: VIEWER,
+        },
+        result: {
+          data: {
+            viewer: specialist,
+          },
+        },
+      },
+      {
+        request: {
+          query: GET_APPLICATION,
+          variables: {
+            id: "rec123",
+          },
+        },
+        result: {
+          data: {
+            application,
+          },
+        },
+      },
+      {
+        request: {
+          query: SEND_PROPOSAL,
+          variables: {
+            input: {
+              application: "rec123",
+              proposalComment: "This is a message",
+            },
+          },
+        },
+        result: {
+          data: {
+            sendProposal: {
+              __typename: "SendProposalPayload",
+              application: {
+                ...application,
+                proposalComment: "This is a message",
+              },
+              errors: null,
+            },
+          },
+        },
+      },
+    ],
+  });
+
+  const message = await app.findByLabelText("Include a short message");
+  fireEvent.change(message, { target: { value: "This is a message" } });
+  const cont = app.getByLabelText("Send Proposal");
+  fireEvent.click(cont);
+  const header = await app.findByText("Your proposal has been sent!");
+  expect(header).toBeInTheDocument();
 });
