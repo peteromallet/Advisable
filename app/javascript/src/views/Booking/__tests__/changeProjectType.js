@@ -79,7 +79,7 @@ test("User can change the project type", async () => {
     graphQLMocks,
   });
 
-  const btn = await app.findByLabelText("Edit project type");
+  const btn = await app.findByText("Switch to a project basis");
   fireEvent.click(btn);
   const fixed = app.getByLabelText("Projects - Predefined Projects", {
     exact: false,

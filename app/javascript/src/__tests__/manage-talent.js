@@ -150,7 +150,13 @@ test("Does not render a tutorial video if the user has completed it", async () =
 });
 
 test("The client can change the project type", async () => {
-  const { findByText, getByText, getByLabelText, getByTestId } = renderApp({
+  const {
+    findByText,
+    getByText,
+    getByLabelText,
+    getByTestId,
+    debug,
+  } = renderApp({
     route: "/manage/rec1234",
     graphQLMocks: [
       {
@@ -217,7 +223,7 @@ test("The client can change the project type", async () => {
   });
 
   await findByText("Active Projects"); // wait for page to load
-  const button = getByLabelText("Edit project type");
+  const button = getByText("Switch to Flexible");
   fireEvent.click(button);
   const flexible = getByTestId("flexible");
   fireEvent.click(flexible);

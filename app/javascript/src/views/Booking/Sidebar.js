@@ -126,7 +126,10 @@ const Sidebar = ({ data, history, tutorial, match }) => {
               label="Monthly Limit"
               value={`${application.monthlyLimit} hours`}
               actions={
-                <AttributeList.Action onClick={() => setProjectTypeModal(true)}>
+                <AttributeList.Action
+                  aria-label="Update monthly limit"
+                  onClick={() => setProjectTypeModal(true)}
+                >
                   <Icon icon="settings" />
                 </AttributeList.Action>
               }
@@ -137,7 +140,10 @@ const Sidebar = ({ data, history, tutorial, match }) => {
             label="Payment Method"
             value={data?.viewer.projectPaymentMethod}
             actions={
-              <AttributeList.Action onClick={handleEditPayment}>
+              <AttributeList.Action
+                aria-label="Update payment method"
+                onClick={handleEditPayment}
+              >
                 <Icon icon="settings" />
               </AttributeList.Action>
             }
@@ -167,7 +173,7 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                     color="neutral.7"
                     icon="help-circle"
                   />
-                  <span>
+                  <span data-testid="projectType">
                     {t(`projectTypes.${application.projectType}.label`)}
                   </span>
                 </Box>
