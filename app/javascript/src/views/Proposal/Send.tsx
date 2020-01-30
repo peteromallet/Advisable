@@ -38,15 +38,8 @@ const Send = ({ application, history, sendProposal }) => {
   return (
     <Card>
       <Padding size="l">
-        <Padding bottom="s">
-          <Heading level={3}>Send Proposal</Heading>
-        </Padding>
         <Padding bottom="l">
-          <Text size="s">
-            Some text that exlains what a freelancer should expect when a
-            proposal is submitted. How long is it going to take? What are the
-            next steps?
-          </Text>
+          <Heading level={3}>Send Proposal</Heading>
         </Padding>
         <Formik
           onSubmit={handleSubmit}
