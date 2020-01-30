@@ -1,39 +1,45 @@
 import React from "react";
+import Talk from "talkjs";
 import Div100vh from "react-div-100vh";
 import queryString from "query-string";
 import { useBreakpoint } from "@advisable/donut";
-import useTalkSession from "../../hooks/useTalkSession";
+import useViewer from "../../hooks/useViewer";
 import { Container, Main } from "./styles";
 import TopBar from "./TopBar";
 import Sidebar from "./Sidebar";
+import createTalkSession from "../../utilities/createTalkSession";
 
 const Messages = ({ location }) => {
   const isMobile = useBreakpoint("m");
   const container = React.useRef(null);
   const [applicationId, setAppliationId] = React.useState(null);
   const queryParams = queryString.parse(location.search);
-  const talkSession = useTalkSession();
+  const viewer = useViewer();
 
   React.useEffect(() => {
-    // talkSession.syncThemeForLocalDev("/talkjs.css");
-    var inbox = talkSession.createInbox({
-      showChatHeader: false,
-      showFeedHeader: false,
-    });
-    inbox.mount(container.current);
+    Talk.ready.then(() => {
+      const session = createTalkSession(viewer);
 
-    inbox.on("conversationSelected", e => {
-      if (e.conversation) {
-        setAppliationId(e.conversation.id);
-      } else {
-        setAppliationId(null);
+      const inbox = session.createInbox({
+        showChatHeader: false,
+        showFeedHeader: false,
+      });
+
+      inbox.mount(container.current);
+
+      inbox.on("conversationSelected", e => {
+        if (e.conversation) {
+          setAppliationId(e.conversation.id);
+        } else {
+          setAppliationId(null);
+        }
+      });
+
+      if (queryParams.conversation) {
+        inbox.select(queryParams.conversation);
       }
     });
-
-    if (queryParams.conversation) {
-      inbox.select(queryParams.conversation);
-    }
-  }, container);
+  }, []);
 
   return (
     <>

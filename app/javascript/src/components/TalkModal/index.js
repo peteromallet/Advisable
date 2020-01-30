@@ -16,31 +16,37 @@ import Modal from "../Modal";
 import Talk from "talkjs";
 import Div100vh from "react-div-100vh";
 import { useBreakpoint } from "@advisable/donut";
-import useTalkSession from "../../hooks/useTalkSession";
+import useViewer from "../../hooks/useViewer";
+import createTalkSession from "../../utilities/createTalkSession";
 
 const TalkModal = ({ isOpen, onClose, conversationId, participants }) => {
+  const viewer = useViewer();
   const isMobile = useBreakpoint("s");
-  const talkSession = useTalkSession();
-  const conversation = talkSession.getOrCreateConversation(conversationId);
-  conversation.setParticipant(talkSession.me);
+  const messengerRef = React.useRef(null);
 
-  participants.forEach(participant => {
-    const user = new Talk.User({
-      id: participant.id,
-      name: participant.name,
-      email: participant.email,
-      role: participant.__typename === "User" ? "Client" : "Specialist",
+  React.useEffect(() => {
+    if (isOpen === false) return;
+
+    Talk.ready.then(() => {
+      const session = createTalkSession(viewer);
+      const conversation = session.getOrCreateConversation(conversationId);
+      conversation.setParticipant(session.me);
+
+      participants.forEach(participant => {
+        const user = new Talk.User({
+          id: participant.id,
+          name: participant.name,
+          email: participant.email,
+          role: participant.__typename === "User" ? "Client" : "Specialist",
+        });
+
+        conversation.setParticipant(user);
+      });
+
+      const chatbox = session.createChatbox(conversation);
+      chatbox.mount(messengerRef.current);
     });
-
-    conversation.setParticipant(user);
-  });
-
-  const messengerRef = React.useCallback(node => {
-    if (node !== null) {
-      const chatbox = talkSession.createChatbox(conversation);
-      chatbox.mount(node);
-    }
-  }, []);
+  }, [isOpen]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} expandOnMobile>
