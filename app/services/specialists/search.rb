@@ -1,7 +1,19 @@
 class Specialists::Search < ApplicationService
-  attr_accessor :skill, :industry, :company_type, :user, :industry_required, :company_type_required
+  attr_accessor :skill,
+                :industry,
+                :company_type,
+                :user,
+                :industry_required,
+                :company_type_required
 
-  def initialize(skill:, industry:, company_type:, user:, industry_required:, company_type_required:)
+  def initialize(
+    skill:,
+    industry:,
+    company_type:,
+    user:,
+    industry_required:,
+    company_type_required:
+  )
     @skill = skill
     @industry = industry
     @company_type = company_type
@@ -20,8 +32,10 @@ class Specialists::Search < ApplicationService
 
   # Update the users industry and company type based on their search
   def update_user_info
-    return unless user.present?
-    user.update(industry: Industry.find_by_name(industry), company_type: company_type)
+    return unless user.present? && user.is_a?(User)
+    user.update(
+      industry: Industry.find_by_name(industry), company_type: company_type
+    )
     user.sync_to_airtable
   end
 
@@ -53,8 +67,8 @@ class Specialists::Search < ApplicationService
       Specialist.joins(off_platform_projects: :skills).where(
         'average_score >= ?',
         65.0
-    )
-      .where(off_platform_projects: { skills: { name: skill } })
+      )
+        .where(off_platform_projects: { skills: { name: skill } })
         .where
         .not(hourly_rate: nil)
     query = filter_industry(query)
@@ -66,7 +80,7 @@ class Specialists::Search < ApplicationService
     return query unless industry_required
     joined = query.left_outer_joins(:off_platform_projects, :projects)
     joined.where(off_platform_projects: { industry: industry }).or(
-                   joined.where(projects: { industry: industry })
+      joined.where(projects: { industry: industry })
     )
   end
 
