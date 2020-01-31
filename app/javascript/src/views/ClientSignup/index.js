@@ -1,12 +1,19 @@
 import React from "react";
 import { get, find } from "lodash";
 import { Box } from "@advisable/donut";
-import { Switch, Route, matchPath, useLocation } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  Redirect,
+  matchPath,
+  useLocation,
+} from "react-router-dom";
 import Criteria from "./Criteria";
 import PriceRange from "./PriceRange";
 import SaveSearch from "./SaveSearch";
 import Specialists from "./Specialists";
 import Testimonials from "./Testimonials";
+import useViewer from "../../hooks/useViewer";
 
 const STEPS = [
   {
@@ -33,7 +40,13 @@ const STEPS = [
 
 // Renders the various stages of the client signup flow.
 const ClientSignup = () => {
+  const viewer = useViewer();
   const location = useLocation();
+
+  if (viewer?.__typename === "Specialist") {
+    return <Redirect to="/" />;
+  }
+
   const current = find(STEPS, step => {
     return matchPath(location.pathname, { path: step.path });
   });
