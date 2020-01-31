@@ -155,10 +155,8 @@ const Login = ({ location }) => {
         Don't have an account?
       </Text>
       <SignupLinks>
-        <SignupLink href="https://advisable.com/apply-to-be-a-client/">
-          Apply to be a client
-        </SignupLink>
-        <SignupLink href="/freelancers/signup">
+        <SignupLink to="/clients/signup">Apply to be a client</SignupLink>
+        <SignupLink to="/freelancers/signup">
           Apply to be a specialist
         </SignupLink>
       </SignupLinks>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import colors from '../../colors';
+import { Link } from "react-router-dom";
+import colors from "../../colors";
 
 export const Container = styled.div`
   width: 96%;
@@ -35,9 +36,9 @@ export const Error = styled.div`
 
 export const SignupLinks = styled.div`
   margin-bottom: 50px;
-`
+`;
 
-export const SignupLink = styled.a`
+export const SignupLink = styled(Link)`
   flex-grow: 1;
   display: block;
   font-size: 14px;
@@ -54,4 +55,4 @@ export const SignupLink = styled.a`
     color: ${colors.neutral.s8};
     border-color: ${colors.neutral.s3};
   }
-`
+`;
