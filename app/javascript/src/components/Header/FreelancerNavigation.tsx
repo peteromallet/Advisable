@@ -1,54 +1,46 @@
 import * as React from "react";
-import { Query } from "react-apollo";
 import Icon from "../Icon";
 import { useMobile } from "../../components/Breakpoint";
-import VIEWER from "../../graphql/queries/viewer";
+import useViewer from "../../hooks/useViewer";
 import useMessageCount from "../../hooks/useMessageCount";
 import { CloseNav, NavContainer, Nav, NavItem, Badge } from "./styles";
 
 const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
+  const viewer = useViewer();
   const isMobile = useMobile();
   const messageCount = useMessageCount();
 
+  const isSpecialist = viewer && viewer.__typename === "Specialist";
+
+  if (!isSpecialist) return null;
+
   return (
-    <Query query={VIEWER}>
-      {query => {
-        if (query.loading) return null;
-        const { viewer } = query.data;
-        const isSpecialist = viewer && viewer.__typename === "Specialist";
+    <NavContainer isOpen={navOpen}>
+      <Nav>
+        <CloseNav onClick={onCloseNav}>
+          <Icon icon="x" />
+        </CloseNav>
+        <NavItem onClick={onCloseNav} to="/applications">
+          Applications
+        </NavItem>
+        <NavItem onClick={onCloseNav} to="/clients">
+          Active Projects
+        </NavItem>
+        <NavItem onClick={onCloseNav} to="/profile">
+          Profile
+        </NavItem>
+        <NavItem onClick={onCloseNav} to="/messages">
+          {messageCount > 0 && <Badge>{messageCount}</Badge>}
+          Messages
+        </NavItem>
 
-        if (!isSpecialist) return null;
-
-        return (
-          <NavContainer isOpen={navOpen}>
-            <Nav>
-              <CloseNav onClick={onCloseNav}>
-                <Icon icon="x" />
-              </CloseNav>
-              <NavItem onClick={onCloseNav} to="/applications">
-                Applications
-              </NavItem>
-              <NavItem onClick={onCloseNav} to="/clients">
-                Active Projects
-              </NavItem>
-              <NavItem onClick={onCloseNav} to="/profile">
-                Profile
-              </NavItem>
-              <NavItem onClick={onCloseNav} to="/messages">
-                {messageCount > 0 && <Badge>{messageCount}</Badge>}
-                Messages
-              </NavItem>
-
-              {isMobile && (
-                <NavItem as="a" href="#" onClick={onLogout}>
-                  Logout
-                </NavItem>
-              )}
-            </Nav>
-          </NavContainer>
-        );
-      }}
-    </Query>
+        {isMobile && (
+          <NavItem as="a" href="#" onClick={onLogout}>
+            Logout
+          </NavItem>
+        )}
+      </Nav>
+    </NavContainer>
   );
 };
 

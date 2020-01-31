@@ -1,5 +1,6 @@
 import { fireEvent, cleanup, within } from "@testing-library/react";
 import renderApp from "../../testHelpers/renderApp";
+import { mockQuery, mockMutation } from "../../testHelpers/apolloMocks";
 import generateTypes from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
 import GET_APPLICATION from "./fetchApplication";
@@ -27,52 +28,22 @@ test("Rate step continues to the project type step", async () => {
   const app = renderApp({
     route: "/applications/rec123/proposal",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
-        },
-        result: {
-          data: {
-            viewer: specialist,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_APPLICATION,
-          variables: {
-            id: "rec123",
-          },
-        },
-        result: {
-          data: {
-            application,
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_APPLICATION,
-          variables: {
-            input: {
-              id: "rec123",
-              rate: 75,
+      mockQuery(VIEWER, {}, { viewer: specialist }),
+      mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
+      mockMutation(
+        UPDATE_APPLICATION,
+        { id: "rec123", rate: 75 },
+        {
+          updateApplication: {
+            __typename: "UpdateApplicationPayload",
+            application: {
+              ...application,
+              rate: "75",
             },
+            errors: null,
           },
-        },
-        result: {
-          data: {
-            updateApplication: {
-              __typename: "UpdateApplicationPayload",
-              application: {
-                ...application,
-                rate: "75",
-              },
-              errors: null,
-            },
-          },
-        },
-      },
+        }
+      ),
     ],
   });
 
@@ -106,54 +77,23 @@ test("Project type step continues to the tasks step for Fixed working type", asy
   const app = renderApp({
     route: "/applications/rec123/proposal/type",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
-        },
-        result: {
-          data: {
-            viewer: specialist,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_APPLICATION,
-          variables: {
-            id: "rec123",
-          },
-        },
-        result: {
-          data: {
-            application,
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_APPLICATION,
-          variables: {
-            input: {
-              id: "rec123",
+      mockQuery(VIEWER, {}, { viewer: specialist }),
+      mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
+      mockMutation(
+        UPDATE_APPLICATION,
+        { id: "rec123", projectType: "Fixed", monthlyLimit: null },
+        {
+          updateApplication: {
+            __typename: "UpdateApplicationPayload",
+            application: {
+              ...application,
               projectType: "Fixed",
               monthlyLimit: null,
             },
+            errors: null,
           },
-        },
-        result: {
-          data: {
-            updateApplication: {
-              __typename: "UpdateApplicationPayload",
-              application: {
-                ...application,
-                projectType: "Fixed",
-                monthlyLimit: null,
-              },
-              errors: null,
-            },
-          },
-        },
-      },
+        }
+      ),
     ],
   });
 
@@ -187,54 +127,23 @@ test("Project type step continues to the billing cycle for Flexible working type
   const app = renderApp({
     route: "/applications/rec123/proposal/type",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
-        },
-        result: {
-          data: {
-            viewer: specialist,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_APPLICATION,
-          variables: {
-            id: "rec123",
-          },
-        },
-        result: {
-          data: {
-            application,
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_APPLICATION,
-          variables: {
-            input: {
-              id: "rec123",
+      mockQuery(VIEWER, {}, { viewer: specialist }),
+      mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
+      mockMutation(
+        UPDATE_APPLICATION,
+        { id: "rec123", projectType: "Flexible", monthlyLimit: 155 },
+        {
+          updateApplication: {
+            __typename: "UpdateApplicationPayload",
+            application: {
+              ...application,
               projectType: "Flexible",
               monthlyLimit: 155,
             },
+            errors: null,
           },
-        },
-        result: {
-          data: {
-            updateApplication: {
-              __typename: "UpdateApplicationPayload",
-              application: {
-                ...application,
-                projectType: "Flexible",
-                monthlyLimit: 155,
-              },
-              errors: null,
-            },
-          },
-        },
-      },
+        }
+      ),
     ],
   });
 
@@ -275,52 +184,25 @@ test("Freelancer can set billing cycle", async () => {
   const app = renderApp({
     route: "/applications/rec123/proposal/billing_cycle",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
+      mockQuery(VIEWER, {}, { viewer: specialist }),
+      mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
+      mockMutation(
+        UPDATE_APPLICATION,
+        {
+          id: "rec123",
+          billingCycle: "Monthly",
         },
-        result: {
-          data: {
-            viewer: specialist,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_APPLICATION,
-          variables: {
-            id: "rec123",
-          },
-        },
-        result: {
-          data: {
-            application,
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_APPLICATION,
-          variables: {
-            input: {
-              id: "rec123",
-              billingCycle: "Monthly",
+        {
+          updateApplication: {
+            __typename: "UpdateApplicationPayload",
+            application: {
+              ...application,
+              billing_cycle: "Monthly",
             },
+            errors: null,
           },
-        },
-        result: {
-          data: {
-            updateApplication: {
-              __typename: "UpdateApplicationPayload",
-              application: {
-                ...application,
-                billing_cycle: "Monthly",
-              },
-              errors: null,
-            },
-          },
-        },
-      },
+        }
+      ),
     ],
   });
 
@@ -357,52 +239,25 @@ test("Freelancer can send the proposal", async () => {
   const app = renderApp({
     route: "/applications/rec123/proposal/send",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
+      mockQuery(VIEWER, {}, { viewer: specialist }),
+      mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
+      mockMutation(
+        SEND_PROPOSAL,
+        {
+          application: "rec123",
+          proposalComment: "This is a message",
         },
-        result: {
-          data: {
-            viewer: specialist,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_APPLICATION,
-          variables: {
-            id: "rec123",
-          },
-        },
-        result: {
-          data: {
-            application,
-          },
-        },
-      },
-      {
-        request: {
-          query: SEND_PROPOSAL,
-          variables: {
-            input: {
-              application: "rec123",
+        {
+          sendProposal: {
+            __typename: "SendProposalPayload",
+            application: {
+              ...application,
               proposalComment: "This is a message",
             },
+            errors: null,
           },
-        },
-        result: {
-          data: {
-            sendProposal: {
-              __typename: "SendProposalPayload",
-              application: {
-                ...application,
-                proposalComment: "This is a message",
-              },
-              errors: null,
-            },
-          },
-        },
-      },
+        }
+      ),
     ],
   });
 
@@ -433,72 +288,32 @@ test("Freelancer can mark a task as a trial task", async () => {
   });
 
   const API_MOCKS = [
-    {
-      request: {
-        query: VIEWER,
-      },
-      result: {
-        data: {
-          viewer: specialist,
-        },
-      },
-    },
-    {
-      request: {
-        query: GET_APPLICATION,
-        variables: {
-          id: "rec1234",
-        },
-      },
-      result: {
-        data: {
-          application,
-        },
-      },
-    },
-    {
-      request: {
-        query: GET_TASK,
-        variables: {
-          id: "task_1234",
-        },
-      },
-      result: {
-        data: {
+    mockQuery(VIEWER, {}, { viewer: specialist }),
+    mockQuery(GET_APPLICATION, { id: "rec1234" }, { application }),
+    mockQuery(
+      GET_TASK,
+      { id: "task_1234" },
+      {
+        task: { ...task, application },
+      }
+    ),
+    mockMutation(
+      UPDATE_TASK,
+      { id: "task_1234", trial: true },
+      {
+        updateTask: {
+          __typename: "UpdateTaskPayload",
           task: {
             ...task,
-            application,
-          },
-        },
-      },
-    },
-    {
-      request: {
-        query: UPDATE_TASK,
-        variables: {
-          input: {
-            id: "task_1234",
             trial: true,
-          },
-        },
-      },
-      result: {
-        data: {
-          __typename: "Mutation",
-          updateTask: {
-            __typename: "UpdateTaskPayload",
-            task: {
-              ...task,
-              trial: true,
-              application: {
-                ...application,
-                trialTask: task,
-              },
+            application: {
+              ...application,
+              trialTask: task,
             },
           },
         },
-      },
-    },
+      }
+    ),
   ];
 
   const { findByText, findByLabelText } = renderApp({
@@ -533,72 +348,32 @@ test("Freelancer can toggle the task trial via the task menu", async () => {
   });
 
   const API_MOCKS = [
-    {
-      request: {
-        query: VIEWER,
-      },
-      result: {
-        data: {
-          viewer: specialist,
-        },
-      },
-    },
-    {
-      request: {
-        query: GET_APPLICATION,
-        variables: {
-          id: "rec1234",
-        },
-      },
-      result: {
-        data: {
-          application,
-        },
-      },
-    },
-    {
-      request: {
-        query: GET_TASK,
-        variables: {
-          id: "task_1234",
-        },
-      },
-      result: {
-        data: {
+    mockQuery(VIEWER, {}, { viewer: specialist }),
+    mockQuery(GET_APPLICATION, { id: "rec1234" }, { application }),
+    mockQuery(
+      GET_TASK,
+      { id: "task_1234" },
+      {
+        task: { ...task, application },
+      }
+    ),
+    mockMutation(
+      UPDATE_TASK,
+      { id: "task_1234", trial: true },
+      {
+        updateTask: {
+          __typename: "UpdateTaskPayload",
           task: {
             ...task,
-            application,
-          },
-        },
-      },
-    },
-    {
-      request: {
-        query: UPDATE_TASK,
-        variables: {
-          input: {
-            id: "task_1234",
             trial: true,
-          },
-        },
-      },
-      result: {
-        data: {
-          __typename: "Mutation",
-          updateTask: {
-            __typename: "UpdateTaskPayload",
-            task: {
-              ...task,
-              trial: true,
-              application: {
-                ...application,
-                trialTask: task,
-              },
+            application: {
+              ...application,
+              trialTask: task,
             },
           },
         },
-      },
-    },
+      }
+    ),
   ];
 
   const { findByText, findByLabelText } = renderApp({

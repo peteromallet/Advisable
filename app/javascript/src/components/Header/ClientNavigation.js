@@ -2,12 +2,13 @@ import * as React from "react";
 import Icon from "../Icon";
 import { useMobile } from "../../components/Breakpoint";
 import useMessageCount from "../../hooks/useMessageCount";
+import useViewer from "../../hooks/useViewer";
 import { CloseNav, NavContainer, Nav, NavItem, Badge } from "./styles";
 
-const FreelancerNavigation = ({ data, navOpen, onCloseNav, onLogout }) => {
+const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
+  const viewer = useViewer();
   const isMobile = useMobile();
   const messageCount = useMessageCount();
-  const { viewer } = data;
   const isUser = viewer && viewer.__typename === "User";
 
   if (!isUser) return null;
@@ -39,4 +40,4 @@ const FreelancerNavigation = ({ data, navOpen, onCloseNav, onLogout }) => {
   );
 };
 
-export default FreelancerNavigation;
+export default ClientNavigation;

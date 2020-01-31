@@ -9,31 +9,31 @@ import {
 } from "./styles";
 import useViewer from "../../hooks/useViewer";
 
-const CurrentUser = ({ user, onLogout }) => {
+const CurrentUser = ({ onLogout }) => {
   const viewer = useViewer();
   const [open, setOpen] = useState(false);
   const handleBlur = () => setOpen(false);
   const handleFocus = () => setOpen(true);
-  let isClient = get(viewer, "__typename") === "User";
+  let isClient = get?.__typename === "User";
 
   React.useEffect(() => {
     if (!window.Rollbar) return;
-    if (user) {
+    if (viewer) {
       Rollbar.configure({
         payload: {
           environment: process.env.ROLLBAR_ENV,
           person: {
-            id: user.airtableId,
-            email: user.email,
+            id: viewer.airtableId,
+            email: viewer.email,
           },
         },
       });
 
       Sentry.configureScope(scope => {
         scope.setUser({
-          id: user.id,
-          email: user.email,
-          username: user.name,
+          id: viewer.id,
+          email: viewer.email,
+          username: viewer.name,
         });
       });
     } else {
@@ -49,13 +49,13 @@ const CurrentUser = ({ user, onLogout }) => {
     }
   });
 
-  if (!user) return null;
+  if (!viewer) return null;
 
   return (
     <CurrentUserWrapper tabIndex="0" onFocus={handleFocus} onBlur={handleBlur}>
       <CurrentUserToggle>
-        <strong>{user.firstName}</strong>
-        {user.companyName && <span>{user.companyName}</span>}
+        <strong>{viewer.firstName}</strong>
+        {viewer.companyName && <span>{viewer.companyName}</span>}
       </CurrentUserToggle>
       <CurrentUserDropdown open={open}>
         {isClient && <Link to="/settings">Settings</Link>}
