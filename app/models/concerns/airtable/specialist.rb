@@ -21,13 +21,11 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'PID', to: :pid
   sync_column 'Campaign Name', to: :campaign_name
   sync_column 'Campaign Source', to: :campaign_source
-  sync_column 'Referrer', to: :referrer
 
   sync_data do |specialist|
-    if # sync the bank holder address
-       self[
-         'Bank Holder Address'
-       ]
+    if self['Bank Holder Address']
+      # sync the bank holder address
+
       specialist.bank_holder_address =
         Address.parse(self['Bank Holder Address']).to_h
     end
@@ -71,6 +69,7 @@ class Airtable::Specialist < Airtable::Base
 
     specialist.remote = true if fields['Remote OK'].try(:include?, 'Yes')
     specialist.remote = false if fields['Remote OK'].try(:include?, 'No')
+    specialist.referrer = self['Referrer'].try(:first)
   end
 
   # After the syncing process has been complete
@@ -184,6 +183,7 @@ class Airtable::Specialist < Airtable::Base
     # get the postgres skill that represents this skill
 
     # pass on to the handle_duplicate_skill method if the skill exists
+
     if e.message.include?('ROW_DOES_NOT_EXIST')
       id = e.message[/(rec\w*)/, 1]
 
