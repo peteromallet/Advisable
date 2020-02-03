@@ -17,7 +17,8 @@ const ActiveTasks = ({ onSelectTask, onNewTask, application }) => {
       tasks={tasks}
       onClickTask={onSelectTask}
       lastRow={
-        application.status === "Working" && (
+        application.status === "Working" &&
+        application.projectType === "Fixed" && (
           <NewTask onCreate={onNewTask} application={application} />
         )
       }

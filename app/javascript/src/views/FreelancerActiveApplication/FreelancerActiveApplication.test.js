@@ -13,6 +13,11 @@ import {
   updateTaskEstimate as UPDATE_TASK_ESTIMATE,
   updateTaskDescription as UPDATE_TASK_DESCRIPTION,
 } from "../../graphql/mutations/tasks";
+import {
+  mockViewer,
+  mockQuery,
+  mockMutation,
+} from "../../testHelpers/apolloMocks";
 
 jest.mock("nanoid/generate");
 afterEach(cleanup);
@@ -40,130 +45,81 @@ test("Freelancer can create a task", async () => {
   } = renderApp({
     route: "/clients/rec1234",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
+      mockViewer(specialist),
+      mockQuery(FETCH_APPLICATION, { id: "rec1234" }, { application }),
+      mockMutation(
+        CREATE_TASK,
+        {
+          application: "rec1234",
+          id: "tas_abc",
         },
-        result: {
-          data: {
-            viewer: specialist,
-          },
-        },
-      },
-      {
-        request: {
-          query: FETCH_APPLICATION,
-          variables: {
-            id: "rec1234",
-          },
-        },
-        result: {
-          data: {
-            application,
-          },
-        },
-      },
-      {
-        request: {
-          query: CREATE_TASK,
-          variables: {
-            input: {
-              application: "rec1234",
+        {
+          createTask: {
+            __typename: "CreateTaskPayload",
+            task: generateTypes.task({
               id: "tas_abc",
-            },
+              application,
+            }),
+            errors: null,
           },
+        }
+      ),
+      mockMutation(
+        UPDATE_TASK_NAME,
+        {
+          id: "tas_abc",
+          name: "Task name here",
         },
-        result: {
-          data: {
-            __typename: "Mutation",
-            createTask: {
-              __typename: "CreateTaskPayload",
-              task: generateTypes.task({
-                id: "tas_abc",
-                application,
-              }),
-              errors: null,
-            },
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_TASK_NAME,
-          variables: {
-            input: {
+        {
+          updateTask: {
+            __typename: "UpdateTaskPayload",
+            task: generateTypes.task({
               id: "tas_abc",
               name: "Task name here",
-            },
+            }),
+            errors: null,
           },
+        }
+      ),
+      mockMutation(
+        UPDATE_TASK_ESTIMATE,
+        {
+          id: "tas_abc",
+          estimate: 10,
+          flexibleEstimate: 20,
         },
-        result: {
-          data: {
-            __typename: "Mutation",
-            updateTask: {
-              __typename: "UpdateTaskPayload",
-              task: generateTypes.task({
-                id: "tas_abc",
-                name: "Task name here",
-              }),
-              errors: null,
-            },
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_TASK_ESTIMATE,
-          variables: {
-            input: {
+        {
+          updateTask: {
+            __typename: "UpdateTaskPayload",
+            task: generateTypes.task({
               id: "tas_abc",
               estimate: 10,
               flexibleEstimate: 20,
-            },
+            }),
+            errors: null,
           },
+        }
+      ),
+      mockMutation(
+        UPDATE_TASK_DESCRIPTION,
+        {
+          id: "tas_abc",
+          description: "Description here",
         },
-        result: {
-          data: {
-            __typename: "Mutation",
-            updateTask: {
-              __typename: "UpdateTaskPayload",
-              task: generateTypes.task({
-                id: "tas_abc",
-                estimate: 10,
-                flexibleEstimate: 20,
-              }),
-              errors: null,
-            },
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_TASK_DESCRIPTION,
-          variables: {
-            input: {
+        {
+          updateTask: {
+            __typename: "UpdateTaskPayload",
+            task: generateTypes.task({
               id: "tas_abc",
+              name: "Task name here",
               description: "Description here",
-            },
+              estimate: 10,
+              flexibleEstimate: 20,
+            }),
+            errors: null,
           },
-        },
-        result: {
-          data: {
-            __typename: "Mutation",
-            updateTask: {
-              __typename: "UpdateTaskPayload",
-              task: generateTypes.task({
-                id: "tas_abc",
-                name: "Task name here",
-                description: "Description here",
-                estimate: 10,
-                flexibleEstimate: 20,
-              }),
-              errors: null,
-            },
-          },
-        },
-      },
+        }
+      ),
     ],
   });
 
@@ -201,6 +157,7 @@ test("Freelancer can mark a task as complete", async () => {
     estimate: 10,
     flexibleEstimate: 20,
     estimateType: "Hourly",
+    name: "This is a test task",
   });
 
   const application = generateTypes.application({
@@ -214,75 +171,38 @@ test("Freelancer can mark a task as complete", async () => {
   task.application = application;
 
   const { findByText, findByLabelText, getByLabelText } = renderApp({
-    route: "/clients/rec1234/tasks/tas_1234",
+    route: "/clients/rec1234",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
+      mockViewer(specialist),
+      mockQuery(FETCH_APPLICATION, { id: "rec1234" }, { application }),
+      mockQuery(
+        GET_TASK,
+        { id: "tas_1234" },
+        { task: { ...task, application } }
+      ),
+      mockMutation(
+        SUBMIT_TASK,
+        {
+          task: "tas_1234",
+          finalCost: 90000,
         },
-        result: {
-          data: {
-            viewer: specialist,
-          },
-        },
-      },
-      {
-        request: {
-          query: FETCH_APPLICATION,
-          variables: {
-            id: "rec1234",
-          },
-        },
-        result: {
-          data: {
-            application,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_TASK,
-          variables: {
-            id: "tas_1234",
-          },
-        },
-        result: {
-          data: {
+        {
+          submitTask: {
+            __typename: "SubmitTaskPayload",
+            errors: null,
             task: {
               ...task,
-              application,
-            },
-          },
-        },
-      },
-      {
-        request: {
-          query: SUBMIT_TASK,
-          variables: {
-            input: {
-              task: "tas_1234",
+              stage: "Submitted",
               finalCost: 90000,
             },
           },
-        },
-        result: {
-          data: {
-            __typename: "Mutation",
-            submitTask: {
-              __typename: "SubmitTaskPayload",
-              errors: null,
-              task: {
-                ...task,
-                stage: "Submitted",
-                finalCost: 90000,
-              },
-            },
-          },
-        },
-      },
+        }
+      ),
     ],
   });
 
+  const taskName = await findByText(task.name);
+  fireEvent.click(taskName);
   const markAsComplete = await findByLabelText("Mark as complete");
   fireEvent.click(markAsComplete);
   const continueButton = getByLabelText("Continue");
@@ -314,52 +234,24 @@ test("Freelancer can change their billing type from weekly to monthly", async ()
   });
 
   const graphQLMocks = [
-    {
-      request: {
-        query: VIEWER,
+    mockViewer(specialist),
+    mockQuery(FETCH_APPLICATION, { id: "rec1234" }, { application }),
+    mockMutation(
+      UPDATE_BILLING_CYCLE,
+      {
+        id: "rec123",
+        billingCycle: "Monthly",
       },
-      result: {
-        data: {
-          viewer: specialist,
-        },
-      },
-    },
-    {
-      request: {
-        query: FETCH_APPLICATION,
-        variables: {
-          id: "rec1234",
-        },
-      },
-      result: {
-        data: {
-          application,
-        },
-      },
-    },
-    {
-      request: {
-        query: UPDATE_BILLING_CYCLE,
-        variables: {
-          input: {
-            id: "rec123",
+      {
+        updateApplication: {
+          __typename: "UpdateApplicationPayload",
+          application: {
+            ...application,
             billingCycle: "Monthly",
           },
         },
-      },
-      result: {
-        data: {
-          __typename: "Mutation",
-          updateApplication: {
-            __typename: "UpdateApplicationPayload",
-            application: {
-              ...application,
-              billingCycle: "Monthly",
-            },
-          },
-        },
-      },
-    },
+      }
+    ),
   ];
 
   const app = renderApp({

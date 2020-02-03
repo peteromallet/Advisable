@@ -53,7 +53,7 @@ const StopWorkingModal = ({ isOpen, onClose, application, stopWorking }) => {
         >
           Are you sure you want to stop working with {name}?
         </Text>
-        <Text size="xs" color="neutral.5" lineHeight="s" mb="l">
+        <Text size="xs" color="neutral.8" lineHeight="s" mb="l">
           You wont be able to add or edit any tasks. Don't worry though, If you
           want to start working with {name} again you will be able to restart
           this project when you need.

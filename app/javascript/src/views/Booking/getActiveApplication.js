@@ -13,6 +13,7 @@ export default gql`
     }
     application(id: $id) {
       ...applicationFields
+      billingCycle
       tasks {
         ...taskFields
       }

@@ -51,13 +51,13 @@ export const StyledRadioLabel = styled.div`
   font-size: 15px;
   font-weight: 500;
   line-height: 18px;
-  color: ${theme.colors.neutral[7]};
+  color: ${theme.colors.neutral[9]};
 `;
 
 export const StyledRadioDescription = styled.div`
   font-size: 15px;
   line-height: 18px;
-  color: ${theme.colors.neutral[6]};
+  color: ${theme.colors.neutral[7]};
 `;
 
 const disabledStyles = css`

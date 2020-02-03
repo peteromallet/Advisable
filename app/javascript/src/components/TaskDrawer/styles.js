@@ -173,7 +173,7 @@ export const DetailLabel = styled.h5`
   line-height: 1;
   font-size: 12px;
   font-weight: 400;
-  color: ${theme.colors.neutral[4]};
+  color: ${theme.colors.neutral[8]};
 `;
 
 export const DetailValue = styled.span`
@@ -188,7 +188,7 @@ export const DetailValue = styled.span`
 
 export const DetailPlaceholder = styled(DetailValue)`
   font-weight: 400;
-  color: ${theme.colors.neutral[3]};
+  color: ${theme.colors.neutral[6]};
 `;
 
 export const Label = styled.label`
