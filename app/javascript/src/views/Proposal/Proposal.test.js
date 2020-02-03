@@ -1,16 +1,16 @@
-import { fireEvent, cleanup, within } from "@testing-library/react";
+import { fireEvent, within } from "@testing-library/react";
 import renderApp from "../../testHelpers/renderApp";
-import { mockQuery, mockMutation } from "../../testHelpers/apolloMocks";
+import {
+  mockViewer,
+  mockQuery,
+  mockMutation,
+} from "../../testHelpers/apolloMocks";
 import generateTypes from "../../__mocks__/graphqlFields";
-import VIEWER from "../../graphql/queries/viewer";
 import GET_APPLICATION from "./fetchApplication";
 import UPDATE_APPLICATION from "./updateApplication";
 import SEND_PROPOSAL from "./sendProposal";
 import GET_TASK from "../../graphql/queries/taskDetails";
 import { UPDATE_TASK } from "../../components/TaskDrawer/MarkAsTrial";
-
-jest.mock("nanoid/generate");
-afterEach(cleanup);
 
 test("Rate step continues to the project type step", async () => {
   const user = generateTypes.user({ companyName: "Test Inc" });
@@ -20,7 +20,6 @@ test("Rate step continues to the project type step", async () => {
     id: "rec123",
     airtableId: "rec123",
     status: "Application Accepted",
-    tasks: [],
     project,
     specialist,
   });
@@ -28,7 +27,7 @@ test("Rate step continues to the project type step", async () => {
   const app = renderApp({
     route: "/applications/rec123/proposal",
     graphQLMocks: [
-      mockQuery(VIEWER, {}, { viewer: specialist }),
+      mockViewer(specialist),
       mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
       mockMutation(
         UPDATE_APPLICATION,
@@ -52,7 +51,7 @@ test("Rate step continues to the project type step", async () => {
   fireEvent.change(rate, { target: { value: "75" } });
   let button = app.getByLabelText("Continue");
   fireEvent.click(button);
-  const description = await app.findByText("How would you like to work", {
+  const description = await app.findByText("How would you like", {
     exact: false,
   });
   expect(description).toBeInTheDocument();
@@ -66,10 +65,8 @@ test("Project type step continues to the tasks step for Fixed working type", asy
     id: "rec123",
     airtableId: "rec123",
     status: "Application Accepted",
-    rate: "75",
     projectType: null,
     monthlyLimit: null,
-    tasks: [],
     project,
     specialist,
   });
@@ -77,7 +74,7 @@ test("Project type step continues to the tasks step for Fixed working type", asy
   const app = renderApp({
     route: "/applications/rec123/proposal/type",
     graphQLMocks: [
-      mockQuery(VIEWER, {}, { viewer: specialist }),
+      mockViewer(specialist),
       mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
       mockMutation(
         UPDATE_APPLICATION,
@@ -116,10 +113,8 @@ test("Project type step continues to the billing cycle for Flexible working type
     id: "rec123",
     airtableId: "rec123",
     status: "Application Accepted",
-    rate: "75",
     projectType: null,
     monthlyLimit: null,
-    tasks: [],
     project,
     specialist,
   });
@@ -127,7 +122,7 @@ test("Project type step continues to the billing cycle for Flexible working type
   const app = renderApp({
     route: "/applications/rec123/proposal/type",
     graphQLMocks: [
-      mockQuery(VIEWER, {}, { viewer: specialist }),
+      mockViewer(specialist),
       mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
       mockMutation(
         UPDATE_APPLICATION,
@@ -172,11 +167,9 @@ test("Freelancer can set billing cycle", async () => {
     id: "rec123",
     airtableId: "rec123",
     status: "Application Accepted",
-    rate: "75",
     projectType: "Flexible",
     monthlyLimit: 155,
     billingCycle: null,
-    tasks: [],
     project,
     specialist,
   });
@@ -184,7 +177,7 @@ test("Freelancer can set billing cycle", async () => {
   const app = renderApp({
     route: "/applications/rec123/proposal/billing_cycle",
     graphQLMocks: [
-      mockQuery(VIEWER, {}, { viewer: specialist }),
+      mockViewer(specialist),
       mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
       mockMutation(
         UPDATE_APPLICATION,
@@ -231,7 +224,6 @@ test("Freelancer can send the proposal", async () => {
     projectType: "Flexible",
     monthlyLimit: 155,
     billingCycle: "Monthly",
-    tasks: [],
     project,
     specialist,
   });
@@ -239,7 +231,7 @@ test("Freelancer can send the proposal", async () => {
   const app = renderApp({
     route: "/applications/rec123/proposal/send",
     graphQLMocks: [
-      mockQuery(VIEWER, {}, { viewer: specialist }),
+      mockViewer(specialist),
       mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
       mockMutation(
         SEND_PROPOSAL,
@@ -271,10 +263,12 @@ test("Freelancer can send the proposal", async () => {
 
 test("Freelancer can mark a task as a trial task", async () => {
   const specialist = generateTypes.specialist();
+
   const task = generateTypes.task({
     id: "task_1234",
     trial: false,
   });
+
   const application = generateTypes.application({
     id: "rec1324",
     airtableId: "rec1234",
@@ -288,7 +282,7 @@ test("Freelancer can mark a task as a trial task", async () => {
   });
 
   const API_MOCKS = [
-    mockQuery(VIEWER, {}, { viewer: specialist }),
+    mockViewer(specialist),
     mockQuery(GET_APPLICATION, { id: "rec1234" }, { application }),
     mockQuery(
       GET_TASK,
@@ -348,7 +342,7 @@ test("Freelancer can toggle the task trial via the task menu", async () => {
   });
 
   const API_MOCKS = [
-    mockQuery(VIEWER, {}, { viewer: specialist }),
+    mockViewer(specialist),
     mockQuery(GET_APPLICATION, { id: "rec1234" }, { application }),
     mockQuery(
       GET_TASK,

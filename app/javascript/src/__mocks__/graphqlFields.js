@@ -100,7 +100,7 @@ export const application = (fields = {}) => {
   return merge(
     {
       __typename: "Application",
-      id: uniqueId("application"),
+      id: uniqueId("app_"),
       airtableId: uniqueId("rec"),
       rate: "75",
       currency: "USD",
