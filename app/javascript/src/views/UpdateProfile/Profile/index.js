@@ -10,9 +10,10 @@ import {
   Autocomplete,
   Button,
   Checkbox,
+  Avatar,
 } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
-import Avatar from "../../../components/Avatar";
+import Loading from "../../../components/Loading";
 import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
 import { useNotifications } from "../../../components/Notifications";
@@ -38,10 +39,6 @@ const Profile = () => {
     skills: (get(data, "viewer.skills") || []).map(s => s.name),
   };
 
-  React.useEffect(() => {
-    setProfilePhoto(get(data, "viewer.avatar"));
-  }, [loading, data]);
-
   const handleSubmit = async (values, formik) => {
     let input = {
       bio: values.bio,
@@ -63,7 +60,7 @@ const Profile = () => {
   };
 
   if (loading) {
-    return <>loading...</>;
+    return <Loading />;
   }
 
   return (
@@ -89,7 +86,13 @@ const Profile = () => {
                     reader.readAsDataURL(file);
                   }
 
-                  return <Avatar url={profilePhoto} name={data.viewer.name} />;
+                  return (
+                    <Avatar
+                      size="s"
+                      name={data.viewer.name}
+                      url={profilePhoto || data.viewer.avatar}
+                    />
+                  );
                 }}
                 label="Upload a profile photo"
               />
