@@ -48,7 +48,7 @@ gem 'airrecord', '~> 1.0.2'
 gem 'graphql'
 gem 'parser'
 gem 'rollbar'
-gem 'stripe', '~> 4.21.0'
+gem 'stripe', '~> 5.14'
 gem 'attr_encrypted', '~> 3.0.0'
 
 gem 'jwt'

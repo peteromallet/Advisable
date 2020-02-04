@@ -62,7 +62,6 @@
     "react-router-dom": "^5.1.2",
     "react-select": "^2.1.0",
     "react-spring": "^8.0.25",
-    "react-stripe-elements": "^3.0.0",
     "react-text-mask": "^5.4.3",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.5",
