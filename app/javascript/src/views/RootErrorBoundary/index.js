@@ -20,7 +20,7 @@ class RootErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    if (error.name.match(/ChunkLoadError/)) {
+    if (error.name && error.name.match(/ChunkLoadError/)) {
       this.setState({ update: true });
       return;
     }
