@@ -20,14 +20,8 @@ class Mutations::UpdateConsultation < Mutations::BaseMutation
 
     consultation.topic = args[:topic]
 
-    if consultation.save
-      consultation.sync_to_airtable
-      return { consultation: consultation }
-    end
-
-    ApiError.invalidRequest(
-      'consultations.failedToUpdate',
-      consultation.errors.full_messages.first
-    )
+    consultation.save
+    consultation.sync_to_airtable
+    return { consultation: consultation }
   end
 end

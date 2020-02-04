@@ -4,20 +4,22 @@ describe Mutations::SendConsultationRequest do
   let!(:consultation) do
     create(:consultation, status: 'Request Started', topic: nil)
   end
+
   let(:topic) { 'Testing' }
+  let(:likely_to_hire) { 5 }
 
   let(:query) do
     <<-GRAPHQL
-    mutation {
-      sendConsultationRequest(input: {
-        consultation: "#{consultation.uid}",
-        topic: "#{topic}"
-      }) {
-        consultation {
-          id
+      mutation {
+        sendConsultationRequest(input: {
+          consultation: "#{consultation.uid}",
+          likelyToHire: #{likely_to_hire}
+        }) {
+          consultation {
+            id
+          }
         }
       }
-    }
     GRAPHQL
   end
 
@@ -32,10 +34,10 @@ describe Mutations::SendConsultationRequest do
       .to('Request Completed')
   end
 
-  it 'sets the consultation topic' do
+  it 'sets the likely_to_hire value' do
     expect { AdvisableSchema.execute(query) }.to change {
-      consultation.reload.topic
+      consultation.reload.likely_to_hire
     }.from(nil)
-      .to('Testing')
+      .to(5)
   end
 end
