@@ -10,13 +10,13 @@ class Airtable::Base < Airrecord::Table
     attr_accessor :sync_model, :sync_block, :push_block, :after_sync_block
 
     def base_key
-      ENV["AIRTABLE_DATABASE_KEY"]
+      ENV['AIRTABLE_DATABASE_KEY']
     end
 
     def columns_hash
       @columns_hash || {}
     end
-    
+
     def associations
       @associations ||= {}
     end
@@ -25,9 +25,18 @@ class Airtable::Base < Airrecord::Table
     # to sync all records from airtable.
     # We filter the query to only fetch records that have been modified within
     # the last day.
-    def sync(report = nil, filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 3")
+    def sync(
+      report = nil,
+      filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 3"
+    )
       records = all(filter: filter)
-      records.each { |r| r.sync(report) }
+      records.each do |r|
+        begin
+          r.sync(report)
+        rescue StandardError => e
+          raise $!, "#{e.message} (#{r.class} with id #{r.id})", $!.backtrace
+        end
+      end
     end
 
     # The sync_with method tells the class which ActiveRecord model to sync
@@ -105,7 +114,8 @@ class Airtable::Base < Airrecord::Table
         return model
       end
 
-      message = "Failed to sync #{record_type} #{id} \n#{model.errors.full_messages}"
+      message =
+        "Failed to sync #{record_type} #{id} \n#{model.errors.full_messages}"
       Rails.logger.warn(message)
       report.failed(id, record_type, model.errors.full_messages) if report
       return nil
@@ -117,10 +127,8 @@ class Airtable::Base < Airrecord::Table
   # in graphql mutations and service classes, however, most of these are being
   # converted to use the sync_to_airtable method from the Syncable module which
   # uses push
-  def push(record, additional_fields={})
-    if id && id != record.try(:airtable_id)
-      raise "Airtable ID does not match"
-    end
+  def push(record, additional_fields = {})
+    raise 'Airtable ID does not match' if id && id != record.try(:airtable_id)
 
     ActiveRecord::Base.transaction do
       # we keep track of how many times the push has been retried if any errors
@@ -132,29 +140,21 @@ class Airtable::Base < Airrecord::Table
         retry_count += 1
         instance_exec(record, &self.class.push_block) if self.class.push_block
 
-        additional_fields.each do |field, value|
-          self[field] = value
-        end
+        additional_fields.each { |field, value| self[field] = value }
 
-        if id.present?
-          save
-        else
-          create
-        end
+        id.present? ? save : create
 
-        if record.airtable_id.blank?
-          record.update(airtable_id: id)
-        end
+        record.update(airtable_id: id) if record.airtable_id.blank?
 
         # When airtable response with an error we call the handle_airtable_error
         # method which can then be used to handle the error before attempting to
         # retry the sync
-        rescue Airrecord::Error => e
-          if retry_count <= retry_limit && handle_airtable_error(e, record)
-            retry
-          else
-            raise e
-          end
+      rescue Airrecord::Error => e
+        if retry_count <= retry_limit && handle_airtable_error(e, record)
+          retry
+        else
+          raise e
+        end
       end
     end
   end
@@ -169,7 +169,7 @@ class Airtable::Base < Airrecord::Table
 
   private
 
-  def sync_association(column:,record:,attribute:)
+  def sync_association(column:, record:, attribute:)
     # read the id from the column data.
     id = self[column].try(:first)
     # if there is no ID then we are done.
