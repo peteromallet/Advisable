@@ -142,6 +142,14 @@ const Profile = () => {
               placeholder="Hourly rate"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              onChange={e => {
+                if (e.target.value.length > 0) {
+                  const amount = Number(e.target.value.replace(/\,/, ""));
+                  formik.setFieldValue(e.target.name, amount);
+                } else {
+                  formik.setFieldValue(e.target.name, null);
+                }
+              }}
               value={formik.values.hourlyRate}
               label="What is your typical hourly rate in USD?"
               description="This is just to get an idea of your rate. You will be able to set your rate on a per project basis when working with clients on Advisable."

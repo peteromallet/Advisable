@@ -4,6 +4,7 @@ const noRate = "Please specify your hourly rate for a project like this.";
 
 const validationSchema = Yup.object().shape({
   rate: Yup.number()
+    .nullable()
     .moreThan(0, noRate)
     .required(noRate),
   acceptsFee: Yup.boolean().oneOf(

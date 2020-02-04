@@ -17,6 +17,8 @@ import UPDATE_APPLICATION from "../updateApplication.js";
 import validationSchema from "./validationSchema";
 import Actions from "../Actions";
 
+const numberMask = createNumberMask({ prefix: "" });
+
 const Terms = ({
   match,
   history,
@@ -80,19 +82,21 @@ const Terms = ({
             <FieldRow>
               <TextField
                 name="rate"
+                prefix="$"
+                mask={numberMask}
                 value={formik.values.rate}
                 onBlur={formik.handleBlur}
-                onChange={({ target }) => {
-                  const val = Number(target.value.replace(/[^0-9\.-]+/g, ""));
-                  formik.setFieldValue("rate", val);
+                onChange={e => {
+                  if (e.target.value.length > 0) {
+                    const amount = Number(e.target.value.replace(/\,/, ""));
+                    formik.setFieldValue("rate", amount);
+                  } else {
+                    formik.setFieldValue("rate", null);
+                  }
                 }}
                 error={formik.touched.rate && formik.errors.rate}
                 label="Including Advisable's fee, what's your estimated hourly rate for projects like this?"
-                placeholder={`$0.00`}
-                mask={createNumberMask({
-                  prefix: "$",
-                  allowDecimal: true,
-                })}
+                placeholder="0"
               />
             </FieldRow>
             <FieldRow>
