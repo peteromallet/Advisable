@@ -14,6 +14,7 @@ function ScaleInput({ value, onChange }) {
           <StyledScaleInputOption
             key={n}
             type="button"
+            aria-label={n}
             data-selected={value === n}
             onClick={createClickHandler(n)}
           >
