@@ -12,7 +12,7 @@ import {
   useLocation,
   generatePath,
 } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Box, Card, useTheme, useBreakpoint } from "@advisable/donut";
 import NotFound from "../NotFound";
 import Loading from "../../components/Loading";
@@ -22,6 +22,7 @@ import fetchSpecialist from "./fetchSpecialist";
 import Availability from "./Availability";
 import CompanyInformation from "./CompanyInformation";
 import Sidebar from "./Sidebar";
+import Send from "./Send";
 import Complete from "./Complete";
 
 const RequestConsultation = () => {
@@ -72,6 +73,12 @@ const RequestConsultation = () => {
       label: "Topic",
       path: "/request_consultation/:specialistId/topic",
       component: Topic,
+      disabled: isComplete,
+    },
+    {
+      label: "Send",
+      path: "/request_consultation/:specialistId/send",
+      component: Send,
       disabled: isComplete,
     },
     {

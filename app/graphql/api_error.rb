@@ -1,7 +1,7 @@
 # The ApiError should be used to throw errors in our graphql API. It ensures
 # that each error will have a CODE which clients can use to determine what to
 # do with the error.
-# 
+#
 # @param [String] type The type of error.
 # @param [String] code The error code for the error. This is can be used as a
 # key in i18n libraries to display errors to users. This should be a camelCase
@@ -17,31 +17,38 @@
 #
 class ApiError < GraphQL::ExecutionError
   def initialize(type, code, message, extensions: {})
-    super(message, extensions: extensions.merge({ type: type, code: code }).as_json)
+    super(
+      message,
+      extensions: extensions.merge({ type: type, code: code }).as_json
+    )
+  end
+
+  def self.invalidRequest(code, message)
+    raise ApiError::InvalidRequest.new(code, message)
   end
 end
 
 class ApiError::NotAuthenticated < ApiError
   def initialize(message)
-    super("NOT_AUTHENTICATED", "notAuthenticated", message)
+    super('NOT_AUTHENTICATED', 'notAuthenticated', message)
   end
 end
 
 class ApiError::NotAuthorized < ApiError
   def initialize(message)
-    super("NOT_AUTHORIZED", "notAuthorized", message)
+    super('NOT_AUTHORIZED', 'notAuthorized', message)
   end
 end
 
 # InvalidRequst can be rasied to indicate that the request the user has made is
 # invalid. Although they have provided correct input values, the request could
 # not complete for some reason.
-# 
+#
 # @example
 #   raise ApiError::InvalidRequest.new("applicationStatusNotWorking", "Application status must be 'Working'")
 #
 class ApiError::InvalidRequest < ApiError
   def initialize(code, message)
-    super("INVALID_REQUEST", code, message)
+    super('INVALID_REQUEST', code, message)
   end
 end

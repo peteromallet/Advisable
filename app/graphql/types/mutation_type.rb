@@ -60,6 +60,7 @@ class Types::MutationType < GraphQL::Schema::Object
         mutation: Mutations::VerifyOffPlatformProject
 
   field :create_consultation, mutation: Mutations::CreateConsultation
+  field :update_consultation, mutation: Mutations::UpdateConsultation
   field :decline_consultation, mutation: Mutations::DeclineConsultation
   field :accept_consultation, mutation: Mutations::AcceptConsultation
   field :send_consultation_request, mutation: Mutations::SendConsultationRequest

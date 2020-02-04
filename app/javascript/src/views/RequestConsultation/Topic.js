@@ -5,7 +5,7 @@ import { useParams, useLocation, Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
 import TextField from "../../components/TextField";
-import SEND from "./sendRequest";
+import UPDATE from "./updateConsultation";
 
 const validationSchema = Yup.object({
   topic: Yup.string().required("Please provide a topic"),
@@ -14,7 +14,7 @@ const validationSchema = Yup.object({
 const Topic = ({ data, previousStepURL, nextStep }) => {
   const params = useParams();
   const location = useLocation();
-  const [sendRequest] = useMutation(SEND);
+  const [updateConsultation] = useMutation(UPDATE);
 
   if (!location.state?.consultationId) {
     return <Redirect to={previousStepURL(params)} />;
@@ -25,11 +25,11 @@ const Topic = ({ data, previousStepURL, nextStep }) => {
   };
 
   const handleSubmit = async values => {
-    await sendRequest({
+    await updateConsultation({
       variables: {
         input: {
+          id: location.state.consultationId,
           topic: values.topic,
-          consultation: location.state.consultationId,
         },
       },
     });
