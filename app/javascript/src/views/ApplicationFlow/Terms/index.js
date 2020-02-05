@@ -1,35 +1,20 @@
 import * as React from "react";
-import { Box, Link, Text, Tooltip, Icon } from "@advisable/donut";
-import { graphql } from "react-apollo";
-import { flowRight as compose } from "lodash";
+import { useMutation } from "react-apollo";
 import { Formik, Form, Field } from "formik";
+import { Box, Link, Text, Tooltip, Icon, Checkbox } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
-import {
-  Heading,
-  Padding,
-  FieldRow,
-  Checkbox,
-  TextField,
-} from "../../../components";
-import { useScreenSize } from "../../../utilities/screenSizes";
-import SUBMIT_APPLICATION from "../submitApplication.js";
-import UPDATE_APPLICATION from "../updateApplication.js";
+import { TextField } from "../../../components";
+import SUBMIT_APPLICATION from "../submitApplication";
+import UPDATE_APPLICATION from "../updateApplication";
 import validationSchema from "./validationSchema";
 import Actions from "../Actions";
 
 const numberMask = createNumberMask({ prefix: "" });
 
-const Terms = ({
-  match,
-  history,
-  application,
-  steps,
-  currentStep,
-  location,
-  updateApplication,
-  submitApplication,
-}) => {
-  const isMobile = useScreenSize("small");
+function Terms({ match, history, application, steps, currentStep, location }) {
+  const [updateApplication] = useMutation(UPDATE_APPLICATION);
+  const [submitApplication] = useMutation(SUBMIT_APPLICATION);
+
   let applicationId = match.params.applicationId;
   let locationState = location.state || {};
 
@@ -62,30 +47,42 @@ const Terms = ({
     history.push({ ...location, pathname });
   };
 
+  const initialValues = {
+    rate: parseFloat(application.rate) || "",
+    acceptsFee: application.acceptsFee,
+    acceptsTerms: application.acceptsTerms,
+    trialProgram: application.trialProgram || false,
+    autoApply: false,
+  };
+
   return (
     <Formik
       onSubmit={handleSubmit}
+      initialValues={initialValues}
       validationSchema={validationSchema}
-      initialValues={{
-        rate: parseFloat(application.rate) || "",
-        acceptsFee: application.acceptsFee,
-        acceptsTerms: application.acceptsTerms,
-        trialProgram: application.trialProgram || false,
-      }}
     >
       {formik => (
         <Form>
-          <Padding size={isMobile ? "l" : "xl"}>
-            <Padding bottom="l">
-              <Heading level={1}>Payment Terms</Heading>
-            </Padding>
-            <FieldRow>
-              <TextField
-                name="rate"
+          <Box padding={{ _: "l", m: "xl" }}>
+            <Text
+              as="h1"
+              mb="l"
+              fontSize="30px"
+              color="blue.9"
+              fontWeight="semibold"
+              letterSpacing="-0.04em"
+            >
+              Payment Terms
+            </Text>
+            <Box mb="l">
+              <Field
                 prefix="$"
+                name="rate"
+                as={TextField}
                 mask={numberMask}
-                value={formik.values.rate}
-                onBlur={formik.handleBlur}
+                error={formik.touched.rate && formik.errors.rate}
+                label="Including Advisable's fee, what's your estimated hourly rate for projects like this?"
+                placeholder="0"
                 onChange={e => {
                   if (e.target.value.length > 0) {
                     const amount = Number(e.target.value.replace(/\,/, ""));
@@ -94,131 +91,117 @@ const Terms = ({
                     formik.setFieldValue("rate", null);
                   }
                 }}
-                error={formik.touched.rate && formik.errors.rate}
-                label="Including Advisable's fee, what's your estimated hourly rate for projects like this?"
-                placeholder="0"
               />
-            </FieldRow>
-            <FieldRow>
+            </Box>
+            <Field as={Checkbox} type="checkbox" name="autoApply" mb="m">
+              I would like to automatically be applied to similar projects using
+              the data I just provided
+            </Field>
+            <Box mb="m">
               <Field
                 as={Checkbox}
                 type="checkbox"
                 name="acceptsFee"
-                onChange={e => {
-                  formik.setFieldValue(e.target.name, e.target.checked);
-                }}
-                description={
-                  <Tooltip
-                    content={
-                      <>
-                        <Padding bottom="m">
-                          <Text color="white" size="xs" lineHeight="xs">
-                            In order to facilitate fair long-term outcomes,
-                            Advisable's fee to freelancers is reduced for larger
-                            relationships between Freelancer and Client
-                          </Text>
-                        </Padding>
-                        <Text color="white" size="xs" lineHeight="xs">
-                          For the first $10,000, our fee is 20%
-                        </Text>
-                        <Text color="white" size="xs" lineHeight="xs">
-                          From $10,000-25,000, our fee is 10%
-                        </Text>
-                        <Text color="white" size="xs" lineHeight="xs">
-                          For $25,000+, our fee is 5%
-                        </Text>
-                      </>
-                    }
-                  >
-                    <Box pt="xs" display="flex" alignItems="center">
-                      <Icon
-                        mr="xxs"
-                        width={18}
-                        strokeWidth={1.5}
-                        icon="help-circle"
-                      />
-                      More Information
-                    </Box>
-                  </Tooltip>
-                }
-                label=" I agree that if Advisable connects me to a client that I
-                successfully contract with, between 5-20% of my fees are
-                payable to Advisable and all payments must go through
-                Advisable."
                 error={formik.touched.acceptsFee && formik.errors.acceptsFee}
-              />
-            </FieldRow>
-            <FieldRow>
+              >
+                <Text lineHeight="m" fontSize="s">
+                  I agree that if Advisable connects me to a client that I
+                  successfully contract with, between 5-20% of my fees are
+                  payable to Advisable and all payments must go through
+                  Advisable.
+                </Text>
+                <Tooltip
+                  content={
+                    <>
+                      <Text color="white" size="xs" lineHeight="xs" mb="m">
+                        In order to facilitate fair long-term outcomes,
+                        Advisable's fee to freelancers is reduced for larger
+                        relationships between Freelancer and Client
+                      </Text>
+                      <Text color="white" size="xs" lineHeight="xs">
+                        For the first $10,000, our fee is 20%
+                      </Text>
+                      <Text color="white" size="xs" lineHeight="xs">
+                        From $10,000-25,000, our fee is 10%
+                      </Text>
+                      <Text color="white" size="xs" lineHeight="xs">
+                        For $25,000+, our fee is 5%
+                      </Text>
+                    </>
+                  }
+                >
+                  <Box pt="xs" display="flex" alignItems="center">
+                    <Icon
+                      mr="xxs"
+                      width={20}
+                      strokeWidth={1.5}
+                      color="neutral.7"
+                      icon="help-circle"
+                    />
+                    More Information
+                  </Box>
+                </Tooltip>
+              </Field>
+            </Box>
+            <Box mb="m">
               <Field
-                type="checkbox"
                 as={Checkbox}
+                type="checkbox"
                 name="acceptsTerms"
-                onChange={e =>
-                  formik.setFieldValue(e.target.name, e.target.checked)
-                }
                 error={
                   formik.touched.acceptsTerms && formik.errors.acceptsTerms
                 }
-                label={
-                  <span>
-                    I agree with{" "}
-                    <Link
-                      as="a"
-                      href=" https://www.advisable.com/freelancer-agreement/"
-                      target="_blank"
-                    >
-                      Advisable's freelancer agreement.
-                    </Link>
-                  </span>
-                }
-              />
-            </FieldRow>
-            <FieldRow>
+              >
+                I agree with{" "}
+                <Link
+                  as="a"
+                  href=" https://www.advisable.com/freelancer-agreement/"
+                  target="_blank"
+                >
+                  Advisable's freelancer agreement.
+                </Link>
+              </Field>
+            </Box>
+            <Box>
               <Field
                 as={Checkbox}
                 type="checkbox"
                 name="trialProgram"
-                onChange={e =>
-                  formik.setFieldValue(e.target.name, e.target.checked)
-                }
-                label={
-                  <span>
-                    I agree to participate in{" "}
-                    <Tooltip
-                      interactable
-                      content={
-                        <>
-                          Advisable offers clients a trial period of up to 8
-                          hours when working with a new freelancer. You will be
-                          paid for work completed during this trial as long as
-                          the client agrees you adhered to{" "}
-                          <Link
-                            as="a"
-                            display="inline"
-                            href="https://advisable.com/professional-standards"
-                            target="_blank"
-                          >
-                            Advisable's Professional Standards
-                          </Link>
-                        </>
-                      }
-                    >
-                      <Link
-                        as="a"
-                        target="_blank"
-                        href="https://advisable.com/freelancer-trial"
-                      >
-                        Advisable's Guaranteed Trial Programme.
-                      </Link>
-                    </Tooltip>
-                  </span>
-                }
                 error={
                   formik.touched.trialProgram && formik.errors.trialProgram
                 }
-              />
-            </FieldRow>
-          </Padding>
+              >
+                I agree to participate in{" "}
+                <Tooltip
+                  interactable
+                  content={
+                    <>
+                      Advisable offers clients a trial period of up to 8 hours
+                      when working with a new freelancer. You will be paid for
+                      work completed during this trial as long as the client
+                      agrees you adhered to{" "}
+                      <Link
+                        as="a"
+                        display="inline"
+                        href="https://advisable.com/professional-standards"
+                        target="_blank"
+                      >
+                        Advisable's Professional Standards
+                      </Link>
+                    </>
+                  }
+                >
+                  <Link
+                    as="a"
+                    target="_blank"
+                    href="https://advisable.com/freelancer-trial"
+                  >
+                    Advisable's Guaranteed Trial Programme.
+                  </Link>
+                </Tooltip>
+              </Field>
+            </Box>
+          </Box>
 
           <Actions
             steps={steps}
@@ -232,11 +215,6 @@ const Terms = ({
       )}
     </Formik>
   );
-};
+}
 
-const withMutations = compose(
-  graphql(UPDATE_APPLICATION, { name: "updateApplication" }),
-  graphql(SUBMIT_APPLICATION, { name: "submitApplication" })
-)(Terms);
-
-export default withMutations;
+export default Terms;

@@ -135,6 +135,16 @@ export const application = (fields = {}) => {
   );
 };
 
+export const applicationQuestion = (fields = {}) =>
+  merge(
+    {
+      __typename: "ApplicationQuestion",
+      question: "This is a question",
+      answer: null,
+    },
+    fields
+  );
+
 export const specialist = (fields = {}) => {
   return merge(
     {
@@ -304,4 +314,5 @@ export default {
   consultation,
   specialistSkill,
   offPlatformProject,
+  applicationQuestion,
 };
