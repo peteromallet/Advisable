@@ -38,30 +38,16 @@ const PreviousProjects = ({
         <Padding bottom="xs">
           <Heading level={6}>Previous Projects</Heading>
         </Padding>
-        <Field name="references">
-          {({ field }) =>
-            previousProjects.map(p => (
-              <PreviousProject
-                key={p.project.id}
-                project={p.project}
-                checked={field.value.includes(p.project.airtableId)}
-                onChange={e => {
-                  if (field.value.includes(p.project.airtableId)) {
-                    formik.setFieldValue(
-                      "references",
-                      field.value.filter(id => id !== p.project.airtableId)
-                    );
-                  } else {
-                    formik.setFieldValue(
-                      "references",
-                      field.value.concat(p.project.airtableId)
-                    );
-                  }
-                }}
-              />
-            ))
-          }
-        </Field>
+        {previousProjects.map(p => (
+          <Field
+            type="checkbox"
+            name="references"
+            key={p.project.id}
+            as={PreviousProject}
+            value={p.project.airtableId}
+            project={p.project}
+          />
+        ))}
         <Padding top="m">
           <Button size="l" type="button" styling="outlined" onClick={onAdd}>
             Add a previous project
