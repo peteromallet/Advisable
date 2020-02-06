@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { withSpacing } from "src/components/Spacing";
 import { rgba } from "polished";
 import { theme } from "@advisable/donut";
 
@@ -56,7 +55,7 @@ export const ScrollableContainer = styled.div`
   ${props => bottomShadow(props.bottomShadow)};
 `;
 
-let ScrollInner = styled.div.attrs(props => ({
+export const ScrollInner = styled.div.attrs(props => ({
   style: {
     height: props.height ? `${props.height}px` : "auto",
   },
@@ -66,6 +65,3 @@ let ScrollInner = styled.div.attrs(props => ({
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 `;
-
-ScrollInner = withSpacing(ScrollInner);
-export { ScrollInner };

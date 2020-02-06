@@ -6,27 +6,27 @@ class Tasks::Start < ApplicationService
   end
 
   def call
-    if task.stage != "Assigned"
-      raise Service::Error.new("tasks.mustBeAssigned")
-    end
+    raise Service::Error.new('tasks.mustBeAssigned') if task.stage != 'Assigned'
 
-    if task.estimate.blank?
-      raise Service::Error.new("tasks.estimateRequired")
-    end
+    raise Service::Error.new('tasks.estimateRequired') if task.estimate.blank?
 
-    if task.due_date.blank?
-      raise Service::Error.new("tasks.dueDateRequired")
-    end
+    raise Service::Error.new('tasks.dueDateRequired') if task.due_date.blank?
 
-    if task.update(stage: "Working")
-      if task.application.project_type == "Fixed"
-        Tasks::CreateInvoiceItem.call(task: task)
-      end
-
+    if task.update(stage: 'Working')
+      add_invoice_item if task.application.project_type == 'Fixed'
       task.sync_to_airtable
-      WebhookEvent.trigger("tasks.started", WebhookEvent::Task.data(task))
+      WebhookEvent.trigger('tasks.started', WebhookEvent::Task.data(task))
     end
 
     return task
+  end
+
+  private
+
+  def add_invoice_item
+    Tasks::CreateInvoiceItem.call(task: task)
+  rescue Stripe::StripeError => e
+    # Still log the error in sentry
+    Raven.capture_exception(e)
   end
 end
