@@ -85,7 +85,7 @@ class Airtable::Application < Airtable::Base
       application.questions = questions
     end
 
-    application.auto_apply = self['Auto Apply'].include?('Yes')
+    application.auto_apply = self['Auto Apply'].try(:include?, 'Yes')
   end
 
   def status_to_sync
