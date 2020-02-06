@@ -59,38 +59,56 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
     @user ||=
       begin
         user = User.find_by_email(args[:email])
-        return user if user.present?
 
-        specialist = Specialist.find_by_email(args[:email])
-        if specialist.present?
-          raise ApiError::InvalidRequest.new(
-                  'emailBelongsToFreelancer',
-                  'This email belongs to a freelancer account'
-                )
+        if user.present?
+          update_existing_user(user, **args)
+          return user
         end
 
-        user =
-          User.create(
-            first_name: args[:first_name],
-            last_name: args[:last_name],
-            email: args[:email],
-            company_name: args[:company],
-            campaign_source: args[:utm_source],
-            campaign_name: args[:utm_campaign],
-            campaign_medium: args[:campaign_medium],
-            gclid: args[:gclid]
-          )
-
-        domain = user.email.split('@').last
-        client = Client.create(name: args[:company], domain: domain)
-        client.users << user
-        user.sync_to_airtable
-        # Currently we dont have a relationship between clients and client
-        # contacts so we set the 'Client Contacts' column while calling sync.
-        client.sync_to_airtable(
-          { 'Client Contacts' => [user.airtable_id].compact }
-        )
-        user
+        create_new_user(**args)
       end
+  end
+
+  def update_existing_user(user, **args)
+    user.update(company_name: args[:company])
+
+    if user.client.present?
+      user.client.update(name: args[:company]) if user.client.present?
+    else
+      client = Client.create(name: args[:company])
+      client.users << user
+    end
+  end
+
+  def create_new_user(**args)
+    specialist = Specialist.find_by_email(args[:email])
+    if specialist.present?
+      raise ApiError::InvalidRequest.new(
+              'emailBelongsToFreelancer',
+              'This email belongs to a freelancer account'
+            )
+    end
+
+    user =
+      User.create(
+        first_name: args[:first_name],
+        last_name: args[:last_name],
+        email: args[:email],
+        company_name: args[:company],
+        campaign_source: args[:utm_source],
+        campaign_name: args[:utm_campaign],
+        campaign_medium: args[:campaign_medium],
+        gclid: args[:gclid]
+      )
+
+    domain = user.email.split('@').last
+    client = Client.create(name: args[:company], domain: domain)
+    client.users << user
+    user.sync_to_airtable
+    # Currently we dont have a relationship between clients and client
+    # contacts so we set the 'Client Contacts' column while calling sync.
+    client.sync_to_airtable({ 'Client Contacts' => [user.airtable_id].compact })
+
+    user
   end
 end
