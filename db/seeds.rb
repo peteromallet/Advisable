@@ -1,1 +1,10 @@
-`rails data:industries`
+Airtable::Skill.sync(filter: nil)
+Airtable::Industry.sync(filter: nil)
+Airtable::ClientContact.sync(filter: nil)
+Airtable::Specialist.sync(filter: nil)
+Airtable::Project.sync(filter: nil)
+Airtable::Application.sync(filter: nil)
+Airtable::Task.sync(filter: nil)
+
+User.first.update(password: 'testing123', confirmed_at: 2.hours.ago)
+Specialist.first.update(password: 'testing123', confirmed_at: 2.hours.ago)
