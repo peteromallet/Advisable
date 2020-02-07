@@ -58,7 +58,7 @@ gem 'simplecov', require: false, group: :test
 gem 'pundit'
 gem 'nanoid'
 
-gem 'aws-sdk-s3', require: false
+gem 'aws-sdk-s3', '~> 1'
 gem 'image_processing', '~> 1.0'
 
 group :development, :test do
