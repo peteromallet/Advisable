@@ -13,9 +13,8 @@ describe 'Updating a proposal' do
     visit "/applications/#{application.airtable_id}/proposal"
     fill_in 'rate', with: '55'
     click_on 'Continue'
-    find(:label, text: 'Flexible - Monthly Limit').click
-    fill_in 'monthlyLimit', with: '65'
-    find(:label, text: 'I agree to follow these payment terms').click
+    find(:label, text: 'Project Basis').click
+    find(:label, text: 'I agree to follow').click
     click_on 'Continue'
     click_on 'Add a task'
     fill_in 'name', with: 'This is a task'
