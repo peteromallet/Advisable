@@ -8,6 +8,7 @@ import {
   CurrentUserDropdown,
 } from "./styles";
 import useViewer from "../../hooks/useViewer";
+import clientConfig from "../../clientConfig";
 
 const CurrentUser = ({ user, onLogout }) => {
   const viewer = useViewer();
@@ -21,7 +22,7 @@ const CurrentUser = ({ user, onLogout }) => {
     if (user) {
       Rollbar.configure({
         payload: {
-          environment: process.env.ROLLBAR_ENV,
+          environment: clientConfig.ROLLBAR_ENV,
           person: {
             id: user.airtableId,
             email: user.email,
@@ -39,7 +40,7 @@ const CurrentUser = ({ user, onLogout }) => {
     } else {
       Rollbar.configure({
         payload: {
-          environment: process.env.ROLLBAR_ENV,
+          environment: clientConfig.ROLLBAR_ENV,
         },
       });
 

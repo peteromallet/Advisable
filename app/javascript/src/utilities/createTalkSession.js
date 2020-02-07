@@ -1,4 +1,5 @@
 import Talk from "talkjs";
+import clientConfig from "../clientConfig";
 
 const createTalkSession = viewer => {
   const user = new Talk.User({
@@ -11,7 +12,7 @@ const createTalkSession = viewer => {
 
   const session = new Talk.Session({
     me: user,
-    appId: process.env.TALKJS,
+    appId: clientConfig.TALKJS,
     signature: viewer.talkSignature,
   });
 

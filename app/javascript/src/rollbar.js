@@ -1,10 +1,11 @@
 import rollbar from "rollbar";
+import clientConfig from "./clientConfig";
 
 export default rollbar.init({
-  accessToken: process.env.ROLLBAR_CLIENT_TOKEN,
+  accessToken: clientConfig.ROLLBAR_CLIENT_TOKEN,
   captureUncaught: true,
   payload: {
-    environment: process.env.ROLLBAR_ENV,
+    environment: clientConfig.ROLLBAR_ENV,
     client: {
       javascript: {
         source_map_enabled: true,

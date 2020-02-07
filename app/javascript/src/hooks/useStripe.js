@@ -1,6 +1,8 @@
+import clientConfig from "../clientConfig";
+
 const useStripe = () => {
   if (window.stripe) return window.stripe;
-  window.stripe = window.Stripe(process.env.STRIPE_PUBLIC_KEY);
+  window.stripe = window.Stripe(clientConfig.STRIPE_PUBLIC_KEY);
   return window.stripe;
 };
 

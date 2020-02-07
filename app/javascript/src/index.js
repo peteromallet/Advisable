@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Root from "./Root";
 import rollbar from "./rollbar";
+import clientConfig from "./clientConfig";
 import * as Sentry from "@sentry/browser";
 
 window.Rollbar = rollbar;
@@ -19,10 +20,10 @@ if (!Object.entries) {
   };
 }
 
-if (process.env.SENTRY_FRONTEND_DSN) {
+if (clientConfig.SENTRY_FRONTEND_DSN) {
   Sentry.init({
-    dsn: `${process.env.SENTRY_FRONTEND_DSN}`,
-    environment: process.env.SENTRY_ENVIRONMENT,
+    dsn: `${clientConfig.SENTRY_FRONTEND_DSN}`,
+    environment: clientConfig.SENTRY_ENVIRONMENT,
   });
 }
 

@@ -1,12 +1,13 @@
 import { get } from "lodash";
 import { useEffect } from "react";
 import usePrevious from "./usePrevious";
+import clientConfig from "../clientConfig";
 
 const bootIntercom = viewer => {
   if (!window.Intercom) return null;
 
   let data = {
-    app_id: process.env.INTERCOM_APP_ID,
+    app_id: clientConfig.INTERCOM_APP_ID,
   };
 
   if (viewer) {
@@ -20,7 +21,7 @@ const bootIntercom = viewer => {
 };
 
 const useIntercom = (location, viewer) => {
-  if (!process.env.INTERCOM_APP_ID) return null;
+  if (!clientConfig.INTERCOM_APP_ID) return null;
 
   const previousPath = usePrevious(location.pathname);
   const previousViewer = usePrevious(viewer);
