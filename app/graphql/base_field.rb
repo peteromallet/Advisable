@@ -12,13 +12,12 @@ class BaseField < GraphQL::Schema::Field
     @authorize_methods = methods
   end
 
-  def authorized?(object, context)
+  def authorized?(object, args, context)
     super
     return true unless authorize_methods
     policy = policy(context[:current_user], object)
-    truthy = authorize_methods.filter do |auth_method|
-      policy.send("#{auth_method}")
-    end
+    truthy =
+      authorize_methods.filter { |auth_method| policy.send("#{auth_method}") }
     truthy.any?
   end
 

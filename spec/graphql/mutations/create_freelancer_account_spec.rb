@@ -2,11 +2,12 @@ require 'rails_helper'
 
 describe Mutations::CreateFreelancerAccount do
   let(:project) { create(:project) }
-  let(:skill) { create(:skill, name: "Marketing") }
+  let(:skill) { create(:skill, name: 'Marketing') }
   let(:skill_name) { skill.name }
-  let(:email) { "test@test.com" }
+  let(:email) { 'test@test.com' }
 
-  let(:query) { %|
+  let(:query) do
+    <<-GRAPHQL
     mutation {
       createFreelancerAccount(input: {
         firstName: "Test",
@@ -23,7 +24,8 @@ describe Mutations::CreateFreelancerAccount do
         token
       }
     }
-  |}
+    GRAPHQL
+  end
 
   before :each do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
@@ -33,10 +35,8 @@ describe Mutations::CreateFreelancerAccount do
     allow(Airtable::Project).to receive(:find).and_return(project)
   end
 
-  it "Creates a new specialist" do
-    expect {
-      response = AdvisableSchema.execute(query)
-    }.to change {
+  it 'Creates a new specialist' do
+    expect { response = AdvisableSchema.execute(query) }.to change {
       Specialist.count
     }.by(1)
   end
@@ -58,7 +58,7 @@ describe Mutations::CreateFreelancerAccount do
     AdvisableSchema.execute(query)
   end
 
-  context "when no pid is provided" do
+  context 'when no pid is provided' do
     let(:project) { nil }
 
     it "doesn't create any application record" do
@@ -69,47 +69,47 @@ describe Mutations::CreateFreelancerAccount do
   end
 
   context "When given a skill that doesn't exist" do
-    let(:skill_name) { "Nope" }
-    
-    it "returns an error" do
+    let(:skill_name) { 'Nope' }
+
+    it 'returns an error' do
       response = AdvisableSchema.execute(query)
-      error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("skillNotFound")
+      error = response['errors'][0]['extensions']['code']
+      expect(error).to eq('skillNotFound')
     end
   end
 
-  context "When given an email that is already been used" do
+  context 'When given an email that is already been used' do
     let(:user) { create(:user) }
     let(:email) { user.email.upcase }
-    
-    it "returns an error" do
+
+    it 'returns an error' do
       response = AdvisableSchema.execute(query)
-      error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("emailTaken")
+      error = response['errors'][0]['extensions']['code']
+      expect(error).to eq('emailTaken')
     end
   end
 
-  it "sets the first_name" do
+  it 'sets the first_name' do
     AdvisableSchema.execute(query)
     specialist = Specialist.last
-    expect(specialist.first_name).to eq("Test")
+    expect(specialist.first_name).to eq('Test')
   end
 
-  it "sets the last_name" do
+  it 'sets the last_name' do
     AdvisableSchema.execute(query)
     specialist = Specialist.last
-    expect(specialist.last_name).to eq("Account")
+    expect(specialist.last_name).to eq('Account')
   end
 
-  it "sets the email" do
+  it 'sets the email' do
     AdvisableSchema.execute(query)
     specialist = Specialist.last
     expect(specialist.email).to eq(email)
   end
 
-  it "sets the phone_number" do
+  it 'sets the phone_number' do
     AdvisableSchema.execute(query)
     specialist = Specialist.last
-    expect(specialist.phone_number).to eq("0861234567")
+    expect(specialist.phone_number).to eq('0861234567')
   end
 end

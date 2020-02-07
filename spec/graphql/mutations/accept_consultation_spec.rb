@@ -1,21 +1,21 @@
 require 'rails_helper'
 
 describe Mutations::AcceptConsultation do
-  let!(:consultation) {
-    create(:consultation, status: "Request Started")
-  }
+  let!(:consultation) { create(:consultation, status: 'Request Started') }
 
-  let(:query) { %|
-    mutation {
-      acceptConsultation(input: {
-        consultation: "#{consultation.uid}"
-      }) {
-        interview {
-          id
+  let(:query) do
+    <<-GRAPHQL
+      mutation {
+        acceptConsultation(input: {
+          consultation: "#{consultation.uid}"
+        }) {
+          interview {
+            id
+          }
         }
       }
-    }
-  |}
+    GRAPHQL
+  end
 
   before :each do
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
@@ -25,11 +25,10 @@ describe Mutations::AcceptConsultation do
   end
 
   it "Sets the consultation status to 'Accepted By Specialist'" do
-    expect {
-      AdvisableSchema.execute(query)
-    }.to change {
+    expect { AdvisableSchema.execute(query) }.to change {
       consultation.reload.status
-    }.from("Request Started").to("Accepted By Specialist")
+    }.from('Request Started')
+      .to('Accepted By Specialist')
   end
 
   it 'creates a project' do
@@ -38,15 +37,16 @@ describe Mutations::AcceptConsultation do
     expect(Project).to receive(:create).with(
       user: consultation.user,
       skills: [consultation.skill],
-      sales_status: "Open",
-      status: "Project Created",
-      service_type: "Consultation",
+      sales_status: 'Open',
+      status: 'Project Created',
+      service_type: 'Consultation',
       primary_skill: consultation.skill.name,
-      owner: "peteromalley",
+      owner: 'peteromalley',
       name: instance_of(String)
-    ).and_return(project)
+    )
+      .and_return(project)
 
-      AdvisableSchema.execute(query)
+    AdvisableSchema.execute(query)
   end
 
   it 'creates an application record' do
@@ -54,10 +54,11 @@ describe Mutations::AcceptConsultation do
     expect(application).to receive(:sync_to_airtable)
     expect(Application).to receive(:create).with(
       project: instance_of(Project),
-      status: "Applied",
+      status: 'Applied',
       specialist: consultation.specialist
-    ).and_return(application)
+    )
+      .and_return(application)
 
-      AdvisableSchema.execute(query)
+    AdvisableSchema.execute(query)
   end
 end

@@ -1,15 +1,18 @@
 require 'rails_helper'
 
 describe Mutations::SetTypeForProject do
-  let(:application) { create(:application, project_type: "Flexible", monthly_limit: nil) }
-  let(:project_type) { "Fixed" }
+  let(:application) do
+    create(:application, project_type: 'Flexible', monthly_limit: nil)
+  end
+  let(:project_type) { 'Fixed' }
   let(:monthly_limit) { 400 }
 
-  let(:query) { %|
+  let(:query) do
+    <<-GRAPHQL
     mutation {
       setTypeForProject(input: {
-        application: #{application.airtable_id},
-        projectType: #{project_type},
+        application: "#{application.airtable_id}",
+        projectType: "#{project_type}",
         monthlyLimit: #{monthly_limit}
       }) {
         application {
@@ -20,7 +23,8 @@ describe Mutations::SetTypeForProject do
         }
       }
     }
-  |}
+    GRAPHQL
+  end
 
   let(:context) { { current_user: application.project.user } }
 
@@ -29,59 +33,61 @@ describe Mutations::SetTypeForProject do
   end
 
   it "sets the project_type to 'Flexible'" do
-    expect {
-      AdvisableSchema.execute(query, context: context)
-    }.to change {
+    expect { AdvisableSchema.execute(query, context: context) }.to change {
       application.reload.project_type
-    }.from("Flexible").to("Fixed")
+    }.from('Flexible')
+      .to('Fixed')
   end
 
-  it "sets the monthly_limit" do
-    expect {
-      AdvisableSchema.execute(query, context: context)
-    }.to change {
+  it 'sets the monthly_limit' do
+    expect { AdvisableSchema.execute(query, context: context) }.to change {
       application.reload.monthly_limit
-    }.from(nil).to(400)
+    }.from(nil)
+      .to(400)
   end
 
   context 'when an invalid project type is passed' do
-    let(:project_type) { "invalidType" }
+    let(:project_type) { 'invalidType' }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response["data"]["setTypeForProject"]["errors"][0]["code"]
-      expect(error).to eq("invalidProjectType")
+      error = response['data']['setTypeForProject']['errors'][0]['code']
+      expect(error).to eq('invalidProjectType')
     end
   end
 
   context "When setting the project type to 'Flexible'" do
-    let(:application) { create(:application, project_type: "Fixed", monthly_limit: monthly_limit) }
-    let(:project_type) { "Flexible" }
+    let(:application) do
+      create(:application, project_type: 'Fixed', monthly_limit: monthly_limit)
+    end
+    let(:project_type) { 'Flexible' }
 
-    it "calls the flexible invoice service" do
+    it 'calls the flexible invoice service' do
       expect(Applications::FlexibleInvoice).to receive(:call)
       AdvisableSchema.execute(query, context: context)
     end
   end
 
-  context "When only updating the monthly limit" do
-    let(:application) { create(:application, project_type: "Flexible", monthly_limit: 100) }
-    let(:project_type) { "Flexible" }
+  context 'When only updating the monthly limit' do
+    let(:application) do
+      create(:application, project_type: 'Flexible', monthly_limit: 100)
+    end
+    let(:project_type) { 'Flexible' }
     let(:monthly_limit) { 400 }
 
-    it "calls the flexible invoice service" do
+    it 'calls the flexible invoice service' do
       expect(Applications::FlexibleInvoice).to receive(:call)
       AdvisableSchema.execute(query, context: context)
     end
   end
 
   context 'When the user is not the owner of the project' do
-    let(:context)  {{ current_user: create(:user) }}
+    let(:context) { { current_user: create(:user) } }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response["data"]["setTypeForProject"]["errors"][0]["code"]
-      expect(error).to eq("not_authorized")
+      error = response['data']['setTypeForProject']['errors'][0]['code']
+      expect(error).to eq('not_authorized')
     end
   end
 end

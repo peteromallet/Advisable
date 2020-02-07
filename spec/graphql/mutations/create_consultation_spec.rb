@@ -10,30 +10,22 @@ describe Mutations::CreateConsultation do
   let(:skill_name) { skill.name }
 
   let(:query) do
-    "
+    <<-GRAPHQL
     mutation {
       createConsultation(input: {
-        specialist: \"#{
-      specialist.uid
-    }\",
-        firstName: \"#{first_name}\",
-        lastName: \"#{
-      last_name
-    }\",
-        email: \"#{email}\",
-        company: \"#{
-      company
-    }\",
-        skill: \"#{
-      skill_name
-    }\",
+        specialist: "#{specialist.uid}",
+        firstName: "#{first_name}",
+        lastName: "#{last_name}",
+        email: "#{email}",
+        company: "#{company}",
+        skill: "#{skill_name}",
       }) {
         consultation {
           id
         }
       }
     }
-  "
+    GRAPHQL
   end
 
   before :each do

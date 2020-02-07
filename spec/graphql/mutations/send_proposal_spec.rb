@@ -1,11 +1,12 @@
-require "rails_helper"
+require 'rails_helper'
 
 describe Mutations::SendProposal do
-  let(:application) { create(:application, status: "Interview Completed") }
-  let(:query) { %|
+  let(:application) { create(:application, status: 'Interview Completed') }
+  let(:query) do
+    <<-GRAPHQL
     mutation {
       sendProposal(input: {
-        application: #{application.airtable_id},
+        application: "#{application.airtable_id}",
         proposalComment: "This is the proposal comment"
       }) {
         application {
@@ -18,7 +19,8 @@ describe Mutations::SendProposal do
         }
       }
     }
-  |}
+    GRAPHQL
+  end
 
   let(:context) { { current_user: application.specialist } }
 
@@ -28,58 +30,61 @@ describe Mutations::SendProposal do
 
   it "sets the status to 'Proposed'" do
     response = AdvisableSchema.execute(query, context: context)
-    status = response["data"]["sendProposal"]["application"]["status"]
-    expect(status).to eq("Proposed")
+    status = response['data']['sendProposal']['application']['status']
+    expect(status).to eq('Proposed')
   end
 
-  it "sets the proposalComment" do
+  it 'sets the proposalComment' do
     response = AdvisableSchema.execute(query, context: context)
-    comment = response["data"]["sendProposal"]["application"]["proposalComment"]
-    expect(comment).to eq("This is the proposal comment")
+    comment = response['data']['sendProposal']['application']['proposalComment']
+    expect(comment).to eq('This is the proposal comment')
   end
 
-  it "triggers a webhook" do
-    expect(WebhookEvent).to receive(:trigger).with("applications.proposal_sent", any_args)
+  it 'triggers a webhook' do
+    expect(WebhookEvent).to receive(:trigger).with(
+      'applications.proposal_sent',
+      any_args
+    )
     AdvisableSchema.execute(query, context: context)
   end
 
-  context "when there is no logged in user" do
-    let(:context) {{ current_user: nil }}
+  context 'when there is no logged in user' do
+    let(:context) { { current_user: nil } }
 
-    it "returns an error" do
+    it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      errors = response["data"]["sendProposal"]["errors"]
-      expect(errors[0]["code"]).to eq("not_authorized")
+      errors = response['data']['sendProposal']['errors']
+      expect(errors[0]['code']).to eq('not_authorized')
     end
   end
 
-  context "when the client is logged in" do
-    let(:context) {{ current_user: application.project.user }}
+  context 'when the client is logged in' do
+    let(:context) { { current_user: application.project.user } }
 
-    it "returns an error" do
+    it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      errors = response["data"]["sendProposal"]["errors"]
-      expect(errors[0]["code"]).to eq("not_authorized")
+      errors = response['data']['sendProposal']['errors']
+      expect(errors[0]['code']).to eq('not_authorized')
     end
   end
 
-  context "when the logged in specialist is not the application specialist" do
-    let(:context) {{ current_user: create(:specialist) }}
+  context 'when the logged in specialist is not the application specialist' do
+    let(:context) { { current_user: create(:specialist) } }
 
-    it "returns an error" do
+    it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      errors = response["data"]["sendProposal"]["errors"]
-      expect(errors[0]["code"]).to eq("not_authorized")
+      errors = response['data']['sendProposal']['errors']
+      expect(errors[0]['code']).to eq('not_authorized')
     end
   end
 
-  context "when a Service::Error is thrown" do
-    it "includes it in the response" do
-      error = Service::Error.new("service_error")
+  context 'when a Service::Error is thrown' do
+    it 'includes it in the response' do
+      error = Service::Error.new('service_error')
       allow(Proposals::Send).to receive(:call).and_raise(error)
       response = AdvisableSchema.execute(query, context: context)
-      errors = response["data"]["sendProposal"]["errors"]
-      expect(errors[0]["code"]).to eq("service_error")
+      errors = response['data']['sendProposal']['errors']
+      expect(errors[0]['code']).to eq('service_error')
     end
   end
 end
