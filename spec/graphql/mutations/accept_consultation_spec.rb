@@ -41,7 +41,7 @@ describe Mutations::AcceptConsultation do
       status: 'Project Created',
       service_type: 'Consultation',
       primary_skill: consultation.skill.name,
-      owner: 'peteromalley',
+      owner: ENV['CONSULTATION_PROJECT_OWNER'],
       name: instance_of(String)
     )
       .and_return(project)
