@@ -74,16 +74,11 @@ const Input = styled.input`
   }
 `;
 
-const PreviousProject = ({ project, onChange, checked }) => {
+const PreviousProject = ({ project, ...props }) => {
   return (
     <Wrapper>
-      <Input
-        type="checkbox"
-        id={project.airtableId}
-        onChange={onChange}
-        checked={checked}
-      />
-      <Label htmlFor={project.airtableId}>
+      <Input type="checkbox" id={project.airtableId} {...props} />
+      <Label htmlFor={project.airtableId} data-testid={project.airtableId}>
         <Checkbox />
         <Title>{title(project)}</Title>
         <Description>{project.description}</Description>
