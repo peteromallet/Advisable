@@ -6,7 +6,6 @@ import { useLocation } from "react-router-dom";
 import { useMutation } from "react-apollo";
 import { motion, AnimatePresence } from "framer-motion";
 import { Box, Card, Text, Button, Link } from "@advisable/donut";
-import { Header } from "../styles";
 import Logo from "../../../components/Logo";
 import CREATE_ACCOUNT from "./createAccount";
 import Form from "./Form";
@@ -88,9 +87,6 @@ const SaveSearch = () => {
 
   return (
     <>
-      <Header>
-        <Logo />
-      </Header>
       <Box maxWidth={500} margin="50px auto" position="relative">
         <AnimatePresence>
           {get(data, "createUserAccount") ? (
@@ -103,11 +99,13 @@ const SaveSearch = () => {
             >
               <Card padding="l">
                 <Text
-                  fontSize="xxl"
-                  fontWeight="semibold"
-                  letterSpacing="-0.03rem"
-                  color="neutral.9"
+                  as="h2"
                   mb="xs"
+                  color="blue.8"
+                  fontSize="30px"
+                  lineHeight="28px"
+                  fontWeight="semibold"
+                  letterSpacing="-0.035em"
                 >
                   Tell us more
                 </Text>

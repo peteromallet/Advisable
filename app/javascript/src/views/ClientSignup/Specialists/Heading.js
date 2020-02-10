@@ -19,7 +19,7 @@ const Heading = ({ search, results }) => {
   let text = t(translationKey, { ...search, count: results.nodes.length });
 
   return (
-    <Text fontSize="s" lineHeight="s" color="neutral.7">
+    <Text color="neutral.8" lineHeight="m" mb="l">
       {text}
     </Text>
   );

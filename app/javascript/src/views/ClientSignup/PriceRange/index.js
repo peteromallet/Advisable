@@ -2,7 +2,6 @@ import React from "react";
 import { get } from "lodash";
 import { useLocation, Redirect } from "react-router-dom";
 import { Box, Text } from "@advisable/donut";
-import Logo from "../../../components/Logo";
 import groupByPriceRange from "./groupByPriceRange";
 import Range from "./Range";
 
@@ -41,22 +40,20 @@ const PriceRange = () => {
   }
 
   return (
-    <Box maxWidth={600} margin="0 auto" px="m">
-      <Box py="xl">
-        <Logo />
-      </Box>
+    <Box maxWidth={600} margin="0 auto" px="m" py="xl">
       <Text
-        as="h1"
+        pr="m"
+        as="h2"
         mb="xs"
-        fontSize={30}
-        letterSpacing={-0.5}
+        color="blue.8"
+        fontSize="30px"
+        lineHeight="28px"
         fontWeight="semibold"
-        color="neutral.9"
-        lineHeight="30px"
+        letterSpacing="-0.035em"
       >
         What level of specialist are you looking for?
       </Text>
-      <Text fontSize="s" lineHeight="s" color="neutral.7" mb="l">
+      <Text fontSize="l" color="neutral.8" lineHeight="m" mb="l">
         Let us know what you are looking for so that we can find the perfect
         specialist for you.
       </Text>

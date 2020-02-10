@@ -5,7 +5,7 @@ import StarRating from "./StarRating";
 import trustpilot from "./trustpilot.png";
 import { Quotes, Quote, Logos, Logo } from "./styles";
 import TESTIMONIALS from "./data";
-import useInterval from "../../../hooks/useInterval";
+import useInterval from "../../../../hooks/useInterval";
 
 const DELAY = 4000;
 

@@ -2,7 +2,7 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { useTranslation } from "react-i18next";
-import { Box, Text, Button } from "@advisable/donut";
+import { Box, Text, RoundedButton, Icon } from "@advisable/donut";
 import TextField from "../../../components/TextField";
 
 const SaveSearchForm = ({ onSubmit }) => {
@@ -21,15 +21,17 @@ const SaveSearchForm = ({ onSubmit }) => {
   return (
     <>
       <Text
-        fontSize="xxl"
-        fontWeight="semibold"
-        letterSpacing="-0.03rem"
-        color="neutral.9"
+        as="h2"
         mb="xs"
+        color="blue.8"
+        fontSize="xxl"
+        lineHeight="28px"
+        fontWeight="semibold"
+        letterSpacing="-0.035em"
       >
         Save your search
       </Text>
-      <Text fontSize="s" color="neutral.7" lineHeight="s" mb="l">
+      <Text fontSize="m" color="neutral.8" lineHeight="s" mb="l">
         Great! We think we’ll have the perfect person for this project. Enter
         your email to save your details so far.
       </Text>
@@ -58,14 +60,12 @@ const SaveSearchForm = ({ onSubmit }) => {
                 {t(formik.status)}
               </Text>
             )}
-            <Button
-              appearance="primary"
-              intent="success"
-              iconRight="arrow-right"
+            <RoundedButton
               loading={formik.isSubmitting}
+              suffix={<Icon icon="arrow-right" />}
             >
               Continue
-            </Button>
+            </RoundedButton>
           </Form>
         )}
       </Formik>

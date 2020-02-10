@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useQuery } from "react-apollo";
 import { useHistory } from "react-router-dom";
-import { Box, Text, useTheme } from "@advisable/donut";
-import Logo from "../../../components/Logo";
+import { Box, Text } from "@advisable/donut";
 import SearchingIndicator from "../../../components/SearchingIndicator";
 import useInterval from "../../../hooks/useInterval";
 import SEARCH from "./search";
@@ -10,7 +9,6 @@ import SEARCH from "./search";
 const SECONDS = 3;
 
 const Searching = ({ search, queryParams }) => {
-  const theme = useTheme();
   const history = useHistory();
   const [seconds, setSeconds] = React.useState(0);
 
@@ -46,17 +44,8 @@ const Searching = ({ search, queryParams }) => {
     }
   }, [search, seconds, loading, data, history, queryParams]);
 
-  React.useLayoutEffect(() => {
-    theme.updateTheme({ background: "white" });
-    return () => theme.updateTheme({ background: "default" });
-  }, []);
-
   return (
-    <Box maxWidth={600} margin="0 auto" px="m">
-      <Box py="xl">
-        <Logo />
-      </Box>
-
+    <Box maxWidth={600} margin="0 auto" px="m" py="xl">
       <Box
         padding="xl"
         borderRadius={12}
