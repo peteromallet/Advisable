@@ -30,20 +30,20 @@ describe Mutations::CreateOffPlatformProject do
     <<~GRAPHQL
     mutation {
       createOffPlatformProject(input: {
-        specialist: \"#{specialist.airtable_id}\",
-        clientName: \"#{client_name}\",
+        specialist: "#{specialist.airtable_id}",
+        clientName: "#{client_name}",
         confidential: #{confidential},
         industries: #{industries},
-        primaryIndustry: #{primary_industry}
+        primaryIndustry: "#{primary_industry}"
         skills: #{skills},
-        primarySkill: #{primary_skill},
-        companyType: \"#{company_type}\",
+        primarySkill: "#{primary_skill}",
+        companyType: "#{company_type}",
         publicUse: #{public_use},
-        contactName: \"#{contact_name}\",
-        contactJobTitle: \"#{contact_job_title}\",
-        description: \"#{description}\",
-        contactRelationship: \"#{contact_relationship}\",
-        goal: \"#{goal}\"
+        contactName: "#{contact_name}",
+        contactJobTitle: "#{contact_job_title}",
+        description: "#{description}",
+        contactRelationship: "#{contact_relationship}",
+        goal: "#{goal}"
       }) {
         previousProject {
           project {

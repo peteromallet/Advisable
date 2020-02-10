@@ -6,17 +6,18 @@ describe Mutations::CreateUserAccount do
   let(:industry) { create(:industry) }
   let(:industry_name) { industry.name }
   let(:industry_experience_required) { true }
-  let(:company_type) { "Startup" }
+  let(:company_type) { 'Startup' }
   let(:company_type_experience_required) { true }
-  let(:email) { "test@test.com" }
+  let(:email) { 'test@test.com' }
   let(:specialists) { [] }
-  let(:campaign_name) { "Test" }
-  let(:campaign_source) { "Test" }
+  let(:campaign_name) { 'Test' }
+  let(:campaign_source) { 'Test' }
   let(:pid) { nil }
   let(:rid) { nil }
   let(:gclid) { nil }
 
-  let(:query) { %|
+  let(:query) do
+    <<-GRAPHQL
     mutation {
       createUserAccount(input: {
         skill: "#{skill_name}",
@@ -37,7 +38,8 @@ describe Mutations::CreateUserAccount do
         }
       }
     }
-  |}
+    GRAPHQL
+  end
 
   before :each do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
@@ -46,68 +48,54 @@ describe Mutations::CreateUserAccount do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
   end
 
-  it "creates a new user" do
-    expect {
-      AdvisableSchema.execute(query)
-    }.to change {
-      User.count
-    }.by(1)
+  it 'creates a new user' do
+    expect { AdvisableSchema.execute(query) }.to change { User.count }.by(1)
   end
 
-  it "creates a new client" do
-    expect {
-      AdvisableSchema.execute(query)
-    }.to change {
-      Client.count
-    }.by(1)
+  it 'creates a new client' do
+    expect { AdvisableSchema.execute(query) }.to change { Client.count }.by(1)
   end
 
-  it "creates a new project" do
-    expect {
-      AdvisableSchema.execute(query)
-    }.to change {
-      Project.count
-    }.by(1)
+  it 'creates a new project' do
+    expect { AdvisableSchema.execute(query) }.to change { Project.count }.by(1)
   end
 
-  context "when a specialist is provided" do
+  context 'when a specialist is provided' do
     let(:specialist) { create(:specialist) }
-    let(:specialists) { [specialist.airtable_id]}
-    
-    it "creates an application record for that specialist" do
-      expect {
-        AdvisableSchema.execute(query)
-      }.to change {
+    let(:specialists) { [specialist.airtable_id] }
+
+    it 'creates an application record for that specialist' do
+      expect { AdvisableSchema.execute(query) }.to change {
         Application.count
       }.by(1)
     end
   end
 
-  context "when provides more than 10 specialists" do
-    let(:specialists) { [1,2,3,4,5,6,7,8,9,10,11] }
+  context 'when provides more than 10 specialists' do
+    let(:specialists) { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }
 
-    it "raises an error" do
+    it 'raises an error' do
       response = AdvisableSchema.execute(query)
-      error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("tooManySpecialists")
+      error = response['errors'].first['extensions']['code']
+      expect(error).to eq('tooManySpecialists')
     end
   end
 
-  context "when the email has been blacklisted" do
-    it "raises an error" do
-      create(:blacklisted_domain, domain: "test.com" )
+  context 'when the email has been blacklisted' do
+    it 'raises an error' do
+      create(:blacklisted_domain, domain: 'test.com')
       response = AdvisableSchema.execute(query)
-      error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("nonCorporateEmail")
+      error = response['errors'].first['extensions']['code']
+      expect(error).to eq('nonCorporateEmail')
     end
   end
 
-  context "when the email has already been taken" do
-    it "raises an error" do
-      create(:user, email: email )
+  context 'when the email has already been taken' do
+    it 'raises an error' do
+      create(:user, email: email)
       response = AdvisableSchema.execute(query)
-      error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("emailTaken")
+      error = response['errors'].first['extensions']['code']
+      expect(error).to eq('emailTaken')
     end
   end
 end

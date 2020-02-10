@@ -4,7 +4,8 @@ describe Mutations::UpdateAvailability do
   let(:user) { create(:user, availability: []) }
   let(:time) { 2.days.from_now.utc.iso8601 }
 
-  let(:query) { %|
+  let(:query) do
+    <<-GRAPHQL
     mutation {
       updateAvailability(input: {
         id: "#{user.airtable_id}",
@@ -16,12 +17,14 @@ describe Mutations::UpdateAvailability do
         }
       }
     }
-  |}
+    GRAPHQL
+  end
 
-  it "updates the users availability" do
+  it 'updates the users availability' do
     expect(user.reload.availability).to be_empty
     response = AdvisableSchema.execute(query)
-    availability = response["data"]["updateAvailability"]["user"]["availability"]
+    availability =
+      response['data']['updateAvailability']['user']['availability']
     expect(availability).to include(time)
   end
 end
