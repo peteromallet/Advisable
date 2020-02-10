@@ -1,9 +1,10 @@
-require "rails_helper"
+require 'rails_helper'
 
 describe Mutations::RejectApplicationInvitation do
   let(:application) { create(:application, invitation_rejection_reason: nil) }
 
-  let(:query) { %|
+  let(:query) do
+    <<-GRAPHQL
     mutation {
       rejectApplicationInvitation(input: {
         id: "#{application.airtable_id}",
@@ -15,7 +16,8 @@ describe Mutations::RejectApplicationInvitation do
         errors
       }
     }
-  |}
+    GRAPHQL
+  end
 
   before :each do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
@@ -23,15 +25,15 @@ describe Mutations::RejectApplicationInvitation do
 
   it "sets the status to 'Invitation Rejected'" do
     response = AdvisableSchema.execute(query, context: {})
-    status = response["data"]["rejectApplicationInvitation"]["application"]["status"]
-    expect(status).to eq("Invitation Rejected")
+    status =
+      response['data']['rejectApplicationInvitation']['application']['status']
+    expect(status).to eq('Invitation Rejected')
   end
 
-  it "sets the invitation_rejection_reason" do
-    expect {
-      AdvisableSchema.execute(query, context: {})
-    }.to change {
+  it 'sets the invitation_rejection_reason' do
+    expect { AdvisableSchema.execute(query, context: {}) }.to change {
       application.reload.invitation_rejection_reason
-    }.from(nil).to("Not a good fit")
+    }.from(nil)
+      .to('Not a good fit')
   end
 end

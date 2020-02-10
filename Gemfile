@@ -6,13 +6,13 @@ ruby '~> 2.6.1'
 # loads env vars from the .env file in dev and test
 gem 'dotenv-rails', groups: %i[development test]
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.0'
+gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '>= 6'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 # gem "administrate"
@@ -39,7 +39,7 @@ gem 'sentry-raven'
 gem 'webpacker', '~> 4.0.x'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', '>= 1.4.2', require: false
 
 # Airrecord for querying airtable
 gem 'airrecord', '~> 1.0.2'
@@ -49,7 +49,7 @@ gem 'graphql'
 gem 'parser'
 gem 'rollbar'
 gem 'stripe', '~> 5.14'
-gem 'attr_encrypted', '~> 3.0.0'
+gem 'attr_encrypted', '~> 3.1.0'
 
 gem 'jwt'
 
@@ -58,14 +58,14 @@ gem 'simplecov', require: false, group: :test
 gem 'pundit'
 gem 'nanoid'
 
-gem 'aws-sdk-s3', require: false
-gem 'image_processing', '~> 1.2'
+gem 'aws-sdk-s3', '~> 1'
+gem 'image_processing', '~> 1.0'
 
 group :development, :test do
   gem 'pry'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'rspec-rails', '~> 3.8.2'
+  gem 'rspec-rails', '~> 3.9.0'
   gem 'factory_bot_rails'
 end
 
