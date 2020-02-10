@@ -5,7 +5,7 @@ class Types::SpecialistType < Types::BaseType
   HEREDOC
 
   field :id, ID, null: false do
-    description "The unique ID for the specialist"
+    description 'The unique ID for the specialist'
   end
 
   def id
@@ -13,19 +13,19 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :airtable_id, String, null: false do
-    description "The airtable ID for the specialist"
+    description 'The airtable ID for the specialist'
   end
 
   field :first_name, String, null: true do
-    description "The specialists first name"
+    description 'The specialists first name'
   end
 
   field :last_name, String, null: true do
-    description "The specialists last name"
+    description 'The specialists last name'
   end
 
   field :name, String, null: true do
-    description "The specailists full name"
+    description 'The specailists full name'
   end
 
   def name
@@ -33,7 +33,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :city, String, null: true do
-    description "The specialists city"
+    description 'The specialists city'
   end
 
   field :bio, String, null: true do
@@ -44,37 +44,37 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :confirmed, Boolean, null: false do
-    description "Wether or not the specialists account has been confirmed"
+    description 'Wether or not the specialists account has been confirmed'
   end
 
   field :travel_availability, String, null: true do
-    description "Wether or not the specailist is willing to travel for work"
+    description 'Wether or not the specailist is willing to travel for work'
   end
 
   field :linkedin, String, null: true do
-    description "The specialists linkedin URL"
+    description 'The specialists linkedin URL'
   end
 
   def linkedin
     url = object.linkedin
     return nil if url.nil?
-    url.starts_with?("http") ? url : "https://#{url}"
+    url.starts_with?('http') ? url : "https://#{url}"
   end
 
   field :website, String, null: true do
-    description "The specialists portfolio"
+    description 'The specialists portfolio'
   end
 
   field :phone_number, String, null: true do
-    description "The phone number for the specialist"
+    description 'The phone number for the specialist'
   end
 
   field :image, Types::AttachmentType, null: true do
-    description "The specialists profile image"
+    description 'The specialists profile image'
   end
 
   field :resume, Types::AttachmentType, null: true do
-    description "The specialists resume"
+    description 'The specialists resume'
   end
 
   def resume
@@ -82,20 +82,25 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :avatar, String, null: true do
-    description "The specialists avatar"
+    description 'The specialists avatar'
   end
 
   def avatar
     if object.avatar.attached?
-      return Rails.application.routes.url_helpers.rails_blob_url(object.avatar, host: ENV["ORIGIN"])
+      return(
+        Rails.application.routes.url_helpers.rails_blob_url(
+          object.avatar,
+          host: ENV['ORIGIN']
+        )
+      )
     end
 
     # Fallback to the airtable image if they have not uploaded an avatar
-    object.image.try(:[], "url")
+    object.image.try(:[], 'url')
   end
 
   field :skills, [Types::SpecialistSkillType, null: true], null: true do
-    description "A list of skills that the specialist possesses"
+    description 'A list of skills that the specialist possesses'
     argument :project_skills, Boolean, required: false
     argument :limit, Int, required: false
   end
@@ -108,41 +113,43 @@ class Types::SpecialistType < Types::BaseType
   # By default the skills field will only show direct skills, however, you can
   # include project skills by specifying the project_skills argument.
   def skills(project_skills: false, limit: nil)
-    records = begin
-      if project_skills
-        (
-          object.skills +
-          object.project_skills +
-          object.off_platform_project_skills
-        ).uniq
-      else
-        object.skills
+    records =
+      begin
+        if project_skills
+          (
+            object.skills + object.project_skills +
+              object.off_platform_project_skills
+          )
+            .uniq
+        else
+          object.skills
+        end
       end
-    end
 
-    sorted = records.sort_by { |s| [s.projects_count, s.specialists_count] }.reverse!
+    sorted =
+      records.sort_by { |s| [s.projects_count, s.specialists_count] }.reverse!
     sorted[0..(limit || sorted.count + 1) - 1].map do |skill|
       OpenStruct.new(specialist: object, skill: skill)
     end
   end
 
   field :ratings, Types::Ratings, null: false do
-    description "The combined ratings for the specialist based on previous work"
+    description 'The combined ratings for the specialist based on previous work'
   end
 
   # Eventually the reviews and reviewsCount fields should be combined into
   # some kind of Connection type to support pagination and where the count
   # would be a field of the connection type.
   field :reviews, [Types::Review], null: false do
-    description "A list of reviews for the specialist"
+    description 'A list of reviews for the specialist'
   end
 
   field :reviewsCount, Integer, null: true do
-    description "The amount of reviews a specialist has"
+    description 'The amount of reviews a specialist has'
   end
 
   field :remote, Boolean, null: true do
-    description "Wether or not the specialist will work remotely"
+    description 'Wether or not the specialist will work remotely'
   end
 
   field :previous_projects, [Types::PreviousProject], null: false do
@@ -151,14 +158,15 @@ class Types::SpecialistType < Types::BaseType
       that happened on Advisable or off platform projects that the specialist
       has provided.
     HEREDOC
-    
+
     argument :include_validation_failed, Boolean, required: false
   end
 
   def previous_projects(include_validation_failed: false)
-    ::PreviousProject.for_specialist(object, {
-      include_validation_failed: include_validation_failed
-    })
+    ::PreviousProject.for_specialist(
+      object,
+      { include_validation_failed: include_validation_failed }
+    )
   end
 
   field :previous_projects_count, Int, null: false
@@ -168,7 +176,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :has_account, Boolean, null: false do
-    description "Wether or not the specialist has created their account yet"
+    description 'Wether or not the specialist has created their account yet'
   end
 
   def has_account
@@ -185,7 +193,7 @@ class Types::SpecialistType < Types::BaseType
 
   field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
     authorize :is_specialist, :is_admin
-    description "The timestamp for when the specialist record was created"
+    description 'The timestamp for when the specialist record was created'
   end
 
   # Eventually the applications field should be updated to support pagination
@@ -204,32 +212,34 @@ class Types::SpecialistType < Types::BaseType
 
   def applications(status: nil, sales_status: nil)
     applications = object.applications.order(created_at: :desc)
-    applications = applications.by_sales_status(sales_status) if sales_status.present?
+    if sales_status.present?
+      applications = applications.by_sales_status(sales_status)
+    end
     applications = applications.where(status: status) if status.present?
     applications
   end
 
   field :email, String, null: true do
     authorize :is_admin, :is_specialist, :is_applicant_of_user_project
-    description "The specialists email address"
+    description 'The specialists email address'
   end
-  
+
   field :talk_signature, String, null: false do
     authorize :is_specialist
-    description "A unique signature used to for identification with talkjs"
+    description 'A unique signature used to for identification with talkjs'
   end
-  
+
   def talk_signature
     user_id = context[:current_user].uid
-    OpenSSL::HMAC.hexdigest('SHA256', ENV["TALKJS_SECRET"], user_id)
+    OpenSSL::HMAC.hexdigest('SHA256', ENV['TALKJS_SECRET'], user_id)
   end
 
   field :country, Types::CountryType, null: true do
-    description "The specialists country"
+    description 'The specialists country'
   end
 
   field :location, String, null: true
-  
+
   def location
     "#{object.city}, #{object.country.try(:name)}"
   end
@@ -271,27 +281,26 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :primarily_freelance, Boolean, null: true do
-    description "Wether or not the freelancers occupation is primarily freelancing"
+    description 'Wether or not the freelancers occupation is primarily freelancing'
   end
 
   field :number_of_projects, String, null: true do
-    description "The number of projects the freelancer has completed"
+    description 'The number of projects the freelancer has completed'
   end
 
   field :hourly_rate, Int, null: true do
-    description "The typical hourly rate for this freelancer"
+    description 'The typical hourly rate for this freelancer'
   end
 
   field :public_use, Boolean, null: true do
-    description "Wether or not the specialist is ok with being used publicly"
+    description 'Wether or not the specialist is ok with being used publicly'
   end
 
   field :application_stage, String, null: true do
     authorize :is_specialist
-    description "The account status for the specialist"
+    description 'The account status for the specialist'
   end
 end
-
 
 class Types::SpecialistEdgeType < GraphQL::Types::Relay::BaseEdge
   node_type(Types::SpecialistType)
