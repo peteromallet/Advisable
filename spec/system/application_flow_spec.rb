@@ -140,9 +140,13 @@ describe 'Application flow' do
           'I agree that if Advisable connects me to a client that I successfully contract with, between 5-20% of my fees are payable to Advisable and all payments must go through Advisable.'
       )
         .click
-      find('span', text: 'I agree with').sibling("span[class^='styles__Box']")
+      find('input[name="acceptsTerms"').sibling(
+        '*[class^=styles__StyledCheckboxToggle]'
+      )
         .click
-      find('span', text: /participate/).sibling("span[class^='styles__Box']")
+      find('input[name="trialProgram"').sibling(
+        '*[class^=styles__StyledCheckboxToggle]'
+      )
         .click
       click_on 'Submit Application'
       expect(page).to have_content('Application sent!')

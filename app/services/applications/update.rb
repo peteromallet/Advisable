@@ -20,8 +20,15 @@ class Applications::Update < ApplicationService
 
   def permitted_attributes
     attributes.slice(
-      :introduction, :availability, :rate, :accepts_fee, :accepts_terms,
-      :project_type, :monthly_limit, :trial_program
+      :introduction,
+      :availability,
+      :rate,
+      :accepts_fee,
+      :accepts_terms,
+      :project_type,
+      :monthly_limit,
+      :trial_program,
+      :auto_apply
     )
   end
 
@@ -38,15 +45,20 @@ class Applications::Update < ApplicationService
     # iterate through the passed questions. This should be an array of hashes
     # with 'question' and 'answer' keys.
     attributes[:questions].each do |hash|
-      # Check that the passed quesion is in the projects questions array.
-      unless (application.project.questions || []).include?(hash[:question])
+      unless (
+               # Check that the passed quesion is in the projects questions array.
+               application.project.questions ||
+                 []
+             )
+               .include?(hash[:question])
         raise Service::Error.new(:invalid_question)
       end
 
       # Check if the question has already been answered
-      index = application_questions.find_index do |q|
-        q['question'] == hash[:question]
-      end
+      index =
+        application_questions.find_index do |q|
+          q['question'] == hash[:question]
+        end
 
       # Override the answer if it has already been answered
       if index.present?
