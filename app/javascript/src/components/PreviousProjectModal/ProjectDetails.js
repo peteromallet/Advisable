@@ -45,52 +45,54 @@ const ProjectDetails = ({ previousProject }) => {
         />
       </Modal.Header>
       <Modal.Body>
-        {get(viewer, "isSpecialist") && project.validationStatus === "Pending" && (
-          <Box mb="m">
-            <ProjectValidationPrompt project={project} />
-          </Box>
-        )}
-        <Spacing paddingBottom="s">
-          {clientDescription && (
-            <>
-              <Heading level={6}>Client Description</Heading>
-              <Text size="s" marginBottom="l">
-                {clientDescription}
-              </Text>
-            </>
-          )}
+        <Box padding="l">
+          {get(viewer, "isSpecialist") &&
+            project.validationStatus === "Pending" && (
+              <Box mb="m">
+                <ProjectValidationPrompt project={project} />
+              </Box>
+            )}
+          <Spacing paddingBottom="s">
+            {clientDescription && (
+              <>
+                <Heading level={6}>Client Description</Heading>
+                <Text size="s" marginBottom="l">
+                  {clientDescription}
+                </Text>
+              </>
+            )}
 
-          {requirements && (
-            <>
-              <Heading level={6}>Requirements</Heading>
-              <Text size="s" marginBottom="l">
-                {requirements}
-              </Text>
-            </>
-          )}
+            {requirements && (
+              <>
+                <Heading level={6}>Requirements</Heading>
+                <Text size="s" marginBottom="l">
+                  {requirements}
+                </Text>
+              </>
+            )}
 
-          <Heading level={6}>Project Description</Heading>
-          <Text fontSize="s" lineHeight="s" color="neutral.7">
-            {renderLineBreaks(project.description)}
-          </Text>
+            <Heading level={6}>Project Description</Heading>
+            <Text fontSize="s" lineHeight="s" color="neutral.7">
+              {renderLineBreaks(project.description)}
+            </Text>
 
-          {project.results && (
-            <>
-              <Heading level={6}>Results</Heading>
-              <Text size="s" mt="l" marginBottom="l">
-                {project.results}
-              </Text>
-            </>
-          )}
-        </Spacing>
-
-        {reviews.map(review => (
-          <Review
-            key={review.id}
-            review={review}
-            companyName={companyName(project)}
-          />
-        ))}
+            {project.results && (
+              <>
+                <Heading level={6}>Results</Heading>
+                <Text size="s" mt="l" marginBottom="l">
+                  {project.results}
+                </Text>
+              </>
+            )}
+          </Spacing>
+          {reviews.map(review => (
+            <Review
+              key={review.id}
+              review={review}
+              companyName={companyName(project)}
+            />
+          ))}
+        </Box>
       </Modal.Body>
     </React.Fragment>
   );
