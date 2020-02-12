@@ -12,6 +12,7 @@ function BottomBar({ specialists, onContinue }) {
       width="100%"
       bg="white.9"
       position="fixed"
+      zIndex={4}
       boxShadow="0 10px 50px rgba(0, 0, 0, 0.2)"
       as={motion.div}
       animate={{

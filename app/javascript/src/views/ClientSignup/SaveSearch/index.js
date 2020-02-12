@@ -2,43 +2,57 @@ import React from "react";
 import { get } from "lodash";
 import queryString from "query-string";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { useLocation, Redirect } from "react-router-dom";
 import { useMutation } from "react-apollo";
 import { motion, AnimatePresence } from "framer-motion";
-import { Box, Card, Text, Button, Link } from "@advisable/donut";
-import Logo from "../../../components/Logo";
+import {
+  Box,
+  Card,
+  Text,
+  RoundedButton,
+  Link,
+  Icon,
+  useTheme,
+} from "@advisable/donut";
 import CREATE_ACCOUNT from "./createAccount";
 import Form from "./Form";
+import illustration from "../../../illustrations/handshake.png";
 
 const SaveSearch = () => {
+  const theme = useTheme();
   const { t } = useTranslation();
   const location = useLocation();
   const [email, setEmail] = React.useState(null);
   const [createAccount, { data }] = useMutation(CREATE_ACCOUNT);
-  const queryParams = queryString.parse(location.search);
+  const queryParams = queryString.parse(location.search, {
+    parseBooleans: true,
+  });
+
+  React.useEffect(() => {
+    theme.updateTheme({ background: "white" });
+    return () => theme.updateTheme({ background: "default" });
+  }, []);
+
+  if (!queryParams.skill) {
+    return <Redirect to="/clients/signup" />;
+  }
 
   const handleSubmit = async (values, formik) => {
     const response = await createAccount({
       variables: {
         input: {
-          skill: get(location, "state.search.skill"),
-          industry: get(location, "state.search.industry"),
-          industryExperienceRequired: get(
-            location,
-            "state.search.industryRequired"
-          ),
-          companyType: get(location, "state.search.companyType"),
-          companyTypeExperienceRequired: get(
-            location,
-            "state.search.companyTypeRequired"
-          ),
+          skill: queryParams.skill,
+          industry: queryParams.industry,
+          industryExperienceRequired: queryParams.industryRequired,
+          companyType: queryParams.companyType,
+          companyTypeExperienceRequired: queryParams.companyTypeRequired,
           email: values.email,
           specialists: location.state.selected,
-          campaignName: get(queryParams, "utm_campaign"),
-          campaignSource: get(queryParams, "utm_source"),
-          pid: get(queryParams, "pid"),
-          rid: get(queryParams, "rid"),
-          gclid: get(queryParams, "gclid"),
+          campaignName: queryParams.utm_campaign,
+          campaignSource: queryParams.utm_source,
+          pid: queryParams.pid,
+          rid: queryParams.rid,
+          gclid: queryParams.gclid,
         },
       },
     });
@@ -87,57 +101,60 @@ const SaveSearch = () => {
 
   return (
     <>
-      <Box maxWidth={500} margin="50px auto" position="relative">
-        <AnimatePresence>
-          {get(data, "createUserAccount") ? (
-            <motion.div
-              key="done"
-              initial={{ opacity: 0, y: 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ ease: "easeOut", duration: 0.25 }}
-            >
-              <Card padding="l">
+      <Box
+        maxWidth={1100}
+        margin="0 auto"
+        py="xl"
+        display="flex"
+        alignItems="center"
+      >
+        <Box maxWidth={480} flexShrink={0}>
+          <AnimatePresence>
+            {get(data, "createUserAccount") ? (
+              <motion.div
+                key="done"
+                initial={{ opacity: 0, y: 60 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ ease: "easeOut", duration: 0.25 }}
+              >
                 <Text
                   as="h2"
                   mb="xs"
                   color="blue.8"
-                  fontSize="30px"
-                  lineHeight="28px"
+                  fontSize="xxxl"
                   fontWeight="semibold"
-                  letterSpacing="-0.035em"
+                  letterSpacing="-0.02em"
                 >
                   Tell us more
                 </Text>
-                <Text fontSize="s" color="neutral.7" lineHeight="s" mb="l">
+                <Text folor="neutral.9" lineHeight="m" mb="xl">
                   Great! We think we’ll have the perfect person for this project
                   but we need to know a little bit more about your project
                   first.
                 </Text>
-                <Button
-                  intent="success"
-                  appearance="primary"
-                  iconRight="arrow-right"
+                <RoundedButton
+                  size="l"
+                  suffix={<Icon icon="arrow-right" />}
                   onClick={handleContinue}
                 >
                   Setup Project
-                </Button>
-              </Card>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="save"
-              initial={{ opacity: 0, y: 60, position: "static" }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 60, position: "absolute" }}
-              transition={{ ease: "easeOut", duration: 0.25 }}
-            >
-              <Card padding="l">
+                </RoundedButton>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="save"
+                exit={{ opacity: 0, y: -100, position: "absolute" }}
+                transition={{ ease: "easeOut", duration: 0.25 }}
+              >
                 <Form onSubmit={handleSubmit} />
-              </Card>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Box>
+        <Box textAlign="center">
+          <img src={illustration} width="80%" />
+        </Box>
       </Box>
     </>
   );

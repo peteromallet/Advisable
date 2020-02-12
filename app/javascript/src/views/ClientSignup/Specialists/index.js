@@ -1,131 +1,81 @@
 import React from "react";
-import { get, filter } from "lodash";
-import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
-import { useLocation, useHistory, Redirect } from "react-router-dom";
-import { Box, Text, RoundedButton, Icon } from "@advisable/donut";
-import SpecialistCard from "../../../components/SpecialistCard";
-import Heading from "./Heading";
-import BottomBar from "./BottomBar";
+import queryString from "query-string";
+import { useQuery } from "react-apollo";
+import { useLocation, Redirect } from "react-router-dom";
+import SEARCH from "./search";
+import Searching from "./Searching";
+import SearchResults from "./SearchResults";
+import SelectPriceRange from "./SelectPriceRange";
+import { withinLimits } from "./rangeHelpers";
+import useInterval from "../../../hooks/useInterval";
 
 function Specialists() {
-  const { t } = useTranslation();
   const location = useLocation();
-  const history = useHistory();
-  const search = get(location, "state.search");
-  const results = get(location, "state.results");
+  const [showResults, setShowResults] = React.useState(false);
 
-  if (!results) {
+  useInterval(() => {
+    setShowResults(true);
+  }, 2000);
+
+  const queryParams = queryString.parse(location.search, {
+    parseBooleans: true,
+  });
+
+  const variables = { skill: queryParams.skill };
+
+  if (queryParams.industryRequired) {
+    variables.industry = queryParams.industry;
+    variables.industryRequired = queryParams.industryRequired;
+  }
+
+  if (queryParams.companyTypeRequired) {
+    variables.companyType = queryParams.companyType;
+    variables.companyTypeRequired = queryParams.companyTypeRequired;
+  }
+
+  const { data, loading } = useQuery(SEARCH, {
+    variables,
+    skip: !variables.skill,
+  });
+
+  if (!variables.skill) {
     return <Redirect to="/clients/signup" />;
   }
 
-  const selected = get(location, "state.selected") || [];
+  if (loading || showResults === false) {
+    return <Searching />;
+  }
 
-  const selectedFreelancers = results.nodes.filter(s => {
-    return selected.indexOf(s.id) > -1;
-  });
+  let specialists = data.specialists.nodes;
 
-  const toggleSelected = id => {
-    let nextSelected;
-    if (selected.indexOf(id) > -1) {
-      nextSelected = selected.filter(s => s !== id);
-    } else {
-      nextSelected = [...selected, id];
-    }
-
-    history.replace({
-      pathname: location.pathname,
-      search: location.search,
-      state: {
-        ...location.state,
-        selected: nextSelected,
-      },
+  if (location.state?.priceRange) {
+    const priceRange = location.state.priceRange;
+    specialists = specialists.filter(specialist => {
+      return (
+        withinLimits(specialist.hourlyRate) >= priceRange.min &&
+        withinLimits(specialist.hourlyRate) <= priceRange.max
+      );
     });
-  };
+  }
 
-  const handleContinue = () => {
-    history.push({
-      pathname: "/clients/signup/save",
-      search: location.search,
-      state: location.state,
-    });
-  };
-
-  return (
-    <Box maxWidth={1100} mx="auto" py={{ _: "m", s: "xl" }} px="20px">
-      <Text
-        as="h2"
-        mb="xs"
-        color="blue.8"
-        fontSize="30px"
-        lineHeight="28px"
-        fontWeight="semibold"
-        letterSpacing="-0.035em"
-      >
-        {t("clientSignup.resultsHeading")}
-      </Text>
-      <Heading search={search} results={results} />
-
-      <Box flexWrap="wrap" display="flex" ml="-10px" mr="-10px">
-        {results.nodes.map((s, i) => (
-          <Box
-            key={s.id}
-            as={motion.div}
-            animate={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 30 }}
-            transition={{ delay: (i + 1) * 0.2 }}
-            width={{ _: "100%", s: "50%", l: "33.3333%" }}
-          >
-            <SpecialistCard
-              mx="10px"
-              mb={20}
-              height={480}
-              specialist={s}
-              border="2px solid white"
-              elevation={selected.indexOf(s.id) > -1 ? "l" : "m"}
-              borderColor={selected.indexOf(s.id) > -1 && "blue.6"}
-              action={
-                <RoundedButton
-                  aria-label={`Select ${s.name}`}
-                  onClick={() => toggleSelected(s.id)}
-                  variant={selected.indexOf(s.id) > -1 ? "primary" : "dark"}
-                  prefix={
-                    <Icon
-                      icon={selected.indexOf(s.id) > -1 ? "check" : "plus"}
-                    />
-                  }
-                >
-                  {selected.indexOf(s.id) > -1 ? "Added" : "Add"}
-                </RoundedButton>
-              }
-            />
-          </Box>
-        ))}
-      </Box>
-
-      <BottomBar
-        specialists={selectedFreelancers}
-        onContinue={handleContinue}
+  if (specialists.length === 0) {
+    return (
+      <Redirect
+        to={{
+          ...location,
+          pathname: "/clients/signup/save",
+        }}
       />
+    );
+  }
 
-      <Box height={1} width={200} bg="neutral.2" my="xl" mx="auto" />
-      <Box maxWidth={500} mx="auto" textAlign="center" mb="xxl">
-        <Text mb="xs" fontWeight="semibold">
-          Don’t see anyone you like?
-        </Text>
-        <Text mb="m" lineHeight="m" fontSize="s">
-          Don’t worry, we’ll handpick the perfect specialist for you.
-        </Text>
-        <RoundedButton
-          variant="subtle"
-          onClick={handleContinue}
-          suffix={<Icon icon="arrow-right" />}
-        >
-          Skip
-        </RoundedButton>
-      </Box>
-    </Box>
-  );
+  // If there is more than 6 specialists and there is no price range
+  // filter then show the range selection
+  if (specialists.length >= 6 && !location.state?.priceRange) {
+    return <SelectPriceRange specialists={specialists} />;
+  }
+
+  return <SearchResults specialists={specialists} />;
 }
 
 export default Specialists;

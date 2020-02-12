@@ -1,14 +1,20 @@
 // A simple react hook that will reset the view scroll back to 0 when the
 // component mounts.
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 
-export default (selector, dependents = []) => {
-  useLayoutEffect(() => {
+function useScrollRestore(selector, dependents = []) {
+  useEffect(() => {
     if (selector) {
       const el = document.querySelector(selector);
       if (el && el.strollTo) el.scrollTo(0, 0);
     } else {
-      window.scrollTo(0, 0);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 5);
     }
   }, dependents);
-};
+
+  return null;
+}
+
+export default useScrollRestore;
