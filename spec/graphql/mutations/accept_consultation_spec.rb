@@ -61,4 +61,23 @@ describe Mutations::AcceptConsultation do
 
     AdvisableSchema.execute(query)
   end
+
+  context 'when the user already has a project with the skill' do
+    let!(:project) do
+      create(
+        :project,
+        user: consultation.user, primary_skill: consultation.skill.name
+      )
+    end
+
+    it 'doesnt create a new project' do
+      expect { AdvisableSchema.execute(query) }.to_not change { Project.count }
+    end
+
+    it 'creates an application for that project' do
+      expect { AdvisableSchema.execute(query) }.to change {
+        project.applications.count
+      }.by(1)
+    end
+  end
 end

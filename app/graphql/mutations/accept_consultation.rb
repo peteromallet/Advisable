@@ -8,7 +8,7 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
       consultation =
         Consultation.find_by_uid_or_airtable_id!(args[:consultation])
 
-      project = create_project(consultation)
+      project = get_project(consultation)
       application = create_application(project, consultation.specialist)
       interview = create_interview(application)
       consultation.update(
@@ -21,20 +21,24 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
 
   private
 
-  def create_project(consultation)
+  def get_project(consultation)
     user = consultation.user
+    project = user.projects.find_by_primary_skill(consultation.skill.name)
+    project = create_new_project(consultation) if project.nil?
+    project
+  end
+
+  def create_new_project(consultation)
     project =
       Project.create(
-        {
-          user: user,
-          skills: [consultation.skill],
-          sales_status: 'Open',
-          status: 'Project Created',
-          service_type: 'Consultation',
-          primary_skill: consultation.skill.name,
-          owner: ENV['CONSULTATION_PROJECT_OWNER'],
-          name: "#{user.company_name} - #{consultation.skill.name}"
-        }
+        user: consultation.user,
+        skills: [consultation.skill],
+        sales_status: 'Open',
+        status: 'Project Created',
+        service_type: 'Consultation',
+        primary_skill: consultation.skill.name,
+        owner: ENV['CONSULTATION_PROJECT_OWNER'],
+        name: "#{consultation.user.company_name} - #{consultation.skill.name}"
       )
     project.sync_to_airtable
     project
