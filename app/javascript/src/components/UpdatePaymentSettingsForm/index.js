@@ -69,7 +69,7 @@ const UpdatePaymentSettingsForm = ({
                   {...field}
                   label="Bank account holder name"
                   placeholder="Full name or company name..."
-                  description="Please provivde the name of the bank account holder. Either your full name or company name."
+                  description="Please provide the name of the bank account holder. Either your full name or company name."
                   error={
                     get(formik.touched, `bankHolderName`) &&
                     get(formik.errors, `bankHolderName`)
