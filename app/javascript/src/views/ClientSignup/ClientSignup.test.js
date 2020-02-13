@@ -200,18 +200,15 @@ test("Alternative flow", async () => {
   ];
 
   const app = renderApp({
-    route: "/clients/signup?alternative=true",
+    route: `/clients/signup?alternative=true&skill=Twitter%20Marketing`,
     graphQLMocks,
   });
 
-  const popularSkill = await app.findByText(skill.name);
-  fireEvent.click(popularSkill);
-  fireEvent.click(
-    app.getByLabelText(
-      "Experience working at companies similar to mine is important"
-    )
+  const checkbox = await app.findByLabelText(
+    "Experience working at companies similar to mine is important"
   );
 
+  fireEvent.click(checkbox);
   const industryInput = app.getByPlaceholderText("What industry are you in?");
   fireEvent.click(industryInput);
   fireEvent.keyDown(industryInput, { key: "ArrowDown" });

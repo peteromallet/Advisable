@@ -68,7 +68,7 @@ function AlternativeCriteriaForm({ data, onSubmit }) {
               formik.setFieldValue("skill", skill);
             }}
           />
-          <Box>
+          {/* <Box>
             <Text mb="s" fontSize="s" color="neutral.7" letterSpacing="-0.02em">
               Popular skills
             </Text>
@@ -86,7 +86,7 @@ function AlternativeCriteriaForm({ data, onSubmit }) {
                 {skill.name}
               </StyledPopularSkill>
             ))}
-          </Box>
+          </Box> */}
           <Box height={1} bg="neutral.1" my="l" />
           <Field as={Checkbox} type="checkbox" name="experienceRequired">
             Experience working at companies similar to mine is important
