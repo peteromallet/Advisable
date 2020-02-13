@@ -55,6 +55,7 @@ describe Mutations::AcceptConsultation do
     expect(Application).to receive(:create).with(
       project: instance_of(Project),
       status: 'Applied',
+      score: 80,
       specialist: consultation.specialist
     )
       .and_return(application)
