@@ -11,6 +11,7 @@ const Applicant = lazy(() => import("./views/Applicant"));
 const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
 const Applications = lazy(() => import("./views/Applications"));
+const ClientSignup = lazy(() => import("./views/ClientSignup"));
 const FreelancerProjects = lazy(() => import("./views/FreelancerProjects"));
 const UpdateProfile = lazy(() => import("./views/UpdateProfile"));
 const Projects = lazy(() => import("./views/Projects"));
@@ -36,6 +37,7 @@ const ApplicationRoutes = () => {
       <Header />
       <Suspense fallback={<Loading />}>
         <Switch>
+          <Route path="/clients/signup" component={ClientSignup} />
           <AuthenticatedRoute exact path="/messages" component={Messages} />
           {/* Client routes */}
           <Route

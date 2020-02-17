@@ -69,9 +69,9 @@ const DownshiftMulti = props => {
     <Downshift
       {...props}
       onChange={handleSelection}
-      selectedItem={props.multiple && null}
       stateReducer={stateReducer}
       itemToString={item => (item ? item.label : "")}
+      selectedItem={props.multiple ? null : props.value || null}
     >
       {downshift => props.children(downshiftProps(downshift))}
     </Downshift>

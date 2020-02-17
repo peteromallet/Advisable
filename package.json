@@ -28,7 +28,7 @@
     "clipboard-polyfill": "^2.8.1",
     "dinero.js": "^1.6.0",
     "dotenv": "^8.2.0",
-    "downshift": "^3.4.8",
+    "downshift": "^5.0.0",
     "feather-icons": "^4.22.1",
     "file-loader": "^5.0.2",
     "formik": "^2.1.3",

@@ -80,6 +80,7 @@ const AutocompleteDesktop = props => {
             multiple={multiple}
             onChange={onChange}
             primary={primary}
+            selectedItem={value}
             onPrimaryChange={onPrimaryChange}
             initialInputValue={props.multiple ? undefined : value?.label}
             onStateChange={handleStateChange(popper)}
