@@ -42,7 +42,6 @@ const Routes = () => {
           path="/interview_request/:interviewID"
           component={InterviewRequest}
         />
-        <Route path="/clients/signup" component={ClientSignup} />
         <Route path="/freelancers/signup" component={FreelancerSignup} />
         <Route path="/verify_project/:id" component={VerifyProject} />
         <Route component={ApplicationRoutes} />

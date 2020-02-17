@@ -1,6 +1,7 @@
 import React from "react";
 import Icon from "../Icon";
 import extractSpacingProps from "../../utilities/extractSpacingProps";
+import withoutSpacingProps from "../../utilities/withoutSpacingProps";
 import { StyledSelect, StyledSelectInput, StyledSelectArrow } from "./styles";
 
 const Select = ({ children, placeholder, value, ...props }) => {
@@ -11,7 +12,7 @@ const Select = ({ children, placeholder, value, ...props }) => {
       <StyledSelectInput
         placeholderSelected={placeholderSelected}
         value={value}
-        {...props}
+        {...withoutSpacingProps(props)}
       >
         {placeholder && (
           <option value="" disabled selected={placeholderSelected}>

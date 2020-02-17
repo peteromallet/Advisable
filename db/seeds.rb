@@ -7,5 +7,12 @@ Airtable::Application.sync(filter: nil)
 Airtable::Task.sync(filter: nil)
 Airtable::SalesPerson.sync(filter: nil)
 
-User.first.update(password: 'testing123', confirmed_at: 2.hours.ago)
-Specialist.first.update(password: 'testing123', confirmed_at: 2.hours.ago)
+User.all.each do |user|
+  user.update(password: 'testing123', confirmed_at: 2.hours.ago)
+end
+
+Specialist.all.each do |specialist|
+  specialist.update(
+    password: 'testing123', confirmed_at: 2.hours.ago, average_score: 85
+  )
+end

@@ -1,135 +1,81 @@
 import React from "react";
-import { get } from "lodash";
-import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
-import { useLocation, useHistory, Redirect } from "react-router-dom";
-import { Box, Text, Button } from "@advisable/donut";
-import { SlideInUp } from "../../../components/Animations";
-import Logo from "../../../components/Logo";
-import SearchingIndicator from "../../../components/SearchingIndicator";
-import { Header, StyledSpecialist } from "../styles";
-import Heading from "./Heading";
-import Specialist from "./Specialist";
-import SideScroller from "./SideScroller";
+import queryString from "query-string";
+import { useQuery } from "react-apollo";
+import { useLocation, Redirect } from "react-router-dom";
+import SEARCH from "./search";
+import Searching from "./Searching";
+import SearchResults from "./SearchResults";
+import SelectPriceRange from "./SelectPriceRange";
+import { withinLimits } from "./rangeHelpers";
+import useInterval from "../../../hooks/useInterval";
 
-const Specailists = () => {
-  const { t } = useTranslation();
+function Specialists() {
   const location = useLocation();
-  const history = useHistory();
-  const search = get(location, "state.search");
-  const results = get(location, "state.results");
+  const [showResults, setShowResults] = React.useState(false);
 
-  if (!results) {
+  useInterval(() => {
+    setShowResults(true);
+  }, 2000);
+
+  const queryParams = queryString.parse(location.search, {
+    parseBooleans: true,
+  });
+
+  const variables = { skill: queryParams.skill };
+
+  if (queryParams.industryRequired) {
+    variables.industry = queryParams.industry;
+    variables.industryRequired = queryParams.industryRequired;
+  }
+
+  if (queryParams.companyTypeRequired) {
+    variables.companyType = queryParams.companyType;
+    variables.companyTypeRequired = queryParams.companyTypeRequired;
+  }
+
+  const { data, loading } = useQuery(SEARCH, {
+    variables,
+    skip: !variables.skill,
+  });
+
+  if (!variables.skill) {
     return <Redirect to="/clients/signup" />;
   }
 
-  const selected = get(location, "state.selected") || [];
+  if (loading || showResults === false) {
+    return <Searching />;
+  }
 
-  const toggleSelected = id => {
-    let nextSelected;
-    if (selected.indexOf(id) > -1) {
-      nextSelected = selected.filter(s => s !== id);
-    } else {
-      nextSelected = [...selected, id];
-    }
+  let specialists = data.specialists.nodes;
 
-    history.replace({
-      pathname: location.pathname,
-      search: location.search,
-      state: {
-        ...location.state,
-        selected: nextSelected,
-      },
+  if (location.state?.priceRange) {
+    const priceRange = location.state.priceRange;
+    specialists = specialists.filter(specialist => {
+      return (
+        withinLimits(specialist.hourlyRate) >= priceRange.min &&
+        withinLimits(specialist.hourlyRate) <= priceRange.max
+      );
     });
-  };
+  }
 
-  const handleContinue = () => {
-    history.push({
-      pathname: "/clients/signup/save",
-      search: location.search,
-      state: location.state,
-    });
-  };
+  if (specialists.length === 0) {
+    return (
+      <Redirect
+        to={{
+          ...location,
+          pathname: "/clients/signup/save",
+        }}
+      />
+    );
+  }
 
-  return (
-    <>
-      <Header>
-        <Logo />
-        <Button
-          onClick={handleContinue}
-          appearance="primary"
-          intent="success"
-          iconRight="arrow-right"
-        >
-          Continue
-        </Button>
-      </Header>
-      <Box maxWidth={800} ml={{ _: "m", l: "xxl" }}>
-        <Text
-          as="h2"
-          mb="xs"
-          fontSize="xxl"
-          lineHeight="xl"
-          fontWeight="semibold"
-        >
-          {t("clientSignup.resultsHeading")}
-        </Text>
-        <Heading search={search} results={results} />
-      </Box>
-      <SideScroller>
-        {results.nodes.map((specialist, i) => (
-          <motion.div
-            key={specialist.id}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ ease: "easeOut", delay: i * 0.15 }}
-          >
-            <Specialist
-              specialist={specialist}
-              onSelect={toggleSelected}
-              isSelected={selected.indexOf(specialist.airtableId) > -1}
-            />
-          </motion.div>
-        ))}
-        <SlideInUp>
-          <StyledSpecialist css="display: flex; align-items: center;">
-            <Box textAlign="center" px="s">
-              <Box mt="xl" mb="xl">
-                <SearchingIndicator />
-              </Box>
-              <Text fontSize="s" mb="s">
-                We'll identify the perfect specialist for you
-              </Text>
-              <Text fontSize="xxs" lineHeight="xs" color="neutral.6">
-                Don’t worry, based on your exact requirements, our team will
-                identify the perfect specialist for you from our network.
-              </Text>
-              <Button
-                mt="l"
-                intent="success"
-                appearance="primary"
-                iconRight="arrow-right"
-                onClick={handleContinue}
-              >
-                Continue
-              </Button>
-            </Box>
-          </StyledSpecialist>
-        </SlideInUp>
-      </SideScroller>
-      <Box ml={{ _: "m", l: "xxl" }}>
-        <Text fontSize="s" fontWeight="medium" mb="xxs">
-          Don't see anyone you like?
-        </Text>
-        <Text fontSize="xs" color="neutral.7" mb="s">
-          Don’t worry, we’ll handpick the perfect specialist for you.
-        </Text>
-        <Button appearance="outlined" onClick={handleContinue} mb="l">
-          Skip
-        </Button>
-      </Box>
-    </>
-  );
-};
+  // If there is more than 6 specialists and there is no price range
+  // filter then show the range selection
+  if (specialists.length >= 6 && !location.state?.priceRange) {
+    return <SelectPriceRange specialists={specialists} />;
+  }
 
-export default Specailists;
+  return <SearchResults specialists={specialists} />;
+}
+
+export default Specialists;

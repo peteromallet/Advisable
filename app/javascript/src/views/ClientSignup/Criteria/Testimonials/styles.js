@@ -69,7 +69,7 @@ export const StyledStar = styled.div`
 `;
 
 export const Sidebar = styled.div`
-  top: 0;
+  top: 58px;
   right: 0;
   right: 0;
   bottom: 0;

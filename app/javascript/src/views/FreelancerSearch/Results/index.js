@@ -7,7 +7,6 @@ import NoResults from "./NoResults";
 import Freelancers from "./Freelancers";
 
 const Results = () => {
-  const history = useHistory();
   const location = useLocation();
   const search = location.state?.search;
 
