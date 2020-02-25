@@ -2,6 +2,15 @@ import { rgba } from "polished";
 import styled, { css } from "styled-components";
 import { Box, theme } from "@advisable/donut";
 
+export const StyledProfileImageWrapper = styled.div`
+  height: 360px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 12px;
+  background: ${theme.colors.neutral[1]};
+  box-shadow: 0 8px 20px ${rgba(theme.colors.neutral[8], 0.2)};
+`;
+
 export const StyledProfileImage = styled(Box).attrs(props => ({
   style: {
     backgroundImage: `url(${props.url})`,
@@ -12,13 +21,13 @@ export const StyledProfileImage = styled(Box).attrs(props => ({
   right: 0;
   bottom: 0;
   z-index: 1;
+  opacity: 0;
   position: absolute;
+  transform: scale(1.1);
   background-size: cover;
   background-position: center;
   transition: opacity 0.7s, transform 6s;
   background-color: ${theme.colors.neutral[2]};
-  opacity: 0;
-  transform: scale(1.1);
 
   ${props =>
     props.loaded &&

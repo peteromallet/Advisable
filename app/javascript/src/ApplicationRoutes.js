@@ -38,10 +38,7 @@ const ApplicationRoutes = () => {
       <Suspense fallback={<Loading />}>
         <Switch>
           <AuthenticatedRoute exact path="/messages" component={Messages} />
-          <AuthenticatedRoute
-            path="/freelancers/:id"
-            component={FreelancerProfile}
-          />
+          <Route path="/freelancers/:id" component={FreelancerProfile} />
           {/* Client routes */}
           <Route
             component={Applicant}

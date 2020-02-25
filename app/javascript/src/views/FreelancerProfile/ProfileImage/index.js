@@ -6,6 +6,7 @@ import {
   StyledProfileImage,
   StyledImageGradient,
   StyledImageContent,
+  StyledProfileImageWrapper,
 } from "./styles";
 
 function ProfileImage({ data }) {
@@ -20,13 +21,7 @@ function ProfileImage({ data }) {
   }, [specialist]);
 
   return (
-    <Box
-      height={360}
-      bg="neutral.1"
-      borderRadius={12}
-      overflow="hidden"
-      position="relative"
-    >
+    <StyledProfileImageWrapper>
       <StyledImageGradient />
       <StyledProfileImage loaded={imageLoaded} url={specialist.avatar} />
       <StyledImageContent>
@@ -63,7 +58,7 @@ function ProfileImage({ data }) {
           {t("nouns.reviewCount", { count: specialist.reviews.length })}
         </Text>
       </StyledImageContent>
-    </Box>
+    </StyledProfileImageWrapper>
   );
 }
 

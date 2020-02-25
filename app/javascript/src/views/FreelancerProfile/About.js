@@ -22,6 +22,7 @@ function ProfileAbout({ data }) {
         fontSize="s"
         color="blue.8"
         display="inline-block"
+        css="cursor: pointer;"
         onClick={() => setExpanded(!expanded)}
       >
         {expanded ? "Hide" : "Read More"}

@@ -26,6 +26,26 @@ const getProfileData = gql`
             clientName
             description
           }
+
+          ... on Project {
+            id
+          }
+        }
+      }
+
+      reviews {
+        id
+        name
+        role
+        comment
+        companyName
+        ratings {
+          overall
+          skills
+          communication
+          qualityOfWork
+          availability
+          adherenceToSchedule
         }
       }
     }
