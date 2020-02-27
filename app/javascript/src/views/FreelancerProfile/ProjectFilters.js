@@ -1,7 +1,7 @@
 import React from "react";
 import queryString from "query-string";
 import { useLocation, useHistory } from "react-router-dom";
-import { Box, Select } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 import Filter from "./Filter";
 
 function ProjectFilters({ data }) {
@@ -28,14 +28,14 @@ function ProjectFilters({ data }) {
 
   return (
     <Box display="flex" justifyContent="flex-end" mb="m">
-      <Box width="120px">
-        <Filter
-          multiple
-          label="Skills"
-          options={data.specialist.skills.map(s => s.name)}
-          selected={queryParams?.skills || []}
-          onChange={skills => updateFilters({ skills })}
-        />
+      <Filter
+        multiple
+        label="Skills"
+        options={data.specialist.skills.map(s => s.name)}
+        selected={queryParams?.skills || []}
+        onChange={skills => updateFilters({ skills })}
+      />
+      <Box ml="m">
         <Filter
           label="Industry"
           options={data.specialist.industries.map(s => s.name)}
