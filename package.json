@@ -65,7 +65,7 @@
     "react-text-mask": "^5.4.3",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.5",
-    "reakit": "1.0.0-beta.13",
+    "reakit": "1.0.0-beta.16",
     "rollbar": "^2.13.0",
     "rollbar-sourcemap-webpack-plugin": "^2.5.3",
     "stickybits": "^3.6.6",

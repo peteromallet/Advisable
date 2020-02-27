@@ -8,10 +8,16 @@ const getProfileData = gql`
       avatar
       location
       bio
-      skills(projectSkills: true, limit: 12) {
+      skills(projectSkills: true) {
         id
         name
       }
+
+      industries {
+        id
+        name
+      }
+
       ratings {
         overall
       }
@@ -19,16 +25,20 @@ const getProfileData = gql`
         id
         comment
       }
-      previousProjects {
-        project {
-          ... on OffPlatformProject {
-            id
-            clientName
-            description
-          }
 
-          ... on Project {
+      workExperience {
+        nodes {
+          id
+          industry {
             id
+            name
+            color
+          }
+          title
+          excerpt
+          skills {
+            id
+            name
           }
         }
       }

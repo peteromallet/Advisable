@@ -20,7 +20,7 @@ function ProfileAbout({ data }) {
       </Text>
       <Box
         fontSize="s"
-        color="blue.8"
+        color="blue.7"
         display="inline-block"
         css="cursor: pointer;"
         onClick={() => setExpanded(!expanded)}

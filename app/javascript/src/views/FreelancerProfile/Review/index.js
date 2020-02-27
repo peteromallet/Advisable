@@ -14,7 +14,7 @@ function Star() {
 
 function RatingStar({ filled }) {
   return (
-    <Box color={filled ? "neutral.8" : "neutral.4"}>
+    <Box color={filled ? "neutral600" : "neutral200"}>
       <Star />
     </Box>
   );
@@ -24,7 +24,7 @@ function Rating({ label, rating }) {
   return (
     <Box
       pr="xl"
-      mb="xs"
+      mb="xxs"
       width="50%"
       display="flex"
       alignItems="center"
@@ -32,7 +32,7 @@ function Rating({ label, rating }) {
     >
       <Box
         fontSize="s"
-        color="neutral.7"
+        color="neutral500"
         fontWeight="medium"
         letterSpacing="-0.01em"
       >
@@ -57,12 +57,12 @@ function Review({ review }) {
       <Box py="xl">
         <Box mb="m" display="flex" alignItems="center">
           <Box
-            bg="yellow.4"
             mr="s"
-            py="xs"
             px="s"
-            color="yellow.8"
+            py="xs"
             fontSize="xl"
+            bg="yellow400"
+            color="yellow900"
             fontWeight="medium"
             borderRadius="20px"
           >
@@ -73,14 +73,15 @@ function Review({ review }) {
           </Box>
           <Box>
             <Text
-              fontSize="l"
-              fontWeight="medium"
               mb="xxs"
+              fontSize="l"
+              color="neutral900"
+              fontWeight="medium"
               letterSpacing="-0.01em"
             >
               {review.name}
             </Text>
-            <Text color="neutral.8" fontSize="s">
+            <Text color="neutral700" fontSize="s">
               {review.role} at {review.companyName}
             </Text>
           </Box>
@@ -95,11 +96,11 @@ function Review({ review }) {
             rating={ratings.adherenceToSchedule}
           />
         </Box>
-        <Text mt="s" lineHeight="m" fontStyle="italic">
+        <Text mt="s" lineHeight="m" fontStyle="italic" color="neutral800">
           "{review.comment}"
         </Text>
       </Box>
-      <Box width="100%" height={1} bg="neutral.2" />
+      <Box width="100%" height={1} bg="neutral100" />
     </>
   );
 }

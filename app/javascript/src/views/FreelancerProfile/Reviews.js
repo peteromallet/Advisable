@@ -17,7 +17,7 @@ function Reviews({ data }) {
       >
         {t("nouns.reviewCount", { count: reviews.length })}
       </Text>
-      <Box width="100%" mt="m" height={1} bg="neutral.2" />
+      <Box width="100%" mt="m" height={1} bg="neutral.3" />
       {reviews.map(review => (
         <Review key={review.id} review={review} />
       ))}

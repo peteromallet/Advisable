@@ -133,6 +133,19 @@ class Types::SpecialistType < Types::BaseType
     end
   end
 
+  field :industries, [Types::IndustryType], null: false do
+    description 'Returns a list of all the industries the specialist has worked in'
+  end
+
+  # TODO: This should eventually be updated to include multiple industries associated with an on
+  # platform project
+  def industries
+    (
+      object.off_platform_project_industries +
+      Industry.where(name: object.successful_projects.map(&:industry))
+    ).uniq
+  end
+
   field :ratings, Types::Ratings, null: false do
     description 'The combined ratings for the specialist based on previous work'
   end
@@ -299,6 +312,15 @@ class Types::SpecialistType < Types::BaseType
   field :application_stage, String, null: true do
     authorize :is_specialist
     description 'The account status for the specialist'
+  end
+
+  field :work_experience, Types::WorkExperienceType.connection_type, null: false
+
+  def work_experience
+    ::PreviousProject.for_specialist(
+      object,
+      { include_validation_failed: false }
+    )
   end
 end
 
