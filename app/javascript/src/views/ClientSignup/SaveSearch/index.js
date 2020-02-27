@@ -89,7 +89,7 @@ const SaveSearch = () => {
 
   const handleContinue = () => {
     const project = data.createUserAccount.project;
-    const selected = location.state.selected;
+    const selected = location.state?.selected || [];
     let url = "http://advisable.com/clients/signup/complete";
     url += `?pid=${project.airtableId}`;
     url += `&email=${encodeURIComponent(email)}`;
