@@ -94,6 +94,7 @@ const SaveSearchForm = ({ onSubmit }) => {
             >
               <RoundedButton
                 size="l"
+                type="submit"
                 loading={formik.isSubmitting}
                 suffix={<Icon icon="arrow-right" />}
               >

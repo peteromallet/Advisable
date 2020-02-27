@@ -19,7 +19,7 @@ function Loading() {
         <Skeleton height={12} maxWidth={230} mb="xxs" />
         <Skeleton height={40} maxWidth={560} mb="l" />
       </Box>
-      <Box>
+      <Box display={{ _: "none", l: "block" }}>
         <Testimonials />
       </Box>
     </Box>
