@@ -120,6 +120,8 @@ export const StyledButton = styled.button`
   letter-spacing: -0.01em;
   background: ${theme.colors.blue[5]};
   transition: background 100ms, color 100ms;
+  width: ${props => (props.fullWidth ? "100%" : "auto")};
+  ${props => props.align === "left" && { justifyContent: "flex-start" }}
 
   svg {
     width: 20px;
