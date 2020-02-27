@@ -7,12 +7,12 @@ import { useMutation } from "react-apollo";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Box,
-  Card,
   Text,
   RoundedButton,
   Link,
   Icon,
   useTheme,
+  useBreakpoint,
 } from "@advisable/donut";
 import CREATE_ACCOUNT from "./createAccount";
 import Form from "./Form";
@@ -22,6 +22,7 @@ const SaveSearch = () => {
   const theme = useTheme();
   const { t } = useTranslation();
   const location = useLocation();
+  const isDesktop = useBreakpoint("mUp");
   const [email, setEmail] = React.useState(null);
   const [createAccount, { data }] = useMutation(CREATE_ACCOUNT);
   const queryParams = queryString.parse(location.search, {
@@ -47,7 +48,7 @@ const SaveSearch = () => {
           companyType: queryParams.companyType,
           companyTypeExperienceRequired: queryParams.companyTypeRequired,
           email: values.email,
-          specialists: location.state.selected,
+          specialists: location.state?.selected,
           campaignName: queryParams.utm_campaign,
           campaignSource: queryParams.utm_source,
           pid: queryParams.pid,
@@ -102,13 +103,14 @@ const SaveSearch = () => {
   return (
     <>
       <Box
-        maxWidth={1100}
-        margin="0 auto"
+        px="m"
         py="xl"
         display="flex"
+        margin="0 auto"
+        maxWidth={1100}
         alignItems="center"
       >
-        <Box maxWidth={480} flexShrink={0}>
+        <Box width="100%">
           <AnimatePresence>
             {get(data, "createUserAccount") ? (
               <motion.div
@@ -152,9 +154,11 @@ const SaveSearch = () => {
             )}
           </AnimatePresence>
         </Box>
-        <Box textAlign="center">
-          <img src={illustration} width="80%" />
-        </Box>
+        {isDesktop && (
+          <Box textAlign="center">
+            <img src={illustration} width="80%" />
+          </Box>
+        )}
       </Box>
     </>
   );
