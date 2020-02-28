@@ -3,5 +3,3 @@
 //= link_directory ../stylesheets .css
 //= link administrate/application.css
 //= link administrate/application.js
-//= link graphiql/rails/application.css
-//= link graphiql/rails/application.js
