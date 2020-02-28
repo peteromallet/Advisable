@@ -1,7 +1,7 @@
 import React from "react";
 import { rgba, darken } from "polished";
 import { Box, Text, Checkbox, theme } from "@advisable/donut";
-import { useMenuState, Menu, MenuItem, MenuButton } from "reakit/menu";
+import { useMenuState, Menu, MenuItem, MenuButton } from "reakit/Menu";
 import styled from "styled-components";
 
 const StyledMenu = styled(Menu)`
