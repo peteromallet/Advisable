@@ -47,11 +47,15 @@ function FreelancerProfile() {
     return true;
   });
 
-  if (isDesktop) {
-    return <Desktop data={data} projects={projects} />;
-  }
-
-  return <Mobile data={data} projects={projects} />;
+  return (
+    <>
+      {isDesktop ? (
+        <Desktop data={data} projects={projects} />
+      ) : (
+        <Mobile data={data} projects={projects} />
+      )}
+    </>
+  );
 }
 
 export default FreelancerProfile;
