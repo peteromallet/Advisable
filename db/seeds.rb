@@ -6,6 +6,8 @@ Airtable::Project.sync(filter: nil)
 Airtable::Application.sync(filter: nil)
 Airtable::Task.sync(filter: nil)
 Airtable::SalesPerson.sync(filter: nil)
+Airtable::PreviousProject.sync(filter: nil)
+Airtable::SpecialistReview.sync(filter: nil)
 
 User.first.update(password: 'testing123', confirmed_at: 2.hours.ago)
 Specialist.first.update(password: 'testing123', confirmed_at: 2.hours.ago)
