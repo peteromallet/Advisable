@@ -6,9 +6,12 @@ export const StyledProfileImageWrapper = styled.div`
   height: 360px;
   overflow: hidden;
   position: relative;
-  border-radius: 12px;
   background: ${theme.colors.neutral[1]};
-  box-shadow: 0 8px 20px ${rgba(theme.colors.neutral[8], 0.2)};
+
+  @media screen and (min-width: 52em) {
+    border-radius: 12px;
+    box-shadow: 0 8px 20px ${rgba(theme.colors.neutral[8], 0.2)};
+  }
 `;
 
 export const StyledProfileImage = styled(Box).attrs(props => ({

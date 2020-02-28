@@ -23,9 +23,9 @@ function RatingStar({ filled }) {
 function Rating({ label, rating }) {
   return (
     <Box
-      pr="xl"
+      pr={{ _: null, m: "xl" }}
       mb="xxs"
-      width="50%"
+      width={{ _: "100%", m: "50%" }}
       display="flex"
       alignItems="center"
       justifyContent="space-between"

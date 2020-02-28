@@ -7,7 +7,7 @@ function ProfileAbout({ data }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <Box pt="xl">
+    <Box>
       <Text fontSize="l" mb="xs" fontWeight="medium">
         About
       </Text>

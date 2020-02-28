@@ -8,7 +8,7 @@ function ProjectCard({ project }) {
       <Box padding="l">
         <IndustryTag industry={project.industry} mb="s" />
         <Text
-          mb="xs"
+          mb="s"
           fontSize="xxl"
           color="blue900"
           fontWeight="semibold"

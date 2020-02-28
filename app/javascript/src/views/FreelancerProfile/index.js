@@ -1,15 +1,18 @@
 import React from "react";
-import { isArray, intersection } from "lodash";
 import queryString from "query-string";
-import { useLocation } from "react-router-dom";
 import { useQuery } from "react-apollo";
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { isArray, intersection } from "lodash";
+import { useBreakpoint } from "@advisable/donut";
 import GET_PROFILE from "./getProfile";
+import Mobile from "./Mobile";
 import Desktop from "./Desktop";
 
 function FreelancerProfile() {
   const params = useParams();
   const location = useLocation();
+  const isDesktop = useBreakpoint("mUp");
   const { loading, data } = useQuery(GET_PROFILE, {
     variables: {
       id: params.id,
@@ -44,7 +47,11 @@ function FreelancerProfile() {
     return true;
   });
 
-  return <Desktop data={data} projects={projects} />;
+  if (isDesktop) {
+    return <Desktop data={data} projects={projects} />;
+  }
+
+  return <Mobile data={data} projects={projects} />;
 }
 
 export default FreelancerProfile;
