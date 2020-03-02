@@ -10,10 +10,12 @@ import ProjectCard from "./ProjectCard";
 import ProfileImage from "./ProfileImage";
 import ProfileSkills from "./ProfileSkills";
 import ProjectFilters from "./ProjectFilters";
+import useFilteredProjects from "./useFilteredProjects";
 
-function FreelancerProfileDesktop({ data, projects }) {
+function FreelancerProfileDesktop({ data }) {
   const id = data.specialist.id;
   const isLargeScreen = useBreakpoint("lUp");
+  const projects = useFilteredProjects(data);
 
   return (
     <Box maxWidth={1250} px="m" mx="auto" py="l" display="flex">

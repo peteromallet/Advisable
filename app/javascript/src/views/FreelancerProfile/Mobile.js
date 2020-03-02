@@ -8,6 +8,7 @@ import ProjectCard from "./ProjectCard";
 import ProfileImage from "./ProfileImage";
 import ProfileSkills from "./ProfileSkills";
 import ProjectFilters from "./ProjectFilters";
+import useFilteredProjects from "./useFilteredProjects";
 
 function Profile({ data }) {
   return (
@@ -35,8 +36,9 @@ function ProfileReviews({ data }) {
   return <Reviews data={data} />;
 }
 
-function FreelancerProfileMobile({ data, projects }) {
+function FreelancerProfileMobile({ data }) {
   const id = data.specialist.id;
+  const projects = useFilteredProjects(data);
 
   return (
     <>

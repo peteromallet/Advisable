@@ -1,5 +1,5 @@
 // This component is used to render a loading indicator
-import { space, layout } from "styled-system";
+import { border, space, layout } from "styled-system";
 import styled, { keyframes } from "styled-components";
 
 const animation = keyframes`
@@ -13,11 +13,13 @@ const animation = keyframes`
 `;
 
 export const SkeletonStyles = styled.div`
-  ${space}
-  ${layout}
   border-radius: 4px;
   background: #3c466a;
   animation: ${animation} 0.6s linear infinite alternate;
+
+  ${space}
+  ${layout}
+  ${border}
 `;
 
 export default SkeletonStyles;
