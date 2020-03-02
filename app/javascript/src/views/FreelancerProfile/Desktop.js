@@ -10,7 +10,6 @@ import ProjectCard from "./ProjectCard";
 import ProfileImage from "./ProfileImage";
 import ProfileSkills from "./ProfileSkills";
 import ProjectFilters from "./ProjectFilters";
-import Sticky from "../../components/Sticky";
 
 function FreelancerProfileDesktop({ data, projects }) {
   const id = data.specialist.id;
@@ -19,22 +18,20 @@ function FreelancerProfileDesktop({ data, projects }) {
   return (
     <Box maxWidth={1250} px="m" mx="auto" py="l" display="flex">
       <Box width={320} flexShrink={0}>
-        <Sticky>
-          <ProfileImage data={data} />
-          <RoundedButton
-            mt="l"
-            mb="l"
-            size="l"
-            as={Link}
-            fullWidth
-            to={`/request_consultation/${id}`}
-            prefix={<Icon icon="message-circle" />}
-          >
-            Request Consultation
-          </RoundedButton>
-          <About data={data} />
-          <ProfileSkills data={data} />
-        </Sticky>
+        <ProfileImage data={data} />
+        <RoundedButton
+          mt="l"
+          mb="l"
+          size="l"
+          as={Link}
+          fullWidth
+          to={`/request_consultation/${id}`}
+          prefix={<Icon icon="message-circle" />}
+        >
+          Request Consultation
+        </RoundedButton>
+        <About data={data} />
+        <ProfileSkills data={data} />
       </Box>
       <Box pl="80px" width="100%">
         <Box mb="l">
@@ -42,7 +39,11 @@ function FreelancerProfileDesktop({ data, projects }) {
           {projects.length === 0 && <NoProjects />}
           <Masonry columns={isLargeScreen ? 2 : 1}>
             {projects.map(we => (
-              <ProjectCard key={we.id} project={we} />
+              <ProjectCard
+                key={we.id}
+                project={we}
+                specialistId={data.specialist.id}
+              />
             ))}
           </Masonry>
         </Box>

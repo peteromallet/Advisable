@@ -123,6 +123,10 @@ export const StyledButton = styled.button`
   width: ${props => (props.fullWidth ? "100%" : "auto")};
   ${props => props.align === "left" && { justifyContent: "flex-start" }}
 
+  &:focus {
+    outline: 2px solid red;
+  }
+
   svg {
     width: 20px;
     height: 20px;

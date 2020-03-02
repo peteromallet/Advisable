@@ -1,8 +1,47 @@
 import React from "react";
 import IndustryTag from "../../../components/IndustryTag";
-import { Card, Box, Text, RoundedButton } from "@advisable/donut";
+import { DialogDisclosure } from "reakit/Dialog";
+import { useHistory, useLocation } from "react-router-dom";
+import {
+  Box,
+  Card,
+  Text,
+  Modal,
+  useModal,
+  RoundedButton,
+} from "@advisable/donut";
+import ProjectDetails from "../ProjectDetails";
 
-function ProjectCard({ project }) {
+function useRoutedModal(path, back) {
+  const modal = useModal();
+  const history = useHistory();
+  const location = useLocation();
+
+  React.useEffect(() => {}, []);
+
+  return {
+    ...modal,
+    toggle: () => {
+      history.push(path);
+      modal.toggle();
+    },
+    show: () => {
+      history.push(path);
+      modal.show();
+    },
+    hide: () => {
+      history.push(back);
+      modal.hide();
+    },
+  };
+}
+
+function ProjectCard({ specialistId, project }) {
+  const modal = useRoutedModal(
+    `/freelancers/${specialistId}/projects/${project.id}`,
+    `/freelancers/${specialistId}`
+  );
+
   return (
     <Card>
       <Box padding="l">
@@ -25,8 +64,8 @@ function ProjectCard({ project }) {
               mr="xxs"
               mb="xxs"
               px="12px"
-              key={skill.id}
               height="26px"
+              key={skill.id}
               fontSize="xxs"
               bg="neutral100"
               color="neutral800"
@@ -38,7 +77,13 @@ function ProjectCard({ project }) {
             </Box>
           ))}
         </Box>
-        <RoundedButton variant="subtle">View Project</RoundedButton>
+        <Modal modal={modal}>
+          <ProjectDetails id={project.id} />
+          <RoundedButton>test</RoundedButton>
+        </Modal>
+        <DialogDisclosure as={RoundedButton} {...modal} variant="subtle">
+          View Project
+        </DialogDisclosure>
       </Box>
     </Card>
   );

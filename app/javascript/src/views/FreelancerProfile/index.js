@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { isArray, intersection } from "lodash";
 import { useBreakpoint } from "@advisable/donut";
+import NotFound, { isNotFound } from "../NotFound";
 import GET_PROFILE from "./getProfile";
 import Mobile from "./Mobile";
 import Desktop from "./Desktop";
@@ -13,11 +14,13 @@ function FreelancerProfile() {
   const params = useParams();
   const location = useLocation();
   const isDesktop = useBreakpoint("mUp");
-  const { loading, data } = useQuery(GET_PROFILE, {
+  const { loading, data, error } = useQuery(GET_PROFILE, {
     variables: {
       id: params.id,
     },
   });
+
+  if (isNotFound(error)) return <NotFound />;
 
   if (loading) {
     return <div>loading...</div>;

@@ -24,7 +24,7 @@ function Projects({ data, projects }) {
       <ProjectFilters data={data} />
       {projects.map(we => (
         <Box mb="m" key={we.id}>
-          <ProjectCard project={we} />
+          <ProjectCard project={we} specialistId={data.specialist.id} />
         </Box>
       ))}
     </>
