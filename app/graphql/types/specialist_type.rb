@@ -142,8 +142,9 @@ class Types::SpecialistType < Types::BaseType
   def industries
     (
       object.off_platform_project_industries +
-      Industry.where(name: object.successful_projects.map(&:industry))
-    ).uniq
+        Industry.where(name: object.successful_projects.map(&:industry))
+    )
+      .uniq
   end
 
   field :ratings, Types::Ratings, null: false do
@@ -314,13 +315,26 @@ class Types::SpecialistType < Types::BaseType
     description 'The account status for the specialist'
   end
 
-  field :work_experience, Types::WorkExperienceType.connection_type, null: false
+  field :profile_projects,
+        Types::ProfileProjectType.connection_type,
+        null: false
 
-  def work_experience
+  def profile_projects
     ::PreviousProject.for_specialist(
       object,
       { include_validation_failed: false }
     )
+  end
+
+  field :profile_project, Types::ProfileProjectType, null: true do
+    argument :id, ID, required: true
+  end
+
+  def profile_project(id:)
+    project = OffPlatformProject.find_by_uid_or_airtable_id(id)
+    project = Project.find_by_uid_or_airtable_id(id) if project.nil?
+    raise ActiveRecord::RecordNotFound if project.nil?
+    PreviousProject.new(project: project, specialist: object)
   end
 end
 

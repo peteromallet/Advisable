@@ -1,7 +1,7 @@
 import React from "react";
 import IndustryTag from "../../../components/IndustryTag";
 import { DialogDisclosure } from "reakit/Dialog";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import {
   Box,
   Card,
@@ -15,9 +15,13 @@ import ProjectDetails from "../ProjectDetails";
 function useRoutedModal(path, back) {
   const modal = useModal();
   const history = useHistory();
-  const location = useLocation();
+  const match = useRouteMatch(path);
 
-  React.useEffect(() => {}, []);
+  React.useEffect(() => {
+    if (match && !modal.visible) {
+      modal.show();
+    }
+  }, []);
 
   return {
     ...modal,
@@ -77,9 +81,8 @@ function ProjectCard({ specialistId, project }) {
             </Box>
           ))}
         </Box>
-        <Modal modal={modal}>
-          <ProjectDetails id={project.id} />
-          <RoundedButton>test</RoundedButton>
+        <Modal modal={modal} label="Freelancer project" width={800}>
+          <ProjectDetails specialistId={specialistId} projectId={project.id} />
         </Modal>
         <DialogDisclosure as={RoundedButton} {...modal} variant="subtle">
           View Project

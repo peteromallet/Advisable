@@ -1,11 +1,14 @@
-class Types::WorkExperienceType < Types::BaseType
+class Types::ProfileProjectType < Types::BaseType
   field :id, ID, null: false
   field :industry, Types::IndustryType, null: true
   field :title, String, null: false
   field :company_name, String, null: false
   field :company_type, String, null: false
   field :excerpt, String, null: true
+  field :description, String, null: true
   field :skills, [Types::Skill], null: false
+  field :industries, [Types::IndustryType], null: false
+  field :reviews, [Types::Review], null: false
 
   def id
     object.project.uid
@@ -34,8 +37,23 @@ class Types::WorkExperienceType < Types::BaseType
     project.description.try(:truncate, 160)
   end
 
+  def description
+    project.description
+  end
+
   def skills
     project.skills
+  end
+
+  def industries
+    return [Industry.find_by_name(project.industry)] if project.is_a?(Project)
+
+    project.industries
+  end
+
+  # At the moment the underlying object is a PreviousProject so we can simply call the reviews method for now
+  def reviews
+    object.reviews
   end
 
   private

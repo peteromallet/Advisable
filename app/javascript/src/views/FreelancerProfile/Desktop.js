@@ -26,7 +26,7 @@ function FreelancerProfileDesktop({ data }) {
           mb="l"
           size="l"
           as={Link}
-          fullWidth
+          width="100%"
           to={`/request_consultation/${id}`}
           prefix={<Icon icon="message-circle" />}
         >

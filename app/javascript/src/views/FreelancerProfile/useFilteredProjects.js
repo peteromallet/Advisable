@@ -12,7 +12,7 @@ function useFilteredProjects(data) {
   const filteredSkills = queryParams.skills;
   const filteredIndustry = queryParams.industry;
 
-  const projects = data.specialist.workExperience.nodes.filter(project => {
+  const projects = data.specialist.profileProjects.nodes.filter(project => {
     if (filteredSkills && isArray(filteredSkills)) {
       const projectSkills = project.skills.map(s => s.name);
       const hasSkills =

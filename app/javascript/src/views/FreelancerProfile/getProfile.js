@@ -26,7 +26,7 @@ const getProfileData = gql`
         comment
       }
 
-      workExperience {
+      profileProjects {
         nodes {
           id
           industry {
