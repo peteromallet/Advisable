@@ -27,6 +27,7 @@ const styles = css`
   ${space}
   ${typography}
 
+  outline: none;
   align-items: center;
   display: inline-flex;
   text-decoration: none;

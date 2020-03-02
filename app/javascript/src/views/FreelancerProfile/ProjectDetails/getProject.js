@@ -21,6 +21,12 @@ const getProject = gql`
           id
           name
         }
+        specialist {
+          id
+          name
+          avatar
+          location
+        }
         reviews {
           id
           name

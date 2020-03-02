@@ -1,8 +1,9 @@
 import React from "react";
-import GET_PROJECT from "./getProject";
 import { useQuery } from "react-apollo";
+import { Link as RouterLink } from "react-router-dom";
+import { Link, Avatar, Box, Text, Tag } from "@advisable/donut";
+import GET_PROJECT from "./getProject";
 import IndustryTag from "../../../components/IndustryTag";
-import { Box, Text, Tag } from "@advisable/donut";
 import Review from "../Review";
 
 function ProjectDetails({ specialistId, projectId }) {
@@ -18,8 +19,8 @@ function ProjectDetails({ specialistId, projectId }) {
   const project = data.specialist.profileProject;
 
   return (
-    <Box padding="xl">
-      <IndustryTag industry={project.industry} mb="m" />
+    <>
+      <IndustryTag industry={project.industry} mb="s" />
       <Box mb="m" width="80%">
         <Text
           as="h2"
@@ -32,11 +33,39 @@ function ProjectDetails({ specialistId, projectId }) {
           {project.title}
         </Text>
       </Box>
+      <Box height={1} bg="neutral100" mb="m" />
+      <Box mb="m" display="flex" alignItems="center">
+        <Box flexShrink={0} mr="s">
+          <Avatar
+            size="s"
+            name={project.specialist.name}
+            url={project.specialist.avatar}
+          />
+        </Box>
+        <Box>
+          <Link
+            mb="1px"
+            as={RouterLink}
+            color="blue700"
+            to={`/freelancers/${specialistId}`}
+            fontWeight="medium"
+          >
+            {project.specialist.name}
+          </Link>
+          <Text mt="1px" color="neutral500" fontSize="s">
+            {project.specialist.location}
+          </Text>
+        </Box>
+      </Box>
+      <Box height={1} bg="neutral100" mb="l" />
+      <Text mb="xs" color="blue900" fontWeight="medium" letterSpacing="-0.02em">
+        Project description
+      </Text>
       <Text mb="xl" fontSize="m" color="neutral800" lineHeight="m">
         {project.description}
       </Text>
       <Box display={["block", "flex"]}>
-        <Box width="100%" mb={["l", null]}>
+        <Box width="100%" mb="xl">
           <Text
             mb="xs"
             color="blue900"
@@ -53,7 +82,7 @@ function ProjectDetails({ specialistId, projectId }) {
             ))}
           </Box>
         </Box>
-        <Box width="100%">
+        <Box width="100%" mb="xl">
           <Text
             mb="xs"
             color="blue900"
@@ -73,11 +102,13 @@ function ProjectDetails({ specialistId, projectId }) {
       </Box>
       {project.reviews.length > 0 && (
         <>
-          <Box mt="xl" height={1} bg="neutral100" />
-          <Review review={project.reviews[0]} />
+          <Box height={1} bg="neutral100" />
+          <Box mb="xl">
+            <Review review={project.reviews[0]} />
+          </Box>
         </>
       )}
-    </Box>
+    </>
   );
 }
 

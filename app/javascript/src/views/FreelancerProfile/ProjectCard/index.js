@@ -1,16 +1,18 @@
 import React from "react";
-import IndustryTag from "../../../components/IndustryTag";
+import { Link } from "react-router-dom";
 import { DialogDisclosure } from "reakit/Dialog";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import {
   Box,
   Card,
+  Icon,
   Text,
   Modal,
   useModal,
   RoundedButton,
 } from "@advisable/donut";
 import ProjectDetails from "../ProjectDetails";
+import IndustryTag from "../../../components/IndustryTag";
 
 function useRoutedModal(path, back) {
   const modal = useModal();
@@ -21,7 +23,11 @@ function useRoutedModal(path, back) {
     if (match && !modal.visible) {
       modal.show();
     }
-  }, []);
+
+    if (!match && modal.visible) {
+      modal.hide();
+    }
+  }, [match]);
 
   return {
     ...modal,
@@ -82,7 +88,20 @@ function ProjectCard({ specialistId, project }) {
           ))}
         </Box>
         <Modal modal={modal} label="Freelancer project" width={800}>
-          <ProjectDetails specialistId={specialistId} projectId={project.id} />
+          <Box padding="xl">
+            <ProjectDetails
+              specialistId={specialistId}
+              projectId={project.id}
+            />
+            <RoundedButton
+              size="l"
+              as={Link}
+              to={`/request_consultation/${specialistId}`}
+              prefix={<Icon icon="message-circle" />}
+            >
+              Request Consultation
+            </RoundedButton>
+          </Box>
         </Modal>
         <DialogDisclosure as={RoundedButton} {...modal} variant="subtle">
           View Project

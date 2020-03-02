@@ -9,6 +9,7 @@ class Types::ProfileProjectType < Types::BaseType
   field :skills, [Types::Skill], null: false
   field :industries, [Types::IndustryType], null: false
   field :reviews, [Types::Review], null: false
+  field :specialist, Types::SpecialistType, null: true
 
   def id
     object.project.uid
