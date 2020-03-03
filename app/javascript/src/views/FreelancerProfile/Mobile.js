@@ -39,10 +39,11 @@ function ProfileReviews({ data }) {
 function FreelancerProfileMobile({ data }) {
   const id = data.specialist.id;
   const projects = useFilteredProjects(data);
+  const hasReviews = data.specialist.reviews.length > 0;
 
   return (
     <>
-      <ProfileImage data={data} />
+      <ProfileImage data={data} showReviews={hasReviews} />
       <MobileTabs data={data} />
       <Box padding="m" pb="xxl">
         <Switch>

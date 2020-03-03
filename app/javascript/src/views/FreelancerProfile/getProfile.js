@@ -5,6 +5,7 @@ const getProfileData = gql`
     specialist(id: $id) {
       id
       name
+      firstName
       avatar
       location
       bio

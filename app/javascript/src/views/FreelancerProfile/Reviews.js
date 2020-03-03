@@ -6,6 +6,18 @@ import Review from "./Review";
 function Reviews({ data }) {
   const { t } = useTranslation();
   const reviews = data.specialist.reviews;
+  const name = data.specialist.firstName;
+
+  if (reviews.length === 0) {
+    return (
+      <Box py="l" textAlign="center">
+        <Text color="neutral900" mb="xs" fontWeight="medium">
+          No Reviews
+        </Text>
+        <Text color="neutral700">{name} does not have any reviews yet.</Text>
+      </Box>
+    );
+  }
 
   return (
     <>

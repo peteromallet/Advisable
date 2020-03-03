@@ -16,11 +16,12 @@ function FreelancerProfileDesktop({ data }) {
   const id = data.specialist.id;
   const isLargeScreen = useBreakpoint("lUp");
   const projects = useFilteredProjects(data);
+  const hasReviews = data.specialist.reviews.length > 0;
 
   return (
     <Box maxWidth={1250} px="m" mx="auto" py="l" display="flex">
       <Box width={320} flexShrink={0}>
-        <ProfileImage data={data} />
+        <ProfileImage data={data} showReviews={hasReviews} />
         <RoundedButton
           mt="l"
           mb="l"
@@ -49,7 +50,7 @@ function FreelancerProfileDesktop({ data }) {
             ))}
           </Masonry>
         </Box>
-        <Reviews data={data} />
+        {hasReviews && <Reviews data={data} />}
       </Box>
     </Box>
   );

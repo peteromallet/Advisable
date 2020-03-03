@@ -28,9 +28,13 @@ export const StyledProfileImage = styled(Box).attrs(props => ({
   position: absolute;
   transform: scale(1.1);
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   transition: opacity 0.7s, transform 6s;
   background-color: ${theme.colors.neutral[2]};
+
+  @media screen and (min-width: 52em) {
+    background-position: center;
+  }
 
   ${props =>
     props.loaded &&
