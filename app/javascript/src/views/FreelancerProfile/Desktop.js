@@ -38,17 +38,21 @@ function FreelancerProfileDesktop({ data }) {
       </Box>
       <Box pl="80px" width="100%">
         <Box mb="l">
-          <ProjectFilters data={data} />
-          {projects.length === 0 && <NoProjects />}
-          <Masonry columns={isLargeScreen ? 2 : 1}>
-            {projects.map(we => (
-              <ProjectCard
-                key={we.id}
-                project={we}
-                specialistId={data.specialist.id}
-              />
-            ))}
-          </Masonry>
+          {projects.length === 0 && <NoProjects data={data} />}
+          {projects.length > 0 && (
+            <>
+              <ProjectFilters data={data} />
+              <Masonry columns={isLargeScreen ? 2 : 1}>
+                {projects.map(we => (
+                  <ProjectCard
+                    key={we.id}
+                    project={we}
+                    specialistId={data.specialist.id}
+                  />
+                ))}
+              </Masonry>
+            </>
+          )}
         </Box>
         {hasReviews && <Reviews data={data} />}
       </Box>

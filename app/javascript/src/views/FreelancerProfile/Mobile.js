@@ -9,6 +9,7 @@ import ProfileImage from "./ProfileImage";
 import ProfileSkills from "./ProfileSkills";
 import ProjectFilters from "./ProjectFilters";
 import useFilteredProjects from "./useFilteredProjects";
+import NoProjects from "./NoProjects";
 
 function Profile({ data }) {
   return (
@@ -20,6 +21,10 @@ function Profile({ data }) {
 }
 
 function Projects({ data, projects }) {
+  if (projects.length === 0) {
+    return <NoProjects data={data} />;
+  }
+
   return (
     <>
       <ProjectFilters data={data} />
