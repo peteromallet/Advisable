@@ -10,6 +10,7 @@ import ProfileSkills from "./ProfileSkills";
 import ProjectFilters from "./ProjectFilters";
 import useFilteredProjects from "./useFilteredProjects";
 import NoProjects from "./NoProjects";
+import NoFilteredProjects from "./NoFilteredProjects";
 
 function Profile({ data }) {
   return (
@@ -21,18 +22,22 @@ function Profile({ data }) {
 }
 
 function Projects({ data, projects }) {
-  if (projects.length === 0) {
+  if (data.specialist.profileProjects.length === 0) {
     return <NoProjects data={data} />;
   }
 
   return (
     <>
       <ProjectFilters data={data} />
-      {projects.map(we => (
-        <Box mb="m" key={we.id}>
-          <ProjectCard project={we} specialistId={data.specialist.id} />
-        </Box>
-      ))}
+      {projects.length > 0 ? (
+        projects.map(we => (
+          <Box mb="m" key={we.id}>
+            <ProjectCard project={we} specialistId={data.specialist.id} />
+          </Box>
+        ))
+      ) : (
+        <NoFilteredProjects data={data} />
+      )}
     </>
   );
 }

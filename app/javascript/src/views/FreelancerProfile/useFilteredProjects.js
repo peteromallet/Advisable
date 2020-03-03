@@ -1,6 +1,6 @@
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
-import { isArray, intersection } from "lodash";
+import { isArray, some } from "lodash";
 
 function useFilteredProjects(data) {
   const location = useLocation();
@@ -10,24 +10,32 @@ function useFilteredProjects(data) {
   });
 
   const filteredSkills = queryParams.skills;
-  const filteredIndustry = queryParams.industry;
+  const filteredIndustries = queryParams.industries;
 
   const projects = data.specialist.profileProjects.nodes.filter(project => {
-    if (filteredSkills && isArray(filteredSkills)) {
-      const projectSkills = project.skills.map(s => s.name);
-      const hasSkills =
-        intersection(projectSkills, filteredSkills).length ===
-        filteredSkills.length;
-      if (!hasSkills) return false;
-    }
+    let include = true;
 
-    if (filteredIndustry) {
-      if (project.industry.name !== filteredIndustry) {
-        return false;
+    if (filteredSkills && isArray(filteredSkills)) {
+      const hasSkill = some(project.skills, s => {
+        return filteredSkills.indexOf(s.name) > -1;
+      });
+
+      if (hasSkill === false) {
+        include = false;
       }
     }
 
-    return true;
+    if (filteredIndustries && isArray(filteredIndustries)) {
+      const hasIndustry = some(project.industries, i => {
+        return filteredIndustries.indexOf(i.name) > -1;
+      });
+
+      if (hasIndustry === false) {
+        include = false;
+      }
+    }
+
+    return include;
   });
 
   return projects;

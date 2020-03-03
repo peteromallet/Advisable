@@ -133,6 +133,13 @@ class Types::SpecialistType < Types::BaseType
     end
   end
 
+  # Project skills returns all of the skills the specialist has used on actual projects.
+  field :project_skills, Types::Skill.connection_type, null: false
+
+  def project_skills
+    (object.project_skills + object.off_platform_project_skills).uniq
+  end
+
   field :industries, [Types::IndustryType], null: false do
     description 'Returns a list of all the industries the specialist has worked in'
   end

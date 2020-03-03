@@ -10,6 +10,7 @@ import ProjectCard from "./ProjectCard";
 import ProfileImage from "./ProfileImage";
 import ProfileSkills from "./ProfileSkills";
 import ProjectFilters from "./ProjectFilters";
+import NoFilteredProjects from "./NoFilteredProjects";
 import useFilteredProjects from "./useFilteredProjects";
 
 function FreelancerProfileDesktop({ data }) {
@@ -38,20 +39,28 @@ function FreelancerProfileDesktop({ data }) {
       </Box>
       <Box pl="80px" width="100%">
         <Box mb="l">
-          {projects.length === 0 && <NoProjects data={data} />}
-          {projects.length > 0 && (
+          {data.specialist.profileProjects.nodes.length > 0 && (
             <>
               <ProjectFilters data={data} />
-              <Masonry columns={isLargeScreen ? 2 : 1}>
-                {projects.map(we => (
-                  <ProjectCard
-                    key={we.id}
-                    project={we}
-                    specialistId={data.specialist.id}
-                  />
-                ))}
-              </Masonry>
+              {projects.length > 0 ? (
+                <>
+                  <Masonry columns={isLargeScreen ? 2 : 1}>
+                    {projects.map(we => (
+                      <ProjectCard
+                        key={we.id}
+                        project={we}
+                        specialistId={data.specialist.id}
+                      />
+                    ))}
+                  </Masonry>
+                </>
+              ) : (
+                <NoFilteredProjects data={data} />
+              )}
             </>
+          )}
+          {data.specialist.profileProjects.nodes.length === 0 && (
+            <NoProjects data={data} />
           )}
         </Box>
         {hasReviews && <Reviews data={data} />}

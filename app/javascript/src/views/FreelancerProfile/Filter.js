@@ -74,45 +74,30 @@ const DoneButton = styled(FilterButton)`
   }
 `;
 
-function Filter({ label, options, selected, onChange, multiple = false }) {
+function Filter({ label, options, selected, onChange }) {
   const menu = useMenuState({
     placement: "top-end",
   });
 
   const handleChange = e => {
     const option = e.target.value;
-    if (multiple) {
-      if (selected.indexOf(option) > -1) {
-        onChange(selected.filter(s => s !== option));
-      } else {
-        onChange([...selected, option]);
-      }
+    if (selected.indexOf(option) > -1) {
+      onChange(selected.filter(s => s !== option));
     } else {
-      onChange(option);
+      onChange([...selected, option]);
     }
   };
 
   const handleClear = () => {
-    onChange(multiple ? [] : null);
+    onChange([]);
     menu.hide();
   };
 
   const isSelected = option => {
-    if (multiple) {
-      return selected.indexOf(option) > -1;
-    } else {
-      return selected === option;
-    }
+    return selected.indexOf(option) > -1;
   };
 
-  let value = "Any";
-  if (multiple && selected.length > 0) {
-    value = selected.join(", ");
-  }
-
-  if (!multiple && selected) {
-    value = selected;
-  }
+  const value = selected.length > 0 ? selected.join(", ") : "Any";
 
   return (
     <>

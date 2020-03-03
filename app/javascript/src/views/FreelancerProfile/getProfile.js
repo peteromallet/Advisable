@@ -9,9 +9,11 @@ const getProfileData = gql`
       avatar
       location
       bio
-      skills(projectSkills: true) {
-        id
-        name
+      projectSkills {
+        nodes {
+          id
+          name
+        }
       }
 
       industries {
@@ -30,14 +32,18 @@ const getProfileData = gql`
       profileProjects {
         nodes {
           id
+          title
+          excerpt
           industry {
             id
             name
             color
           }
-          title
-          excerpt
           skills {
+            id
+            name
+          }
+          industries {
             id
             name
           }

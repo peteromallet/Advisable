@@ -3,7 +3,7 @@ import { Box, Text } from "@advisable/donut";
 import { StyledProfileSkill } from "./styles";
 
 function ProfileSkills({ data }) {
-  const skills = data.specialist.skills.slice(0, 12);
+  const skills = data.specialist.projectSkills.nodes.slice(0, 12);
 
   return (
     <Box pt="xl">
