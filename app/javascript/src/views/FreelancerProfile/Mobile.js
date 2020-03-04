@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, RoundedButton, Icon } from "@advisable/donut";
-import { Switch, Route, Redirect, Link } from "react-router-dom";
+import { Box } from "@advisable/donut";
+import { useLocation, Switch, Route, Redirect } from "react-router-dom";
 import About from "./About";
 import Reviews from "./Reviews";
 import MobileTabs from "./MobileTabs";
@@ -11,6 +11,7 @@ import ProjectFilters from "./ProjectFilters";
 import useFilteredProjects from "./useFilteredProjects";
 import NoProjects from "./NoProjects";
 import NoFilteredProjects from "./NoFilteredProjects";
+import RequestConsultationButton from "./RequestConsultationButton";
 
 function Profile({ data }) {
   return (
@@ -48,6 +49,7 @@ function ProfileReviews({ data }) {
 
 function FreelancerProfileMobile({ data }) {
   const id = data.specialist.id;
+  const location = useLocation();
   const projects = useFilteredProjects(data);
   const hasReviews = data.specialist.reviews.length > 0;
 
@@ -69,7 +71,12 @@ function FreelancerProfileMobile({ data }) {
             path={`/freelancers/${id}/reviews`}
             render={() => <ProfileReviews data={data} />}
           />
-          <Redirect to={`/freelancers/${id}/profile`} />
+          <Redirect
+            to={{
+              ...location,
+              pathname: `/freelancers/${id}/profile`,
+            }}
+          />
         </Switch>
       </Box>
       <Box
@@ -83,15 +90,9 @@ function FreelancerProfileMobile({ data }) {
         position="fixed"
         alignItems="center"
       >
-        <RoundedButton
-          size="l"
-          as={Link}
-          width="100%"
-          to={`/request_consultation/${id}`}
-          prefix={<Icon icon="message-circle" />}
-        >
+        <RequestConsultationButton id={id}>
           Request Consultation
-        </RoundedButton>
+        </RequestConsultationButton>
       </Box>
     </>
   );

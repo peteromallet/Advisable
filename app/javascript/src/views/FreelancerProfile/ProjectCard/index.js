@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { DialogDisclosure } from "reakit/Dialog";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useLocation, useHistory, useRouteMatch } from "react-router-dom";
 import {
   Box,
   Card,
@@ -47,9 +47,17 @@ function useRoutedModal(path, back) {
 }
 
 function ProjectCard({ specialistId, project }) {
+  const location = useLocation();
+
   const modal = useRoutedModal(
-    `/freelancers/${specialistId}/projects/${project.id}`,
-    `/freelancers/${specialistId}/projects`
+    {
+      ...location,
+      pathname: `/freelancers/${specialistId}/projects/${project.id}`,
+    },
+    {
+      ...location,
+      pathname: `/freelancers/${specialistId}/projects`,
+    }
   );
 
   return (

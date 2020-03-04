@@ -1,7 +1,6 @@
 // Renders the desktop version of the freelancer profile
 import React from "react";
-import { Link } from "react-router-dom";
-import { Box, Icon, RoundedButton, useBreakpoint } from "@advisable/donut";
+import { Box, useBreakpoint } from "@advisable/donut";
 import About from "./About";
 import Reviews from "./Reviews";
 import Masonry from "./Masonry";
@@ -12,6 +11,7 @@ import ProfileSkills from "./ProfileSkills";
 import ProjectFilters from "./ProjectFilters";
 import NoFilteredProjects from "./NoFilteredProjects";
 import useFilteredProjects from "./useFilteredProjects";
+import RequestConsultationButton from "./RequestConsultationButton";
 
 function FreelancerProfileDesktop({ data }) {
   const id = data.specialist.id;
@@ -23,17 +23,9 @@ function FreelancerProfileDesktop({ data }) {
     <Box maxWidth={1250} px="m" mx="auto" py="l" display="flex">
       <Box width={320} flexShrink={0}>
         <ProfileImage data={data} showReviews={hasReviews} />
-        <RoundedButton
-          mt="l"
-          mb="l"
-          size="l"
-          as={Link}
-          width="100%"
-          to={`/request_consultation/${id}`}
-          prefix={<Icon icon="message-circle" />}
-        >
+        <RequestConsultationButton mt="l" mb="l" id={id}>
           Request Consultation
-        </RoundedButton>
+        </RequestConsultationButton>
         <About data={data} />
         <ProfileSkills data={data} />
       </Box>
