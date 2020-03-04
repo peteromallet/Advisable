@@ -9,6 +9,7 @@ const getProfileData = gql`
       avatar
       location
       bio
+
       projectSkills {
         nodes {
           id
@@ -23,10 +24,6 @@ const getProfileData = gql`
 
       ratings {
         overall
-      }
-      reviews {
-        id
-        comment
       }
 
       profileProjects {

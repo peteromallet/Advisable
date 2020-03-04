@@ -264,6 +264,7 @@ export const industry = (fields = {}) => {
       __typename: "Industry",
       id: uniqueId("industry"),
       name: "Industry",
+      color: "blue",
     },
     fields
   );
@@ -301,6 +302,24 @@ export const interview = (fields = {}) => {
   );
 };
 
+export const profileProject = (fields = {}) => {
+  return merge(
+    {
+      __typename: "ProfileProject",
+      id: uniqueId("off "),
+      title: "Project title",
+      excerpt: "This is the excerpt...",
+      description: "This is the description",
+      industry: null,
+      skills: [],
+      industries: [],
+      reviews: [],
+      specialist: null,
+    },
+    fields
+  );
+};
+
 export default {
   user,
   task,
@@ -312,6 +331,7 @@ export default {
   application,
   specialist,
   consultation,
+  profileProject,
   specialistSkill,
   offPlatformProject,
   applicationQuestion,

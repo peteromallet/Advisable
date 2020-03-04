@@ -3,12 +3,14 @@ import { useQuery } from "react-apollo";
 import { useParams } from "react-router-dom";
 import { useBreakpoint } from "@advisable/donut";
 import NotFound, { isNotFound } from "../NotFound";
+import useLogoURL from "../../components/ApplicationProvider/useLogoURL";
 import GET_PROFILE from "./getProfile";
 import Mobile from "./Mobile";
 import Desktop from "./Desktop";
 import Loading from "./Loading";
 
 function FreelancerProfile() {
+  useLogoURL("https://advisable.com");
   const params = useParams();
   const isDesktop = useBreakpoint("mUp");
   const { loading, data, error } = useQuery(GET_PROFILE, {
