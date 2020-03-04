@@ -23,7 +23,7 @@ function Profile({ data }) {
 }
 
 function Projects({ data, projects }) {
-  if (data.specialist.profileProjects.length === 0) {
+  if (data.specialist.profileProjects.nodes.length === 0) {
     return <NoProjects data={data} />;
   }
 

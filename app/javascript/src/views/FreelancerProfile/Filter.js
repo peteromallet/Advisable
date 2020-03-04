@@ -163,7 +163,7 @@ function Filter({ label, options, selected, onChange }) {
 
   return (
     <>
-      <StyledMenuToggle {...menu}>
+      <StyledMenuToggle {...menu} aria-label={`Filter projects by ${label}`}>
         <StyledMenuToggleLabel>{label}</StyledMenuToggleLabel>
         <StyledMenuToggleValue>{value}</StyledMenuToggleValue>
       </StyledMenuToggle>
@@ -197,7 +197,9 @@ function Filter({ label, options, selected, onChange }) {
           ))}
         </Box>
         <Box padding={{ _: "m", md: "xs" }} bg="neutral50" boxShadow="sx">
-          <DoneButton onClick={menu.hide}>Filter</DoneButton>
+          <DoneButton onClick={menu.hide} aria-label={`Filter by ${label}`}>
+            Filter
+          </DoneButton>
           <ClearButton onClick={handleClear}>Clear</ClearButton>
         </Box>
       </Div100vh>

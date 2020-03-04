@@ -320,10 +320,34 @@ export const profileProject = (fields = {}) => {
   );
 };
 
+export const review = (fields = {}) => {
+  return merge(
+    {
+      __typename: "Review",
+      id: uniqueId("rev"),
+      comment: "This is a review comment",
+      name: "Jane Doe",
+      role: "CEO",
+      companyName: "Acme Inc",
+      ratings: {
+        __typename: "Ratings",
+        overall: 5,
+        skills: 4,
+        availability: 3,
+        adherenceToSchedule: 2,
+        qualityOfWork: 1,
+        communication: 2,
+      },
+    },
+    merge
+  );
+};
+
 export default {
   user,
   task,
   skill,
+  review,
   country,
   project,
   industry,
