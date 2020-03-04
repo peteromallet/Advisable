@@ -27,14 +27,20 @@ function ProjectFilters({ data }) {
   };
 
   return (
-    <Box display="flex" justifyContent="flex-end" mb="m">
-      <Filter
-        label="Skill"
-        selected={queryParams?.skills || []}
-        options={data.specialist.projectSkills.nodes.map(s => s.name)}
-        onChange={skills => updateFilters({ skills })}
-      />
-      <Box ml="m">
+    <Box
+      mb={{ _: "m", md: "s" }}
+      justifyContent="flex-end"
+      display={{ _: "block", m: "flex" }}
+    >
+      <Box mb={{ _: "s", m: null }}>
+        <Filter
+          label="Skill"
+          selected={queryParams?.skills || []}
+          options={data.specialist.projectSkills.nodes.map(s => s.name)}
+          onChange={skills => updateFilters({ skills })}
+        />
+      </Box>
+      <Box ml={{ _: null, m: "m" }}>
         <Filter
           label="Industry"
           selected={queryParams?.industries || []}

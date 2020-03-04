@@ -49,7 +49,7 @@ function useRoutedModal(path, back) {
 function ProjectCard({ specialistId, project }) {
   const modal = useRoutedModal(
     `/freelancers/${specialistId}/projects/${project.id}`,
-    `/freelancers/${specialistId}`
+    `/freelancers/${specialistId}/projects`
   );
 
   return (

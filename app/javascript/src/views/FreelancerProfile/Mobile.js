@@ -75,7 +75,7 @@ function FreelancerProfileMobile({ data }) {
       <Box
         px="s"
         bottom={0}
-        height={60}
+        height={70}
         boxShadow="s"
         width="100%"
         bg="white.9"
