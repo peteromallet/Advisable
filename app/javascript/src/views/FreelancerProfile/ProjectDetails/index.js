@@ -5,6 +5,7 @@ import { Link, Avatar, Box, Text, Tag } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
 import IndustryTag from "../../../components/IndustryTag";
 import Review from "../Review";
+import ProjectDetailsLoading from "./ProjectDetailsLoading";
 
 function ProjectDetails({ specialistId, projectId }) {
   const { loading, data, error } = useQuery(GET_PROJECT, {
@@ -14,7 +15,7 @@ function ProjectDetails({ specialistId, projectId }) {
     },
   });
 
-  if (loading) return <>loading</>;
+  if (loading) return <ProjectDetailsLoading />;
 
   const project = data.specialist.profileProject;
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { isObject } from "lodash";
 import { Link } from "react-router-dom";
 import { DialogDisclosure } from "reakit/Dialog";
 import { useLocation, useHistory, useRouteMatch } from "react-router-dom";
@@ -17,7 +18,9 @@ import IndustryTag from "../../../components/IndustryTag";
 function useRoutedModal(path, back) {
   const modal = useModal();
   const history = useHistory();
-  const match = useRouteMatch(path);
+
+  const pathname = isObject(path) ? path.pathname : path;
+  const match = useRouteMatch(pathname);
 
   React.useEffect(() => {
     if (match && !modal.visible) {

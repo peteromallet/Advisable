@@ -135,11 +135,10 @@ test("Can view freelancer project", async () => {
   ];
 
   const app = renderApp({
-    route: `/freelancers/${specialist.id}`,
+    route: `/freelancers/${specialist.id}/projects`,
     graphQLMocks,
   });
 
-  resizeWindow(1200, 800);
   await app.findByText("John Doe");
   const viewProject = app.getByLabelText("View Project");
   fireEvent.click(viewProject);
