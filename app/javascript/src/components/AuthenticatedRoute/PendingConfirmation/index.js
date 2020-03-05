@@ -1,40 +1,53 @@
-import { graphql } from "react-apollo";
-import Text from "src/components/Text";
-import React, { Fragment, useState } from "react";
-import { withNotifications } from "src/components/Notifications";
-import { Card, Button } from "./styles";
-import RESEND_CONFIRMATION_EMAIL from "./resendConfirmationEmail.graphql";
+import React from "react";
+import { useMutation } from "react-apollo";
+import { Box, Card, Text, Link } from "@advisable/donut";
+import { useNotifications } from "src/components/Notifications";
+import RESEND_CONFIRMATION_EMAIL from "./resendConfirmationEmail";
 
-const PendingConfirmation = ({ mutate, notifications }) => {
-  const [resent, setResent] = useState(false);
+function PendingConfirmation() {
+  const notifications = useNotifications();
+  const [resend, { data }] = useMutation(RESEND_CONFIRMATION_EMAIL);
 
-  const handleResend = () => {
-    setResent(true);
+  const handleResend = e => {
+    e.preventDefault();
     notifications.notify("Confirmation email has been resent");
-    mutate()
+    resend();
   };
 
   return (
-    <Card>
-      <Text marginBottom="xs" weight="bold" center>
-        Please confirm your account
-      </Text>
-      <Text marginBottom="xl" center>
-        Please check your inbox for a confirmation email to verify your account. If you do not receive the confirmation message within a few minutes of signing up, please check your Spam folder.
-      </Text>
+    <Box py="xxl" textAlign="center">
+      <Card maxWidth={500} mx="auto" padding="xl">
+        <Text
+          mb="xs"
+          fontSize="xl"
+          color="blue.8"
+          fontWeight="semibold"
+          letterSpacing="-0.01em"
+        >
+          Please confirm your account
+        </Text>
+        <Text mb="l" color="neutral.8" lineHeight="s">
+          Please check your inbox for a confirmation email to verify your
+          account.
+        </Text>
+        <Text mb="l" fontSize="s" color="neutral.8" lineHeight="s">
+          If you do not receive the confirmation message within a few minutes of
+          signing up, please check your Spam folder.
+        </Text>
 
-      {!resent && (
-        <Fragment>
-          <Text size="s" center>
-            Didn't receive an email?
-          </Text>
-          <Button onClick={handleResend}>Resend confirmation email</Button>
-        </Fragment>
-      )}
-    </Card>
+        {!data && (
+          <>
+            <Text fontSize="s" mb="xxs" fontWeight="medium">
+              Didn't receive an email?
+            </Text>
+            <Link.External fontSize="s" href="#" onClick={handleResend}>
+              Resend confirmation email
+            </Link.External>
+          </>
+        )}
+      </Card>
+    </Box>
   );
-};
+}
 
-export default graphql(RESEND_CONFIRMATION_EMAIL)(
-  withNotifications(PendingConfirmation)
-);
+export default PendingConfirmation;

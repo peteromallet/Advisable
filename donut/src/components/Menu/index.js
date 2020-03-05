@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useMenuState, MenuDisclosure } from "reakit";
+import { useMenuState, MenuButton } from "reakit";
 import Text from "../Text";
 import MenuContext from "./context";
 import { StyledMenu, StyledMenuItem } from "./styles";
@@ -17,11 +17,11 @@ const Menu = ({
 
   return (
     <MenuContext.Provider value={menu}>
-      <MenuDisclosure {...menu}>
+      <MenuButton {...menu}>
         {disclosureProps =>
           React.cloneElement(React.Children.only(trigger), disclosureProps)
         }
-      </MenuDisclosure>
+      </MenuButton>
       <StyledMenu {...menu} {...props} width={width}>
         {children}
       </StyledMenu>

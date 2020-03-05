@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import colors from "../../colors";
 
 export const Spacer = styled.div`
@@ -21,7 +21,7 @@ export const Header = styled.header`
   box-shadow: 0px 2px 3px rgba(0, 25, 116, 0.14);
 `;
 
-export const Logo = styled(Link)`
+export const Logo = styled.a`
   @media (max-width: 800px) {
     top: 50%;
     left: 50%;

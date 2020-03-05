@@ -3,7 +3,6 @@ import renderApp from "../../testHelpers/renderApp";
 import mockData, { offPlatformProject } from "../../__mocks__/graphqlFields";
 import GET_APPLICATION from "./fetchApplication";
 import UPDATE from "./updateApplication";
-import SUBMIT from "./submitApplication";
 import {
   mockViewer,
   mockQuery,

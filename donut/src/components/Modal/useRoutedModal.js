@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
 import { useDialogState } from "reakit/Dialog";
 import { useLocation, useHistory } from "react-router-dom";
 

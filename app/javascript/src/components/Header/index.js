@@ -9,10 +9,12 @@ import { useMobile } from "../../components/Breakpoint";
 import ClientNavigation from "./ClientNavigation";
 import FreelancerNavigation from "./FreelancerNavigation";
 import VIEWER from "../../graphql/queries/viewer";
+import useLogoURL from "../ApplicationProvider/useLogoURL";
 
 const Header = () => {
   const isMobile = useMobile();
   const [navOpen, setNavOpen] = React.useState(false);
+  const logoURL = useLogoURL();
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -32,7 +34,7 @@ const Header = () => {
                 <div />
                 <div />
               </Hamburger>
-              <Logo to="/">
+              <Logo href={logoURL}>
                 <img src={logo} alt="" />
               </Logo>
               <ClientNavigation

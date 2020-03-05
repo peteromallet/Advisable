@@ -133,6 +133,27 @@ class Types::SpecialistType < Types::BaseType
     end
   end
 
+  # Project skills returns all of the skills the specialist has used on actual projects.
+  field :project_skills, Types::Skill.connection_type, null: false
+
+  def project_skills
+    (object.project_skills + object.off_platform_project_skills).uniq
+  end
+
+  field :industries, [Types::IndustryType], null: false do
+    description 'Returns a list of all the industries the specialist has worked in'
+  end
+
+  # TODO: This should eventually be updated to include multiple industries associated with an on
+  # platform project
+  def industries
+    (
+      object.off_platform_project_industries +
+        Industry.where(name: object.successful_projects.map(&:industry))
+    )
+      .uniq
+  end
+
   field :ratings, Types::Ratings, null: false do
     description 'The combined ratings for the specialist based on previous work'
   end
@@ -299,6 +320,28 @@ class Types::SpecialistType < Types::BaseType
   field :application_stage, String, null: true do
     authorize :is_specialist
     description 'The account status for the specialist'
+  end
+
+  field :profile_projects,
+        Types::ProfileProjectType.connection_type,
+        null: false
+
+  def profile_projects
+    ::PreviousProject.for_specialist(
+      object,
+      { include_validation_failed: false }
+    )
+  end
+
+  field :profile_project, Types::ProfileProjectType, null: true do
+    argument :id, ID, required: true
+  end
+
+  def profile_project(id:)
+    project = OffPlatformProject.find_by_uid_or_airtable_id(id)
+    project = Project.find_by_uid_or_airtable_id(id) if project.nil?
+    raise ActiveRecord::RecordNotFound if project.nil?
+    PreviousProject.new(project: project, specialist: object)
   end
 end
 

@@ -144,9 +144,6 @@ GEM
     ffi (1.12.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    graphiql-rails (1.7.0)
-      railties
-      sprockets-rails
     graphql (1.10.2)
     hashdiff (1.0.0)
     i18n (1.8.2)
@@ -368,7 +365,6 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faraday
-  graphiql-rails
   graphql
   image_processing (~> 1.0)
   jwt

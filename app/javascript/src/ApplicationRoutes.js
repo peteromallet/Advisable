@@ -22,6 +22,7 @@ const ApplicationFlow = lazy(() => import("./views/ApplicationFlow"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
 const Messages = lazy(() => import("./views/Messages"));
 const FreelancerSearch = lazy(() => import("./views/FreelancerSearch"));
+const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
 const InterviewAvailability = lazy(() =>
   import("./views/InterviewAvailability")
 );
@@ -39,6 +40,7 @@ const ApplicationRoutes = () => {
         <Switch>
           <Route path="/clients/signup" component={ClientSignup} />
           <AuthenticatedRoute exact path="/messages" component={Messages} />
+          <Route path="/freelancers/:id" component={FreelancerProfile} />
           {/* Client routes */}
           <Route
             component={Applicant}
