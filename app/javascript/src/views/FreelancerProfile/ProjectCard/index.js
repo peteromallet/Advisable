@@ -66,7 +66,7 @@ function ProjectCard({ specialistId, project }) {
   return (
     <Card>
       <Box padding="l">
-        <IndustryTag industry={project.industry} mb="s" />
+        {project.industry && <IndustryTag industry={project.industry} mb="s" />}
         <Text
           mb="s"
           fontSize="xxl"
