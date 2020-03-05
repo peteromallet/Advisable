@@ -47,7 +47,10 @@ class Types::ProfileProjectType < Types::BaseType
   end
 
   def industries
-    return [Industry.find_by_name(project.industry)] if project.is_a?(Project)
+    if project.is_a?(Project)
+      return [] if project.industry.nil?
+      return [Industry.find_by_name(project.industry)]
+    end
 
     project.industries
   end
