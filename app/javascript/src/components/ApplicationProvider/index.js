@@ -9,9 +9,12 @@ import ApplicationContext from "../../applicationContext";
 
 let ApplicationProvider = ({ children, location, data }) => {
   useIntercom(location, data.viewer);
+  const [logoURL, setLogoURL] = React.useState("/");
 
   const context = {
     viewer: data.viewer,
+    logoURL,
+    setLogoURL,
   };
 
   const isLoading = data.loading;

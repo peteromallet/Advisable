@@ -6,6 +6,7 @@ class Types::Review < Types::BaseType
   field :name, String, null: true
   field :role, String, null: true
   field :specialist, Types::SpecialistType, null: false
+  field :company_name, String, null: true
 
   def id
     object.airtable_id
@@ -19,5 +20,10 @@ class Types::Review < Types::BaseType
   def role
     return object.project.user.title if object.project.is_a?(Project)
     object.project.contact_job_title
+  end
+
+  def company_name
+    return object.project.user.company_name if object.project.is_a?(Project)
+    object.project.client_name
   end
 end

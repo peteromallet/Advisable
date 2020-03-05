@@ -3,14 +3,15 @@ Rails.application.routes.draw do
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
     ActiveSupport::SecurityUtils.secure_compare(
       ::Digest::SHA256.hexdigest(username),
-      ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_USERNAME"])
-    ) & ActiveSupport::SecurityUtils.secure_compare(
-      ::Digest::SHA256.hexdigest(password),
-      ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_PASSWORD"])
-    )
+      ::Digest::SHA256.hexdigest(ENV['SIDEKIQ_USERNAME'])
+    ) &
+      ActiveSupport::SecurityUtils.secure_compare(
+        ::Digest::SHA256.hexdigest(password),
+        ::Digest::SHA256.hexdigest(ENV['SIDEKIQ_PASSWORD'])
+      )
   end
 
-  mount Sidekiq::Web, at: "/sidekiq"
+  mount Sidekiq::Web, at: '/sidekiq'
 
   namespace :admin do
     resources :applications
@@ -22,24 +23,20 @@ Rails.application.routes.draw do
     resources :blacklisted_domains
     resources :webhook_events
     resources :webhook_configurations
-    resources :webhooks, only: [:index, :show]
+    resources :webhooks, only: %i[index show]
 
-    post "resync", to: "application#resync", as: :resync if ENV["STAGING"]
+    post 'resync', to: 'application#resync', as: :resync if ENV['STAGING']
 
-    root to: "applications#index"
+    root to: 'applications#index'
   end
 
-  if Rails.env.development?
-    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
-  end
-
-  post "/graphql", to: "graphql#execute"
+  post '/graphql', to: 'graphql#execute'
 
   post '/stripe_events', to: 'stripe_events#create'
 
   # match every other route to the frontend codebase
   root 'application#frontend'
-  get '*path', to: 'application#frontend', constraints: lambda { |req|
-    req.path.exclude? "rails/active_storage"
-  }
+  get '*path',
+      to: 'application#frontend',
+      constraints: ->(req) { req.path.exclude? 'rails/active_storage' }
 end

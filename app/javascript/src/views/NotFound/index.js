@@ -22,4 +22,9 @@ const NotFound = ({ heading, children }) => (
   </Box>
 );
 
+export const isNotFound = graphqlError => {
+  const code = graphqlError?.graphQLErrors?.[0]?.extensions?.code;
+  return code === "notFound";
+};
+
 export default NotFound;

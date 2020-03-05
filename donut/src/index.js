@@ -11,6 +11,9 @@ export { default as Radio } from "./components/Radio";
 export { default as Alert } from "./components/Alert";
 export { default as Availability } from "./components/Availability";
 
+export { default as Tag } from "./components/Tag";
+export * from "./components/Tag/styles";
+
 export { default as Error } from "./components/Error";
 export * from "./components/Error/styles";
 

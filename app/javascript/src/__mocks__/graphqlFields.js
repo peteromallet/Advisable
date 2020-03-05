@@ -264,6 +264,7 @@ export const industry = (fields = {}) => {
       __typename: "Industry",
       id: uniqueId("industry"),
       name: "Industry",
+      color: "blue",
     },
     fields
   );
@@ -301,10 +302,52 @@ export const interview = (fields = {}) => {
   );
 };
 
+export const profileProject = (fields = {}) => {
+  return merge(
+    {
+      __typename: "ProfileProject",
+      id: uniqueId("off "),
+      title: "Project title",
+      excerpt: "This is the excerpt...",
+      description: "This is the description",
+      industry: null,
+      skills: [],
+      industries: [],
+      reviews: [],
+      specialist: null,
+    },
+    fields
+  );
+};
+
+export const review = (fields = {}) => {
+  return merge(
+    {
+      __typename: "Review",
+      id: uniqueId("rev"),
+      comment: "This is a review comment",
+      name: "Jane Doe",
+      role: "CEO",
+      companyName: "Acme Inc",
+      ratings: {
+        __typename: "Ratings",
+        overall: 5,
+        skills: 4,
+        availability: 3,
+        adherenceToSchedule: 2,
+        qualityOfWork: 1,
+        communication: 2,
+      },
+    },
+    merge
+  );
+};
+
 export default {
   user,
   task,
   skill,
+  review,
   country,
   project,
   industry,
@@ -312,6 +355,7 @@ export default {
   application,
   specialist,
   consultation,
+  profileProject,
   specialistSkill,
   offPlatformProject,
   applicationQuestion,

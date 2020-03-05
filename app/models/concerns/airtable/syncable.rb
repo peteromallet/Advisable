@@ -8,6 +8,12 @@ module Airtable::Syncable
       @airtable = klass
     end
 
+    def find_by_uid_or_airtable_id(id)
+      record = find_by_uid(id)
+      record = find_by_airtable_id(id) if record.nil?
+      record
+    end
+
     def find_by_uid_or_airtable_id!(id)
       record = find_by_uid(id)
       record = find_by_airtable_id!(id) if record.nil?
@@ -33,24 +39,28 @@ module Airtable::Syncable
     end
 
     # Updates or creates an airtable record for the instance
-    def sync_to_airtable(additional_fields={})
-      airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
-      airtable_record = if airtable_id.present?
-        airtable_class.find(airtable_id)
-      else
-        airtable_class.new({})
-      end
+    def sync_to_airtable(additional_fields = {})
+      airtable_class =
+        self.class.airtable || "Airtable::#{self.class}".constantize
+      airtable_record =
+        if airtable_id.present?
+          airtable_class.find(airtable_id)
+        else
+          airtable_class.new({})
+        end
 
       airtable_record.push(self, additional_fields)
     end
 
     def remove_from_airtable
-      airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
+      airtable_class =
+        self.class.airtable || "Airtable::#{self.class}".constantize
       airtable_class.find(airtable_id).destroy
     end
 
     def sync_from_airtable
-      airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
+      airtable_class =
+        self.class.airtable || "Airtable::#{self.class}".constantize
       airtable_record = airtable_class.find(airtable_id)
       airtable_record.sync
     end
