@@ -12,6 +12,7 @@ import ProjectFilters from "./ProjectFilters";
 import NoFilteredProjects from "./NoFilteredProjects";
 import useFilteredProjects from "./useFilteredProjects";
 import RequestConsultationButton from "./RequestConsultationButton";
+import Sticky from "../../components/Sticky";
 
 function FreelancerProfileDesktop({ data }) {
   const id = data.specialist.id;
@@ -22,12 +23,14 @@ function FreelancerProfileDesktop({ data }) {
   return (
     <Box maxWidth={1250} px="m" mx="auto" py="l" display="flex">
       <Box width={320} flexShrink={0}>
-        <ProfileImage data={data} showReviews={hasReviews} />
-        <RequestConsultationButton mt="l" mb="l" id={id}>
-          Request Consultation
-        </RequestConsultationButton>
-        <About data={data} />
-        <ProfileSkills data={data} />
+        <Sticky>
+          <ProfileImage data={data} showReviews={hasReviews} />
+          <RequestConsultationButton mt="l" mb="l" id={id}>
+            Request Consultation
+          </RequestConsultationButton>
+          <About data={data} />
+          <ProfileSkills data={data} />
+        </Sticky>
       </Box>
       <Box pl="80px" width="100%">
         <Box mb="l">
