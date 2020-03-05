@@ -5,6 +5,8 @@ import { Box, Text } from "@advisable/donut";
 function ProfileAbout({ data }) {
   const specialist = data.specialist;
   const [expanded, setExpanded] = useState(false);
+  const truncated = truncate(specialist.bio, { length: 270 });
+  const expandable = truncated !== specialist.bio;
 
   return (
     <Box>
@@ -18,15 +20,17 @@ function ProfileAbout({ data }) {
               length: 270,
             })}
       </Text>
-      <Box
-        fontSize="s"
-        color="blue.7"
-        display="inline-block"
-        css="cursor: pointer;"
-        onClick={() => setExpanded(!expanded)}
-      >
-        {expanded ? "Hide" : "Read More"}
-      </Box>
+      {expandable && (
+        <Box
+          fontSize="s"
+          color="blue.7"
+          display="inline-block"
+          css="cursor: pointer;"
+          onClick={() => setExpanded(!expanded)}
+        >
+          {expanded ? "Hide" : "Read More"}
+        </Box>
+      )}
     </Box>
   );
 }
