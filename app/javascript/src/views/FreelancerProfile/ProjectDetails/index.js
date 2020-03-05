@@ -21,7 +21,7 @@ function ProjectDetails({ specialistId, projectId }) {
 
   return (
     <>
-      <IndustryTag industry={project.industry} mb="s" />
+      {project.industry && <IndustryTag industry={project.industry} mb="s" />}
       <Box mb="m" width="80%">
         <Text
           as="h2"
