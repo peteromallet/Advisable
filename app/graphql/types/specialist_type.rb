@@ -327,10 +327,15 @@ class Types::SpecialistType < Types::BaseType
         null: false
 
   def profile_projects
-    ::PreviousProject.for_specialist(
-      object,
-      { include_validation_failed: false }
-    )
+    projects =
+      ::PreviousProject.for_specialist(
+        object,
+        { include_validation_failed: false, exclude_hidden_from_profile: true }
+      )
+
+    projects.sort_by do |previous_project|
+      previous_project.project.try(:priority) || Float::INFINITY
+    end
   end
 
   field :profile_project, Types::ProfileProjectType, null: true do

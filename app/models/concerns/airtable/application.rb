@@ -43,6 +43,7 @@ class Airtable::Application < Airtable::Base
     application.featured = fields['Featured Candidate'] == 'Yes'
     application.references_requested = fields['References Requested'] == 'Yes'
     application.hidden = fields['Application Hidden'] == 'Yes'
+    application.hide_from_profile = fields['Hide From Profile'] == 'Yes'
 
     if self['Trial Program']
       application.trial_program = self['Trial Program'].include?('Yes')

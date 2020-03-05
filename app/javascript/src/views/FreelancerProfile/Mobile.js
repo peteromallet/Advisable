@@ -57,7 +57,7 @@ function FreelancerProfileMobile({ data }) {
     <>
       <ProfileImage data={data} showReviews={hasReviews} />
       <MobileTabs data={data} />
-      <Box padding="m" pb="xxl">
+      <Box padding="m" pb="xxxl">
         <Switch>
           <Route
             path={`/freelancers/${id}/profile`}
