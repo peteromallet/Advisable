@@ -8,11 +8,11 @@ import { ProjectCard, ProjectDescription } from "./styles";
 const ProjectsList = ({ projects }) => {
   return (
     <Box flexWrap="wrap" display="flex" ml="-10px" mr="-10px">
-      <Box width={[1, 1 / 2, 1 / 3]} px={10} pb="m">
+      <Box width={[1, 1 / 2, 1 / 3]} px="10px" pb="m">
         <NewProject />
       </Box>
       {projects.map(project => (
-        <Box width={[1, 1 / 2, 1 / 3]} key={project.id} px={10} pb="m">
+        <Box width={[1, 1 / 2, 1 / 3]} key={project.id} px="10px" pb="m">
           <ProjectCard to={`/projects/${project.airtableId}`}>
             <Text
               as="h4"
