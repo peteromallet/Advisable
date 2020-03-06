@@ -13,21 +13,22 @@ class PreviousProject
 
   # We only want to show reviews that are related to the specialist
   def reviews
-    @reviews ||= project.reviews.where(
-      type: ["On-Platform Job Review", "Off-Platform Project Review"],
-      specialist: specialist,
-    )
+    @reviews ||=
+      project.reviews.where(
+        type: ['On-Platform Job Review', 'Off-Platform Project Review'],
+        specialist: specialist
+      )
   end
 
   class << self
     def find(id:, type:, specialist_id:)
       specialist = Specialist.find_by_airtable_id!(specialist_id)
-      project = if type == "OffPlatformProject"
-        specialist.off_platform_projects.find_by_airtable_id!(id)
-      else
-        specialist_platform_projects(specialist)
-          .find_by_airtable_id!(id)
-      end
+      project =
+        if type == 'OffPlatformProject'
+          specialist.off_platform_projects.find_by_airtable_id!(id)
+        else
+          specialist_platform_projects(specialist).find_by_airtable_id!(id)
+        end
       new(specialist: specialist, project: project)
     end
 
@@ -38,13 +39,27 @@ class PreviousProject
       # Filter out any off platform projects that have failed validation unless
       # we have specified to include them
       unless opts.fetch(:include_validation_failed, false)
-        off_platform = off_platform.where.not(validation_status: "Validation Failed")
+        off_platform =
+          off_platform.where.not(validation_status: 'Validation Failed')
       end
 
-      on_platform = specialist_platform_projects(specialist)
-      results = (off_platform + on_platform).map do |project|
-        new(project: project, specialist: specialist)
+      if opts.fetch(:exclude_hidden_from_profile, false)
+        off_platform = off_platform.where(hide_from_profile: [false, nil])
       end
+
+      on_platform =
+        specialist_platform_projects(
+          specialist,
+          {
+            exclude_hidden_from_profile:
+              opts.fetch(:exclude_hidden_from_profile, false)
+          }
+        )
+
+      results =
+        (off_platform + on_platform).map do |project|
+          new(project: project, specialist: specialist)
+        end
 
       results.sort_by do |previous_project|
         previous_project.project.created_at
@@ -52,20 +67,22 @@ class PreviousProject
     end
 
     def for_application(application, opts = {})
-      results = application.references.map do |reference|
-        new(project: reference.project, specialist: application.specialist)
-      end
+      results =
+        application.references.map do |reference|
+          new(project: reference.project, specialist: application.specialist)
+        end
 
       # Filter out any off platform projects that have failed validation unless
       # we have specified to include them
       unless opts.fetch(:include_validation_failed, false)
-        results = results.select do |reference|
-          if reference.project.is_a?(OffPlatformProject)
-            next reference.project.validation_status != "Validation Failed"
+        results =
+          results.select do |reference|
+            if reference.project.is_a?(OffPlatformProject)
+              next reference.project.validation_status != 'Validation Failed'
+            end
+
+            true
           end
-          
-          true
-        end
       end
 
       results.sort_by do |previous_project|
@@ -78,14 +95,26 @@ class PreviousProject
     # Returns the projects that specialist where their application has been
     # successful and has an associated booking with a status of either Complete
     # or Accepted
-    def specialist_platform_projects(specialist)
-      Project.joins(applications: [:specialist])
-        .where(
+    def specialist_platform_projects(specialist, opts = {})
+      projects =
+        Project.joins(applications: %i[specialist]).where(
           applications: {
-            status: ["Working", "Stopped Working"],
-            specialists: { id: specialist.id },
-          },
+            status: ['Working', 'Stopped Working'],
+            specialists: { id: specialist.id }
+          }
         )
+
+      if opts.fetch(:exclude_hidden_from_profile, false)
+        projects =
+          projects.where(
+            applications: {
+              hide_from_profile: [false, nil],
+              specialists: { id: specialist.id }
+            }
+          )
+      end
+
+      projects
     end
   end
 end

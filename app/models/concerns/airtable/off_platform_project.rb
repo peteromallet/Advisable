@@ -18,10 +18,13 @@ class Airtable::OffPlatformProject < Airtable::Base
   sync_column 'Validation Explanation', to: :validation_explanation
   sync_column 'Contact Relationship', to: :contact_relationship
   sync_column 'Company Type', to: :company_type
+  sync_column 'Priority', to: :priority
 
   sync_data do |opp|
     pull_specialist(opp)
     opp.confidential = fields['Okay with naming client'] != 'Yes'
+
+    opp.hide_from_profile = fields['Hide From Profile'] == 'Yes'
 
     opp.public_use = true if self['Public Use'] == 'Yes'
     opp.public_use = false if self['Public Use'] == 'No'
