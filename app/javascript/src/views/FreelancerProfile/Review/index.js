@@ -96,9 +96,11 @@ function Review({ review }) {
             rating={ratings.adherenceToSchedule}
           />
         </Box>
-        <Text mt="s" lineHeight="m" fontStyle="italic" color="neutral800">
-          "{review.comment}"
-        </Text>
+        {review.comment && (
+          <Text mt="s" lineHeight="m" fontStyle="italic" color="neutral800">
+            "{review.comment}"
+          </Text>
+        )}
       </Box>
       <Box width="100%" height={1} bg="neutral100" />
     </>

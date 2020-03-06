@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_144535) do
+ActiveRecord::Schema.define(version: 2020_03_05_144734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 2020_02_25_144535) do
     t.datetime "stopped_working_at"
     t.string "billing_cycle"
     t.boolean "auto_apply"
+    t.boolean "hide_from_profile"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
@@ -308,6 +309,8 @@ ActiveRecord::Schema.define(version: 2020_02_25_144535) do
     t.string "uid"
     t.string "goal"
     t.string "contact_relationship"
+    t.boolean "hide_from_profile"
+    t.integer "priority"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
   end

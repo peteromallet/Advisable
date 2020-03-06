@@ -10,7 +10,7 @@ breakpoints.l = breakpoints[2];
 breakpoints.xl = breakpoints[3];
 
 // Spacing
-const space = [0, 4, 8, 16, 20, 32, 40, 60, 80, 100];
+const space = [0, 4, 8, 16, 20, 32, 40, 60, 80, 100, 150];
 space.none = space[0];
 space.xxs = space[1];
 space.xs = space[2];
@@ -19,6 +19,7 @@ space.m = space[4];
 space.l = space[5];
 space.xl = space[6];
 space.xxl = space[7];
+space.xxxl = space[8];
 
 const fonts = {
   body: "poppins, sans-serif",
