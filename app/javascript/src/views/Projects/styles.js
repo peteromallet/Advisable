@@ -5,6 +5,7 @@ import { Status } from "../../components/Status/styles";
 export const ProjectCard = styled(Link)`
   padding: 30px;
   height: 280px;
+  width: 100%;
   display: block;
   overflow: hidden;
   background: white;
