@@ -30,7 +30,9 @@ class Types::ProfileProjectType < Types::BaseType
 
   def company_name
     return project.user.company_name if project.is_a?(Project)
-    return "#{industry.name} #{company_type}" if project.confidential?
+    if project.confidential?
+      return "#{industry.name} #{company_type || 'company'}"
+    end
     project.client_name
   end
 
