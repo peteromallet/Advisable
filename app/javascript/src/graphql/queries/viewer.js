@@ -42,7 +42,7 @@ export const viewerFields = gql`
 export default gql`
   ${viewerFields}
 
-  query {
+  query viewer {
     viewer {
       ...ViewerFields
     }
