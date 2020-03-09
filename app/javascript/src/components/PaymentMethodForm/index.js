@@ -1,10 +1,10 @@
 import React from "react";
-import { Box, Text, Button } from "@advisable/donut";
 import { Formik, Form, Field } from "formik";
+import { Box, Text, Button, theme } from "@advisable/donut";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { CardField } from "./styles";
 import TextField from "../TextField";
-import useStripe from "../../hooks/useStripe";
 import InputLabel from "../InputLabel";
-import { Field as StyledField } from "./styles";
 import validationSchema from "./validationSchema";
 
 // Used to update a user's payment method. It does not atomatically handle the
@@ -20,33 +20,12 @@ const PaymentMethodForm = ({
   handleCardDetails,
 }) => {
   const stripe = useStripe();
-  const card = React.useRef(null);
-  const elementsRef = React.useRef(null);
-
-  React.useEffect(() => {
-    if (!elementsRef.current) return;
-    const elements = stripe.elements();
-    card.current = elements.create("card");
-    card.current.mount(elementsRef.current);
-    return () => {
-      if (card.current.unmount) {
-        card.current.unmount();
-      }
-    };
-  }, [stripe]);
+  const elements = useElements();
 
   const handleSubmit = async (values, formikBag) => {
     formikBag.setStatus(null);
-
-    await handleCardDetails(
-      stripe,
-      {
-        ...values,
-        card: card.current,
-      },
-      formikBag
-    );
-
+    const card = elements.getElement(CardElement);
+    await handleCardDetails(stripe, { ...values, card }, formikBag);
     formikBag.setSubmitting(false);
   };
 
@@ -73,7 +52,23 @@ const PaymentMethodForm = ({
             />
           </Box>
           <InputLabel>Card Details</InputLabel>
-          <StyledField ref={elementsRef} />
+          <CardField>
+            <CardElement
+              options={{
+                style: {
+                  base: {
+                    iconColor: theme.colors.neutral600,
+                    color: theme.colors.neutral900,
+                    fontSize: "16px",
+                  },
+                  invalid: {
+                    iconColor: theme.colors.red600,
+                    color: theme.colors.red600,
+                  },
+                },
+              }}
+            />
+          </CardField>
           <Button
             size="l"
             width="100%"

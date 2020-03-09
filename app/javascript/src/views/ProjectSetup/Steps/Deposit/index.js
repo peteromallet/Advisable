@@ -3,7 +3,7 @@ import { get } from "lodash";
 import { graphql } from "react-apollo";
 import { Redirect } from "react-router-dom";
 import { Box, Text } from "@advisable/donut";
-import useStripe from "../../../../hooks/useStripe";
+import { useStripe } from "@stripe/react-stripe-js";
 import currency from "../../../../utilities/currency";
 import Button from "../../../../components/Button";
 import PaymentMethod from "../../../../components/PaymentMethod";
@@ -13,7 +13,7 @@ import GET_PAYMENT_INTENT from "./getPaymentIntent";
 import { Total, Label, Amount } from "./styles";
 
 const Deposit = ({ data, project, history }) => {
-  let stripe = useStripe();
+  const stripe = useStripe();
   const [useNewCard, setUseNewCard] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [pending, setPending] = React.useState(false);

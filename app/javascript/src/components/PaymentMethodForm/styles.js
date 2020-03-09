@@ -1,9 +1,17 @@
 import styled from "styled-components";
+import { theme } from "@advisable/donut";
 
-export const Field = styled.div`
-  padding: 10px;
+export const CardField = styled.div`
   border-radius: 8px;
   margin-bottom: 20px;
-  background: rgba(29, 39, 75, 0.06);
-  border: 2px solid ${props => (props.focused ? "#3360FF" : "transparent")};
+  background: ${theme.colors.neutral100};
+
+  .StripeElement--webkit-autofill {
+    background: transparent !important;
+  }
+
+  .StripeElement {
+    width: 100%;
+    padding: 10px 12px 10px 12px;
+  }
 `;
