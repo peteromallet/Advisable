@@ -27,6 +27,7 @@ export default gql`
           }
         }
         paymentMethod {
+          id
           brand
           last4
           expMonth
