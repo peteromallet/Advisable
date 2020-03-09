@@ -1,7 +1,7 @@
 import React from "react";
 import { graphql } from "react-apollo";
-import { Provider as DonutProvider } from "@advisable/donut";
 import { withRouter } from "react-router-dom";
+import { Provider as DonutProvider } from "@advisable/donut";
 import Loading from "../Loading";
 import viewer from "../../graphql/queries/viewer";
 import useIntercom from "../../utilities/useIntercom";
