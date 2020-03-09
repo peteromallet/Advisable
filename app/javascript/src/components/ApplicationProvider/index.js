@@ -1,15 +1,11 @@
 import React from "react";
 import { graphql } from "react-apollo";
-import { loadStripe } from "@stripe/stripe-js";
 import { withRouter } from "react-router-dom";
-import { Elements } from "@stripe/react-stripe-js";
 import { Provider as DonutProvider } from "@advisable/donut";
 import Loading from "../Loading";
 import viewer from "../../graphql/queries/viewer";
 import useIntercom from "../../utilities/useIntercom";
 import ApplicationContext from "../../applicationContext";
-
-const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY);
 
 let ApplicationProvider = ({ children, location, data }) => {
   useIntercom(location, data.viewer);
@@ -25,9 +21,7 @@ let ApplicationProvider = ({ children, location, data }) => {
 
   return (
     <ApplicationContext.Provider value={context}>
-      <Elements stripe={stripePromise}>
-        <DonutProvider>{isLoading ? <Loading /> : children}</DonutProvider>
-      </Elements>
+      <DonutProvider>{isLoading ? <Loading /> : children}</DonutProvider>
     </ApplicationContext.Provider>
   );
 };

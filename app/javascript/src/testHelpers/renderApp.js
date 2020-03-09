@@ -3,6 +3,7 @@ import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { I18nextProvider } from "react-i18next";
 import { render } from "@testing-library/react";
+import { Elements } from "@stripe/react-stripe-js";
 import { MockedProvider } from "@apollo/react-testing";
 import {
   InMemoryCache,
@@ -66,6 +67,39 @@ jest.mock("talkjs", () => {
   };
 });
 
+export const mockElement = () => ({
+  mount: jest.fn(),
+  destroy: jest.fn(),
+  on: jest.fn(),
+  update: jest.fn(),
+});
+
+export const mockElements = () => {
+  const elements = {};
+  return {
+    create: jest.fn(type => {
+      elements[type] = mockElement();
+      return elements[type];
+    }),
+    getElement: jest.fn(type => {
+      return elements[type] || null;
+    }),
+  };
+};
+
+export const mockStripe = () => ({
+  elements: jest.fn(() => mockElements()),
+  createToken: jest.fn(),
+  createSource: jest.fn(),
+  createPaymentMethod: jest.fn(),
+  confirmCardPayment: jest.fn(),
+  confirmCardSetup: jest.fn(),
+  paymentRequest: jest.fn(),
+  handleCardPayment: () => Promise.resolve({ error: null }),
+  handleCardSetup: (secret, card, details) =>
+    Promise.resolve({ setupIntent: {} }),
+});
+
 const renderApp = (config = defaultConfig) => {
   return renderComponent(<App />, config);
 };
@@ -99,18 +133,6 @@ export const renderComponent = (component, config = {}) => {
     }
   };
 
-  window.stripe = {
-    elements: () => ({
-      create: el => ({
-        mount: node => {},
-        unmount: () => {},
-      }),
-    }),
-    handleCardPayment: () => Promise.resolve({ error: null }),
-    handleCardSetup: (secret, card, details) =>
-      Promise.resolve({ setupIntent: {} }),
-  };
-
   const history = createMemoryHistory({ initialEntries: [config.route] });
   const cache = new InMemoryCache({ fragmentMatcher });
 
@@ -118,7 +140,9 @@ export const renderComponent = (component, config = {}) => {
     ...render(
       <MockedProvider mocks={config.graphQLMocks} cache={cache}>
         <Router history={history}>
-          <I18nextProvider i18n={i18n}>{component}</I18nextProvider>
+          <Elements stripe={mockStripe()}>
+            <I18nextProvider i18n={i18n}>{component}</I18nextProvider>
+          </Elements>
         </Router>
       </MockedProvider>
     ),
