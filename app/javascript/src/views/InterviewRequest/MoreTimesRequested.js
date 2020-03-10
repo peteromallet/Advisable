@@ -1,16 +1,15 @@
 import React from "react";
-import Text from "src/components/Text";
+import { Box, Text } from "@advisable/donut";
 import illustration from "./illustration.png";
-import { Centered } from "./styles";
 
 const MoreTimesRequested = ({ clientName }) => (
-  <Centered>
+  <Box textAlign="center">
     <img width={250} src={illustration} alt="" />
-    <Text>
+    <Text lineHeight="m" color="neutral800">
       We have requested more times from {clientName} and will let you know when
       they respond.
     </Text>
-  </Centered>
+  </Box>
 );
 
 export default MoreTimesRequested;

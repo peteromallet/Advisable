@@ -1,14 +1,13 @@
 import reduce from "lodash/reduce";
 import moment from "moment-timezone";
-import React, { useState, Fragment } from "react";
-import Text from "src/components/Text";
-import Heading from "src/components/Heading";
+import React, { useState } from "react";
+import { Text, Modal, useModal } from "@advisable/donut";
 import { Day, RequestMore } from "./styles";
 import NoAvailability from "./NoAvailability";
 import RequestMoreAvailability from "./RequestMoreAvailability";
 
 const SelectDay = ({ clientName, availability, timeZone, match }) => {
-  const [requestMoreTimes, setRequestMoreTimes] = useState(false);
+  const modal = useModal();
 
   const dates = reduce(
     availability,
@@ -22,30 +21,33 @@ const SelectDay = ({ clientName, availability, timeZone, match }) => {
     []
   );
 
-  const handleRequestMoreAvailability = e => {
-    e.preventDefault();
-    setRequestMoreTimes(true);
-  };
-
   return (
-    <Fragment>
-      <Heading size="l" marginBottom="xs">
+    <>
+      <Text
+        as="h1"
+        mb="xs"
+        fontSize="xxl"
+        color="blue900"
+        fontWeight="semibold"
+        letterSpacing="-0.02em"
+      >
         Call with {clientName}
-      </Heading>
-      <Text marginBottom="xl">
+      </Text>
+      <Text lineHeight="s" color="neutral800" mb="l">
         {clientName} has requested a call with you! Please select an available
         day below.
       </Text>
 
-      <RequestMoreAvailability
-        clientName={clientName}
-        isOpen={requestMoreTimes}
-        interviewID={match.params.interviewID}
-        onClose={() => setRequestMoreTimes(false)}
-      />
+      <Modal label="Request more time" modal={modal}>
+        <RequestMoreAvailability
+          clientName={clientName}
+          interviewID={match.params.interviewID}
+          onCancel={modal.hide}
+        />
+      </Modal>
 
       {dates.length > 0 && (
-        <Fragment>
+        <>
           {dates.map(d => {
             const date = moment.tz(d, timeZone);
             return (
@@ -58,20 +60,18 @@ const SelectDay = ({ clientName, availability, timeZone, match }) => {
               </Day>
             );
           })}
-          <Text size="s" marginTop="xl">
+          <Text color="neutral900" mb="xxs" mt="l">
             None of these dates work for you?
           </Text>
 
-          <RequestMore onClick={handleRequestMoreAvailability}>
+          <RequestMore onClick={modal.show}>
             Request more availability
           </RequestMore>
-        </Fragment>
+        </>
       )}
 
-      {dates.length === 0 && (
-        <NoAvailability onRequestMoreTimes={handleRequestMoreAvailability} />
-      )}
-    </Fragment>
+      {dates.length === 0 && <NoAvailability onRequestMoreTimes={modal.show} />}
+    </>
   );
 };
 
