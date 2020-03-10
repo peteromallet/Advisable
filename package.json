@@ -9,7 +9,6 @@
     "@babel/preset-typescript": "^7.8.3",
     "@rails/activestorage": "^6.0.2-1",
     "@rails/webpacker": "4.2.2",
-    "@reach/menu-button": "^0.1.18",
     "@reach/tabs": "^0.1.6",
     "@rehooks/component-size": "^1.0.3",
     "@sentry/browser": "^5.13.2",
