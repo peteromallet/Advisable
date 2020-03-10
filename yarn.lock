@@ -2167,10 +2167,10 @@
   dependencies:
     prop-types "^15.7.2"
 
-"@stripe/stripe-js@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.0.2.tgz#dfa798d00bdc72b3b1673e6fa801f55e49d1e240"
-  integrity sha512-YZNXVFCDSvjjE7aPP78qUt4cBrHlrj97Q/uXgrZbjDwJdPJYXv31EQGgBblbDjdIeq+kPfmZixulc/Hn1LZqJQ==
+"@stripe/stripe-js@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.0.3.tgz#512ed718d8b64c2965550581dde17642980e4baa"
+  integrity sha512-eixi4Ycc25HLZBrAjT6QYi7QxOAdMbIZkX38Iu4/s/8tAF4xJf+er69LzS0Wy+czVKsdyNGWJ0R0nvKTHaD/Cg==
 
 "@styled-system/background@^5.1.2":
   version "5.1.2"
@@ -5506,10 +5506,10 @@ dotenv@^8.0.0, dotenv@^8.2.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
   integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
 
-downshift@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/downshift/-/downshift-5.0.0.tgz#2fc85e2f1b8854ef8194ab9c025b05487841ab9d"
-  integrity sha512-7rgK+WVi22nP7UA/hO97jsxkFE5ByK0DyVtHn3GB5rVGHXRjKrm2QvgK3wzFn1yWU/UwUDSdDYRpsiPz9oztVg==
+downshift@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/downshift/-/downshift-5.0.4.tgz#d7c8126458bcc0e9a94b1f533fa08c19cb33763f"
+  integrity sha512-vFDJKm7vHU/1IYtYcZl52CdkZ9WKGQEPZzTnDo+X2Tb+yYnnz9M5L9WT/j0EDPZOcB+js94Vf5ylvQsvYpRzrw==
   dependencies:
     "@babel/runtime" "^7.4.5"
     compute-scroll-into-view "^1.0.9"
