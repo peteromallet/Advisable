@@ -9,13 +9,13 @@ const ResultsLoading = () => {
       <Skeleton maxWidth={600} height={18} mb="l" />
       <Box display="flex" flexWrap="wrap" ml="-10px" mr="-10px">
         <Box width={{ _: "100%", s: "50%", m: "33.3333%" }}>
-          <Skeleton height={470} mx={10} mb={10} />
+          <Skeleton height={470} mx="10px" mb="10px" />
         </Box>
         <Box width={{ _: "100%", s: "50%", m: "33.3333%" }}>
-          <Skeleton height={470} mx={10} mb={10} />
+          <Skeleton height={470} mx="10px" mb="10px" />
         </Box>
         <Box width={{ _: "100%", s: "50%", m: "33.3333%" }}>
-          <Skeleton height={470} mx={10} mb={10} />
+          <Skeleton height={470} mx="10px" mb="10px" />
         </Box>
       </Box>
     </Box>
