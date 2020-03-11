@@ -76,7 +76,7 @@ function SearchResults({ specialists }) {
           >
             <SpecialistCard
               mx="10px"
-              mb={20}
+              mb="20px"
               height={480}
               specialist={s}
               border="2px solid white"

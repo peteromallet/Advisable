@@ -69,7 +69,7 @@ const Freelancers = ({ data }) => {
           >
             <SpecialistCard
               mx="10px"
-              mb={20}
+              mb="20px"
               height={480}
               specialist={s}
               elevation={selectedFreelancers.indexOf(s.id) > -1 ? "l" : "m"}
