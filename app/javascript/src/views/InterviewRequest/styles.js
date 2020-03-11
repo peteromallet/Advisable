@@ -1,24 +1,7 @@
 import styled from "styled-components";
 import { rgba } from "polished";
 import { Link } from "react-router-dom";
-import { Icon } from "src/components/Icon/styles";
-
-export const Container = styled.div`
-  padding: 30px;
-  max-width: 600px;
-  background: #ffffff;
-  border-radius: 3px;
-  position: relative;
-  margin: 80px auto 80px auto;
-  box-shadow: 0 4px 10px 0 rgba(208, 217, 233, 0.38);
-
-  @media (max-width: 650px) {
-    margin-top: 0;
-    max-width: 100%;
-    border-radius: 0;
-    min-height: 100vh;
-  }
-`;
+import { theme, StyledIcon } from "@advisable/donut";
 
 export const Day = styled(Link)`
   display: block;
@@ -63,7 +46,9 @@ export const RequestMore = styled.a`
   cursor: pointer;
   text-decoration: none;
   letter-spacing: -0.04em;
-  &:hover { color: #173FCD; }
+  &:hover {
+    color: #173fcd;
+  }
 `;
 
 export const Times = styled.div`
@@ -95,15 +80,14 @@ export const Time = styled(Link)`
 
 export const Event = styled.div`
   display: block;
-  position: relative;
-  border-radius: 5px;
-  margin-bottom: 30px;
-  text-decoration: none;
   text-align: left;
+  position: relative;
+  border-radius: 12px;
+  text-decoration: none;
   padding: 15px 20px 15px 60px;
-  border: 1px solid rgba(23, 63, 205, 0.2);
+  background: ${theme.colors.neutral100};
 
-  ${Icon} {
+  ${StyledIcon} {
     top: 50%;
     left: 20px;
     position: absolute;
@@ -111,11 +95,11 @@ export const Event = styled.div`
   }
 
   h4 {
-    color: #142150;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 4px;
     letter-spacing: -0.01em;
+    color: ${theme.colors.neutral900};
   }
 
   span {

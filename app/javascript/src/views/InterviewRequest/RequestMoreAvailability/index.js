@@ -1,55 +1,82 @@
 import React from "react";
-import { Box } from "@advisable/donut";
-import { Mutation } from "react-apollo";
-import Text from "src/components/Text";
-import Modal from "src/components/Modal";
-import Button from "src/components/Button";
-import Heading from "src/components/Heading";
+import { Formik, Form, Field } from "formik";
+import { Box, Text, RoundedButton } from "@advisable/donut";
+import { useMutation } from "react-apollo";
 import ButtonGroup from "src/components/ButtonGroup";
-import REQUEST_MORE_TIMES from "./requestMoreTimes.graphql";
+import TextField from "../../../components/TextField";
+import REQUEST_MORE_TIMES from "./requestMoreTimes";
 
-const RequestMoreAvailability = ({
-  isOpen,
-  onClose,
+export default function RequestMoreAvailability({
+  onCancel,
   interviewID,
   clientName,
-}) => {
+}) {
+  const [requestMoreTimes, { loading }] = useMutation(REQUEST_MORE_TIMES);
+
+  const initialValues = {
+    availabilityNote: "",
+  };
+
+  const handleSubmit = async values => {
+    return requestMoreTimes({
+      variables: {
+        input: {
+          id: interviewID,
+          availabilityNote: values.availabilityNote,
+        },
+      },
+    });
+  };
+
   return (
-    <Mutation mutation={REQUEST_MORE_TIMES}>
-      {(requestMoreTimes, { loading }) => (
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <Box padding="l">
-            <Heading marginBottom="s">Request more availability</Heading>
-            <Text marginBottom="l">
-              We will request more availability from {clientName} and let you
-              know when they respond.
-            </Text>
+    <Box padding="l">
+      <Text
+        mb="xs"
+        as="h3"
+        fontSize="xxl"
+        color="blue900"
+        fontWeight="semibold"
+        letterSpacing="-0.02em"
+      >
+        Request more availability
+      </Text>
+      <Text mb="l" lineHeight="m" color="neutral800">
+        We will request more availability from {clientName} and let you know
+        when they respond.
+      </Text>
+      <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+        {formik => (
+          <Form>
+            <Box mb="l">
+              <Field
+                as={TextField}
+                multiline
+                name="availabilityNote"
+                label="When suits for you?"
+                placeholder="Please add a note on your availability"
+              />
+            </Box>
             <ButtonGroup fullWidth>
-              <Button
+              <RoundedButton
                 size="l"
-                styling="primary"
+                type="submit"
+                variant="dark"
                 loading={loading}
-                onClick={() =>
-                  requestMoreTimes({
-                    variables: {
-                      input: {
-                        id: interviewID,
-                      },
-                    },
-                  })
-                }
               >
                 Request
-              </Button>
-              <Button size="l" onClick={onClose}>
+              </RoundedButton>
+              <RoundedButton
+                type="button"
+                variant="subtle"
+                size="l"
+                onClick={onCancel}
+              >
                 Cancel
-              </Button>
+              </RoundedButton>
             </ButtonGroup>
-          </Box>
-        </Modal>
-      )}
-    </Mutation>
+          </Form>
+        )}
+      </Formik>
+    </Box>
   );
-};
-
-export default RequestMoreAvailability;
+}
