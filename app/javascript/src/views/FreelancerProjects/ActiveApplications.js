@@ -15,7 +15,7 @@ export default ({ onClick, applications }) => {
       <Text as="h1" weight="semibold" size="xxl" mb="m" color="neutral.9">
         Active Projects
       </Text>
-      <Tabs>
+      <Tabs label="Clients">
         <Tabs.Tab title="Active Clients">
           <Cards>
             {active.map(application => (

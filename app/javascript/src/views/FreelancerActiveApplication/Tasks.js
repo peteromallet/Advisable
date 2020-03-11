@@ -11,7 +11,7 @@ const Tasks = props => {
       <Text as="h4" size="xl" padding="m" weight="medium" color="neutral.9">
         My Tasks
       </Text>
-      <Tabs tabListProps={{ pl: "m" }}>
+      <Tabs label="Tasks" tabListProps={{ pl: "m" }}>
         <Tabs.Tab title="Active Tasks">
           <ActiveTasks {...props} />
         </Tabs.Tab>

@@ -1,79 +1,42 @@
-import styled, { css } from "styled-components";
-import {
-  Tab as ReachTab,
-  Tabs as ReachTabs,
-  TabList as ReachTabList,
-  TabPanel as ReachTabPanel,
-  TabPanels as ReachTabPanels,
-} from "@reach/tabs";
-import theme from "../../theme";
 import { space } from "styled-system";
+import styled from "styled-components";
+import { Tab, TabList, TabPanel } from "reakit/Tab";
+import theme from "../../theme";
 
-let colors = theme.colors;
-
-export const Tabs = styled(ReachTabs)``;
-
-export const TabPanels = styled(ReachTabPanels)``;
-
-export const TabPanel = styled(ReachTabPanel)`
-  outline: none;
-`;
-
-export const TabList = styled(ReachTabList)`
-  ${space};
-
-  z-index: 2;
-  position: relative;
-  border-bottom: 1px solid ${colors.neutral[2]};
-`;
-
-// Additional styles for the tab when it is selected.
-const selectedTab = css`
-  cursor: default;
-  color: ${colors.blue[5]};
-  border-color: ${colors.blue[5]};
-
-  &:hover {
-    color: ${colors.blue[5]};
-    border-color: ${colors.blue[5]};
-  }
-`;
-
-export const Tab = styled(ReachTab)`
-  margin: 0;
+export const StyledTab = styled(Tab)`
   padding: 0;
+  z-index: 1;
   border: none;
   outline: none;
   font-size: 15px;
-  font-weight: 400;
   cursor: pointer;
   appearance: none;
-  margin-right: 20px;
+  margin-right: 28px;
+  position: relative;
   margin-bottom: -1px;
   align-items: center;
+  padding-bottom: 12px;
   display: inline-flex;
-  padding-bottom: 10px;
+  letter-spacing: -0.01em;
   background: transparent;
-  letter-spacing: -0.01rem;
-  color: ${colors.neutral[7]};
-  font-family: poppins, sans-serif;
-  border-bottom: 2px solid transparent;
-  transition: color 300ms;
+  color: ${theme.colors.neutral500};
+  font-family: Poppins, sans-serif;
 
   &:hover {
-    color: ${colors.neutral[7]};
+    color: ${theme.colors.neutral700};
   }
 
-  ${props => props.isSelected && selectedTab};
-
-  &:first-child {
-    padding-left: 0;
-  }
-
-  svg {
-    margin-right: 2px;
-    margin-bottom: -1px;
+  &[aria-selected="true"] {
+    color: ${theme.colors.blue700};
+    border-bottom: 1px solid ${theme.colors.blue700};
   }
 `;
 
-export default Tabs;
+export const StyledTabList = styled(TabList)`
+  ${space};
+  border-bottom: 1px solid ${theme.colors.neutral100};
+`;
+
+export const StyledTabPanel = styled(TabPanel)`
+  outline: none;
+`;
