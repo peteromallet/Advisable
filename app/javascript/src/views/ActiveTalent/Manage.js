@@ -22,7 +22,7 @@ export default ({ onClick, applications }) => {
       >
         Manage Talent
       </Text>
-      <Tabs>
+      <Tabs label="Tasks">
         <Tabs.Tab title="Active Talent">
           <Cards>
             {active.map(application => (

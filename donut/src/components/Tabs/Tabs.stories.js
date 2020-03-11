@@ -9,7 +9,7 @@ export default {
 export const tabs = () => {
   return (
     <Card mx="auto" p="xl" maxWidth={500}>
-      <Tabs>
+      <Tabs label="The tabs">
         <Tabs.Tab icon="list" title="Active Tasks">
           This is the active tasks section
         </Tabs.Tab>

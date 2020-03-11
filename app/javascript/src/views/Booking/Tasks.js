@@ -13,7 +13,7 @@ export default ({ onNewTask, application, onSelectTask }) => {
       <Text as="h4" size="l" padding="m" weight="medium" color="neutral.9">
         {t("tasks.title", application.specialist)}
       </Text>
-      <Tabs tabListProps={{ pl: "m" }}>
+      <Tabs label="Tasks" tabListProps={{ pl: "m" }}>
         <Tabs.Tab title="Active Projects" icon="list">
           <ActiveTasks
             onNewTask={onNewTask}

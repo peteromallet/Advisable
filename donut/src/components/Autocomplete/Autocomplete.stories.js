@@ -1,14 +1,12 @@
 import React from "react";
 import find from "lodash/find";
 import sortBy from "lodash/sortBy";
-import { withKnobs } from "@storybook/addon-knobs";
 import Text from "../Text";
 import Card from "../Card";
 import Autocomplete from "./";
 
 export default {
   title: "Autocomplete",
-  decorators: [withKnobs],
 };
 
 export const singleSelect = () => {
