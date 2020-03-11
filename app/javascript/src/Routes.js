@@ -15,7 +15,6 @@ import FreelancerSignup from "./views/FreelancerSignup";
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const VerifyProject = lazy(() => import("./views/VerifyProject"));
-const ClientSignup = lazy(() => import("./views/ClientSignup"));
 
 const Routes = () => {
   return (

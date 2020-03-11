@@ -8,12 +8,10 @@ describe Mutations::RequestMoreInterviewTimes do
     mutation {
       requestMoreInterviewTimes(input: {
         id: "#{interview.airtable_id}", 
+        availabilityNote: "This is a note",
       }) {
         interview {
           status
-        }
-        errors {
-          code
         }
       }
     }
@@ -36,8 +34,8 @@ describe Mutations::RequestMoreInterviewTimes do
     let(:interview) { create(:interview, status: 'Call Completed') }
 
     it 'returns an error' do
-      error = response['data']['requestMoreInterviewTimes']['errors'][0]
-      expect(error['code']).to eq('interview.not_requested')
+      error = response['errors'][0]['extensions']['code']
+      expect(error).to eq('interview.notRequested')
     end
   end
 end
