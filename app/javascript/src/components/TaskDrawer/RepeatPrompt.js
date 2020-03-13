@@ -22,6 +22,8 @@ const RepeatPrompt = ({ task, onRepeat, onClose, createTask }) => {
           description: task.description,
           estimate: task.estimate,
           repeat: task.repeat,
+          estimateType: task.estimateType,
+          flexibleEstimate: task.flexibleEstimate,
           dueDate: moment(task.dueDate).add(1, "month"),
         },
       },
