@@ -239,4 +239,16 @@ class Types::QueryType < Types::BaseType
   def consultation(id:)
     Consultation.find_by_uid_or_airtable_id!(id)
   end
+
+  field :search, Types::SearchType, null: true do
+    argument :id, ID, required: true
+  end
+
+  def search(id:)
+    unless context[:current_user].try(:is_a?, User)
+      raise ApiError::NotAuthenticated.new('You must be logged in as a user')
+    end
+
+    context[:current_user].searches.find_by_uid!(id)
+  end
 end

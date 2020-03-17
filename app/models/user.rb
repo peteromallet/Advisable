@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :interviews
   has_many :applications, through: :projects
   has_many :consultations
+  has_many :searches
   has_one :client_user
   has_one :client, through: :client_user
   belongs_to :industry, required: false
@@ -19,8 +20,8 @@ class User < ApplicationRecord
 
   attribute :availability, :datetime, default: [], array: true
 
-  register_tutorial "fixedProjects"
-  register_tutorial "flexibleProjects"
+  register_tutorial 'fixedProjects'
+  register_tutorial 'flexibleProjects'
 
   def name
     "#{first_name} #{last_name}"
@@ -38,22 +39,21 @@ class User < ApplicationRecord
 
   def stripe_customer_id
     return self[:stripe_customer_id] if self[:stripe_customer_id]
-    customer = Stripe::Customer.create({
-      email: email,
-      name: company_name,
-      metadata: {
-        user_id: uid,
-      }
-    })
+    customer =
+      Stripe::Customer.create(
+        { email: email, name: company_name, metadata: { user_id: uid } }
+      )
     update_columns(stripe_customer_id: customer.id)
     customer.id
   end
 
   def stripe_customer
-    Stripe::Customer.retrieve({
-      id: stripe_customer_id,
-      expand: ['invoice_settings.default_payment_method']
-    })
+    Stripe::Customer.retrieve(
+      {
+        id: stripe_customer_id,
+        expand: %w[invoice_settings.default_payment_method]
+      }
+    )
   end
 
   # company name is both a column on the users table and an attribute of the
@@ -82,19 +82,16 @@ class User < ApplicationRecord
 
   def are_payments_setup
     return false if project_payment_method.nil?
-    return false if project_payment_method == "Card" && payment_method.nil?
+    return false if project_payment_method == 'Card' && payment_method.nil?
     return false if invoice_settings[:name].nil?
     return false if accepted_project_payment_terms_at.nil?
     true
   end
 
-
   # Called before the client record is saved to clean up any availability
   # in the past.
   def remove_past_availabililty
     return if availability.nil?
-    self.availability = availability.select do |time|
-      time > DateTime.now.utc
-    end
+    self.availability = availability.select { |time| time > DateTime.now.utc }
   end
 end

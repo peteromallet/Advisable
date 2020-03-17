@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/faker-ruby/faker.git
+  revision: 7966190d46fd8165b58f3be1bffe41d37ccaea7c
+  branch: master
+  specs:
+    faker (2.10.2)
+      i18n (>= 1.6, < 2)
+
+GIT
   remote: https://github.com/thoughtbot/administrate.git
   revision: 127ac1be3a0378bfe5cdf33e830affcc988a4785
   specs:
@@ -364,6 +372,7 @@ DEPENDENCIES
   countries
   dotenv-rails
   factory_bot_rails
+  faker!
   faraday
   graphql
   image_processing (~> 1.0)
