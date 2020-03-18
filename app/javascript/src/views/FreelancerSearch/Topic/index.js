@@ -7,7 +7,7 @@ import { Box, Link, Text, Card, RoundedButton, Icon } from "@advisable/donut";
 import TextField from "../../../components/TextField";
 import validationSchema from "./validationSchema";
 
-const Topic = () => {
+const Topic = ({ data }) => {
   const history = useHistory();
   const location = useLocation();
   const selected = location.state?.freelancers || [];
@@ -26,13 +26,16 @@ const Topic = () => {
       variables: {
         input: {
           specialists: location.state.freelancers,
-          skill: location.state.search.skill,
+          skill: data.search.skill,
           topic: values.topic,
         },
       },
     });
 
-    history.push({ pathname: "/freelancer_search/sent", state: null });
+    history.push({
+      pathname: `/freelancer_search/${data.search.id}/sent`,
+      state: null,
+    });
   };
 
   return (
@@ -41,7 +44,7 @@ const Topic = () => {
         mb="xs"
         to={{
           ...location,
-          pathname: "/freelancer_search/availability",
+          pathname: `/freelancer_search/${data.search.id}/availability`,
         }}
       >
         <Icon mr="xxs" width={16} height={16} icon="arrow-left" />

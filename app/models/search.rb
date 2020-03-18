@@ -13,6 +13,7 @@ class Search < ApplicationRecord
             search_by_skills + search_by_projects +
               search_by_off_platform_projects
           )
+            .uniq
         records.sort_by { |s| s.average_score || 0 }.reverse
       end
   end

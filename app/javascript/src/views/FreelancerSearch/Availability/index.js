@@ -17,13 +17,13 @@ import UPDATE_AVAILABILITY from "./updateAvailability";
 import AvailabilityMobileFields from "./AvailabilityMobileFields";
 import AvailabilityDesktopFields from "./AvailabilityDesktopFields";
 
-const Availability = () => {
+const Availability = ({ data }) => {
   const theme = useTheme();
   const viewer = useViewer();
   const history = useHistory();
   const location = useLocation();
   const selected = location.state?.freelancers || [];
-  const { data, loading } = useQuery(GET_AVAILABILITY);
+  const getAvailability = useQuery(GET_AVAILABILITY);
   const [updateAvailability] = useMutation(UPDATE_AVAILABILITY);
   const sUp = useBreakpoint("sUp");
 
@@ -39,16 +39,16 @@ const Availability = () => {
     return <Redirect to="/freelancer_search/results" />;
   }
 
-  if (loading) {
+  if (getAvailability.loading) {
     return <Loading />;
   }
 
   const initialValues = {
     timeZone:
-      data?.viewer.timeZone ||
+      getAvailability.data?.viewer.timeZone ||
       Intl.DateTimeFormat()?.resolvedOptions()?.timeZone ||
       "",
-    availability: data?.viewer.availability || [],
+    availability: getAvailability.data?.viewer.availability || [],
   };
 
   const handleSubmit = async values => {
@@ -63,7 +63,7 @@ const Availability = () => {
 
     history.push({
       ...location,
-      pathname: "/freelancer_search/topic",
+      pathname: `/freelancer_search/${data.search.id}/topic`,
     });
   };
 
@@ -73,7 +73,7 @@ const Availability = () => {
         mb="xs"
         to={{
           ...location,
-          pathname: "/freelancer_search/results",
+          pathname: `/freelancer_search/${data.search.id}/results`,
         }}
       >
         <Icon mr="xxs" width={16} height={16} icon="arrow-left" />

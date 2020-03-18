@@ -6,25 +6,25 @@ import {
   Checkbox,
   Autocomplete,
   RoundedButton,
-  useBreakpoint,
   useTheme,
 } from "@advisable/donut";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { useQuery } from "react-apollo";
+import { useQuery, useMutation } from "react-apollo";
 import { Container } from "./styles";
 import Select from "../../../components/Select";
 import Loading from "../../../components/Loading";
 import Images from "./Images";
 import validationSchema from "./validationSchema";
 import DATA from "./getData";
+import { createSearch as CREATE_SEARCH } from "../searchQueries";
 
 const FreelancerSearchCriteria = () => {
   const history = useHistory();
   const theme = useTheme();
-  const { data, loading, error } = useQuery(DATA);
-  const isDesktop = useBreakpoint("mUp");
+  const { data, loading } = useQuery(DATA);
+  const [createSearch] = useMutation(CREATE_SEARCH);
 
   React.useEffect(() => {
     theme.updateTheme({ background: "white" });
@@ -36,18 +36,20 @@ const FreelancerSearchCriteria = () => {
   const initialValues = {
     skill: "",
     industry: data.viewer?.industry?.name || "",
-    industryRequired: false,
+    industryExperienceRequired: false,
     companyType: data.viewer?.companyType || "Growth-Stage Startup",
-    companyTypeRequired: false,
+    companyExperienceRequired: false,
   };
 
-  const handleSubmit = values => {
-    history.push({
-      pathname: "/freelancer_search/results",
-      state: {
-        search: values,
+  const handleSubmit = async values => {
+    const response = await createSearch({
+      variables: {
+        input: values,
       },
     });
+
+    const id = response.data?.createSearch.search.id;
+    history.push(`/freelancer_search/${id}`);
   };
 
   return (
@@ -112,7 +114,7 @@ const FreelancerSearchCriteria = () => {
                   mt="s"
                   as={Checkbox}
                   type="checkbox"
-                  name="industryRequired"
+                  name="industryExperienceRequired"
                 >
                   Industry experience is important to me
                 </Field>
@@ -138,12 +140,16 @@ const FreelancerSearchCriteria = () => {
                   mt="s"
                   as={Checkbox}
                   type="checkbox"
-                  name="companyTypeRequired"
+                  name="companyExperienceRequired"
                 >
                   Experience with this type of company is important
                 </Field>
               </Box>
-              <RoundedButton size="l" prefix={<Icon icon="search" />}>
+              <RoundedButton
+                size="l"
+                prefix={<Icon icon="search" />}
+                loading={formik.isSubmitting}
+              >
                 Find a freelancer
               </RoundedButton>
             </Form>

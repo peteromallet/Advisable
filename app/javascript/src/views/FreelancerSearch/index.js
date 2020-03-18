@@ -1,11 +1,8 @@
 import React from "react";
-import Sent from "./Sent";
-import Topic from "./Topic";
-import Results from "./Results";
-import Criteria from "./Criteria";
-import Availability from "./Availability";
 import { Box } from "@advisable/donut";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
+import Criteria from "./Criteria";
+import ViewSearch from "./ViewSearch";
 import useViewer from "../../hooks/useViewer";
 import useScrollRestore from "../../utilities/useScrollRestore";
 
@@ -22,14 +19,8 @@ const FreelancerSearch = () => {
   return (
     <Box maxWidth={1100} mx="auto" py={{ _: "m", s: "xl" }} px="20px">
       <Switch>
-        <Route path="/freelancer_search/results" component={Results} />
-        <Route
-          path="/freelancer_search/availability"
-          component={Availability}
-        />
-        <Route path="/freelancer_search/topic" component={Topic} />
-        <Route path="/freelancer_search/sent" component={Sent} />
-        <Route path="/freelancer_search" component={Criteria} />
+        <Route exact path="/freelancer_search" component={Criteria} />
+        <Route path="/freelancer_search/:id" component={ViewSearch} />
       </Switch>
     </Box>
   );

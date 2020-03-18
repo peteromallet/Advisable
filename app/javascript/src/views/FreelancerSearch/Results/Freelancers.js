@@ -9,8 +9,10 @@ import SelectionBar from "./SelectionBar";
 const Freelancers = ({ data }) => {
   const history = useHistory();
   const location = useLocation();
-  const search = location.state?.search;
   const selectedFreelancers = location.state?.freelancers || [];
+
+  const skill = data.search.skill.name;
+  const results = data.search.results;
 
   const handleClickFreelancer = specialist => e => {
     let nextSelected;
@@ -44,7 +46,7 @@ const Freelancers = ({ data }) => {
           fontWeight="semibold"
           letterSpacing="-0.035em"
         >
-          We found {data.specialists.nodes.length} {search.skill} freelancers
+          We found {results.length} {skill} freelancers
         </Text>
         <Text
           mb="l"
@@ -58,7 +60,7 @@ const Freelancers = ({ data }) => {
         </Text>
       </motion.div>
       <Box flexWrap="wrap" display="flex" ml="-10px" mr="-10px">
-        {data.specialists.nodes.map((s, i) => (
+        {results.nodes.map((s, i) => (
           <Box
             as={motion.div}
             key={s.id}
@@ -120,7 +122,8 @@ const Freelancers = ({ data }) => {
         <RequestCallButton>Request a call</RequestCallButton>
       </Box>
       <SelectionBar
-        specialists={data.specialists.nodes.filter(
+        search={data.search}
+        specialists={results.nodes.filter(
           s => selectedFreelancers.indexOf(s.id) > -1
         )}
       />

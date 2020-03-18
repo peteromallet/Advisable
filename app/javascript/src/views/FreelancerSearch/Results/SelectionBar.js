@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Avatar, Box, Icon, Text, RoundedButton } from "@advisable/donut";
 import pluralize from "../../../utilities/pluralize";
 
-const SelectionBar = ({ specialists }) => {
+const SelectionBar = ({ search, specialists }) => {
   const location = useLocation();
 
   return (
@@ -58,7 +58,7 @@ const SelectionBar = ({ specialists }) => {
             size="l"
             to={{
               ...location,
-              pathname: "/freelancer_search/availability",
+              pathname: `/freelancer_search/${search.id}/availability`,
             }}
             suffix={<Icon icon="arrow-right" />}
           >
