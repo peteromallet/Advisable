@@ -4,7 +4,7 @@ import Freelancers from "./Freelancers";
 
 function SearchResults({ data }) {
   if (data.search.results.nodes.length === 0) {
-    return <NoResults />;
+    return <NoResults data={data} />;
   }
 
   return <Freelancers data={data} />;
