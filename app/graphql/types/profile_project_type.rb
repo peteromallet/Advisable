@@ -2,6 +2,7 @@ class Types::ProfileProjectType < Types::BaseType
   field :id, ID, null: false
   field :industry, Types::IndustryType, null: true
   field :title, String, null: false
+  field :goal, String, null: true
   field :company_name, String, null: false
   field :company_type, String, null: false
   field :excerpt, String, null: true
@@ -21,6 +22,10 @@ class Types::ProfileProjectType < Types::BaseType
 
   def industry
     Industry.find_by_name(project.industry)
+  end
+
+  def goal
+    project.goal
   end
 
   def company_type

@@ -5,6 +5,7 @@ import Sent from "./Sent";
 import Topic from "./Topic";
 import Results from "./Results";
 import Availability from "./Availability";
+import SearchRecommendation from "./SearchRecommendation";
 import { getSearch } from "./searchQueries";
 
 function ViewSearch() {
@@ -21,6 +22,9 @@ function ViewSearch() {
       <Route path="/freelancer_search/:id/results">
         <Results data={data} />
       </Route>
+      <Route path="/freelancer_search/:id/recommendation">
+        <SearchRecommendation data={data} />
+      </Route>
       <Route path="/freelancer_search/:id/availability">
         <Availability data={data} />
       </Route>
@@ -30,7 +34,11 @@ function ViewSearch() {
       <Route path="/freelancer_search/:id/sent">
         <Sent data={data} />
       </Route>
-      <Redirect to={`/freelancer_search/${id}/results`} />
+      {data.search.recommendation ? (
+        <Redirect to={`/freelancer_search/${id}/recommendation`} />
+      ) : (
+        <Redirect to={`/freelancer_search/${id}/results`} />
+      )}
     </Switch>
   );
 }

@@ -26,7 +26,7 @@ const Topic = ({ data }) => {
       variables: {
         input: {
           specialists: location.state.freelancers,
-          skill: data.search.skill,
+          skill: data.search.skill.name,
           topic: values.topic,
         },
       },
@@ -40,16 +40,10 @@ const Topic = ({ data }) => {
 
   return (
     <Box maxWidth={700} mx="auto">
-      <Link
-        mb="xs"
-        to={{
-          ...location,
-          pathname: `/freelancer_search/${data.search.id}/availability`,
-        }}
-      >
+      <Link.External mb="xs" href="#" onClick={history.goBack}>
         <Icon mr="xxs" width={16} height={16} icon="arrow-left" />
         Back
-      </Link>
+      </Link.External>
       <Text
         as="h1"
         mb="xs"

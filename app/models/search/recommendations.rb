@@ -19,11 +19,17 @@ class Search::Recommendations
   # updated to accomodate that.
   def recommendation
     @recommendation ||=
-      OffPlatformProject.joins(:specialist, :industries).where(
+      OffPlatformProject.left_outer_joins(:reviews).joins(
+        :specialist,
+        :industries
+      )
+        .where(
         'advisable_score >= 9 AND specialists.average_score >= 85 AND primary_skill = ? AND industries.name = ?',
         search.skill,
         search.industry
       )
+        .where
+        .not(reviews: { id: nil })
         .order(advisable_score: :desc)
         .first
   end

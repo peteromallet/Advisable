@@ -18,13 +18,30 @@ import Loading from "../../../components/Loading";
 import Images from "./Images";
 import validationSchema from "./validationSchema";
 import DATA from "./getData";
-import { createSearch as CREATE_SEARCH } from "../searchQueries";
+import {
+  createSearch as CREATE_SEARCH,
+  getSearch as GET_SEARCH,
+} from "../searchQueries";
 
 const FreelancerSearchCriteria = () => {
   const history = useHistory();
   const theme = useTheme();
   const { data, loading } = useQuery(DATA);
-  const [createSearch] = useMutation(CREATE_SEARCH);
+  const [createSearch] = useMutation(CREATE_SEARCH, {
+    update(store, result) {
+      const search = result.data.createSearch.search;
+      console.log("asdfakjsf", result);
+      store.writeQuery({
+        query: GET_SEARCH,
+        variables: {
+          id: search.id,
+        },
+        data: {
+          search,
+        },
+      });
+    },
+  });
 
   React.useEffect(() => {
     theme.updateTheme({ background: "white" });

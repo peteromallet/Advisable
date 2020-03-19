@@ -34,9 +34,9 @@ const Freelancers = ({ data }) => {
   return (
     <Box>
       <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }}>
-        <Link mb="xs" to="/freelancer_search">
+        <Link.External mb="xs" href="#" onClick={history.goBack}>
           <Icon icon="arrow-left" width={16} height={16} mr="xxs" /> Back
-        </Link>
+        </Link.External>
         <Text
           as="h2"
           mb="xs"
