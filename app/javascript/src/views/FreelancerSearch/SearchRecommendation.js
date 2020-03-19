@@ -10,29 +10,29 @@ function SearchRecommendation({ data }) {
   const project = data.search.recommendation;
 
   return (
-    <Box paddingBottom="xxxl">
-      <Link mb="s" to="/freelancer_search">
-        <Icon mr="xxs" width={16} height={16} icon="arrow-left" />
+    <Box paddingBottom="120px">
+      <Link fontSize="l" mb="s" to="/freelancer_search">
+        <Icon mr="2px" width={20} height={20} icon="arrow-left" />
         Back
       </Link>
       <Text
         mb="xs"
-        fontSize="xxxl"
+        fontSize="32px"
         color="blue900"
         fontWeight="semibold"
-        letterSpacing="-0.03em"
+        letterSpacing="-0.02em"
       >
         We have the perfect freelancer for this!
       </Text>
       <Box maxWidth="800px" mb="xl">
-        <Text fontSize="l" lineHeight="m">
+        <Text fontSize="l" lineHeight="l" color="neutral800">
           {project.reviews[0].name} from {project.companyName} recommends{" "}
           {project.specialist.name} for {data.search.industry.name} companies
           {project.goal && <> who want to {project.goal.toLowerCase()}</>}.
         </Text>
       </Box>
       <Box display={{ _: "block", m: "flex" }}>
-        <Box width="100%" maxWidth="300px" flexShrink={0}>
+        <Box width="100%" maxWidth={{ _: "300px", xl: "320px" }} flexShrink={0}>
           <Box mb="l" position="relative">
             <Box position="absolute" right={20} top={-4} zIndex={2}>
               <Ribbon />
@@ -52,7 +52,7 @@ function SearchRecommendation({ data }) {
             autoLink
             length={400}
             fontSize="s"
-            lineHeight="s"
+            lineHeight="m"
             color="neutral800"
           >
             {project.specialist.bio}

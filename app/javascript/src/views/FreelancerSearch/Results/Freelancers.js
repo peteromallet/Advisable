@@ -61,14 +61,7 @@ const Freelancers = ({ data }) => {
       </motion.div>
       <Box flexWrap="wrap" display="flex" ml="-10px" mr="-10px">
         {results.nodes.map((s, i) => (
-          <Box
-            as={motion.div}
-            key={s.id}
-            animate={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 30 }}
-            width={{ _: "100%", s: "50%", l: "33.3333%" }}
-            transition={{ delay: (i + 1) * 0.2 }}
-          >
+          <Box key={s.id} width={{ _: "100%", s: "50%", l: "33.3333%" }}>
             <SpecialistCard
               mx="10px"
               mb="20px"

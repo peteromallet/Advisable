@@ -5,6 +5,7 @@ import {
   Circle,
   Text,
   Icon,
+  Container,
   RoundedButton,
   theme,
 } from "@advisable/donut";
@@ -16,36 +17,27 @@ function RecommendationBar({ data }) {
   return (
     <Box
       width="100%"
-      height="80px"
-      bg="white.9"
-      position="fixed"
       left={0}
       bottom={0}
-      shadow="xl"
+      zIndex={5}
+      height="70px"
+      bg="white.9"
+      boxShadow="l"
+      position="fixed"
     >
-      <Box
-        px="s"
-        mx="auto"
-        height="100%"
-        display="flex"
-        maxWidth={1100}
-        alignItems="center"
-      >
+      <Container height="100%" display="flex" alignItems="center">
         <Box>
-          <Circle width="40px" height="40px" bg="neutral100" flexShrink="0">
-            <Icon
-              icon="zap"
-              strokeWidth={0}
-              color="neutral600"
-              fill={theme.colors.neutral600}
-            />
+          <Circle width="40px" height="40px" bg="blue100" flexShrink="0">
+            <Icon icon="zap" strokeWidth={0} fill={theme.colors.blue800} />
           </Circle>
         </Box>
-        <Box width="100%" flexShrink={1} pl="s" pr="l">
-          <Text fontSize="xs" lineHeight="s">
-            Because {specialist.firstName} is a recommended freelancer, we offer
-            an expanded 3-day money-back guarantee with them.
-          </Text>
+        <Box width="100%" flexShrink={1} px="s">
+          <Box maxWidth="500px">
+            <Text fontSize="xs" lineHeight="s">
+              Because {specialist.firstName} is a recommended freelancer, we
+              offer an expanded 3-day money-back guarantee with them.
+            </Text>
+          </Box>
         </Box>
         <Box flexShrink={0}>
           <RoundedButton
@@ -72,7 +64,7 @@ function RecommendationBar({ data }) {
             Talk with {specialist.firstName}
           </RoundedButton>
         </Box>
-      </Box>
+      </Container>
     </Box>
   );
 }

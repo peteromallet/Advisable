@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@advisable/donut";
+import { Container } from "@advisable/donut";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import Criteria from "./Criteria";
 import ViewSearch from "./ViewSearch";
@@ -17,12 +17,12 @@ const FreelancerSearch = () => {
   }
 
   return (
-    <Box maxWidth={1100} mx="auto" py={{ _: "m", s: "xl" }} px="20px">
+    <Container py="xl">
       <Switch>
         <Route exact path="/freelancer_search" component={Criteria} />
         <Route path="/freelancer_search/:id" component={ViewSearch} />
       </Switch>
-    </Box>
+    </Container>
   );
 };
 

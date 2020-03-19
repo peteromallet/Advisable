@@ -57,7 +57,7 @@ const SpecialistCard = ({ specialist, action, ...props }) => {
       </Text>
       <TagCloud
         maxRows={2}
-        tags={specialist.skills}
+        tags={specialist.skills.slice(0, 5)}
         name={specialist.firstName}
       />
       <SpecialistModal modal={specialistModal} specialistId={specialist.id} />

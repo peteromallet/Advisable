@@ -5,8 +5,12 @@ import styled from "styled-components";
 const color = variant({
   variants: {
     neutral: {
-      color: theme.colors.neutral800,
-      background: theme.colors.neutral100,
+      color: theme.colors.neutral700,
+      background: theme.colors.blue100,
+    },
+    dark: {
+      color: theme.colors.white[9],
+      background: theme.colors.blue900,
     },
   },
 });
@@ -15,7 +19,7 @@ const size = variant({
   prop: "size",
   variants: {
     m: {
-      fontSize: 14,
+      fontSize: 13,
       padding: "6px 12px",
     },
   },
@@ -26,10 +30,9 @@ export const StyledTag = styled.div`
   ${color};
   ${size};
 
-  font-weight: 400;
+  font-weight: 500;
   border-radius: 20px;
   display: inline-flex;
-  letter-spacing: -0.01em;
 `;
 
 export default StyledTag;

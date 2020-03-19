@@ -23,7 +23,7 @@ function RatingStar({ filled }) {
 function Rating({ label, rating }) {
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between">
-      <Box fontSize="m" color="neutral600" letterSpacing="-0.01em">
+      <Box fontSize="m" color="neutral800" letterSpacing="-0.01em">
         {label}
       </Box>
       <Box display="flex">

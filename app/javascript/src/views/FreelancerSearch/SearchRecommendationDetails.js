@@ -58,7 +58,7 @@ function SearchRecommendationDetails({ data }) {
             Skills Used
           </Text>
           {project.skills.map(s => (
-            <Tag key={s.id} mr="xs" mb="xs">
+            <Tag key={s.id} mr="xxs" mb="xs">
               {s.name}
             </Tag>
           ))}
@@ -68,7 +68,7 @@ function SearchRecommendationDetails({ data }) {
             Industries
           </Text>
           {project.industries.map(i => (
-            <Tag key={i.id} mr="xs" mb="xs">
+            <Tag key={i.id} mr="xxs" mb="xs">
               {i.name}
             </Tag>
           ))}

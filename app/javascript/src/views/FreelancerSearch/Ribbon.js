@@ -3,16 +3,16 @@ import { Box, Circle, Icon } from "@advisable/donut";
 
 function Ribbon() {
   return (
-    <Box width={32} height={50} position="relative" color="neutral900">
+    <Box width={32} height={50} position="relative" color="blue900">
       <Circle
         width={20}
         height={20}
-        top="8px"
+        top="9px"
         left="6px"
-        bg="neutral600"
         position="absolute"
+        bg="rgba(255, 255, 255, 0.25)"
       >
-        <Icon width={14} icon="check" color="white.9" />
+        <Icon width={14} icon="check" color="white.9" strokeWidth={2.5} />
       </Circle>
       <svg width="32" height="49" fill="none" viewBox="0 0 32 49">
         <path
