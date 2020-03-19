@@ -19,6 +19,7 @@ class Airtable::OffPlatformProject < Airtable::Base
   sync_column 'Contact Relationship', to: :contact_relationship
   sync_column 'Company Type', to: :company_type
   sync_column 'Priority', to: :priority
+  sync_column 'Advisable Score', to: :advisable_score
 
   sync_data do |opp|
     pull_specialist(opp)
