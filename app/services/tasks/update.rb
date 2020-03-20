@@ -14,23 +14,31 @@ class Tasks::Update < ApplicationService
 
     # If the stage is "Quote Requested" and the estimate has changed then set
     # the status to "Quote Provided".
-    if task.estimate_changed? && ["Quote Requested"].include?(task.stage)
-      task.stage = "Quote Provided"
+    if task.estimate_changed? && ['Quote Requested'].include?(task.stage)
+      task.stage = 'Quote Provided'
+      task.quote_provided_at = DateTime.now.utc
     end
 
     # If the the name, dueDate or description was changed
+
+    # clear the estimate if the client is making the edit
+
+    # Set the stage to Not Assigned if the task was Quote Provided
+
     if task.name_changed? or task.due_date_changed? or task.description_changed?
-      # clear the estimate if the client is making the edit
       task.estimate = nil if task.estimate? && is_client?
       task.flexible_estimate = nil if task.flexible_estimate? && is_client?
-      # Set the stage to Not Assigned if the task was Quote Provided
-      task.stage = "Not Assigned" if task.stage == "Quote Provided"
+
+      task.stage = 'Not Assigned' if task.stage == 'Quote Provided'
     end
 
     task.sync_to_airtable if task.save
 
-    if task.saved_change_to_stage? && task.stage == "Quote Provided"
-      WebhookEvent.trigger("tasks.quote_provided", WebhookEvent::Task.data(task))
+    if task.saved_change_to_stage? && task.stage == 'Quote Provided'
+      WebhookEvent.trigger(
+        'tasks.quote_provided',
+        WebhookEvent::Task.data(task)
+      )
     end
 
     task
@@ -49,8 +57,9 @@ class Tasks::Update < ApplicationService
   def set_trial(trial)
     existing = task.application.trial_task
 
-    if existing.present? && existing.stage.in?(["Assigned", "Working", "Submitted", "Approved", "Paid"])
-      raise Service::Error.new("tasks.applicationHasActiveTrialTask")
+    if existing.present? &&
+         existing.stage.in?(%w[Assigned Working Submitted Approved Paid])
+      raise Service::Error.new('tasks.applicationHasActiveTrialTask')
     end
 
     if trial == true && existing && existing != task

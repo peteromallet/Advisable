@@ -12,7 +12,7 @@ class Tasks::Start < ApplicationService
 
     raise Service::Error.new('tasks.dueDateRequired') if task.due_date.blank?
 
-    if task.update(stage: 'Working')
+    if task.update(stage: 'Working', started_working_at: DateTime.now.utc)
       add_invoice_item if task.application.project_type == 'Fixed'
       task.sync_to_airtable
       WebhookEvent.trigger('tasks.started', WebhookEvent::Task.data(task))
