@@ -38,8 +38,8 @@ class Airtable::Consultation < Airtable::Base
     self['Consultation Status - Accepted By Specialist - Timestamp'] =
       consultation.accepted_at
     self['Consultation Status - Specialist Rejected - Timestamp'] =
-      consultation.declined_at
+      consultation.rejected_at
     self['Consultation Status - Advisable Rejected - Timestamp'] =
-      consultation.advisable_declined_at
+      consultation.advisable_rejected_at
   end
 end

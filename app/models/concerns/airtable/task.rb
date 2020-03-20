@@ -35,6 +35,7 @@ class Airtable::Task < Airtable::Base
     self['Final Cost'] = task.final_cost.try(:/, 100)
     self['Estimate Type'] = task.estimate_type
 
+    self['Task Stage - To Be Invited - Timestamp'] = task.to_be_invited_at
     self['Task Stage - Quote Requested - Timestamp'] = task.quote_requested_at
     self['Task Stage - Quote Provided - Timestamp'] = task.quote_provided_at
     self['Task Stage - Assigned - Timestamp'] = task.assigned_at
