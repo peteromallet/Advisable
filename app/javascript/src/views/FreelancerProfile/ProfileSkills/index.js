@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
-import { StyledProfileSkill } from "./styles";
+import { Box, Text, Tag } from "@advisable/donut";
 
 function ProfileSkills({ data }) {
   const skills = data.specialist.projectSkills.nodes.slice(0, 12);
@@ -11,7 +10,9 @@ function ProfileSkills({ data }) {
         Skills
       </Text>
       {skills.map(skill => (
-        <StyledProfileSkill key={skill.id}>{skill.name}</StyledProfileSkill>
+        <Tag mr="xxs" mb="xxs" key={skill.id}>
+          {skill.name}
+        </Tag>
       ))}
     </Box>
   );

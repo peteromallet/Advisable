@@ -73,7 +73,7 @@ const VARIANTS = {
 };
 
 const buttonSize = variant({
-  prop: "size",
+  prop: "buttonSize",
   variants: {
     s: {
       height: 32,

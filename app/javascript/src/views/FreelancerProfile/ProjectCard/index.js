@@ -9,6 +9,7 @@ import {
   Icon,
   Text,
   Modal,
+  Tag,
   useModal,
   RoundedButton,
 } from "@advisable/donut";
@@ -81,21 +82,9 @@ function ProjectCard({ specialistId, project }) {
         </Text>
         <Box mt="l" mb="l">
           {project.skills.map(skill => (
-            <Box
-              mr="xxs"
-              mb="xxs"
-              px="12px"
-              height="26px"
-              key={skill.id}
-              fontSize="xxs"
-              bg="neutral100"
-              color="neutral800"
-              borderRadius="15px"
-              alignItems="center"
-              display="inline-flex"
-            >
+            <Tag mr="xxs" mb="xxs">
               {skill.name}
-            </Box>
+            </Tag>
           ))}
         </Box>
         <Modal modal={modal} label="Freelancer project" width={800}>

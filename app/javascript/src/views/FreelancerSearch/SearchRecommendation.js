@@ -5,13 +5,21 @@ import ExpandableText from "../../components/ExpandableText";
 import FreelancerImageCard from "../../components/FreelancerImageCard";
 import Ribbon from "./Ribbon";
 import RecommendationBar from "./RecommendationBar";
+import RecommendationOffer from "./RecommendationOffer";
+import RecommendationActions from "./RecommendationActions";
 
 function SearchRecommendation({ data }) {
   const project = data.search.recommendation;
 
   return (
     <Box paddingBottom="120px">
-      <Link fontSize="l" mb="s" to="/freelancer_search">
+      <Link
+        fontSize="l"
+        mb="s"
+        fontWeight="medium"
+        to="/freelancer_search"
+        letterSpacing="-0.02em"
+      >
         <Icon mr="2px" width={20} height={20} icon="arrow-left" />
         Back
       </Link>
@@ -32,7 +40,12 @@ function SearchRecommendation({ data }) {
         </Text>
       </Box>
       <Box display={{ _: "block", m: "flex" }}>
-        <Box width="100%" maxWidth={{ _: "300px", xl: "320px" }} flexShrink={0}>
+        <Box
+          width="100%"
+          maxWidth={{ _: null, m: "300px", xl: "320px" }}
+          flexShrink={0}
+          marginBottom={{ _: "xl", m: null }}
+        >
           <Box mb="l" position="relative">
             <Box position="absolute" right={20} top={-4} zIndex={2}>
               <Ribbon />
@@ -44,6 +57,16 @@ function SearchRecommendation({ data }) {
               rating={project.specialist.ratings.overall}
               reviewsCount={project.specialist.reviewsCount}
             />
+          </Box>
+          <Box display={{ _: "block", l: "none" }} my="l">
+            <RecommendationOffer firstName={project.specialist.firstName} />
+            <Box mt="l">
+              <RecommendationActions
+                search={data.search}
+                specialistID={project.specialist.id}
+                firstName={project.specialist.firstName}
+              />
+            </Box>
           </Box>
           <Text color="neutral900" fontWeight="medium" fontSize="l" mb="xs">
             About
@@ -58,8 +81,16 @@ function SearchRecommendation({ data }) {
             {project.specialist.bio}
           </ExpandableText>
         </Box>
-        <Box ml="60px">
+        <Box ml={{ _: null, m: "60px" }}>
           <SearchRecommendationDetails data={data} />
+
+          <Box display={{ _: "block", l: "none" }} mt="l">
+            <RecommendationActions
+              search={data.search}
+              specialistID={project.specialist.id}
+              firstName={project.specialist.firstName}
+            />
+          </Box>
         </Box>
       </Box>
       <RecommendationBar data={data} />

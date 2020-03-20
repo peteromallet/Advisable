@@ -32,10 +32,9 @@ function SearchRecommendationDetails({ data }) {
       <Box height={1} bg="neutral100" my="l" />
       <Box
         display="grid"
-        gridColumn={2}
         gridRowGap="10px"
         gridColumnGap="40px"
-        gridTemplateColumns="1fr 1fr"
+        gridTemplateColumns={{ _: "1fr", l: "1fr 1fr" }}
       >
         <Rating label="Skills" rating={review.ratings.skills} />
         <Rating label="Communication" rating={review.ratings.communcation} />
@@ -50,11 +49,12 @@ function SearchRecommendationDetails({ data }) {
       <Box
         display="grid"
         gridColumn={2}
+        gridRowGap="20px"
         gridColumnGap="40px"
-        gridTemplateColumns="1fr 1fr"
+        gridTemplateColumns={{ _: "1fr", l: "1fr 1fr" }}
       >
         <Box>
-          <Text fontSize="m" mb="s" fontWeight="medium" color="neutral900">
+          <Text fontSize="m" mb="xs" fontWeight="medium" color="neutral900">
             Skills Used
           </Text>
           {project.skills.map(s => (
@@ -64,7 +64,7 @@ function SearchRecommendationDetails({ data }) {
           ))}
         </Box>
         <Box>
-          <Text fontSize="m" mb="s" fontWeight="medium" color="neutral900">
+          <Text fontSize="m" mb="xs" fontWeight="medium" color="neutral900">
             Industries
           </Text>
           {project.industries.map(i => (

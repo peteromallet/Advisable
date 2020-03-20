@@ -7,6 +7,7 @@ import Results from "./Results";
 import Availability from "./Availability";
 import SearchRecommendation from "./SearchRecommendation";
 import { getSearch } from "./searchQueries";
+import Loading from "../../components/Loading";
 
 function ViewSearch() {
   const { id } = useParams();
@@ -14,7 +15,7 @@ function ViewSearch() {
     variables: { id },
   });
 
-  if (loading) return <div>loading...</div>;
+  if (loading) return <Loading />;
   if (error) return <div>Something went wrong</div>;
 
   return (
