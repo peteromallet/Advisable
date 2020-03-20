@@ -118,6 +118,35 @@ describe Airtable::Task do
       )
       expect(airtable).to receive(:[]=).with('Description', task.description)
       expect(airtable).to receive(:[]=).with('Repeat', task.repeat)
+
+      expect(airtable).to receive(:[]=).with(
+        'Task Stage - To Be Invited - Timestamp',
+        task.to_be_invited_at
+      )
+      expect(airtable).to receive(:[]=).with(
+        'Task Stage - Quote Requested - Timestamp',
+        task.quote_requested_at
+      )
+      expect(airtable).to receive(:[]=).with(
+        'Task Stage - Quote Provided - Timestamp',
+        task.quote_provided_at
+      )
+      expect(airtable).to receive(:[]=).with(
+        'Task Stage - Assigned - Timestamp',
+        task.assigned_at
+      )
+      expect(airtable).to receive(:[]=).with(
+        'Task Stage - Working - Timestamp',
+        task.started_working_at
+      )
+      expect(airtable).to receive(:[]=).with(
+        'Task Stage - Submitted - Timestamp',
+        task.submitted_at
+      )
+      expect(airtable).to receive(:[]=).with(
+        'Task Stage - Approved - Timestamp',
+        task.approved_at
+      )
       expect(airtable).to receive(:save)
       airtable.push(task)
     end

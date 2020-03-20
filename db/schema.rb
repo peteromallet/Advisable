@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_10_112649) do
+ActiveRecord::Schema.define(version: 2020_03_20_075409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,12 @@ ActiveRecord::Schema.define(version: 2020_03_10_112649) do
     t.bigint "interview_id"
     t.string "source"
     t.integer "likely_to_hire"
+    t.datetime "request_started_at"
+    t.datetime "request_completed_at"
+    t.datetime "sent_at"
+    t.datetime "accepted_at"
+    t.datetime "rejected_at"
+    t.datetime "advisable_rejected_at"
     t.index ["airtable_id"], name: "index_consultations_on_airtable_id"
     t.index ["interview_id"], name: "index_consultations_on_interview_id"
     t.index ["skill_id"], name: "index_consultations_on_skill_id"
@@ -312,6 +318,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_112649) do
     t.string "contact_relationship"
     t.boolean "hide_from_profile"
     t.integer "priority"
+    t.integer "advisable_score"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
   end
@@ -473,6 +480,22 @@ ActiveRecord::Schema.define(version: 2020_03_10_112649) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "searches", force: :cascade do |t|
+    t.string "uid"
+    t.bigint "user_id", null: false
+    t.string "skill"
+    t.string "industry"
+    t.boolean "industry_experience_required"
+    t.string "company_type"
+    t.boolean "company_experience_required"
+    t.bigint "recommended_project_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["recommended_project_id"], name: "index_searches_on_recommended_project_id"
+    t.index ["uid"], name: "index_searches_on_uid"
+    t.index ["user_id"], name: "index_searches_on_user_id"
+  end
+
   create_table "skills", force: :cascade do |t|
     t.string "name"
     t.string "airtable_id"
@@ -562,6 +585,13 @@ ActiveRecord::Schema.define(version: 2020_03_10_112649) do
     t.string "stripe_invoice_id"
     t.string "estimate_type"
     t.integer "final_cost"
+    t.datetime "to_be_invited_at"
+    t.datetime "quote_requested_at"
+    t.datetime "quote_provided_at"
+    t.datetime "assigned_at"
+    t.datetime "started_working_at"
+    t.datetime "submitted_at"
+    t.datetime "approved_at"
     t.index ["airtable_id"], name: "index_tasks_on_airtable_id"
     t.index ["application_id"], name: "index_tasks_on_application_id"
     t.index ["uid"], name: "index_tasks_on_uid"
@@ -665,6 +695,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_112649) do
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "users"
   add_foreign_key "reviews", "specialists"
+  add_foreign_key "searches", "users"
   add_foreign_key "skills", "skills", column: "original_id"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"

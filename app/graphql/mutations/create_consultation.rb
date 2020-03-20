@@ -44,7 +44,8 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
         specialist: specialist_record,
         status: 'Request Started',
         skill: skill,
-        source: args[:utm_source]
+        source: args[:utm_source],
+        request_started_at: DateTime.now.utc
       )
 
     consultation.sync_to_airtable

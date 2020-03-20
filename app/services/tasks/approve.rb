@@ -6,13 +6,13 @@ class Tasks::Approve < ApplicationService
   end
 
   def call
-    if task.stage != "Submitted"
-      raise Service::Error.new("tasks.statusNotSubmitted")
+    if task.stage != 'Submitted'
+      raise Service::Error.new('tasks.statusNotSubmitted')
     end
 
-    if task.update(stage: "Approved")
+    if task.update(stage: 'Approved', approved_at: DateTime.now.utc)
       task.sync_to_airtable
-      WebhookEvent.trigger("tasks.approved", WebhookEvent::Task.data(task))
+      WebhookEvent.trigger('tasks.approved', WebhookEvent::Task.data(task))
       return task
     end
 
