@@ -12,7 +12,9 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
       application = create_application(project, consultation.specialist)
       interview = create_interview(application)
       consultation.update(
-        interview: interview, status: 'Accepted By Specialist'
+        interview: interview,
+        status: 'Accepted By Specialist',
+        accepted_at: DateTime.now.utc
       )
       consultation.sync_to_airtable
       { interview: interview }

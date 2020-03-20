@@ -6,22 +6,24 @@ class Tasks::Assign < ApplicationService
   end
 
   def call
-    if task.name.blank?
-      raise Service::Error.new("tasks.nameRequired")
-    end
+    raise Service::Error.new('tasks.nameRequired') if task.name.blank?
 
     if task.description.blank?
-      raise Service::Error.new("tasks.descriptionRequired")
+      raise Service::Error.new('tasks.descriptionRequired')
     end
 
-    unless ["Not Assigned", "Requested To Start", "Quote Requested", "Quote Provided"].include?(task.stage)
-      raise Service::Error.new("tasks.alreadyAssigned")
+    unless [
+             'Not Assigned',
+             'Requested To Start',
+             'Quote Requested',
+             'Quote Provided'
+           ].include?(task.stage)
+      raise Service::Error.new('tasks.alreadyAssigned')
     end
 
-    if task.update(stage: "Assigned")
-
+    if task.update(stage: 'Assigned', assigned_at: DateTime.now.utc)
       task.sync_to_airtable
-      WebhookEvent.trigger("tasks.assigned", WebhookEvent::Task.data(task))
+      WebhookEvent.trigger('tasks.assigned', WebhookEvent::Task.data(task))
       return task
     end
 

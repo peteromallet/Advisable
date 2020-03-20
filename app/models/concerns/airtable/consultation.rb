@@ -28,5 +28,18 @@ class Airtable::Consultation < Airtable::Base
     self['Consultation Status'] = consultation.status
     self['Consultation Source'] = consultation.source
     self['Likely To Hire'] = consultation.likely_to_hire
+
+    self['Consultation Status - Request Started - Timestamp'] =
+      consultation.request_started_at
+    self['Consultation Status - Request Completed - Timestamp'] =
+      consultation.request_completed_at
+    self['Consultation Status - Sent To Specialist - Timestamp'] =
+      consultation.sent_at
+    self['Consultation Status - Accepted By Specialist - Timestamp'] =
+      consultation.accepted_at
+    self['Consultation Status - Specialist Rejected - Timestamp'] =
+      consultation.declined_at
+    self['Consultation Status - Advisable Rejected - Timestamp'] =
+      consultation.advisable_declined_at
   end
 end
