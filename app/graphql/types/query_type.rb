@@ -184,7 +184,7 @@ class Types::QueryType < Types::BaseType
   end
 
   field :specialists,
-        Types::SpecialistConnection,
+        Types::SpecialistType::ConnectionType,
         null: false, max_page_size: 25 do
     description <<~HEREDOC
       Returns a list of specialists that match a given search criteria.

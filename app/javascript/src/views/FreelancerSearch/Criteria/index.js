@@ -30,7 +30,6 @@ const FreelancerSearchCriteria = () => {
   const [createSearch] = useMutation(CREATE_SEARCH, {
     update(store, result) {
       const search = result.data.createSearch.search;
-      console.log("asdfakjsf", result);
       store.writeQuery({
         query: GET_SEARCH,
         variables: {

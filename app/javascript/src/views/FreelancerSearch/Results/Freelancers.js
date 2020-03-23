@@ -46,7 +46,7 @@ const Freelancers = ({ data }) => {
           fontWeight="semibold"
           letterSpacing="-0.035em"
         >
-          We found {results.length} {skill} freelancers
+          We found {results.nodes.length} {skill} freelancers
         </Text>
         <Text
           mb="l"

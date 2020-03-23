@@ -27,14 +27,14 @@ export default function RecommendationAction({
         prefix={<Icon icon="message-circle" />}
         to={{
           ...location,
-          pathname: `/freelancer_search/${search.id}/topic`,
+          pathname: `/freelancer_search/${search.id}/availability`,
           state: {
             freelancers: [specialistID],
           },
         }}
         size="l"
       >
-        Talk with {firstName}
+        {`Talk with ${firstName}`}
       </RoundedButton>
     </Box>
   );

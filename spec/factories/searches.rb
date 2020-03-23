@@ -1,12 +1,11 @@
 FactoryBot.define do
   factory :search do
-    user { nil }
-    skill { "MyString" }
-    industry { "MyString" }
+    user
+    association :recommended_project, factory: :off_platform_project
+    skill { 'Skill Name' }
+    industry { 'Industry Name' }
     industry_experience_required { false }
-    company_type { "MyString" }
+    company_type { 'Startup' }
     company_experience_required { false }
-    recommended_specialist { "MyString" }
-    recommended_project { "MyString" }
   end
 end

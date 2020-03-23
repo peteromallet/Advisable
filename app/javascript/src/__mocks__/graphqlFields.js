@@ -310,6 +310,8 @@ export const profileProject = (fields = {}) => {
       title: "Project title",
       excerpt: "This is the excerpt...",
       description: "This is the description",
+      goal: "This was the project goal",
+      companyName: "Testing Inc",
       industry: null,
       skills: [],
       industries: [],
@@ -339,7 +341,17 @@ export const review = (fields = {}) => {
         communication: 2,
       },
     },
-    merge
+    fields
+  );
+};
+
+export const search = (fields = {}) => {
+  return merge(
+    {
+      __typename: "Search",
+      id: uniqueId("sea"),
+    },
+    fields
   );
 };
 
@@ -347,6 +359,7 @@ export default {
   user,
   task,
   skill,
+  search,
   review,
   country,
   project,

@@ -2,7 +2,9 @@ class Types::SearchType < Types::BaseType
   field :id, ID, null: false
   field :skill, Types::Skill, null: true
   field :industry, Types::IndustryType, null: true
-  field :results, Types::SpecialistConnection, max_page_size: 25, null: false
+  field :results,
+        Types::SpecialistType::ConnectionType,
+        max_page_size: 25, null: false
   field :recommendation, Types::ProfileProjectType, null: true
 
   def id

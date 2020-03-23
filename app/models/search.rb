@@ -42,7 +42,7 @@ class Search < ApplicationRecord
   end
 
   def search_by_projects
-    base_search.joins(projects: :skills).where(
+    base_search.joins(successful_projects: :skills).where(
       projects: { skills: { name: skill } }
     )
   end
@@ -55,9 +55,13 @@ class Search < ApplicationRecord
 
   def filter_industry(query)
     return query unless industry_experience_required
-    joined = query.left_outer_joins(:off_platform_projects, :projects)
-    joined.where(off_platform_projects: { industry: industry }).or(
-      joined.where(projects: { industry: industry })
+    joined =
+      query.left_outer_joins(
+        off_platform_projects: :industries, projects: :industries
+      )
+
+    joined.where(off_platform_projects: { industries: { name: industry } }).or(
+      joined.where(projects: { industries: { name: industry } })
     )
   end
 
