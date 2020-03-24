@@ -1,10 +1,20 @@
 import React from "react";
+import Linkify from "linkifyjs/react";
 import { Text as TextStyles } from "./styles";
 
-const Text = ({ children, size, weight, ...rest }) => {
+const Text = ({ children, autoLink, size, weight, ...rest }) => {
+  const linkProps = {
+    options: {
+      attributes: {
+        rel: "nofollow",
+        className: "linkified",
+      },
+    },
+  };
+
   return (
     <TextStyles fontSize={size} fontWeight={weight} {...rest}>
-      {children}
+      {autoLink ? <Linkify {...linkProps}>{children}</Linkify> : children}
     </TextStyles>
   );
 };

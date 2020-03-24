@@ -35,7 +35,7 @@ class Types::OffPlatformProject < Types::BaseType
 
   # Only show the contact email if the validation status is in progress
   def contact_email
-    return object.contact_email if object.validation_status == "In Progress"
+    return object.contact_email if object.validation_status == 'In Progress'
     nil
   end
 

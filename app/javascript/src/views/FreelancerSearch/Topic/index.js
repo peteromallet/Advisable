@@ -7,7 +7,7 @@ import { Box, Link, Text, Card, RoundedButton, Icon } from "@advisable/donut";
 import TextField from "../../../components/TextField";
 import validationSchema from "./validationSchema";
 
-const Topic = () => {
+const Topic = ({ data }) => {
   const history = useHistory();
   const location = useLocation();
   const selected = location.state?.freelancers || [];
@@ -26,27 +26,24 @@ const Topic = () => {
       variables: {
         input: {
           specialists: location.state.freelancers,
-          skill: location.state.search.skill,
+          skill: data.search.skill.name,
           topic: values.topic,
         },
       },
     });
 
-    history.push({ pathname: "/freelancer_search/sent", state: null });
+    history.push({
+      pathname: `/freelancer_search/${data.search.id}/sent`,
+      state: null,
+    });
   };
 
   return (
     <Box maxWidth={700} mx="auto">
-      <Link
-        mb="xs"
-        to={{
-          ...location,
-          pathname: "/freelancer_search/availability",
-        }}
-      >
+      <Link.External mb="xs" href="#" onClick={history.goBack}>
         <Icon mr="xxs" width={16} height={16} icon="arrow-left" />
         Back
-      </Link>
+      </Link.External>
       <Text
         as="h1"
         mb="xs"

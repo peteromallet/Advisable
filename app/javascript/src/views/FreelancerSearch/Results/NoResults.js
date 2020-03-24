@@ -3,7 +3,7 @@ import RequestCallButton from "../RequestCallButton";
 import { useLocation, Link as RouterLink } from "react-router-dom";
 import { Circle, Box, Text, Icon, RoundedButton } from "@advisable/donut";
 
-const NoResults = () => {
+const NoResults = ({ data }) => {
   const location = useLocation();
 
   return (
@@ -15,7 +15,7 @@ const NoResults = () => {
         No results
       </Text>
       <Text mb="m" lineHeight="m" fontSize="s" color="neutral.8">
-        We couldn't find any "{location.state.search.skill}" freelancers. Make
+        We couldn't find any "{data.search.skill.name}" freelancers. Make
         another search or request a call with an Advisable project manager and
         we’ll identify the perfect person for you.
       </Text>
