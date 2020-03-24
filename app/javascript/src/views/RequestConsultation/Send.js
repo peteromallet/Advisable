@@ -2,7 +2,7 @@ import React from "react";
 import { useMutation } from "react-apollo";
 import { useLocation, useParams } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
+import { Box, Text, RoundedButton } from "@advisable/donut";
 import SEND from "./sendRequest";
 import ScaleInput from "../../components/ScaleInput";
 

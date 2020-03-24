@@ -4,8 +4,8 @@ import {
   Text,
   Link,
   Icon,
-  useBreakpoint,
   useTheme,
+  useBreakpoint,
 } from "@advisable/donut";
 import { Formik, Form } from "formik";
 import { useQuery, useMutation } from "react-apollo";
@@ -70,26 +70,25 @@ const Availability = ({ data }) => {
   return (
     <Box maxWidth={700} mx="auto">
       <Link
-        mb="xs"
-        to={{
-          ...location,
-          pathname: `/freelancer_search/${data.search.id}/results`,
-        }}
+        fontSize="l"
+        mb="s"
+        fontWeight="medium"
+        to="/freelancer_search"
+        letterSpacing="-0.02em"
       >
-        <Icon mr="xxs" width={16} height={16} icon="arrow-left" />
+        <Icon mr="2px" width={20} height={20} icon="arrow-left" />
         Back
       </Link>
       <Text
-        as="h1"
         mb="xs"
-        color="blue.8"
-        fontSize="xxl"
-        fontWeight="bold"
-        letterSpacing="-0.015em"
+        fontSize="32px"
+        color="blue900"
+        fontWeight="semibold"
+        letterSpacing="-0.02em"
       >
         Availability
       </Text>
-      <Text lineHeight="s" color="neutral.8" mb="m">
+      <Text fontSize="l" lineHeight="m" color="neutral800" mb="l">
         Select the times you will be available for a consultation. The more
         times you select, the easier it'll be for us to find a time that suits
         them.

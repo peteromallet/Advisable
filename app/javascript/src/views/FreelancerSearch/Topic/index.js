@@ -5,6 +5,7 @@ import REQUEST_CONSULTATIONS from "./requestConsultations";
 import { useLocation, useHistory, Redirect } from "react-router-dom";
 import { Box, Link, Text, Card, RoundedButton, Icon } from "@advisable/donut";
 import TextField from "../../../components/TextField";
+import ScaleInput from "../../../components/ScaleInput";
 import validationSchema from "./validationSchema";
 
 const Topic = ({ data }) => {
@@ -28,6 +29,7 @@ const Topic = ({ data }) => {
           specialists: location.state.freelancers,
           skill: data.search.skill.name,
           topic: values.topic,
+          likelyToHire: values.likelyToHire,
         },
       },
     });
@@ -40,24 +42,30 @@ const Topic = ({ data }) => {
 
   return (
     <Box maxWidth={700} mx="auto">
-      <Link.External mb="xs" href="#" onClick={history.goBack}>
-        <Icon mr="xxs" width={16} height={16} icon="arrow-left" />
+      <Link.External
+        mb="s"
+        href="#"
+        fontSize="l"
+        fontWeight="medium"
+        letterSpacing="-0.02em"
+        onClick={history.goBack}
+      >
+        <Icon mr="2px" width={20} height={20} icon="arrow-left" />
         Back
       </Link.External>
       <Text
-        as="h1"
         mb="xs"
-        color="blue.8"
-        fontSize="xxl"
-        fontWeight="bold"
+        fontSize="32px"
+        color="blue900"
+        fontWeight="semibold"
         letterSpacing="-0.02em"
       >
         What would you like to cover during this consultation?
       </Text>
-      <Text lineHeight="s" color="neutral.8" mb="l">
+      <Text fontSize="l" lineHeight="m" color="neutral800" mb="l">
         Please describe briefly what you'd like to cover in a 30-minute
-        consultation. This is for us to share with the freelancers when
-        requesting their time.
+        consultation. This is for us to share with freelancers when requesting
+        their time.
       </Text>
       <Card padding="m">
         <Formik
@@ -76,6 +84,19 @@ const Topic = ({ data }) => {
                   as={TextField}
                   placeholder="What would you like to talk about..."
                   error={formik.touched.topic && formik.errors.topic}
+                />
+              </Box>
+              <Box mb="l">
+                <Text lineHeight="m" color="blue900" mb="xs">
+                  If you are impressed by someone you speak to, how likely are
+                  you to hire them as a freelancer?
+                </Text>
+                <Field
+                  as={ScaleInput}
+                  name="likelyToHire"
+                  onChange={v => {
+                    formik.setFieldValue("likelyToHire", v);
+                  }}
                 />
               </Box>
               <RoundedButton
