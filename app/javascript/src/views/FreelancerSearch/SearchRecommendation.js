@@ -10,6 +10,7 @@ import RecommendationActions from "./RecommendationActions";
 
 function SearchRecommendation({ data }) {
   const project = data.search.recommendation;
+  const hasReviews = project.reviews.length > 0;
 
   return (
     <Box paddingBottom="120px">
@@ -34,8 +35,9 @@ function SearchRecommendation({ data }) {
       </Text>
       <Box maxWidth="800px" mb="xl">
         <Text fontSize="l" lineHeight="l" color="neutral800">
-          {project.reviews[0].name} from {project.companyName} recommends{" "}
-          {project.specialist.name} for {data.search.industry.name} companies
+          {hasReviews && <>{project.reviews[0].name} from </>}
+          {project.companyName} recommends {project.specialist.name} for{" "}
+          {data.search.industry.name} companies
           {project.goal && <> who want to {project.goal.toLowerCase()}</>}.
         </Text>
       </Box>
