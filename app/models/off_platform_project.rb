@@ -18,8 +18,14 @@ class OffPlatformProject < ApplicationRecord
           as: :project, class_name: 'ProjectSkill'
   has_one :primary_skill, through: :primary_project_skill, source: :skill
 
+  # Project industries
   has_many :project_industries, as: :project
   has_many :industries, through: :project_industries
+  has_one :primary_project_industry,
+          -> { where primary: true },
+          as: :project, class_name: 'ProjectIndustry'
+  has_one :primary_industry,
+          through: :primary_project_industry, source: :industry
 
   scope :validated, -> { where(validation_status: 'Validated') }
 
