@@ -24,7 +24,7 @@ class Search::Recommendations
         :industries
       )
         .where(
-        'advisable_score >= 85 AND specialists.average_score >= 85 AND primary_skill = ? AND industries.name = ?',
+        'advisable_score >= 85 AND specialists.average_score >= 80 AND primary_skill = ? AND industries.name = ?',
         search.skill,
         [search.industry]
       )
