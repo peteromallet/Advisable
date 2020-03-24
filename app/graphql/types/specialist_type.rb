@@ -1,4 +1,17 @@
 class Types::SpecialistType < Types::BaseType
+  class Types::SpecialistType::EdgeType < GraphQL::Types::Relay::BaseEdge
+    node_type(Types::SpecialistType)
+  end
+
+  class Types::SpecialistType::ConnectionType < GraphQL::Types::Relay::BaseConnection
+    edge_type(Types::SpecialistType::EdgeType)
+
+    field :total_count, Integer, null: false
+
+    def total_count
+      object.nodes.size
+    end
+  end
   description <<~HEREDOC
     Represents a freelancer. The Specialist type is also a type of viewer. It
     will be returned for the viewer query when the freelancer is logged in.
@@ -353,19 +366,5 @@ class Types::SpecialistType < Types::BaseType
     project = Project.find_by_uid_or_airtable_id(id) if project.nil?
     raise ActiveRecord::RecordNotFound if project.nil?
     PreviousProject.new(project: project, specialist: object)
-  end
-end
-
-class Types::SpecialistEdgeType < GraphQL::Types::Relay::BaseEdge
-  node_type(Types::SpecialistType)
-end
-
-class Types::SpecialistConnection < GraphQL::Types::Relay::BaseConnection
-  edge_type(Types::SpecialistEdgeType)
-
-  field :total_count, Integer, null: false
-
-  def total_count
-    object.nodes.size
   end
 end

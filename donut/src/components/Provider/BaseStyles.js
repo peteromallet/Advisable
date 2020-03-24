@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 const BACKGROUND = {
-  default: "#F4F6FD",
+  default: "#F9FAFF",
   white: "#FFFFFF",
 };
 

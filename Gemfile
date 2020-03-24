@@ -60,6 +60,7 @@ gem 'nanoid'
 
 gem 'aws-sdk-s3', '~> 1'
 gem 'image_processing', '~> 1.0'
+gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 
 group :development, :test do
   gem 'pry'

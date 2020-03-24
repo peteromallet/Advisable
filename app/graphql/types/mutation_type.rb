@@ -66,5 +66,5 @@ class Types::MutationType < GraphQL::Schema::Object
   field :send_consultation_request, mutation: Mutations::SendConsultationRequest
   field :request_consultations, mutation: Mutations::RequestConsultations
 
-  field :example, mutation: Mutations::ExampleMutation
+  field :create_search, mutation: Mutations::CreateSearch
 end

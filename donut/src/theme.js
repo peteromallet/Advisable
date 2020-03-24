@@ -3,7 +3,7 @@ import { rgba } from "polished";
 import isObject from "lodash/isObject";
 
 // Breakpoints
-const breakpoints = ["40em", "52em", "64em", "80em"];
+const breakpoints = ["640px", "768px", "1024px", "1280px"];
 breakpoints.s = breakpoints[0];
 breakpoints.m = breakpoints[1];
 breakpoints.l = breakpoints[2];
@@ -70,7 +70,7 @@ const boxShadow = {
 const colors = {
   // NEW COLORS USE A NUMERIC SCALE
   neutral50: "#F9FAFF",
-  neutral100: "#EBEEF5",
+  neutral100: "#E0E3EC",
   neutral200: "#CFD3DB",
   neutral300: "#B5B7C3",
   neutral400: "#8C8EA5",

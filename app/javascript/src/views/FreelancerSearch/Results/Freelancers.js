@@ -9,8 +9,10 @@ import SelectionBar from "./SelectionBar";
 const Freelancers = ({ data }) => {
   const history = useHistory();
   const location = useLocation();
-  const search = location.state?.search;
   const selectedFreelancers = location.state?.freelancers || [];
+
+  const skill = data.search.skill.name;
+  const results = data.search.results;
 
   const handleClickFreelancer = specialist => e => {
     let nextSelected;
@@ -32,9 +34,9 @@ const Freelancers = ({ data }) => {
   return (
     <Box>
       <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }}>
-        <Link mb="xs" to="/freelancer_search">
+        <Link.External mb="xs" href="#" onClick={history.goBack}>
           <Icon icon="arrow-left" width={16} height={16} mr="xxs" /> Back
-        </Link>
+        </Link.External>
         <Text
           as="h2"
           mb="xs"
@@ -44,7 +46,7 @@ const Freelancers = ({ data }) => {
           fontWeight="semibold"
           letterSpacing="-0.035em"
         >
-          We found {data.specialists.nodes.length} {search.skill} freelancers
+          We found {results.nodes.length} {skill} freelancers
         </Text>
         <Text
           mb="l"
@@ -58,15 +60,8 @@ const Freelancers = ({ data }) => {
         </Text>
       </motion.div>
       <Box flexWrap="wrap" display="flex" ml="-10px" mr="-10px">
-        {data.specialists.nodes.map((s, i) => (
-          <Box
-            as={motion.div}
-            key={s.id}
-            animate={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 30 }}
-            width={{ _: "100%", s: "50%", l: "33.3333%" }}
-            transition={{ delay: (i + 1) * 0.2 }}
-          >
+        {results.nodes.map((s, i) => (
+          <Box key={s.id} width={{ _: "100%", s: "50%", l: "33.3333%" }}>
             <SpecialistCard
               mx="10px"
               mb="20px"
@@ -120,7 +115,8 @@ const Freelancers = ({ data }) => {
         <RequestCallButton>Request a call</RequestCallButton>
       </Box>
       <SelectionBar
-        specialists={data.specialists.nodes.filter(
+        search={data.search}
+        specialists={results.nodes.filter(
           s => selectedFreelancers.indexOf(s.id) > -1
         )}
       />
