@@ -8,43 +8,55 @@ function SearchRecommendationDetails({ data }) {
 
   return (
     <>
-      <Box bg="blue100" padding="m" borderRadius="12px" mb="l">
-        <Text
-          fontSize="l"
-          fontStyle="italic"
-          lineHeight="l"
-          color="blue900"
-          mb="m"
-        >
-          "{review.comment}"
-        </Text>
-        <Text fontWeight="medium" color="neutral900" mb="xxs">
-          {review.name}, {review.role}
-        </Text>
-        <Text color="neutral600">{project.companyName}</Text>
-      </Box>
+      {review && (
+        <Box bg="blue100" padding="m" borderRadius="12px" mb="l">
+          <Text
+            fontSize="l"
+            fontStyle="italic"
+            lineHeight="l"
+            color="blue900"
+            mb="m"
+          >
+            "{review.comment}"
+          </Text>
+          <Text fontWeight="medium" color="neutral900" mb="xxs">
+            {review.name}, {review.role}
+          </Text>
+          <Text color="neutral600">{project.companyName}</Text>
+        </Box>
+      )}
       <Text fontSize="l" mb="xs" fontWeight="medium" color="neutral900">
         Project Description
       </Text>
       <Text lineHeight="m" color="neutral800" autoLink>
         {project.description}
       </Text>
-      <Box height={1} bg="neutral100" my="l" />
-      <Box
-        display="grid"
-        gridRowGap="10px"
-        gridColumnGap="40px"
-        gridTemplateColumns={{ _: "1fr", l: "1fr 1fr" }}
-      >
-        <Rating label="Skills" rating={review.ratings.skills} />
-        <Rating label="Communication" rating={review.ratings.communcation} />
-        <Rating label="Quality of Work" rating={review.ratings.qualityOfWork} />
-        <Rating label="Availability" rating={review.ratings.availability} />
-        <Rating
-          label="Time Management"
-          rating={review.ratings.adherenceToSchedule}
-        />
-      </Box>
+      {review && (
+        <>
+          <Box height={1} bg="neutral100" my="l" />
+          <Box
+            display="grid"
+            gridRowGap="10px"
+            gridColumnGap="40px"
+            gridTemplateColumns={{ _: "1fr", l: "1fr 1fr" }}
+          >
+            <Rating label="Skills" rating={review.ratings.skills} />
+            <Rating
+              label="Communication"
+              rating={review.ratings.communication}
+            />
+            <Rating
+              label="Quality of Work"
+              rating={review.ratings.qualityOfWork}
+            />
+            <Rating label="Availability" rating={review.ratings.availability} />
+            <Rating
+              label="Time Management"
+              rating={review.ratings.adherenceToSchedule}
+            />
+          </Box>
+        </>
+      )}
       <Box height={1} bg="neutral100" my="l" />
       <Box
         display="grid"
