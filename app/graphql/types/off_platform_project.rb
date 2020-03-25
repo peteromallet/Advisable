@@ -1,3 +1,4 @@
+# DEPRECATED: This type has been deprecated in favour of the Types::ProfileProjectType
 class Types::OffPlatformProject < Types::BaseType
   field :id, ID, null: false
   field :uid, String, null: false
@@ -40,12 +41,20 @@ class Types::OffPlatformProject < Types::BaseType
   end
 
   def client_name
-    return "#{object.industry} Company" if object.confidential
+    return "#{industry} Company" if object.confidential
     object.client_name
   end
 
+  def industry
+    object.primary_industry.try(:name) || object[:industry] ||
+      industries.try(:first)
+  end
+
+  # Initially the primary_skill column was a text column and now it is an
+  # association.
   def primary_skill
-    object.primary_skill || skills.try(:last)
+    object.primary_skill.try(:name) || object[:primary_skill] ||
+      skills.try(:first)
   end
 
   def skills
