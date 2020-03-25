@@ -42,5 +42,17 @@ module Admin
 
     # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
     # for more information
+
+    def resource
+      Search
+    end
+
+    def order
+      @order ||=
+        Administrate::Order.new(
+          params.fetch(:user_search, {}).fetch(:order, :created_at),
+          params.fetch(:user_search, {}).fetch(:direction, :desc)
+        )
+    end
   end
 end

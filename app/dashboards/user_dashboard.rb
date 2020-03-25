@@ -1,4 +1,4 @@
-require "administrate/base_dashboard"
+require 'administrate/base_dashboard'
 
 class UserDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -18,7 +18,7 @@ class UserDashboard < Administrate::BaseDashboard
     bank_transfers_enabled: Field::Boolean,
     permissions: PermissionsField,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -26,38 +26,34 @@ class UserDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = [
-    :first_name,
-    :last_name,
-    :email,
-  ].freeze
+  COLLECTION_ATTRIBUTES = %i[first_name last_name email created_at].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :id,
-    :airtable_id,
-    :first_name,
-    :last_name,
-    :email,
-    :country,
-    :bank_transfers_enabled,
-    :permissions,
-    :projects,
-    :created_at,
-    :updated_at,
+  SHOW_PAGE_ATTRIBUTES = %i[
+    id
+    airtable_id
+    first_name
+    last_name
+    email
+    country
+    bank_transfers_enabled
+    permissions
+    projects
+    created_at
+    updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = [
-    :first_name,
-    :last_name,
-    :email,
-    :country,
-    :permissions,
-    :bank_transfers_enabled
+  FORM_ATTRIBUTES = %i[
+    first_name
+    last_name
+    email
+    country
+    permissions
+    bank_transfers_enabled
   ].freeze
 
   # Overwrite this method to customize how clients are displayed
