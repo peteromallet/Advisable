@@ -74,7 +74,7 @@ class Types::ProfileProjectType < Types::BaseType
   end
 
   def primary_skill
-    return project.primary_skill.try(:name) if projet.is_a?(OffPlatformProject)
+    return project.primary_skill.try(:name) if project.is_a?(OffPlatformProject)
     Skill.find_by_name(project.primary_skill)
   end
 end
