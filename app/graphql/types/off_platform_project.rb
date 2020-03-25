@@ -1,3 +1,4 @@
+# DEPRECATED: This type has been deprecated in favour of the Types::ProfileProjectType
 class Types::OffPlatformProject < Types::BaseType
   field :id, ID, null: false
   field :uid, String, null: false
