@@ -13,15 +13,11 @@ class Search::Recommendations
 
   private
 
-  # TODO: At the moment the primary_skill column is a simple text column on
-  # the off_platform_projects table. Eventually this should become a relationship
-  # based on the project_skills record with primary = true. This query will need to
-  # updated to accomodate that.
   def recommendation
     @recommendation ||=
       OffPlatformProject.joins(:skills, :specialist, :industries).where(
         'advisable_score >= 85 AND specialists.average_score >= 80 AND skills.name = ? AND industries.name = ?',
-        search.skill,
+        [search.skill],
         [search.industry]
       )
         .order(advisable_score: :desc)

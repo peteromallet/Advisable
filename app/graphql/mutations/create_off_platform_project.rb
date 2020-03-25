@@ -52,9 +52,6 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
         )
     end
 
-    project.industry = args[:primary_industry]
-    project.primary_skill = args[:primary_skill]
-
     project.save
     project.sync_to_airtable
 

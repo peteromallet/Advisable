@@ -125,9 +125,9 @@ describe Mutations::UpdateApplication do
       mutation {
         updateApplication(input: {
           id: "#{application.airtable_id}",
-          references: ["#{off_platform_project.airtable_id}", "#{
-        project.airtable_id
-      }"]
+          references: [
+            "#{off_platform_project.airtable_id}",
+            "#{project.airtable_id}"]
         }) {
           errors {
             code

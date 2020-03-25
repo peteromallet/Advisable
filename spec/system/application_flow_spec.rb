@@ -98,7 +98,10 @@ describe 'Application flow' do
 
       it 'proceeds to the payment terms' do
         visit "/invites/#{application.airtable_id}/apply/references"
-        find('span', text: "#{project.primary_skill} at #{project.client_name}")
+        find(
+          'span',
+          text: "#{project.primary_skill.name} at #{project.client_name}"
+        )
           .click
         click_on 'Next'
         click_on 'Continue With 1 Reference'

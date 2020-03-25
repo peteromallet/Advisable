@@ -2,7 +2,6 @@ class Airtable::OffPlatformProject < Airtable::Base
   self.table_name = 'Off-Platform Projects'
 
   sync_with ::OffPlatformProject
-  sync_column 'Client Industry', to: :industry
   sync_column 'Client Contact First Name', to: :contact_first_name
   sync_column 'Client Contact Last Name', to: :contact_last_name
   sync_column 'Client Contact Job Title', to: :contact_job_title
@@ -11,7 +10,6 @@ class Airtable::OffPlatformProject < Airtable::Base
   sync_column 'Specialist Requirement Description', to: :requirements
   sync_column 'Project Description', to: :description
   sync_column 'Results Description', to: :results
-  sync_column 'Primary Skill Required', to: :primary_skill
   sync_column 'Advisable Validation Status', to: :validation_status
   sync_column 'Validation Method', to: :validation_method
   sync_column 'Validated By Client', to: :validated_by_client
@@ -34,7 +32,10 @@ class Airtable::OffPlatformProject < Airtable::Base
   end
 
   push_data do |project|
-    self['Client Industry'] = project.industry
+    self['Primary Skill'] = [project.primary_skill.try(:airtable_id)].compact
+    self['Primary Industry'] = [
+      project.primary_industry.try(:airtable_id)
+    ].compact
     self['Industries'] = project.industries.map(&:airtable_id).compact
     self['Client Contact First Name'] = project.contact_first_name
     self['Client Contact Last Name'] = project.contact_last_name
@@ -43,7 +44,6 @@ class Airtable::OffPlatformProject < Airtable::Base
     self['Client Description'] = project.client_description
     self['Project Description'] = project.description
     self['Results Description'] = project.results
-    self['Primary Skill Required'] = project.primary_skill
     self['Specialist Requirement Description'] = project.requirements
     self['Client Contact Email Address'] = project.contact_email
     self['Validation Method'] = project.validation_method
@@ -89,13 +89,12 @@ class Airtable::OffPlatformProject < Airtable::Base
       skill = Airtable::Skill.find(skill_id).sync unless skill.present?
       next if skill.nil?
       project_skill = opp.project_skills.find_by_skill_id(skill.id)
+      is_primary = skill.airtable_id == fields['Primary Skill'].try(:first)
 
       if project_skill.present?
-        project_skill.update(
-          primary: project_skill.skill.name == fields['Primary Skill Required']
-        )
+        project_skill.update(primary: is_primary)
       else
-        opp.project_skills.new(skill: skill)
+        opp.project_skills.new(skill: skill, primary: is_primary)
       end
     end
   end
@@ -116,13 +115,13 @@ class Airtable::OffPlatformProject < Airtable::Base
       end
       next if industry.nil?
       project_industry = opp.project_industries.find_by_industry_id(industry.id)
+      is_primary =
+        industry.airtable_id == fields['Primary Industry'].try(:first)
 
       if project_industry.present?
-        project_industry.update(
-          primary: project_industry.industry.name == fields['Client Industry']
-        )
+        project_industry.update(primary: is_primary)
       else
-        opp.project_industries.new(industry: industry)
+        opp.project_industries.new(industry: industry, primary: is_primary)
       end
     end
   end

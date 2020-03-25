@@ -8,7 +8,7 @@ describe Search::Recommendations do
   let(:project) do
     create(
       :off_platform_project,
-      specialist: specialist, primary_skill: search.skill, advisable_score: 90
+      specialist: specialist, primary_skill: skill, advisable_score: 90
     )
   end
 

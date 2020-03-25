@@ -31,12 +31,151 @@ describe Airtable::OffPlatformProject do
     end
   end
 
+  describe 'syncing skills' do
+    it 'creates project_skill records for skills that dont already exist' do
+      project = create(:off_platform_project)
+      skill = create(:skill)
+      record =
+        Airtable::OffPlatformProject.new(
+          { 'Skills Required' => [skill.airtable_id] },
+          id: project.airtable_id
+        )
+      expect { record.sync }.to change { project.project_skills.count }.by(1)
+    end
+
+    it 'does not create a new project skill if one already exists for that skill' do
+      project = create(:off_platform_project)
+      skill = create(:skill)
+      project.skills << skill
+      record =
+        Airtable::OffPlatformProject.new(
+          { 'Skills Required' => [skill.airtable_id] },
+          id: project.airtable_id
+        )
+      expect { record.sync }.to_not change { project.project_skills.count }
+    end
+
+    it 'creates a record with primary = true for the primary skill' do
+      project = create(:off_platform_project, primary_skill: nil)
+      skills = [create(:skill), create(:skill)]
+      record =
+        Airtable::OffPlatformProject.new(
+          {
+            'Skills Required' => skills.map(&:airtable_id),
+            'Primary Skill' => [skills.last.airtable_id]
+          },
+          id: project.airtable_id
+        )
+      expect { record.sync }.to change { project.reload.primary_skill }.from(
+        nil
+      )
+        .to(skills.last)
+    end
+
+    it 'updates the project_skill with primary = true for the primary skill' do
+      project = create(:off_platform_project, primary_skill: nil)
+      skills = [create(:skill), create(:skill)]
+      project_skills = [
+        create(
+          :project_skill,
+          project: project, skill: skills.first, primary: false
+        ),
+        create(
+          :project_skill,
+          project: project, skill: skills.last, primary: false
+        )
+      ]
+      record =
+        Airtable::OffPlatformProject.new(
+          {
+            'Skills Required' => skills.map(&:airtable_id),
+            'Primary Skill' => [skills.last.airtable_id]
+          },
+          id: project.airtable_id
+        )
+      expect { record.sync }.to change {
+        project_skills.last.reload.primary
+      }.from(false)
+        .to(true)
+    end
+  end
+
+  describe 'syncing industries' do
+    it 'creates project_industry records for industries that dont already exist' do
+      project = create(:off_platform_project)
+      industry = create(:industry)
+      record =
+        Airtable::OffPlatformProject.new(
+          { 'Industries' => [industry.airtable_id] },
+          id: project.airtable_id
+        )
+      expect { record.sync }.to change { project.project_industries.count }.by(
+        1
+      )
+    end
+
+    it 'does not create a new project industry if one already exists for that industry' do
+      project = create(:off_platform_project)
+      industry = create(:industry)
+      project.industries << industry
+      record =
+        Airtable::OffPlatformProject.new(
+          { 'Industries' => [industry.airtable_id] },
+          id: project.airtable_id
+        )
+      expect { record.sync }.to_not change { project.project_industries.count }
+    end
+
+    it 'creates a record with primary = true for the primary industry' do
+      project = create(:off_platform_project, primary_industry: nil)
+      industries = [create(:industry), create(:industry)]
+      record =
+        Airtable::OffPlatformProject.new(
+          {
+            'Industries' => industries.map(&:airtable_id),
+            'Primary Industry' => [industries.last.airtable_id]
+          },
+          id: project.airtable_id
+        )
+      expect { record.sync }.to change { project.reload.primary_industry }.from(
+        nil
+      )
+        .to(industries.last)
+    end
+
+    it 'updates the project_industry with primary = true for the primary industry' do
+      project = create(:off_platform_project, primary_industry: nil)
+      industries = [create(:industry), create(:industry)]
+      project_industries = [
+        create(
+          :project_industry,
+          project: project, industry: industries.first, primary: false
+        ),
+        create(
+          :project_industry,
+          project: project, industry: industries.last, primary: false
+        )
+      ]
+      record =
+        Airtable::OffPlatformProject.new(
+          {
+            'Industries' => industries.map(&:airtable_id),
+            'Primary Industry' => [industries.last.airtable_id]
+          },
+          id: project.airtable_id
+        )
+      expect { record.sync }.to change {
+        project_industries.last.reload.primary
+      }.from(false)
+        .to(true)
+    end
+  end
+
   describe '#push_data' do
     let(:project) do
       create(
         :off_platform_project,
         {
-          industry: 'Testing',
           contact_first_name: 'John',
           contact_last_name: 'Doe',
           contact_job_title: 'CEO',
@@ -64,8 +203,18 @@ describe Airtable::OffPlatformProject do
     it 'syncs the data' do
       skill_a = create(:skill)
       create(:project_skill, project: project, skill: skill_a)
-      expect(airtable).to receive(:[]=).with('Client Industry', 'Testing')
-      expect(airtable).to receive(:[]=).with('Industries', [])
+      expect(airtable).to receive(:[]=).with(
+        'Primary Industry',
+        [project.primary_industry.airtable_id]
+      )
+      expect(airtable).to receive(:[]=).with(
+        'Primary Skill',
+        [project.primary_skill.airtable_id]
+      )
+      expect(airtable).to receive(:[]=).with(
+        'Industries',
+        project.industries.map(&:airtable_id)
+      )
       expect(airtable).to receive(:[]=).with(
         'Client Contact First Name',
         'John'
@@ -92,10 +241,6 @@ describe Airtable::OffPlatformProject do
         project.results
       )
       expect(airtable).to receive(:[]=).with(
-        'Primary Skill Required',
-        project.primary_skill
-      )
-      expect(airtable).to receive(:[]=).with(
         'Specialist Requirement Description',
         project.requirements
       )
@@ -119,7 +264,7 @@ describe Airtable::OffPlatformProject do
       )
       expect(airtable).to receive(:[]=).with(
         'Skills Required',
-        [skill_a.airtable_id]
+        project.skills.map(&:airtable_id)
       )
       expect(airtable).to receive(:[]=).with(
         'Advisable Validation Status',
