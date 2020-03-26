@@ -1,11 +1,9 @@
-import { fireEvent, cleanup, within } from "@testing-library/react";
+import { fireEvent, within } from "@testing-library/react";
 import renderApp from "../../../testHelpers/renderApp";
 import VIEWER from "../../../graphql/queries/viewer";
 import graphql from "../../../__mocks__/graphqlFields";
 import GET_APPLICATION from "../fetchApplication";
 import REQUEST_REFERENCES from "../../../components/RequestReferences/requestReferences.graphql";
-
-afterEach(cleanup);
 
 test("Requesting references", async () => {
   // setup mock data

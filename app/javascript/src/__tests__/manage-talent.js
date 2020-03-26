@@ -1,6 +1,6 @@
 import generate from "nanoid/generate";
 import wait from "waait";
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import VIEWER from "../graphql/queries/viewer";
 import renderApp from "../testHelpers/renderApp";
 import generateType from "../__mocks__/graphqlFields";
@@ -12,7 +12,6 @@ import {
 import SET_PROJECT_TYPE from "../views/Booking/ProjectTypeModal/setProjectType";
 
 jest.mock("nanoid/generate");
-afterEach(cleanup);
 jest.setTimeout(10000);
 
 test("Renders the manage view for a specialist", async () => {

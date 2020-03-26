@@ -1,11 +1,9 @@
-import { cleanup, fireEvent } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import renderApp from "../testHelpers/renderApp";
 import viewer from "../graphql/queries/viewer";
 import getApplication from "../views/ApplicationFlow/fetchApplication";
 import updateApplication from "../views/ApplicationFlow/updateApplication";
 import generateTypes from "../__mocks__/graphqlFields";
-
-afterEach(cleanup);
 
 test("Submitting the overview step continues to the questions step", async () => {
   const { findByLabelText, getByText, findByText, debug } = renderApp({

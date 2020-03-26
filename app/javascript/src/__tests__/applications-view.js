@@ -1,10 +1,7 @@
-import { cleanup } from "@testing-library/react";
 import renderApp from "../testHelpers/renderApp";
 import viewer from "../graphql/queries/viewer";
 import generateTypes from "../__mocks__/graphqlFields";
 import getApplications from "../views/Project/fetchProject";
-
-afterEach(cleanup);
 
 describe("Viewing 'Applied'", () => {
   const render = () =>

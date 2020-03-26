@@ -1,12 +1,10 @@
 import renderApp from "../../../testHelpers/renderApp";
-import { cleanup } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_SETUP_DATA from "../getSetupData";
 import { GET_PAYMENT_METHOD } from "../CardDetails";
 import { CREATE_SETUP_INTENT } from "../../../components/UpdatePaymentMethod";
 
-afterEach(cleanup);
 jest.setTimeout(10000);
 
 test("Shows form to add card when user has no card", async () => {

@@ -1,15 +1,11 @@
-import generate from "nanoid/generate";
-import wait from "waait";
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import renderApp from "../../testHelpers/renderApp";
 import generateTypes from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
-import { createTask as CREATE_TASK } from "../../graphql/mutations/tasks";
 import GET_APPLICATION from "./fetchApplication";
 import UPDATE_APPLICATION from "./updateApplication";
 
 jest.mock("nanoid/generate");
-afterEach(cleanup);
 
 test("Rate step continues to the project type step", async () => {
   const user = generateTypes.user({ companyName: "Test Inc" });

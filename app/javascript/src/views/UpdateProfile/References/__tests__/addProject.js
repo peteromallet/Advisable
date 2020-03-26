@@ -1,13 +1,11 @@
 import { repeat } from "lodash";
-import { cleanup, fireEvent } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import viewer from "../../../../graphql/queries/viewer";
 import renderApp from "../../../../testHelpers/renderApp";
 import generateTypes from "../../../../__mocks__/graphqlFields";
 import GET_PROJECTS from "../previousProjects";
 import FETCH_DATA from "../../../../components/PreviousProjectForm/getData";
 import CREATE_PROJECT from "../../../../components/PreviousProjectForm/createOffPlatformProject";
-
-afterEach(cleanup);
 
 jest.setTimeout(10000);
 

@@ -1,10 +1,8 @@
-import { cleanup, fireEvent } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import renderApp from "../../testHelpers/renderApp";
 import mock from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
 import FETCH_DATA from "./fetchData";
-
-afterEach(cleanup)
 
 test("User can see their active freelancers", async () => {
   const project = mock.project();

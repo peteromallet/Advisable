@@ -12,10 +12,6 @@ import SEARCH from "./Specialists/search";
 import CREATE_ACCOUNT from "./SaveSearch/createAccount";
 import GET_PROJECTS from "../Projects/getProjects";
 
-beforeEach(() => {
-  jest.setTimeout(10000);
-});
-
 test("Criteria step", async () => {
   const skill = generateTypes.skill();
   const industry = generateTypes.industry();
@@ -110,7 +106,8 @@ test("Criteria step", async () => {
   );
   const button = app.getByLabelText("Find a specialist");
   fireEvent.click(button);
-  const budget = await app.findByLabelText("Select Budget");
+
+  const budget = await app.findByLabelText(/Select Budget/i, {}, { timeout: 3000 });
   fireEvent.click(budget);
   fireEvent.click(app.getByLabelText("Select Specialist 0"));
   fireEvent.click(app.getByLabelText("Select Specialist 1"));
@@ -216,7 +213,7 @@ test("Alternative flow", async () => {
   const button = app.getByLabelText("Find a specialist");
   fireEvent.click(button);
 
-  const budget = await app.findByLabelText("Select Budget");
+  const budget = await app.findByLabelText(/Select Budget/i, {}, { timeout: 3000 });
   fireEvent.click(budget);
 
   fireEvent.click(app.getByLabelText("Select Specialist 0"));

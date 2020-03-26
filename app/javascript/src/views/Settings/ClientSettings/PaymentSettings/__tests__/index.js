@@ -1,12 +1,10 @@
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import renderApp from "../../../../../testHelpers/renderApp";
 import mockData from "../../../../../__mocks__/graphqlFields";
 import VIEWER from "../../../../../graphql/queries/viewer";
 import { GET_DATA } from "../../../../../components/InvoiceSettingsFields";
 import GET_PAYMENT_SETTINGS from "../getPaymentSettings";
 import UPDATE_PAYMENT_SETTINGS from "../updateProjectPaymentMethod";
-
-afterEach(cleanup);
 
 test("Bank transer option is disabled if bankTransfersEnabled is false", async () => {
   const user = mockData.user({ bankTransfersEnabled: false });

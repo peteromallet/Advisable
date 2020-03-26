@@ -1,14 +1,12 @@
 import React from "react";
 import { repeat } from "lodash";
-import { cleanup, fireEvent, wait } from "@testing-library/react";
+import { fireEvent, waitFor } from "@testing-library/react";
 import mockData from "../../../__mocks__/graphqlFields";
 import { useRoutedModal } from "../../../../../../donut/src";
 import { renderComponent } from "../../../testHelpers/renderApp";
 import PreviousProjectForm from "../";
 import GET_DATA from "../getData";
 import CREATE_PROJECT from "../createOffPlatformProject";
-
-afterEach(cleanup);
 
 const skill = mockData.skill();
 const industry = mockData.industry();
@@ -120,7 +118,7 @@ test("Can create a project", async () => {
   fireEvent.change(role, { target: { value: "CEO" } });
   next = await comp.findByLabelText("Add Previous Project");
   fireEvent.click(next);
-  await wait(() => {
+  await waitFor(() => {
     expect(onSuccess).toHaveBeenCalled();
   });
 });

@@ -1,11 +1,9 @@
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import VIEWER from "../../graphql/queries/viewer";
 import renderApp from "../../testHelpers/renderApp";
 import mockData from "../../__mocks__/graphqlFields";
 import LOGIN from "./login";
 import PROJECTS from "../Projects/getProjects";
-
-afterEach(cleanup);
 
 test("User can login", async () => {
   const user = mockData.user();

@@ -1,11 +1,9 @@
 import renderApp from "../../../testHelpers/renderApp";
-import { wait, fireEvent, cleanup } from "@testing-library/react";
+import { waitFor, fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import { RESUME_WORKING } from "../StoppedWorkingNotice";
-
-afterEach(cleanup);
 
 test("Client can resume working with specialist", async () => {
   let user = generateTypes.user();
@@ -75,7 +73,7 @@ test("Client can resume working with specialist", async () => {
   fireEvent.click(resumeWorking);
   const confirm = getAllByLabelText("Resume Project")[1];
   fireEvent.click(confirm);
-  await wait(() => {
+  await waitFor(() => {
     expect(queryByText("This project has ended")).not.toBeInTheDocument();
   });
 });

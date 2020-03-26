@@ -1,5 +1,5 @@
 import moment from "moment";
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import renderApp from "../../testHelpers/renderApp";
 import mockData from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
@@ -13,8 +13,6 @@ import { getSearch, createSearch } from "./searchQueries";
 import USER_AVAILABILITY from "./Availability/getUserAvailability";
 import UPDATE_AVAILABILITY from "./Availability/updateAvailability";
 import REQUEST_CONSULTATION from "./Topic/requestConsultations";
-
-afterEach(cleanup);
 
 const getNextAvailableDate = date => {
   if (["Sa", "Su"].indexOf(moment(date).format("dd")) > -1) {

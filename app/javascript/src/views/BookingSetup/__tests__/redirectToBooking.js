@@ -1,11 +1,9 @@
 import renderApp from "../../../testHelpers/renderApp";
-import { cleanup } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../../Booking/getActiveApplication";
 import GET_SETUP_DATA from "../getSetupData";
 
-afterEach(cleanup);
 jest.setTimeout(10000);
 
 test("User is redirected to booking step when application is already Working", async () => {

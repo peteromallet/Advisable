@@ -1,12 +1,10 @@
 import renderApp from "../../../testHelpers/renderApp";
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_SPECIALIST from "../getProfile";
 import UPDATE_PROFILE from "../updateProfile";
 import { GET_COUNTRIES } from "../BuildProfile";
-
-afterEach(cleanup);
 
 test("Continues to the work history step", async () => {
   const viewer = generateTypes.specialist({

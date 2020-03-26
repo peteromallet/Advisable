@@ -1,13 +1,10 @@
 import React from "react";
-import { cleanup, fireEvent, wait } from "@testing-library/react";
+import { fireEvent, waitFor } from "@testing-library/react";
 import mockData from "../../../__mocks__/graphqlFields";
 import { renderComponent } from "../../../testHelpers/renderApp";
 import FETCH_TASK from "../../../graphql/queries/taskDetails";
 import UPDATE_ESTIMATE from "../QuoteInput/updateEstimate";
 import TaskDrawer from "../";
-
-afterEach(cleanup);
-// jest.setTimeout(10000);
 
 const user = mockData.user();
 const project = mockData.project({ user });
@@ -81,7 +78,7 @@ test("Setting the estimate for a task", async () => {
   fireEvent.change(estimate, { target: { value: "10" } });
   const flexibleEstimate = comp.getByPlaceholderText("20 Hours");
   fireEvent.change(flexibleEstimate, { target: { value: "20" } });
-  await wait(); // wait for validations to finish!
+  await waitFor(() => {}); // wait for validations to finish!
   const save = comp.getByLabelText("Save Quote");
   fireEvent.click(save);
   const label = await comp.findByText("10 - 20 hours", { exact: false });
@@ -152,7 +149,7 @@ test("Setting a fixed price estimate", async () => {
   fireEvent.change(estimate, { target: { value: "100" } });
   const flexibleEstimate = comp.getByPlaceholderText("1000");
   fireEvent.change(flexibleEstimate, { target: { value: "200" } });
-  await wait(); // wait for validations to finish!
+  await waitFor(() => {}); // wait for validations to finish!
   const save = comp.getByLabelText("Save Quote");
   fireEvent.click(save);
   const label = await comp.findByText("$100 - $200", { exact: false });
@@ -220,7 +217,7 @@ test("Can switch from flexible estimate to strit", async () => {
   fireEvent.click(estimateButton);
   const flexible = comp.getByLabelText("Flexible hours");
   fireEvent.click(flexible);
-  await wait(); // wait for validations to finish!
+  await waitFor(() => {}); // wait for validations to finish!
   const save = comp.getByLabelText("Save Quote");
   fireEvent.click(save);
   const label = await comp.findByText("10 hours", { exact: false });
