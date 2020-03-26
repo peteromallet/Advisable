@@ -2,6 +2,7 @@ import React from "react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { I18nextProvider } from "react-i18next";
+import { configure } from "@testing-library/dom";
 import { render } from "@testing-library/react";
 import { Elements } from "@stripe/react-stripe-js";
 import { MockedProvider } from "@apollo/react-testing";
@@ -13,6 +14,10 @@ import App from "../App";
 import i18n from "./i18next.js";
 import introspectionQueryResultData from "../fragmentTypes.json";
 import "@testing-library/jest-dom/extend-expect";
+
+configure({
+  timeout: 5000,
+})
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData,
