@@ -54,7 +54,7 @@ test("Overview step continues to the questions step", async () => {
             availability: "2 - 4 weeks",
           },
         },
-      }
+      },
     ),
   ];
 
@@ -71,8 +71,7 @@ test("Overview step continues to the questions step", async () => {
   fireEvent.click(availability);
   const button = app.getByLabelText("Next");
   fireEvent.click(button);
-  const header = await app.findByText("Application Questions");
-  expect(header).toBeInTheDocument();
+  await app.findByText("Question one");
 });
 
 test("Questions step continues to the references step", async () => {
@@ -106,7 +105,7 @@ test("Questions step continues to the references step", async () => {
             ],
           },
         },
-      }
+      },
     ),
     mockMutation(
       UPDATE,
@@ -137,7 +136,7 @@ test("Questions step continues to the references step", async () => {
             ],
           },
         },
-      }
+      },
     ),
   ];
 
@@ -158,7 +157,7 @@ test("Questions step continues to the references step", async () => {
 
   const text = await app.findByText(
     "We require references from all freelancers",
-    { exact: false }
+    { exact: false },
   );
   expect(text).toBeInTheDocument();
 });
@@ -216,7 +215,7 @@ test("References continue to payment terms step", async () => {
           errors: null,
           application: application,
         },
-      }
+      },
     ),
   ];
 

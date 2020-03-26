@@ -6,7 +6,6 @@ import {
   Checkbox,
   theme,
   useBreakpoint,
-  VerticalLayout,
 } from "@advisable/donut";
 import { useMenuState, Menu, MenuItem, MenuButton } from "reakit/Menu";
 import styled from "styled-components";

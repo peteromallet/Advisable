@@ -1,4 +1,4 @@
-import { fireEvent, within } from "@testing-library/react";
+import { fireEvent, waitFor, within } from "@testing-library/react";
 import renderApp from "../../testHelpers/renderApp";
 import mockData from "../../__mocks__/graphqlFields";
 import { mockViewer, mockQuery } from "../../testHelpers/apolloMocks";
@@ -317,11 +317,11 @@ test("Can filter projects by skill", async () => {
   });
 
   const skillFilter = await app.findByLabelText("Filter projects by Skill");
-  expect(app.queryByText("Recruiting Project")).toBeInTheDocument();
   fireEvent.click(skillFilter);
   const skill = app.getByLabelText(twitterMarketing.name);
   fireEvent.click(skill);
   fireEvent.click(app.getByLabelText("Filter by Skill"));
+  await waitFor(() => {}) // Wait for filter to be applied
   expect(app.queryByText("Recruiting Project")).toBeNull();
 });
 
@@ -375,5 +375,6 @@ test("Can filter projects by industry", async () => {
   const industry = app.getByLabelText(financeIndustry.name);
   fireEvent.click(industry);
   fireEvent.click(app.getByLabelText("Filter by Industry"));
+  await waitFor(() => {}) // Wait for filter to be applied
   expect(app.queryByText("Recruiting Project")).toBeNull();
 });

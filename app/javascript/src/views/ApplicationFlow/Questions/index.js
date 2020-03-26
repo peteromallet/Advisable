@@ -62,7 +62,7 @@ const Questions = ({
     );
   }
 
-  const goBack = formik => {
+  const goBack = (formik) => {
     let url;
     if (number > 1) {
       formik.resetForm();
@@ -117,7 +117,7 @@ const Questions = ({
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <Box padding={{ _: "l", m: "xl " }}>
             <Text

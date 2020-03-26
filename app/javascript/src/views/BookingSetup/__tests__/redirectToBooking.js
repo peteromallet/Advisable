@@ -78,6 +78,6 @@ test("User is redirected to booking step when application is already Working", a
     ],
   });
 
-  const header = await app.findByText("tasks.title");
+  const header = await app.findByText("tasks.title", {}, { timeout: 5000 });
   expect(header).toBeInTheDocument();
 });

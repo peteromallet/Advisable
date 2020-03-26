@@ -14,7 +14,6 @@ import {
 } from "../../graphql/mutations/tasks";
 
 jest.mock("nanoid/generate");
-jest.setTimeout(10000);
 
 test("Freelancer can create a task", async () => {
   generate.mockReturnValue("abc");
@@ -165,7 +164,7 @@ test("Freelancer can create a task", async () => {
     ],
   });
 
-  const createButton = await findByText("Add a project");
+  const createButton = await findByText("Add a project", {}, { timeout: 5000 });
   fireEvent.click(createButton);
   const name = await findByTestId("nameField");
   fireEvent.change(name, { target: { value: "Task name here" } });

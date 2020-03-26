@@ -1,12 +1,13 @@
+import { fireEvent, waitForElementToBeRemoved } from "@testing-library/react";
 import renderApp from "../../../testHelpers/renderApp";
-import wait from "waait";
-import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
-import VIEWER from "../../../graphql/queries/viewer";
+import {
+  mockViewer,
+  mockQuery,
+  mockMutation,
+} from "../../../testHelpers/apolloMocks";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import UPDATE_PROJECT_TYPE from "../ProjectTypeModal/setProjectType";
-
-jest.setTimeout(10000);
 
 test("User can change the project type", async () => {
   let user = generateTypes.user();
@@ -23,54 +24,29 @@ test("User can change the project type", async () => {
   });
 
   const graphQLMocks = [
-    {
-      request: {
-        query: VIEWER,
+    mockViewer(user),
+    mockQuery(
+      GET_ACTIVE_APPLICATION,
+      { id: "rec1234" },
+      { viewer: user, application },
+    ),
+    mockMutation(
+      UPDATE_PROJECT_TYPE,
+      {
+        application: "rec1234",
+        projectType: "Fixed",
+        monthlyLimit: 50,
       },
-      result: {
-        data: {
-          viewer: user,
-        },
-      },
-    },
-    {
-      request: {
-        query: GET_ACTIVE_APPLICATION,
-        variables: {
-          id: "rec1234",
-        },
-      },
-      result: {
-        data: {
-          viewer: user,
-          application,
-        },
-      },
-    },
-    {
-      request: {
-        query: UPDATE_PROJECT_TYPE,
-        variables: {
-          input: {
-            application: "rec1234",
+      {
+        setTypeForProject: {
+          __typename: "SetTypeForProjectPayload",
+          application: {
+            ...application,
             projectType: "Fixed",
-            monthlyLimit: 50,
           },
         },
       },
-      result: {
-        data: {
-          __typename: "MutationPayload",
-          setTypeForProject: {
-            __typename: "SetTypeForProjectPayload",
-            application: {
-              ...application,
-              projectType: "Fixed",
-            },
-          },
-        },
-      },
-    },
+    ),
   ];
 
   const app = renderApp({
@@ -88,9 +64,7 @@ test("User can change the project type", async () => {
   fireEvent.click(accept);
   const submit = app.getByLabelText("Update Project Type");
   fireEvent.click(submit);
-  // Not sure why the need for two waits here..
-  await wait(0);
-  await wait(0);
+  await waitForElementToBeRemoved(submit);
   const projectType = await app.findByTestId("projectType");
   expect(projectType).toHaveTextContent("projectTypes.Fixed.label");
 });

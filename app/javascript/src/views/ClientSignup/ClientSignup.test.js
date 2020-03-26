@@ -41,7 +41,7 @@ test("Criteria step", async () => {
             value: industry.name,
           },
         ],
-      }
+      },
     ),
     mockQuery(
       SEARCH,
@@ -56,16 +56,16 @@ test("Criteria step", async () => {
         specialists: {
           __typename: "SpecialistConnection",
           totalCount: 25,
-          nodes: times(25, t =>
+          nodes: times(25, (t) =>
             generateTypes.specialist({
               id: `spe_${t}`,
               airtableId: `recSpecialist${t}`,
               hourlyRate: t * 10,
               name: `Specialist ${t}`,
-            })
+            }),
           ),
         },
-      }
+      },
     ),
     mockMutation(
       CREATE_ACCOUNT,
@@ -83,7 +83,7 @@ test("Criteria step", async () => {
           __typename: "CreateUserAccountPayload",
           project: project,
         },
-      }
+      },
     ),
   ];
 
@@ -102,12 +102,16 @@ test("Criteria step", async () => {
   fireEvent.keyDown(industryInput, { key: "Enter" });
   fireEvent.click(app.getByLabelText("Industry experience is important to me"));
   fireEvent.click(
-    app.getByLabelText("Experience with this type of company is important")
+    app.getByLabelText("Experience with this type of company is important"),
   );
   const button = app.getByLabelText("Find a specialist");
   fireEvent.click(button);
 
-  const budget = await app.findByLabelText(/Select Budget/i, {}, { timeout: 3000 });
+  const budget = await app.findByLabelText(
+    /Select Budget/i,
+    {},
+    { timeout: 3000 },
+  );
   fireEvent.click(budget);
   fireEvent.click(app.getByLabelText("Select Specialist 0"));
   fireEvent.click(app.getByLabelText("Select Specialist 1"));
@@ -117,8 +121,7 @@ test("Criteria step", async () => {
   const btn = await app.findByLabelText("Continue");
   fireEvent.click(btn);
 
-  const more = await app.findByText("Tell us more");
-  expect(more).toBeInTheDocument();
+  await app.findByText("Tell us more");
 });
 
 test("Alternative flow", async () => {
@@ -150,7 +153,7 @@ test("Alternative flow", async () => {
             value: industry.name,
           },
         ],
-      }
+      },
     ),
     mockQuery(
       SEARCH,
@@ -165,16 +168,16 @@ test("Alternative flow", async () => {
         specialists: {
           __typename: "SpecialistConnection",
           totalCount: 25,
-          nodes: times(25, t =>
+          nodes: times(25, (t) =>
             generateTypes.specialist({
               id: `spe_${t}`,
               airtableId: `recSpecialist${t}`,
               hourlyRate: t * 10,
               name: `Specialist ${t}`,
-            })
+            }),
           ),
         },
-      }
+      },
     ),
     mockMutation(
       CREATE_ACCOUNT,
@@ -192,7 +195,7 @@ test("Alternative flow", async () => {
           __typename: "CreateUserAccountPayload",
           project: project,
         },
-      }
+      },
     ),
   ];
 
@@ -202,7 +205,7 @@ test("Alternative flow", async () => {
   });
 
   const checkbox = await app.findByLabelText(
-    "Experience working at companies similar to mine is important"
+    "Experience working at companies similar to mine is important",
   );
 
   fireEvent.click(checkbox);
@@ -213,7 +216,11 @@ test("Alternative flow", async () => {
   const button = app.getByLabelText("Find a specialist");
   fireEvent.click(button);
 
-  const budget = await app.findByLabelText(/Select Budget/i, {}, { timeout: 3000 });
+  const budget = await app.findByLabelText(
+    /Select Budget/i,
+    {},
+    { timeout: 3000 },
+  );
   fireEvent.click(budget);
 
   fireEvent.click(app.getByLabelText("Select Specialist 0"));
@@ -241,11 +248,10 @@ test("Redirects when there is already a viewer", async () => {
       {},
       {
         viewer: user,
-      }
+      },
     ),
   ];
 
   const app = renderApp({ route: "/clients/signup", graphQLMocks });
-  const header = await app.findByText("Your projects");
-  expect(header).toBeInTheDocument();
+  await app.findByText("Find a new freelancer");
 });
