@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "react-apollo";
-import { useParams, Switch, Route, Redirect } from "react-router-dom";
+import { Text, RoundedButton } from "@advisable/donut";
+import { useParams, Switch, Route, Redirect, Link } from "react-router-dom";
 import Sent from "./Sent";
 import Topic from "./Topic";
 import Results from "./Results";
@@ -8,6 +9,7 @@ import Availability from "./Availability";
 import SearchRecommendation from "./SearchRecommendation";
 import { getSearch } from "./searchQueries";
 import Loading from "../../components/Loading";
+import NotFound, { isNotFound } from "../NotFound";
 
 function ViewSearch() {
   const { id } = useParams();
@@ -16,6 +18,11 @@ function ViewSearch() {
   });
 
   if (loading) return <Loading />;
+
+  if (isNotFound(error)) {
+    return <NotFound />;
+  }
+
   if (error) return <div>Something went wrong</div>;
 
   return (
