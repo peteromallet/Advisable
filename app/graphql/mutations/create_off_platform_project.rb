@@ -4,9 +4,9 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
   argument :client_name, String, required: true
   argument :confidential, Boolean, required: false
   argument :industries, [String], required: true
-  argument :primaryIndustry, String, required: true
+  argument :primary_industry, String, required: true
   argument :skills, [String], required: true
-  argument :primarySkill, String, required: true
+  argument :primary_skill, String, required: true
   argument :contact_name, String, required: true
   argument :contact_job_title, String, required: true
   argument :contact_relationship, String, required: true
