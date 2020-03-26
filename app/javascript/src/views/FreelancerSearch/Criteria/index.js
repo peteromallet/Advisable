@@ -11,36 +11,18 @@ import {
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { useQuery, useMutation } from "react-apollo";
+import { useQuery } from "react-apollo";
 import { Container } from "./styles";
 import Select from "../../../components/Select";
 import Loading from "../../../components/Loading";
 import Images from "./Images";
 import validationSchema from "./validationSchema";
 import DATA from "./getData";
-import {
-  createSearch as CREATE_SEARCH,
-  getSearch as GET_SEARCH,
-} from "../searchQueries";
 
 const FreelancerSearchCriteria = () => {
   const history = useHistory();
   const theme = useTheme();
   const { data, loading } = useQuery(DATA);
-  const [createSearch] = useMutation(CREATE_SEARCH, {
-    update(store, result) {
-      const search = result.data.createSearch.search;
-      store.writeQuery({
-        query: GET_SEARCH,
-        variables: {
-          id: search.id,
-        },
-        data: {
-          search,
-        },
-      });
-    },
-  });
 
   React.useEffect(() => {
     theme.updateTheme({ background: "white" });
@@ -57,15 +39,13 @@ const FreelancerSearchCriteria = () => {
     companyExperienceRequired: false,
   };
 
-  const handleSubmit = async values => {
-    const response = await createSearch({
-      variables: {
-        input: values,
+  const handleSubmit = values => {
+    history.push({
+      pathname: "/freelancer_search/search",
+      state: {
+        search: values,
       },
     });
-
-    const id = response.data?.createSearch.search.id;
-    history.push(`/freelancer_search/${id}`);
   };
 
   return (
@@ -163,8 +143,8 @@ const FreelancerSearchCriteria = () => {
               </Box>
               <RoundedButton
                 size="l"
+                type="submit"
                 prefix={<Icon icon="search" />}
-                loading={formik.isSubmitting}
               >
                 Find a freelancer
               </RoundedButton>
