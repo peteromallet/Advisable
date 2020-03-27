@@ -1,12 +1,16 @@
 import generate from "nanoid/generate";
-import { fireEvent, waitForElementToBeRemoved } from "@testing-library/react";
+import {
+  renderRoute,
+  fireEvent,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "test-utils";
 import VIEWER from "../graphql/queries/viewer";
 import {
   mockViewer,
   mockQuery,
   mockMutation,
 } from "../testHelpers/apolloMocks";
-import renderApp from "../testHelpers/renderApp";
 import generateType from "../__mocks__/graphqlFields";
 import GET_ACTIVE_APPLICATION from "../views/Booking/getActiveApplication";
 import {
@@ -19,7 +23,7 @@ jest.mock("nanoid/generate");
 
 test("Renders the manage view for a specialist", async () => {
   let viewer = generateType.user();
-  const app = renderApp({
+  const app = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
       mockViewer(viewer),
@@ -46,7 +50,7 @@ test("Renders the manage view for a specialist", async () => {
 });
 
 test("Renders a tutorial video if it's the first time viewing", async () => {
-  const { findByText } = renderApp({
+  const { findByText } = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
       mockViewer(generateType.user()),
@@ -80,7 +84,7 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
 });
 
 test("Does not render a tutorial video if the user has completed it", async () => {
-  const { findByText, queryByText } = renderApp({
+  const { findByText, queryByText } = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
       {
@@ -126,7 +130,7 @@ test("Does not render a tutorial video if the user has completed it", async () =
 });
 
 test("The client can change the project type", async () => {
-  const app = renderApp({
+  const app = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
       mockViewer(
@@ -175,8 +179,7 @@ test("The client can change the project type", async () => {
     ],
   });
 
-  await app.findByText("Active Projects"); // wait for page to load
-  const button = app.getByLabelText("Edit project type");
+  const button = await app.findByLabelText("Edit project type");
   fireEvent.click(button);
   const flexible = app.getByTestId("flexible");
   fireEvent.click(flexible);
@@ -192,9 +195,9 @@ test("The client can change the project type", async () => {
   fireEvent.click(checkbox);
   const submit = app.getByLabelText("Update Project Type");
   fireEvent.click(submit);
-  await app.findByText("100 hours");
+  await waitForElementToBeRemoved(checkbox);
   const projectType = app.getByTestId("projectType");
-  expect(projectType).toHaveTextContent("Flexible");
+  await waitFor(() => expect(projectType).toHaveTextContent("Flexible"));
 });
 
 test("The client can add a task", async () => {
@@ -212,7 +215,7 @@ test("The client can add a task", async () => {
 
   let viewer = generateType.user();
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
       {

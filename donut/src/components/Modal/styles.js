@@ -14,7 +14,7 @@ export const StyledBackdrop = styled(motion.div)`
   background: ${rgba(theme.colors.neutral[2], 0.9)};
   ${"" /* Override the display prop that reakit tries to set so that we can handle exit animations */}
   display: block !important;
-  pointer-events: ${props => (props.hidden ? "none" : "all")};
+  pointer-events: ${(props) => (props.hidden ? "none" : "all")};
 `;
 
 export const StyledModalWindowContainer = styled.div`
@@ -29,8 +29,8 @@ export const StyledModalWindowContainer = styled.div`
   overflow-y: scroll;
   ${"" /* Override the display prop that reakit tries to set so that we can handle exit animations */}
   display: flex !important;
-  pointer-events: ${props => (props.hidden ? "none" : "all")};
-  ${props => props.isMobile && StyledWindowContainerMobile};
+  pointer-events: ${(props) => (props.hidden ? "none" : "all")};
+  ${(props) => props.isMobile && StyledWindowContainerMobile};
 `;
 
 const StyledWindowContainerMobile = css`
@@ -67,9 +67,9 @@ export const StyledWindow = styled(motion.div)`
   margin: auto;
   background: white;
   transform-style: preserve-3d;
-  max-width: ${props => props.width || 500}px;
+  max-width: ${(props) => props.width || 500}px;
   box-shadow: 0 8px 30px ${rgba(theme.colors.neutral[9], 0.1)};
-  ${props => props.isMobile && StyledWindowMobile};
+  ${(props) => props.isMobile && StyledWindowMobile};
 `;
 
 const StyledWindowMobile = css`
