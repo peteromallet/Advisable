@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Card } from "@advisable/donut";
 import { useParams, Route, Switch, Redirect } from "react-router-dom";
 import Loading from "src/components/Loading";
@@ -37,7 +37,7 @@ export default function InterviewRequestView({ match }) {
         <Switch>
           <Route
             path={`${match.path}/${SELECT_TIME_PATH}`}
-            render={route => (
+            render={(route) => (
               <SelectTime
                 {...route}
                 timeZone={interview.timeZone}
@@ -48,7 +48,7 @@ export default function InterviewRequestView({ match }) {
           />
           <Route
             path={`${match.path}/${CONFIRM_PATH}`}
-            render={route => (
+            render={(route) => (
               <ConfirmInterviewRequest
                 {...route}
                 phoneNumber={interview.application.specialist.phoneNumber}
@@ -60,7 +60,7 @@ export default function InterviewRequestView({ match }) {
           <Route
             exact
             path={match.path}
-            render={route => (
+            render={(route) => (
               <SelectDay
                 {...route}
                 timeZone={interview.timeZone}
@@ -75,7 +75,7 @@ export default function InterviewRequestView({ match }) {
       {interview.status === "Call Scheduled" && (
         <Route
           path={match.path}
-          render={route => (
+          render={(route) => (
             <InterviewConfirmed
               {...route}
               startsAt={interview.startsAt}
@@ -88,7 +88,7 @@ export default function InterviewRequestView({ match }) {
       {interview.status === "Need More Time Options" && (
         <Route
           path={match.path}
-          render={route => (
+          render={(route) => (
             <MoreTimesRequested
               {...route}
               clientName={interview.user.companyName}

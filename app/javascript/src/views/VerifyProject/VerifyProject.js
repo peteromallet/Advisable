@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Text, Button, Box, NumberedList, Checkbox } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import VALIDATE_PROJECT from "./validateProject";
@@ -13,7 +13,7 @@ const VerifyProject = ({ project, match }) => {
     contactName += ` ${project.contactLastName}`;
   }
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await validate({
       variables: {
         input: {
@@ -57,10 +57,10 @@ const VerifyProject = ({ project, match }) => {
         initialValues={{ email: "", accept: false }}
         validationSchema={createValidationSchema(
           project.specialist.name,
-          contactName
+          contactName,
         )}
       >
-        {formik => (
+        {(formik) => (
           <Form>
             <Box mb="s">
               <Field

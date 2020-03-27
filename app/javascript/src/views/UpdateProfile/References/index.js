@@ -1,18 +1,19 @@
 import * as React from "react";
 import { get } from "lodash";
-import { graphql } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Text, RoundedButton, useRoutedModal, Icon } from "@advisable/donut";
 import Loading from "../../../components/Loading";
 import PreviousProjects from "../../../components/PreviousProjects";
 import PreviousProjectForm from "../../../components/PreviousProjectForm";
 import PREVIOUS_PROJECTS from "./previousProjects";
 
-const References = ({ data }) => {
+const References = () => {
+  const { data, loading } = useQuery(PREVIOUS_PROJECTS);
   const modal = useRoutedModal("/profile/references/new_project/client", {
     returnLocation: "/profile/references",
   });
 
-  if (data.loading) return <Loading />;
+  if (loading) return <Loading />;
 
   return (
     <>
@@ -52,4 +53,4 @@ const References = ({ data }) => {
   );
 };
 
-export default graphql(PREVIOUS_PROJECTS)(References);
+export default References;

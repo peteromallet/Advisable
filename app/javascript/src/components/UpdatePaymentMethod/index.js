@@ -1,7 +1,6 @@
 import React from "react";
 import gql from "graphql-tag";
-import { flowRight as compose } from "lodash";
-import { withApollo, graphql } from "react-apollo";
+import { useMutation, useApolloClient } from "@apollo/react-hooks";
 import Loading from "../Loading";
 import useViewer from "../../hooks/useViewer";
 import PaymentMethodForm from "../PaymentMethodForm";
@@ -25,13 +24,15 @@ export const GET_SETUP_INTENT_STATUS = gql`
   }
 `;
 
-const UpdatePaymentMethod = ({ createSetupIntent, client, onSuccess }) => {
+const UpdatePaymentMethod = ({ onSuccess }) => {
+  const client = useApolloClient();
+  const [createSetupIntent] = useMutation(CREATE_SETUP_INTENT);
   let timer = React.useRef(null);
   let viewer = useViewer();
   let [secret, setSecret] = React.useState(null);
 
   React.useEffect(() => {
-    createSetupIntent().then(r => {
+    createSetupIntent().then((r) => {
       setSecret(r.data.createSetupIntent.secret);
     });
   }, [createSetupIntent]);
@@ -64,7 +65,7 @@ const UpdatePaymentMethod = ({ createSetupIntent, client, onSuccess }) => {
         payment_method_data: {
           billing_details: { name: details.cardholder },
         },
-      }
+      },
     );
 
     if (error) {
@@ -85,7 +86,4 @@ const UpdatePaymentMethod = ({ createSetupIntent, client, onSuccess }) => {
   );
 };
 
-export default compose(
-  withApollo,
-  graphql(CREATE_SETUP_INTENT, { name: "createSetupIntent" })
-)(UpdatePaymentMethod);
+export default UpdatePaymentMethod;

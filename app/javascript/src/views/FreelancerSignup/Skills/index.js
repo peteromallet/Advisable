@@ -3,7 +3,7 @@ import Rollbar from "rollbar";
 import gql from "graphql-tag";
 import { get, sortBy } from "lodash";
 import { Formik, Form } from "formik";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
 import { Text, Box, Link, Button, Autocomplete } from "@advisable/donut";
 import Loading from "../../../components/Loading";
@@ -41,7 +41,7 @@ const Skills = ({ history, location, specialist }) => {
   // Its important that we first replace the state so that if the user
   // navigates back to the skills step, we can read their previously selected
   // skills from the location state.
-  const handleSubmit = values => {
+  const handleSubmit = (values) => {
     const state = { skills: values.skills };
     history.replace(`/freelancers/signup${location.search}`, state);
     // Continue to the account details step and pass the state.
@@ -71,7 +71,7 @@ const Skills = ({ history, location, specialist }) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        {formik => (
+        {(formik) => (
           <Form>
             {loading ? (
               <Loading />
@@ -88,7 +88,7 @@ const Skills = ({ history, location, specialist }) => {
                   onBlur={formik.handleBlur}
                   value={formik.values.skills}
                   error={formik.touched.skills && formik.errors.skills}
-                  onChange={skills => {
+                  onChange={(skills) => {
                     formik.setFieldTouched("skills", true);
                     formik.setFieldValue("skills", skills);
                   }}

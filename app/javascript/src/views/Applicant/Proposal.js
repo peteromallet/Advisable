@@ -1,6 +1,6 @@
 import React from "react";
 import { camelCase } from "lodash";
-import { graphql } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
@@ -20,11 +20,12 @@ import renderLineBreaks from "../../utilities/renderLineBreaks";
 const Loaded = ({ data }) => {
   const { t } = useTranslation();
   const [selectedTask, setSelectedTask] = React.useState(null);
+
   const application = data.application;
   const project = data.application.project;
   const specialist = data.application.specialist;
 
-  const handleSelectTask = task => {
+  const handleSelectTask = (task) => {
     setSelectedTask(task.id);
   };
 
@@ -106,18 +107,18 @@ const Loading = () => (
   </Padding>
 );
 
-const Proposal = ({ data }) => {
+const Proposal = () => {
+  const { data, loading } = useQuery(FETCH_PROPOSAL, {
+    variables: {
+      id: props.match.params.applicationID,
+    },
+  });
+
   return (
     <FadeInUp>
-      <Card>{data.loading ? <Loading /> : <Loaded data={data} />}</Card>
+      <Card>{loading ? <Loading /> : <Loaded data={data} />}</Card>
     </FadeInUp>
   );
 };
 
-export default graphql(FETCH_PROPOSAL, {
-  options: props => ({
-    variables: {
-      id: props.match.params.applicationID,
-    },
-  }),
-})(Proposal);
+export default Proposal;

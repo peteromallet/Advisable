@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import { Query, Mutation } from "react-apollo";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment-timezone";
 import React, { useState } from "react";
 import Button from "src/components/Button";
@@ -8,7 +8,7 @@ import Loading from "src/components/Loading";
 import Availability from "src/components/Availability";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
 import { withNotifications } from "src/components/Notifications";
-import useWindowSize from 'src/utilities/useWindowSize';
+import useWindowSize from "src/utilities/useWindowSize";
 
 import { Container, Form, Header, Body, Footer } from "./styles";
 
@@ -16,76 +16,73 @@ import FETCH_AVAILABILITY from "./fetchAvailability.graphql";
 import UPDATE_AVAILABILITY from "./updateAvailability.graphql";
 
 const AvailabilityView = ({ match, notifications }) => {
-  const [timeZone, setTimeZone] = useState(
-    moment.tz.guess() || "Europe/Dublin"
-  );
   const windowSize = useWindowSize();
+  const [updateAvailability] = useMutation(UPDATE_AVAILABILITY);
+  const [timeZone, setTimeZone] = useState(
+    moment.tz.guess() || "Europe/Dublin",
+  );
+
+  const query = useQuery(FETCH_AVAILABILITY, {
+    variables: { id: match.params.userID },
+  });
 
   return (
     <Container height={windowSize.height}>
-      <Query query={FETCH_AVAILABILITY} variables={{ id: match.params.userID }}>
-        {query => {
-          if (query.loading) return <Loading />;
+      {query.loading ? (
+        <Loading />
+      ) : (
+        <Formik
+          onSubmit={async (values) => {
+            await updateAvailability({
+              variables: {
+                input: {
+                  id: query.data.user.airtableId,
+                  ...values,
+                },
+              },
+            });
 
-          return (
-            <Mutation mutation={UPDATE_AVAILABILITY}>
-              {updateAvailability => (
-                <Formik
-                  onSubmit={async values => {
-                    await updateAvailability({
-                      variables: {
-                        input: {
-                          id: query.data.user.airtableId,
-                          ...values
-                        }
-                      }
-                    });
-
-                    notifications.notify("Your availability has been updated");
+            notifications.notify("Your availability has been updated");
+          }}
+          initialValues={{
+            availability: query.data.user.availability,
+          }}
+        >
+          {(formik) => (
+            <Form onSubmit={formik.handleSubmit}>
+              <Header>
+                <Heading marginBottom="m">
+                  Availability for calls with specialists!
+                </Heading>
+                <TimeZoneSelect
+                  value={timeZone}
+                  onChange={(zone) => setTimeZone(zone)}
+                />
+              </Header>
+              <Body>
+                <Availability
+                  timeZone={timeZone}
+                  selected={formik.values.availability}
+                  onSelect={(times) => {
+                    formik.setFieldValue("availability", times);
                   }}
-                  initialValues={{
-                    availability: query.data.user.availability
-                  }}
+                />
+              </Body>
+              <Footer>
+                <Button
+                  type="submit"
+                  size="l"
+                  isLoading={formik.isLoading}
+                  disabled={formik.isLoading}
+                  primary
                 >
-                  {formik => (
-                    <Form onSubmit={formik.handleSubmit}>
-                      <Header>
-                        <Heading marginBottom="m">
-                          Availability for calls with specialists!
-                        </Heading>
-                        <TimeZoneSelect
-                          value={timeZone}
-                          onChange={zone => setTimeZone(zone)}
-                        />
-                      </Header>
-                      <Body>
-                        <Availability
-                          timeZone={timeZone}
-                          selected={formik.values.availability}
-                          onSelect={times => {
-                            formik.setFieldValue("availability", times);
-                          }}
-                        />
-                      </Body>
-                      <Footer>
-                        <Button
-                          type="submit"
-                          size="l"
-                          isLoading={formik.isLoading}
-                          disabled={formik.isLoading}
-                          primary
-                        >
-                          Update Availability
-                        </Button>
-                      </Footer>
-                    </Form>
-                  )}
-                </Formik>
-              )}
-            </Mutation>
-          );
-        }}
-      </Query>
+                  Update Availability
+                </Button>
+              </Footer>
+            </Form>
+          )}
+        </Formik>
+      )}
     </Container>
   );
 };

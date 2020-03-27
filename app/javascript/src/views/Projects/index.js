@@ -1,6 +1,6 @@
 // Renders the projects view for a user.
 import React from "react";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Box, Text } from "@advisable/donut";
 import useScrollRestore from "../../utilities/useScrollRestore";
 import Loading from "./Loading";

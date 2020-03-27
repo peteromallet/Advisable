@@ -2,7 +2,7 @@ import React from "react";
 import { get } from "lodash";
 import gql from "graphql-tag";
 import { Formik, Form } from "formik";
-import { graphql } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Text, Box, Button } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import Modal from "../../components/Modal";
@@ -18,8 +18,9 @@ export const STOP_WORKING = gql`
   }
 `;
 
-const StopWorkingModal = ({ isOpen, onClose, application, stopWorking }) => {
+const StopWorkingModal = ({ isOpen, onClose, application }) => {
   const name = get(application, "specialist.firstName");
+  const [stopWorking] = useMutation(STOP_WORKING);
 
   const handleSubmit = async (values, formikBag) => {
     try {
@@ -34,7 +35,7 @@ const StopWorkingModal = ({ isOpen, onClose, application, stopWorking }) => {
     } catch (e) {
       formikBag.setSubmitting(false);
       formikBag.setStatus(
-        "It looks like something went wrong. Please try again."
+        "It looks like something went wrong. Please try again.",
       );
     }
   };
@@ -59,7 +60,7 @@ const StopWorkingModal = ({ isOpen, onClose, application, stopWorking }) => {
           this project when you need.
         </Text>
         <Formik onSubmit={handleSubmit} initialValues={{ reason: "" }}>
-          {formik => (
+          {(formik) => (
             <Form>
               <TextField
                 multiline
@@ -102,4 +103,4 @@ const StopWorkingModal = ({ isOpen, onClose, application, stopWorking }) => {
   );
 };
 
-export default graphql(STOP_WORKING, { name: "stopWorking" })(StopWorkingModal);
+export default StopWorkingModal;

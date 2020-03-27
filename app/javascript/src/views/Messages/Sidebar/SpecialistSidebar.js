@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash";
-import { graphql } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Text, Padding } from "@advisable/donut";
 import currency from "../../../utilities/currency";
 import Status from "../../../components/Status";
@@ -10,8 +10,14 @@ import SpecialistActions from "./SpecialistActions";
 import GET_APPLICATION from "../getApplicationForSpecialist";
 
 // Renders the specialist sidebar on the messages view
-const SpecialistSidebar = ({ data }) => {
-  if (data.loading) {
+const SpecialistSidebar = () => {
+  const { data, loading, error } = useQuery(GET_APPLICATION, {
+    variables: {
+      id: props.applicationId,
+    },
+  });
+
+  if (loading) {
     return (
       <>
         <Padding bottom="xs">
@@ -41,7 +47,7 @@ const SpecialistSidebar = ({ data }) => {
     );
   }
 
-  if (data.error) {
+  if (error) {
     return <>Failed to fetch application</>;
   }
 
@@ -98,10 +104,4 @@ const SpecialistSidebar = ({ data }) => {
   );
 };
 
-export default graphql(GET_APPLICATION, {
-  options: props => ({
-    variables: {
-      id: props.applicationId,
-    },
-  }),
-})(SpecialistSidebar);
+export default SpecialistSidebar;

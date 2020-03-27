@@ -1,6 +1,6 @@
 import React from "react";
 import gql from "graphql-tag";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import Loading from "../../../components/Loading";
 import VIEWER, { viewerFields } from "../../../graphql/queries/viewer";
 import { useNotifications } from "../../../components/Notifications";

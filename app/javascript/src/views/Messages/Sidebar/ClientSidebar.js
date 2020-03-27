@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash";
-import { graphql } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Text, Padding } from "@advisable/donut";
 import Avatar from "../../../components/Avatar";
 import Status from "../../../components/Status";
@@ -11,8 +11,14 @@ import GET_APPLICATION from "../getApplicationForClient";
 import CandidateAttributeList from "../../../components/CandidateAttributeList";
 import ClientActions from "./ClientActions";
 
-const ClientSidebar = ({ data }) => {
-  if (data.loading) {
+const ClientSidebar = ({ props }) => {
+  const { data, loading, error } = useQuery(GET_APPLICATION, {
+    variables: {
+      id: props.applicationId,
+    },
+  });
+
+  if (loading) {
     return (
       <>
         <Padding bottom="xs">
@@ -42,7 +48,7 @@ const ClientSidebar = ({ data }) => {
     );
   }
 
-  if (data.error) {
+  if (error) {
     return <>Failed to fetch application</>;
   }
 
@@ -106,10 +112,4 @@ const ClientSidebar = ({ data }) => {
   );
 };
 
-export default graphql(GET_APPLICATION, {
-  options: props => ({
-    variables: {
-      id: props.applicationId,
-    },
-  }),
-})(ClientSidebar);
+export default ClientSidebar;

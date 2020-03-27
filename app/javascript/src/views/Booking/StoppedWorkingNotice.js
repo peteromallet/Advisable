@@ -1,6 +1,6 @@
 import React from "react";
 import gql from "graphql-tag";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Box, Text, Button } from "@advisable/donut";
 import Modal from "../../components/Modal";
 import Notice from "../../components/Notice";

@@ -3,7 +3,7 @@ import { get } from "lodash";
 import queryString from "query-string";
 import { useTranslation } from "react-i18next";
 import { useLocation, Redirect } from "react-router-dom";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import {
   Box,
   Text,

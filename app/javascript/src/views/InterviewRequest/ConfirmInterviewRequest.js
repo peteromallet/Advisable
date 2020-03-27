@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 import moment from "moment-timezone";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Text, Box, Link, Icon, RoundedButton } from "@advisable/donut";
 import TextField from "src/components/TextField";
 import ACCEPT_INTERVIEW_REQUEST from "./acceptInterviewRequest";
@@ -16,7 +16,7 @@ export default function ConfirmInterviewRequest({
   const parsed = moment.parseZone(match.params.datetime);
   const [acceptInterviewRequest] = useMutation(ACCEPT_INTERVIEW_REQUEST);
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await acceptInterviewRequest({
       variables: {
         input: { ...values, id: match.params.interviewID },
@@ -34,7 +34,7 @@ export default function ConfirmInterviewRequest({
       <Link
         mb="xs"
         to={`/interview_request/${match.params.interviewID}/${parsed.format(
-          "YYYY-MM-DD"
+          "YYYY-MM-DD",
         )}`}
       >
         <Icon icon="arrow-left" width={16} mr="xxs" />
@@ -60,7 +60,7 @@ export default function ConfirmInterviewRequest({
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
-        render={form => (
+        render={(form) => (
           <form onSubmit={form.handleSubmit}>
             <TextField
               autoFocus

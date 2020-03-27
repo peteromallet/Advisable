@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { findIndex } from "lodash";
-import { useQuery, useMutation } from "react-apollo";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { Modal, StyledModalWindowContainer } from "@advisable/donut";
 import React, { useMemo, useState } from "react";
 import {
@@ -28,8 +28,8 @@ const PreviousProjectForm = ({
   const [createProject] = useMutation(CREATE_PROJECT, {
     update: mutationUpdate,
   });
-  const currentIndex = findIndex(STEPS, step =>
-    matchPath(pathname, { path: step.path })
+  const currentIndex = findIndex(STEPS, (step) =>
+    matchPath(pathname, { path: step.path }),
   );
 
   const [values, setValues] = useState({});
@@ -38,7 +38,7 @@ const PreviousProjectForm = ({
 
   useScrollRestore(`${StyledModalWindowContainer}`, [pathname]);
 
-  const next = async nextValues => {
+  const next = async (nextValues) => {
     if (currentIndex === STEPS.length - 1) {
       await createProject({
         variables: {
@@ -74,7 +74,7 @@ const PreviousProjectForm = ({
       label="Add previous project"
     >
       <Switch>
-        {STEPS.map(step => (
+        {STEPS.map((step) => (
           <Route
             key={step.path}
             path={step.path}

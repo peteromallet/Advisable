@@ -1,13 +1,16 @@
 import * as React from "react";
-import { graphql, ApolloConsumer } from "react-apollo";
+import { useMutation, useApolloClient } from "@apollo/react-hooks";
 import Icon from "../../components/Icon";
 import { NewTask, NewTaskIcon } from "./styles";
 import generateID from "../../utilities/generateID";
 import CREATE_TASK from "../../graphql/mutations/createTask";
 import TASK_DETAILS from "../../graphql/queries/taskDetails";
 
-const Component = ({ application, onCreate, mutate }) => {
-  const handleClick = client => async () => {
+const Component = ({ application, onCreate }) => {
+  const [mutate] = useMutation(CREATE_TASK);
+  const client = useApolloClient();
+
+  const handleClick = (client) => async () => {
     const id = generateID("tas");
 
     const task = {
@@ -70,17 +73,13 @@ const Component = ({ application, onCreate, mutate }) => {
   };
 
   return (
-    <ApolloConsumer>
-      {client => (
-        <NewTask onClick={handleClick(client)} aria-label="Add a task">
-          <NewTaskIcon>
-            <Icon icon="plus" strokeWidth={2} />
-          </NewTaskIcon>
-          Add a project
-        </NewTask>
-      )}
-    </ApolloConsumer>
+    <NewTask onClick={handleClick(client)} aria-label="Add a task">
+      <NewTaskIcon>
+        <Icon icon="plus" strokeWidth={2} />
+      </NewTaskIcon>
+      Add a project
+    </NewTask>
   );
 };
 
-export default graphql<any, any, any, any>(CREATE_TASK)(Component);
+export default Component;

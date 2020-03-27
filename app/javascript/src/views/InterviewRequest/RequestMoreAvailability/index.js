@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { Box, Text, RoundedButton } from "@advisable/donut";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import ButtonGroup from "src/components/ButtonGroup";
 import TextField from "../../../components/TextField";
 import REQUEST_MORE_TIMES from "./requestMoreTimes";
@@ -17,7 +17,7 @@ export default function RequestMoreAvailability({
     availabilityNote: "",
   };
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     return requestMoreTimes({
       variables: {
         input: {
@@ -45,7 +45,7 @@ export default function RequestMoreAvailability({
         when they respond.
       </Text>
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-        {formik => (
+        {(formik) => (
           <Form>
             <Box mb="l">
               <Field

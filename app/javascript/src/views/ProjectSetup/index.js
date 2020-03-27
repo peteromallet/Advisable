@@ -1,5 +1,5 @@
 // Renders the confirmation steps for a project.
-import { graphql } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Transition, animated } from "react-spring/renderprops.cjs";
 import { Route, Switch, Redirect } from "react-router";
 import React, { Fragment, useEffect, useRef } from "react";
@@ -11,8 +11,15 @@ import FETCH_PROJECT from "./fetchProject";
 import { stepsForProject, currentStep } from "./Steps";
 import { Container, Step, StepHeading } from "./styles";
 
-const ProjectSetup = ({ data = {}, match }) => {
-  if (data.loading) return <Loading />;
+function ProjectSetupWrapper({ match }) {
+  const { data, loading, error } = useQuery(FETCH_PROJECT, {
+    variables: {
+      id: match.params.projectID,
+    },
+    skip: match.params.projectID === undefined,
+  });
+
+  if (loading) return <Loading />;
 
   if (match.params.projectID && !data.project) {
     return <NotFound />;
@@ -23,6 +30,10 @@ const ProjectSetup = ({ data = {}, match }) => {
     return <Redirect to={`/projects/${match.params.projectID}`} />;
   }
 
+  return <ProjectSetup data={data} />;
+}
+
+const ProjectSetup = ({ data }) => {
   // Filter the steps that are required for the project.
   const steps = stepsForProject(data.project);
   const step = currentStep() || {};
@@ -59,7 +70,7 @@ const ProjectSetup = ({ data = {}, match }) => {
             <Transition
               initial={null}
               items={location}
-              keys={location => location.pathname}
+              keys={(location) => location.pathname}
               from={{
                 opacity: 0,
                 transform:
@@ -77,16 +88,16 @@ const ProjectSetup = ({ data = {}, match }) => {
                     : "translateX(-300px)",
               }}
             >
-              {location => transition => (
+              {(location) => (transition) => (
                 <Switch location={location}>
-                  {steps.map(route => {
+                  {steps.map((route) => {
                     const Component = route.component;
                     return (
                       <Route
                         key={route.path}
                         path={route.path}
                         exact={route.exact}
-                        render={route => (
+                        render={(route) => (
                           <animated.div style={transition}>
                             <Component {...route} project={data.project} />
                           </animated.div>
@@ -104,13 +115,4 @@ const ProjectSetup = ({ data = {}, match }) => {
   );
 };
 
-export default graphql(FETCH_PROJECT, {
-  options: props => ({
-    variables: {
-      id: props.match.params.projectID,
-    },
-  }),
-  // We also need to handle the case when the user is at /project_setup and
-  // there is no projectID in the url. In these cases we simply skip the query
-  skip: props => props.match.params.projectID === undefined,
-})(ProjectSetup);
+export default ProjectSetupWrapper;

@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash";
 import Rollbar from "rollbar";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "src/components/Layout";
 import Loading from "src/components/Loading";
@@ -59,7 +59,7 @@ const Applicant = ({ match, history, location }) => {
           <Route
             exact={true}
             path={match.path}
-            render={route => <ApplicationDetails {...route} data={data} />}
+            render={(route) => <ApplicationDetails {...route} data={data} />}
           />
           <Route path={`${match.path}/proposal`} component={Proposal} />
           <Route render={() => <Redirect to={match.url} />} />

@@ -1,6 +1,5 @@
 import * as React from "react";
-import { flowRight as compose } from "lodash";
-import { graphql } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import Button from "../Button";
 import { Button as DonutButton } from "@advisable/donut";
 import Padding from "../Spacing/Padding";
@@ -12,15 +11,12 @@ import REQUEST_QUOTE from "./requestQuote.graphql";
 import REQUEST_TO_START from "./requestToStart";
 import { useMobile } from "../Breakpoint";
 
-const Component = ({
-  task,
-  isClient,
-  startTask,
-  requestQuote,
-  setPrompt,
-  requestToStart,
-}) => {
+export default function TaskDrawerActions({ task, isClient, setPrompt }) {
   const isMobile = useMobile();
+  const [requestQuote] = useMutation(REQUEST_QUOTE);
+  const [startTask] = useMutation(START_TASK);
+  const [requestToStart] = useMutation(REQUEST_TO_START);
+
   const [loading, setLoading] = React.useState(null);
   const { stage } = task;
 
@@ -90,7 +86,7 @@ const Component = ({
         loading={loading === "SUBMIT" ? true : undefined}
       >
         Mark as complete
-      </Button>
+      </Button>,
     );
   }
 
@@ -105,7 +101,7 @@ const Component = ({
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
-      </Button>
+      </Button>,
     );
 
     if (!hasQuote) {
@@ -117,7 +113,7 @@ const Component = ({
           loading={loading === "REQUEST_QUOTE" ? true : undefined}
         >
           Request Quote
-        </Button>
+        </Button>,
       );
     }
   }
@@ -141,7 +137,7 @@ const Component = ({
         loading={loading === "REQUEST_TO_START" ? true : undefined}
       >
         Request to Start Working
-      </DonutButton>
+      </DonutButton>,
     );
 
     if (!hasName || !hasDescription) {
@@ -172,7 +168,7 @@ const Component = ({
           loading={loading === "REQUEST_QUOTE" ? true : undefined}
         >
           Request Quote
-        </Button>
+        </Button>,
       );
     }
 
@@ -185,7 +181,7 @@ const Component = ({
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
-      </Button>
+      </Button>,
     );
   }
 
@@ -199,7 +195,7 @@ const Component = ({
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
-      </Button>
+      </Button>,
     );
   }
 
@@ -213,7 +209,7 @@ const Component = ({
         loading={loading === "ASSIGN" ? true : undefined}
       >
         Assign Task
-      </Button>
+      </Button>,
     );
   }
 
@@ -227,7 +223,7 @@ const Component = ({
         loading={loading === "START_WORKING" ? true : undefined}
       >
         Start Working
-      </Button>
+      </Button>,
     );
   }
 
@@ -242,7 +238,7 @@ const Component = ({
         loading={loading === "SUBMIT" ? true : undefined}
       >
         Mark as complete
-      </Button>
+      </Button>,
     );
   }
 
@@ -254,7 +250,7 @@ const Component = ({
         onClick={() => setPrompt("APPROVE_PROMPT")}
       >
         Approve
-      </Button>
+      </Button>,
     );
   }
 
@@ -268,10 +264,4 @@ const Component = ({
   }
 
   return null;
-};
-
-export default compose(
-  graphql(REQUEST_QUOTE, { name: "requestQuote" }),
-  graphql(START_TASK, { name: "startTask" }),
-  graphql(REQUEST_TO_START, { name: "requestToStart" })
-)(Component);
+}

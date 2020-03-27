@@ -8,7 +8,7 @@ import {
   useBreakpoint,
 } from "@advisable/donut";
 import { Formik, Form } from "formik";
-import { useQuery, useMutation } from "react-apollo";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { useLocation, useHistory, Redirect } from "react-router-dom";
 import useViewer from "../../../hooks/useViewer";
 import Loading from "../../../components/Loading";
@@ -51,7 +51,7 @@ const Availability = ({ data }) => {
     availability: getAvailability.data?.viewer.availability || [],
   };
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await updateAvailability({
       variables: {
         input: {
@@ -94,7 +94,7 @@ const Availability = ({ data }) => {
         them.
       </Text>
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-        {formik => (
+        {(formik) => (
           <Form>
             {sUp ? (
               <AvailabilityDesktopFields formik={formik} />

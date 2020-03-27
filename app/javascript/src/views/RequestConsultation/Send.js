@@ -1,5 +1,5 @@
 import React from "react";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { useLocation, useParams } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { Box, Text, RoundedButton } from "@advisable/donut";
@@ -15,7 +15,7 @@ function Send({ data, nextStep }) {
     likelyToHire: null,
   };
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await send({
       variables: {
         input: {
@@ -45,13 +45,13 @@ function Send({ data, nextStep }) {
         to hire them as a freelancer?
       </Text>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {formik => (
+        {(formik) => (
           <Form>
             <Box mb="xl">
               <Field
                 as={ScaleInput}
                 name="likelyToHire"
-                onChange={v => {
+                onChange={(v) => {
                   formik.setFieldValue("likelyToHire", v);
                 }}
               />

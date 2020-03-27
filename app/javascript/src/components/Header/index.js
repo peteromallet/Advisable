@@ -1,5 +1,4 @@
 // Renders the primary header for the app
-import { Query } from "react-apollo";
 import { withRouter } from "react-router-dom";
 import React, { Fragment } from "react";
 import { Header as Wrapper, Spacer, Logo, Hamburger } from "./styles";
@@ -8,10 +7,11 @@ import CurrentUser from "./CurrentUser";
 import { useMobile } from "../../components/Breakpoint";
 import ClientNavigation from "./ClientNavigation";
 import FreelancerNavigation from "./FreelancerNavigation";
-import VIEWER from "../../graphql/queries/viewer";
 import useLogoURL from "../ApplicationProvider/useLogoURL";
+import useViewer from "../../hooks/useViewer";
 
 const Header = () => {
+  const viewer = useViewer();
   const isMobile = useMobile();
   const [navOpen, setNavOpen] = React.useState(false);
   const logoURL = useLogoURL();
@@ -26,37 +26,29 @@ const Header = () => {
     <Fragment>
       <Spacer />
       <Wrapper>
-        <Query query={VIEWER}>
-          {query => (
-            <React.Fragment>
-              <Hamburger onClick={() => setNavOpen(true)}>
-                <div />
-                <div />
-                <div />
-              </Hamburger>
-              <Logo href={logoURL}>
-                <img src={logo} alt="" />
-              </Logo>
-              <ClientNavigation
-                data={query.data}
-                navOpen={navOpen}
-                onCloseNav={() => setNavOpen(false)}
-                onLogout={() => handleLogout()}
-              />
-              <FreelancerNavigation
-                navOpen={navOpen}
-                onLogout={() => handleLogout()}
-                onCloseNav={() => setNavOpen(false)}
-              />
-              {!isMobile && !query.loading && (
-                <CurrentUser
-                  user={query.data.viewer}
-                  onLogout={() => handleLogout()}
-                />
-              )}
-            </React.Fragment>
+        <React.Fragment>
+          <Hamburger onClick={() => setNavOpen(true)}>
+            <div />
+            <div />
+            <div />
+          </Hamburger>
+          <Logo href={logoURL}>
+            <img src={logo} alt="" />
+          </Logo>
+          <ClientNavigation
+            navOpen={navOpen}
+            onCloseNav={() => setNavOpen(false)}
+            onLogout={() => handleLogout()}
+          />
+          <FreelancerNavigation
+            navOpen={navOpen}
+            onLogout={() => handleLogout()}
+            onCloseNav={() => setNavOpen(false)}
+          />
+          {!isMobile && (
+            <CurrentUser user={viewer} onLogout={() => handleLogout()} />
           )}
-        </Query>
+        </React.Fragment>
       </Wrapper>
     </Fragment>
   );

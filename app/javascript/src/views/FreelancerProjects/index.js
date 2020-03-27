@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import Layout from "../../components/Layout";
 import Loading from "./Loading";
 import FETCH_DATA from "./fetchData";
@@ -9,7 +9,7 @@ import ActiveApplications from "./ActiveApplications";
 const FreelancerProjects = ({ history }) => {
   const { loading, data } = useQuery(FETCH_DATA);
 
-  const handleClick = application => {
+  const handleClick = (application) => {
     history.push(`/clients/${application.airtableId}`);
   };
 

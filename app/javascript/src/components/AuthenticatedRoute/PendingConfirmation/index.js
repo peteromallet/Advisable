@@ -1,5 +1,5 @@
 import React from "react";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Box, Card, Text, Link } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import RESEND_CONFIRMATION_EMAIL from "./resendConfirmationEmail";
@@ -8,7 +8,7 @@ function PendingConfirmation() {
   const notifications = useNotifications();
   const [resend, { data }] = useMutation(RESEND_CONFIRMATION_EMAIL);
 
-  const handleResend = e => {
+  const handleResend = (e) => {
     e.preventDefault();
     notifications.notify("Confirmation email has been resent");
     resend();

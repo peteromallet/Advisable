@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import queryString from "query-string";
-import { graphql } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
 import Loading from "src/components/Loading";
 import { useNotifications } from "src/components/Notifications";
 import CONFIRM_ACCOUNT from "./confirmAccount.graphql";
 
-const ConfirmAccount = ({ match, location, history, mutate }) => {
+const ConfirmAccount = ({ match, location, history }) => {
+  const [mutate] = useMutation(CONFIRM_ACCOUNT);
   const notifications = useNotifications();
   const parsed = queryString.parse(location.search);
 
@@ -40,4 +41,4 @@ const ConfirmAccount = ({ match, location, history, mutate }) => {
   return <Loading />;
 };
 
-export default graphql(CONFIRM_ACCOUNT)(ConfirmAccount);
+export default ConfirmAccount;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import { Box, Link, Text, Tooltip, Icon, Checkbox } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
@@ -18,7 +18,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
   let applicationId = match.params.applicationId;
   let locationState = location.state || {};
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await updateApplication({
       variables: {
         input: {
@@ -61,7 +61,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <Box padding={{ _: "l", m: "xl" }}>
             <Text
@@ -83,7 +83,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
                 error={formik.touched.rate && formik.errors.rate}
                 label="Including Advisable's fee, what's your estimated hourly rate for projects like this?"
                 placeholder="0"
-                onChange={e => {
+                onChange={(e) => {
                   if (e.target.value.length > 0) {
                     const amount = Number(e.target.value.replace(/\,/, ""));
                     formik.setFieldValue("rate", amount);

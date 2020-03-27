@@ -1,7 +1,7 @@
 // Renders the modal for when the client clicks "start working with X" to create
 // a new booking.
 import * as React from "react";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Box, Text } from "@advisable/donut";
 import Modal from "../../../components/Modal";
 import BookingTypeForm from "../../../components/BookingTypeForm";
@@ -19,7 +19,7 @@ const ProjectTypeModal = ({ isOpen, onClose, application }) => {
     acceptUpfrontCharges: false,
   };
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await setProjectType({
       variables: {
         input: {

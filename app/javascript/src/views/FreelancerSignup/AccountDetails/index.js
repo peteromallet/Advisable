@@ -2,7 +2,7 @@ import React from "react";
 import { get } from "lodash";
 import { Formik, Form } from "formik";
 import queryString from "query-string";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Text, Box, Button } from "@advisable/donut";
@@ -88,7 +88,7 @@ const AccountDetails = ({ specialist, history, location }) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        {formik => (
+        {(formik) => (
           <Form>
             <Box display="flex" mb="s">
               <Box pr="xxs" flex={1}>

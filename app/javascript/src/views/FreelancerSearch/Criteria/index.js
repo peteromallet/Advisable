@@ -11,7 +11,7 @@ import {
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { useQuery } from "react-apollo";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { Container } from "./styles";
 import Select from "../../../components/Select";
 import Loading from "../../../components/Loading";
@@ -39,11 +39,10 @@ const FreelancerSearchCriteria = () => {
     companyExperienceRequired: false,
   };
 
-  const handleSubmit = values => {
-    history.push({
-      pathname: "/freelancer_search/search",
-      state: {
-        search: values,
+  const handleSubmit = async (values) => {
+    const response = await createSearch({
+      variables: {
+        input: values,
       },
     });
   };
@@ -78,7 +77,7 @@ const FreelancerSearchCriteria = () => {
           initialValues={initialValues}
           validationSchema={validationSchema}
         >
-          {formik => (
+          {(formik) => (
             <Form>
               <Box mb="m">
                 <Field
@@ -88,7 +87,7 @@ const FreelancerSearchCriteria = () => {
                   placeholder="Search for a skill"
                   label="What skill are you looking for?"
                   error={formik.submitCount > 0 && formik.errors.skill}
-                  onChange={skill => {
+                  onChange={(skill) => {
                     formik.setFieldValue("skill", skill);
                   }}
                 />
@@ -101,7 +100,7 @@ const FreelancerSearchCriteria = () => {
                   label="What industry are you in?"
                   options={data.industries}
                   error={formik.submitCount > 0 && formik.errors.industry}
-                  onChange={industry => {
+                  onChange={(industry) => {
                     formik.setFieldTouched("industry", true);
                     formik.setFieldValue("industry", industry);
                   }}
