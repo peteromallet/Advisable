@@ -1,8 +1,8 @@
 module.exports = {
   verbose: true,
+  testTimeout: 10000,
   roots: ["app/javascript/src", "donut/src"],
   testEnvironment: "jest-environment-jsdom-fifteen",
-  setupFilesAfterEnv: ["<rootDir>/app/javascript/src/testHelpers/setup.js"],
   moduleDirectories: ["node_modules", "app/javascript"],
   moduleNameMapper: {
     "@advisable/donut": "<rootDir>/donut/src",

@@ -1,6 +1,7 @@
 import React from "react";
 import { fireEvent, waitFor } from "@testing-library/react";
 import mockData from "../../../__mocks__/graphqlFields";
+import { mockQuery, mockMutation } from "../../../testHelpers/apolloMocks";
 import { renderComponent } from "../../../testHelpers/renderApp";
 import FETCH_TASK from "../../../graphql/queries/taskDetails";
 import UPDATE_ESTIMATE from "../QuoteInput/updateEstimate";
@@ -19,46 +20,27 @@ const task = mockData.task({
 
 test("Setting the estimate for a task", async () => {
   const graphQLMocks = [
-    {
-      request: {
-        query: FETCH_TASK,
-        variables: {
-          id: task.id,
-        },
+    mockQuery(FETCH_TASK, { id: task.id }, { task }),
+    mockMutation(
+      UPDATE_ESTIMATE,
+      {
+        id: task.id,
+        estimate: 10,
+        estimateType: "Hourly",
+        flexibleEstimate: 20,
       },
-      result: {
-        data: {
-          task,
-        },
-      },
-    },
-    {
-      request: {
-        query: UPDATE_ESTIMATE,
-        variables: {
-          input: {
-            id: task.id,
+      {
+        updateTask: {
+          __typename: "UpdateTaskPayload",
+          task: {
+            ...task,
             estimate: 10,
             estimateType: "Hourly",
             flexibleEstimate: 20,
           },
         },
       },
-      result: {
-        data: {
-          __typename: "Mutation",
-          updateTask: {
-            __typename: "UpdateTaskPayload",
-            task: {
-              ...task,
-              estimate: 10,
-              estimateType: "Hourly",
-              flexibleEstimate: 20,
-            },
-          },
-        },
-      },
-    },
+    ),
   ];
 
   const comp = renderComponent(
@@ -66,7 +48,7 @@ test("Setting the estimate for a task", async () => {
     {
       route: "/",
       graphQLMocks,
-    }
+    },
   );
   const estimateButton = await comp.findByText("Add estimate", {
     exact: false,
@@ -134,7 +116,7 @@ test("Setting a fixed price estimate", async () => {
     {
       route: "/",
       graphQLMocks,
-    }
+    },
   );
 
   const estimateButton = await comp.findByText("Add estimate", {
@@ -210,7 +192,7 @@ test("Can switch from flexible estimate to strit", async () => {
     {
       route: "/",
       graphQLMocks,
-    }
+    },
   );
 
   const estimateButton = await comp.findByLabelText("Set estimate");
@@ -220,6 +202,5 @@ test("Can switch from flexible estimate to strit", async () => {
   await waitFor(() => {}); // wait for validations to finish!
   const save = comp.getByLabelText("Save Quote");
   fireEvent.click(save);
-  const label = await comp.findByText("10 hours", { exact: false });
-  expect(label).toBeInTheDocument();
+  await comp.findByText("10 hours", { exact: false });
 });

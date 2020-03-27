@@ -1,5 +1,5 @@
 import generate from "nanoid/generate";
-import { fireEvent, waitFor } from "@testing-library/react";
+import { fireEvent, waitForElementToBeRemoved } from "@testing-library/react";
 import VIEWER from "../graphql/queries/viewer";
 import {
   mockViewer,
@@ -42,23 +42,14 @@ test("Renders the manage view for a specialist", async () => {
     ],
   });
 
-  await app.findByText("This is a test task");
+  await app.findByText(/test task/i);
 });
 
 test("Renders a tutorial video if it's the first time viewing", async () => {
   const { findByText } = renderApp({
     route: "/manage/rec1234",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
-        },
-        result: {
-          data: {
-            viewer: generateType.user(),
-          },
-        },
-      },
+      mockViewer(generateType.user()),
       {
         request: {
           query: GET_ACTIVE_APPLICATION,
@@ -85,9 +76,7 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
     ],
   });
 
-  expect(
-    await findByText("tutorials.fixedProjects.heading"),
-  ).toBeInTheDocument();
+  await findByText("tutorials.fixedProjects.heading");
 });
 
 test("Does not render a tutorial video if the user has completed it", async () => {
@@ -223,7 +212,7 @@ test("The client can add a task", async () => {
 
   let viewer = generateType.user();
 
-  const { findByText, findByLabelText, getByTestId } = renderApp({
+  const app = renderApp({
     route: "/manage/rec1234",
     graphQLMocks: [
       {
@@ -308,11 +297,11 @@ test("The client can add a task", async () => {
     ],
   });
 
-  const createButton = await findByText("Add a project");
+  const createButton = await app.findByText("Add a project");
   fireEvent.click(createButton);
-  const name = getByTestId("nameField");
+  const name = app.getByTestId("nameField");
   fireEvent.change(name, { target: { value: "This is a new task" } });
-  const close = await findByLabelText("Close Drawer");
+  const close = app.getByLabelText("Close Drawer");
   fireEvent.click(close);
-  expect(await findByText("This is a new task")).toBeInTheDocument();
+  await app.findByText("This is a new task");
 });
