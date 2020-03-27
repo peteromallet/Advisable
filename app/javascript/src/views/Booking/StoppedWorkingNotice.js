@@ -1,6 +1,6 @@
 import React from "react";
 import gql from "graphql-tag";
-import { graphql } from "react-apollo";
+import { useMutation } from "react-apollo";
 import { Box, Text, Button } from "@advisable/donut";
 import Modal from "../../components/Modal";
 import Notice from "../../components/Notice";
@@ -16,9 +16,10 @@ export const RESUME_WORKING = gql`
   }
 `;
 
-const StoppedWorkingNotice = ({ firstName, application, resumeWorking }) => {
+export default function StoppedWorkingNotice({ firstName, application }) {
   const [modal, setModal] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [resumeWorking] = useMutation(RESUME_WORKING);
 
   const handleResume = async () => {
     setLoading(true);
@@ -71,8 +72,4 @@ const StoppedWorkingNotice = ({ firstName, application, resumeWorking }) => {
       </Notice>
     </>
   );
-};
-
-export default graphql(RESUME_WORKING, { name: "resumeWorking" })(
-  StoppedWorkingNotice
-);
+}

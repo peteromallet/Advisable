@@ -1,6 +1,6 @@
 module.exports = {
   verbose: true,
-  testTimeout: 10000,
+  testTimeout: 20000,
   roots: ["app/javascript/src", "donut/src"],
   testEnvironment: "jest-environment-jsdom-fifteen",
   setupFilesAfterEnv: ["<rootDir>/app/javascript/src/testHelpers/setup.js"],

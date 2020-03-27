@@ -24,10 +24,10 @@ const Messages = lazy(() => import("./views/Messages"));
 const FreelancerSearch = lazy(() => import("./views/FreelancerSearch"));
 const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
 const InterviewAvailability = lazy(() =>
-  import("./views/InterviewAvailability")
+  import("./views/InterviewAvailability"),
 );
 const FreelancerActiveApplication = lazy(() =>
-  import("./views/FreelancerActiveApplication")
+  import("./views/FreelancerActiveApplication"),
 );
 const RequestConsultation = lazy(() => import("./views/RequestConsultation"));
 const Consultation = lazy(() => import("./views/Consultation"));
@@ -36,78 +36,69 @@ const ApplicationRoutes = () => {
   return (
     <>
       <Header />
-      <Suspense fallback={<Loading />}>
-        <Switch>
-          <Route path="/clients/signup" component={ClientSignup} />
-          <AuthenticatedRoute exact path="/messages" component={Messages} />
-          <Route path="/freelancers/:id" component={FreelancerProfile} />
-          {/* Client routes */}
-          <Route
-            component={Applicant}
-            path="/projects/:projectID/applications/:applicationID"
-          />
-          <Route
-            path="/projects/:projectID/interviews/:interviewID/availability"
-            component={InterviewAvailability}
-          />
-          <Route path="/projects/:projectId/:status?" component={Project} />
-          <AuthenticatedRoute
-            clientOnly
-            path="/projects"
-            component={Projects}
-          />
-          <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
-          <AuthenticatedRoute
-            path="/book/:applicationId"
-            component={BookingSetup}
-          />
-          <AuthenticatedRoute
-            path="/manage/:applicationId"
-            component={Booking}
-          />
-          <Route
-            path="/request_consultation/:specialistId"
-            component={RequestConsultation}
-          />
-          <AuthenticatedRoute
-            path="/freelancer_search"
-            component={FreelancerSearch}
-          />
-          {/* Freelancer Routes */}
-          <Route path="/consultations/:id" component={Consultation} />
-          <AuthenticatedRoute
-            exact
-            specialistOnly
-            path="/applications"
-            component={Applications}
-          />
-          <AuthenticatedRoute
-            component={Proposal}
-            path={"/applications/:applicationId/proposal"}
-          />
-          <AuthenticatedRoute
-            exact
-            path="/clients"
-            component={FreelancerProjects}
-          />
-          <AuthenticatedRoute
-            path="/clients/:applicationId"
-            component={FreelancerActiveApplication}
-          />
-          <AuthenticatedRoute
-            specialistOnly
-            path="/profile"
-            component={UpdateProfile}
-          />
-          <Route exact path="/invites/:applicationId" component={JobListing} />
-          <Route
-            path="/invites/:applicationId/apply"
-            component={ApplicationFlow}
-          />
-          <AuthenticatedRoute path="/settings" component={Settings} />
-          <Route component={NotFound} />
-        </Switch>
-      </Suspense>
+      <Switch>
+        <Route path="/clients/signup" component={ClientSignup} />
+        <AuthenticatedRoute exact path="/messages" component={Messages} />
+        <Route path="/freelancers/:id" component={FreelancerProfile} />
+        {/* Client routes */}
+        <Route
+          component={Applicant}
+          path="/projects/:projectID/applications/:applicationID"
+        />
+        <Route
+          path="/projects/:projectID/interviews/:interviewID/availability"
+          component={InterviewAvailability}
+        />
+        <Route path="/projects/:projectId/:status?" component={Project} />
+        <AuthenticatedRoute clientOnly path="/projects" component={Projects} />
+        <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
+        <AuthenticatedRoute
+          path="/book/:applicationId"
+          component={BookingSetup}
+        />
+        <AuthenticatedRoute path="/manage/:applicationId" component={Booking} />
+        <Route
+          path="/request_consultation/:specialistId"
+          component={RequestConsultation}
+        />
+        <AuthenticatedRoute
+          path="/freelancer_search"
+          component={FreelancerSearch}
+        />
+        {/* Freelancer Routes */}
+        <Route path="/consultations/:id" component={Consultation} />
+        <AuthenticatedRoute
+          exact
+          specialistOnly
+          path="/applications"
+          component={Applications}
+        />
+        <AuthenticatedRoute
+          component={Proposal}
+          path={"/applications/:applicationId/proposal"}
+        />
+        <AuthenticatedRoute
+          exact
+          path="/clients"
+          component={FreelancerProjects}
+        />
+        <AuthenticatedRoute
+          path="/clients/:applicationId"
+          component={FreelancerActiveApplication}
+        />
+        <AuthenticatedRoute
+          specialistOnly
+          path="/profile"
+          component={UpdateProfile}
+        />
+        <Route exact path="/invites/:applicationId" component={JobListing} />
+        <Route
+          path="/invites/:applicationId/apply"
+          component={ApplicationFlow}
+        />
+        <AuthenticatedRoute path="/settings" component={Settings} />
+        <Route component={NotFound} />
+      </Switch>
     </>
   );
 };

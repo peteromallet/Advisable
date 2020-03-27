@@ -1,7 +1,6 @@
-import renderApp from "../../../testHelpers/renderApp";
-import { waitFor, fireEvent } from "@testing-library/react";
+import { renderRoute, waitFor, fireEvent } from "test-utils";
+import { mockViewer, mockQuery, mockMutation } from "apolloMocks";
 import generateTypes from "../../../__mocks__/graphqlFields";
-import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import { RESUME_WORKING } from "../StoppedWorkingNotice";
 
@@ -16,56 +15,31 @@ test("Client can resume working with specialist", async () => {
     status: "Stopped Working",
   });
 
-  const { getAllByLabelText, queryByText, findByLabelText } = renderApp({
+  const { getAllByLabelText, queryByText, findByLabelText } = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
+      mockViewer(user),
+      mockQuery(
+        GET_ACTIVE_APPLICATION,
+        { id: "rec1234" },
+        { viewer: user, application },
+      ),
+      mockMutation(
+        RESUME_WORKING,
+        {
+          application: application.airtableId,
+          projectType: application.projectType,
         },
-        result: {
-          data: {
-            viewer: user,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_ACTIVE_APPLICATION,
-          variables: {
-            id: "rec1234",
-          },
-        },
-        result: {
-          data: {
-            viewer: user,
-            application,
-          },
-        },
-      },
-      {
-        request: {
-          query: RESUME_WORKING,
-          variables: {
-            input: {
-              application: application.airtableId,
-              projectType: application.projectType,
+        {
+          startWorking: {
+            __typename: "StartWorkingPayload",
+            application: {
+              ...application,
+              status: "Working",
             },
           },
         },
-        result: {
-          data: {
-            __typename: "Mutation",
-            startWorking: {
-              __typename: "StartWorkingPayload",
-              application: {
-                ...application,
-                status: "Working",
-              },
-            },
-          },
-        },
-      },
+      ),
     ],
   });
 

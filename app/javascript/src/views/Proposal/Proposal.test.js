@@ -153,7 +153,7 @@ test("Project type step continues to the tasks step", async () => {
   const flexible = await findByTestId("flexible");
   fireEvent.click(flexible);
   const limit = getByLabelText(
-    "Set suggested monthly hour cap (to 200-hour max)"
+    "Set suggested monthly hour cap (to 200-hour max)",
   );
   fireEvent.change(limit, { target: { value: "155" } });
   const accept = getByLabelText("I agree", { exact: false });

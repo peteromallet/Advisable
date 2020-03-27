@@ -95,7 +95,4 @@ const AddressFields = ({ label, name, formik, data }) => {
   );
 };
 
-export default compose(
-  connect,
-  graphql(GET_DATA)
-)(AddressFields);
+export default compose(connect, graphql(GET_DATA))(AddressFields);

@@ -1,11 +1,6 @@
-import { fireEvent, waitForElementToBeRemoved } from "@testing-library/react";
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute, fireEvent, waitForElementToBeRemoved } from "test-utils";
 import generateTypes from "../../../__mocks__/graphqlFields";
-import {
-  mockViewer,
-  mockQuery,
-  mockMutation,
-} from "../../../testHelpers/apolloMocks";
+import { mockViewer, mockQuery, mockMutation } from "apolloMocks";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import UPDATE_PROJECT_TYPE from "../ProjectTypeModal/setProjectType";
 
@@ -49,7 +44,7 @@ test("User can change the project type", async () => {
     ),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks,
   });

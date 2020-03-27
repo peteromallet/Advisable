@@ -1,6 +1,7 @@
 import { get } from "lodash";
 import gql from "graphql-tag";
 import { useState } from "react";
+import { useApolloClient } from "react-apollo";
 import useViewer from "./useViewer";
 
 const COMPLETE_TUTORIAL = gql`
@@ -22,17 +23,11 @@ const COMPLETE_TUTORIAL = gql`
 
 const useTutorial = (name, opts = {}) => {
   const viewer = useViewer();
+  const client = useApolloClient();
   const isComplete = viewer.completedTutorials.indexOf(name) > -1;
-  const autoStart = get(opts, "autoStart", false);
+  const autoStart = opts.autoStart || false;
   const initialActive = autoStart ? !isComplete : false;
   const [isActive, setActive] = useState(initialActive);
-  const client = opts.client;
-
-  // Until react apollo has production ready support for hooks we need to pass
-  // the client in to the useTutorial hook.
-  if (!client) {
-    throw "useTutorial is missing the 'client' option";
-  }
 
   const start = () => setActive(true);
   const stop = () => setActive(false);

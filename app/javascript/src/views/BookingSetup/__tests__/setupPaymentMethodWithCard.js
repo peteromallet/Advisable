@@ -1,7 +1,6 @@
-import renderApp from "../../../testHelpers/renderApp";
-import { fireEvent } from "@testing-library/react";
+import { renderRoute, fireEvent, waitForElementToBeRemoved } from "test-utils";
+import { mockViewer, mockQuery, mockMutation } from "apolloMocks";
 import generateTypes from "../../../__mocks__/graphqlFields";
-import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../../Booking/getActiveApplication";
 import GET_SETUP_DATA from "../getSetupData";
 import { GET_PAYMENT_METHOD } from "../CardDetails";
@@ -9,8 +8,6 @@ import { GET_DATA } from "../../../components/InvoiceSettingsFields";
 import UPDATE_PROJECT_PAYMENT_METHOD from "../updateProjectPaymentMethod";
 import START_WORKING from "../startWorking";
 import graphqlFields from "../../../__mocks__/graphqlFields";
-
-jest.setTimeout(10000);
 
 test("User can complete booking setup", async () => {
   let user = generateTypes.user({
@@ -34,133 +31,74 @@ test("User can complete booking setup", async () => {
     specialist,
   });
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/book/rec1234",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
-        },
-        result: {
-          data: {
-            viewer: user,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_SETUP_DATA,
-          variables: {
-            id: "rec1234",
-          },
-        },
-        result: {
-          data: {
-            viewer: user,
-            application,
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_PROJECT_PAYMENT_METHOD,
-          variables: {
-            input: {
-              paymentMethod: "Card",
+      mockViewer(user),
+      mockQuery(
+        GET_SETUP_DATA,
+        { id: "rec1234" },
+        { viewer: user, application },
+      ),
+      mockMutation(
+        UPDATE_PROJECT_PAYMENT_METHOD,
+        { paymentMethod: "Card" },
+        {
+          updateProjectPaymentMethod: {
+            __typename: "UpdateProjectPaymentMethodPayload",
+            user: {
+              ...user,
+              projectPaymentMethod: "Card",
             },
           },
         },
-        result: {
-          data: {
-            __typename: "Mutation",
-            updateProjectPaymentMethod: {
-              __typename: "UpdateProjectPaymentMethodPayload",
-              user: {
-                ...user,
-                projectPaymentMethod: "Card",
-              },
+      ),
+      mockQuery(GET_PAYMENT_METHOD, {}, { viewer: user }),
+      mockQuery(GET_DATA, {}, { countries: [graphqlFields.country()] }),
+      mockMutation(
+        UPDATE_PROJECT_PAYMENT_METHOD,
+        {
+          invoiceSettings: {
+            name: "Test Account",
+            companyName: "Test Corp",
+            billingEmail: "test@test.com",
+            address: {
+              line1: "Bacon Street",
+              country: "IE",
+              city: "Test City",
+              state: "Test County",
+              postcode: "12345",
+            },
+            vatNumber: "12345",
+          },
+        },
+        {
+          updateProjectPaymentMethod: {
+            __typename: "UpdateProjectPaymentMethodPayload",
+            user: {
+              ...user,
+              projectPaymentMethod: "Card",
             },
           },
         },
-      },
-      {
-        request: {
-          query: GET_PAYMENT_METHOD,
+      ),
+      mockMutation(
+        UPDATE_PROJECT_PAYMENT_METHOD,
+        {
+          acceptTerms: true,
+          exceptionalTerms: "",
         },
-        result: {
-          data: {
-            viewer: user,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_DATA,
-        },
-        result: {
-          data: {
-            countries: [graphqlFields.country()],
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_PROJECT_PAYMENT_METHOD,
-          variables: {
-            input: {
-              invoiceSettings: {
-                name: "Test Account",
-                companyName: "Test Corp",
-                billingEmail: "test@test.com",
-                address: {
-                  line1: "Bacon Street",
-                  country: "IE",
-                  city: "Test City",
-                  state: "Test County",
-                  postcode: "12345",
-                },
-                vatNumber: "12345",
-              },
+        {
+          updateProjectPaymentMethod: {
+            __typename: "UpdateProjectPaymentMethodPayload",
+            user: {
+              ...user,
+              paymentsSetup: true,
+              projectPaymentMethod: "Card",
             },
           },
         },
-        result: {
-          data: {
-            __typename: "Mutation",
-            updateProjectPaymentMethod: {
-              __typename: "UpdateProjectPaymentMethodPayload",
-              user: {
-                ...user,
-                projectPaymentMethod: "Card",
-              },
-            },
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_PROJECT_PAYMENT_METHOD,
-          variables: {
-            input: {
-              acceptTerms: true,
-              exceptionalTerms: "",
-            },
-          },
-        },
-        result: {
-          data: {
-            __typename: "Mutation",
-            updateProjectPaymentMethod: {
-              __typename: "UpdateProjectPaymentMethodPayload",
-              user: {
-                ...user,
-                paymentsSetup: true,
-                projectPaymentMethod: "Card",
-              },
-            },
-          },
-        },
-      },
+      ),
       {
         request: {
           query: START_WORKING,
@@ -208,7 +146,7 @@ test("User can complete booking setup", async () => {
   });
 
   await app.findByText(
-    "It look’s like you haven’t added a project payment method yet"
+    "It look’s like you haven’t added a project payment method yet",
   );
   let card = await app.getByLabelText("Payments with Card", { exact: false });
   fireEvent.click(card);
@@ -250,7 +188,7 @@ test("User can complete booking setup", async () => {
   fireEvent.click(checkbox);
   button = await app.findByLabelText("Continue");
   fireEvent.click(button);
+  await waitForElementToBeRemoved(button);
 
-  const tab = await app.findByText("Active Projects");
-  expect(tab).toBeInTheDocument();
+  app.getByText("Active Projects");
 });
