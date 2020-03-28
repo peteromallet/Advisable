@@ -1,4 +1,4 @@
-import generate from "nanoid/generate";
+import { customAlphabet } from "nanoid";
 import {
   renderRoute,
   fireEvent,
@@ -15,7 +15,7 @@ import {
 } from "../graphql/mutations/tasks";
 import SET_PROJECT_TYPE from "../views/Booking/ProjectTypeModal/setProjectType";
 
-jest.mock("nanoid/generate");
+jest.mock("nanoid");
 
 test("Renders the manage view for a specialist", async () => {
   let viewer = generateType.user();
@@ -197,7 +197,7 @@ test("The client can change the project type", async () => {
 });
 
 test("The client can add a task", async () => {
-  generate.mockReturnValue("abc");
+  customAlphabet.mockReturnValue("abc");
 
   const user = generateType.user();
   const project = generateType.project({ user });

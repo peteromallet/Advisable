@@ -4,8 +4,6 @@ import generateTypes from "../../__mocks__/graphqlFields";
 import GET_APPLICATION from "./fetchApplication";
 import UPDATE_APPLICATION from "./updateApplication";
 
-jest.mock("nanoid/generate");
-
 test("Rate step continues to the project type step", async () => {
   const user = generateTypes.user({ companyName: "Test Inc" });
   const project = generateTypes.project({ user, primarySkill: "Testing" });

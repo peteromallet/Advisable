@@ -1,5 +1,5 @@
 import renderApp from "../../testHelpers/renderApp";
-import generate from "nanoid/generate";
+import { customAlphabet } from "nanoid";
 import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
@@ -13,10 +13,10 @@ import {
   updateTaskDescription as UPDATE_TASK_DESCRIPTION,
 } from "../../graphql/mutations/tasks";
 
-jest.mock("nanoid/generate");
+jest.mock("nanoid");
 
 test("Freelancer can create a task", async () => {
-  generate.mockReturnValue("abc");
+  customAlphabet.mockReturnValue("abc");
 
   const user = generateTypes.user();
   const project = generateTypes.project({ user });
@@ -289,7 +289,7 @@ test("Freelancer can mark a task as complete", async () => {
   const completeButton = getByLabelText("Complete");
   fireEvent.click(completeButton);
   const notice = await findByText(
-    "tasks.stageDescriptions.specialist.submitted"
+    "tasks.stageDescriptions.specialist.submitted",
   );
   expect(notice).toBeInTheDocument();
 });
