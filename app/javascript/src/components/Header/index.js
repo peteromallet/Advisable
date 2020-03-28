@@ -10,7 +10,7 @@ import FreelancerNavigation from "./FreelancerNavigation";
 import useLogoURL from "../ApplicationProvider/useLogoURL";
 import useViewer from "../../hooks/useViewer";
 
-const Header = () => {
+const Header = (props) => {
   const viewer = useViewer();
   const isMobile = useMobile();
   const [navOpen, setNavOpen] = React.useState(false);

@@ -105,7 +105,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --maxWorkers=4",
     "storybook": "start-storybook -p 6006 -c donut/.storybook",
     "build-storybook": "build-storybook -c donut/.storybook"
   }

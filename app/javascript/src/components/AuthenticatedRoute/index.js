@@ -12,7 +12,6 @@ const AuthenticatedRoute = ({
   component: Component,
   specialistOnly = false,
   clientOnly = false,
-  freelancerRoute,
   ...rest
 }) => {
   const viewer = useViewer();
@@ -30,7 +29,7 @@ const AuthenticatedRoute = ({
   return (
     <Route
       {...rest}
-      render={props => {
+      render={(props) => {
         // If there is no user then clear out any token and redirect immediately
         if (!viewer) {
           window.sessionStorage.removeItem("authToken");

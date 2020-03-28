@@ -19,9 +19,13 @@ let ApplicationProvider = ({ children }) => {
     setLogoURL,
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <ApplicationContext.Provider value={context}>
-      <DonutProvider>{loading ? <Loading /> : children}</DonutProvider>
+      <DonutProvider>{children}</DonutProvider>
     </ApplicationContext.Provider>
   );
 };
