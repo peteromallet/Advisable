@@ -3,11 +3,11 @@ import { I18nextProvider } from "react-i18next";
 import { MemoryRouter } from "react-router-dom";
 import { render } from "@testing-library/react";
 import { MockedProvider } from "@apollo/react-testing";
-import i18n from "./i18next";
 import {
   InMemoryCache,
   IntrospectionFragmentMatcher,
 } from "apollo-cache-inmemory";
+import i18n from "./i18next";
 import App from "../App";
 import introspectionQueryResultData from "../fragmentTypes.json";
 
