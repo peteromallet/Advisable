@@ -22,7 +22,7 @@ function ApplicationFlowContainer(props) {
   if (query.loading) return <Loading />;
 
   if (query.error) {
-    const code = query.error?.graphQLErrors?.[0].extensions.code;
+    const code = query.error?.graphQLErrors?.[0]?.extensions.code;
     if (code === "recordNotFound") {
       return <NotFound />;
     } else {

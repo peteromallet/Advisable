@@ -98,13 +98,17 @@ test("Freelancer can toggle the task trial via the task menu", async () => {
     graphQLMocks: API_MOCKS,
   });
 
-  const openMenu = await findByLabelText("Open task actions menu");
+  const openMenu = await findByLabelText(
+    "Open task actions menu",
+    {},
+    { timeout: 5000 },
+  );
   fireEvent.click(openMenu);
   const menu = await findByLabelText("Task actions");
   const toggle = within(menu).getByText("actions.markTaskAsTrial");
   fireEvent.click(toggle);
   const notice = await findByText(
-    "This task has been offered as a guaranteed trial"
+    "This task has been offered as a guaranteed trial",
   );
   expect(notice).toBeInTheDocument();
 });

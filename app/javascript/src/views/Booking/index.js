@@ -8,7 +8,7 @@ import Booking from "./Booking";
 
 export default function BookingContainer({ match }) {
   const { applicationId } = useParams();
-  const { data, loading } = useQuery(GET_ACTIVE_APPLICATION, {
+  const { data, loading, error } = useQuery(GET_ACTIVE_APPLICATION, {
     variables: {
       id: applicationId,
     },

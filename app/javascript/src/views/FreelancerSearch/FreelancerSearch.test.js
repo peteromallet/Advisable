@@ -89,16 +89,7 @@ test("User can search for freelancers and request consultations with them", asyn
         },
       },
     ),
-    {
-      request: {
-        query: USER_AVAILABILITY,
-      },
-      result: {
-        data: {
-          viewer: user,
-        },
-      },
-    },
+    mockQuery(USER_AVAILABILITY, {}, { viewer: user }),
     {
       request: {
         query: UPDATE_AVAILABILITY,
@@ -146,7 +137,11 @@ test("User can search for freelancers and request consultations with them", asyn
     graphQLMocks,
   });
 
-  const skillInput = await app.findByPlaceholderText("Search for a skill");
+  const skillInput = await app.findByPlaceholderText(
+    "Search for a skill",
+    {},
+    { timeout: 5000 },
+  );
   fireEvent.click(skillInput);
   fireEvent.keyDown(skillInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillInput, { key: "Enter" });

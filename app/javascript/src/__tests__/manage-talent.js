@@ -6,11 +6,7 @@ import {
   waitForElementToBeRemoved,
 } from "test-utils";
 import VIEWER from "../graphql/queries/viewer";
-import {
-  mockViewer,
-  mockQuery,
-  mockMutation,
-} from "../testHelpers/apolloMocks";
+import { mockViewer, mockQuery, mockMutation } from "apolloMocks";
 import generateType from "../__mocks__/graphqlFields";
 import GET_ACTIVE_APPLICATION from "../views/Booking/getActiveApplication";
 import {
@@ -46,7 +42,7 @@ test("Renders the manage view for a specialist", async () => {
     ],
   });
 
-  await app.findByText(/test task/i);
+  await app.findByText(/test task/i, {}, { timeout: 5000 });
 });
 
 test("Renders a tutorial video if it's the first time viewing", async () => {

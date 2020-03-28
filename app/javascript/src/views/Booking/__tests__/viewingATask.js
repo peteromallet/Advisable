@@ -1,11 +1,8 @@
-import renderApp from "../../../testHelpers/renderApp";
-import { fireEvent } from "@testing-library/react";
+import { renderRoute, fireEvent } from "test-utils";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import FETCH_TASK from "../../../graphql/queries/taskDetails";
-
-jest.setTimeout(10000);
 
 test("User can view an active task", async () => {
   let user = generateTypes.user();
@@ -74,14 +71,13 @@ test("User can view an active task", async () => {
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks,
   });
 
-  const taskName = await app.findByText(task.name);
+  const taskName = await app.findByText(task.name, {}, { timeout: 5000 });
   fireEvent.click(taskName);
   const nameInput = await app.findByPlaceholderText("Add a task name...");
-
   expect(nameInput).toBeInTheDocument();
 });

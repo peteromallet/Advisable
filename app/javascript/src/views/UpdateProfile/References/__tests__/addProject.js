@@ -7,8 +7,6 @@ import GET_PROJECTS from "../previousProjects";
 import FETCH_DATA from "../../../../components/PreviousProjectForm/getData";
 import CREATE_PROJECT from "../../../../components/PreviousProjectForm/createOffPlatformProject";
 
-jest.setTimeout(10000);
-
 test("Adds a previous project", async () => {
   const specialist = generateTypes.specialist();
   const skill = generateTypes.skill();
@@ -97,7 +95,11 @@ test("Adds a previous project", async () => {
     graphQLMocks: apiMocks,
   });
 
-  const button = await findByLabelText("Add a previous project");
+  const button = await findByLabelText(
+    "Add a previous project",
+    {},
+    { timeout: 5000 },
+  );
   fireEvent.click(button);
   const clientName = await findByLabelText("Client Name");
   fireEvent.change(clientName, { target: { value: "Test inc" } });

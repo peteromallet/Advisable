@@ -98,6 +98,7 @@
     "eslint-plugin-react-hooks": "^2.5.1",
     "jest": "^25.2.1",
     "jest-environment-jsdom-fifteen": "^1.0.2",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "jest-transform-graphql": "^2.1.0",
     "prettier": "^2.0.2",
     "waait": "^1.0.5",

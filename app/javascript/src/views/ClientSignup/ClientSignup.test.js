@@ -92,7 +92,11 @@ test("Criteria step", async () => {
     graphQLMocks,
   });
 
-  const skillsInput = await app.findByPlaceholderText("Search for a skill");
+  const skillsInput = await app.findByPlaceholderText(
+    "Search for a skill",
+    {},
+    { timeout: 5000 },
+  );
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
