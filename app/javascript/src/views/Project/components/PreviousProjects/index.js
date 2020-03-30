@@ -9,7 +9,7 @@ import ProjectSkeleton from "./ProjectSkeleton";
 import FETCH_PROJECTS from "./fetchProjects.graphql";
 import PreviousProjectsModal from "../../../../components/PreviousProjectsModal";
 
-const PreviousProjects = ({ project }) => {
+const PreviousProjects = ({ project, ...props }) => {
   const { data, loading } = useQuery(FETCH_PROJECTS, {
     variables: {
       applicationId: props.applicationId,
