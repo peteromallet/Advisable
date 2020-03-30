@@ -47,7 +47,6 @@ gem 'airrecord', '~> 1.0.2'
 # For graphQL endpoint
 gem 'graphql'
 gem 'parser'
-gem 'rollbar'
 gem 'stripe', '~> 5.14'
 gem 'attr_encrypted', '~> 3.1.0'
 

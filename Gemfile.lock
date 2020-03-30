@@ -260,7 +260,6 @@ GEM
       ffi (~> 1.0)
     redis (4.1.3)
     regexp_parser (1.6.0)
-    rollbar (2.23.2)
     rspec-core (3.9.1)
       rspec-support (~> 3.9.1)
     rspec-expectations (3.9.0)
@@ -390,7 +389,6 @@ DEPENDENCIES
   pundit
   rack-attack
   rails (~> 6.0.2, >= 6.0.2.1)
-  rollbar
   rspec-rails (~> 3.9.0)
   rspec-retry
   sass-rails (>= 6)
