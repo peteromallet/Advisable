@@ -1,12 +1,12 @@
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
+import { mockQuery } from "apolloMocks";
 import renderApp from "../../../testHelpers/renderApp";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_PROJECT from "../fetchProject";
 import GET_PAYMENT_INTENT from "../Steps/Deposit/getPaymentIntent";
 import { GET_DEPOSIT } from "../Steps/Deposit/PaymentPending";
-
-afterEach(cleanup);
+import getApplications from "../../Project/fetchProject";
 
 test("User can complete deposit step", async () => {
   let user = generateTypes.user();
@@ -18,7 +18,7 @@ test("User can complete deposit step", async () => {
     acceptedTerms: true,
   });
 
-  const { debug, findByText, findByLabelText } = renderApp({
+  const { findByText, findByLabelText } = renderApp({
     route: "/project_setup/rec1234/deposit",
     graphQLMocks: [
       {
@@ -83,6 +83,10 @@ test("User can complete deposit step", async () => {
   fireEvent.click(complete);
   let text = await findByText("Please wait while", { exact: false });
   expect(text).toBeInTheDocument();
-  let confirmText = await findByText("Setting up your project...");
+  let confirmText = await findByText(
+    "Setting up your project...",
+    {},
+    { timeout: 4000 },
+  );
   expect(confirmText).toBeInTheDocument();
 });

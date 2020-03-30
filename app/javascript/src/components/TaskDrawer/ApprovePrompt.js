@@ -1,6 +1,6 @@
 // Displays the prompt for when a client approves a task.
 import React from "react";
-import { graphql } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
 import Button from "../Button";
 import ButtonGroup from "../ButtonGroup";
@@ -8,8 +8,9 @@ import Padding from "../Spacing/Padding";
 import { Confirmation, ConfirmationContainer } from "./styles";
 import APPROVE_TASK from "./approveTask.graphql";
 
-const ApprovePrompt = ({ task, onClose, onApprove, approveTask }) => {
+const ApprovePrompt = ({ task, onClose, onApprove }) => {
   const [loading, setLoading] = React.useState(false);
+  const [approveTask] = useMutation(APPROVE_TASK);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -50,4 +51,4 @@ const ApprovePrompt = ({ task, onClose, onApprove, approveTask }) => {
   );
 };
 
-export default graphql(APPROVE_TASK, { name: "approveTask" })(ApprovePrompt);
+export default ApprovePrompt;

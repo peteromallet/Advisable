@@ -1,13 +1,17 @@
 import React from "react";
 import get from "lodash/get";
 import countBy from "lodash/countBy";
-import { Query } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { NavLink } from "react-router-dom";
 import Icon from "src/components/Icon";
 import { StatusList, Count, LoadingItem } from "./styles";
 import FETCH_PROJECT from "src/views/Project/graphql/fetchProject.graphql";
 
-const ProjectStatuses = ({ match, data, loading, onNavigate }) => {
+const ProjectStatuses = ({ match, onNavigate }) => {
+  const { data, loading, error } = useQuery(FETCH_PROJECT, {
+    variables: { id: match.params.projectID },
+  });
+
   const applications = get(data, "project.applications", []);
   const counts = countBy(applications, "status");
   const { projectID } = match.params;
@@ -28,7 +32,10 @@ const ProjectStatuses = ({ match, data, loading, onNavigate }) => {
             Applied
             <Count>{counts["Applied"] || 0}</Count>
           </NavLink>
-          <NavLink to={`/projects/${projectID}/introduced`} onClick={onNavigate}>
+          <NavLink
+            to={`/projects/${projectID}/introduced`}
+            onClick={onNavigate}
+          >
             <Icon icon="message-circle" />
             Introduced
             <Count>{counts["Application Accepted"] || 0}</Count>
@@ -54,8 +61,4 @@ const ProjectStatuses = ({ match, data, loading, onNavigate }) => {
   );
 };
 
-export default props => (
-  <Query query={FETCH_PROJECT} variables={{ id: props.match.params.projectID }}>
-    {query => <ProjectStatuses {...props} {...query} />}
-  </Query>
-);
+export default ProjectStatuses;

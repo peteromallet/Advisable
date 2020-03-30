@@ -1,5 +1,5 @@
 import React from "react";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import { Card, Text, RoundedButton } from "@advisable/donut";
 import DECLINE from "./declineConsultation";

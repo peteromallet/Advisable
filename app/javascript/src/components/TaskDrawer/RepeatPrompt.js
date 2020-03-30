@@ -1,7 +1,7 @@
 // Renders the prompt to repeat a task.
 import React from "react";
 import moment from "moment";
-import { graphql } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
 import Button from "../Button";
 import ButtonGroup from "../ButtonGroup";
@@ -9,8 +9,9 @@ import Padding from "../Spacing/Padding";
 import CREATE_TASK from "../../graphql/mutations/createTask";
 import { Confirmation, ConfirmationContainer } from "./styles";
 
-const RepeatPrompt = ({ task, onRepeat, onClose, createTask }) => {
+const RepeatPrompt = ({ task, onRepeat, onClose }) => {
   const [loading, setLoading] = React.useState(false);
+  const [createTask] = useMutation(CREATE_TASK);
 
   const handleRepeat = async () => {
     setLoading(true);
@@ -56,4 +57,4 @@ const RepeatPrompt = ({ task, onRepeat, onClose, createTask }) => {
   );
 };
 
-export default graphql(CREATE_TASK, { name: "createTask" })(RepeatPrompt);
+export default RepeatPrompt;

@@ -82,7 +82,7 @@ function ProjectCard({ specialistId, project }) {
         </Text>
         <Box mt="l" mb="l">
           {project.skills.map(skill => (
-            <Tag mr="xxs" mb="xxs">
+            <Tag key={skill.id} mr="xxs" mb="xxs">
               {skill.name}
             </Tag>
           ))}
@@ -93,14 +93,17 @@ function ProjectCard({ specialistId, project }) {
               specialistId={specialistId}
               projectId={project.id}
             />
+            <Link
+              to={`/request_consultation/${specialistId}`}
+            >
+
             <RoundedButton
               size="l"
-              as={Link}
-              to={`/request_consultation/${specialistId}`}
               prefix={<Icon icon="message-circle" />}
             >
               Request Consultation
             </RoundedButton>
+            </Link>
           </Box>
         </Modal>
         <DialogDisclosure as={RoundedButton} {...modal} variant="subtle">

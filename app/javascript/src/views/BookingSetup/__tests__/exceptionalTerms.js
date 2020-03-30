@@ -1,11 +1,10 @@
 import renderApp from "../../../testHelpers/renderApp";
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_SETUP_DATA from "../getSetupData";
 import UPDATE_PROJECT_PAYMENT_METHOD from "../updateProjectPaymentMethod";
 
-afterEach(cleanup);
 jest.setTimeout(10000);
 
 test("User can request custom terms", async () => {

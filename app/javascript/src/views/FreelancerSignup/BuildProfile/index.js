@@ -3,7 +3,7 @@ import { get } from "lodash";
 import gql from "graphql-tag";
 import { Formik, Form, Field } from "formik";
 import { Button, Text, Box, Checkbox } from "@advisable/donut";
-import { useQuery, useMutation } from "react-apollo";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import Select from "../../../components/Select";
 import Avatar from "../../../components/Avatar";
 import TextField from "../../../components/TextField";
@@ -25,10 +25,10 @@ const BuildProfile = ({ history, specialist }) => {
 
   const countriesQuery = useQuery(GET_COUNTRIES);
   const [profilePhoto, setProfilePhoto] = React.useState(
-    get(specialist, "avatar")
+    get(specialist, "avatar"),
   );
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     const { data, errors } = await updateProfile({
       variables: {
         input: values,
@@ -56,7 +56,7 @@ const BuildProfile = ({ history, specialist }) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <Text as="h2" size="xxxl" weight="semibold" color="neutral.9" mb="s">
             Build your profile
@@ -71,13 +71,13 @@ const BuildProfile = ({ history, specialist }) => {
               Proile photo
             </Text>
             <FileUpload
-              onChange={blob => {
+              onChange={(blob) => {
                 formik.setFieldValue("avatar", blob.signed_id);
               }}
-              preview={file => {
+              preview={(file) => {
                 if (file) {
                   const reader = new FileReader();
-                  reader.onload = e => setProfilePhoto(e.target.result);
+                  reader.onload = (e) => setProfilePhoto(e.target.result);
                   reader.readAsDataURL(file);
                 }
                 return (

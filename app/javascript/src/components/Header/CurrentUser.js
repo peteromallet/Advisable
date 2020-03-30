@@ -17,19 +17,9 @@ const CurrentUser = ({ user, onLogout }) => {
   let isClient = get(viewer, "__typename") === "User";
 
   React.useEffect(() => {
-    if (!window.Rollbar) return;
+    if (!Sentry) return;
     if (user) {
-      Rollbar.configure({
-        payload: {
-          environment: process.env.ROLLBAR_ENV,
-          person: {
-            id: user.airtableId,
-            email: user.email,
-          },
-        },
-      });
-
-      Sentry.configureScope(scope => {
+      Sentry.configureScope((scope) => {
         scope.setUser({
           id: user.id,
           email: user.email,
@@ -37,13 +27,7 @@ const CurrentUser = ({ user, onLogout }) => {
         });
       });
     } else {
-      Rollbar.configure({
-        payload: {
-          environment: process.env.ROLLBAR_ENV,
-        },
-      });
-
-      Sentry.configureScope(scope => {
+      Sentry.configureScope((scope) => {
         scope.setUser(null);
       });
     }

@@ -20,6 +20,7 @@ describe 'Submitting a proposal' do
     find(:label, text: 'I agree to follow these payment terms').click
     click_on 'Continue'
     click_on 'Add a task'
+    sleep 20
     fill_in 'name', with: 'This is a task'
     click_on 'Due Date'
     click_on 'Next Month'

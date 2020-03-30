@@ -1,12 +1,10 @@
-import { fireEvent, cleanup, within } from "@testing-library/react";
+import { fireEvent, within } from "@testing-library/react";
 import renderApp from "../../../testHelpers/renderApp";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_APPLICATION from "../fetchApplication";
 import GET_TASK from "../../../graphql/queries/taskDetails";
 import { UPDATE_TASK } from "../../../components/TaskDrawer/MarkAsTrial";
-
-afterEach(cleanup);
 
 test("Freelancer can toggle the task trial via the task menu", async () => {
   const specialist = generateTypes.specialist();
@@ -100,13 +98,17 @@ test("Freelancer can toggle the task trial via the task menu", async () => {
     graphQLMocks: API_MOCKS,
   });
 
-  const openMenu = await findByLabelText("Open task actions menu");
+  const openMenu = await findByLabelText(
+    "Open task actions menu",
+    {},
+    { timeout: 5000 },
+  );
   fireEvent.click(openMenu);
   const menu = await findByLabelText("Task actions");
   const toggle = within(menu).getByText("actions.markTaskAsTrial");
   fireEvent.click(toggle);
   const notice = await findByText(
-    "This task has been offered as a guaranteed trial"
+    "This task has been offered as a guaranteed trial",
   );
   expect(notice).toBeInTheDocument();
 });

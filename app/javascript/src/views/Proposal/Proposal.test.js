@@ -1,15 +1,8 @@
-import generate from "nanoid/generate";
-import wait from "waait";
-import { fireEvent, cleanup } from "@testing-library/react";
-import renderApp from "../../testHelpers/renderApp";
+import { fireEvent, renderRoute, waitForElementToBeRemoved } from "test-utils";
+import { mockViewer, mockQuery, mockMutation } from "apolloMocks";
 import generateTypes from "../../__mocks__/graphqlFields";
-import VIEWER from "../../graphql/queries/viewer";
-import { createTask as CREATE_TASK } from "../../graphql/mutations/tasks";
 import GET_APPLICATION from "./fetchApplication";
 import UPDATE_APPLICATION from "./updateApplication";
-
-jest.mock("nanoid/generate");
-afterEach(cleanup);
 
 test("Rate step continues to the project type step", async () => {
   const user = generateTypes.user({ companyName: "Test Inc" });
@@ -24,65 +17,38 @@ test("Rate step continues to the project type step", async () => {
     specialist,
   });
 
-  const { findByText, getByLabelText } = renderApp({
+  const { findByText, getByLabelText } = renderRoute({
     route: "/applications/rec123/proposal",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
-        },
-        result: {
-          data: {
-            viewer: specialist,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_APPLICATION,
-          variables: {
-            id: "rec123",
-          },
-        },
-        result: {
-          data: {
-            application,
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_APPLICATION,
-          variables: {
-            input: {
-              id: "rec123",
-              rate: 75,
+      mockViewer(specialist),
+      mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
+      mockMutation(
+        UPDATE_APPLICATION,
+        { id: "rec123", rate: 75 },
+        {
+          updateApplication: {
+            __typename: "UpdateApplicationPayload",
+            application: {
+              ...application,
+              rate: "75",
             },
+            errors: null,
           },
         },
-        result: {
-          data: {
-            updateApplication: {
-              __typename: "UpdateApplicationPayload",
-              application: {
-                ...application,
-                rate: "75",
-              },
-              errors: null,
-            },
-          },
-        },
-      },
+      ),
     ],
   });
 
-  await findByText('Proposal for "Testing" with Test Inc');
+  await findByText(
+    'Proposal for "Testing" with Test Inc',
+    {},
+    { timeout: 5000 },
+  );
   const rate = getByLabelText("Hourly Rate");
   fireEvent.change(rate, { target: { value: "75" } });
-  let button = getByLabelText("Continue");
+  const button = getByLabelText("Continue");
   fireEvent.click(button);
-  const flexible = await findByText("Project Type");
-  expect(flexible).toBeInTheDocument();
+  await waitForElementToBeRemoved(button);
 });
 
 test("Project type step continues to the tasks step", async () => {
@@ -99,57 +65,30 @@ test("Project type step continues to the tasks step", async () => {
     specialist,
   });
 
-  const { findByText, findByTestId, getByLabelText } = renderApp({
+  const { findByText, findByTestId, getByLabelText } = renderRoute({
     route: "/applications/rec123/proposal/type",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
+      mockViewer(specialist),
+      mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
+      mockMutation(
+        UPDATE_APPLICATION,
+        {
+          id: "rec123",
+          projectType: "Flexible",
+          monthlyLimit: 155,
         },
-        result: {
-          data: {
-            viewer: specialist,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_APPLICATION,
-          variables: {
-            id: "rec123",
-          },
-        },
-        result: {
-          data: {
-            application,
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_APPLICATION,
-          variables: {
-            input: {
-              id: "rec123",
+        {
+          updateApplication: {
+            __typename: "UpdateApplicationPayload",
+            application: {
+              ...application,
               projectType: "Flexible",
               monthlyLimit: 155,
             },
+            errors: null,
           },
         },
-        result: {
-          data: {
-            updateApplication: {
-              __typename: "UpdateApplicationPayload",
-              application: {
-                ...application,
-                projectType: "Flexible",
-                monthlyLimit: 155,
-              },
-              errors: null,
-            },
-          },
-        },
-      },
+      ),
     ],
   });
 
@@ -157,7 +96,7 @@ test("Project type step continues to the tasks step", async () => {
   const flexible = await findByTestId("flexible");
   fireEvent.click(flexible);
   const limit = getByLabelText(
-    "Set suggested monthly hour cap (to 200-hour max)"
+    "Set suggested monthly hour cap (to 200-hour max)",
   );
   fireEvent.change(limit, { target: { value: "155" } });
   const accept = getByLabelText("I agree", { exact: false });

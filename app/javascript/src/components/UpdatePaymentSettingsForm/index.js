@@ -1,6 +1,6 @@
 import React from "react";
-import { get, flowRight as compose } from "lodash";
-import { graphql } from "react-apollo";
+import { get } from "lodash";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import { Button, Box, Text } from "@advisable/donut";
 import Select from "../Select";
@@ -10,11 +10,12 @@ import validationSchema from "./validationSchema";
 import { GET_PAYMENT_SETTINGS, UPDATE_PAYMENT_SETTINGS } from "./queries";
 
 const UpdatePaymentSettingsForm = ({
-  data,
   buttonLabel = "Save Changes",
-  updatePaymentSettings,
   onSuccess,
 }) => {
+  const { data, loading } = useQuery(GET_PAYMENT_SETTINGS);
+  const [updatePaymentSettings] = useMutation(UPDATE_PAYMENT_SETTINGS);
+
   const handleSubmit = async (values, formikBag) => {
     await updatePaymentSettings({
       variables: { input: values },
@@ -44,12 +45,12 @@ const UpdatePaymentSettingsForm = ({
     },
   };
 
-  let currencies = get(data, "currencies", []).map(currency => ({
+  let currencies = get(data, "currencies", []).map((currency) => ({
     label: `${currency.name} (${currency.isoCode})`,
     value: currency.isoCode,
   }));
 
-  if (data.loading) {
+  if (loading) {
     return <>loading...</>;
   }
 
@@ -59,7 +60,7 @@ const UpdatePaymentSettingsForm = ({
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <Box mb="m">
             <Field
@@ -124,7 +125,4 @@ const UpdatePaymentSettingsForm = ({
   );
 };
 
-export default compose(
-  graphql(GET_PAYMENT_SETTINGS),
-  graphql(UPDATE_PAYMENT_SETTINGS, { name: "updatePaymentSettings" })
-)(UpdatePaymentSettingsForm);
+export default UpdatePaymentSettingsForm;

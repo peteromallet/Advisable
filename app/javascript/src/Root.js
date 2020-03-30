@@ -2,7 +2,7 @@ import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { BrowserRouter } from "react-router-dom";
-import { ApolloProvider } from "react-apollo";
+import { ApolloProvider } from "@apollo/react-hooks";
 import client from "./graphqlClient";
 
 const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY);

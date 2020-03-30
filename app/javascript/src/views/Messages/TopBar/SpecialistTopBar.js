@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash";
-import { withRouter } from "react-router-dom";
-import { graphql } from "react-apollo";
+import { useHistory } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
 import { Text, Padding, Flex } from "@advisable/donut";
 import Icon from "../../../components/Icon";
 import Avatar from "../../../components/Avatar";
@@ -9,10 +9,17 @@ import Status from "../../../components/Status";
 import GET_APPLICATION from "../getApplicationForSpecialist";
 import { Topbar } from "../styles";
 
-const ClientTopbar = ({ history, data }) => {
-  if (data.loading) return null;
+const ClientTopbar = () => {
+  const history = useHistory();
+  const { data, loading, error } = useQuery(GET_APPLICATION, {
+    variables: {
+      id: props.applicationId,
+    },
+  });
 
-  if (data.error) {
+  if (loading) return null;
+
+  if (error) {
     return <>Failed to fetch application</>;
   }
 
@@ -52,7 +59,7 @@ const ClientTopbar = ({ history, data }) => {
     actionURL = `/clients/${application.airtableId}`;
   }
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     history.push(actionURL);
   };
 
@@ -97,12 +104,4 @@ const ClientTopbar = ({ history, data }) => {
   );
 };
 
-export default withRouter(
-  graphql(GET_APPLICATION, {
-    options: props => ({
-      variables: {
-        id: props.applicationId,
-      },
-    }),
-  })(ClientTopbar)
-);
+export default ClientTopbar;

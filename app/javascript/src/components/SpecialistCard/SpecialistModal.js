@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash";
 import gql from "graphql-tag";
-import { useLazyQuery } from "react-apollo";
+import { useLazyQuery } from "@apollo/react-hooks";
 import { Box, Text, Modal } from "@advisable/donut";
 import Avatar from "../Avatar";
 import Loading from "../Loading";

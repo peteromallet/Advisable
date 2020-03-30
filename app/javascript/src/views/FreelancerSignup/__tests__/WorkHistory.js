@@ -1,13 +1,11 @@
 import renderApp from "../../../testHelpers/renderApp";
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_SPECIALIST from "../getProfile";
 import UPDATE_PROFILE from "../updateProfile";
 import COMPLETE_SETUP from "../completeSetup";
 import GET_APPLICATIONS from "../../Applications/fetchData";
-
-afterEach(cleanup);
 
 test("Completes the setup", async () => {
   const viewer = generateTypes.specialist({

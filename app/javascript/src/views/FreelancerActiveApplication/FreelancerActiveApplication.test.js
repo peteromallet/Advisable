@@ -1,6 +1,6 @@
 import renderApp from "../../testHelpers/renderApp";
-import generate from "nanoid/generate";
-import { fireEvent, cleanup } from "@testing-library/react";
+import generateID from "../../utilities/generateID";
+import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
 import CREATE_TASK from "../../graphql/mutations/createTask";
@@ -13,12 +13,10 @@ import {
   updateTaskDescription as UPDATE_TASK_DESCRIPTION,
 } from "../../graphql/mutations/tasks";
 
-jest.mock("nanoid/generate");
-afterEach(cleanup);
-jest.setTimeout(10000);
+jest.mock("../../utilities/generateID");
 
 test("Freelancer can create a task", async () => {
-  generate.mockReturnValue("abc");
+  generateID.mockReturnValue("tas_abc");
 
   const user = generateTypes.user();
   const project = generateTypes.project({ user });
@@ -166,7 +164,7 @@ test("Freelancer can create a task", async () => {
     ],
   });
 
-  const createButton = await findByText("Add a project");
+  const createButton = await findByText("Add a project", {}, { timeout: 5000 });
   fireEvent.click(createButton);
   const name = await findByTestId("nameField");
   fireEvent.change(name, { target: { value: "Task name here" } });
@@ -291,7 +289,7 @@ test("Freelancer can mark a task as complete", async () => {
   const completeButton = getByLabelText("Complete");
   fireEvent.click(completeButton);
   const notice = await findByText(
-    "tasks.stageDescriptions.specialist.submitted"
+    "tasks.stageDescriptions.specialist.submitted",
   );
   expect(notice).toBeInTheDocument();
 });

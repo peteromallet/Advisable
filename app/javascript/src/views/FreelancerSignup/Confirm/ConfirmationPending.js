@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash";
 import gql from "graphql-tag";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Text, Button } from "@advisable/donut";
 import useViewer from "../../../hooks/useViewer";
 import { useNotifications } from "../../../components/Notifications";

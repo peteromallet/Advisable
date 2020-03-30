@@ -1,6 +1,6 @@
 import React from "react";
 import queryString from "query-string";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { useLocation, Redirect } from "react-router-dom";
 import SEARCH from "./search";
 import Searching from "./Searching";
@@ -50,7 +50,7 @@ function Specialists() {
 
   if (location.state?.priceRange) {
     const priceRange = location.state.priceRange;
-    specialists = specialists.filter(specialist => {
+    specialists = specialists.filter((specialist) => {
       return (
         withinLimits(specialist.hourlyRate) >= priceRange.min &&
         withinLimits(specialist.hourlyRate) <= priceRange.max

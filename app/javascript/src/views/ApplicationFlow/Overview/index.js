@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form } from "formik";
 import { Box, Text } from "@advisable/donut";
 import { TextField, ChoiceList } from "../../../components";
@@ -11,8 +11,8 @@ function Overview({ application, history, location, steps, currentStep }) {
   const { airtableId } = application;
   const [mutate] = useMutation(UPDATE_APPLICATION);
 
-  const handleSubmit = async values => {
-    const r = await mutate({
+  const handleSubmit = async (values) => {
+    await mutate({
       variables: {
         input: {
           id: airtableId,
@@ -35,7 +35,7 @@ function Overview({ application, history, location, steps, currentStep }) {
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <Box padding={{ _: "l", m: "xl" }}>
             <Text

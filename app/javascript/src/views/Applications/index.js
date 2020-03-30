@@ -1,7 +1,7 @@
 // Renders the freelancers applications view.
 import { get } from "lodash";
 import * as React from "react";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Box, Alert } from "@advisable/donut";
 import Layout from "../../components/Layout";
 import FETCH_DATA from "./fetchData.js";
@@ -11,7 +11,7 @@ import ApplicationInvitations from "./ApplicationInvitations";
 const Applications = ({ history }) => {
   const { loading, data } = useQuery(FETCH_DATA);
 
-  const handleViewInvitation = id => {
+  const handleViewInvitation = (id) => {
     history.push(`/invites/${id}`);
   };
 
@@ -51,8 +51,8 @@ const Applications = ({ history }) => {
               : encodeURI(
                   `https://advisable.com/request_feature_invitation?field75221875=${get(
                     viewer,
-                    "email"
-                  )}&sid=${get(viewer, "airtableId")}`
+                    "email",
+                  )}&sid=${get(viewer, "airtableId")}`,
                 )
           }
         />

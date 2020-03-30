@@ -3,16 +3,14 @@ import React from "react";
 import get from "lodash/get";
 import filter from "lodash/filter";
 import countBy from "lodash/countBy";
+import { Text, Icon } from "@advisable/donut";
 import Sticky from "../../../components/Sticky";
-import Icon from "src/components/Icon";
 import pluralize from "src/utilities/pluralize";
 import useScrollRestore from "src/utilities/useScrollRestore";
 import useMobile from "../../../utilities/useMobile";
 import ShareAction from "../components/ShareAction";
 import Layout from "../../../components/Layout";
 import {
-  ProjectTitle,
-  TotalApplicants,
   NavMenu,
   NavMenuItem,
   NavMenuItemIcon,
@@ -52,7 +50,7 @@ const navigation = [
   },
 ];
 
-export default ({ match, data }) => {
+export default function ProjectNavigation({ match, data }) {
   useScrollRestore();
   const isMobile = useMobile();
   const applications = get(data, "project.applications", []);
@@ -61,7 +59,7 @@ export default ({ match, data }) => {
     "Invited To Apply",
     "Invitation Rejected",
   ];
-  const filtered = filter(applications, a => {
+  const filtered = filter(applications, (a) => {
     if (a.hidden) return false;
     return excludedStatuses.indexOf(a.status) === -1;
   });
@@ -70,13 +68,15 @@ export default ({ match, data }) => {
   return (
     <Layout.Sidebar>
       <Sticky enabled={!isMobile} offset={98}>
-        <ProjectTitle>{data.project.primarySkill}</ProjectTitle>
-        <TotalApplicants>
+        <Text mb="xxs" fontSize="xl" fontWeight="medium" color="blue900">
+          {data.project.primarySkill}
+        </Text>
+        <Text color="neutral700">
           {pluralize(filtered.length, "Applicant", "Applicants")}
-        </TotalApplicants>
+        </Text>
 
         <NavMenu>
-          {navigation.map(item => (
+          {navigation.map((item) => (
             <NavMenuItem
               key={item.path}
               replace={!isMobile}
@@ -97,4 +97,4 @@ export default ({ match, data }) => {
       </Sticky>
     </Layout.Sidebar>
   );
-};
+}

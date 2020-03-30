@@ -1,15 +1,11 @@
 import { repeat } from "lodash";
-import { cleanup, fireEvent } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import viewer from "../../../../graphql/queries/viewer";
 import renderApp from "../../../../testHelpers/renderApp";
 import generateTypes from "../../../../__mocks__/graphqlFields";
 import GET_PROJECTS from "../previousProjects";
 import FETCH_DATA from "../../../../components/PreviousProjectForm/getData";
 import CREATE_PROJECT from "../../../../components/PreviousProjectForm/createOffPlatformProject";
-
-afterEach(cleanup);
-
-jest.setTimeout(10000);
 
 test("Adds a previous project", async () => {
   const specialist = generateTypes.specialist();
@@ -99,7 +95,11 @@ test("Adds a previous project", async () => {
     graphQLMocks: apiMocks,
   });
 
-  const button = await findByLabelText("Add a previous project");
+  const button = await findByLabelText(
+    "Add a previous project",
+    {},
+    { timeout: 5000 },
+  );
   fireEvent.click(button);
   const clientName = await findByLabelText("Client Name");
   fireEvent.change(clientName, { target: { value: "Test inc" } });

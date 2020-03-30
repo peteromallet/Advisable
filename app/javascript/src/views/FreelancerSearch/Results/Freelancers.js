@@ -14,10 +14,10 @@ const Freelancers = ({ data }) => {
   const skill = data.search.skill.name;
   const results = data.search.results;
 
-  const handleClickFreelancer = specialist => e => {
+  const handleClickFreelancer = (specialist) => (e) => {
     let nextSelected;
     if (selectedFreelancers.indexOf(specialist.id) > -1) {
-      nextSelected = selectedFreelancers.filter(s => s !== specialist.id);
+      nextSelected = selectedFreelancers.filter((s) => s !== specialist.id);
     } else {
       nextSelected = [...selectedFreelancers, specialist.id];
     }
@@ -110,21 +110,21 @@ const Freelancers = ({ data }) => {
           Make another search or request a call with an Advisable project
           manager and we’ll identify the perfect person for you.
         </Text>
-        <RoundedButton
-          mr="s"
-          as={RouterLink}
-          variant="secondary"
-          to="/freelancer_search"
-          prefix={<Icon icon="search" />}
-        >
-          Make another search
-        </RoundedButton>
+        <RouterLink to="/freelancer_Search">
+          <RoundedButton
+            mr="s"
+            variant="secondary"
+            prefix={<Icon icon="search" />}
+          >
+            Make another search
+          </RoundedButton>
+        </RouterLink>
         <RequestCallButton>Request a call</RequestCallButton>
       </Box>
       <SelectionBar
         search={data.search}
         specialists={results.nodes.filter(
-          s => selectedFreelancers.indexOf(s.id) > -1
+          (s) => selectedFreelancers.indexOf(s.id) > -1,
         )}
       />
     </Box>

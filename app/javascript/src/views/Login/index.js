@@ -4,7 +4,7 @@ import queryString from "query-string";
 import { Redirect, useHistory } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useTranslation } from "react-i18next";
-import { useMutation, useApolloClient } from "react-apollo";
+import { useMutation, useApolloClient } from "@apollo/react-hooks";
 import {
   Box,
   Card,
@@ -92,7 +92,7 @@ const Login = ({ location }) => {
           initialValues={initialValues}
           validationSchema={validationSchema}
         >
-          {formik => (
+          {(formik) => (
             <Form onSubmit={formik.handleSubmit}>
               <Box mb="s">
                 <Label mb="xs" htmlFor="email">

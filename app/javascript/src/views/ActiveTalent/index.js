@@ -1,7 +1,7 @@
 import React from "react";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
-import Layout from "../../components/Layout";
+import { Container } from "@advisable/donut";
 import Manage from "./Manage";
 import Loading from "./Loading";
 import FETCH_DATA from "./fetchData";
@@ -10,23 +10,18 @@ const ActiveTalent = () => {
   const history = useHistory();
   const { data, loading } = useQuery(FETCH_DATA);
 
-  const handleClick = application => {
+  const handleClick = (application) => {
     history.push(`/manage/${application.airtableId}`);
   };
 
   return (
-    <Layout>
-      <Layout.Main>
-        {loading ? (
-          <Loading />
-        ) : (
-          <Manage
-            onClick={handleClick}
-            applications={data.viewer.applications}
-          />
-        )}
-      </Layout.Main>
-    </Layout>
+    <Container mt="xl">
+      {loading ? (
+        <Loading />
+      ) : (
+        <Manage onClick={handleClick} applications={data.viewer.applications} />
+      )}
+    </Container>
   );
 };
 

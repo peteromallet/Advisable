@@ -1,12 +1,10 @@
 import renderApp from "../../../testHelpers/renderApp";
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import { GET_SKILLS } from "../Skills";
 import GET_SPECIALIST from "../getProfile";
 import CREATE_ACCOUNT from "../AccountDetails/createFreelancerAccount";
-
-afterEach(cleanup);
 
 test("Continues to the confirmation step", async () => {
   const skills = [

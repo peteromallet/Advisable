@@ -1,3 +1,4 @@
+import "@testing-library/jest-dom/extend-expect";
 import React from "react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
@@ -12,7 +13,6 @@ import {
 import App from "../App";
 import i18n from "./i18next.js";
 import introspectionQueryResultData from "../fragmentTypes.json";
-import "@testing-library/jest-dom/extend-expect";
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData,

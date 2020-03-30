@@ -13,19 +13,19 @@ export default ({ onClick, applications }) => {
   return (
     <>
       <Text
-        as="h1"
-        mb="m"
-        fontSize="xxl"
-        color="neutral.8"
+        mb="l"
+        as="h2"
+        fontSize="28px"
+        color="blue900"
         fontWeight="semibold"
-        letterSpacing="-0.03em"
+        letterSpacing="-0.02em"
       >
         Manage Talent
       </Text>
       <Tabs label="Tasks">
         <Tabs.Tab title="Active Talent">
           <Cards>
-            {active.map(application => (
+            {active.map((application) => (
               <TalentCard
                 key={application.id}
                 application={application}
@@ -37,7 +37,7 @@ export default ({ onClick, applications }) => {
         </Tabs.Tab>
         <Tabs.Tab title="Finished">
           <Cards>
-            {finished.map(application => (
+            {finished.map((application) => (
               <TalentCard
                 key={application.id}
                 application={application}

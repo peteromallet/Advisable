@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import React from "react";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { Box, Checkbox, RoundedButton, Text } from "@advisable/donut";
@@ -48,20 +48,20 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
     flexibleEstimate: task.flexibleEstimate ? task.flexibleEstimate : undefined,
   };
 
-  const handleChangePricingType = formik => e => {
+  const handleChangePricingType = (formik) => (e) => {
     formik.handleChange(e);
     formik.setFieldValue("estimate", undefined);
     formik.setFieldValue("flexibleEstimate", undefined);
   };
 
-  const handleToggleFlexible = formik => e => {
+  const handleToggleFlexible = (formik) => (e) => {
     if (formik.values.isFlexible) {
       formik.setFieldValue("flexibleEstimate", undefined);
     }
     formik.handleChange(e);
   };
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     const r = await updateEstimate({
       variables: {
         input: {

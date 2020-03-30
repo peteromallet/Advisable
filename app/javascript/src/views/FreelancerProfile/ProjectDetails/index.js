@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Link as RouterLink } from "react-router-dom";
 import { Link, Avatar, Box, Text, Tag } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
@@ -76,7 +76,7 @@ function ProjectDetails({ specialistId, projectId }) {
             Skills Used
           </Text>
           <Box>
-            {project.skills.map(skill => (
+            {project.skills.map((skill) => (
               <Tag key={skill.id} mr="xxs" mb="xxs">
                 {skill.name}
               </Tag>
@@ -93,7 +93,7 @@ function ProjectDetails({ specialistId, projectId }) {
             Industries
           </Text>
           <Box>
-            {project.industries.map(industry => (
+            {project.industries.map((industry) => (
               <Tag key={industry.id} mr="xxs" mb="xxs">
                 {industry.name}
               </Tag>

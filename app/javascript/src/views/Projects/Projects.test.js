@@ -1,11 +1,8 @@
-import { cleanup } from "@testing-library/react";
 import fields from "../../__mocks__/graphqlFields";
 import renderApp from "../../testHelpers/renderApp";
 import VIEWER from "../../graphql/queries/viewer";
 import PROJECTS from "./getProjects";
 import FREELANCER_APPLICATIONS from "../Applications/fetchData";
-
-afterEach(cleanup);
 
 test("Loads the clients projects", async () => {
   const project = fields.project({ primarySkill: "Test Primary Skill" });

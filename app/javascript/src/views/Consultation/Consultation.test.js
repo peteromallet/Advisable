@@ -1,4 +1,4 @@
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import renderApp from "../../testHelpers/renderApp";
 import mockData from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
@@ -6,8 +6,6 @@ import GET_CONSULTATION from "./getConsultation";
 import ACCEPT_CONSULTATION from "./acceptConsultation";
 import DECLINE_CONSULTATION from "./declineConsultation";
 import FETCH_INTERVIEW from "../InterviewRequest/fetchInterview";
-
-afterEach(cleanup);
 
 test("Accepting a consultation request", async () => {
   const user = mockData.user();

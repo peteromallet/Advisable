@@ -1,6 +1,6 @@
 import * as React from "react";
-import { withRouter } from "react-router";
-import { graphql } from "react-apollo";
+import { useHistory } from "react-router";
+import { useMutation } from "@apollo/react-hooks";
 import Modal from "../../components/Modal";
 import Text from "../../components/Text";
 import Heading from "../../components/Heading";
@@ -9,8 +9,10 @@ import ButtonGroup from "../../components/ButtonGroup";
 import { Padding } from "../../components/Spacing";
 import ACCEPT_PROPOSAL from "./acceptProposal.graphql";
 
-let AcceptedModal = ({ isOpen, onClose, application, firstName, mutate, history }) => {
+let AcceptedModal = ({ isOpen, onClose, application, firstName }) => {
+  const history = useHistory();
   const [loading, setLoading] = React.useState(false);
+  const [mutate] = useMutation(ACCEPT_PROPOSAL);
 
   const handleAccept = async () => {
     setLoading(true);
@@ -22,9 +24,9 @@ let AcceptedModal = ({ isOpen, onClose, application, firstName, mutate, history 
 
     const { errors } = response.data.acceptProposal;
     if (errors) {
-      setLoading(false)
+      setLoading(false);
     } else {
-      history.replace(`/manage/${application.airtableId}`)
+      history.replace(`/manage/${application.airtableId}`);
     }
   };
 
@@ -54,7 +56,4 @@ let AcceptedModal = ({ isOpen, onClose, application, firstName, mutate, history 
   );
 };
 
-AcceptedModal = withRouter(AcceptedModal)
-AcceptedModal = graphql(ACCEPT_PROPOSAL)(AcceptedModal);
-
-export default AcceptedModal
+export default AcceptedModal;

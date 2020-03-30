@@ -1,31 +1,19 @@
 import moment from "moment";
-import { fireEvent, cleanup } from "@testing-library/react";
-import renderApp from "../../testHelpers/renderApp";
+import { renderRoute, fireEvent } from "test-utils";
 import mockData from "../../__mocks__/graphqlFields";
-import VIEWER from "../../graphql/queries/viewer";
 import GET_DATA from "./Criteria/getData";
-import {
-  mockViewer,
-  mockQuery,
-  mockMutation,
-} from "../../testHelpers/apolloMocks";
-import { getSearch, createSearch } from "./searchQueries";
+import { mockViewer, mockQuery, mockMutation } from "apolloMocks";
+import { createSearch } from "./searchQueries";
 import USER_AVAILABILITY from "./Availability/getUserAvailability";
 import UPDATE_AVAILABILITY from "./Availability/updateAvailability";
 import REQUEST_CONSULTATION from "./Topic/requestConsultations";
 
-afterEach(cleanup);
-
-const getNextAvailableDate = date => {
+const getNextAvailableDate = (date) => {
   if (["Sa", "Su"].indexOf(moment(date).format("dd")) > -1) {
     return getNextAvailableDate(moment(date).add(1, "day"));
   }
 
-  return date
-    .hours(10)
-    .minutes(0)
-    .seconds(0)
-    .milliseconds(0);
+  return date.hours(10).minutes(0).seconds(0).milliseconds(0);
 };
 
 test("User can search for freelancers and request consultations with them", async () => {
@@ -39,17 +27,11 @@ test("User can search for freelancers and request consultations with them", asyn
     industry,
     availability: [
       day1.toISOString(),
-      moment(day1)
-        .add(30, "minutes")
-        .toISOString(),
+      moment(day1).add(30, "minutes").toISOString(),
       day2.toISOString(),
-      moment(day2)
-        .add(30, "minutes")
-        .toISOString(),
+      moment(day2).add(30, "minutes").toISOString(),
       day3.toISOString(),
-      moment(day3)
-        .add(30, "minutes")
-        .toISOString(),
+      moment(day3).add(30, "minutes").toISOString(),
     ],
   });
 
@@ -81,7 +63,7 @@ test("User can search for freelancers and request consultations with them", asyn
             value: industry.name,
           },
         ],
-      }
+      },
     ),
     mockMutation(
       createSearch,
@@ -105,18 +87,9 @@ test("User can search for freelancers and request consultations with them", asyn
             },
           }),
         },
-      }
+      },
     ),
-    {
-      request: {
-        query: USER_AVAILABILITY,
-      },
-      result: {
-        data: {
-          viewer: user,
-        },
-      },
-    },
+    mockQuery(USER_AVAILABILITY, {}, { viewer: user }),
     {
       request: {
         query: UPDATE_AVAILABILITY,
@@ -159,12 +132,16 @@ test("User can search for freelancers and request consultations with them", asyn
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/freelancer_search",
     graphQLMocks,
   });
 
-  const skillInput = await app.findByPlaceholderText("Search for a skill");
+  const skillInput = await app.findByPlaceholderText(
+    "Search for a skill",
+    {},
+    { timeout: 5000 },
+  );
   fireEvent.click(skillInput);
   fireEvent.keyDown(skillInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillInput, { key: "Enter" });
@@ -187,13 +164,13 @@ test("User can search for freelancers and request consultations with them", asyn
 
   await app.findByText("What would you like to cover", { exact: false });
   const topic = app.getByPlaceholderText(
-    "What would you like to talk about..."
+    "What would you like to talk about...",
   );
   fireEvent.change(topic, { target: { value: "This is the topic" } });
   fireEvent.click(app.getByLabelText("Request Consultation"));
 
   const header = await app.findByText(
-    "Your consultation request has been sent"
+    "Your consultation request has been sent",
   );
   expect(header).toBeInTheDocument();
 });
@@ -209,17 +186,11 @@ test("User can search for freelancers and get a recommendation", async () => {
     industry,
     availability: [
       day1.toISOString(),
-      moment(day1)
-        .add(30, "minutes")
-        .toISOString(),
+      moment(day1).add(30, "minutes").toISOString(),
       day2.toISOString(),
-      moment(day2)
-        .add(30, "minutes")
-        .toISOString(),
+      moment(day2).add(30, "minutes").toISOString(),
       day3.toISOString(),
-      moment(day3)
-        .add(30, "minutes")
-        .toISOString(),
+      moment(day3).add(30, "minutes").toISOString(),
     ],
   });
 
@@ -249,7 +220,7 @@ test("User can search for freelancers and get a recommendation", async () => {
             value: industry.name,
           },
         ],
-      }
+      },
     ),
     mockMutation(
       createSearch,
@@ -278,7 +249,7 @@ test("User can search for freelancers and get a recommendation", async () => {
             },
           }),
         },
-      }
+      },
     ),
     {
       request: {
@@ -332,7 +303,7 @@ test("User can search for freelancers and get a recommendation", async () => {
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/freelancer_search",
     graphQLMocks,
   });
@@ -352,7 +323,7 @@ test("User can search for freelancers and get a recommendation", async () => {
 
   await app.findByText("We have the perfect freelancer for this!");
   fireEvent.click(
-    app.getAllByLabelText(`Talk with ${specialists[0].firstName}`)[0]
+    app.getAllByLabelText(`Talk with ${specialists[0].firstName}`)[0],
   );
 
   await app.findByText("Availability");
@@ -360,13 +331,13 @@ test("User can search for freelancers and get a recommendation", async () => {
 
   await app.findByText("What would you like to cover", { exact: false });
   const topic = app.getByPlaceholderText(
-    "What would you like to talk about..."
+    "What would you like to talk about...",
   );
   fireEvent.change(topic, { target: { value: "This is the topic" } });
   fireEvent.click(app.getByLabelText("Request Consultation"));
 
   const header = await app.findByText(
-    "Your consultation request has been sent"
+    "Your consultation request has been sent",
   );
   expect(header).toBeInTheDocument();
 });

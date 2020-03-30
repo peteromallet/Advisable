@@ -1,5 +1,5 @@
 import React from "react";
-import { Mutation } from "react-apollo";
+import { useMutation, Mutation } from "@apollo/react-hooks";
 import { Formik } from "formik";
 import Modal from "src/components/Modal";
 import Text from "src/components/Text";
@@ -17,7 +17,7 @@ import REJECT from "./reject.graphql";
 // Takes a given application record and returns an array of rejection reasons. This is
 // needed becuase we only show the "I just want to see more candidates" reason when
 // the application status is Applied.
-const optionsForApplication = application => {
+const optionsForApplication = (application) => {
   const options = [
     "I want someone with more relevant experience",
     "I want someone cheaper",
@@ -113,6 +113,7 @@ const RejectModal = ({
   onRequestCall,
 }) => {
   const specialist = application.specialist;
+  const [reject] = useMutation(REJECT);
 
   const initialValues = {
     rejectionReason: "",
@@ -121,53 +122,49 @@ const RejectModal = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <Mutation mutation={REJECT}>
-        {reject => (
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={async values => {
-              await reject({
-                variables: {
-                  input: {
-                    id: application.airtableId,
-                    ...values,
-                  },
-                },
-              });
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={async (values) => {
+          await reject({
+            variables: {
+              input: {
+                id: application.airtableId,
+                ...values,
+              },
+            },
+          });
 
-              notifications.notify(`${specialist.name} has been declined`);
+          notifications.notify(`${specialist.name} has been declined`);
 
-              onClose();
-            }}
-          >
-            {formik => (
-              <form onSubmit={formik.handleSubmit}>
-                <Container>
-                  <Heading marginBottom="xs">Reject {specialist.name}</Heading>
-                  <Text marginBottom="xl">
-                    Please provide feedback to our recruitment team to help us
-                    find you a better candidate
-                  </Text>
-                  <Select
-                    block
-                    name="rejectionReason"
-                    value={formik.values.rejectionReason}
-                    onChange={formik.handleChange}
-                    placeholder="Select reason for rejection"
-                    options={optionsForApplication(application)}
-                  />
-                  <SelectedOption
-                    formik={formik}
-                    onClose={onClose}
-                    onRequestCall={onRequestCall}
-                  />
-                </Container>
-              </form>
-            )}
-          </Formik>
+          onClose();
+        }}
+      >
+        {(formik) => (
+          <form onSubmit={formik.handleSubmit}>
+            <Container>
+              <Heading marginBottom="xs">Reject {specialist.name}</Heading>
+              <Text marginBottom="xl">
+                Please provide feedback to our recruitment team to help us find
+                you a better candidate
+              </Text>
+              <Select
+                block
+                name="rejectionReason"
+                value={formik.values.rejectionReason}
+                onChange={formik.handleChange}
+                placeholder="Select reason for rejection"
+                options={optionsForApplication(application)}
+              />
+              <SelectedOption
+                formik={formik}
+                onClose={onClose}
+                onRequestCall={onRequestCall}
+              />
+            </Container>
+          </form>
         )}
-      </Mutation>
+      </Formik>
     </Modal>
   );
 };

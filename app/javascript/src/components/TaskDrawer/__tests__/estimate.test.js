@@ -1,13 +1,11 @@
 import React from "react";
-import { cleanup, fireEvent, wait } from "@testing-library/react";
+import { fireEvent, waitFor } from "@testing-library/react";
 import mockData from "../../../__mocks__/graphqlFields";
+import { mockQuery, mockMutation } from "../../../testHelpers/apolloMocks";
 import { renderComponent } from "../../../testHelpers/renderApp";
 import FETCH_TASK from "../../../graphql/queries/taskDetails";
 import UPDATE_ESTIMATE from "../QuoteInput/updateEstimate";
 import TaskDrawer from "../";
-
-afterEach(cleanup);
-// jest.setTimeout(10000);
 
 const user = mockData.user();
 const project = mockData.project({ user });
@@ -22,46 +20,27 @@ const task = mockData.task({
 
 test("Setting the estimate for a task", async () => {
   const graphQLMocks = [
-    {
-      request: {
-        query: FETCH_TASK,
-        variables: {
-          id: task.id,
-        },
+    mockQuery(FETCH_TASK, { id: task.id }, { task }),
+    mockMutation(
+      UPDATE_ESTIMATE,
+      {
+        id: task.id,
+        estimate: 10,
+        estimateType: "Hourly",
+        flexibleEstimate: 20,
       },
-      result: {
-        data: {
-          task,
-        },
-      },
-    },
-    {
-      request: {
-        query: UPDATE_ESTIMATE,
-        variables: {
-          input: {
-            id: task.id,
+      {
+        updateTask: {
+          __typename: "UpdateTaskPayload",
+          task: {
+            ...task,
             estimate: 10,
             estimateType: "Hourly",
             flexibleEstimate: 20,
           },
         },
       },
-      result: {
-        data: {
-          __typename: "Mutation",
-          updateTask: {
-            __typename: "UpdateTaskPayload",
-            task: {
-              ...task,
-              estimate: 10,
-              estimateType: "Hourly",
-              flexibleEstimate: 20,
-            },
-          },
-        },
-      },
-    },
+    ),
   ];
 
   const comp = renderComponent(
@@ -69,7 +48,7 @@ test("Setting the estimate for a task", async () => {
     {
       route: "/",
       graphQLMocks,
-    }
+    },
   );
   const estimateButton = await comp.findByText("Add estimate", {
     exact: false,
@@ -81,7 +60,7 @@ test("Setting the estimate for a task", async () => {
   fireEvent.change(estimate, { target: { value: "10" } });
   const flexibleEstimate = comp.getByPlaceholderText("20 Hours");
   fireEvent.change(flexibleEstimate, { target: { value: "20" } });
-  await wait(); // wait for validations to finish!
+  await waitFor(() => {}); // wait for validations to finish!
   const save = comp.getByLabelText("Save Quote");
   fireEvent.click(save);
   const label = await comp.findByText("10 - 20 hours", { exact: false });
@@ -137,7 +116,7 @@ test("Setting a fixed price estimate", async () => {
     {
       route: "/",
       graphQLMocks,
-    }
+    },
   );
 
   const estimateButton = await comp.findByText("Add estimate", {
@@ -152,7 +131,7 @@ test("Setting a fixed price estimate", async () => {
   fireEvent.change(estimate, { target: { value: "100" } });
   const flexibleEstimate = comp.getByPlaceholderText("1000");
   fireEvent.change(flexibleEstimate, { target: { value: "200" } });
-  await wait(); // wait for validations to finish!
+  await waitFor(() => {}); // wait for validations to finish!
   const save = comp.getByLabelText("Save Quote");
   fireEvent.click(save);
   const label = await comp.findByText("$100 - $200", { exact: false });
@@ -213,16 +192,15 @@ test("Can switch from flexible estimate to strit", async () => {
     {
       route: "/",
       graphQLMocks,
-    }
+    },
   );
 
   const estimateButton = await comp.findByLabelText("Set estimate");
   fireEvent.click(estimateButton);
   const flexible = comp.getByLabelText("Flexible hours");
   fireEvent.click(flexible);
-  await wait(); // wait for validations to finish!
+  await waitFor(() => {}); // wait for validations to finish!
   const save = comp.getByLabelText("Save Quote");
   fireEvent.click(save);
-  const label = await comp.findByText("10 hours", { exact: false });
-  expect(label).toBeInTheDocument();
+  await comp.findByText("10 hours", { exact: false });
 });

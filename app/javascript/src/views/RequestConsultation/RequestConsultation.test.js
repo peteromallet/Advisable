@@ -43,7 +43,7 @@ test("Skills step continues to the company details", async () => {
     graphQLMocks,
   });
 
-  const skillTag = await app.findByText("Testing");
+  const skillTag = await app.findByText("Testing", {}, { timeout: 5000 });
   fireEvent.click(skillTag);
   const btn = app.getByLabelText("Continue");
   fireEvent.click(btn);
@@ -130,7 +130,11 @@ test("company details step continues to availability", async () => {
     graphQLMocks,
   });
 
-  const firstName = await app.findByLabelText("First Name");
+  const firstName = await app.findByLabelText(
+    "First Name",
+    {},
+    { timeout: 5000 },
+  );
   const lastName = app.getByLabelText("Last Name");
   const email = app.getByLabelText("Email Address");
   const company = app.getByLabelText("Company Name");
@@ -142,7 +146,7 @@ test("company details step continues to availability", async () => {
   fireEvent.click(btn);
   const header = await app.findByText(
     "Select the times you will be available",
-    { exact: false }
+    { exact: false },
   );
 
   expect(header).toBeInTheDocument();
@@ -183,7 +187,11 @@ test("Company details step redirects back if no skill is in state", async () => 
     graphQLMocks,
   });
 
-  const header = await app.findByText("Please select which", { exact: false });
+  const header = await app.findByText(
+    "Please select which",
+    { exact: false },
+    { timeout: 5000 },
+  );
   expect(header).toBeInTheDocument();
 });
 
@@ -267,7 +275,9 @@ test("Topic step continues to the send step", async () => {
   });
 
   const textarea = await app.findByPlaceholderText(
-    "What would you like to talk about..."
+    "What would you like to talk about...",
+    {},
+    { timeout: 5000 },
   );
   fireEvent.change(textarea, { target: { value: "Testing" } });
   const btn = app.getByLabelText("Continue");
@@ -461,7 +471,7 @@ test("Can link back to a particular consultation via query params", async () => 
 
   const header = await app.findByText(
     "Select the times you will be available",
-    { exact: false }
+    { exact: false },
   );
 
   expect(header).toBeInTheDocument();

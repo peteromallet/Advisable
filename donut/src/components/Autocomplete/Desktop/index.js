@@ -13,7 +13,7 @@ import {
 import Downshift, { stateChangeTypes } from "../Downshift";
 import Tag from "../Tag";
 
-const AutocompleteDesktop = props => {
+const AutocompleteDesktop = (props) => {
   const {
     label,
     error,
@@ -34,12 +34,12 @@ const AutocompleteDesktop = props => {
   const inputSize = useComponentSize(inputRef);
   const listRef = React.useRef(null);
 
-  const handleStateChange = popper => (changes, downshift) => {
+  const handleStateChange = (popper) => (changes, downshift) => {
     popper.scheduleUpdate();
 
     if (
       [stateChangeTypes.clickItem, stateChangeTypes.keyDownEnter].indexOf(
-        changes.type
+        changes.type,
       ) > -1
     ) {
       downshift.setState({
@@ -57,7 +57,7 @@ const AutocompleteDesktop = props => {
 
   let filteredOptions = options;
   if (props.multiple) {
-    filteredOptions = options.filter(option => {
+    filteredOptions = options.filter((option) => {
       return value.indexOf(option.value) === -1;
     });
   }
@@ -73,7 +73,7 @@ const AutocompleteDesktop = props => {
         }}
         positionFixed
       >
-        {popper => (
+        {(popper) => (
           <Downshift
             value={value}
             options={options}
@@ -85,7 +85,7 @@ const AutocompleteDesktop = props => {
             initialInputValue={props.multiple ? undefined : value?.label}
             onStateChange={handleStateChange(popper)}
           >
-            {downshift => (
+            {(downshift) => (
               <AutocompleteStyles {...rest} {...downshift.getRootProps()}>
                 <Label
                   as="label"
@@ -108,7 +108,7 @@ const AutocompleteDesktop = props => {
                   </Text>
                 )}
                 <Reference>
-                  {popperRef => (
+                  {(popperRef) => (
                     <>
                       <div ref={popperRef.ref}>
                         <Input
@@ -123,7 +123,7 @@ const AutocompleteDesktop = props => {
                       </div>
                       {multiple && (
                         <Tags>
-                          {downshift.selected.map(item => (
+                          {downshift.selected.map((item) => (
                             <Tag
                               key={item.value}
                               isPrimary={primary === item.value}

@@ -35,7 +35,7 @@ const Modal = ({
   const mediumAndUp = useBreakpoint("mUp");
   const isMobile = !mediumAndUp;
 
-  const handleContainerClick = e => {
+  const handleContainerClick = (e) => {
     if (e.target === ref.current) {
       modal.hide();
     }

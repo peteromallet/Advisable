@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Switch, Route, Redirect } from "react-router-dom";
 import NotFound from "../NotFound";
 import { Loading } from "../../components";
@@ -22,7 +22,7 @@ function ApplicationFlowContainer(props) {
   if (query.loading) return <Loading />;
 
   if (query.error) {
-    const code = query.error?.graphQLErrors?.[0].extensions.code;
+    const code = query.error?.graphQLErrors?.[0]?.extensions.code;
     if (code === "recordNotFound") {
       return <NotFound />;
     } else {
@@ -53,7 +53,7 @@ function ApplicationFlowContainer(props) {
         component={ApplicationSent}
       />
       <Route
-        render={props => {
+        render={(props) => {
           return <ApplicationFlow {...props} application={application} />;
         }}
       />

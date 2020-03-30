@@ -1,10 +1,8 @@
 import renderApp from "../../../testHelpers/renderApp";
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_APPLICATIONS from "../../Applications/fetchData";
-
-afterEach(cleanup);
 
 test("Display account on hold notice when account is on hold", async () => {
   const viewer = generateTypes.specialist({ applicationStage: "On Hold" });

@@ -1,12 +1,10 @@
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import renderApp from "../../../testHelpers/renderApp";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_APPLICATION from "../fetchApplication";
 import GET_TASK from "../../../graphql/queries/taskDetails";
 import { UPDATE_TASK } from "../../../components/TaskDrawer/MarkAsTrial";
-
-afterEach(cleanup);
 
 test("Freelancer can mark a task as a trial task", async () => {
   const specialist = generateTypes.specialist();

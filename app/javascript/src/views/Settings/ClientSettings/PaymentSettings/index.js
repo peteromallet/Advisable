@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash";
-import { useQuery, useMutation } from "react-apollo";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import {
   Box,
@@ -26,7 +26,7 @@ const PaymentSettings = () => {
   const [updateProjectPaymentMethod] = useMutation(UPDATE_PAYMENT_INFO);
   const [paymentMethodModal, setPaymentMethodModal] = React.useState(false);
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await updateProjectPaymentMethod({
       variables: {
         input: values,
@@ -43,7 +43,7 @@ const PaymentSettings = () => {
       companyName: get(
         data,
         "viewer.invoiceSettings.companyName",
-        get(data, "viewer.companyName")
+        get(data, "viewer.companyName"),
       ),
       billingEmail: get(data, "viewer.invoiceSettings.billingEmail") || "",
       vatNumber: get(data, "viewer.invoiceSettings.vatNumber") || "",
@@ -55,7 +55,7 @@ const PaymentSettings = () => {
         country: get(
           data,
           "viewer.invoiceSettings.address.country",
-          get(data, "viewer.country.id")
+          get(data, "viewer.country.id"),
         ),
         postcode: get(data, "viewer.invoiceSettings.address.postcode") || "",
       },
@@ -86,7 +86,7 @@ const PaymentSettings = () => {
         Payment Preferences
       </Text>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {formik => (
+        {(formik) => (
           <Form>
             <Text
               mb="xxs"

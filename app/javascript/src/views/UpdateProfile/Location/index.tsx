@@ -2,8 +2,8 @@
 // settings
 import * as React from "react";
 import { Formik, Form } from "formik";
-import { flowRight as compose, get } from "lodash";
-import { graphql } from "react-apollo";
+import { get } from "lodash";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import Text from "../../../components/Text";
 import Card from "../../../components/Card";
 import Button from "../../../components/Button";
@@ -19,8 +19,11 @@ import FETCH_PROFILE from "../fetchProfile.graphql";
 import UPDATE_PROFILE from "../updateProfile";
 import FETCH_COUNTRIES from "./fetchCountries.graphql";
 
-let Location = ({ profileQuery, countriesQuery, mutate }) => {
+let Location = () => {
   const notifications = useNotifications();
+  const [mutate] = useMutation(UPDATE_PROFILE);
+  const profileQuery = useQuery(FETCH_PROFILE);
+  const countriesQuery = useQuery(FETCH_COUNTRIES);
 
   if (profileQuery.loading || countriesQuery.loading) return <Loading />;
 
@@ -39,12 +42,12 @@ let Location = ({ profileQuery, countriesQuery, mutate }) => {
     <Formik
       onSubmit={handleSubmit}
       initialValues={{
-        city: profileQuery.viewer.city,
-        remote: profileQuery.viewer.remote,
-        country: get(profileQuery.viewer, "country.id"),
+        city: profileQuery.data.viewer.city,
+        remote: profileQuery.data.viewer.remote,
+        country: get(profileQuery.data.viewer, "country.id"),
       }}
     >
-      {formik => (
+      {(formik) => (
         <React.Fragment>
           <Padding bottom="m">
             <Heading level={2}>Location</Heading>
@@ -66,7 +69,7 @@ let Location = ({ profileQuery, countriesQuery, mutate }) => {
                     label="Country"
                     value={formik.values.country}
                     onChange={formik.handleChange}
-                    options={countriesQuery.countries}
+                    options={countriesQuery.data.countries}
                   />
                 </FieldRow>
                 <Padding bottom="m">
@@ -79,7 +82,7 @@ let Location = ({ profileQuery, countriesQuery, mutate }) => {
                     name="remote"
                     value={formik.values.remote}
                     label="Yes, I’m happy to work remote"
-                    onChange={e => {
+                    onChange={(e) => {
                       formik.setFieldValue("remote", true);
                     }}
                   />
@@ -89,7 +92,7 @@ let Location = ({ profileQuery, countriesQuery, mutate }) => {
                     name="remote"
                     value={formik.values.remote === false}
                     label="No, I only work with clients in person"
-                    onChange={e => {
+                    onChange={(e) => {
                       formik.setFieldValue("remote", false);
                     }}
                   />
@@ -106,8 +109,4 @@ let Location = ({ profileQuery, countriesQuery, mutate }) => {
   );
 };
 
-export default compose(
-  graphql(FETCH_PROFILE, { name: "profileQuery" }),
-  graphql(FETCH_COUNTRIES, { name: "countriesQuery" }),
-  graphql(UPDATE_PROFILE)
-)(Location);
+export default Location;

@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { Menu } from "@advisable/donut";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
 
 const SET_TASK_REPEAT = gql`

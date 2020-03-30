@@ -1,7 +1,6 @@
 import React from "react";
-import { useQuery } from "react-apollo";
-import { Text, RoundedButton } from "@advisable/donut";
-import { useParams, Switch, Route, Redirect, Link } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
+import { useParams, Switch, Route, Redirect } from "react-router-dom";
 import Sent from "./Sent";
 import Topic from "./Topic";
 import Results from "./Results";

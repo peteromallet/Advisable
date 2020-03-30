@@ -1,11 +1,9 @@
 import renderApp from "../../../testHelpers/renderApp";
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import { STOP_WORKING } from "../StopWorkingModal";
-
-afterEach(cleanup);
 
 test("Client can stop working with specialist", async () => {
   let user = generateTypes.user();
@@ -71,10 +69,14 @@ test("Client can stop working with specialist", async () => {
     ],
   });
 
-  const stopWorkingButton = await findByLabelText("Stop Working");
+  const stopWorkingButton = await findByLabelText(
+    "Stop Working",
+    {},
+    { timeout: 5000 },
+  );
   fireEvent.click(stopWorkingButton);
   const reason = await findByLabelText(
-    "Let us know why you are stopping this work"
+    "Let us know why you are stopping this work",
   );
   fireEvent.change(reason, { target: { value: "Because" } });
   const confirm = getAllByLabelText("Stop Working")[1];

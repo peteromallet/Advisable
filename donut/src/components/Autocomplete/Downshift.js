@@ -4,7 +4,7 @@ import Downshift from "downshift";
 
 export const stateChangeTypes = Downshift.stateChangeTypes;
 
-const DownshiftMulti = props => {
+const DownshiftMulti = (props) => {
   const stateReducer = (state, changes) => {
     switch (changes.type) {
       case Downshift.stateChangeTypes.keyDownEnter:
@@ -21,7 +21,7 @@ const DownshiftMulti = props => {
   };
 
   const removeItem = (item, downshift) => {
-    const next = props.value.filter(i => i !== item.value);
+    const next = props.value.filter((i) => i !== item.value);
     props.onChange(next, downshift);
 
     if (props.onPrimaryChange && props.primary === item.value) {
@@ -52,17 +52,17 @@ const DownshiftMulti = props => {
 
   let selected;
   if (props.multiple) {
-    selected = props.value.map(item => {
+    selected = props.value.map((item) => {
       return find(props.options, { value: item });
     });
   } else {
     selected = find(props.options, { value: props.value }) || null;
   }
 
-  const downshiftProps = downshift => ({
+  const downshiftProps = (downshift) => ({
     ...downshift,
     selected,
-    remove: item => removeItem(item, downshift),
+    remove: (item) => removeItem(item, downshift),
   });
 
   return (
@@ -70,10 +70,10 @@ const DownshiftMulti = props => {
       {...props}
       onChange={handleSelection}
       stateReducer={stateReducer}
-      itemToString={item => (item ? item.label : "")}
+      itemToString={(item) => (item ? item.label : "")}
       selectedItem={props.multiple ? null : props.value || null}
     >
-      {downshift => props.children(downshiftProps(downshift))}
+      {(downshift) => props.children(downshiftProps(downshift))}
     </Downshift>
   );
 };

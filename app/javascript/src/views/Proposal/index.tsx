@@ -1,6 +1,5 @@
 import * as React from "react";
-import { flowRight as compose } from "lodash";
-import { graphql } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "../../components/Layout";
 import Rate from "./Rate";
@@ -13,12 +12,18 @@ import Loading from "./Loading";
 import FETCH_APPLICATION from "./fetchApplication";
 import Notfound from "../NotFound";
 
-const Proposals = ({ fetchApplication }) => {
-  if (fetchApplication.loading) {
+const Proposals = ({ match }) => {
+  const { loading, data } = useQuery(FETCH_APPLICATION, {
+    variables: {
+      id: match.params.applicationId,
+    },
+  });
+
+  if (loading) {
     return <Loading />;
   }
 
-  const application = fetchApplication.application;
+  const application = data.application;
   if (!application) return <Notfound />;
   const urlPrefix = `/applications/${application.airtableId}/proposal`;
 
@@ -30,25 +35,25 @@ const Proposals = ({ fetchApplication }) => {
           <Route
             exact
             path={urlPrefix}
-            render={props => <Rate application={application} {...props} />}
+            render={(props) => <Rate application={application} {...props} />}
           />
           <Route
             path={`${urlPrefix}/type`}
-            render={props => (
+            render={(props) => (
               <ProjectType application={application} {...props} />
             )}
           />
           <Route
             path={`${urlPrefix}/tasks`}
-            render={props => <Tasks application={application} {...props} />}
+            render={(props) => <Tasks application={application} {...props} />}
           />
           <Route
             path={`${urlPrefix}/send`}
-            render={props => <Send application={application} {...props} />}
+            render={(props) => <Send application={application} {...props} />}
           />
           <Route
             path={`${urlPrefix}/sent`}
-            render={props => <Sent application={application} {...props} />}
+            render={(props) => <Sent application={application} {...props} />}
           />
           <Route render={() => <Redirect to={urlPrefix} />} />
         </Switch>
@@ -57,13 +62,4 @@ const Proposals = ({ fetchApplication }) => {
   );
 };
 
-export default compose(
-  graphql(FETCH_APPLICATION, {
-    name: "fetchApplication",
-    options: (props: any) => ({
-      variables: {
-        id: props.match.params.applicationId,
-      },
-    }),
-  })
-)(Proposals);
+export default Proposals;

@@ -5,7 +5,7 @@ export default function Container({ children, ...props }) {
   return (
     <StyledContainer
       mx="auto"
-      maxWidth="1280px"
+      maxWidth="1240px"
       px={["s", "m", "l"]}
       {...props}
     >

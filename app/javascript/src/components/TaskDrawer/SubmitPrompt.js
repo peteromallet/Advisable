@@ -1,6 +1,6 @@
 // Renders the prompt to submit a task
 import React from "react";
-import { graphql } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
 import Slider from "../Slider";
 import Button from "../Button";
@@ -17,11 +17,13 @@ import { Confirmation, ConfirmationContainer } from "./styles";
 const CONFIRM_APPROVED = "CONFIRM_APPROVED";
 const HOURS_WORKED = "HOURS_WORKED";
 
-const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
+const SubmitPrompt = ({ task, onClose, onSubmit }) => {
   const [loading, setLoading] = React.useState(false);
   const [step, setStep] = React.useState(CONFIRM_APPROVED);
+  const [submitTask] = useMutation(SUBMIT_TASK);
   const [estimate, setCost] = React.useState(
-    (Number(task.estimate) + Number(task.flexibleEstimate || task.estimate)) / 2
+    (Number(task.estimate) + Number(task.flexibleEstimate || task.estimate)) /
+      2,
   );
 
   const handleConfirmApproved = () => {
@@ -129,7 +131,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
                 label="Hours Worked"
                 max={task.flexibleEstimate}
                 step={isFixedPricing ? "5000" : "1"}
-                onChange={e => setCost(e.target.value)}
+                onChange={(e) => setCost(e.target.value)}
               />
             </Padding>
             <ButtonGroup fullWidth>
@@ -150,4 +152,4 @@ const SubmitPrompt = ({ task, onClose, onSubmit, submitTask }) => {
   );
 };
 
-export default graphql(SUBMIT_TASK, { name: "submitTask" })(SubmitPrompt);
+export default SubmitPrompt;

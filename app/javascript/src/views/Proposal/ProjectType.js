@@ -1,8 +1,7 @@
 import * as React from "react";
 import { Formik, Form, Field } from "formik";
-import { graphql } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
-import { flowRight as compose } from "lodash";
 import { Box, Text, Checkbox, NumberedList, Button } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Card from "../../components/Card";
@@ -20,11 +19,12 @@ const numberMask = createNumberMask({
   suffix: " hours",
 });
 
-const ProjectType = ({ history, application, updateApplication }) => {
+const ProjectType = ({ history, application }) => {
   const isMobile = useMobile();
   const { t } = useTranslation();
+  const [updateApplication] = useMutation(UPDATE_APPLICATION);
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     const response = await updateApplication({
       variables: {
         input: {
@@ -49,7 +49,7 @@ const ProjectType = ({ history, application, updateApplication }) => {
     accept: false,
   };
 
-  const handleLimitChange = formik => e => {
+  const handleLimitChange = (formik) => (e) => {
     let value = e.target.value;
     if (value) {
       value = value.replace(" hours", "");
@@ -70,7 +70,7 @@ const ProjectType = ({ history, application, updateApplication }) => {
         initialValues={initialValues}
         validationSchema={projectTypeValidationSchema}
       >
-        {formik => (
+        {(formik) => (
           <Form>
             <Padding size="xl">
               <Padding bottom="s">
@@ -89,7 +89,7 @@ const ProjectType = ({ history, application, updateApplication }) => {
                   name="projectType"
                   value="Fixed"
                   data-testid="fixed"
-                  onChange={e => {
+                  onChange={(e) => {
                     formik.setFieldValue("accept", false);
                     formik.handleChange(e);
                   }}
@@ -104,7 +104,7 @@ const ProjectType = ({ history, application, updateApplication }) => {
                   name="projectType"
                   value="Flexible"
                   data-testid="flexible"
-                  onChange={e => {
+                  onChange={(e) => {
                     formik.setFieldValue("accept", false);
                     formik.handleChange(e);
                   }}
@@ -195,6 +195,4 @@ const ProjectType = ({ history, application, updateApplication }) => {
   );
 };
 
-export default compose(
-  graphql(UPDATE_APPLICATION, { name: "updateApplication" })
-)(ProjectType);
+export default ProjectType;

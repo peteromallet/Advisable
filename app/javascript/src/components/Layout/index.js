@@ -5,7 +5,7 @@ let Layout = styled.div`
   width: 100%;
   display: flex;
   margin: 0 auto;
-  max-width: 1080px;
+  max-width: 1240px;
   padding: 40px 20px;
 
   ${breakpoints.small(css`
@@ -26,7 +26,7 @@ const sidebarWidths = {
 let Sidebar = styled.div`
   flex-shrink: 0;
   margin-right: 50px;
-  width: ${props => sidebarWidths[props.size || "m"]};
+  width: ${(props) => sidebarWidths[props.size || "m"]};
 
   @media (max-width: 900px) {
     width: 100%;
@@ -41,7 +41,7 @@ const mainWidths = {
 let Main = styled.div`
   word-wrap: break-word;
   overflow-wrap: break-word;
-  width: ${props => mainWidths[props.size || "m"]};
+  width: ${(props) => mainWidths[props.size || "m"]};
   flex-grow: 1;
   flex-shrink: 1;
 

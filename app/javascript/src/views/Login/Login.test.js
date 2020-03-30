@@ -1,11 +1,9 @@
-import { fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import VIEWER from "../../graphql/queries/viewer";
 import renderApp from "../../testHelpers/renderApp";
 import mockData from "../../__mocks__/graphqlFields";
 import LOGIN from "./login";
 import PROJECTS from "../Projects/getProjects";
-
-afterEach(cleanup);
 
 test("User can login", async () => {
   const user = mockData.user();
@@ -76,8 +74,7 @@ test("User can login", async () => {
   fireEvent.change(password, { target: { value: "testing123" } });
   let login = await app.findByLabelText("Login");
   fireEvent.click(login);
-  const header = await app.findByText("Your projects");
-  expect(header).toBeInTheDocument();
+  await app.findByText("Find a new freelancer");
 });
 
 test("User is redirected if already logged in", async () => {
@@ -112,8 +109,7 @@ test("User is redirected if already logged in", async () => {
     ],
   });
 
-  const text = await app.findByText("Your projects");
-  expect(text).toBeInTheDocument();
+  await app.findByText("Find a new freelancer");
 });
 
 test("It shows API errors", async () => {

@@ -1,9 +1,14 @@
 module.exports = {
   verbose: true,
+  testTimeout: 20000,
   roots: ["app/javascript/src", "donut/src"],
-  testEnvironment: "jest-environment-jsdom-fifteen",
+  testEnvironment: "jest-environment-jsdom-sixteen",
   setupFilesAfterEnv: ["<rootDir>/app/javascript/src/testHelpers/setup.js"],
-  moduleDirectories: ["node_modules", "app/javascript"],
+  moduleDirectories: [
+    "node_modules",
+    "app/javascript",
+    "app/javascript/src/testHelpers",
+  ],
   moduleNameMapper: {
     "@advisable/donut": "<rootDir>/donut/src",
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":

@@ -1,17 +1,7 @@
-jest.setTimeout(10000);
+import "@testing-library/jest-dom/extend-expect";
 
-// this is just a little hack to silence a warning that we'll get until react
-// fixes this: https://github.com/facebook/react/pull/14853
-const originalError = console.error;
-beforeAll(() => {
-  console.error = (...args) => {
-    if (/Warning.*not wrapped in act/.test(args[0])) {
-      return;
-    }
-    originalError.call(console, ...args);
-  };
-});
+import { configure } from "@testing-library/dom";
 
-afterAll(() => {
-  console.error = originalError;
+configure({
+  asyncUtilTimeout: 5000,
 });

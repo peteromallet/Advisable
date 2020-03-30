@@ -36,7 +36,7 @@ gem 'sentry-raven'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem 'webpacker', '~> 4.0.x'
+gem 'webpacker', '~> 5.0.1'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -47,7 +47,6 @@ gem 'airrecord', '~> 1.0.2'
 # For graphQL endpoint
 gem 'graphql'
 gem 'parser'
-gem 'rollbar'
 gem 'stripe', '~> 5.14'
 gem 'attr_encrypted', '~> 3.1.0'
 
