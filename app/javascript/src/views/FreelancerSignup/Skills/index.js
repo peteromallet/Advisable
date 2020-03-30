@@ -1,5 +1,4 @@
 import React from "react";
-import Rollbar from "rollbar";
 import gql from "graphql-tag";
 import { get, sortBy } from "lodash";
 import { Formik, Form } from "formik";
@@ -29,10 +28,6 @@ const Skills = ({ history, location, specialist }) => {
   const initialValues = {
     skills: get(location.state, "skills") || [],
   };
-
-  if (error) {
-    Rollbar.debug(error.message);
-  }
 
   // We want to store the skills in the location state so that they are
   // persisted accross browser refreshes and navigation. They are not actually

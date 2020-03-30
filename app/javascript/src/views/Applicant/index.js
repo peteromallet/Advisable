@@ -1,6 +1,5 @@
 import React from "react";
 import { get } from "lodash";
-import Rollbar from "rollbar";
 import { useQuery } from "@apollo/react-hooks";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "src/components/Layout";
