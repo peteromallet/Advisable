@@ -11,7 +11,7 @@ import GET_APPLICATION from "../getApplicationForClient";
 import CandidateAttributeList from "../../../components/CandidateAttributeList";
 import ClientActions from "./ClientActions";
 
-const ClientSidebar = ({ props }) => {
+const ClientSidebar = (props) => {
   const { data, loading, error } = useQuery(GET_APPLICATION, {
     variables: {
       id: props.applicationId,
