@@ -17,7 +17,7 @@ class Types::ProfileProjectType < Types::BaseType
   end
 
   def title
-    "#{primary_skill.name} with #{company_name}"
+    "#{primary_skill.try(:name)} with #{company_name}"
   end
 
   def industry
