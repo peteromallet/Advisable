@@ -10,7 +10,7 @@ import SpecialistActions from "./SpecialistActions";
 import GET_APPLICATION from "../getApplicationForSpecialist";
 
 // Renders the specialist sidebar on the messages view
-const SpecialistSidebar = () => {
+const SpecialistSidebar = (props) => {
   const { data, loading, error } = useQuery(GET_APPLICATION, {
     variables: {
       id: props.applicationId,
