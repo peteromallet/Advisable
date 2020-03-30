@@ -1,9 +1,7 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
-import { flowRight as compose } from "lodash";
 import { Redirect } from "react-router-dom";
-import { graphql } from "react-apollo";
-import Text from "../../components/Text";
+import { useMutation } from "@apollo/react-hooks";
 import Card from "../../components/Card";
 import Button from "../../components/Button";
 import ButtonGroup from "../../components/ButtonGroup";
@@ -14,15 +12,16 @@ import SEND_PROPOSAL from "./sendProposal.graphql";
 import { useMobile } from "../../components/Breakpoint";
 import { hasCompleteTasksStep } from "./validationSchema";
 
-const Send = ({ application, history, sendProposal }) => {
+const Send = ({ application, history }) => {
   const isMobile = useMobile();
+  const [sendProposal] = useMutation(SEND_PROPOSAL);
 
   // If they haven't complete the tasks step then redirect back
   if (!hasCompleteTasksStep(application)) {
     return <Redirect to="tasks" />;
   }
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await sendProposal({
       variables: {
         input: {
@@ -45,7 +44,7 @@ const Send = ({ application, history, sendProposal }) => {
           onSubmit={handleSubmit}
           initialValues={{ proposalComment: application.proposalComment || "" }}
         >
-          {formik => (
+          {(formik) => (
             <Form>
               <Padding bottom="l">
                 <TextField
@@ -76,4 +75,4 @@ const Send = ({ application, history, sendProposal }) => {
   );
 };
 
-export default compose(graphql(SEND_PROPOSAL, { name: "sendProposal" }))(Send);
+export default Send;

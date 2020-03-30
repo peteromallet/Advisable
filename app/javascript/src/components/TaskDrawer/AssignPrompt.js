@@ -1,6 +1,6 @@
 // Renders the prompt to assign a task
 import React from "react";
-import { graphql } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
 import Button from "../Button";
 import ButtonGroup from "../ButtonGroup";
@@ -8,7 +8,8 @@ import Padding from "../Spacing/Padding";
 import ASSIGN_TASK from "./assignTask.graphql";
 import { Confirmation, ConfirmationContainer } from "./styles";
 
-const AssignPrompt = ({ task, onClose, onAssign, assignTask }) => {
+const AssignPrompt = ({ task, onClose, onAssign }) => {
+  const [assignTask] = useMutation(ASSIGN_TASK);
   const [loading, setLoading] = React.useState(false);
 
   const handleAssign = async () => {
@@ -58,4 +59,4 @@ const AssignPrompt = ({ task, onClose, onAssign, assignTask }) => {
   );
 };
 
-export default graphql(ASSIGN_TASK, { name: "assignTask" })(AssignPrompt);
+export default AssignPrompt;

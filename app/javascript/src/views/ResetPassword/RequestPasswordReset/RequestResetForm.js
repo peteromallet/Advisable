@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Box, Text, Label, Input, RoundedButton } from "@advisable/donut";
 import validationSchema from "./validationSchema";
 import REQUEST_PASSWORD_RESET from "./requestPasswordReset.graphql";
@@ -25,7 +25,7 @@ function RequestResetForm({ onSubmit }) {
       initialValues={{ email: "" }}
       onSubmit={handleSubmit}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <Text
             mb="l"

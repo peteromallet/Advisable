@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Field } from "formik";
 import { find, get } from "lodash";
 import gql from "graphql-tag";
-import { graphql } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Box } from "@advisable/donut";
 import Loading from "../Loading";
 import TextField from "../TextField";
@@ -20,7 +20,7 @@ export const GET_DATA = gql`
   }
 `;
 
-const runValidation = schema => value => {
+const runValidation = (schema) => (value) => {
   try {
     schema.validateSync(value);
   } catch (err) {
@@ -32,16 +32,17 @@ const emailValidation = Yup.string()
   .required("Please enter your billing email")
   .email("Please enter a valid email");
 
-const InvoiceSettingsFields = ({ data, formik }) => {
+const InvoiceSettingsFields = ({ formik }) => {
+  const { data, loading } = useQuery(GET_DATA);
   let countries = get(data, "countries", []);
   const countryValue = get(formik.values, "invoiceSettings.address.country");
-  const country = find(countries, c => {
+  const country = find(countries, (c) => {
     return c.code === countryValue || c.name === countryValue;
   });
 
-  if (data.loading) return <Loading />;
+  if (loading) return <Loading />;
 
-  const required = errorMessage => value => {
+  const required = (errorMessage) => (value) => {
     if (!value) return errorMessage;
   };
 
@@ -116,4 +117,4 @@ const InvoiceSettingsFields = ({ data, formik }) => {
   );
 };
 
-export default graphql(GET_DATA)(InvoiceSettingsFields);
+export default InvoiceSettingsFields;

@@ -1,7 +1,7 @@
 import { find } from "lodash";
 import * as React from "react";
 import { Formik, Form } from "formik";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
 import { Box, Text } from "@advisable/donut";
 import { TextField } from "../../../components";
@@ -62,7 +62,7 @@ const Questions = ({
     );
   }
 
-  const goBack = formik => {
+  const goBack = (formik) => {
     let url;
     if (number > 1) {
       formik.resetForm();
@@ -117,7 +117,7 @@ const Questions = ({
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <Box padding={{ _: "l", m: "xl " }}>
             <Text

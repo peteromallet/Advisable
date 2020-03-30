@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
-import { get, flowRight as compose } from "lodash";
-import { graphql } from "react-apollo";
+import { get } from "lodash";
+import { useQuery } from "@apollo/react-hooks";
 import { connect, Field } from "formik";
 import { Box } from "@advisable/donut";
 import Select from "../Select";
@@ -25,10 +25,11 @@ const GET_DATA = gql`
   ${addressFieldsFragment}
 `;
 
-const AddressFields = ({ label, name, formik, data }) => {
-  let countries = get(data, "countries") || [];
+const AddressFields = ({ label, name, formik }) => {
+  const { data, loading } = useQuery(GET_DATA);
+  const countries = data?.countries || [];
 
-  if (data.loading) return <>loading...</>;
+  if (loading) return <>loading...</>;
 
   return (
     <>
@@ -95,7 +96,4 @@ const AddressFields = ({ label, name, formik, data }) => {
   );
 };
 
-export default compose(
-  connect,
-  graphql(GET_DATA)
-)(AddressFields);
+export default connect(AddressFields);

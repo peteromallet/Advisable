@@ -20,7 +20,7 @@ const ApplicationFlow = ({ application, match, location }) => {
   // variable is an array of step names to keep track of the steps that have
   // been skipped.
   const [skipped, setSkipped] = React.useState([]);
-  const skipStep = step => setSkipped([...skipped, step.name]);
+  const skipStep = (step) => setSkipped([...skipped, step.name]);
 
   // Various parts of this flow need to act differently based on wether the user
   // is applying or updating an existing application.
@@ -49,7 +49,7 @@ const ApplicationFlow = ({ application, match, location }) => {
       hidden: application.project.questions.length === 0,
       isComplete:
         !isApplying ||
-        filter(application.questions, q => !isEmpty(q.answer)).length >=
+        filter(application.questions, (q) => !isEmpty(q.answer)).length >=
           application.project.questions.length,
     },
     {
@@ -70,7 +70,9 @@ const ApplicationFlow = ({ application, match, location }) => {
       isComplete:
         !isApplying ||
         Boolean(
-          application.rate && application.acceptsFee && application.acceptsTerms
+          application.rate &&
+            application.acceptsFee &&
+            application.acceptsTerms,
         ),
     },
   ];
@@ -80,7 +82,7 @@ const ApplicationFlow = ({ application, match, location }) => {
   let ContentContainer = isMobile ? "div" : Card;
 
   // Iterate through the STEPS and filter our any where hidden is true.
-  const activeSteps = filter(STEPS, step => !step.hidden);
+  const activeSteps = filter(STEPS, (step) => !step.hidden);
   const { project } = application;
 
   return (
@@ -157,7 +159,7 @@ const ApplicationFlow = ({ application, match, location }) => {
                   key={step.path}
                   exact={step.exact}
                   path={`/invites/:applicationId/apply${step.path}`}
-                  render={props =>
+                  render={(props) =>
                     previousStepComplete ? (
                       <Component
                         steps={STEPS}

@@ -1,7 +1,7 @@
 import React from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
-import { useQuery, useMutation } from "react-apollo";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { Icon, Box, Text, RoundedButton, Autocomplete } from "@advisable/donut";
 import { useParams, useLocation, Redirect } from "react-router-dom";
 import Loading from "../../components/Loading";
@@ -11,7 +11,7 @@ import useWindowSize from "../../utilities/useWindowSize";
 import UPDATE_AVAILABILITY from "./updateAvailability";
 import GET_CONSULTATION from "./getConsultation";
 
-const TIMEZONE_OPTIONS = ZONES.map(z => ({ label: z, value: z }));
+const TIMEZONE_OPTIONS = ZONES.map((z) => ({ label: z, value: z }));
 
 const validationSchmea = Yup.object({
   availability: Yup.array().min(6),
@@ -39,7 +39,7 @@ const Availability = ({ nextStep, previousStepURL }) => {
 
   const specialist = data.consultation.specialist;
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await updateAvailability({
       variables: {
         input: {
@@ -73,7 +73,7 @@ const Availability = ({ nextStep, previousStepURL }) => {
         initialValues={initialValues}
         validationSchmea={validationSchmea}
       >
-        {formik => (
+        {(formik) => (
           <Form>
             <Box
               flexShrink={1}
@@ -104,8 +104,8 @@ const Availability = ({ nextStep, previousStepURL }) => {
                 name="timeZone"
                 label="Time Zone"
                 options={TIMEZONE_OPTIONS}
-                formatInputValue={value => `Timezone: ${value}`}
-                onChange={o => {
+                formatInputValue={(value) => `Timezone: ${value}`}
+                onChange={(o) => {
                   formik.setFieldTouched("timeZone", true);
                   formik.setFieldValue("timeZone", o.value);
                 }}
@@ -120,7 +120,7 @@ const Availability = ({ nextStep, previousStepURL }) => {
               <AvailabilityInput
                 selected={formik.values.availability}
                 timeZone={formik.values.timeZone}
-                onSelect={a => {
+                onSelect={(a) => {
                   formik.setFieldTouched("availability", true);
                   formik.setFieldValue("availability", a);
                 }}

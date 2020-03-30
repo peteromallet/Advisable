@@ -1,7 +1,7 @@
 // Renders the freelancer signup flow.
 import React from "react";
 import { get } from "lodash";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { useTheme, Box } from "@advisable/donut";
 import { Switch, Route, Redirect, matchPath } from "react-router-dom";
 import Logo from "../../components/Logo";
@@ -78,7 +78,7 @@ const FreelancerSignup = ({ location }) => {
           <Box mt="l" mb="xxl" position="relative">
             <Logo />
             <Box display="flex" position="absolute" right={0} top={15}>
-              {STEPS.map(step => {
+              {STEPS.map((step) => {
                 const isActive = matchPath(location.pathname, {
                   path: `/freelancers/signup${step.path}`,
                   exact: step.exact,
@@ -99,12 +99,12 @@ const FreelancerSignup = ({ location }) => {
             </Box>
           </Box>
           <Switch>
-            {STEPS.map(step => (
+            {STEPS.map((step) => (
               <Route
                 key={step.path}
                 path={`/freelancers/signup${step.path}`}
                 exact={step.exact}
-                render={route => {
+                render={(route) => {
                   // If the step required authenticated user
                   if (step.authRequired) {
                     // and there is no viewer

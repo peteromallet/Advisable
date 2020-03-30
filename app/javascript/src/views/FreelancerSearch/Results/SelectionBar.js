@@ -28,7 +28,7 @@ const SelectionBar = ({ search, specialists }) => {
         <Box height={80} display="flex" alignItems="center">
           <Box width="100%">
             <Box ml="8px">
-              {specialists.map(s => (
+              {specialists.map((s) => (
                 <Box
                   key={s.id}
                   display="inline-block"
@@ -53,17 +53,16 @@ const SelectionBar = ({ search, specialists }) => {
               </Text>
             </Box>
           </Box>
-          <RoundedButton
-            as={Link}
-            size="l"
+          <Link
             to={{
               ...location,
               pathname: `/freelancer_search/${search.id}/availability`,
             }}
-            suffix={<Icon icon="arrow-right" />}
           >
-            Continue
-          </RoundedButton>
+            <RoundedButton size="l" suffix={<Icon icon="arrow-right" />}>
+              Continue
+            </RoundedButton>
+          </Link>
         </Box>
       </Box>
     </Box>

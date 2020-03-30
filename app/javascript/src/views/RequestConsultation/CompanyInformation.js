@@ -1,6 +1,6 @@
 import React from "react";
 import * as Yup from "yup";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { useParams, useLocation, Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
@@ -10,9 +10,7 @@ import CREATE_CONSULTATION from "./createConsultation";
 const validationSchema = Yup.object({
   firstName: Yup.string().required("Please enter your first name"),
   lastName: Yup.string().required("Please enter your last name"),
-  email: Yup.string()
-    .required("Please enter your email")
-    .email(),
+  email: Yup.string().required("Please enter your email").email(),
   company: Yup.string().required("Please enter your company name"),
 });
 
@@ -69,7 +67,7 @@ const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
         ...location.state,
         ...values,
         consultationId: consultation.id,
-      }
+      },
     );
   };
 
@@ -97,7 +95,7 @@ const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        {formik => (
+        {(formik) => (
           <Form>
             <Box mb="m" display="flex">
               <Box mr="xxs" width="100%">

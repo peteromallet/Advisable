@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Formik } from "formik";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { useRoutedModal, useModal } from "@advisable/donut";
 import FETCH_APPLICATION from "../fetchApplication.js";
 import UPDATE_APPLICATION from "../updateApplication.js";
@@ -28,7 +28,7 @@ const References = ({
     `/invites/${applicationId}/apply/references/new_project/client`,
     {
       returnLocation: `/invites/${applicationId}/apply/references`,
-    }
+    },
   );
 
   const handleSubmit = async (values, formik) => {
@@ -41,7 +41,7 @@ const References = ({
     await submit(values);
   };
 
-  const submit = async values => {
+  const submit = async (values) => {
     await updateApplication({
       variables: {
         input: {
@@ -76,17 +76,17 @@ const References = ({
   const handleNewProject = () => {
     notifications.notify(
       "We have sent an email with details on how to validate this project. In the meantime, you can add more references.",
-      { duration: 4000 }
+      { duration: 4000 },
     );
   };
 
   const initialValues = {
-    references: application.previousProjects.map(r => r.project.airtableId),
+    references: application.previousProjects.map((r) => r.project.airtableId),
   };
 
   return (
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-      {formik => (
+      {(formik) => (
         <>
           <ConfirmationModal
             formik={formik}
@@ -108,15 +108,15 @@ const References = ({
               formik.setFieldValue(
                 "references",
                 formik.values.references.concat(
-                  previousProject.project.airtableId
-                )
+                  previousProject.project.airtableId,
+                ),
               );
               const data = proxy.readQuery({
                 query: FETCH_APPLICATION,
                 variables: { id: applicationId },
               });
               data.application.specialist.previousProjects.push(
-                previousProject
+                previousProject,
               );
               proxy.writeQuery({ query: FETCH_APPLICATION, data });
             }}

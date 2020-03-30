@@ -1,32 +1,14 @@
 import { rgba } from "polished";
 import styled from "styled-components";
+import { theme, StyledIcon } from "@advisable/donut";
 import { NavLink } from "react-router-dom";
-import arrow from './arrow.svg';
-
-export const ProjectTitle = styled.h3`
-  color: #00071f;
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 2px;
-  letter-spacing: -0.03em;
-
-  @media screen and (max-width: 800px) {
-    font-size: 22px;
-  }
-`;
-
-export const TotalApplicants = styled.span`
-  color: #565f80;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-`;
+import arrow from "./arrow.svg";
 
 export const NavMenu = styled.div`
   margin-top: 25px;
   padding-top: 25px;
   margin-bottom: 20px;
-  border-top: 1px solid #C6CDE1;
+  border-top: 1px solid ${theme.colors.neutral200};
 
   @media screen and (max-width: 800px) {
     padding-top: 0;
@@ -46,7 +28,7 @@ export const NavMenuItemCount = styled.div`
   position: absolute;
   border-radius: 10px;
   transform: translateY(-50%);
-  background: ${rgba("#1E2C60", 0.06)};
+  background: ${theme.colors.blue100};
 `;
 
 export const NavMenuItemIcon = styled.div`
@@ -64,23 +46,28 @@ export const NavMenuItem = styled(NavLink)`
   font-weight: 500;
   margin-left: -15px;
   position: relative;
-  border-radius: 8px;
+  border-radius: 20px;
   margin-bottom: 5px;
   align-items: center;
   text-decoration: none;
-  padding: 0 15px 0 45px;
+  padding: 0 15px 0 48px;
+  transition: background-color 100ms;
 
   &:hover {
-    color: #404966;
-    background-color: ${rgba("#DADEEE", 0.5)};
+    color: ${theme.colors.neutral800};
+    background: ${rgba(theme.colors.blue100, 0.5)};
   }
 
   &.active {
-    color: #173fcd;
-    background-color: #dadeee;
+    color: ${theme.colors.blue900};
+    background-color: ${theme.colors.blue100};
+
+    ${StyledIcon} {
+      color: ${theme.colors.blue700};
+    }
 
     ${NavMenuItemCount} {
-      background: ${rgba("#1E2C60", 0.1)};
+      background: white;
     }
   }
 
@@ -92,9 +79,11 @@ export const NavMenuItem = styled(NavLink)`
     border-radius: 0;
     padding: 0 0 0 35px;
     background: transparent url(${arrow}) no-repeat center right;
-    border-bottom: 1px solid #C6CDE1;
+    border-bottom: 1px solid #c6cde1;
 
-    &:hover { background-color: transparent }
+    &:hover {
+      background-color: transparent;
+    }
 
     ${NavMenuItemIcon} {
       left: 0;

@@ -1,6 +1,6 @@
 // Renders the prompt to submit a task
 import React from "react";
-import { graphql } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
 import Button from "../Button";
 import ButtonGroup from "../ButtonGroup";
@@ -8,8 +8,9 @@ import Padding from "../Spacing/Padding";
 import DELETE_TASK from "./deleteTask.graphql";
 import { Confirmation, ConfirmationContainer } from "./styles";
 
-const DeletePrompt = ({ task, onClose, onDelete, deleteTask }) => {
+const DeletePrompt = ({ task, onClose, onDelete }) => {
   const [loading, setLoading] = React.useState(false);
+  const [deleteTask] = useMutation(DELETE_TASL);
 
   const handleDelete = async () => {
     setLoading(true);
@@ -43,4 +44,4 @@ const DeletePrompt = ({ task, onClose, onDelete, deleteTask }) => {
   );
 };
 
-export default graphql(DELETE_TASK, { name: "deleteTask" })(DeletePrompt);
+export default DeletePrompt;

@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
 import { useBreakpoint } from "@advisable/donut";
 import NotFound, { isNotFound } from "../NotFound";

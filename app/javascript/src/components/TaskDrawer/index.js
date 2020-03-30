@@ -5,7 +5,7 @@
 // become very bloated from when it was a simple task drawer.
 import * as React from "react";
 import { withRouter } from "react-router-dom";
-import { useQuery, useMutation } from "react-apollo";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { get, filter } from "lodash";
 import Drawer from "../Drawer";
 import { TaskDrawer as TaskDrawerStyles } from "./styles";
@@ -73,7 +73,7 @@ const TaskDrawer = ({
   };
 
   const handleSave = async (attr, fields) => {
-    setSaving(s => ({ ...s, [attr]: true }));
+    setSaving((s) => ({ ...s, [attr]: true }));
     const mutation = mutations[attr];
     await mutation({
       variables: {
@@ -83,15 +83,15 @@ const TaskDrawer = ({
         },
       },
     });
-    setSaving(s => ({ ...s, [attr]: false }));
+    setSaving((s) => ({ ...s, [attr]: false }));
   };
 
-  const handleDelete = task => {
+  const handleDelete = (task) => {
     setPrompt(null);
     onDeleteTask(task);
   };
 
-  const isSaving = filter(saving, loading => loading).length > 0;
+  const isSaving = filter(saving, (loading) => loading).length > 0;
   const task = get(query, "data.task");
 
   if (!task) return null;
@@ -167,7 +167,7 @@ const TaskDrawer = ({
             <RepeatPrompt
               task={task}
               onClose={() => setPrompt(null)}
-              onRepeat={task => {
+              onRepeat={(task) => {
                 history.replace(task.id);
                 if (onCreateRepeatingTask) {
                   onCreateRepeatingTask(task);

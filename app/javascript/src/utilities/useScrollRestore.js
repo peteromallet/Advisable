@@ -8,9 +8,7 @@ function useScrollRestore(selector, dependents = []) {
       const el = document.querySelector(selector);
       if (el && el.strollTo) el.scrollTo(0, 0);
     } else {
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-      }, 5);
+      window.scrollTo(0, 0);
     }
   }, dependents);
 

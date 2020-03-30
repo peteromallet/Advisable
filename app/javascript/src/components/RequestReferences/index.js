@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { graphql } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Padding } from "@advisable/donut";
 import Text from "../Text";
 import Modal from "../Modal";
@@ -16,10 +16,10 @@ const RequestReferences = ({
   name,
   applicationId,
   notifications,
-  requestReferences,
 }) => {
   const isMobile = useMobile();
   const [isLoading, setLoading] = useState(false);
+  const [requestReferences] = useMutation(REQUEST_REFERENCES);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -55,6 +55,4 @@ const RequestReferences = ({
   );
 };
 
-export default graphql(REQUEST_REFERENCES, {
-  name: "requestReferences",
-})(withNotifications(RequestReferences));
+export default withNotifications(RequestReferences);

@@ -1,8 +1,12 @@
-import generate from "nanoid/generate";
-import wait from "waait";
-import { fireEvent, cleanup } from "@testing-library/react";
+import generateID from "../utilities/generateID";
+import {
+  renderRoute,
+  fireEvent,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "test-utils";
 import VIEWER from "../graphql/queries/viewer";
-import renderApp from "../testHelpers/renderApp";
+import { mockViewer, mockQuery, mockMutation } from "apolloMocks";
 import generateType from "../__mocks__/graphqlFields";
 import GET_ACTIVE_APPLICATION from "../views/Booking/getActiveApplication";
 import {
@@ -11,67 +15,41 @@ import {
 } from "../graphql/mutations/tasks";
 import SET_PROJECT_TYPE from "../views/Booking/ProjectTypeModal/setProjectType";
 
-jest.mock("nanoid/generate");
-afterEach(cleanup);
-jest.setTimeout(10000);
+jest.mock("../utilities/generateID");
 
 test("Renders the manage view for a specialist", async () => {
   let viewer = generateType.user();
-  const { findByText } = renderApp({
+  const app = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
-        },
-        result: {
-          data: {
-            viewer,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_ACTIVE_APPLICATION,
-          variables: {
+      mockViewer(viewer),
+      mockQuery(
+        GET_ACTIVE_APPLICATION,
+        { id: "rec1234" },
+        {
+          viewer,
+          application: generateType.application({
             id: "rec1234",
-          },
-        },
-        result: {
-          data: {
-            viewer,
-            application: generateType.application({
-              id: "rec1234",
-              airtableId: "rec1234",
-              tasks: [generateType.task({ name: "This is a test task" })],
-              project: generateType.project({
-                user: generateType.user(),
-              }),
-              specialist: generateType.specialist(),
+            airtableId: "rec1234",
+            tasks: [generateType.task({ name: "This is a test task" })],
+            project: generateType.project({
+              user: generateType.user(),
             }),
-          },
+            specialist: generateType.specialist(),
+          }),
         },
-      },
+      ),
     ],
   });
 
-  expect(await findByText("This is a test task")).toBeInTheDocument();
+  await app.findByText(/test task/i, {}, { timeout: 5000 });
 });
 
 test("Renders a tutorial video if it's the first time viewing", async () => {
-  const { findByText } = renderApp({
+  const { findByText } = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
-        },
-        result: {
-          data: {
-            viewer: generateType.user(),
-          },
-        },
-      },
+      mockViewer(generateType.user()),
       {
         request: {
           query: GET_ACTIVE_APPLICATION,
@@ -98,13 +76,11 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
     ],
   });
 
-  expect(
-    await findByText("tutorials.fixedProjects.heading")
-  ).toBeInTheDocument();
+  await findByText("tutorials.fixedProjects.heading");
 });
 
 test("Does not render a tutorial video if the user has completed it", async () => {
-  const { findByText, queryByText } = renderApp({
+  const { findByText, queryByText } = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
       {
@@ -150,97 +126,78 @@ test("Does not render a tutorial video if the user has completed it", async () =
 });
 
 test("The client can change the project type", async () => {
-  const { findByText, getByText, getByLabelText, getByTestId } = renderApp({
+  const app = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
+      mockViewer(
+        generateType.user({
+          completedTutorials: ["fixedProjects"],
+        }),
+      ),
+      mockQuery(
+        GET_ACTIVE_APPLICATION,
+        {
+          id: "rec1234",
         },
-        result: {
-          data: {
-            viewer: generateType.user({
-              completedTutorials: ["fixedProjects"],
-            }),
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_ACTIVE_APPLICATION,
-          variables: {
+        {
+          viewer: generateType.user(),
+          application: generateType.application({
             id: "rec1234",
-          },
+            airtableId: "rec1234",
+            projecType: "Fixed",
+            tasks: [generateType.task({ name: "This is a test task" })],
+            project: generateType.project({
+              user: generateType.user(),
+            }),
+            specialist: generateType.specialist(),
+          }),
         },
-        result: {
-          data: {
-            viewer: generateType.user(),
+      ),
+      mockMutation(
+        SET_PROJECT_TYPE,
+        {
+          application: "rec1234",
+          projectType: "Flexible",
+          monthlyLimit: 100,
+        },
+        {
+          setTypeForProject: {
+            __typename: "SetTypeForProjectPayload",
             application: generateType.application({
               id: "rec1234",
               airtableId: "rec1234",
-              projecType: "Fixed",
-              tasks: [generateType.task({ name: "This is a test task" })],
-              project: generateType.project({
-                user: generateType.user(),
-              }),
-              specialist: generateType.specialist(),
+              projectType: "Flexible",
+              monthlyLimit: 100,
             }),
           },
         },
-      },
-      {
-        request: {
-          query: SET_PROJECT_TYPE,
-          variables: {
-            input: {
-              application: "rec1234",
-              projectType: "Flexible",
-              monthlyLimit: 100,
-            },
-          },
-        },
-        result: {
-          data: {
-            setTypeForProject: {
-              __typename: "SetTypeForProjectPayload",
-              application: generateType.application({
-                id: "rec1234",
-                airtableId: "rec1234",
-                projectType: "Flexible",
-                monthlyLimit: 100,
-              }),
-            },
-          },
-        },
-      },
+      ),
     ],
   });
 
-  await findByText("Active Projects"); // wait for page to load
-  const button = getByLabelText("Edit project type");
+  const button = await app.findByLabelText("Edit project type");
   fireEvent.click(button);
-  const flexible = getByTestId("flexible");
+  const flexible = app.getByTestId("flexible");
   fireEvent.click(flexible);
-  const limit = getByLabelText("Set a monthly hour cap (to 200-hour max)");
+  const limit = app.getByLabelText("Set a monthly hour cap (to 200-hour max)");
   fireEvent.change(limit, { target: { value: "100" } });
-  let checkbox = getByLabelText(
-    "I accept that I will be charged 50% of the monthly limit immediately"
+  let checkbox = app.getByLabelText(
+    "I accept that I will be charged 50% of the monthly limit immediately",
   );
   fireEvent.click(checkbox);
-  checkbox = getByLabelText(
-    "I consent to being charged for all hours I approve within the monthly limit I have specified, until I stop working with Test"
+  checkbox = app.getByLabelText(
+    "I consent to being charged for all hours I approve within the monthly limit I have specified, until I stop working with Test",
   );
   fireEvent.click(checkbox);
-  const submit = getByLabelText("Update Project Type");
+  const submit = app.getByLabelText("Update Project Type");
   fireEvent.click(submit);
-  await wait(0);
-  await wait(0);
-  expect(getByText("100 hours")).toBeInTheDocument();
-  expect(getByTestId("projectType")).toHaveTextContent("Flexible");
+  await waitForElementToBeRemoved(checkbox);
+  const projectType = app.getByTestId("projectType");
+  await waitFor(() => expect(projectType).toHaveTextContent("Flexible"));
 });
 
 test("The client can add a task", async () => {
-  generate.mockReturnValue("abc");
+  generateID.mockReturnValue("tas_abc");
 
   const user = generateType.user();
   const project = generateType.project({ user });
@@ -254,7 +211,7 @@ test("The client can add a task", async () => {
 
   let viewer = generateType.user();
 
-  const { findByText, findByLabelText, getByTestId } = renderApp({
+  const app = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
       {
@@ -339,11 +296,11 @@ test("The client can add a task", async () => {
     ],
   });
 
-  const createButton = await findByText("Add a project");
+  const createButton = await app.findByText("Add a project");
   fireEvent.click(createButton);
-  const name = getByTestId("nameField");
+  const name = app.getByTestId("nameField");
   fireEvent.change(name, { target: { value: "This is a new task" } });
-  const close = await findByLabelText("Close Drawer");
+  const close = app.getByLabelText("Close Drawer");
   fireEvent.click(close);
-  expect(await findByText("This is a new task")).toBeInTheDocument();
+  await app.findByText("This is a new task");
 });

@@ -1,5 +1,5 @@
 import React from "react";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import REQUEST_CONSULTATIONS from "./requestConsultations";
 import { useLocation, useHistory, Redirect } from "react-router-dom";
@@ -22,7 +22,7 @@ const Topic = ({ data }) => {
     topic: "",
   };
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await requestConsultations({
       variables: {
         input: {
@@ -73,7 +73,7 @@ const Topic = ({ data }) => {
           initialValues={initialValues}
           validationSchema={validationSchema}
         >
-          {formik => (
+          {(formik) => (
             <Form>
               <Box mb="l">
                 <Field
@@ -94,7 +94,7 @@ const Topic = ({ data }) => {
                 <Field
                   as={ScaleInput}
                   name="likelyToHire"
-                  onChange={v => {
+                  onChange={(v) => {
                     formik.setFieldValue("likelyToHire", v);
                   }}
                 />

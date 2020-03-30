@@ -1,7 +1,7 @@
 import React from "react";
 import { get, sortBy } from "lodash";
 import { Formik, Form, Field } from "formik";
-import { useQuery, useMutation } from "react-apollo";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   Box,
   Card,
@@ -36,7 +36,7 @@ const Profile = () => {
     avatar: null,
     hourlyRate: get(data, "viewer.hourlyRate") / 100.0,
     publicUse: get(data, "viewer.publicUse"),
-    skills: (get(data, "viewer.skills") || []).map(s => s.name),
+    skills: (get(data, "viewer.skills") || []).map((s) => s.name),
   };
 
   const handleSubmit = async (values, formik) => {
@@ -65,7 +65,7 @@ const Profile = () => {
 
   return (
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-      {formik => (
+      {(formik) => (
         <Form>
           <Card padding="l" borderRadius={8}>
             <Text size="xxl" color="neutral.9" as="h2" weight="semibold" mb="l">
@@ -76,13 +76,13 @@ const Profile = () => {
                 Proile photo
               </Text>
               <FileUpload
-                onChange={blob => {
+                onChange={(blob) => {
                   formik.setFieldValue("avatar", blob.signed_id);
                 }}
-                preview={file => {
+                preview={(file) => {
                   if (file) {
                     const reader = new FileReader();
-                    reader.onload = e => setProfilePhoto(e.target.result);
+                    reader.onload = (e) => setProfilePhoto(e.target.result);
                     reader.readAsDataURL(file);
                   }
 
@@ -122,7 +122,7 @@ const Profile = () => {
               onBlur={formik.handleBlur}
               value={formik.values.skills}
               error={formik.touched.skills && formik.errors.skills}
-              onChange={skills => {
+              onChange={(skills) => {
                 formik.setFieldTouched("skills", true);
                 formik.setFieldValue("skills", skills);
               }}
@@ -142,7 +142,7 @@ const Profile = () => {
               placeholder="Hourly rate"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              onChange={e => {
+              onChange={(e) => {
                 if (e.target.value.length > 0) {
                   const amount = Number(e.target.value.replace(/\,/, ""));
                   formik.setFieldValue(e.target.name, amount);

@@ -3,8 +3,7 @@ import { get } from "lodash";
 import queryString from "query-string";
 import { useTranslation } from "react-i18next";
 import { useLocation, Redirect } from "react-router-dom";
-import { useMutation } from "react-apollo";
-import { motion, AnimatePresence } from "framer-motion";
+import { useMutation } from "@apollo/react-hooks";
 import {
   Box,
   Text,
@@ -58,9 +57,8 @@ const SaveSearch = () => {
       },
     });
 
-    formik.setSubmitting(false);
-
     if (response.errors) {
+      formik.setSubmitting(false);
       const code = get(response.errors, "[0].extensions.code");
       if (code === "emailTaken") {
         formik.setFieldError(
@@ -75,7 +73,7 @@ const SaveSearch = () => {
                 Click here to sign in
               </Link>
             </Text>
-          </>
+          </>,
         );
       } else if (code === "nonCorporateEmail") {
         formik.setFieldError("email", t("errors.nonCorporateEmail"));
@@ -111,48 +109,33 @@ const SaveSearch = () => {
         alignItems="center"
       >
         <Box width="100%">
-          <AnimatePresence>
-            {get(data, "createUserAccount") ? (
-              <motion.div
-                key="done"
-                initial={{ opacity: 0, y: 60 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ ease: "easeOut", duration: 0.25 }}
+          {get(data, "createUserAccount") ? (
+            <>
+              <Text
+                as="h2"
+                mb="xs"
+                color="blue.8"
+                fontSize="xxxl"
+                fontWeight="semibold"
+                letterSpacing="-0.02em"
               >
-                <Text
-                  as="h2"
-                  mb="xs"
-                  color="blue.8"
-                  fontSize="xxxl"
-                  fontWeight="semibold"
-                  letterSpacing="-0.02em"
-                >
-                  Tell us more
-                </Text>
-                <Text folor="neutral.9" lineHeight="m" mb="xl">
-                  Great! We think we’ll have the perfect person for this project
-                  but we need to know a little bit more about your project
-                  first.
-                </Text>
-                <RoundedButton
-                  size="l"
-                  suffix={<Icon icon="arrow-right" />}
-                  onClick={handleContinue}
-                >
-                  Setup Project
-                </RoundedButton>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="save"
-                exit={{ opacity: 0, y: -100, position: "absolute" }}
-                transition={{ ease: "easeOut", duration: 0.25 }}
+                Tell us more
+              </Text>
+              <Text folor="neutral.9" lineHeight="m" mb="xl">
+                Great! We think we’ll have the perfect person for this project
+                but we need to know a little bit more about your project first.
+              </Text>
+              <RoundedButton
+                size="l"
+                suffix={<Icon icon="arrow-right" />}
+                onClick={handleContinue}
               >
-                <Form onSubmit={handleSubmit} />
-              </motion.div>
-            )}
-          </AnimatePresence>
+                Setup Project
+              </RoundedButton>
+            </>
+          ) : (
+            <Form onSubmit={handleSubmit} />
+          )}
         </Box>
         {isDesktop && (
           <Box textAlign="center">

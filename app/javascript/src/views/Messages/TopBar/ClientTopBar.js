@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash";
-import { withRouter } from "react-router-dom";
-import { graphql } from "react-apollo";
+import { useHistory } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
 import { Text, Padding, Flex } from "@advisable/donut";
 import Icon from "../../../components/Icon";
 import Avatar from "../../../components/Avatar";
@@ -9,12 +9,19 @@ import Status from "../../../components/Status";
 import GET_APPLICATION from "../getApplicationForClient";
 import { Topbar } from "../styles";
 
-const ClientTopbar = ({ history, data }) => {
-  if (data.loading) {
+const ClientTopbar = ({ props }) => {
+  const history = useHistory();
+  const { data, loading, error } = useQuery(GET_APPLICATION, {
+    variables: {
+      id: props.applicationId,
+    },
+  });
+
+  if (loading) {
     return <>loading...</>;
   }
 
-  if (data.error) {
+  if (error) {
     return <>Failed to fetch application</>;
   }
 
@@ -25,10 +32,8 @@ const ClientTopbar = ({ history, data }) => {
   let application = data.application;
   let specialist = data.application.specialist;
 
-  const handleClick = e => {
-    let url = `/projects/${application.project.airtableId}/applications/${
-      application.airtableId
-    }`;
+  const handleClick = (e) => {
+    let url = `/projects/${application.project.airtableId}/applications/${application.airtableId}`;
     if (application.status === "Working") {
       url = `/manage/${application.airtableId}`;
     }
@@ -79,12 +84,4 @@ const ClientTopbar = ({ history, data }) => {
   );
 };
 
-export default withRouter(
-  graphql(GET_APPLICATION, {
-    options: props => ({
-      variables: {
-        id: props.applicationId,
-      },
-    }),
-  })(ClientTopbar)
-);
+export default ClientTopbar;

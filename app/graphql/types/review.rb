@@ -14,16 +14,16 @@ class Types::Review < Types::BaseType
 
   def name
     return object.project.user.name if object.project.is_a?(Project)
-    object.project.contact_name
+    object.project.try(:contact_name)
   end
 
   def role
     return object.project.user.title if object.project.is_a?(Project)
-    object.project.contact_job_title
+    object.project.try(:contact_job_title)
   end
 
   def company_name
     return object.project.user.company_name if object.project.is_a?(Project)
-    object.project.client_name
+    object.project.try(:client_name)
   end
 end

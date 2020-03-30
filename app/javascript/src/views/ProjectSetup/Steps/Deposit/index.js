@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash";
-import { graphql } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
 import { Box, Text } from "@advisable/donut";
 import { useStripe } from "@stripe/react-stripe-js";
@@ -12,8 +12,13 @@ import PaymentPending from "./PaymentPending";
 import GET_PAYMENT_INTENT from "./getPaymentIntent";
 import { Total, Label, Amount } from "./styles";
 
-const Deposit = ({ data, project, history }) => {
+const Deposit = ({ project, history }) => {
   const stripe = useStripe();
+  const query = useQuery(GET_PAYMENT_INTENT, {
+    variables: {
+      id: project.airtableId,
+    },
+  });
   const [useNewCard, setUseNewCard] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [pending, setPending] = React.useState(false);
@@ -27,9 +32,9 @@ const Deposit = ({ data, project, history }) => {
     history.replace(`/project_setup/${projectId}/confirm`);
   };
 
-  let paymentMethod = get(data, "viewer.paymentMethod");
+  let paymentMethod = get(query.data, "viewer.paymentMethod");
 
-  if (data.loading) return <>loading...</>;
+  if (query.loading) return <>loading...</>;
 
   if (pending) {
     return <PaymentPending onSuccess={handleSuccess} id={project.airtableId} />;
@@ -38,10 +43,10 @@ const Deposit = ({ data, project, history }) => {
   const handleExistingPaymentMethod = async () => {
     setLoading(true);
     const { error } = await stripe.handleCardPayment(
-      data.project.depositPaymentIntent.secret,
+      query.data.project.depositPaymentIntent.secret,
       {
         payment_method: paymentMethod.id,
-      }
+      },
     );
 
     if (error) {
@@ -56,7 +61,7 @@ const Deposit = ({ data, project, history }) => {
   // method.
   const handleCardDetails = async (stripe, details, formik) => {
     const { error } = await stripe.handleCardPayment(
-      data.project.depositPaymentIntent.secret,
+      query.data.project.depositPaymentIntent.secret,
       details.card,
       {
         payment_method_data: {
@@ -64,7 +69,7 @@ const Deposit = ({ data, project, history }) => {
             name: details.cardholder,
           },
         },
-      }
+      },
     );
 
     if (error) {
@@ -78,7 +83,7 @@ const Deposit = ({ data, project, history }) => {
     useNewCard || Boolean(paymentMethod) === false ? (
       <PaymentMethodForm
         buttonLabel="Complete Setup"
-        userId={data.project.user.id}
+        userId={query.data.project.user.id}
         handleCardDetails={handleCardDetails}
       />
     ) : (
@@ -115,7 +120,7 @@ const Deposit = ({ data, project, history }) => {
         freelancer if you do go ahead with it.
       </Text>
       <Total>
-        <Amount>{currency(data.project.depositOwed)}</Amount>
+        <Amount>{currency(query.data.project.depositOwed)}</Amount>
         <Label>Deposit</Label>
       </Total>
       {paymentInfo}
@@ -123,10 +128,4 @@ const Deposit = ({ data, project, history }) => {
   );
 };
 
-export default graphql(GET_PAYMENT_INTENT, {
-  options: props => ({
-    variables: {
-      id: props.project.airtableId,
-    },
-  }),
-})(Deposit);
+export default Deposit;

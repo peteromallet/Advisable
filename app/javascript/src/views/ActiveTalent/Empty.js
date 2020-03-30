@@ -19,9 +19,9 @@ export default () => {
           project with a freelancer you will be able to manage their work from
           here.
         </Text>
-        <RoundedButton as={Link} to="/freelancer_search">
-          Create a project
-        </RoundedButton>
+        <Link to="/freelancer_search">
+          <RoundedButton>Create a project</RoundedButton>
+        </Link>
       </div>
     </div>
   );

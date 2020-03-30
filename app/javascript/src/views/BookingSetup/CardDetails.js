@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { Text, Card, Button, Box } from "@advisable/donut";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import Loading from "../../components/Loading";
 import PaymentMethod from "../../components/PaymentMethod";
 import UpdatePaymentMethod from "../../components/UpdatePaymentMethod";

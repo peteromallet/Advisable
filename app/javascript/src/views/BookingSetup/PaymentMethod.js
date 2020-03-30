@@ -1,6 +1,6 @@
 import React from "react";
 import * as Yup from "yup";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import {
@@ -69,7 +69,7 @@ const PaymentMethod = ({ data, nextStep }) => {
           initialValues={initialValues}
           validationSchema={validationSchema}
         >
-          {formik => (
+          {(formik) => (
             <Form>
               <RadioGroup mb="l">
                 <Field
@@ -103,9 +103,7 @@ const PaymentMethod = ({ data, nextStep }) => {
                 <Text color="red.6" mb="l">
                   {formik.errors.paymentMethod}
                 </Text>
-              ) : (
-                undefined
-              )}
+              ) : undefined}
               <Button
                 size="l"
                 type="submit"

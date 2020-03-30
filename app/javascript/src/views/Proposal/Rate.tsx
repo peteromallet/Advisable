@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
-import { flowRight as compose } from "lodash";
-import { graphql } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
@@ -20,13 +19,13 @@ type Props = {
   history: any;
   booking: any;
   application: ApplicationType;
-  updateApplication: (opt: any) => any;
 };
 
-const Rate = ({ history, application, updateApplication }: Props) => {
+const Rate = ({ history, application }: Props) => {
   const isMobile = useMobile();
+  const [updateApplication] = useMutation(UPDATE_APPLICATION);
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     const response = await updateApplication({
       variables: {
         input: {
@@ -48,7 +47,7 @@ const Rate = ({ history, application, updateApplication }: Props) => {
     rate: application.rate || "",
   };
 
-  const calculateRate = amount => {
+  const calculateRate = (amount) => {
     const rate = (amount * 0.8).toFixed(2);
     return currency(parseFloat(rate) * 100.0);
   };
@@ -61,7 +60,7 @@ const Rate = ({ history, application, updateApplication }: Props) => {
         initialValues={initialValues}
         validationSchema={rateValidationSchema}
       >
-        {formik => (
+        {(formik) => (
           <Form>
             <Padding size="l">
               <Padding bottom="s">
@@ -84,7 +83,7 @@ const Rate = ({ history, application, updateApplication }: Props) => {
                   value={formik.values.rate}
                   onBlur={formik.handleBlur}
                   error={formik.touched.rate && formik.errors.rate}
-                  onChange={e => {
+                  onChange={(e) => {
                     const value = e.target.value;
                     const stripped = value.replace(/[^0-9\.-]+/g, "");
                     const val = stripped ? Number(stripped) : null;
@@ -97,7 +96,7 @@ const Rate = ({ history, application, updateApplication }: Props) => {
                   description={
                     Number(formik.values.rate) > 0 &&
                     `You would earn ${calculateRate(
-                      formik.values.rate
+                      formik.values.rate,
                     )} per hour`
                   }
                 />
@@ -121,6 +120,4 @@ const Rate = ({ history, application, updateApplication }: Props) => {
   );
 };
 
-export default compose(
-  graphql(UPDATE_APPLICATION, { name: "updateApplication" })
-)(Rate);
+export default Rate;

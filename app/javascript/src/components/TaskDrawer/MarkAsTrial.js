@@ -1,6 +1,6 @@
 import React from "react";
 import gql from "graphql-tag";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Box, Button, Text, Link } from "@advisable/donut";
 
 export const UPDATE_TASK = gql`
@@ -34,7 +34,7 @@ const MarkAsTrial = ({ task }) => {
     return null;
   }
 
-  const setTrial = value => async () => {
+  const setTrial = (value) => async () => {
     await update({
       variables: {
         input: {

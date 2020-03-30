@@ -2,7 +2,7 @@
 // required for the booking to be in a working state.
 import React from "react";
 import { Box } from "@advisable/donut";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import {
   Switch,
   Route,
@@ -24,7 +24,7 @@ const STEPS = [
   {
     path: "/book/:applicationId/payment_method",
     component: PaymentMethod,
-    enabled: data => !data.viewer.paymentsSetup,
+    enabled: (data) => !data.viewer.paymentsSetup,
   },
   {
     path: "/book/:applicationId/card_details",
@@ -35,12 +35,12 @@ const STEPS = [
   {
     path: "/book/:applicationId/invoice_settings",
     component: InvoiceSettings,
-    enabled: data => !data.viewer.paymentsSetup,
+    enabled: (data) => !data.viewer.paymentsSetup,
   },
   {
     path: "/book/:applicationId/payment_terms",
     component: PaymentTerms,
-    enabled: data => !data.viewer.paymentsSetup,
+    enabled: (data) => !data.viewer.paymentsSetup,
   },
   {
     path: "/book/:applicationId/booking_type",
@@ -61,7 +61,7 @@ const BookingSetup = () => {
     return <Redirect to={`/manage/${data.application.airtableId}`} />;
   }
 
-  const filteredSteps = STEPS.filter(step => {
+  const filteredSteps = STEPS.filter((step) => {
     return step.enabled ? step.enabled(data) : true;
   });
 
@@ -75,7 +75,7 @@ const BookingSetup = () => {
             <Route
               key={step.path}
               path={step.path}
-              render={route => (
+              render={(route) => (
                 <Component
                   {...route}
                   data={data}

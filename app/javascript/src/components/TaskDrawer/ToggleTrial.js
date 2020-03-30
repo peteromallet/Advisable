@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { Menu } from "@advisable/donut";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
 import { MenuItem } from "reakit";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
@@ -52,7 +52,7 @@ const ToggleWithConfirmation = React.forwardRef(
         </DrawerModal>
       </>
     );
-  }
+  },
 );
 
 const ToggleTrial = ({ onToggle, task, menu }) => {

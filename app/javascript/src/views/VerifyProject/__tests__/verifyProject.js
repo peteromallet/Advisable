@@ -1,11 +1,9 @@
-import { cleanup, fireEvent } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import viewer from "../../../graphql/queries/viewer";
 import renderApp from "../../../testHelpers/renderApp";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import GET_DATA from "../getData";
 import VALIDATE_PROJECT from "../validateProject";
-
-afterEach(cleanup);
 
 test("Starts the verification process", async () => {
   const specialist = generateTypes.specialist();

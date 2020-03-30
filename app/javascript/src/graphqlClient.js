@@ -1,6 +1,4 @@
-import Rollbar from "rollbar";
 import { ApolloLink } from "apollo-link";
-import { onError } from "apollo-link-error";
 import { ApolloClient } from "apollo-client";
 import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
@@ -45,20 +43,9 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
-    graphQLErrors.map(({ message, path }) =>
-      Rollbar.debug(`[GraphQL error]: Message: ${message}, Path: ${path}`)
-    );
-
-  if (networkError) {
-    Rollbar.debug(`[Network error]: ${networkError}`);
-  }
-});
-
 const client = new ApolloClient({
   cache,
-  link: ApolloLink.from([authLink, errorLink, httpLink]),
+  link: ApolloLink.from([authLink, httpLink]),
   defaultOptions: {
     mutate: {
       errorPolicy: "all",

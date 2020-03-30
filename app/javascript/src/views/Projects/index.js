@@ -1,7 +1,7 @@
 // Renders the projects view for a user.
 import React from "react";
-import { useQuery } from "react-apollo";
-import { Box, Text } from "@advisable/donut";
+import { useQuery } from "@apollo/react-hooks";
+import { Container, Box, Text } from "@advisable/donut";
 import useScrollRestore from "../../utilities/useScrollRestore";
 import Loading from "./Loading";
 import PROJECTS from "./getProjects";
@@ -12,20 +12,20 @@ const Projects = () => {
   const { loading, data } = useQuery(PROJECTS);
 
   return (
-    <Box maxWidth={1100} mx="auto" pt="xl">
+    <Container pt="xl">
       <Text
         as="h2"
         fontSize="28px"
+        color="blue900"
         fontWeight="semibold"
-        color="blue.9"
-        letterSpacing="-0.03em"
+        letterSpacing="-0.02em"
       >
-        Your projects
+        Your Projects
       </Text>
       <Box height={1} bg="neutral.2" mt="l" mb="l" />
 
       {loading ? <Loading /> : <ProjectsList projects={data.viewer.projects} />}
-    </Box>
+    </Container>
   );
 };
 

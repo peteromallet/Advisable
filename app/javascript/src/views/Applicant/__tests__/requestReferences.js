@@ -1,11 +1,8 @@
-import { fireEvent, cleanup, within } from "@testing-library/react";
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute, fireEvent, within } from "test-utils";
 import VIEWER from "../../../graphql/queries/viewer";
 import graphql from "../../../__mocks__/graphqlFields";
 import GET_APPLICATION from "../fetchApplication";
 import REQUEST_REFERENCES from "../../../components/RequestReferences/requestReferences.graphql";
-
-afterEach(cleanup);
 
 test("Requesting references", async () => {
   // setup mock data
@@ -69,12 +66,16 @@ test("Requesting references", async () => {
     },
   ];
 
-  const { findByText, findByLabelText, getByRole } = renderApp({
+  const { findByText, findByLabelText, getByRole } = renderRoute({
     route: "/projects/rec123/applications/app123",
     graphQLMocks,
   });
 
-  const button = await findByLabelText("Request References");
+  const button = await findByLabelText(
+    "Request References",
+    {},
+    { timeout: 5000 },
+  );
   fireEvent.click(button);
   const modal = getByRole("dialog");
   const confirm = within(modal).getByLabelText("Request References");

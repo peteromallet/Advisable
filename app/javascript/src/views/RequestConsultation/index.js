@@ -1,7 +1,7 @@
 // Renders the steps for requesting a consultation with a specialist.
 import React from "react";
 import queryString from "query-string";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import {
   useParams,
   Switch,
@@ -47,7 +47,7 @@ const RequestConsultation = () => {
   const isComplete = Boolean(
     matchPath(location.pathname, {
       path: "/request_consultation/:specialistId/sent",
-    })
+    }),
   );
 
   const STEPS = [
@@ -115,14 +115,14 @@ const RequestConsultation = () => {
     return { ...location, pathname, state: state || location.state };
   };
 
-  const handleStepURL = index => (params, state) => {
+  const handleStepURL = (index) => (params, state) => {
     const step = STEPS[index];
     if (step) {
       return buildStepLocation(step, params, state);
     }
   };
 
-  const gotoStep = index => (params, state) => {
+  const gotoStep = (index) => (params, state) => {
     const nextStep = STEPS[index];
     if (nextStep) {
       history.push(buildStepLocation(nextStep, params, state));
@@ -152,7 +152,7 @@ const RequestConsultation = () => {
               <Route
                 key={step.path}
                 path={step.path}
-                render={route => (
+                render={(route) => (
                   <motion.div
                     key={step.path}
                     transition={{

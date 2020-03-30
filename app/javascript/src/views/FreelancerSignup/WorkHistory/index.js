@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { Button, Text, Box, Icon } from "@advisable/donut";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
@@ -12,7 +12,7 @@ const WorkHistory = ({ specialist, history }) => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);
   const [completeSetup] = useMutation(COMPLETE_SETUP);
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     const { data, errors } = await updateProfile({
       variables: {
         input: values,
@@ -35,7 +35,7 @@ const WorkHistory = ({ specialist, history }) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <Text as="h2" size="xxxl" weight="semibold" color="neutral.9" mb="s">
             Work history
@@ -76,7 +76,7 @@ const WorkHistory = ({ specialist, history }) => {
               preview={() => {
                 return <Icon icon="upload-cloud" ml="xs" color="neutral.6" />;
               }}
-              onChange={blob => {
+              onChange={(blob) => {
                 formik.setFieldValue("resume", blob.signed_id);
               }}
             />

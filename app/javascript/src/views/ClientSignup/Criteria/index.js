@@ -1,6 +1,6 @@
 import React from "react";
 import queryString from "query-string";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Box, Text, useTheme } from "@advisable/donut";
 import { useLocation, useHistory } from "react-router-dom";
 import Loading from "./Loading";
@@ -23,7 +23,7 @@ function Criteria() {
     return () => theme.updateTheme({ background: "default" });
   }, []);
 
-  const handleSubmit = search => {
+  const handleSubmit = (search) => {
     history.push({
       pathname: "/clients/signup/specialists",
       search: queryString.stringify({ ...queryParams, ...search }),

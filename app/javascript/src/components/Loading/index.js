@@ -2,9 +2,10 @@ import React from "react";
 import { Loading as Wrapper } from "./styles";
 import loading from "./loading.svg";
 
-const Loading = () => (
+const Loading = ({ children }) => (
   <Wrapper>
     <img src={loading} />
+    {children}
   </Wrapper>
 );
 

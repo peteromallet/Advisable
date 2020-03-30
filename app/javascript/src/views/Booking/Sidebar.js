@@ -1,6 +1,5 @@
 import React from "react";
 import { get } from "lodash";
-import { Mutation } from "react-apollo";
 import { Button, Tooltip, Box, Icon } from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";

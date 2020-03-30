@@ -44,14 +44,11 @@ const Sent = () => {
         animate={{ scale: 1 }}
         transition={{ delay: 0.3 }}
       >
-        <RoundedButton
-          as={Link}
-          to="/freelancer_search"
-          prefix={<Icon icon="search" />}
-          variant="secondary"
-        >
-          Make another search
-        </RoundedButton>
+        <Link to="/freelancer_search">
+          <RoundedButton prefix={<Icon icon="search" />} variant="secondary">
+            Make another search
+          </RoundedButton>
+        </Link>
       </motion.div>
     </Box>
   );

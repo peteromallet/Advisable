@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Button as DonutButton, Notice } from "@advisable/donut";
-import { withApollo } from "react-apollo";
+import { Button as DonutButton } from "@advisable/donut";
+import { useApolloClient } from "@apollo/react-hooks";
 import { matchPath } from "react-router";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
@@ -16,10 +16,11 @@ import { useMobile } from "../../components/Breakpoint";
 import FETCH_APPLICATION from "./fetchApplication";
 import { hasCompleteTasksStep } from "./validationSchema";
 
-const Tasks = ({ application, match, location, history, client }) => {
+const Tasks = ({ application, match, location, history }) => {
+  const client = useApolloClient();
   const [confirmModal, setConfirmModal] = React.useState(false);
   const isMobile = useMobile();
-  const onSelectTask = task => {
+  const onSelectTask = (task) => {
     history.push(`${match.url}/${task.id}`);
   };
 
@@ -30,7 +31,7 @@ const Tasks = ({ application, match, location, history, client }) => {
     },
   };
 
-  const handleNewTask = task => {
+  const handleNewTask = (task) => {
     const newData = client.readQuery(applicationQuery);
     newData.application.tasks.push(task);
     client.writeQuery({
@@ -41,9 +42,9 @@ const Tasks = ({ application, match, location, history, client }) => {
     history.push(`${match.url}/${task.id}`);
   };
 
-  const handleDeleteTask = task => {
+  const handleDeleteTask = (task) => {
     const newData = client.readQuery(applicationQuery);
-    newData.application.tasks = application.tasks.filter(t => {
+    newData.application.tasks = application.tasks.filter((t) => {
       return t.id !== task.id;
     });
     client.writeQuery({
@@ -73,11 +74,11 @@ const Tasks = ({ application, match, location, history, client }) => {
   // Wether or not the continue button should be visible
   const canContinue = hasCompleteTasksStep(application);
 
-  const showPromptForTask = task => {
+  const showPromptForTask = (task) => {
     return !Boolean(task.name) || !Boolean(task.description);
   };
 
-  const noticeForTask = task => {
+  const noticeForTask = (task) => {
     if (!task.name) {
       return "Please provide a name for this task to continue.";
     }
@@ -154,4 +155,4 @@ const Tasks = ({ application, match, location, history, client }) => {
   );
 };
 
-export default withApollo(Tasks);
+export default Tasks;

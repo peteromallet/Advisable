@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Text, Box, Button } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Radio from "../../../components/Radio";
@@ -16,7 +16,7 @@ const numberMask = createNumberMask({
 const FreelancingPreferences = ({ history }) => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     const { data, errors } = await updateProfile({
       variables: {
         input: {
@@ -41,7 +41,7 @@ const FreelancingPreferences = ({ history }) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <Text as="h2" size="xxxl" weight="semibold" color="neutral.9" mb="s">
             Freelancing Preferences

@@ -1,7 +1,10 @@
-import generate from "nanoid/generate";
-const CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+import { customAlphabet } from "nanoid";
+const CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const nanoid = customAlphabet(CHARS, 15);
 
-export default prefix => {
-  const id = generate(CHARS, 15);
-  return `${prefix}_${id}`
-}
+const generateID = (prefix) => {
+  const id = nanoid();
+  return `${prefix}_${id}`;
+};
+
+export default generateID;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import Text from "src/components/Text";
 import Modal from "src/components/Modal";
 import Select from "src/components/Select";
@@ -41,7 +41,7 @@ const RejectProposalModal = ({
     comment: "",
   };
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await mutate({
       variables: {
         input: {
@@ -57,7 +57,7 @@ const RejectProposalModal = ({
     }
 
     notifications.notify(
-      `${specialist.firstName}'s application has been rejected`
+      `${specialist.firstName}'s application has been rejected`,
     );
   };
 
@@ -68,7 +68,7 @@ const RejectProposalModal = ({
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        {formik => (
+        {(formik) => (
           <form onSubmit={formik.handleSubmit}>
             <Padding size="xl">
               <Padding bottom="s">

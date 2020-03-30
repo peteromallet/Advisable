@@ -26,7 +26,6 @@ const PaymentMethodForm = ({
     formikBag.setStatus(null);
     const card = elements.getElement(CardElement);
     await handleCardDetails(stripe, { ...values, card }, formikBag);
-    formikBag.setSubmitting(false);
   };
 
   const formikInitialValues = {
@@ -40,7 +39,7 @@ const PaymentMethodForm = ({
       validationSchema={validationSchema}
       initialValues={formikInitialValues}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <Box mb="s">
             <Field

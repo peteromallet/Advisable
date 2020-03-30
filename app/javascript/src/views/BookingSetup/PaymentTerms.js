@@ -1,6 +1,6 @@
 import React from "react";
 import * as Yup from "yup";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import { Card, Box, Text, Button, Radio, RadioGroup } from "@advisable/donut";
 import TextField from "../../components/TextField";
@@ -9,7 +9,7 @@ import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
 const validationSchema = Yup.object().shape({
   acceptTerms: Yup.boolean().oneOf(
     [true, false],
-    "Please accept the payment terms"
+    "Please accept the payment terms",
   ),
   exceptionalTerms: Yup.string().when("acceptTerms", {
     is: false,
@@ -20,7 +20,7 @@ const validationSchema = Yup.object().shape({
 const PaymentTerms = ({ nextStep }) => {
   const [updatePaymentMethod] = useMutation(UPDATE_PAYMENT_METHOD);
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await updatePaymentMethod({
       variables: { input: values },
     });
@@ -78,7 +78,7 @@ const PaymentTerms = ({ nextStep }) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        {formik => (
+        {(formik) => (
           <Form>
             <RadioGroup mb="l">
               <Field

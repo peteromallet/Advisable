@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { withApollo } from "react-apollo";
+import { useApolloClient } from "@apollo/react-hooks";
 import { Text } from "@advisable/donut";
 import React, { Fragment } from "react";
 import Loading from "src/components/Loading";
@@ -13,7 +13,8 @@ export const GET_DEPOSIT = gql`
   }
 `;
 
-const PaymentPending = ({ id, client, onSuccess }) => {
+const PaymentPending = ({ id, onSuccess }) => {
+  const client = useApolloClient();
   const [seconds, setSeconds] = React.useState(0);
   const [timer, setTimer] = React.useState(null);
 
@@ -35,7 +36,7 @@ const PaymentPending = ({ id, client, onSuccess }) => {
         }
 
         setSeconds(seconds + 2);
-      }, 2000)
+      }, 2000),
     );
   };
 
@@ -54,4 +55,4 @@ const PaymentPending = ({ id, client, onSuccess }) => {
   );
 };
 
-export default withApollo(PaymentPending);
+export default PaymentPending;

@@ -55,11 +55,6 @@ const openStyling = css`
   }
 `;
 
-const animating = css`
-  visibility: visible;
-  transition: opacity 200ms;
-`;
-
 // Because we are using custom component below e.g styled(ReakitTooltip) instead
 // of styled.div, styled-components will pass all props through. This emits a
 // warning for the interactable prop as it isn't a valid html prop. This simple
@@ -79,7 +74,6 @@ const StyledTooltip = styled(ExtractedReakitTooltip)`
   display: block !important;
 
   ${props => props.visible && openStyling};
-  ${props => props.unstable_animating && animating};
   ${props => props.interactable && interactableStyling}
 
   ${TooltipContent} {
@@ -96,7 +90,6 @@ const Tooltip = ({
 }) => {
   const tooltip = useTooltipState({
     gutter: gutter || 0,
-    unstable_animated: 200,
     placement,
   });
 

@@ -1,11 +1,13 @@
-import { withApollo } from "react-apollo";
+import { useApolloClient } from "@apollo/react-hooks";
 import React, { Fragment, useEffect } from "react";
 import { Spring } from "react-spring/renderprops.cjs";
 import CONFIRM_PROJECT from "./confirmProject.graphql";
 import { Wrapper, Progress } from "./styles";
 import illustration from "./illustration.png";
 
-const SubmitConfirmation = ({ project, match, history, client }) => {
+const SubmitConfirmation = ({ project, match, history }) => {
+  const client = useApolloClient();
+
   useEffect(() => {
     if (project.acceptedTerms === false) {
       history.replace("terms");
@@ -44,7 +46,7 @@ const SubmitConfirmation = ({ project, match, history, client }) => {
         <h4>Setting up your project...</h4>
         <Progress>
           <Spring from={{ width: "50%" }} to={{ width: "100%" }}>
-            {props => <div style={props} />}
+            {(props) => <div style={props} />}
           </Spring>
         </Progress>
       </Wrapper>
@@ -52,4 +54,4 @@ const SubmitConfirmation = ({ project, match, history, client }) => {
   );
 };
 
-export default withApollo(SubmitConfirmation);
+export default SubmitConfirmation;

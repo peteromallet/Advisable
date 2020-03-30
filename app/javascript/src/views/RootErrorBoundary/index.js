@@ -25,15 +25,11 @@ class RootErrorBoundary extends React.Component {
       return;
     }
 
-    Sentry.withScope(scope => {
+    Sentry.withScope((scope) => {
       scope.setExtras(errorInfo);
       const eventId = Sentry.captureException(error);
       this.setState({ eventId });
     });
-
-    if (window.Rollbar) {
-      Rollbar.error(error.message, error);
-    }
   }
 
   render() {

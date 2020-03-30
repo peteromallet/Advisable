@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import React from "react";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import { useParams, useLocation, Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
@@ -24,7 +24,7 @@ const Topic = ({ data, previousStepURL, nextStep }) => {
     topic: "",
   };
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     await updateConsultation({
       variables: {
         input: {
@@ -63,7 +63,7 @@ const Topic = ({ data, previousStepURL, nextStep }) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        {formik => (
+        {(formik) => (
           <Form>
             <Box mb="xl">
               <Field

@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import { Box, Card, Text } from "@advisable/donut";
 import NotFound from "../NotFound";
 import GET_DATA from "./getData";

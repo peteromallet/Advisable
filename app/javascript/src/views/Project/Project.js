@@ -17,11 +17,11 @@ const Project = ({ data }) => {
       <Route
         exact={isMobile}
         path="/projects/:projectID"
-        render={route => <ProjectNavigation {...route} data={data} />}
+        render={(route) => <ProjectNavigation {...route} data={data} />}
       />
       <Route
         path="/projects/:projectId/:status"
-        render={route => <Applications data={data} {...route} />}
+        render={(route) => <Applications data={data} {...route} />}
       />
       {/* If the user is not on mobile, and there is no status then redirect
         to the applied page. */}
