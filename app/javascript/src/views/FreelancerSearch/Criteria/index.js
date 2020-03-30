@@ -11,7 +11,7 @@ import {
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import { Container } from "./styles";
 import Select from "../../../components/Select";
 import Loading from "../../../components/Loading";
@@ -39,10 +39,11 @@ const FreelancerSearchCriteria = () => {
     companyExperienceRequired: false,
   };
 
-  const handleSubmit = async (values) => {
-    const response = await createSearch({
-      variables: {
-        input: values,
+  const handleSubmit = (values) => {
+    history.push({
+      pathname: "/freelancer_search/search",
+      state: {
+        search: values,
       },
     });
   };

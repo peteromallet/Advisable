@@ -1,5 +1,5 @@
 import renderApp from "../../testHelpers/renderApp";
-import { customAlphabet } from "nanoid";
+import generateID from "../../utilities/generateID";
 import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
@@ -13,10 +13,10 @@ import {
   updateTaskDescription as UPDATE_TASK_DESCRIPTION,
 } from "../../graphql/mutations/tasks";
 
-jest.mock("nanoid");
+jest.mock("../../utilities/generateID");
 
 test("Freelancer can create a task", async () => {
-  customAlphabet.mockReturnValue("abc");
+  generateID.mockReturnValue("tas_abc");
 
   const user = generateTypes.user();
   const project = generateTypes.project({ user });
