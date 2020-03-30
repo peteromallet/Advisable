@@ -10,7 +10,7 @@ const Component = ({ application, onCreate }) => {
   const [mutate] = useMutation(CREATE_TASK);
   const client = useApolloClient();
 
-  const handleClick = (client) => async () => {
+  const handleClick = async () => {
     const id = generateID("tas");
 
     const task = {
@@ -73,7 +73,7 @@ const Component = ({ application, onCreate }) => {
   };
 
   return (
-    <NewTask onClick={handleClick(client)} aria-label="Add a task">
+    <NewTask onClick={handleClick} aria-label="Add a task">
       <NewTaskIcon>
         <Icon icon="plus" strokeWidth={2} />
       </NewTaskIcon>

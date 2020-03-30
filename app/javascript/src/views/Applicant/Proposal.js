@@ -107,7 +107,7 @@ const Loading = () => (
   </Padding>
 );
 
-const Proposal = () => {
+const Proposal = (props) => {
   const { data, loading } = useQuery(FETCH_PROPOSAL, {
     variables: {
       id: props.match.params.applicationID,
