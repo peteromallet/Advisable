@@ -60,7 +60,7 @@ const BaseStyles = createGlobalStyle`
     line-height: 1;
     min-height: 100%;
     overflow-x: hidden;
-    background: ${props => BACKGROUND[props.theme.background]} !important;
+    background: ${(props) => BACKGROUND[props.theme.background]} !important;
     transition: background-color 400ms;
   }
 
@@ -82,6 +82,10 @@ const BaseStyles = createGlobalStyle`
   table {
     border-collapse: collapse;
     border-spacing: 0;
+  }
+
+  a {
+    text-decoration: none;
   }
 `;
 

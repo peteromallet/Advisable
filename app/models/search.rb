@@ -5,6 +5,8 @@ class Search < ApplicationRecord
   belongs_to :recommended_project,
              class_name: 'OffPlatformProject', required: false
 
+  has_many :consultations
+
   def results
     @results ||=
       begin
@@ -12,8 +14,7 @@ class Search < ApplicationRecord
           (
             search_by_skills + search_by_projects +
               search_by_off_platform_projects
-          )
-            .uniq
+          ).uniq
         records.sort_by { |s| s.average_score || 0 }.reverse
       end
   end
