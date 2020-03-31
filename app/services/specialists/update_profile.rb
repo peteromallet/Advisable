@@ -1,4 +1,4 @@
-j# Service object to update a specialists profile. This is primarily
+j # Service object to update a specialists profile. This is primarily
 # used by the graphql update_profile mutation.
 class Specialists::UpdateProfile < ApplicationService
   attr_accessor :specialist, :attributes
@@ -37,7 +37,7 @@ class Specialists::UpdateProfile < ApplicationService
       :public_use,
       :hourly_rate,
       :number_of_projects,
-      :primarily_freelance,
+      :primarily_freelance
     )
   end
 
@@ -60,6 +60,7 @@ class Specialists::UpdateProfile < ApplicationService
 
   # Update the country if it was passed
   def update_country
+    return unless attributes[:country]
     country = Country.find_by_uid(attributes[:country])
     country = Country.find_by_name(attributes[:country]) if country.nil?
     specialist.country = country
