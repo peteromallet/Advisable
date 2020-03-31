@@ -6,6 +6,7 @@ class Airtable::Consultation < Airtable::Base
   sync_column 'Reason For Consultation', to: :topic
   sync_column 'Consultation Status', to: :status
   sync_column 'Consultation Source', to: :source
+  sync_column 'Specialist Rejected Reason', to: :rejection_reason
   sync_column 'Likely To Hire', to: :likely_to_hire
   sync_association 'Specialist', to: :specialist
   sync_association 'Skill', to: :skill
@@ -28,6 +29,7 @@ class Airtable::Consultation < Airtable::Base
     self['Consultation Status'] = consultation.status
     self['Consultation Source'] = consultation.source
     self['Likely To Hire'] = consultation.likely_to_hire
+    self['Specialist Rejected Reason'] = consultation.rejection_reason
 
     self['Consultation Status - Request Started - Timestamp'] =
       consultation.request_started_at
