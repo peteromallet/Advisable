@@ -7,7 +7,9 @@ class Mutations::RequestConsultations < Mutations::BaseMutation
 
   field :consultations, [Types::ConsultationType], null: true
 
-  def authorized?(specialists:, skill:, topic:, likely_to_hire: nil, search:)
+  def authorized?(
+    specialists:, skill:, topic:, likely_to_hire: nil, search: nil
+  )
     if context[:current_user].nil?
       raise ApiError::NotAuthenticated.new('You are not logged in')
     end
@@ -22,7 +24,7 @@ class Mutations::RequestConsultations < Mutations::BaseMutation
     true
   end
 
-  def resolve(specialists:, skill:, topic:, likely_to_hire: nil, search:)
+  def resolve(specialists:, skill:, topic:, likely_to_hire: nil, search: nil)
     search_record = Search.find_by_uid(search)
 
     ActiveRecord::Base.transaction do

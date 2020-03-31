@@ -78,6 +78,7 @@ test("User can search for freelancers and request consultations with them", asyn
         createSearch: {
           __typename: "CreateSearchPayload",
           search: mockData.search({
+            id: "sea_123",
             skill,
             industry,
             recommendation: null,
@@ -118,6 +119,7 @@ test("User can search for freelancers and request consultations with them", asyn
             skill: skill.name,
             topic: "This is the topic",
             specialists: [specialists[0].id, specialists[1].id],
+            search: "sea_123",
           },
         },
       },
@@ -235,6 +237,7 @@ test("User can search for freelancers and get a recommendation", async () => {
         createSearch: {
           __typename: "CreateSearchPayload",
           search: mockData.search({
+            id: "sea_123",
             skill,
             industry,
             recommendation: mockData.profileProject({
@@ -289,6 +292,7 @@ test("User can search for freelancers and get a recommendation", async () => {
             skill: skill.name,
             topic: "This is the topic",
             specialists: [specialists[0].id],
+            search: "sea_123",
           },
         },
       },
