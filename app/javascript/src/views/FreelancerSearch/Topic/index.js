@@ -2,13 +2,14 @@ import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import REQUEST_CONSULTATIONS from "./requestConsultations";
-import { useLocation, useHistory, Redirect } from "react-router-dom";
+import { useParams, useLocation, useHistory, Redirect } from "react-router-dom";
 import { Box, Link, Text, Card, RoundedButton, Icon } from "@advisable/donut";
 import TextField from "../../../components/TextField";
 import ScaleInput from "../../../components/ScaleInput";
 import validationSchema from "./validationSchema";
 
 const Topic = ({ data }) => {
+  const params = useParams();
   const history = useHistory();
   const location = useLocation();
   const selected = location.state?.freelancers || [];
@@ -30,6 +31,7 @@ const Topic = ({ data }) => {
           skill: data.search.skill.name,
           topic: values.topic,
           likelyToHire: values.likelyToHire,
+          search: params.id,
         },
       },
     });
