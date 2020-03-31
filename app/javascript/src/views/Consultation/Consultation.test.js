@@ -125,6 +125,7 @@ test("Declining a consultation request", async () => {
         variables: {
           input: {
             consultation: consultation.id,
+            reason: "Reason",
           },
         },
       },
@@ -150,8 +151,13 @@ test("Declining a consultation request", async () => {
 
   const btn = await app.findByLabelText("Decline Request");
   fireEvent.click(btn);
+  const reason = app.getByLabelText(
+    "What is your reason for declining this consultation?",
+  );
+  fireEvent.change(reason, { target: { value: "Reason" } });
+  fireEvent.click(await app.findByLabelText("Decline Consultation"));
   const text = await app.findByText(
-    "You have declined this consultation request"
+    "You have declined this consultation request",
   );
   expect(text).toBeInTheDocument();
 });

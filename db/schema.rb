@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_065550) do
+ActiveRecord::Schema.define(version: 2020_03_31_104129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -199,6 +199,7 @@ ActiveRecord::Schema.define(version: 2020_03_31_065550) do
     t.datetime "rejected_at"
     t.datetime "advisable_rejected_at"
     t.bigint "search_id"
+    t.string "rejection_reason"
     t.index ["airtable_id"], name: "index_consultations_on_airtable_id"
     t.index ["interview_id"], name: "index_consultations_on_interview_id"
     t.index ["search_id"], name: "index_consultations_on_search_id"
