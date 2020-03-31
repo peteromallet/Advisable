@@ -3,10 +3,11 @@ class Mutations::RequestConsultations < Mutations::BaseMutation
   argument :topic, String, required: true
   argument :specialists, [ID], required: true
   argument :likely_to_hire, Integer, required: false
+  argument :search, ID, required: false
 
   field :consultations, [Types::ConsultationType], null: true
 
-  def authorized?(specialists:, skill:, topic:, likely_to_hire: nil)
+  def authorized?(specialists:, skill:, topic:, likely_to_hire: nil, search:)
     if context[:current_user].nil?
       raise ApiError::NotAuthenticated.new('You are not logged in')
     end
@@ -21,7 +22,9 @@ class Mutations::RequestConsultations < Mutations::BaseMutation
     true
   end
 
-  def resolve(specialists:, skill:, topic:, likely_to_hire: nil)
+  def resolve(specialists:, skill:, topic:, likely_to_hire: nil, search:)
+    search_record = Search.find_by_uid(search)
+
     ActiveRecord::Base.transaction do
       consultations =
         specialists.map do |id|
@@ -32,6 +35,7 @@ class Mutations::RequestConsultations < Mutations::BaseMutation
               skill: Skill.find_by_name!(skill),
               status: 'Request Completed',
               topic: topic,
+              search: search_record,
               likely_to_hire: likely_to_hire
             )
 

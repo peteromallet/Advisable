@@ -11,7 +11,7 @@ const NewProject = () => {
       aria-label="Find a new freelancer"
     >
       <StyledNewProjectIcon>
-        <Icon icon="plus" />
+        <Icon icon="search" />
       </StyledNewProjectIcon>
       Find a new freelancer
     </StyledNewProject>

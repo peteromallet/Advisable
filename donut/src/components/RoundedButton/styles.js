@@ -120,7 +120,7 @@ export const StyledButton = styled.button`
   letter-spacing: -0.01em;
   background: ${theme.colors.blue[5]};
   transition: background 100ms, color 100ms;
-  ${props => props.align === "left" && { justifyContent: "flex-start" }}
+  ${(props) => props.align === "left" && { justifyContent: "flex-start" }}
 
   svg {
     width: 20px;
@@ -145,7 +145,7 @@ export const StyledButton = styled.button`
     background: ${theme.colors.blue[6]};
   }
 
-  ${props => VARIANTS[props.variant || "primary"]}
+  ${(props) => VARIANTS[props.variant || "primary"]}
 `;
 
 export const StyledButtonPrefix = styled.div`
