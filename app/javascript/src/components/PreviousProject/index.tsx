@@ -9,19 +9,10 @@ import ProjectValidationStatus from "../ProjectValidationStatus";
 import PreviousProjectModal from "../PreviousProjectModal";
 import { PreviousProject, ProjectTitle, ProjectDescription } from "./styles";
 
-const companyName = project => {
-  if (project.__typename === "Project") {
-    return project.user.companyName;
-  }
-
-  return project.clientName;
-};
-
-const title = project => {
-  return `${project.primarySkill} at ${companyName(project)}`;
-};
-
-export default ({ specialistId, previousProject }) => {
+export default function PreviousProjectContainer({
+  specialistId,
+  previousProject,
+}) {
   const viewer = useViewer();
   const [isOpen, setOpen] = React.useState(false);
   const isMobile = useMobile();
@@ -38,8 +29,8 @@ export default ({ specialistId, previousProject }) => {
       />
 
       <PreviousProject onClick={() => setOpen(true)}>
-        <ProjectTitle>{title(project)}</ProjectTitle>
-        <ProjectDescription>{project.description}</ProjectDescription>
+        <ProjectTitle>{project.title}</ProjectTitle>
+        <ProjectDescription>{project.excerpt}</ProjectDescription>
         <Flex align="center">
           {!isMobile && (
             <Spacing paddingRight="s">
@@ -56,4 +47,4 @@ export default ({ specialistId, previousProject }) => {
       </PreviousProject>
     </React.Fragment>
   );
-};
+}

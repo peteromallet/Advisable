@@ -32,40 +32,23 @@ const GET_DATA = gql`
         overall
       }
       previousProjects {
-        project {
-          ... on Project {
-            id
-            airtableId
-            description
-            primarySkill
-            user {
-              companyName
-            }
-          }
-          ... on OffPlatformProject {
-            id
-            airtableId
-            description
-            primarySkill
-            clientName
-            confidential
-            skills
-            industry
-            validationStatus
-          }
-        }
-        reviews {
+        nodes {
           id
-          name
-          role
-          comment
-          ratings {
-            overall
-            skills
-            qualityOfWork
-            adherenceToSchedule
-            availability
-            communication
+          title
+          excerpt
+          reviews {
+            id
+            name
+            role
+            comment
+            ratings {
+              overall
+              skills
+              qualityOfWork
+              adherenceToSchedule
+              availability
+              communication
+            }
           }
         }
       }
@@ -96,6 +79,7 @@ const SpecialistModal = ({ modal, specialistId }) => {
       loading={loading}
     >
       <Box overflowY="auto">
+        {error && <>Something went wrong</>}
         <Scrollable>
           {!specialist ? (
             <Loading />
@@ -136,26 +120,27 @@ const SpecialistModal = ({ modal, specialistId }) => {
                   tags={specialist.skills}
                   name={specialist.firstName}
                 />
+                {specialist.previousProjects.nodes.length > 0 && (
+                  <>
+                    <Text
+                      my="l"
+                      as="h4"
+                      fontSize="xl"
+                      color="blue900"
+                      fontWeight="medium"
+                      letterSpacing="-0.01rem"
+                    >
+                      Previous Projects
+                    </Text>
+                    <Box height={1} bg="neutral100" />
+                    <PreviousProjects
+                      showValidationStatus={false}
+                      specialistId={specialist.airtableId}
+                      previousProjects={specialist.previousProjects.nodes}
+                    />
+                  </>
+                )}
               </Box>
-              {specialist.previousProjects.length > 0 && (
-                <>
-                  <Text
-                    as="h4"
-                    pl="l"
-                    fontSize="xl"
-                    color="neutral.8"
-                    letterSpacing="-0.03rem"
-                    fontWeight="semibold"
-                  >
-                    Previous Projects
-                  </Text>
-                  <PreviousProjects
-                    showValidationStatus={false}
-                    specialistId={specialist.airtableId}
-                    previousProjects={specialist.previousProjects}
-                  />
-                </>
-              )}
             </Box>
           )}
         </Scrollable>

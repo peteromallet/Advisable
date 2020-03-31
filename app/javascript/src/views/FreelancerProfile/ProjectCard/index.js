@@ -61,13 +61,15 @@ function ProjectCard({ specialistId, project }) {
     {
       ...location,
       pathname: `/freelancers/${specialistId}/projects`,
-    }
+    },
   );
 
   return (
     <Card>
       <Box padding="l">
-        {project.industry && <IndustryTag industry={project.industry} mb="s" />}
+        {project.primaryIndustry && (
+          <IndustryTag industry={project.primaryIndustry} mb="s" />
+        )}
         <Text
           mb="s"
           fontSize="xxl"
@@ -81,7 +83,7 @@ function ProjectCard({ specialistId, project }) {
           {project.excerpt}
         </Text>
         <Box mt="l" mb="l">
-          {project.skills.map(skill => (
+          {project.skills.map((skill) => (
             <Tag key={skill.id} mr="xxs" mb="xxs">
               {skill.name}
             </Tag>
@@ -93,16 +95,10 @@ function ProjectCard({ specialistId, project }) {
               specialistId={specialistId}
               projectId={project.id}
             />
-            <Link
-              to={`/request_consultation/${specialistId}`}
-            >
-
-            <RoundedButton
-              size="l"
-              prefix={<Icon icon="message-circle" />}
-            >
-              Request Consultation
-            </RoundedButton>
+            <Link to={`/request_consultation/${specialistId}`}>
+              <RoundedButton size="l" prefix={<Icon icon="message-circle" />}>
+                Request Consultation
+              </RoundedButton>
             </Link>
           </Box>
         </Modal>

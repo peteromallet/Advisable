@@ -1,11 +1,9 @@
 import React from "react";
 import Loading from "./Loading";
 import PreviousProject from "./PreviousProject";
-import Card from "../Card";
+import { Box, Text } from "@advisable/donut";
 import Button from "../Button";
 import Divider from "../Divider";
-import Heading from "../Heading";
-import { Padding } from "../Spacing";
 import PreviousProjectsModal from "../PreviousProjectsModal";
 
 const PreviousProjects = ({
@@ -17,7 +15,7 @@ const PreviousProjects = ({
   hasMoreProjects,
 }) => {
   const [viewAllProjects, setViewAllProjects] = React.useState(
-    !hasMoreProjects
+    !hasMoreProjects,
   );
 
   if (loading) {
@@ -25,31 +23,28 @@ const PreviousProjects = ({
   }
 
   return (
-    <Card>
+    <>
       {title && (
         <>
-          <Padding left="xl" top="l" bottom="l">
-            <Heading level={4}>{title}</Heading>
-          </Padding>
+          <Text as="h4">{title}</Text>
           <Divider />
         </>
       )}
-      {previousProjects.map(previousProject => (
+      {previousProjects.map((previousProject) => (
         <PreviousProject
-          specialistId={specialistId}
-          key={previousProject.project.id}
+          key={previousProject.id}
           previousProject={previousProject}
           showValidationStatus={showValidationStatus}
         />
       ))}
       {hasMoreProjects && (
-        <React.Fragment>
+        <>
           <PreviousProjectsModal
             isOpen={viewAllProjects}
             onClose={() => setViewAllProjects(false)}
             specialistId={specialistId}
           />
-          <Padding size="xl">
+          <Box padding="xl">
             <Button
               block
               size="l"
@@ -58,10 +53,10 @@ const PreviousProjects = ({
             >
               View all projects
             </Button>
-          </Padding>
-        </React.Fragment>
+          </Box>
+        </>
       )}
-    </Card>
+    </>
   );
 };
 

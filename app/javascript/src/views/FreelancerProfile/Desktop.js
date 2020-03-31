@@ -34,13 +34,13 @@ function FreelancerProfileDesktop({ data }) {
       </Box>
       <Box pl="80px" width="100%">
         <Box mb="l">
-          {data.specialist.profileProjects.nodes.length > 0 && (
+          {data.specialist.previousProjects.nodes.length > 0 && (
             <>
               <ProjectFilters data={data} />
               {projects.length > 0 ? (
                 <>
                   <Masonry columns={isLargeScreen ? 2 : 1}>
-                    {projects.map(we => (
+                    {projects.map((we) => (
                       <ProjectCard
                         key={we.id}
                         project={we}
@@ -54,7 +54,7 @@ function FreelancerProfileDesktop({ data }) {
               )}
             </>
           )}
-          {data.specialist.profileProjects.nodes.length === 0 && (
+          {data.specialist.previousProjects.nodes.length === 0 && (
             <NoProjects data={data} />
           )}
         </Box>

@@ -9,6 +9,7 @@ class Application < ApplicationRecord
   has_one :trial_task, -> { where(trial: true) }, class_name: 'Task'
   has_many :references, class_name: 'ApplicationReference'
   has_one :interview
+  has_one :previous_project
 
   # Every time an application is created, updated or destroyed we want to update
   # the associated specialists project count.
@@ -55,6 +56,10 @@ class Application < ApplicationRecord
   def invoice_rate
     return 0 if rate.nil?
     (rate * 100).ceil
+  end
+
+  def create_previous_project
+    PreviousProject::ConvertApplication.run(self)
   end
 
   private

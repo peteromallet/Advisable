@@ -26,12 +26,12 @@ const getProfileData = gql`
         overall
       }
 
-      profileProjects {
+      previousProjects {
         nodes {
           id
           title
           excerpt
-          industry {
+          primaryIndustry {
             id
             name
             color

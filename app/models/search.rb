@@ -10,11 +10,7 @@ class Search < ApplicationRecord
   def results
     @results ||=
       begin
-        records =
-          (
-            search_by_skills + search_by_projects +
-              search_by_off_platform_projects
-          ).uniq
+        records = (search_by_skills + search_by_off_platform_projects).uniq
         records.sort_by { |s| s.average_score || 0 }.reverse
       end
   end
@@ -42,35 +38,22 @@ class Search < ApplicationRecord
     base_search.joins(:skills).where(skills: { name: skill })
   end
 
-  def search_by_projects
-    base_search.joins(successful_projects: :skills).where(
-      projects: { skills: { name: skill } }
-    )
-  end
-
   def search_by_off_platform_projects
-    base_search.joins(off_platform_projects: :skills).where(
-      off_platform_projects: { skills: { name: skill } }
+    base_search.joins(previous_projects: :skills).where(
+      previous_projects: { skills: { name: skill } }
     )
   end
 
   def filter_industry(query)
     return query unless industry_experience_required
-    joined =
-      query.left_outer_joins(
-        off_platform_projects: :industries, projects: :industries
-      )
+    joined = query.left_outer_joins(previous_projects: :industries)
 
-    joined.where(off_platform_projects: { industries: { name: industry } }).or(
-      joined.where(projects: { industries: { name: industry } })
-    )
+    joined.where(previous_projects: { industries: { name: industry } })
   end
 
   def filter_company_type(query)
     return query unless company_experience_required
-    joined = query.left_outer_joins(:off_platform_projects, :projects)
-    joined.where(off_platform_projects: { company_type: company_type }).or(
-      joined.where(projects: { company_type: company_type })
-    )
+    joined = query.left_outer_joins(:previous_projects)
+    joined.where(previous_projects: { company_type: company_type })
   end
 end

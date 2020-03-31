@@ -132,8 +132,7 @@ class Types::SpecialistType < Types::BaseType
           (
             object.skills + object.project_skills +
               object.off_platform_project_skills
-          )
-            .uniq
+          ).uniq
         else
           object.skills
         end
@@ -163,8 +162,7 @@ class Types::SpecialistType < Types::BaseType
     (
       object.off_platform_project_industries +
         Industry.where(name: object.successful_projects.map(&:industry))
-    )
-      .uniq
+    ).uniq
   end
 
   field :ratings, Types::Ratings, null: false do
@@ -192,7 +190,9 @@ class Types::SpecialistType < Types::BaseType
     description 'Wether or not the specialist will work remotely'
   end
 
-  field :previous_projects, [Types::PreviousProject], null: false do
+  field :previous_projects,
+        Types::PreviousProject.connection_type,
+        null: false do
     description <<~HEREDOC
       list of the specialists previous projects. These can either be projects
       that happened on Advisable or off platform projects that the specialist
@@ -203,10 +203,11 @@ class Types::SpecialistType < Types::BaseType
   end
 
   def previous_projects(include_validation_failed: false)
-    ::PreviousProject.for_specialist(
-      object,
-      { include_validation_failed: include_validation_failed }
-    )
+    if include_validation_failed
+      object.previous_projects
+    else
+      object.previous_projects.validation_not_failed
+    end
   end
 
   field :previous_projects_count, Int, null: false

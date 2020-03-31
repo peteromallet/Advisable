@@ -1,61 +1,49 @@
 import React, { useState } from "react";
-import { get, truncate } from "lodash";
-import { Text, Box, Button } from "@advisable/donut";
+import { get } from "lodash";
+import { Link, Text, Box, RoundedButton } from "@advisable/donut";
 import Review from "src/components/Review";
-import Spacing, { Padding } from "src/components/Spacing";
-import Divider from "src/components/Divider";
 import PreviousProjectModal from "src/components/PreviousProjectModal";
 import ProjectValidationStatus from "src/components/ProjectValidationStatus";
-import { ProjectTitle } from "./styles";
 import ProjectValidationPrompt from "../ProjectValidationPrompt";
 import useViewer from "../../hooks/useViewer";
-
-const companyName = project => {
-  if (project.__typename === "Project") return project.user.companyName;
-  return project.clientName;
-};
-
-const title = project => {
-  return `${project.primarySkill} at ${companyName(project)}`;
-};
 
 const PreviousProject = ({
   showValidationStatus = true,
   previousProject,
   specialistId,
 }) => {
-  const [isOpen, setOpen] = useState(false);
   const viewer = useViewer();
-  const { project, reviews } = previousProject;
+  const [isOpen, setOpen] = useState(false);
+  const { reviews } = previousProject;
+  const project = previousProject;
 
-  const openProject = e => {
+  const openProject = (e) => {
     e.preventDefault();
     setOpen(true);
   };
 
   return (
-    <React.Fragment>
+    <>
       <PreviousProjectModal
+        id={project.id}
         isOpen={isOpen}
-        onClose={() => setOpen(false)}
-        id={project.airtableId}
-        type={project.__typename}
         specialistId={specialistId}
+        onClose={() => setOpen(false)}
       />
-      <Padding size="xl">
-        <Text fontSize="m" fontWeight="medium" mb="xs">
-          <ProjectTitle href="#" onClick={openProject}>
-            {title(project)}
-          </ProjectTitle>
+      <Box py="l">
+        <Text as="h4" fontWeight="medium" fontSize="l" mb="xs">
+          <Link.External variant="dark" href="#" onClick={openProject}>
+            {project.title}
+          </Link.External>
         </Text>
 
         {showValidationStatus && (
-          <Spacing marginBottom="m">
+          <Box marginBottom="m">
             <ProjectValidationStatus
               isClient={get(viewer, "isClient")}
               status={project.validationStatus}
             />
-          </Spacing>
+          </Box>
         )}
 
         {get(viewer, "isSpecialist") && project.validationStatus === "Pending" && (
@@ -63,34 +51,29 @@ const PreviousProject = ({
             <ProjectValidationPrompt project={project} />
           </Box>
         )}
-        {project.description && (
-          <Text
-            mb="l"
-            fontWeight="light"
-            fontSize="s"
-            lineHeight={1.4}
-            color="neutral.8"
-          >
-            {truncate(project.description, { length: 380, separator: " " })}
+
+        {project.excerpt && (
+          <Text mb="m" fontSize="s" lineHeight="m" color="neutral800">
+            {project.excerpt}
           </Text>
         )}
         {reviews && reviews.length > 0 && (
-          <Spacing paddingBottom="xl">
-            {reviews.map(review => (
+          <Box paddingBottom="xl">
+            {reviews.map((review) => (
               <Review
                 key={review.id}
                 review={review}
                 companyName={companyName(project)}
               />
             ))}
-          </Spacing>
+          </Box>
         )}
-        <Button size="s" appearance="outlined" onClick={openProject}>
+        <RoundedButton size="s" variant="subtle" onClick={openProject}>
           View project details
-        </Button>
-      </Padding>
-      <Divider />
-    </React.Fragment>
+        </RoundedButton>
+      </Box>
+      <Box height={1} bg="neutral100" />
+    </>
   );
 };
 
