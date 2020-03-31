@@ -10,7 +10,7 @@ import { Confirmation, ConfirmationContainer } from "./styles";
 
 const DeletePrompt = ({ task, onClose, onDelete }) => {
   const [loading, setLoading] = React.useState(false);
-  const [deleteTask] = useMutation(DELETE_TASL);
+  const [deleteTask] = useMutation(DELETE_TASK);
 
   const handleDelete = async () => {
     setLoading(true);
