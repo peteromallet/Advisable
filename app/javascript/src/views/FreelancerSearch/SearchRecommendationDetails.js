@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Text, Tag } from "@advisable/donut";
 import Rating from "../../components/Rating";
+import renderLinkBreaks from "../../utilities/renderLineBreaks";
 
 function SearchRecommendationDetails({ data }) {
   const project = data.search.recommendation;
@@ -29,7 +30,7 @@ function SearchRecommendationDetails({ data }) {
         Project Description
       </Text>
       <Text lineHeight="m" color="neutral800" autoLink>
-        {project.description}
+        {renderLinkBreaks(project.description)}
       </Text>
       {review && (
         <>
@@ -69,7 +70,7 @@ function SearchRecommendationDetails({ data }) {
           <Text fontSize="m" mb="xs" fontWeight="medium" color="neutral900">
             Skills Used
           </Text>
-          {project.skills.map(s => (
+          {project.skills.map((s) => (
             <Tag key={s.id} mr="xxs" mb="xs">
               {s.name}
             </Tag>
@@ -79,7 +80,7 @@ function SearchRecommendationDetails({ data }) {
           <Text fontSize="m" mb="xs" fontWeight="medium" color="neutral900">
             Industries
           </Text>
-          {project.industries.map(i => (
+          {project.industries.map((i) => (
             <Tag key={i.id} mr="xxs" mb="xs">
               {i.name}
             </Tag>
