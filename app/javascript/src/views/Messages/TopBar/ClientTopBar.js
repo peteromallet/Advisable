@@ -9,7 +9,7 @@ import Status from "../../../components/Status";
 import GET_APPLICATION from "../getApplicationForClient";
 import { Topbar } from "../styles";
 
-const ClientTopbar = ({ props }) => {
+const ClientTopbar = (props) => {
   const history = useHistory();
   const { data, loading, error } = useQuery(GET_APPLICATION, {
     variables: {
