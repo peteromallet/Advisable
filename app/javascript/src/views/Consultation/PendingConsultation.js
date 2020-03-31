@@ -1,21 +1,15 @@
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
-import { Card, Text, RoundedButton } from "@advisable/donut";
-import DECLINE from "./declineConsultation";
+import { Card, Text, RoundedButton, useModal } from "@advisable/donut";
+import DeclineConsultationModal from "./DeclineConsultationModal";
 import ACCEPT from "./acceptConsultation";
 
 const PendingConsultation = ({ data }) => {
   const history = useHistory();
-  const [declineConsultation, declineMutation] = useMutation(DECLINE);
   const [acceptConsultation, acceptMutation] = useMutation(ACCEPT);
+  const declineModal = useModal();
   const { id, topic, specialist, user } = data.consultation;
-
-  const handleDecline = async () => {
-    await declineConsultation({
-      variables: { input: { consultation: id } },
-    });
-  };
 
   const handleAccept = async () => {
     const response = await acceptConsultation({
@@ -26,10 +20,12 @@ const PendingConsultation = ({ data }) => {
     history.push(`/interview_request/${interview.airtableId}`);
   };
 
-  const isLoading = declineMutation.loading;
-
   return (
     <Card padding="xl">
+      <DeclineConsultationModal
+        modal={declineModal}
+        consultation={data.consultation}
+      />
       <Text
         mb="xs"
         as="h2"
@@ -54,7 +50,6 @@ const PendingConsultation = ({ data }) => {
       </Text>
       <RoundedButton
         mr="xs"
-        disabled={isLoading}
         onClick={handleAccept}
         loading={acceptMutation.loading}
       >
@@ -62,8 +57,8 @@ const PendingConsultation = ({ data }) => {
       </RoundedButton>
       <RoundedButton
         variant="secondary"
-        onClick={handleDecline}
-        loading={declineMutation.loading}
+        disabled={acceptMutation.loading}
+        onClick={declineModal.show}
       >
         Decline Request
       </RoundedButton>
