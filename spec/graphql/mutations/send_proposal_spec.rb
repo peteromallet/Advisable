@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 describe Mutations::SendProposal do
-  let(:application) { create(:application, status: 'Interview Completed') }
+  let(:project) { create(:project, status: 'Brief Confirmed') }
+  let(:application) do
+    create(:application, status: 'Interview Completed', project: project)
+  end
   let(:query) do
     <<-GRAPHQL
     mutation {
@@ -26,6 +29,7 @@ describe Mutations::SendProposal do
 
   before :each do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
+    allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end
 
   it "sets the status to 'Proposed'" do
@@ -38,6 +42,12 @@ describe Mutations::SendProposal do
     response = AdvisableSchema.execute(query, context: context)
     comment = response['data']['sendProposal']['application']['proposalComment']
     expect(comment).to eq('This is the proposal comment')
+  end
+
+  it 'sets the project status to Proposal Received' do
+    expect { AdvisableSchema.execute(query, context: context) }.to change {
+      application.reload.project.status
+    }.from('Brief Confirmed').to('Proposal Received')
   end
 
   it 'triggers a webhook' do
