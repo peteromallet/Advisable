@@ -1,38 +1,33 @@
 import React, { useState } from "react";
 import { get } from "lodash";
-import { Link, Text, Box, RoundedButton } from "@advisable/donut";
+import {
+  Modal,
+  useModal,
+  Link,
+  Text,
+  Box,
+  RoundedButton,
+} from "@advisable/donut";
 import Review from "src/components/Review";
-import PreviousProjectModal from "src/components/PreviousProjectModal";
 import ProjectValidationStatus from "src/components/ProjectValidationStatus";
 import ProjectValidationPrompt from "../ProjectValidationPrompt";
 import useViewer from "../../hooks/useViewer";
+import PreviousProjectDetails from "../../components/PreviousProjectDetails";
 
-const PreviousProject = ({
-  showValidationStatus = true,
-  previousProject,
-  specialistId,
-}) => {
+const PreviousProject = ({ showValidationStatus = true, previousProject }) => {
+  const modal = useModal();
   const viewer = useViewer();
-  const [isOpen, setOpen] = useState(false);
   const { reviews } = previousProject;
   const project = previousProject;
 
-  const openProject = (e) => {
-    e.preventDefault();
-    setOpen(true);
-  };
-
   return (
     <>
-      <PreviousProjectModal
-        id={project.id}
-        isOpen={isOpen}
-        specialistId={specialistId}
-        onClose={() => setOpen(false)}
-      />
+      <Modal modal={modal} label={project.title} width={800} padding="xl">
+        <PreviousProjectDetails id={project.id} />
+      </Modal>
       <Box py="l">
         <Text as="h4" fontWeight="medium" fontSize="l" mb="xs">
-          <Link.External variant="dark" href="#" onClick={openProject}>
+          <Link.External variant="dark" href="#" onClick={modal.show}>
             {project.title}
           </Link.External>
         </Text>
@@ -68,7 +63,7 @@ const PreviousProject = ({
             ))}
           </Box>
         )}
-        <RoundedButton size="s" variant="subtle" onClick={openProject}>
+        <RoundedButton size="s" variant="subtle" onClick={modal.show}>
           View project details
         </RoundedButton>
       </Box>

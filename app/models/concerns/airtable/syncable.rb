@@ -40,6 +40,8 @@ module Airtable::Syncable
 
     # Updates or creates an airtable record for the instance
     def sync_to_airtable(additional_fields = {})
+      puts 'SYNCING'
+      puts self.class.airtable
       airtable_class =
         self.class.airtable || "Airtable::#{self.class}".constantize
       airtable_record =

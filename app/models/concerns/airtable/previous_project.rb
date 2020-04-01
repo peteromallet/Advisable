@@ -1,7 +1,7 @@
-class Airtable::OffPlatformProject < Airtable::Base
+class Airtable::PreviousProject < Airtable::Base
   self.table_name = 'Off-Platform Projects'
 
-  sync_with ::OffPlatformProject
+  sync_with ::PreviousProject
   sync_column 'Client Contact First Name', to: :contact_first_name
   sync_column 'Client Contact Last Name', to: :contact_last_name
   sync_column 'Client Contact Job Title', to: :contact_job_title

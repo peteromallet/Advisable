@@ -1,5 +1,6 @@
 class PreviousProject < ApplicationRecord
   include Uid
+  include Airtable::Syncable
   self.table_name = 'off_platform_projects'
 
   belongs_to :specialist

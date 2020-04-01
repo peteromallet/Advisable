@@ -1,4 +1,4 @@
-class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
+class Mutations::CreatePreviousProject < Mutations::BaseMutation
   # TODO: Eventually the specialist ID should be removed and this mutation should expect a specialist to be logged in.
   argument :specialist, ID, required: true
   argument :client_name, String, required: true
@@ -16,24 +16,21 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
   argument :public_use, Boolean, required: true
 
   field :previous_project, Types::PreviousProject, null: true
-  field :errors, [Types::Error], null: true
 
   def resolve(**args)
     specialist = Specialist.find_by_uid_or_airtable_id!(args[:specialist])
     project =
-      specialist.off_platform_projects.new(
-        {
-          client_name: args[:client_name],
-          confidential: args[:confidential],
-          contact_name: args[:contact_name],
-          contact_job_title: args[:contact_job_title],
-          contact_relationship: args[:contact_relationship],
-          company_type: args[:company_type],
-          description: args[:description],
-          goal: args[:goal],
-          public_use: args[:public_use],
-          validation_status: 'Pending'
-        }
+      specialist.previous_projects.new(
+        client_name: args[:client_name],
+        confidential: args[:confidential],
+        contact_name: args[:contact_name],
+        contact_job_title: args[:contact_job_title],
+        contact_relationship: args[:contact_relationship],
+        company_type: args[:company_type],
+        description: args[:description],
+        goal: args[:goal],
+        public_use: args[:public_use],
+        validation_status: 'Pending'
       )
 
     args[:skills].each do |skill|
@@ -57,9 +54,6 @@ class Mutations::CreateOffPlatformProject < Mutations::BaseMutation
 
     SpecialistMailer.verify_project(project.uid).deliver_later
 
-    {
-      previous_project:
-        PreviousProject.new(specialist: project.specialist, project: project)
-    }
+    { previous_project: project }
   end
 end

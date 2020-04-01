@@ -203,11 +203,9 @@ class Types::SpecialistType < Types::BaseType
   end
 
   def previous_projects(include_validation_failed: false)
-    if include_validation_failed
-      object.previous_projects
-    else
-      object.previous_projects.validation_not_failed
-    end
+    records = object.previous_projects
+    records = records.validation_not_failed unless include_validation_failed
+    records.order(created_at: :desc)
   end
 
   field :previous_projects_count, Int, null: false

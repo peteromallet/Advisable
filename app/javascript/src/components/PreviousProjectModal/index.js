@@ -4,11 +4,11 @@ import { useQuery } from "@apollo/react-hooks";
 import Modal from "src/components/Modal";
 import Loading from "src/components/Loading";
 import ProjectDetails from "./ProjectDetails";
-import FETCH_PROJECT from "./fetchProject.graphql";
+import FETCH_PROJECT from "./fetchProject";
 
-const PreviousProjectModal = ({ isOpen, onClose, id, type, specialistId }) => {
+const PreviousProjectModal = ({ isOpen, onClose, id }) => {
   const { data, loading, error } = useQuery(FETCH_PROJECT, {
-    variables: { id, type, specialistId },
+    variables: { id },
     skip: !isOpen,
   });
 
