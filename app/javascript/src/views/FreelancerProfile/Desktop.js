@@ -34,7 +34,7 @@ function FreelancerProfileDesktop({ data }) {
       </Box>
       <Box pl="80px" width="100%">
         <Box mb="l">
-          {data.specialist.previousProjects.nodes.length > 0 && (
+          {data.specialist.profileProjects.length > 0 && (
             <>
               <ProjectFilters data={data} />
               {projects.length > 0 ? (
@@ -54,7 +54,7 @@ function FreelancerProfileDesktop({ data }) {
               )}
             </>
           )}
-          {data.specialist.previousProjects.nodes.length === 0 && (
+          {data.specialist.profileProjects.length === 0 && (
             <NoProjects data={data} />
           )}
         </Box>

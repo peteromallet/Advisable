@@ -340,19 +340,12 @@ class Types::SpecialistType < Types::BaseType
     description 'The account status for the specialist'
   end
 
-  field :profile_projects,
-        Types::ProfileProjectType.connection_type,
-        null: false
+  field :profile_projects, [Types::PreviousProject], null: false
 
   def profile_projects
-    projects =
-      ::PreviousProject.for_specialist(
-        object,
-        { include_validation_failed: false, exclude_hidden_from_profile: true }
-      )
-
-    projects.sort_by do |previous_project|
-      previous_project.project.try(:priority) || Float::INFINITY
+    object.previous_projects.validation_not_failed.not_hidden
+      .sort_by do |previous_project|
+      previous_project.try(:priority) || Float::INFINITY
     end
   end
 

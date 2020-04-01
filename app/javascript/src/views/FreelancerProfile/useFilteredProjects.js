@@ -12,7 +12,7 @@ function useFilteredProjects(data) {
   const filteredSkills = queryParams.skills;
   const filteredIndustries = queryParams.industries;
 
-  const projects = data.specialist.previousProjects.nodes.filter((project) => {
+  const projects = data.specialist.profileProjects.filter((project) => {
     let include = true;
 
     if (filteredSkills && isArray(filteredSkills)) {

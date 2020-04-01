@@ -29,6 +29,7 @@ class PreviousProject < ApplicationRecord
   scope :validated, -> { where(validation_status: 'Validated') }
   scope :validation_not_failed, -> { where.not(validation_status: 'Failed') }
   scope :on_platform, -> { where.not(application_id: nil) }
+  scope :not_hidden, -> { where(hide_from_profile: [nil, false]) }
 
   # Every time a project is created, updated or destroyed we want to update the
   # associated specialists project count.

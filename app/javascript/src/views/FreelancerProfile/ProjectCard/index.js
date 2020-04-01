@@ -13,8 +13,8 @@ import {
   useModal,
   RoundedButton,
 } from "@advisable/donut";
-import ProjectDetails from "../ProjectDetails";
 import IndustryTag from "../../../components/IndustryTag";
+import ProjectDetails from "../../../components/PreviousProjectDetails";
 
 function useRoutedModal(path, back) {
   const modal = useModal();
@@ -91,11 +91,11 @@ function ProjectCard({ specialistId, project }) {
         </Box>
         <Modal modal={modal} label="Freelancer project" width={800}>
           <Box padding="xl">
-            <ProjectDetails
-              specialistId={specialistId}
-              projectId={project.id}
-            />
-            <Link to={`/request_consultation/${specialistId}`}>
+            <ProjectDetails id={project.id} />
+            <Link
+              to={`/request_consultation/${specialistId}`}
+              style={{ outline: "none" }}
+            >
               <RoundedButton size="l" prefix={<Icon icon="message-circle" />}>
                 Request Consultation
               </RoundedButton>
