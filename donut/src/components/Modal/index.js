@@ -1,5 +1,4 @@
-import React, { useRef, useEffect } from "react";
-import { Portal } from "reakit/Portal";
+import React, { useRef } from "react";
 import {
   useDialogState,
   Dialog,
@@ -25,7 +24,7 @@ const Modal = ({
   modal,
   label,
   children,
-  backdrop,
+  backdrop = true,
   loading,
   width,
   showCloseButton = true,
@@ -53,16 +52,14 @@ const Modal = ({
   return (
     <>
       {backdrop && (
-        <Portal>
-          <DialogBackdrop
-            {...modal}
-            initial="hidden"
-            as={StyledBackdrop}
-            variants={backdropVariants}
-            animate={modal.visible ? "visible" : "hidden"}
-            transition={{ ease: "easeOut" }}
-          />
-        </Portal>
+        <DialogBackdrop
+          {...modal}
+          initial="hidden"
+          as={StyledBackdrop}
+          variants={backdropVariants}
+          animate={modal.visible ? "visible" : "hidden"}
+          transition={{ ease: "easeOut" }}
+        />
       )}
       <Dialog
         ref={ref}

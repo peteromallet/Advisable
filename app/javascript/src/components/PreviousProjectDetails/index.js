@@ -1,14 +1,14 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { Link as RouterLink } from "react-router-dom";
-import { Link, Avatar, Box, Text, Tag } from "@advisable/donut";
+import { Modal, Link, Avatar, Box, Text, Tag } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
 import IndustryTag from "../IndustryTag";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
 import Review from "./Review";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
 
-function ProjectDetails({ id }) {
+function PreviousProjectDetails({ id }) {
   const { loading, data, error } = useQuery(GET_PROJECT, {
     variables: {
       id: id,
@@ -115,4 +115,12 @@ function ProjectDetails({ id }) {
   );
 }
 
-export default ProjectDetails;
+PreviousProjectDetails.Modal = ({ modal, id, ...props }) => {
+  return (
+    <Modal modal={modal} width={800} padding="xl" {...props}>
+      <PreviousProjectDetails id={id} />
+    </Modal>
+  );
+};
+
+export default PreviousProjectDetails;

@@ -49,8 +49,7 @@ class Applications::Update < ApplicationService
                # Check that the passed quesion is in the projects questions array.
                application.project.questions ||
                  []
-             )
-               .include?(hash[:question])
+             ).include?(hash[:question])
         raise Service::Error.new(:invalid_question)
       end
 

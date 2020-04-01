@@ -8,13 +8,12 @@ class Application < ApplicationRecord
   has_many :tasks
   has_one :trial_task, -> { where(trial: true) }, class_name: 'Task'
   has_many :references, class_name: 'ApplicationReference'
+  has_many :previous_projects,
+           through: :references,
+           source: :project,
+           source_type: 'PreviousProject'
   has_one :interview
   has_one :previous_project
-
-  # Every time an application is created, updated or destroyed we want to update
-  # the associated specialists project count.
-  after_save :update_specialist_project_count
-  after_destroy :update_specialist_project_count
 
   # Every time an application is created, updated or destroyed we want to update
   # the assoicated specialists average_score.
@@ -63,12 +62,6 @@ class Application < ApplicationRecord
   end
 
   private
-
-  # Update the associated specialists project count
-  def update_specialist_project_count
-    return unless specialist.present?
-    specialist.update_project_count
-  end
 
   def update_specialist_average_score
     return unless specialist.present?

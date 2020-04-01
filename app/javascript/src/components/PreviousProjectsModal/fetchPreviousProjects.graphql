@@ -1,8 +1,0 @@
-#import "../../graphql/previousProjectFields.graphql"
-query PreviousProjects($id: ID!) {
-  specialist(id: $id) {
-    previousProjects {
-      ...PreviousProjectFields
-    }
-  }
-}

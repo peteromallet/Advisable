@@ -87,6 +87,10 @@ const BaseStyles = createGlobalStyle`
   a {
     text-decoration: none;
   }
+
+  .__reakit-portal {
+    position: relative;
+  }
 `;
 
 export default BaseStyles;
