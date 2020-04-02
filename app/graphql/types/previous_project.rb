@@ -14,6 +14,9 @@ class Types::PreviousProject < Types::BaseType
   field :industries, [Types::IndustryType], null: false
   field :validation_status, String, null: true
   field :on_platform, Boolean, null: false
+  field :contact_email, String, null: true
+  field :contact_first_name, String, null: true
+  field :contact_last_name, String, null: true
 
   def id
     object.uid
@@ -41,5 +44,11 @@ class Types::PreviousProject < Types::BaseType
     end
 
     object.client_name
+  end
+
+  # Only show the contact email if the validation status is in progress
+  def contact_email
+    return object.contact_email if object.validation_status == 'In Progress'
+    nil
   end
 end

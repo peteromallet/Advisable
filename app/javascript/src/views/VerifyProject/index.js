@@ -14,7 +14,7 @@ const VerifyProjectView = ({ match }) => {
   if (loading) return null;
   if (error) return <NotFound />;
 
-  const project = data.offPlatformProject;
+  const project = data.previousProject;
 
   let content;
   switch (project.validationStatus) {

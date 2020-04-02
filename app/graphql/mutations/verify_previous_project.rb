@@ -1,11 +1,11 @@
-class Mutations::VerifyOffPlatformProject < Mutations::BaseMutation
+class Mutations::VerifyPreviousProject < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :email, String, required: false
 
-  field :off_platform_project, Types::OffPlatformProject, null: true
+  field :previous_project, Types::PreviousProject, null: true
 
   def authorized?(id:, email:)
-    project = OffPlatformProject.find_by_uid!(id)
+    project = PreviousProject.find_by_uid!(id)
 
     if project.validation_status != 'Pending'
       raise ApiError::InvalidRequest.new(
@@ -20,10 +20,10 @@ class Mutations::VerifyOffPlatformProject < Mutations::BaseMutation
   end
 
   def resolve(id:, email:)
-    project = OffPlatformProject.find_by_uid!(id)
+    project = PreviousProject.find_by_uid!(id)
     project.update(validation_status: 'In Progress', contact_email: email)
     project.sync_to_airtable
 
-    { off_platform_project: project }
+    { previous_project: project }
   end
 end
