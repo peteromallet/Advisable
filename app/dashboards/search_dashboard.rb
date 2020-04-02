@@ -20,7 +20,7 @@ class SearchDashboard < Administrate::BaseDashboard
     company_type: Field::String,
     company_experience_required: Field::Boolean,
     recommended_project:
-      Field::BelongsTo.with_options(class_name: 'OffPlatformProject'),
+      Field::BelongsTo.with_options(class_name: 'PreviousProject'),
     updated_at: Field::DateTime
   }.freeze
 

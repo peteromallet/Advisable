@@ -1,6 +1,6 @@
 class SpecialistMailerPreview < ActionMailer::Preview
   def verify_project
-    project = OffPlatformProject.last
+    project = PreviousProject.last
     SpecialistMailer.verify_project(project.uid)
   end
 end

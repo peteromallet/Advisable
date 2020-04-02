@@ -1,9 +1,5 @@
 # Represents a review of a specialist in various contexts. A review will always
 # have an attached specialist and project.
-# The project of a reivew is a polymorphic association. In the database there is
-# a project_type and a project_id column to determin which record to load. This
-# is required as a review can be for an advisable project (Project) or an
-# off-platform project (OffPlatformProject).
 # The "reviewable" for a review represent the record that was reviewed. This
 # again is a polymorphic assocation and is used to add more context to the
 # review.
@@ -13,7 +9,7 @@ class Review < ApplicationRecord
 
   belongs_to :specialist, required: false
   # The review project is a polymorphic association. The review
-  # can either blong to a project or an off-platform project. 
+  # can either blong to a project or an off-platform project.
   belongs_to :project, polymorphic: true
   # The 'reviewable' for a review represents the record that was reviewed. This
   # can be a 'booking', 'application' or 'interview'
@@ -30,10 +26,11 @@ class Review < ApplicationRecord
 
   def update_specialist_reviews_count
     return unless specialist.present?
-    specialist.reviews_count = Review.where(
-      specialist: specialist,
-      type: ["On-Platform Job Review", "Off-Platform Project Review"],
-    ).count
+    specialist.reviews_count =
+      Review.where(
+        specialist: specialist,
+        type: ['On-Platform Job Review', 'Off-Platform Project Review']
+      ).count
     specialist.save(validate: false)
   end
 

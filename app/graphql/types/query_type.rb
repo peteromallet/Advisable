@@ -173,14 +173,6 @@ class Types::QueryType < Types::BaseType
     Money::Currency.all.sort_by(&:name)
   end
 
-  field :off_platform_project, Types::OffPlatformProject, null: false do
-    argument :id, ID, required: true
-  end
-
-  def off_platform_project(id:)
-    OffPlatformProject.find_by_uid!(id)
-  end
-
   field :specialists,
         Types::SpecialistType::ConnectionType,
         null: false, max_page_size: 25 do

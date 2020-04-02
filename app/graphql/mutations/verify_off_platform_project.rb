@@ -6,12 +6,14 @@ class Mutations::VerifyOffPlatformProject < Mutations::BaseMutation
 
   def authorized?(id:, email:)
     project = OffPlatformProject.find_by_uid!(id)
-    
-    if project.validation_status != "Pending"
+
+    if project.validation_status != 'Pending'
       raise ApiError::InvalidRequest.new(
-        "validationStatusNotPending",
-        "Expected validation status to be 'Pending' but is #{project.validation_status}"
-      )
+              'validationStatusNotPending',
+              "Expected validation status to be 'Pending' but is #{
+                project.validation_status
+              }"
+            )
     end
 
     true
@@ -19,7 +21,7 @@ class Mutations::VerifyOffPlatformProject < Mutations::BaseMutation
 
   def resolve(id:, email:)
     project = OffPlatformProject.find_by_uid!(id)
-    project.update(validation_status: "In Progress", contact_email: email)
+    project.update(validation_status: 'In Progress', contact_email: email)
     project.sync_to_airtable
 
     { off_platform_project: project }
