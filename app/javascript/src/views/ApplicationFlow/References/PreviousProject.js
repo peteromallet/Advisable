@@ -3,21 +3,6 @@ import styled from "styled-components";
 import { rgba } from "polished";
 import tick from "./tick.svg";
 
-const companyName = project => {
-  if (project.__typename === "Project") return project.user.companyName;
-  if (project.confidential) return `${project.industry} Company`;
-  return project.clientName;
-};
-
-const title = project => {
-  if (project.skills && project.skills.length > 0) {
-    const skills = project.skills.join(", ");
-    return `${skills} at ${companyName(project)}`;
-  }
-
-  return `${project.primarySkill} at ${companyName(project)}`;
-};
-
 const Wrapper = styled.div`
   margin-bottom: 8px;
   position: relative;
@@ -77,11 +62,11 @@ const Input = styled.input`
 const PreviousProject = ({ project, ...props }) => {
   return (
     <Wrapper>
-      <Input type="checkbox" id={project.airtableId} {...props} />
-      <Label htmlFor={project.airtableId} data-testid={project.airtableId}>
+      <Input type="checkbox" id={project.id} {...props} />
+      <Label htmlFor={project.id} data-testid={project.id}>
         <Checkbox />
-        <Title>{title(project)}</Title>
-        <Description>{project.description}</Description>
+        <Title>{project.title}</Title>
+        <Description>{project.excerpt}</Description>
       </Label>
     </Wrapper>
   );

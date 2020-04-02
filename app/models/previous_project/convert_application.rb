@@ -27,6 +27,7 @@ class PreviousProject::ConvertApplication
       contact_last_name: project.user.last_name,
       project_skills: project_skills,
       project_industries: project_industries
+      created_at: project.started_working_at || DateTime.now.utc
     )
   end
 

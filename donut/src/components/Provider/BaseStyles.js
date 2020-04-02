@@ -55,6 +55,10 @@ const BaseStyles = createGlobalStyle`
   html {
     min-height: 100%;
   }
+  
+  button {
+    margin: 0;
+  }
 
   body {
     width: 100vw;

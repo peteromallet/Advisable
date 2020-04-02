@@ -76,10 +76,7 @@ class Applications::Update < ApplicationService
     @reference_projects ||=
       begin
         attributes[:references].map do |id|
-          project = specialist.projects.find_by_airtable_id(id)
-          if project.blank?
-            project = specialist.off_platform_projects.find_by_airtable_id(id)
-          end
+          project = specialist.previous_projects.find_by_uid_or_airtable_id(id)
           raise Service::Error.new(:invalid_reference) if project.blank?
           project
         end
