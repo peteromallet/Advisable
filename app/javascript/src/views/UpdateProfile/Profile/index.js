@@ -101,6 +101,7 @@ const Profile = () => {
             <TextField
               name="bio"
               multiline
+              autoHeight
               minRows={8}
               label="About me"
               value={formik.values.bio}
