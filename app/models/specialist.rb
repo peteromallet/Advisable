@@ -17,11 +17,10 @@ class Specialist < ApplicationRecord
   has_many :project_skills, through: :successful_projects, source: :skills
 
   has_many :previous_projects
-  has_many :off_platform_projects
-  has_many :off_platform_project_skills,
-           through: :off_platform_projects, source: :skills
-  has_many :off_platform_project_industries,
-           through: :off_platform_projects, source: :industries
+  has_many :previous_project_skills,
+           through: :previous_projects, source: :skills
+  has_many :previous_project_industries,
+           through: :previous_projects, source: :industries
 
   has_many :specialist_skills, dependent: :destroy
   has_many :skills, through: :specialist_skills

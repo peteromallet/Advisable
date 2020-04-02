@@ -18,6 +18,7 @@ class Airtable::PreviousProject < Airtable::Base
   sync_column 'Company Type', to: :company_type
   sync_column 'Priority', to: :priority
   sync_column 'Advisable Score', to: :advisable_score
+  sync_association 'Application', to: :application
 
   sync_data do |opp|
     pull_specialist(opp)
@@ -57,6 +58,7 @@ class Airtable::PreviousProject < Airtable::Base
     self['Validation Explanation'] = project.validation_explanation
     self['Company Type'] = project.company_type
     self['Contact Relationship'] = project.contact_relationship
+    self['Application'] = [project.application.try(:airtable_id)].compact
 
     unless project.public_use.nil?
       self['Public Use'] = 'Yes' if project.public_use == true
@@ -76,11 +78,6 @@ class Airtable::PreviousProject < Airtable::Base
   end
 
   # Syncs the projects skills from airtable
-  # Currently an off platform project has a skills association and a
-  # primary_skill string column. The primary_skill column will eventually
-  # be deprecated in favour of the skills association. For this reason
-  # we also track which skill is the primary skill by setting the
-  # ProjectSkill's primary attribute to true or false.
   def sync_skills(opp)
     skills_required = fields['Skills Required'] || []
 
@@ -100,11 +97,6 @@ class Airtable::PreviousProject < Airtable::Base
   end
 
   # Syncs the projects industry from airtable
-  # Currently an off platform project has an industries association and a
-  # client_industry string column. The client_industry column will eventually
-  # be deprecated in favour of the industries association. For this reason
-  # we also track which industry is the primary industry by setting the
-  # ProjectIndustry's primary attribute to true or false.
   def sync_industries(opp)
     industries = fields['Industries'] || []
 

@@ -24,12 +24,11 @@ namespace :demo do
         specialist.skills << skill
       end
 
-      # Create off platform projects
       5.times do |p|
         industry = industries.sample
         skill = skills.sample
 
-        specialist.off_platform_projects.create(
+        specialist.previous_projects.create(
           industry: industry.name,
           primary_skill: skill.name,
           contact_first_name: Faker::Name.first_name,
