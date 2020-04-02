@@ -8,7 +8,7 @@ export const Quotes = styled.div`
   width: calc(100% * ${TESTIMONIALS.length});
   transition: transform 300ms;
   transform: translateX(
-    -${props => props.current * (100.0 / TESTIMONIALS.length)}%
+    -${(props) => props.current * (100.0 / TESTIMONIALS.length)}%
   );
 `;
 
@@ -22,7 +22,7 @@ export const Quote = styled.div`
   justify-content: center;
   width: calc(100% / ${TESTIMONIALS.length});
   transition: opacity 300ms;
-  opacity: ${props => (props.isCurrent ? 1 : 0)};
+  opacity: ${(props) => (props.isCurrent ? 1 : 0)};
 `;
 
 export const Logos = styled.div`
@@ -43,7 +43,7 @@ export const Logo = styled.div`
   transition: opacity 200ms;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: ${props => (props.isCurrent ? 1 : 0.5)};
+  opacity: ${(props) => (props.isCurrent ? 1 : 0.5)};
 
   &:hover {
     opacity: 0.8;
@@ -75,7 +75,7 @@ export const Sidebar = styled.div`
   bottom: 0;
   z-index: 1;
   width: 550px;
-  height: 100vh;
+  height: calc(100vh - 58px);
   display: flex;
   position: fixed;
   overflow: hidden;
