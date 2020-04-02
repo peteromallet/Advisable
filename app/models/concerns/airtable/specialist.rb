@@ -107,6 +107,8 @@ class Airtable::Specialist < Airtable::Base
       specialist.number_of_projects
     self['Application Stage'] = specialist.application_stage
 
+    self['Specialist Bio Updated'] = 'Yes' if specialist.saved_change_to_bio
+
     if specialist.hourly_rate
       self['Typical Hourly Rate'] = specialist.hourly_rate / 100.0
     end
