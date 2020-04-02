@@ -31,24 +31,22 @@ const GET_DATA = gql`
       ratings {
         overall
       }
-      previousProjects {
-        nodes {
+      profileProjects {
+        id
+        title
+        excerpt
+        reviews {
           id
-          title
-          excerpt
-          reviews {
-            id
-            name
-            role
-            comment
-            ratings {
-              overall
-              skills
-              qualityOfWork
-              adherenceToSchedule
-              availability
-              communication
-            }
+          name
+          role
+          comment
+          ratings {
+            overall
+            skills
+            qualityOfWork
+            adherenceToSchedule
+            availability
+            communication
           }
         }
       }
@@ -120,7 +118,7 @@ const SpecialistModal = ({ modal, specialistId }) => {
                   tags={specialist.skills}
                   name={specialist.firstName}
                 />
-                {specialist.previousProjects.nodes.length > 0 && (
+                {specialist.profileProjects.length > 0 && (
                   <>
                     <Text
                       my="l"
@@ -136,7 +134,7 @@ const SpecialistModal = ({ modal, specialistId }) => {
                     <PreviousProjects
                       showValidationStatus={false}
                       specialistId={specialist.airtableId}
-                      previousProjects={specialist.previousProjects.nodes}
+                      previousProjects={specialist.profileProjects}
                     />
                   </>
                 )}

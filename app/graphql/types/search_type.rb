@@ -5,7 +5,7 @@ class Types::SearchType < Types::BaseType
   field :results,
         Types::SpecialistType::ConnectionType,
         max_page_size: 25, null: false
-  field :recommendation, Types::ProfileProjectType, null: true
+  field :recommendation, Types::PreviousProject, null: true
 
   def id
     object.uid
@@ -20,10 +20,6 @@ class Types::SearchType < Types::BaseType
   end
 
   def recommendation
-    return nil unless object.recommended_project.present?
-    PreviousProject.new(
-      project: object.recommended_project,
-      specialist: object.recommended_project.specialist
-    )
+    object.recommended_project
   end
 end

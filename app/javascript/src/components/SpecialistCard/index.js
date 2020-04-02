@@ -7,6 +7,7 @@ import {
   Icon,
   useModal,
   RoundedButton,
+  DialogDisclosure,
 } from "@advisable/donut";
 import LineClamp from "../LineClamp";
 import TagCloud from "./TagCloud";
@@ -67,14 +68,15 @@ const SpecialistCard = ({ specialist, action, ...props }) => {
             {action}
           </Box>
         )}
-        <RoundedButton
+        <DialogDisclosure
+          as={RoundedButton}
           aria-label={`View ${specialist.name}`}
           onClick={specialistModal.show}
           variant="subtle"
           prefix={<Icon icon="external-link" />}
         >
           View More
-        </RoundedButton>
+        </DialogDisclosure>
       </Box>
     </StyledSpecialistCard>
   );

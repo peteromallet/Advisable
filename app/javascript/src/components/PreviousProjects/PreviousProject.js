@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { get } from "lodash";
 import {
   Modal,
@@ -7,6 +7,7 @@ import {
   Text,
   Box,
   RoundedButton,
+  DialogDisclosure,
 } from "@advisable/donut";
 import Review from "src/components/Review";
 import ProjectValidationStatus from "src/components/ProjectValidationStatus";
@@ -63,9 +64,14 @@ const PreviousProject = ({ showValidationStatus = true, previousProject }) => {
             ))}
           </Box>
         )}
-        <RoundedButton size="s" variant="subtle" onClick={modal.show}>
+        <DialogDisclosure
+          as={RoundedButton}
+          size="s"
+          variant="subtle"
+          onClick={modal.show}
+        >
           View project details
-        </RoundedButton>
+        </DialogDisclosure>
       </Box>
       <Box height={1} bg="neutral100" />
     </>

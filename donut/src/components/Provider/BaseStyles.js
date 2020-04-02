@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { StyledBackdrop, StyledModalWindowContainer } from "../Modal/styles";
 
 const BACKGROUND = {
   default: "#F9FAFF",
@@ -88,8 +89,28 @@ const BaseStyles = createGlobalStyle`
     text-decoration: none;
   }
 
-  .__reakit-portal {
+  body > .__reakit-portal {
     position: relative;
+  }
+
+  /* Styling for nested modals */
+  ${StyledBackdrop} {
+    z-index: 20;
+  }
+
+  ${StyledModalWindowContainer} {
+    z-index: 25;
+  }
+
+  body > .__reakit-portal > .__reakit-portal {
+    ${StyledBackdrop} {
+      z-index: 30;
+      opacity: 0.25;
+    }
+
+    ${StyledModalWindowContainer} {
+      z-index: 35;
+    }
   }
 `;
 

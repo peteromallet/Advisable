@@ -15,12 +15,10 @@ class Search::Recommendations
 
   def recommendation
     @recommendation ||=
-      OffPlatformProject.joins(:skills, :specialist, :industries).where(
+      PreviousProject.joins(:skills, :specialist, :industries).where(
         'advisable_score >= 85 AND specialists.average_score >= 80 AND skills.name = ? AND industries.name = ?',
         [search.skill],
         [search.industry]
-      )
-        .order(advisable_score: :desc)
-        .first
+      ).order(advisable_score: :desc).first
   end
 end

@@ -3,14 +3,14 @@ class Search < ApplicationRecord
 
   belongs_to :user
   belongs_to :recommended_project,
-             class_name: 'OffPlatformProject', required: false
+             class_name: 'PreviousProject', required: false
 
   has_many :consultations
 
   def results
     @results ||=
       begin
-        records = (search_by_skills + search_by_off_platform_projects).uniq
+        records = (search_by_skills + search_by_previous_projects).uniq
         records.sort_by { |s| s.average_score || 0 }.reverse
       end
   end
@@ -38,7 +38,7 @@ class Search < ApplicationRecord
     base_search.joins(:skills).where(skills: { name: skill })
   end
 
-  def search_by_off_platform_projects
+  def search_by_previous_projects
     base_search.joins(previous_projects: :skills).where(
       previous_projects: { skills: { name: skill } }
     )
