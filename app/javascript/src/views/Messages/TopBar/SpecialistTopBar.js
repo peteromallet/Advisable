@@ -9,7 +9,7 @@ import Status from "../../../components/Status";
 import GET_APPLICATION from "../getApplicationForSpecialist";
 import { Topbar } from "../styles";
 
-const ClientTopbar = () => {
+const SpecialistTopBar = (props) => {
   const history = useHistory();
   const { data, loading, error } = useQuery(GET_APPLICATION, {
     variables: {
@@ -104,4 +104,4 @@ const ClientTopbar = () => {
   );
 };
 
-export default ClientTopbar;
+export default SpecialistTopBar;
