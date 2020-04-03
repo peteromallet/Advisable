@@ -50,8 +50,6 @@ const PreviousProjectForm = ({
         },
       });
 
-      console.log(response);
-
       setValues({});
       if (onSuccess) onSuccess();
       modal.hide();

@@ -42,7 +42,7 @@ export const user = (fields = {}) => {
         name: "Ireland",
       },
     },
-    fields
+    fields,
   );
 };
 
@@ -56,7 +56,7 @@ export const country = (fields = {}) => {
       name: "Ireland",
       states: ["Dublin", "Cork", "Galway", "Limerick"],
     },
-    fields
+    fields,
   );
 };
 
@@ -92,7 +92,7 @@ export const project = (fields = {}) => {
         secret: "secret1234",
       },
     },
-    fields
+    fields,
   );
 };
 
@@ -131,7 +131,7 @@ export const application = (fields = {}) => {
       tasks: [],
       previousProjects: [],
     },
-    fields
+    fields,
   );
 };
 
@@ -142,7 +142,7 @@ export const applicationQuestion = (fields = {}) =>
       question: "This is a question",
       answer: null,
     },
-    fields
+    fields,
   );
 
 export const specialist = (fields = {}) => {
@@ -183,11 +183,14 @@ export const specialist = (fields = {}) => {
         name: "Ireland",
       },
       linkedin: "https://linkedin.com",
-      previousProjects: [],
+      previousProjects: {
+        __typename: "PreviousProjectsConnection",
+        nodes: [],
+      },
       skills: [],
       previousProjectsCount: 0,
     },
-    fields
+    fields,
   );
 };
 
@@ -199,7 +202,7 @@ export const specialistSkill = (fields = {}) => {
       name: "Testing",
       verified: false,
     },
-    fields
+    fields,
   );
 };
 
@@ -220,7 +223,7 @@ export const task = (fields = {}) => {
       estimateType: "Hourly",
       createdAt: new Date().toISOString(),
     },
-    fields
+    fields,
   );
 };
 
@@ -231,30 +234,34 @@ export const skill = (fields = {}) => {
       id: uniqueId("skill"),
       name: "Skill",
     },
-    fields
+    fields,
   );
 };
 
-export const offPlatformProject = (fields = {}) => {
+export const previousProject = (fields = {}) => {
   return merge(
     {
-      __typename: "OffPlatformProject",
-      uid: uniqueId("opp_"),
-      id: uniqueId("opp_"),
-      airtableId: "rec123",
-      clientName: "Test Inc",
-      primarySkill: "Testing",
-      contactEmail: null,
-      description: "testing",
-      confidential: false,
-      skills: ["Testing"],
-      industry: "Testing",
-      validationStatus: "Pending",
-      contactFirstName: "Thomas",
-      contactLastName: "Cullen",
+      __typename: "PreviousProject",
+      id: uniqueId("pre_"),
+      title: "Previous project title",
+      goal: "This was the project goal",
+      excerpt: "This is the excerpt...",
+      description: "This is the description",
+      companyName: "Test Inc",
+      companyType: "Startup",
       specialist: null,
+      reviews: [],
+      primarySkill: null,
+      primaryIndustry: null,
+      skills: [],
+      industries: [],
+      validationStatus: "Pending",
+      onPlatform: false,
+      contactEmail: null,
+      contactFirstName: "John",
+      contactLastName: "Doe",
     },
-    fields
+    fields,
   );
 };
 
@@ -266,7 +273,7 @@ export const industry = (fields = {}) => {
       name: "Industry",
       color: "blue",
     },
-    fields
+    fields,
   );
 };
 
@@ -281,7 +288,7 @@ export const consultation = (fields = {}) => {
       specialist: null,
       interview: null,
     },
-    fields
+    fields,
   );
 };
 
@@ -298,27 +305,7 @@ export const interview = (fields = {}) => {
       application: null,
       user: null,
     },
-    fields
-  );
-};
-
-export const profileProject = (fields = {}) => {
-  return merge(
-    {
-      __typename: "ProfileProject",
-      id: uniqueId("off "),
-      title: "Project title",
-      excerpt: "This is the excerpt...",
-      description: "This is the description",
-      goal: "This was the project goal",
-      companyName: "Testing Inc",
-      industry: null,
-      skills: [],
-      industries: [],
-      reviews: [],
-      specialist: null,
-    },
-    fields
+    fields,
   );
 };
 
@@ -341,7 +328,7 @@ export const review = (fields = {}) => {
         communication: 2,
       },
     },
-    fields
+    fields,
   );
 };
 
@@ -351,7 +338,7 @@ export const search = (fields = {}) => {
       __typename: "Search",
       id: uniqueId("sea"),
     },
-    fields
+    fields,
   );
 };
 
@@ -368,8 +355,7 @@ export default {
   application,
   specialist,
   consultation,
-  profileProject,
   specialistSkill,
-  offPlatformProject,
+  previousProject,
   applicationQuestion,
 };

@@ -1,6 +1,6 @@
 import { fireEvent } from "@testing-library/react";
 import renderApp from "../../testHelpers/renderApp";
-import mockData, { offPlatformProject } from "../../__mocks__/graphqlFields";
+import mockData from "../../__mocks__/graphqlFields";
 import GET_APPLICATION from "./fetchApplication";
 import UPDATE from "./updateApplication";
 import {
@@ -173,28 +173,15 @@ test("Questions step continues to the references step", async () => {
 });
 
 test("References continue to payment terms step", async () => {
-  const project1 = offPlatformProject({
-    airtableId: "recopp1",
-    skills: ["Online marketing"],
-  });
+  const project1 = mockData.previousProject();
+  const project2 = mockData.previousProject();
 
-  const project2 = offPlatformProject({
-    airtableId: "recopp2",
-    skills: ["Twitter marketing"],
-  });
-
-  const { specialist, application, project } = setupData({
+  const { specialist, application } = setupData({
     specialist: {
-      previousProjects: [
-        {
-          __typename: "PreviousProject",
-          project: project1,
-        },
-        {
-          __typename: "PreviousProject",
-          project: project2,
-        },
-      ],
+      previousProjects: {
+        __typename: "PreviousProjectsConnection",
+        nodes: [project1, project2],
+      },
     },
     application: {
       questions: [
@@ -217,7 +204,7 @@ test("References continue to payment terms step", async () => {
       UPDATE,
       {
         id: application.airtableId,
-        references: [project1.airtableId, project2.airtableId],
+        references: [project1.id, project2.id],
       },
       {
         updateApplication: {
@@ -234,13 +221,9 @@ test("References continue to payment terms step", async () => {
     graphQLMocks,
   });
 
-  const selection1 = await app.findByTestId(
-    project1.airtableId,
-    {},
-    { timeout: 5000 },
-  );
+  const selection1 = await app.findByTestId(project1.id, {}, { timeout: 5000 });
   fireEvent.click(selection1);
-  const selection2 = app.getByTestId(project2.airtableId);
+  const selection2 = app.getByTestId(project2.id);
   fireEvent.click(selection2);
   const button = app.getByLabelText("Next");
   fireEvent.click(button);
