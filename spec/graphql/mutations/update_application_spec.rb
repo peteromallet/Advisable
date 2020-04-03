@@ -89,8 +89,7 @@ describe Mutations::UpdateApplication do
     it 'updates the questions' do
       expect { AdvisableSchema.execute(query) }.to change {
         application.reload.questions
-      }.from([])
-        .to(
+      }.from([]).to(
         [
           {
             'question' => 'This is a question?', 'answer' => 'This is an answer'
@@ -111,13 +110,13 @@ describe Mutations::UpdateApplication do
   end
 
   context 'when updating the references' do
-    let(:off_platform_project) do
-      create(:off_platform_project, specialist: specialist)
+    let(:previous_project) { create(:previous_project, specialist: specialist) }
+    let(:previous_project_2) do
+      create(:previous_project, specialist: specialist)
     end
-    let(:previous_project) { create(:project) }
 
     before :each do
-      create(:application, specialist: specialist, project: previous_project)
+      create(:application, specialist: specialist)
     end
 
     let(:query) do
@@ -126,8 +125,8 @@ describe Mutations::UpdateApplication do
         updateApplication(input: {
           id: "#{application.airtable_id}",
           references: [
-            "#{off_platform_project.airtable_id}",
-            "#{project.airtable_id}"]
+            "#{previous_project.uid}",
+            "#{previous_project_2.uid}"]
         }) {
           errors {
             code

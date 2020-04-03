@@ -7,7 +7,7 @@ describe Search::Recommendations do
   let(:specialist) { create(:specialist, average_score: 90) }
   let(:project) do
     create(
-      :off_platform_project,
+      :previous_project,
       specialist: specialist, primary_skill: skill, advisable_score: 90
     )
   end

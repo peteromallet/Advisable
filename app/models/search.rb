@@ -47,13 +47,15 @@ class Search < ApplicationRecord
   def filter_industry(query)
     return query unless industry_experience_required
     joined = query.left_outer_joins(previous_projects: :industries)
-
     joined.where(previous_projects: { industries: { name: industry } })
   end
 
+  # TODO: There is something a little od happening here where due to the fact that the underlying
+  # table for previous projects is off_platform_projects we need to use that name in the where query
+  # below
   def filter_company_type(query)
     return query unless company_experience_required
     joined = query.left_outer_joins(:previous_projects)
-    joined.where(previous_projects: { company_type: company_type })
+    joined.where(off_platform_projects: { company_type: company_type })
   end
 end

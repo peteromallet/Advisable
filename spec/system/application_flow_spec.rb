@@ -91,7 +91,7 @@ describe 'Application flow' do
   describe 'References step' do
     context 'when the specialist has previous projects' do
       let!(:specialist) { create(:specialist) }
-      let!(:project) { create(:off_platform_project, specialist: specialist) }
+      let!(:project) { create(:previous_project, specialist: specialist) }
       let(:application) do
         create(:application, specialist: specialist, status: 'Invited To Apply')
       end
@@ -100,9 +100,8 @@ describe 'Application flow' do
         visit "/invites/#{application.airtable_id}/apply/references"
         find(
           'span',
-          text: "#{project.primary_skill.name} at #{project.client_name}"
-        )
-          .click
+          text: "#{project.primary_skill.name} with #{project.client_name}"
+        ).click
         click_on 'Next'
         click_on 'Continue With 1 Reference'
         expect(page).to have_content("Including Advisable's fee")
@@ -141,16 +140,13 @@ describe 'Application flow' do
         'label',
         text:
           'I agree that if Advisable connects me to a client that I successfully contract with, between 5-20% of my fees are payable to Advisable and all payments must go through Advisable.'
-      )
-        .click
+      ).click
       find('input[name="acceptsTerms"').sibling(
         '*[class^=styles__StyledCheckboxToggle]'
-      )
-        .click
+      ).click
       find('input[name="trialProgram"').sibling(
         '*[class^=styles__StyledCheckboxToggle]'
-      )
-        .click
+      ).click
       click_on 'Submit Application'
       expect(page).to have_content('Application sent!')
     end

@@ -1,12 +1,15 @@
 require 'rails_helper'
 
 describe Applications::RejectApplicationInvitation do
-  let(:application) { create(:application, status: "Applied", project_type: nil) }
-  let(:project_type) { "Fixed" }
+  let(:application) do
+    create(:application, status: 'Applied', project_type: nil)
+  end
+  let(:project_type) { 'Fixed' }
   let(:monthly_limit) { 150 }
 
   before :each do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
+    allow_any_instance_of(PreviousProject).to receive(:sync_to_airtable)
   end
 
   it "sets the application status to 'Working'" do
@@ -16,21 +19,17 @@ describe Applications::RejectApplicationInvitation do
         project_type: project_type,
         monthly_limit: monthly_limit
       )
-    }.to change {
-      application.reload.status
-    }.from("Applied").to("Working")
+    }.to change { application.reload.status }.from('Applied').to('Working')
   end
 
-  it "sets the project type" do
+  it 'sets the project type' do
     expect {
       Applications::StartWorking.call(
         application: application,
         project_type: project_type,
         monthly_limit: monthly_limit
       )
-    }.to change {
-      application.project_type
-    }.from(nil).to(project_type)
+    }.to change { application.project_type }.from(nil).to(project_type)
   end
 
   context "when project type is 'Flexible" do
@@ -38,24 +37,24 @@ describe Applications::RejectApplicationInvitation do
       allow(Applications::FlexibleInvoice).to receive(:call)
     end
 
-    it "sets the monthly limit" do
+    it 'sets the monthly limit' do
       expect {
         Applications::StartWorking.call(
           application: application,
-          project_type: "Flexible",
+          project_type: 'Flexible',
           monthly_limit: monthly_limit
         )
-      }.to change {
-        application.reload.monthly_limit
-      }.from(nil).to(monthly_limit)
+      }.to change { application.reload.monthly_limit }.from(nil).to(
+        monthly_limit
+      )
     end
 
-    it "calls the FlexibleInvoice service" do
+    it 'calls the FlexibleInvoice service' do
       expect(Applications::FlexibleInvoice).to receive(:call)
 
       Applications::StartWorking.call(
         application: application,
-        project_type: "Flexible",
+        project_type: 'Flexible',
         monthly_limit: monthly_limit
       )
     end
@@ -72,6 +71,18 @@ describe Applications::RejectApplicationInvitation do
 
   it 'triggers a webhook' do
     expect(Webhook).to receive(:process).with(application)
+    Applications::StartWorking.call(
+      application: application,
+      project_type: project_type,
+      monthly_limit: monthly_limit
+    )
+  end
+
+  it 'creates a previous project' do
+    previous_project = double(PreviousProject)
+    expect_any_instance_of(Application).to receive(:create_previous_project)
+      .and_return(previous_project)
+    expect(previous_project).to receive(:sync_to_airtable)
     Applications::StartWorking.call(
       application: application,
       project_type: project_type,
