@@ -8,8 +8,8 @@ class Types::PreviousProject < Types::BaseType
   field :company_type, String, null: false
   field :specialist, Types::SpecialistType, null: false
   field :reviews, [Types::Review], null: false
-  field :primary_skill, Types::Skill, null: false
-  field :primary_industry, Types::IndustryType, null: false
+  field :primary_skill, Types::Skill, null: true
+  field :primary_industry, Types::IndustryType, null: true
   field :skills, [Types::Skill], null: false
   field :industries, [Types::IndustryType], null: false
   field :validation_status, String, null: true
