@@ -38,14 +38,14 @@ const PreviousProjects = ({
         <Padding bottom="xs">
           <Heading level={6}>Previous Projects</Heading>
         </Padding>
-        {previousProjects.map(p => (
+        {previousProjects.map((p) => (
           <Field
             type="checkbox"
             name="references"
-            key={p.project.id}
+            key={p.id}
             as={PreviousProject}
-            value={p.project.airtableId}
-            project={p.project}
+            value={p.id}
+            project={p}
           />
         ))}
         <Padding top="m">

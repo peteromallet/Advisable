@@ -121,19 +121,14 @@ class Types::SpecialistType < Types::BaseType
   # Specialist can have skills from multiple places:
   # - Direct skills they have added to their profile. Associated via
   # SpecialistSkill records.
-  # - Skills associated to projects that they have worked on
-  # - Skills associated to off platform projects they have added
+  # - Skills associated to previous projects that they have worked on
   # By default the skills field will only show direct skills, however, you can
   # include project skills by specifying the project_skills argument.
   def skills(project_skills: false, limit: nil)
     records =
       begin
         if project_skills
-          (
-            object.skills + object.project_skills +
-              object.off_platform_project_skills
-          )
-            .uniq
+          (object.skills + object.previous_project_skills).uniq
         else
           object.skills
         end
@@ -150,7 +145,7 @@ class Types::SpecialistType < Types::BaseType
   field :project_skills, Types::Skill.connection_type, null: false
 
   def project_skills
-    (object.project_skills + object.off_platform_project_skills).uniq
+    object.previous_project_skills
   end
 
   field :industries, [Types::IndustryType], null: false do
@@ -160,11 +155,7 @@ class Types::SpecialistType < Types::BaseType
   # TODO: This should eventually be updated to include multiple industries associated with an on
   # platform project
   def industries
-    (
-      object.off_platform_project_industries +
-        Industry.where(name: object.successful_projects.map(&:industry))
-    )
-      .uniq
+    object.previous_project_industries
   end
 
   field :ratings, Types::Ratings, null: false do
@@ -192,21 +183,16 @@ class Types::SpecialistType < Types::BaseType
     description 'Wether or not the specialist will work remotely'
   end
 
-  field :previous_projects, [Types::PreviousProject], null: false do
-    description <<~HEREDOC
-      list of the specialists previous projects. These can either be projects
-      that happened on Advisable or off platform projects that the specialist
-      has provided.
-    HEREDOC
-
+  field :previous_projects,
+        Types::PreviousProject.connection_type,
+        null: false do
     argument :include_validation_failed, Boolean, required: false
   end
 
   def previous_projects(include_validation_failed: false)
-    ::PreviousProject.for_specialist(
-      object,
-      { include_validation_failed: include_validation_failed }
-    )
+    records = object.previous_projects
+    records = records.validation_not_failed unless include_validation_failed
+    records.order(created_at: :desc)
   end
 
   field :previous_projects_count, Int, null: false
@@ -341,30 +327,12 @@ class Types::SpecialistType < Types::BaseType
     description 'The account status for the specialist'
   end
 
-  field :profile_projects,
-        Types::ProfileProjectType.connection_type,
-        null: false
+  field :profile_projects, [Types::PreviousProject], null: false
 
   def profile_projects
-    projects =
-      ::PreviousProject.for_specialist(
-        object,
-        { include_validation_failed: false, exclude_hidden_from_profile: true }
-      )
-
-    projects.sort_by do |previous_project|
-      previous_project.project.try(:priority) || Float::INFINITY
+    object.previous_projects.validation_not_failed.not_hidden
+      .sort_by do |previous_project|
+      previous_project.try(:priority) || Float::INFINITY
     end
-  end
-
-  field :profile_project, Types::ProfileProjectType, null: true do
-    argument :id, ID, required: true
-  end
-
-  def profile_project(id:)
-    project = OffPlatformProject.find_by_uid_or_airtable_id(id)
-    project = Project.find_by_uid_or_airtable_id(id) if project.nil?
-    raise ActiveRecord::RecordNotFound if project.nil?
-    PreviousProject.new(project: project, specialist: object)
   end
 end

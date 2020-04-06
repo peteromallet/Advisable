@@ -1,15 +1,18 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query offPlatformProject($id: ID!) {
-    offPlatformProject(id: $id) {
+  query previousProject($id: ID!) {
+    previousProject(id: $id) {
       id
-      clientName
-      primarySkill
+      companyName
       contactEmail
       validationStatus
       contactFirstName
       contactLastName
+      primarySkill {
+        id
+        name
+      }
       specialist {
         id
         name

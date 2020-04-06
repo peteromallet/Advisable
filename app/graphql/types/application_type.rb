@@ -24,7 +24,7 @@ class Types::ApplicationType < Types::BaseType
   field :interview, Types::Interview, null: true
   field :trial_program, Boolean, null: true
   field :trial_task, Types::TaskType, null: true
- 
+
   field :proposal_comment, String, null: true do
     authorize :read
   end
@@ -60,19 +60,17 @@ class Types::ApplicationType < Types::BaseType
   # previous proejcts if there are none specifically related to the application
   # through references. This argument defaults to true.
   def previous_projects(fallback: true)
-    references = ::PreviousProject.for_application(object)
-
-    if fallback && references.empty?
-      references = ::PreviousProject.for_specialist(object.specialist)
+    projects = object.previous_projects
+    if fallback && projects.empty?
+      projects = object.specialist.previous_projects
     end
-
-    references
+    projects
   end
 
   # Wether or not the candidate has more previous projects than the ones they
   # have included in their application
   def has_more_projects
     return false if object.references.empty?
-    object.references.count < ::PreviousProject.for_specialist(object.specialist).count
+    object.previous_projects.count < object.specialist.previous_projects.count
   end
 end

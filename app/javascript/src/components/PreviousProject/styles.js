@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 
 export const PreviousProject = styled.div`
   padding: 15px;
+  outline: none;
   background: #f2f3f7;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -10,7 +11,7 @@ export const PreviousProject = styled.div`
     margin-bottom: 0;
   }
 
-  ${props =>
+  ${(props) =>
     props.onClick &&
     css`
       cursor: pointer;

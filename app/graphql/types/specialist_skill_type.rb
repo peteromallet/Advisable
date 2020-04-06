@@ -17,8 +17,7 @@ class Types::SpecialistSkillType < Types::BaseType
   end
 
   def verified
-    specialist.project_skills.include?(skill) || 
-    specialist.off_platform_project_skills.include?(skill)
+    specialist.previous_project_skills.include?(skill)
   end
 
   def skill

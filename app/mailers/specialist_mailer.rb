@@ -6,7 +6,7 @@ class SpecialistMailer < ApplicationMailer
   end
 
   def verify_project(uid)
-    @project = OffPlatformProject.find_by_uid(uid)
+    @project = PreviousProject.find_by_uid(uid)
     @specialist = @project.specialist
 
     mail(

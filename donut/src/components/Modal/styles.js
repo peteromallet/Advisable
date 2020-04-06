@@ -4,12 +4,13 @@ import { motion } from "framer-motion";
 import styled, { css, keyframes } from "styled-components";
 import theme from "../../theme";
 
+// Z-INDEX FOR MODALS ARE MANAGED INSIDE OF THE BASE STYLES.
+
 export const StyledBackdrop = styled(motion.div)`
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 50;
   position: fixed;
   background: ${rgba(theme.colors.neutral[2], 0.9)};
   ${"" /* Override the display prop that reakit tries to set so that we can handle exit animations */}
@@ -22,7 +23,6 @@ export const StyledModalWindowContainer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 100;
   padding: 40px;
   position: fixed;
   perspective: 800;

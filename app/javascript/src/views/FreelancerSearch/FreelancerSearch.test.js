@@ -240,7 +240,7 @@ test("User can search for freelancers and get a recommendation", async () => {
             id: "sea_123",
             skill,
             industry,
-            recommendation: mockData.profileProject({
+            recommendation: mockData.previousProject({
               industries: [industry],
               skills: [skill],
               reviews: [mockData.review()],

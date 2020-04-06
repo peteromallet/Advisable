@@ -1,11 +1,9 @@
 import React from "react";
 import Loading from "./Loading";
 import PreviousProject from "./PreviousProject";
-import Card from "../Card";
+import { Box, Text, useModal } from "@advisable/donut";
 import Button from "../Button";
 import Divider from "../Divider";
-import Heading from "../Heading";
-import { Padding } from "../Spacing";
 import PreviousProjectsModal from "../PreviousProjectsModal";
 
 const PreviousProjects = ({
@@ -16,52 +14,38 @@ const PreviousProjects = ({
   specialistId,
   hasMoreProjects,
 }) => {
-  const [viewAllProjects, setViewAllProjects] = React.useState(
-    !hasMoreProjects
-  );
+  const modal = useModal();
 
   if (loading) {
     return <Loading />;
   }
 
   return (
-    <Card>
+    <>
       {title && (
         <>
-          <Padding left="xl" top="l" bottom="l">
-            <Heading level={4}>{title}</Heading>
-          </Padding>
+          <Text as="h4">{title}</Text>
           <Divider />
         </>
       )}
-      {previousProjects.map(previousProject => (
+      {previousProjects.map((previousProject) => (
         <PreviousProject
-          specialistId={specialistId}
-          key={previousProject.project.id}
+          key={previousProject.id}
           previousProject={previousProject}
           showValidationStatus={showValidationStatus}
         />
       ))}
       {hasMoreProjects && (
-        <React.Fragment>
-          <PreviousProjectsModal
-            isOpen={viewAllProjects}
-            onClose={() => setViewAllProjects(false)}
-            specialistId={specialistId}
-          />
-          <Padding size="xl">
-            <Button
-              block
-              size="l"
-              styling="outlined"
-              onClick={() => setViewAllProjects(true)}
-            >
+        <>
+          <PreviousProjectsModal modal={modal} specialistId={specialistId} />
+          <Box py="l">
+            <Button block size="l" styling="outlined" onClick={modal.show}>
               View all projects
             </Button>
-          </Padding>
-        </React.Fragment>
+          </Box>
+        </>
       )}
-    </Card>
+    </>
   );
 };
 

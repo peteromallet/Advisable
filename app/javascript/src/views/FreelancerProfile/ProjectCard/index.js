@@ -13,8 +13,8 @@ import {
   useModal,
   RoundedButton,
 } from "@advisable/donut";
-import ProjectDetails from "../ProjectDetails";
 import IndustryTag from "../../../components/IndustryTag";
+import ProjectDetails from "../../../components/PreviousProjectDetails";
 
 function useRoutedModal(path, back) {
   const modal = useModal();
@@ -61,13 +61,15 @@ function ProjectCard({ specialistId, project }) {
     {
       ...location,
       pathname: `/freelancers/${specialistId}/projects`,
-    }
+    },
   );
 
   return (
     <Card>
       <Box padding="l">
-        {project.industry && <IndustryTag industry={project.industry} mb="s" />}
+        {project.primaryIndustry && (
+          <IndustryTag industry={project.primaryIndustry} mb="s" />
+        )}
         <Text
           mb="s"
           fontSize="xxl"
@@ -81,7 +83,7 @@ function ProjectCard({ specialistId, project }) {
           {project.excerpt}
         </Text>
         <Box mt="l" mb="l">
-          {project.skills.map(skill => (
+          {project.skills.map((skill) => (
             <Tag key={skill.id} mr="xxs" mb="xxs">
               {skill.name}
             </Tag>
@@ -89,20 +91,14 @@ function ProjectCard({ specialistId, project }) {
         </Box>
         <Modal modal={modal} label="Freelancer project" width={800}>
           <Box padding="xl">
-            <ProjectDetails
-              specialistId={specialistId}
-              projectId={project.id}
-            />
+            <ProjectDetails id={project.id} />
             <Link
               to={`/request_consultation/${specialistId}`}
+              style={{ outline: "none" }}
             >
-
-            <RoundedButton
-              size="l"
-              prefix={<Icon icon="message-circle" />}
-            >
-              Request Consultation
-            </RoundedButton>
+              <RoundedButton size="l" prefix={<Icon icon="message-circle" />}>
+                Request Consultation
+              </RoundedButton>
             </Link>
           </Box>
         </Modal>

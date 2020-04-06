@@ -27,23 +27,21 @@ const getProfileData = gql`
       }
 
       profileProjects {
-        nodes {
+        id
+        title
+        excerpt
+        primaryIndustry {
           id
-          title
-          excerpt
-          industry {
-            id
-            name
-            color
-          }
-          skills {
-            id
-            name
-          }
-          industries {
-            id
-            name
-          }
+          name
+          color
+        }
+        skills {
+          id
+          name
+        }
+        industries {
+          id
+          name
         }
       }
 

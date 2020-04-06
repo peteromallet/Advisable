@@ -1,27 +1,29 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { Link as RouterLink } from "react-router-dom";
-import { Link, Avatar, Box, Text, Tag } from "@advisable/donut";
+import { Modal, Link, Avatar, Box, Text, Tag } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
-import IndustryTag from "../../../components/IndustryTag";
-import Review from "../Review";
+import IndustryTag from "../IndustryTag";
+import renderLineBreaks from "../../utilities/renderLineBreaks";
+import Review from "./Review";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
 
-function ProjectDetails({ specialistId, projectId }) {
+function PreviousProjectDetails({ id }) {
   const { loading, data, error } = useQuery(GET_PROJECT, {
     variables: {
-      specialist: specialistId,
-      project: projectId,
+      id: id,
     },
   });
 
   if (loading) return <ProjectDetailsLoading />;
 
-  const project = data.specialist.profileProject;
+  const project = data.previousProject;
 
   return (
     <>
-      {project.industry && <IndustryTag industry={project.industry} mb="s" />}
+      {project.industry && (
+        <IndustryTag industry={project.primaryIndustry} mb="s" />
+      )}
       <Box mb="m" width="80%">
         <Text
           as="h2"
@@ -48,7 +50,7 @@ function ProjectDetails({ specialistId, projectId }) {
             mb="1px"
             as={RouterLink}
             color="blue700"
-            to={`/freelancers/${specialistId}`}
+            to={`/freelancers/${project.specialist.id}`}
             fontWeight="medium"
           >
             {project.specialist.name}
@@ -63,7 +65,7 @@ function ProjectDetails({ specialistId, projectId }) {
         Project description
       </Text>
       <Text mb="xl" fontSize="m" color="neutral800" lineHeight="m">
-        {project.description}
+        {renderLineBreaks(project.description)}
       </Text>
       <Box display={["block", "flex"]}>
         <Box width="100%" mb="xl">
@@ -113,4 +115,12 @@ function ProjectDetails({ specialistId, projectId }) {
   );
 }
 
-export default ProjectDetails;
+PreviousProjectDetails.Modal = ({ modal, id, ...props }) => {
+  return (
+    <Modal modal={modal} width={800} padding="xl" {...props}>
+      <PreviousProjectDetails id={id} />
+    </Modal>
+  );
+};
+
+export default PreviousProjectDetails;

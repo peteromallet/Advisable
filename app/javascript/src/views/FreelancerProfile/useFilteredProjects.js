@@ -12,11 +12,11 @@ function useFilteredProjects(data) {
   const filteredSkills = queryParams.skills;
   const filteredIndustries = queryParams.industries;
 
-  const projects = data.specialist.profileProjects.nodes.filter(project => {
+  const projects = data.specialist.profileProjects.filter((project) => {
     let include = true;
 
     if (filteredSkills && isArray(filteredSkills)) {
-      const hasSkill = some(project.skills, s => {
+      const hasSkill = some(project.skills, (s) => {
         return filteredSkills.indexOf(s.name) > -1;
       });
 
@@ -26,7 +26,7 @@ function useFilteredProjects(data) {
     }
 
     if (filteredIndustries && isArray(filteredIndustries)) {
-      const hasIndustry = some(project.industries, i => {
+      const hasIndustry = some(project.industries, (i) => {
         return filteredIndustries.indexOf(i.name) > -1;
       });
 

@@ -8,10 +8,8 @@ import createValidationSchema from "./validationSchema";
 
 const VerifyProject = ({ project, match }) => {
   const [validate] = useMutation(VALIDATE_PROJECT);
-  let contactName = project.contactFirstName;
-  if (project.contactLastName) {
-    contactName += ` ${project.contactLastName}`;
-  }
+  const { contactFirstName, contactLastName } = project;
+  const contactName = `${contactFirstName} ${contactLastName}`;
 
   const handleSubmit = async (values) => {
     await validate({
@@ -34,7 +32,8 @@ const VerifyProject = ({ project, match }) => {
         lineHeight="xl"
         fontWeight="semibold"
       >
-        Verify {project.primarySkill} project with {project.specialist.name}
+        Verify {project.primarySkill.name} project with{" "}
+        {project.specialist.name}
       </Text>
       <Text size="s" lineHeight="s">
         To validate this project, please enter your email address. This should
@@ -42,7 +41,7 @@ const VerifyProject = ({ project, match }) => {
       </Text>
       <NumberedList my="m" fontSize="xs">
         <NumberedList.Item>
-          {project.clientName} corporate email address for {contactName}
+          {project.companyName} corporate email address for {contactName}
         </NumberedList.Item>
         <NumberedList.Item>
           An email address associated with the personal LinkedIn account of{" "}

@@ -1,5 +1,5 @@
 class Airtable::SpecialistReview < Airtable::Base
-  self.table_name = "Specialist Reviews"
+  self.table_name = 'Specialist Reviews'
 
   sync_with ::Review
   sync_column 'Comment', to: :comment
@@ -12,10 +12,10 @@ class Airtable::SpecialistReview < Airtable::Base
   end
 
   private
-  
+
   # Setup the specialist relationship for the review
   def pull_specialist(review)
-    airtable_id = fields["Specialist"].try(:first)
+    airtable_id = fields['Specialist'].try(:first)
     return unless airtable_id
     specialist = ::Specialist.find_by_airtable_id(airtable_id)
     specialist = Airtable::Specialist.find(airtable_id).sync if specialist.nil?
@@ -25,8 +25,9 @@ class Airtable::SpecialistReview < Airtable::Base
   # Setup the project relationship for the review
   def pull_project(review)
     # If there is a value in the "Project" column then setup that relationship
+
     if fields['Project']
-      airtable_id = fields["Project"].try(:first)
+      airtable_id = fields['Project'].try(:first)
       return unless airtable_id
       project = ::Project.find_by_airtable_id(airtable_id)
       project = Airtable::Project.find(airtable_id).sync if project.nil?
@@ -34,12 +35,13 @@ class Airtable::SpecialistReview < Airtable::Base
     end
 
     # If there is a value in the "Off-Platform Project" column then set the
-    # project to the off-platform project
+    # project to the previous project
+
     if fields['Off-Platform Project']
-      airtable_id = fields["Off-Platform Project"].try(:first)
+      airtable_id = fields['Off-Platform Project'].try(:first)
       return unless airtable_id
-      project = ::OffPlatformProject.find_by_airtable_id(airtable_id)
-      project = Airtable::OffPlatformProject.find(airtable_id).sync if project.nil?
+      project = ::PreviousProject.find_by_airtable_id(airtable_id)
+      project = Airtable::PreviousProject.find(airtable_id).sync if project.nil?
       review.project = project
     end
   end
@@ -48,12 +50,12 @@ class Airtable::SpecialistReview < Airtable::Base
   # reviews ratings hash.
   def pull_ratings(review)
     review.ratings = {
-      overall: fields["Overall Rating"],
-      skills: fields["Skills - Rating"],
-      quality_of_work: fields["Quality of Work - Rating"],
-      adherence_to_schedule: fields["Adherence to Schedule - Rating"],
-      availability: fields["Availability - Rating"],
-      communication: fields["Communication - Rating"]
+      overall: fields['Overall Rating'],
+      skills: fields['Skills - Rating'],
+      quality_of_work: fields['Quality of Work - Rating'],
+      adherence_to_schedule: fields['Adherence to Schedule - Rating'],
+      availability: fields['Availability - Rating'],
+      communication: fields['Communication - Rating']
     }
   end
 end

@@ -13,6 +13,11 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web, at: '/sidekiq'
 
+  if Rails.env.development?
+    mount GraphqlPlayground::Rails::Engine,
+          at: '/playground', graphql_path: '/graphql'
+  end
+
   namespace :admin do
     resources :searches
     resources :applications

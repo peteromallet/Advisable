@@ -29,25 +29,9 @@ export default gql`
         }
         hasMoreProjects
         previousProjects {
-          project {
-            ... on Project {
-              id
-              airtableId
-              description
-              primarySkill
-              user {
-                companyName
-              }
-            }
-            ... on OffPlatformProject {
-              id
-              airtableId
-              description
-              primarySkill
-              clientName
-              validationStatus
-            }
-          }
+          id
+          title
+          excerpt
           reviews {
             id
             name

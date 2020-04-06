@@ -5,7 +5,7 @@ import renderApp from "../../../../testHelpers/renderApp";
 import generateTypes from "../../../../__mocks__/graphqlFields";
 import GET_PROJECTS from "../previousProjects";
 import FETCH_DATA from "../../../../components/PreviousProjectForm/getData";
-import CREATE_PROJECT from "../../../../components/PreviousProjectForm/createOffPlatformProject";
+import CREATE_PROJECT from "../../../../components/PreviousProjectForm/createPreviousProject";
 
 test("Adds a previous project", async () => {
   const specialist = generateTypes.specialist();
@@ -32,7 +32,10 @@ test("Adds a previous project", async () => {
         data: {
           viewer: {
             ...specialist,
-            previousProjects: [],
+            previousProjects: {
+              __typename: "PreviousProjectsConnection",
+              nodes: [],
+            },
           },
         },
       },
@@ -73,17 +76,13 @@ test("Adds a previous project", async () => {
       result: {
         data: {
           __typename: "Mutation",
-          createOffPlatformProject: {
-            __typename: "CreateOffPlatformProjectPayload",
-            previousProject: {
-              __typename: "PreviousProject",
-              project: generateTypes.offPlatformProject({
-                primarySkill: "Testing",
-                clientName: "Test inc",
-              }),
-              specialist,
-              reviews: [],
-            },
+          createPreviousProject: {
+            __typename: "CreatePreivousProjectPayload",
+            previousProject: generateTypes.previousProject({
+              primaryskill: skill,
+              skills: [skill],
+              title: "This is the new project",
+            }),
           },
         },
       },
@@ -125,6 +124,6 @@ test("Adds a previous project", async () => {
   fireEvent.change(role, { target: { value: "CEO" } });
   const complete = await findByLabelText("Add Previous Project");
   fireEvent.click(complete);
-  const project = await findByText("Testing at Test inc");
+  const project = await findByText("This is the new project");
   expect(project).toBeInTheDocument();
 });

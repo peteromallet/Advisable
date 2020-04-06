@@ -32,49 +32,17 @@ describe Search do
       expect(search.results).to_not include(specialist)
     end
 
-    it 'find specialist by project skills' do
-      skill = create(:skill, name: 'Testing')
-      project = create(:project)
-      project.skills << skill
-
-      s1 = create(:specialist, average_score: 70)
-      s2 = create(:specialist, average_score: 70)
-      s3 = create(:specialist, average_score: 70)
-
-      create(:application, project: project, specialist: s1, status: 'Applied')
-      create(:application, project: project, specialist: s2, status: 'Working')
-      create(
-        :application,
-        project: project, specialist: s3, status: 'Stopped Working'
-      )
-
-      search = create(:search, skill: skill.name)
-
-      expect(search.results).not_to include(s1)
-      expect(search.results).to include(s2)
-      expect(search.results).to include(s3)
-    end
-
-    it 'finds specialists by off platform projects skills' do
-      skill = create(:skill, name: 'Testing')
-      specialist = create(:specialist, average_score: 70)
-      project = create(:off_platform_project, specialist: specialist)
-      project.skills << skill
-      search = create(:search, skill: skill.name)
-      expect(search.results).to include(specialist)
-    end
-
     it 'can filter by industry' do
       skill = create(:skill, name: 'Testing')
       industry = create(:industry, name: 'Tech')
 
       specialist1 = create(:specialist, average_score: 70)
-      project = create(:off_platform_project, specialist: specialist1)
+      project = create(:previous_project, specialist: specialist1)
       project.skills << skill
       project.industries << industry
 
       specialist2 = create(:specialist, average_score: 70)
-      project = create(:off_platform_project, specialist: specialist2)
+      project = create(:previous_project, specialist: specialist2)
       project.skills << skill
 
       search =
@@ -96,7 +64,7 @@ describe Search do
       specialist1 = create(:specialist, average_score: 70)
       project =
         create(
-          :off_platform_project,
+          :previous_project,
           specialist: specialist1, company_type: company_type
         )
       project.skills << skill
@@ -104,7 +72,7 @@ describe Search do
       specialist2 = create(:specialist, average_score: 70)
       project =
         create(
-          :off_platform_project,
+          :previous_project,
           specialist: specialist2, company_type: 'Corpo'
         )
       project.skills << skill

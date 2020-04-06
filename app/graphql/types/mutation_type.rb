@@ -24,8 +24,7 @@ class Types::MutationType < GraphQL::Schema::Object
   field :update_project, mutation: Mutations::UpdateProject
   field :confirm_project, mutation: Mutations::ConfirmProject
   field :convert_to_self_service, mutation: Mutations::ConvertToSelfService
-  field :create_off_platform_project,
-        mutation: Mutations::CreateOffPlatformProject
+  field :create_previous_project, mutation: Mutations::CreatePreviousProject
 
   field :login, mutation: Mutations::Login
   field :signup, mutation: Mutations::Signup
@@ -56,8 +55,7 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :update_payment_settings, mutation: Mutations::UpdatePaymentSettings
   field :complete_setup, mutation: Mutations::CompleteSetup
-  field :verify_off_platform_project,
-        mutation: Mutations::VerifyOffPlatformProject
+  field :verify_previous_project, mutation: Mutations::VerifyPreviousProject
 
   field :create_consultation, mutation: Mutations::CreateConsultation
   field :update_consultation, mutation: Mutations::UpdateConsultation
