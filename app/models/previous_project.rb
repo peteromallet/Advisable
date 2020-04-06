@@ -49,6 +49,12 @@ class PreviousProject < ApplicationRecord
     self.contact_last_name = name.split(' ').try(:[], 1)
   end
 
+  def self.for_project(specialist:, project:)
+    project.applications.find_by_specialist_id(specialist.id).try(
+      :previous_project
+    )
+  end
+
   private
 
   # Update the associated specialists project count

@@ -77,7 +77,7 @@ test("Adds a previous project", async () => {
         data: {
           __typename: "Mutation",
           createPreviousProject: {
-            __typename: "CreateOffPlatformProjectPayload",
+            __typename: "CreatePreivousProjectPayload",
             previousProject: generateTypes.previousProject({
               primaryskill: skill,
               skills: [skill],

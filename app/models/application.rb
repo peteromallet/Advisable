@@ -7,13 +7,20 @@ class Application < ApplicationRecord
   has_many :interviews
   has_many :tasks
   has_one :trial_task, -> { where(trial: true) }, class_name: 'Task'
-  has_many :references, class_name: 'ApplicationReference'
+  # This previous project association represents a previous project that was created
+  # from the application record after working with the client.
+  has_one :previous_project
+
+  # references attached are previous projects that the specialist attaches to the application
+  # during the application process.
+  has_many :references,
+           -> { where(project_type: 'PreviousProject') },
+           class_name: 'ApplicationReference'
   has_many :previous_projects,
            through: :references,
            source: :project,
            source_type: 'PreviousProject'
   has_one :interview
-  has_one :previous_project
 
   # Every time an application is created, updated or destroyed we want to update
   # the assoicated specialists average_score.
