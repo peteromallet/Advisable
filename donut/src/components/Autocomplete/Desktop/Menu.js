@@ -25,7 +25,7 @@ const Menu = ({
   const { getItemProps, highlightedIndex, selected } = downshift;
 
   let items = filterItems(downshift, options);
-  let listHeight = items.length < 7 ? items.length * 36 : 252;
+  let listHeight = items.length < 7 ? items.length * 36 : 288;
 
   return createPortal(
     <StyledMenuContainer
@@ -65,7 +65,7 @@ const Menu = ({
         </MenuStyles>
       </motion.div>
     </StyledMenuContainer>,
-    portalRoot
+    portalRoot,
   );
 };
 
