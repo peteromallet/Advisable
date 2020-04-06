@@ -11,6 +11,7 @@ export default gql`
             id
             title
             excerpt
+            companyName
             reviews {
               id
               name
