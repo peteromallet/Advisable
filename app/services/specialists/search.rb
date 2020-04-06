@@ -24,7 +24,7 @@ class Specialists::Search < ApplicationService
 
   def call
     update_user_info
-    specialists = (by_skills + by_projects + by_off_platform_projects).uniq
+    specialists = (by_skills + by_previous_projects).uniq
     specialists.sort_by { |s| s.average_score || 0 }.reverse
   end
 
@@ -43,34 +43,20 @@ class Specialists::Search < ApplicationService
     query =
       Specialist.joins(:skills).where('average_score >= ?', 65.0).where(
         skills: { name: skill }
-      )
-        .where
-        .not(hourly_rate: nil)
+      ).where.not(hourly_rate: nil)
     query = filter_industry(query)
     query = filter_company_type(query)
     query
   end
 
-  def by_projects
+  def by_previous_projects
     query =
-      Specialist.joins(projects: :skills).where('average_score >= ?', 65.0)
-        .where(projects: { skills: { name: skill } })
-        .where
-        .not(hourly_rate: nil)
-    query = filter_industry(query)
-    query = filter_company_type(query)
-    query
-  end
-
-  def by_off_platform_projects
-    query =
-      Specialist.joins(off_platform_projects: :skills).where(
+      Specialist.joins(previous_projects: :skills).where(
         'average_score >= ?',
         65.0
+      ).where(previous_projects: { skills: { name: skill } }).where.not(
+        hourly_rate: nil
       )
-        .where(off_platform_projects: { skills: { name: skill } })
-        .where
-        .not(hourly_rate: nil)
     query = filter_industry(query)
     query = filter_company_type(query)
     query
@@ -78,17 +64,13 @@ class Specialists::Search < ApplicationService
 
   def filter_industry(query)
     return query unless industry_required
-    joined = query.left_outer_joins(:off_platform_projects, :projects)
-    joined.where(off_platform_projects: { industry: industry }).or(
-      joined.where(projects: { industry: industry })
-    )
+    joined = query.left_outer_joins(:previous_projects)
+    joined.where(off_platform_projects: { industry: industry })
   end
 
   def filter_company_type(query)
     return query unless company_type_required
-    joined = query.left_outer_joins(:off_platform_projects, :projects)
-    joined.where(off_platform_projects: { company_type: company_type }).or(
-      joined.where(projects: { company_type: company_type })
-    )
+    joined = query.left_outer_joins(:previous_projects)
+    joined.where(off_platform_projects: { company_type: company_type })
   end
 end

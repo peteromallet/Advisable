@@ -5,17 +5,24 @@ import theme from "../../theme";
 
 const VARIANTS = {
   default: css`
-    color: ${theme.colors.blue[6]};
+    color: ${theme.colors.blue600};
 
     &:hover {
-      color: ${theme.colors.blue[8]};
+      color: ${theme.colors.blue800};
+    }
+  `,
+  dark: css`
+    color: ${theme.colors.blue900};
+
+    &:hover {
+      color: ${theme.colors.blue600};
     }
   `,
   subtle: css`
-    color: ${theme.colors.neutral[7]};
+    color: ${theme.colors.neutral800};
 
     &:hover {
-      color: ${theme.colors.blue[6]};
+      color: ${theme.colors.blue600};
     }
   `,
 };
@@ -32,7 +39,7 @@ const styles = css`
   display: inline-flex;
   text-decoration: none;
   transition: color 200ms;
-  ${props => VARIANTS[props.variant || "default"]};
+  ${(props) => VARIANTS[props.variant || "default"]};
 `;
 
 export const LinkStyles = styled(Link)`

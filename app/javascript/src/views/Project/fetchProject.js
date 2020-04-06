@@ -27,6 +27,19 @@ export default gql`
         availability
         introduction
         referencesRequested
+        hasMoreProjects
+        previousProjects {
+          id
+          title
+          excerpt
+          validationStatus
+          reviews {
+            id
+            ratings {
+              overall
+            }
+          }
+        }
         questions {
           question
           answer

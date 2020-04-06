@@ -23,7 +23,7 @@ function Profile({ data }) {
 }
 
 function Projects({ data, projects }) {
-  if (data.specialist.profileProjects.nodes.length === 0) {
+  if (data.specialist.profileProjects.length === 0) {
     return <NoProjects data={data} />;
   }
 
@@ -31,7 +31,7 @@ function Projects({ data, projects }) {
     <>
       <ProjectFilters data={data} />
       {projects.length > 0 ? (
-        projects.map(we => (
+        projects.map((we) => (
           <Box mb="m" key={we.id}>
             <ProjectCard project={we} specialistId={data.specialist.id} />
           </Box>

@@ -22,6 +22,7 @@ const References = ({
   const { applicationId } = match.params;
   const notifications = useNotifications();
   const confirmationModal = useModal();
+  const specialist = application.specialist;
   const { previousProjects } = application.specialist;
   const [updateApplication, { loading }] = useMutation(UPDATE_APPLICATION);
   const projectModal = useRoutedModal(
@@ -81,7 +82,7 @@ const References = ({
   };
 
   const initialValues = {
-    references: application.previousProjects.map((r) => r.project.airtableId),
+    references: application.previousProjects.map((project) => project.id),
   };
 
   return (
@@ -104,35 +105,33 @@ const References = ({
             onSuccess={handleNewProject}
             mutationUpdate={(proxy, response) => {
               const previousProject =
-                response.data.createOffPlatformProject.previousProject;
+                response.data.createPreviousProject.previousProject;
               formik.setFieldValue(
                 "references",
-                formik.values.references.concat(
-                  previousProject.project.airtableId,
-                ),
+                formik.values.references.concat(previousProject.id),
               );
               const data = proxy.readQuery({
                 query: FETCH_APPLICATION,
                 variables: { id: applicationId },
               });
-              data.application.specialist.previousProjects.push(
+              data.application.specialist.previousProjects.nodes.unshift(
                 previousProject,
               );
               proxy.writeQuery({ query: FETCH_APPLICATION, data });
             }}
           />
 
-          {previousProjects.length > 0 ? (
+          {specialist.previousProjects.nodes.length > 0 ? (
             <PreviousProjects
               steps={steps}
-              application={application}
-              currentStep={currentStep}
               onBack={goBack}
               formik={formik}
-              onAdd={projectModal.show}
               initialValues={{}}
-              previousProjects={previousProjects}
               onSubmit={handleSubmit}
+              onAdd={projectModal.show}
+              application={application}
+              currentStep={currentStep}
+              previousProjects={specialist.previousProjects.nodes}
             />
           ) : (
             <NoReferences

@@ -12,9 +12,7 @@ module Account
     validates_confirmation_of :password
     validates :password, length: { minimum: 8 }, allow_blank: true
     validate :email_not_taken
-    validates :email, allow_blank: true, format: {
-      with: VALID_EMAIL_REGEX
-    }
+    validates :email, allow_blank: true, format: { with: VALID_EMAIL_REGEX }
 
     # Returns werther or not the record has set a password. Due to the fact that
     # records are synced from airtable, it's likely that an account already

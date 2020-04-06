@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Card, Text, Box } from "@advisable/donut";
 import { Padding } from "../../components/Spacing";
 import PreviousProjects from "../../components/PreviousProjects";
 import PreviousProjectsEmptyState from "../../components/PreviousProjectsEmptyState";
@@ -9,13 +10,25 @@ export default ({ data }) => {
   return (
     <Padding bottom="l">
       {application.previousProjects.length > 0 ? (
-        <PreviousProjects
-          title={`Previous projects related to ${data.project.primarySkill}`}
-          name={application.specialist.name}
-          hasMoreProjects={application.hasMoreProjects}
-          specialistId={application.specialist.airtableId}
-          previousProjects={application.previousProjects || []}
-        />
+        <Card>
+          <Text
+            py="m"
+            pl="l"
+            color="blue900"
+            fontSize="18px"
+            fontWeight="medium"
+          >
+            Previous Projects
+          </Text>
+          <Box height={1} bg="neutral100" />
+          <Box px="l">
+            <PreviousProjects
+              hasMoreProjects={application.hasMoreProjects}
+              specialistId={application.specialist.airtableId}
+              previousProjects={application.previousProjects || []}
+            />
+          </Box>
+        </Card>
       ) : (
         <PreviousProjectsEmptyState
           name={application.specialist.name}

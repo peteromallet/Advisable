@@ -105,10 +105,7 @@ const Candidate = ({ application, project }) => {
           )}
 
           <Padding bottom="xl">
-            <PreviousProjects
-              project={project}
-              applicationId={application.airtableId}
-            />
+            <PreviousProjects project={project} application={application} />
           </Padding>
         </React.Fragment>
       )}

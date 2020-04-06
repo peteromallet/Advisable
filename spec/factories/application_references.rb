@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :application_reference do
     application
-    project
+    association :project, factory: :previous_project
   end
 end

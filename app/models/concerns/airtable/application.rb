@@ -131,15 +131,10 @@ class Airtable::Application < Airtable::Base
     end
     self['Trial Program'] = application.trial_program ? 'Yes' : 'No'
 
-    references_project_ids =
-      application.references.where(project_type: 'Project').map do |r|
+    references_off_platform_project_ids =
+      application.references.where(project_type: 'PreviousProject').map do |r|
         r.project.airtable_id
       end
-    self['References - Projects'] = references_project_ids
-
-    references_off_platform_project_ids =
-      application.references.where(project_type: 'OffPlatformProject')
-        .map { |r| r.project.airtable_id }
     self['References - Off Platform Projects'] =
       references_off_platform_project_ids
 

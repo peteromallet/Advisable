@@ -7,7 +7,13 @@ import VALIDATE_PROJECT from "../validateProject";
 
 test("Starts the verification process", async () => {
   const specialist = generateTypes.specialist();
-  const offPlatformProject = generateTypes.offPlatformProject({
+  const skill = generateTypes.skill();
+  const industry = generateTypes.industry();
+  const previousProject = generateTypes.previousProject({
+    primarySkill: skill,
+    primaryIndustry: industry,
+    skills: [skill],
+    industries: [industry],
     specialist,
   });
 
@@ -31,7 +37,7 @@ test("Starts the verification process", async () => {
       },
       result: {
         data: {
-          offPlatformProject,
+          previousProject,
         },
       },
     },
@@ -48,10 +54,10 @@ test("Starts the verification process", async () => {
       result: {
         data: {
           __typename: "Mutation",
-          verifyOffPlatformProject: {
-            __typename: "VerifyOffPlatformProjectPayload",
-            offPlatformProject: {
-              ...offPlatformProject,
+          verifyPreviousProject: {
+            __typename: "VerifyPreviousProjectPayload",
+            previousProject: {
+              ...previousProject,
               validationStatus: "In Progress",
               contactEmail: "hello@test.com",
             },
@@ -71,7 +77,7 @@ test("Starts the verification process", async () => {
   fireEvent.change(email, { target: { value: "hello@test.com" } });
   const accept = getByLabelText(
     "I consent to be contacted to verify this project at the above email address.",
-    { exact: false }
+    { exact: false },
   );
   fireEvent.click(accept);
   const button = getByLabelText("Send verification details");

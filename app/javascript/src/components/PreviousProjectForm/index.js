@@ -12,7 +12,7 @@ import {
 } from "react-router-dom";
 import { buildSteps } from "./steps";
 import GET_DATA from "./getData";
-import CREATE_PROJECT from "./createOffPlatformProject";
+import CREATE_PROJECT from "./createPreviousProject";
 import useScrollRestore from "../../utilities/useScrollRestore";
 
 const PreviousProjectForm = ({
@@ -40,7 +40,7 @@ const PreviousProjectForm = ({
 
   const next = async (nextValues) => {
     if (currentIndex === STEPS.length - 1) {
-      await createProject({
+      const response = await createProject({
         variables: {
           input: {
             specialist,

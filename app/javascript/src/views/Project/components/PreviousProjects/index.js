@@ -1,20 +1,15 @@
 // Fetches a specialists previous projects.
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
-import Button from "src/components/Button";
 import Heading from "src/components/Heading";
+import { DialogDisclosure } from "reakit/Dialog";
+import { useModal, RoundedButton } from "@advisable/donut";
 import PreviousProject from "src/components/PreviousProject";
 import PreviousProjectsEmptyState from "src/components/PreviousProjectsEmptyState";
-import ProjectSkeleton from "./ProjectSkeleton";
-import FETCH_PROJECTS from "./fetchProjects.graphql";
 import PreviousProjectsModal from "../../../../components/PreviousProjectsModal";
 
-const PreviousProjects = ({ project, ...props }) => {
-  const { data, loading } = useQuery(FETCH_PROJECTS, {
-    variables: {
-      applicationId: props.applicationId,
-    },
-  });
+const PreviousProjects = ({ project, application }) => {
+  const allProjectsModal = useModal();
+  const hasProjects = application.previousProjects.length > 0;
 
   return (
     <>
@@ -22,63 +17,40 @@ const PreviousProjects = ({ project, ...props }) => {
         <>Previous Projects related to "{project.primarySkill}"</>
       </Heading>
 
-      {loading ? (
-        <React.Fragment>
-          <ProjectSkeleton />
-          <ProjectSkeleton />
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <SpecialistProjects
-            hasMoreProjects={data.application.hasMoreProjects}
-            data={data}
+      {!hasProjects && (
+        <PreviousProjectsEmptyState
+          name={application.specialist.name}
+          applicationId={application.airtableId}
+          specialistId={application.specialist.airtableId}
+          referencesRequested={application.referencesRequested}
+        />
+      )}
+
+      {application.previousProjects.map((previousProject) => (
+        <PreviousProject
+          key={previousProject.id}
+          previousProject={previousProject}
+          specialistId={application.specialist.airtableId}
+        />
+      ))}
+
+      {hasProjects && application.hasMoreProjects && (
+        <>
+          <PreviousProjectsModal
+            modal={allProjectsModal}
+            specialistId={application.specialist.id}
           />
-        </React.Fragment>
+          <DialogDisclosure
+            size="s"
+            as={RoundedButton}
+            variant="subtle"
+            onClick={allProjectsModal.show}
+          >
+            View all projects
+          </DialogDisclosure>
+        </>
       )}
     </>
-  );
-};
-
-const SpecialistProjects = ({ data, hasMoreProjects }) => {
-  const [viewAllProjects, setViewAllProjects] = React.useState(
-    !hasMoreProjects,
-  );
-
-  if (data.application.previousProjects.length > 0) {
-    const projects = data.application.previousProjects;
-
-    return (
-      <React.Fragment>
-        {projects.map((previousProject) => (
-          <PreviousProject
-            key={previousProject.project.id}
-            previousProject={previousProject}
-            specialistId={data.application.specialist.airtableId}
-          />
-        ))}
-        {hasMoreProjects && (
-          <React.Fragment>
-            <PreviousProjectsModal
-              isOpen={viewAllProjects}
-              onClose={() => setViewAllProjects(false)}
-              specialistId={data.application.specialist.airtableId}
-            />
-            <Button styling="outlined" onClick={() => setViewAllProjects(true)}>
-              View all projects
-            </Button>
-          </React.Fragment>
-        )}
-      </React.Fragment>
-    );
-  }
-
-  return (
-    <PreviousProjectsEmptyState
-      name={data.application.specialist.name}
-      applicationId={data.application.airtableId}
-      specialistId={data.application.specialist.airtableId}
-      referencesRequested={data.application.referencesRequested}
-    />
   );
 };
 

@@ -7,13 +7,20 @@ class Application < ApplicationRecord
   has_many :interviews
   has_many :tasks
   has_one :trial_task, -> { where(trial: true) }, class_name: 'Task'
-  has_many :references, class_name: 'ApplicationReference'
-  has_one :interview
+  # This previous project association represents a previous project that was created
+  # from the application record after working with the client.
+  has_one :previous_project
 
-  # Every time an application is created, updated or destroyed we want to update
-  # the associated specialists project count.
-  after_save :update_specialist_project_count
-  after_destroy :update_specialist_project_count
+  # references attached are previous projects that the specialist attaches to the application
+  # during the application process.
+  has_many :references,
+           -> { where(project_type: 'PreviousProject') },
+           class_name: 'ApplicationReference'
+  has_many :previous_projects,
+           through: :references,
+           source: :project,
+           source_type: 'PreviousProject'
+  has_one :interview
 
   # Every time an application is created, updated or destroyed we want to update
   # the assoicated specialists average_score.
@@ -57,13 +64,11 @@ class Application < ApplicationRecord
     (rate * 100).ceil
   end
 
-  private
-
-  # Update the associated specialists project count
-  def update_specialist_project_count
-    return unless specialist.present?
-    specialist.update_project_count
+  def create_previous_project
+    PreviousProject::ConvertApplication.run(self)
   end
+
+  private
 
   def update_specialist_average_score
     return unless specialist.present?

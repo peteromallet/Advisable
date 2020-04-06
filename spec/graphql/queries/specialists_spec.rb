@@ -52,22 +52,9 @@ describe 'specialists root query' do
       end
     end
 
-    context 'and a specialist has an off_platform_project in that industry' do
+    context 'and a specialist has an previous_project in that industry' do
       it 'includes the specialist' do
-        create(
-          :off_platform_project,
-          industry: 'Marketing', specialist: specialist
-        )
-        response = AdvisableSchema.execute(query)
-        nodes = response['data']['specialists']['nodes']
-        expect(nodes).to include({ 'id' => specialist.uid })
-      end
-    end
-
-    context 'and a specialist has an on_platform project in that industry' do
-      it 'includes the specialist' do
-        project = create(:project, industry: 'Marketing')
-        create(:application, project: project, specialist: specialist)
+        create(:previous_project, industry: 'Marketing', specialist: specialist)
         response = AdvisableSchema.execute(query)
         nodes = response['data']['specialists']['nodes']
         expect(nodes).to include({ 'id' => specialist.uid })
@@ -90,22 +77,12 @@ describe 'specialists root query' do
       end
     end
 
-    context 'and a specialist has an off_platform_project with that company type' do
+    context 'and a specialist has an previous_project with that company type' do
       it 'includes the specialist' do
         create(
-          :off_platform_project,
+          :previous_project,
           company_type: 'Start-up', specialist: specialist
         )
-        response = AdvisableSchema.execute(query)
-        nodes = response['data']['specialists']['nodes']
-        expect(nodes).to include({ 'id' => specialist.uid })
-      end
-    end
-
-    context 'and a specialist has an on_platform project with that company type' do
-      it 'includes the specialist' do
-        project = create(:project, company_type: 'Start-up')
-        create(:application, project: project, specialist: specialist)
         response = AdvisableSchema.execute(query)
         nodes = response['data']['specialists']['nodes']
         expect(nodes).to include({ 'id' => specialist.uid })

@@ -3,13 +3,14 @@ import renderApp from "../../testHelpers/renderApp";
 import mockData from "../../__mocks__/graphqlFields";
 import { mockViewer, mockQuery } from "../../testHelpers/apolloMocks";
 import GET_PROFILE from "./getProfile";
-import PROJECT_DETAILS from "./ProjectDetails/getProject";
+import PROJECT_DETAILS from "../../components/PreviousProjectDetails/getProject";
 
 test("Shows users profile", async () => {
   const skill = mockData.skill();
   const industry = mockData.industry();
-  const profileProject = mockData.profileProject({
-    industry,
+  const profileProject = mockData.previousProject({
+    primarySkill: skill,
+    primaryIndustry: industry,
     skills: [skill],
     industries: [industry],
   });
@@ -24,10 +25,7 @@ test("Shows users profile", async () => {
     },
     industries: [industry],
     reviews: [review],
-    profileProjects: {
-      __typename: "ProfileProjectsConnection",
-      nodes: [profileProject],
-    },
+    profileProjects: [profileProject],
   });
 
   profileProject.specialist = specialist;
@@ -49,8 +47,9 @@ test("Shows users profile", async () => {
 test("Can see reviews", async () => {
   const skill = mockData.skill();
   const industry = mockData.industry();
-  const profileProject = mockData.profileProject({
-    industry,
+  const profileProject = mockData.previousProject({
+    primarySkill: skill,
+    primaryIndustry: industry,
     skills: [skill],
     industries: [industry],
   });
@@ -65,10 +64,7 @@ test("Can see reviews", async () => {
     },
     industries: [industry],
     reviews: [review],
-    profileProjects: {
-      __typename: "ProfileProjectsConnection",
-      nodes: [profileProject],
-    },
+    profileProjects: [profileProject],
   });
 
   profileProject.specialist = specialist;
@@ -134,8 +130,9 @@ test("Renders 404 if the specialist isn't found", async () => {
 test("Can view freelancer project", async () => {
   const skill = mockData.skill();
   const industry = mockData.industry();
-  const profileProject = mockData.profileProject({
-    industry,
+  const profileProject = mockData.previousProject({
+    primarySkill: skill,
+    primaryIndustry: industry,
     skills: [skill],
     industries: [industry],
   });
@@ -148,11 +145,10 @@ test("Can view freelancer project", async () => {
     },
     industries: [industry],
     reviews: [],
-    profileProjects: {
-      __typename: "ProfileProjectsConnection",
-      nodes: [profileProject],
-    },
+    profileProjects: [profileProject],
   });
+
+  profileProject.specialist = specialist;
 
   const graphQLMocks = [
     mockViewer(null),
@@ -160,17 +156,10 @@ test("Can view freelancer project", async () => {
     mockQuery(
       PROJECT_DETAILS,
       {
-        specialist: specialist.id,
-        project: profileProject.id,
+        id: profileProject.id,
       },
       {
-        specialist: {
-          ...specialist,
-          profileProject: {
-            ...profileProject,
-            specialist,
-          },
-        },
+        previousProject: profileProject,
       },
     ),
   ];
@@ -191,8 +180,9 @@ test("Can view freelancer project", async () => {
 test("Can view a project by giong to url", async () => {
   const skill = mockData.skill();
   const industry = mockData.industry();
-  const profileProject = mockData.profileProject({
-    industry,
+  const previousProject = mockData.previousProject({
+    primarySkill: skill,
+    primaryIndustry: industry,
     skills: [skill],
     industries: [industry],
   });
@@ -205,40 +195,24 @@ test("Can view a project by giong to url", async () => {
     },
     industries: [industry],
     reviews: [],
-    profileProjects: {
-      __typename: "ProfileProjectsConnection",
-      nodes: [profileProject],
-    },
+    profileProjects: [previousProject],
   });
+
+  previousProject.specialist = specialist;
 
   const graphQLMocks = [
     mockViewer(null),
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
-    mockQuery(
-      PROJECT_DETAILS,
-      {
-        specialist: specialist.id,
-        project: profileProject.id,
-      },
-      {
-        specialist: {
-          ...specialist,
-          profileProject: {
-            ...profileProject,
-            specialist,
-          },
-        },
-      },
-    ),
+    mockQuery(PROJECT_DETAILS, { id: previousProject.id }, { previousProject }),
   ];
 
   const app = renderApp({
-    route: `/freelancers/${specialist.id}/projects/${profileProject.id}`,
+    route: `/freelancers/${specialist.id}/projects/${previousProject.id}`,
     graphQLMocks,
   });
 
   const modal = await app.findByRole("dialog", {}, { timeout: 5000 });
-  const title = await within(modal).findByText(profileProject.title);
+  const title = await within(modal).findByText(previousProject.title);
   expect(title).toBeInTheDocument();
 });
 
@@ -254,10 +228,7 @@ test("Shows message when specialist has no projects", async () => {
     },
     industries: [industry],
     reviews: [],
-    profileProjects: {
-      __typename: "ProfileProjectsConnection",
-      nodes: [],
-    },
+    profileProjects: [],
   });
 
   const graphQLMocks = [
@@ -286,16 +257,18 @@ test("Can filter projects by skill", async () => {
   const financeIndustry = mockData.industry({ name: "Finance" });
   const recruitingIndustry = mockData.industry({ name: "Recruiting" });
 
-  const financeProject = mockData.profileProject({
+  const financeProject = mockData.previousProject({
     title: "Finance Project",
-    industry: financeIndustry,
+    primarySkill: twitterMarketing,
+    primaryIndustry: financeIndustry,
     skills: [twitterMarketing],
     industries: [financeIndustry],
   });
 
-  const recruitingProject = mockData.profileProject({
+  const recruitingProject = mockData.previousProject({
     title: "Recruiting Project",
-    industry: recruitingIndustry,
+    primarySkill: facebookMarketing,
+    primaryIndustry: recruitingIndustry,
     skills: [facebookMarketing],
     industries: [recruitingIndustry],
   });
@@ -308,10 +281,7 @@ test("Can filter projects by skill", async () => {
     },
     industries: [financeIndustry, recruitingIndustry],
     reviews: [],
-    profileProjects: {
-      __typename: "ProfileProjectsConnection",
-      nodes: [financeProject, recruitingProject],
-    },
+    profileProjects: [financeProject, recruitingProject],
   });
 
   const graphQLMocks = [
@@ -343,16 +313,18 @@ test("Can filter projects by industry", async () => {
   const financeIndustry = mockData.industry({ name: "Finance" });
   const recruitingIndustry = mockData.industry({ name: "Recruiting" });
 
-  const financeProject = mockData.profileProject({
+  const financeProject = mockData.previousProject({
     title: "Finance Project",
-    industry: financeIndustry,
+    primarySkill: twitterMarketing,
+    primaryIndustry: financeIndustry,
     skills: [twitterMarketing],
     industries: [financeIndustry],
   });
 
-  const recruitingProject = mockData.profileProject({
+  const recruitingProject = mockData.previousProject({
     title: "Recruiting Project",
-    industry: recruitingIndustry,
+    primarySkill: facebookMarketing,
+    primaryIndustry: recruitingIndustry,
     skills: [facebookMarketing],
     industries: [recruitingIndustry],
   });
@@ -365,10 +337,7 @@ test("Can filter projects by industry", async () => {
     },
     industries: [financeIndustry, recruitingIndustry],
     reviews: [],
-    profileProjects: {
-      __typename: "ProfileProjectsConnection",
-      nodes: [financeProject, recruitingProject],
-    },
+    profileProjects: [financeProject, recruitingProject],
   });
 
   const graphQLMocks = [

@@ -6,7 +6,7 @@ import { useRoutedModal } from "../../../../../../donut/src";
 import { renderComponent } from "../../../testHelpers/renderApp";
 import PreviousProjectForm from "../";
 import GET_DATA from "../getData";
-import CREATE_PROJECT from "../createOffPlatformProject";
+import CREATE_PROJECT from "../createPreviousProject";
 
 const skill = mockData.skill();
 const industry = mockData.industry();
@@ -54,17 +54,12 @@ test("Can create a project", async () => {
         result: {
           data: {
             __typename: "Mutation",
-            createOffPlatformProject: {
-              __typename: "CreateOffPlatformProjectPayload",
-              previousProject: {
-                __typename: "PreviousProject",
-                project: mockData.offPlatformProject({
-                  primarySkill: "Testing",
-                  clientName: "Test inc",
-                }),
-                specialist,
-                reviews: [],
-              },
+            createPreviousProject: {
+              __typename: "CreatePreviousProjectPayload",
+              previousProject: mockData.previousProject({
+                primarySkill: "Testing",
+                clientName: "Test inc",
+              }),
             },
           },
         },
@@ -84,7 +79,7 @@ test("Can create a project", async () => {
   fireEvent.click(next);
 
   const industryField = await comp.findByPlaceholderText(
-    "e.g Financial Services"
+    "e.g Financial Services",
   );
   fireEvent.click(industryField);
   fireEvent.keyDown(industryField, { key: "ArrowDown" });
@@ -97,12 +92,12 @@ test("Can create a project", async () => {
   fireEvent.click(next);
 
   const goal = await comp.findByLabelText(
-    "What was your primary goal for this project?"
+    "What was your primary goal for this project?",
   );
   fireEvent.change(goal, { target: { value: "Improve retention" } });
   const goalOtherPlaceholder = "What was your goal for this project...";
   expect(
-    comp.queryByPlaceholderText(goalOtherPlaceholder)
+    comp.queryByPlaceholderText(goalOtherPlaceholder),
   ).not.toBeInTheDocument();
   fireEvent.change(goal, { target: { value: "Other" } });
   const goalOther = comp.getByPlaceholderText(goalOtherPlaceholder);

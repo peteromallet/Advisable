@@ -1,42 +1,40 @@
 require 'rails_helper'
 
-describe Airtable::OffPlatformProject do
+describe Airtable::PreviousProject do
   context 'when Okay with naming client is Yes' do
     it 'sets confidential to false' do
-      record = create(:off_platform_project, confidential: true)
+      record = create(:previous_project, confidential: true)
       airtable =
-        Airtable::OffPlatformProject.new(
+        Airtable::PreviousProject.new(
           { 'Okay with naming client' => 'Yes', 'Skills Required' => [] },
           id: record.airtable_id
         )
       expect { airtable.sync }.to change { record.reload.confidential }.from(
         true
-      )
-        .to(false)
+      ).to(false)
     end
   end
 
   context 'when Okay with naming client is blank' do
     it 'sets confidential to true' do
-      record = create(:off_platform_project, confidential: false)
+      record = create(:previous_project, confidential: false)
       airtable =
-        Airtable::OffPlatformProject.new(
+        Airtable::PreviousProject.new(
           { 'Okay with naming client' => nil, 'Skills Required' => [] },
           id: record.airtable_id
         )
       expect { airtable.sync }.to change { record.reload.confidential }.from(
         false
-      )
-        .to(true)
+      ).to(true)
     end
   end
 
   describe 'syncing skills' do
     it 'creates project_skill records for skills that dont already exist' do
-      project = create(:off_platform_project)
+      project = create(:previous_project)
       skill = create(:skill)
       record =
-        Airtable::OffPlatformProject.new(
+        Airtable::PreviousProject.new(
           { 'Skills Required' => [skill.airtable_id] },
           id: project.airtable_id
         )
@@ -44,11 +42,11 @@ describe Airtable::OffPlatformProject do
     end
 
     it 'does not create a new project skill if one already exists for that skill' do
-      project = create(:off_platform_project)
+      project = create(:previous_project)
       skill = create(:skill)
       project.skills << skill
       record =
-        Airtable::OffPlatformProject.new(
+        Airtable::PreviousProject.new(
           { 'Skills Required' => [skill.airtable_id] },
           id: project.airtable_id
         )
@@ -56,10 +54,10 @@ describe Airtable::OffPlatformProject do
     end
 
     it 'creates a record with primary = true for the primary skill' do
-      project = create(:off_platform_project, primary_skill: nil)
+      project = create(:previous_project, primary_skill: nil)
       skills = [create(:skill), create(:skill)]
       record =
-        Airtable::OffPlatformProject.new(
+        Airtable::PreviousProject.new(
           {
             'Skills Required' => skills.map(&:airtable_id),
             'Primary Skill' => [skills.last.airtable_id]
@@ -68,12 +66,11 @@ describe Airtable::OffPlatformProject do
         )
       expect { record.sync }.to change { project.reload.primary_skill }.from(
         nil
-      )
-        .to(skills.last)
+      ).to(skills.last)
     end
 
     it 'updates the project_skill with primary = true for the primary skill' do
-      project = create(:off_platform_project, primary_skill: nil)
+      project = create(:previous_project, primary_skill: nil)
       skills = [create(:skill), create(:skill)]
       project_skills = [
         create(
@@ -86,7 +83,7 @@ describe Airtable::OffPlatformProject do
         )
       ]
       record =
-        Airtable::OffPlatformProject.new(
+        Airtable::PreviousProject.new(
           {
             'Skills Required' => skills.map(&:airtable_id),
             'Primary Skill' => [skills.last.airtable_id]
@@ -95,17 +92,16 @@ describe Airtable::OffPlatformProject do
         )
       expect { record.sync }.to change {
         project_skills.last.reload.primary
-      }.from(false)
-        .to(true)
+      }.from(false).to(true)
     end
   end
 
   describe 'syncing industries' do
     it 'creates project_industry records for industries that dont already exist' do
-      project = create(:off_platform_project)
+      project = create(:previous_project)
       industry = create(:industry)
       record =
-        Airtable::OffPlatformProject.new(
+        Airtable::PreviousProject.new(
           { 'Industries' => [industry.airtable_id] },
           id: project.airtable_id
         )
@@ -115,11 +111,11 @@ describe Airtable::OffPlatformProject do
     end
 
     it 'does not create a new project industry if one already exists for that industry' do
-      project = create(:off_platform_project)
+      project = create(:previous_project)
       industry = create(:industry)
       project.industries << industry
       record =
-        Airtable::OffPlatformProject.new(
+        Airtable::PreviousProject.new(
           { 'Industries' => [industry.airtable_id] },
           id: project.airtable_id
         )
@@ -127,10 +123,10 @@ describe Airtable::OffPlatformProject do
     end
 
     it 'creates a record with primary = true for the primary industry' do
-      project = create(:off_platform_project, primary_industry: nil)
+      project = create(:previous_project, primary_industry: nil)
       industries = [create(:industry), create(:industry)]
       record =
-        Airtable::OffPlatformProject.new(
+        Airtable::PreviousProject.new(
           {
             'Industries' => industries.map(&:airtable_id),
             'Primary Industry' => [industries.last.airtable_id]
@@ -139,12 +135,11 @@ describe Airtable::OffPlatformProject do
         )
       expect { record.sync }.to change { project.reload.primary_industry }.from(
         nil
-      )
-        .to(industries.last)
+      ).to(industries.last)
     end
 
     it 'updates the project_industry with primary = true for the primary industry' do
-      project = create(:off_platform_project, primary_industry: nil)
+      project = create(:previous_project, primary_industry: nil)
       industries = [create(:industry), create(:industry)]
       project_industries = [
         create(
@@ -157,7 +152,7 @@ describe Airtable::OffPlatformProject do
         )
       ]
       record =
-        Airtable::OffPlatformProject.new(
+        Airtable::PreviousProject.new(
           {
             'Industries' => industries.map(&:airtable_id),
             'Primary Industry' => [industries.last.airtable_id]
@@ -166,15 +161,14 @@ describe Airtable::OffPlatformProject do
         )
       expect { record.sync }.to change {
         project_industries.last.reload.primary
-      }.from(false)
-        .to(true)
+      }.from(false).to(true)
     end
   end
 
   describe '#push_data' do
     let(:project) do
       create(
-        :off_platform_project,
+        :previous_project,
         {
           contact_first_name: 'John',
           contact_last_name: 'Doe',
@@ -197,7 +191,7 @@ describe Airtable::OffPlatformProject do
     end
 
     let(:airtable) do
-      Airtable::OffPlatformProject.new({}, id: project.airtable_id)
+      Airtable::PreviousProject.new({}, id: project.airtable_id)
     end
 
     it 'syncs the data' do
@@ -227,6 +221,8 @@ describe Airtable::OffPlatformProject do
         'Contact Relationship',
         project.contact_relationship
       )
+
+      expect(airtable).to receive(:[]=).with('Application', [])
       expect(airtable).to receive(:[]=).with('Public Use', 'No')
       expect(airtable).to receive(:[]=).with(
         'Client Description',

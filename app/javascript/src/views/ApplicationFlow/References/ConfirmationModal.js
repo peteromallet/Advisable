@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Button, Modal } from "@advisable/donut";
+import { Box, Text, RoundedButton, Modal } from "@advisable/donut";
 
 const ConfirmationModal = ({
   modal,
@@ -14,54 +14,60 @@ const ConfirmationModal = ({
   return (
     <Modal modal={modal} label="Are you sure?">
       <Box padding="l">
-        <Text fontSize="xl" color="blue.9" mb="xs" fontWeight="medium">
+        <Text
+          fontSize="24px"
+          color="blue900"
+          mb="xs"
+          fontWeight="medium"
+          letterSpacing="-0.01em"
+        >
           {noOfSelectedProjects === 0 ? (
             <>Are you sure?</>
           ) : (
             <>You've only attached 1 reference</>
           )}
         </Text>
-        <Text color="neutral.7" fontSize="s" lineHeight="s" mb="m">
+        <Text color="neutral800" fontSize="s" lineHeight="m" mb="l">
           The average successful application attaches at least two references of
           relevant previous projects they have completed.
         </Text>
         {noOfSelectedProjects === 0 && noOfAvailableProjects === 0 && (
-          <Button
+          <RoundedButton
             mr="xs"
             type="button"
-            appearance="primary"
+            variant="dark"
             onClick={onAddReference}
           >
             Add a Reference
-          </Button>
+          </RoundedButton>
         )}
 
         {noOfSelectedProjects === 0 && noOfAvailableProjects > 0 && (
-          <Button
+          <RoundedButton
             mr="xs"
             type="button"
             onClick={modal.hide}
-            appearance="primary"
+            variant="subtle"
           >
             Cancel
-          </Button>
+          </RoundedButton>
         )}
 
         {noOfSelectedProjects > 0 && (
-          <Button
-            mr="xs"
-            type="button"
-            appearance="primary"
-            onClick={onAddReference}
-          >
+          <RoundedButton mr="xs" type="button" onClick={onAddReference}>
             Add Another Project
-          </Button>
+          </RoundedButton>
         )}
-        <Button type="button" loading={loading} onClick={onSubmit}>
+        <RoundedButton
+          variant="dark"
+          type="button"
+          loading={loading}
+          onClick={onSubmit}
+        >
           {noOfSelectedProjects === 0
             ? "Continue Without References"
             : "Continue With 1 Reference"}
-        </Button>
+        </RoundedButton>
       </Box>
     </Modal>
   );
