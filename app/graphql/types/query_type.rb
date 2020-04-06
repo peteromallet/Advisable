@@ -154,7 +154,7 @@ class Types::QueryType < Types::BaseType
   field :industries, [Types::IndustryType], null: false
 
   def industries
-    Industry.all.order(name: :asc)
+    Industry.active.order(name: :asc)
   end
 
   field :task, Types::TaskType, null: true do
