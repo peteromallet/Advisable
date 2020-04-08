@@ -5,41 +5,21 @@ class Mutations::CreatePreviousProject < Mutations::BaseMutation
   argument :confidential, Boolean, required: false
   argument :industries, [String], required: true
   argument :primary_industry, String, required: true
-  argument :skills, [String], required: true
-  argument :primary_skill, String, required: true
-  argument :contact_name, String, required: true
-  argument :contact_job_title, String, required: true
-  argument :contact_relationship, String, required: true
   argument :company_type, String, required: true
-  argument :description, String, required: true
-  argument :goal, String, required: true
-  argument :public_use, Boolean, required: true
 
   field :previous_project, Types::PreviousProject, null: true
 
   def resolve(**args)
     specialist = Specialist.find_by_uid_or_airtable_id!(args[:specialist])
+
     project =
       specialist.previous_projects.new(
         client_name: args[:client_name],
         confidential: args[:confidential],
-        contact_name: args[:contact_name],
-        contact_job_title: args[:contact_job_title],
-        contact_relationship: args[:contact_relationship],
         company_type: args[:company_type],
         description: args[:description],
-        goal: args[:goal],
-        public_use: args[:public_use],
-        validation_status: 'Pending'
+        draft: true
       )
-
-    args[:skills].each do |skill|
-      project.project_skills <<
-        ProjectSkill.new(
-          skill: Skill.find_by_name!(skill),
-          primary: args[:primary_skill] == skill
-        )
-    end
 
     args[:industries].each do |industry|
       project.project_industries <<
@@ -51,8 +31,6 @@ class Mutations::CreatePreviousProject < Mutations::BaseMutation
 
     project.save
     project.sync_to_airtable
-
-    SpecialistMailer.verify_project(project.uid).deliver_later
 
     { previous_project: project }
   end

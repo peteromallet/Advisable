@@ -17,9 +17,14 @@ class Types::PreviousProject < Types::BaseType
   field :contact_email, String, null: true
   field :contact_first_name, String, null: true
   field :contact_last_name, String, null: true
+  field :draft, Boolean, null: false
 
   def id
     object.uid
+  end
+
+  def draft
+    object.draft || false
   end
 
   def on_platform
