@@ -4,5 +4,7 @@ class Airtable::Industry < Airtable::Base
   sync_with ::Industry
   sync_column 'Name', to: :name
 
-  sync_data { |industry| industry.active = self['Active'].include?('Yes') }
+  sync_data do |industry|
+    industry.active = self['Active'].try(:include?, 'Yes')
+  end
 end
