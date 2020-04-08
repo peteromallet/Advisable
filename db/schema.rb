@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_06_130301) do
+ActiveRecord::Schema.define(version: 2020_04_08_053931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -324,6 +324,7 @@ ActiveRecord::Schema.define(version: 2020_04_06_130301) do
     t.integer "priority"
     t.integer "advisable_score"
     t.bigint "application_id"
+    t.boolean "draft"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
@@ -497,6 +498,7 @@ ActiveRecord::Schema.define(version: 2020_04_06_130301) do
     t.bigint "recommended_project_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "description"
     t.index ["recommended_project_id"], name: "index_searches_on_recommended_project_id"
     t.index ["uid"], name: "index_searches_on_uid"
     t.index ["user_id"], name: "index_searches_on_user_id"

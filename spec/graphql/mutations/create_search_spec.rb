@@ -5,6 +5,7 @@ describe Mutations::CreateSearch do
   let(:skill) { create(:skill, name: 'Testing') }
   let(:industry) { create(:industry, name: 'Design') }
   let(:company_type) { 'Startup' }
+  let(:description) { 'Description' }
   let(:context) { { current_user: user } }
   let(:query) do
     <<-GRAPHQL
@@ -12,7 +13,8 @@ describe Mutations::CreateSearch do
         createSearch(input: {
           skill: "#{skill.name}",
           industry: "#{industry.name}",
-          companyType: "#{company_type}"
+          companyType: "#{company_type}",
+          description: "#{description}"
         }) {
           search {
             id
@@ -35,15 +37,13 @@ describe Mutations::CreateSearch do
   it 'udpates the users industry' do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       user.reload.industry
-    }.from(nil)
-      .to(industry)
+    }.from(nil).to(industry)
   end
 
   it 'udpates the users company_type' do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       user.reload.company_type
-    }.from(nil)
-      .to(company_type)
+    }.from(nil).to(company_type)
   end
 
   it 'calls #create_recommendation' do
