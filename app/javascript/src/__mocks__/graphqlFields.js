@@ -337,6 +337,7 @@ export const search = (fields = {}) => {
     {
       __typename: "Search",
       id: uniqueId("sea"),
+      description: "Description",
     },
     fields,
   );

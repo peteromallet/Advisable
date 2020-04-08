@@ -2,6 +2,7 @@ class Types::SearchType < Types::BaseType
   field :id, ID, null: false
   field :skill, Types::Skill, null: true
   field :industry, Types::IndustryType, null: true
+  field :description, String, null: true
   field :results,
         Types::SpecialistType::ConnectionType,
         max_page_size: 25, null: false

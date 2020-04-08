@@ -1,6 +1,7 @@
 class Mutations::CreateSearch < Mutations::BaseMutation
   argument :skill, String, required: true
   argument :industry, String, required: true
+  argument :description, String, required: true
   argument :industry_experience_required, Boolean, required: false
   argument :company_type, String, required: true
   argument :company_experience_required, Boolean, required: false

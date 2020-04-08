@@ -14,6 +14,7 @@ import { Formik, Form, Field } from "formik";
 import { useQuery } from "@apollo/react-hooks";
 import { Container } from "./styles";
 import Select from "../../../components/Select";
+import TextField from "../../../components/TextField";
 import Loading from "../../../components/Loading";
 import Images from "./Images";
 import validationSchema from "./validationSchema";
@@ -37,6 +38,7 @@ const FreelancerSearchCriteria = () => {
     industryExperienceRequired: false,
     companyType: data.viewer?.companyType || "Growth-Stage Startup",
     companyExperienceRequired: false,
+    description: "",
   };
 
   const handleSubmit = (values) => {
@@ -115,7 +117,7 @@ const FreelancerSearchCriteria = () => {
                   Industry experience is important to me
                 </Field>
               </Box>
-              <Box mb="xl">
+              <Box mb="l">
                 <Field
                   as={Select}
                   name="companyType"
@@ -140,6 +142,18 @@ const FreelancerSearchCriteria = () => {
                 >
                   Experience with this type of company is important
                 </Field>
+              </Box>
+              <Box mb="xl">
+                <Field
+                  multiline
+                  minRows={2}
+                  as={TextField}
+                  name="description"
+                  label="Please briefly describe what you're looking for"
+                  error={
+                    formik.touched.description && formik.errors.description
+                  }
+                />
               </Box>
               <RoundedButton
                 size="l"

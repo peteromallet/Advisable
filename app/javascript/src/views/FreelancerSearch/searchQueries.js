@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 const searchFields = gql`
   fragment searchFields on Search {
     id
+    description
     skill {
       id
       name
