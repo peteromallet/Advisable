@@ -36,7 +36,7 @@ const Availability = ({ data }) => {
   }, [sUp]);
 
   if (selected.length === 0) {
-    return <Redirect to="/freelancer_search/results" />;
+    return <Redirect to={`/freelancer_search/${data.search.id}/results`} />;
   }
 
   if (getAvailability.loading) {

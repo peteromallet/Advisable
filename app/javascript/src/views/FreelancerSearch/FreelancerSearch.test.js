@@ -73,6 +73,7 @@ test("User can search for freelancers and request consultations with them", asyn
         companyType: "Startup",
         companyExperienceRequired: false,
         industryExperienceRequired: false,
+        description: "Description",
       },
       {
         createSearch: {
@@ -81,6 +82,7 @@ test("User can search for freelancers and request consultations with them", asyn
             id: "sea_123",
             skill,
             industry,
+            description: "Description",
             recommendation: null,
             results: {
               __typename: "SpecialistConnection",
@@ -152,6 +154,11 @@ test("User can search for freelancers and request consultations with them", asyn
   fireEvent.click(industryInput);
   fireEvent.keyDown(industryInput, { key: "ArrowDown" });
   fireEvent.keyDown(industryInput, { key: "Enter" });
+
+  const description = app.getByLabelText(
+    "Please briefly describe what you're looking for",
+  );
+  fireEvent.change(description, { target: { value: "Description" } });
 
   const searchButton = app.getByLabelText("Find a freelancer");
   fireEvent.click(searchButton);
@@ -232,6 +239,7 @@ test("User can search for freelancers and get a recommendation", async () => {
         companyType: "Startup",
         companyExperienceRequired: false,
         industryExperienceRequired: false,
+        description: "Description",
       },
       {
         createSearch: {
@@ -240,6 +248,7 @@ test("User can search for freelancers and get a recommendation", async () => {
             id: "sea_123",
             skill,
             industry,
+            description: "Description",
             recommendation: mockData.previousProject({
               industries: [industry],
               skills: [skill],
@@ -321,6 +330,10 @@ test("User can search for freelancers and get a recommendation", async () => {
   fireEvent.click(industryInput);
   fireEvent.keyDown(industryInput, { key: "ArrowDown" });
   fireEvent.keyDown(industryInput, { key: "Enter" });
+  const description = app.getByLabelText(
+    "Please briefly describe what you're looking for",
+  );
+  fireEvent.change(description, { target: { value: "Description" } });
 
   const searchButton = app.getByLabelText("Find a freelancer");
   fireEvent.click(searchButton);

@@ -20,7 +20,7 @@ const Topic = ({ data }) => {
   }
 
   const initialValues = {
-    topic: "",
+    topic: data.search.description || "",
   };
 
   const handleSubmit = async (values) => {
@@ -44,17 +44,19 @@ const Topic = ({ data }) => {
 
   return (
     <Box maxWidth={700} mx="auto">
-      <Link.External
+      <Link
         mb="s"
-        href="#"
         fontSize="l"
         fontWeight="medium"
         letterSpacing="-0.02em"
-        onClick={history.goBack}
+        to={{
+          ...location,
+          pathname: `/freelancer_search/${data.search.id}/availability`,
+        }}
       >
         <Icon mr="2px" width={20} height={20} icon="arrow-left" />
         Back
-      </Link.External>
+      </Link>
       <Text
         mb="xs"
         fontSize="32px"
