@@ -17,6 +17,7 @@ class Types::PreviousProject < Types::BaseType
   field :contact_email, String, null: true
   field :contact_first_name, String, null: true
   field :contact_last_name, String, null: true
+  field :confidential, Boolean, null: false
   field :draft, Boolean, null: false
 
   def id
@@ -37,6 +38,10 @@ class Types::PreviousProject < Types::BaseType
 
   def excerpt
     object.description.try(:truncate, 160)
+  end
+
+  def confidential
+    object.confidential || false
   end
 
   def company_name

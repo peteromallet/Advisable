@@ -4,26 +4,21 @@ import {
   Card,
   Text,
   RoundedButton,
-  useModal,
   DialogDisclosure,
-  useRoutedModal,
   Icon,
 } from "@advisable/donut";
 import Loading from "../../../components/Loading";
+import useViewer from "../../../hooks/useViewer";
 import PreviousProjects from "../../../components/PreviousProjects";
-import PreviousProjectForm from "../../../components/PreviousProjectForm";
 import PREVIOUS_PROJECTS from "./previousProjects";
 import PreviousProjectFormModal, {
   usePreviousProjectModal,
 } from "../../../components/PreviousProjectFormModal";
 
 const References = () => {
+  const viewer = useViewer();
   const { data, loading } = useQuery(PREVIOUS_PROJECTS);
-  // const modal = useRoutedModal("/profile/references/new_project/client", {
-  //   returnLocation: "/profile/references",
-  // });
-
-  const modal = usePreviousProjectModal();
+  const modal = usePreviousProjectModal("/previous_projects/new");
 
   if (loading) return <Loading />;
 
@@ -48,27 +43,15 @@ const References = () => {
       </Text>
 
       <DialogDisclosure
-        as={RoundedButton}
         mb="xl"
+        as={RoundedButton}
         prefix={<Icon icon="plus" />}
         {...modal}
       >
         Add a previous project
       </DialogDisclosure>
 
-      <PreviousProjectFormModal modal={modal} />
-
-      {/* <PreviousProjectForm
-        modal={modal}
-        specialist={data.viewer.id}
-        pathPrefix="/profile/references"
-        mutationUpdate={(proxy, response) => {
-          const data = proxy.readQuery({ query: PREVIOUS_PROJECTS });
-          const project = response.data.createPreviousProject.previousProject;
-          data.viewer.previousProjects.nodes.unshift(project);
-          proxy.writeQuery({ query: PREVIOUS_PROJECTS, data });
-        }}
-      /> */}
+      <PreviousProjectFormModal specialistId={viewer.id} modal={modal} />
 
       <Card px="l">
         <PreviousProjects

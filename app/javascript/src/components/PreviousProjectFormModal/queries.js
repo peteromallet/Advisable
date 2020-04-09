@@ -1,9 +1,21 @@
 import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
 
 const previousProjectFields = gql`
   fragment PreviousProjectFields on PreviousProject {
     id
     draft
+    companyName
+    companyType
+    confidential
+    primaryIndustry {
+      id
+      name
+    }
+    industries {
+      id
+      name
+    }
   }
 `;
 
@@ -18,6 +30,21 @@ export const CREATE_PREVIOUS_PROJECT = gql`
     }
   }
 `;
+
+export const UPDATE_PREVIOUS_PROJECT = gql`
+  ${previousProjectFields}
+
+  mutation updatePreviousProject($input: UpdatePreviousProjectInput!) {
+    updatePreviousProject(input: $input) {
+      previousProject {
+        ...PreviousProjectFields
+      }
+    }
+  }
+`;
+
+export const useUpdatePreviousProject = () =>
+  useMutation(UPDATE_PREVIOUS_PROJECT);
 
 export const GET_PREVIOUS_PROJECT = gql`
   ${previousProjectFields}

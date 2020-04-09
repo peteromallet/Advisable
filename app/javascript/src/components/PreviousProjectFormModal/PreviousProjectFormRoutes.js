@@ -7,11 +7,11 @@ import MoreInformation from "./MoreInformation";
 import UpdateClientDetails from "./UpdateClientDetails";
 import CreatePreviousProject from "./CreatePreviousProject";
 
-export default function PreviousProjectFormRoutes() {
+export default function PreviousProjectFormRoutes({ specialistId }) {
   return (
     <Switch>
       <Route path="*previous_projects/new">
-        <CreatePreviousProject />
+        <CreatePreviousProject specialistId={specialistId} />
       </Route>
       <Route path="*previous_projects/:id/client">
         <UpdateClientDetails />

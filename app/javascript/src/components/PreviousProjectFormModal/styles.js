@@ -13,6 +13,11 @@ export const StyledDialog = styled.div`
   padding-top: 60px;
 `;
 
+export const StyledDialogContent = styled.div`
+  height: 100%;
+  overflow-y: scroll;
+`;
+
 export const StyledPreviousProjectFormHeader = styled.div`
   top: 0;
   left: 0;

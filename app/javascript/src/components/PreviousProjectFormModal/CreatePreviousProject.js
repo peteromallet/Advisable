@@ -5,7 +5,7 @@ import { CREATE_PREVIOUS_PROJECT, GET_PREVIOUS_PROJECT } from "./queries";
 import { PATH_REGEX } from "./usePreviousProjectModal";
 import ClientDetails from "./ClientDetails";
 
-export default function CreatePreviousProject() {
+export default function CreatePreviousProject({ specialistId }) {
   const history = useHistory();
   const location = useLocation();
   const [createPreviousProject] = useMutation(CREATE_PREVIOUS_PROJECT, {
@@ -23,7 +23,12 @@ export default function CreatePreviousProject() {
 
   const handleCreate = async (values) => {
     const response = await createPreviousProject({
-      variables: { input: values },
+      variables: {
+        input: {
+          ...values,
+          specialist: specialistId,
+        },
+      },
     });
 
     const project = response.data?.createPreviousProject.previousProject;

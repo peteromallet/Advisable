@@ -6,13 +6,14 @@ export const StyledInput = styled.input`
   margin: 0;
   outline: none;
   font-size: 16px;
+  font-weight: 500;
   border-radius: 8px;
   padding: 8px 12px 10px 12px;
   color: ${theme.colors.neutral[9]};
   background: ${theme.colors.neutral[1]};
-  width: ${props => props.width || "100%"};
-  border: 1px solid ${theme.colors.neutral[1]};
-  transition: border-color 200ms, box-shadow 200ms;
+  width: ${(props) => props.width || "100%"};
+  border: 2px solid ${theme.colors.neutral[1]};
+  cursor: default;
 
   ${space}
 
@@ -26,8 +27,7 @@ export const StyledInput = styled.input`
   }
 
   &:focus {
-    border-color: ${theme.colors.blue[7]};
-    box-shadow: 0 0 0 1px ${theme.colors.blue[7]};
+    border-color: ${theme.colors.blue800};
   }
 `;
 
@@ -65,7 +65,7 @@ export const StyledInputDecorations = styled.div`
   display: flex;
 
   ${StyledInputDecorationsChildren} {
-    fle-grow: 1;
+    flex-grow: 1;
     flex-shrink: 1;
     position: relative;
 
