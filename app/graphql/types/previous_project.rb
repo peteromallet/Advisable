@@ -17,6 +17,9 @@ class Types::PreviousProject < Types::BaseType
   field :contact_email, String, null: true
   field :contact_first_name, String, null: true
   field :contact_last_name, String, null: true
+  field :contact_name, String, null: true
+  field :contact_job_title, String, null: true
+  field :contact_relationship, String, null: true
   field :confidential, Boolean, null: false
   field :draft, Boolean, null: false
 
@@ -33,6 +36,7 @@ class Types::PreviousProject < Types::BaseType
   end
 
   def title
+    return "Project with #{company_name}" if object.primary_skill.nil?
     "#{object.primary_skill.try(:name)} with #{company_name}"
   end
 
@@ -45,6 +49,8 @@ class Types::PreviousProject < Types::BaseType
   end
 
   def company_name
+    return object.client_name if object.draft
+
     if object.confidential
       return(
         "#{object.primary_industry.try(:name)} #{

@@ -1,24 +1,12 @@
 import * as React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import {
-  Card,
-  Text,
-  RoundedButton,
-  DialogDisclosure,
-  Icon,
-} from "@advisable/donut";
+import { Text } from "@advisable/donut";
 import Loading from "../../../components/Loading";
-import useViewer from "../../../hooks/useViewer";
-import PreviousProjects from "../../../components/PreviousProjects";
 import PREVIOUS_PROJECTS from "./previousProjects";
-import PreviousProjectFormModal, {
-  usePreviousProjectModal,
-} from "../../../components/PreviousProjectFormModal";
+import PreviousProjectsList from "./PreviousProjectsList";
 
 const References = () => {
-  const viewer = useViewer();
-  const { data, loading } = useQuery(PREVIOUS_PROJECTS);
-  const modal = usePreviousProjectModal("/previous_projects/new");
+  const { data, loading, error } = useQuery(PREVIOUS_PROJECTS);
 
   if (loading) return <Loading />;
 
@@ -42,24 +30,11 @@ const References = () => {
         projects.
       </Text>
 
-      <DialogDisclosure
-        mb="xl"
-        as={RoundedButton}
-        prefix={<Icon icon="plus" />}
-        {...modal}
-      >
-        Add a previous project
-      </DialogDisclosure>
-
-      <PreviousProjectFormModal specialistId={viewer.id} modal={modal} />
-
-      <Card px="l">
-        <PreviousProjects
-          loading={data.loading}
-          specialistId={data.viewer.airtableId}
-          previousProjects={data?.viewer.previousProjects.nodes}
+      {!loading && !error && (
+        <PreviousProjectsList
+          previousProjects={data.viewer.previousProjects.nodes}
         />
-      </Card>
+      )}
     </>
   );
 };

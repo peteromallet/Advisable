@@ -1,16 +1,16 @@
 import React from "react";
 import { Box, Text, Icon, Circle } from "@advisable/donut";
 
-function HelperText({ heading, children }) {
+function HelperText({ heading, children, ...props }) {
   return (
-    <>
+    <Box {...props}>
       <Text color="blue900" mb="xxs" fontWeight="medium">
         {heading}
       </Text>
       <Text color="neutral800" mb="xs" fontSize="xs" lineHeight="s">
         {children}
       </Text>
-    </>
+    </Box>
   );
 }
 

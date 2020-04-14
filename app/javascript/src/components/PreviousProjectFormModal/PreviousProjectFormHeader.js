@@ -1,11 +1,19 @@
 import React from "react";
-import { StyledPreviousProjectFormHeader } from "./styles";
+import { Text } from "@advisable/donut";
+import {
+  StyledPreviousProjectFormHeader,
+  StyledClosePreviousProjectFormButton,
+} from "./styles";
 
 export default function PreviousProjectFormHeader({ modal }) {
   return (
     <StyledPreviousProjectFormHeader>
-      Add a previous project
-      <button onClick={modal.hide}>close</button>
+      <Text fontSize="l" color="blue900">
+        Previous project
+      </Text>
+      <StyledClosePreviousProjectFormButton onClick={modal.hide}>
+        Save and close
+      </StyledClosePreviousProjectFormButton>
     </StyledPreviousProjectFormHeader>
   );
 }

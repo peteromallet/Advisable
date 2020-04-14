@@ -23,6 +23,24 @@ export const StyledPreviousProjectFormHeader = styled.div`
   left: 0;
   width: 100%;
   height: 60px;
+  display: flex;
+  padding: 0 20px;
   position: absolute;
+  align-items: center;
+  justify-content: space-between;
   box-shadow: 0 2px 6px ${rgba(theme.colors.neutral800, 0.2)};
+`;
+
+export const StyledClosePreviousProjectFormButton = styled.button`
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  appearance: none;
+  background: transparent;
+  color: ${theme.colors.blue600};
+  font-family: "Poppins", sans-serif;
+
+  &:hover {
+    color: ${theme.colors.blue700};
+  }
 `;

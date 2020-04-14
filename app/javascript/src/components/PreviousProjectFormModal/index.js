@@ -1,31 +1,18 @@
 import React from "react";
 import { Dialog } from "reakit/Dialog";
-import { StyledDialog, StyledDialogContent } from "./styles";
-import { Box, Container } from "@advisable/donut";
-import NavigationMenu from "./NavigationMenu";
-import PreviousProjectFormHeader from "./PreviousProjectFormHeader";
-import PreviousProjectFormRoutes from "./PreviousProjectFormRoutes";
+import { StyledDialog } from "./styles";
 export * from "./usePreviousProjectModal";
+import PreviousProjectFormContainer from "./PreviousProjectFormContainer";
 
-export default function PreviousProjectFormModal({ modal, specialistId }) {
+export default function PreviousProjectFormModal(props) {
   return (
     <Dialog
+      {...props.modal}
       as={StyledDialog}
-      aria-label="Previous Project Modal"
       hideOnClickOutside={false}
-      {...modal}
+      aria-label="Previous Project Modal"
     >
-      <PreviousProjectFormHeader modal={modal} />
-      <StyledDialogContent>
-        <Container display="flex" py="l">
-          <Box width={200} flexShrink={0}>
-            <NavigationMenu>asdf</NavigationMenu>
-          </Box>
-          <Box pl="l">
-            <PreviousProjectFormRoutes specialistId={specialistId} />
-          </Box>
-        </Container>
-      </StyledDialogContent>
+      {props.modal.visible && <PreviousProjectFormContainer {...props} />}
     </Dialog>
   );
 }

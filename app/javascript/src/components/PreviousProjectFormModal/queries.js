@@ -8,11 +8,24 @@ const previousProjectFields = gql`
     companyName
     companyType
     confidential
+    description
+    goal
+    contactName
+    contactJobTitle
+    contactRelationship
     primaryIndustry {
       id
       name
     }
     industries {
+      id
+      name
+    }
+    primarySkill {
+      id
+      name
+    }
+    skills {
       id
       name
     }

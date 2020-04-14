@@ -37,6 +37,7 @@ export function usePreviousProjectModal(initialPath) {
 
   return {
     ...modal,
+    returnPath,
     toggle: () => {
       initialPathRef.current = initialPath;
       modal.toggle();

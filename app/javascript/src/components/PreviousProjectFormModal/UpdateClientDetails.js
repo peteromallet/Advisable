@@ -1,18 +1,14 @@
 import React from "react";
 import ClientDetails from "./ClientDetails";
+import { useHistory } from "react-router-dom";
 import { useUpdatePreviousProject } from "./queries";
-import usePreviousProject from "./usePreviousProject";
 
-export default function CreatePreviousProject() {
-  const { data, loading } = usePreviousProject();
+export default function UpdateClientDetails({ modal, data }) {
+  const history = useHistory();
   const [updatePreviousProject] = useUpdatePreviousProject();
 
-  if (loading) {
-    return <div>loading ....</div>;
-  }
-
   const handleSubmit = async (values) => {
-    const response = updatePreviousProject({
+    const response = await updatePreviousProject({
       variables: {
         input: {
           previousProject: data.previousProject.id,
@@ -21,7 +17,8 @@ export default function CreatePreviousProject() {
       },
     });
 
-    console.log(response);
+    const id = response.data.updatePreviousProject.previousProject.id;
+    history.push(`${modal.returnPath}/previous_projects/${id}/overview`);
   };
 
   return (

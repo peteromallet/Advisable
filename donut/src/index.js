@@ -7,6 +7,8 @@ export { default as Icon } from "./components/Icon";
 export { Icon as StyledIcon } from "./components/Icon/styles";
 
 export { default as Text } from "./components/Text";
+export { default as StyledText } from "./components/Text/styles";
+
 export { default as Flex } from "./components/Flex";
 export { default as Tabs } from "./components/Tabs";
 export { default as Radio } from "./components/Radio";
@@ -33,6 +35,9 @@ export * from "./components/Avatar/styles";
 
 export { default as Circle } from "./components/Circle";
 export * from "./components/Circle/styles";
+
+export { default as Stack } from "./components/Stack";
+export * from "./components/Stack/styles";
 
 export { default as Select } from "./components/Select";
 export * from "./components/Select/styles";

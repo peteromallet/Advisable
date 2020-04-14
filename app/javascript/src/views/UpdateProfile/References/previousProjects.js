@@ -10,6 +10,7 @@ export default gql`
           nodes {
             id
             title
+            draft
             excerpt
             companyName
             reviews {
