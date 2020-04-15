@@ -86,8 +86,8 @@ export const PUBLISH_PREVIOUS_PROJECT = gql`
   }
 `;
 
-export const usePublishPreviousProject = () =>
-  useMutation(PUBLISH_PREVIOUS_PROJECT);
+export const usePublishPreviousProject = (props) =>
+  useMutation(PUBLISH_PREVIOUS_PROJECT, props);
 
 export const UPDATE_IMAGE = gql`
   mutation updatePhoto($input: UpdatePreviousProjectImageInput!) {
@@ -101,7 +101,8 @@ export const UPDATE_IMAGE = gql`
   }
 `;
 
-export const useUpdatePreviousProjectImage = () => useMutation(UPDATE_IMAGE);
+export const useUpdatePreviousProjectImage = (props) =>
+  useMutation(UPDATE_IMAGE, props);
 
 export const DELETE = gql`
   mutation deletePhoto($input: DeletePreviousProjectImageInput!) {

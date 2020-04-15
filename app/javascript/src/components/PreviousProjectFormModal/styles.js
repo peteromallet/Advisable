@@ -62,7 +62,6 @@ export const StyledClosePreviousProjectFormButton = styled.button`
 `;
 
 const withoutCoverStyles = css`
-  background-color: ${theme.colors.neutral50};
   border: 2px dashed ${theme.colors.neutral100};
 
   &:hover {
@@ -89,6 +88,7 @@ export const StyledCoverPhoto = styled.div`
   text-align: center;
   align-items: center;
   justify-content: center;
+  background-color: ${theme.colors.neutral50};
   ${(p) => (p.coverImage ? withCoverStyles : withoutCoverStyles)};
 
   input {

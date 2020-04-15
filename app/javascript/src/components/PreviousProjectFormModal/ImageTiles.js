@@ -4,7 +4,7 @@ import { find } from "lodash";
 import { rgba } from "polished";
 import styled, { css } from "styled-components";
 import { theme, Icon } from "@advisable/donut";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useApolloClient } from "@apollo/react-hooks";
 import { DirectUpload } from "@rails/activestorage";
 import {
   useUpdatePreviousProjectImage,
@@ -218,13 +218,13 @@ function Upload({ previousProjectId, image, dispatch, onClick }) {
 }
 
 const PortfolioImage = React.memo(({ image, onClick, dispatch }) => {
-  const [update] = useUpdatePreviousProjectImage();
+  const [setAsCover] = useUpdatePreviousProjectImage();
   const [deleteImage] = useDeletePreviousProjectImage();
 
   const handleClick = () => {
     if (image.cover) return;
 
-    update({
+    setAsCover({
       variables: {
         input: {
           previousProjectImage: image.id,
@@ -265,12 +265,32 @@ const PortfolioImage = React.memo(({ image, onClick, dispatch }) => {
 });
 
 function ImageTiles({ images, dispatch, previousProjectId }) {
+  const client = useApolloClient();
+  const cover = find(images, { cover: true });
+
   const handleSetCover = (image) => () => {
     if (image.cover) return;
+
     dispatch({
       type: "SET_COVER",
       id: image.id,
     });
+
+    // Unset the existing cover photo in the graphql cache
+    if (cover) {
+      client.writeFragment({
+        id: `PreviousProjectImage:${cover.id}`,
+        fragment: gql`
+          fragment image on PreviousProjectImage {
+            cover
+          }
+        `,
+        data: {
+          __typename: "PreviousProjectImage",
+          cover: false,
+        },
+      });
+    }
   };
 
   const tiles = images.map((image) => {
