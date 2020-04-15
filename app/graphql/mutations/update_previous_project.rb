@@ -10,9 +10,6 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
   argument :skills, [String], required: false
   argument :primary_skill, String, required: false
   argument :primary_skill, String, required: false
-  argument :contact_name, String, required: false
-  argument :contact_job_title, String, required: false
-  argument :contact_relationship, String, required: false
 
   field :previous_project, Types::PreviousProject, null: true
 
@@ -21,23 +18,13 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
     project.assign_attributes(assignable_attrs(args))
     update_skills(project, args)
     project.save
-    puts project.errors.full_messages
     return { previous_project: project }
   end
 
   private
 
   def assignable_attrs(**args)
-    args.slice(
-      :client_name,
-      :confidential,
-      :company_type,
-      :description,
-      :goal,
-      :contact_job_title,
-      :contact_relationship,
-      :contact_name
-    )
+    args.slice(:client_name, :confidential, :company_type, :description, :goal)
   end
 
   def update_skills(project, args)

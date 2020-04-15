@@ -27,6 +27,9 @@ export * from "./components/Error/styles";
 export { default as Input } from "./components/Input";
 export * from "./components/Input/styles";
 
+export { default as Textarea } from "./components/Textarea";
+export * from "./components/Textarea/styles";
+
 export { default as Label } from "./components/Label";
 export * from "./components/Label/styles";
 

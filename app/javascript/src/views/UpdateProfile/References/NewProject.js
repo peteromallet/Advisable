@@ -17,11 +17,11 @@ const StyledNewProject = styled.div`
   cursor: default;
   align-items: center;
   border-radius: 12px;
-  border: 2px dashed ${theme.colors.neutral100};
+  border: 2px dashed ${theme.colors.neutral200};
 
   &:hover {
     cursor: pointer;
-    border-color: ${theme.colors.neutral200};
+    border-color: ${theme.colors.neutral300};
   }
 
   &:hover ${StyledCircle} {

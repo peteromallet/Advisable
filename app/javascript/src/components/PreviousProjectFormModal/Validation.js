@@ -7,10 +7,11 @@ import {
   Input,
   Label,
   Select,
+  Stack,
   RoundedButton,
 } from "@advisable/donut";
 import Helper from "./Helper";
-import { useUpdatePreviousProject } from "./queries";
+import { usePublishPreviousProject } from "./queries";
 
 const RELATIONSHIPS = [
   "They managed the project",
@@ -20,10 +21,10 @@ const RELATIONSHIPS = [
 
 export default function Validation({ data, modal }) {
   const history = useHistory();
-  const [updatePreviousProject] = useUpdatePreviousProject();
+  const [publishPreviousProject] = usePublishPreviousProject();
 
   const handleSubmit = async (values) => {
-    const response = await updatePreviousProject({
+    const response = await publishPreviousProject({
       variables: {
         input: {
           previousProject: data.previousProject.id,
@@ -32,8 +33,7 @@ export default function Validation({ data, modal }) {
       },
     });
 
-    const id = response.data.updatePreviousProject.previousProject.id;
-    history.push(`${modal.returnPath}/previous_projects/${id}/more`);
+    modal.hide();
   };
 
   const initialValues = {
@@ -60,39 +60,43 @@ export default function Validation({ data, modal }) {
                 We will need to confirm the details of this project with someone
                 who worked on the project.
               </Text>
-              <Box display="flex" mb="l">
-                <Box pr="xs" width="50%">
-                  <Label mb="xs">Contact Name</Label>
-                  <Field
-                    as={Input}
-                    name="contactName"
-                    placeholder="Contact Name"
-                  />
+              <Stack mb="xl" spacing="xxl" divider="neutral100">
+                <Box display="flex">
+                  <Box pr="xs" width="50%">
+                    <Label mb="xs">Contact Name</Label>
+                    <Field
+                      as={Input}
+                      name="contactName"
+                      placeholder="Contact Name"
+                    />
+                  </Box>
+                  <Box pl="xs" width="50%">
+                    <Label mb="xs">Contact Job Title</Label>
+                    <Field
+                      as={Input}
+                      name="contactJobTitle"
+                      placeholder="Contact Job Title"
+                    />
+                  </Box>
                 </Box>
-                <Box pl="xs" width="50%">
-                  <Label mb="xs">Contact Job Title</Label>
-                  <Field
-                    as={Input}
-                    name="contactJobTitle"
-                    placeholder="Contact Job Title"
-                  />
+                <Box>
+                  <Label mb="xs">
+                    What was your relationship to them for this project?
+                  </Label>
+                  <Field as={Select} name="contactRelationship">
+                    {RELATIONSHIPS.map((r) => (
+                      <option key={r}>{r}</option>
+                    ))}
+                  </Field>
                 </Box>
-              </Box>
-              <Label mb="xs">
-                What was your relationship to them for this project?
-              </Label>
-              <Field as={Select} name="contactRelationship" mb="xl">
-                {RELATIONSHIPS.map((r) => (
-                  <option key={r}>{r}</option>
-                ))}
-              </Field>
+              </Stack>
 
               <RoundedButton
                 size="l"
                 type="submit"
                 loading={formik.isSubmitting}
               >
-                Continue
+                Publish Project
               </RoundedButton>
             </Form>
           )}

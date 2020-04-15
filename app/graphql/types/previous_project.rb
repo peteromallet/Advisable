@@ -22,6 +22,8 @@ class Types::PreviousProject < Types::BaseType
   field :contact_relationship, String, null: true
   field :confidential, Boolean, null: false
   field :draft, Boolean, null: false
+  field :images, [Types::PreviousProjectImage], null: false
+  field :cover_photo, Types::PreviousProjectImage, null: true
 
   def id
     object.uid

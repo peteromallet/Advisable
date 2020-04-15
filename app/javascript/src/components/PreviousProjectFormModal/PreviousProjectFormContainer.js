@@ -15,7 +15,6 @@ import PreviousProjectFormHeader from "./PreviousProjectFormHeader";
 import Overview from "./Overview";
 import Portfolio from "./Portfolio";
 import Validation from "./Validation";
-import MoreInformation from "./MoreInformation";
 import UpdateClientDetails from "./UpdateClientDetails";
 import CreatePreviousProject from "./CreatePreviousProject";
 
@@ -47,7 +46,7 @@ export default function PreviousProjectFormContainer({ modal, specialistId }) {
           <Box width={200} flexShrink={0}>
             <NavigationMenu />
           </Box>
-          <Box pl="l">
+          <Box pl="l" flexGrow={1}>
             <Switch>
               <Route path="*previous_projects/new">
                 <CreatePreviousProject specialistId={specialistId} />
@@ -62,13 +61,10 @@ export default function PreviousProjectFormContainer({ modal, specialistId }) {
                 <Overview modal={modal} data={data} />
               </Route>
               <Route path="*previous_projects/:id/portfolio">
-                <Portfolio />
+                <Portfolio modal={modal} data={data} />
               </Route>
               <Route path="*previous_projects/:id/validation">
                 <Validation modal={modal} data={data} />
-              </Route>
-              <Route path="*previous_projects/:id/more">
-                <MoreInformation />
               </Route>
             </Switch>
           </Box>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "@advisable/donut";
+import { Text, Icon } from "@advisable/donut";
 import {
   StyledPreviousProjectFormHeader,
   StyledClosePreviousProjectFormButton,
@@ -13,6 +13,7 @@ export default function PreviousProjectFormHeader({ modal }) {
       </Text>
       <StyledClosePreviousProjectFormButton onClick={modal.hide}>
         Save and close
+        <Icon icon="chevron-down" ml="xxs" />
       </StyledClosePreviousProjectFormButton>
     </StyledPreviousProjectFormHeader>
   );

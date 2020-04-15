@@ -13,6 +13,11 @@ const previousProjectFields = gql`
     contactName
     contactJobTitle
     contactRelationship
+    images {
+      id
+      url
+      cover
+    }
     primaryIndustry {
       id
       name
@@ -28,6 +33,16 @@ const previousProjectFields = gql`
     skills {
       id
       name
+    }
+  }
+`;
+
+export const GET_PREVIOUS_PROJECT = gql`
+  ${previousProjectFields}
+
+  query getPreviousProject($id: ID!) {
+    previousProject(id: $id) {
+      ...PreviousProjectFields
     }
   }
 `;
@@ -59,12 +74,17 @@ export const UPDATE_PREVIOUS_PROJECT = gql`
 export const useUpdatePreviousProject = () =>
   useMutation(UPDATE_PREVIOUS_PROJECT);
 
-export const GET_PREVIOUS_PROJECT = gql`
+export const PUBLISH_PREVIOUS_PROJECT = gql`
   ${previousProjectFields}
 
-  query getPreviousProject($id: ID!) {
-    previousProject(id: $id) {
-      ...PreviousProjectFields
+  mutation publishPreviousProject($input: PublishPreviousProjectInput!) {
+    publishPreviousProject(input: $input) {
+      previousProject {
+        ...PreviousProjectFields
+      }
     }
   }
 `;
+
+export const usePublishPreviousProject = () =>
+  useMutation(PUBLISH_PREVIOUS_PROJECT);

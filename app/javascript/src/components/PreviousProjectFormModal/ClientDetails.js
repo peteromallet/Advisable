@@ -8,6 +8,7 @@ import {
   Text,
   Input,
   Label,
+  Stack,
   Select,
   Checkbox,
   RoundedButton,
@@ -69,78 +70,84 @@ export default function ClientDetails({ onSubmit, initialValues = {} }) {
                 invite you to.
               </Text>
 
-              <Box display="flex" mb="l">
-                <Box pr="xs" width="50%">
-                  <Label htmlFor="clientName" mb="xs">
-                    Client Name
+              <Stack divider="neutral100" spacing="xxl" mb="xl">
+                <Box display="flex">
+                  <Box pr="xs" width="50%">
+                    <Label htmlFor="clientName" mb="xs">
+                      Client Name
+                    </Label>
+                    <Field
+                      as={Input}
+                      name="clientName"
+                      placeholder="Client name"
+                    />
+                  </Box>
+                  <Box pl="xs" width="50%">
+                    <Label htmlFor="companyType" mb="xs">
+                      Company Type
+                    </Label>
+                    <Field as={Select} name="companyType">
+                      <option>Individual Entrepreneur</option>
+                      <option>Small Business</option>
+                      <option>Medium-Sized Business</option>
+                      <option>Startup</option>
+                      <option>Growth-Stage Startup</option>
+                      <option>Major Corporation</option>
+                      <option>Non-Profit</option>
+                      <option>Education Institution</option>
+                      <option>Government</option>
+                    </Field>
+                  </Box>
+                </Box>
+                <Box>
+                  <Label mb="xs">
+                    What industries does this client work in?
                   </Label>
-                  <Field
-                    as={Input}
-                    name="clientName"
-                    placeholder="Client name"
+                  <Autocomplete
+                    max={3}
+                    multiple
+                    name="industries"
+                    options={data.industries}
+                    placeholder="Search for an industry"
+                    value={formik.values.industries}
+                    onChange={(industries) =>
+                      formik.setFieldValue("industries", industries)
+                    }
+                    primary={formik.values.primaryIndustry}
+                    onPrimaryChange={(industry) =>
+                      formik.setFieldValue("primaryIndustry", industry)
+                    }
+                    description={
+                      formik.values.primaryIndustry && (
+                        <>
+                          You have selected{" "}
+                          <Text
+                            as="span"
+                            fontSize="xs"
+                            color="neutral800"
+                            fontWeight="medium"
+                          >
+                            {formik.values.primaryIndustry}
+                          </Text>{" "}
+                          as the primary industry.
+                        </>
+                      )
+                    }
                   />
                 </Box>
-                <Box pl="xs" width="50%">
-                  <Label htmlFor="companyType" mb="xs">
-                    Company Type
-                  </Label>
-                  <Field as={Select} name="companyType">
-                    <option>Individual Entrepreneur</option>
-                    <option>Small Business</option>
-                    <option>Medium-Sized Business</option>
-                    <option>Startup</option>
-                    <option>Growth-Stage Startup</option>
-                    <option>Major Corporation</option>
-                    <option>Non-Profit</option>
-                    <option>Education Institution</option>
-                    <option>Government</option>
+                <Box>
+                  <Field as={Checkbox} type="checkbox" name="confidential">
+                    <Text color="blue900" fontWeight="medium" mb="2px">
+                      This client is confidential
+                    </Text>
+                    <Text fontSize="xs" color="neutral600">
+                      If checked the client's name will be hidden and the
+                      industry will be named instead. e.g 'Financial Services
+                      Company'
+                    </Text>
                   </Field>
                 </Box>
-              </Box>
-
-              <Label mb="xs">What industries does this client work in?</Label>
-              <Autocomplete
-                mb="l"
-                max={3}
-                multiple
-                name="industries"
-                options={data.industries}
-                placeholder="Search for an industry"
-                value={formik.values.industries}
-                onChange={(industries) =>
-                  formik.setFieldValue("industries", industries)
-                }
-                primary={formik.values.primaryIndustry}
-                onPrimaryChange={(industry) =>
-                  formik.setFieldValue("primaryIndustry", industry)
-                }
-                description={
-                  formik.values.primaryIndustry && (
-                    <>
-                      You have selected{" "}
-                      <Text
-                        as="span"
-                        fontSize="xs"
-                        color="neutral800"
-                        fontWeight="medium"
-                      >
-                        {formik.values.primaryIndustry}
-                      </Text>{" "}
-                      as the primary industry.
-                    </>
-                  )
-                }
-              />
-
-              <Field as={Checkbox} type="checkbox" name="confidential" mb="xl">
-                <Text color="blue900" fontWeight="medium" mb="2px">
-                  This client is confidential
-                </Text>
-                <Text fontSize="xs" color="neutral600">
-                  If checked the client's name will be hidden and the industry
-                  will be named instead. e.g 'Financial Services Company'
-                </Text>
-              </Field>
+              </Stack>
 
               <RoundedButton
                 size="l"

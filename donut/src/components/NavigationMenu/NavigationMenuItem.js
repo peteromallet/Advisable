@@ -1,10 +1,22 @@
 import React from "react";
-import { StyledNavigationMenuItem, StyledNavigationMenuLink } from "./styles";
+import {
+  StyledNavigationMenuItem,
+  StyledNavigationMenuLink,
+  StyledNavigationMenuItemPrefix,
+  StyledNavigationMenuItemNumber,
+} from "./styles";
 
-export default function NavigationMenuItem({ children, to }) {
+export default function NavigationMenuItem({ number, children, to }) {
   return (
     <StyledNavigationMenuItem>
-      <StyledNavigationMenuLink to={to}>{children}</StyledNavigationMenuLink>
+      <StyledNavigationMenuLink to={to}>
+        <StyledNavigationMenuItemPrefix>
+          <StyledNavigationMenuItemNumber>
+            {number}
+          </StyledNavigationMenuItemNumber>
+        </StyledNavigationMenuItemPrefix>
+        {children}
+      </StyledNavigationMenuLink>
     </StyledNavigationMenuItem>
   );
 }

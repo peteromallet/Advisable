@@ -9,15 +9,17 @@ import {
   Select,
   Label,
   Input,
+  Stack,
   Autocomplete,
   RoundedButton,
+  Textarea,
 } from "@advisable/donut";
 import Helper from "./Helper";
 import { useUpdatePreviousProject } from "./queries";
 
 const SKILLS = gql`
   {
-    skills {
+    skills(local: true) {
       id
       label: name
       value: name
@@ -96,71 +98,78 @@ export default function Overview({ modal, data }) {
                 your skills. Advisable uses them to decide what projects to
                 invite you to.
               </Text>
-              <Label mb="xs">
-                Please describe the problem they had, an overview of the
-                project, how you approached it and the results you achieved
-              </Label>
-              <Field
-                as={Input}
-                placeholder="Project description"
-                name="description"
-                mb="m"
-              />
-              <Label mb="xs">
-                What was your primary goal for this project?
-              </Label>
-              <Box mb="m">
-                <Field
-                  name="goal"
-                  as={Select}
-                  onChange={handleGoalChange(formik)}
-                  value={customGoal ? "Other" : formik.values.goal}
-                >
-                  {GOALS.map((g) => (
-                    <option key={g}>{g}</option>
-                  ))}
-                </Field>
-                {customGoal && (
+              <Stack divider="neutral100" spacing="xxl" mb="xl">
+                <Box>
+                  <Label mb="xs" lineHeight="s">
+                    Please describe the problem they had, an overview of the
+                    project, how you approached it and the results you achieved
+                  </Label>
                   <Field
-                    as={Input}
-                    mt="xs"
-                    name="goal"
-                    placeholder="What was your goal for this project..."
+                    as={Textarea}
+                    placeholder="Project description"
+                    name="description"
                   />
-                )}
-              </Box>
-
-              <Label mb="xs">What skills did you use for this project?</Label>
-              <Autocomplete
-                mb="l"
-                max={5}
-                multiple
-                name="skills"
-                options={skillsQuery.data.skills}
-                placeholder="Search for an industry"
-                value={formik.values.skills}
-                onChange={(skills) => formik.setFieldValue("skills", skills)}
-                primary={formik.values.primarySkill}
-                onPrimaryChange={(skill) =>
-                  formik.setFieldValue("primarySkill", skill)
-                }
-                description={
-                  formik.values.primarySkill && (
-                    <>
-                      You have selected{" "}
-                      <Text
-                        as="span"
-                        fontSize="xs"
-                        color="neutral800"
-                        fontWeight="medium"
-                      >
-                        {formik.values.primarySkill}
-                      </Text>{" "}
-                      as the primary skill.
-                    </>
-                  )
-                }
-              />
+                </Box>
+                <Box>
+                  <Label mb="xs">
+                    What skills did you use for this project?
+                  </Label>
+                  <Autocomplete
+                    max={5}
+                    multiple
+                    name="skills"
+                    options={skillsQuery.data.skills}
+                    placeholder="Search for an industry"
+                    value={formik.values.skills}
+                    onChange={(skills) =>
+                      formik.setFieldValue("skills", skills)
+                    }
+                    primary={formik.values.primarySkill}
+                    onPrimaryChange={(skill) =>
+                      formik.setFieldValue("primarySkill", skill)
+                    }
+                    description={
+                      formik.values.primarySkill && (
+                        <>
+                          You have selected{" "}
+                          <Text
+                            as="span"
+                            fontSize="xs"
+                            color="neutral800"
+                            fontWeight="medium"
+                          >
+                            {formik.values.primarySkill}
+                          </Text>{" "}
+                          as the primary skill.
+                        </>
+                      )
+                    }
+                  />
+                </Box>
+                <Box>
+                  <Label mb="xs">
+                    What was your primary goal for this project?
+                  </Label>
+                  <Field
+                    name="goal"
+                    as={Select}
+                    onChange={handleGoalChange(formik)}
+                    value={customGoal ? "Other" : formik.values.goal}
+                  >
+                    {GOALS.map((g) => (
+                      <option key={g}>{g}</option>
+                    ))}
+                  </Field>
+                  {customGoal && (
+                    <Field
+                      as={Input}
+                      mt="xs"
+                      name="goal"
+                      placeholder="What was your goal for this project..."
+                    />
+                  )}
+                </Box>
+              </Stack>
 
               <RoundedButton
                 size="l"

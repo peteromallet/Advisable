@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { space } from "styled-system";
+import { margin } from "styled-system";
 import theme from "../../theme";
 
 export const StyledInput = styled.input`
@@ -13,9 +13,8 @@ export const StyledInput = styled.input`
   background: ${theme.colors.neutral[1]};
   width: ${(props) => props.width || "100%"};
   border: 2px solid ${theme.colors.neutral[1]};
-  cursor: default;
 
-  ${space}
+  ${margin}
 
   &::placeholder {
     color: ${theme.colors.neutral[6]};

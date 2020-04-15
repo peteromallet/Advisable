@@ -1,6 +1,18 @@
 import { rgba } from "polished";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { theme } from "@advisable/donut";
+
+const slideUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 export const StyledDialog = styled.div`
   top: 0;
@@ -11,6 +23,7 @@ export const StyledDialog = styled.div`
   position: fixed;
   background: white;
   padding-top: 60px;
+  animation: ${slideUp} 500ms forwards;
 `;
 
 export const StyledDialogContent = styled.div`
@@ -33,9 +46,12 @@ export const StyledPreviousProjectFormHeader = styled.div`
 
 export const StyledClosePreviousProjectFormButton = styled.button`
   border: none;
+  outline: none;
   cursor: pointer;
   font-size: 16px;
   appearance: none;
+  align-items: center;
+  display: inline-flex;
   background: transparent;
   color: ${theme.colors.blue600};
   font-family: "Poppins", sans-serif;

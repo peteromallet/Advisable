@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useRouteMatch } from "react-router-dom";
-import { Box, NavigationMenu, NavigationMenuItem } from "@advisable/donut";
+import { NavigationMenu } from "@advisable/donut";
 import { PATH_REGEX } from "./usePreviousProjectModal";
 
 export default function PreviousProjectNavigationMenu() {
@@ -12,21 +12,18 @@ export default function PreviousProjectNavigationMenu() {
 
   return (
     <NavigationMenu>
-      <NavigationMenuItem to={`${urlPrefix}/client`}>
+      <NavigationMenu.Item to={`${urlPrefix}/client`}>
         Client Details
-      </NavigationMenuItem>
-      <NavigationMenuItem to={`${urlPrefix}/overview`}>
+      </NavigationMenu.Item>
+      <NavigationMenu.Item to={`${urlPrefix}/overview`}>
         Project Overview
-      </NavigationMenuItem>
-      <NavigationMenuItem to={`${urlPrefix}/portfolio`}>
+      </NavigationMenu.Item>
+      <NavigationMenu.Item to={`${urlPrefix}/portfolio`}>
         Portfolio
-      </NavigationMenuItem>
-      <NavigationMenuItem to={`${urlPrefix}/validation`}>
+      </NavigationMenu.Item>
+      <NavigationMenu.Item to={`${urlPrefix}/validation`}>
         Validation
-      </NavigationMenuItem>
-      <NavigationMenuItem to={`${urlPrefix}/more`}>
-        More Info
-      </NavigationMenuItem>
+      </NavigationMenu.Item>
     </NavigationMenu>
   );
 }

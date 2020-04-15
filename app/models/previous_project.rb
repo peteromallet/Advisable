@@ -7,6 +7,13 @@ class PreviousProject < ApplicationRecord
   belongs_to :application, required: false
 
   has_many :reviews, as: :project
+  has_many :images,
+           class_name: 'PreviousProjectImage',
+           foreign_key: 'off_platform_project_id'
+  has_one :cover_photo,
+          -> { where cover: true },
+          class_name: 'PreviousProjectImage',
+          foreign_key: 'off_platform_project_id'
 
   # Project skills
   has_many :project_skills, as: :project, dependent: :destroy
