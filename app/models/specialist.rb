@@ -28,6 +28,7 @@ class Specialist < ApplicationRecord
   has_one_attached :avatar
   has_one_attached :resume
 
+  # DEPRECATED IN FAVOUR OF phone column
   attr_encrypted :phone_number, key: [ENV['ENCRYPTION_KEY']].pack('H*')
 
   validates :number_of_projects,

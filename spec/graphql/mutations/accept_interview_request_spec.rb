@@ -46,8 +46,7 @@ describe Mutations::AcceptInterviewRequest do
 
   it 'sets the specialist phone number' do
     expect { AdvisableSchema.execute(query, context: {}) }.to change {
-      specialist.reload.phone_number
-    }.from(nil)
-      .to('0123456789')
+      specialist.reload.phone
+    }.from(nil).to('0123456789')
   end
 end

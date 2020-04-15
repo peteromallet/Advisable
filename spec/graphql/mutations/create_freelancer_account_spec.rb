@@ -110,6 +110,6 @@ describe Mutations::CreateFreelancerAccount do
   it 'sets the phone_number' do
     AdvisableSchema.execute(query)
     specialist = Specialist.last
-    expect(specialist.phone_number).to eq('0861234567')
+    expect(specialist.phone).to eq('0861234567')
   end
 end
