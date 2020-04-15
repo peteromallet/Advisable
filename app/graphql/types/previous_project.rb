@@ -25,6 +25,10 @@ class Types::PreviousProject < Types::BaseType
   field :images, [Types::PreviousProjectImage], null: false
   field :cover_photo, Types::PreviousProjectImage, null: true
 
+  def images
+    object.images.order(position: :asc)
+  end
+
   def id
     object.uid
   end

@@ -28,6 +28,7 @@ function reducer(state, action) {
           uploading: true,
           file: action.file,
           cover: action.cover,
+          position: action.position,
         },
       ];
     }
@@ -44,6 +45,18 @@ function reducer(state, action) {
 
         return image;
       });
+    }
+
+    case "REMOVE_IMAGE": {
+      const isCover = find(state, { id: action.id })?.cover || false;
+
+      let nextState = state.filter((img) => img.id !== action.id);
+
+      if (isCover) {
+        nextState[0].cover = true;
+      }
+
+      return nextState;
     }
 
     case "SET_COVER": {
@@ -81,12 +94,14 @@ export default function Portfolio({ modal, data }) {
           skills. Advisable uses them to decide what projects to invite you to.
         </Text>
         <Box mb="xl">
-          <CoverPhoto images={images} />
-          <ImageTiles
-            images={images}
-            dispatch={dispatch}
-            previousProjectId={data.previousProject.id}
-          />
+          <CoverPhoto images={images} dispatch={dispatch} />
+          {images.length > 0 && (
+            <ImageTiles
+              images={images}
+              dispatch={dispatch}
+              previousProjectId={data.previousProject.id}
+            />
+          )}
         </Box>
         <Link
           to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/validation`}

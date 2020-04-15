@@ -1,8 +1,9 @@
 import { find } from "lodash";
-import { Box } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import React from "react";
+import { StyledCoverPhoto, StyledCoverPhotoTag } from "./styles";
 
-function CoverPhoto({ images }) {
+function CoverPhoto({ images, dispatch }) {
   const cover = find(images, { cover: true });
   const [background, setBackground] = React.useState(cover?.url);
 
@@ -20,18 +21,32 @@ function CoverPhoto({ images }) {
     }
   }, [cover]);
 
-  if (!cover) return null;
+  const handleChange = (e) => {
+    Array.from(e.target.files).forEach((file, i) => {
+      dispatch({
+        type: "NEW_UPLOAD",
+        file,
+        cover: !cover && i === 0,
+        position: i + 1,
+      });
+    });
+  };
 
   return (
-    <Box
-      mb="12px"
-      borderRadius="12px"
-      backgroundColor="neutral50"
-      backgroundImage={`url('${background}')`}
-      backgroundSize="cover"
-      backgroundPosition="center"
-      height="250px"
-    />
+    <StyledCoverPhoto coverImage={background}>
+      {cover && <StyledCoverPhotoTag>Cover Photo</StyledCoverPhotoTag>}
+      {!cover && (
+        <Box>
+          <input type="file" onChange={handleChange} multiple />
+          <Text color="blue900" mb="xxs" className="title">
+            Add images to this project
+          </Text>
+          <Text fontSize="s" color="neutral500" className="subtext">
+            Upload images to support this project
+          </Text>
+        </Box>
+      )}
+    </StyledCoverPhoto>
   );
 }
 

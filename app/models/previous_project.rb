@@ -48,7 +48,9 @@ class PreviousProject < ApplicationRecord
   end
 
   def contact_name
-    "#{contact_first_name} #{contact_last_name}"
+    output = contact_first_name
+    output += " #{contact_last_name}" if contact_first_name.present?
+    output
   end
 
   def contact_name=(name)

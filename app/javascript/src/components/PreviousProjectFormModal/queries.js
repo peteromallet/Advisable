@@ -88,3 +88,31 @@ export const PUBLISH_PREVIOUS_PROJECT = gql`
 
 export const usePublishPreviousProject = () =>
   useMutation(PUBLISH_PREVIOUS_PROJECT);
+
+export const UPDATE_IMAGE = gql`
+  mutation updatePhoto($input: UpdatePreviousProjectImageInput!) {
+    updatePreviousProjectImage(input: $input) {
+      image {
+        id
+        url
+        cover
+      }
+    }
+  }
+`;
+
+export const useUpdatePreviousProjectImage = () => useMutation(UPDATE_IMAGE);
+
+export const DELETE = gql`
+  mutation deletePhoto($input: DeletePreviousProjectImageInput!) {
+    deletePreviousProjectImage(input: $input) {
+      image {
+        id
+        url
+        cover
+      }
+    }
+  }
+`;
+
+export const useDeletePreviousProjectImage = () => useMutation(DELETE);

@@ -20,7 +20,6 @@ const RELATIONSHIPS = [
 ];
 
 export default function Validation({ data, modal }) {
-  const history = useHistory();
   const [publishPreviousProject] = usePublishPreviousProject();
 
   const handleSubmit = async (values) => {
