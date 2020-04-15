@@ -82,6 +82,10 @@ class Types::SpecialistType < Types::BaseType
     description 'The phone number for the specialist'
   end
 
+  def phone_number
+    object.phone
+  end
+
   field :image, Types::AttachmentType, null: true do
     description 'The specialists profile image'
   end
