@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_08_053931) do
+ActiveRecord::Schema.define(version: 2020_04_15_101253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -347,6 +347,16 @@ ActiveRecord::Schema.define(version: 2020_04_08_053931) do
     t.index ["uid"], name: "index_payments_on_uid"
   end
 
+  create_table "previous_project_images", force: :cascade do |t|
+    t.integer "position"
+    t.bigint "off_platform_project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "uid"
+    t.boolean "cover"
+    t.index ["off_platform_project_id"], name: "index_previous_project_images_on_off_platform_project_id"
+  end
+
   create_table "project_contents", force: :cascade do |t|
     t.string "airtable_id"
     t.string "project_id"
@@ -571,6 +581,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_053931) do
     t.string "confirmation_token"
     t.decimal "average_score"
     t.integer "project_count"
+    t.string "phone"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
@@ -698,6 +709,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_053931) do
   add_foreign_key "matches", "specialists"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
+  add_foreign_key "previous_project_images", "off_platform_projects"
   add_foreign_key "project_industries", "industries"
   add_foreign_key "project_skills", "skills"
   add_foreign_key "projects", "clients"

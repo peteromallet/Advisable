@@ -8,8 +8,11 @@ class Mutations::AcceptInterviewRequest < Mutations::BaseMutation
 
   def resolve(**args)
     interview = Interview.find_by_airtable_id!(args[:id])
-    interview.update(starts_at: args[:starts_at], status: "Call Scheduled")
-    update_specialist_number(interview.application.specialist, args[:phone_number])
+    interview.update(starts_at: args[:starts_at], status: 'Call Scheduled')
+    update_specialist_number(
+      interview.application.specialist,
+      args[:phone_number]
+    )
     interview.sync_to_airtable
     Webhook.process(interview)
     return { interview: interview }
@@ -18,8 +21,8 @@ class Mutations::AcceptInterviewRequest < Mutations::BaseMutation
   private
 
   def update_specialist_number(specialist, number)
-    return if specialist.phone_number === number
-    specialist.update(phone_number: number)
+    return if specialist.phone === number
+    specialist.update(phone: number)
     specialist.sync_to_airtable
   end
 end
