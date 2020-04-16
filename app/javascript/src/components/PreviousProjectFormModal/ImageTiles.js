@@ -7,6 +7,7 @@ import { theme, Icon } from "@advisable/donut";
 import { useMutation, useApolloClient } from "@apollo/react-hooks";
 import { DirectUpload } from "@rails/activestorage";
 import {
+  GET_PREVIOUS_PROJECT,
   useUpdatePreviousProjectImage,
   useDeletePreviousProjectImage,
 } from "./queries";
@@ -178,7 +179,28 @@ const CREATE_PHOTO = gql`
 `;
 
 function Upload({ previousProjectId, image, dispatch, onClick }) {
-  const [createImage] = useMutation(CREATE_PHOTO, {});
+  const [createImage] = useMutation(CREATE_PHOTO, {
+    update(client, { data }) {
+      const prev = client.readQuery({
+        query: GET_PREVIOUS_PROJECT,
+        variables: { id: previousProjectId },
+      });
+
+      client.writeQuery({
+        query: GET_PREVIOUS_PROJECT,
+        variables: { id: previousProjectId },
+        data: {
+          previousProject: {
+            ...prev.previousProject,
+            images: [
+              ...prev.previousProject.images,
+              data.createPreviousProjectImage.image,
+            ],
+          },
+        },
+      });
+    },
+  });
 
   const upload = useUpload(image.file, {
     cover: image.cover,
