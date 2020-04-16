@@ -1,6 +1,5 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
-import { useHistory } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
   Box,
   Text,
@@ -8,10 +7,12 @@ import {
   Label,
   Select,
   Stack,
+  InputError,
   RoundedButton,
 } from "@advisable/donut";
 import Helper from "./Helper";
 import { usePublishPreviousProject } from "./queries";
+import { verificationValidationSchema } from "./validationSchemas";
 
 const RELATIONSHIPS = [
   "They managed the project",
@@ -38,13 +39,18 @@ export default function Validation({ data, modal }) {
   const initialValues = {
     contactName: data.previousProject.contactName || "",
     contactJobTitle: data.previousProject.contactJobTitle || "",
-    contactRelationship: data.previousProject.contactRelationship || "",
+    contactRelationship:
+      data.previousProject.contactRelationship || RELATIONSHIPS[0],
   };
 
   return (
     <Box display="flex">
       <Box flexGrow={1} pr="xl">
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={verificationValidationSchema}
+        >
           {(formik) => (
             <Form>
               <Text
@@ -67,6 +73,14 @@ export default function Validation({ data, modal }) {
                       as={Input}
                       name="contactName"
                       placeholder="Contact Name"
+                      error={
+                        formik.touched.contactName && formik.errors.contactName
+                      }
+                    />
+                    <ErrorMessage
+                      mt="xs"
+                      name="contactName"
+                      component={InputError}
                     />
                   </Box>
                   <Box pl="xs" width="50%">
@@ -75,6 +89,15 @@ export default function Validation({ data, modal }) {
                       as={Input}
                       name="contactJobTitle"
                       placeholder="Contact Job Title"
+                      error={
+                        formik.touched.contactJobTitle &&
+                        formik.errors.contactJobTitle
+                      }
+                    />
+                    <ErrorMessage
+                      mt="xs"
+                      name="contactJobTitle"
+                      component={InputError}
                     />
                   </Box>
                 </Box>

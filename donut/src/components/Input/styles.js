@@ -1,6 +1,11 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { margin } from "styled-system";
 import theme from "../../theme";
+
+const StyledInput_WithError = css`
+  border: 2px solid ${theme.colors.red200};
+  background: ${theme.colors.red50};
+`;
 
 export const StyledInput = styled.input`
   margin: 0;
@@ -20,14 +25,12 @@ export const StyledInput = styled.input`
     color: ${theme.colors.neutral[6]};
   }
 
-  &:hover {
-    border-color: ${theme.colors.neutral[2]};
-    background-color: ${theme.colors.neutral[2]};
-  }
-
   &:focus {
     border-color: ${theme.colors.blue800};
+    background: ${theme.colors.neutral50};
   }
+
+  ${(props) => props.error && StyledInput_WithError};
 `;
 
 export const StyledInputDecorator = styled.div`

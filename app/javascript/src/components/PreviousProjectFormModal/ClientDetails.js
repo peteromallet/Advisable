@@ -1,7 +1,6 @@
 import React from "react";
-import * as Yup from "yup";
 import gql from "graphql-tag";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useQuery } from "@apollo/react-hooks";
 import {
   Box,
@@ -12,9 +11,11 @@ import {
   Stack,
   Select,
   Checkbox,
+  InputError,
   RoundedButton,
   Autocomplete,
 } from "@advisable/donut";
+import { clientDetailsValidationSchema } from "./validationSchemas";
 import Helper from "./Helper";
 
 const INDUSTRIES = gql`
@@ -26,10 +27,6 @@ const INDUSTRIES = gql`
     }
   }
 `;
-
-const validationSchema = Yup.object({
-  clientName: Yup.string().required("Please enter the clients name"),
-});
 
 export default function ClientDetails({ onSubmit, initialValues = {} }) {
   const { data, loading } = useQuery(INDUSTRIES);
@@ -53,7 +50,7 @@ export default function ClientDetails({ onSubmit, initialValues = {} }) {
         <Formik
           onSubmit={onSubmit}
           initialValues={formInitialValues}
-          validationSchema={validationSchema}
+          validationSchema={clientDetailsValidationSchema}
         >
           {(formik) => (
             <Form>
@@ -74,13 +71,19 @@ export default function ClientDetails({ onSubmit, initialValues = {} }) {
               <Stack divider="neutral100" spacing="xxl" mb="xl">
                 <Box display="flex">
                   <Box pr="xs" width="50%">
-                    <Label htmlFor="clientName" mb="xs">
-                      Client Name
-                    </Label>
+                    <Label mb="xs">Company Name</Label>
                     <Field
                       as={Input}
                       name="clientName"
-                      placeholder="Client name"
+                      placeholder="e.g Acme Inc"
+                      error={
+                        formik.touched.clientName && formik.errors.clientName
+                      }
+                    />
+                    <ErrorMessage
+                      mt="xs"
+                      name="clientName"
+                      component={InputError}
                     />
                   </Box>
                   <Box pl="xs" width="50%">
@@ -134,6 +137,11 @@ export default function ClientDetails({ onSubmit, initialValues = {} }) {
                         </>
                       )
                     }
+                  />
+                  <ErrorMessage
+                    mt="xs"
+                    name="industries"
+                    component={InputError}
                   />
                 </Box>
                 <Box>

@@ -12,7 +12,6 @@ export default gql`
             title
             draft
             excerpt
-            companyName
             reviews {
               id
               name

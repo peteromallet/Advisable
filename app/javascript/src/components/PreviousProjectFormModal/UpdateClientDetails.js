@@ -25,7 +25,7 @@ export default function UpdateClientDetails({ modal, data }) {
     <ClientDetails
       onSubmit={handleSubmit}
       initialValues={{
-        clientName: data.previousProject.companyName,
+        clientName: data.previousProject.clientName,
         primaryIndustry: data.previousProject.primaryIndustry.name,
         companyType: data.previousProject.companyType,
         industries: data.previousProject.industries.map((i) => i.name),

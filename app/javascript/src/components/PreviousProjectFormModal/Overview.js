@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useHistory } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useQuery } from "@apollo/react-hooks";
 import {
   Box,
@@ -10,12 +10,14 @@ import {
   Label,
   Input,
   Stack,
+  InputError,
   Autocomplete,
   RoundedButton,
   Textarea,
 } from "@advisable/donut";
 import Helper from "./Helper";
 import { useUpdatePreviousProject } from "./queries";
+import { projectOverviewValidationSchema } from "./validationSchemas";
 
 const SKILLS = gql`
   {
@@ -70,6 +72,7 @@ export default function Overview({ modal, data }) {
   const handleGoalChange = (formik) => (e) => {
     if (e.target.value === "Other") {
       setCustomGoal(true);
+      formik.setFieldTouched("goal", false);
       formik.setFieldValue("goal", "");
     } else {
       setCustomGoal(false);
@@ -82,7 +85,11 @@ export default function Overview({ modal, data }) {
   return (
     <Box display="flex">
       <Box flexGrow={1} pr="xl">
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={projectOverviewValidationSchema}
+        >
           {(formik) => (
             <Form>
               <Text
@@ -108,6 +115,14 @@ export default function Overview({ modal, data }) {
                     as={Textarea}
                     placeholder="Project description"
                     name="description"
+                    error={
+                      formik.touched.description && formik.errors.description
+                    }
+                  />
+                  <ErrorMessage
+                    mt="xs"
+                    name="description"
+                    component={InputError}
                   />
                 </Box>
                 <Box>
@@ -145,6 +160,7 @@ export default function Overview({ modal, data }) {
                       )
                     }
                   />
+                  <ErrorMessage mt="xs" name="skills" component={InputError} />
                 </Box>
                 <Box>
                   <Label mb="xs">
@@ -165,9 +181,11 @@ export default function Overview({ modal, data }) {
                       as={Input}
                       mt="xs"
                       name="goal"
+                      error={formik.touched.goal && formik.errors.goal}
                       placeholder="What was your goal for this project..."
                     />
                   )}
+                  <ErrorMessage mt="xs" name="goal" component={InputError} />
                 </Box>
               </Stack>
 

@@ -4,7 +4,7 @@ class Types::PreviousProject < Types::BaseType
   field :goal, String, null: true
   field :excerpt, String, null: true
   field :description, String, null: true
-  field :company_name, String, null: false
+  field :client_name, String, null: false
   field :company_type, String, null: false
   field :specialist, Types::SpecialistType, null: false
   field :reviews, [Types::Review], null: false
@@ -42,8 +42,8 @@ class Types::PreviousProject < Types::BaseType
   end
 
   def title
-    return "Project with #{company_name}" if object.primary_skill.nil?
-    "#{object.primary_skill.try(:name)} with #{company_name}"
+    return "Project with #{client_name}" if object.primary_skill.nil?
+    "#{object.primary_skill.try(:name)} with #{client_name}"
   end
 
   def excerpt
@@ -54,7 +54,7 @@ class Types::PreviousProject < Types::BaseType
     object.confidential || false
   end
 
-  def company_name
+  def client_name
     return object.client_name if object.draft
 
     if object.confidential
