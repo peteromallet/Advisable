@@ -5,11 +5,11 @@ import {
   StyledClosePreviousProjectFormButton,
 } from "./styles";
 
-export default function PreviousProjectFormHeader({ modal }) {
+export default function PreviousProjectFormHeader({ modal, data }) {
   return (
     <StyledPreviousProjectFormHeader>
-      <Text fontSize="l" color="blue900">
-        Previous project
+      <Text fontSize="m" color="blue900">
+        {data ? data.previousProject.title : "Add a previous project"}
       </Text>
       <StyledClosePreviousProjectFormButton onClick={modal.hide}>
         Save and close

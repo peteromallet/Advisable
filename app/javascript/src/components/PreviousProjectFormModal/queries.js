@@ -15,6 +15,7 @@ const previousProjectFields = gql`
     contactName
     contactJobTitle
     contactRelationship
+    validationStatus
     images {
       id
       url

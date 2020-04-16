@@ -18,6 +18,7 @@ class Mutations::CreatePreviousProject < Mutations::BaseMutation
         confidential: args[:confidential],
         company_type: args[:company_type],
         description: args[:description],
+        validation_status: 'Pending',
         draft: true
       )
 

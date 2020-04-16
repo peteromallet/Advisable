@@ -44,7 +44,7 @@ export default function PreviousProjectFormContainer({
 
   return (
     <>
-      <PreviousProjectFormHeader modal={modal} />
+      <PreviousProjectFormHeader modal={modal} data={data} />
       {error && <NotFound id={route?.params.id} />}
       {!error && (
         <ErrorBoundary>
@@ -52,7 +52,7 @@ export default function PreviousProjectFormContainer({
             <StyledSidebar>
               <NavigationMenu previousProject={data?.previousProject} />
             </StyledSidebar>
-            <Container maxWidth="1200px" py="l">
+            <Container maxWidth="1100px" py="l">
               <Switch>
                 <Route path="*previous_projects/:id" exact>
                   <RedirectToFirstStep />

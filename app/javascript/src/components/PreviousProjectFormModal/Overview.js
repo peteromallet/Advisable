@@ -10,6 +10,7 @@ import {
   Label,
   Input,
   Stack,
+  Icon,
   InputError,
   Autocomplete,
   RoundedButton,
@@ -84,7 +85,7 @@ export default function Overview({ modal, data }) {
 
   return (
     <Box display="flex">
-      <Box flexGrow={1} pr="xl">
+      <Box flexGrow={1} pr="50px">
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -100,19 +101,23 @@ export default function Overview({ modal, data }) {
               >
                 Project Overview
               </Text>
-              <Text lineHeight="m" color="neutral700" mb="l">
+              <Text lineHeight="l" color="neutral600" mb="xl">
                 Previous projects are one of the most effective ways to validate
                 your skills. Advisable uses them to decide what projects to
                 invite you to.
               </Text>
-              <Stack divider="neutral100" spacing="xxl" mb="xl">
+              <Stack spacing="l" mb="xl">
                 <Box>
-                  <Label mb="xs" lineHeight="s">
+                  <Label mb="xxs" lineHeight="s">
+                    Project description
+                  </Label>
+                  <Text fontSize="s" color="neutral700" lineHeight="s" mb="s">
                     Please describe the problem they had, an overview of the
                     project, how you approached it and the results you achieved
-                  </Label>
+                  </Text>
                   <Field
                     as={Textarea}
+                    minRows={4}
                     placeholder="Project description"
                     name="description"
                     error={
@@ -193,6 +198,7 @@ export default function Overview({ modal, data }) {
                 size="l"
                 type="submit"
                 loading={formik.isSubmitting}
+                suffix={<Icon icon="arrow-right" />}
               >
                 Continue
               </RoundedButton>

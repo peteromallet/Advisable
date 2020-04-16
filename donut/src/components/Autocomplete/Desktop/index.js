@@ -100,11 +100,11 @@ const AutocompleteDesktop = (props) => {
                 )}
                 {description && (
                   <Text
-                    mb="s"
+                    mb="12px"
                     mt="-4px"
                     fontSize="xs"
                     lineHeight="xs"
-                    color="neutral700"
+                    color="neutral600"
                   >
                     {description}
                   </Text>

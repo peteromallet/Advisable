@@ -1,6 +1,6 @@
 import * as React from "react";
+import { Tooltip, Box } from "@advisable/donut";
 import Status from "./Status";
-import Tooltip from "./Tooltip";
 
 // This component is used in mulitiple places to display the validation status
 // of a previous project.
@@ -9,7 +9,6 @@ import Tooltip from "./Tooltip";
 const STATUSES = {
   Pending: {
     label: "Verification Pending",
-    icon: "refresh-cw",
     styling: "yellow",
     tooltip:
       "Advisable is working to verify with the client that this project happened.",
@@ -17,7 +16,6 @@ const STATUSES = {
   },
   "In Progress": {
     label: "Verification In Progress",
-    icon: "refresh-cw",
     styling: "yellow",
     tooltip: "Advisable is in the process of verifying this project",
     hideForClients: true,

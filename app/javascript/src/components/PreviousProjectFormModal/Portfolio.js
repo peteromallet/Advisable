@@ -1,7 +1,7 @@
 import React from "react";
 import { find } from "lodash";
 import { Link } from "react-router-dom";
-import { Box, Text, RoundedButton } from "@advisable/donut";
+import { Box, Text, Icon, RoundedButton } from "@advisable/donut";
 import generateID from "../../utilities/generateID";
 import CoverPhoto from "./CoverPhoto";
 import ImageTiles from "./ImageTiles";
@@ -89,7 +89,7 @@ export default function Portfolio({ modal, data }) {
         <Text mb="xs" fontSize="28px" color="blue900" fontWeight="semibold">
           Portfolio
         </Text>
-        <Text lineHeight="m" color="neutral700" mb="l">
+        <Text lineHeight="l" color="neutral600" mb="l">
           Previous projects are one of the most effective ways to validate your
           skills. Advisable uses them to decide what projects to invite you to.
         </Text>
@@ -106,7 +106,16 @@ export default function Portfolio({ modal, data }) {
         <Link
           to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/validation`}
         >
-          <RoundedButton size="l">Continue</RoundedButton>
+          <RoundedButton size="l" mr="xs" suffix={<Icon icon="arrow-right" />}>
+            Continue
+          </RoundedButton>
+        </Link>
+        <Link
+          to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/validation`}
+        >
+          <RoundedButton variant="subtle" size="l">
+            Skip
+          </RoundedButton>
         </Link>
       </Box>
       <Box width={320} flexShrink={0}>

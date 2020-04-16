@@ -12,6 +12,7 @@ export default gql`
             title
             draft
             excerpt
+            validationStatus
             reviews {
               id
               name

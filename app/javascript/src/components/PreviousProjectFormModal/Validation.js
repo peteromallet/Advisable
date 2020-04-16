@@ -61,11 +61,11 @@ export default function Validation({ data, modal }) {
               >
                 Validation
               </Text>
-              <Text lineHeight="m" color="neutral700" mb="l">
+              <Text lineHeight="l" color="neutral600" mb="xl">
                 We will need to confirm the details of this project with someone
                 who worked on the project.
               </Text>
-              <Stack mb="xl" spacing="xxl" divider="neutral100">
+              <Stack mb="xl" spacing="l">
                 <Box display="flex">
                   <Box pr="xs" width="50%">
                     <Label mb="xs">Contact Name</Label>

@@ -34,7 +34,7 @@ export default function ClientDetails({ onSubmit, initialValues = {} }) {
   const formInitialValues = {
     clientName: "",
     industries: [],
-    primaryIndustry: "",
+    primaryIndustry: null,
     companyType: "Individual Entrepreneur",
     confidential: false,
     ...initialValues,
@@ -62,13 +62,13 @@ export default function ClientDetails({ onSubmit, initialValues = {} }) {
               >
                 Client Details
               </Text>
-              <Text lineHeight="m" color="neutral700" mb="l">
+              <Text mb="xl" lineHeight="l" color="neutral600">
                 Previous projects are one of the most effective ways to validate
                 your skills. Advisable uses them to decide what projects to
                 invite you to.
               </Text>
 
-              <Stack divider="neutral100" spacing="xxl" mb="xl">
+              <Stack spacing="l" mb="xl">
                 <Box display="flex">
                   <Box pr="xs" width="50%">
                     <Label mb="xs">Company Name</Label>
@@ -114,29 +114,14 @@ export default function ClientDetails({ onSubmit, initialValues = {} }) {
                     options={data.industries}
                     placeholder="Search for an industry"
                     value={formik.values.industries}
-                    onChange={(industries) =>
-                      formik.setFieldValue("industries", industries)
-                    }
-                    primary={formik.values.primaryIndustry}
-                    onPrimaryChange={(industry) =>
-                      formik.setFieldValue("primaryIndustry", industry)
-                    }
-                    description={
-                      formik.values.primaryIndustry && (
-                        <>
-                          You have selected{" "}
-                          <Text
-                            as="span"
-                            fontSize="xs"
-                            color="neutral800"
-                            fontWeight="medium"
-                          >
-                            {formik.values.primaryIndustry}
-                          </Text>{" "}
-                          as the primary industry.
-                        </>
-                      )
-                    }
+                    onChange={(industries) => {
+                      const { primaryIndustry } = formik.values;
+                      const selectedIndusties = formik.values.industries;
+                      if (selectedIndusties.indexOf(primaryIndustry) === -1) {
+                        formik.setFieldValue("primaryIndustry", industries[0]);
+                      }
+                      formik.setFieldValue("industries", industries);
+                    }}
                   />
                   <ErrorMessage
                     mt="xs"
@@ -144,6 +129,18 @@ export default function ClientDetails({ onSubmit, initialValues = {} }) {
                     component={InputError}
                   />
                 </Box>
+                {formik.values.industries.length > 1 && (
+                  <Box>
+                    <Label mb="xs">
+                      Which of these is the primary industry for this company?
+                    </Label>
+                    <Field name="primaryIndustry" as={Select}>
+                      {formik.values.industries.map((industry) => (
+                        <option key={industry}>{industry}</option>
+                      ))}
+                    </Field>
+                  </Box>
+                )}
                 <Box>
                   <Field as={Checkbox} type="checkbox" name="confidential">
                     <Text color="blue900" fontWeight="medium" mb="2px">

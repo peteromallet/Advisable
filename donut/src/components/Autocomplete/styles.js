@@ -69,7 +69,7 @@ export const MenuItem = styled.div`
   letter-spacing: -0.015em;
   color: ${theme.colors.neutral[8]};
 
-  ${props => props.highlighted && highlightedItemStyles};
+  ${(props) => props.highlighted && highlightedItemStyles};
 
   &:first-child {
     border-top-left-radius: 8px;
@@ -129,7 +129,7 @@ export const Tags = styled.div`
 export const TagName = styled.div`
   padding: 0 8px;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -159,7 +159,7 @@ export const Primary = styled.button`
     color: ${theme.colors.neutral[4]};
   }
 
-  ${props =>
+  ${(props) =>
     props.isPrimary &&
     css`
       color: ${theme.colors.blue[5]} !important;
@@ -167,25 +167,25 @@ export const Primary = styled.button`
 `;
 
 export const RemoveTag = styled.button`
-  opacity: 0.6;
   padding: 0;
   width: 36px;
   height: 100%;
   border: none;
   outline: none;
   appearance: none;
+  padding-right: 2px;
   justify-content: center;
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  color: ${theme.colors.blue[7]};
+  color: ${rgba(theme.colors.blue900, 0.4)};
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
-  background: ${rgba(theme.colors.blue[1], 0.6)};
+  background: ${rgba(theme.colors.blue100, 0.8)};
   transition: opacity 150ms;
 
   &:hover {
-    opacity: 1;
+    color: ${theme.colors.blue900};
   }
 `;
 
@@ -196,11 +196,11 @@ export const Tag = styled.div`
   align-items: center;
   border-radius: 16px;
   display: inline-flex;
-  color: ${theme.colors.blue[7]};
-  background: ${theme.colors.blue[0]};
+  color: ${theme.colors.blue800};
+  background: ${theme.colors.blue50};
   transition: background-color 300ms;
-  ${props => props.onClick && StyledClickableTag}
-  ${props => props.isPrimary && StyledPrimaryTag}
+  ${(props) => props.onClick && StyledClickableTag}
+  ${(props) => props.isPrimary && StyledPrimaryTag}
 `;
 
 const StyledClickableTag = css`
@@ -213,7 +213,7 @@ const StyledClickableTag = css`
 
 const StyledPrimaryTag = css`
   color: white;
-  background: ${theme.colors.blue[7]};
+  background: ${theme.colors.blue900};
 
   ${RemoveTag} {
     color: white;

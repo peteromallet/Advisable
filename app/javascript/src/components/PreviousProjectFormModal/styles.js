@@ -39,6 +39,7 @@ export const StyledSidebar = styled.div`
   position: fixed;
   height: calc(100vh - 60px);
   background: ${theme.colors.neutral50};
+  border-right: 1px solid ${theme.colors.neutral100};
 `;
 
 export const StyledPreviousProjectFormHeader = styled.div`

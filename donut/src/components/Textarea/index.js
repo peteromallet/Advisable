@@ -4,14 +4,14 @@ import { StyledTextarea } from "./styles";
 const LINE_HEIGHT = 18;
 const PADDING = 24;
 
-const Textarea = React.forwardRef((props, ref, minRows = 2, maxRows = 5) => {
+const Textarea = React.forwardRef((props, ref) => {
   const textarea = ref || React.useRef(null);
 
   function calculateRows() {
-    textarea.current.rows = minRows;
+    textarea.current.rows = props.minRows;
     const baseHeight = textarea.current.scrollHeight - PADDING;
     const currentRows = Math.floor(baseHeight / LINE_HEIGHT);
-    const rows = currentRows >= maxRows ? maxRows : currentRows;
+    const rows = currentRows >= props.maxRows ? props.maxRows : currentRows;
     textarea.current.rows = rows;
   }
 
@@ -19,5 +19,10 @@ const Textarea = React.forwardRef((props, ref, minRows = 2, maxRows = 5) => {
 
   return <StyledTextarea as="textarea" ref={textarea} {...props} />;
 });
+
+Textarea.defaultProps = {
+  minRows: 2,
+  maxrows: 5,
+};
 
 export default Textarea;
