@@ -3,7 +3,7 @@ import ClientDetails from "./ClientDetails";
 import { useHistory } from "react-router-dom";
 import { useUpdatePreviousProject } from "./queries";
 
-export default function UpdateClientDetails({ modal, data }) {
+export default function UpdateClientDetails({ modal, data, industries }) {
   const history = useHistory();
   const [updatePreviousProject] = useUpdatePreviousProject();
 
@@ -24,6 +24,7 @@ export default function UpdateClientDetails({ modal, data }) {
 
   return (
     <ClientDetails
+      industries={industries}
       onSubmit={handleSubmit}
       initialValues={{
         clientName: data.previousProject.clientName,

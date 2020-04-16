@@ -1,7 +1,5 @@
 import React from "react";
-import gql from "graphql-tag";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useQuery } from "@apollo/react-hooks";
 import {
   Box,
   Text,
@@ -18,19 +16,11 @@ import {
 import { clientDetailsValidationSchema } from "./validationSchemas";
 import Helper from "./Helper";
 
-const INDUSTRIES = gql`
-  {
-    industries {
-      id
-      label: name
-      value: name
-    }
-  }
-`;
-
-export default function ClientDetails({ onSubmit, initialValues = {} }) {
-  const { data, loading } = useQuery(INDUSTRIES);
-
+export default function ClientDetails({
+  onSubmit,
+  industries,
+  initialValues = {},
+}) {
   const formInitialValues = {
     clientName: "",
     industries: [],
@@ -39,10 +29,6 @@ export default function ClientDetails({ onSubmit, initialValues = {} }) {
     confidential: false,
     ...initialValues,
   };
-
-  if (loading) {
-    return <>loading...</>;
-  }
 
   return (
     <Box display="flex">
@@ -111,7 +97,7 @@ export default function ClientDetails({ onSubmit, initialValues = {} }) {
                     max={3}
                     multiple
                     name="industries"
-                    options={data.industries}
+                    options={industries}
                     placeholder="Search for an industry"
                     value={formik.values.industries}
                     onChange={(industries) => {

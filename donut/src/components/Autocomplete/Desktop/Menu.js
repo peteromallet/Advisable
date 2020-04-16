@@ -25,7 +25,7 @@ const Menu = ({
   const { getItemProps, highlightedIndex, selected } = downshift;
 
   let items = filterItems(downshift, options);
-  let listHeight = items.length < 7 ? items.length * 36 : 288;
+  let listHeight = items.length < 7 ? items.length * 36 : 224;
 
   return createPortal(
     <StyledMenuContainer
@@ -33,37 +33,32 @@ const Menu = ({
       style={{ ...popper.style, width }}
       data-placement={popper.placement}
     >
-      <motion.div
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <MenuStyles {...downshift.getMenuProps()}>
-          {isMax ? (
-            <Padding size="m">
-              <Text color="neutral.N5" size="xs" css="text-align: center;">
-                You can not add more than {max} items
-              </Text>
-            </Padding>
-          ) : (
-            <List
-              width={width}
-              ref={listRef}
-              itemCount={items.length}
-              height={listHeight}
-              itemSize={36}
-              itemData={{
-                items,
-                getItemProps,
-                highlightedIndex,
-                selected,
-                formatLabel,
-              }}
-            >
-              {MenuItem}
-            </List>
-          )}
-        </MenuStyles>
-      </motion.div>
+      <MenuStyles {...downshift.getMenuProps()}>
+        {isMax ? (
+          <Padding size="m">
+            <Text color="neutral.N5" size="xs" css="text-align: center;">
+              You can not add more than {max} items
+            </Text>
+          </Padding>
+        ) : (
+          <List
+            width={width}
+            ref={listRef}
+            itemCount={items.length}
+            height={listHeight}
+            itemSize={36}
+            itemData={{
+              items,
+              getItemProps,
+              highlightedIndex,
+              selected,
+              formatLabel,
+            }}
+          >
+            {MenuItem}
+          </List>
+        )}
+      </MenuStyles>
     </StyledMenuContainer>,
     portalRoot,
   );

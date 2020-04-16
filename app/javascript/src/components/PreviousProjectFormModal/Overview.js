@@ -1,8 +1,6 @@
 import React from "react";
-import gql from "graphql-tag";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useQuery } from "@apollo/react-hooks";
 import {
   Box,
   Text,
@@ -20,16 +18,6 @@ import Helper from "./Helper";
 import { useUpdatePreviousProject } from "./queries";
 import { projectOverviewValidationSchema } from "./validationSchemas";
 
-const SKILLS = gql`
-  {
-    skills(local: true) {
-      id
-      label: name
-      value: name
-    }
-  }
-`;
-
 const GOALS = [
   "Generate Leads",
   "Launch product",
@@ -41,9 +29,8 @@ const GOALS = [
   "Other",
 ];
 
-export default function Overview({ modal, data }) {
+export default function Overview({ modal, data, skills }) {
   const history = useHistory();
-  const skillsQuery = useQuery(SKILLS);
   const [updatePreviousProject] = useUpdatePreviousProject();
   const [customGoal, setCustomGoal] = React.useState(
     GOALS.indexOf(data.previousProject.goal || GOALS[0]) === -1,
@@ -80,8 +67,6 @@ export default function Overview({ modal, data }) {
       formik.handleChange(e);
     }
   };
-
-  if (skillsQuery.loading) return <div>Loading...</div>;
 
   return (
     <Box display="flex">
@@ -138,7 +123,7 @@ export default function Overview({ modal, data }) {
                     max={5}
                     multiple
                     name="skills"
-                    options={skillsQuery.data.skills}
+                    options={skills}
                     placeholder="Search for an industry"
                     value={formik.values.skills}
                     onChange={(skills) =>

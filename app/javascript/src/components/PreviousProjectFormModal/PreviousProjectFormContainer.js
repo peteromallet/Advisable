@@ -1,4 +1,5 @@
 import React from "react";
+import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import {
   Switch,
@@ -7,7 +8,7 @@ import {
   useLocation,
   useRouteMatch,
 } from "react-router-dom";
-import { Box, Container } from "@advisable/donut";
+import { Container, Text } from "@advisable/donut";
 import NavigationMenu from "./NavigationMenu";
 import { StyledDialogContent, StyledSidebar } from "./styles";
 import { GET_PREVIOUS_PROJECT } from "./queries";
@@ -19,11 +20,27 @@ import UpdateClientDetails from "./UpdateClientDetails";
 import CreatePreviousProject from "./CreatePreviousProject";
 import ErrorBoundary from "./ErrorBoundary";
 import NotFound from "./NotFound";
+import Loading from "./Loading";
 
 function RedirectToFirstStep() {
   const location = useLocation();
   return <Redirect to={`${location.pathname}/client`} />;
 }
+
+const SELECT_DATA = gql`
+  {
+    industries {
+      id
+      label: name
+      value: name
+    }
+    skills {
+      id
+      label: name
+      value: name
+    }
+  }
+`;
 
 export default function PreviousProjectFormContainer({
   modal,
@@ -33,6 +50,7 @@ export default function PreviousProjectFormContainer({
   const route = useRouteMatch("*previous_projects/:id");
   const id = route?.params.id;
   const hasProjectId = id && id !== "new";
+  const selectDataQuery = useQuery(SELECT_DATA);
   const { data, loading, error } = useQuery(GET_PREVIOUS_PROJECT, {
     skip: !hasProjectId,
     variables: {
@@ -40,11 +58,15 @@ export default function PreviousProjectFormContainer({
     },
   });
 
-  if (hasProjectId && loading) return <div>loading...</div>;
+  if (selectDataQuery.loading || loading) return <Loading modal={modal} />;
 
   return (
     <>
-      <PreviousProjectFormHeader modal={modal} data={data} />
+      <PreviousProjectFormHeader modal={modal} data={data}>
+        <Text color="blue900">
+          {data ? data.previousProject.title : "Add a previous project"}
+        </Text>
+      </PreviousProjectFormHeader>
       {error && <NotFound id={route?.params.id} />}
       {!error && (
         <ErrorBoundary>
@@ -64,13 +86,22 @@ export default function PreviousProjectFormContainer({
                   <CreatePreviousProject
                     specialistId={specialistId}
                     onCreate={onCreate}
+                    industries={selectDataQuery.data.industries}
                   />
                 </Route>
                 <Route path="*previous_projects/:id/client">
-                  <UpdateClientDetails modal={modal} data={data} />
+                  <UpdateClientDetails
+                    modal={modal}
+                    data={data}
+                    industries={selectDataQuery.data.industries}
+                  />
                 </Route>
                 <Route path="*previous_projects/:id/overview">
-                  <Overview modal={modal} data={data} />
+                  <Overview
+                    modal={modal}
+                    data={data}
+                    skills={selectDataQuery.data.skills}
+                  />
                 </Route>
                 <Route path="*previous_projects/:id/portfolio">
                   <Portfolio modal={modal} data={data} />
