@@ -4,10 +4,10 @@ import { Box, Text, Icon, Circle } from "@advisable/donut";
 function HelperText({ heading, children, ...props }) {
   return (
     <Box {...props}>
-      <Text color="blue900" mb="xxs" fontWeight="medium">
+      <Text color="blue900" mb="xs" fontSize="l" fontWeight="medium">
         {heading}
       </Text>
-      <Text color="neutral800" mb="xs" fontSize="xs" lineHeight="s">
+      <Text color="neutral800" mb="xs" fontSize="s" lineHeight="s">
         {children}
       </Text>
     </Box>

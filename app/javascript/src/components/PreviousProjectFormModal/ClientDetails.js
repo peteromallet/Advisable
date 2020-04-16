@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/react-hooks";
 import {
   Box,
   Text,
+  Icon,
   Input,
   Label,
   Stack,
@@ -48,7 +49,7 @@ export default function ClientDetails({ onSubmit, initialValues = {} }) {
 
   return (
     <Box display="flex">
-      <Box flexGrow={1} pr="xl">
+      <Box flexGrow={1} pr="50px">
         <Formik
           onSubmit={onSubmit}
           initialValues={formInitialValues}
@@ -153,6 +154,7 @@ export default function ClientDetails({ onSubmit, initialValues = {} }) {
                 size="l"
                 type="submit"
                 loading={formik.isSubmitting}
+                suffix={<Icon icon="arrow-right" />}
               >
                 Continue
               </RoundedButton>

@@ -42,11 +42,17 @@ export default function PreviousProjectFormContainer({ modal, specialistId }) {
     <>
       <PreviousProjectFormHeader modal={modal} />
       <StyledDialogContent>
-        <Container display="flex" py="l">
-          <Box width={200} flexShrink={0}>
-            <NavigationMenu />
+        <Box display="flex">
+          <Box
+            width={250}
+            padding="s"
+            flexShrink={0}
+            bg="neutral50"
+            height="calc(100vh - 60px)"
+          >
+            <NavigationMenu previousProject={data?.previousProject} />
           </Box>
-          <Box pl="l" flexGrow={1}>
+          <Container maxWidth="1200px" py="l">
             <Switch>
               <Route path="*previous_projects/new">
                 <CreatePreviousProject specialistId={specialistId} />
@@ -67,8 +73,8 @@ export default function PreviousProjectFormContainer({ modal, specialistId }) {
                 <Validation modal={modal} data={data} />
               </Route>
             </Switch>
-          </Box>
-        </Container>
+          </Container>
+        </Box>
       </StyledDialogContent>
     </>
   );

@@ -1,9 +1,7 @@
 import { rgba } from "polished";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
 import theme from "../../theme";
-
-export const StyledNavigationMenuItem = styled.div``;
 
 export const StyledNavigationMenuItemPrefix = styled.div`
   width: 40px;
@@ -30,23 +28,78 @@ export const StyledNavigationMenuItemNumber = styled.div`
 export const StyledNavigationMenuLink = styled(NavLink)`
   height: 40px;
   display: flex;
+  color: inherit;
   border-radius: 20px;
   align-items: center;
+`;
+
+const StyledNavigationMenuItem_Comlete = css`
+  ${StyledNavigationMenuItemNumber} {
+    color: white;
+    background: ${theme.colors.cyan500};
+    border-color: ${theme.colors.cyan500};
+  }
+
+  &::after {
+    background: ${theme.colors.cyan100};
+  }
+`;
+
+const StyledNavigationMenuItem_Disabled = css`
+  color: ${theme.colors.neutral200};
+
+  ${StyledNavigationMenuLink} {
+    cursor: default;
+  }
+`;
+
+const StyledNavigationMenuItem_Enabled = css`
   color: ${theme.colors.neutral500};
-  transition: background 150ms;
 
   &:hover {
-    color: ${theme.colors.blue900};
-    background: ${rgba(theme.colors.neutral100, 0.4)};
-  }
-
-  &.active {
-    color: ${theme.colors.blue900};
-
-    ${StyledNavigationMenuItemNumber} {
-      color: white;
-      background: ${theme.colors.cyan500};
-      border-color: ${theme.colors.cyan500};
+    ${StyledNavigationMenuLink} {
+      color: ${theme.colors.neutral700};
+      background: ${rgba(theme.colors.blue50, 0.75)};
     }
   }
+
+  ${StyledNavigationMenuLink} {
+    &.active {
+      color: ${theme.colors.blue900};
+      background: ${theme.colors.blue50};
+
+      ${StyledNavigationMenuItemNumber} {
+        color: white;
+        background: ${theme.colors.cyan500};
+        border-color: ${theme.colors.cyan500};
+      }
+    }
+  }
+`;
+
+export const StyledNavigationMenuItem = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  position: relative;
+  color: ${theme.colors.neutral500};
+
+  &::after {
+    content: "";
+    width: 2px;
+    height: 20px;
+    position: absolute;
+    top: 32px;
+    left: 19px;
+    z-index: -1;
+    background: ${theme.colors.neutral50};
+  }
+
+  &:last-child&::after {
+    display: none;
+  }
+
+  ${(props) => props.isDisabled && StyledNavigationMenuItem_Disabled};
+  ${(props) => !props.isDisabled && StyledNavigationMenuItem_Enabled};
+  ${(props) => props.isComplete && StyledNavigationMenuItem_Comlete};
 `;

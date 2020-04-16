@@ -43,7 +43,7 @@ export default function Overview({ modal, data }) {
   const skillsQuery = useQuery(SKILLS);
   const [updatePreviousProject] = useUpdatePreviousProject();
   const [customGoal, setCustomGoal] = React.useState(
-    GOALS.indexOf(data.previousProject.goal) === -1,
+    GOALS.indexOf(data.previousProject.goal || GOALS[0]) === -1,
   );
 
   const handleSubmit = async (values) => {
@@ -62,7 +62,7 @@ export default function Overview({ modal, data }) {
 
   const initialValues = {
     description: data.previousProject.description || "",
-    goal: data.previousProject.goal || "",
+    goal: data.previousProject.goal || GOALS[0],
     skills: data.previousProject.skills.map((s) => s.name),
     primarySkill: data.previousProject.primarySkill?.name || "",
   };
