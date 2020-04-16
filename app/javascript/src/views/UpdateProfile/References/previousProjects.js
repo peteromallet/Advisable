@@ -6,7 +6,7 @@ export default gql`
       ... on Specialist {
         id
         airtableId
-        previousProjects(includeValidationFailed: true) {
+        previousProjects(includeValidationFailed: true, includeDrafts: true) {
           nodes {
             id
             title

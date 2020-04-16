@@ -30,7 +30,6 @@ class Mutations::CreatePreviousProject < Mutations::BaseMutation
     end
 
     project.save
-    project.sync_to_airtable
 
     { previous_project: project }
   end

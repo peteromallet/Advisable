@@ -25,7 +25,11 @@ function RedirectToFirstStep() {
   return <Redirect to={`${location.pathname}/client`} />;
 }
 
-export default function PreviousProjectFormContainer({ modal, specialistId }) {
+export default function PreviousProjectFormContainer({
+  modal,
+  specialistId,
+  onCreate,
+}) {
   const route = useRouteMatch("*previous_projects/:id");
   const id = route?.params.id;
   const hasProjectId = id && id !== "new";
@@ -57,7 +61,10 @@ export default function PreviousProjectFormContainer({ modal, specialistId }) {
                   <RedirectToFirstStep />
                 </Route>
                 <Route path="*previous_projects/new/client">
-                  <CreatePreviousProject specialistId={specialistId} />
+                  <CreatePreviousProject
+                    specialistId={specialistId}
+                    onCreate={onCreate}
+                  />
                 </Route>
                 <Route path="*previous_projects/:id/client">
                   <UpdateClientDetails modal={modal} data={data} />

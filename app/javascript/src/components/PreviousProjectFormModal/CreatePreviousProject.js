@@ -5,7 +5,7 @@ import { CREATE_PREVIOUS_PROJECT, GET_PREVIOUS_PROJECT } from "./queries";
 import { PATH_REGEX } from "./usePreviousProjectModal";
 import ClientDetails from "./ClientDetails";
 
-export default function CreatePreviousProject({ specialistId }) {
+export default function CreatePreviousProject({ specialistId, onCreate }) {
   const history = useHistory();
   const location = useLocation();
   const [createPreviousProject] = useMutation(CREATE_PREVIOUS_PROJECT, {
@@ -32,6 +32,7 @@ export default function CreatePreviousProject({ specialistId }) {
     });
 
     const project = response.data?.createPreviousProject.previousProject;
+    onCreate(project);
     history.replace(`${pathPrefix}/previous_projects/${project.id}/client`);
     history.push(`${pathPrefix}/previous_projects/${project.id}/overview`);
   };

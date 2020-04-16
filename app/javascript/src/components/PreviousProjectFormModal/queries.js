@@ -5,6 +5,8 @@ const previousProjectFields = gql`
   fragment PreviousProjectFields on PreviousProject {
     id
     draft
+    title
+    excerpt
     clientName
     companyType
     confidential
@@ -33,6 +35,9 @@ const previousProjectFields = gql`
     skills {
       id
       name
+    }
+    reviews {
+      id
     }
   }
 `;
