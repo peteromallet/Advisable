@@ -3,7 +3,7 @@ import { Box, Icon, Text } from "@advisable/donut";
 
 class PreviousProjectFormErrorBoundary extends React.Component {
   state = {
-    hasError: true,
+    hasError: false,
   };
 
   componentDidCatch(error, info) {

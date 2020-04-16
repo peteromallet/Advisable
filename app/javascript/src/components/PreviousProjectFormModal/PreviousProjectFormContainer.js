@@ -18,6 +18,7 @@ import Validation from "./Validation";
 import UpdateClientDetails from "./UpdateClientDetails";
 import CreatePreviousProject from "./CreatePreviousProject";
 import ErrorBoundary from "./ErrorBoundary";
+import NotFound from "./NotFound";
 
 function RedirectToFirstStep() {
   const location = useLocation();
@@ -37,43 +38,44 @@ export default function PreviousProjectFormContainer({ modal, specialistId }) {
 
   if (hasProjectId && loading) return <div>loading...</div>;
 
-  if (hasProjectId && error) return <div>Failed to load project</div>;
-
   return (
     <>
       <PreviousProjectFormHeader modal={modal} />
-      <ErrorBoundary>
-        <StyledDialogContent>
-          <StyledSidebar>
-            <NavigationMenu previousProject={data?.previousProject} />
-          </StyledSidebar>
-          <Container maxWidth="1200px" py="l">
-            <Switch>
-              <Route path="*previous_projects/:id" exact>
-                <RedirectToFirstStep />
-              </Route>
-              <Route path="*previous_projects/new" exact>
-                <RedirectToFirstStep />
-              </Route>
-              <Route path="*previous_projects/new/client">
-                <CreatePreviousProject specialistId={specialistId} />
-              </Route>
-              <Route path="*previous_projects/:id/client">
-                <UpdateClientDetails modal={modal} data={data} />
-              </Route>
-              <Route path="*previous_projects/:id/overview">
-                <Overview modal={modal} data={data} />
-              </Route>
-              <Route path="*previous_projects/:id/portfolio">
-                <Portfolio modal={modal} data={data} />
-              </Route>
-              <Route path="*previous_projects/:id/validation">
-                <Validation modal={modal} data={data} />
-              </Route>
-            </Switch>
-          </Container>
-        </StyledDialogContent>
-      </ErrorBoundary>
+      {error && <NotFound id={route?.params.id} />}
+      {!error && (
+        <ErrorBoundary>
+          <StyledDialogContent>
+            <StyledSidebar>
+              <NavigationMenu previousProject={data?.previousProject} />
+            </StyledSidebar>
+            <Container maxWidth="1200px" py="l">
+              <Switch>
+                <Route path="*previous_projects/:id" exact>
+                  <RedirectToFirstStep />
+                </Route>
+                <Route path="*previous_projects/new" exact>
+                  <RedirectToFirstStep />
+                </Route>
+                <Route path="*previous_projects/new/client">
+                  <CreatePreviousProject specialistId={specialistId} />
+                </Route>
+                <Route path="*previous_projects/:id/client">
+                  <UpdateClientDetails modal={modal} data={data} />
+                </Route>
+                <Route path="*previous_projects/:id/overview">
+                  <Overview modal={modal} data={data} />
+                </Route>
+                <Route path="*previous_projects/:id/portfolio">
+                  <Portfolio modal={modal} data={data} />
+                </Route>
+                <Route path="*previous_projects/:id/validation">
+                  <Validation modal={modal} data={data} />
+                </Route>
+              </Switch>
+            </Container>
+          </StyledDialogContent>
+        </ErrorBoundary>
+      )}
     </>
   );
 }
