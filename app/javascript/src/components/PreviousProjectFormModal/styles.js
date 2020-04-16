@@ -22,13 +22,23 @@ export const StyledDialog = styled.div`
   z-index: 20;
   position: fixed;
   background: white;
-  padding-top: 60px;
   animation: ${slideUp} 500ms forwards;
 `;
 
 export const StyledDialogContent = styled.div`
   height: 100%;
+  padding-top: 60px;
   overflow-y: scroll;
+  padding-left: 250px;
+`;
+
+export const StyledSidebar = styled.div`
+  left: 0;
+  width: 250px;
+  padding: 20px;
+  position: fixed;
+  height: calc(100vh - 60px);
+  background: ${theme.colors.neutral50};
 `;
 
 export const StyledPreviousProjectFormHeader = styled.div`
@@ -38,9 +48,11 @@ export const StyledPreviousProjectFormHeader = styled.div`
   height: 60px;
   display: flex;
   padding: 0 20px;
+  background: white;
   position: absolute;
   align-items: center;
   justify-content: space-between;
+  z-index: 10;
   box-shadow: 0 2px 6px ${rgba(theme.colors.neutral800, 0.2)};
 `;
 

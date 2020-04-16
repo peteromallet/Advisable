@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import { Box, Container } from "@advisable/donut";
 import NavigationMenu from "./NavigationMenu";
-import { StyledDialogContent } from "./styles";
+import { StyledDialogContent, StyledSidebar } from "./styles";
 import { GET_PREVIOUS_PROJECT } from "./queries";
 import PreviousProjectFormHeader from "./PreviousProjectFormHeader";
 import Overview from "./Overview";
@@ -17,6 +17,7 @@ import Portfolio from "./Portfolio";
 import Validation from "./Validation";
 import UpdateClientDetails from "./UpdateClientDetails";
 import CreatePreviousProject from "./CreatePreviousProject";
+import ErrorBoundary from "./ErrorBoundary";
 
 function RedirectToFirstStep() {
   const location = useLocation();
@@ -41,24 +42,21 @@ export default function PreviousProjectFormContainer({ modal, specialistId }) {
   return (
     <>
       <PreviousProjectFormHeader modal={modal} />
-      <StyledDialogContent>
-        <Box display="flex">
-          <Box
-            width={250}
-            padding="s"
-            flexShrink={0}
-            bg="neutral50"
-            height="calc(100vh - 60px)"
-          >
+      <ErrorBoundary>
+        <StyledDialogContent>
+          <StyledSidebar>
             <NavigationMenu previousProject={data?.previousProject} />
-          </Box>
+          </StyledSidebar>
           <Container maxWidth="1200px" py="l">
             <Switch>
-              <Route path="*previous_projects/new">
-                <CreatePreviousProject specialistId={specialistId} />
-              </Route>
               <Route path="*previous_projects/:id" exact>
                 <RedirectToFirstStep />
+              </Route>
+              <Route path="*previous_projects/new" exact>
+                <RedirectToFirstStep />
+              </Route>
+              <Route path="*previous_projects/new/client">
+                <CreatePreviousProject specialistId={specialistId} />
               </Route>
               <Route path="*previous_projects/:id/client">
                 <UpdateClientDetails modal={modal} data={data} />
@@ -74,8 +72,8 @@ export default function PreviousProjectFormContainer({ modal, specialistId }) {
               </Route>
             </Switch>
           </Container>
-        </Box>
-      </StyledDialogContent>
+        </StyledDialogContent>
+      </ErrorBoundary>
     </>
   );
 }
