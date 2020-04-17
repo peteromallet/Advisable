@@ -27,8 +27,7 @@ describe Mutations::AcceptConsultation do
   it "Sets the consultation status to 'Accepted By Specialist'" do
     expect { AdvisableSchema.execute(query) }.to change {
       consultation.reload.status
-    }.from('Request Started')
-      .to('Accepted By Specialist')
+    }.from('Request Started').to('Accepted By Specialist')
   end
 
   it 'creates a project' do
@@ -43,8 +42,7 @@ describe Mutations::AcceptConsultation do
       primary_skill: consultation.skill.name,
       owner: ENV['CONSULTATION_PROJECT_OWNER'],
       name: instance_of(String)
-    )
-      .and_return(project)
+    ).and_return(project)
 
     AdvisableSchema.execute(query)
   end
@@ -55,10 +53,9 @@ describe Mutations::AcceptConsultation do
     expect(Application).to receive(:create).with(
       project: instance_of(Project),
       status: 'Applied',
-      score: 80,
+      score: 90,
       specialist: consultation.specialist
-    )
-      .and_return(application)
+    ).and_return(application)
 
     AdvisableSchema.execute(query)
   end
