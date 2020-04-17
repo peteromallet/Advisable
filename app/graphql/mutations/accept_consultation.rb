@@ -49,7 +49,7 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
   def create_application(project, specialist)
     application =
       Application.create(
-        project: project, status: 'Applied', score: 80, specialist: specialist
+        project: project, status: 'Applied', score: 90, specialist: specialist
       )
     application.sync_to_airtable({ 'Source' => 'consultation-request' })
     application
