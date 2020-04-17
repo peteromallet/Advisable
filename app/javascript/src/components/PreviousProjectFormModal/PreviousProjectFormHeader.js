@@ -1,17 +1,19 @@
 import React from "react";
-import { Text, Icon } from "@advisable/donut";
+import { Icon, useBreakpoint } from "@advisable/donut";
 import {
   StyledPreviousProjectFormHeader,
   StyledClosePreviousProjectFormButton,
 } from "./styles";
 
 export default function PreviousProjectFormHeader({ modal, data, children }) {
+  const mUp = useBreakpoint("mUp");
+
   return (
     <StyledPreviousProjectFormHeader>
       {children}
       <StyledClosePreviousProjectFormButton onClick={modal.hide}>
-        Save and close
-        <Icon icon="chevron-down" ml="xxs" />
+        {mUp ? "Save and close" : "Close"}
+        <Icon icon={mUp ? "chevron-down" : "x"} ml="xxs" />
       </StyledClosePreviousProjectFormButton>
     </StyledPreviousProjectFormHeader>
   );

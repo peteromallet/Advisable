@@ -32,7 +32,7 @@ export default function ClientDetails({
 
   return (
     <Box display="flex">
-      <Box flexGrow={1} pr="50px">
+      <Box flexGrow={1}>
         <Formik
           onSubmit={onSubmit}
           initialValues={formInitialValues}
@@ -153,7 +153,12 @@ export default function ClientDetails({
           )}
         </Formik>
       </Box>
-      <Box width={320} flexShrink={0}>
+      <Box
+        ml="50px"
+        width={320}
+        flexShrink={0}
+        display={["none", "none", "none", "block"]}
+      >
         <Helper>
           <Helper.Text heading="What's this for?">
             This data will help us know which similar projects to invite you to

@@ -12,7 +12,9 @@ export const StyledInput = styled.input`
   outline: none;
   font-size: 16px;
   font-weight: 500;
+  box-shadow: none;
   border-radius: 8px;
+  appearance: none;
   padding: 8px 12px 10px 12px;
   color: ${theme.colors.neutral[9]};
   background: ${theme.colors.neutral[1]};

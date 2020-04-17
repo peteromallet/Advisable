@@ -1,7 +1,7 @@
 import React from "react";
 import { find } from "lodash";
-import { Link } from "react-router-dom";
-import { Box, Text, Icon, RoundedButton } from "@advisable/donut";
+import { Link as RouterLink } from "react-router-dom";
+import { Box, Text, Icon, RoundedButton, Link } from "@advisable/donut";
 import generateID from "../../utilities/generateID";
 import CoverPhoto from "./CoverPhoto";
 import ImageTiles from "./ImageTiles";
@@ -85,7 +85,16 @@ export default function Portfolio({ modal, data }) {
 
   return (
     <Box display="flex">
-      <Box flexGrow={1} pr="xl">
+      <Box flexGrow={1}>
+        <Link
+          mb="s"
+          fontSize="l"
+          fontWeight="medium"
+          to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/overview`}
+        >
+          <Icon icon="arrow-left" mr="xxs" width={20} />
+          Back
+        </Link>
         <Text mb="xs" fontSize="28px" color="blue900" fontWeight="semibold">
           Portfolio
         </Text>
@@ -103,22 +112,27 @@ export default function Portfolio({ modal, data }) {
             />
           )}
         </Box>
-        <Link
+        <RouterLink
           to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/validation`}
         >
           <RoundedButton size="l" mr="xs" suffix={<Icon icon="arrow-right" />}>
             Continue
           </RoundedButton>
-        </Link>
-        <Link
+        </RouterLink>
+        <RouterLink
           to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/validation`}
         >
           <RoundedButton variant="subtle" size="l">
             Skip
           </RoundedButton>
-        </Link>
+        </RouterLink>
       </Box>
-      <Box width={320} flexShrink={0}>
+      <Box
+        ml="50px"
+        width={320}
+        flexShrink={0}
+        display={["none", "none", "none", "block"]}
+      >
         <Helper>
           <Helper.Text heading="What's this for?" mb="l">
             The Advisable team will review and score the information you upload

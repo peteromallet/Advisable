@@ -1,7 +1,7 @@
 import React from "react";
 import Loading from "../../components/Loading";
 import { Box, Skeleton, Container } from "@advisable/donut";
-import { StyledDialogContent, StyledSidebar } from "./styles";
+import { StyledSidebar } from "./styles";
 import PreviousProjectFormHeader from "./PreviousProjectFormHeader";
 
 function Login({ modal }) {
@@ -10,8 +10,8 @@ function Login({ modal }) {
       <PreviousProjectFormHeader modal={modal}>
         <Skeleton height="20px" width="50%" maxWidth="250px" />
       </PreviousProjectFormHeader>
-      <StyledDialogContent>
-        <StyledSidebar>
+      <Box paddingLeft={{ _: 0, m: "250px" }}>
+        <StyledSidebar display={["none", "none", "block"]}>
           <Skeleton height="36px" mb="xs" borderRadius="20px" width="160px" />
           <Skeleton height="36px" mb="xs" borderRadius="20px" width="200px" />
           <Skeleton height="36px" mb="xs" borderRadius="20px" width="120px" />
@@ -22,7 +22,7 @@ function Login({ modal }) {
             <Loading />
           </Box>
         </Container>
-      </StyledDialogContent>
+      </Box>
     </>
   );
 }

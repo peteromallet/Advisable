@@ -7,6 +7,8 @@ import {
   Label,
   Select,
   Stack,
+  Link,
+  Icon,
   InputError,
   RoundedButton,
 } from "@advisable/donut";
@@ -45,7 +47,7 @@ export default function Validation({ data, modal }) {
 
   return (
     <Box display="flex">
-      <Box flexGrow={1} pr="xl">
+      <Box flexGrow={1}>
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -53,6 +55,15 @@ export default function Validation({ data, modal }) {
         >
           {(formik) => (
             <Form>
+              <Link
+                mb="s"
+                fontSize="l"
+                fontWeight="medium"
+                to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/portfolio`}
+              >
+                <Icon icon="arrow-left" mr="xxs" width={20} />
+                Back
+              </Link>
               <Text
                 mb="xs"
                 fontSize="28px"
@@ -66,40 +77,38 @@ export default function Validation({ data, modal }) {
                 who worked on the project.
               </Text>
               <Stack mb="xl" spacing="l">
-                <Box display="flex">
-                  <Box pr="xs" width="50%">
-                    <Label mb="xs">Contact Name</Label>
-                    <Field
-                      as={Input}
-                      name="contactName"
-                      placeholder="Contact Name"
-                      error={
-                        formik.touched.contactName && formik.errors.contactName
-                      }
-                    />
-                    <ErrorMessage
-                      mt="xs"
-                      name="contactName"
-                      component={InputError}
-                    />
-                  </Box>
-                  <Box pl="xs" width="50%">
-                    <Label mb="xs">Contact Job Title</Label>
-                    <Field
-                      as={Input}
-                      name="contactJobTitle"
-                      placeholder="Contact Job Title"
-                      error={
-                        formik.touched.contactJobTitle &&
-                        formik.errors.contactJobTitle
-                      }
-                    />
-                    <ErrorMessage
-                      mt="xs"
-                      name="contactJobTitle"
-                      component={InputError}
-                    />
-                  </Box>
+                <Box>
+                  <Label mb="xs">Contact Name</Label>
+                  <Field
+                    as={Input}
+                    name="contactName"
+                    placeholder="Contact Name"
+                    error={
+                      formik.touched.contactName && formik.errors.contactName
+                    }
+                  />
+                  <ErrorMessage
+                    mt="xs"
+                    name="contactName"
+                    component={InputError}
+                  />
+                </Box>
+                <Box>
+                  <Label mb="xs">Contact Job Title</Label>
+                  <Field
+                    as={Input}
+                    name="contactJobTitle"
+                    placeholder="Contact Job Title"
+                    error={
+                      formik.touched.contactJobTitle &&
+                      formik.errors.contactJobTitle
+                    }
+                  />
+                  <ErrorMessage
+                    mt="xs"
+                    name="contactJobTitle"
+                    component={InputError}
+                  />
                 </Box>
                 <Box>
                   <Label mb="xs">
@@ -124,7 +133,12 @@ export default function Validation({ data, modal }) {
           )}
         </Formik>
       </Box>
-      <Box width={320} flexShrink={0}>
+      <Box
+        ml="50px"
+        width={320}
+        flexShrink={0}
+        display={["none", "none", "none", "block"]}
+      >
         <Helper>
           <Helper.Text heading="What's this for?" mb="l">
             With your permission, Advisable will reach out to this contact to

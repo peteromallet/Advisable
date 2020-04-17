@@ -4,11 +4,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
   Box,
   Text,
-  Select,
   Label,
   Input,
   Stack,
   Icon,
+  Link,
+  Select,
   InputError,
   Autocomplete,
   RoundedButton,
@@ -70,7 +71,7 @@ export default function Overview({ modal, data, skills }) {
 
   return (
     <Box display="flex">
-      <Box flexGrow={1} pr="50px">
+      <Box flexGrow={1}>
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -78,6 +79,15 @@ export default function Overview({ modal, data, skills }) {
         >
           {(formik) => (
             <Form>
+              <Link
+                mb="s"
+                fontSize="l"
+                fontWeight="medium"
+                to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/client`}
+              >
+                <Icon icon="arrow-left" mr="xxs" width={20} />
+                Back
+              </Link>
               <Text
                 mb="xs"
                 fontSize="28px"
@@ -126,32 +136,29 @@ export default function Overview({ modal, data, skills }) {
                     options={skills}
                     placeholder="Search for an industry"
                     value={formik.values.skills}
-                    onChange={(skills) =>
-                      formik.setFieldValue("skills", skills)
-                    }
-                    primary={formik.values.primarySkill}
-                    onPrimaryChange={(skill) =>
-                      formik.setFieldValue("primarySkill", skill)
-                    }
-                    description={
-                      formik.values.primarySkill && (
-                        <>
-                          You have selected{" "}
-                          <Text
-                            as="span"
-                            fontSize="xs"
-                            color="neutral800"
-                            fontWeight="medium"
-                          >
-                            {formik.values.primarySkill}
-                          </Text>{" "}
-                          as the primary skill.
-                        </>
-                      )
-                    }
+                    onChange={(skills) => {
+                      const { primarySkill } = formik.values;
+                      const selected = formik.values.skills;
+                      if (selected.indexOf(primarySkill) === -1) {
+                        formik.setFieldValue("primarySkill", skills[0]);
+                      }
+                      formik.setFieldValue("skills", skills);
+                    }}
                   />
                   <ErrorMessage mt="xs" name="skills" component={InputError} />
                 </Box>
+                {formik.values.skills.length > 1 && (
+                  <Box>
+                    <Label mb="xs">
+                      Which of these was the primary skill for this project?
+                    </Label>
+                    <Field name="primarySkill" as={Select}>
+                      {formik.values.skills.map((skill) => (
+                        <option key={skill}>{skill}</option>
+                      ))}
+                    </Field>
+                  </Box>
+                )}
                 <Box>
                   <Label mb="xs">
                     What was your primary goal for this project?
@@ -191,7 +198,12 @@ export default function Overview({ modal, data, skills }) {
           )}
         </Formik>
       </Box>
-      <Box width={320} flexShrink={0}>
+      <Box
+        ml="50px"
+        width={320}
+        flexShrink={0}
+        display={["none", "none", "none", "block"]}
+      >
         <Helper>
           <Helper.Text heading="What's this for?" mb="l">
             The Advisable team will review and score the information you upload

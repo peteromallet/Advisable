@@ -8,9 +8,9 @@ import {
   useLocation,
   useRouteMatch,
 } from "react-router-dom";
-import { Container, Text } from "@advisable/donut";
+import { Box, Container, Text } from "@advisable/donut";
 import NavigationMenu from "./NavigationMenu";
-import { StyledDialogContent, StyledSidebar } from "./styles";
+import { StyledSidebar } from "./styles";
 import { GET_PREVIOUS_PROJECT } from "./queries";
 import PreviousProjectFormHeader from "./PreviousProjectFormHeader";
 import Overview from "./Overview";
@@ -34,7 +34,7 @@ const SELECT_DATA = gql`
       label: name
       value: name
     }
-    skills {
+    skills(local: true) {
       id
       label: name
       value: name
@@ -64,14 +64,17 @@ export default function PreviousProjectFormContainer({
     <>
       <PreviousProjectFormHeader modal={modal} data={data}>
         <Text color="blue900">
-          {data ? data.previousProject.title : "Add a previous project"}
+          {data ? "Edit previous project" : "Add a previous project"}
         </Text>
       </PreviousProjectFormHeader>
       {error && <NotFound id={route?.params.id} />}
       {!error && (
         <ErrorBoundary>
-          <StyledDialogContent>
-            <StyledSidebar>
+          <Box
+            paddingBottom={["40px", "0px"]}
+            paddingLeft={{ _: 0, m: "250px" }}
+          >
+            <StyledSidebar display={["none", "none", "block"]}>
               <NavigationMenu previousProject={data?.previousProject} />
             </StyledSidebar>
             <Container maxWidth="1100px" py="l">
@@ -111,7 +114,7 @@ export default function PreviousProjectFormContainer({
                 </Route>
               </Switch>
             </Container>
-          </StyledDialogContent>
+          </Box>
         </ErrorBoundary>
       )}
     </>
