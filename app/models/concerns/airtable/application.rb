@@ -163,5 +163,6 @@ class Airtable::Application < Airtable::Base
     self['Client Project'] = [application.project.try(:airtable_id)].compact
     self['Auto Apply'] = 'Yes' if application.auto_apply
     self['Auto Apply'] = 'No' if application.auto_apply == false
+    self['Score'] = application.score.try(:to_i)
   end
 end

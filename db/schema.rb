@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_15_101837) do
+ActiveRecord::Schema.define(version: 2020_04_17_062529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -277,6 +277,7 @@ ActiveRecord::Schema.define(version: 2020_04_15_101837) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.string "availability_note"
+    t.string "zoom_meeting_id"
     t.index ["airtable_id"], name: "index_interviews_on_airtable_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
     t.index ["user_id"], name: "index_interviews_on_user_id"
