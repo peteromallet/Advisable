@@ -31,6 +31,7 @@ export default function NavigationMenuItem({
   children,
   isComplete,
   isDisabled,
+  exact,
 }) {
   const handleClick = (e) => {
     if (isDisabled) {
@@ -40,7 +41,7 @@ export default function NavigationMenuItem({
 
   return (
     <StyledNavigationMenuItem isComplete={isComplete} isDisabled={isDisabled}>
-      <StyledNavigationMenuLink to={to} onClick={handleClick}>
+      <StyledNavigationMenuLink to={to} onClick={handleClick} exact={exact}>
         <StyledNavigationMenuItemPrefix>
           <StyledNavigationMenuItemNumber>
             {isComplete ? <Check /> : number}

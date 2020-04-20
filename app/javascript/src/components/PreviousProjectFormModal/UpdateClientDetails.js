@@ -8,7 +8,6 @@ export default function UpdateClientDetails({ modal, data, industries }) {
   const [updatePreviousProject] = useUpdatePreviousProject();
 
   const handleSubmit = async (values) => {
-    console.log(values);
     const response = await updatePreviousProject({
       variables: {
         input: {

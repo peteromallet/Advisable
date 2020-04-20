@@ -83,6 +83,7 @@ export const StyledNavigationMenuItem = styled.div`
   margin-bottom: 4px;
   position: relative;
   color: ${theme.colors.neutral500};
+  margin-left: -8px;
 
   &::after {
     content: "";

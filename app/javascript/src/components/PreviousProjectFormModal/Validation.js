@@ -22,7 +22,7 @@ const RELATIONSHIPS = [
   "They worked at the company but not the project",
 ];
 
-export default function Validation({ data, modal }) {
+export default function Validation({ data, modal, onPublish }) {
   const [publishPreviousProject] = usePublishPreviousProject();
 
   const handleSubmit = async (values) => {
@@ -35,6 +35,8 @@ export default function Validation({ data, modal }) {
       },
     });
 
+    const project = response.data?.publishPreviousProject.previousProject;
+    onPublish(project);
     modal.hide();
   };
 

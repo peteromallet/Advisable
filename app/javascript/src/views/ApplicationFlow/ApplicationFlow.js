@@ -5,8 +5,8 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Back from "../../components/Back";
 import Steps from "../../components/Steps";
 import { useScreenSize } from "../../utilities/screenSizes";
-import { Text } from "@advisable/donut";
-import { Layout, Heading, Padding, Card } from "../../components";
+import { Text, Box, NavigationMenu } from "@advisable/donut";
+import { Layout } from "../../components";
 import Terms from "./Terms";
 import Overview from "./Overview";
 import Questions from "./Questions";
@@ -37,9 +37,7 @@ const ApplicationFlow = ({ application, match, location }) => {
       to: "/",
       path: "/",
       component: Overview,
-      isComplete:
-        !isApplying ||
-        Boolean(application.introduction && application.availability),
+      isComplete: Boolean(application.introduction && application.availability),
     },
     {
       name: "Application Questions",
@@ -77,59 +75,52 @@ const ApplicationFlow = ({ application, match, location }) => {
     },
   ];
 
-  // On mobile we dont want to show the main content inside of a card and so
-  // we just use a div.
-  let ContentContainer = isMobile ? "div" : Card;
-
   // Iterate through the STEPS and filter our any where hidden is true.
   const activeSteps = filter(STEPS, (step) => !step.hidden);
   const { project } = application;
+  console.log(STEPS);
 
   return (
     <Layout>
       {!isMobile && (
-        <Layout.Sidebar>
+        <Layout.Sidebar size="l">
           <Sticky offset={98}>
-            <Padding bottom="s">
+            <Box marginBottom="s">
               <Back to={`/invites/${match.params.applicationId}`}>
                 View project details
               </Back>
-            </Padding>
+            </Box>
             <Text
               as="h4"
               fontSize="xl"
-              color="blue.9"
-              lineHeight="m"
+              lineHeight="l"
+              color="blue900"
               fontWeight="medium"
+              letterSpacing="-0.01em"
             >
-              Applying to {application.project.primarySkill} project
+              {application.project.primarySkill} project
             </Text>
             {(project.industry || project.companyType) && (
               <Text
-                mt="xs"
+                mt="xxs"
                 fontSize="s"
-                lineHeight="s"
-                color="neutral.6"
+                color="neutral500"
                 fontWeight="medium"
               >
                 {project.industry} {project.companyType}
               </Text>
             )}
-            <Text pt="s" pb="m" fontSize="xs" lineHeight="xs" color="neutral.7">
-              {application.project.companyDescription}
-            </Text>
-            <Text pb="m" fontSize="xs" lineHeight="xs" color="neutral.7">
+            <Text py="m" fontSize="xs" lineHeight="s" color="neutral700">
               {application.project.description}
             </Text>
-            <Steps>
+            <NavigationMenu>
               {activeSteps.map((step, i) => {
                 const previousStep = STEPS[i - 1];
                 return (
-                  <Steps.Step
+                  <NavigationMenu.Item
                     key={step.name}
                     exact={step.exact}
-                    number={i + 1}
-                    isComplete={isApplying && step.isComplete}
+                    isComplete={step.isComplete}
                     isDisabled={previousStep ? !previousStep.isComplete : false}
                     to={{
                       ...location,
@@ -137,48 +128,46 @@ const ApplicationFlow = ({ application, match, location }) => {
                     }}
                   >
                     {step.name}
-                  </Steps.Step>
+                  </NavigationMenu.Item>
                 );
               })}
-            </Steps>
+            </NavigationMenu>
           </Sticky>
         </Layout.Sidebar>
       )}
       <Layout.Main>
-        <ContentContainer>
-          <Switch>
-            {STEPS.map((step, i) => {
-              const Component = step.component;
-              const previousStep = STEPS[i - 1];
-              const previousStepComplete = previousStep
-                ? previousStep.isComplete
-                : true;
+        <Switch>
+          {STEPS.map((step, i) => {
+            const Component = step.component;
+            const previousStep = STEPS[i - 1];
+            const previousStepComplete = previousStep
+              ? previousStep.isComplete
+              : true;
 
-              return (
-                <Route
-                  key={step.path}
-                  exact={step.exact}
-                  path={`/invites/:applicationId/apply${step.path}`}
-                  render={(props) =>
-                    previousStepComplete ? (
-                      <Component
-                        steps={STEPS}
-                        currentStep={i}
-                        application={application}
-                        skipStep={() => skipStep(step)}
-                        {...props}
-                      />
-                    ) : (
-                      <Redirect
-                        to={`/invites/${applicationId}/apply${previousStep.path}`}
-                      />
-                    )
-                  }
-                />
-              );
-            })}
-          </Switch>
-        </ContentContainer>
+            return (
+              <Route
+                key={step.path}
+                exact={step.exact}
+                path={`/invites/:applicationId/apply${step.path}`}
+                render={(props) =>
+                  previousStepComplete ? (
+                    <Component
+                      steps={STEPS}
+                      currentStep={i}
+                      application={application}
+                      skipStep={() => skipStep(step)}
+                      {...props}
+                    />
+                  ) : (
+                    <Redirect
+                      to={`/invites/${applicationId}/apply${previousStep.path}`}
+                    />
+                  )
+                }
+              />
+            );
+          })}
+        </Switch>
       </Layout.Main>
     </Layout>
   );

@@ -44,6 +44,9 @@ export * from "./components/Circle/styles";
 export { default as Stack } from "./components/Stack";
 export * from "./components/Stack/styles";
 
+export { default as Columns } from "./components/Columns";
+export * from "./components/Columns/styles";
+
 export { default as Select } from "./components/Select";
 export * from "./components/Select/styles";
 

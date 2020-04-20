@@ -12,16 +12,16 @@ const Autocomplete = ({ options: selectOptions, value, ...rest }) => {
   // because some times the API reqturns duplicate records and so we can't use
   // the value attribute as the key.
   const [options, _] = React.useState(
-    selectOptions.map(option => ({
+    selectOptions.map((option) => ({
       ...option,
       key: uniqueId("autocompleteOption"),
-    }))
+    })),
   );
 
   let filteredValue = value;
 
   if (rest.multiple) {
-    filteredValue = filter(value, v => {
+    filteredValue = filter(value, (v) => {
       return find(options, { value: v });
     });
   } else {
@@ -34,10 +34,10 @@ const Autocomplete = ({ options: selectOptions, value, ...rest }) => {
   if (isMobile) {
     return (
       <Mobile
-        options={options}
-        initalSelectedItem={filteredValue}
         isMax={isMax}
+        options={options}
         value={filteredValue}
+        initalSelectedItem={filteredValue}
         {...rest}
       />
     );
@@ -46,17 +46,17 @@ const Autocomplete = ({ options: selectOptions, value, ...rest }) => {
   // fallback to the desktop experience
   return (
     <Desktop
-      options={options}
-      initalSelectedItem={filteredValue}
       isMax={isMax}
+      options={options}
       value={filteredValue}
+      initalSelectedItem={filteredValue}
       {...rest}
     />
   );
 };
 
 Autocomplete.defaultProps = {
-  formatLabel: item => item.label,
+  formatLabel: (item) => item.label,
 };
 
 export default Autocomplete;

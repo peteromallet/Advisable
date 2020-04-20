@@ -46,6 +46,7 @@ export default function PreviousProjectFormContainer({
   modal,
   specialistId,
   onCreate,
+  onPublish,
 }) {
   const route = useRouteMatch("*previous_projects/:id");
   const id = route?.params.id;
@@ -110,7 +111,7 @@ export default function PreviousProjectFormContainer({
                   <Portfolio modal={modal} data={data} />
                 </Route>
                 <Route path="*previous_projects/:id/validation">
-                  <Validation modal={modal} data={data} />
+                  <Validation modal={modal} data={data} onPublish={onPublish} />
                 </Route>
               </Switch>
             </Container>

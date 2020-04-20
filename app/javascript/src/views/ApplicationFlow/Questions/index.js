@@ -3,7 +3,7 @@ import * as React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, Card } from "@advisable/donut";
 import { TextField } from "../../../components";
 import useScrollRestore from "../../../utilities/useScrollRestore";
 import UPDATE_APPLICATION from "../updateApplication";
@@ -112,60 +112,62 @@ const Questions = ({
   };
 
   return (
-    <Formik
-      onSubmit={handleSubmit}
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-    >
-      {(formik) => (
-        <Form>
-          <Box padding={{ _: "l", m: "xl " }}>
-            <Text
-              mb="s"
-              as="h1"
-              fontSize="30px"
-              color="blue.9"
-              fontWeight="semibold"
-              letterSpacing="-0.03em"
-            >
-              Application Questions
-            </Text>
-            <Text
-              mb="l"
-              as="h6"
-              fontSize="xxs"
-              color="neutral.7"
-              fontWeight="semibold"
-              style={{ textTransform: "uppercase" }}
-            >
-              Question {number} of {questions.length}
-            </Text>
-            <Box mb="m">
-              <TextField
-                multiline
-                autoHeight
-                minRows={10}
-                name="answer"
-                label={question}
-                placeholder={question}
-                onBlur={formik.handleBlur}
-                value={formik.values.answer}
-                onChange={formik.handleChange}
-                error={formik.touched.answer && formik.errors.answer}
-              />
+    <Card>
+      <Formik
+        onSubmit={handleSubmit}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+      >
+        {(formik) => (
+          <Form>
+            <Box padding={{ _: "l", m: "xl" }}>
+              <Text
+                mb="s"
+                as="h1"
+                fontSize="30px"
+                color="blue.9"
+                fontWeight="semibold"
+                letterSpacing="-0.03em"
+              >
+                Application Questions
+              </Text>
+              <Text
+                mb="l"
+                as="h6"
+                fontSize="xxs"
+                color="neutral.7"
+                fontWeight="semibold"
+                style={{ textTransform: "uppercase" }}
+              >
+                Question {number} of {questions.length}
+              </Text>
+              <Box mb="m">
+                <TextField
+                  multiline
+                  autoHeight
+                  minRows={10}
+                  name="answer"
+                  label={question}
+                  placeholder={question}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.answer}
+                  onChange={formik.handleChange}
+                  error={formik.touched.answer && formik.errors.answer}
+                />
+              </Box>
             </Box>
-          </Box>
 
-          <Actions
-            steps={steps}
-            currentStep={currentStep}
-            application={application}
-            onBack={() => goBack(formik)}
-            isSubmitting={formik.isSubmitting}
-          />
-        </Form>
-      )}
-    </Formik>
+            <Actions
+              steps={steps}
+              currentStep={currentStep}
+              application={application}
+              onBack={() => goBack(formik)}
+              isSubmitting={formik.isSubmitting}
+            />
+          </Form>
+        )}
+      </Formik>
+    </Card>
   );
 };
 

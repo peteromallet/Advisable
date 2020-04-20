@@ -1,20 +1,19 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, useField } from "formik";
 import {
   Box,
   Text,
   Icon,
-  Input,
-  Label,
   Stack,
   Select,
   Checkbox,
-  InputError,
-  RoundedButton,
+  Columns,
   Autocomplete,
 } from "@advisable/donut";
-import { clientDetailsValidationSchema } from "./validationSchemas";
 import Helper from "./Helper";
+import { clientDetailsValidationSchema } from "./validationSchemas";
+import FormField from "../../components/FormField";
+import SubmitButton from "../../components/SubmitButton";
 
 export default function ClientDetails({
   onSubmit,
@@ -33,6 +32,13 @@ export default function ClientDetails({
   return (
     <Box display="flex">
       <Box flexGrow={1}>
+        <Text mb="xs" fontSize="28px" color="blue900" fontWeight="semibold">
+          Client Details
+        </Text>
+        <Text mb="xl" lineHeight="l" color="neutral600">
+          Previous projects are one of the most effective ways to validate your
+          skills. Advisable uses them to decide what projects to invite you to.
+        </Text>
         <Formik
           onSubmit={onSubmit}
           initialValues={formInitialValues}
@@ -40,115 +46,45 @@ export default function ClientDetails({
         >
           {(formik) => (
             <Form>
-              <Text
-                fontSize="28px"
-                color="blue900"
-                fontWeight="semibold"
-                mb="xs"
-              >
-                Client Details
-              </Text>
-              <Text mb="xl" lineHeight="l" color="neutral600">
-                Previous projects are one of the most effective ways to validate
-                your skills. Advisable uses them to decide what projects to
-                invite you to.
-              </Text>
-
               <Stack spacing="l" mb="xl">
-                <Box display="flex">
-                  <Box pr="xs" width="50%">
-                    <Label mb="xs">Company Name</Label>
-                    <Field
-                      as={Input}
-                      name="clientName"
-                      placeholder="e.g Acme Inc"
-                      error={
-                        formik.touched.clientName && formik.errors.clientName
-                      }
-                    />
-                    <ErrorMessage
-                      mt="xs"
-                      name="clientName"
-                      component={InputError}
-                    />
-                  </Box>
-                  <Box pl="xs" width="50%">
-                    <Label htmlFor="companyType" mb="xs">
-                      Company Type
-                    </Label>
-                    <Field as={Select} name="companyType">
-                      <option>Individual Entrepreneur</option>
-                      <option>Small Business</option>
-                      <option>Medium-Sized Business</option>
-                      <option>Startup</option>
-                      <option>Growth-Stage Startup</option>
-                      <option>Major Corporation</option>
-                      <option>Non-Profit</option>
-                      <option>Education Institution</option>
-                      <option>Government</option>
-                    </Field>
-                  </Box>
-                </Box>
-                <Box>
-                  <Label mb="xs">
-                    What industries does this client work in?
-                  </Label>
-                  <Autocomplete
-                    max={3}
-                    multiple
-                    name="industries"
-                    options={industries}
-                    placeholder="Search for an industry"
-                    value={formik.values.industries}
-                    onChange={(industries) => {
-                      const { primaryIndustry } = formik.values;
-                      const selectedIndusties = formik.values.industries;
-                      if (selectedIndusties.indexOf(primaryIndustry) === -1) {
-                        formik.setFieldValue("primaryIndustry", industries[0]);
-                      }
-                      formik.setFieldValue("industries", industries);
-                    }}
+                <Columns spacing="s">
+                  <FormField
+                    label="Company Name"
+                    name="clientName"
+                    placeholder="e.g Acme Inc"
                   />
-                  <ErrorMessage
-                    mt="xs"
-                    name="industries"
-                    component={InputError}
-                  />
-                </Box>
-                {formik.values.industries.length > 1 && (
-                  <Box>
-                    <Label mb="xs">
-                      Which of these is the primary industry for this company?
-                    </Label>
-                    <Field name="primaryIndustry" as={Select}>
-                      {formik.values.industries.map((industry) => (
-                        <option key={industry}>{industry}</option>
-                      ))}
-                    </Field>
-                  </Box>
-                )}
-                <Box>
-                  <Field as={Checkbox} type="checkbox" name="confidential">
-                    <Text color="blue900" fontWeight="medium" mb="2px">
-                      This client is confidential
-                    </Text>
-                    <Text fontSize="xs" color="neutral600">
-                      If checked the client's name will be hidden and the
-                      industry will be named instead. e.g 'Financial Services
-                      Company'
-                    </Text>
-                  </Field>
-                </Box>
+                  <FormField
+                    as={Select}
+                    label="Company Type"
+                    name="companyType"
+                  >
+                    <option>Individual Entrepreneur</option>
+                    <option>Small Business</option>
+                    <option>Medium-Sized Business</option>
+                    <option>Startup</option>
+                    <option>Growth-Stage Startup</option>
+                    <option>Major Corporation</option>
+                    <option>Non-Profit</option>
+                    <option>Education Institution</option>
+                    <option>Government</option>
+                  </FormField>
+                </Columns>
+                <IndustriesSelection industries={industries} />
+                {formik.values.industries.length > 1 && <PrimaryIndustry />}
+                <FormField as={Checkbox} type="checkbox" name="confidential">
+                  <Text color="blue900" fontWeight="medium" mb="2px">
+                    This client is confidential
+                  </Text>
+                  <Text fontSize="xs" color="neutral600">
+                    If checked the client's name will be hidden and the industry
+                    will be named instead. e.g 'Financial Services Company'
+                  </Text>
+                </FormField>
               </Stack>
 
-              <RoundedButton
-                size="l"
-                type="submit"
-                loading={formik.isSubmitting}
-                suffix={<Icon icon="arrow-right" />}
-              >
+              <SubmitButton size="l" suffix={<Icon icon="arrow-right" />}>
                 Continue
-              </RoundedButton>
+              </SubmitButton>
             </Form>
           )}
         </Formik>
@@ -167,5 +103,47 @@ export default function ClientDetails({
         </Helper>
       </Box>
     </Box>
+  );
+}
+
+function IndustriesSelection({ industries }) {
+  const [field, _, helpers] = useField("industries");
+  const [primaryField, __, primaryHelpers] = useField("primaryIndustry");
+
+  return (
+    <>
+      <FormField
+        {...field}
+        as={Autocomplete}
+        max={3}
+        multiple
+        label="What industries does this client work in?"
+        options={industries}
+        placeholder="Search for an industry"
+        onChange={(industries) => {
+          if (field.value.indexOf(primaryField.value) === -1) {
+            primaryHelpers.setValue(industries[0]);
+          }
+          helpers.setValue(industries);
+        }}
+      />
+    </>
+  );
+}
+
+function PrimaryIndustry() {
+  const [industries] = useField("industries");
+  const [primaryField] = useField("primaryIndustry");
+
+  return (
+    <FormField
+      {...primaryField}
+      as={Select}
+      label="Which of these is the primary industry for this company?"
+    >
+      {industries.value.map((industry) => (
+        <option key={industry}>{industry}</option>
+      ))}
+    </FormField>
   );
 }

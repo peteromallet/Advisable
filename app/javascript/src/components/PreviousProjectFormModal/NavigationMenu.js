@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useRouteMatch } from "react-router-dom";
-import { NavigationMenu, Text } from "@advisable/donut";
+import { NavigationMenu } from "@advisable/donut";
 import { PATH_REGEX } from "./usePreviousProjectModal";
 import {
   clientDetailsValidationSchema,
