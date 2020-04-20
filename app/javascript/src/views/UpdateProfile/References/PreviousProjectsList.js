@@ -6,7 +6,7 @@ import PreviousProjectFormModal, {
   usePreviousProjectModal,
 } from "../../../components/PreviousProjectFormModal";
 import PreviousProject from "./PreviousProject";
-import NewProject from "./NewProject";
+import NewProject from "../../../components/AddPreviousProjectButton";
 import PREVIOUS_PROJECTS from "./previousProjects";
 
 export default function PreviousProjectsList({ previousProjects }) {

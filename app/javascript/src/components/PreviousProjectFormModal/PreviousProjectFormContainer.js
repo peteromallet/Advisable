@@ -1,5 +1,4 @@
 import React from "react";
-import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import {
   Switch,
@@ -11,7 +10,7 @@ import {
 import { Box, Container, Text } from "@advisable/donut";
 import NavigationMenu from "./NavigationMenu";
 import { StyledSidebar } from "./styles";
-import { GET_PREVIOUS_PROJECT } from "./queries";
+import { SELECT_DATA, GET_PREVIOUS_PROJECT } from "./queries";
 import PreviousProjectFormHeader from "./PreviousProjectFormHeader";
 import Overview from "./Overview";
 import Portfolio from "./Portfolio";
@@ -26,21 +25,6 @@ function RedirectToFirstStep() {
   const location = useLocation();
   return <Redirect to={`${location.pathname}/client`} />;
 }
-
-const SELECT_DATA = gql`
-  {
-    industries {
-      id
-      label: name
-      value: name
-    }
-    skills(local: true) {
-      id
-      label: name
-      value: name
-    }
-  }
-`;
 
 export default function PreviousProjectFormContainer({
   modal,

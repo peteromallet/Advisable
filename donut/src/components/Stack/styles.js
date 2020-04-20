@@ -15,11 +15,11 @@ export const StyledStackItem = styled.div`
   padding-bottom: ${(p) => theme.space[p.spacing] / 2}px;
   ${(p) => p.divider && dividerStyles};
 
-  ${StyledStackItem}:first-child {
+  &:first-child {
     padding-top: 0;
   }
 
-  ${StyledStackItem}:last-child {
+  &:last-child {
     padding-bottom: 0;
     border-bottom: none;
   }

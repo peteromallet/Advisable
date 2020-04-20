@@ -1,20 +1,18 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import {
   Box,
   Text,
-  Input,
-  Label,
   Select,
   Stack,
   Link,
   Icon,
-  InputError,
   RoundedButton,
 } from "@advisable/donut";
 import Helper from "./Helper";
 import { usePublishPreviousProject } from "./queries";
 import { verificationValidationSchema } from "./validationSchemas";
+import FormField from "../../components/FormField";
 
 const RELATIONSHIPS = [
   "They managed the project",
@@ -36,7 +34,10 @@ export default function Validation({ data, modal, onPublish }) {
     });
 
     const project = response.data?.publishPreviousProject.previousProject;
-    onPublish(project);
+    if (onPublish) {
+      onPublish(project);
+    }
+
     modal.hide();
   };
 
@@ -79,49 +80,25 @@ export default function Validation({ data, modal, onPublish }) {
                 who worked on the project.
               </Text>
               <Stack mb="xl" spacing="l">
-                <Box>
-                  <Label mb="xs">Contact Name</Label>
-                  <Field
-                    as={Input}
-                    name="contactName"
-                    placeholder="Contact Name"
-                    error={
-                      formik.touched.contactName && formik.errors.contactName
-                    }
-                  />
-                  <ErrorMessage
-                    mt="xs"
-                    name="contactName"
-                    component={InputError}
-                  />
-                </Box>
-                <Box>
-                  <Label mb="xs">Contact Job Title</Label>
-                  <Field
-                    as={Input}
-                    name="contactJobTitle"
-                    placeholder="Contact Job Title"
-                    error={
-                      formik.touched.contactJobTitle &&
-                      formik.errors.contactJobTitle
-                    }
-                  />
-                  <ErrorMessage
-                    mt="xs"
-                    name="contactJobTitle"
-                    component={InputError}
-                  />
-                </Box>
-                <Box>
-                  <Label mb="xs">
-                    What was your relationship to them for this project?
-                  </Label>
-                  <Field as={Select} name="contactRelationship">
-                    {RELATIONSHIPS.map((r) => (
-                      <option key={r}>{r}</option>
-                    ))}
-                  </Field>
-                </Box>
+                <FormField
+                  name="contactName"
+                  label="Contact Name"
+                  placeholder="Contact Name"
+                />
+                <FormField
+                  name="contactJobTitle"
+                  label="Contact Job Title"
+                  placeholder="Contact Job Title"
+                />
+                <FormField
+                  as={Select}
+                  name="contactRelationship"
+                  label="What was your relationship to them for this project?"
+                >
+                  {RELATIONSHIPS.map((r) => (
+                    <option key={r}>{r}</option>
+                  ))}
+                </FormField>
               </Stack>
 
               <RoundedButton

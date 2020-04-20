@@ -78,7 +78,6 @@ const ApplicationFlow = ({ application, match, location }) => {
   // Iterate through the STEPS and filter our any where hidden is true.
   const activeSteps = filter(STEPS, (step) => !step.hidden);
   const { project } = application;
-  console.log(STEPS);
 
   return (
     <Layout>

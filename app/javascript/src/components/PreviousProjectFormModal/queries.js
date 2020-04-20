@@ -1,6 +1,21 @@
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 
+export const SELECT_DATA = gql`
+  {
+    industries {
+      id
+      label: name
+      value: name
+    }
+    skills(local: true) {
+      id
+      label: name
+      value: name
+    }
+  }
+`;
+
 const previousProjectFields = gql`
   fragment PreviousProjectFields on PreviousProject {
     id

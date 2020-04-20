@@ -58,7 +58,7 @@ export default function Overview({ modal, data, skills }) {
     goal: data.previousProject.goal || GOALS[0],
     skills: data.previousProject.skills.map((s) => s.name),
     primarySkill: data.previousProject.primarySkill?.name || "",
-    publicUse: data.previousProject.publicUse || false,
+    publicUse: data.previousProject.publicUse || true,
   };
 
   const handleGoalChange = (formik) => (e) => {
@@ -106,7 +106,7 @@ export default function Overview({ modal, data, skills }) {
               </Text>
               <Stack spacing="l" mb="xl">
                 <Box>
-                  <Label mb="xxs" lineHeight="s">
+                  <Label mb="xxs" lineHeight="s" htmlFor="description">
                     Project description
                   </Label>
                   <Text fontSize="s" color="neutral700" lineHeight="s" mb="s">
@@ -116,6 +116,7 @@ export default function Overview({ modal, data, skills }) {
                   <Field
                     as={Textarea}
                     minRows={4}
+                    id="description"
                     placeholder="Project description"
                     name="description"
                     error={
@@ -137,7 +138,7 @@ export default function Overview({ modal, data, skills }) {
                     multiple
                     name="skills"
                     options={skills}
-                    placeholder="Search for an industry"
+                    placeholder="Search for a skill"
                     value={formik.values.skills}
                     onChange={(skills) => {
                       const { primarySkill } = formik.values;

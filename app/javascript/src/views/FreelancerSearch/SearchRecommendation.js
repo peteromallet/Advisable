@@ -36,7 +36,7 @@ function SearchRecommendation({ data }) {
       <Box maxWidth="800px" mb="xl">
         <Text fontSize="l" lineHeight="l" color="neutral800">
           {hasReviews && <>{project.reviews[0].name} from </>}
-          {project.companyName} recommends {project.specialist.name} for{" "}
+          {project.clientName} recommends {project.specialist.name} for{" "}
           {data.search.industry.name} companies
           {project.goal && <> who want to {project.goal.toLowerCase()}</>}.
         </Text>

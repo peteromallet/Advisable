@@ -41,7 +41,7 @@ const VerifyProject = ({ project, match }) => {
       </Text>
       <NumberedList my="m" fontSize="xs">
         <NumberedList.Item>
-          {project.companyName} corporate email address for {contactName}
+          {project.clientName} corporate email address for {contactName}
         </NumberedList.Item>
         <NumberedList.Item>
           An email address associated with the personal LinkedIn account of{" "}

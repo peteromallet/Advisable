@@ -18,7 +18,7 @@ const searchFields = gql`
       goal
       title
       description
-      companyName
+      clientName
       industries {
         id
         name

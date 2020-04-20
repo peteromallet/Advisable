@@ -59,7 +59,7 @@ const PreviousProject = ({ showValidationStatus = true, previousProject }) => {
               <Review
                 key={review.id}
                 review={review}
-                companyName={project.companyName}
+                companyName={project.clientName}
               />
             ))}
           </Box>
