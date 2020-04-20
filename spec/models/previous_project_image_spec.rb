@@ -1,5 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe PreviousProjectImage, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe PreviousProjectImage, type: :model do
+  it 'has a valid factory' do
+    record = create(:previous_project_image)
+    expect(record).to be_valid
+  end
 end

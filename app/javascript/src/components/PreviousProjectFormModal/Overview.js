@@ -10,6 +10,7 @@ import {
   Icon,
   Link,
   Select,
+  Checkbox,
   InputError,
   Autocomplete,
   RoundedButton,
@@ -18,6 +19,7 @@ import {
 import Helper from "./Helper";
 import { useUpdatePreviousProject } from "./queries";
 import { projectOverviewValidationSchema } from "./validationSchemas";
+import FormField from "../../components/FormField";
 
 const GOALS = [
   "Generate Leads",
@@ -56,6 +58,7 @@ export default function Overview({ modal, data, skills }) {
     goal: data.previousProject.goal || GOALS[0],
     skills: data.previousProject.skills.map((s) => s.name),
     primarySkill: data.previousProject.primarySkill?.name || "",
+    publicUse: data.previousProject.publicUse || false,
   };
 
   const handleGoalChange = (formik) => (e) => {
@@ -184,6 +187,10 @@ export default function Overview({ modal, data, skills }) {
                   )}
                   <ErrorMessage mt="xs" name="goal" component={InputError} />
                 </Box>
+                <FormField as={Checkbox} type="checkbox" name="publicUse">
+                  It is okay for Advisable to use anonymised details of this
+                  project publicly to promote me
+                </FormField>
               </Stack>
 
               <RoundedButton

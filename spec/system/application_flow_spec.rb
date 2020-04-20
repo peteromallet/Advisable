@@ -99,18 +99,12 @@ describe 'Application flow' do
       it 'proceeds to the payment terms' do
         visit "/invites/#{application.airtable_id}/apply/references"
         find(
-          'span',
+          'label',
           text: "#{project.primary_skill.name} with #{project.client_name}"
         ).click
         click_on 'Next'
         click_on 'Continue With 1 Reference'
         expect(page).to have_content("Including Advisable's fee")
-      end
-
-      it 'allows the user to add another previous project' do
-        visit "/invites/#{application.airtable_id}/apply/references"
-        click_on 'Add a previous project'
-        expect(page).to have_content('Client Name')
       end
     end
 
@@ -118,12 +112,6 @@ describe 'Application flow' do
       let!(:specialist) { create(:specialist) }
       let(:application) do
         create(:application, specialist: specialist, status: 'Invited To Apply')
-      end
-
-      it 'allows the user to add another previous project' do
-        visit "/invites/#{application.airtable_id}/apply/references"
-        click_on 'Add a previous project'
-        expect(page).to have_content('Client Name')
       end
     end
   end

@@ -37,7 +37,12 @@ const StyledNewProject = styled.div`
 
 export default function AddPreviousProjectButton({ modal, ...props }) {
   return (
-    <DialogDisclosure {...modal} as={StyledNewProject} {...props}>
+    <DialogDisclosure
+      {...modal}
+      as={StyledNewProject}
+      {...props}
+      aria-label="Add a previous project"
+    >
       <Circle size={40} bg="blue800" mr="s">
         <Icon icon="plus" color="white.9" />
       </Circle>

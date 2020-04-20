@@ -12,6 +12,7 @@ const previousProjectFields = gql`
     confidential
     description
     goal
+    publicUse
     contactName
     contactJobTitle
     contactRelationship

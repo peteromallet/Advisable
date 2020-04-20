@@ -9,7 +9,7 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
   argument :goal, String, required: false
   argument :skills, [String], required: false
   argument :primary_skill, String, required: false
-  argument :primary_skill, String, required: false
+  argument :public_use, Boolean, required: false
 
   field :previous_project, Types::PreviousProject, null: true
 
@@ -25,7 +25,14 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
   private
 
   def assignable_attrs(**args)
-    args.slice(:confidential, :client_name, :company_type, :description, :goal)
+    args.slice(
+      :confidential,
+      :client_name,
+      :company_type,
+      :description,
+      :goal,
+      :public_use
+    )
   end
 
   def update_skills(project, args)
