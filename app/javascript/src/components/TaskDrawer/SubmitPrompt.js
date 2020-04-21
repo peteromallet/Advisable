@@ -1,11 +1,10 @@
 // Renders the prompt to submit a task
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
+import { Columns, RoundedButton } from "@advisable/donut";
 import Text from "../Text";
 import Slider from "../Slider";
-import Button from "../Button";
 import Heading from "../Heading";
-import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
 import SUBMIT_TASK from "./submitTask";
 import currency from "../../utilities/currency";
@@ -74,19 +73,17 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
                 it.
               </Text>
             </Padding>
-            <ButtonGroup fullWidth>
-              <Button
+            <Columns spacing="xs">
+              <RoundedButton
                 styling="primary"
                 loading={loading}
-                aria-label={
-                  Boolean(task.flexibleEstimate) ? "Continue" : "Complete"
-                }
+                aria-label={task.flexibleEstimate ? "Continue" : "Complete"}
                 onClick={handleConfirmApproved}
               >
-                {Boolean(task.flexibleEstimate) ? "Continue" : "Complete"}
-              </Button>
-              <Button onClick={onClose}>Cancel</Button>
-            </ButtonGroup>
+                {task.flexibleEstimate ? "Continue" : "Complete"}
+              </RoundedButton>
+              <RoundedButton onClick={onClose}>Cancel</RoundedButton>
+            </Columns>
           </>
         )}
         {step === HOURS_WORKED && (

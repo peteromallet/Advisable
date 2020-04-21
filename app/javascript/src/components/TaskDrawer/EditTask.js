@@ -1,10 +1,9 @@
 import * as React from "react";
 import Div100vh from "react-div-100vh";
+import { RoundedButton } from "@advisable/donut";
 import TaskStatus from "../TaskStatus";
 import Text from "../Text";
-import Button from "../Button";
 import Scrollable from "../Scrollable";
-import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
 import VerticalLayout from "../VerticalLayout";
 import Title from "./Title";
@@ -30,28 +29,28 @@ const PERMISSIONS = {
   "Not Assigned": {
     name: (isClient, task) => (isClient && task.estimate ? PROMPT : WRITE),
     dueDate: (isClient, task) => (isClient && task.estimate ? PROMPT : WRITE),
-    estimate: isClient => (isClient ? READ : WRITE),
+    estimate: (isClient) => (isClient ? READ : WRITE),
     description: (isClient, task) =>
       isClient && task.estimate ? PROMPT : WRITE,
   },
   "Requested To Start": {
     name: (isClient, task) => (isClient && task.estimate ? PROMPT : WRITE),
     dueDate: (isClient, task) => (isClient && task.estimate ? PROMPT : WRITE),
-    estimate: isClient => (isClient ? READ : WRITE),
+    estimate: (isClient) => (isClient ? READ : WRITE),
     description: (isClient, task) =>
       isClient && task.estimate ? PROMPT : WRITE,
   },
   "Quote Requested": {
     name: () => WRITE,
     dueDate: () => WRITE,
-    estimate: isClient => (isClient ? READ : WRITE),
+    estimate: (isClient) => (isClient ? READ : WRITE),
     description: () => WRITE,
   },
   "Quote Provided": {
-    name: isClient => (isClient ? PROMPT : READ),
-    dueDate: isClient => (isClient ? PROMPT : READ),
-    estimate: isClient => (isClient ? READ : WRITE),
-    description: isClient => (isClient ? PROMPT : READ),
+    name: (isClient) => (isClient ? PROMPT : READ),
+    dueDate: (isClient) => (isClient ? PROMPT : READ),
+    estimate: (isClient) => (isClient ? READ : WRITE),
+    description: (isClient) => (isClient ? PROMPT : READ),
   },
   Assigned: {
     dueDate: (isClient, task) => {
@@ -96,7 +95,7 @@ const EditTask = ({
   const [confirmPrompt, setConfirmPrompt] = React.useState(false);
   const [focusedElement, setFocusedElement] = React.useState(null);
 
-  const handleFocus = input => e => {
+  const handleFocus = (input) => (e) => {
     if (readOnly || getTaskPermission(task, input, isClient) === READ) {
       e.preventDefault();
       return;
@@ -118,11 +117,11 @@ const EditTask = ({
     setEditAllowed(true);
   };
 
-  const handleBlur = attribute => () => {
+  const handleBlur = (attribute) => () => {
     setEditAllowed(false);
   };
 
-  const handleBlurWithSave = attribute => () => {
+  const handleBlurWithSave = (attribute) => () => {
     handleBlur(attribute)();
 
     const value = attributes[attribute];
@@ -138,14 +137,14 @@ const EditTask = ({
     return newData;
   };
 
-  const handleChange = attribute => value => {
+  const handleChange = (attribute) => (value) => {
     updateField(attribute, value);
     if (task[attribute] !== value) {
       onSave(attribute, { [attribute]: value });
     }
   };
 
-  const handleChangeWithTimeout = attribute => value => {
+  const handleChangeWithTimeout = (attribute) => (value) => {
     updateField(attribute, value);
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -175,17 +174,15 @@ const EditTask = ({
                 Are you sure you want to continue?
               </Text>
             </Padding>
-            <ButtonGroup fullWidth>
-              <Button onClick={handleConfirm} styling="primary">
-                Continue
-              </Button>
-              <Button
-                onClick={() => setConfirmPrompt(false)}
-                styling="outlined"
-              >
-                Cancel
-              </Button>
-            </ButtonGroup>
+            <RoundedButton onClick={handleConfirm} mr="xs">
+              Continue
+            </RoundedButton>
+            <RoundedButton
+              onClick={() => setConfirmPrompt(false)}
+              variant="subtle"
+            >
+              Cancel
+            </RoundedButton>
           </ConfirmationContainer>
         </Confirmation>
       )}
@@ -220,7 +217,7 @@ const EditTask = ({
                   <QuoteInput
                     task={task}
                     readOnly={estimateReadOnly}
-                    onSubmit={values => {
+                    onSubmit={(values) => {
                       updateField("estimate", values.estimate);
                       updateField("flexibleEstimate", values.flexibleEstimate);
                       onSave("estimate", values);

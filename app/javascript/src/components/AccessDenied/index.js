@@ -1,9 +1,12 @@
 import React from "react";
-import { Box, Text, Icon } from "@advisable/donut";
+import { Key } from "@styled-icons/feather";
+import { Box, Text, Circle } from "@advisable/donut";
 
 const AccessDenied = ({ heading, children }) => (
   <Box maxWidth={320} mx="auto" my="xxl" textAlign="center">
-    <Icon icon="key" width={40} height={40} color="neutral.4" mb="m" />
+    <Circle size={60} color="white.9" bg="blue800" mb="l">
+      <Key size={24} strokeWidth={2} />
+    </Circle>
     <Text fontWeight="medium" mb="xxs">
       {heading || "Access Denied"}
     </Text>

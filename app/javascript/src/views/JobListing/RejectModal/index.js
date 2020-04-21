@@ -1,16 +1,9 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
+import { Columns, RoundedButton } from "@advisable/donut";
 import REJECT from "./reject.graphql";
-import {
-  Modal,
-  Heading,
-  FieldRow,
-  Select,
-  Padding,
-  ButtonGroup,
-  Button,
-} from "src/components";
+import { Modal, Heading, FieldRow, Select, Padding } from "src/components";
 
 const REJECTION_REASONS = [
   "Don’t have right skillset",
@@ -57,24 +50,26 @@ const RejectModal = ({ isOpen, onClose, onReject, application }) => {
                     options={REJECTION_REASONS}
                   />
                 </FieldRow>
-                <ButtonGroup fullWidth>
-                  <Button
-                    type="submit"
+                <Columns spacing="s">
+                  <RoundedButton
                     size="l"
-                    styling="danger"
+                    type="submit"
+                    variant="dark"
                     loading={formik.isSubmitting}
+                    width="100%"
                   >
                     Reject Invite
-                  </Button>
-                  <Button
-                    styling="outlined"
+                  </RoundedButton>
+                  <RoundedButton
                     size="l"
                     type="button"
+                    variant="subtle"
                     onClick={onClose}
+                    width="100%"
                   >
                     Cancel
-                  </Button>
-                </ButtonGroup>
+                  </RoundedButton>
+                </Columns>
               </Form>
             )}
           </Formik>

@@ -1,32 +1,26 @@
 import { get } from "lodash-es";
 import * as React from "react";
-import { Text } from "@advisable/donut";
+import { Text, Link } from "@advisable/donut";
 import * as moment from "moment-timezone";
-import { Link } from "react-router-dom";
 import Icon from "../../../components/Icon";
-import Button from "../../../components/Button";
 import Padding from "../../../components/Spacing/Padding";
 import ApplicationStatus from "../../../components/ApplicationStatus";
-import { ApplicationType } from "../../../types";
 import { Card, Notice } from "./styles";
 
 const INFORMATION = {
-  Applied: ({ application }) => (
-    <React.Fragment>
-      <Text size="s">
-        Your application has submitted. We will let you know when you get a
-        response.
-      </Text>
-      <Button
-        as={Link}
-        styling="plain"
-        target="_blank"
-        to={`/invites/${application.airtableId}/apply`}
-      >
-        Update Application
-      </Button>
-    </React.Fragment>
-  ),
+  Applied: function ApplicationApplied({ application }) {
+    return (
+      <React.Fragment>
+        <Text size="s" mb="xs">
+          Your application has submitted. We will let you know when you get a
+          response.
+        </Text>
+        <Link target="_blank" to={`/invites/${application.airtableId}/apply`}>
+          Update Application
+        </Link>
+      </React.Fragment>
+    );
+  },
   Offered: ({ application }) => {
     const { offer } = application;
 
@@ -48,14 +42,12 @@ const INFORMATION = {
             You have accepted an offer from{" "}
             {application.project.user.companyName}
           </Text>
-          <Button
-            as={Link}
-            styling="plain"
+          <Link
             target="_blank"
             to={`/offers/${get(application, "offer.airtableId")}`}
           >
             View Offer
-          </Button>
+          </Link>
         </React.Fragment>
       );
     }
@@ -65,14 +57,12 @@ const INFORMATION = {
         <Text size="s">
           {application.project.user.companyName} has sent you an offer
         </Text>
-        <Button
-          as={Link}
-          styling="plain"
+        <Link
           target="_blank"
           to={`/offers/${get(application, "offer.airtableId")}`}
         >
           View Offer
-        </Button>
+        </Link>
       </React.Fragment>
     );
   },
@@ -82,14 +72,12 @@ const INFORMATION = {
         Your proposal has been sent to {application.project.user.companyName}.
         We will let you know when they respond.
       </Text>
-      <Button
-        as={Link}
+      <Link
         target="_blank"
-        styling="plain"
         to={`/applications/${application.airtableId}/proposal`}
       >
         Update Proposal
-      </Button>
+      </Link>
     </React.Fragment>
   ),
   "Application Accepted": ({ application }) => {
@@ -103,14 +91,12 @@ const INFORMATION = {
             complete. We will let you know when they respond. In the mean time
             you can send them a proposal.
           </Text>
-          <Button
-            styling="plain"
-            as={Link}
+          <Link
             target="_blank"
             to={`/applications/${application.airtableId}/proposal`}
           >
             Send Proposal
-          </Button>
+          </Link>
         </React.Fragment>
       );
     }
@@ -122,14 +108,12 @@ const INFORMATION = {
             {application.project.user.companyName} has requested an interview
             with you
           </Text>
-          <Button
-            styling="plain"
-            as={Link}
+          <Link
             target="_blank"
             to={`/interview_request/${interview.airtableId}`}
           >
             Schedule Interview
-          </Button>
+          </Link>
         </React.Fragment>
       );
     }

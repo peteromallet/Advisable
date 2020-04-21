@@ -2,27 +2,17 @@ import * as React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
+import { RoundedButton } from "@advisable/donut";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
-import Button from "../../components/Button";
-import ButtonGroup from "../../components/ButtonGroup";
 import Heading from "../../components/Heading";
 import TextField from "../../components/TextField";
 import { Padding } from "../../components/Spacing";
-import { useMobile } from "../../components/Breakpoint";
 import currency from "../../utilities/currency";
-import { ApplicationType } from "../../types";
 import { rateValidationSchema } from "./validationSchema";
 import UPDATE_APPLICATION from "./updateApplication.js";
 
-type Props = {
-  history: any;
-  booking: any;
-  application: ApplicationType;
-};
-
-const Rate = ({ history, application }: Props) => {
-  const isMobile = useMobile();
+const Rate = ({ history, application }) => {
   const [updateApplication] = useMutation(UPDATE_APPLICATION);
 
   const handleSubmit = async (values) => {
@@ -101,17 +91,14 @@ const Rate = ({ history, application }: Props) => {
                   }
                 />
               </Padding>
-              <ButtonGroup fullWidth={isMobile}>
-                <Button
-                  type="submit"
-                  disabled={!formik.isValid}
-                  aria-label="Continue"
-                  loading={formik.isSubmitting ? true : undefined}
-                  styling="primary"
-                >
-                  Continue
-                </Button>
-              </ButtonGroup>
+              <RoundedButton
+                type="submit"
+                disabled={!formik.isValid}
+                aria-label="Continue"
+                loading={formik.isSubmitting ? true : undefined}
+              >
+                Continue
+              </RoundedButton>
             </Padding>
           </Form>
         )}

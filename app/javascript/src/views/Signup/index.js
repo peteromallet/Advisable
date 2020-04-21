@@ -4,11 +4,11 @@ import { get } from "lodash-es";
 import { Formik } from "formik";
 import queryString from "query-string";
 import { Redirect } from "react-router-dom";
+import { RoundedButton } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
 import Text from "src/components/Text";
 import Link from "src/components/Link";
-import Button from "src/components/Button";
 import FieldRow from "src/components/FieldRow";
 import Heading from "src/components/Heading";
 import TextField from "src/components/TextField";
@@ -119,16 +119,15 @@ const Signup = ({ location, match }) => {
                   }
                 />
               </FieldRow>
-              <Button
+              <RoundedButton
                 loading={formik.isSubmitting}
                 type="submit"
                 size="l"
-                block
-                styling="primary"
+                width="100%"
                 marginTop="s"
               >
                 Signup
-              </Button>
+              </RoundedButton>
               {formik.status && <Error>{t(`errors.${formik.status}`)}</Error>}
             </form>
           )}

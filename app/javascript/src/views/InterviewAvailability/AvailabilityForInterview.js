@@ -1,9 +1,9 @@
 import { Formik } from "formik";
 import moment from "moment-timezone";
+import { RoundedButton } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 import Div100vh from "react-div-100vh";
-import Button from "src/components/Button";
 import Text from "src/components/Text";
 import Heading from "src/components/Heading";
 import Availability from "src/components/Availability";
@@ -65,14 +65,13 @@ const AvailabilityForInterview = ({ interview, notifications }) => {
               />
             </Body>
             <Footer>
-              <Button
-                type="submit"
+              <RoundedButton
                 size="l"
+                type="submit"
                 loading={formik.isSubmitting}
-                primary
               >
                 Update Availability
-              </Button>
+              </RoundedButton>
             </Footer>
           </Form>
         </Div100vh>

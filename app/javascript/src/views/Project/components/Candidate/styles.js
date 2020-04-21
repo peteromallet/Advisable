@@ -1,3 +1,4 @@
+import { theme } from "@advisable/donut";
 import styled, { keyframes } from "styled-components";
 import { default as BaseCard } from "src/components/Card";
 import { Avatar } from "src/components/Avatar/styles";
@@ -16,12 +17,30 @@ const slideUp = keyframes`
   }
 `;
 
+export const ViewMore = styled.button`
+  appearance: none;
+  padding: 6px 12px;
+  background: white;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  color: ${theme.colors.neutral700};
+  font-family: "Poppins", sans-serif;
+  border: 1px solid ${theme.colors.neutral100};
+
+  svg {
+    margin-right: 8px;
+  }
+`;
+
 export const Card = styled(BaseCard)`
   opacity: 0;
   margin-bottom: 20px;
   transition: box-shadow 300ms ease-out;
   animation: ${slideUp} 700ms cubic-bezier(0.3, 0, 0, 1) forwards;
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.expanded
       ? `0 50px 200px -50px rgba(55, 69, 120, 0.45)`
       : `0 15px 40px -15px rgba(55, 69, 120, 0.2)`};
@@ -116,7 +135,7 @@ export const MoreInfo = styled.div`
   width: 100%;
 `;
 
-export const CandidateWrapper = styled.div.attrs(props => ({
+export const CandidateWrapper = styled.div.attrs((props) => ({
   style: {
     opacity: props.opacity,
     height: `${props.height}px`,

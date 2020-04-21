@@ -4,11 +4,10 @@ import { useMutation } from "@apollo/react-hooks";
 import Text from "src/components/Text";
 import Modal from "src/components/Modal";
 import Select from "src/components/Select";
-import Button from "src/components/Button";
+import { RoundedButton, Columns } from "@advisable/donut";
 import Heading from "src/components/Heading";
 import { Padding } from "src/components/Spacing";
 import TextField from "src/components/TextField";
-import ButtonGroup from "src/components/ButtonGroup";
 import { useNotifications } from "src/components/Notifications";
 import REJECT_PROPOSAL from "./rejectProposal.graphql";
 import validationSchema from "./validationSchema";
@@ -99,20 +98,24 @@ const RejectProposalModal = ({
                   placeholder="Let us know why you are declining this proposal..."
                 />
               </Padding>
-              <ButtonGroup fullWidth>
-                <Button
+              <Columns spacing="s">
+                <RoundedButton
                   type="submit"
-                  theme="danger"
-                  styling="primary"
+                  width="100%"
+                  variant="dark"
                   loading={formik.isSubmitting}
-                  disabled={formik.isSubmitting}
                 >
                   Reject Applicant
-                </Button>
-                <Button type="button" onClick={onClose}>
+                </RoundedButton>
+                <RoundedButton
+                  type="button"
+                  width="100%"
+                  variant="subtle"
+                  onClick={onClose}
+                >
                   Cancel
-                </Button>
-              </ButtonGroup>
+                </RoundedButton>
+              </Columns>
             </Padding>
           </form>
         )}

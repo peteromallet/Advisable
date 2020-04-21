@@ -2,8 +2,7 @@
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
-import Button from "../Button";
-import ButtonGroup from "../ButtonGroup";
+import { RoundedButton } from "@advisable/donut";
 import Padding from "../Spacing/Padding";
 import { Confirmation, ConfirmationContainer } from "./styles";
 import APPROVE_TASK from "./approveTask.graphql";
@@ -40,12 +39,12 @@ const ApprovePrompt = ({ task, onClose, onApprove }) => {
             advance.
           </Text>
         </Padding>
-        <ButtonGroup fullWidth>
-          <Button loading={loading} onClick={handleSubmit} styling="primary">
-            Approve
-          </Button>
-          <Button onClick={onClose}>Cancel</Button>
-        </ButtonGroup>
+        <RoundedButton loading={loading} onClick={handleSubmit} mr="xs">
+          Approve
+        </RoundedButton>
+        <RoundedButton onClick={onClose} variant="subtle">
+          Cancel
+        </RoundedButton>
       </ConfirmationContainer>
     </Confirmation>
   );

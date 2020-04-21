@@ -1,6 +1,6 @@
 import React from "react";
+import { Search } from "@styled-icons/heroicons-outline";
 import { Link } from "react-router-dom";
-import { Icon } from "@advisable/donut";
 import { StyledNewProject, StyledNewProjectIcon } from "./styles";
 
 const NewProject = () => {
@@ -11,7 +11,7 @@ const NewProject = () => {
       aria-label="Find a new freelancer"
     >
       <StyledNewProjectIcon>
-        <Icon icon="search" />
+        <Search size={32} strokeWidth={2} />
       </StyledNewProjectIcon>
       Find a new freelancer
     </StyledNewProject>

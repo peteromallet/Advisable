@@ -83,7 +83,6 @@ module.exports = function (api) {
           removeImport: true,
         },
       ],
-      require("babel-plugin-lodash").default,
     ].filter(Boolean),
   };
 };

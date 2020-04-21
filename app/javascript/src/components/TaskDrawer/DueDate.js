@@ -1,8 +1,7 @@
 import * as moment from "moment";
 import * as React from "react";
 import Icon from "../Icon";
-import Button from "../Button";
-import ButtonGroup from "../ButtonGroup";
+import { RoundedButton } from "@advisable/donut";
 import Popover from "../Popover";
 import { Padding } from "../Spacing";
 import DatePicker from "../DatePicker";
@@ -15,39 +14,23 @@ import {
   Popout,
 } from "./styles";
 
-interface Props {
-  value: string;
-  isOpen: boolean;
-  readOnly?: boolean;
-  onClick?: (e: React.SyntheticEvent) => void;
-  onClose: () => void;
-  onChange: (date: string) => void;
-}
-
-export default ({
-  value,
-  onChange,
-  onClick,
-  isOpen,
-  onClose,
-  readOnly,
-}: Props) => {
+export default ({ value, onChange, onClick, isOpen, onClose, readOnly }) => {
   const selected = value ? new Date(value) : null;
   const initialMonth = selected || new Date();
 
-  const handleSelection = popover => (day, modifiers) => {
+  const handleSelection = (popover) => (day, modifiers) => {
     if (modifiers.disabled) return;
     onChange(day.toISOString());
     popover.close();
   };
 
-  const isDayDisabled = day => {
+  const isDayDisabled = (day) => {
     const now = new Date();
     now.setHours(0, 0, 0, 0);
     return day < now;
   };
 
-  const handleRemove = popover => () => {
+  const handleRemove = (popover) => () => {
     onChange(null);
     popover.close();
   };
@@ -71,7 +54,7 @@ export default ({
         </Detail>
       }
     >
-      {popover => (
+      {(popover) => (
         <Popout>
           <DatePicker
             showOutsideDays={false}
@@ -82,9 +65,9 @@ export default ({
           />
           {selected && (
             <Padding top="m">
-              <ButtonGroup fullWidth>
-                <Button onClick={handleRemove(popover)}>Remove due date</Button>
-              </ButtonGroup>
+              <RoundedButton width="100%" onClick={handleRemove(popover)}>
+                Remove due date
+              </RoundedButton>
             </Padding>
           )}
         </Popout>

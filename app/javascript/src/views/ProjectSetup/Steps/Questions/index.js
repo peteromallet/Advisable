@@ -2,10 +2,8 @@ import { Formik } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import React, { Fragment, useEffect } from "react";
 import Text from "src/components/Text";
-import Button from "src/components/Button";
+import { RoundedButton } from "@advisable/donut";
 import TextField from "src/components/TextField";
-import { Mobile } from "src/components/Breakpoint";
-import ButtonGroup from "src/components/ButtonGroup";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
 export default ({ project, match, history }) => {
@@ -66,28 +64,18 @@ export default ({ project, match, history }) => {
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
             />
-            <Mobile>
-              {(isMobile) => (
-                <ButtonGroup fullWidth={isMobile}>
-                  <Button
-                    type="button"
-                    size="l"
-                    styling="outlined"
-                    onClick={goBack}
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    type="submit"
-                    size="l"
-                    styling="primary"
-                    loading={formik.isSubmitting}
-                  >
-                    Continue
-                  </Button>
-                </ButtonGroup>
-              )}
-            </Mobile>
+            <RoundedButton
+              mr="xs"
+              type="button"
+              size="l"
+              variant="subtle"
+              onClick={goBack}
+            >
+              Back
+            </RoundedButton>
+            <RoundedButton size="l" type="submit" loading={formik.isSubmitting}>
+              Continue
+            </RoundedButton>
           </form>
         )}
       </Formik>

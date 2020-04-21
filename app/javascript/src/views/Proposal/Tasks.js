@@ -1,12 +1,10 @@
 import * as React from "react";
-import { Button as DonutButton } from "@advisable/donut";
+import { Button as DonutButton, RoundedButton } from "@advisable/donut";
 import { useApolloClient } from "@apollo/react-hooks";
 import { matchPath } from "react-router";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Modal from "../../components/Modal";
-import Button from "../../components/Button";
-import ButtonGroup from "../../components/ButtonGroup";
 import Heading from "../../components/Heading";
 import NewTask from "../../components/NewTask";
 import TaskList from "../../components/TaskList";
@@ -127,29 +125,21 @@ const Tasks = ({ application, match, location, history }) => {
               task and click "Set as trial task"
             </Text>
           </Padding>
-          <DonutButton
-            appearance="primary"
-            intent="success"
-            onClick={nextStep}
-            mr="xs"
-          >
+          <RoundedButton onClick={nextStep} mr="xs">
             Continue without trial task
-          </DonutButton>
-          <DonutButton onClick={() => setConfirmModal(false)}>
+          </RoundedButton>
+          <RoundedButton
+            variant="subtle"
+            onClick={() => setConfirmModal(false)}
+          >
             Cancel
-          </DonutButton>
+          </RoundedButton>
         </Padding>
       </Modal>
       <Padding size="l">
-        <ButtonGroup fullWidth={isMobile}>
-          <Button
-            styling="primary"
-            onClick={handleContinue}
-            disabled={!canContinue}
-          >
-            Continue
-          </Button>
-        </ButtonGroup>
+        <RoundedButton onClick={handleContinue} disabled={!canContinue}>
+          Continue
+        </RoundedButton>
       </Padding>
     </Card>
   );

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useMutation } from "@apollo/react-hooks";
-import Button from "../Button";
-import { Button as DonutButton } from "@advisable/donut";
+import { RoundedButton } from "@advisable/donut";
 import Padding from "../Spacing/Padding";
 import { Text } from "@advisable/donut";
 import ButtonGroup from "../ButtonGroup";
@@ -77,16 +76,15 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
     stage === "Not Assigned"
   ) {
     actions.push(
-      <Button
+      <RoundedButton
         key="submit"
-        styling="primary"
         disabled={loading || !hasName}
         aria-label="Mark as complete"
         onClick={() => setPrompt("SUBMIT_PROMPT")}
         loading={loading === "SUBMIT" ? true : undefined}
       >
         Mark as complete
-      </Button>,
+      </RoundedButton>,
     );
   }
 
@@ -94,26 +92,26 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
   // an action to assign the task.
   if (isClient && stage === "Requested To Start") {
     actions.push(
-      <Button
+      <RoundedButton
         key="assign"
-        styling={"primary"}
         loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
-      </Button>,
+      </RoundedButton>,
     );
 
     if (!hasQuote) {
       actions.push(
-        <Button
+        <RoundedButton
           key="quote"
+          variant="dark"
           disabled={!hasNameAndDescription || loading}
           onClick={handleRequestQuote}
           loading={loading === "REQUEST_QUOTE" ? true : undefined}
         >
           Request Quote
-        </Button>,
+        </RoundedButton>,
       );
     }
   }
@@ -127,17 +125,15 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
     stage === "Not Assigned"
   ) {
     actions.push(
-      <DonutButton
+      <RoundedButton
         size="s"
-        intent="success"
-        appearance="primary"
         key="requestToStart"
         onClick={handleRequestToStart}
         disabled={!hasNameAndDescription || loading}
         loading={loading === "REQUEST_TO_START" ? true : undefined}
       >
         Request to Start Working
-      </DonutButton>,
+      </RoundedButton>,
     );
 
     if (!hasName || !hasDescription) {
@@ -160,97 +156,88 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
   if (isClient && stage === "Not Assigned") {
     if (!hasQuote) {
       actions.push(
-        <Button
+        <RoundedButton
           key="quote"
-          styling="primary"
           disabled={!hasNameAndDescription || loading}
           onClick={handleRequestQuote}
           loading={loading === "REQUEST_QUOTE" ? true : undefined}
         >
           Request Quote
-        </Button>,
+        </RoundedButton>,
       );
     }
 
     actions.push(
-      <Button
+      <RoundedButton
         key="assign"
         disabled={!hasNameAndDescription || loading}
-        styling={hasQuote && "primary"}
+        styling={hasQuote ? "primary" : "dark"}
         loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
-      </Button>,
+      </RoundedButton>,
     );
   }
 
   if (isClient && stage === "Quote Requested") {
     actions.push(
-      <Button
+      <RoundedButton
         key="quote"
-        styling="primary"
         disabled={loading}
         loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
-      </Button>,
+      </RoundedButton>,
     );
   }
 
   if (isClient && stage === "Quote Provided") {
     actions.push(
-      <Button
+      <RoundedButton
         key="quote"
-        styling="primary"
         disabled={loading}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
         loading={loading === "ASSIGN" ? true : undefined}
       >
         Assign Task
-      </Button>,
+      </RoundedButton>,
     );
   }
 
   if (!isClient && stage === "Assigned") {
     actions.push(
-      <Button
+      <RoundedButton
         key="start"
-        styling="primary"
         disabled={!hasQuote || !hasDueDate || loading}
         onClick={handleStartTask}
         loading={loading === "START_WORKING" ? true : undefined}
       >
         Start Working
-      </Button>,
+      </RoundedButton>,
     );
   }
 
   if (!isClient && stage === "Working") {
     actions.push(
-      <Button
+      <RoundedButton
         key="submit"
-        styling="primary"
         disabled={loading}
         aria-label="Mark as complete"
         onClick={() => setPrompt("SUBMIT_PROMPT")}
         loading={loading === "SUBMIT" ? true : undefined}
       >
         Mark as complete
-      </Button>,
+      </RoundedButton>,
     );
   }
 
   if (isClient && stage === "Submitted") {
     actions.push(
-      <Button
-        key="approve"
-        styling="primary"
-        onClick={() => setPrompt("APPROVE_PROMPT")}
-      >
+      <RoundedButton key="approve" onClick={() => setPrompt("APPROVE_PROMPT")}>
         Approve
-      </Button>,
+      </RoundedButton>,
     );
   }
 

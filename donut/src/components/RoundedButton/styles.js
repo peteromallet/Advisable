@@ -95,6 +95,10 @@ const buttonSize = variant({
       paddingLeft: 20,
       paddingRight: 20,
       fontWeight: 500,
+      svg: {
+        width: 16,
+        height: 16,
+      },
     },
     m: {
       height: 38,
@@ -102,6 +106,10 @@ const buttonSize = variant({
       paddingLeft: 20,
       paddingRight: 20,
       fontWeight: 500,
+      svg: {
+        width: 20,
+        height: 20,
+      },
     },
     l: {
       height: 48,
@@ -109,6 +117,10 @@ const buttonSize = variant({
       paddingLeft: 28,
       paddingRight: 28,
       fontWeight: 600,
+      svg: {
+        width: 20,
+        height: 20,
+      },
     },
   },
 });
@@ -139,8 +151,7 @@ export const StyledButton = styled.button`
   ${(props) => props.align === "left" && { justifyContent: "flex-start" }}
 
   svg {
-    width: 20px;
-    height: 20px;
+    stroke-width: 2;
   }
 
   &[data-loading="true"] {
