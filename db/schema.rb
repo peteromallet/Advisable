@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_21_060929) do
+ActiveRecord::Schema.define(version: 2020_04_21_061820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -511,6 +511,8 @@ ActiveRecord::Schema.define(version: 2020_04_21_060929) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "description"
+    t.bigint "manually_recommended_project_id"
+    t.index ["manually_recommended_project_id"], name: "index_searches_on_manually_recommended_project_id"
     t.index ["recommended_project_id"], name: "index_searches_on_recommended_project_id"
     t.index ["uid"], name: "index_searches_on_uid"
     t.index ["user_id"], name: "index_searches_on_user_id"
@@ -719,6 +721,7 @@ ActiveRecord::Schema.define(version: 2020_04_21_060929) do
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "users"
   add_foreign_key "reviews", "specialists"
+  add_foreign_key "searches", "off_platform_projects", column: "manually_recommended_project_id"
   add_foreign_key "searches", "users"
   add_foreign_key "skills", "skills", column: "original_id"
   add_foreign_key "specialist_skills", "skills"
