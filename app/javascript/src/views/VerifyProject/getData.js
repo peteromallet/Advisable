@@ -4,7 +4,7 @@ export default gql`
   query previousProject($id: ID!) {
     previousProject(id: $id) {
       id
-      companyName
+      clientName
       contactEmail
       validationStatus
       contactFirstName

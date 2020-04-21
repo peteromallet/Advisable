@@ -21,6 +21,7 @@ test("Submitting the overview step continues to the questions step", async () =>
             questions: [],
             specialist: generateTypes.specialist(),
             project: generateTypes.project({
+              primarySkill: "Testing",
               questions: ["This is the first question?"],
             }),
           }),
@@ -55,7 +56,7 @@ test("Submitting the overview step continues to the questions step", async () =>
     ],
   });
 
-  await app.findByText(/Applying to/i, {}, { timeout: 10000 });
+  await app.findByText(/Testing project/i, {}, { timeout: 10000 });
   const intro = app.getByLabelText(
     "Give a 2-3 line description of your background as it related to this project.",
   );

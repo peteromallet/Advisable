@@ -1,11 +1,13 @@
 import * as React from "react";
-import { Formik } from "formik";
-import { useMutation } from "@apollo/react-hooks";
-import { useRoutedModal, useModal } from "@advisable/donut";
+import { Formik, Form } from "formik";
+import { useMutation, useApolloClient } from "@apollo/react-hooks";
+import { Text, useModal } from "@advisable/donut";
 import FETCH_APPLICATION from "../fetchApplication.js";
 import UPDATE_APPLICATION from "../updateApplication.js";
 import { useNotifications } from "../../../components/Notifications";
-import PreviousProjectForm from "../../../components/PreviousProjectForm";
+import PreviousProjectFormModal, {
+  usePreviousProjectModal,
+} from "../../../components/PreviousProjectFormModal";
 import NoReferences from "./NoReferences";
 import PreviousProjects from "./PreviousProjects";
 import ConfirmationModal from "./ConfirmationModal";
@@ -19,18 +21,14 @@ const References = ({
   currentStep,
   location,
 }) => {
+  const client = useApolloClient();
   const { applicationId } = match.params;
   const notifications = useNotifications();
   const confirmationModal = useModal();
   const specialist = application.specialist;
   const { previousProjects } = application.specialist;
   const [updateApplication, { loading }] = useMutation(UPDATE_APPLICATION);
-  const projectModal = useRoutedModal(
-    `/invites/${applicationId}/apply/references/new_project/client`,
-    {
-      returnLocation: `/invites/${applicationId}/apply/references`,
-    },
-  );
+  const newProjectModal = usePreviousProjectModal("/previous_projects/new");
 
   const handleSubmit = async (values, formik) => {
     if (values.references.length <= 1) {
@@ -74,7 +72,24 @@ const References = ({
     });
   };
 
-  const handleNewProject = () => {
+  const handleNewProject = (project) => {
+    const previous = client.readQuery({
+      query: FETCH_APPLICATION,
+      variables: { id: applicationId },
+    });
+    previous.application.specialist.previousProjects.nodes.unshift(project);
+    client.writeQuery({
+      query: FETCH_APPLICATION,
+      variables: { id: applicationId },
+      data: previous,
+    });
+  };
+
+  const handlePublishProject = (formik) => (project) => {
+    formik.setFieldValue(
+      "references",
+      formik.values.references.concat(project.id),
+    );
     notifications.notify(
       "We have sent an email with details on how to validate this project. In the meantime, you can add more references.",
       { duration: 4000 },
@@ -88,58 +103,61 @@ const References = ({
   return (
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
       {(formik) => (
-        <>
+        <Form>
+          <Text
+            mb="xs"
+            as="h1"
+            fontSize="28px"
+            color="blue900"
+            fontWeight="semibold"
+            letterSpacing="-0.02em"
+          >
+            References
+          </Text>
+          <Text lineHeight="m" color="neutral700" mb="l">
+            Previous projects are the most effective way to validate your
+            experience and suitability for a project. Please select the relevant
+            projects below to attach to this application. The average successful
+            application attaches at least 2 previous projects to their
+            application.
+          </Text>
+
           <ConfirmationModal
             formik={formik}
             loading={loading}
             modal={confirmationModal}
-            onAddReference={projectModal.show}
+            newProjectModal={newProjectModal}
             onSubmit={() => submit(formik.values)}
             noOfAvailableProjects={previousProjects.length}
           />
 
-          <PreviousProjectForm
-            modal={projectModal}
-            specialist={application.specialist.airtableId}
-            pathPrefix={`/invites/${applicationId}/apply/references`}
-            onSuccess={handleNewProject}
-            mutationUpdate={(proxy, response) => {
-              const previousProject =
-                response.data.createPreviousProject.previousProject;
-              formik.setFieldValue(
-                "references",
-                formik.values.references.concat(previousProject.id),
-              );
-              const data = proxy.readQuery({
-                query: FETCH_APPLICATION,
-                variables: { id: applicationId },
-              });
-              data.application.specialist.previousProjects.nodes.unshift(
-                previousProject,
-              );
-              proxy.writeQuery({ query: FETCH_APPLICATION, data });
-            }}
+          <PreviousProjectFormModal
+            modal={newProjectModal}
+            onCreate={handleNewProject}
+            onPublish={handlePublishProject(formik)}
+            specialistId={application.specialist.id}
           />
 
-          {specialist.previousProjects.nodes.length > 0 ? (
+          {specialist.previousProjects.nodes.length === 0 && (
+            <NoReferences
+              newProjectModal={newProjectModal}
+              confirmationModal={confirmationModal}
+            />
+          )}
+
+          {specialist.previousProjects.nodes.length > 0 && (
             <PreviousProjects
+              modal={newProjectModal}
               steps={steps}
               onBack={goBack}
               formik={formik}
-              initialValues={{}}
               onSubmit={handleSubmit}
-              onAdd={projectModal.show}
               application={application}
               currentStep={currentStep}
               previousProjects={specialist.previousProjects.nodes}
             />
-          ) : (
-            <NoReferences
-              onSkip={confirmationModal.show}
-              openAddReferenceModal={projectModal.show}
-            />
           )}
-        </>
+        </Form>
       )}
     </Formik>
   );

@@ -1,12 +1,18 @@
 import React from "react";
-import { Box, Text, RoundedButton, Modal } from "@advisable/donut";
+import {
+  Box,
+  Text,
+  RoundedButton,
+  Modal,
+  DialogDisclosure,
+} from "@advisable/donut";
 
 const ConfirmationModal = ({
   modal,
   formik,
   onSubmit,
   loading,
-  onAddReference,
+  newProjectModal,
   noOfAvailableProjects,
 }) => {
   const noOfSelectedProjects = formik.values.references.length;
@@ -32,14 +38,15 @@ const ConfirmationModal = ({
           relevant previous projects they have completed.
         </Text>
         {noOfSelectedProjects === 0 && noOfAvailableProjects === 0 && (
-          <RoundedButton
+          <DialogDisclosure
+            as={RoundedButton}
             mr="xs"
             type="button"
             variant="dark"
-            onClick={onAddReference}
+            {...newProjectModal}
           >
             Add a Reference
-          </RoundedButton>
+          </DialogDisclosure>
         )}
 
         {noOfSelectedProjects === 0 && noOfAvailableProjects > 0 && (
@@ -54,9 +61,18 @@ const ConfirmationModal = ({
         )}
 
         {noOfSelectedProjects > 0 && (
-          <RoundedButton mr="xs" type="button" onClick={onAddReference}>
+          <DialogDisclosure
+            as={RoundedButton}
+            mr="xs"
+            type="button"
+            {...newProjectModal}
+            onClick={() => {
+              newProjectModal.show();
+              modal.hide();
+            }}
+          >
             Add Another Project
-          </RoundedButton>
+          </DialogDisclosure>
         )}
         <RoundedButton
           variant="dark"

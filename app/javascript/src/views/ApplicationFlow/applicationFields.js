@@ -22,11 +22,12 @@ export default gql`
       id
       bio
       airtableId
-      previousProjects {
+      previousProjects(includeDrafts: true) {
         nodes {
           id
           title
           excerpt
+          draft
         }
       }
     }

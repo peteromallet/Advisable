@@ -87,22 +87,24 @@ const AutocompleteDesktop = (props) => {
           >
             {(downshift) => (
               <AutocompleteStyles {...rest} {...downshift.getRootProps()}>
-                <Label
-                  as="label"
-                  fontSize="s"
-                  color="neutral.8"
-                  fontWeight="medium"
-                  {...downshift.getLabelProps()}
-                >
-                  {label}
-                </Label>
+                {label && (
+                  <Label
+                    as="label"
+                    fontSize="s"
+                    color="neutral.8"
+                    fontWeight="medium"
+                    {...downshift.getLabelProps()}
+                  >
+                    {label}
+                  </Label>
+                )}
                 {description && (
                   <Text
-                    mb="s"
+                    mb="12px"
                     mt="-4px"
                     fontSize="xs"
                     lineHeight="xs"
-                    color="neutral.6"
+                    color="neutral600"
                   >
                     {description}
                   </Text>

@@ -9,10 +9,12 @@ export default gql`
       }
     }
     skills {
+      id
       label: name
       value: name
     }
     industries {
+      id
       label: name
       value: name
     }

@@ -56,6 +56,20 @@ const VARIANTS = {
       background: ${lighten(0.02, theme.colors.blue[7])};
     }
   `,
+  green: css`
+    color: white;
+    background: ${theme.colors.cyan600};
+
+    &:not(:disabled):hover {
+      color: white;
+      background: ${theme.colors.cyan700};
+    }
+
+    &:not(:disabled):active {
+      color: white;
+      background: ${theme.colors.cyan800};
+    }
+  `,
   subtle: css`
     color: ${theme.colors.blue[7]};
     background: ${theme.colors.blue[0]};
@@ -80,18 +94,21 @@ const buttonSize = variant({
       fontSize: 14,
       paddingLeft: 20,
       paddingRight: 20,
+      fontWeight: 500,
     },
     m: {
       height: 38,
       fontSize: 15,
       paddingLeft: 20,
       paddingRight: 20,
+      fontWeight: 500,
     },
     l: {
       height: 48,
-      fontSize: 16,
+      fontSize: 17,
       paddingLeft: 28,
       paddingRight: 28,
+      fontWeight: 600,
     },
   },
 });
@@ -106,7 +123,6 @@ export const StyledButton = styled.button`
   outline: none;
   line-height: 1;
   appearance: none;
-  font-weight: 500;
   user-select: none;
   position: relative;
   border-radius: 30px;

@@ -4,7 +4,7 @@ class Types::PreviousProject < Types::BaseType
   field :goal, String, null: true
   field :excerpt, String, null: true
   field :description, String, null: true
-  field :company_name, String, null: false
+  field :client_name, String, null: false
   field :company_type, String, null: false
   field :specialist, Types::SpecialistType, null: false
   field :reviews, [Types::Review], null: false
@@ -17,9 +17,29 @@ class Types::PreviousProject < Types::BaseType
   field :contact_email, String, null: true
   field :contact_first_name, String, null: true
   field :contact_last_name, String, null: true
+  field :contact_name, String, null: true
+  field :contact_job_title, String, null: true
+  field :contact_relationship, String, null: true
+  field :confidential, Boolean, null: false
+  field :draft, Boolean, null: false
+  field :public_use, Boolean, null: false
+  field :images, [Types::PreviousProjectImage], null: false
+  field :cover_photo, Types::PreviousProjectImage, null: true
+
+  def images
+    object.images.order(position: :asc)
+  end
 
   def id
     object.uid
+  end
+
+  def draft
+    object.draft || false
+  end
+
+  def public_use
+    object.public_use || false
   end
 
   def on_platform
@@ -27,14 +47,21 @@ class Types::PreviousProject < Types::BaseType
   end
 
   def title
-    "#{object.primary_skill.try(:name)} with #{company_name}"
+    return "Project with #{client_name}" if object.primary_skill.nil?
+    "#{object.primary_skill.try(:name)} with #{client_name}"
   end
 
   def excerpt
     object.description.try(:truncate, 160)
   end
 
-  def company_name
+  def confidential
+    object.confidential || false
+  end
+
+  def client_name
+    return object.client_name if object.draft
+
     if object.confidential
       return(
         "#{object.primary_industry.try(:name)} #{

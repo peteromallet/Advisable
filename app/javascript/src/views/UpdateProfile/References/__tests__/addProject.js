@@ -1,17 +1,35 @@
-import { repeat } from "lodash";
-import { fireEvent } from "@testing-library/react";
+import {
+  fireEvent,
+  renderRoute,
+  mockMutation,
+  waitForElementToBeRemoved,
+} from "test-utils";
 import viewer from "../../../../graphql/queries/viewer";
-import renderApp from "../../../../testHelpers/renderApp";
 import generateTypes from "../../../../__mocks__/graphqlFields";
 import GET_PROJECTS from "../previousProjects";
-import FETCH_DATA from "../../../../components/PreviousProjectForm/getData";
-import CREATE_PROJECT from "../../../../components/PreviousProjectForm/createPreviousProject";
+import {
+  SELECT_DATA,
+  CREATE_PREVIOUS_PROJECT,
+  UPDATE_PREVIOUS_PROJECT,
+  PUBLISH_PREVIOUS_PROJECT,
+} from "../../../../components/PreviousProjectFormModal/queries";
 
 test("Adds a previous project", async () => {
   const specialist = generateTypes.specialist();
   const skill = generateTypes.skill();
   const industry = generateTypes.industry();
-  const description = repeat("description", 50);
+
+  let project = generateTypes.previousProject({
+    id: "pre_1",
+    draft: true,
+    primaryIndustry: industry,
+    industries: [industry],
+    title: "This is the new project",
+    goal: null,
+    contactName: null,
+    contactJobTitle: null,
+    contactRelationship: null,
+  });
 
   const apiMocks = [
     {
@@ -42,33 +60,37 @@ test("Adds a previous project", async () => {
     },
     {
       request: {
-        query: FETCH_DATA,
+        query: SELECT_DATA,
       },
       result: {
         data: {
-          skills: [skill],
-          industries: [industry],
+          skills: [
+            {
+              ...skill,
+              value: skill.name,
+              label: skill.name,
+            },
+          ],
+          industries: [
+            {
+              ...industry,
+              value: industry.name,
+              label: industry.name,
+            },
+          ],
         },
       },
     },
     {
       request: {
-        query: CREATE_PROJECT,
+        query: CREATE_PREVIOUS_PROJECT,
         variables: {
           input: {
             clientName: "Test inc",
             confidential: false,
             industries: [industry.name],
             primaryIndustry: industry.name,
-            skills: [skill.name],
-            primarySkill: skill.name,
-            description: description,
             companyType: "Individual Entrepreneur",
-            publicUse: true,
-            contactName: "Test Person",
-            contactJobTitle: "CEO",
-            contactRelationship: "They managed the project",
-            goal: "Generate Leads",
             specialist: specialist.id,
           },
         },
@@ -78,52 +100,101 @@ test("Adds a previous project", async () => {
           __typename: "Mutation",
           createPreviousProject: {
             __typename: "CreatePreivousProjectPayload",
-            previousProject: generateTypes.previousProject({
-              primaryskill: skill,
-              skills: [skill],
-              title: "This is the new project",
-            }),
+            previousProject: project,
           },
         },
       },
     },
+    mockMutation(
+      UPDATE_PREVIOUS_PROJECT,
+      {
+        previousProject: "pre_1",
+        description: "Description",
+        skills: [skill.name],
+        primarySkill: skill.name,
+        goal: "Generate Leads",
+        publicUse: true,
+      },
+      {
+        updatePreviousProject: {
+          __typename: "UpdatePreviousProjectPayload",
+          previousProject: {
+            ...project,
+            skills: [skill],
+            primarySkill: skill,
+            goal: "Generate Leads",
+            publicUse: true,
+          },
+        },
+      },
+    ),
+    mockMutation(
+      PUBLISH_PREVIOUS_PROJECT,
+      {
+        previousProject: "pre_1",
+        contactName: "John Doe",
+        contactJobTitle: "CEO",
+        contactRelationship: "They managed the project",
+      },
+      {
+        publishPreviousProject: {
+          __typename: "UpdatePreviousProjectPayload",
+          previousProject: {
+            ...project,
+            draft: false,
+            contactName: "John Doe",
+            contactJobTitle: "CEO",
+            contactRelationship: "They managed the project",
+          },
+        },
+      },
+    ),
   ];
 
-  const { findByText, findByLabelText, findByPlaceholderText } = renderApp({
+  const app = renderRoute({
     route: "/profile/references",
     graphQLMocks: apiMocks,
   });
 
-  const button = await findByLabelText(
+  const button = await app.findAllByLabelText(
     "Add a previous project",
     {},
     { timeout: 5000 },
   );
-  fireEvent.click(button);
-  const clientName = await findByLabelText("Client Name");
+  fireEvent.click(button[0]);
+  const clientName = await app.findByLabelText("Company Name");
   fireEvent.change(clientName, { target: { value: "Test inc" } });
-  let next = await findByLabelText("Continue");
-  fireEvent.click(next);
-  const industryField = await findByPlaceholderText("e.g Financial Services");
+  const industryField = await app.findByPlaceholderText(
+    "Search for an industry",
+  );
   fireEvent.click(industryField);
   fireEvent.keyDown(industryField, { key: "ArrowDown" });
   fireEvent.keyDown(industryField, { key: "Enter" });
-  const skillField = await findByPlaceholderText("e.g Facebook Marketing");
+  let next = await app.findByLabelText("Continue");
+  fireEvent.click(next);
+
+  const description = await app.findByLabelText("Project description");
+  fireEvent.change(description, { target: { value: "Description" } });
+  const skillField = await app.findByPlaceholderText("Search for a skill");
   fireEvent.click(skillField);
   fireEvent.keyDown(skillField, { key: "ArrowDown" });
   fireEvent.keyDown(skillField, { key: "Enter" });
-  next = await findByLabelText("Continue");
+  next = await app.findByLabelText("Continue");
   fireEvent.click(next);
-  const overview = await findByPlaceholderText("Project overview...");
-  fireEvent.change(overview, { target: { value: description } });
-  next = await findByLabelText("Continue");
+
+  next = await app.findByLabelText("Skip");
   fireEvent.click(next);
-  const contactName = await findByPlaceholderText("Contact Name");
-  fireEvent.change(contactName, { target: { value: "Test Person" } });
-  const role = await findByPlaceholderText("e.g Head of Marketing");
-  fireEvent.change(role, { target: { value: "CEO" } });
-  const complete = await findByLabelText("Add Previous Project");
-  fireEvent.click(complete);
-  const project = await findByText("This is the new project");
-  expect(project).toBeInTheDocument();
+
+  fireEvent.change(app.getByLabelText("Contact Name"), {
+    target: { value: "John Doe" },
+  });
+  fireEvent.change(app.getByLabelText("Contact Job Title"), {
+    target: { value: "CEO" },
+  });
+  next = await app.findByLabelText("Publish Project");
+  fireEvent.click(next);
+  await waitForElementToBeRemoved(next);
+
+  const projectTitle = app.getByText(project.title);
+  expect(projectTitle).toBeInTheDocument();
 });

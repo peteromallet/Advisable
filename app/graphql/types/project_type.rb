@@ -23,7 +23,7 @@ class Types::ProjectType < Types::BaseType
   field :applications_open, Boolean, null: false
   field :industry, String, null: true
   field :company_type, String, null: true
-  
+
   field :deposit_payment_intent, Types::PaymentIntentType, null: true
 
   field :applications, [Types::ApplicationType, null: true], null: true do
@@ -37,9 +37,7 @@ class Types::ProjectType < Types::BaseType
   # we are moving the industry data from the project to the client contact
   # record so first check for it there before falling back to the project.
   def industry
-    if object.user.try(:industry)
-      return object.user.industry.name
-    end
+    return object.user.industry.name if object.user.try(:industry)
 
     object.industry
   end
@@ -54,35 +52,33 @@ class Types::ProjectType < Types::BaseType
   # candidates plus any applications that have been rejected or featured.
   def applications(status: nil)
     base = object.applications.not_hidden
-    applications = (base.rejected.or(base.featured) + base.not_final.top_three).uniq
+    applications =
+      (base.rejected.or(base.featured) + base.not_final.top_three).uniq
 
     if status
-      applications = applications.select do |a|
-        status.include?(a.status)
-      end
+      applications = applications.select { |a| status.include?(a.status) }
     end
 
     applications
   end
 
-  def deposit_payment_intent 
+  def deposit_payment_intent
     if object.deposit_payment_intent_id
       return Stripe::PaymentIntent.retrieve(object.deposit_payment_intent_id)
     end
 
-    intent = Stripe::PaymentIntent.create({
-      currency: "usd",
-      amount: object.deposit_owed,
-      customer: object.user.stripe_customer_id,
-      setup_future_usage: "off_session",
-      metadata: {
-        payment_type: "deposit",
-        project: object.uid
-      }
-    }, {
-      idempotency_key: "deposit_#{object.uid}"
-    })
-    
+    intent =
+      Stripe::PaymentIntent.create(
+        {
+          currency: 'usd',
+          amount: object.deposit_owed,
+          customer: object.user.stripe_customer_id,
+          setup_future_usage: 'off_session',
+          metadata: { payment_type: 'deposit', project: object.uid }
+        },
+        { idempotency_key: "deposit_#{object.uid}" }
+      )
+
     object.update_columns(deposit_payment_intent_id: intent.id)
     intent
   end

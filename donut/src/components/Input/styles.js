@@ -1,34 +1,38 @@
-import styled from "styled-components";
-import { space } from "styled-system";
+import styled, { css } from "styled-components";
+import { margin } from "styled-system";
 import theme from "../../theme";
+
+const StyledInput_WithError = css`
+  border: 2px solid ${theme.colors.red200};
+  background: ${theme.colors.red50};
+`;
 
 export const StyledInput = styled.input`
   margin: 0;
   outline: none;
   font-size: 16px;
+  font-weight: 500;
+  box-shadow: none;
   border-radius: 8px;
+  appearance: none;
   padding: 8px 12px 10px 12px;
   color: ${theme.colors.neutral[9]};
   background: ${theme.colors.neutral[1]};
-  width: ${props => props.width || "100%"};
-  border: 1px solid ${theme.colors.neutral[1]};
-  transition: border-color 200ms, box-shadow 200ms;
+  width: ${(props) => props.width || "100%"};
+  border: 2px solid ${theme.colors.neutral[1]};
 
-  ${space}
+  ${margin}
 
   &::placeholder {
     color: ${theme.colors.neutral[6]};
   }
 
-  &:hover {
-    border-color: ${theme.colors.neutral[2]};
-    background-color: ${theme.colors.neutral[2]};
+  &:focus {
+    border-color: ${theme.colors.blue800};
+    background: ${theme.colors.neutral50};
   }
 
-  &:focus {
-    border-color: ${theme.colors.blue[7]};
-    box-shadow: 0 0 0 1px ${theme.colors.blue[7]};
-  }
+  ${(props) => props.error && StyledInput_WithError};
 `;
 
 export const StyledInputDecorator = styled.div`
@@ -65,7 +69,7 @@ export const StyledInputDecorations = styled.div`
   display: flex;
 
   ${StyledInputDecorationsChildren} {
-    fle-grow: 1;
+    flex-grow: 1;
     flex-shrink: 1;
     position: relative;
 

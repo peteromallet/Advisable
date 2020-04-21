@@ -25,7 +25,7 @@ const ProjectValidationPrompt = ({ project }) => {
           </Text>
         </Box>
       </Box>
-      <CopyURL bg="white">{`${location.origin}/verify_project/${project.uid}`}</CopyURL>
+      <CopyURL bg="white">{`${location.origin}/verify_project/${project.id}`}</CopyURL>
     </Box>
   );
 };

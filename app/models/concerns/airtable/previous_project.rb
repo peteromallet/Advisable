@@ -25,6 +25,7 @@ class Airtable::PreviousProject < Airtable::Base
     opp.confidential = fields['Okay with naming client'] != 'Yes'
 
     opp.hide_from_profile = fields['Hide From Profile'] == 'Yes'
+    opp.draft = fields['Draft'] == 'Yes'
 
     opp.public_use = true if self['Public Use'] == 'Yes'
     opp.public_use = false if self['Public Use'] == 'No'
@@ -59,6 +60,7 @@ class Airtable::PreviousProject < Airtable::Base
     self['Company Type'] = project.company_type
     self['Contact Relationship'] = project.contact_relationship
     self['Application'] = [project.application.try(:airtable_id)].compact
+    self['Draft'] = project.draft ? 'Yes' : 'No'
 
     unless project.public_use.nil?
       self['Public Use'] = 'Yes' if project.public_use == true
