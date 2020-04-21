@@ -1,22 +1,12 @@
 import * as React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import {
-  Card,
-  Text,
-  RoundedButton,
-  useRoutedModal,
-  Icon,
-} from "@advisable/donut";
+import { Text } from "@advisable/donut";
 import Loading from "../../../components/Loading";
-import PreviousProjects from "../../../components/PreviousProjects";
-import PreviousProjectForm from "../../../components/PreviousProjectForm";
 import PREVIOUS_PROJECTS from "./previousProjects";
+import PreviousProjectsList from "./PreviousProjectsList";
 
 const References = () => {
-  const { data, loading } = useQuery(PREVIOUS_PROJECTS);
-  const modal = useRoutedModal("/profile/references/new_project/client", {
-    returnLocation: "/profile/references",
-  });
+  const { data, loading, error } = useQuery(PREVIOUS_PROJECTS);
 
   if (loading) return <Loading />;
 
@@ -40,29 +30,11 @@ const References = () => {
         projects.
       </Text>
 
-      <RoundedButton mb="xl" onClick={modal.show} prefix={<Icon icon="plus" />}>
-        Add a previous project
-      </RoundedButton>
-
-      <PreviousProjectForm
-        modal={modal}
-        specialist={data.viewer.id}
-        pathPrefix="/profile/references"
-        mutationUpdate={(proxy, response) => {
-          const data = proxy.readQuery({ query: PREVIOUS_PROJECTS });
-          const project = response.data.createPreviousProject.previousProject;
-          data.viewer.previousProjects.nodes.unshift(project);
-          proxy.writeQuery({ query: PREVIOUS_PROJECTS, data });
-        }}
-      />
-
-      <Card px="l">
-        <PreviousProjects
-          loading={data.loading}
-          specialistId={data.viewer.airtableId}
-          previousProjects={data?.viewer.previousProjects.nodes}
+      {!loading && !error && (
+        <PreviousProjectsList
+          previousProjects={data.viewer.previousProjects.nodes}
         />
-      </Card>
+      )}
     </>
   );
 };

@@ -87,3 +87,4 @@ export function renderRoute(config) {
 
 // re-export everything
 export * from "@testing-library/react";
+export * from "./apolloMocks";

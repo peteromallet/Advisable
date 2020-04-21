@@ -7,7 +7,7 @@ export const StyledSelect = styled.div`
   ${space}
 
   position: relative;
-  width: ${props => props.width || "100%"};
+  width: ${(props) => props.width || "100%"};
 `;
 
 export const StyledSelectArrow = styled.div`
@@ -17,7 +17,7 @@ export const StyledSelectArrow = styled.div`
   display: flex;
   position: absolute;
   align-items: center;
-  color: ${theme.colors.neutral[6]};
+  color: ${theme.colors.neutral400};
 `;
 
 const placeholderStyles = css`
@@ -26,7 +26,10 @@ const placeholderStyles = css`
 
 export const StyledSelectInput = styled(StyledInput).attrs({ as: "select" })`
   appearance: none;
-  ${props => props.placeholderSelected && placeholderStyles};
+  font-weight: 500;
+  color: ${theme.colors.neutral900};
+
+  ${(props) => props.placeholderSelected && placeholderStyles};
 `;
 
 export default StyledSelect;

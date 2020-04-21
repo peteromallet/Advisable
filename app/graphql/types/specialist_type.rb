@@ -191,11 +191,13 @@ class Types::SpecialistType < Types::BaseType
         Types::PreviousProject.connection_type,
         null: false do
     argument :include_validation_failed, Boolean, required: false
+    argument :include_drafts, Boolean, required: false
   end
 
-  def previous_projects(include_validation_failed: false)
+  def previous_projects(include_validation_failed: false, include_drafts: false)
     records = object.previous_projects
     records = records.validation_not_failed unless include_validation_failed
+    records = records.published unless include_drafts
     records.order(created_at: :desc)
   end
 

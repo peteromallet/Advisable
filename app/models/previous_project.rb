@@ -7,6 +7,13 @@ class PreviousProject < ApplicationRecord
   belongs_to :application, required: false
 
   has_many :reviews, as: :project
+  has_many :images,
+           class_name: 'PreviousProjectImage',
+           foreign_key: 'off_platform_project_id'
+  has_one :cover_photo,
+          -> { where cover: true },
+          class_name: 'PreviousProjectImage',
+          foreign_key: 'off_platform_project_id'
 
   # Project skills
   has_many :project_skills, as: :project, dependent: :destroy
@@ -30,6 +37,8 @@ class PreviousProject < ApplicationRecord
   scope :validation_not_failed, -> { where.not(validation_status: 'Failed') }
   scope :on_platform, -> { where.not(application_id: nil) }
   scope :not_hidden, -> { where(hide_from_profile: [nil, false]) }
+  scope :published, -> { where(draft: [false, nil]) }
+  scope :draft, -> { where(draft: true) }
 
   # Every time a project is created, updated or destroyed we want to update the
   # associated specialists project count.
@@ -41,7 +50,9 @@ class PreviousProject < ApplicationRecord
   end
 
   def contact_name
-    "#{contact_first_name} #{contact_last_name}"
+    output = contact_first_name
+    output += " #{contact_last_name}" if contact_first_name.present?
+    output
   end
 
   def contact_name=(name)

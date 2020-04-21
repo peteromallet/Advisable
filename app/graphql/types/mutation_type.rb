@@ -25,6 +25,15 @@ class Types::MutationType < GraphQL::Schema::Object
   field :confirm_project, mutation: Mutations::ConfirmProject
   field :convert_to_self_service, mutation: Mutations::ConvertToSelfService
   field :create_previous_project, mutation: Mutations::CreatePreviousProject
+  field :update_previous_project, mutation: Mutations::UpdatePreviousProject
+  field :publish_previous_project, mutation: Mutations::PublishPreviousProject
+
+  field :create_previous_project_image,
+        mutation: Mutations::CreatePreviousProjectImage
+  field :update_previous_project_image,
+        mutation: Mutations::UpdatePreviousProjectImage
+  field :delete_previous_project_image,
+        mutation: Mutations::DeletePreviousProjectImage
 
   field :login, mutation: Mutations::Login
   field :signup, mutation: Mutations::Signup

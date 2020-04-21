@@ -295,14 +295,6 @@ describe Airtable::Application do
       end
     end
 
-    it "syncs the 'References - Off Platform Projects' column" do
-      project = create(:previous_project)
-      create(:application_reference, application: application, project: project)
-      expect { airtable.push(application) }.to change {
-        airtable.fields['References - Off Platform Projects']
-      }.from(nil).to([project.airtable_id])
-    end
-
     context 'when saved changes to rate' do
       it "syncs the 'Hourly Rate For Project'" do
         application.reload

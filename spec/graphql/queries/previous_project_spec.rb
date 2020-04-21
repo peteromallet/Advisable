@@ -11,7 +11,7 @@ describe Types::PreviousProject do
           goal
           excerpt
           description
-          companyName
+          clientName
           companyType
           validationStatus
           onPlatform
@@ -53,7 +53,7 @@ describe Types::PreviousProject do
     end
 
     it 'returns the company name' do
-      expect(response['data']['previousProject']['companyName']).to eq(
+      expect(response['data']['previousProject']['clientName']).to eq(
         previous_project.client_name
       )
     end
@@ -71,7 +71,7 @@ describe Types::PreviousProject do
     end
 
     it 'masks the company name' do
-      expect(response['data']['previousProject']['companyName']).to eq(
+      expect(response['data']['previousProject']['clientName']).to eq(
         "#{previous_project.primary_industry.name} #{
           previous_project.company_type
         }"

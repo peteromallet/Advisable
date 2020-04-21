@@ -23,7 +23,7 @@ function SearchRecommendationDetails({ data }) {
           <Text fontWeight="medium" color="neutral900" mb="xxs">
             {review.name}, {review.role}
           </Text>
-          <Text color="neutral600">{project.companyName}</Text>
+          <Text color="neutral600">{project.clientName}</Text>
         </Box>
       )}
       <Text fontSize="l" mb="xs" fontWeight="medium" color="neutral900">

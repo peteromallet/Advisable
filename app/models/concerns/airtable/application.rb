@@ -131,13 +131,6 @@ class Airtable::Application < Airtable::Base
     end
     self['Trial Program'] = application.trial_program ? 'Yes' : 'No'
 
-    references_off_platform_project_ids =
-      application.references.where(project_type: 'PreviousProject').map do |r|
-        r.project.airtable_id
-      end
-    self['References - Off Platform Projects'] =
-      references_off_platform_project_ids
-
     if application.saved_change_to_rate?
       self['Hourly Rate For Project'] = application.rate.try(:to_f)
     end
