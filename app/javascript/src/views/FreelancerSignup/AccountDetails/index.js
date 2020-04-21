@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { Formik, Form } from "formik";
 import queryString from "query-string";
 import { useMutation } from "@apollo/react-hooks";

@@ -1,4 +1,4 @@
-import { find } from "lodash";
+import { find } from "lodash-es";
 import * as React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";

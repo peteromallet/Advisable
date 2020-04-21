@@ -1,10 +1,9 @@
-import find from "lodash/find";
-import filter from "lodash/filter";
-import { matchPath } from 'react-router-dom'
+import { find, filter } from "lodash-es";
+import { matchPath } from "react-router-dom";
 import Terms from "./Terms";
 import Deposit from "./Deposit";
 import Questions from "./Questions";
-import ProjectSkill from './ProjectSkill';
+import ProjectSkill from "./ProjectSkill";
 import ProjectGoals from "./ProjectGoals";
 import CompanyOverview from "./CompanyOverview";
 import ProjectOverview from "./ProjectOverview";
@@ -31,14 +30,14 @@ const STEPS = [
     title: "What skill are you looking for?",
     path: "/project_setup",
     component: ProjectSkill,
-    enabled: project => !project
+    enabled: (project) => !project,
   },
   {
     title: "What skill are you looking for?",
     exact: true,
     path: "/project_setup/:projectID",
     component: ProjectSkill,
-    enabled: project => project
+    enabled: (project) => project,
   },
   {
     title: "Company Overview",
@@ -48,54 +47,54 @@ const STEPS = [
   {
     title: "Project Overview",
     path: "/project_setup/:projectID/project_overview",
-    component: ProjectOverview
+    component: ProjectOverview,
   },
   {
     title: "Project Goals",
     path: "/project_setup/:projectID/goals",
-    component: ProjectGoals
+    component: ProjectGoals,
   },
   {
     title: "Specialist Overview",
     path: "/project_setup/:projectID/specialist_overview",
-    component: SpecialistOverview
+    component: SpecialistOverview,
   },
   {
     title: "Must-have Characteristics",
     path: "/project_setup/:projectID/must_have",
-    component: MustHaveCharacteristics
+    component: MustHaveCharacteristics,
   },
   {
     title: "Nice-to-have Characteristics",
     path: "/project_setup/:projectID/nice_to_have",
-    component: NiceToHaveCharacteristics
+    component: NiceToHaveCharacteristics,
   },
   {
     title: "Qualification Questions",
     path: "/project_setup/:projectID/questions",
-    component: Questions
+    component: Questions,
   },
   {
     title: "Terms & Conditions",
     path: "/project_setup/:projectID/terms",
-    component: Terms
+    component: Terms,
   },
   {
     title: "Recruitment Deposit",
     path: "/project_setup/:projectID/deposit",
     component: Deposit,
-    enabled: project => project && project.depositOwed > 0
+    enabled: (project) => project && project.depositOwed > 0,
   },
   {
     path: "/project_setup/:projectID/confirm",
-    component: SubmitConfirmation
-  }
+    component: SubmitConfirmation,
+  },
 ];
 
 // Returns an array of steps for a given project. Any steps that have an
 // 'enabled' function that returns false will be excluded.
-export const stepsForProject = project => {
-  return filter(STEPS, route => {
+export const stepsForProject = (project) => {
+  return filter(STEPS, (route) => {
     if (route.enabled) {
       return route.enabled(project);
     }
@@ -105,12 +104,12 @@ export const stepsForProject = project => {
 
 // Returns the route config for the current step based on the current URL
 export const currentStep = () => {
-  return find(STEPS, route => {
+  return find(STEPS, (route) => {
     return matchPath(window.location.pathname, {
       path: route.path,
       exact: route.exact,
-    })
+    });
   });
 };
 
-export default STEPS
+export default STEPS;

@@ -1,4 +1,4 @@
-import { sortBy } from "lodash";
+import { sortBy } from "lodash-es";
 
 const TIMEZONES = [
   "Europe/Andorra",
@@ -351,6 +351,6 @@ const TIMEZONES = [
   "Africa/Johannesburg",
 ];
 
-const SORTED = sortBy(TIMEZONES, t => t);
+const SORTED = sortBy(TIMEZONES, (t) => t);
 
 export default SORTED;

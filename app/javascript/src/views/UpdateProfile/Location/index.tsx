@@ -2,7 +2,7 @@
 // settings
 import * as React from "react";
 import { Formik, Form } from "formik";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Text from "../../../components/Text";
 import Card from "../../../components/Card";

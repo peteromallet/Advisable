@@ -1,5 +1,5 @@
 import React from "react";
-import { filter } from "lodash";
+import { filter } from "lodash-es";
 import Layout from "../../components/Layout";
 import Candidate from "./components/Candidate";
 import NoApplicants from "./components/NoCandidates";
@@ -16,7 +16,7 @@ const Applications = ({ data, match }) => {
     <Layout.Main>
       {applications.length > 0 ? (
         <div>
-          {applications.map(application => (
+          {applications.map((application) => (
             <Candidate
               key={application.id}
               project={data.project}

@@ -1,6 +1,6 @@
 import React from "react";
 import { rgba } from "polished";
-import { minBy, maxBy } from "lodash";
+import { minBy, maxBy } from "lodash-es";
 import { motion } from "framer-motion";
 import {
   Box,

@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { Text, Button } from "@advisable/donut";

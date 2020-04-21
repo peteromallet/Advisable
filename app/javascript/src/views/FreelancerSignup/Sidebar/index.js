@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { Box } from "@advisable/donut";
 import Testimonial from "./Testimonial";
 import OpenProject from "./OpenProject";

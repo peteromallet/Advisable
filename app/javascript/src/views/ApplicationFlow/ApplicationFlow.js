@@ -1,6 +1,6 @@
 import * as React from "react";
 import Sticky from "../../components/Sticky";
-import { isEmpty, filter } from "lodash";
+import { isEmpty, filter } from "lodash-es";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Back from "../../components/Back";
 import Steps from "../../components/Steps";

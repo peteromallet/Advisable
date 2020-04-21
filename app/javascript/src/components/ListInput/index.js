@@ -1,36 +1,35 @@
 import React from "react";
-import uniqueID from "lodash/uniqueId";
+import { uniqueId } from "lodash-es";
 import styled from "styled-components";
 import TextField from "src/components/TextField";
 import InputError from "src/components/InputError";
 import InputLabel from "src/components/InputLabel";
-import { withSpacing, extractSpacingProps } from 'src/components/Spacing';
+import { withSpacing, extractSpacingProps } from "src/components/Spacing";
 
-const Wrapper = withSpacing(styled.div``)
+const Wrapper = withSpacing(styled.div``);
 
 const ListItem = styled.div`
   margin-bottom: 8px;
 
-  &:last-child { margin-bottom: 0 }
-`
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
 
 class ListInput extends React.Component {
   static defaultProps = {
-    value: []
+    value: [],
   };
 
   state = {
-    items: [
-      ...this.props.value,
-      ""
-    ]
-  }
+    items: [...this.props.value, ""],
+  };
 
   componentWillMount() {
-    this.id = this.props.id || uniqueID("input");
+    this.id = this.props.id || uniqueId("input");
   }
 
-  handleChange = index => e => {
+  handleChange = (index) => (e) => {
     const value = e.target.value;
     const items = this.state.items.map((v, i) => {
       if (index === i) return value;
@@ -50,7 +49,7 @@ class ListInput extends React.Component {
       items.splice(index, 1);
     }
 
-    this.setState({ items })
+    this.setState({ items });
     this.props.onChange(items.filter(Boolean));
   };
 
@@ -60,19 +59,19 @@ class ListInput extends React.Component {
     return (
       <Wrapper {...extractSpacingProps(this.props)}>
         {label && <InputLabel htmlFor={this.id}>{label}</InputLabel>}
-          {this.state.items.map((v, i) => (
-            <ListItem key={i}>
-              <TextField
-                multiline
-                value={v}
-                minRows={1}
-                autoHeight
-                name={`${this.props.name}[${i}]`}
-                placeholder={this.props.placeholder}
-                onChange={this.handleChange(i)}
-              />
-            </ListItem>
-          ))}
+        {this.state.items.map((v, i) => (
+          <ListItem key={i}>
+            <TextField
+              multiline
+              value={v}
+              minRows={1}
+              autoHeight
+              name={`${this.props.name}[${i}]`}
+              placeholder={this.props.placeholder}
+              onChange={this.handleChange(i)}
+            />
+          </ListItem>
+        ))}
         {error && <InputError>{error}</InputError>}
       </Wrapper>
     );

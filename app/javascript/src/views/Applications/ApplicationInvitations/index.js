@@ -1,11 +1,11 @@
 import * as React from "react";
-import { filter } from "lodash";
+import { filter } from "lodash-es";
 import { Box, Text } from "@advisable/donut";
 import Invitation from "./Invitation";
 import Loading from "./Loading";
 import { InvitationsWrapper, Invitations } from "./styles";
 
-const ApplicationInvitations = props => {
+const ApplicationInvitations = (props) => {
   if (props.loading) return <Loading />;
 
   // We filter the application recrods by status so that if the status
@@ -37,7 +37,7 @@ const ApplicationInvitations = props => {
       </Box>
       <InvitationsWrapper>
         <Invitations>
-          {filtered.map(application => (
+          {filtered.map((application) => (
             <Invitation
               key={application.id}
               application={application}

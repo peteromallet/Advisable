@@ -1,7 +1,7 @@
 // Renders the loaded state for when a freelancer is viewing an active
 // application
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { Box } from "@advisable/donut";
 import { matchPath } from "react-router-dom";
 import Layout from "../../components/Layout";
@@ -37,7 +37,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
   const TutorialComponent =
     tutorial.name === "flexibleProjects" ? FlexibleTutorial : FixedTutorial;
 
-  const handleTaskClick = task => {
+  const handleTaskClick = (task) => {
     history.replace(`/clients/${application.airtableId}/tasks/${task.id}`);
   };
 
@@ -49,7 +49,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
     history.replace(match.url);
   };
 
-  const addNewTaskToCache = task => {
+  const addNewTaskToCache = (task) => {
     let newData = client.readQuery({
       query: FETCH_APPLICATION,
       variables: {
@@ -76,7 +76,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
     history.replace(`/clients/${application.airtableId}/tasks/${task.id}`);
   };
 
-  const handleDeleteTask = task => {
+  const handleDeleteTask = (task) => {
     let newData = client.readQuery({
       query: FETCH_APPLICATION,
       variables: {
@@ -84,7 +84,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
       },
     });
 
-    newData.application.tasks = data.application.tasks.filter(t => {
+    newData.application.tasks = data.application.tasks.filter((t) => {
       return t.id !== task.id;
     });
 

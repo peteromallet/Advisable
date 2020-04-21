@@ -1,5 +1,5 @@
 import React from "react";
-import { times } from "lodash";
+import { times } from "lodash-es";
 import Box from "../Box";
 import VerticalLayout from "./";
 
@@ -21,7 +21,7 @@ const Footer = () => (
 export const verticalLayout = () => {
   return (
     <VerticalLayout header={<Header />} footer={<Footer />}>
-      {times(100, n => {
+      {times(100, (n) => {
         return (
           <Box bg="neutral.2" key={n}>
             Ths is the content It will fill the remaining space

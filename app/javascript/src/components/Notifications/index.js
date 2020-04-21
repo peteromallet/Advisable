@@ -1,5 +1,5 @@
 import React from "react";
-import uniqueId from "lodash/uniqueId";
+import { uniqueId } from "lodash-es";
 import { useTransition, animated } from "react-spring";
 import { Container } from "./styles";
 import Notification from "./Notification";
@@ -13,24 +13,24 @@ export const NotificationsProvider = ({ children }) => {
   const notify = (content, opts = {}) => {
     const id = uniqueId("notification");
     const duration = opts["duration"] || 3000;
-    setQueue(items => [...items, { id, content }]);
+    setQueue((items) => [...items, { id, content }]);
     setTimeout(() => remove(id), duration);
   };
 
-  const remove = id => {
-    setQueue(items => items.filter(i => i.id !== id));
+  const remove = (id) => {
+    setQueue((items) => items.filter((i) => i.id !== id));
   };
 
   const transitions = useTransition(
     queue,
-    item => {
+    (item) => {
       return item.id;
     },
     {
       from: { transform: "translate3d(100%, 0, 0)", opacity: 0 },
       enter: { transform: "translate3d(0, 0, 0)", opacity: 1 },
       leave: { transform: "translate3d(100%, 0, 0)", opacity: 0 },
-    }
+    },
   );
 
   return (

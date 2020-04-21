@@ -1,5 +1,5 @@
 import * as React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { Route } from "react-router-dom";
 import Sticky from "../../components/Sticky";
 import { Text, Padding } from "../../../../../donut/src";

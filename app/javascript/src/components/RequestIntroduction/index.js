@@ -1,5 +1,5 @@
 import React from "react";
-import filter from "lodash/filter";
+import { filter } from "lodash-es";
 import { Formik } from "formik";
 import moment from "moment-timezone";
 import { useQuery, useMutation } from "@apollo/react-hooks";

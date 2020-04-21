@@ -1,8 +1,6 @@
 // Renders the navigation for the project candidates view
 import React from "react";
-import get from "lodash/get";
-import filter from "lodash/filter";
-import countBy from "lodash/countBy";
+import { get, filter, countBy } from "lodash-es";
 import { Text, Icon } from "@advisable/donut";
 import Sticky from "../../../components/Sticky";
 import pluralize from "src/utilities/pluralize";

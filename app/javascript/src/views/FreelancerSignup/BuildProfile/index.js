@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { Formik, Form, Field } from "formik";
 import { Button, Text, Box, Checkbox } from "@advisable/donut";

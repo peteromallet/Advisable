@@ -1,6 +1,6 @@
 // Renders the freelancer signup flow.
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { useQuery } from "@apollo/react-hooks";
 import { useTheme, Box } from "@advisable/donut";
 import { Switch, Route, Redirect, matchPath } from "react-router-dom";

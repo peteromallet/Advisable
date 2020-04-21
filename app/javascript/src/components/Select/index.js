@@ -1,5 +1,5 @@
 import React from "react";
-import uniqueID from "lodash/uniqueId";
+import { uniqueId } from "lodash-es";
 import { Text } from "@advisable/donut";
 import { Select, Wrapper, SelectWrapper, Arrows } from "./styles.js";
 import InputLabel from "src/components/InputLabel";
@@ -8,7 +8,7 @@ import { extractSpacingProps } from "src/components/Spacing";
 
 class SelectComponent extends React.Component {
   state = {
-    id: this.props.id || uniqueID("Select"),
+    id: this.props.id || uniqueId("Select"),
   };
 
   componentDidMount() {
@@ -55,7 +55,7 @@ class SelectComponent extends React.Component {
       </option>
     );
 
-    const optionsMarkup = options.map(option => {
+    const optionsMarkup = options.map((option) => {
       if (typeof option === "string") {
         return (
           <option key={option} value={option}>
@@ -88,7 +88,7 @@ class SelectComponent extends React.Component {
             id={this.state.id}
             name={name}
             value={finalValue}
-            ref={c => (this.select = c)}
+            ref={(c) => (this.select = c)}
             defaultValue={defaultValue}
             onChange={onChange}
             onFocus={onFocus}

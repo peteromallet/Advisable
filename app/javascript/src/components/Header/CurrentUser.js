@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import { get } from "lodash-es";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import * as Sentry from "@sentry/browser";

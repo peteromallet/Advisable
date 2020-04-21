@@ -1,6 +1,5 @@
 import React from "react";
-import get from "lodash/get";
-import countBy from "lodash/countBy";
+import { get, countBy } from "lodash-es";
 import { useQuery } from "@apollo/react-hooks";
 import { NavLink } from "react-router-dom";
 import Icon from "src/components/Icon";

@@ -1,4 +1,4 @@
-module.exports = function(api) {
+module.exports = function (api) {
   var validEnv = ["development", "test", "production"];
   var currentEnv = api.env();
   var isDevelopmentEnv = api.env("development");
@@ -11,7 +11,7 @@ module.exports = function(api) {
         '`BABEL_ENV` environment variables. Valid values are "development", ' +
         '"test", and "production". Instead, received: ' +
         JSON.stringify(currentEnv) +
-        "."
+        ".",
     );
   }
 
@@ -83,6 +83,7 @@ module.exports = function(api) {
           removeImport: true,
         },
       ],
+      require("babel-plugin-lodash").default,
     ].filter(Boolean),
   };
 };

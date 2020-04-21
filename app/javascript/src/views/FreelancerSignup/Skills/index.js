@@ -1,6 +1,6 @@
 import React from "react";
 import gql from "graphql-tag";
-import { get, sortBy } from "lodash";
+import { get, sortBy } from "lodash-es";
 import { Formik, Form } from "formik";
 import { useQuery } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";

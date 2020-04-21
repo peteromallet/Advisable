@@ -1,5 +1,5 @@
 import React from "react";
-import { find } from "lodash";
+import { find } from "lodash-es";
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Text, Icon, RoundedButton, Link } from "@advisable/donut";
 import generateID from "../../utilities/generateID";

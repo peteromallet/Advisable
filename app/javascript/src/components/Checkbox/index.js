@@ -1,7 +1,7 @@
 // DEPRECATED: You should use the checkbox component inside of the donut
 // component lib instead.
 import React from "react";
-import uniqueId from "lodash/uniqueId";
+import { uniqueId } from "lodash-es";
 import { Text } from "@advisable/donut";
 import { extractSpacingProps } from "src/components/Spacing";
 import InputLabel from "src/components/InputLabel";

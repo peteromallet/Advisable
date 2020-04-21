@@ -1,8 +1,8 @@
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { useEffect } from "react";
 import usePrevious from "./usePrevious";
 
-const bootIntercom = viewer => {
+const bootIntercom = (viewer) => {
   if (!window.Intercom) return null;
 
   let data = {

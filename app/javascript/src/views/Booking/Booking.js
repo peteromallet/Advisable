@@ -1,5 +1,5 @@
 import * as React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { Box } from "@advisable/donut";
 import { useApolloClient } from "@apollo/react-hooks";
 import {

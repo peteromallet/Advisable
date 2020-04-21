@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { Button, Tooltip, Box, Icon } from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -69,7 +69,7 @@ const Sidebar = ({ data, history, tutorial, match }) => {
               <>
                 <Route
                   path={`${match.path}/stop`}
-                  render={route => (
+                  render={(route) => (
                     <StopWorkingModal
                       isOpen
                       application={application}
@@ -132,7 +132,7 @@ const Sidebar = ({ data, history, tutorial, match }) => {
               >
                 <Tooltip
                   content={t(
-                    `projectTypes.${application.projectType}.clientDescription`
+                    `projectTypes.${application.projectType}.clientDescription`,
                   )}
                 >
                   <Box display="flex" alignItems="center">

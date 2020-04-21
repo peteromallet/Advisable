@@ -1,5 +1,5 @@
 import React from "react";
-import { isObject } from "lodash";
+import { isObject } from "lodash-es";
 import { Link } from "react-router-dom";
 import { DialogDisclosure } from "reakit/Dialog";
 import { useLocation, useHistory, useRouteMatch } from "react-router-dom";

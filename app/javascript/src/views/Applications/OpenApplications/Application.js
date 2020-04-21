@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import { get } from "lodash-es";
 import * as React from "react";
 import { Text } from "@advisable/donut";
 import * as moment from "moment-timezone";

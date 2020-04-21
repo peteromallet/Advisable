@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { useQuery } from "@apollo/react-hooks";
 import Loading from "./Loading";
 import JobListing from "./JobListing";

@@ -1,5 +1,5 @@
 import moment from "moment";
-import { uniqueId } from "lodash";
+import { uniqueId } from "lodash-es";
 import React, { Component } from "react";
 import { TimeCell } from "./styles";
 
@@ -20,21 +20,21 @@ class AvailabilityTimeCell extends Component {
     return false;
   }
 
-  handleMouseOver = e => {
+  handleMouseOver = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (this.disabled) return;
     this.props.onMouseOver(this.props.cell);
   };
 
-  handleMouseDown = e => {
+  handleMouseDown = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (this.disabled) return;
     this.props.onMouseDown(this.props.cell);
   };
 
-  handleTouchStart = e => {
+  handleTouchStart = (e) => {
     e.preventDefault();
 
     const position = {
@@ -44,7 +44,7 @@ class AvailabilityTimeCell extends Component {
     this.setState({ firstTouch: position, lastTouch: position });
   };
 
-  handleTouchMove = e => {
+  handleTouchMove = (e) => {
     const position = {
       x: e.touches[0].clientX,
       y: e.touches[0].clientY,
@@ -52,7 +52,7 @@ class AvailabilityTimeCell extends Component {
     this.setState({ lastTouch: position });
   };
 
-  handleTouchEnd = e => {
+  handleTouchEnd = (e) => {
     e.preventDefault();
     if (!this.state.firstTouch || !this.state.lastTouch) return;
     const xDiff = Math.abs(this.state.lastTouch.x - this.state.firstTouch.x);
@@ -73,7 +73,7 @@ class AvailabilityTimeCell extends Component {
     const time = this.props.time;
     const plusHour = moment(time).add(1, "hour");
     return `${time.format("ha")} to ${plusHour.format("ha")} on ${time.format(
-      "Do MMMM YYYY"
+      "Do MMMM YYYY",
     )}`;
   }
 
@@ -89,7 +89,7 @@ class AvailabilityTimeCell extends Component {
         isSelected={this.props.isSelected}
         aria-label={this.label}
         isHighlighted={this.props.isHighlighted}
-        ref={c => (this.cell = c)}
+        ref={(c) => (this.cell = c)}
       >
         {!this.disabled && (
           <div>

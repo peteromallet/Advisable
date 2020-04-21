@@ -1,6 +1,6 @@
 import React from "react";
 import gql from "graphql-tag";
-import { find } from "lodash";
+import { find } from "lodash-es";
 import { rgba } from "polished";
 import styled, { css } from "styled-components";
 import { theme, Icon } from "@advisable/donut";

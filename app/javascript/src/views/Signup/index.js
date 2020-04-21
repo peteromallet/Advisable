@@ -1,6 +1,6 @@
 // Renders the login page
 import React from "react";
-import get from "lodash/get";
+import { get } from "lodash-es";
 import { Formik } from "formik";
 import queryString from "query-string";
 import { Redirect } from "react-router-dom";

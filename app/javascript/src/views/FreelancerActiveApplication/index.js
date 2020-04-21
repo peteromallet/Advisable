@@ -1,7 +1,7 @@
 // Renders the view for when a freelancer is viewing an application with a
 // status of "Working".
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { useQuery } from "@apollo/react-hooks";
 import Loading from "./Loading";
 import NotFound from "../NotFound";

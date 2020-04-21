@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import queryString from "query-string";
 import { useTranslation } from "react-i18next";
 import { useLocation, Redirect } from "react-router-dom";

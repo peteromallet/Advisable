@@ -1,10 +1,10 @@
 import React from "react";
-import unqiueId from "lodash/uniqueId";
+import { uniqueId } from "lodash-es";
 import InputDescription from "../InputDescription";
 import { Radio as RadioStyles, Label, Input, Value, Circle } from "./styles";
 
 const Radio = ({ label, description, variation, ...rest }) => {
-  const [id, _] = React.useState(rest.id || unqiueId("radio"));
+  const [id, _] = React.useState(rest.id || uniqueId("radio"));
 
   return (
     <RadioStyles>

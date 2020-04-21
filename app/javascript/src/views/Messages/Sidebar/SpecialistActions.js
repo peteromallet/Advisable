@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { Link } from "react-router-dom";
 import { Button } from "@advisable/donut";
 
@@ -19,7 +19,7 @@ const ClientActions = ({ application }) => {
         to={`/invites/${application.airtableId}/apply`}
       >
         Update Application
-      </Button>
+      </Button>,
     );
   }
 
@@ -34,7 +34,7 @@ const ClientActions = ({ application }) => {
         to={`/applications/${application.airtableId}/proposal`}
       >
         Update Proposal
-      </Button>
+      </Button>,
     );
   }
 
@@ -50,7 +50,7 @@ const ClientActions = ({ application }) => {
           to={`/applications/${application.airtableId}/proposal`}
         >
           Send Proposal
-        </Button>
+        </Button>,
       );
     }
 
@@ -65,7 +65,7 @@ const ClientActions = ({ application }) => {
           to={`/interview_request/${application.interview.airtableId}`}
         >
           Schedule Interview
-        </Button>
+        </Button>,
       );
     }
   }
