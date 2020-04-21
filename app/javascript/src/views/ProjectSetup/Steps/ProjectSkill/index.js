@@ -1,24 +1,26 @@
-import React, { Fragment } from "react";
-import find from "lodash/find";
+import React from "react";
 import { Formik } from "formik";
+import { useHistory, useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import Text from "src/components/Text";
+import { Box, Autocomplete, Select } from "@advisable/donut";
+import FormField from "src/components/FormField";
 import Button from "src/components/Button";
 import Loading from "src/components/Loading";
-import FieldRow from "src/components/FieldRow";
 import ButtonGroup from "src/components/ButtonGroup";
-import SuggestedSelect from "src/components/SuggestedSelect";
-import SKILLS from "./skills.graphql";
+import SKILLS from "./skills.js";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ history, match, project }) => {
-  const [mutate] = useMutation(UPDATE_PROJECT);
+export default function ProjectSkillsStep({ project }) {
+  const params = useParams();
+  const history = useHistory();
   const query = useQuery(SKILLS);
+  const [mutate] = useMutation(UPDATE_PROJECT);
 
   if (query.loading) return <Loading />;
 
   let initialValues = {
-    primarySkill: "",
+    skills: project.skills.map((skill) => skill.name),
+    primarySkill: project.primarySkill || "",
   };
 
   if (project) {
@@ -26,60 +28,61 @@ export default ({ history, match, project }) => {
     initialValues.primarySkill = project.primarySkill || "";
   }
 
-  const getSelectedOption = (skills, id) => {
-    if (!id) return null;
-    return find(skills, { value: id });
+  const handleSubmit = async (values) => {
+    await mutate({
+      variables: { input: values },
+    });
+
+    const id = params.projectID;
+    history.push(`/project_setup/${id}/company_overview`);
   };
 
   return (
-    <Fragment>
-      <Text marginBottom="l">
-        Select the primary skill you require from a freelancer in the list
-        below.
-      </Text>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={async (values) => {
-          const response = await mutate({
-            variables: { input: values },
-          });
-
-          let id = match.params.projectID;
-          if (response.data.createProject) {
-            id = response.data.createProject.project.airtableId;
-          }
-          history.push(`/project_setup/${id}/company_overview`);
-        }}
-      >
-        {(formik) => (
-          <form onSubmit={formik.handleSubmit}>
-            <FieldRow>
-              <SuggestedSelect
-                name="skills"
-                options={query.data.skills}
-                value={getSelectedOption(
-                  query.data.skills,
-                  formik.values.primarySkill,
-                )}
-                onBlur={formik.handleBlur}
-                onChange={(skill) =>
-                  formik.setFieldValue("primarySkill", skill)
+    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+      {({ values, ...formik }) => (
+        <form onSubmit={formik.handleSubmit}>
+          <Box mb="xl">
+            <FormField
+              max={5}
+              multiple
+              name="skills"
+              as={Autocomplete}
+              options={query.data.skills}
+              placeholder="Search for a skill"
+              label="Select the primary skill you require from a freelancer in the list below."
+              onChange={(skills) => {
+                if (skills.indexOf(values.primarySkill) === -1) {
+                  formik.setFieldValue("primarySkill", skills[0]);
                 }
-              />
-            </FieldRow>
-            <ButtonGroup>
-              <Button
-                type="submit"
-                size="l"
-                styling="primary"
-                loading={formik.isSubmitting}
+                formik.setFieldValue("skills", skills);
+              }}
+            />
+          </Box>
+          {values.skills.length > 1 && (
+            <Box mb="xl">
+              <FormField
+                as={Select}
+                name="primarySkill"
+                label="Which of these is the primary skill for this project?"
               >
-                Continue
-              </Button>
-            </ButtonGroup>
-          </form>
-        )}
-      </Formik>
-    </Fragment>
+                {values.skills.map((skill) => (
+                  <option key={skill}>{skill}</option>
+                ))}
+              </FormField>
+            </Box>
+          )}
+          <ButtonGroup>
+            <Button
+              size="l"
+              type="submit"
+              styling="primary"
+              loading={formik.isSubmitting}
+            >
+              Continue
+            </Button>
+          </ButtonGroup>
+        </form>
+      )}
+    </Formik>
   );
-};
+}

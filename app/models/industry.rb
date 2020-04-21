@@ -6,7 +6,7 @@ class Industry < ApplicationRecord
 
   before_validation :set_color, on: :create
 
-  scope :active, -> { where(active: [true, nil]) }
+  scope :active, -> { where(active: true) }
 
   COLORS = %w[neutral blue purple cyan green yellow orange red].freeze
 

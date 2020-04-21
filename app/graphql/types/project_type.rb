@@ -3,6 +3,7 @@ class Types::ProjectType < Types::BaseType
   field :airtable_id, String, null: false
   field :name, String, null: false
   field :primary_skill, String, null: true
+  field :skills, [Types::Skill], null: true
   field :currency, String, null: true
   field :status, String, null: true
   field :service_type, String, null: true
