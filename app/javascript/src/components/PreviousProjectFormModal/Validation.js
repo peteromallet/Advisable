@@ -107,7 +107,7 @@ export default function Validation({ data, modal, onPublish }) {
                 type="submit"
                 loading={formik.isSubmitting}
               >
-                Publish Project
+                Submit Project
               </RoundedButton>
             </Form>
           )}
@@ -121,8 +121,8 @@ export default function Validation({ data, modal, onPublish }) {
       >
         <Helper>
           <Helper.Text heading="What's this for?" mb="l">
-            With your permission, Advisable will reach out to this contact to
-            validate your performance on this project.
+            You&apos;ll be given a unique link to share with this reference in
+            order for them to validate this project.
           </Helper.Text>
         </Helper>
       </Box>
