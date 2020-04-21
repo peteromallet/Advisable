@@ -100,9 +100,9 @@ export default function Overview({ modal, data, skills }) {
                 Project Overview
               </Text>
               <Text lineHeight="l" color="neutral600" mb="xl">
-                Previous projects are one of the most effective ways to validate
-                your skills. Advisable uses them to decide what projects to
-                invite you to.
+                Tell us a little more about your involvement in this project.
+                Please provide as specific information as possible about the
+                results of this project.
               </Text>
               <Stack spacing="l" mb="xl">
                 <Box>
@@ -214,7 +214,7 @@ export default function Overview({ modal, data, skills }) {
       >
         <Helper>
           <Helper.Text heading="What's this for?" mb="l">
-            The Advisable team will review and score the information you upload
+            The Advisable team will review and score the information you provide
             here in order to decide whether to propose you to clients.
           </Helper.Text>
           <Helper.Text heading="Who will see this?">

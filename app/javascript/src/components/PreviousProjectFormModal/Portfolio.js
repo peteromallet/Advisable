@@ -99,8 +99,8 @@ export default function Portfolio({ modal, data }) {
           Portfolio
         </Text>
         <Text lineHeight="l" color="neutral600" mb="l">
-          Previous projects are one of the most effective ways to validate your
-          skills. Advisable uses them to decide what projects to invite you to.
+          Add images related to the work you carried out on this project. You
+          can select one mage as the project cover photo.
         </Text>
         <Box mb="xl">
           <CoverPhoto images={images} dispatch={dispatch} />
@@ -135,14 +135,12 @@ export default function Portfolio({ modal, data }) {
       >
         <Helper>
           <Helper.Text heading="What's this for?" mb="l">
-            The Advisable team will review and score the information you upload
-            here in order to decide whether to propose you to clients.
+            The Advisable team will review and score the images you upload here
+            in order to decide whether to propose you to clients.
           </Helper.Text>
           <Helper.Text heading="Who will see this?">
-            This will be seen by potential clients when applying for projects on
-            Advisable. Please provide as specific information as possible about
-            the results of this project. Include URLs and examples of work where
-            possible.
+            The images you upload will be seen by potential clients when
+            applying for projects on Advisable.
           </Helper.Text>
         </Helper>
       </Box>
