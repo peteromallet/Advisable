@@ -4,6 +4,8 @@ class Search < ApplicationRecord
   belongs_to :user
   belongs_to :recommended_project,
              class_name: 'PreviousProject', required: false
+  belongs_to :manually_recommended_project,
+             class_name: 'PreviousProject', required: false
 
   has_many :consultations
 
