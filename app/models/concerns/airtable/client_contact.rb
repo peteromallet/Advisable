@@ -21,12 +21,12 @@ class Airtable::ClientContact < Airtable::Base
   sync_column 'RID', to: :rid
   sync_column 'gclid', to: :gclid
   sync_association 'Industry', to: :industry
+  sync_association 'Owner', to: :sales_person
 
   sync_data do |user|
-    if # sync the address
-       self[
-         'Address'
-       ]
+    if self['Address']
+      # sync the address
+
       user.address = Address.parse(self['Address']).to_h
     end
 

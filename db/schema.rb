@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_17_062529) do
+ActiveRecord::Schema.define(version: 2020_04_21_060929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -660,9 +660,11 @@ ActiveRecord::Schema.define(version: 2020_04_17_062529) do
     t.boolean "payments_setup", default: false
     t.string "time_zone"
     t.string "campaign_medium"
+    t.bigint "sales_person_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"
+    t.index ["sales_person_id"], name: "index_users_on_sales_person_id"
   end
 
   create_table "webhook_configurations", force: :cascade do |t|
@@ -724,4 +726,5 @@ ActiveRecord::Schema.define(version: 2020_04_17_062529) do
   add_foreign_key "specialists", "countries"
   add_foreign_key "users", "countries"
   add_foreign_key "users", "industries"
+  add_foreign_key "users", "sales_people"
 end

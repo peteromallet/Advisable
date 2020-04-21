@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :searches
   has_one :client_user
   has_one :client, through: :client_user
+  belongs_to :sales_person, required: false
   belongs_to :industry, required: false
   belongs_to :country, required: false
 
