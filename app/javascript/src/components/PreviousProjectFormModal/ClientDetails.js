@@ -117,6 +117,7 @@ function IndustriesSelection({ industries }) {
         as={Autocomplete}
         max={3}
         multiple
+        error={null}
         label="What industries does this client work in?"
         options={industries}
         placeholder="Search for an industry"

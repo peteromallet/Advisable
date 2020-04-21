@@ -14,9 +14,9 @@ const FormField = ({ label, as: Component = Input, ...props }) => {
       </Label>
       <Component
         {...field}
-        {...props}
         id={id}
         error={meta.touched && meta.error}
+        {...props}
       />
       {meta.touched && meta.error ? (
         <InputError mt="xs">{meta.error}</InputError>

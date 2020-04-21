@@ -191,7 +191,7 @@ test("Adds a previous project", async () => {
   fireEvent.change(app.getByLabelText("Contact Job Title"), {
     target: { value: "CEO" },
   });
-  next = await app.findByLabelText("Publish Project");
+  next = await app.findByLabelText("Submit Project");
   fireEvent.click(next);
   await waitForElementToBeRemoved(next);
 
