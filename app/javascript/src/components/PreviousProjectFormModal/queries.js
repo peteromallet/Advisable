@@ -30,6 +30,8 @@ const previousProjectFields = gql`
     publicUse
     contactName
     contactJobTitle
+    contactFirstName
+    contactLastName
     contactRelationship
     validationStatus
     images {
