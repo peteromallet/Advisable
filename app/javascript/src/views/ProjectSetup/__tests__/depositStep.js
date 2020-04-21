@@ -16,6 +16,7 @@ test("User can complete deposit step", async () => {
     status: "Brief Pending Confirmation",
     depositOwed: 25000,
     acceptedTerms: true,
+    skills: [],
   });
 
   const { findByText, findByLabelText } = renderApp({
