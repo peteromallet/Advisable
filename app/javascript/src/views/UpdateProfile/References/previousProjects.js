@@ -13,6 +13,9 @@ export default gql`
             draft
             excerpt
             validationStatus
+            contactFirstName
+            contactLastName
+            clientName
             reviews {
               id
               name

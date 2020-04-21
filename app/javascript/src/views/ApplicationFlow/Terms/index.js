@@ -12,10 +12,10 @@ import {
 } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { TextField } from "../../../components";
+import SubmitButton from "../../../components/SubmitButton";
 import SUBMIT_APPLICATION from "../submitApplication";
 import UPDATE_APPLICATION from "../updateApplication";
 import validationSchema from "./validationSchema";
-import Actions from "../Actions";
 
 const numberMask = createNumberMask({ prefix: "" });
 
@@ -47,11 +47,6 @@ function Terms({ match, history, application, steps, currentStep, location }) {
     }
 
     let pathname = `/invites/${applicationId}/apply/sent`;
-    history.push({ ...location, pathname });
-  };
-
-  const goBack = () => {
-    let pathname = `/invites/${applicationId}/apply/references`;
     history.push({ ...location, pathname });
   };
 
@@ -210,16 +205,15 @@ function Terms({ match, history, application, steps, currentStep, location }) {
                   </Tooltip>
                 </Field>
               </Box>
-            </Box>
 
-            <Actions
-              steps={steps}
-              onBack={goBack}
-              label="Submit Application"
-              currentStep={currentStep}
-              application={application}
-              isSubmitting={formik.isSubmitting}
-            />
+              <SubmitButton
+                mt="xl"
+                size="l"
+                suffix={<Icon icon="arrow-right" />}
+              >
+                Submit Application
+              </SubmitButton>
+            </Box>
           </Form>
         )}
       </Formik>

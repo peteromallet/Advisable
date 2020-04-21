@@ -1,11 +1,12 @@
 import * as React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form } from "formik";
-import { Box, Text, Card } from "@advisable/donut";
-import { TextField, ChoiceList } from "../../../components";
+import { Box, Text, Card, Textarea, Icon } from "@advisable/donut";
+import { ChoiceList } from "../../../components";
+import FormField from "../../../components/FormField";
+import SubmitButton from "../../../components/SubmitButton";
 import UPDATE_APPLICATION from "../updateApplication";
 import validationSchema from "./validationSchema";
-import Actions from "../Actions";
 
 function Overview({ application, history, location, steps, currentStep }) {
   const { airtableId } = application;
@@ -50,20 +51,12 @@ function Overview({ application, history, location, steps, currentStep }) {
                 Overview
               </Text>
               <Box mb="m">
-                <TextField
-                  multiline
-                  autoHeight
+                <FormField
+                  minRows={3}
+                  as={Textarea}
                   name="introduction"
-                  description={application.project.specialistDescription}
-                  value={formik.values.introduction}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.introduction && formik.errors.introduction
-                  }
                   label="Give a 2-3 line description of your background as it related to this project."
                   placeholder="Give a 2-3 line description of your background as it related to this project."
-                  charCount={200}
                 />
               </Box>
               <ChoiceList
@@ -83,14 +76,14 @@ function Overview({ application, history, location, steps, currentStep }) {
                   "1 Month+",
                 ]}
               />
+              <SubmitButton
+                mt="l"
+                size="l"
+                suffix={<Icon icon="arrow-right" />}
+              >
+                Next
+              </SubmitButton>
             </Box>
-
-            <Actions
-              steps={steps}
-              currentStep={currentStep}
-              application={application}
-              isSubmitting={formik.isSubmitting}
-            />
           </Form>
         )}
       </Formik>

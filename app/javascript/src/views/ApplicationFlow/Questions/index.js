@@ -3,12 +3,12 @@ import * as React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
-import { Box, Text, Card } from "@advisable/donut";
-import { TextField } from "../../../components";
+import { Box, Text, Card, Textarea, Icon } from "@advisable/donut";
+import FormField from "../../../components/FormField";
+import SubmitButton from "../../../components/SubmitButton";
 import useScrollRestore from "../../../utilities/useScrollRestore";
 import UPDATE_APPLICATION from "../updateApplication";
 import validationSchema from "./validationSchema";
-import Actions from "../Actions";
 
 const Questions = ({
   application,
@@ -142,28 +142,23 @@ const Questions = ({
                 Question {number} of {questions.length}
               </Text>
               <Box mb="m">
-                <TextField
-                  multiline
-                  autoHeight
-                  minRows={10}
+                <FormField
                   name="answer"
+                  minRows={10}
+                  as={Textarea}
                   label={question}
                   placeholder={question}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.answer}
-                  onChange={formik.handleChange}
-                  error={formik.touched.answer && formik.errors.answer}
                 />
               </Box>
-            </Box>
 
-            <Actions
-              steps={steps}
-              currentStep={currentStep}
-              application={application}
-              onBack={() => goBack(formik)}
-              isSubmitting={formik.isSubmitting}
-            />
+              <SubmitButton
+                mt="m"
+                size="l"
+                suffix={<Icon icon="arrow-right" />}
+              >
+                Next
+              </SubmitButton>
+            </Box>
           </Form>
         )}
       </Formik>

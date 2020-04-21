@@ -89,6 +89,7 @@ export default function Validation({ data, modal, onPublish }) {
                   name="contactJobTitle"
                   label="Contact Job Title"
                   placeholder="Contact Job Title"
+                  autoComplete="off"
                 />
                 <FormField
                   as={Select}
