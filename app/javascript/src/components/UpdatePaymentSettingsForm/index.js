@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import { Button, Box, Text } from "@advisable/donut";
@@ -112,13 +112,7 @@ const UpdatePaymentSettingsForm = ({
             will send you an email where you can securely enter your bank
             account details
           </Text>
-          <Button
-            intent="success"
-            appearance="primary"
-            loading={formik.isSubmitting}
-          >
-            {buttonLabel}
-          </Button>
+          <Button loading={formik.isSubmitting}>{buttonLabel}</Button>
         </Form>
       )}
     </Formik>

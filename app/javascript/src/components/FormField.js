@@ -1,7 +1,7 @@
 import React from "react";
 import { useField } from "formik";
 import { Input, Label, InputError } from "@advisable/donut";
-import uniqueId from "lodash/uniqueId";
+import { uniqueId } from "lodash-es";
 
 const FormField = ({ label, as: Component = Input, ...props }) => {
   const [field, meta] = useField(props);

@@ -48,16 +48,16 @@ const CardDetails = ({ data, nextStep }) => {
             paymentMethod={paymentMethodQuery.data.viewer.paymentMethod}
           />
         </Box>
-        <Button size="l" width="100%" mb="xs" onClick={() => setNewCard(true)}>
-          Add a new card
-        </Button>
         <Button
           size="l"
+          variant="subtle"
           width="100%"
-          intent="success"
-          appearance="primary"
-          onClick={nextStep}
+          mb="xs"
+          onClick={() => setNewCard(true)}
         >
+          Add a new card
+        </Button>
+        <Button size="l" width="100%" onClick={nextStep}>
           Continue with this card
         </Button>
       </Card>

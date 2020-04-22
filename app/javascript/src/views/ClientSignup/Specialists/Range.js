@@ -1,15 +1,8 @@
 import React from "react";
 import { rgba } from "polished";
-import { minBy, maxBy } from "lodash";
+import { minBy, maxBy } from "lodash-es";
 import { motion } from "framer-motion";
-import {
-  Box,
-  Circle,
-  theme,
-  RoundedButton,
-  Icon,
-  Text,
-} from "@advisable/donut";
+import { Box, Circle, theme, Button, Icon, Text } from "@advisable/donut";
 import { useHistory, useLocation } from "react-router-dom";
 import currency from "../../../utilities/currency";
 import { StyledPriceRange, StyledPriceRangeBackground } from "./styles";
@@ -96,7 +89,7 @@ const Range = ({ name, icon, specialists, animationDelay }) => {
           <Text fontSize="xxs" color="neutral.7" mb="l">
             Per hour
           </Text>
-          <RoundedButton
+          <Button
             onClick={handleClick}
             suffix={<Icon icon="arrow-right" />}
             variant="dark"
@@ -104,7 +97,7 @@ const Range = ({ name, icon, specialists, animationDelay }) => {
             size="l"
           >
             Continue
-          </RoundedButton>
+          </Button>
         </Box>
         <StyledPriceRangeBackground
           as={motion.div}

@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useLocation, useHistory } from "react-router-dom";
-import { Box, Text, RoundedButton, Icon, Link } from "@advisable/donut";
+import { Box, Text, Button, Icon, Link } from "@advisable/donut";
 import SpecialistCard from "../../../components/SpecialistCard";
 import useScrollRestore from "../../../utilities/useScrollRestore";
 import Heading from "./Heading";
@@ -15,14 +15,14 @@ function SearchResults({ specialists }) {
   const { t } = useTranslation();
   const selected = location.state?.selected || [];
 
-  const selectedFreelancers = specialists.filter(s => {
+  const selectedFreelancers = specialists.filter((s) => {
     return selected.indexOf(s.id) > -1;
   });
 
-  const toggleSelected = id => {
+  const toggleSelected = (id) => {
     let nextSelected;
     if (selected.indexOf(id) > -1) {
-      nextSelected = selected.filter(s => s !== id);
+      nextSelected = selected.filter((s) => s !== id);
     } else {
       nextSelected = [...selected, id];
     }
@@ -83,7 +83,7 @@ function SearchResults({ specialists }) {
               elevation={selected.indexOf(s.id) > -1 ? "l" : "m"}
               borderColor={selected.indexOf(s.id) > -1 && "blue.6"}
               action={
-                <RoundedButton
+                <Button
                   aria-label={`Select ${s.name}`}
                   onClick={() => toggleSelected(s.id)}
                   variant={selected.indexOf(s.id) > -1 ? "primary" : "dark"}
@@ -94,7 +94,7 @@ function SearchResults({ specialists }) {
                   }
                 >
                   {selected.indexOf(s.id) > -1 ? "Added" : "Add"}
-                </RoundedButton>
+                </Button>
               }
             />
           </Box>
@@ -114,13 +114,13 @@ function SearchResults({ specialists }) {
         <Text mb="m" lineHeight="m" fontSize="s">
           Don’t worry, we’ll handpick the perfect specialist for you.
         </Text>
-        <RoundedButton
+        <Button
           variant="subtle"
           onClick={handleContinue}
           suffix={<Icon icon="arrow-right" />}
         >
           Skip
-        </RoundedButton>
+        </Button>
       </Box>
     </Box>
   );

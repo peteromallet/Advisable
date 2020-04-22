@@ -47,14 +47,7 @@ const InvoiceSettings = ({ nextStep }) => {
         {(formik) => (
           <Form>
             <InvoiceFields formik={formik} />
-            <Button
-              mt="m"
-              size="l"
-              type="submit"
-              intent="success"
-              appearance="primary"
-              loading={formik.isSubmitting}
-            >
+            <Button mt="m" size="l" type="submit" loading={formik.isSubmitting}>
               Continue
             </Button>
           </Form>

@@ -93,7 +93,7 @@ export const Button = styled.button`
   font-weight: 600;
   background: white;
   line-height: 28px;
-  border-radius: 6px;
+  border-radius: 16px;
   left: 20px;
   bottom: 20px;
   z-index: 2;

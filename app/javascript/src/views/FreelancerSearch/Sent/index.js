@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Circle, Box, Text, RoundedButton, Icon } from "@advisable/donut";
+import { Circle, Box, Text, Button, Icon } from "@advisable/donut";
 
 const Sent = () => {
   return (
@@ -45,9 +45,9 @@ const Sent = () => {
         transition={{ delay: 0.3 }}
       >
         <Link to="/freelancer_search">
-          <RoundedButton prefix={<Icon icon="search" />} variant="secondary">
+          <Button prefix={<Icon icon="search" />} variant="secondary">
             Make another search
-          </RoundedButton>
+          </Button>
         </Link>
       </motion.div>
     </Box>

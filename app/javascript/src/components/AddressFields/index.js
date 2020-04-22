@@ -1,6 +1,6 @@
 import React from "react";
 import gql from "graphql-tag";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { useQuery } from "@apollo/react-hooks";
 import { connect, Field } from "formik";
 import { Box } from "@advisable/donut";

@@ -1,56 +1,39 @@
-// DEPRECATED: Use RoundedButton instead.
+// Button is a new style of button added to Donut in Nov 2019. It should
+// be used instead of the Button component.
+// TODO: Eventually all buttons should be moved over to use this component and
+// it should simply be renamed to Button.
 import React from "react";
-import Icon from "../Icon";
-import { Button as ButtonStyles, ButtonText, Loading, Dot } from "./styles";
+import {
+  StyledButton,
+  StyledButtonPrefix,
+  StyledButtonSuffix,
+  Loading,
+} from "./styles";
 
-const ICON_SIZES = {
-  l: 22,
-  m: 20,
-  s: 18,
-};
-
-// Renders a button.. obviously
-//
-// == Props ==
-// - appearance: 'default', 'primary' or 'minimal'. This determins the visual
-// styling for the button.
-// - intent: 'default', 'success', 'danger'. The intent prop dtermins the
-// coloring for the button.
-// - icon: Accepts any icon string for feather-icons.
-const Button = React.forwardRef(
-  ({ children, icon, iconRight, loading, size, align, ...rest }, ref) => {
-    return (
-      <ButtonStyles
-        {...rest}
-        ref={ref}
-        size={size}
-        data-align={align}
-        data-right-icon={Boolean(iconRight)}
-        aria-label={rest["aria-label"] || children}
-        data-loading={loading || null}
-      >
-        {loading && (
-          <Loading>
-            <Dot />
-            <Dot />
-            <Dot />
-          </Loading>
-        )}
-        {icon && <Icon icon={icon} width={ICON_SIZES[size]} />}
-        {children && (
-          <ButtonText hasIcon={Boolean(icon)} hasRightIcon={Boolean(iconRight)}>
-            {children}
-          </ButtonText>
-        )}
-        {iconRight && <Icon icon={iconRight} width={ICON_SIZES[size]} />}
-      </ButtonStyles>
-    );
-  }
-);
+const Button = React.forwardRef(function DonutButton(
+  { children, loading, disabled, prefix, suffix, size, ...props },
+  ref,
+) {
+  return (
+    <StyledButton
+      ref={ref}
+      aria-label={children}
+      data-loading={loading}
+      disabled={loading || disabled}
+      buttonSize={size}
+      {...props}
+    >
+      {loading && <Loading />}
+      {prefix && <StyledButtonPrefix>{prefix}</StyledButtonPrefix>}
+      {children}
+      {suffix && <StyledButtonSuffix>{suffix}</StyledButtonSuffix>}
+    </StyledButton>
+  );
+});
 
 Button.defaultProps = {
-  intent: "default",
-  appearance: "default",
+  size: "m",
+  variant: "primary",
 };
 
 export default Button;

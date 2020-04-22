@@ -1,5 +1,6 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
+import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form } from "formik";
 import queryString from "query-string";
 import { useMutation } from "@apollo/react-hooks";
@@ -152,9 +153,7 @@ const AccountDetails = ({ specialist, history, location }) => {
             <Button
               size="l"
               type="submit"
-              intent="success"
-              appearance="primary"
-              iconRight="arrow-right"
+              suffix={<ArrowRight />}
               loading={formik.isSubmitting}
             >
               Continue

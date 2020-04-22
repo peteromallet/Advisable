@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
-import { Avatar, Box, Icon, Text, RoundedButton } from "@advisable/donut";
+import { Avatar, Box, Icon, Text, Button } from "@advisable/donut";
 import pluralize from "../../../utilities/pluralize";
 
 const SelectionBar = ({ search, specialists }) => {
@@ -59,9 +59,9 @@ const SelectionBar = ({ search, specialists }) => {
               pathname: `/freelancer_search/${search.id}/availability`,
             }}
           >
-            <RoundedButton size="l" suffix={<Icon icon="arrow-right" />}>
+            <Button size="l" suffix={<Icon icon="arrow-right" />}>
               Continue
-            </RoundedButton>
+            </Button>
           </Link>
         </Box>
       </Box>

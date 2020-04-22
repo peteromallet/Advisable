@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Sentry from "@sentry/browser";
-import { Circle, Box, Icon, Text, RoundedButton } from "@advisable/donut";
+import { Circle, Box, Icon, Text, Button } from "@advisable/donut";
 import CollectFeedback from "./CollectFeedback";
 
 class RootErrorBoundary extends React.Component {
@@ -60,9 +60,9 @@ class RootErrorBoundary extends React.Component {
             the page. You will need to reload the page to upgrade to the new
             version.
           </Text>
-          <RoundedButton size="l" onClick={() => location.reload()}>
+          <Button size="l" onClick={() => location.reload()}>
             Upgrade to new version
-          </RoundedButton>
+          </Button>
         </Box>
       );
     }

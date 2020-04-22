@@ -2,11 +2,9 @@ import React from "react";
 import { Formik } from "formik";
 import { useHistory, useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { Box, Autocomplete, Select } from "@advisable/donut";
+import { Box, Autocomplete, Select, Button } from "@advisable/donut";
 import FormField from "src/components/FormField";
-import Button from "src/components/Button";
 import Loading from "src/components/Loading";
-import ButtonGroup from "src/components/ButtonGroup";
 import SKILLS from "./skills.js";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
@@ -71,16 +69,9 @@ export default function ProjectSkillsStep({ project }) {
               </FormField>
             </Box>
           )}
-          <ButtonGroup>
-            <Button
-              size="l"
-              type="submit"
-              styling="primary"
-              loading={formik.isSubmitting}
-            >
-              Continue
-            </Button>
-          </ButtonGroup>
+          <Button size="l" type="submit" loading={formik.isSubmitting}>
+            Continue
+          </Button>
         </form>
       )}
     </Formik>

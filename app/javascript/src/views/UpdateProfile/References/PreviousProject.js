@@ -3,7 +3,7 @@ import {
   Box,
   Card,
   Text,
-  RoundedButton,
+  Button,
   useModal,
   DialogDisclosure,
 } from "@advisable/donut";
@@ -41,7 +41,7 @@ export default function PreviousProject({ previousProject, editModal }) {
       {previousProject.draft && (
         <DialogDisclosure
           variant="subtle"
-          as={RoundedButton}
+          as={Button}
           {...editModal.atPath(`/previous_projects/${previousProject.id}`)}
         >
           Edit Project
@@ -50,7 +50,7 @@ export default function PreviousProject({ previousProject, editModal }) {
 
       {previousProject.draft === false && (
         <>
-          <DialogDisclosure as={RoundedButton} variant="subtle" {...modal}>
+          <DialogDisclosure as={Button} variant="subtle" {...modal}>
             View Project
           </DialogDisclosure>
 

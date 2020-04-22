@@ -2,9 +2,8 @@ import * as React from "react";
 import { Formik, Form } from "formik";
 import { Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
+import { Button } from "@advisable/donut";
 import Card from "../../components/Card";
-import Button from "../../components/Button";
-import ButtonGroup from "../../components/ButtonGroup";
 import Heading from "../../components/Heading";
 import TextField from "../../components/TextField";
 import { Padding } from "../../components/Spacing";
@@ -58,15 +57,9 @@ const Send = ({ application, history }) => {
                   placeholder="Add a message..."
                 />
               </Padding>
-              <ButtonGroup fullWidth={isMobile}>
-                <Button
-                  loading={formik.isSubmitting}
-                  type="submit"
-                  styling="primary"
-                >
-                  Send Proposal
-                </Button>
-              </ButtonGroup>
+              <Button type="submit" loading={formik.isSubmitting}>
+                Send Proposal
+              </Button>
             </Form>
           )}
         </Formik>

@@ -1,6 +1,5 @@
 import React from "react";
-import sortBy from "lodash/sortBy";
-import filter from "lodash/filter";
+import { sortBy, filter } from "lodash-es";
 import moment from "moment-timezone";
 import { Text, Link, Icon } from "@advisable/donut";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
@@ -9,15 +8,15 @@ import { Times, Time } from "./styles";
 export default function SelectTime(props) {
   const { availability, timeZone, match, clientName } = props;
   const [selectedTimeZone, setTimeZone] = React.useState(
-    timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone
+    timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone,
   );
 
   const date = moment.tz(match.params.date, timeZone);
   const times = sortBy(
-    filter(availability, t => {
+    filter(availability, (t) => {
       return date.isSame(t, "day");
     }),
-    time => moment(time).format("HHmm")
+    (time) => moment(time).format("HHmm"),
   );
 
   return (
@@ -41,10 +40,10 @@ export default function SelectTime(props) {
       </Text>
       <TimeZoneSelect
         value={selectedTimeZone}
-        onChange={timeZone => setTimeZone(timeZone)}
+        onChange={(timeZone) => setTimeZone(timeZone)}
       />
       <Times>
-        {times.map(time => {
+        {times.map((time) => {
           const parsed = moment.tz(time, selectedTimeZone);
           return (
             <Time key={time} to={parsed.toISOString(true)}>

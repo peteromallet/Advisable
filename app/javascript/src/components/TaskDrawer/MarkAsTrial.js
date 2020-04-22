@@ -78,9 +78,9 @@ const MarkAsTrial = ({ task }) => {
         </Text>
       </Box>
       <Button
-        size="xs"
+        size="s"
+        variant="dark"
         type="button"
-        appearance="primary"
         loading={loading}
         onClick={setTrial(true)}
       >

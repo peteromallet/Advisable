@@ -1,5 +1,5 @@
 // Takes a props object and returns a new object with only the stlyed system spacing props
-import omit from "lodash/omit";
+import { omit } from "lodash-es";
 
 const PROPS = [
   "margin",

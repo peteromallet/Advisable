@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/react-hooks";
 import { Box, Text, Modal } from "@advisable/donut";

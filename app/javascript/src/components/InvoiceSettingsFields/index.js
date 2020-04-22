@@ -1,7 +1,7 @@
 import React from "react";
 import * as Yup from "yup";
 import { Field } from "formik";
-import { find, get } from "lodash";
+import { find, get } from "lodash-es";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Box } from "@advisable/donut";

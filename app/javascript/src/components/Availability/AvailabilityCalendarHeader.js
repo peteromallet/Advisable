@@ -1,5 +1,5 @@
 import React from "react";
-import Icon from "src/components/Icon";
+import { ChevronLeft, ChevronRight } from "@styled-icons/feather";
 import { Header, HeaderCell, NavButton } from "./styles";
 import { useBreakpoint } from "@advisable/donut";
 
@@ -19,10 +19,10 @@ const AvailabilityCalendarHeader = ({
         onClick={onPrevious}
         disabled={previousDisabled}
       >
-        <Icon icon="chevron-left" />
+        <ChevronLeft size={20} strokeWidth={2} />
       </NavButton>
       <NavButton type="button" onClick={onNext} next>
-        <Icon icon="chevron-right" />
+        <ChevronRight size={20} strokeWidth={2} />
       </NavButton>
       {dates.map((date, i) => {
         return (

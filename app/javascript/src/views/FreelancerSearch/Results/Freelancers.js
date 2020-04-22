@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useHistory, useLocation, Link as RouterLink } from "react-router-dom";
-import { Box, Text, Icon, Link, RoundedButton } from "@advisable/donut";
+import { Box, Text, Icon, Link, Button } from "@advisable/donut";
 import RequestCallButton from "../RequestCallButton";
 import SpecialistCard from "../../../components/SpecialistCard";
 import SelectionBar from "./SelectionBar";
@@ -78,7 +78,7 @@ const Freelancers = ({ data }) => {
               border="2px solid white"
               borderColor={selectedFreelancers.indexOf(s.id) > -1 && "blue.6"}
               action={
-                <RoundedButton
+                <Button
                   aria-label={`Select ${s.name}`}
                   onClick={handleClickFreelancer(s)}
                   variant={
@@ -95,7 +95,7 @@ const Freelancers = ({ data }) => {
                   }
                 >
                   {selectedFreelancers.indexOf(s.id) > -1 ? "Added" : "Add"}
-                </RoundedButton>
+                </Button>
               }
             />
           </Box>
@@ -111,13 +111,9 @@ const Freelancers = ({ data }) => {
           manager and we’ll identify the perfect person for you.
         </Text>
         <RouterLink to="/freelancer_Search">
-          <RoundedButton
-            mr="s"
-            variant="secondary"
-            prefix={<Icon icon="search" />}
-          >
+          <Button mr="s" variant="secondary" prefix={<Icon icon="search" />}>
             Make another search
-          </RoundedButton>
+          </Button>
         </RouterLink>
         <RequestCallButton>Request a call</RequestCallButton>
       </Box>

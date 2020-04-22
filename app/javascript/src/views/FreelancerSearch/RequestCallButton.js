@@ -1,5 +1,5 @@
 import React from "react";
-import { RoundedButton, Icon } from "@advisable/donut";
+import { Button, Icon } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import calendly from "../../utilities/calendly";
 
@@ -12,19 +12,19 @@ const RequestCallButton = ({ children, ...props }) => {
       {
         full_name: viewer.name,
         email: viewer.email,
-      }
+      },
     );
   };
 
   return (
-    <RoundedButton
+    <Button
       variant="secondary"
       prefix={<Icon icon="phone" />}
       {...props}
       onClick={handleSubmit}
     >
       {children}
-    </RoundedButton>
+    </Button>
   );
 };
 

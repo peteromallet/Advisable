@@ -1,10 +1,10 @@
 import React from "react";
-import { filter } from "lodash";
+import { filter } from "lodash-es";
 import { Text } from "@advisable/donut";
 import TaskList from "../../components/TaskList";
 
 const CompletedTasks = ({ onSelectTask, application }) => {
-  let tasks = filter(application.tasks, t => t.stage === "Approved");
+  let tasks = filter(application.tasks, (t) => t.stage === "Approved");
 
   if (tasks.length === 0) {
     return (

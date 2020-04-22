@@ -1,5 +1,5 @@
 import React from "react";
-import { find } from "lodash";
+import { find } from "lodash-es";
 import Downshift from "downshift";
 
 export const stateChangeTypes = Downshift.stateChangeTypes;

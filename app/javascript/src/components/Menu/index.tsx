@@ -1,5 +1,5 @@
 import * as React from "react";
-import { isFunction } from "lodash";
+import { isFunction } from "lodash-es";
 import Popover from "../Popover";
 import Item from "./Item";
 import Meatballs from "./Meatballs";
@@ -9,7 +9,7 @@ const Menu = ({ children }) => {
   return (
     <Container>
       <Popover placement="bottom-end" trigger={<Meatballs />}>
-        {popover => (
+        {(popover) => (
           <Popout>{isFunction(children) ? children(popover) : children}</Popout>
         )}
       </Popover>

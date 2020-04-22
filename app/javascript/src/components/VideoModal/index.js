@@ -1,7 +1,7 @@
 import React from "react";
 import Text from "../Text";
 import Modal from "../Modal";
-import Button from "../Button";
+import { Button } from "@advisable/donut";
 import Spacing from "../Spacing/Padding";
 
 const VideoModal = ({
@@ -31,7 +31,7 @@ const VideoModal = ({
         allowFullScreen
       />
       <Spacing size="l" css="text-align: center;">
-        <Button size="l" styling="primary" onClick={onDismiss}>
+        <Button size="l" onClick={onDismiss}>
           {buttonLabel || "Okay"}
         </Button>
       </Spacing>

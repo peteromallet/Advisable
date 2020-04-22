@@ -1,5 +1,5 @@
 import React from "react";
-import reduce from "lodash/reduce";
+import { reduce } from "lodash-es";
 import { Avatar } from "./styles";
 
 const Component = ({ name, url, size, ...props }) => {
@@ -17,7 +17,7 @@ const Component = ({ name, url, size, ...props }) => {
     (sum, name) => {
       return `${sum}${name[0]}`;
     },
-    ""
+    "",
   );
 
   let style = {};

@@ -1,14 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import {
-  Box,
-  Text,
-  Select,
-  Stack,
-  Link,
-  Icon,
-  RoundedButton,
-} from "@advisable/donut";
+import { Box, Text, Select, Stack, Link, Icon, Button } from "@advisable/donut";
 import Helper from "./Helper";
 import { usePublishPreviousProject } from "./queries";
 import { verificationValidationSchema } from "./validationSchemas";
@@ -102,13 +94,9 @@ export default function Validation({ data, modal, onPublish }) {
                 </FormField>
               </Stack>
 
-              <RoundedButton
-                size="l"
-                type="submit"
-                loading={formik.isSubmitting}
-              >
+              <Button size="l" type="submit" loading={formik.isSubmitting}>
                 Submit Project
-              </RoundedButton>
+              </Button>
             </Form>
           )}
         </Formik>

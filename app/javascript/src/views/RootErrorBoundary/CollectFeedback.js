@@ -1,6 +1,6 @@
 import React from "react";
 import * as Sentry from "@sentry/browser";
-import { Icon, RoundedButton } from "@advisable/donut";
+import { Icon, Button } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 
 const CollectFeedback = ({ eventId }) => {
@@ -20,13 +20,13 @@ const CollectFeedback = ({ eventId }) => {
   };
 
   return (
-    <RoundedButton
+    <Button
       variant="subtle"
       prefix={<Icon icon="message-circle" />}
       onClick={handleFeedback}
     >
       Report feedback
-    </RoundedButton>
+    </Button>
   );
 };
 

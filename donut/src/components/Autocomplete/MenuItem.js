@@ -1,5 +1,5 @@
 import React from "react";
-import { isArray } from "lodash";
+import { isArray } from "lodash-es";
 import { MenuItem as MenuItemStyles } from "./styles";
 
 const MenuItem = ({ index, data, style }) => {

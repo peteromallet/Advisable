@@ -2,7 +2,7 @@
 import React from "react";
 import Heading from "src/components/Heading";
 import { DialogDisclosure } from "reakit/Dialog";
-import { useModal, RoundedButton } from "@advisable/donut";
+import { useModal, Button } from "@advisable/donut";
 import PreviousProject from "src/components/PreviousProject";
 import PreviousProjectsEmptyState from "src/components/PreviousProjectsEmptyState";
 import PreviousProjectsModal from "../../../../components/PreviousProjectsModal";
@@ -42,7 +42,7 @@ const PreviousProjects = ({ project, application }) => {
           />
           <DialogDisclosure
             size="s"
-            as={RoundedButton}
+            as={Button}
             variant="subtle"
             onClick={allProjectsModal.show}
           >

@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Box, Text, RoundedButton, Link, Icon } from "@advisable/donut";
+import { Box, Text, Button, Link, Icon } from "@advisable/donut";
 import TextField from "../../../components/TextField";
 
 const SaveSearchForm = ({ onSubmit }) => {
@@ -62,7 +62,7 @@ const SaveSearchForm = ({ onSubmit }) => {
         validationSchema={validationSchema}
         validateOnBlur={false}
       >
-        {formik => (
+        {(formik) => (
           <Form>
             <Box mb="xl">
               <motion.div
@@ -92,14 +92,14 @@ const SaveSearchForm = ({ onSubmit }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.15 }}
             >
-              <RoundedButton
+              <Button
                 size="l"
                 type="submit"
                 loading={formik.isSubmitting}
                 suffix={<Icon icon="arrow-right" />}
               >
                 Continue
-              </RoundedButton>
+              </Button>
             </motion.div>
           </Form>
         )}

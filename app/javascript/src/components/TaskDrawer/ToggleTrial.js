@@ -35,16 +35,10 @@ const ToggleWithConfirmation = React.forwardRef(
                 Marking this as a trial task will remove the existing trial
                 offer from the task "{trialTask.name}"
               </Text>
-              <Button
-                onClick={handleUpdate}
-                appearance="primary"
-                intent="success"
-                size="s"
-                mr="xxs"
-              >
+              <Button onClick={handleUpdate} size="s" mr="xxs">
                 Okay
               </Button>
-              <Button onClick={dialog.hide} size="s" ml="xxs">
+              <Button onClick={dialog.hide} size="s" ml="xxs" variant="subtle">
                 Cancel
               </Button>
             </Text>

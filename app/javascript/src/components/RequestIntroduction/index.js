@@ -1,14 +1,14 @@
 import React from "react";
-import filter from "lodash/filter";
+import { filter } from "lodash-es";
 import { Formik } from "formik";
 import moment from "moment-timezone";
+import { Button } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Modal from "src/components/Modal";
 import Text from "src/components/Text";
 import Loading from "src/components/Loading";
 import Spacing from "src/components/Spacing";
 import Heading from "src/components/Heading";
-import Button from "src/components/Button";
 import { withNotifications } from "src/components/Notifications";
 import { Mobile } from "src/components/Breakpoint";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
@@ -110,10 +110,8 @@ function RequestIntroductionModal(props) {
 
                       {!(isMobile && !formik.isValid) && (
                         <Button
-                          primary
                           size="l"
                           type="submit"
-                          block={isMobile}
                           loading={formik.isSubmitting}
                           onClick={() => setSubmitted(true)}
                         >

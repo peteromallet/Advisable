@@ -1,11 +1,10 @@
 // Renders the prompt to submit a task
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
+import { Columns, Button } from "@advisable/donut";
 import Text from "../Text";
 import Slider from "../Slider";
-import Button from "../Button";
 import Heading from "../Heading";
-import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
 import SUBMIT_TASK from "./submitTask";
 import currency from "../../utilities/currency";
@@ -74,19 +73,20 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
                 it.
               </Text>
             </Padding>
-            <ButtonGroup fullWidth>
+            <Columns spacing="xs">
               <Button
+                width="100%"
                 styling="primary"
                 loading={loading}
-                aria-label={
-                  Boolean(task.flexibleEstimate) ? "Continue" : "Complete"
-                }
+                aria-label={task.flexibleEstimate ? "Continue" : "Complete"}
                 onClick={handleConfirmApproved}
               >
-                {Boolean(task.flexibleEstimate) ? "Continue" : "Complete"}
+                {task.flexibleEstimate ? "Continue" : "Complete"}
               </Button>
-              <Button onClick={onClose}>Cancel</Button>
-            </ButtonGroup>
+              <Button width="100%" variant="subtle" onClick={onClose}>
+                Cancel
+              </Button>
+            </Columns>
           </>
         )}
         {step === HOURS_WORKED && (
@@ -134,8 +134,9 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
                 onChange={(e) => setCost(e.target.value)}
               />
             </Padding>
-            <ButtonGroup fullWidth>
+            <Columns spacing="xs">
               <Button
+                width="100%"
                 styling="primary"
                 loading={loading}
                 onClick={submit}
@@ -143,8 +144,10 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
               >
                 Complete
               </Button>
-              <Button onClick={onClose}>Cancel</Button>
-            </ButtonGroup>
+              <Button width="100%" onClick={onClose} variant="subtle">
+                Cancel
+              </Button>
+            </Columns>
           </>
         )}
       </ConfirmationContainer>

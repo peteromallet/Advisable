@@ -1,11 +1,12 @@
 // Renders the sidebar in the freelancer active application view.
 import React from "react";
+import { MessageCircle } from "@styled-icons/feather";
 import Sticky from "../../components/Sticky";
 import { useTranslation } from "react-i18next";
 import Back from "../../components/Back";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
-import Button from "../../components/Button";
+import { Button } from "@advisable/donut";
 import Heading from "../../components/Heading";
 import Padding from "../../components/Spacing/Padding";
 import VideoButton from "../../components/VideoButton";
@@ -36,8 +37,9 @@ const Component = ({ data, tutorial }) => {
         />
         <Padding top="xl">
           <Button
-            block
-            icon="message-circle"
+            width="100%"
+            variant="subtle"
+            prefix={<MessageCircle />}
             onClick={() => setTalkModal(true)}
           >
             Message {application.project.user.firstName}

@@ -4,7 +4,6 @@ import Text from "src/components/Text";
 import Avatar from "src/components/Avatar";
 import Linkify from "linkifyjs/react";
 import Spacing, { Padding } from "src/components/Spacing";
-import Button from "src/components/Button";
 import FeaturedBadge from "src/components/FeaturedBadge";
 import Questions from "./Questions";
 import Skills from "src/components/Skills";
@@ -17,6 +16,7 @@ import {
   Card,
   Name,
   Location,
+  ViewMore,
   CandidateHeader,
   NameAndLocation,
   CandidateHeaderActions,
@@ -71,7 +71,7 @@ const Candidate = ({ application, project }) => {
       </Linkify>
 
       <Padding bottom="xl">
-        <Button blank className="ViewMore" onClick={handleExpand}>
+        <ViewMore className="ViewMore" onClick={handleExpand}>
           {expanded ? (
             <svg width={13} height={6}>
               <path
@@ -90,7 +90,7 @@ const Candidate = ({ application, project }) => {
             </svg>
           )}
           {expanded ? "View Less" : "View More"}
-        </Button>
+        </ViewMore>
       </Padding>
 
       {expanded && (

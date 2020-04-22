@@ -1,4 +1,5 @@
 import React from "react";
+import { ArrowRight } from "@styled-icons/feather";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
@@ -107,9 +108,7 @@ const PaymentMethod = ({ data, nextStep }) => {
               <Button
                 size="l"
                 type="submit"
-                intent="success"
-                appearance="primary"
-                iconRight="arrow-right"
+                suffix={<ArrowRight />}
                 loading={formik.isSubmitting}
               >
                 Continue

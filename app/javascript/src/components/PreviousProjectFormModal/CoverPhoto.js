@@ -1,4 +1,4 @@
-import { find } from "lodash";
+import { find } from "lodash-es";
 import { Box, Text } from "@advisable/donut";
 import React from "react";
 import { StyledCoverPhoto, StyledCoverPhotoTag } from "./styles";

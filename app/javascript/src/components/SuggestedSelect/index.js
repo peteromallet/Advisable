@@ -1,12 +1,12 @@
 import React from "react";
 import { components } from "react-select";
-import { map, isArray, isString, isObject, find } from "lodash";
+import { map, isArray, isString, isObject, find } from "lodash-es";
 import { Select, MenuContainer } from "./styles";
 import InputLabel from "src/components/InputLabel";
 import InputError from "src/components/InputError";
 import InputSubLabel from "src/components/InputSubLabel";
 
-const Menu = props => {
+const Menu = (props) => {
   return (
     <MenuContainer>
       <components.Menu {...props}>{props.children}</components.Menu>
@@ -31,7 +31,7 @@ const SuggestedSelect = ({
   // rather than its value key so we intercept that event passing only the
   // value to the onChange prop rather than the entire object.
   // e.g just "Marketing" instead of  { label: "Marketing", value: "Marketing" }
-  const handleChange = selected => {
+  const handleChange = (selected) => {
     let value;
 
     if (props.isMulti) {
@@ -49,7 +49,7 @@ const SuggestedSelect = ({
   // e.g value="Sales" instead of value={{ label: "Sales", value: "Sales"}}
   let selectedValue = value;
   if (isArray(value)) {
-    selectedValue = map(value, v => {
+    selectedValue = map(value, (v) => {
       if (isObject(v)) return v;
       return find(options, { value: v });
     });
@@ -83,7 +83,7 @@ const SuggestedSelect = ({
         label={label}
         classNamePrefix="SuggestedSelect"
         menuPortalTarget={document.body}
-        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+        styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
         onChange={handleChange}
         components={{ Menu }}
         value={selectedValue}

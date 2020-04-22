@@ -1,7 +1,7 @@
 import React from "react";
-import { find } from "lodash";
+import { find } from "lodash-es";
 import { Link as RouterLink } from "react-router-dom";
-import { Box, Text, Icon, RoundedButton, Link } from "@advisable/donut";
+import { Box, Text, Icon, Button, Link } from "@advisable/donut";
 import generateID from "../../utilities/generateID";
 import CoverPhoto from "./CoverPhoto";
 import ImageTiles from "./ImageTiles";
@@ -115,16 +115,16 @@ export default function Portfolio({ modal, data }) {
         <RouterLink
           to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/validation`}
         >
-          <RoundedButton size="l" mr="xs" suffix={<Icon icon="arrow-right" />}>
+          <Button size="l" mr="xs" suffix={<Icon icon="arrow-right" />}>
             Continue
-          </RoundedButton>
+          </Button>
         </RouterLink>
         <RouterLink
           to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/validation`}
         >
-          <RoundedButton variant="subtle" size="l">
+          <Button variant="subtle" size="l">
             Skip
-          </RoundedButton>
+          </Button>
         </RouterLink>
       </Box>
       <Box

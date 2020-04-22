@@ -1,4 +1,4 @@
-import reduce from "lodash/reduce";
+import { reduce } from "lodash-es";
 import moment from "moment-timezone";
 import React, { useState } from "react";
 import { Text, Modal, useModal } from "@advisable/donut";
@@ -18,7 +18,7 @@ const SelectDay = ({ clientName, availability, timeZone, match }) => {
       }
       return collection;
     },
-    []
+    [],
   );
 
   return (
@@ -48,7 +48,7 @@ const SelectDay = ({ clientName, availability, timeZone, match }) => {
 
       {dates.length > 0 && (
         <>
-          {dates.map(d => {
+          {dates.map((d) => {
             const date = moment.tz(d, timeZone);
             return (
               <Day key={d} to={`${match.url}/${d}`}>

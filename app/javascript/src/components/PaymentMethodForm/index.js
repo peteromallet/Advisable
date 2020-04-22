@@ -72,8 +72,6 @@ const PaymentMethodForm = ({
             size="l"
             width="100%"
             type="submit"
-            intent="success"
-            appearance="primary"
             loading={formik.isSubmitting}
           >
             {buttonLabel || "Continue"}

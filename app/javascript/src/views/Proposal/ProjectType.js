@@ -175,18 +175,14 @@ const ProjectType = ({ history, application }) => {
                   <Box my="l" height={1} bg="neutral.1" />
                 </>
               )}
-              <ButtonGroup fullWidth={isMobile}>
-                <Button
-                  type="submit"
-                  intent="success"
-                  appearance="primary"
-                  aria-label="Continue"
-                  disabled={!formik.isValid}
-                  loading={formik.isSubmitting}
-                >
-                  Continue
-                </Button>
-              </ButtonGroup>
+              <Button
+                type="submit"
+                aria-label="Continue"
+                disabled={!formik.isValid}
+                loading={formik.isSubmitting}
+              >
+                Continue
+              </Button>
             </Padding>
           </Form>
         )}

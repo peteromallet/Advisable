@@ -1,14 +1,13 @@
 import React from "react";
-import { useMutation, Mutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import { Formik } from "formik";
 import Modal from "src/components/Modal";
 import Text from "src/components/Text";
 import Heading from "src/components/Heading";
 import Select from "src/components/Select";
-import Button from "src/components/Button";
+import { Button, Columns } from "@advisable/donut";
 import TextField from "src/components/TextField";
 import { withNotifications } from "src/components/Notifications";
-import ButtonGroup from "src/components/ButtonGroup";
 import validationSchema from "./validationSchema";
 
 import { Container } from "./styles";
@@ -54,12 +53,12 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
     case "I just want to see more candidates": {
       return (
         <React.Fragment>
-          <Text size="s" marginBottom="m" marginTop="m">
+          <Text size="s" marginBottom="l" marginTop="m">
             We encourage you to talk to relevant candidates as they come in.
             This ensures that they’re still available and lets us calibrate the
             search ASAP.
           </Text>
-          <Button onClick={onRequestCall} size="l" type="button" primary>
+          <Button onClick={onRequestCall} size="l" type="button">
             Request Call
           </Button>
         </React.Fragment>
@@ -84,21 +83,26 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
             onChange={formik.handleChange}
             placeholder={PLACEHOLDERS[formik.values.rejectionReason]}
           />
-          <ButtonGroup fullWidth>
+          <Columns spacing="xs">
             <Button
-              primary
-              block
               size="l"
               type="submit"
+              width="100%"
+              variant="dark"
               loading={formik.isSubmitting}
-              disabled={formik.isSubmitting}
             >
               Reject
             </Button>
-            <Button size="l" type="button" block onClick={onClose}>
+            <Button
+              size="l"
+              type="button"
+              width="100%"
+              onClick={onClose}
+              variant="subtle"
+            >
               Cancel
             </Button>
-          </ButtonGroup>
+          </Columns>
         </React.Fragment>
       );
     }

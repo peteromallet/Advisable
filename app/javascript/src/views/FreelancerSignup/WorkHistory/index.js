@@ -7,6 +7,7 @@ import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
 import COMPLETE_SETUP from "../completeSetup";
 import validationSchema from "./validationSchema";
+import { ArrowRight } from "@styled-icons/feather";
 
 const WorkHistory = ({ specialist, history }) => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);
@@ -88,10 +89,8 @@ const WorkHistory = ({ specialist, history }) => {
           </Box>
           <Button
             size="l"
-            intent="success"
-            appearance="primary"
             type="submit"
-            iconRight="arrow-right"
+            suffix={<ArrowRight />}
             loading={formik.isSubmitting}
           >
             Complete Setup

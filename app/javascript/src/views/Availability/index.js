@@ -1,8 +1,8 @@
 import { Formik } from "formik";
+import { Button } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment-timezone";
 import React, { useState } from "react";
-import Button from "src/components/Button";
 import Heading from "src/components/Heading";
 import Loading from "src/components/Loading";
 import Availability from "src/components/Availability";
@@ -69,13 +69,7 @@ const AvailabilityView = ({ match, notifications }) => {
                 />
               </Body>
               <Footer>
-                <Button
-                  type="submit"
-                  size="l"
-                  isLoading={formik.isLoading}
-                  disabled={formik.isLoading}
-                  primary
-                >
+                <Button size="l" type="submit" isLoading={formik.isLoading}>
                   Update Availability
                 </Button>
               </Footer>

@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { Formik, Form, Field } from "formik";
 import { Button, Text, Box, Checkbox } from "@advisable/donut";
@@ -10,6 +10,7 @@ import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
+import { ArrowRight } from "@styled-icons/feather";
 
 export const GET_COUNTRIES = gql`
   {
@@ -134,10 +135,8 @@ const BuildProfile = ({ history, specialist }) => {
           </Box>
           <Button
             size="l"
-            intent="success"
-            appearance="primary"
             type="submit"
-            iconRight="arrow-right"
+            suffix={<ArrowRight />}
             loading={formik.isSubmitting}
           >
             Continue

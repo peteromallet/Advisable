@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { Button, Tooltip, Box, Icon } from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -17,6 +17,7 @@ import { useMobile } from "../../components/Breakpoint";
 import TalkModal from "../../components/TalkModal";
 import ProjectTypeModal from "./ProjectTypeModal";
 import StopWorkingModal from "./StopWorkingModal";
+import { MessageCircle, PauseCircle, Edit } from "react-feather";
 const TALK_MODAL = "TALK_MODAL";
 
 const Sidebar = ({ data, history, tutorial, match }) => {
@@ -55,21 +56,21 @@ const Sidebar = ({ data, history, tutorial, match }) => {
           />
 
           <Padding top="xl">
-            <Padding bottom="s">
-              <Button
-                width="100%"
-                appearance="outlined"
-                icon="message-circle"
-                onClick={() => setModal(TALK_MODAL)}
-              >
-                Message {specialist.firstName}
-              </Button>
-            </Padding>
+            <Button
+              mb="xs"
+              width="100%"
+              align="left"
+              variant="subtle"
+              prefix={<MessageCircle />}
+              onClick={() => setModal(TALK_MODAL)}
+            >
+              Message {specialist.firstName}
+            </Button>
             {application.status === "Working" && (
               <>
                 <Route
                   path={`${match.path}/stop`}
-                  render={route => (
+                  render={(route) => (
                     <StopWorkingModal
                       isOpen
                       application={application}
@@ -79,9 +80,10 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                 />
                 <Button
                   width="100%"
-                  appearance="outlined"
-                  icon="pause-circle"
+                  align="left"
+                  prefix={<PauseCircle />}
                   aria-label="Stop Working"
+                  variant="subtle"
                   onClick={() => history.replace(`${match.url}/stop`)}
                 >
                   Stop Working
@@ -104,9 +106,11 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                   action={
                     <Button
                       size="s"
-                      icon="edit"
+                      variant="subtle"
                       onClick={() => setProjectTypeModal(true)}
-                    />
+                    >
+                      <Edit />
+                    </Button>
                   }
                 >
                   {application.monthlyLimit} hours
@@ -124,15 +128,17 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                 action={
                   <Button
                     size="s"
-                    icon="edit"
+                    variant="subtle"
                     aria-label="Edit project type"
                     onClick={() => setProjectTypeModal(true)}
-                  />
+                  >
+                    <Edit />
+                  </Button>
                 }
               >
                 <Tooltip
                   content={t(
-                    `projectTypes.${application.projectType}.clientDescription`
+                    `projectTypes.${application.projectType}.clientDescription`,
                   )}
                 >
                   <Box display="flex" alignItems="center">
@@ -153,7 +159,9 @@ const Sidebar = ({ data, history, tutorial, match }) => {
               <AttributeList.Item
                 label="Payment Method"
                 action={
-                  <Button onClick={handleEditPayment} icon="edit" size="s" />
+                  <Button variant="subtle" onClick={handleEditPayment} size="s">
+                    <Edit />
+                  </Button>
                 }
               >
                 {get(data, "viewer.projectPaymentMethod")}

@@ -1,9 +1,9 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import { Text, Box, Button } from "@advisable/donut";
+import { Text, Box, Button, Columns } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import Modal from "../../components/Modal";
 
@@ -71,25 +71,24 @@ const StopWorkingModal = ({ isOpen, onClose, application }) => {
                 label="Let us know why you are stopping this work"
                 placeholder={`What is your reason for stopping your work with ${name}`}
               />
-              <Box mt="l" display="flex">
-                <Box width="100%" pr="xxs">
-                  <Button
-                    width="100%"
-                    type="submit"
-                    intent="success"
-                    appearance="primary"
-                    aria-label="Stop Working"
-                    loading={formik.isSubmitting}
-                  >
-                    Stop Working
-                  </Button>
-                </Box>
-                <Box width="100%" pl="xxs">
-                  <Button type="button" width="100%" onClick={onClose}>
-                    Cancel
-                  </Button>
-                </Box>
-              </Box>
+              <Columns mt="l" spacing="xs">
+                <Button
+                  width="100%"
+                  type="submit"
+                  aria-label="Stop Working"
+                  loading={formik.isSubmitting}
+                >
+                  Stop Working
+                </Button>
+                <Button
+                  type="button"
+                  width="100%"
+                  variant="subtle"
+                  onClick={onClose}
+                >
+                  Cancel
+                </Button>
+              </Columns>
               {formik.status && (
                 <Text color="red.6" mt="m">
                   {formik.status}

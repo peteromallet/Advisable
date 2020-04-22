@@ -2,7 +2,7 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { Icon, Box, Text, RoundedButton, Autocomplete } from "@advisable/donut";
+import { Icon, Box, Text, Button, Autocomplete } from "@advisable/donut";
 import { useParams, useLocation, Redirect } from "react-router-dom";
 import Loading from "../../components/Loading";
 import AvailabilityInput from "../../components/Availability";
@@ -142,7 +142,7 @@ const Availability = ({ nextStep, previousStepURL }) => {
                   Please select at least 3 available times
                 </Box>
               )}
-              <RoundedButton
+              <Button
                 type="submit"
                 width={["100%", "auto"]}
                 disabled={formik.values.availability.length < 6}
@@ -150,7 +150,7 @@ const Availability = ({ nextStep, previousStepURL }) => {
                 suffix={<Icon icon="arrow-right" />}
               >
                 Continue
-              </RoundedButton>
+              </Button>
             </Box>
           </Form>
         )}

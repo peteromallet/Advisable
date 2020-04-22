@@ -1,9 +1,8 @@
 // Renders the prompt to assign a task
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
+import { Button } from "@advisable/donut";
 import Text from "../Text";
-import Button from "../Button";
-import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
 import ASSIGN_TASK from "./assignTask.graphql";
 import { Confirmation, ConfirmationContainer } from "./styles";
@@ -48,12 +47,12 @@ const AssignPrompt = ({ task, onClose, onAssign }) => {
             </Text>
           </Padding>
         )}
-        <ButtonGroup fullWidth>
-          <Button loading={loading} onClick={handleAssign} styling="primary">
-            Assign
-          </Button>
-          <Button onClick={onClose}>Cancel</Button>
-        </ButtonGroup>
+        <Button loading={loading} onClick={handleAssign} mr="xs">
+          Assign
+        </Button>
+        <Button onClick={onClose} variant="subtle">
+          Cancel
+        </Button>
       </ConfirmationContainer>
     </Confirmation>
   );

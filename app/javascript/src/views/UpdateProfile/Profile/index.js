@@ -1,5 +1,5 @@
 import React from "react";
-import { get, sortBy } from "lodash";
+import { get, sortBy } from "lodash-es";
 import { Formik, Form, Field } from "formik";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
@@ -163,12 +163,7 @@ const Profile = () => {
                 on advisable.com
               </Field>
             </Box>
-            <Button
-              type="submit"
-              appearance="primary"
-              intent="success"
-              loading={formik.isSubmitting}
-            >
+            <Button type="submit" loading={formik.isSubmitting}>
               Save Changes
             </Button>
           </Card>

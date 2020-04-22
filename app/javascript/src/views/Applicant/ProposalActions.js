@@ -1,7 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router";
-import Button from "../../components/Button";
-import ButtonGroup from "../../components/ButtonGroup";
+import { Button, Stack } from "@advisable/donut";
 import RejectProposalModal from "../../components/RejectProposalModal";
 
 const ProposalActions = ({ application, specialist, history }) => {
@@ -22,10 +21,10 @@ const ProposalActions = ({ application, specialist, history }) => {
         onReject={afterReject}
         onClose={() => setModal(null)}
       />
-      <ButtonGroup fullWidth stack>
+      <Stack spacing="xs">
         <Button
+          width="100%"
           onClick={() => history.push(`/book/${application.airtableId}`)}
-          styling="green"
         >
           {application.trialTask ? (
             <>Start risk-free trial with {specialist.firstName}</>
@@ -33,8 +32,10 @@ const ProposalActions = ({ application, specialist, history }) => {
             <>Start working with {specialist.firstName}</>
           )}
         </Button>
-        <Button onClick={() => setModal("REJECT")}>Reject application</Button>
-      </ButtonGroup>
+        <Button width="100%" variant="dark" onClick={() => setModal("REJECT")}>
+          Reject application
+        </Button>
+      </Stack>
     </>
   );
 };

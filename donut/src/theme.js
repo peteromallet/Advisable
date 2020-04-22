@@ -1,6 +1,5 @@
-import find from "lodash/find";
+import { find, isObject } from "lodash-es";
 import { rgba } from "polished";
-import isObject from "lodash/isObject";
 
 // Breakpoints
 const breakpoints = ["640px", "768px", "1024px", "1280px"];
@@ -242,7 +241,7 @@ const shadows = {
 
 export default {
   background: "default",
-  responsiveProp: prop => {
+  responsiveProp: (prop) => {
     if (!isObject(prop)) return prop;
     let propForBreakpoint = find(prop, (_, breakpoint) => {
       return breakpoints[breakpoint];

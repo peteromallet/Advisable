@@ -1,5 +1,5 @@
 import React from "react";
-import filter from "lodash/filter";
+import { filter } from "lodash-es";
 import Candidate from "../components/Candidate";
 import NoApplicants from "../components/NoCandidates";
 
@@ -10,7 +10,7 @@ const Applicants = ({ data, status, emptyStateText, emptyStateSubText }) => {
     <React.Fragment>
       {applications.length > 0 ? (
         <div>
-          {applications.map(application => (
+          {applications.map((application) => (
             <Candidate
               key={application.id}
               project={data.project}

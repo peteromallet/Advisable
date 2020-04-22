@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import uniqueID from "lodash/uniqueId";
+import { uniqueId } from "lodash-es";
 import { Text } from "@advisable/donut";
 import {
   Wrapper,
@@ -44,12 +44,12 @@ const TextField = React.forwardRef(
       prefix,
       ...props
     },
-    ref
+    ref,
   ) => {
     const input = ref || useRef(null);
     const [focused, setFocused] = useState(false);
     const [rows, setRows] = useState(props.minRows);
-    const [id, _] = useState(props.id || uniqueID("TextField"));
+    const [id, _] = useState(props.id || uniqueId("TextField"));
 
     let charLimit = charCount || maxLength;
     let characterCount = charLimit - (value || "").length;
@@ -88,12 +88,12 @@ const TextField = React.forwardRef(
 
     React.useLayoutEffect(calculateRows, [input]);
 
-    const handleChange = e => {
+    const handleChange = (e) => {
       calculateRows();
       onChange(e);
     };
 
-    const handleClick = e => {
+    const handleClick = (e) => {
       if (mask) {
         input.current.inputElement.focus();
       } else {
@@ -101,12 +101,12 @@ const TextField = React.forwardRef(
       }
     };
 
-    const handleFocus = e => {
+    const handleFocus = (e) => {
       setFocused(true);
       onFocus(e);
     };
 
-    const handleBlur = e => {
+    const handleBlur = (e) => {
       setFocused(false);
       onBlur(e);
     };
@@ -158,7 +158,7 @@ const TextField = React.forwardRef(
         )}
       </Wrapper>
     );
-  }
+  },
 );
 
 TextField.defaultProps = {

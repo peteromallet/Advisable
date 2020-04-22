@@ -1,5 +1,5 @@
 import React from "react";
-import { times } from "lodash";
+import { times } from "lodash-es";
 import { motion } from "framer-motion";
 import { theme } from "@advisable/donut";
 import styled from "styled-components";
@@ -11,7 +11,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   align-content: center;
-  justify-content: ${props => props.justify || "center"};
+  justify-content: ${(props) => props.justify || "center"};
 `;
 
 const Dot = styled(motion.div)`
@@ -22,7 +22,7 @@ const Dot = styled(motion.div)`
 `;
 
 const StepDots = ({ total, current, justify, ...props }) => {
-  const dots = times(total, i => {
+  const dots = times(total, (i) => {
     const isCurrent = current === i + 1;
     return (
       <Dot

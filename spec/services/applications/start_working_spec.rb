@@ -9,7 +9,6 @@ describe Applications::RejectApplicationInvitation do
 
   before :each do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
-    allow_any_instance_of(PreviousProject).to receive(:sync_to_airtable)
   end
 
   it "sets the application status to 'Working'" do
@@ -82,7 +81,6 @@ describe Applications::RejectApplicationInvitation do
     previous_project = double(PreviousProject)
     expect_any_instance_of(Application).to receive(:create_previous_project)
       .and_return(previous_project)
-    expect(previous_project).to receive(:sync_to_airtable)
     Applications::StartWorking.call(
       application: application,
       project_type: project_type,

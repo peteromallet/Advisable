@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import context from "../applicationContext";
 
 const useViewer = () => {

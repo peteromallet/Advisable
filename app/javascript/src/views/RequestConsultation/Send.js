@@ -2,7 +2,7 @@ import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { useLocation, useParams } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Box, Text, RoundedButton } from "@advisable/donut";
+import { Box, Text, Button } from "@advisable/donut";
 import SEND from "./sendRequest";
 import ScaleInput from "../../components/ScaleInput";
 
@@ -56,9 +56,9 @@ function Send({ data, nextStep }) {
                 }}
               />
             </Box>
-            <RoundedButton type="submit" size="l" loading={formik.isSubmitting}>
+            <Button type="submit" size="l" loading={formik.isSubmitting}>
               Request Consultation
-            </RoundedButton>
+            </Button>
           </Form>
         )}
       </Formik>
