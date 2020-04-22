@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import { Box, Text, Button, theme } from "@advisable/donut";
+import { Box, Text, RoundedButton, theme } from "@advisable/donut";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { CardField } from "./styles";
 import TextField from "../TextField";
@@ -68,16 +68,14 @@ const PaymentMethodForm = ({
               }}
             />
           </CardField>
-          <Button
+          <RoundedButton
             size="l"
             width="100%"
             type="submit"
-            intent="success"
-            appearance="primary"
             loading={formik.isSubmitting}
           >
             {buttonLabel || "Continue"}
-          </Button>
+          </RoundedButton>
           {formik.status && (
             <Text size="s" color="red.8" mt="m">
               {formik.status}

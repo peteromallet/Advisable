@@ -2,7 +2,14 @@ import React from "react";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
-import { Card, Box, Text, Button, Radio, RadioGroup } from "@advisable/donut";
+import {
+  Card,
+  Box,
+  Text,
+  RoundedButton,
+  Radio,
+  RadioGroup,
+} from "@advisable/donut";
 import TextField from "../../components/TextField";
 import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
 
@@ -116,17 +123,14 @@ const PaymentTerms = ({ nextStep }) => {
                 />
               </Box>
             )}
-            <Button
-              block
+            <RoundedButton
               size="l"
               type="submit"
-              intent="success"
-              appearance="primary"
               disabled={!formik.isValid}
               loading={formik.isSubmitting}
             >
               Continue
-            </Button>
+            </RoundedButton>
           </Form>
         )}
       </Formik>

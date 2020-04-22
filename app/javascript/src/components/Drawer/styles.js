@@ -11,7 +11,7 @@ export const Container = styled.div`
   bottom: 0;
   z-index: 20;
   position: fixed;
-  pointer-events: ${props => props.isOpen ? "all" : "none"};
+  pointer-events: ${(props) => (props.isOpen ? "all" : "none")};
 `;
 
 export const Backdrop = styled(animated.div)`
@@ -37,9 +37,11 @@ export const Actions = styled.div`
   top: 20px;
   z-index: 3;
   right: 20px;
+  display: flex;
+  align-items: flex-start;
   position: absolute;
 
   ${IconButton} {
     margin-left: 8px;
   }
-`
+`;

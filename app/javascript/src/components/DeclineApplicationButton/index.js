@@ -1,7 +1,8 @@
 import React from "react";
-import { Button } from "@advisable/donut";
+import { RoundedButton } from "@advisable/donut";
 import RejectModal from "../RejectModal";
 import RequestIntroduction from "../RequestIntroduction";
+import { Trash } from "@styled-icons/feather";
 
 // Reners a button which when clicked will open the modal to decline an
 // application.
@@ -22,9 +23,14 @@ const DeclineApplicationButton = ({ application }) => {
         application={application}
         onClose={() => setOpen(false)}
       />
-      <Button icon="trash" width="100%" onClick={() => setOpen(true)}>
+      <RoundedButton
+        variant="subtle"
+        prefix={<Trash />}
+        width="100%"
+        onClick={() => setOpen(true)}
+      >
         Decline Application
-      </Button>
+      </RoundedButton>
     </>
   );
 };

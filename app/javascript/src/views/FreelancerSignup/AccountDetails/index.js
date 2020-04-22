@@ -1,11 +1,12 @@
 import React from "react";
 import { get } from "lodash-es";
+import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form } from "formik";
 import queryString from "query-string";
 import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Text, Box, Button } from "@advisable/donut";
+import { Text, Box, RoundedButton } from "@advisable/donut";
 import VIEWER from "../../../graphql/queries/viewer";
 import TextField from "../../../components/TextField";
 import validationSchema from "./validationSchema";
@@ -149,16 +150,14 @@ const AccountDetails = ({ specialist, history, location }) => {
               error={formik.touched.password && formik.errors.password}
             />
             <Box bg="neutral.1" width="100%" height="1px" my="l" />
-            <Button
+            <RoundedButton
               size="l"
               type="submit"
-              intent="success"
-              appearance="primary"
-              iconRight="arrow-right"
+              suffix={<ArrowRight />}
               loading={formik.isSubmitting}
             >
               Continue
-            </Button>
+            </RoundedButton>
           </Form>
         )}
       </Formik>

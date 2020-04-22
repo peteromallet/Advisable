@@ -2,7 +2,13 @@ import React from "react";
 import * as Yup from "yup";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { Formik, Form, Field } from "formik";
-import { Box, Button, Radio, RadioGroup, Checkbox } from "@advisable/donut";
+import {
+  Box,
+  RoundedButton,
+  Radio,
+  RadioGroup,
+  Checkbox,
+} from "@advisable/donut";
 import TextField from "../TextField";
 import currency from "../../utilities/currency";
 
@@ -46,7 +52,7 @@ const BookingTypeForm = ({
     ...initialValues,
   };
 
-  const calculateCost = formik => {
+  const calculateCost = (formik) => {
     if (!rate) return null;
     if (!formik.values.monthlyLimit) return null;
     if (formik.values.monthlyLimit > 200) return null;
@@ -60,11 +66,11 @@ const BookingTypeForm = ({
         projectType: values.projectType,
         monthlyLimit: values.monthlyLimit,
       },
-      formik
+      formik,
     );
   };
 
-  const handleLimitChange = formik => e => {
+  const handleLimitChange = (formik) => (e) => {
     let value = e.target.value;
     if (Boolean(value)) {
       value = value.replace(" hours", "");
@@ -84,7 +90,7 @@ const BookingTypeForm = ({
       initialValues={initial}
       validationSchema={validation}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <RadioGroup mb="l">
             <Field
@@ -96,7 +102,7 @@ const BookingTypeForm = ({
               variation="bordered"
               data-testid="fixed"
               description="I want to work with them on predefined projects, with set deliverables and timelines."
-              onChange={e => {
+              onChange={(e) => {
                 formik.setFieldValue("acceptCharges", false);
                 formik.setFieldValue("acceptUpfrontCharges", false);
                 formik.handleChange(e);
@@ -111,7 +117,7 @@ const BookingTypeForm = ({
               variation="bordered"
               data-testid="flexible"
               description="I want to propose a maximum monthly limit of hours and work flexibly within that."
-              onChange={e => {
+              onChange={(e) => {
                 formik.setFieldValue("acceptCharges", false);
                 formik.setFieldValue("acceptUpfrontCharges", false);
                 formik.handleChange(e);
@@ -170,16 +176,14 @@ const BookingTypeForm = ({
               </Box>
             </>
           )}
-          <Button
+          <RoundedButton
             size="l"
             type="submit"
-            intent="success"
-            appearance="primary"
             disabled={!formik.isValid}
             loading={formik.isSubmitting}
           >
             {buttonLabel || "Continue"}
-          </Button>
+          </RoundedButton>
         </Form>
       )}
     </Formik>

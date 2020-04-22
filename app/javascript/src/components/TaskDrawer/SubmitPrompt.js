@@ -75,6 +75,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
             </Padding>
             <Columns spacing="xs">
               <RoundedButton
+                width="100%"
                 styling="primary"
                 loading={loading}
                 aria-label={task.flexibleEstimate ? "Continue" : "Complete"}
@@ -82,7 +83,9 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
               >
                 {task.flexibleEstimate ? "Continue" : "Complete"}
               </RoundedButton>
-              <RoundedButton onClick={onClose}>Cancel</RoundedButton>
+              <RoundedButton width="100%" variant="subtle" onClick={onClose}>
+                Cancel
+              </RoundedButton>
             </Columns>
           </>
         )}
@@ -131,17 +134,20 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
                 onChange={(e) => setCost(e.target.value)}
               />
             </Padding>
-            <ButtonGroup fullWidth>
-              <Button
+            <Columns spacing="xs">
+              <RoundedButton
+                width="100%"
                 styling="primary"
                 loading={loading}
                 onClick={submit}
                 aria-label="Complete"
               >
                 Complete
-              </Button>
-              <Button onClick={onClose}>Cancel</Button>
-            </ButtonGroup>
+              </RoundedButton>
+              <RoundedButton width="100%" onClick={onClose} variant="subtle">
+                Cancel
+              </RoundedButton>
+            </Columns>
           </>
         )}
       </ConfirmationContainer>

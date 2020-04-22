@@ -1,7 +1,15 @@
 // Renders the various actions for a candidate based on its status.
 import React, { Fragment, useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Text, Padding, Flex, Button } from "@advisable/donut";
+import {
+  FileText,
+  MessageCircle,
+  Award,
+  Trash,
+  UserCheck,
+  PhoneCall,
+} from "@styled-icons/feather";
+import { Text, Padding, RoundedButton } from "@advisable/donut";
 import { Link } from "react-router-dom";
 import useMobile from "src/utilities/useMobile";
 import RejectModal from "src/components/RejectModal";
@@ -18,7 +26,7 @@ const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
 const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
 
 const statusActions = {
-  Applied: ({ application, stack, modal, setModal }) => {
+  Applied: function AppliedActions({ application, stack, modal, setModal }) {
     return (
       <React.Fragment>
         <RequestIntroduction
@@ -32,43 +40,35 @@ const statusActions = {
           application={application}
           onClose={() => setModal(null)}
         />
-        <Flex
-          spacing="xs"
-          distribute="evenly"
-          direction={{
-            default: stack ? "vertical" : "horizontal",
-            s: "vertical",
-          }}
+        <RoundedButton
+          mb="xs"
+          align="left"
+          width="100%"
+          intent="success"
+          prefix={<PhoneCall />}
+          onClick={() => setModal(REQUEST_INTRODUCTION)}
         >
-          <Button
-            align="left"
-            width="100%"
-            intent="success"
-            icon="phone-call"
-            appearance="primary"
-            onClick={() => setModal(REQUEST_INTRODUCTION)}
-          >
-            Request Call
-          </Button>
-          <Button
-            align="left"
-            icon="trash"
-            width="100%"
-            onClick={() => setModal(REJECT_MODAL)}
-          >
-            Provide Feedback
-          </Button>
-        </Flex>
+          Request Call
+        </RoundedButton>
+        <RoundedButton
+          align="left"
+          width="100%"
+          variant="subtle"
+          prefix={<Trash />}
+          onClick={() => setModal(REJECT_MODAL)}
+        >
+          Provide Feedback
+        </RoundedButton>
       </React.Fragment>
     );
   },
-  "Application Accepted": ({
+  "Application Accepted": function ApplicationAcceptedActions({
     application,
     history,
     stack,
     modal,
     setModal,
-  }) => {
+  }) {
     return (
       <Fragment>
         <RejectModal
@@ -90,60 +90,47 @@ const statusActions = {
           participants={[application.specialist]}
         />
         <Padding bottom="xs">
-          <Flex
-            spacing="xs"
-            distribute="evenly"
-            direction={{
-              default: stack ? "vertical" : "horiztonal",
-              s: "vertical",
-            }}
-          >
-            <Button
-              width="100%"
-              align="left"
-              intent="success"
-              icon="user-check"
-              appearance="primary"
-              onClick={() => history.push(`/book/${application.airtableId}`)}
-            >
-              Start working with {application.specialist.firstName}
-            </Button>
-            <Button
-              width="100%"
-              align="left"
-              icon="message-circle"
-              onClick={() => setModal(TALK_MODAL)}
-            >
-              Message {application.specialist.firstName}
-            </Button>
-          </Flex>
-        </Padding>
-        <Flex
-          spacing="xs"
-          distribute="evenly"
-          direction={{
-            default: stack ? "vertical" : "horiztonal",
-            s: "vertical",
-          }}
-        >
-          <Button
+          <RoundedButton
+            mb="xs"
             width="100%"
-            icon="award"
             align="left"
+            icon="user-check"
+            prefix={<UserCheck />}
+            onClick={() => history.push(`/book/${application.airtableId}`)}
+          >
+            Start working with {application.specialist.firstName}
+          </RoundedButton>
+          <RoundedButton
+            mb="xs"
+            width="100%"
+            align="left"
+            variant="subtle"
+            prefix={<MessageCircle />}
+            onClick={() => setModal(TALK_MODAL)}
+          >
+            Message {application.specialist.firstName}
+          </RoundedButton>
+          <RoundedButton
+            mb="xs"
+            width="100%"
+            align="left"
+            variant="subtle"
+            prefix={<Award />}
             disabled={application.referencesRequested}
             onClick={() => setModal(REQUEST_REFERENCES_MODAL)}
           >
             Request References
-          </Button>
-          <Button
-            icon="trash"
+          </RoundedButton>
+          <RoundedButton
             width="100%"
             align="left"
+            variant="subtle"
+            prefix={<Trash />}
             onClick={() => setModal(REJECT_MODAL)}
           >
             Provide Feedback
-          </Button>
-        </Flex>
+          </RoundedButton>
+        </Padding>
         {application.referencesRequested && (
           <Padding top="m">
             <Notice icon="info">
@@ -163,7 +150,12 @@ const statusActions = {
       </Fragment>
     );
   },
-  Proposed: ({ projectId, application, stack, modal, setModal }) => {
+  Proposed: function ProposedActions({
+    projectId,
+    application,
+    modal,
+    setModal,
+  }) {
     return (
       <Fragment>
         <RejectProposalModal
@@ -185,62 +177,47 @@ const statusActions = {
           participants={[application.specialist]}
         />
         <Padding bottom="xs">
-          <Flex
-            spacing="xs"
-            distribute="evenly"
-            direction={{
-              default: stack ? "vertical" : "horiztonal",
-              s: "vertical",
-            }}
-          >
-            <Button
-              as={Link}
-              width="100%"
-              align="left"
-              intent="success"
-              icon="file-text"
-              appearance="primary"
-              to={`/projects/${projectId}/applications/${application.airtableId}/proposal`}
-            >
-              View Proposal
-            </Button>
-            <Button
-              width="100%"
-              align="left"
-              icon="message-circle"
-              onClick={() => setModal(TALK_MODAL)}
-            >
-              Message {application.specialist.firstName}
-            </Button>
-          </Flex>
-        </Padding>
-
-        <Flex
-          spacing="xs"
-          distribute="evenly"
-          direction={{
-            default: stack ? "vertical" : "horiztonal",
-            s: "vertical",
-          }}
-        >
-          <Button
-            width="100%"
-            icon="award"
+          <RoundedButton
             align="left"
+            as={Link}
+            prefix={<FileText />}
+            mb="xs"
+            width="100%"
+            to={`/projects/${projectId}/applications/${application.airtableId}/proposal`}
+          >
+            View Proposal
+          </RoundedButton>
+          <RoundedButton
+            align="left"
+            variant="subtle"
+            onClick={() => setModal(TALK_MODAL)}
+            prefix={<MessageCircle />}
+            mb="xs"
+            width="100%"
+          >
+            Message
+          </RoundedButton>
+          <RoundedButton
+            align="left"
+            prefix={<Award />}
+            variant="subtle"
+            mb="xs"
+            width="100%"
             disabled={application.referencesRequested}
             onClick={() => setModal(REQUEST_REFERENCES_MODAL)}
           >
             Request References
-          </Button>
-          <Button
-            icon="trash"
-            width="100%"
+          </RoundedButton>
+          <RoundedButton
             align="left"
+            width="100%"
+            variant="subtle"
+            prefix={<Trash />}
             onClick={() => setModal(REJECT_PROPOSAL_MODAL)}
           >
             Provide Feedback
-          </Button>
-        </Flex>
+          </RoundedButton>
+        </Padding>
         {application.referencesRequested && (
           <Padding top="m">
             <Notice icon="info">

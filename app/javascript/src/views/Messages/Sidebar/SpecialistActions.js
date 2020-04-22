@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash-es";
 import { Link } from "react-router-dom";
-import { Button } from "@advisable/donut";
+import { RoundedButton } from "@advisable/donut";
 
 // Renders all of the available actions in the messages sidebar when viewed
 // by the specialist.
@@ -10,62 +10,54 @@ const ClientActions = ({ application }) => {
 
   if (application.status === "Applied") {
     actions.push(
-      <Button
+      <RoundedButton
         as={Link}
         width="100%"
-        intent="success"
         key="updateApplication"
-        appearance="primary"
         to={`/invites/${application.airtableId}/apply`}
       >
         Update Application
-      </Button>,
+      </RoundedButton>,
     );
   }
 
   if (application.status === "Proposed") {
     actions.push(
-      <Button
+      <RoundedButton
         as={Link}
         width="100%"
-        intent="success"
         key="updateProposal"
-        appearance="primary"
         to={`/applications/${application.airtableId}/proposal`}
       >
         Update Proposal
-      </Button>,
+      </RoundedButton>,
     );
   }
 
   if (application.status === "Application Accepted") {
     if (get(application, "interview.status") === "Call Completed") {
       actions.push(
-        <Button
+        <RoundedButton
           as={Link}
           width="100%"
-          intent="success"
           key="sendProposal"
-          appearance="primary"
           to={`/applications/${application.airtableId}/proposal`}
         >
           Send Proposal
-        </Button>,
+        </RoundedButton>,
       );
     }
 
     if (get(application, "interview.status") === "Call Requested") {
       actions.push(
-        <Button
+        <RoundedButton
           as={Link}
           width="100%"
-          intent="success"
-          appearance="primary"
           key="scheduleInterview"
           to={`/interview_request/${application.interview.airtableId}`}
         >
           Schedule Interview
-        </Button>,
+        </RoundedButton>,
       );
     }
   }

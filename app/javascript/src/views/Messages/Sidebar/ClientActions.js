@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Padding, Button } from "@advisable/donut";
+import { Padding, RoundedButton } from "@advisable/donut";
 import CreateBookingButton from "../../../components/CreateBookingButton";
 import DeclineApplicationButton from "../../../components/DeclineApplicationButton";
+import { FileText, Check } from "@styled-icons/feather";
 
 // Renders all of the available actions in the messages sidebar when viewed
 // by the client.
@@ -16,63 +17,56 @@ const ClientActions = ({ application }) => {
     actions.push(
       <Padding bottom="xs" key="createBooking">
         <CreateBookingButton application={application} />
-      </Padding>
+      </Padding>,
     );
   }
 
   if (!isBooking && application.status === "Proposed") {
     actions.push(
       <Padding bottom="xs" key="viewProposal">
-        <Button
+        <RoundedButton
           as={Link}
           width="100%"
-          intent="success"
-          icon="file-text"
-          appearance="primary"
-          to={`/projects/${application.project.airtableId}/applications/${
-            application.airtableId
-          }/proposal`}
+          prefix={<FileText />}
+          to={`/projects/${application.project.airtableId}/applications/${application.airtableId}/proposal`}
         >
           View Proposal
-        </Button>
-      </Padding>
+        </RoundedButton>
+      </Padding>,
     );
   }
 
   if (!isBooking) {
     actions.push(
       <Padding bottom="xs" key="viewApplication">
-        <Button
+        <RoundedButton
           as={Link}
           width="100%"
-          icon="file-text"
-          to={`/projects/${application.project.airtableId}/applications/${
-            application.airtableId
-          }`}
+          variant="subtle"
+          prefix={<FileText />}
+          to={`/projects/${application.project.airtableId}/applications/${application.airtableId}`}
         >
           View Application
-        </Button>
-      </Padding>
+        </RoundedButton>
+      </Padding>,
     );
 
     actions.push(
-      <DeclineApplicationButton key="decline" application={application} />
+      <DeclineApplicationButton key="decline" application={application} />,
     );
   }
 
   if (isBooking) {
     actions.push(
-      <Button
+      <RoundedButton
         as={Link}
         width="100%"
-        icon="check"
         key="viewTasks"
-        intent="success"
-        appearance="primary"
+        prefix={<Check />}
         to={`/manage/${application.airtableId}`}
       >
         View Tasks
-      </Button>
+      </RoundedButton>,
     );
   }
 

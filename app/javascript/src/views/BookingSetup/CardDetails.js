@@ -1,6 +1,6 @@
 import React from "react";
 import gql from "graphql-tag";
-import { Text, Card, Button, Box } from "@advisable/donut";
+import { Text, Card, RoundedButton, Box } from "@advisable/donut";
 import { useQuery } from "@apollo/react-hooks";
 import Loading from "../../components/Loading";
 import PaymentMethod from "../../components/PaymentMethod";
@@ -48,18 +48,18 @@ const CardDetails = ({ data, nextStep }) => {
             paymentMethod={paymentMethodQuery.data.viewer.paymentMethod}
           />
         </Box>
-        <Button size="l" width="100%" mb="xs" onClick={() => setNewCard(true)}>
-          Add a new card
-        </Button>
-        <Button
+        <RoundedButton
           size="l"
+          variant="subtle"
           width="100%"
-          intent="success"
-          appearance="primary"
-          onClick={nextStep}
+          mb="xs"
+          onClick={() => setNewCard(true)}
         >
+          Add a new card
+        </RoundedButton>
+        <RoundedButton size="l" width="100%" onClick={nextStep}>
           Continue with this card
-        </Button>
+        </RoundedButton>
       </Card>
     );
   }

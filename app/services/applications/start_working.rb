@@ -17,13 +17,14 @@ class Applications::StartWorking < ApplicationService
     application.monthly_limit = monthly_limit if project_type == 'Flexible'
 
     if application.save
-      project = application.create_previous_project
+      unless application.previous_project.present?
+        project = application.create_previous_project
+      end
 
       if project_type == 'Flexible'
         Applications::FlexibleInvoice.call(application: application)
       end
 
-      project.sync_to_airtable
       application.sync_to_airtable
       Webhook.process(application)
       return application

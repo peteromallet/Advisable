@@ -1,4 +1,5 @@
 import React from "react";
+import { ArrowRight } from "@styled-icons/feather";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
@@ -9,7 +10,7 @@ import {
   Text,
   Radio,
   RadioGroup,
-  Button,
+  RoundedButton,
   Link,
 } from "@advisable/donut";
 import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
@@ -104,16 +105,14 @@ const PaymentMethod = ({ data, nextStep }) => {
                   {formik.errors.paymentMethod}
                 </Text>
               ) : undefined}
-              <Button
+              <RoundedButton
                 size="l"
                 type="submit"
-                intent="success"
-                appearance="primary"
-                iconRight="arrow-right"
+                suffix={<ArrowRight />}
                 loading={formik.isSubmitting}
               >
                 Continue
-              </Button>
+              </RoundedButton>
             </Form>
           )}
         </Formik>

@@ -2,10 +2,11 @@ import * as React from "react";
 import { createPortal } from "react-dom";
 import { useTransition } from "react-spring";
 import Div100vh from "react-div-100vh";
-import { Button } from "@advisable/donut";
+import { RoundedButton } from "@advisable/donut";
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { useMobile } from "../../components/Breakpoint";
 import { Container, Backdrop, Drawer, Actions } from "./styles";
+import { X } from "@styled-icons/feather";
 export { default as DrawerModal } from "./DrawerModal";
 
 export default ({ isOpen, onClose, children, actions }) => {
@@ -19,7 +20,7 @@ export default ({ isOpen, onClose, children, actions }) => {
     document.body.appendChild(root);
   }
 
-  const handleKeyPress = e => {
+  const handleKeyPress = (e) => {
     if (e.keyCode === 27) {
       onClose();
     }
@@ -79,32 +80,35 @@ export default ({ isOpen, onClose, children, actions }) => {
 
   return createPortal(
     fadeTransition.map(
-      fade =>
+      (fade) =>
         fade.item && (
           <Container key={fade.key} isOpen={isOpen}>
             {drawerTransition.map(
-              drawer =>
+              (drawer) =>
                 drawer.item && (
                   <Drawer ref={drawerRef} key={drawer.key} style={drawer.props}>
                     <Div100vh>
                       <Actions>
                         {actions}
-                        <Button
+                        <RoundedButton
                           icon="x"
                           size="s"
+                          variant="subtle"
                           aria-label="Close Drawer"
                           onClick={onClose}
-                        />
+                        >
+                          <X />
+                        </RoundedButton>
                       </Actions>
                       {children}
                     </Div100vh>
                   </Drawer>
-                )
+                ),
             )}
             <Backdrop onClick={handleBackdropClick} style={fade.props} />
           </Container>
-        )
+        ),
     ),
-    root
+    root,
   );
 };

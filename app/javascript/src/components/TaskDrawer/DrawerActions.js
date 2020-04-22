@@ -1,11 +1,12 @@
 import React from "react";
 import { useMenuState } from "reakit";
-import { Box, Menu, Button } from "@advisable/donut";
+import { Box, Menu, RoundedButton } from "@advisable/donut";
 import DeleteTask from "./DeleteTask";
 import ToggleTrial from "./ToggleTrial";
 import ToggleRepeating from "./ToggleRepeating";
+import { MoreHorizontal } from "@styled-icons/feather";
 
-const Actions = props => {
+const Actions = (props) => {
   const menu = useMenuState({ placement: "bottom-end" });
   const actions = [];
 
@@ -15,7 +16,7 @@ const Actions = props => {
   };
 
   actions.push(
-    <Menu.Item key="delete" title="Delete task" onClick={handleDelete} />
+    <Menu.Item key="delete" title="Delete task" onClick={handleDelete} />,
   );
 
   return (
@@ -24,14 +25,14 @@ const Actions = props => {
         state={menu}
         aria-label="Task actions"
         trigger={
-          <Button
+          <RoundedButton
             size="s"
             type="button"
-            icon="more-horizontal"
-            borderTopRightRadius={0}
-            borderBottomRightRadius={0}
+            variant="subtle"
             aria-label="Open task actions menu"
-          />
+          >
+            <MoreHorizontal />
+          </RoundedButton>
         }
       >
         {!props.isClient && props.task.application.trialProgram && (

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Button } from "@advisable/donut";
+import { Box, Text, RoundedButton } from "@advisable/donut";
 import PaymentMethod from "../../../../components/PaymentMethod";
 
 const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
@@ -21,15 +21,14 @@ const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
             freelancers.
           </Text>
           <PaymentMethod paymentMethod={paymentMethod} />
-          <Button
+          <RoundedButton
             mt="xs"
             type="button"
-            intent="success"
-            appearance="minimal"
+            variant="subtle"
             onClick={openCardModal}
           >
             Update card details
-          </Button>
+          </RoundedButton>
         </>
       )}
 
@@ -47,9 +46,9 @@ const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
           <Text fontSize="s" color="neutral.7" mb="s">
             You have not added any card details yet.
           </Text>
-          <Button type="button" appearance="primary" onClick={openCardModal}>
+          <RoundedButton type="button" variant="dark" onClick={openCardModal}>
             Add a card
-          </Button>
+          </RoundedButton>
         </>
       )}
 

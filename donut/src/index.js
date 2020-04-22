@@ -58,7 +58,6 @@ export { default as NavigationMenu } from "./components/NavigationMenu";
 export { default as NavigationMenuItem } from "./components/NavigationMenu/NavigationMenuItem";
 export * from "./components/NavigationMenu/styles";
 
-export { default as Button } from "./components/Button";
 export { default as RoundedButton } from "./components/RoundedButton";
 export { default as Tooltip } from "./components/Tooltip";
 export { default as Padding } from "./components/Padding";

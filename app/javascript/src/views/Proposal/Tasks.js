@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button as DonutButton, RoundedButton } from "@advisable/donut";
+import { RoundedButton } from "@advisable/donut";
 import { useApolloClient } from "@apollo/react-hooks";
 import { matchPath } from "react-router";
 import Card from "../../components/Card";
@@ -10,14 +10,12 @@ import NewTask from "../../components/NewTask";
 import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
 import { Padding } from "../../components/Spacing";
-import { useMobile } from "../../components/Breakpoint";
 import FETCH_APPLICATION from "./fetchApplication";
 import { hasCompleteTasksStep } from "./validationSchema";
 
 const Tasks = ({ application, match, location, history }) => {
   const client = useApolloClient();
   const [confirmModal, setConfirmModal] = React.useState(false);
-  const isMobile = useMobile();
   const onSelectTask = (task) => {
     history.push(`${match.url}/${task.id}`);
   };

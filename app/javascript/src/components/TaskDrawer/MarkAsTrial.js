@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Box, Button, Text, Link } from "@advisable/donut";
+import { Box, RoundedButton, Text, Link } from "@advisable/donut";
 
 export const UPDATE_TASK = gql`
   mutation updateTask($input: UpdateTaskInput!) {
@@ -77,15 +77,15 @@ const MarkAsTrial = ({ task }) => {
           </Link.External>
         </Text>
       </Box>
-      <Button
-        size="xs"
+      <RoundedButton
+        size="s"
+        variant="dark"
         type="button"
-        appearance="primary"
         loading={loading}
         onClick={setTrial(true)}
       >
         Set as trial task
-      </Button>
+      </RoundedButton>
     </Box>
   );
 };
