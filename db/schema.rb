@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_21_061820) do
+ActiveRecord::Schema.define(version: 2020_04_22_094411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -327,6 +327,7 @@ ActiveRecord::Schema.define(version: 2020_04_21_061820) do
     t.integer "advisable_score"
     t.bigint "application_id"
     t.boolean "draft"
+    t.boolean "description_requires_update"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"

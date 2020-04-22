@@ -25,6 +25,8 @@ class Airtable::PreviousProject < Airtable::Base
     opp.confidential = fields['Okay with naming client'] != 'Yes'
 
     opp.hide_from_profile = fields['Hide From Profile'] == 'Yes'
+    opp.description_requires_update =
+      fields['Project Description Requires Update'] == 'Yes'
     opp.draft = fields['Draft'] == 'Yes'
 
     opp.public_use = true if self['Public Use'] == 'Yes'
