@@ -9,6 +9,7 @@ module.exports = {
     "app/javascript",
     "app/javascript/src/testHelpers",
   ],
+  transformIgnorePatterns: ["<rootDir>/node_modules/(?!lodash-es)"],
   moduleNameMapper: {
     "@advisable/donut": "<rootDir>/donut/src",
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
