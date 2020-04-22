@@ -1,11 +1,11 @@
 import React from "react";
-import { times } from "lodash";
+import { times } from "lodash-es";
 import { DateTime } from "luxon";
 import { Formik, Field } from "formik";
 import Icon from "../Icon";
 import Box from "../Box";
 import Text from "../Text";
-import RoundedButton from "../RoundedButton";
+import Button from "../Button";
 import VerticalLayout from "../VerticalLayout";
 import { StyledTime, StyledTimeCheckbox } from "./styles";
 
@@ -13,7 +13,7 @@ const AvailabilityFormTimes = ({ selectedDay, formik }) => {
   const dateISO = selectedDay.toISOWeekDate();
   const start = DateTime.fromISO(dateISO, { zone: formik.values.timeZone });
 
-  return times(48, n => {
+  return times(48, (n) => {
     const t = start.plus({ minutes: 30 * n });
 
     return (
@@ -60,10 +60,8 @@ const AvailabilityForm = ({
   // through the initialAvailability array and use luxon to recreate the ISO
   // so that we know it will be the same as the ISO generated for the checkbox
   // values.
-  const asLuxonISOs = initialAvailability.map(iso => {
-    return DateTime.fromISO(iso)
-      .toUTC()
-      .toISO();
+  const asLuxonISOs = initialAvailability.map((iso) => {
+    return DateTime.fromISO(iso).toUTC().toISO();
   });
 
   const initialValues = {
@@ -71,13 +69,13 @@ const AvailabilityForm = ({
     availability: asLuxonISOs,
   };
 
-  const handleSubmit = values => {
+  const handleSubmit = (values) => {
     setAvailabilityForDay(selectedDay, values.availability);
   };
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {formik => (
+      {(formik) => (
         <form onSubmit={formik.handleSubmit} style={{ height: "100%" }}>
           <VerticalLayout
             header={
@@ -94,9 +92,9 @@ const AvailabilityForm = ({
             }
             footer={
               <Box padding="m" boxShadow="s">
-                <RoundedButton size="l" type="Submit" width="100%">
+                <Button size="l" type="Submit" width="100%">
                   Set availability for {selectedDay.toFormat("dd MMM")}
-                </RoundedButton>
+                </Button>
               </Box>
             }
           >

@@ -1,4 +1,4 @@
-import { merge, uniqueId } from "lodash";
+import { merge, uniqueId } from "lodash-es";
 
 export const user = (fields = {}) => {
   return merge(

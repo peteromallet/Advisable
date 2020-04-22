@@ -1,6 +1,5 @@
-import { times } from "lodash";
+import { reduce, times } from "lodash-es";
 import moment from "moment-timezone";
-import reduce from "lodash/reduce";
 import React, { Component } from "react";
 import { Wrapper, Times, Day } from "./styles";
 import AvailabilityHours from "./AvailabilityHours";
@@ -13,7 +12,7 @@ const ISO_FORMAT = "YYYY-MM-DDTHH:mm:ss[Z]";
 
 class Availability extends Component {
   static defaultProps = {
-    selected: []
+    selected: [],
   };
 
   constructor(props) {
@@ -22,7 +21,7 @@ class Availability extends Component {
     this.state = {
       weekOffset: 0,
       times: this.calculateTimes(0),
-      highlight: null
+      highlight: null,
     };
   }
 
@@ -41,7 +40,7 @@ class Availability extends Component {
     // If the timezone changes then we need to recalculate the times.
     if (prevProps.timeZone !== this.props.timeZone) {
       this.setState({
-        times: this.calculateTimes(this.state.weekOffset)
+        times: this.calculateTimes(this.state.weekOffset),
       });
     }
   }
@@ -59,18 +58,16 @@ class Availability extends Component {
   // This will be an array repesenting the next 7 days, with each item being an
   // array of available times. The first item in the array represents tomorrow.
   // e.g [[...], [...], [...], [....], [....], [....], [...]]
-  calculateTimes = weekOffset => {
+  calculateTimes = (weekOffset) => {
     const baseDate = moment
       .tz(this.props.timeZone)
       .add(1, "day")
       .add(weekOffset, "weeks")
       .startOf("day");
 
-    return times(7, day => {
-      return times(24, hour => {
-        return moment(baseDate)
-          .add(day, "days")
-          .set("hour", hour);
+    return times(7, (day) => {
+      return times(24, (hour) => {
+        return moment(baseDate).add(day, "days").set("hour", hour);
       });
     });
   };
@@ -78,29 +75,29 @@ class Availability extends Component {
   nextWeek = () => {
     this.setState({
       weekOffset: this.state.weekOffset + 1,
-      times: this.calculateTimes(this.state.weekOffset + 1)
+      times: this.calculateTimes(this.state.weekOffset + 1),
     });
   };
 
   previousWeek = () => {
     this.setState({
       weekOffset: this.state.weekOffset - 1,
-      times: this.calculateTimes(this.state.weekOffset - 1)
+      times: this.calculateTimes(this.state.weekOffset - 1),
     });
   };
 
-  handleMouseDown = cell => {
+  handleMouseDown = (cell) => {
     const isSelected = this.isSelected(cell);
     const highlight = {
       from: cell,
       to: cell,
-      action: isSelected ? REMOVE : ADD
+      action: isSelected ? REMOVE : ADD,
     };
 
     this.setState({ highlight });
   };
 
-  handleMouseOver = cell => {
+  handleMouseOver = (cell) => {
     if (!this.state.highlight) return;
     const highlight = { ...this.state.highlight, to: cell };
     this.setState({ highlight });
@@ -112,12 +109,12 @@ class Availability extends Component {
     }
   };
 
-  handleTap = cell => {
+  handleTap = (cell) => {
     const isSelected = this.isSelected(cell);
     const highlight = {
       from: cell,
       to: cell,
-      action: isSelected ? REMOVE : ADD
+      action: isSelected ? REMOVE : ADD,
     };
 
     this.setState({ highlight }, this.processHighlight);
@@ -143,10 +140,7 @@ class Availability extends Component {
         if (!isWeekend) {
           selection.push(time.utc().format(ISO_FORMAT));
           selection.push(
-            moment(time)
-              .add(30, "minutes")
-              .utc()
-              .format(ISO_FORMAT)
+            moment(time).add(30, "minutes").utc().format(ISO_FORMAT),
           );
         }
       }
@@ -160,7 +154,7 @@ class Availability extends Component {
           if (index > -1) {
             return [
               ...collection.slice(0, index),
-              ...collection.slice(index + 1)
+              ...collection.slice(index + 1),
             ];
           }
           return collection;
@@ -172,19 +166,19 @@ class Availability extends Component {
           }
         }
       },
-      this.props.selected
+      this.props.selected,
     );
 
     this.props.onSelect(selected);
     this.setState({ highlight: null });
   };
 
-  isSelected = cell => {
+  isSelected = (cell) => {
     const time = this.state.times[cell[0]][cell[1]];
     return this.props.selected.indexOf(time.utc().format(ISO_FORMAT)) > -1;
   };
 
-  isHighlighted = cell => {
+  isHighlighted = (cell) => {
     const { highlight } = this.state;
     if (!highlight) return false;
     const { from, to } = highlight;
@@ -213,11 +207,11 @@ class Availability extends Component {
           onPrevious={this.previousWeek}
           onNext={this.nextWeek}
           previousDisabled={this.previousDisabled}
-          dates={this.state.times.map(t =>
-            moment.tz(t[0], this.props.timeZone)
+          dates={this.state.times.map((t) =>
+            moment.tz(t[0], this.props.timeZone),
           )}
         />
-        <Times ref={c => (this.view = c)}>
+        <Times ref={(c) => (this.view = c)}>
           <AvailabilityHours />
           {this.state.times.map((times, d) => (
             <Day

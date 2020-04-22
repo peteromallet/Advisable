@@ -1,4 +1,4 @@
-import reduce from "lodash/reduce";
+import { reduce } from "lodash-es";
 import React, { useState, useEffect } from "react";
 import {
   StyledAvatar,
@@ -19,7 +19,7 @@ const Avatar = ({ url, name, children, ...props }) => {
   const initials = reduce(
     name.trim().split(/\s+/),
     (sum, name) => `${sum}${name[0]}`,
-    ""
+    "",
   );
 
   return (

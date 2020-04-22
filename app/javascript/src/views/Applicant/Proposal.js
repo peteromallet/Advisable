@@ -1,5 +1,5 @@
 import React from "react";
-import { camelCase } from "lodash";
+import { camelCase } from "lodash-es";
 import { useQuery } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
 import Card from "../../components/Card";

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useMutation } from "@apollo/react-hooks";
-import Button from "../Button";
-import { Button as DonutButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import Padding from "../Spacing/Padding";
 import { Text } from "@advisable/donut";
 import ButtonGroup from "../ButtonGroup";
@@ -79,7 +78,6 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
     actions.push(
       <Button
         key="submit"
-        styling="primary"
         disabled={loading || !hasName}
         aria-label="Mark as complete"
         onClick={() => setPrompt("SUBMIT_PROMPT")}
@@ -96,7 +94,6 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
     actions.push(
       <Button
         key="assign"
-        styling={"primary"}
         loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
@@ -108,6 +105,7 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
       actions.push(
         <Button
           key="quote"
+          variant="dark"
           disabled={!hasNameAndDescription || loading}
           onClick={handleRequestQuote}
           loading={loading === "REQUEST_QUOTE" ? true : undefined}
@@ -127,17 +125,15 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
     stage === "Not Assigned"
   ) {
     actions.push(
-      <DonutButton
+      <Button
         size="s"
-        intent="success"
-        appearance="primary"
         key="requestToStart"
         onClick={handleRequestToStart}
         disabled={!hasNameAndDescription || loading}
         loading={loading === "REQUEST_TO_START" ? true : undefined}
       >
         Request to Start Working
-      </DonutButton>,
+      </Button>,
     );
 
     if (!hasName || !hasDescription) {
@@ -162,7 +158,6 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
       actions.push(
         <Button
           key="quote"
-          styling="primary"
           disabled={!hasNameAndDescription || loading}
           onClick={handleRequestQuote}
           loading={loading === "REQUEST_QUOTE" ? true : undefined}
@@ -176,7 +171,7 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
       <Button
         key="assign"
         disabled={!hasNameAndDescription || loading}
-        styling={hasQuote && "primary"}
+        styling={hasQuote ? "primary" : "dark"}
         loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
@@ -189,7 +184,6 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
     actions.push(
       <Button
         key="quote"
-        styling="primary"
         disabled={loading}
         loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
@@ -203,7 +197,6 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
     actions.push(
       <Button
         key="quote"
-        styling="primary"
         disabled={loading}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
         loading={loading === "ASSIGN" ? true : undefined}
@@ -217,7 +210,6 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
     actions.push(
       <Button
         key="start"
-        styling="primary"
         disabled={!hasQuote || !hasDueDate || loading}
         onClick={handleStartTask}
         loading={loading === "START_WORKING" ? true : undefined}
@@ -231,7 +223,6 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
     actions.push(
       <Button
         key="submit"
-        styling="primary"
         disabled={loading}
         aria-label="Mark as complete"
         onClick={() => setPrompt("SUBMIT_PROMPT")}
@@ -244,11 +235,7 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
 
   if (isClient && stage === "Submitted") {
     actions.push(
-      <Button
-        key="approve"
-        styling="primary"
-        onClick={() => setPrompt("APPROVE_PROMPT")}
-      >
+      <Button key="approve" onClick={() => setPrompt("APPROVE_PROMPT")}>
         Approve
       </Button>,
     );

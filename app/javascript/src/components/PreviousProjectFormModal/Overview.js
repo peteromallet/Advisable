@@ -13,7 +13,7 @@ import {
   Checkbox,
   InputError,
   Autocomplete,
-  RoundedButton,
+  Button,
   Textarea,
 } from "@advisable/donut";
 import Helper from "./Helper";
@@ -194,14 +194,14 @@ export default function Overview({ modal, data, skills }) {
                 </FormField>
               </Stack>
 
-              <RoundedButton
+              <Button
                 size="l"
                 type="submit"
                 loading={formik.isSubmitting}
                 suffix={<Icon icon="arrow-right" />}
               >
                 Continue
-              </RoundedButton>
+              </Button>
             </Form>
           )}
         </Formik>

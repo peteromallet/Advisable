@@ -1,10 +1,9 @@
 // Renders the prompt to repeat a task.
 import React from "react";
 import moment from "moment";
+import { Button } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
-import Button from "../Button";
-import ButtonGroup from "../ButtonGroup";
 import Padding from "../Spacing/Padding";
 import CREATE_TASK from "../../graphql/mutations/createTask";
 import { Confirmation, ConfirmationContainer } from "./styles";
@@ -46,12 +45,12 @@ const RepeatPrompt = ({ task, onRepeat, onClose }) => {
             for another month?
           </Text>
         </Padding>
-        <ButtonGroup fullWidth>
-          <Button loading={loading} onClick={handleRepeat} styling="primary">
-            Yes
-          </Button>
-          <Button onClick={onClose}>No</Button>
-        </ButtonGroup>
+        <Button loading={loading} onClick={handleRepeat} mr="xs">
+          Yes
+        </Button>
+        <Button onClick={onClose} variant="subtle">
+          No
+        </Button>
       </ConfirmationContainer>
     </Confirmation>
   );

@@ -14,7 +14,7 @@ import {
   Input,
   theme,
   Error,
-  RoundedButton,
+  Button,
 } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import useScrollRestore from "../../utilities/useScrollRestore";
@@ -114,14 +114,14 @@ const Login = ({ location }) => {
                 />
                 <ErrorMessage name="password" component={Error} mt="xs" />
               </Box>
-              <RoundedButton
+              <Button
                 size="l"
                 width="100%"
                 type="submit"
                 loading={formik.isSubmitting}
               >
                 Login
-              </RoundedButton>
+              </Button>
               {formik.status && (
                 <Box
                   mt="s"

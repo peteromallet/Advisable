@@ -1,5 +1,5 @@
 import React from "react";
-import { filter } from "lodash";
+import { filter } from "lodash-es";
 import { Text, Tabs } from "@advisable/donut";
 import ActiveProject from "./ActiveProject";
 import { Cards } from "./styles";
@@ -18,7 +18,7 @@ export default ({ onClick, applications }) => {
       <Tabs label="Clients">
         <Tabs.Tab title="Active Clients">
           <Cards>
-            {active.map(application => (
+            {active.map((application) => (
               <ActiveProject
                 key={application.id}
                 application={application}
@@ -30,7 +30,7 @@ export default ({ onClick, applications }) => {
         </Tabs.Tab>
         <Tabs.Tab title="Finished">
           <Cards>
-            {finished.map(application => (
+            {finished.map((application) => (
               <ActiveProject
                 key={application.id}
                 application={application}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { isFunction } from "lodash";
+import { isFunction } from "lodash-es";
 import { useTransition, animated } from "react-spring";
 import Popper, { Placement } from "popper.js";
 import usePrevious from "../../utilities/usePrevious";
@@ -45,18 +45,18 @@ export default ({ children, trigger, placement, onClick, ...props }: Props) => {
     config: { mass: 1, tension: 500, friction: 30 },
   });
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     if (onClick) onClick(e);
     if (!e.defaultPrevented) {
       setOpen(!open);
     }
   };
 
-  const handleFocusClose = e => {
+  const handleFocusClose = (e) => {
     setOpen(false);
   };
 
-  const handleDocumentClick = e => {
+  const handleDocumentClick = (e) => {
     if (popoverRef.current && popoverRef.current.contains(e.target)) {
       return;
     }
@@ -119,7 +119,7 @@ export default ({ children, trigger, placement, onClick, ...props }: Props) => {
                 {renderChildren()}
                 <div onFocus={handleFocusClose} tabIndex={0} />
               </animated.div>
-            )
+            ),
         )}
       </div>
     </>

@@ -24,8 +24,7 @@ const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
           <Button
             mt="xs"
             type="button"
-            intent="success"
-            appearance="minimal"
+            variant="subtle"
             onClick={openCardModal}
           >
             Update card details
@@ -47,7 +46,7 @@ const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
           <Text fontSize="s" color="neutral.7" mb="s">
             You have not added any card details yet.
           </Text>
-          <Button type="button" appearance="primary" onClick={openCardModal}>
+          <Button type="button" variant="dark" onClick={openCardModal}>
             Add a card
           </Button>
         </>

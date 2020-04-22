@@ -1,9 +1,7 @@
 import React, { Fragment } from "react";
+import { Button } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik } from "formik";
-import Button from "src/components/Button";
-import { Mobile } from "src/components/Breakpoint";
-import ButtonGroup from "src/components/ButtonGroup";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 import Terms from "./Terms";
@@ -38,28 +36,18 @@ export default ({ project, match, history }) => {
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
             <Terms project={project} formik={formik} />
-            <Mobile>
-              {(isMobile) => (
-                <ButtonGroup fullWidth={isMobile}>
-                  <Button
-                    type="button"
-                    size="l"
-                    styling="outlined"
-                    onClick={goBack}
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    type="submit"
-                    size="l"
-                    styling="primary"
-                    loading={formik.isSubmitting}
-                  >
-                    {isLastStep ? "Complete" : "Continue"}
-                  </Button>
-                </ButtonGroup>
-              )}
-            </Mobile>
+            <Button
+              mr="xs"
+              type="button"
+              size="l"
+              variant="subtle"
+              onClick={goBack}
+            >
+              Back
+            </Button>
+            <Button size="l" type="submit" loading={formik.isSubmitting}>
+              Continue
+            </Button>
           </form>
         )}
       </Formik>

@@ -1,6 +1,6 @@
 import React from "react";
 import Text from "../Text";
-import RoundedButton from "../RoundedButton";
+import Button from "../Button";
 import Modal, { useModal } from "./";
 
 export default {
@@ -12,14 +12,9 @@ export const basicModal = () => {
 
   return (
     <>
-      <RoundedButton
-        margin="l"
-        {...modal}
-        onClick={modal.show}
-        as={Modal.Disclosure}
-      >
+      <Button margin="l" {...modal} onClick={modal.show} as={Modal.Disclosure}>
         Open Modal
-      </RoundedButton>
+      </Button>
       <Modal modal={modal} padding="l" label="An example modal">
         <Text lineHeight="m">
           Start Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -41,25 +36,25 @@ export const nestedModals = () => {
 
   return (
     <>
-      <RoundedButton
+      <Button
         margin="l"
         {...modalA}
         onClick={modalA.show}
         as={Modal.Disclosure}
       >
         Open Modal
-      </RoundedButton>
+      </Button>
       <Modal modal={modalA} padding="l" label="An example modal">
         This is the first modal.
         <br />
-        <RoundedButton
+        <Button
           {...modalB}
           marginTop="l"
           onClick={modalB.show}
           as={Modal.Disclosure}
         >
           Open Modal
-        </RoundedButton>
+        </Button>
         <Modal
           modal={modalB}
           backdrop={false}
@@ -86,14 +81,9 @@ export const scrolling = () => {
 
   return (
     <>
-      <RoundedButton
-        margin="l"
-        {...modal}
-        onClick={modal.show}
-        as={Modal.Disclosure}
-      >
+      <Button margin="l" {...modal} onClick={modal.show} as={Modal.Disclosure}>
         Open Modal
-      </RoundedButton>
+      </Button>
       <Modal modal={modal} padding="l" label="An example modal">
         <Text mb="m" lineHeight="m">
           Start Lorem ipsum dolor sit amet, consectetur adipiscing elit.

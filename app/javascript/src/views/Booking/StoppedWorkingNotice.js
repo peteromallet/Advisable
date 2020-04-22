@@ -3,7 +3,6 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { Box, Text, Button } from "@advisable/donut";
 import Modal from "../../components/Modal";
-import Notice from "../../components/Notice";
 
 export const RESUME_WORKING = gql`
   mutation startWorking($input: StartWorkingInput!) {
@@ -42,34 +41,35 @@ export default function StoppedWorkingNotice({ firstName, application }) {
           </Text>
           <Button
             mr="xs"
-            intent="success"
             loading={loading}
-            appearance="primary"
             onClick={handleResume}
             aria-label="Resume Project"
           >
             Resume Project
           </Button>
-          <Button onClick={() => setModal(false)}>Cancel</Button>
+          <Button variant="subtle" onClick={() => setModal(false)}>
+            Cancel
+          </Button>
         </Box>
       </Modal>
-      <Notice icon="info" elevation="s">
-        <Text size="s" weight="medium" color="neutral.9" mb="xxs">
+      <Box bg="orange100" padding="l" borderRadius="12px">
+        <Text fontSize="l" fontWeight="medium" color="orange900" mb="xs">
           This project has ended
         </Text>
-        <Text size="xs" lineHeight="xs" color="neutral.5" mb="s">
+        <Text size="xs" lineHeight="xs" color="neutral700" mb="s">
           You have stopped working with {firstName}. You will not be able to
           action any more tasks for this project until you start working with
           them again.
         </Text>
         <Button
           type="button"
+          variant="dark"
           aria-label="Resume Project"
           onClick={() => setModal(true)}
         >
           Resume Project
         </Button>
-      </Notice>
+      </Box>
     </>
   );
 }

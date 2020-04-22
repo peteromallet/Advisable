@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import REQUEST_CONSULTATIONS from "./requestConsultations";
 import { useParams, useLocation, useHistory, Redirect } from "react-router-dom";
-import { Box, Link, Text, Card, RoundedButton, Icon } from "@advisable/donut";
+import { Box, Link, Text, Card, Button, Icon } from "@advisable/donut";
 import TextField from "../../../components/TextField";
 import ScaleInput from "../../../components/ScaleInput";
 import validationSchema from "./validationSchema";
@@ -103,14 +103,14 @@ const Topic = ({ data }) => {
                   }}
                 />
               </Box>
-              <RoundedButton
+              <Button
                 type="submit"
                 width={["100%", "auto"]}
                 loading={formik.isSubmitting}
                 suffix={<Icon icon="arrow-right" />}
               >
                 Request Consultation
-              </RoundedButton>
+              </Button>
             </Form>
           )}
         </Formik>

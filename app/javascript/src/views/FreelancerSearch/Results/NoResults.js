@@ -1,7 +1,7 @@
 import React from "react";
 import RequestCallButton from "../RequestCallButton";
 import { useLocation, Link as RouterLink } from "react-router-dom";
-import { Circle, Box, Text, Icon, RoundedButton } from "@advisable/donut";
+import { Circle, Box, Text, Icon, Button } from "@advisable/donut";
 
 const NoResults = ({ data }) => {
   const location = useLocation();
@@ -19,7 +19,7 @@ const NoResults = ({ data }) => {
         another search or request a call with an Advisable project manager and
         we’ll identify the perfect person for you.
       </Text>
-      <RoundedButton
+      <Button
         mr="s"
         as={RouterLink}
         variant="secondary"
@@ -27,7 +27,7 @@ const NoResults = ({ data }) => {
         prefix={<Icon icon="search" />}
       >
         Make another search
-      </RoundedButton>
+      </Button>
       <RequestCallButton>Request a call</RequestCallButton>
     </Box>
   );

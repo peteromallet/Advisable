@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { Text, Button } from "@advisable/donut";
@@ -50,7 +50,7 @@ const ConfirmationPending = () => {
           <Text size="s" color="neutral.4" mt="l">
             Didn't receive an email?
           </Text>
-          <Button intent="success" onClick={resend} appearance="minimal">
+          <Button onClick={resend} variant="subtle">
             Resend confirmation email
           </Button>
         </>

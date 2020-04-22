@@ -1,5 +1,5 @@
 import * as React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import Link from "../../components/Link";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
@@ -17,7 +17,7 @@ export default ({ data, onClick }) => {
   const applications = data.project.applications;
   if (applications.length === 0) return null;
 
-  const handleClick = application => () => {
+  const handleClick = (application) => () => {
     onClick(application);
   };
 
@@ -27,7 +27,7 @@ export default ({ data, onClick }) => {
         <Heading level={4}>More candidates like {specialist.name}</Heading>
       </Padding>
       <Divider />
-      {applications.map(application => {
+      {applications.map((application) => {
         if (application.id == data.project.application.id) return;
 
         return (

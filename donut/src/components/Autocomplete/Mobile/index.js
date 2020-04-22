@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import Menu from "./Menu";
 import Text from "../../Text";
 import FieldError from "../../FieldError";
@@ -12,7 +12,7 @@ import {
 import Tag from "../Tag";
 import { getSelected, getSelectedMultiple, handleRemoveItem } from "../utils";
 
-const AutocompleteMobile = props => {
+const AutocompleteMobile = (props) => {
   const {
     options,
     placeholder,
@@ -29,7 +29,7 @@ const AutocompleteMobile = props => {
 
   const [open, setOpen] = React.useState(false);
 
-  const handleChange = value => {
+  const handleChange = (value) => {
     if (!props.multiple) {
       setOpen(false);
     }
@@ -40,7 +40,7 @@ const AutocompleteMobile = props => {
     ? getSelectedMultiple(props.value, options)
     : getSelected(props.value, options);
 
-  const handleFocus = e => {
+  const handleFocus = (e) => {
     setOpen(true);
   };
 
@@ -62,7 +62,7 @@ const AutocompleteMobile = props => {
       />
       {props.multiple && (
         <Tags>
-          {selected.map(item => (
+          {selected.map((item) => (
             <Tag
               key={item.value}
               isPrimary={primary === item.value}

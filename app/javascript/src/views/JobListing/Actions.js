@@ -1,9 +1,9 @@
 import * as React from "react";
 import ShareModal from "./ShareModal";
 import RejectModal from "./RejectModal";
-import { ButtonGroup, Button, Text } from "../../components";
+import { Text, Stack, Button } from "@advisable/donut";
 
-const Actions = ({ onApply, application, stack, fullWidth }) => {
+const Actions = ({ onApply, application }) => {
   const [rejectModal, setRejectModal] = React.useState(false);
   const [shareModal, setShareModal] = React.useState(false);
 
@@ -11,39 +11,39 @@ const Actions = ({ onApply, application, stack, fullWidth }) => {
 
   if (application.status === "Applied") {
     actions = (
-      <ButtonGroup stack={stack}>
+      <Stack spacing="xs">
         <Text size="xs">You have already applied for this project</Text>
-        <Button onClick={onApply} styling="green" size="l" block>
+        <Button onClick={onApply} size="l" width="100%">
           Update Application
         </Button>
-      </ButtonGroup>
+      </Stack>
     );
   }
 
   if (application.status === "Invitation Rejected") {
     actions = (
-      <ButtonGroup stack={stack}>
+      <Stack spacing="xs">
         <Text size="xs">
           You have already rejected this invitation. Changed your mind?
         </Text>
-        <Button onClick={onApply} styling="green" size="l" block>
+        <Button onClick={onApply} size="l" width="100%">
           Apply Now
         </Button>
-      </ButtonGroup>
+      </Stack>
     );
   }
 
   if (application.status === "Application Rejected") {
     actions = (
-      <ButtonGroup stack={stack}>
+      <Stack spacing="xs">
         <Text size="xs">
           Your previous application for this project was rejected. Would you
           like to re-apply?
         </Text>
-        <Button onClick={onApply} styling="green" size="l" block>
+        <Button onClick={onApply} size="l" width="100%">
           Apply Now
         </Button>
-      </ButtonGroup>
+      </Stack>
     );
   }
 
@@ -56,19 +56,19 @@ const Actions = ({ onApply, application, stack, fullWidth }) => {
           onClose={() => setRejectModal(false)}
           onReject={() => setShareModal(true)}
         />
-        <ButtonGroup stack={stack} fullWidth={fullWidth}>
-          <Button onClick={onApply} styling="green" size="l" block>
+        <Stack>
+          <Button onClick={onApply} size="l" width="100%">
             Apply
           </Button>
           <Button
-            styling="outlined"
+            variant="subtle"
             size="l"
             onClick={() => setRejectModal(true)}
-            block
+            width="100%"
           >
             Reject Invitation
           </Button>
-        </ButtonGroup>
+        </Stack>
       </React.Fragment>
     );
   }

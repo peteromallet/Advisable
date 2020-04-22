@@ -3,7 +3,7 @@ import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
-import { Box, Checkbox, RoundedButton, Text } from "@advisable/donut";
+import { Box, Checkbox, Button, Text } from "@advisable/donut";
 import TextField from "../../TextField";
 import UPDATE_ESTIMATE from "./updateEstimate";
 import SegmentedControl from "../../SegmentedControl";
@@ -165,7 +165,7 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
             {CONTENT[`${formik.values.estimateType}`].flexibleToggle}
           </Field>
 
-          <RoundedButton
+          <Button
             mr="xs"
             size="s"
             type="submit"
@@ -174,15 +174,10 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
             aria-label="Save Quote"
           >
             Save Quote
-          </RoundedButton>
-          <RoundedButton
-            type="button"
-            size="s"
-            variant="secondary"
-            onClick={onCancel}
-          >
+          </Button>
+          <Button type="button" size="s" variant="secondary" onClick={onCancel}>
             Cancel
-          </RoundedButton>
+          </Button>
         </Form>
       )}
     </Formik>

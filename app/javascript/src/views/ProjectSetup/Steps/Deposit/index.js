@@ -1,11 +1,11 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
+import { Button } from "@advisable/donut";
 import { useQuery } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
 import { Box, Text } from "@advisable/donut";
 import { useStripe } from "@stripe/react-stripe-js";
 import currency from "../../../../utilities/currency";
-import Button from "../../../../components/Button";
 import PaymentMethod from "../../../../components/PaymentMethod";
 import PaymentMethodForm from "../../../../components/PaymentMethodForm";
 import PaymentPending from "./PaymentPending";
@@ -92,16 +92,11 @@ const Deposit = ({ project, history }) => {
           <PaymentMethod paymentMethod={paymentMethod} />
         </Box>
         <Box mb="l">
-          <Button
-            styling="plainSubtle"
-            size="s"
-            onClick={() => setUseNewCard(true)}
-          >
+          <Button size="s" variant="subtle" onClick={() => setUseNewCard(true)}>
             Update payment method
           </Button>
         </Box>
         <Button
-          styling="primary"
           size="l"
           loading={loading}
           onClick={handleExistingPaymentMethod}

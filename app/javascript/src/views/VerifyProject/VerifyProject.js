@@ -83,12 +83,7 @@ const VerifyProject = ({ project, match }) => {
               I consent to be contacted to verify this project at the above
               email address.
             </Field>
-            <Button
-              mt="m"
-              intent="success"
-              appearance="primary"
-              loading={formik.isSubmitting}
-            >
+            <Button mt="m" loading={formik.isSubmitting}>
               Send verification details
             </Button>
           </Form>

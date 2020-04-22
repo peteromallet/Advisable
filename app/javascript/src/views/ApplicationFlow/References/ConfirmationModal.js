@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Text,
-  RoundedButton,
-  Modal,
-  DialogDisclosure,
-} from "@advisable/donut";
+import { Box, Text, Button, Modal, DialogDisclosure } from "@advisable/donut";
 
 const ConfirmationModal = ({
   modal,
@@ -39,7 +33,7 @@ const ConfirmationModal = ({
         </Text>
         {noOfSelectedProjects === 0 && noOfAvailableProjects === 0 && (
           <DialogDisclosure
-            as={RoundedButton}
+            as={Button}
             mr="xs"
             type="button"
             variant="dark"
@@ -50,19 +44,14 @@ const ConfirmationModal = ({
         )}
 
         {noOfSelectedProjects === 0 && noOfAvailableProjects > 0 && (
-          <RoundedButton
-            mr="xs"
-            type="button"
-            onClick={modal.hide}
-            variant="subtle"
-          >
+          <Button mr="xs" type="button" onClick={modal.hide} variant="subtle">
             Cancel
-          </RoundedButton>
+          </Button>
         )}
 
         {noOfSelectedProjects > 0 && (
           <DialogDisclosure
-            as={RoundedButton}
+            as={Button}
             mr="xs"
             type="button"
             {...newProjectModal}
@@ -74,7 +63,7 @@ const ConfirmationModal = ({
             Add Another Project
           </DialogDisclosure>
         )}
-        <RoundedButton
+        <Button
           variant="dark"
           type="button"
           loading={loading}
@@ -83,7 +72,7 @@ const ConfirmationModal = ({
           {noOfSelectedProjects === 0
             ? "Continue Without References"
             : "Continue With 1 Reference"}
-        </RoundedButton>
+        </Button>
       </Box>
     </Modal>
   );

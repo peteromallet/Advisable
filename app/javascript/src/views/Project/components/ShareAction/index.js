@@ -1,9 +1,9 @@
 // Displays a button which when clicked will open a modal window to share
 //the project on various networks.
 import React from "react";
-import Icon from "src/components/Icon";
+import { Share as ShareIcon } from "@styled-icons/feather";
 import Modal from "src/components/Modal";
-import Button from "src/components/Button";
+import { Button } from "@advisable/donut";
 import Share from "../Share";
 
 class ShareAction extends React.Component {
@@ -24,13 +24,13 @@ class ShareAction extends React.Component {
           <Share {...this.props} />
         </Modal>
         <Button
-          size='s'
+          size="s"
           marginTop="m"
           type="button"
-          styling="outlined"
+          variant="subtle"
+          prefix={<ShareIcon />}
           onClick={() => this.setState({ open: true })}
         >
-          <Icon icon='share' width={16} />
           Sharing options
         </Button>
       </React.Fragment>

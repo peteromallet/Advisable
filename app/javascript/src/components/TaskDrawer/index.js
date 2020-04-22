@@ -6,7 +6,7 @@
 import * as React from "react";
 import { withRouter } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { get, filter } from "lodash";
+import { get, filter } from "lodash-es";
 import Drawer from "../Drawer";
 import { TaskDrawer as TaskDrawerStyles } from "./styles";
 import EditTask from "./EditTask";

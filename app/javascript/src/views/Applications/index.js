@@ -1,5 +1,5 @@
 // Renders the freelancers applications view.
-import { get } from "lodash";
+import { get } from "lodash-es";
 import * as React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { Box, Alert } from "@advisable/donut";

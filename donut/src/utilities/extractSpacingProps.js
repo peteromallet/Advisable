@@ -1,5 +1,5 @@
 // Takes a props object and returns a new object with only the stlyed system spacing props
-import pick from "lodash/pick";
+import { pick } from "lodash-es";
 
 const PROPS = [
   "margin",
@@ -32,7 +32,7 @@ const PROPS = [
   "y",
 ];
 
-const extractSpacingProps = props => {
+const extractSpacingProps = (props) => {
   return pick(props, PROPS);
 };
 

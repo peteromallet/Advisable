@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import {
@@ -153,13 +153,7 @@ const PaymentSettings = () => {
 
             <InvoiceSettingsFields formik={formik} />
 
-            <Button
-              appearance="primary"
-              intent="success"
-              loading={formik.isSubmitting}
-            >
-              Save Changes
-            </Button>
+            <Button loading={formik.isSubmitting}>Save Changes</Button>
           </Form>
         )}
       </Formik>

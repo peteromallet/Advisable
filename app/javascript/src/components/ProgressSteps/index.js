@@ -1,25 +1,25 @@
 import React from "react";
-import { findIndex } from "lodash";
+import { findIndex } from "lodash-es";
 import { NavLink, matchPath, useLocation } from "react-router-dom";
 import { StyledProgressSteps, StyledProgressStepsStep } from "./styles";
 
 const ProgressSteps = ({ steps }) => {
   const location = useLocation();
-  const currentIndex = findIndex(steps, step => {
+  const currentIndex = findIndex(steps, (step) => {
     return matchPath(location.pathname, {
       path: step.url,
     });
   });
 
-  const isComplete = index => index < currentIndex;
-  const isActive = index => index === currentIndex;
-  const isDisabled = index => {
+  const isComplete = (index) => index < currentIndex;
+  const isActive = (index) => index === currentIndex;
+  const isDisabled = (index) => {
     const step = steps[index];
     if (step.disabled) return true;
     return index > currentIndex;
   };
 
-  const handleClick = index => e => {
+  const handleClick = (index) => (e) => {
     if (isDisabled(index)) {
       e.preventDefault();
     }

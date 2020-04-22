@@ -8,6 +8,7 @@ import Choices from "../../../components/Choices";
 import TextField from "../../../components/TextField";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
+import { ArrowRight } from "@styled-icons/feather";
 
 const numberMask = createNumberMask({
   prefix: "",
@@ -123,9 +124,7 @@ const FreelancingPreferences = ({ history }) => {
             mb="xxl"
             size="l"
             type="submit"
-            intent="success"
-            appearance="primary"
-            iconRight="arrow-right"
+            suffix={<ArrowRight />}
             loading={formik.isSubmitting}
           >
             Continue

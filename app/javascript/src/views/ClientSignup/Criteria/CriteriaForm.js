@@ -10,7 +10,7 @@ import {
   Select,
   Checkbox,
   Autocomplete,
-  RoundedButton,
+  Button,
 } from "@advisable/donut";
 
 const validationSchema = Yup.object({
@@ -30,7 +30,7 @@ function CriteriaForm({ onSubmit, data }) {
     companyTypeRequired: false,
   };
 
-  const handleSubmit = values => {
+  const handleSubmit = (values) => {
     let searchInput = {
       skill: values.skill,
       industry: values.industry,
@@ -54,7 +54,7 @@ function CriteriaForm({ onSubmit, data }) {
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <Box mb="l">
             <Autocomplete
@@ -64,7 +64,7 @@ function CriteriaForm({ onSubmit, data }) {
               label="What skill are you looking for?"
               options={data.skills}
               error={formik.submitCount > 0 && formik.errors.skill}
-              onChange={skill => {
+              onChange={(skill) => {
                 formik.setFieldValue("skill", skill);
               }}
             />
@@ -77,7 +77,7 @@ function CriteriaForm({ onSubmit, data }) {
               label="What industry are you in?"
               options={data.industries}
               error={formik.submitCount > 0 && formik.errors.industry}
-              onChange={industry => {
+              onChange={(industry) => {
                 formik.setFieldTouched("industry", true);
                 formik.setFieldValue("industry", industry);
               }}
@@ -108,9 +108,9 @@ function CriteriaForm({ onSubmit, data }) {
           >
             Experience with this type of company is important
           </Field>
-          <RoundedButton size="l" type="submit" prefix={<Icon icon="search" />}>
+          <Button size="l" type="submit" prefix={<Icon icon="search" />}>
             Find a specialist
-          </RoundedButton>
+          </Button>
         </Form>
       )}
     </Formik>

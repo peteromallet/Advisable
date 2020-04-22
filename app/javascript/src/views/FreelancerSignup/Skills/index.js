@@ -1,12 +1,13 @@
 import React from "react";
 import gql from "graphql-tag";
-import { get, sortBy } from "lodash";
+import { get, sortBy } from "lodash-es";
 import { Formik, Form } from "formik";
 import { useQuery } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
 import { Text, Box, Link, Button, Autocomplete } from "@advisable/donut";
 import Loading from "../../../components/Loading";
 import validationSchema from "./validationSchema";
+import { ArrowRight } from "react-feather";
 
 export const GET_SKILLS = gql`
   query {
@@ -89,13 +90,7 @@ const Skills = ({ history, location, specialist }) => {
                   }}
                 />
                 <Box bg="neutral.1" width="100%" height="1px" my="l" />
-                <Button
-                  size="l"
-                  type="submit"
-                  iconRight="arrow-right"
-                  appearance="primary"
-                  intent="success"
-                >
+                <Button size="l" type="submit" suffix={<ArrowRight />}>
                   Get Started
                 </Button>
               </>

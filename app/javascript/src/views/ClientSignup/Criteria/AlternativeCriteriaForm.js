@@ -9,7 +9,7 @@ import {
   Box,
   Text,
   Autocomplete,
-  RoundedButton,
+  Button,
   Icon,
   Select,
   Label,
@@ -33,7 +33,7 @@ function AlternativeCriteriaForm({ data, onSubmit }) {
     experienceRequired: false,
   };
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     const search = {
       skill: values.skill,
     };
@@ -54,7 +54,7 @@ function AlternativeCriteriaForm({ data, onSubmit }) {
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
-      {formik => (
+      {(formik) => (
         <Form>
           <Field
             mb="m"
@@ -64,7 +64,7 @@ function AlternativeCriteriaForm({ data, onSubmit }) {
             label="What skill are you looking for?"
             options={data.skills}
             error={formik.submitCount > 0 && formik.errors.skill}
-            onChange={skill => {
+            onChange={(skill) => {
               formik.setFieldValue("skill", skill);
             }}
           />
@@ -102,7 +102,7 @@ function AlternativeCriteriaForm({ data, onSubmit }) {
                 label="What industry are you in?"
                 options={data.industries}
                 error={formik.submitCount > 0 && formik.errors.industry}
-                onChange={industry => {
+                onChange={(industry) => {
                   formik.setFieldTouched("industry", true);
                   formik.setFieldValue("industry", industry);
                 }}
@@ -124,9 +124,9 @@ function AlternativeCriteriaForm({ data, onSubmit }) {
             </>
           )}
           <Box height={1} bg="neutral.1" my="l" />
-          <RoundedButton size="l" type="submit" prefix={<Icon icon="search" />}>
+          <Button size="l" type="submit" prefix={<Icon icon="search" />}>
             Find a specialist
-          </RoundedButton>
+          </Button>
         </Form>
       )}
     </Formik>

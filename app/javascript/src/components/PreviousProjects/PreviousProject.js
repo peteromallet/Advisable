@@ -1,12 +1,12 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import {
   Modal,
   useModal,
   Link,
   Text,
   Box,
-  RoundedButton,
+  Button,
   DialogDisclosure,
 } from "@advisable/donut";
 import Review from "src/components/Review";
@@ -65,7 +65,7 @@ const PreviousProject = ({ showValidationStatus = true, previousProject }) => {
           </Box>
         )}
         <DialogDisclosure
-          as={RoundedButton}
+          as={Button}
           size="s"
           variant="subtle"
           onClick={modal.show}

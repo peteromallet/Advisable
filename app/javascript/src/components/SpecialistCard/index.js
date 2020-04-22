@@ -1,12 +1,12 @@
 import React from "react";
-import { truncate } from "lodash";
+import { truncate } from "lodash-es";
 import {
   Avatar,
   Box,
   Text,
   Icon,
   useModal,
-  RoundedButton,
+  Button,
   DialogDisclosure,
 } from "@advisable/donut";
 import LineClamp from "../LineClamp";
@@ -69,7 +69,7 @@ const SpecialistCard = ({ specialist, action, ...props }) => {
           </Box>
         )}
         <DialogDisclosure
-          as={RoundedButton}
+          as={Button}
           aria-label={`View ${specialist.name}`}
           onClick={specialistModal.show}
           variant="subtle"

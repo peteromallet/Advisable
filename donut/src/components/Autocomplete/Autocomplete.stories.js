@@ -1,6 +1,5 @@
 import React from "react";
-import find from "lodash/find";
-import sortBy from "lodash/sortBy";
+import { find, sortBy } from "lodash-es";
 import Text from "../Text";
 import Card from "../Card";
 import Autocomplete from "./";
@@ -18,13 +17,13 @@ export const singleSelect = () => {
         value={value}
         label="Choose a country"
         placeholder="Country"
-        onChange={v => setValue(v)}
-        options={sortBy(COUNTRIES, "name").map(country => ({
+        onChange={(v) => setValue(v)}
+        options={sortBy(COUNTRIES, "name").map((country) => ({
           label: country.name,
           value: country.code,
           emoji: country.emoji,
         }))}
-        formatLabel={country => {
+        formatLabel={(country) => {
           return (
             <>
               {country.emoji} {country.label}
@@ -45,13 +44,13 @@ export const existingValue = () => {
         value={value}
         label="Choose a country"
         placeholder="Country"
-        onChange={v => setValue(v)}
-        options={sortBy(COUNTRIES, "name").map(country => ({
+        onChange={(v) => setValue(v)}
+        options={sortBy(COUNTRIES, "name").map((country) => ({
           label: country.name,
           value: country.code,
           emoji: country.emoji,
         }))}
-        formatLabel={country => {
+        formatLabel={(country) => {
           return (
             <>
               {country.emoji} {country.label}
@@ -73,15 +72,15 @@ export const multipleSelect = () => {
         value={value}
         label="Countries"
         placeholder="Select a country"
-        onChange={v => setValue(v)}
-        formatLabel={country => {
+        onChange={(v) => setValue(v)}
+        formatLabel={(country) => {
           return (
             <>
               {country.emoji} {country.label}
             </>
           );
         }}
-        options={sortBy(COUNTRIES, "name").map(country => ({
+        options={sortBy(COUNTRIES, "name").map((country) => ({
           label: country.name,
           value: country.code,
           emoji: country.emoji,
@@ -95,7 +94,7 @@ export const PrimarySelection = () => {
   const [value, setValue] = React.useState("");
   const [primary, setPrimary] = React.useState(null);
 
-  const options = sortBy(COUNTRIES, "name").map(country => ({
+  const options = sortBy(COUNTRIES, "name").map((country) => ({
     label: country.name,
     value: country.code,
     emoji: country.emoji,
@@ -110,9 +109,9 @@ export const PrimarySelection = () => {
         value={value}
         label="Countries"
         primary={primary}
-        onPrimaryChange={p => setPrimary(p)}
+        onPrimaryChange={(p) => setPrimary(p)}
         placeholder="Select a country"
-        onChange={v => setValue(v)}
+        onChange={(v) => setValue(v)}
         options={options}
       />
       {primaryCountry && (

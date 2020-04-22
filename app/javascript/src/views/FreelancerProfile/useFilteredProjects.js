@@ -1,6 +1,6 @@
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
-import { isArray, some } from "lodash";
+import { isArray, some } from "lodash-es";
 
 function useFilteredProjects(data) {
   const location = useLocation();

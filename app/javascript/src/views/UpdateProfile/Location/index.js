@@ -2,11 +2,11 @@
 // settings
 import * as React from "react";
 import { Formik, Form } from "formik";
-import { get } from "lodash";
+import { get } from "lodash-es";
+import { Button } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Text from "../../../components/Text";
 import Card from "../../../components/Card";
-import Button from "../../../components/Button";
 import Loading from "../../../components/Loading";
 import Heading from "../../../components/Heading";
 import FieldRow from "../../../components/FieldRow";
@@ -97,9 +97,7 @@ let Location = () => {
                     }}
                   />
                 </Padding>
-                <Button loading={formik.isSubmitting} styling="green">
-                  Save Changes
-                </Button>
+                <Button loading={formik.isSubmitting}>Save Changes</Button>
               </Form>
             </Padding>
           </Card>

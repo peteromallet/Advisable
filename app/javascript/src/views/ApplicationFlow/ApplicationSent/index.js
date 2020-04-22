@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Box, Card, Text, RoundedButton } from "@advisable/donut";
+import { Box, Card, Text, Button } from "@advisable/donut";
 import illustration from "./illustration.png";
 
 const ApplicationSent = ({ match }) => {
@@ -28,13 +28,13 @@ const ApplicationSent = ({ match }) => {
           In the meantime you can review and update your application.
         </Text>
 
-        <RoundedButton
+        <Button
           as={Link}
           variant="subtle"
           to={`/invites/${applicationId}/apply`}
         >
           Update Application
-        </RoundedButton>
+        </Button>
       </Card>
     </Box>
   );

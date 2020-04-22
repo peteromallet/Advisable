@@ -1,10 +1,10 @@
 import React from "react";
 import { Field } from "formik";
-import { Box, Card, Autocomplete, RoundedButton, Icon } from "@advisable/donut";
+import { Box, Card, Autocomplete, Button, Icon } from "@advisable/donut";
 import AvailabilityInput from "../../../components/Availability";
 import ZONES from "../../../data/timezones";
 
-const TIMEZONE_OPTIONS = ZONES.map(z => ({ label: z, value: z }));
+const TIMEZONE_OPTIONS = ZONES.map((z) => ({ label: z, value: z }));
 
 const AvailabilityDesktopFields = ({ formik }) => {
   return (
@@ -14,8 +14,8 @@ const AvailabilityDesktopFields = ({ formik }) => {
         name="timeZone"
         label="Time Zone"
         options={TIMEZONE_OPTIONS}
-        formatInputValue={value => `Timezone: ${value}`}
-        onChange={o => {
+        formatInputValue={(value) => `Timezone: ${value}`}
+        onChange={(o) => {
           formik.setFieldTouched("timeZone", true);
           formik.setFieldValue("timeZone", o.value);
         }}
@@ -24,14 +24,14 @@ const AvailabilityDesktopFields = ({ formik }) => {
         <AvailabilityInput
           selected={formik.values.availability}
           timeZone={formik.values.timeZone}
-          onSelect={a => {
+          onSelect={(a) => {
             formik.setFieldTouched("availability", true);
             formik.setFieldValue("availability", a);
           }}
         />
       </Box>
 
-      <RoundedButton
+      <Button
         type="submit"
         width={["100%", "auto"]}
         disabled={formik.values.availability.length < 6}
@@ -39,7 +39,7 @@ const AvailabilityDesktopFields = ({ formik }) => {
         suffix={<Icon icon="arrow-right" />}
       >
         Continue
-      </RoundedButton>
+      </Button>
     </Card>
   );
 };

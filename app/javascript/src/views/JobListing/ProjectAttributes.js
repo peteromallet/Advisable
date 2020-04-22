@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { Divider, Padding, AttributeList } from "src/components";
 
 const ProjectAttributes = ({ project }) => {

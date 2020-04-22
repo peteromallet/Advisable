@@ -66,14 +66,7 @@ class Types::QueryType < Types::BaseType
   end
 
   def application(id:)
-    application = Application.find_by_airtable_id(id)
-    application = Application.find_by_uid(id) if application.nil?
-    return application if application.present?
-
-    raise ApiError::InvalidRequest.new(
-            'recordNotFound',
-            "Could not find application with id '#{id}'"
-          )
+    Application.find_by_uid_or_airtable_id!(id)
   end
 
   field :interview,

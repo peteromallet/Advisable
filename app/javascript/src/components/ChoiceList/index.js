@@ -1,5 +1,5 @@
 import React from "react";
-import { isObject } from "lodash";
+import { isObject } from "lodash-es";
 import InputLabel from "../InputLabel";
 import InputError from "../InputError";
 import InputDescription from "../InputDescription";
@@ -14,13 +14,13 @@ const ChoiceList = ({
   fullWidth,
   description,
   optionsPerRow,
-  error
+  error,
 }) => {
   return (
     <React.Fragment>
       {label && <InputLabel>{label}</InputLabel>}
       <Choices fullWidth={fullWidth} optionsPerRow={optionsPerRow}>
-        {options.map(option => (
+        {options.map((option) => (
           <Choice key={isObject(option) ? option.value : option}>
             <input
               name={name}

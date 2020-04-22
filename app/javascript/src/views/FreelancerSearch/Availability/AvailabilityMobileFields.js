@@ -4,7 +4,7 @@ import {
   Box,
   Select,
   Availability,
-  RoundedButton,
+  Button,
   Icon,
   Text,
 } from "@advisable/donut";
@@ -14,17 +14,17 @@ const AvailabilityMobileFields = ({ formik }) => {
   return (
     <>
       <Field as={Select} name="timeZone" mb="l">
-        {ZONES.map(zone => (
+        {ZONES.map((zone) => (
           <option key={zone}>{zone}</option>
         ))}
       </Field>
       <Box mx="-20px" mb="xxl">
         <Availability
           value={formik.values.availability}
-          onChange={a => formik.setFieldValue("availability", a)}
+          onChange={(a) => formik.setFieldValue("availability", a)}
         />
       </Box>
-      <RoundedButton
+      <Button
         size="l"
         type="submit"
         width={["100%", "auto"]}
@@ -33,7 +33,7 @@ const AvailabilityMobileFields = ({ formik }) => {
         suffix={<Icon icon="arrow-right" />}
       >
         Continue
-      </RoundedButton>
+      </Button>
       {formik.values.availability.length < 6 ? (
         <Text mt="s">
           Please select at least 6 times that you will be available for a call.

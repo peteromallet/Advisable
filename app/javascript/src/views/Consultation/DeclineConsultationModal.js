@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import { Modal, Box, Text, RoundedButton } from "@advisable/donut";
+import { Modal, Box, Text, Button } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import DECLINE from "./declineConsultation";
 
@@ -42,17 +42,17 @@ export default function DeclineConsultationModal({ consultation, modal }) {
                   name="reason"
                 />
               </Box>
-              <RoundedButton
+              <Button
                 type="submit"
                 loading={formik.isSubmitting}
                 variant="dark"
                 mr="xs"
               >
                 Decline Consultation
-              </RoundedButton>
-              <RoundedButton variant="subtle" onClick={modal.hide}>
+              </Button>
+              <Button variant="subtle" onClick={modal.hide}>
                 Cancel
-              </RoundedButton>
+              </Button>
             </Form>
           )}
         </Formik>

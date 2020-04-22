@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Avatar, Box, Icon, Text, RoundedButton } from "@advisable/donut";
+import { Avatar, Box, Icon, Text, Button } from "@advisable/donut";
 import pluralize from "../../../utilities/pluralize";
 
 function BottomBar({ specialists, onContinue }) {
@@ -26,7 +26,7 @@ function BottomBar({ specialists, onContinue }) {
         <Box height={80} display="flex" alignItems="center">
           <Box width="100%">
             <Box ml="8px">
-              {specialists.map(s => (
+              {specialists.map((s) => (
                 <Box
                   key={s.id}
                   display="inline-block"
@@ -51,13 +51,13 @@ function BottomBar({ specialists, onContinue }) {
               </Text>
             </Box>
           </Box>
-          <RoundedButton
+          <Button
             size="l"
             onClick={onContinue}
             suffix={<Icon icon="arrow-right" />}
           >
             Continue
-          </RoundedButton>
+          </Button>
         </Box>
       </Box>
     </Box>

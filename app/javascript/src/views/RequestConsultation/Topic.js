@@ -3,7 +3,7 @@ import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { useParams, useLocation, Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
+import { Icon, Box, Text, Button } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import UPDATE from "./updateConsultation";
 
@@ -75,7 +75,7 @@ const Topic = ({ data, previousStepURL, nextStep }) => {
                 placeholder="What would you like to talk about..."
               />
             </Box>
-            <RoundedButton
+            <Button
               type="submit"
               width={["100%", "auto"]}
               disabled={!formik.isValid}
@@ -83,7 +83,7 @@ const Topic = ({ data, previousStepURL, nextStep }) => {
               suffix={<Icon icon="arrow-right" />}
             >
               Continue
-            </RoundedButton>
+            </Button>
           </Form>
         )}
       </Formik>

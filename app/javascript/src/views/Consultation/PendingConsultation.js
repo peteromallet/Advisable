@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
-import { Card, Text, RoundedButton, useModal } from "@advisable/donut";
+import { Card, Text, Button, useModal } from "@advisable/donut";
 import DeclineConsultationModal from "./DeclineConsultationModal";
 import ACCEPT from "./acceptConsultation";
 
@@ -48,20 +48,16 @@ const PendingConsultation = ({ data }) => {
       <Text lineHeight="s" color="neutral.7" mb="xl">
         {topic}
       </Text>
-      <RoundedButton
-        mr="xs"
-        onClick={handleAccept}
-        loading={acceptMutation.loading}
-      >
+      <Button mr="xs" onClick={handleAccept} loading={acceptMutation.loading}>
         Accept Request
-      </RoundedButton>
-      <RoundedButton
+      </Button>
+      <Button
         variant="secondary"
         disabled={acceptMutation.loading}
         onClick={declineModal.show}
       >
         Decline Request
-      </RoundedButton>
+      </Button>
     </Card>
   );
 };

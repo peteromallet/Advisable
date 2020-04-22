@@ -2,9 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik } from "formik";
 import Text from "src/components/Text";
-import Button from "src/components/Button";
-import { Mobile } from "src/components/Breakpoint";
-import ButtonGroup from "src/components/ButtonGroup";
+import { Button } from "@advisable/donut";
 import TextField from "src/components/TextField";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
@@ -57,28 +55,18 @@ export default ({ project, match, history }) => {
               marginBottom="xl"
               error={formik.submitCount > 0 && formik.errors.description}
             />
-            <Mobile>
-              {(isMobile) => (
-                <ButtonGroup fullWidth={isMobile}>
-                  <Button
-                    type="button"
-                    size="l"
-                    styling="outlined"
-                    onClick={goBack}
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    type="submit"
-                    size="l"
-                    styling="primary"
-                    loading={formik.isSubmitting}
-                  >
-                    Continue
-                  </Button>
-                </ButtonGroup>
-              )}
-            </Mobile>
+            <Button
+              mr="xs"
+              type="button"
+              size="l"
+              variant="subtle"
+              onClick={goBack}
+            >
+              Back
+            </Button>
+            <Button size="l" type="submit" loading={formik.isSubmitting}>
+              Continue
+            </Button>
           </form>
         )}
       </Formik>

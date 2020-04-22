@@ -1,7 +1,7 @@
 // DEPRECATED: You should use FieldGroup instead.
 
 import React from "react";
-import isArray from "lodash/isArray";
+import { isArray } from "lodash-es";
 import styled from "styled-components";
 
 const FieldRowField = styled.div`

@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import { Link } from "react-router-dom";
 import { Button } from "@advisable/donut";
 
@@ -13,13 +13,11 @@ const ClientActions = ({ application }) => {
       <Button
         as={Link}
         width="100%"
-        intent="success"
         key="updateApplication"
-        appearance="primary"
         to={`/invites/${application.airtableId}/apply`}
       >
         Update Application
-      </Button>
+      </Button>,
     );
   }
 
@@ -28,13 +26,11 @@ const ClientActions = ({ application }) => {
       <Button
         as={Link}
         width="100%"
-        intent="success"
         key="updateProposal"
-        appearance="primary"
         to={`/applications/${application.airtableId}/proposal`}
       >
         Update Proposal
-      </Button>
+      </Button>,
     );
   }
 
@@ -44,13 +40,11 @@ const ClientActions = ({ application }) => {
         <Button
           as={Link}
           width="100%"
-          intent="success"
           key="sendProposal"
-          appearance="primary"
           to={`/applications/${application.airtableId}/proposal`}
         >
           Send Proposal
-        </Button>
+        </Button>,
       );
     }
 
@@ -59,13 +53,11 @@ const ClientActions = ({ application }) => {
         <Button
           as={Link}
           width="100%"
-          intent="success"
-          appearance="primary"
           key="scheduleInterview"
           to={`/interview_request/${application.interview.airtableId}`}
         >
           Schedule Interview
-        </Button>
+        </Button>,
       );
     }
   }

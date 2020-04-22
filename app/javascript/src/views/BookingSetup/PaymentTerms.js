@@ -117,11 +117,8 @@ const PaymentTerms = ({ nextStep }) => {
               </Box>
             )}
             <Button
-              block
               size="l"
               type="submit"
-              intent="success"
-              appearance="primary"
               disabled={!formik.isValid}
               loading={formik.isSubmitting}
             >

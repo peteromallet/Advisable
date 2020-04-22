@@ -1,5 +1,5 @@
 import * as React from "react";
-import { get } from "lodash";
+import { get } from "lodash-es";
 import Text from "../../components/Text";
 import Card from "../../components/Card";
 import NewTask from "../../components/NewTask";

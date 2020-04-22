@@ -21,13 +21,13 @@ export const Card = styled.div`
   position: relative;
   box-shadow: 0 4px 10px 0 rgba(208, 217, 233, 0.38);
 
-  ${props =>
+  ${(props) =>
     props.center &&
     css`
       text-align: center;
     `}
 
-  ${props =>
+  ${(props) =>
     props.onClick &&
     css`
       transition: box-shadow 200ms;
@@ -38,9 +38,9 @@ export const Card = styled.div`
       }
     `};
 
-  ${props => ELEVATIONS[props.elevation]};
+  ${(props) => ELEVATIONS[props.elevation]};
 
-  ${props =>
+  ${(props) =>
     props.hoverElevation &&
     css`
       transition: box-shadow 300ms, transform 300ms;
@@ -48,7 +48,7 @@ export const Card = styled.div`
       &:hover {
         cursor: pointer;
         transform: translateY(-1px);
-        ${props => ELEVATIONS[props.hoverElevation]};
+        ${(props) => ELEVATIONS[props.hoverElevation]};
       }
     `};
 `;
