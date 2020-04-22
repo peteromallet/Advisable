@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
 import { MenuItem } from "reakit";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
-import { Text, RoundedButton, Box } from "@advisable/donut";
+import { Text, Button, Box } from "@advisable/donut";
 import { DrawerModal } from "../Drawer";
 import UPDATE_TASK from "./setTaskTrial";
 
@@ -35,17 +35,12 @@ const ToggleWithConfirmation = React.forwardRef(
                 Marking this as a trial task will remove the existing trial
                 offer from the task "{trialTask.name}"
               </Text>
-              <RoundedButton onClick={handleUpdate} size="s" mr="xxs">
+              <Button onClick={handleUpdate} size="s" mr="xxs">
                 Okay
-              </RoundedButton>
-              <RoundedButton
-                onClick={dialog.hide}
-                size="s"
-                ml="xxs"
-                variant="subtle"
-              >
+              </Button>
+              <Button onClick={dialog.hide} size="s" ml="xxs" variant="subtle">
                 Cancel
-              </RoundedButton>
+              </Button>
             </Text>
           </Box>
         </DrawerModal>

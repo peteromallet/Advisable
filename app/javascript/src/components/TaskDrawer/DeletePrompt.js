@@ -1,6 +1,6 @@
 // Renders the prompt to submit a task
 import React from "react";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
 import Padding from "../Spacing/Padding";
@@ -32,12 +32,12 @@ const DeletePrompt = ({ task, onClose, onDelete }) => {
             Are you sure you want to delete this task?
           </Text>
         </Padding>
-        <RoundedButton loading={loading} onClick={handleDelete} variant="dark">
+        <Button loading={loading} onClick={handleDelete} variant="dark">
           Delete
-        </RoundedButton>
-        <RoundedButton onClick={onClose} variant="subtle">
+        </Button>
+        <Button onClick={onClose} variant="subtle">
           Cancel
-        </RoundedButton>
+        </Button>
       </ConfirmationContainer>
     </Confirmation>
   );

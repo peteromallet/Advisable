@@ -3,7 +3,7 @@ import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import { Text, Box, RoundedButton, Columns } from "@advisable/donut";
+import { Text, Box, Button, Columns } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import Modal from "../../components/Modal";
 
@@ -72,22 +72,22 @@ const StopWorkingModal = ({ isOpen, onClose, application }) => {
                 placeholder={`What is your reason for stopping your work with ${name}`}
               />
               <Columns mt="l" spacing="xs">
-                <RoundedButton
+                <Button
                   width="100%"
                   type="submit"
                   aria-label="Stop Working"
                   loading={formik.isSubmitting}
                 >
                   Stop Working
-                </RoundedButton>
-                <RoundedButton
+                </Button>
+                <Button
                   type="button"
                   width="100%"
                   variant="subtle"
                   onClick={onClose}
                 >
                   Cancel
-                </RoundedButton>
+                </Button>
               </Columns>
               {formik.status && (
                 <Text color="red.6" mt="m">

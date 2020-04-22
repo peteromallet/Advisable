@@ -1,13 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import {
-  Text,
-  RoundedButton,
-  Box,
-  NumberedList,
-  Checkbox,
-} from "@advisable/donut";
+import { Text, Button, Box, NumberedList, Checkbox } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import VALIDATE_PROJECT from "./validateProject";
 import createValidationSchema from "./validationSchema";
@@ -89,9 +83,9 @@ const VerifyProject = ({ project, match }) => {
               I consent to be contacted to verify this project at the above
               email address.
             </Field>
-            <RoundedButton mt="m" loading={formik.isSubmitting}>
+            <Button mt="m" loading={formik.isSubmitting}>
               Send verification details
-            </RoundedButton>
+            </Button>
           </Form>
         )}
       </Formik>

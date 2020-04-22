@@ -7,7 +7,7 @@ import {
   Card,
   Link,
   Text,
-  RoundedButton,
+  Button,
   Skeleton,
   Radio,
   RadioGroup,
@@ -153,9 +153,7 @@ const PaymentSettings = () => {
 
             <InvoiceSettingsFields formik={formik} />
 
-            <RoundedButton loading={formik.isSubmitting}>
-              Save Changes
-            </RoundedButton>
+            <Button loading={formik.isSubmitting}>Save Changes</Button>
           </Form>
         )}
       </Formik>

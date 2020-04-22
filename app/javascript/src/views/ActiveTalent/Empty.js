@@ -1,7 +1,7 @@
 // Loads the empty state for the manage talent view
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Text, RoundedButton } from "@advisable/donut";
+import { Box, Text, Button } from "@advisable/donut";
 import illustration from "./illustration.png";
 
 export default () => {
@@ -20,7 +20,7 @@ export default () => {
           here.
         </Text>
         <Link to="/freelancer_search">
-          <RoundedButton>Create a project</RoundedButton>
+          <Button>Create a project</Button>
         </Link>
       </div>
     </div>

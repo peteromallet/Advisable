@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Formik } from "formik";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "src/components/Text";
 import TextField from "src/components/TextField";
@@ -50,7 +50,7 @@ export default ({ project, match, history }) => {
               marginBottom="xl"
               error={formik.submitCount > 0 && formik.errors.companyDescription}
             />
-            <RoundedButton
+            <Button
               mr="xs"
               type="button"
               size="l"
@@ -58,10 +58,10 @@ export default ({ project, match, history }) => {
               onClick={goBack}
             >
               Back
-            </RoundedButton>
-            <RoundedButton size="l" type="submit" loading={formik.isSubmitting}>
+            </Button>
+            <Button size="l" type="submit" loading={formik.isSubmitting}>
               Continue
-            </RoundedButton>
+            </Button>
           </form>
         )}
       </Formik>

@@ -2,7 +2,7 @@ import React from "react";
 import { Formik } from "formik";
 import moment from "moment-timezone";
 import { useMutation } from "@apollo/react-hooks";
-import { Text, Box, Link, Icon, RoundedButton } from "@advisable/donut";
+import { Text, Box, Link, Icon, Button } from "@advisable/donut";
 import TextField from "src/components/TextField";
 import ACCEPT_INTERVIEW_REQUEST from "./acceptInterviewRequest";
 // import { Event } from "./styles";
@@ -71,14 +71,14 @@ export default function ConfirmInterviewRequest({
               value={form.values.phoneNumber}
               onChange={form.handleChange}
             />
-            <RoundedButton
+            <Button
               size="l"
               loading={form.isSubmitting}
               disabled={form.isSubmitting}
               type="submit"
             >
               Confirm Call
-            </RoundedButton>
+            </Button>
           </form>
         )}
       />

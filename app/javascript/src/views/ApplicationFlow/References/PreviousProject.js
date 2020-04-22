@@ -5,7 +5,7 @@ import {
   Text,
   Box,
   Columns,
-  RoundedButton,
+  Button,
   DialogDisclosure,
   theme,
 } from "@advisable/donut";
@@ -57,7 +57,7 @@ function Publish({ modal, id }) {
   return (
     <DialogDisclosure
       size="s"
-      as={RoundedButton}
+      as={Button}
       variant="dark"
       {...modal.atPath(`/previous_projects/${id}`)}
     >

@@ -1,7 +1,7 @@
 // Renders the prompt to submit a task
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { Columns, RoundedButton } from "@advisable/donut";
+import { Columns, Button } from "@advisable/donut";
 import Text from "../Text";
 import Slider from "../Slider";
 import Heading from "../Heading";
@@ -74,7 +74,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
               </Text>
             </Padding>
             <Columns spacing="xs">
-              <RoundedButton
+              <Button
                 width="100%"
                 styling="primary"
                 loading={loading}
@@ -82,10 +82,10 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
                 onClick={handleConfirmApproved}
               >
                 {task.flexibleEstimate ? "Continue" : "Complete"}
-              </RoundedButton>
-              <RoundedButton width="100%" variant="subtle" onClick={onClose}>
+              </Button>
+              <Button width="100%" variant="subtle" onClick={onClose}>
                 Cancel
-              </RoundedButton>
+              </Button>
             </Columns>
           </>
         )}
@@ -135,7 +135,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
               />
             </Padding>
             <Columns spacing="xs">
-              <RoundedButton
+              <Button
                 width="100%"
                 styling="primary"
                 loading={loading}
@@ -143,10 +143,10 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
                 aria-label="Complete"
               >
                 Complete
-              </RoundedButton>
-              <RoundedButton width="100%" onClick={onClose} variant="subtle">
+              </Button>
+              <Button width="100%" onClick={onClose} variant="subtle">
                 Cancel
-              </RoundedButton>
+              </Button>
             </Columns>
           </>
         )}

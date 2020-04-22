@@ -1,6 +1,6 @@
 import React from "react";
 import { useMenuState } from "reakit";
-import { Box, Menu, RoundedButton } from "@advisable/donut";
+import { Box, Menu, Button } from "@advisable/donut";
 import DeleteTask from "./DeleteTask";
 import ToggleTrial from "./ToggleTrial";
 import ToggleRepeating from "./ToggleRepeating";
@@ -25,14 +25,14 @@ const Actions = (props) => {
         state={menu}
         aria-label="Task actions"
         trigger={
-          <RoundedButton
+          <Button
             size="s"
             type="button"
             variant="subtle"
             aria-label="Open task actions menu"
           >
             <MoreHorizontal />
-          </RoundedButton>
+          </Button>
         }
       >
         {!props.isClient && props.task.application.trialProgram && (

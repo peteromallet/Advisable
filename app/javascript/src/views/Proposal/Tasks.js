@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import { useApolloClient } from "@apollo/react-hooks";
 import { matchPath } from "react-router";
 import Card from "../../components/Card";
@@ -123,21 +123,18 @@ const Tasks = ({ application, match, location, history }) => {
               task and click "Set as trial task"
             </Text>
           </Padding>
-          <RoundedButton onClick={nextStep} mr="xs">
+          <Button onClick={nextStep} mr="xs">
             Continue without trial task
-          </RoundedButton>
-          <RoundedButton
-            variant="subtle"
-            onClick={() => setConfirmModal(false)}
-          >
+          </Button>
+          <Button variant="subtle" onClick={() => setConfirmModal(false)}>
             Cancel
-          </RoundedButton>
+          </Button>
         </Padding>
       </Modal>
       <Padding size="l">
-        <RoundedButton onClick={handleContinue} disabled={!canContinue}>
+        <Button onClick={handleContinue} disabled={!canContinue}>
           Continue
-        </RoundedButton>
+        </Button>
       </Padding>
     </Card>
   );

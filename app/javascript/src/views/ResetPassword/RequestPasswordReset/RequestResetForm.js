@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import { Box, Text, Label, Input, RoundedButton } from "@advisable/donut";
+import { Box, Text, Label, Input, Button } from "@advisable/donut";
 import validationSchema from "./validationSchema";
 import REQUEST_PASSWORD_RESET from "./requestPasswordReset.graphql";
 
@@ -54,14 +54,14 @@ function RequestResetForm({ onSubmit }) {
               </Text>
             )}
           </Box>
-          <RoundedButton
+          <Button
             size="l"
             type="submit"
             css="width: 100%;"
             loading={formik.isSubmitting}
           >
             Send password reset
-          </RoundedButton>
+          </Button>
         </Form>
       )}
     </Formik>

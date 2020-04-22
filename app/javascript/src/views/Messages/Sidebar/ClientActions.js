@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Padding, RoundedButton } from "@advisable/donut";
+import { Padding, Button } from "@advisable/donut";
 import CreateBookingButton from "../../../components/CreateBookingButton";
 import DeclineApplicationButton from "../../../components/DeclineApplicationButton";
 import { FileText, Check } from "@styled-icons/feather";
@@ -24,14 +24,14 @@ const ClientActions = ({ application }) => {
   if (!isBooking && application.status === "Proposed") {
     actions.push(
       <Padding bottom="xs" key="viewProposal">
-        <RoundedButton
+        <Button
           as={Link}
           width="100%"
           prefix={<FileText />}
           to={`/projects/${application.project.airtableId}/applications/${application.airtableId}/proposal`}
         >
           View Proposal
-        </RoundedButton>
+        </Button>
       </Padding>,
     );
   }
@@ -39,7 +39,7 @@ const ClientActions = ({ application }) => {
   if (!isBooking) {
     actions.push(
       <Padding bottom="xs" key="viewApplication">
-        <RoundedButton
+        <Button
           as={Link}
           width="100%"
           variant="subtle"
@@ -47,7 +47,7 @@ const ClientActions = ({ application }) => {
           to={`/projects/${application.project.airtableId}/applications/${application.airtableId}`}
         >
           View Application
-        </RoundedButton>
+        </Button>
       </Padding>,
     );
 
@@ -58,7 +58,7 @@ const ClientActions = ({ application }) => {
 
   if (isBooking) {
     actions.push(
-      <RoundedButton
+      <Button
         as={Link}
         width="100%"
         key="viewTasks"
@@ -66,7 +66,7 @@ const ClientActions = ({ application }) => {
         to={`/manage/${application.airtableId}`}
       >
         View Tasks
-      </RoundedButton>,
+      </Button>,
     );
   }
 

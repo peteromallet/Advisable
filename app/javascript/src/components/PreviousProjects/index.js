@@ -1,7 +1,7 @@
 import React from "react";
 import Loading from "./Loading";
 import PreviousProject from "./PreviousProject";
-import { Box, Text, useModal, RoundedButton } from "@advisable/donut";
+import { Box, Text, useModal, Button } from "@advisable/donut";
 import Divider from "../Divider";
 import PreviousProjectsModal from "../PreviousProjectsModal";
 
@@ -38,14 +38,9 @@ const PreviousProjects = ({
         <>
           <PreviousProjectsModal modal={modal} specialistId={specialistId} />
           <Box py="l">
-            <RoundedButton
-              width="100%"
-              size="l"
-              variant="subtle"
-              onClick={modal.show}
-            >
+            <Button width="100%" size="l" variant="subtle" onClick={modal.show}>
               View all projects
-            </RoundedButton>
+            </Button>
           </Box>
         </>
       )}

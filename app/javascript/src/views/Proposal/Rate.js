@@ -2,7 +2,7 @@ import * as React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Heading from "../../components/Heading";
@@ -91,14 +91,14 @@ const Rate = ({ history, application }) => {
                   }
                 />
               </Padding>
-              <RoundedButton
+              <Button
                 type="submit"
                 disabled={!formik.isValid}
                 aria-label="Continue"
                 loading={formik.isSubmitting ? true : undefined}
               >
                 Continue
-              </RoundedButton>
+              </Button>
             </Padding>
           </Form>
         )}

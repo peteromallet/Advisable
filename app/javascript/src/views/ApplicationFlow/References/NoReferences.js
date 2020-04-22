@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-  DialogDisclosure,
-  RoundedButton,
-  Text,
-  Icon,
-  Card,
-} from "@advisable/donut";
+import { DialogDisclosure, Button, Text, Icon, Card } from "@advisable/donut";
 
 const NoReferences = ({ confirmationModal, newProjectModal }) => {
   return (
@@ -21,17 +15,13 @@ const NoReferences = ({ confirmationModal, newProjectModal }) => {
       </Text>
       <DialogDisclosure
         mr="xs"
-        as={RoundedButton}
+        as={Button}
         prefix={<Icon icon="plus" />}
         {...newProjectModal}
       >
         Add a previous project
       </DialogDisclosure>
-      <DialogDisclosure
-        as={RoundedButton}
-        variant="subtle"
-        {...confirmationModal}
-      >
+      <DialogDisclosure as={Button} variant="subtle" {...confirmationModal}>
         I don't want to provide references
       </DialogDisclosure>
     </Card>

@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Box, Icon, RoundedButton } from "@advisable/donut";
+import { Box, Icon, Button } from "@advisable/donut";
 
 export default function RecommendationAction({
   search,
@@ -11,7 +11,7 @@ export default function RecommendationAction({
   const location = useLocation();
   return (
     <Box flexShrink={0}>
-      <RoundedButton
+      <Button
         size="l"
         mb={{ _: "xs", l: 0 }}
         width={{ _: "100%", l: "auto" }}
@@ -19,8 +19,8 @@ export default function RecommendationAction({
         variant="subtle"
       >
         See other matches
-      </RoundedButton>
-      <RoundedButton
+      </Button>
+      <Button
         size="l"
         ml={{ _: null, l: "xs" }}
         width={{ _: "100%", l: "auto" }}
@@ -36,7 +36,7 @@ export default function RecommendationAction({
         }
       >
         {`Talk with ${firstName}`}
-      </RoundedButton>
+      </Button>
     </Box>
   );
 }

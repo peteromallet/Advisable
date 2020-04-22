@@ -2,13 +2,7 @@ import * as React from "react";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
-import {
-  Box,
-  Text,
-  Checkbox,
-  NumberedList,
-  RoundedButton,
-} from "@advisable/donut";
+import { Box, Text, Checkbox, NumberedList, Button } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Card from "../../components/Card";
 import TextField from "../../components/TextField";
@@ -181,14 +175,14 @@ const ProjectType = ({ history, application }) => {
                   <Box my="l" height={1} bg="neutral.1" />
                 </>
               )}
-              <RoundedButton
+              <Button
                 type="submit"
                 aria-label="Continue"
                 disabled={!formik.isValid}
                 loading={formik.isSubmitting}
               >
                 Continue
-              </RoundedButton>
+              </Button>
             </Padding>
           </Form>
         )}

@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/react-hooks";
 import Text from "src/components/Text";
 import Modal from "src/components/Modal";
 import Select from "src/components/Select";
-import { RoundedButton, Columns } from "@advisable/donut";
+import { Button, Columns } from "@advisable/donut";
 import Heading from "src/components/Heading";
 import { Padding } from "src/components/Spacing";
 import TextField from "src/components/TextField";
@@ -99,22 +99,22 @@ const RejectProposalModal = ({
                 />
               </Padding>
               <Columns spacing="s">
-                <RoundedButton
+                <Button
                   type="submit"
                   width="100%"
                   variant="dark"
                   loading={formik.isSubmitting}
                 >
                   Reject Applicant
-                </RoundedButton>
-                <RoundedButton
+                </Button>
+                <Button
                   type="button"
                   width="100%"
                   variant="subtle"
                   onClick={onClose}
                 >
                   Cancel
-                </RoundedButton>
+                </Button>
               </Columns>
             </Padding>
           </form>

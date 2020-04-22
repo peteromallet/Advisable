@@ -4,7 +4,7 @@ import { get } from "lodash-es";
 import { Formik } from "formik";
 import queryString from "query-string";
 import { Redirect } from "react-router-dom";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
 import Text from "src/components/Text";
@@ -119,7 +119,7 @@ const Signup = ({ location, match }) => {
                   }
                 />
               </FieldRow>
-              <RoundedButton
+              <Button
                 loading={formik.isSubmitting}
                 type="submit"
                 size="l"
@@ -127,7 +127,7 @@ const Signup = ({ location, match }) => {
                 marginTop="s"
               >
                 Signup
-              </RoundedButton>
+              </Button>
               {formik.status && <Error>{t(`errors.${formik.status}`)}</Error>}
             </form>
           )}

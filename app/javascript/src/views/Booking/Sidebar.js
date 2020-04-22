@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash-es";
-import { RoundedButton, Tooltip, Box, Icon } from "@advisable/donut";
+import { Button, Tooltip, Box, Icon } from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "../../components/Sticky";
@@ -56,7 +56,7 @@ const Sidebar = ({ data, history, tutorial, match }) => {
           />
 
           <Padding top="xl">
-            <RoundedButton
+            <Button
               mb="xs"
               width="100%"
               align="left"
@@ -65,7 +65,7 @@ const Sidebar = ({ data, history, tutorial, match }) => {
               onClick={() => setModal(TALK_MODAL)}
             >
               Message {specialist.firstName}
-            </RoundedButton>
+            </Button>
             {application.status === "Working" && (
               <>
                 <Route
@@ -78,7 +78,7 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                     />
                   )}
                 />
-                <RoundedButton
+                <Button
                   width="100%"
                   align="left"
                   prefix={<PauseCircle />}
@@ -87,7 +87,7 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                   onClick={() => history.replace(`${match.url}/stop`)}
                 >
                   Stop Working
-                </RoundedButton>
+                </Button>
               </>
             )}
           </Padding>
@@ -104,13 +104,13 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                 <AttributeList.Item
                   label="Monthly Limit"
                   action={
-                    <RoundedButton
+                    <Button
                       size="s"
                       variant="subtle"
                       onClick={() => setProjectTypeModal(true)}
                     >
                       <Edit />
-                    </RoundedButton>
+                    </Button>
                   }
                 >
                   {application.monthlyLimit} hours
@@ -126,14 +126,14 @@ const Sidebar = ({ data, history, tutorial, match }) => {
               <AttributeList.Item
                 label="Project Type"
                 action={
-                  <RoundedButton
+                  <Button
                     size="s"
                     variant="subtle"
                     aria-label="Edit project type"
                     onClick={() => setProjectTypeModal(true)}
                   >
                     <Edit />
-                  </RoundedButton>
+                  </Button>
                 }
               >
                 <Tooltip
@@ -159,13 +159,9 @@ const Sidebar = ({ data, history, tutorial, match }) => {
               <AttributeList.Item
                 label="Payment Method"
                 action={
-                  <RoundedButton
-                    variant="subtle"
-                    onClick={handleEditPayment}
-                    size="s"
-                  >
+                  <Button variant="subtle" onClick={handleEditPayment} size="s">
                     <Edit />
-                  </RoundedButton>
+                  </Button>
                 }
               >
                 {get(data, "viewer.projectPaymentMethod")}

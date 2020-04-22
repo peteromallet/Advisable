@@ -5,7 +5,7 @@ import {
   Icon,
   Checkbox,
   Autocomplete,
-  RoundedButton,
+  Button,
   useTheme,
 } from "@advisable/donut";
 import { motion } from "framer-motion";
@@ -155,13 +155,9 @@ const FreelancerSearchCriteria = () => {
                   }
                 />
               </Box>
-              <RoundedButton
-                size="l"
-                type="submit"
-                prefix={<Icon icon="search" />}
-              >
+              <Button size="l" type="submit" prefix={<Icon icon="search" />}>
                 Find a freelancer
-              </RoundedButton>
+              </Button>
             </Form>
           )}
         </Formik>

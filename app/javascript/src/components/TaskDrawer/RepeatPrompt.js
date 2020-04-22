@@ -1,7 +1,7 @@
 // Renders the prompt to repeat a task.
 import React from "react";
 import moment from "moment";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
 import Padding from "../Spacing/Padding";
@@ -45,12 +45,12 @@ const RepeatPrompt = ({ task, onRepeat, onClose }) => {
             for another month?
           </Text>
         </Padding>
-        <RoundedButton loading={loading} onClick={handleRepeat} mr="xs">
+        <Button loading={loading} onClick={handleRepeat} mr="xs">
           Yes
-        </RoundedButton>
-        <RoundedButton onClick={onClose} variant="subtle">
+        </Button>
+        <Button onClick={onClose} variant="subtle">
           No
-        </RoundedButton>
+        </Button>
       </ConfirmationContainer>
     </Confirmation>
   );

@@ -1,7 +1,7 @@
 // Renders the prompt to assign a task
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import Text from "../Text";
 import Padding from "../Spacing/Padding";
 import ASSIGN_TASK from "./assignTask.graphql";
@@ -47,12 +47,12 @@ const AssignPrompt = ({ task, onClose, onAssign }) => {
             </Text>
           </Padding>
         )}
-        <RoundedButton loading={loading} onClick={handleAssign} mr="xs">
+        <Button loading={loading} onClick={handleAssign} mr="xs">
           Assign
-        </RoundedButton>
-        <RoundedButton onClick={onClose} variant="subtle">
+        </Button>
+        <Button onClick={onClose} variant="subtle">
           Cancel
-        </RoundedButton>
+        </Button>
       </ConfirmationContainer>
     </Confirmation>
   );

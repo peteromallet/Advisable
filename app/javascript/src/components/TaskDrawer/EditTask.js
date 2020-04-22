@@ -1,6 +1,6 @@
 import * as React from "react";
 import Div100vh from "react-div-100vh";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import TaskStatus from "../TaskStatus";
 import Text from "../Text";
 import Scrollable from "../Scrollable";
@@ -174,15 +174,12 @@ const EditTask = ({
                 Are you sure you want to continue?
               </Text>
             </Padding>
-            <RoundedButton onClick={handleConfirm} mr="xs">
+            <Button onClick={handleConfirm} mr="xs">
               Continue
-            </RoundedButton>
-            <RoundedButton
-              onClick={() => setConfirmPrompt(false)}
-              variant="subtle"
-            >
+            </Button>
+            <Button onClick={() => setConfirmPrompt(false)} variant="subtle">
               Cancel
-            </RoundedButton>
+            </Button>
           </ConfirmationContainer>
         </Confirmation>
       )}

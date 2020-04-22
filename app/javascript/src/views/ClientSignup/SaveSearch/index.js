@@ -7,7 +7,7 @@ import { useMutation } from "@apollo/react-hooks";
 import {
   Box,
   Text,
-  RoundedButton,
+  Button,
   Link,
   Icon,
   useTheme,
@@ -125,13 +125,13 @@ const SaveSearch = () => {
                 Great! We think we’ll have the perfect person for this project
                 but we need to know a little bit more about your project first.
               </Text>
-              <RoundedButton
+              <Button
                 size="l"
                 suffix={<Icon icon="arrow-right" />}
                 onClick={handleContinue}
               >
                 Setup Project
-              </RoundedButton>
+              </Button>
             </>
           ) : (
             <Form onSubmit={handleSubmit} />

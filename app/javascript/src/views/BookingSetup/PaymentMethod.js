@@ -10,7 +10,7 @@ import {
   Text,
   Radio,
   RadioGroup,
-  RoundedButton,
+  Button,
   Link,
 } from "@advisable/donut";
 import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
@@ -105,14 +105,14 @@ const PaymentMethod = ({ data, nextStep }) => {
                   {formik.errors.paymentMethod}
                 </Text>
               ) : undefined}
-              <RoundedButton
+              <Button
                 size="l"
                 type="submit"
                 suffix={<ArrowRight />}
                 loading={formik.isSubmitting}
               >
                 Continue
-              </RoundedButton>
+              </Button>
             </Form>
           )}
         </Formik>

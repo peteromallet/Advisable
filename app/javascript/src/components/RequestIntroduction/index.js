@@ -2,7 +2,7 @@ import React from "react";
 import { filter } from "lodash-es";
 import { Formik } from "formik";
 import moment from "moment-timezone";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Modal from "src/components/Modal";
 import Text from "src/components/Text";
@@ -109,14 +109,14 @@ function RequestIntroductionModal(props) {
                       )}
 
                       {!(isMobile && !formik.isValid) && (
-                        <RoundedButton
+                        <Button
                           size="l"
                           type="submit"
                           loading={formik.isSubmitting}
                           onClick={() => setSubmitted(true)}
                         >
                           Request Call
-                        </RoundedButton>
+                        </Button>
                       )}
 
                       {isMobile && !formik.isValid && (

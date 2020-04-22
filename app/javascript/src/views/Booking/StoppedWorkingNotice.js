@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Box, Text, RoundedButton } from "@advisable/donut";
+import { Box, Text, Button } from "@advisable/donut";
 import Modal from "../../components/Modal";
 
 export const RESUME_WORKING = gql`
@@ -39,17 +39,17 @@ export default function StoppedWorkingNotice({ firstName, application }) {
           <Text size="l" lineHeight="l" mb="m">
             Are you sure you want to resume working with {firstName}?
           </Text>
-          <RoundedButton
+          <Button
             mr="xs"
             loading={loading}
             onClick={handleResume}
             aria-label="Resume Project"
           >
             Resume Project
-          </RoundedButton>
-          <RoundedButton variant="subtle" onClick={() => setModal(false)}>
+          </Button>
+          <Button variant="subtle" onClick={() => setModal(false)}>
             Cancel
-          </RoundedButton>
+          </Button>
         </Box>
       </Modal>
       <Box bg="orange100" padding="l" borderRadius="12px">
@@ -61,14 +61,14 @@ export default function StoppedWorkingNotice({ firstName, application }) {
           action any more tasks for this project until you start working with
           them again.
         </Text>
-        <RoundedButton
+        <Button
           type="button"
           variant="dark"
           aria-label="Resume Project"
           onClick={() => setModal(true)}
         >
           Resume Project
-        </RoundedButton>
+        </Button>
       </Box>
     </>
   );

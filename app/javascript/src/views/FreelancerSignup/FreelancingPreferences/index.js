@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import { Text, Box, RoundedButton } from "@advisable/donut";
+import { Text, Box, Button } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Radio from "../../../components/Radio";
 import Choices from "../../../components/Choices";
@@ -120,7 +120,7 @@ const FreelancingPreferences = ({ history }) => {
             />
           </Box>
 
-          <RoundedButton
+          <Button
             mb="xxl"
             size="l"
             type="submit"
@@ -128,7 +128,7 @@ const FreelancingPreferences = ({ history }) => {
             loading={formik.isSubmitting}
           >
             Continue
-          </RoundedButton>
+          </Button>
         </Form>
       )}
     </Formik>

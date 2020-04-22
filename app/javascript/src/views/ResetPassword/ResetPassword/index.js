@@ -2,7 +2,7 @@ import React from "react";
 import { Formik } from "formik";
 import queryString from "query-string";
 import { useMutation } from "@apollo/react-hooks";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import { withNotifications } from "src/components/Notifications";
 import Heading from "src/components/Heading";
 import FieldRow from "src/components/FieldRow";
@@ -89,9 +89,9 @@ export default withNotifications(
                     }
                   />
                 </FieldRow>
-                <RoundedButton loading={formik.isSubmitting} type="submit">
+                <Button loading={formik.isSubmitting} type="submit">
                   Reset Password
-                </RoundedButton>
+                </Button>
               </form>
             )}
           />

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Formik, Form } from "formik";
 import { Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import Card from "../../components/Card";
 import Heading from "../../components/Heading";
 import TextField from "../../components/TextField";
@@ -57,9 +57,9 @@ const Send = ({ application, history }) => {
                   placeholder="Add a message..."
                 />
               </Padding>
-              <RoundedButton type="submit" loading={formik.isSubmitting}>
+              <Button type="submit" loading={formik.isSubmitting}>
                 Send Proposal
-              </RoundedButton>
+              </Button>
             </Form>
           )}
         </Formik>

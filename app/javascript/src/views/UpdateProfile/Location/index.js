@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
 import { get } from "lodash-es";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Text from "../../../components/Text";
 import Card from "../../../components/Card";
@@ -97,9 +97,7 @@ let Location = () => {
                     }}
                   />
                 </Padding>
-                <RoundedButton loading={formik.isSubmitting}>
-                  Save Changes
-                </RoundedButton>
+                <Button loading={formik.isSubmitting}>Save Changes</Button>
               </Form>
             </Padding>
           </Card>

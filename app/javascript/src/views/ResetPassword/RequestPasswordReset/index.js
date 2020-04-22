@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Text, Box, Card, RoundedButton, theme } from "@advisable/donut";
+import { Text, Box, Card, Button, theme } from "@advisable/donut";
 import Heading from "src/components/Heading";
 import RequestResetForm from "./RequestResetForm";
 
@@ -20,7 +20,7 @@ function RequestPasswordReset() {
   const history = useHistory();
   const [status, setStatus] = useState("REQUEST");
 
-  const handleRequest = data => {
+  const handleRequest = (data) => {
     if (data.requestPasswordReset.sent) {
       setStatus(SENT);
     }
@@ -78,7 +78,7 @@ function RequestPasswordReset() {
             <Text textAlign="center" color="neutral.8" mb="l" lineHeight="s">
               We couldn't find an account for the email you provided.
             </Text>
-            <RoundedButton
+            <Button
               mb="xs"
               size="l"
               css="width: 100%;"
@@ -88,8 +88,8 @@ function RequestPasswordReset() {
               }}
             >
               Apply to be a client
-            </RoundedButton>
-            <RoundedButton
+            </Button>
+            <Button
               size="l"
               css="width: 100%;"
               variant="subtle"
@@ -98,7 +98,7 @@ function RequestPasswordReset() {
               }}
             >
               Apply to be a specialist
-            </RoundedButton>
+            </Button>
           </>
         )}
 

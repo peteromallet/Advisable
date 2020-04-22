@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { Box, RoundedButton, Text } from "@advisable/donut";
+import { Box, Button, Text } from "@advisable/donut";
 import Modal from "../Modal";
 import { withNotifications } from "../Notifications";
 import REQUEST_REFERENCES from "./requestReferences.graphql";
@@ -45,12 +45,12 @@ const RequestReferences = ({
           out to their previous clients in order to get feedback on their past
           projects and performance and share the results with you.
         </Text>
-        <RoundedButton loading={isLoading} onClick={handleSubmit} mr="xs">
+        <Button loading={isLoading} onClick={handleSubmit} mr="xs">
           Request References
-        </RoundedButton>
-        <RoundedButton variant="subtle" onClick={onClose}>
+        </Button>
+        <Button variant="subtle" onClick={onClose}>
           Cancel
-        </RoundedButton>
+        </Button>
       </Box>
     </Modal>
   );

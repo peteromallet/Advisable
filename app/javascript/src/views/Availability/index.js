@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment-timezone";
 import React, { useState } from "react";
@@ -69,13 +69,9 @@ const AvailabilityView = ({ match, notifications }) => {
                 />
               </Body>
               <Footer>
-                <RoundedButton
-                  size="l"
-                  type="submit"
-                  isLoading={formik.isLoading}
-                >
+                <Button size="l" type="submit" isLoading={formik.isLoading}>
                   Update Availability
-                </RoundedButton>
+                </Button>
               </Footer>
             </Form>
           )}

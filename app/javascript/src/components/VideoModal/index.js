@@ -1,7 +1,7 @@
 import React from "react";
 import Text from "../Text";
 import Modal from "../Modal";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import Spacing from "../Spacing/Padding";
 
 const VideoModal = ({
@@ -31,9 +31,9 @@ const VideoModal = ({
         allowFullScreen
       />
       <Spacing size="l" css="text-align: center;">
-        <RoundedButton size="l" onClick={onDismiss}>
+        <Button size="l" onClick={onDismiss}>
           {buttonLabel || "Okay"}
-        </RoundedButton>
+        </Button>
       </Spacing>
     </Modal>
   );

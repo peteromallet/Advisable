@@ -11,7 +11,7 @@ import {
   Modal,
   Tag,
   useModal,
-  RoundedButton,
+  Button,
 } from "@advisable/donut";
 import IndustryTag from "../../../components/IndustryTag";
 import ProjectDetails from "../../../components/PreviousProjectDetails";
@@ -96,13 +96,13 @@ function ProjectCard({ specialistId, project }) {
               to={`/request_consultation/${specialistId}`}
               style={{ outline: "none" }}
             >
-              <RoundedButton size="l" prefix={<Icon icon="message-circle" />}>
+              <Button size="l" prefix={<Icon icon="message-circle" />}>
                 Request Consultation
-              </RoundedButton>
+              </Button>
             </Link>
           </Box>
         </Modal>
-        <DialogDisclosure as={RoundedButton} {...modal} variant="subtle">
+        <DialogDisclosure as={Button} {...modal} variant="subtle">
           View Project
         </DialogDisclosure>
       </Box>

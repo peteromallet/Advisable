@@ -3,7 +3,7 @@
 import React from "react";
 import { Share as ShareIcon } from "@styled-icons/feather";
 import Modal from "src/components/Modal";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import Share from "../Share";
 
 class ShareAction extends React.Component {
@@ -23,7 +23,7 @@ class ShareAction extends React.Component {
         >
           <Share {...this.props} />
         </Modal>
-        <RoundedButton
+        <Button
           size="s"
           marginTop="m"
           type="button"
@@ -32,7 +32,7 @@ class ShareAction extends React.Component {
           onClick={() => this.setState({ open: true })}
         >
           Sharing options
-        </RoundedButton>
+        </Button>
       </React.Fragment>
     );
   }

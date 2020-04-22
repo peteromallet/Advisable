@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, RoundedButton } from "@advisable/donut";
+import { Text, Button } from "@advisable/donut";
 import RequestReferences from "src/components/RequestReferences";
 import { Container } from "./styles";
 
@@ -27,9 +27,9 @@ export default function PreviousProjectsEmptyState({
         {name} has not listed any previous projects yet. We can reach out to
         their previous clients and request references for you.
       </Text>
-      <RoundedButton onClick={() => setOpen(true)} variant="subtle" size="s">
+      <Button onClick={() => setOpen(true)} variant="subtle" size="s">
         Request references
-      </RoundedButton>
+      </Button>
 
       <RequestReferences
         name={name}

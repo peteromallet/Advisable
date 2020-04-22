@@ -1,7 +1,7 @@
 import * as React from "react";
 import ShareModal from "./ShareModal";
 import RejectModal from "./RejectModal";
-import { Text, Stack, RoundedButton } from "@advisable/donut";
+import { Text, Stack, Button } from "@advisable/donut";
 
 const Actions = ({ onApply, application }) => {
   const [rejectModal, setRejectModal] = React.useState(false);
@@ -13,9 +13,9 @@ const Actions = ({ onApply, application }) => {
     actions = (
       <Stack spacing="xs">
         <Text size="xs">You have already applied for this project</Text>
-        <RoundedButton onClick={onApply} size="l" width="100%">
+        <Button onClick={onApply} size="l" width="100%">
           Update Application
-        </RoundedButton>
+        </Button>
       </Stack>
     );
   }
@@ -26,9 +26,9 @@ const Actions = ({ onApply, application }) => {
         <Text size="xs">
           You have already rejected this invitation. Changed your mind?
         </Text>
-        <RoundedButton onClick={onApply} size="l" width="100%">
+        <Button onClick={onApply} size="l" width="100%">
           Apply Now
-        </RoundedButton>
+        </Button>
       </Stack>
     );
   }
@@ -40,9 +40,9 @@ const Actions = ({ onApply, application }) => {
           Your previous application for this project was rejected. Would you
           like to re-apply?
         </Text>
-        <RoundedButton onClick={onApply} size="l" width="100%">
+        <Button onClick={onApply} size="l" width="100%">
           Apply Now
-        </RoundedButton>
+        </Button>
       </Stack>
     );
   }
@@ -57,17 +57,17 @@ const Actions = ({ onApply, application }) => {
           onReject={() => setShareModal(true)}
         />
         <Stack>
-          <RoundedButton onClick={onApply} size="l" width="100%">
+          <Button onClick={onApply} size="l" width="100%">
             Apply
-          </RoundedButton>
-          <RoundedButton
+          </Button>
+          <Button
             variant="subtle"
             size="l"
             onClick={() => setRejectModal(true)}
             width="100%"
           >
             Reject Invitation
-          </RoundedButton>
+          </Button>
         </Stack>
       </React.Fragment>
     );

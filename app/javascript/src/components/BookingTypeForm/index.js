@@ -2,13 +2,7 @@ import React from "react";
 import * as Yup from "yup";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { Formik, Form, Field } from "formik";
-import {
-  Box,
-  RoundedButton,
-  Radio,
-  RadioGroup,
-  Checkbox,
-} from "@advisable/donut";
+import { Box, Button, Radio, RadioGroup, Checkbox } from "@advisable/donut";
 import TextField from "../TextField";
 import currency from "../../utilities/currency";
 
@@ -176,14 +170,14 @@ const BookingTypeForm = ({
               </Box>
             </>
           )}
-          <RoundedButton
+          <Button
             size="l"
             type="submit"
             disabled={!formik.isValid}
             loading={formik.isSubmitting}
           >
             {buttonLabel || "Continue"}
-          </RoundedButton>
+          </Button>
         </Form>
       )}
     </Formik>

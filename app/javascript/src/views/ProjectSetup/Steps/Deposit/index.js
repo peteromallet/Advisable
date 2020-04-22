@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash-es";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import { useQuery } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
 import { Box, Text } from "@advisable/donut";
@@ -92,21 +92,17 @@ const Deposit = ({ project, history }) => {
           <PaymentMethod paymentMethod={paymentMethod} />
         </Box>
         <Box mb="l">
-          <RoundedButton
-            size="s"
-            variant="subtle"
-            onClick={() => setUseNewCard(true)}
-          >
+          <Button size="s" variant="subtle" onClick={() => setUseNewCard(true)}>
             Update payment method
-          </RoundedButton>
+          </Button>
         </Box>
-        <RoundedButton
+        <Button
           size="l"
           loading={loading}
           onClick={handleExistingPaymentMethod}
         >
           Complete Setup
-        </RoundedButton>
+        </Button>
       </>
     );
 

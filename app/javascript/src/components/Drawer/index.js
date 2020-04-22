@@ -2,7 +2,7 @@ import * as React from "react";
 import { createPortal } from "react-dom";
 import { useTransition } from "react-spring";
 import Div100vh from "react-div-100vh";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { useMobile } from "../../components/Breakpoint";
 import { Container, Backdrop, Drawer, Actions } from "./styles";
@@ -90,7 +90,7 @@ export default ({ isOpen, onClose, children, actions }) => {
                     <Div100vh>
                       <Actions>
                         {actions}
-                        <RoundedButton
+                        <Button
                           icon="x"
                           size="s"
                           variant="subtle"
@@ -98,7 +98,7 @@ export default ({ isOpen, onClose, children, actions }) => {
                           onClick={onClose}
                         >
                           <X />
-                        </RoundedButton>
+                        </Button>
                       </Actions>
                       {children}
                     </Div100vh>

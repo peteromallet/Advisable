@@ -8,7 +8,7 @@ import {
   Text,
   Link,
   Autocomplete,
-  RoundedButton,
+  Button,
   Checkbox,
   Avatar,
 } from "@advisable/donut";
@@ -163,9 +163,9 @@ const Profile = () => {
                 on advisable.com
               </Field>
             </Box>
-            <RoundedButton type="submit" loading={formik.isSubmitting}>
+            <Button type="submit" loading={formik.isSubmitting}>
               Save Changes
-            </RoundedButton>
+            </Button>
           </Card>
         </Form>
       )}

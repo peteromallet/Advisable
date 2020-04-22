@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import Back from "../../components/Back";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import Heading from "../../components/Heading";
 import Padding from "../../components/Spacing/Padding";
 import VideoButton from "../../components/VideoButton";
@@ -36,14 +36,14 @@ const Component = ({ data, tutorial }) => {
           participants={[application.project.user]}
         />
         <Padding top="xl">
-          <RoundedButton
+          <Button
             width="100%"
             variant="subtle"
             prefix={<MessageCircle />}
             onClick={() => setTalkModal(true)}
           >
             Message {application.project.user.firstName}
-          </RoundedButton>
+          </Button>
         </Padding>
         <Padding top="l" bottom="xl">
           <AttributeList>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import { Columns, RoundedButton } from "@advisable/donut";
+import { Columns, Button } from "@advisable/donut";
 import REJECT from "./reject.graphql";
 import { Modal, Heading, FieldRow, Select, Padding } from "src/components";
 
@@ -51,7 +51,7 @@ const RejectModal = ({ isOpen, onClose, onReject, application }) => {
                   />
                 </FieldRow>
                 <Columns spacing="s">
-                  <RoundedButton
+                  <Button
                     size="l"
                     type="submit"
                     variant="dark"
@@ -59,8 +59,8 @@ const RejectModal = ({ isOpen, onClose, onReject, application }) => {
                     width="100%"
                   >
                     Reject Invite
-                  </RoundedButton>
-                  <RoundedButton
+                  </Button>
+                  <Button
                     size="l"
                     type="button"
                     variant="subtle"
@@ -68,7 +68,7 @@ const RejectModal = ({ isOpen, onClose, onReject, application }) => {
                     width="100%"
                   >
                     Cancel
-                  </RoundedButton>
+                  </Button>
                 </Columns>
               </Form>
             )}

@@ -2,7 +2,7 @@ import React from "react";
 import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Text, RoundedButton } from "@advisable/donut";
+import { Text, Button } from "@advisable/donut";
 import useViewer from "../../../hooks/useViewer";
 import { useNotifications } from "../../../components/Notifications";
 
@@ -50,9 +50,9 @@ const ConfirmationPending = () => {
           <Text size="s" color="neutral.4" mt="l">
             Didn't receive an email?
           </Text>
-          <RoundedButton onClick={resend} variant="subtle">
+          <Button onClick={resend} variant="subtle">
             Resend confirmation email
-          </RoundedButton>
+          </Button>
         </>
       )}
     </>

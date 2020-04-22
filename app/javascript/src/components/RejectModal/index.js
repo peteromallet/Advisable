@@ -5,7 +5,7 @@ import Modal from "src/components/Modal";
 import Text from "src/components/Text";
 import Heading from "src/components/Heading";
 import Select from "src/components/Select";
-import { RoundedButton, Columns } from "@advisable/donut";
+import { Button, Columns } from "@advisable/donut";
 import TextField from "src/components/TextField";
 import { withNotifications } from "src/components/Notifications";
 import validationSchema from "./validationSchema";
@@ -58,9 +58,9 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
             This ensures that they’re still available and lets us calibrate the
             search ASAP.
           </Text>
-          <RoundedButton onClick={onRequestCall} size="l" type="button">
+          <Button onClick={onRequestCall} size="l" type="button">
             Request Call
-          </RoundedButton>
+          </Button>
         </React.Fragment>
       );
     }
@@ -84,7 +84,7 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
             placeholder={PLACEHOLDERS[formik.values.rejectionReason]}
           />
           <Columns spacing="xs">
-            <RoundedButton
+            <Button
               size="l"
               type="submit"
               width="100%"
@@ -92,8 +92,8 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
               loading={formik.isSubmitting}
             >
               Reject
-            </RoundedButton>
-            <RoundedButton
+            </Button>
+            <Button
               size="l"
               type="button"
               width="100%"
@@ -101,7 +101,7 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
               variant="subtle"
             >
               Cancel
-            </RoundedButton>
+            </Button>
           </Columns>
         </React.Fragment>
       );

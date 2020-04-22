@@ -2,7 +2,7 @@ import React from "react";
 import { Formik } from "formik";
 import { useHistory, useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { Box, Autocomplete, Select, RoundedButton } from "@advisable/donut";
+import { Box, Autocomplete, Select, Button } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import Loading from "src/components/Loading";
 import SKILLS from "./skills.js";
@@ -69,9 +69,9 @@ export default function ProjectSkillsStep({ project }) {
               </FormField>
             </Box>
           )}
-          <RoundedButton size="l" type="submit" loading={formik.isSubmitting}>
+          <Button size="l" type="submit" loading={formik.isSubmitting}>
             Continue
-          </RoundedButton>
+          </Button>
         </form>
       )}
     </Formik>

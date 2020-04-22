@@ -2,7 +2,7 @@ import React from "react";
 import { get } from "lodash-es";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
-import { RoundedButton, Box, Text } from "@advisable/donut";
+import { Button, Box, Text } from "@advisable/donut";
 import Select from "../Select";
 import TextField from "../TextField";
 import AddressFields from "../AddressFields";
@@ -112,9 +112,7 @@ const UpdatePaymentSettingsForm = ({
             will send you an email where you can securely enter your bank
             account details
           </Text>
-          <RoundedButton loading={formik.isSubmitting}>
-            {buttonLabel}
-          </RoundedButton>
+          <Button loading={formik.isSubmitting}>{buttonLabel}</Button>
         </Form>
       )}
     </Formik>

@@ -1,7 +1,7 @@
 import * as moment from "moment";
 import * as React from "react";
 import Icon from "../Icon";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import Popover from "../Popover";
 import { Padding } from "../Spacing";
 import DatePicker from "../DatePicker";
@@ -65,9 +65,9 @@ export default ({ value, onChange, onClick, isOpen, onClose, readOnly }) => {
           />
           {selected && (
             <Padding top="m">
-              <RoundedButton width="100%" onClick={handleRemove(popover)}>
+              <Button width="100%" onClick={handleRemove(popover)}>
                 Remove due date
-              </RoundedButton>
+              </Button>
             </Padding>
           )}
         </Popout>

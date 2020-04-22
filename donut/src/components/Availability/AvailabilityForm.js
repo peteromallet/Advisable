@@ -5,7 +5,7 @@ import { Formik, Field } from "formik";
 import Icon from "../Icon";
 import Box from "../Box";
 import Text from "../Text";
-import RoundedButton from "../RoundedButton";
+import Button from "../Button";
 import VerticalLayout from "../VerticalLayout";
 import { StyledTime, StyledTimeCheckbox } from "./styles";
 
@@ -92,9 +92,9 @@ const AvailabilityForm = ({
             }
             footer={
               <Box padding="m" boxShadow="s">
-                <RoundedButton size="l" type="Submit" width="100%">
+                <Button size="l" type="Submit" width="100%">
                   Set availability for {selectedDay.toFormat("dd MMM")}
-                </RoundedButton>
+                </Button>
               </Box>
             }
           >

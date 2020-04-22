@@ -2,7 +2,7 @@ import React from "react";
 import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { Formik, Form, Field } from "formik";
-import { RoundedButton, Text, Box, Checkbox } from "@advisable/donut";
+import { Button, Text, Box, Checkbox } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Select from "../../../components/Select";
 import Avatar from "../../../components/Avatar";
@@ -133,14 +133,14 @@ const BuildProfile = ({ history, specialist }) => {
               advisable.com
             </Field>
           </Box>
-          <RoundedButton
+          <Button
             size="l"
             type="submit"
             suffix={<ArrowRight />}
             loading={formik.isSubmitting}
           >
             Continue
-          </RoundedButton>
+          </Button>
         </Form>
       )}
     </Formik>

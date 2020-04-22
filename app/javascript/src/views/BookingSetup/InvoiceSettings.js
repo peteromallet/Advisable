@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import { Card, Text, RoundedButton } from "@advisable/donut";
+import { Card, Text, Button } from "@advisable/donut";
 import InvoiceFields from "../../components/InvoiceSettingsFields";
 import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
 
@@ -47,14 +47,9 @@ const InvoiceSettings = ({ nextStep }) => {
         {(formik) => (
           <Form>
             <InvoiceFields formik={formik} />
-            <RoundedButton
-              mt="m"
-              size="l"
-              type="submit"
-              loading={formik.isSubmitting}
-            >
+            <Button mt="m" size="l" type="submit" loading={formik.isSubmitting}>
               Continue
-            </RoundedButton>
+            </Button>
           </Form>
         )}
       </Formik>

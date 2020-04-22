@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { RoundedButton, Text, Box, Icon } from "@advisable/donut";
+import { Button, Text, Box, Icon } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
@@ -87,14 +87,14 @@ const WorkHistory = ({ specialist, history }) => {
               </Text>
             )}
           </Box>
-          <RoundedButton
+          <Button
             size="l"
             type="submit"
             suffix={<ArrowRight />}
             loading={formik.isSubmitting}
           >
             Complete Setup
-          </RoundedButton>
+          </Button>
         </Form>
       )}
     </Formik>

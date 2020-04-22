@@ -1,5 +1,5 @@
 import React from "react";
-import { RoundedButton } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import RejectModal from "../RejectModal";
 import RequestIntroduction from "../RequestIntroduction";
 import { Trash } from "@styled-icons/feather";
@@ -23,14 +23,14 @@ const DeclineApplicationButton = ({ application }) => {
         application={application}
         onClose={() => setOpen(false)}
       />
-      <RoundedButton
+      <Button
         variant="subtle"
         prefix={<Trash />}
         width="100%"
         onClick={() => setOpen(true)}
       >
         Decline Application
-      </RoundedButton>
+      </Button>
     </>
   );
 };

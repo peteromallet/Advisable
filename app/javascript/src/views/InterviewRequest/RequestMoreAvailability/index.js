@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import { Box, Text, RoundedButton, Columns } from "@advisable/donut";
+import { Box, Text, Button, Columns } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import ButtonGroup from "src/components/ButtonGroup";
 import TextField from "../../../components/TextField";
@@ -57,7 +57,7 @@ export default function RequestMoreAvailability({
               />
             </Box>
             <Columns spacing="xs">
-              <RoundedButton
+              <Button
                 width="100%"
                 size="l"
                 type="submit"
@@ -65,8 +65,8 @@ export default function RequestMoreAvailability({
                 loading={loading}
               >
                 Request
-              </RoundedButton>
-              <RoundedButton
+              </Button>
+              <Button
                 width="100%"
                 type="button"
                 variant="subtle"
@@ -74,7 +74,7 @@ export default function RequestMoreAvailability({
                 onClick={onCancel}
               >
                 Cancel
-              </RoundedButton>
+              </Button>
             </Columns>
           </Form>
         )}

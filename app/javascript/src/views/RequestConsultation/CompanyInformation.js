@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { useMutation } from "@apollo/react-hooks";
 import { useParams, useLocation, Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Icon, Box, Text, RoundedButton } from "@advisable/donut";
+import { Icon, Box, Text, Button } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import CREATE_CONSULTATION from "./createConsultation";
 
@@ -139,14 +139,14 @@ const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
                 error={formik.touched.company ? formik.errors.company : null}
               />
             </Box>
-            <RoundedButton
+            <Button
               width={["100%", "auto"]}
               suffix={<Icon icon="arrow-right" />}
               loading={formik.isSubmitting}
               type="submit"
             >
               Continue
-            </RoundedButton>
+            </Button>
           </Form>
         )}
       </Formik>

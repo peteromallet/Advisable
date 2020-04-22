@@ -9,7 +9,7 @@ import {
   UserCheck,
   PhoneCall,
 } from "@styled-icons/feather";
-import { Text, Padding, RoundedButton } from "@advisable/donut";
+import { Text, Padding, Button } from "@advisable/donut";
 import { Link } from "react-router-dom";
 import useMobile from "src/utilities/useMobile";
 import RejectModal from "src/components/RejectModal";
@@ -40,7 +40,7 @@ const statusActions = {
           application={application}
           onClose={() => setModal(null)}
         />
-        <RoundedButton
+        <Button
           mb="xs"
           align="left"
           width="100%"
@@ -49,8 +49,8 @@ const statusActions = {
           onClick={() => setModal(REQUEST_INTRODUCTION)}
         >
           Request Call
-        </RoundedButton>
-        <RoundedButton
+        </Button>
+        <Button
           align="left"
           width="100%"
           variant="subtle"
@@ -58,7 +58,7 @@ const statusActions = {
           onClick={() => setModal(REJECT_MODAL)}
         >
           Provide Feedback
-        </RoundedButton>
+        </Button>
       </React.Fragment>
     );
   },
@@ -90,7 +90,7 @@ const statusActions = {
           participants={[application.specialist]}
         />
         <Padding bottom="xs">
-          <RoundedButton
+          <Button
             mb="xs"
             width="100%"
             align="left"
@@ -99,8 +99,8 @@ const statusActions = {
             onClick={() => history.push(`/book/${application.airtableId}`)}
           >
             Start working with {application.specialist.firstName}
-          </RoundedButton>
-          <RoundedButton
+          </Button>
+          <Button
             mb="xs"
             width="100%"
             align="left"
@@ -109,8 +109,8 @@ const statusActions = {
             onClick={() => setModal(TALK_MODAL)}
           >
             Message {application.specialist.firstName}
-          </RoundedButton>
-          <RoundedButton
+          </Button>
+          <Button
             mb="xs"
             width="100%"
             align="left"
@@ -120,8 +120,8 @@ const statusActions = {
             onClick={() => setModal(REQUEST_REFERENCES_MODAL)}
           >
             Request References
-          </RoundedButton>
-          <RoundedButton
+          </Button>
+          <Button
             width="100%"
             align="left"
             variant="subtle"
@@ -129,7 +129,7 @@ const statusActions = {
             onClick={() => setModal(REJECT_MODAL)}
           >
             Provide Feedback
-          </RoundedButton>
+          </Button>
         </Padding>
         {application.referencesRequested && (
           <Padding top="m">
@@ -177,7 +177,7 @@ const statusActions = {
           participants={[application.specialist]}
         />
         <Padding bottom="xs">
-          <RoundedButton
+          <Button
             align="left"
             as={Link}
             prefix={<FileText />}
@@ -186,8 +186,8 @@ const statusActions = {
             to={`/projects/${projectId}/applications/${application.airtableId}/proposal`}
           >
             View Proposal
-          </RoundedButton>
-          <RoundedButton
+          </Button>
+          <Button
             align="left"
             variant="subtle"
             onClick={() => setModal(TALK_MODAL)}
@@ -196,8 +196,8 @@ const statusActions = {
             width="100%"
           >
             Message
-          </RoundedButton>
-          <RoundedButton
+          </Button>
+          <Button
             align="left"
             prefix={<Award />}
             variant="subtle"
@@ -207,8 +207,8 @@ const statusActions = {
             onClick={() => setModal(REQUEST_REFERENCES_MODAL)}
           >
             Request References
-          </RoundedButton>
-          <RoundedButton
+          </Button>
+          <Button
             align="left"
             width="100%"
             variant="subtle"
@@ -216,7 +216,7 @@ const statusActions = {
             onClick={() => setModal(REJECT_PROPOSAL_MODAL)}
           >
             Provide Feedback
-          </RoundedButton>
+          </Button>
         </Padding>
         {application.referencesRequested && (
           <Padding top="m">
