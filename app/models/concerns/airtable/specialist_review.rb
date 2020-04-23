@@ -34,14 +34,8 @@ class Airtable::SpecialistReview < Airtable::Base
       review.project = project
     end
 
-    # If there is a value in the "Off-Platform Project" column then set the
-    # project to the previous project
-
-    if fields['Off-Platform Project']
-      airtable_id = fields['Off-Platform Project'].try(:first)
-      return unless airtable_id
-      project = ::PreviousProject.find_by_airtable_id(airtable_id)
-      project = Airtable::PreviousProject.find(airtable_id).sync if project.nil?
+    if fields['Previous Project UID']
+      project = ::PreviousProject.find_by_uid(fields['Previous Project UID'])
       review.project = project
     end
   end
