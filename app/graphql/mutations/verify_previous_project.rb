@@ -22,7 +22,6 @@ class Mutations::VerifyPreviousProject < Mutations::BaseMutation
   def resolve(id:, email:)
     project = PreviousProject.find_by_uid!(id)
     project.update(validation_status: 'In Progress', contact_email: email)
-    project.sync_to_airtable
 
     { previous_project: project }
   end
