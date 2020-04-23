@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { ArrowRight } from "@styled-icons/feather";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
-import { Box, Text, Stack, Columns } from "@advisable/donut";
+import { Card, Text, Stack, Columns } from "@advisable/donut";
 import FormField from "../../components/FormField";
 import SubmitButton from "../../components/SubmitButton";
 import { useCreateConsultation } from "./queries";
@@ -74,7 +74,7 @@ const CompanyInformation = ({ data }) => {
   };
 
   return (
-    <Box padding={["m", "l"]}>
+    <Card padding={["m", "l"]}>
       <Text
         mb="xs"
         as="h2"
@@ -108,7 +108,7 @@ const CompanyInformation = ({ data }) => {
           </SubmitButton>
         </Form>
       </Formik>
-    </Box>
+    </Card>
   );
 };
 

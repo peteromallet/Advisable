@@ -36,6 +36,49 @@ test("Skills step continues to the company details", async () => {
   expect(heading).toBeInTheDocument();
 });
 
+test("When logged in the skills step continues to availability", async () => {
+  const skill = mockData.specialistSkill({ name: "Testing" });
+  const specialist = mockData.specialist({ skills: [skill] });
+  const viewer = mockData.user();
+  const consultation = mockData.consultation({
+    specialist,
+    user: viewer,
+  });
+
+  const graphQLMocks = [
+    mockViewer(viewer),
+    mockQuery(GET_SPECIALIST, { id: specialist.airtableId }, { specialist }),
+    mockMutation(
+      CREATE_CONSULTATION,
+      {
+        specialist: specialist.airtableId,
+        skill: "Testing",
+      },
+      {
+        createConsultation: {
+          __typename: "CreateConsultationPayload",
+          consultation,
+        },
+      },
+    ),
+    mockQuery(GET_CONSULTATION, { id: consultation.id }, { consultation }),
+  ];
+
+  const app = renderRoute({
+    route: `/request_consultation/${specialist.airtableId}`,
+    graphQLMocks,
+  });
+
+  const skillTag = await app.findByText("Testing", {}, { timeout: 5000 });
+  fireEvent.click(skillTag);
+  const btn = app.getByLabelText("Continue");
+  fireEvent.click(btn);
+  const heading = await app.findByText(
+    /Select the times you will be available/i,
+  );
+  expect(heading).toBeInTheDocument();
+});
+
 test("company details step continues to availability", async () => {
   const skill = mockData.specialistSkill({ name: "Testing" });
   const specialist = mockData.specialist({ skills: [skill] });
@@ -189,7 +232,7 @@ test("Topic step redirects back if there is no consultationId in route state", a
     graphQLMocks,
   });
 
-  const firstName = await app.findByLabelText("First Name");
+  const firstName = await app.findByText(/skills are you interested/i);
   expect(firstName).toBeInTheDocument();
 });
 

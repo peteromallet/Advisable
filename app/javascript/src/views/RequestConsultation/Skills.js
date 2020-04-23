@@ -1,12 +1,12 @@
 import React from "react";
 import { ArrowRight } from "@styled-icons/feather";
 import { useParams, useHistory, useLocation } from "react-router-dom";
-import { Box, Text, Button } from "@advisable/donut";
+import { Card, Text, Button } from "@advisable/donut";
 import TagSelect from "../../components/TagSelect";
 import useViewer from "../../hooks/useViewer";
 import { useCreateConsultation } from "./queries";
 
-const RequestConsultationSkills = ({ data, nextStep }) => {
+const RequestConsultationSkills = ({ data }) => {
   const params = useParams();
   const viewer = useViewer();
   const history = useHistory();
@@ -28,7 +28,6 @@ const RequestConsultationSkills = ({ data, nextStep }) => {
     if (viewer?.isClient) {
       handleCreateConsultation();
     } else {
-      nextStep(params, location.state);
       history.push({
         pathname: `/request_consultation/${params.specialistId}/details`,
         state: {
@@ -53,7 +52,7 @@ const RequestConsultationSkills = ({ data, nextStep }) => {
   };
 
   return (
-    <Box padding={["m", "l"]}>
+    <Card padding={["m", "l"]}>
       <Text
         mb="xs"
         as="h2"
@@ -84,7 +83,7 @@ const RequestConsultationSkills = ({ data, nextStep }) => {
       >
         Continue
       </Button>
-    </Box>
+    </Card>
   );
 };
 

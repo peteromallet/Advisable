@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, useParams, useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Box, Text, Button } from "@advisable/donut";
+import { Card, Box, Text, Button } from "@advisable/donut";
 import ScaleInput from "../../components/ScaleInput";
 import { useSendConsultation } from "./queries";
 
@@ -35,7 +35,7 @@ function Send({ data }) {
   };
 
   return (
-    <Box padding={["m", "l"]}>
+    <Card padding={["m", "l"]}>
       <Text
         mb="l"
         as="h2"
@@ -59,13 +59,13 @@ function Send({ data }) {
                 }}
               />
             </Box>
-            <Button type="submit" size="l" loading={formik.isSubmitting}>
+            <Button type="submit" loading={formik.isSubmitting}>
               Request Consultation
             </Button>
           </Form>
         )}
       </Formik>
-    </Box>
+    </Card>
   );
 }
 
