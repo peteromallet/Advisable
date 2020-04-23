@@ -47,6 +47,12 @@ export default function PreviousProjectNavigationMenu({ previousProject }) {
         Portfolio
       </NavigationMenu.Item>
       <NavigationMenu.Item
+        to={`${urlPrefix}/more`}
+        isDisabled={!projectOverviewComplete}
+      >
+        More Information
+      </NavigationMenu.Item>
+      <NavigationMenu.Item
         to={`${urlPrefix}/validation`}
         isDisabled={!projectOverviewComplete}
       >

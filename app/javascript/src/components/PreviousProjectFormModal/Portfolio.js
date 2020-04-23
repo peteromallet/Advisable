@@ -113,14 +113,14 @@ export default function Portfolio({ modal, data }) {
           )}
         </Box>
         <RouterLink
-          to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/validation`}
+          to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/more`}
         >
           <Button size="l" mr="xs" suffix={<Icon icon="arrow-right" />}>
             Continue
           </Button>
         </RouterLink>
         <RouterLink
-          to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/validation`}
+          to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/more`}
         >
           <Button variant="subtle" size="l">
             Skip
