@@ -7,14 +7,14 @@ describe Airtable::SpecialistReview do
   include_examples 'sync airtable association', 'Specialist', to: :specialist
   include_examples 'sync airtable association', 'Project', to: :project
 
-  it "syncs the 'Off-Platform Project' column to the project association" do
+  it 'syncs the previous project' do
     record = build(:review, project: nil)
     record.save(validate: false)
     association = create(:previous_project)
 
     airtable =
       described_class.new(
-        { 'Off-Platform Project' => [association.airtable_id] },
+        { 'Previous Project UID' => association.uid },
         id: record.airtable_id
       )
 
