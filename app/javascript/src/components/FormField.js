@@ -16,6 +16,7 @@ const FormField = ({ label, as: Component = Input, ...props }) => {
         {...field}
         id={id}
         error={meta.touched && meta.error}
+        placeholder={props.placeholder || label}
         {...props}
       />
       {meta.touched && meta.error ? (

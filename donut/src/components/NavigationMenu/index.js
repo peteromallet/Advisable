@@ -3,11 +3,13 @@ import { Box } from "@advisable/donut";
 import NavigationMenuItem from "./NavigationMenuItem";
 
 function NavigationMenu({ children, ...props }) {
+  const items = React.Children.toArray(children);
   return (
     <Box {...props}>
-      {React.Children.map(children, (child, i) =>
-        React.cloneElement(child, { number: i + 1 }),
-      )}
+      {items.map((child, i) => {
+        if (child === null) return null;
+        return React.cloneElement(child, { number: i + 1 });
+      })}
     </Box>
   );
 }

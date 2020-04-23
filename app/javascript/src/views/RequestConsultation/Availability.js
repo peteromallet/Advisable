@@ -1,15 +1,15 @@
 import React from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import { Icon, Box, Text, Button, Autocomplete } from "@advisable/donut";
-import { useParams, useLocation, Redirect } from "react-router-dom";
+import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import Loading from "../../components/Loading";
 import AvailabilityInput from "../../components/Availability";
 import ZONES from "../../components/TimeZoneSelect/zones";
 import useWindowSize from "../../utilities/useWindowSize";
 import UPDATE_AVAILABILITY from "./updateAvailability";
-import GET_CONSULTATION from "./getConsultation";
+import { useConsultation } from "./queries";
 
 const TIMEZONE_OPTIONS = ZONES.map((z) => ({ label: z, value: z }));
 
@@ -17,14 +17,15 @@ const validationSchmea = Yup.object({
   availability: Yup.array().min(6),
 });
 
-const Availability = ({ nextStep, previousStepURL }) => {
+const Availability = ({ previousStepURL }) => {
   const params = useParams();
+  const history = useHistory();
   const location = useLocation();
   const [updateAvailability] = useMutation(UPDATE_AVAILABILITY);
 
   const { height } = useWindowSize();
 
-  const { data, loading } = useQuery(GET_CONSULTATION, {
+  const { data, loading } = useConsultation({
     variables: { id: location.state?.consultationId },
     skip: !location.state?.consultationId,
   });
@@ -49,7 +50,13 @@ const Availability = ({ nextStep, previousStepURL }) => {
       },
     });
 
-    nextStep(params);
+    history.push({
+      pathname: `/request_consultation/${params.specialistId}/topic`,
+      state: {
+        ...location.state,
+        completed: [...(location?.state?.completed || []), "AVAILABILITY"],
+      },
+    });
   };
 
   const initialValues = {
@@ -81,9 +88,6 @@ const Availability = ({ nextStep, previousStepURL }) => {
               pt={["m", "l"]}
               paddingBottom="s"
             >
-              <Text fontSize="s" fontWeight="medium" mb="xs" color="neutral.5">
-                Step 3
-              </Text>
               <Text
                 mb="xs"
                 as="h2"

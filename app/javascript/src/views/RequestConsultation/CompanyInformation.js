@@ -1,11 +1,12 @@
 import React from "react";
 import * as Yup from "yup";
-import { useMutation } from "@apollo/react-hooks";
-import { useParams, useLocation, Redirect } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
-import { Icon, Box, Text, Button } from "@advisable/donut";
-import TextField from "../../components/TextField";
-import CREATE_CONSULTATION from "./createConsultation";
+import { ArrowRight } from "@styled-icons/feather";
+import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
+import { Formik, Form } from "formik";
+import { Box, Text, Stack, Columns } from "@advisable/donut";
+import FormField from "../../components/FormField";
+import SubmitButton from "../../components/SubmitButton";
+import { useCreateConsultation } from "./queries";
 
 const validationSchema = Yup.object({
   firstName: Yup.string().required("Please enter your first name"),
@@ -14,13 +15,16 @@ const validationSchema = Yup.object({
   company: Yup.string().required("Please enter your company name"),
 });
 
-const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
+const CompanyInformation = ({ data }) => {
   const params = useParams();
+  const history = useHistory();
   const location = useLocation();
-  const [createConsultation] = useMutation(CREATE_CONSULTATION);
+  const [createConsultation] = useCreateConsultation();
 
-  if (!location.state?.skill) {
-    return <Redirect to={previousStepURL(params)} />;
+  if (!location?.state?.skill) {
+    return (
+      <Redirect to={`/request_consultation/${params.specialistId}/skills`} />
+    );
   }
 
   const initialValues = {
@@ -34,7 +38,7 @@ const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
     const response = await createConsultation({
       variables: {
         input: {
-          skill: location.state.skill,
+          skill: location.state?.skill,
           specialist: params.specialistId,
           utmSource: location.state?.utmSource,
           utmCampaign: location.state?.utmCampaign,
@@ -59,23 +63,18 @@ const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
     // with request_consultation/:specialistId/[step] and don't need to have the
     // consultation id embeded.
     const consultation = response.data?.createConsultation.consultation;
-    nextStep(
-      {
-        specialistId: params.specialistId,
-      },
-      {
+    history.push({
+      pathname: `/request_consultation/${params.specialistId}/availability`,
+      state: {
         ...location.state,
-        ...values,
         consultationId: consultation.id,
+        completed: [...(location?.state?.completed || []), "DETAILS"],
       },
-    );
+    });
   };
 
   return (
     <Box padding={["m", "l"]}>
-      <Text fontSize="s" fontWeight="medium" mb="xs" color="neutral.5">
-        Step 2
-      </Text>
       <Text
         mb="xs"
         as="h2"
@@ -95,60 +94,19 @@ const CompanyInformation = ({ data, nextStep, previousStepURL }) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        {(formik) => (
-          <Form>
-            <Box mb="m" display="flex">
-              <Box mr="xxs" width="100%">
-                <Field
-                  name="firstName"
-                  as={TextField}
-                  label="First Name"
-                  placeholder="First Name "
-                  error={
-                    formik.touched.firstName ? formik.errors.firstName : null
-                  }
-                />
-              </Box>
-              <Box ml="xxs" width="100%">
-                <Field
-                  name="lastName"
-                  as={TextField}
-                  label="Last Name"
-                  placeholder="Last Name"
-                  error={
-                    formik.touched.lastName ? formik.errors.lastName : null
-                  }
-                />
-              </Box>
-            </Box>
-            <Box mb="m">
-              <Field
-                name="email"
-                as={TextField}
-                label="Email Address"
-                placeholder="Email Address"
-                error={formik.touched.email ? formik.errors.email : null}
-              />
-            </Box>
-            <Box mb="xl">
-              <Field
-                name="company"
-                as={TextField}
-                label="Company Name"
-                placeholder="Company Name"
-                error={formik.touched.company ? formik.errors.company : null}
-              />
-            </Box>
-            <Button
-              width={["100%", "auto"]}
-              suffix={<Icon icon="arrow-right" />}
-              loading={formik.isSubmitting}
-              type="submit"
-            >
-              Continue
-            </Button>
-          </Form>
-        )}
+        <Form>
+          <Stack spacing="m" mb="l">
+            <Columns spacing="s">
+              <FormField name="firstName" label="First Name" />
+              <FormField name="lastName" label="Last Name" />
+            </Columns>
+            <FormField name="email" type="email" label="Email Address" />
+            <FormField name="company" label="Company Name" />
+          </Stack>
+          <SubmitButton suffix={<ArrowRight />} width={["100%", "auto"]}>
+            Continue
+          </SubmitButton>
+        </Form>
       </Formik>
     </Box>
   );
