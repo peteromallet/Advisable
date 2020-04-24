@@ -1,12 +1,18 @@
 import React from "react";
+import { ArrowRight } from "@styled-icons/feather";
 import { useParams, useHistory, useLocation } from "react-router-dom";
-import { Box, Text, Button, Icon } from "@advisable/donut";
+import { Card, Text, Button } from "@advisable/donut";
 import TagSelect from "../../components/TagSelect";
+import useViewer from "../../hooks/useViewer";
+import { useCreateConsultation } from "./queries";
 
-const RequestConsultationSkills = ({ data, nextStep }) => {
+const RequestConsultationSkills = ({ data }) => {
   const params = useParams();
+  const viewer = useViewer();
   const history = useHistory();
   const location = useLocation();
+  const [createConsultation, { loading }] = useCreateConsultation();
+  const { specialist } = data;
 
   const handleSkillUpdate = (skill) => {
     history.replace({
@@ -18,41 +24,66 @@ const RequestConsultationSkills = ({ data, nextStep }) => {
     });
   };
 
+  const handleContinue = () => {
+    if (viewer?.isClient) {
+      handleCreateConsultation();
+    } else {
+      history.push({
+        pathname: `/request_consultation/${params.specialistId}/details`,
+        state: {
+          ...location.state,
+          completed: [...(location?.state?.compelted || []), "SKILLS"],
+        },
+      });
+    }
+  };
+
+  const handleCreateConsultation = async () => {
+    const response = await createConsultation();
+    const consultation = response.data?.createConsultation.consultation;
+    history.push({
+      pathname: `/request_consultation/${params.specialistId}/availability`,
+      state: {
+        ...location.state,
+        consultationId: consultation.id,
+        completed: [...(location?.state?.completed || []), "SKILLS"],
+      },
+    });
+  };
+
   return (
-    <Box padding={["m", "l"]}>
-      <Text fontSize="s" fontWeight="medium" mb="xs" color="neutral.5">
-        Step 1
-      </Text>
+    <Card padding={["m", "l"]}>
       <Text
         mb="xs"
         as="h2"
         fontSize="xxl"
+        color="blue900"
         fontWeight="semibold"
-        color="blue.8"
         letterSpacing="-0.025em"
       >
-        Which of {data.specialist.firstName}’s skills are you interested in?
+        Which of {specialist.firstName}’s skills are you interested in?
       </Text>
-      <Text color="neutral.8" lineHeight="s" mb="l">
+      <Text color="neutral800" lineHeight="s" mb="l">
         Please select which skill you are interested in talking to{" "}
-        {data.specialist.firstName} about in a 30 minute consultation.
+        {specialist.firstName} about in a 30 minute consultation.
       </Text>
       <TagSelect
         multiple={false}
         selected={location.state?.skill}
-        tags={data.specialist.skills.map((s) => s.name)}
+        tags={specialist.skills.map((s) => s.name)}
         onChange={(skill) => handleSkillUpdate(skill)}
       />
-      <Box height={1} bg="neutral.1" mt="xl" mb={["m", "l"]} />
       <Button
+        mt="xxl"
+        loading={loading}
         width={["100%", "auto"]}
-        onClick={() => nextStep(params, location.state)}
-        suffix={<Icon icon="arrow-right" />}
+        onClick={handleContinue}
+        suffix={<ArrowRight />}
         disabled={!location.state?.skill}
       >
         Continue
       </Button>
-    </Box>
+    </Card>
   );
 };
 
