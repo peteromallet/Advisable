@@ -1,23 +1,30 @@
 import * as Yup from "yup";
 import React from "react";
-import { useMutation } from "@apollo/react-hooks";
-import { useParams, useLocation, Redirect } from "react-router-dom";
+import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Icon, Box, Text, Button } from "@advisable/donut";
+import { Icon, Card, Box, Text, Button } from "@advisable/donut";
 import TextField from "../../components/TextField";
-import UPDATE from "./updateConsultation";
+import { useUpdateConsultation } from "./queries";
 
 const validationSchema = Yup.object({
   topic: Yup.string().required("Please provide a topic"),
 });
 
-const Topic = ({ data, previousStepURL, nextStep }) => {
+const Topic = ({ data }) => {
   const params = useParams();
+  const history = useHistory();
   const location = useLocation();
-  const [updateConsultation] = useMutation(UPDATE);
+  const [updateConsultation] = useUpdateConsultation();
 
   if (!location.state?.consultationId) {
-    return <Redirect to={previousStepURL(params)} />;
+    return (
+      <Redirect
+        to={{
+          pathname: `/request_consultation/${params.specialistId}/skills`,
+          state: location.state,
+        }}
+      />
+    );
   }
 
   const initialValues = {
@@ -34,14 +41,17 @@ const Topic = ({ data, previousStepURL, nextStep }) => {
       },
     });
 
-    nextStep(params);
+    history.push({
+      pathname: `/request_consultation/${params.specialistId}/send`,
+      state: {
+        ...location.state,
+        completed: [...(location?.state?.completed || []), "TOPIC"],
+      },
+    });
   };
 
   return (
-    <Box padding={["m", "l"]}>
-      <Text fontSize="s" fontWeight="medium" mb="xs" color="neutral.5">
-        Step 4
-      </Text>
+    <Card padding={["m", "l"]}>
       <Text
         mb="xs"
         as="h2"
@@ -87,7 +97,7 @@ const Topic = ({ data, previousStepURL, nextStep }) => {
           </Form>
         )}
       </Formik>
-    </Box>
+    </Card>
   );
 };
 

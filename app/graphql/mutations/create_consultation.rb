@@ -1,9 +1,9 @@
 class Mutations::CreateConsultation < Mutations::BaseMutation
   argument :specialist, ID, required: true
-  argument :first_name, String, required: true
-  argument :last_name, String, required: true
-  argument :email, String, required: true
-  argument :company, String, required: true
+  argument :first_name, String, required: false
+  argument :last_name, String, required: false
+  argument :email, String, required: false
+  argument :company, String, required: false
   argument :skill, String, required: true
 
   argument :utm_source, String, required: false
@@ -59,6 +59,10 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   def user(**args)
     @user ||=
       begin
+        if context[:current_user].try(:is_a?, User)
+          return context[:current_user]
+        end
+
         user = User.find_by_email(args[:email])
 
         if user.present?
