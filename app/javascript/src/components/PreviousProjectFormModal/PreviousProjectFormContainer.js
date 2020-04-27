@@ -15,6 +15,7 @@ import PreviousProjectFormHeader from "./PreviousProjectFormHeader";
 import Overview from "./Overview";
 import Portfolio from "./Portfolio";
 import Validation from "./Validation";
+import ExtraInformation from "./ExtraInformation";
 import UpdateClientDetails from "./UpdateClientDetails";
 import CreatePreviousProject from "./CreatePreviousProject";
 import ErrorBoundary from "./ErrorBoundary";
@@ -93,6 +94,9 @@ export default function PreviousProjectFormContainer({
                 </Route>
                 <Route path="*previous_projects/:id/portfolio">
                   <Portfolio modal={modal} data={data} />
+                </Route>
+                <Route path="*previous_projects/:id/more">
+                  <ExtraInformation modal={modal} data={data} />
                 </Route>
                 <Route path="*previous_projects/:id/validation">
                   <Validation modal={modal} data={data} onPublish={onPublish} />

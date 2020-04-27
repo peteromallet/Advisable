@@ -1,10 +1,10 @@
 import React from "react";
 import ClientDetails from "./ClientDetails";
-import { useHistory } from "react-router-dom";
 import { useUpdatePreviousProject } from "./queries";
+import useLocationStages from "../../hooks/useLocationStages";
 
 export default function UpdateClientDetails({ modal, data, industries }) {
-  const history = useHistory();
+  const { navigate } = useLocationStages();
   const [updatePreviousProject] = useUpdatePreviousProject();
 
   const handleSubmit = async (values) => {
@@ -18,7 +18,7 @@ export default function UpdateClientDetails({ modal, data, industries }) {
     });
 
     const id = response.data.updatePreviousProject.previousProject.id;
-    history.push(`${modal.returnPath}/previous_projects/${id}/overview`);
+    navigate(`${modal.returnPath}/previous_projects/${id}/overview`);
   };
 
   return (

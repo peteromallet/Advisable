@@ -25,6 +25,10 @@ class Types::PreviousProject < Types::BaseType
   field :public_use, Boolean, null: false
   field :images, [Types::PreviousProjectImage], null: false
   field :cover_photo, Types::PreviousProjectImage, null: true
+  field :industry_relevance, Integer, null: true
+  field :location_relevance, Integer, null: true
+  field :cost_to_hire, Integer, null: true
+  field :execution_cost, Integer, null: true
 
   def images
     object.images.order(position: :asc)
@@ -44,6 +48,19 @@ class Types::PreviousProject < Types::BaseType
 
   def on_platform
     object.on_platform?
+  end
+
+  # Only allow cost_to_hire if object is in draft. Once previous projects can only be added
+  # by an authenticated specialist, this should be updated to check if the project belongs
+  # to the authed specialist.
+  def cost_to_hire
+    return nil unless object.draft?
+    object.cost_to_hire
+  end
+
+  def execution_cost
+    return nil unless object.draft?
+    object.execution_cost
   end
 
   def title

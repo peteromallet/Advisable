@@ -9,6 +9,7 @@ Label.defaultProps = {
   as: "label",
   color: "neutral900",
   fontWeight: "medium",
+  lineHeight: "s",
 };
 
 export default Label;

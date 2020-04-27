@@ -54,7 +54,7 @@ export default function Validation({ data, modal, onPublish }) {
                 mb="s"
                 fontSize="l"
                 fontWeight="medium"
-                to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/portfolio`}
+                to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/more`}
               >
                 <Icon icon="arrow-left" mr="xxs" width={20} />
                 Back
