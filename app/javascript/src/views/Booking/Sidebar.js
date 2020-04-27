@@ -1,6 +1,7 @@
 import React from "react";
+import { HelpCircle } from "@styled-icons/feather";
 import { get } from "lodash-es";
-import { Button, Tooltip, Box, Icon } from "@advisable/donut";
+import { Button, Tooltip, Box } from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "../../components/Sticky";
@@ -142,13 +143,9 @@ const Sidebar = ({ data, history, tutorial, match }) => {
                   )}
                 >
                   <Box display="flex" alignItems="center">
-                    <Icon
-                      mr="xxs"
-                      width={16}
-                      height={16}
-                      color="neutral.6"
-                      icon="help-circle"
-                    />
+                    <Box color="neutral500" mr="xxs">
+                      <HelpCircle size={16} strokeWidth={2} />
+                    </Box>
                     <div data-testid="projectType">
                       {t(`projectTypes.${application.projectType}.label`)}
                     </div>

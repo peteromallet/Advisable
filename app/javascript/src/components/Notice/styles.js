@@ -1,7 +1,6 @@
 import { rgba } from "polished";
 import styled, { css } from "styled-components";
 import { theme } from "@advisable/donut";
-import { Icon } from "../Icon/styles";
 
 // Update this to use the same elevation values as the Card component in Donut.
 const ELEVATION = {
@@ -17,14 +16,17 @@ const colors = theme.colors;
 
 const withIcon = css`
   padding-left: 48px;
+`;
 
-  ${Icon} {
-    top: 50%;
-    left: 14px;
-    position: absolute;
-    color: ${colors.neutral[7]};
-    transform: translateY(-50%);
-  }
+export const NoticeIcon = styled.div`
+  top: 50%;
+  left: 16px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  transform: translateY(-50%);
+  color: ${colors.neutral[7]};
+  stroke-width: 2;
 `;
 
 export const Notice = styled.div`
@@ -36,8 +38,8 @@ export const Notice = styled.div`
   background: ${colors.neutral[0]};
   border-top: 4px solid ${colors.neutral[1]};
 
-  ${props => props.hasIcon && withIcon};
-  ${props => props.elevation && ELEVATION[props.elevation]};
+  ${(props) => props.hasIcon && withIcon};
+  ${(props) => props.elevation && ELEVATION[props.elevation]};
 `;
 
 export default Notice;

@@ -2,7 +2,6 @@ import { rgba } from "polished";
 import { animated } from "react-spring";
 import styled from "styled-components";
 import colors from "../../colors";
-import { IconButton } from "../IconButton/styles";
 
 export const Container = styled.div`
   top: 0;
@@ -40,8 +39,4 @@ export const Actions = styled.div`
   display: flex;
   align-items: flex-start;
   position: absolute;
-
-  ${IconButton} {
-    margin-left: 8px;
-  }
 `;

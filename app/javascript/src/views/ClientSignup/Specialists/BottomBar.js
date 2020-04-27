@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Avatar, Box, Icon, Text, Button } from "@advisable/donut";
+import { ArrowRight } from "@styled-icons/feather";
+import { Avatar, Box, Text, Button } from "@advisable/donut";
 import pluralize from "../../../utilities/pluralize";
 
 function BottomBar({ specialists, onContinue }) {
@@ -51,11 +52,7 @@ function BottomBar({ specialists, onContinue }) {
               </Text>
             </Box>
           </Box>
-          <Button
-            size="l"
-            onClick={onContinue}
-            suffix={<Icon icon="arrow-right" />}
-          >
+          <Button size="l" onClick={onContinue} suffix={<ArrowRight />}>
             Continue
           </Button>
         </Box>

@@ -1,6 +1,6 @@
 import * as moment from "moment";
 import * as React from "react";
-import Icon from "../Icon";
+import { Calendar } from "@styled-icons/feather";
 import { Button } from "@advisable/donut";
 import Popover from "../Popover";
 import { Padding } from "../Spacing";
@@ -43,7 +43,7 @@ export default ({ value, onChange, onClick, isOpen, onClose, readOnly }) => {
       trigger={
         <Detail aria-label="Due Date" tabIndex={0} readOnly={readOnly}>
           <DetailIcon>
-            <Icon strokeWidth={1} width={20} icon="calendar" />
+            <Calendar />
           </DetailIcon>
           <DetailLabel>Due Date</DetailLabel>
           {selected ? (

@@ -1,15 +1,8 @@
 import * as React from "react";
+import { HelpCircle, ArrowRight } from "@styled-icons/feather";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
-import {
-  Box,
-  Link,
-  Text,
-  Tooltip,
-  Icon,
-  Checkbox,
-  Card,
-} from "@advisable/donut";
+import { Box, Link, Text, Tooltip, Checkbox, Card } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { TextField } from "../../../components";
 import SubmitButton from "../../../components/SubmitButton";
@@ -135,13 +128,14 @@ function Terms({ match, history, application, steps, currentStep, location }) {
                     }
                   >
                     <Box pt="xs" display="flex" alignItems="center">
-                      <Icon
+                      <Box
                         mr="xxs"
-                        width={20}
+                        color="neutral700"
                         strokeWidth={1.5}
-                        color="neutral.7"
-                        icon="help-circle"
-                      />
+                        size={20}
+                      >
+                        <HelpCircle />
+                      </Box>
                       More Information
                     </Box>
                   </Tooltip>
@@ -206,11 +200,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
                 </Field>
               </Box>
 
-              <SubmitButton
-                mt="xl"
-                size="l"
-                suffix={<Icon icon="arrow-right" />}
-              >
+              <SubmitButton mt="xl" size="l" suffix={<ArrowRight />}>
                 Submit Application
               </SubmitButton>
             </Box>

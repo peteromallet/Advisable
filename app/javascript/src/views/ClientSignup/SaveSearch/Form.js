@@ -1,5 +1,6 @@
 import React from "react";
 import * as Yup from "yup";
+import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
 import { Formik, Form } from "formik";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
@@ -24,7 +25,9 @@ const SaveSearchForm = ({ onSubmit }) => {
   return (
     <>
       <Link.External href="#" onClick={history.goBack}>
-        <Icon icon="arrow-left" width={16} mr="xxs" />
+        <Box mr="xxs" display="inline-block">
+          <ArrowLeft size={16} strokeWidth={2} />
+        </Box>
         Back
       </Link.External>
       <motion.div
@@ -96,7 +99,7 @@ const SaveSearchForm = ({ onSubmit }) => {
                 size="l"
                 type="submit"
                 loading={formik.isSubmitting}
-                suffix={<Icon icon="arrow-right" />}
+                suffix={<ArrowRight />}
               >
                 Continue
               </Button>

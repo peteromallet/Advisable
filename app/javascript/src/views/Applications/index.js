@@ -1,8 +1,9 @@
 // Renders the freelancers applications view.
 import { get } from "lodash-es";
 import * as React from "react";
-import { useQuery } from "@apollo/react-hooks";
 import { Box, Alert } from "@advisable/donut";
+import { useQuery } from "@apollo/react-hooks";
+import { RefreshCcw } from "@styled-icons/feather";
 import Layout from "../../components/Layout";
 import FETCH_DATA from "./fetchData.js";
 import OpenApplications from "./OpenApplications";
@@ -27,7 +28,7 @@ const Applications = ({ history }) => {
           <Box mb="l">
             <Alert
               mb="m"
-              icon="refresh-ccw"
+              icon={<RefreshCcw />}
               title="Your account is currently on hold"
             >
               We evaluate and accept freelancers as they apply for projects.

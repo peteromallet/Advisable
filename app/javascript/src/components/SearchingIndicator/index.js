@@ -1,11 +1,11 @@
 import React from "react";
-import { Icon } from "@advisable/donut";
+import { Search } from "@styled-icons/feather";
 import StyledSearchingIndicator from "./styles";
 
 const SearchingIndicator = () => {
   return (
     <StyledSearchingIndicator>
-      <Icon icon="search" />
+      <Search size={24} strokeWidth={2} />
     </StyledSearchingIndicator>
   );
 };

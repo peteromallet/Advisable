@@ -1,6 +1,7 @@
 import React from "react";
+import { Clock, ArrowUp } from "@styled-icons/feather";
 import { motion } from "framer-motion";
-import { Icon, Card } from "@advisable/donut";
+import { Card } from "@advisable/donut";
 import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
 import {
   hoursLabel,
@@ -32,11 +33,11 @@ const QuoteInput = ({ task, readOnly, onSubmit }) => {
       >
         {task.stage === "Quote Requested" && (
           <ArrowPrompt>
-            <Icon icon="arrow-up" strokeWidth={2} />
+            <ArrowUp size={24} strokeWidth={2} />
           </ArrowPrompt>
         )}
         <DetailIcon prompt={task.stage === "Quote Requested"}>
-          <Icon strokeWidth={1} width={20} icon="clock" />
+          <Clock />
         </DetailIcon>
         <DetailLabel>{hoursLabel(task)}</DetailLabel>
         {task.estimate ? (

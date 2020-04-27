@@ -1,10 +1,10 @@
 import React from "react";
+import { Star, ExternalLink } from "@styled-icons/feather";
 import { truncate } from "lodash-es";
 import {
   Avatar,
   Box,
   Text,
-  Icon,
   useModal,
   Button,
   DialogDisclosure,
@@ -40,7 +40,7 @@ const SpecialistCard = ({ specialist, action, ...props }) => {
             top="50px"
           >
             <Box mr="xxs">
-              <Icon icon="star" width={13} height={13} fill="white" />
+              <Star size={14} fill="white" />
             </Box>
             {specialist.ratings.overall}
           </Box>
@@ -73,7 +73,7 @@ const SpecialistCard = ({ specialist, action, ...props }) => {
           aria-label={`View ${specialist.name}`}
           onClick={specialistModal.show}
           variant="subtle"
-          prefix={<Icon icon="external-link" />}
+          prefix={<ExternalLink />}
         >
           View More
         </DialogDisclosure>

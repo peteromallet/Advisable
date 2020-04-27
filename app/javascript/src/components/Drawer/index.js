@@ -91,7 +91,6 @@ export default ({ isOpen, onClose, children, actions }) => {
                       <Actions>
                         {actions}
                         <Button
-                          icon="x"
                           size="s"
                           variant="subtle"
                           aria-label="Close Drawer"

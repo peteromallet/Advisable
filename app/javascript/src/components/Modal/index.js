@@ -2,7 +2,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Div100vh from "react-div-100vh";
-import { Icon } from "@advisable/donut";
+import { X } from "@styled-icons/feather";
 import { useTransition } from "react-spring";
 import { RemoveScroll } from "react-remove-scroll";
 import { extractSpacingProps } from "../Spacing";
@@ -64,19 +64,19 @@ const Modal = ({
                   >
                     {onClose && (
                       <CloseModal aria-label="Close Modal" onClick={onClose}>
-                        <Icon icon="x" width={20} strokeWidth={1.5} />
+                        <X size={20} strokWidth={1.5} />
                       </CloseModal>
                     )}
                     {children}
                   </Window>
                 </WindowContainer>
               </Div100vh>
-            )
+            ),
         )}
         <Backdrop onClick={onClose} />
       </ModalContainer>
     </RemoveScroll>,
-    modalRoot
+    modalRoot,
   );
 };
 

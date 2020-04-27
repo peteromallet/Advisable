@@ -1,4 +1,5 @@
 import * as React from "react";
+import { List, CheckSquare } from "@styled-icons/feather";
 import { useTranslation } from "react-i18next";
 import Card from "../../components/Card";
 import { Text, Tabs } from "@advisable/donut";
@@ -14,14 +15,20 @@ export default ({ onNewTask, application, onSelectTask }) => {
         {t("tasks.title", application.specialist)}
       </Text>
       <Tabs label="Tasks" tabListProps={{ pl: "m" }}>
-        <Tabs.Tab title="Active Projects" icon="list">
+        <Tabs.Tab
+          title="Active Projects"
+          icon={<List size={18} strokeWidth={1.5} />}
+        >
           <ActiveTasks
             onNewTask={onNewTask}
             application={application}
             onSelectTask={onSelectTask}
           />
         </Tabs.Tab>
-        <Tabs.Tab title="Completed Projects" icon="check-square">
+        <Tabs.Tab
+          title="Completed Projects"
+          icon={<CheckSquare size={18} strokeWidth={1.5} />}
+        >
           <CompletedTasks
             onNewTask={onNewTask}
             application={application}

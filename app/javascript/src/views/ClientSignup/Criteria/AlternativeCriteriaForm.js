@@ -2,21 +2,18 @@
 // are hidden initially.
 import React from "react";
 import * as Yup from "yup";
-import { motion } from "framer-motion";
+import { Search } from "@styled-icons/feather";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
 import {
   Box,
-  Text,
   Autocomplete,
   Button,
-  Icon,
   Select,
   Label,
   Checkbox,
 } from "@advisable/donut";
 import { Formik, Form, Field } from "formik";
-import { StyledPopularSkill } from "./styles";
 
 const validationSchema = Yup.object({
   skill: Yup.string().required("Please select a skill"),
@@ -68,25 +65,6 @@ function AlternativeCriteriaForm({ data, onSubmit }) {
               formik.setFieldValue("skill", skill);
             }}
           />
-          {/* <Box>
-            <Text mb="s" fontSize="s" color="neutral.7" letterSpacing="-0.02em">
-              Popular skills
-            </Text>
-            {data.popularSkills.nodes.map((skill, i) => (
-              <StyledPopularSkill
-                key={skill.id}
-                type="button"
-                as={motion.button}
-                onClick={() => formik.setFieldValue("skill", skill.name)}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.05 * i }}
-                isSelected={formik.values.skill === skill.name}
-              >
-                {skill.name}
-              </StyledPopularSkill>
-            ))}
-          </Box> */}
           <Box height={1} bg="neutral.1" my="l" />
           <Field as={Checkbox} type="checkbox" name="experienceRequired">
             Experience working at companies similar to mine is important
@@ -124,7 +102,7 @@ function AlternativeCriteriaForm({ data, onSubmit }) {
             </>
           )}
           <Box height={1} bg="neutral.1" my="l" />
-          <Button size="l" type="submit" prefix={<Icon icon="search" />}>
+          <Button size="l" type="submit" prefix={<Search />}>
             Find a specialist
           </Button>
         </Form>

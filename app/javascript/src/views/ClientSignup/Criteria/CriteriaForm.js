@@ -1,11 +1,11 @@
 import React from "react";
+import { Search } from "@styled-icons/feather";
 import * as Yup from "yup";
 import queryString from "query-string";
 import { Formik, Form, Field } from "formik";
 import { useLocation } from "react-router-dom";
 import {
   Box,
-  Icon,
   Label,
   Select,
   Checkbox,
@@ -108,7 +108,7 @@ function CriteriaForm({ onSubmit, data }) {
           >
             Experience with this type of company is important
           </Field>
-          <Button size="l" type="submit" prefix={<Icon icon="search" />}>
+          <Button size="l" type="submit" prefix={<Search />}>
             Find a specialist
           </Button>
         </Form>
