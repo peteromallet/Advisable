@@ -182,6 +182,11 @@ test("Adds a previous project", async () => {
   next = await app.findByLabelText("Continue");
   fireEvent.click(next);
 
+  // portfolio step
+  next = await app.findByLabelText("Skip");
+  fireEvent.click(next);
+
+  // More info step
   next = await app.findByLabelText("Skip");
   fireEvent.click(next);
 

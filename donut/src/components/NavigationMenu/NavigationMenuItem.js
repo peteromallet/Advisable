@@ -42,12 +42,10 @@ export default function NavigationMenuItem({
   return (
     <StyledNavigationMenuItem isComplete={isComplete} isDisabled={isDisabled}>
       <StyledNavigationMenuLink to={to} onClick={handleClick} exact={exact}>
-        <StyledNavigationMenuItemPrefix>
-          <StyledNavigationMenuItemNumber>
-            {isComplete ? <Check /> : number}
-          </StyledNavigationMenuItemNumber>
-        </StyledNavigationMenuItemPrefix>
         {children}
+        <StyledNavigationMenuItemNumber>
+          {isComplete ? <Check /> : number}
+        </StyledNavigationMenuItemNumber>
       </StyledNavigationMenuLink>
     </StyledNavigationMenuItem>
   );

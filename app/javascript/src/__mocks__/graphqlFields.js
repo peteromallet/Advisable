@@ -267,6 +267,10 @@ export const previousProject = (fields = {}) => {
       contactRelationship: "Managed the project",
       draft: false,
       images: [],
+      industryRelevance: null,
+      locationRelevance: null,
+      costToHire: null,
+      executionCost: null,
     },
     fields,
   );

@@ -40,7 +40,23 @@ export const StyledSidebar = styled.div`
   position: fixed;
   height: calc(100vh - 60px);
   background: ${theme.colors.neutral50};
-  border-right: 1px solid ${theme.colors.neutral100};
+
+  &::after {
+    content: "";
+    top: 0;
+    right: 0;
+    z-index: 0;
+    width: 20px;
+    height: 100%;
+    opacity: 0.5;
+    position: absolute;
+    pointer-events: none;
+    background: linear-gradient(
+      270deg,
+      ${theme.colors.neutral100} 0%,
+      ${rgba(theme.colors.neutral100, 0)} 100%
+    );
+  }
 `;
 
 export const StyledPreviousProjectFormHeader = styled.div`
