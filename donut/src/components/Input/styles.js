@@ -32,6 +32,10 @@ export const StyledInput = styled.input`
     background: ${theme.colors.neutral50};
   }
 
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
   ${(props) => props.error && StyledInput_WithError};
 `;
 

@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation, useRouteMatch } from "react-router-dom";
 import { NavigationMenu } from "@advisable/donut";
 import { PATH_REGEX } from "./usePreviousProjectModal";
+import useLocationStages from "../../hooks/useLocationStages";
 import {
   clientDetailsValidationSchema,
   projectOverviewValidationSchema,
@@ -9,6 +10,7 @@ import {
 
 export default function PreviousProjectNavigationMenu({ previousProject }) {
   const location = useLocation();
+  const { pathWithState, skipped } = useLocationStages();
   const pathPrefix = location.pathname.replace(PATH_REGEX, "");
   const match = useRouteMatch(`${pathPrefix}/previous_projects/:id`);
   const id = match?.params?.id;
@@ -22,38 +24,47 @@ export default function PreviousProjectNavigationMenu({ previousProject }) {
     previousProject,
   );
 
-  const portfolioComplete = (previousProject?.images || []).length > 0;
+  const portfolioComplete =
+    (previousProject?.images || []).length > 0 || skipped("PORTFOLIO");
+
+  const moreInfoComplete =
+    previousProject?.costToHire ||
+    previousProject?.executionCost ||
+    previousProject?.industryRelevance ||
+    previousProject?.locationRelevance ||
+    skipped("MORE");
 
   return (
     <NavigationMenu>
       <NavigationMenu.Item
-        to={`${urlPrefix}/client`}
+        to={pathWithState(`${urlPrefix}/client`)}
         isComplete={clientDetailsComplete}
       >
         Client Details
       </NavigationMenu.Item>
       <NavigationMenu.Item
-        to={`${urlPrefix}/overview`}
+        to={pathWithState(`${urlPrefix}/overview`)}
         isComplete={projectOverviewComplete}
         isDisabled={!clientDetailsComplete}
       >
         Project Overview
       </NavigationMenu.Item>
       <NavigationMenu.Item
-        to={`${urlPrefix}/portfolio`}
+        to={pathWithState(`${urlPrefix}/portfolio`)}
         isComplete={portfolioComplete}
         isDisabled={!projectOverviewComplete}
       >
         Portfolio
       </NavigationMenu.Item>
       <NavigationMenu.Item
-        to={`${urlPrefix}/more`}
+        to={pathWithState(`${urlPrefix}/more`)}
+        isComplete={moreInfoComplete}
         isDisabled={!projectOverviewComplete}
       >
         More Information
       </NavigationMenu.Item>
       <NavigationMenu.Item
-        to={`${urlPrefix}/validation`}
+        to={pathWithState(`${urlPrefix}/validation`)}
         isDisabled={!projectOverviewComplete}
       >
         Validation

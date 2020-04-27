@@ -10,6 +10,10 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
   argument :skills, [String], required: false
   argument :primary_skill, String, required: false
   argument :public_use, Boolean, required: false
+  argument :industry_relevance, Integer, required: false
+  argument :location_relevance, Integer, required: false
+  argument :cost_to_hire, Integer, required: false
+  argument :execution_cost, Integer, required: false
 
   field :previous_project, Types::PreviousProject, null: true
 
@@ -31,7 +35,11 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
       :company_type,
       :description,
       :goal,
-      :public_use
+      :public_use,
+      :industry_relevance,
+      :location_relevance,
+      :cost_to_hire,
+      :execution_cost
     )
   end
 

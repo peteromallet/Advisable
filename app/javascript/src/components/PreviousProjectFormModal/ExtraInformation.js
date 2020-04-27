@@ -1,18 +1,54 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Link as RouterLink } from "react-router-dom";
 import { Box, Text, Select, Stack, Link, Icon, Button } from "@advisable/donut";
 import Helper from "./Helper";
 import FormField from "../FormField";
 import SubmitButton from "../SubmitButton";
 import { ArrowRight } from "@styled-icons/feather";
+import CurrencyInput from "../../components/CurrencyInput";
+import { useUpdatePreviousProject } from "./queries";
+import { currencyToString, stringToCurrency } from "../../utilities/currency";
+import useLocationStages from "../../hooks/useLocationStages";
 
 export default function ExtraInfo({ data, modal }) {
-  const id = data.previousProject.id;
-  const handleSubmit = async (values) => {};
+  const { previousProject } = data;
+  const {
+    costToHire,
+    executionCost,
+    locationRelevance,
+    industryRelevance,
+  } = previousProject;
+  const id = previousProject.id;
+  const [updateProject] = useUpdatePreviousProject();
+  const { skip, pathWithState } = useLocationStages();
+
+  const handleSubmit = async (values) => {
+    await updateProject({
+      variables: {
+        input: {
+          previousProject: id,
+          costToHire: stringToCurrency(values.costToHire),
+          executionCost: stringToCurrency(values.executionCost),
+          locationRelevance: parseInt(values.locationRelevance),
+          industryRelevance: parseInt(values.industryRelevance),
+        },
+      },
+    });
+
+    skip("MORE", `${modal.returnPath}/previous_projects/${id}/validation`);
+  };
+
+  const handleSkip = () => {
+    skip("MORE", `${modal.returnPath}/previous_projects/${id}/validation`);
+  };
 
   const initialValues = {
-    cost: null,
+    costToHire: costToHire ? currencyToString(costToHire) : "",
+    executionCost: executionCost ? currencyToString(executionCost) : "",
+    locationRelevance:
+      locationRelevance === null ? "" : String(locationRelevance),
+    industryRelevance:
+      industryRelevance === null ? "" : String(industryRelevance),
   };
 
   const skill = data.previousProject.primarySkill.name;
@@ -26,7 +62,9 @@ export default function ExtraInfo({ data, modal }) {
               mb="s"
               fontSize="l"
               fontWeight="medium"
-              to={`${modal.returnPath}/previous_projects/${id}/portfolio`}
+              to={pathWithState(
+                `${modal.returnPath}/previous_projects/${id}/portfolio`,
+              )}
             >
               <Icon icon="arrow-left" mr="xxs" width={20} />
               Back
@@ -40,52 +78,52 @@ export default function ExtraInfo({ data, modal }) {
             </Text>
             <Stack mb="xl" spacing="l">
               <FormField
-                name="industryExperienceRelavance"
+                name="industryRelevance"
+                placeholder="Select"
                 label={`How important is industry experience for ${skill} projects?`}
                 optional
                 as={Select}
               >
-                <option>Very Important</option>
-                <option>Sort of</option>
-                <option>Not Important</option>
+                <option value="2">Very Important</option>
+                <option value="1">Sort of</option>
+                <option value="0">Not Important</option>
               </FormField>
               <FormField
-                name="locationRelavance"
+                name="locationRelevance"
+                placeholder="Select"
                 label={`How important is geography/language for ${skill} projects?`}
                 optional
                 as={Select}
               >
-                <option>Very Important</option>
-                <option>Sort of</option>
-                <option>Not Important</option>
+                <option value="2">Very Important</option>
+                <option value="1">Sort of</option>
+                <option value="0">Not Important</option>
               </FormField>
               <FormField
-                prefix="$"
-                name="cost"
-                placeholder="0"
-                label="Excluding the cost of hiring you, what was the cost of executing this project?"
-                optional
-              />
-              <FormField
                 optional
                 prefix="$"
+                as={CurrencyInput}
                 name="costToHire"
-                label="What would the estimated cost be to hire you for a similar project?"
                 placeholder="0"
                 autoComplete="off"
+                label="What would the estimated cost be to hire you for a similar project?"
+              />
+              <FormField
+                prefix="$"
+                name="executionCost"
+                placeholder="0"
+                as={CurrencyInput}
+                label="Excluding the cost of hiring you, what was the cost of executing this project?"
+                optional
               />
             </Stack>
 
             <SubmitButton suffix={<ArrowRight />} size="l" mr="xs">
               Continue
             </SubmitButton>
-            <RouterLink
-              to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/validation`}
-            >
-              <Button variant="subtle" size="l">
-                Skip
-              </Button>
-            </RouterLink>
+            <Button onClick={handleSkip} variant="subtle" size="l">
+              Skip
+            </Button>
           </Form>
         </Formik>
       </Box>
@@ -97,8 +135,8 @@ export default function ExtraInfo({ data, modal }) {
       >
         <Helper>
           <Helper.Text heading="What's this for?" mb="l">
-            You&apos;ll be given a unique link to share with this reference in
-            order for them to validate this project.
+            This will help us know when to recommend you to clients for similar
+            projects.
           </Helper.Text>
         </Helper>
       </Box>

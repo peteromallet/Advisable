@@ -11,11 +11,11 @@ const Select = ({ children, placeholder, value, ...props }) => {
     <StyledSelect {...extractSpacingProps(props)}>
       <StyledSelectInput
         placeholderSelected={placeholderSelected}
-        value={value}
+        value={value || ""}
         {...withoutSpacingProps(props)}
       >
         {placeholder && (
-          <option value="" disabled selected={placeholderSelected}>
+          <option key="placeholder" value="" hidden disabled>
             {placeholder}
           </option>
         )}

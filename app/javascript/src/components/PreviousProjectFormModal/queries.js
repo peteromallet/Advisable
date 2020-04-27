@@ -34,6 +34,10 @@ const previousProjectFields = gql`
     contactLastName
     contactRelationship
     validationStatus
+    costToHire
+    executionCost
+    industryRelevance
+    locationRelevance
     images {
       id
       url

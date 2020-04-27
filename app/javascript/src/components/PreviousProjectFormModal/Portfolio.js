@@ -1,8 +1,8 @@
 import React from "react";
 import { find } from "lodash-es";
-import { Link as RouterLink } from "react-router-dom";
 import { Box, Text, Icon, Button, Link } from "@advisable/donut";
 import generateID from "../../utilities/generateID";
+import useLocationStages from "../../hooks/useLocationStages";
 import CoverPhoto from "./CoverPhoto";
 import ImageTiles from "./ImageTiles";
 import Helper from "./Helper";
@@ -78,10 +78,24 @@ function reducer(state, action) {
 }
 
 export default function Portfolio({ modal, data }) {
+  const { navigate, skip, pathWithState } = useLocationStages();
   const [images, dispatch] = React.useReducer(
     reducer,
     data.previousProject.images,
   );
+
+  const handleContinue = () => {
+    navigate(
+      `${modal.returnPath}/previous_projects/${data.previousProject.id}/more`,
+    );
+  };
+
+  const handleSkip = () => {
+    skip(
+      "PORTFOLIO",
+      `${modal.returnPath}/previous_projects/${data.previousProject.id}/more`,
+    );
+  };
 
   return (
     <Box display="flex">
@@ -90,7 +104,9 @@ export default function Portfolio({ modal, data }) {
           mb="s"
           fontSize="l"
           fontWeight="medium"
-          to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/overview`}
+          to={pathWithState(
+            `${modal.returnPath}/previous_projects/${data.previousProject.id}/overview`,
+          )}
         >
           <Icon icon="arrow-left" mr="xxs" width={20} />
           Back
@@ -112,20 +128,18 @@ export default function Portfolio({ modal, data }) {
             />
           )}
         </Box>
-        <RouterLink
-          to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/more`}
+        <Button
+          size="l"
+          mr="xs"
+          onClick={handleContinue}
+          suffix={<Icon icon="arrow-right" />}
+          disabled={data.previousProject.images.length === 0}
         >
-          <Button size="l" mr="xs" suffix={<Icon icon="arrow-right" />}>
-            Continue
-          </Button>
-        </RouterLink>
-        <RouterLink
-          to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/more`}
-        >
-          <Button variant="subtle" size="l">
-            Skip
-          </Button>
-        </RouterLink>
+          Continue
+        </Button>
+        <Button onClick={handleSkip} variant="subtle" size="l">
+          Skip
+        </Button>
       </Box>
       <Box
         ml="50px"

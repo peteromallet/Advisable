@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
   Box,
@@ -20,6 +19,7 @@ import Helper from "./Helper";
 import { useUpdatePreviousProject } from "./queries";
 import { projectOverviewValidationSchema } from "./validationSchemas";
 import FormField from "../../components/FormField";
+import useLocationStages from "../../hooks/useLocationStages";
 
 const GOALS = [
   "Generate Leads",
@@ -33,7 +33,7 @@ const GOALS = [
 ];
 
 export default function Overview({ modal, data, skills }) {
-  const history = useHistory();
+  const { navigate, pathWithState } = useLocationStages();
   const [updatePreviousProject] = useUpdatePreviousProject();
   const [customGoal, setCustomGoal] = React.useState(
     GOALS.indexOf(data.previousProject.goal || GOALS[0]) === -1,
@@ -50,7 +50,7 @@ export default function Overview({ modal, data, skills }) {
     });
 
     const id = response.data.updatePreviousProject.previousProject.id;
-    history.push(`${modal.returnPath}/previous_projects/${id}/portfolio`);
+    navigate(`${modal.returnPath}/previous_projects/${id}/portfolio`);
   };
 
   const initialValues = {
@@ -86,7 +86,9 @@ export default function Overview({ modal, data, skills }) {
                 mb="s"
                 fontSize="l"
                 fontWeight="medium"
-                to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/client`}
+                to={pathWithState(
+                  `${modal.returnPath}/previous_projects/${data.previousProject.id}/client`,
+                )}
               >
                 <Icon icon="arrow-left" mr="xxs" width={20} />
                 Back
