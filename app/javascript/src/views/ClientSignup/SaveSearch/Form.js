@@ -1,5 +1,5 @@
 import React from "react";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
 import { Formik, Form } from "formik";
 import { motion } from "framer-motion";
@@ -16,8 +16,8 @@ const SaveSearchForm = ({ onSubmit }) => {
     email: "",
   };
 
-  const validationSchema = Yup.object({
-    email: Yup.string()
+  const validationSchema = object({
+    email: string()
       .email("Please enter a valid email address")
       .required("Please enter your email address"),
   });

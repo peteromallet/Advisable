@@ -1,5 +1,5 @@
 import React from "react";
-import * as Yup from "yup";
+import { string } from "yup";
 import { Field } from "formik";
 import { find, get } from "lodash-es";
 import gql from "graphql-tag";
@@ -28,7 +28,7 @@ const runValidation = (schema) => (value) => {
   }
 };
 
-const emailValidation = Yup.string()
+const emailValidation = string()
   .required("Please enter your billing email")
   .email("Please enter a valid email");
 

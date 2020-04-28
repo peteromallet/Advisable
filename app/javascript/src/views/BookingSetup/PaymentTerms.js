@@ -1,19 +1,19 @@
 import React from "react";
-import * as Yup from "yup";
+import { object, boolean, string } from "yup";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import { Card, Box, Text, Button, Radio, RadioGroup } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
 
-const validationSchema = Yup.object().shape({
-  acceptTerms: Yup.boolean().oneOf(
+const validationSchema = object().shape({
+  acceptTerms: boolean().oneOf(
     [true, false],
     "Please accept the payment terms",
   ),
-  exceptionalTerms: Yup.string().when("acceptTerms", {
+  exceptionalTerms: string().when("acceptTerms", {
     is: false,
-    then: Yup.string().required("Please outline your suggested terms."),
+    then: string().required("Please outline your suggested terms."),
   }),
 });
 

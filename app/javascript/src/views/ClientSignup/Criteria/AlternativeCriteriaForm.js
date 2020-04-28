@@ -1,7 +1,7 @@
 // A version of the criteria form where the industry and company type
 // are hidden initially.
 import React from "react";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { Search } from "@styled-icons/feather";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
@@ -15,8 +15,8 @@ import {
 } from "@advisable/donut";
 import { Formik, Form, Field } from "formik";
 
-const validationSchema = Yup.object({
-  skill: Yup.string().required("Please select a skill"),
+const validationSchema = object({
+  skill: string().required("Please select a skill"),
 });
 
 function AlternativeCriteriaForm({ data, onSubmit }) {

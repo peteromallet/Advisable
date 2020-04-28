@@ -1,4 +1,4 @@
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { ArrowRight } from "@styled-icons/feather";
 import React from "react";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
@@ -7,8 +7,8 @@ import { Card, Box, Text, Button } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import { useUpdateConsultation } from "./queries";
 
-const validationSchema = Yup.object({
-  topic: Yup.string().required("Please provide a topic"),
+const validationSchema = object({
+  topic: string().required("Please provide a topic"),
 });
 
 const Topic = ({ data }) => {

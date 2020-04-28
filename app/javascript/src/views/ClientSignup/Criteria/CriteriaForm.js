@@ -1,6 +1,6 @@
 import React from "react";
 import { Search } from "@styled-icons/feather";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import queryString from "query-string";
 import { Formik, Form, Field } from "formik";
 import { useLocation } from "react-router-dom";
@@ -13,9 +13,9 @@ import {
   Button,
 } from "@advisable/donut";
 
-const validationSchema = Yup.object({
-  skill: Yup.string().required("Please select a skill"),
-  industry: Yup.string().required("Please provide what industry are in"),
+const validationSchema = object({
+  skill: string().required("Please select a skill"),
+  industry: string().required("Please provide what industry are in"),
 });
 
 function CriteriaForm({ onSubmit, data }) {

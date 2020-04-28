@@ -1,7 +1,9 @@
-import * as Yup from "yup";
+import { object, array, string } from "yup";
 
-const validationSchema = Yup.object().shape({
-  requiredCharacteristics: Yup.array().of(Yup.string()).min(1, "Please add at least one characteristic")
+const validationSchema = object().shape({
+  requiredCharacteristics: array()
+    .of(string())
+    .min(1, "Please add at least one characteristic"),
 });
 
 export default validationSchema;

@@ -1,7 +1,7 @@
-import * as Yup from "yup";
+import { object, string } from "yup";
 
-const validationSchema = Yup.object().shape({
-  companyDescription: Yup.string().required("Please provide a company overview"),
+const validationSchema = object().shape({
+  companyDescription: string().required("Please provide a company overview"),
 });
 
 export default validationSchema;

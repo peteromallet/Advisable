@@ -1,12 +1,12 @@
-import * as Yup from "yup";
+import { object, boolean, string } from "yup";
 
 const createValidationSchema = (specialistName, contactName) =>
-  Yup.object({
-    accept: Yup.boolean().oneOf(
+  object({
+    accept: boolean().oneOf(
       [true],
-      `We will need to contact you to verify that ${specialistName} worked for you.`
+      `We will need to contact you to verify that ${specialistName} worked for you.`,
     ),
-    email: Yup.string()
+    email: string()
       .required(`Please provide an email address for ${contactName}`)
       .email("Please provide a valid email address"),
   });

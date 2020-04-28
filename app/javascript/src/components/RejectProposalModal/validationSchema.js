@@ -1,7 +1,7 @@
-import * as Yup from "yup";
+import { object, string } from "yup";
 
-const validationSchema = Yup.object().shape({
-  reason: Yup.string().required('Please select a reason for rejection'),
+const validationSchema = object().shape({
+  reason: string().required("Please select a reason for rejection"),
 });
 
 export default validationSchema;

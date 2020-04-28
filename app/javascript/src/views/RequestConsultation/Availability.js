@@ -1,5 +1,5 @@
 import React from "react";
-import * as Yup from "yup";
+import { object, array } from "yup";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { Info, ArrowRight } from "@styled-icons/feather";
@@ -14,8 +14,8 @@ import { useConsultation } from "./queries";
 
 const TIMEZONE_OPTIONS = ZONES.map((z) => ({ label: z, value: z }));
 
-const validationSchmea = Yup.object({
-  availability: Yup.array().min(6),
+const validationSchmea = object({
+  availability: array().min(6),
 });
 
 const Availability = () => {

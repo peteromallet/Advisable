@@ -1,12 +1,12 @@
-import * as Yup from "yup";
+import { object, string } from "yup";
 
-const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required("First name is required"),
-  lastName: Yup.string().required("Last name is required"),
-  email: Yup.string()
+const validationSchema = object().shape({
+  firstName: string().required("First name is required"),
+  lastName: string().required("Last name is required"),
+  email: string()
     .required("Please enter your email")
     .email("Please enter a valid email address"),
-  password: Yup.string()
+  password: string()
     .required("Please enter a password")
     .min(8, "Your password must be at least 8 characters long"),
 });

@@ -1,17 +1,17 @@
-import * as Yup from "yup";
+import { object, string, boolean, number } from "yup";
 
-const validationSchema = Yup.object().shape({
-  primarilyFreelance: Yup.boolean()
+const validationSchema = object().shape({
+  primarilyFreelance: boolean()
     .nullable()
     .required(
-      "Please specify wether or not freelancing is your primary occupation."
+      "Please specify wether or not freelancing is your primary occupation.",
     ),
-  numberOfProjects: Yup.string()
+  numberOfProjects: string()
     .nullable()
     .required(
-      "Please select how many previous freelance projects you have completed."
+      "Please select how many previous freelance projects you have completed.",
     ),
-  hourlyRate: Yup.number()
+  hourlyRate: number()
     .nullable()
     .required("Please define your hourly rate in USD."),
 });

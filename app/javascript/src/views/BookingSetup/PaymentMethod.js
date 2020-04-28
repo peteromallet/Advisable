@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowRight } from "@styled-icons/feather";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
@@ -15,8 +15,8 @@ import {
 } from "@advisable/donut";
 import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
 
-const validationSchema = Yup.object({
-  paymentMethod: Yup.string().required("Please select a payment method"),
+const validationSchema = object({
+  paymentMethod: string().required("Please select a payment method"),
 });
 
 const PaymentMethod = ({ data, nextStep }) => {
