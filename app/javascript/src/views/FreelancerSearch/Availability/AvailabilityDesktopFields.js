@@ -1,8 +1,9 @@
 import React from "react";
 import { Field } from "formik";
-import { Box, Card, Autocomplete, Button, Icon } from "@advisable/donut";
+import { Box, Card, Autocomplete, Button } from "@advisable/donut";
 import AvailabilityInput from "../../../components/Availability";
 import ZONES from "../../../data/timezones";
+import { ArrowRight } from "@styled-icons/feather";
 
 const TIMEZONE_OPTIONS = ZONES.map((z) => ({ label: z, value: z }));
 
@@ -36,7 +37,7 @@ const AvailabilityDesktopFields = ({ formik }) => {
         width={["100%", "auto"]}
         disabled={formik.values.availability.length < 6}
         loading={formik.isSubmitting}
-        suffix={<Icon icon="arrow-right" />}
+        suffix={<ArrowRight />}
       >
         Continue
       </Button>

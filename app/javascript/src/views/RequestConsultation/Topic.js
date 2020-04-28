@@ -1,8 +1,9 @@
 import * as Yup from "yup";
+import { ArrowRight } from "@styled-icons/feather";
 import React from "react";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Icon, Card, Box, Text, Button } from "@advisable/donut";
+import { Card, Box, Text, Button } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import { useUpdateConsultation } from "./queries";
 
@@ -90,7 +91,7 @@ const Topic = ({ data }) => {
               width={["100%", "auto"]}
               disabled={!formik.isValid}
               loading={formik.isSubmitting}
-              suffix={<Icon icon="arrow-right" />}
+              suffix={<ArrowRight />}
             >
               Continue
             </Button>

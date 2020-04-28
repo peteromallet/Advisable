@@ -1,13 +1,13 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Button, Text, Box, Icon } from "@advisable/donut";
+import { Button, Text, Box } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
 import COMPLETE_SETUP from "../completeSetup";
 import validationSchema from "./validationSchema";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight, UploadCloud } from "@styled-icons/feather";
 
 const WorkHistory = ({ specialist, history }) => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);
@@ -75,7 +75,11 @@ const WorkHistory = ({ specialist, history }) => {
             <FileUpload
               label="Upload your resume"
               preview={() => {
-                return <Icon icon="upload-cloud" ml="xs" color="neutral.6" />;
+                return (
+                  <Box display="inline-block" ml="xs" color="neutral600">
+                    <UploadCloud />
+                  </Box>
+                );
               }}
               onChange={(blob) => {
                 formik.setFieldValue("resume", blob.signed_id);

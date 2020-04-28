@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, Circle, Icon } from "@advisable/donut";
+import { Award } from "@styled-icons/feather";
+import { Box, Circle } from "@advisable/donut";
 
-function Ribbon() {
+function RibbonComponent() {
   return (
     <Box width={32} height={50} position="relative" color="blue900">
       <Circle
@@ -11,8 +12,9 @@ function Ribbon() {
         left="6px"
         position="absolute"
         bg="rgba(255, 255, 255, 0.25)"
+        color="white.9"
       >
-        <Icon width={14} icon="check" color="white.9" strokeWidth={2.5} />
+        <Award size={14} strokeWidth={2.5} />
       </Circle>
       <svg width="32" height="49" fill="none" viewBox="0 0 32 49">
         <path
@@ -24,4 +26,4 @@ function Ribbon() {
   );
 }
 
-export default Ribbon;
+export default RibbonComponent;

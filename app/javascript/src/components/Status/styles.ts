@@ -1,25 +1,24 @@
 import { rgba, darken } from "polished";
-import styled, { css } from 'styled-components';
-import { Icon } from "../Icon/styles";
+import styled, { css } from "styled-components";
 
 const STYLES = {
-  "yellow": css`
-    color: #2B3169;
-    background: #FFDA91;
+  yellow: css`
+    color: #2b3169;
+    background: #ffda91;
   `,
-  "green": css`
-    color: #2B3169;
-    background: #57E1C8;
+  green: css`
+    color: #2b3169;
+    background: #57e1c8;
   `,
-  "blue": css`
+  blue: css`
     color: ${darken(0.3, "#173FCD")};
     background: ${rgba("#173FCD", 0.12)};
-  `
-}
+  `,
+};
 
 export const Status = styled.span`
   height: 20px;
-  color: #1D274B;
+  color: #1d274b;
   font-size: 11px;
   padding: 0 10px;
   font-weight: 600;
@@ -30,11 +29,14 @@ export const Status = styled.span`
   text-transform: uppercase;
   background: rgba(29, 39, 75, 0.06);
 
-  ${props => STYLES[props.styling]}
+  ${(props) => STYLES[props.styling]}
 
-  ${Icon} {
+  svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
     margin-right: 0px;
     margin-left: -8px;
     display: inline-flex;
   }
-`
+`;

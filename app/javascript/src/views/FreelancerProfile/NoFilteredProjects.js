@@ -8,7 +8,7 @@ function NoFilteredProjects({ data }) {
   return (
     <Box textAlign="center" py="xxl">
       <Circle mb="m" bg="blue800" color="blue100">
-        <Folder size={24} />
+        <Folder size={24} strokeWidth={2} />
       </Circle>
       <Text color="neutral900" fontWeight="medium" mb="xs">
         No Projects

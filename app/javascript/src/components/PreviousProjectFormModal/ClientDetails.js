@@ -1,9 +1,9 @@
 import React from "react";
+import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form, useField } from "formik";
 import {
   Box,
   Text,
-  Icon,
   Stack,
   Select,
   Checkbox,
@@ -82,7 +82,7 @@ export default function ClientDetails({
                 </FormField>
               </Stack>
 
-              <SubmitButton size="l" suffix={<Icon icon="arrow-right" />}>
+              <SubmitButton size="l" suffix={<ArrowRight />}>
                 Continue
               </SubmitButton>
             </Form>

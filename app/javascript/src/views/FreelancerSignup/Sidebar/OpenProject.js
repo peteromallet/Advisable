@@ -1,6 +1,7 @@
 import React from "react";
+import { CheckCircle } from "@styled-icons/feather";
 import { animated, useSpring } from "react-spring";
-import { Box, Card, Text, Icon } from "@advisable/donut";
+import { Box, Card, Text } from "@advisable/donut";
 
 const OpenProject = ({ project }) => {
   const props = useSpring({
@@ -28,8 +29,9 @@ const OpenProject = ({ project }) => {
                 borderRadius="50%"
                 alignItems="center"
                 justifyContent="center"
+                color="blue500"
               >
-                <Icon icon="check-circle" color="blue.5" />
+                <CheckCircle size={24} strokeWidth={2} />
               </Box>
             </Box>
             <Box>

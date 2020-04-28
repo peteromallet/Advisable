@@ -7,7 +7,7 @@ import { Redirect } from "react-router-dom";
 import { Text, Box, Link, Button, Autocomplete } from "@advisable/donut";
 import Loading from "../../../components/Loading";
 import validationSchema from "./validationSchema";
-import { ArrowRight } from "react-feather";
+import { ArrowRight } from "@styled-icons/feather";
 
 export const GET_SKILLS = gql`
   query {

@@ -2,7 +2,7 @@ import React from "react";
 import { times } from "lodash-es";
 import { DateTime } from "luxon";
 import { Formik, Field } from "formik";
-import Icon from "../Icon";
+import { Check } from "@styled-icons/feather";
 import Box from "../Box";
 import Text from "../Text";
 import Button from "../Button";
@@ -26,13 +26,7 @@ const AvailabilityFormTimes = ({ selectedDay, formik }) => {
             value={t.toUTC().toISO()}
           />
           <StyledTimeCheckbox>
-            <Icon
-              width={14}
-              height={14}
-              icon="check"
-              color="white.9"
-              strokeWidth={2.2}
-            />
+            <Check size={14} strokeWidth={2.2} />
           </StyledTimeCheckbox>
           {t.toFormat("HH:mma")} → {t.plus({ minutes: 30 }).toFormat("HH:mma")}
         </StyledTime>

@@ -1,8 +1,8 @@
 import React from "react";
+import { Search } from "@styled-icons/feather";
 import {
   Box,
   Text,
-  Icon,
   Checkbox,
   Autocomplete,
   Button,
@@ -155,7 +155,7 @@ const FreelancerSearchCriteria = () => {
                   }
                 />
               </Box>
-              <Button size="l" type="submit" prefix={<Icon icon="search" />}>
+              <Button size="l" type="submit" prefix={<Search />}>
                 Find a freelancer
               </Button>
             </Form>

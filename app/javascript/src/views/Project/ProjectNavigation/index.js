@@ -1,7 +1,14 @@
 // Renders the navigation for the project candidates view
 import React from "react";
+import {
+  Inbox,
+  MessageCircle,
+  FileText,
+  UserCheck,
+  Trash2,
+} from "@styled-icons/feather";
 import { get, filter, countBy } from "lodash-es";
-import { Text, Icon } from "@advisable/donut";
+import { Text } from "@advisable/donut";
 import Sticky from "../../../components/Sticky";
 import pluralize from "src/utilities/pluralize";
 import useScrollRestore from "src/utilities/useScrollRestore";
@@ -20,31 +27,31 @@ const navigation = [
     path: "applied",
     label: "Applied",
     status: "Applied",
-    icon: "inbox",
+    icon: <Inbox />,
   },
   {
     path: "introduced",
     label: "Introduced",
     status: "Application Accepted",
-    icon: "message-circle",
+    icon: <MessageCircle />,
   },
   {
     path: "proposed",
     label: "Proposed",
     status: "Proposed",
-    icon: "file-text",
+    icon: <FileText />,
   },
   {
     path: "offered",
     label: "Offered",
     status: "Offered",
-    icon: "user-check",
+    icon: <UserCheck />,
   },
   {
     path: "rejected",
     label: "Declined",
     status: "Application Rejected",
-    icon: "trash-2",
+    icon: <Trash2 />,
   },
 ];
 
@@ -80,9 +87,7 @@ export default function ProjectNavigation({ match, data }) {
               replace={!isMobile}
               to={`/projects/${match.params.projectID}/${item.path}`}
             >
-              <NavMenuItemIcon>
-                <Icon icon={item.icon} />
-              </NavMenuItemIcon>
+              <NavMenuItemIcon>{item.icon}</NavMenuItemIcon>
               {item.label}
               <NavMenuItemCount>{counts[item.status] || 0}</NavMenuItemCount>
             </NavMenuItem>

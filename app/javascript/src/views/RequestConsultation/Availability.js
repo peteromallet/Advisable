@@ -2,7 +2,8 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import { Icon, Card, Box, Text, Button, Autocomplete } from "@advisable/donut";
+import { Info, ArrowRight } from "@styled-icons/feather";
+import { Card, Box, Text, Button, Autocomplete } from "@advisable/donut";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import Loading from "../../components/Loading";
 import AvailabilityInput from "../../components/Availability";
@@ -150,7 +151,9 @@ const Availability = () => {
                     color="neutral.7"
                     alignItems="center"
                   >
-                    <Icon icon="info" width={20} color="neutral.6" mr="xs" />
+                    <Box display="inline-block" mr="xs" color="neutral500">
+                      <Info size={20} strokeWidth={2} />
+                    </Box>
                     Please select at least 3 available times
                   </Box>
                 )}
@@ -159,7 +162,7 @@ const Availability = () => {
                   width={["100%", "auto"]}
                   disabled={formik.values.availability.length < 6}
                   loading={formik.isSubmitting}
-                  suffix={<Icon icon="arrow-right" />}
+                  suffix={<ArrowRight />}
                 >
                   Continue
                 </Button>

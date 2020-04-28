@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { rgba } from "polished";
 import { Link } from "react-router-dom";
-import { theme, StyledIcon } from "@advisable/donut";
+import { theme } from "@advisable/donut";
 
 export const Day = styled(Link)`
   display: block;
@@ -87,7 +87,7 @@ export const Event = styled.div`
   padding: 15px 20px 15px 60px;
   background: ${theme.colors.neutral100};
 
-  ${StyledIcon} {
+  svg {
     top: 50%;
     left: 20px;
     position: absolute;

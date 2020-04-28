@@ -1,5 +1,5 @@
 import React from "react";
-import Icon from "../Icon";
+import { X } from "@styled-icons/feather";
 import { Tag as TagStyles, TagName, RemoveTag, Primary } from "./styles";
 
 const Tag = ({ children, onRemove, isPrimary, onSelectPrimary }) => {
@@ -17,7 +17,7 @@ const Tag = ({ children, onRemove, isPrimary, onSelectPrimary }) => {
       )}
       <TagName>{children}</TagName>
       <RemoveTag type="button" onClick={onRemove}>
-        <Icon icon="x" width={16} height={16} />
+        <X size={20} strokeWidth={2} />
       </RemoveTag>
     </TagStyles>
   );

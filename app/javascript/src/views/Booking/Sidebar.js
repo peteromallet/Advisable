@@ -1,5 +1,4 @@
 import React from "react";
-import { HelpCircle } from "@styled-icons/feather";
 import { get } from "lodash-es";
 import { Button, Tooltip, Box } from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
@@ -18,7 +17,12 @@ import { useMobile } from "../../components/Breakpoint";
 import TalkModal from "../../components/TalkModal";
 import ProjectTypeModal from "./ProjectTypeModal";
 import StopWorkingModal from "./StopWorkingModal";
-import { MessageCircle, PauseCircle, Edit } from "react-feather";
+import {
+  HelpCircle,
+  MessageCircle,
+  PauseCircle,
+  Edit,
+} from "@styled-icons/feather";
 const TALK_MODAL = "TALK_MODAL";
 
 const Sidebar = ({ data, history, tutorial, match }) => {

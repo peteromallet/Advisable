@@ -1,8 +1,9 @@
 import React from "react";
 import { Formik } from "formik";
 import moment from "moment-timezone";
+import { ArrowLeft } from "@styled-icons/feather";
 import { useMutation } from "@apollo/react-hooks";
-import { Text, Box, Link, Icon, Button } from "@advisable/donut";
+import { Text, Box, Link, Button } from "@advisable/donut";
 import TextField from "src/components/TextField";
 import ACCEPT_INTERVIEW_REQUEST from "./acceptInterviewRequest";
 // import { Event } from "./styles";
@@ -37,7 +38,9 @@ export default function ConfirmInterviewRequest({
           "YYYY-MM-DD",
         )}`}
       >
-        <Icon icon="arrow-left" width={16} mr="xxs" />
+        <Box display="inline-block" mr="xxs">
+          <ArrowLeft size={16} strokeWidth={2} />
+        </Box>
         Back
       </Link>
       <Text

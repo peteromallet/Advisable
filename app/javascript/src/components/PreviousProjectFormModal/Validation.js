@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Box, Text, Select, Stack, Link, Icon, Button } from "@advisable/donut";
+import { ArrowLeft } from "@styled-icons/feather";
+import { Box, Text, Select, Stack, Link, Button } from "@advisable/donut";
 import Helper from "./Helper";
 import { usePublishPreviousProject } from "./queries";
 import { verificationValidationSchema } from "./validationSchemas";
@@ -56,7 +57,9 @@ export default function Validation({ data, modal, onPublish }) {
                 fontWeight="medium"
                 to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/more`}
               >
-                <Icon icon="arrow-left" mr="xxs" width={20} />
+                <Box display="inline-block" mr="xxs">
+                  <ArrowLeft size={20} strokeWidth={2} />
+                </Box>
                 Back
               </Link>
               <Text

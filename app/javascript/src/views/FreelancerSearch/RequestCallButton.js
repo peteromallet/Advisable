@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Icon } from "@advisable/donut";
+import { Button } from "@advisable/donut";
+import { Phone } from "@styled-icons/feather";
 import useViewer from "../../hooks/useViewer";
 import calendly from "../../utilities/calendly";
 
@@ -19,7 +20,7 @@ const RequestCallButton = ({ children, ...props }) => {
   return (
     <Button
       variant="secondary"
-      prefix={<Icon icon="phone" />}
+      prefix={<Phone />}
       {...props}
       onClick={handleSubmit}
     >

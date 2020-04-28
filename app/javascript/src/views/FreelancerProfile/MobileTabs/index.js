@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, Icon, theme } from "@advisable/donut";
-import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+import { Box, theme } from "@advisable/donut";
+import { User, Folder, AlignLeft } from "@styled-icons/feather";
 
 const StyledMobileTab = styled(NavLink)`
   width: 100%;
@@ -34,21 +35,21 @@ function MobileTabs({ data }) {
         activeClassName="active"
         to={`/freelancers/${data.specialist.id}/profile`}
       >
-        <Icon width={20} icon="user" />
+        <User size={20} strokeWidth={2} />
         Profile
       </StyledMobileTab>
       <StyledMobileTab
         activeClassName="active"
         to={`/freelancers/${data.specialist.id}/projects`}
       >
-        <Icon width={20} icon="folder" />
+        <Folder size={20} strokeWidth={2} />
         Projects
       </StyledMobileTab>
       <StyledMobileTab
         activeClassName="active"
         to={`/freelancers/${data.specialist.id}/reviews`}
       >
-        <Icon width={20} icon="align-left" />
+        <AlignLeft size={20} strokeWidth={2} />
         Reviews
       </StyledMobileTab>
     </Box>

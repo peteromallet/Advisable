@@ -1,13 +1,7 @@
 import React from "react";
 import { Field } from "formik";
-import {
-  Box,
-  Select,
-  Availability,
-  Button,
-  Icon,
-  Text,
-} from "@advisable/donut";
+import { ArrowRight } from "@styled-icons/feather";
+import { Box, Select, Availability, Button, Text } from "@advisable/donut";
 import ZONES from "../../../data/timezones";
 
 const AvailabilityMobileFields = ({ formik }) => {
@@ -30,7 +24,7 @@ const AvailabilityMobileFields = ({ formik }) => {
         width={["100%", "auto"]}
         disabled={formik.values.availability.length < 6}
         loading={formik.isSubmitting}
-        suffix={<Icon icon="arrow-right" />}
+        suffix={<ArrowRight />}
       >
         Continue
       </Button>

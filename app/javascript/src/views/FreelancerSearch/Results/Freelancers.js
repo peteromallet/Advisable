@@ -1,7 +1,8 @@
 import React from "react";
+import { Search, ArrowLeft, Check, Plus } from "@styled-icons/feather";
 import { motion } from "framer-motion";
 import { useHistory, useLocation, Link as RouterLink } from "react-router-dom";
-import { Box, Text, Icon, Link, Button } from "@advisable/donut";
+import { Box, Text, Link, Button } from "@advisable/donut";
 import RequestCallButton from "../RequestCallButton";
 import SpecialistCard from "../../../components/SpecialistCard";
 import SelectionBar from "./SelectionBar";
@@ -41,7 +42,9 @@ const Freelancers = ({ data }) => {
           to="/freelancer_search"
           letterSpacing="-0.02em"
         >
-          <Icon mr="2px" width={20} height={20} icon="arrow-left" />
+          <Box display="inline-block" mr="2px">
+            <ArrowLeft size={20} strokeWidth={2} />
+          </Box>
           Back
         </Link>
         <Text
@@ -85,13 +88,11 @@ const Freelancers = ({ data }) => {
                     selectedFreelancers.indexOf(s.id) > -1 ? "primary" : "dark"
                   }
                   prefix={
-                    <Icon
-                      icon={
-                        selectedFreelancers.indexOf(s.id) > -1
-                          ? "check"
-                          : "plus"
-                      }
-                    />
+                    selectedFreelancers.indexOf(s.id) > -1 ? (
+                      <Check />
+                    ) : (
+                      <Plus />
+                    )
                   }
                 >
                   {selectedFreelancers.indexOf(s.id) > -1 ? "Added" : "Add"}
@@ -111,7 +112,7 @@ const Freelancers = ({ data }) => {
           manager and we’ll identify the perfect person for you.
         </Text>
         <RouterLink to="/freelancer_Search">
-          <Button mr="s" variant="secondary" prefix={<Icon icon="search" />}>
+          <Button mr="s" variant="secondary" prefix={<Search />}>
             Make another search
           </Button>
         </RouterLink>
