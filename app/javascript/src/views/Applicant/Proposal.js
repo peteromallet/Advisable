@@ -1,4 +1,5 @@
 import React from "react";
+import { Info } from "@styled-icons/feather";
 import { camelCase } from "lodash-es";
 import { useQuery } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
@@ -54,7 +55,7 @@ const Loaded = ({ data }) => {
       </Padding>
 
       <Padding left="xl" right="xl" bottom="m">
-        <Notice icon="info">
+        <Notice icon={<Info />}>
           <Text size="s" weight="semibold" colour="dark">
             {t(`proposals.projectType.${projectType}.title`, {
               firstName: application.specialist.firstName,
@@ -68,11 +69,9 @@ const Loaded = ({ data }) => {
       </Padding>
 
       {application.proposalComment && (
-        <Padding left="xl" right="xl" bottom="m">
-          <Message title={`Message from ${specialist.firstName}`}>
-            {renderLineBreaks(application.proposalComment)}
-          </Message>
-        </Padding>
+        <Message mx="l" mb="m" title={`Message from ${specialist.firstName}`}>
+          {renderLineBreaks(application.proposalComment)}
+        </Message>
       )}
       <Padding top="m" left="xl" bottom="m">
         <Text weight="semibold" colour="dark">

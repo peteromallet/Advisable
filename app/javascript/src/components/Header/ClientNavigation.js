@@ -1,5 +1,5 @@
 import * as React from "react";
-import Icon from "../Icon";
+import { X } from "@styled-icons/feather";
 import useViewer from "../../hooks/useViewer";
 import { useMobile } from "../../components/Breakpoint";
 import useMessageCount from "../../hooks/useMessageCount";
@@ -16,7 +16,7 @@ const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
     <NavContainer isOpen={navOpen}>
       <Nav>
         <CloseNav onClick={onCloseNav}>
-          <Icon icon="x" />
+          <X />
         </CloseNav>
         <NavItem onClick={onCloseNav} to="/projects">
           Find Talent

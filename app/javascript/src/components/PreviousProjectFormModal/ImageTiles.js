@@ -2,6 +2,7 @@ import React from "react";
 import gql from "graphql-tag";
 import { find } from "lodash-es";
 import { rgba } from "polished";
+import { X, Plus } from "@styled-icons/feather";
 import styled, { css } from "styled-components";
 import { theme, Icon } from "@advisable/donut";
 import { useMutation, useApolloClient } from "@apollo/react-hooks";
@@ -280,7 +281,7 @@ const PortfolioImage = React.memo(({ image, onClick, dispatch }) => {
       onClick={handleClick}
     >
       <StyledRemovePhotoButton onClick={handleRemove}>
-        <Icon icon="x" width={16} height={16} />
+        <X size={16} strokeWidth={2} />
       </StyledRemovePhotoButton>
     </StyledImageTile>
   );
@@ -354,7 +355,7 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
     <StyledImageTiles>
       {tiles}
       <StyledNewImageTile>
-        <Icon icon="plus" />
+        <Plus size={24} strokeWidth={2} />
         <input type="file" multiple onChange={handleChange} />
       </StyledNewImageTile>
     </StyledImageTiles>

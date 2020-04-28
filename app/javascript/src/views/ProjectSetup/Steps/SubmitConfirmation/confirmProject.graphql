@@ -2,8 +2,9 @@ mutation ConfirmProject($input: ConfirmProjectInput!) {
   confirmProject(input: $input) {
     project {
       id
+      status
     }
-    errors { 
+    errors {
       code
     }
   }

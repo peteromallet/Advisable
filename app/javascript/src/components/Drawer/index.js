@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
-import { useTransition } from "react-spring";
+import { motion } from "framer-motion";
 import Div100vh from "react-div-100vh";
 import { Button } from "@advisable/donut";
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
@@ -49,66 +49,40 @@ export default ({ isOpen, onClose, children, actions }) => {
     };
   });
 
-  const fadeTransition = useTransition(isOpen, null, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-  });
-
-  const drawerTransition = useTransition(isOpen, null, {
-    from: {
-      transform: isMobile
-        ? "translate3d(0, 100%, 0)"
-        : "translate3d(100%, 0, 0)",
-    },
-    enter: { transform: "translate3d(0, 0, 0)" },
-    leave: {
-      transform: isMobile
-        ? "translate3d(0, 100%, 0)"
-        : "translate3d(100%, 0, 0)",
-    },
-    config: {
-      mass: 1,
-      tension: 320,
-      friction: 35,
-    },
-  });
-
   const handleBackdropClick = () => {
     onClose();
   };
 
   return createPortal(
-    fadeTransition.map(
-      (fade) =>
-        fade.item && (
-          <Container key={fade.key} isOpen={isOpen}>
-            {drawerTransition.map(
-              (drawer) =>
-                drawer.item && (
-                  <Drawer ref={drawerRef} key={drawer.key} style={drawer.props}>
-                    <Div100vh>
-                      <Actions>
-                        {actions}
-                        <Button
-                          icon="x"
-                          size="s"
-                          variant="subtle"
-                          aria-label="Close Drawer"
-                          onClick={onClose}
-                        >
-                          <X />
-                        </Button>
-                      </Actions>
-                      {children}
-                    </Div100vh>
-                  </Drawer>
-                ),
-            )}
-            <Backdrop onClick={handleBackdropClick} style={fade.props} />
-          </Container>
-        ),
-    ),
+    <Container isOpen={isOpen}>
+      <Drawer
+        key="drawer"
+        as={motion.div}
+        ref={drawerRef}
+        initial={{
+          opacity: 0,
+          x: isMobile ? 0 : "100%",
+        }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ ease: "easeOut", duration: 0.3 }}
+      >
+        <Div100vh>
+          <Actions>
+            {actions}
+            <Button
+              size="s"
+              variant="subtle"
+              aria-label="Close Drawer"
+              onClick={onClose}
+            >
+              <X />
+            </Button>
+          </Actions>
+          {children}
+        </Div100vh>
+      </Drawer>
+      <Backdrop onClick={handleBackdropClick} />
+    </Container>,
     root,
   );
 };

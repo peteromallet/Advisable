@@ -6,7 +6,6 @@ import { useLocation, useHistory, useRouteMatch } from "react-router-dom";
 import {
   Box,
   Card,
-  Icon,
   Text,
   Modal,
   Tag,
@@ -15,6 +14,7 @@ import {
 } from "@advisable/donut";
 import IndustryTag from "../../../components/IndustryTag";
 import ProjectDetails from "../../../components/PreviousProjectDetails";
+import { MessageCircle } from "@styled-icons/feather";
 
 function useRoutedModal(path, back) {
   const modal = useModal();
@@ -96,7 +96,7 @@ function ProjectCard({ specialistId, project }) {
               to={`/request_consultation/${specialistId}`}
               style={{ outline: "none" }}
             >
-              <Button size="l" prefix={<Icon icon="message-circle" />}>
+              <Button size="l" prefix={<MessageCircle />}>
                 Request Consultation
               </Button>
             </Link>

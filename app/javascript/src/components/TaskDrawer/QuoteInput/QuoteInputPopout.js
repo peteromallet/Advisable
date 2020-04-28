@@ -1,4 +1,4 @@
-import * as Yup from "yup";
+import { object, boolean, string, number, ref } from "yup";
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
@@ -27,14 +27,14 @@ const CONTENT = {
   },
 };
 
-const validationSchema = Yup.object({
-  isFlexible: Yup.boolean(),
-  estimate: Yup.string().required(),
-  flexibleEstimate: Yup.number().when("isFlexible", {
+const validationSchema = object({
+  isFlexible: boolean(),
+  estimate: string().required(),
+  flexibleEstimate: number().when("isFlexible", {
     is: true,
-    then: Yup.number()
+    then: number()
       .required("Field is required")
-      .min(Yup.ref("estimate"), "Value must be greater than ${min}"),
+      .min(ref("estimate"), "Value must be greater than ${min}"),
   }),
 });
 

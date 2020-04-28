@@ -1,5 +1,4 @@
 import * as React from "react";
-import Icon from "../Icon";
 import { NavigationMenuItem as Container } from "./styles";
 
 interface Props {
@@ -11,7 +10,7 @@ interface Props {
 const NavigationMenuItem = ({ children, icon, ...props }: Props) => {
   return (
     <Container {...props}>
-      {icon && <Icon icon={icon} height={20} strokeWidth={2} />}
+      {icon && icon}
       {children}
     </Container>
   );

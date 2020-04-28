@@ -10,7 +10,7 @@ import Loading from "./Loading";
 import Application from "./Application";
 import FooterAction from "../FooterAction";
 
-const OpenApplications = props => {
+const OpenApplications = (props) => {
   if (props.loading) return <Loading />;
 
   if (props.applications.length === 0) {
@@ -24,14 +24,14 @@ const OpenApplications = props => {
           We're currently evaluating the projects you've applied for
         </Text>
       )}
-      {props.applications.map(application => (
+      {props.applications.map((application) => (
         <Padding bottom="m" key={application.id}>
           <Application application={application} />
         </Padding>
       ))}
       <Padding top="l">
         <FooterAction
-          icon="help-circle"
+          icon={<HelpCircle size={24} strokeWidth={2} />}
           css="width: 90%; max-width: 450px; margin: 0 auto;"
         >
           <Link target="_blank" href={props.featuredURL}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Link, Icon } from "@advisable/donut";
+import { Box, Text, Link } from "@advisable/donut";
 import SearchRecommendationDetails from "./SearchRecommendationDetails";
 import ExpandableText from "../../components/ExpandableText";
 import FreelancerImageCard from "../../components/FreelancerImageCard";
@@ -7,6 +7,7 @@ import Ribbon from "./Ribbon";
 import RecommendationBar from "./RecommendationBar";
 import RecommendationOffer from "./RecommendationOffer";
 import RecommendationActions from "./RecommendationActions";
+import { ArrowLeft } from "@styled-icons/feather";
 
 function SearchRecommendation({ data }) {
   const project = data.search.recommendation;
@@ -21,7 +22,9 @@ function SearchRecommendation({ data }) {
         to="/freelancer_search"
         letterSpacing="-0.02em"
       >
-        <Icon mr="2px" width={20} height={20} icon="arrow-left" />
+        <Box display="inline-block" mr="2px">
+          <ArrowLeft size={20} strokeWidth={2} />
+        </Box>
         Back
       </Link>
       <Text

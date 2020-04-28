@@ -1,7 +1,8 @@
 import React from "react";
 import { sortBy, filter } from "lodash-es";
 import moment from "moment-timezone";
-import { Text, Link, Icon } from "@advisable/donut";
+import { Text, Link, Box } from "@advisable/donut";
+import { ArrowLeft } from "@styled-icons/feather";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
 import { Times, Time } from "./styles";
 
@@ -22,7 +23,9 @@ export default function SelectTime(props) {
   return (
     <>
       <Link mb="xs" to={`/interview_request/${match.params.interviewID}`}>
-        <Icon icon="arrow-left" width={16} mr="xxs" />
+        <Box display="inline-block" mr="xxs">
+          <ArrowLeft size={16} strokeWidth={2} />
+        </Box>
         Back
       </Link>
       <Text

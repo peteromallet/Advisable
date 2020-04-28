@@ -2,7 +2,8 @@ import React from "react";
 import { rgba } from "polished";
 import { minBy, maxBy } from "lodash-es";
 import { motion } from "framer-motion";
-import { Box, Circle, theme, Button, Icon, Text } from "@advisable/donut";
+import { ArrowRight } from "@styled-icons/feather";
+import { Box, Circle, theme, Button, Text } from "@advisable/donut";
 import { useHistory, useLocation } from "react-router-dom";
 import currency from "../../../utilities/currency";
 import { StyledPriceRange, StyledPriceRangeBackground } from "./styles";
@@ -53,6 +54,7 @@ const Range = ({ name, icon, specialists, animationDelay }) => {
             bg="blue.1"
             size={80}
             as={motion.div}
+            color="blue700"
             variants={{
               hover: {
                 scale: 1.1,
@@ -60,7 +62,7 @@ const Range = ({ name, icon, specialists, animationDelay }) => {
               },
             }}
           >
-            <Icon icon={icon} color="blue.7" />
+            {icon}
           </Circle>
           <Text
             mb="xs"
@@ -91,7 +93,7 @@ const Range = ({ name, icon, specialists, animationDelay }) => {
           </Text>
           <Button
             onClick={handleClick}
-            suffix={<Icon icon="arrow-right" />}
+            suffix={<ArrowRight />}
             variant="dark"
             aria-label={`Select ${name}`}
             size="l"

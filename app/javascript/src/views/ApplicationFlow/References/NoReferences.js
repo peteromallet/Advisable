@@ -1,5 +1,6 @@
 import * as React from "react";
-import { DialogDisclosure, Button, Text, Icon, Card } from "@advisable/donut";
+import { Plus } from "@styled-icons/feather";
+import { DialogDisclosure, Button, Text, Card } from "@advisable/donut";
 
 const NoReferences = ({ confirmationModal, newProjectModal }) => {
   return (
@@ -16,7 +17,7 @@ const NoReferences = ({ confirmationModal, newProjectModal }) => {
       <DialogDisclosure
         mr="xs"
         as={Button}
-        prefix={<Icon icon="plus" />}
+        prefix={<Plus />}
         {...newProjectModal}
       >
         Add a previous project

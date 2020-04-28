@@ -1,8 +1,14 @@
 import React from "react";
+import {
+  Star,
+  HelpCircle,
+  RefreshCcw,
+  ArrowRight,
+} from "@styled-icons/feather";
 import { useTranslation } from "react-i18next";
-import { Box, Text, Icon, Link, Tooltip } from "@advisable/donut";
+import { Box, Text, Link, Tooltip } from "@advisable/donut";
 
-const Row = ({ icon, children, iconProps, tooltip }) => (
+const Row = ({ icon, children, tooltip }) => (
   <Box
     py="xs"
     mx="xs"
@@ -20,8 +26,9 @@ const Row = ({ icon, children, iconProps, tooltip }) => (
       display="flex"
       alignItems="center"
       justifyContent="center"
+      color="blue600"
     >
-      <Icon icon={icon} color="blue.6" width={12} {...iconProps} />
+      {icon}
     </Box>
     <Box flex={1}>
       <Text fontSize="xs" color="neutral.6" py="xs">
@@ -32,13 +39,9 @@ const Row = ({ icon, children, iconProps, tooltip }) => (
       <Box>
         <Tooltip content={tooltip} placement="bottom-end" interactable>
           <Box display="flex" alignItems="center">
-            <Icon
-              mr="xxs"
-              width={18}
-              color="neutral.4"
-              strokeWidth={1.5}
-              icon="help-circle"
-            />
+            <Box mr="xxs" color="neutral500">
+              <HelpCircle size={18} strokeWidth={1.5} />
+            </Box>
             <Text fontSize="xs" color="neutral.4">
               More info
             </Text>
@@ -55,9 +58,9 @@ const TaskDetailRows = ({ isClient, task }) => {
 
   if (task.repeat) {
     details.push(
-      <Row key="repeat" icon="refresh-cw">
+      <Row key="repeat" icon={<RefreshCcw size={12} strokeWidth={2} />}>
         This is a repeating task
-      </Row>
+      </Row>,
     );
   }
 
@@ -65,7 +68,7 @@ const TaskDetailRows = ({ isClient, task }) => {
     details.push(
       <Row
         key="trial"
-        icon="star"
+        icon={<Star size={12} strokeWidth={2} />}
         iconProps={{ fill: "currentColor", strokeWidth: 0 }}
         tooltip={
           isClient && (
@@ -76,18 +79,20 @@ const TaskDetailRows = ({ isClient, task }) => {
               <Link
                 as="a"
                 target="_blank"
-                onClick={e => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
                 href={"https://advisable.com/client-trial"}
               >
                 Read more information
-                <Icon icon="arrow-right" width={16} ml="xxs" />
+                <Text ml="xxs">
+                  <ArrowRight size={16} strokeWidth={2} />
+                </Text>
               </Link>
             </>
           )
         }
       >
         This task has been offered as a guaranteed trial
-      </Row>
+      </Row>,
     );
   }
 

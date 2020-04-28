@@ -1,7 +1,6 @@
 // Renders the confirmation steps for a project.
 import { useQuery } from "@apollo/react-hooks";
-import React, { useEffect, useRef } from "react";
-import { Transition, animated } from "react-spring/renderprops.cjs";
+import React from "react";
 import { Route, Switch, Redirect } from "react-router";
 import NotFound from "src/views/NotFound";
 import Loading from "src/components/Loading";
@@ -38,13 +37,6 @@ const ProjectSetup = ({ data }) => {
   const step = currentStep() || {};
   const currentStepNumber = steps.indexOf(step) + 1;
 
-  // Keep track of the last step.
-  const lastStepRef = useRef(currentStepNumber);
-  useEffect(() => {
-    lastStepRef.current = currentStepNumber;
-  });
-  const previousStep = lastStepRef.current;
-
   return (
     <Container>
       {/* If the current step has a title then we need to render the header
@@ -59,54 +51,21 @@ const ProjectSetup = ({ data }) => {
         </React.Fragment>
       )}
 
-      {/* Integrate the steps with react-spring animations. For each animation
-        we compare with the previousStep to see if we need to animate forwards
-        or backwards */}
-      <Route
-        render={({ location }) => (
-          <Transition
-            initial={null}
-            items={location}
-            keys={(location) => location.pathname}
-            from={{
-              opacity: 0,
-              transform:
-                currentStepNumber > previousStep
-                  ? "translateX(300px)"
-                  : "translateX(-300px)",
-            }}
-            enter={{ opacity: 1, transform: "translateX(0px)" }}
-            leave={{
-              opacity: 0,
-              position: "absolute",
-              transform:
-                currentStepNumber <= previousStep
-                  ? "translateX(300px)"
-                  : "translateX(-300px)",
-            }}
-          >
-            {(location) => (transition) => (
-              <Switch location={location}>
-                {steps.map((route) => {
-                  const Component = route.component;
-                  return (
-                    <Route
-                      key={route.path}
-                      path={route.path}
-                      exact={route.exact}
-                      render={(route) => (
-                        <animated.div style={transition}>
-                          <Component {...route} project={data.project} />
-                        </animated.div>
-                      )}
-                    />
-                  );
-                })}
-              </Switch>
-            )}
-          </Transition>
-        )}
-      />
+      <Switch>
+        {steps.map((route) => {
+          const Component = route.component;
+          return (
+            <Route
+              key={route.path}
+              path={route.path}
+              exact={route.exact}
+              render={(route) => (
+                <Component {...route} project={data.project} />
+              )}
+            />
+          );
+        })}
+      </Switch>
     </Container>
   );
 };

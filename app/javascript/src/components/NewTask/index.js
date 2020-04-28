@@ -1,6 +1,6 @@
 import * as React from "react";
+import { Plus } from "@styled-icons/feather";
 import { useMutation, useApolloClient } from "@apollo/react-hooks";
-import Icon from "../../components/Icon";
 import { NewTask, NewTaskIcon } from "./styles";
 import generateID from "../../utilities/generateID";
 import CREATE_TASK from "../../graphql/mutations/createTask";
@@ -75,7 +75,7 @@ const Component = ({ application, onCreate }) => {
   return (
     <NewTask onClick={handleClick} aria-label="Add a task">
       <NewTaskIcon>
-        <Icon icon="plus" strokeWidth={2} />
+        <Plus size={20} strokeWidth={2} />
       </NewTaskIcon>
       Add a project
     </NewTask>

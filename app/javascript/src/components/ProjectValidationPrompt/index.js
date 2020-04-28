@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Text, Icon } from "@advisable/donut";
+import { AlertCircle } from "@styled-icons/feather";
+import { Box, Text } from "@advisable/donut";
 import CopyURL from "../CopyURL";
 
 const ProjectValidationPrompt = ({ project }) => {
@@ -9,12 +10,9 @@ const ProjectValidationPrompt = ({ project }) => {
   return (
     <Box borderRadius={12} bg="yellow.0" padding="s">
       <Box display="flex">
-        <Icon
-          width={24}
-          color="yellow.5"
-          strokeWidth={1.6}
-          icon="alert-circle"
-        />
+        <Box color="yellow700">
+          <AlertCircle size={24} strokeWidth={2} />
+        </Box>
         <Box ml="xs">
           <Text fontSize="s" fontWeight="medium" color="neutral.9" mb="xxs">
             Verification required

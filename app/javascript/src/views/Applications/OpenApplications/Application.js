@@ -1,8 +1,8 @@
 import { get } from "lodash-es";
 import * as React from "react";
+import { Info } from "@styled-icons/feather";
 import { Text, Link } from "@advisable/donut";
 import * as moment from "moment-timezone";
-import Icon from "../../../components/Icon";
 import Padding from "../../../components/Spacing/Padding";
 import ApplicationStatus from "../../../components/ApplicationStatus";
 import { Card, Notice } from "./styles";
@@ -163,7 +163,7 @@ const Application = ({ application }) => {
         {InfoComponent && (
           <Padding top="m">
             <Notice>
-              <Icon icon="info" />
+              <Info />
               <InfoComponent application={application} />
             </Notice>
           </Padding>

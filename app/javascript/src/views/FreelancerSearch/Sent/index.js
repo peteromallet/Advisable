@@ -1,7 +1,8 @@
 import React from "react";
+import { Check, Search } from "@styled-icons/feather";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Circle, Box, Text, Button, Icon } from "@advisable/donut";
+import { Circle, Box, Text, Button } from "@advisable/donut";
 
 const Sent = () => {
   return (
@@ -12,8 +13,9 @@ const Sent = () => {
         as={motion.div}
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
+        color="blue700"
       >
-        <Icon icon="check" color="blue.7" />
+        <Check size={24} strokeWidth={2} />
       </Circle>
       <Text
         mb="xs"
@@ -45,7 +47,7 @@ const Sent = () => {
         transition={{ delay: 0.3 }}
       >
         <Link to="/freelancer_search">
-          <Button prefix={<Icon icon="search" />} variant="secondary">
+          <Button prefix={<Search />} variant="secondary">
             Make another search
           </Button>
         </Link>

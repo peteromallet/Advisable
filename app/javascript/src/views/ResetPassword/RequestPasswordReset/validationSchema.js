@@ -1,7 +1,9 @@
-import * as Yup from "yup";
+import { object, string } from "yup";
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string().required("Please enter your email").email("Please enter a valid email address"),
+const validationSchema = object().shape({
+  email: string()
+    .required("Please enter your email")
+    .email("Please enter a valid email address"),
 });
 
 export default validationSchema;

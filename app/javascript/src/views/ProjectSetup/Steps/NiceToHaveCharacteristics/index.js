@@ -4,7 +4,6 @@ import { Formik } from "formik";
 import { Button } from "@advisable/donut";
 import Text from "src/components/Text";
 import ListInput from "src/components/ListInput";
-import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
 export default ({ project, match, history }) => {
@@ -28,7 +27,6 @@ export default ({ project, match, history }) => {
         initialValues={{
           optionalCharacteristics: project.optionalCharacteristics,
         }}
-        validationSchema={validationSchema}
         onSubmit={async (values) => {
           const id = match.params.projectID;
           await mutate({

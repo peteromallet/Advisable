@@ -1,5 +1,4 @@
 import React from "react";
-import Icon from "../Icon";
 import Box from "../Box";
 import {
   StyledNotice,
@@ -11,11 +10,7 @@ import {
 const Notice = ({ icon, children, title, ...props }) => {
   return (
     <StyledNotice {...props}>
-      {icon && (
-        <StyledNoticeIcon>
-          <Icon icon={icon} width={20} height={20} />
-        </StyledNoticeIcon>
-      )}
+      {icon && <StyledNoticeIcon>{icon}</StyledNoticeIcon>}
       <Box>
         {title && (
           <StyledNoticeHeader

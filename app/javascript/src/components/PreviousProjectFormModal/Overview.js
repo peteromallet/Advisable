@@ -1,4 +1,5 @@
 import React from "react";
+import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
   Box,
@@ -6,7 +7,6 @@ import {
   Label,
   Input,
   Stack,
-  Icon,
   Link,
   Select,
   Checkbox,
@@ -90,7 +90,9 @@ export default function Overview({ modal, data, skills }) {
                   `${modal.returnPath}/previous_projects/${data.previousProject.id}/client`,
                 )}
               >
-                <Icon icon="arrow-left" mr="xxs" width={20} />
+                <Box display="inline-block" mr="xxs">
+                  <ArrowLeft size={20} strokeWidth={2} />
+                </Box>
                 Back
               </Link>
               <Text
@@ -200,7 +202,7 @@ export default function Overview({ modal, data, skills }) {
                 size="l"
                 type="submit"
                 loading={formik.isSubmitting}
-                suffix={<Icon icon="arrow-right" />}
+                suffix={<ArrowRight />}
               >
                 Continue
               </Button>

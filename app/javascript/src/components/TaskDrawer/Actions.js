@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Info } from "@styled-icons/feather";
 import { useMutation } from "@apollo/react-hooks";
 import { Button } from "@advisable/donut";
 import Padding from "../Spacing/Padding";
@@ -139,7 +140,7 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
     if (!hasName || !hasDescription) {
       notice = (
         <Padding bottom="m">
-          <Notice icon="info">
+          <Notice icon={<Info />}>
             <Text size="xs" mb="xxs" weight="medium" color="neutral.9">
               Not Assigned
             </Text>

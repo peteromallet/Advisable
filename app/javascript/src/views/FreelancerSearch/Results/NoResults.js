@@ -1,15 +1,14 @@
 import React from "react";
+import { Search } from "@styled-icons/feather";
 import RequestCallButton from "../RequestCallButton";
-import { useLocation, Link as RouterLink } from "react-router-dom";
-import { Circle, Box, Text, Icon, Button } from "@advisable/donut";
+import { Link as RouterLink } from "react-router-dom";
+import { Circle, Box, Text, Button } from "@advisable/donut";
 
 const NoResults = ({ data }) => {
-  const location = useLocation();
-
   return (
     <Box textAlign="center" maxWidth={500} mx="auto">
-      <Circle mb="m" bg="blue.1" size={60}>
-        <Icon icon="search" color="blue.7" />
+      <Circle mb="m" bg="blue.1" size={60} color="blue700">
+        <Search size={24} strokeWidth={2} />
       </Circle>
       <Text fontSize="l" fontWeight="semibold" mb="xs">
         No results
@@ -24,7 +23,7 @@ const NoResults = ({ data }) => {
         as={RouterLink}
         variant="secondary"
         to="/freelancer_search"
-        prefix={<Icon icon="search" />}
+        prefix={<Search />}
       >
         Make another search
       </Button>

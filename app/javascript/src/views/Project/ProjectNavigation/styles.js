@@ -1,6 +1,6 @@
 import { rgba } from "polished";
 import styled from "styled-components";
-import { theme, StyledIcon } from "@advisable/donut";
+import { theme } from "@advisable/donut";
 import { NavLink } from "react-router-dom";
 import arrow from "./arrow.svg";
 
@@ -36,6 +36,12 @@ export const NavMenuItemIcon = styled.div`
   left: 15px;
   position: absolute;
   transform: translateY(-50%);
+
+  svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
+  }
 `;
 
 export const NavMenuItem = styled(NavLink)`
@@ -62,7 +68,7 @@ export const NavMenuItem = styled(NavLink)`
     color: ${theme.colors.blue900};
     background-color: ${theme.colors.blue100};
 
-    ${StyledIcon} {
+    svg {
       color: ${theme.colors.blue700};
     }
 

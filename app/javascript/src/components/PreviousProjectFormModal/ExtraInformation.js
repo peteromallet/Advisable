@@ -1,10 +1,10 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Box, Text, Select, Stack, Link, Icon, Button } from "@advisable/donut";
+import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
+import { Box, Text, Select, Stack, Link, Button } from "@advisable/donut";
 import Helper from "./Helper";
 import FormField from "../FormField";
 import SubmitButton from "../SubmitButton";
-import { ArrowRight } from "@styled-icons/feather";
 import CurrencyInput from "../../components/CurrencyInput";
 import { useUpdatePreviousProject } from "./queries";
 import { currencyToString, stringToCurrency } from "../../utilities/currency";
@@ -66,7 +66,9 @@ export default function ExtraInfo({ data, modal }) {
                 `${modal.returnPath}/previous_projects/${id}/portfolio`,
               )}
             >
-              <Icon icon="arrow-left" mr="xxs" width={20} />
+              <Box display="inline-block" mr="xxs">
+                <ArrowLeft size={20} strokeWidth={2} />
+              </Box>
               Back
             </Link>
             <Text mb="xs" fontSize="28px" color="blue900" fontWeight="semibold">

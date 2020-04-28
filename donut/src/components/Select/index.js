@@ -1,5 +1,5 @@
 import React from "react";
-import Icon from "../Icon";
+import { ChevronDown } from "@styled-icons/feather";
 import extractSpacingProps from "../../utilities/extractSpacingProps";
 import withoutSpacingProps from "../../utilities/withoutSpacingProps";
 import { StyledSelect, StyledSelectInput, StyledSelectArrow } from "./styles";
@@ -22,7 +22,7 @@ const Select = ({ children, placeholder, value, ...props }) => {
         {children}
       </StyledSelectInput>
       <StyledSelectArrow>
-        <Icon icon="chevron-down" width={20} height={20} />
+        <ChevronDown size={20} strokeWidth={2} />
       </StyledSelectArrow>
     </StyledSelect>
   );

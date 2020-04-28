@@ -1,7 +1,8 @@
 import React from "react";
 import * as Sentry from "@sentry/browser";
-import { Icon, Button } from "@advisable/donut";
+import { Button } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
+import { MessageCircle } from "@styled-icons/feather";
 
 const CollectFeedback = ({ eventId }) => {
   const viewer = useViewer();
@@ -22,7 +23,7 @@ const CollectFeedback = ({ eventId }) => {
   return (
     <Button
       variant="subtle"
-      prefix={<Icon icon="message-circle" />}
+      prefix={<MessageCircle />}
       onClick={handleFeedback}
     >
       Report feedback

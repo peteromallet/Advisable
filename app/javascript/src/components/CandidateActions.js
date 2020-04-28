@@ -6,6 +6,7 @@ import {
   MessageCircle,
   Award,
   Trash,
+  Info,
   UserCheck,
   PhoneCall,
 } from "@styled-icons/feather";
@@ -94,7 +95,6 @@ const statusActions = {
             mb="xs"
             width="100%"
             align="left"
-            icon="user-check"
             prefix={<UserCheck />}
             onClick={() => history.push(`/book/${application.airtableId}`)}
           >
@@ -133,7 +133,7 @@ const statusActions = {
         </Padding>
         {application.referencesRequested && (
           <Padding top="m">
-            <Notice icon="info">
+            <Notice icon={<Info />}>
               <Padding bottom="xxs">
                 <Text size="xxs" weight="medium">
                   References requested
@@ -220,7 +220,7 @@ const statusActions = {
         </Padding>
         {application.referencesRequested && (
           <Padding top="m">
-            <Notice icon="info">
+            <Notice icon={<Info />}>
               <Padding bottom="xxs">
                 <Text size="xxs" weight="medium">
                   References requested

@@ -1,8 +1,9 @@
 import React from "react";
+import { ArrowRight, ArrowLeft, Check, Plus } from "@styled-icons/feather";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useLocation, useHistory } from "react-router-dom";
-import { Box, Text, Button, Icon, Link } from "@advisable/donut";
+import { Box, Text, Button, Link } from "@advisable/donut";
 import SpecialistCard from "../../../components/SpecialistCard";
 import useScrollRestore from "../../../utilities/useScrollRestore";
 import Heading from "./Heading";
@@ -48,7 +49,9 @@ function SearchResults({ specialists }) {
   return (
     <Box maxWidth={1100} mx="auto" py={{ _: "m", s: "xl" }} px="20px">
       <Link.External href="#" onClick={history.goBack} mb="xs">
-        <Icon icon="arrow-left" width={16} height={16} mr="xxs" />
+        <Box display="inline-block" mr="xxs">
+          <ArrowLeft size={16} strokeWidth={2} />
+        </Box>
         Back
       </Link.External>
       <Text
@@ -87,11 +90,7 @@ function SearchResults({ specialists }) {
                   aria-label={`Select ${s.name}`}
                   onClick={() => toggleSelected(s.id)}
                   variant={selected.indexOf(s.id) > -1 ? "primary" : "dark"}
-                  prefix={
-                    <Icon
-                      icon={selected.indexOf(s.id) > -1 ? "check" : "plus"}
-                    />
-                  }
+                  prefix={selected.indexOf(s.id) > -1 ? <Check /> : <Plus />}
                 >
                   {selected.indexOf(s.id) > -1 ? "Added" : "Add"}
                 </Button>
@@ -117,7 +116,7 @@ function SearchResults({ specialists }) {
         <Button
           variant="subtle"
           onClick={handleContinue}
-          suffix={<Icon icon="arrow-right" />}
+          suffix={<ArrowRight />}
         >
           Skip
         </Button>

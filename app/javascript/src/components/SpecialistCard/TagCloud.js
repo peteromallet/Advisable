@@ -1,6 +1,7 @@
 import React from "react";
+import { Check } from "@styled-icons/feather";
 import styled from "styled-components";
-import { Box, Icon, Text, theme, Tooltip } from "@advisable/donut";
+import { Box, Text, theme, Tooltip } from "@advisable/donut";
 
 const Tag = styled.div`
   height: 22px;
@@ -77,7 +78,7 @@ const TagCloud = ({ tags, maxRows, name }) => {
           <Tag>
             {tag.verified && (
               <Circle>
-                <Icon width={8} strokeWidth={4} icon="check" />
+                <Check size={8} strokeWidth={4} />
               </Circle>
             )}
             {tag.name}

@@ -1,6 +1,6 @@
 import * as React from "react";
-import Icon from "../Icon";
 import Status from "../Status";
+import { Lock } from "@styled-icons/feather";
 
 interface Props {
   children: string;
@@ -9,18 +9,18 @@ interface Props {
 }
 
 const ICONS = {
-  "Quote Provided": "lock",
-  "Assigned": "lock",
-  "Working": "lock",
-  "Submitted": "lock",
-  "Approved": "lock",
-}
+  "Quote Provided": <Lock />,
+  Assigned: <Lock />,
+  Working: <Lock />,
+  Submitted: <Lock />,
+  Approved: <Lock />,
+};
 
 export default ({ children }: Props) => {
   return (
     <Status>
-      {ICONS[children] && <Icon height={12} strokeWidth={2} icon={ICONS[children]} />}
+      {ICONS[children] && ICONS[children]}
       {children}
     </Status>
-  )
-}
+  );
+};

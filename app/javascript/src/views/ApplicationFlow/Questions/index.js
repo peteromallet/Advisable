@@ -1,9 +1,10 @@
 import { find } from "lodash-es";
+import { ArrowRight } from "@styled-icons/feather";
 import * as React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
-import { Box, Text, Card, Textarea, Icon } from "@advisable/donut";
+import { Box, Text, Card, Textarea } from "@advisable/donut";
 import FormField from "../../../components/FormField";
 import SubmitButton from "../../../components/SubmitButton";
 import useScrollRestore from "../../../utilities/useScrollRestore";
@@ -151,11 +152,7 @@ const Questions = ({
                 />
               </Box>
 
-              <SubmitButton
-                mt="m"
-                size="l"
-                suffix={<Icon icon="arrow-right" />}
-              >
+              <SubmitButton mt="m" size="l" suffix={<ArrowRight />}>
                 Next
               </SubmitButton>
             </Box>

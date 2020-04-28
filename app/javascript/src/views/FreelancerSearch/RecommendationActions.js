@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Box, Icon, Button } from "@advisable/donut";
+import { Box, Button } from "@advisable/donut";
+import { MessageCircle } from "@styled-icons/feather";
 
 export default function RecommendationAction({
   search,
@@ -24,7 +25,7 @@ export default function RecommendationAction({
         size="l"
         ml={{ _: null, l: "xs" }}
         width={{ _: "100%", l: "auto" }}
-        prefix={<Icon icon="message-circle" />}
+        prefix={<MessageCircle />}
         onClick={() =>
           history.push({
             ...location,

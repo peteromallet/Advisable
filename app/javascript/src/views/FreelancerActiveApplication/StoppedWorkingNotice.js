@@ -1,10 +1,11 @@
 import React from "react";
 import { Text } from "@advisable/donut";
+import { Info } from "@styled-icons/feather";
 import Notice from "../../components/Notice";
 
 const StoppedWorkingNotice = ({ client }) => {
   return (
-    <Notice icon="info" elevation="s">
+    <Notice icon={<Info />} elevation="s">
       <Text size="s" weight="medium" color="neutral.9" mb="xxs">
         This project has ended
       </Text>

@@ -1,6 +1,7 @@
 import React from "react";
 import { find } from "lodash-es";
-import { Box, Text, Icon, Button, Link } from "@advisable/donut";
+import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
+import { Box, Text, Button, Link } from "@advisable/donut";
 import generateID from "../../utilities/generateID";
 import useLocationStages from "../../hooks/useLocationStages";
 import CoverPhoto from "./CoverPhoto";
@@ -108,7 +109,9 @@ export default function Portfolio({ modal, data }) {
             `${modal.returnPath}/previous_projects/${data.previousProject.id}/overview`,
           )}
         >
-          <Icon icon="arrow-left" mr="xxs" width={20} />
+          <Box display="inline-block" mr="xxs">
+            <ArrowLeft size={20} strokeWidth={2} />
+          </Box>
           Back
         </Link>
         <Text mb="xs" fontSize="28px" color="blue900" fontWeight="semibold">
@@ -132,7 +135,7 @@ export default function Portfolio({ modal, data }) {
           size="l"
           mr="xs"
           onClick={handleContinue}
-          suffix={<Icon icon="arrow-right" />}
+          suffix={<ArrowRight />}
           disabled={data.previousProject.images.length === 0}
         >
           Continue

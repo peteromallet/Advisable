@@ -1,12 +1,15 @@
-import { useApolloClient } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import React, { Fragment, useEffect } from "react";
-import { Spring } from "react-spring/renderprops.cjs";
+import { motion } from "framer-motion";
 import CONFIRM_PROJECT from "./confirmProject.graphql";
 import { Wrapper, Progress } from "./styles";
 import illustration from "./illustration.png";
+import { useParams, useHistory } from "react-router";
 
-const SubmitConfirmation = ({ project, match, history }) => {
-  const client = useApolloClient();
+const SubmitConfirmation = ({ project }) => {
+  const params = useParams();
+  const history = useHistory();
+  const [confirm] = useMutation(CONFIRM_PROJECT);
 
   useEffect(() => {
     if (project.acceptedTerms === false) {
@@ -18,25 +21,26 @@ const SubmitConfirmation = ({ project, match, history }) => {
     }
   }, []);
 
-  useEffect(() => {
-    setTimeout(async () => {
-      const response = await client.mutate({
-        mutation: CONFIRM_PROJECT,
-        variables: {
-          input: {
-            id: match.params.projectID,
-          },
+  const executeConfirmation = async () => {
+    const response = await confirm({
+      variables: {
+        input: {
+          id: params.projectID,
         },
-      });
+      },
+    });
 
-      const { errors } = response.data.confirmProject;
-      if (errors) {
-        console.log(errors);
-        return;
-      }
+    const { errors } = response.data.confirmProject;
+    if (errors) {
+      console.log(errors);
+      return;
+    }
 
-      window.location = `/projects/${match.params.projectID}`;
-    }, 1000);
+    history.push(`/projects/${params.projectID}`);
+  };
+
+  useEffect(() => {
+    executeConfirmation();
   }, []);
 
   return (
@@ -45,9 +49,11 @@ const SubmitConfirmation = ({ project, match, history }) => {
         <img src={illustration} alt="" />
         <h4>Setting up your project...</h4>
         <Progress>
-          <Spring from={{ width: "50%" }} to={{ width: "100%" }}>
-            {(props) => <div style={props} />}
-          </Spring>
+          <motion.div
+            initial={{ width: "50%" }}
+            animate={{ width: "100%" }}
+            transition={{ ease: "easeOut", duration: 2 }}
+          />
         </Progress>
       </Wrapper>
     </Fragment>

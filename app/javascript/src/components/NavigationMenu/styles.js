@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import colors from '../../colors';
-import { Icon } from "../Icon/styles";
+import colors from "../../colors";
 
-export const NavigationMenu = styled.div`
-`
+export const NavigationMenu = styled.div``;
 
 export const NavigationMenuItem = styled(NavLink)`
   color: ${colors.neutral.s7};
@@ -19,7 +17,10 @@ export const NavigationMenuItem = styled(NavLink)`
   text-decoration: none;
   transition: background-color 150ms;
 
-  ${Icon} {
+  svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
     margin-right: 8px;
   }
 
@@ -31,4 +32,4 @@ export const NavigationMenuItem = styled(NavLink)`
   &.active {
     color: ${colors.blue.base};
   }
-`
+`;

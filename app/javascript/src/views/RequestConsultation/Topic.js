@@ -1,13 +1,14 @@
-import * as Yup from "yup";
+import { object, string } from "yup";
+import { ArrowRight } from "@styled-icons/feather";
 import React from "react";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Icon, Card, Box, Text, Button } from "@advisable/donut";
+import { Card, Box, Text, Button } from "@advisable/donut";
 import TextField from "../../components/TextField";
 import { useUpdateConsultation } from "./queries";
 
-const validationSchema = Yup.object({
-  topic: Yup.string().required("Please provide a topic"),
+const validationSchema = object({
+  topic: string().required("Please provide a topic"),
 });
 
 const Topic = ({ data }) => {
@@ -90,7 +91,7 @@ const Topic = ({ data }) => {
               width={["100%", "auto"]}
               disabled={!formik.isValid}
               loading={formik.isSubmitting}
-              suffix={<Icon icon="arrow-right" />}
+              suffix={<ArrowRight />}
             >
               Continue
             </Button>
