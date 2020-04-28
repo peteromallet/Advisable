@@ -88,3 +88,4 @@ export function renderRoute(config) {
 // re-export everything
 export * from "@testing-library/react";
 export * from "./apolloMocks";
+export { default as mockData } from "../__mocks__/graphqlFields";
