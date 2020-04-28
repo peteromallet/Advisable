@@ -4,6 +4,7 @@
 import * as React from "react";
 import Link from "../../../components/Link";
 import { Text } from "@advisable/donut";
+import { HelpCircle } from "@styled-icons/feather";
 import Padding from "../../../components/Spacing/Padding";
 import Empty from "./Empty";
 import Loading from "./Loading";
