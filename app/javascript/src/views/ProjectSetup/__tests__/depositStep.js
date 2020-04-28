@@ -84,10 +84,4 @@ test("User can complete deposit step", async () => {
   fireEvent.click(complete);
   let text = await findByText("Please wait while", { exact: false });
   expect(text).toBeInTheDocument();
-  let confirmText = await findByText(
-    "Setting up your project...",
-    {},
-    { timeout: 4000 },
-  );
-  expect(confirmText).toBeInTheDocument();
 });
