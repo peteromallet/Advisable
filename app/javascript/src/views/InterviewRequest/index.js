@@ -1,2 +1,2 @@
-import { lazy } from "react";
-export default lazy(() => import("./InterviewRequest"));
+import InterviewRequest from "./InterviewRequest";
+export default InterviewRequest;

@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowLeft, Check, Plus } from "@styled-icons/feather";
+import { ArrowRight, ArrowLeft, Check, Plus } from "@styled-icons/feather";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useLocation, useHistory } from "react-router-dom";
