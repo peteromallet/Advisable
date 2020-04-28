@@ -1,5 +1,6 @@
 import React from "react";
-import { Circle, Box, Text, Icon } from "@advisable/donut";
+import { Folder } from "@styled-icons/feather";
+import { Circle, Box, Text } from "@advisable/donut";
 
 function NoProjects({ data }) {
   const firstName = data.specialist.firstName;
@@ -7,7 +8,7 @@ function NoProjects({ data }) {
   return (
     <Box textAlign="center" py="xxl">
       <Circle mb="m" bg="blue800" color="blue100">
-        <Icon icon="folder" />
+        <Folder size={24} strokeWidth={2} />
       </Circle>
       <Text color="neutral900" fontWeight="medium" mb="xs">
         No Projects

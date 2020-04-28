@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { X } from "@styled-icons/feather";
 import {
   useDialogState,
   Dialog,
@@ -14,7 +15,6 @@ import {
   StyledModalCloseButton,
   StyledModalWindowContainer,
 } from "./styles";
-import Icon from "../Icon";
 import useBreakpoint from "../../hooks/useBreakpoint";
 export { default as useRoutedModal } from "./useRoutedModal";
 
@@ -118,7 +118,7 @@ const Modal = ({
                   onClick={modal.hide}
                   aria-label="Close modal"
                 >
-                  <Icon width={20} height={20} icon="x" />
+                  <X size={20} strokeWidth={2} />
                 </StyledModalCloseButton>
               ) : null}
             </StyledWindow>

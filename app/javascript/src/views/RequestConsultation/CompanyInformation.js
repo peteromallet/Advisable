@@ -1,5 +1,5 @@
 import React from "react";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { ArrowRight } from "@styled-icons/feather";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
@@ -8,11 +8,11 @@ import FormField from "../../components/FormField";
 import SubmitButton from "../../components/SubmitButton";
 import { useCreateConsultation } from "./queries";
 
-const validationSchema = Yup.object({
-  firstName: Yup.string().required("Please enter your first name"),
-  lastName: Yup.string().required("Please enter your last name"),
-  email: Yup.string().required("Please enter your email").email(),
-  company: Yup.string().required("Please enter your company name"),
+const validationSchema = object({
+  firstName: string().required("Please enter your first name"),
+  lastName: string().required("Please enter your last name"),
+  email: string().required("Please enter your email").email(),
+  company: string().required("Please enter your company name"),
 });
 
 const CompanyInformation = ({ data }) => {

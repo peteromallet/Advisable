@@ -1,5 +1,4 @@
 import styled, { keyframes, css } from "styled-components";
-import { animated } from "react-spring";
 
 const fadeIn = keyframes`
   from {
@@ -24,12 +23,12 @@ const windowWidths = {
   l: "700px",
 };
 
-export const WindowContainer = styled(animated.div)`
+export const WindowContainer = styled.div`
   z-index: 999;
   width: 100%;
   margin: 0 auto;
   position: relative;
-  max-width: ${props => windowWidths[props.size || "m"]};
+  max-width: ${(props) => windowWidths[props.size || "m"]};
 `;
 
 export const Window = styled.div`
@@ -72,8 +71,8 @@ export const ModalContainer = styled.div`
   position: fixed;
   flex-direction: column;
   justify-content: center;
-  padding: ${props => !props.expandOnMobile && "15px"};
-  ${props => props.expandOnMobile && expandOnMobileStyles};
+  padding: ${(props) => !props.expandOnMobile && "15px"};
+  ${(props) => props.expandOnMobile && expandOnMobileStyles};
 
   &:first-child ${Backdrop} {
     background: rgba(76, 87, 126, 0.7);

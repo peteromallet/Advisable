@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as Sentry from "@sentry/browser";
-import { Circle, Box, Icon, Text, Button } from "@advisable/donut";
+import { RefreshCw, AlertTriangle } from "@styled-icons/feather";
+import { Circle, Box, Text, Button } from "@advisable/donut";
 import CollectFeedback from "./CollectFeedback";
 
 class RootErrorBoundary extends React.Component {
@@ -36,14 +37,8 @@ class RootErrorBoundary extends React.Component {
     if (this.state.update) {
       return (
         <Box maxWidth={340} mx="auto" my="xxl" textAlign="center">
-          <Circle bg="blue.8" mb="m">
-            <Icon
-              mt="-2px"
-              width={24}
-              height={24}
-              color="white.9"
-              icon="refresh-cw"
-            />
+          <Circle bg="blue.8" mb="m" color="white.9">
+            <RefreshCw size={24} strokeWidth={2} />
           </Circle>
           <Text
             mb="xs"
@@ -70,14 +65,8 @@ class RootErrorBoundary extends React.Component {
     if (this.state.error)
       return (
         <Box maxWidth={320} mx="auto" my="xxl" textAlign="center">
-          <Circle bg="blue.1" mb="m">
-            <Icon
-              mt="-2px"
-              width={30}
-              height={30}
-              color="blue.8"
-              icon="alert-triangle"
-            />
+          <Circle bg="blue.1" mb="m" color="blue800">
+            <AlertTriangle size={30} strokeWidth={2} />
           </Circle>
           <Text
             mb="s"

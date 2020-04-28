@@ -1,28 +1,28 @@
 import React from "react";
-import * as Yup from "yup";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { Formik, Form, Field } from "formik";
 import { Box, Button, Radio, RadioGroup, Checkbox } from "@advisable/donut";
 import TextField from "../TextField";
 import currency from "../../utilities/currency";
+import { object, string, boolean, number } from "yup";
 
 const numberMask = createNumberMask({
   prefix: "",
   suffix: " hours",
 });
 
-const validation = Yup.object().shape({
-  projectType: Yup.string().required("Please select a project type"),
-  acceptCharges: Yup.boolean().oneOf([true]),
-  acceptUpfrontCharges: Yup.boolean().when("projectType", {
+const validation = object().shape({
+  projectType: string().required("Please select a project type"),
+  acceptCharges: boolean().oneOf([true]),
+  acceptUpfrontCharges: boolean().when("projectType", {
     is: "Flexible",
-    then: Yup.boolean().oneOf([true]),
+    then: boolean().oneOf([true]),
   }),
-  monthlyLimit: Yup.number()
+  monthlyLimit: number()
     .nullable()
     .when("projectType", {
       is: "Flexible",
-      then: Yup.number()
+      then: number()
         .required("Please add a monthly limit")
         .min(1, "Monthly limit cannot be 0")
         .max(200, "Monthly limit cannot exceed 200 hours"),

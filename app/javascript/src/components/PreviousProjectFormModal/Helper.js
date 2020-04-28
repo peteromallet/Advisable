@@ -1,4 +1,5 @@
 import React from "react";
+import { Bell } from "@styled-icons/feather";
 import { Box, Text, Icon, Circle } from "@advisable/donut";
 
 function HelperText({ heading, children, ...props }) {
@@ -17,8 +18,8 @@ function HelperText({ heading, children, ...props }) {
 function Helper({ children }) {
   return (
     <Box bg="cyan100" borderRadius="20px" padding="m">
-      <Circle size="40px" bg="cyan500" mb="m">
-        <Icon icon="bell" color="white.9" />
+      <Circle size="40px" bg="cyan500" mb="m" color="white.9">
+        <Bell size={24} strokeWidth={2} />
       </Circle>
       {children}
     </Box>

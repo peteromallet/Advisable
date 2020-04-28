@@ -6,14 +6,14 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
-import Availability from "./views/Availability";
-import InterviewRequest from "./views/InterviewRequest";
 import ApplicationRoutes from "./ApplicationRoutes";
-import FreelancerSignup from "./views/FreelancerSignup";
 
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const VerifyProject = lazy(() => import("./views/VerifyProject"));
+const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
+const Availability = lazy(() => import("./views/Availability"));
+const FreelancerSignup = lazy(() => import("./views/FreelancerSignup"));
 
 const Routes = () => {
   return (

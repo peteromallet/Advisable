@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Icon, Text } from "@advisable/donut";
+import { AlertCircle } from "@styled-icons/feather";
+import { Box, Text } from "@advisable/donut";
 
 class PreviousProjectFormErrorBoundary extends React.Component {
   state = {
@@ -25,14 +26,15 @@ class PreviousProjectFormErrorBoundary extends React.Component {
             <Box
               width={50}
               height={50}
-              bg="yellow.0"
+              bg="orange100"
               display="flex"
               margin="0 auto"
               borderRadius="50%"
               alignItems="center"
+              color="orange700"
               justifyContent="center"
             >
-              <Icon icon="alert-circle" color="yellow.6" />
+              <AlertCircle size={24} strokeWidth={2} />
             </Box>
             <Text
               color="blue900"

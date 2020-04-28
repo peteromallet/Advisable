@@ -2,8 +2,8 @@ import React from "react";
 import { get } from "lodash-es";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
+import { ChevronRight } from "@styled-icons/feather";
 import { Text, Padding, Flex } from "@advisable/donut";
-import Icon from "../../../components/Icon";
 import Avatar from "../../../components/Avatar";
 import Status from "../../../components/Status";
 import GET_APPLICATION from "../getApplicationForSpecialist";
@@ -95,7 +95,7 @@ const SpecialistTopBar = (props) => {
               </Padding>
             </Flex.Item>
             <Padding right="s">
-              <Icon icon="chevron-right" />
+              <ChevronRight size={24} strokeWidth={2} />
             </Padding>
           </Flex>
         </Topbar>

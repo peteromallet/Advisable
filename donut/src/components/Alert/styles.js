@@ -20,6 +20,9 @@ export const IconWrapper = styled.div`
   justify-content: center;
 
   svg {
+    width: 18px;
+    height: 18px;
     color: #593b00;
+    stroke-width: 2;
   }
 `;

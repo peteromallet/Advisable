@@ -3,8 +3,6 @@ export { default as Menu } from "./components/Menu";
 export { default as Link } from "./components/Link";
 export { default as Card } from "./components/Card";
 export * from "./components/Card/styles";
-export { default as Icon } from "./components/Icon";
-export { Icon as StyledIcon } from "./components/Icon/styles";
 
 export { default as Text } from "./components/Text";
 export { default as StyledText } from "./components/Text/styles";

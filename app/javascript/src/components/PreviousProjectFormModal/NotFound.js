@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Icon, Text, Circle } from "@advisable/donut";
+import { Search } from "@styled-icons/feather";
+import { Box, Text, Circle } from "@advisable/donut";
 
 function NotFound({ id }) {
   return (
@@ -12,8 +13,8 @@ function NotFound({ id }) {
       justifyContent="center"
     >
       <Box maxWidth={400} textAlign="center">
-        <Circle size={50} bg="yellow50">
-          <Icon icon="search" color="yellow600" />
+        <Circle size={50} bg="yellow50" color="yellow600">
+          <Search size={24} strokeWidth={2} />
         </Circle>
         <Text
           color="blue900"

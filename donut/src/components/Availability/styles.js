@@ -26,9 +26,9 @@ export const StyledAvailabilityDay = styled.div`
   border-radius: 8px;
   align-items: center;
   flex-direction: column;
-  opacity: ${props => (props.disabled ? 0.4 : 1)};
-  height: ${props => (props.hasAvailability ? "90px" : "70px")};
-  background: ${props =>
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
+  height: ${(props) => (props.hasAvailability ? "90px" : "70px")};
+  background: ${(props) =>
     props.hasAvailability ? theme.colors.blue[1] : theme.colors.neutral[1]};
 `;
 
@@ -40,6 +40,7 @@ export const StyledTimeCheckbox = styled.div`
   align-items: center;
   display: inline-flex;
   justify-content: center;
+  color: white;
   border: 2px solid ${theme.colors.neutral[3]};
   transition: background-color 200ms, border-color 200ms;
 

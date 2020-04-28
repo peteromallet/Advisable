@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
-import {
-  Box,
-  Text,
-  Link,
-  Icon,
-  useTheme,
-  useBreakpoint,
-} from "@advisable/donut";
+import { ArrowLeft } from "@styled-icons/feather";
+import { Box, Text, Link, useTheme, useBreakpoint } from "@advisable/donut";
 import { Formik, Form } from "formik";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { useLocation, useHistory, Redirect } from "react-router-dom";
@@ -76,7 +70,9 @@ const Availability = ({ data }) => {
         to="/freelancer_search"
         letterSpacing="-0.02em"
       >
-        <Icon mr="2px" width={20} height={20} icon="arrow-left" />
+        <Box display="inline-block" mr="2px">
+          <ArrowLeft size={20} strokeWidth={2} />
+        </Box>
         Back
       </Link>
       <Text

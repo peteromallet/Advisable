@@ -1,6 +1,6 @@
 // Renders the description of a task in its various stages.
 import React from "react";
-import Icon from "../Icon";
+import { Info, AlertCircle } from "@styled-icons/feather";
 import Padding from "../Spacing/Padding";
 import Notice from "../Notice";
 import { Text } from "@advisable/donut";
@@ -14,7 +14,7 @@ const FOR_CLIENT = {
     return (
       <Padding bottom="m">
         <StageDescription>
-          <Icon icon="alert-circle" width={20} />
+          <AlertCircle />
           {t("tasks.stageDescriptions.client.nameAndDescriptionRequired")}
         </StageDescription>
       </Padding>
@@ -22,7 +22,7 @@ const FOR_CLIENT = {
   },
   "Requested To Start": ({ t, task }) => (
     <Padding bottom="m">
-      <Notice icon="info">
+      <Notice icon={<Info />}>
         <Text size="xs" mb="xxs" weight="medium" color="neutral.9">
           {t("tasks.stageDescriptions.client.requestedToStart.title", { task })}
         </Text>
@@ -36,7 +36,7 @@ const FOR_CLIENT = {
     return (
       <Padding bottom="m">
         <StageDescription>
-          <Icon icon="info" width={20} />
+          <Info />
           {t("tasks.stageDescriptions.client.quoteRequested")}
         </StageDescription>
       </Padding>
@@ -46,7 +46,7 @@ const FOR_CLIENT = {
     return (
       <Padding bottom="m">
         <StageDescription>
-          <Icon icon="info" width={20} />
+          <Info />
           {t("tasks.stageDescriptions.client.quoteProvided", { task })}
         </StageDescription>
       </Padding>
@@ -55,7 +55,7 @@ const FOR_CLIENT = {
   Assigned: ({ t, task }) => {
     return (
       <StageDescription>
-        <Icon icon="info" width={20} />
+        <Info />
         {t("tasks.stageDescriptions.client.assigned", { task })}
       </StageDescription>
     );
@@ -63,7 +63,7 @@ const FOR_CLIENT = {
   Working: ({ t, task }) => {
     return (
       <StageDescription>
-        <Icon icon="info" width={20} />
+        <Info />
         {t("tasks.stageDescriptions.client.working", { task })}
       </StageDescription>
     );
@@ -72,7 +72,7 @@ const FOR_CLIENT = {
     return (
       <Padding bottom="m">
         <StageDescription>
-          <Icon icon="info" width={20} />
+          <Info />
           {t("tasks.stageDescriptions.client.submitted", { task })}
         </StageDescription>
       </Padding>
@@ -81,7 +81,7 @@ const FOR_CLIENT = {
   Approved: ({ t, task }) => {
     return (
       <StageDescription>
-        <Icon icon="info" width={20} />
+        <Info />
         {t("tasks.stageDescriptions.client.approved", { task })}
       </StageDescription>
     );
@@ -92,7 +92,7 @@ const FOR_SPECIALIST = {
   "Quote Requested": ({ t }) => {
     return (
       <StageDescription>
-        <Icon icon="info" width={20} />
+        <Info />
         {t("tasks.stageDescriptions.specialist.quoteRequested")}
       </StageDescription>
     );
@@ -100,7 +100,7 @@ const FOR_SPECIALIST = {
   "Requested To Start": ({ t }) => {
     return (
       <StageDescription>
-        <Icon icon="info" width={20} />
+        <Info />
         {t("tasks.stageDescriptions.specialist.requestedToStart")}
       </StageDescription>
     );
@@ -108,7 +108,7 @@ const FOR_SPECIALIST = {
   "Quote Provided": ({ t }) => {
     return (
       <StageDescription>
-        <Icon icon="info" width={20} />
+        <Info />
         {t("tasks.stageDescriptions.specialist.quoteProvided")}
       </StageDescription>
     );
@@ -127,7 +127,7 @@ const FOR_SPECIALIST = {
     return (
       <Padding bottom="m">
         <StageDescription>
-          <Icon icon="info" width={20} />
+          <Info />
           {t(`tasks.stageDescriptions.specialist.${key}`, { task })}
         </StageDescription>
       </Padding>
@@ -137,7 +137,7 @@ const FOR_SPECIALIST = {
     return (
       <Padding bottom="m">
         <StageDescription>
-          <Icon icon="info" width={20} />
+          <Info />
           {t("tasks.stageDescriptions.specialist.working", { task })}
         </StageDescription>
       </Padding>
@@ -146,7 +146,7 @@ const FOR_SPECIALIST = {
   Submitted: ({ t, task }) => {
     return (
       <StageDescription>
-        <Icon icon="info" width={20} />
+        <Info />
         {t("tasks.stageDescriptions.specialist.submitted", { task })}
       </StageDescription>
     );
@@ -154,7 +154,7 @@ const FOR_SPECIALIST = {
   Approved: ({ t, task }) => {
     return (
       <StageDescription>
-        <Icon icon="info" width={20} />
+        <Info />
         {t("tasks.stageDescriptions.client.approved", { task })}
       </StageDescription>
     );

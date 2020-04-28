@@ -1,7 +1,7 @@
-import * as Yup from "yup";
+import { object, string } from "yup";
 
-const validationSchema = Yup.object({
-  topic: Yup.string().required("Please provide a topic"),
+const validationSchema = object({
+  topic: string().required("Please provide a topic"),
 });
 
 export default validationSchema;

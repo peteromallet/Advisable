@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Icon, Text } from "@advisable/donut";
+import { AlertCircle } from "@styled-icons/feather";
+import { Box, Text } from "@advisable/donut";
 
 class TaskDrawerErrorBoundary extends React.Component {
   state = {
@@ -31,8 +32,9 @@ class TaskDrawerErrorBoundary extends React.Component {
               borderRadius="50%"
               alignItems="center"
               justifyContent="center"
+              color="yellow700"
             >
-              <Icon icon="alert-circle" color="yellow.6" />
+              <AlertCircle size={24} strokeWidth={2} />
             </Box>
             <Text textAlign="center" mb="xxs" mt="m" fontWeight="medium">
               Could not load task

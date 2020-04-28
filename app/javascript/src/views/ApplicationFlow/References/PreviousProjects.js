@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Field } from "formik";
-import { Icon, Stack } from "@advisable/donut";
+import { Stack } from "@advisable/donut";
 import SubmitButton from "../../../components/SubmitButton";
 import AddPreviousProjectButton from "../../../components/AddPreviousProjectButton";
 import PreviousProject from "./PreviousProject";
+import { ArrowRight } from "@styled-icons/feather";
 
 const PreviousProjects = ({ previousProjects, modal }) => {
   return (
@@ -23,7 +24,7 @@ const PreviousProjects = ({ previousProjects, modal }) => {
         ))}
       </Stack>
       <AddPreviousProjectButton modal={modal} mb="xl" />
-      <SubmitButton size="l" mb="xl" suffix={<Icon icon="arrow-right" />}>
+      <SubmitButton size="l" mb="xl" suffix={<ArrowRight />}>
         Next
       </SubmitButton>
     </>

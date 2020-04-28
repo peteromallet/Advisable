@@ -1,7 +1,8 @@
 import React from "react";
+import { Mail } from "@styled-icons/feather";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
-import { Card, Text, Link, Box, Icon } from "@advisable/donut";
+import { Card, Text, Link, Box } from "@advisable/donut";
 
 const Complete = () => {
   const location = useLocation();
@@ -24,8 +25,9 @@ const Complete = () => {
             display="inline-flex"
             alignItems="center"
             justifyContent="center"
+            color="blue500"
           >
-            <Icon icon="mail" strokeWidth={1.4} color="blue.6" />
+            <Mail size={24} strokeWidth={1.5} />
           </Box>
         </motion.div>
         <Text

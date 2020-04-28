@@ -1,18 +1,14 @@
-import * as Yup from "yup";
+import { object, string } from "yup";
 
-const validationSchema = Yup.object().shape({
-  linkedin: Yup.string()
-    .nullable()
-    .url("Please provide a valid URL"),
-  website: Yup.string()
-    .nullable()
-    .url("Please provide a valid URL"),
-  resume: Yup.string()
+const validationSchema = object().shape({
+  linkedin: string().nullable().url("Please provide a valid URL"),
+  website: string().nullable().url("Please provide a valid URL"),
+  resume: string()
     .nullable()
     .when(["linkedin", "website"], {
       is: (linkedin, website) => !Boolean(linkedin) && !Boolean(website),
-      then: Yup.string().required(
-        "Please provide at least one of the above so that we can see your work history."
+      then: string().required(
+        "Please provide at least one of the above so that we can see your work history.",
       ),
     }),
 });

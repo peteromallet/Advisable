@@ -1,17 +1,17 @@
-import * as Yup from "yup";
+import { object, string, boolean, number } from "yup";
 
-export default Yup.object().shape({
-  projectType: Yup.string().required("Please select a project type"),
-  acceptCharges: Yup.boolean().oneOf([true]),
-  acceptUpfrontCharges: Yup.boolean().when("projectType", {
+export default object().shape({
+  projectType: string().required("Please select a project type"),
+  acceptCharges: boolean().oneOf([true]),
+  acceptUpfrontCharges: boolean().when("projectType", {
     is: "Flexible",
-    then: Yup.boolean().oneOf([true]),
+    then: boolean().oneOf([true]),
   }),
-  monthlyLimit: Yup.number()
+  monthlyLimit: number()
     .nullable()
     .when("projectType", {
       is: "Flexible",
-      then: Yup.number()
+      then: number()
         .required("Please add a monthly limit")
         .min(1, "Monthly limit cannot be 0")
         .max(200, "Monthly limit cannot exceed 200 hours"),

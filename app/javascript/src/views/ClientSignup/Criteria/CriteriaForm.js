@@ -1,11 +1,11 @@
 import React from "react";
-import * as Yup from "yup";
+import { Search } from "@styled-icons/feather";
+import { object, string } from "yup";
 import queryString from "query-string";
 import { Formik, Form, Field } from "formik";
 import { useLocation } from "react-router-dom";
 import {
   Box,
-  Icon,
   Label,
   Select,
   Checkbox,
@@ -13,9 +13,9 @@ import {
   Button,
 } from "@advisable/donut";
 
-const validationSchema = Yup.object({
-  skill: Yup.string().required("Please select a skill"),
-  industry: Yup.string().required("Please provide what industry are in"),
+const validationSchema = object({
+  skill: string().required("Please select a skill"),
+  industry: string().required("Please provide what industry are in"),
 });
 
 function CriteriaForm({ onSubmit, data }) {
@@ -108,7 +108,7 @@ function CriteriaForm({ onSubmit, data }) {
           >
             Experience with this type of company is important
           </Field>
-          <Button size="l" type="submit" prefix={<Icon icon="search" />}>
+          <Button size="l" type="submit" prefix={<Search />}>
             Find a specialist
           </Button>
         </Form>

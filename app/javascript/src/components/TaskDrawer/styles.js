@@ -6,7 +6,7 @@ import { Menu } from "../Menu/styles";
 import { Icon } from "../Icon/styles";
 import { theme } from "@advisable/donut";
 
-const placeholderColor = color => css`
+const placeholderColor = (color) => css`
   &::-webkit-input-placeholder {
     color: ${color};
   }
@@ -103,7 +103,7 @@ export const Detail = styled.button`
     outline: none;
   }
 
-  ${props =>
+  ${(props) =>
     !props.readOnly &&
     css`
       &:hover {
@@ -150,11 +150,13 @@ export const DetailIcon = styled.div`
   background: ${theme.colors.blue[1]};
   transform: translateY(-50%);
 
-  ${Icon} {
-    display: flex;
+  svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.8;
   }
 
-  ${props =>
+  ${(props) =>
     props.prompt &&
     css`
       &::before {
@@ -270,9 +272,12 @@ export const StageDescription = styled.div`
   color: ${colors.neutral.s8};
   background: ${colors.neutral.s1};
 
-  ${Icon} {
+  svg {
     top: 50%;
     left: 16px;
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
     position: absolute;
     transform: translateY(-50%);
     color: ${colors.blue.base};
@@ -313,7 +318,7 @@ export const SavingIndicator = styled.div`
     animation: ${spin} 500ms infinite linear;
   }
 
-  ${props =>
+  ${(props) =>
     props.isSaving &&
     css`
       opacity: 1;

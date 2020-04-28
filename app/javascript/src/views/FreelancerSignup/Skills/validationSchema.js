@@ -1,9 +1,7 @@
-import * as Yup from "yup";
+import { object, array, string } from "yup";
 
-const validationSchema = Yup.object().shape({
-  skills: Yup.array()
-    .of(Yup.string())
-    .min(1, "Please add at least one skill"),
+const validationSchema = object().shape({
+  skills: array().of(string()).min(1, "Please add at least one skill"),
 });
 
 export default validationSchema;

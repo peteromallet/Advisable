@@ -4,12 +4,12 @@ import queryString from "query-string";
 import { useTranslation } from "react-i18next";
 import { useLocation, Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
+import { ArrowRight } from "@styled-icons/feather";
 import {
   Box,
   Text,
   Button,
   Link,
-  Icon,
   useTheme,
   useBreakpoint,
 } from "@advisable/donut";
@@ -125,11 +125,7 @@ const SaveSearch = () => {
                 Great! We think we’ll have the perfect person for this project
                 but we need to know a little bit more about your project first.
               </Text>
-              <Button
-                size="l"
-                suffix={<Icon icon="arrow-right" />}
-                onClick={handleContinue}
-              >
+              <Button size="l" suffix={<ArrowRight />} onClick={handleContinue}>
                 Setup Project
               </Button>
             </>

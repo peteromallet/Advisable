@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Box, Link, Icon, Text } from "@advisable/donut";
+import { ArrowLeft, Tag, ThumbsUp, Award } from "@styled-icons/feather";
+import { Box, Link, Text } from "@advisable/donut";
 import { groupByPriceRange } from "./rangeHelpers";
 import Range from "./Range";
 
@@ -11,7 +12,9 @@ function SelectPriceRange({ specialists }) {
   return (
     <Box maxWidth={1100} margin="0 auto" px="m" py="xl">
       <Link.External href="#" onClick={history.goBack} mb="xs">
-        <Icon icon="arrow-left" width={16} mr="xxs" />
+        <Box display="inline-block" mr="xxs">
+          <ArrowLeft size={16} strokeWidth={2} />
+        </Box>
         Back
       </Link.External>
       <Text
@@ -33,16 +36,20 @@ function SelectPriceRange({ specialists }) {
       </Box>
 
       <Box display={{ _: "block", m: "flex" }} mb="xxl" mx="-15px">
-        <Range name="Budget" icon="tag" specialists={byPriceRange[0]} />
+        <Range
+          name="Budget"
+          icon={<Tag size={24} strokeWidth={2} />}
+          specialists={byPriceRange[0]}
+        />
         <Range
           name="Proven"
-          icon="thumbs-up"
+          icon={<ThumbsUp size={24} strokeWidth={2} />}
           specialists={byPriceRange[1]}
           animationDelay={0.1}
         />
         <Range
           name="World Class"
-          icon="award"
+          icon={<Award size={24} strokeWidth={2} />}
           specialists={byPriceRange[2]}
           animationDelay={0.2}
         />

@@ -1,23 +1,17 @@
-import * as Yup from "yup";
+import { object, number, boolean } from "yup";
 
 const noRate = "Please specify your hourly rate for a project like this.";
 
-const validationSchema = Yup.object().shape({
-  rate: Yup.number()
-    .nullable()
-    .moreThan(0, noRate)
-    .required(noRate),
-  acceptsFee: Yup.boolean().oneOf(
+const validationSchema = object().shape({
+  rate: number().nullable().moreThan(0, noRate).required(noRate),
+  acceptsFee: boolean().oneOf([true], "You must accept our fee's to continue"),
+  acceptsTerms: boolean().oneOf(
     [true],
-    "You must accept our fee's to continue"
+    "You must accept our term's to continue",
   ),
-  acceptsTerms: Yup.boolean().oneOf(
+  trialProgram: boolean().oneOf(
     [true],
-    "You must accept our term's to continue"
-  ),
-  trialProgram: Yup.boolean().oneOf(
-    [true],
-    "You must agree to participate in our guaranteed trial program"
+    "You must agree to participate in our guaranteed trial program",
   ),
 });
 

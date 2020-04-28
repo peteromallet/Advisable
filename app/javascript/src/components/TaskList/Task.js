@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as moment from "moment";
 import { Text } from "@advisable/donut";
+import { Calendar, Clock } from "@styled-icons/feather";
 import { Task, Title, Detail, TaskContent } from "./styles";
-import Icon from "../Icon";
 import TaskStatus from "../TaskStatus";
 import { hoursLabel, displayTaskQuote } from "../../utilities/tasks";
 import TrialIndicator from "./TrialIndicator";
@@ -37,18 +37,18 @@ export default ({
         <Title>{task.name || "Untitled"}</Title>
         {task.dueDate && (
           <Detail>
-            <Icon height={17} icon="calendar" />
-            <span>
+            <Calendar size={16} strokeWidth={2} />
+            <Text fontSize="xs" ml="xs">
               Due: <strong>{moment(task.dueDate).format("DD MMMM")}</strong>
-            </span>
+            </Text>
           </Detail>
         )}
         {Boolean(task.estimate) && (
           <Detail>
-            <Icon height={17} icon="clock" />
-            <span>
+            <Clock size={16} strokeWidth={2} />
+            <Text fontSize="xs" ml="xs" color="neutral600">
               {hoursLabel(task)}: <strong>{displayTaskQuote(task)}</strong>
-            </span>
+            </Text>
           </Detail>
         )}
         {notice && (

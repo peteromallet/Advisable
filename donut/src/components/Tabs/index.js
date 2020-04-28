@@ -1,5 +1,5 @@
 import React from "react";
-import Icon from "../Icon";
+import Box from "../Box";
 import { useTabState } from "reakit/Tab";
 import { StyledTab, StyledTabList, StyledTabPanel } from "./styles";
 
@@ -14,14 +14,7 @@ const Tabs = ({ label, initialState, tabListProps, children }) => {
       <StyledTabList {...tabListProps} {...tab} aria-label={label}>
         {React.Children.map(children, (child, i) => (
           <StyledTab {...tab} stopId={`tab-${i}`}>
-            {child.props.icon && (
-              <Icon
-                mr="xs"
-                width={18}
-                strokeWidth={1.5}
-                icon={child.props.icon}
-              />
-            )}
+            {child.props.icon && <Box mr="xs">{child.props.icon}</Box>}
             {child.props.title}
           </StyledTab>
         ))}

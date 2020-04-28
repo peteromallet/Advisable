@@ -1,7 +1,8 @@
 import * as React from "react";
+import { ArrowRight } from "@styled-icons/feather";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form } from "formik";
-import { Box, Text, Card, Textarea, Icon } from "@advisable/donut";
+import { Box, Text, Card, Textarea } from "@advisable/donut";
 import { ChoiceList } from "../../../components";
 import FormField from "../../../components/FormField";
 import SubmitButton from "../../../components/SubmitButton";
@@ -76,11 +77,7 @@ function Overview({ application, history, location, steps, currentStep }) {
                   "1 Month+",
                 ]}
               />
-              <SubmitButton
-                mt="l"
-                size="l"
-                suffix={<Icon icon="arrow-right" />}
-              >
+              <SubmitButton mt="l" size="l" suffix={<ArrowRight />}>
                 Next
               </SubmitButton>
             </Box>
