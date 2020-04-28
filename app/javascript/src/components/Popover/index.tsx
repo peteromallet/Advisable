@@ -1,6 +1,6 @@
 import * as React from "react";
 import { isFunction } from "lodash-es";
-import { useTransition, animated } from "react-spring";
+import { AnimatePresence, motion } from "framer-motion";
 import Popper, { Placement } from "popper.js";
 import usePrevious from "../../utilities/usePrevious";
 
@@ -37,13 +37,6 @@ export default ({ children, trigger, placement, onClick, ...props }: Props) => {
   const triggerRef = React.useRef(null);
   const popoverRef = React.useRef(null);
   const previouslyOpen = usePrevious(open);
-
-  const transitions = useTransition(open, null, {
-    from: { opacity: 0, transform: "scale(0.9)", transformOrigin: "0 0" },
-    enter: { opacity: 1, transform: "scale(1)" },
-    leave: { opacity: 0, transform: "scale(0.9)" },
-    config: { mass: 1, tension: 500, friction: 30 },
-  });
 
   const handleClick = (e) => {
     if (onClick) onClick(e);
@@ -112,15 +105,18 @@ export default ({ children, trigger, placement, onClick, ...props }: Props) => {
     <>
       {React.cloneElement(trigger, triggerProps)}
       <div ref={popoverRef} style={{ zIndex: 10 }}>
-        {transitions.map(
-          ({ item, key, props }) =>
-            item && (
-              <animated.div key={key} style={props}>
-                {renderChildren()}
-                <div onFocus={handleFocusClose} tabIndex={0} />
-              </animated.div>
-            ),
-        )}
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, transformOrigin: "0 0" }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+            >
+              {renderChildren()}
+              <div onFocus={handleFocusClose} tabIndex={0} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );

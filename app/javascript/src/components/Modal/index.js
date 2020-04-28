@@ -3,7 +3,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Div100vh from "react-div-100vh";
 import { X } from "@styled-icons/feather";
-import { useTransition } from "react-spring";
 import { RemoveScroll } from "react-remove-scroll";
 import { extractSpacingProps } from "../Spacing";
 import {
@@ -33,46 +32,34 @@ const Modal = ({
     document.body.appendChild(modalRoot);
   }
 
-  const transitions = useTransition(isOpen, null, {
-    from: { opacity: 0, transform: "translate3d(0, 100px, 0)" },
-    enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
-    leave: { opacity: 0, transform: "translate3d(0, 100px, 0)" },
-  });
-
   // If the modal isn't open then return null
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
     <RemoveScroll>
       <ModalContainer expandOnMobile={expandOnMobile}>
-        {transitions.map(
-          ({ item, key, props }) =>
-            item && (
-              <Div100vh
-                key={key}
-                style={{
-                  height: "100rvh",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <WindowContainer size={size} style={props}>
-                  <Window
-                    role="dialog"
-                    className="ModalWindow"
-                    {...extractSpacingProps(componentProps)}
-                  >
-                    {onClose && (
-                      <CloseModal aria-label="Close Modal" onClick={onClose}>
-                        <X size={20} strokWidth={1.5} />
-                      </CloseModal>
-                    )}
-                    {children}
-                  </Window>
-                </WindowContainer>
-              </Div100vh>
-            ),
-        )}
+        <Div100vh
+          style={{
+            height: "100rvh",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <WindowContainer size={size}>
+            <Window
+              role="dialog"
+              className="ModalWindow"
+              {...extractSpacingProps(componentProps)}
+            >
+              {onClose && (
+                <CloseModal aria-label="Close Modal" onClick={onClose}>
+                  <X size={20} strokWidth={1.5} />
+                </CloseModal>
+              )}
+              {children}
+            </Window>
+          </WindowContainer>
+        </Div100vh>
         <Backdrop onClick={onClose} />
       </ModalContainer>
     </RemoveScroll>,

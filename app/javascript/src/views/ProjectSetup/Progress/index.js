@@ -1,5 +1,5 @@
 import React from "react";
-import { Spring } from "react-spring/renderprops.cjs";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 const Bar = styled.div`
@@ -9,23 +9,18 @@ const Bar = styled.div`
   background: rgba(183, 189, 213, 0.34);
 `;
 
-const Inner = styled.div.attrs(props => ({
-  style: {
-    width: `${props.width}%`,
-  },
-}))`
+const Inner = styled(motion.div)`
   height: 100%;
   background: #17cda1;
 `;
 
 export default ({ amount }) => {
   return (
-    <Spring from={{ width: amount }} to={{ width: amount }}>
-      {styles => (
-        <Bar>
-          <Inner {...styles} />
-        </Bar>
-      )}
-    </Spring>
+    <Bar>
+      <Inner
+        initial={{ width: `${amount}%` }}
+        animate={{ width: `${amount}%` }}
+      />
+    </Bar>
   );
 };

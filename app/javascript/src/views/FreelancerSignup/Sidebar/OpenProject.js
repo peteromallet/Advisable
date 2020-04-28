@@ -1,23 +1,15 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { CheckCircle } from "@styled-icons/feather";
-import { animated, useSpring } from "react-spring";
 import { Box, Card, Text } from "@advisable/donut";
 
 const OpenProject = ({ project }) => {
-  const props = useSpring({
-    from: {
-      opacity: 0,
-      transform: "translateY(100px) scale(0.95)",
-    },
-    to: {
-      opacity: 1,
-      transform: "translateY(0) scale(1)",
-    },
-  });
-
   return (
     <Box position="absolute" bottom={30} left={30} right={30}>
-      <animated.div style={props}>
+      <motion.div
+        initial={{ opacity: 0, y: 100, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+      >
         <Card padding="m" borderRadius={12} elevation="l">
           <Box display="flex" alignItems="center">
             <Box mr="xs">
@@ -52,7 +44,7 @@ const OpenProject = ({ project }) => {
             </Text>
           </Box>
         </Card>
-      </animated.div>
+      </motion.div>
     </Box>
   );
 };

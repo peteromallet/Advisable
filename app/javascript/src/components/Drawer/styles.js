@@ -1,5 +1,4 @@
 import { rgba } from "polished";
-import { animated } from "react-spring";
 import styled from "styled-components";
 import colors from "../../colors";
 
@@ -13,7 +12,7 @@ export const Container = styled.div`
   pointer-events: ${(props) => (props.isOpen ? "all" : "none")};
 `;
 
-export const Backdrop = styled(animated.div)`
+export const Backdrop = styled.div`
   top: 0;
   left: 0;
   right: 0;
@@ -22,7 +21,7 @@ export const Backdrop = styled(animated.div)`
   background: ${rgba(colors.neutral.s9, 0.7)};
 `;
 
-export const Drawer = styled(animated.div)`
+export const Drawer = styled.div`
   top: 0;
   right: 0;
   z-index: 2;

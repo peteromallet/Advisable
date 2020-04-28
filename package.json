@@ -64,7 +64,6 @@
     "react-responsive": "^8.0.3",
     "react-router-dom": "^5.1.2",
     "react-select": "^2.1.0",
-    "react-spring": "^8.0.25",
     "react-stickynode": "^2.1.1",
     "react-text-mask": "^5.4.3",
     "react-virtualized-auto-sizer": "^1.0.2",
