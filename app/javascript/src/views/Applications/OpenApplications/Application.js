@@ -163,7 +163,7 @@ const Application = ({ application }) => {
         {InfoComponent && (
           <Padding top="m">
             <Notice>
-              <Info />
+              <Info size={24} strokeWidth={2} />
               <InfoComponent application={application} />
             </Notice>
           </Padding>
