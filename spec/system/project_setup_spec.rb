@@ -177,7 +177,6 @@ describe 'Project setup flow' do
         visit "/project_setup/#{project.airtable_id}/terms"
         check 'acceptedTerms'
         click_button 'Continue'
-        expect(page).to have_content('Setting up')
         expect(page).to have_current_path(
           "/projects/#{project.airtable_id}/applied"
         )
