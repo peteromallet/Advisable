@@ -1,7 +1,7 @@
 // Renders the confirmation steps for a project.
 import { useQuery } from "@apollo/react-hooks";
 import React from "react";
-import { Route, Switch, Redirect } from "react-router";
+import { Route, Switch, Redirect, useLocation } from "react-router";
 import NotFound from "src/views/NotFound";
 import Loading from "src/components/Loading";
 import Progress from "./Progress";
@@ -10,6 +10,7 @@ import { stepsForProject, currentStep } from "./Steps";
 import { Container, Step, StepHeading } from "./styles";
 
 function ProjectSetupWrapper({ match }) {
+  const location = useLocation();
   const { data, loading, error } = useQuery(FETCH_PROJECT, {
     variables: {
       id: match.params.projectID,
@@ -18,6 +19,10 @@ function ProjectSetupWrapper({ match }) {
   });
 
   if (loading) return <Loading />;
+
+  if (error?.graphQLErrors[0]?.extensions?.code === "authenticationRequired") {
+    return <Redirect to={{ pathname: "/login", state: { from: location } }} />;
+  }
 
   if (match.params.projectID && !data.project) {
     return <NotFound />;
