@@ -10,7 +10,7 @@ import OpenApplications from "./OpenApplications";
 import ApplicationInvitations from "./ApplicationInvitations";
 
 const Applications = ({ history }) => {
-  const { loading, data } = useQuery(FETCH_DATA);
+  const { loading, data, error } = useQuery(FETCH_DATA);
 
   const handleViewInvitation = (id) => {
     history.push(`/invites/${id}`);
