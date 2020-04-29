@@ -38,7 +38,7 @@ class Types::QueryType < Types::BaseType
     has_account = user.try(:has_account?)
     code = has_account ? 'authenticationRequired' : 'signupRequired'
     url = has_account ? '/login' : "/signup/#{user.try(:airtable_id)}"
-    extensions = { redirect: url, email: email }
+    extensions = { redirect: url, email: email, code: code }
     raise GraphQL::ExecutionError.new(code, extensions: extensions)
   end
 
