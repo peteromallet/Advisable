@@ -65,7 +65,7 @@ export default function PreviousProject({ previousProject, editModal }) {
         prefix={<Edit />}
         {...editModal.atPath(`/previous_projects/${previousProject.id}`)}
       >
-        {previousProject.draft ? "Continue" : "Edit Project"}
+        Edit Project
       </DialogDisclosure>
       <PreviousProjectDetails.Modal
         modal={modal}

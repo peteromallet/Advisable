@@ -2,9 +2,10 @@ import {
   fireEvent,
   renderRoute,
   mockMutation,
+  mockViewer,
+  mockQuery,
   waitForElementToBeRemoved,
 } from "test-utils";
-import viewer from "../../../../graphql/queries/viewer";
 import generateTypes from "../../../../__mocks__/graphqlFields";
 import GET_PROJECTS from "../previousProjects";
 import {
@@ -17,7 +18,7 @@ import {
 test("Adds a previous project", async () => {
   const specialist = generateTypes.specialist();
   const skill = generateTypes.skill();
-  const industry = generateTypes.industry();
+  const industry = generateTypes.industry({ name: "Industry" });
 
   let project = generateTypes.previousProject({
     id: "pre_1",
@@ -32,32 +33,20 @@ test("Adds a previous project", async () => {
   });
 
   const apiMocks = [
-    {
-      request: {
-        query: viewer,
-      },
-      result: {
-        data: {
-          viewer: specialist,
-        },
-      },
-    },
-    {
-      request: {
-        query: GET_PROJECTS,
-      },
-      result: {
-        data: {
-          viewer: {
-            ...specialist,
-            previousProjects: {
-              __typename: "PreviousProjectsConnection",
-              nodes: [],
-            },
+    mockViewer(specialist),
+    mockQuery(
+      GET_PROJECTS,
+      {},
+      {
+        viewer: {
+          ...specialist,
+          previousProjects: {
+            __typename: "PreviousProjectsConnection",
+            nodes: [],
           },
         },
       },
-    },
+    ),
     {
       request: {
         query: SELECT_DATA,
@@ -88,8 +77,8 @@ test("Adds a previous project", async () => {
           input: {
             clientName: "Test inc",
             confidential: false,
-            industries: [industry.name],
-            primaryIndustry: industry.name,
+            industries: ["Industry"],
+            primaryIndustry: "Industry",
             companyType: "Individual Entrepreneur",
             specialist: specialist.id,
           },
@@ -164,14 +153,12 @@ test("Adds a previous project", async () => {
   fireEvent.click(button[0]);
   const clientName = await app.findByLabelText("Company Name");
   fireEvent.change(clientName, { target: { value: "Test inc" } });
-  const industryField = await app.findByPlaceholderText(
-    "Search for an industry",
-  );
+  const industryField = await app.findByPlaceholderText(/industry/i);
   fireEvent.click(industryField);
   fireEvent.keyDown(industryField, { key: "ArrowDown" });
   fireEvent.keyDown(industryField, { key: "Enter" });
-  let next = await app.findByLabelText("Continue");
-  fireEvent.click(next);
+  let continueBtn = await app.findByLabelText("Continue");
+  fireEvent.click(continueBtn);
 
   const description = await app.findByLabelText("Project description");
   fireEvent.change(description, { target: { value: "Description" } });
@@ -179,16 +166,15 @@ test("Adds a previous project", async () => {
   fireEvent.click(skillField);
   fireEvent.keyDown(skillField, { key: "ArrowDown" });
   fireEvent.keyDown(skillField, { key: "Enter" });
-  next = await app.findByLabelText("Continue");
-  fireEvent.click(next);
-
+  continueBtn = await app.findByLabelText("Continue");
+  fireEvent.click(continueBtn);
   // portfolio step
-  next = await app.findByLabelText("Skip");
-  fireEvent.click(next);
+  continueBtn = await app.findByLabelText("Skip");
+  fireEvent.click(continueBtn);
 
   // More info step
-  next = await app.findByLabelText("Skip");
-  fireEvent.click(next);
+  continueBtn = await app.findByLabelText("Skip");
+  fireEvent.click(continueBtn);
 
   fireEvent.change(app.getByLabelText("Contact Name"), {
     target: { value: "John Doe" },
@@ -196,9 +182,9 @@ test("Adds a previous project", async () => {
   fireEvent.change(app.getByLabelText("Contact Job Title"), {
     target: { value: "CEO" },
   });
-  next = await app.findByLabelText("Submit Project");
-  fireEvent.click(next);
-  await waitForElementToBeRemoved(next);
+  continueBtn = await app.findByLabelText("Submit Project");
+  fireEvent.click(continueBtn);
+  await waitForElementToBeRemoved(continueBtn);
 
   const projectTitle = app.getByText(project.title);
   expect(projectTitle).toBeInTheDocument();
