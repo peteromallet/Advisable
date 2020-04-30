@@ -7,14 +7,11 @@ import EditDescription from "./EditDescription";
 import ExtraInformation from "./ExtraInformation";
 import UpdateClientDetails from "./UpdateClientDetails";
 import CreatePreviousProject from "./CreatePreviousProject";
+import EditImages from "./EditImages";
 
 function RedirectToStep({ step }) {
   const location = useLocation();
   return <Redirect to={`${location.pathname}/${step}`} />;
-}
-
-function Images() {
-  return <>edit images</>;
 }
 
 function Routes({
@@ -46,7 +43,7 @@ function Routes({
         <EditDescription data={data} />
       </Route>
       <Route path="*previous_projects/:id/images">
-        <Images />
+        <EditImages data={data} />
       </Route>
       <Route path="*previous_projects/:id/client">
         <UpdateClientDetails
