@@ -17,9 +17,23 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
 
   field :previous_project, Types::PreviousProject, null: true
 
+  ALLOWED_ARGS_WHEN_PUBLISHED = %i[previous_project description]
+
+  def authorized?(**args)
+    project = PreviousProject.find_by_uid(args[:previous_project])
+    if project.draft == false && (args.keys - ALLOWED_ARGS_WHEN_PUBLISHED).any?
+      raise ApiError::InvalidRequest.new(
+              'projectPublished',
+              'Can not save changes because the project has been published'
+            )
+    end
+    true
+  end
+
   def resolve(**args)
     project = PreviousProject.find_by_uid(args[:previous_project])
     project.assign_attributes(assignable_attrs(args))
+    update_description(project, args)
     update_skills(project, args)
     update_industries(project, args)
     project.save
@@ -33,7 +47,6 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
       :confidential,
       :client_name,
       :company_type,
-      :description,
       :goal,
       :public_use,
       :industry_relevance,
@@ -41,6 +54,15 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
       :cost_to_hire,
       :execution_cost
     )
+  end
+
+  def update_description(project, args)
+    return unless args[:description].present?
+    if project.draft? || project.validation_status == 'Pending'
+      project.description = args[:description]
+    else
+      project.pending_description = args[:description]
+    end
   end
 
   def update_skills(project, args)

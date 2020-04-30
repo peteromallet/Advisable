@@ -42,9 +42,16 @@ const ProjectValidationStatus = ({ status, isClient = false }) => {
 
   return (
     <Tooltip content={config.tooltip}>
-      <Status icon={config.icon} styling={config.styling}>
+      <Box
+        px="8px"
+        py="4px"
+        bg="blue100"
+        fontSize="12px"
+        borderRadius="4px"
+        fontWeight="medium"
+      >
         {config.label}
-      </Status>
+      </Box>
     </Tooltip>
   );
 };

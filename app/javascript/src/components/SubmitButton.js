@@ -7,7 +7,14 @@ import { useFormikContext } from "formik";
 // isSubmitting state.
 function SubmitButton(props) {
   const formik = useFormikContext();
-  return <Button type="submit" loading={formik.isSubmitting} {...props} />;
+  return (
+    <Button
+      type="submit"
+      onClick={formik.submitForm}
+      loading={formik.isSubmitting}
+      {...props}
+    />
+  );
 }
 
 export default SubmitButton;

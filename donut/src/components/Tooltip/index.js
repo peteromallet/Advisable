@@ -5,6 +5,7 @@ import {
   Tooltip as ReakitTooltip,
   TooltipReference,
   useTooltipState,
+  TooltipArrow,
 } from "reakit/Tooltip";
 import styled, { css } from "styled-components";
 import theme from "../../theme";
@@ -17,17 +18,18 @@ const StyledTooltipReference = styled(TooltipReference)`
 `;
 
 const TooltipContent = styled.div`
-  color: white;
   font-size: 14px;
   max-width: 320px;
+  color: white;
   padding: 12px 14px;
   line-height: 20px;
+  font-weight: 500;
   border-radius: 12px;
   transform: scale(0.8);
   transition: transform 200ms;
-  background: ${theme.colors.neutral[8]};
+  background: ${theme.colors.blue900};
   box-shadow: 0 0 0 1px rgba(136, 152, 170, 0.1),
-    0 15px 35px 0 rgba(49, 49, 93, 0.1), 0 5px 15px 0 rgba(0, 0, 0, 0.08);
+    0 15px 50px 0 rgba(49, 49, 93, 0.1), 0 5px 20px 0 rgba(0, 0, 0, 0.08);
 
   ${LinkStyles} {
     color: ${theme.colors.blue[2]};
@@ -36,11 +38,6 @@ const TooltipContent = styled.div`
     }
   }
 `;
-
-const TRANSFORM_ORIGIN = {
-  "bottom-start": "10% 0",
-  "bottom-end": "90% 0",
-};
 
 const interactableStyling = css`
   pointer-events: all !important;
@@ -73,12 +70,12 @@ const StyledTooltip = styled(ExtractedReakitTooltip)`
   visibility: hidden;
   display: block !important;
 
-  ${props => props.visible && openStyling};
-  ${props => props.interactable && interactableStyling}
+  ${(props) => props.visible && openStyling};
+  ${(props) => props.interactable && interactableStyling}
+`;
 
-  ${TooltipContent} {
-    transform-origin: ${props => TRANSFORM_ORIGIN[props.placement]};
-  }
+const StyledTooltipArrow = styled(TooltipArrow)`
+  fill: ${theme.colors.blue900};
 `;
 
 const Tooltip = ({
@@ -86,10 +83,10 @@ const Tooltip = ({
   content,
   gutter,
   interactable,
-  placement = "bottom-start",
+  placement = "bottom",
 }) => {
   const tooltip = useTooltipState({
-    gutter: gutter || 0,
+    gutter: gutter || 10,
     placement,
   });
 
@@ -99,7 +96,10 @@ const Tooltip = ({
     <>
       <StyledTooltipReference {...tooltip}>{children}</StyledTooltipReference>
       <StyledTooltip interactable={interactable} {...tooltip}>
-        <TooltipContent>{content}</TooltipContent>
+        <TooltipContent>
+          <StyledTooltipArrow size={16} {...tooltip} />
+          {content}
+        </TooltipContent>
       </StyledTooltip>
     </>
   );

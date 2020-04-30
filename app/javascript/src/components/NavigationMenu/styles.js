@@ -1,35 +1,40 @@
+import { rgba } from "polished";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import colors from "../../colors";
+import { theme } from "@advisable/donut";
 
-export const NavigationMenu = styled.div``;
-
-export const NavigationMenuItem = styled(NavLink)`
-  color: ${colors.neutral.s7};
+export const StyledNavigationMenuItem = styled(NavLink)`
+  height: 40px;
   display: flex;
-  font-size: 15px;
+  color: inherit;
+  font-size: 16px;
   font-weight: 500;
-  padding: 8px 10px;
-  margin-bottom: 4px;
-  margin-left: -10px;
-  border-radius: 6px;
+  border-radius: 20px;
   align-items: center;
-  text-decoration: none;
-  transition: background-color 150ms;
+  padding-left: 16px;
+  margin-bottom: 4px;
+  margin-left: -8px;
+  color: ${theme.colors.neutral500};
 
   svg {
     width: 20px;
     height: 20px;
-    stroke-width: 2;
+    stroke-width: 2.25;
     margin-right: 8px;
   }
 
   &:hover {
-    color: ${colors.neutral.s9};
-    background: ${colors.neutral.s2};
+    color: ${theme.colors.neutral700};
+    background: ${rgba(theme.colors.blue50, 0.75)};
   }
 
   &.active {
-    color: ${colors.blue.base};
+    color: ${theme.colors.blue900};
+    background: ${theme.colors.blue50};
+
+    svg {
+      color: ${theme.colors.blue500};
+    }
   }
+  padding-right: 12px;
 `;
