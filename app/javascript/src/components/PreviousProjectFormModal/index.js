@@ -5,7 +5,10 @@ export * from "./usePreviousProjectModal";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import PreviousProjectFormContainer from "./PreviousProjectFormContainer";
 
-export default function PreviousProjectFormModal(props) {
+export default function PreviousProjectFormModal({
+  unstable_finalFocusRef,
+  ...props
+}) {
   const scrollRef = React.useRef();
 
   React.useEffect(() => {
@@ -22,6 +25,7 @@ export default function PreviousProjectFormModal(props) {
       as={StyledDialog}
       preventBodyScroll={false}
       hideOnClickOutside={false}
+      unstable_finalFocusRef={unstable_finalFocusRef}
       aria-label="Previous Project Modal"
     >
       {props.modal.visible && (

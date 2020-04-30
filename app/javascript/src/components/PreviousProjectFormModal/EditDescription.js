@@ -103,11 +103,11 @@ function EditDescription({ data }) {
                   label="Project description"
                   description="Please describe the problem they had, an overview of the project, how you approached it and the results you achieved."
                 />
-                {pendingDescription && (
+                {pendingDescription ? (
                   <Notice title="Pending approval" icon={<Refresh />}>
                     The advisable team are reviewing your requested changes
                   </Notice>
-                )}
+                ) : null}
                 <Button
                   type="button"
                   loading={formik.isSubmitting}
