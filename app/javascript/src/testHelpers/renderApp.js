@@ -23,6 +23,8 @@ const defaultConfig = {
   graphQLMocks: [],
 };
 
+window.focus = jest.fn();
+
 jest.mock("talkjs", () => {
   class User {}
   class Session {
