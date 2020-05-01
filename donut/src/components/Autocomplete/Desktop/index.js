@@ -35,7 +35,7 @@ const AutocompleteDesktop = (props) => {
   const listRef = React.useRef(null);
 
   const handleStateChange = (popper) => (changes, downshift) => {
-    popper.scheduleUpdate();
+    popper.update();
 
     if (
       [stateChangeTypes.clickItem, stateChangeTypes.keyDownEnter].indexOf(
@@ -64,15 +64,7 @@ const AutocompleteDesktop = (props) => {
 
   return (
     <Manager>
-      <Popper
-        placement="bottom"
-        modifiers={{
-          preventOverflow: {
-            boundariesElement: "window",
-          },
-        }}
-        positionFixed
-      >
+      <Popper placement="bottom" positionFixed>
         {(popper) => (
           <Downshift
             value={value}

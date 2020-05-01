@@ -23,33 +23,18 @@ const defaultConfig = {
   graphQLMocks: [],
 };
 
-jest.mock("popper.js", () => {
-  const PopperJS = jest.requireActual("popper.js");
-
-  return class {
-    static placements = PopperJS.placements;
-
-    constructor() {
-      return {
-        destroy: () => {},
-        scheduleUpdate: () => {},
-      };
-    }
-  };
-});
-
 jest.mock("talkjs", () => {
   class User {}
   class Session {
     getOrCreateConversation() {
       return {
-        setParticipant: user => {},
+        setParticipant: (user) => {},
       };
     }
 
     createChatbox(conversation) {
       return {
-        mount: node => {},
+        mount: (node) => {},
       };
     }
 
@@ -77,11 +62,11 @@ export const mockElement = () => ({
 export const mockElements = () => {
   const elements = {};
   return {
-    create: jest.fn(type => {
+    create: jest.fn((type) => {
       elements[type] = mockElement();
       return elements[type];
     }),
-    getElement: jest.fn(type => {
+    getElement: jest.fn((type) => {
       return elements[type] || null;
     }),
   };
@@ -144,7 +129,7 @@ export const renderComponent = (component, config = {}) => {
             <I18nextProvider i18n={i18n}>{component}</I18nextProvider>
           </Elements>
         </Router>
-      </MockedProvider>
+      </MockedProvider>,
     ),
     // adding `history` to the returned utilities to allow us
     // to reference it in our tests (just try to avoid using

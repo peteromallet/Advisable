@@ -22,8 +22,8 @@ export default function DueDate({
   onClose,
   readOnly,
 }) {
-  const initialMonth = selected || new Date();
   const selected = value ? new Date(value) : null;
+  const initialMonth = selected || new Date();
   const popover = usePopoverState({ placement: "bottom-start" });
 
   React.useEffect(() => {
