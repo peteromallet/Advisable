@@ -2,8 +2,6 @@ import { rgba } from "polished";
 import styled, { css, keyframes } from "styled-components";
 import colors from "../../colors";
 import { Status } from "../Status/styles";
-import { Menu } from "../Menu/styles";
-import { Icon } from "../Icon/styles";
 import { theme } from "@advisable/donut";
 
 const placeholderColor = (color) => css`
@@ -29,12 +27,6 @@ export const TaskDrawer = styled.div`
   ${Status} {
     top: 25px;
     left: 20px;
-    position: absolute;
-  }
-
-  ${Menu} {
-    top: 20px;
-    right: 50px;
     position: absolute;
   }
 `;
