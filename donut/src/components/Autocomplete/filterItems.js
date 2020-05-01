@@ -14,9 +14,9 @@ const filterItems = (downshift, options) => {
   const { inputValue } = downshift;
   let items = options;
 
-  if (Boolean(inputValue)) {
+  if (inputValue) {
     var fuse = new Fuse(options, fuseOptions);
-    items = fuse.search(inputValue);
+    items = fuse.search(inputValue).map((s) => s.item);
   }
 
   return items;
