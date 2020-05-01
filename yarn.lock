@@ -14370,10 +14370,10 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
-talkjs@^0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/talkjs/-/talkjs-0.13.1.tgz#166d3e48a9818e22499cb15991afdea9a870dfef"
-  integrity sha512-8aliQ8STQzJM+B6wmUh2ByVnRVk9uwGEsxwKwfcEgsWNHU00LGxIk7xvF7y4aSzVZ5QUGiL6wmFH132+ZJZSiA==
+talkjs@^0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/talkjs/-/talkjs-0.14.1.tgz#9309436caddf91f866c7dab8e3614c02962b9216"
+  integrity sha512-cFG45cuN2YuFJ7oucvidQtAuaFqs5fwtaudmGu5FpnP9yh05TwnzC6PhPzE+OA0CD4nOu7GzyZZTawknHoB5Hw==
 
 tapable@^1.0.0, tapable@^1.1.3:
   version "1.1.3"
