@@ -71,6 +71,7 @@
     "react-window": "^1.8.5",
     "reakit": "1.0.0-rc.2",
     "stickybits": "^3.7.7",
+    "style-loader": "^1.2.1",
     "styled-components": "^5.1.0",
     "styled-system": "^5.1.5",
     "talkjs": "^0.14.1",
