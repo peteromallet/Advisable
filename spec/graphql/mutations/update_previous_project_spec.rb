@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Mutations::UpdatePreviousProject do
+  let(:draft) { true }
+  let(:validation_status) { 'Pending' }
   let(:project) do
     create(
       :previous_project,
@@ -11,7 +13,9 @@ describe Mutations::UpdatePreviousProject do
       company_type: 'Corporation',
       description: 'Description',
       goal: nil,
-      public_use: true
+      draft: draft,
+      public_use: true,
+      validation_status: validation_status
     )
   end
   let(:client_name) { 'CHANGED' }
@@ -62,6 +66,29 @@ describe Mutations::UpdatePreviousProject do
     expect(project.reload.skills).to_not include(other)
   end
 
+  context 'when project is not a draft' do
+    let(:draft) { false }
+
+    it 'returns an error when trying to update skills when project is not a draft' do
+      query = <<~GRAPHQL
+        mutation {
+          updatePreviousProject(input: {
+            previousProject: "#{project.uid}",
+            skills: ["Marketing", "Design"]
+          }) {
+            previousProject {
+              id
+            }
+          }
+        }
+      GRAPHQL
+
+      response = AdvisableSchema.execute(query)
+      error = response['errors'].first['extensions']['code']
+      expect(error).to eq('projectPublished')
+    end
+  end
+
   it 'sets the primary skill' do
     other = create(:skill)
     project.project_skills.create(skill: other, primary: true)
@@ -105,10 +132,112 @@ describe Mutations::UpdatePreviousProject do
     }.from('Corporation').to('Startup')
   end
 
-  it 'sets the description' do
-    expect { AdvisableSchema.execute(query) }.to change {
-      project.reload.description
-    }.from('Description').to('Testing')
+  describe 'Updating the description' do
+    context 'when the project is a draft' do
+      let(:draft) { true }
+
+      it 'sets the description' do
+        expect { AdvisableSchema.execute(query) }.to change {
+          project.reload.description
+        }.from('Description').to('Testing')
+      end
+    end
+
+    context 'when the project is not a draft' do
+      let(:draft) { false }
+
+      context 'and the validation status is Pending' do
+        let(:validation_status) { 'Pending' }
+
+        it 'sets the description' do
+          query = <<~GRAPHQL
+            mutation {
+              updatePreviousProject(input: {
+                previousProject: "#{project.uid}",
+                description: "Testing"
+              }) {
+                previousProject {
+                  id
+                }
+              }
+            }
+          GRAPHQL
+
+          expect { AdvisableSchema.execute(query) }.to change {
+            project.reload.description
+          }.from('Description').to('Testing')
+        end
+      end
+
+      context 'and the validation status is In Progres' do
+        let(:validation_status) { 'In Progress' }
+
+        it 'sets pending_description column' do
+          query = <<~GRAPHQL
+            mutation {
+              updatePreviousProject(input: {
+                previousProject: "#{project.uid}",
+                description: "Testing"
+              }) {
+                previousProject {
+                  id
+                }
+              }
+            }
+          GRAPHQL
+
+          expect { AdvisableSchema.execute(query) }.to change {
+            project.reload.pending_description
+          }.from(nil).to('Testing')
+        end
+      end
+
+      context 'and the validation status is Validated' do
+        let(:validation_status) { 'Validated' }
+
+        it 'sets pending_description column' do
+          query = <<~GRAPHQL
+            mutation {
+              updatePreviousProject(input: {
+                previousProject: "#{project.uid}",
+                description: "Testing"
+              }) {
+                previousProject {
+                  id
+                }
+              }
+            }
+          GRAPHQL
+
+          expect { AdvisableSchema.execute(query) }.to change {
+            project.reload.pending_description
+          }.from(nil).to('Testing')
+        end
+      end
+
+      context 'and the validation status is Validation Failed' do
+        let(:validation_status) { 'Validation Failed' }
+
+        it 'sets pending_description column' do
+          query = <<~GRAPHQL
+            mutation {
+              updatePreviousProject(input: {
+                previousProject: "#{project.uid}",
+                description: "Testing"
+              }) {
+                previousProject {
+                  id
+                }
+              }
+            }
+          GRAPHQL
+
+          expect { AdvisableSchema.execute(query) }.to change {
+            project.reload.pending_description
+          }.from(nil).to('Testing')
+        end
+      end
+    end
   end
 
   it 'sets the goal' do

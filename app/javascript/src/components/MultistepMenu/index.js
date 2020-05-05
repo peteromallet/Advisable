@@ -1,8 +1,8 @@
 import React from "react";
 import { Box } from "@advisable/donut";
-import NavigationMenuItem from "./NavigationMenuItem";
+import MultistepMenuItem from "./MultistepMenuItem";
 
-function NavigationMenu({ children, ...props }) {
+function MultistepMenu({ children, ...props }) {
   const items = React.Children.toArray(children);
   return (
     <Box {...props}>
@@ -14,6 +14,6 @@ function NavigationMenu({ children, ...props }) {
   );
 }
 
-NavigationMenu.Item = NavigationMenuItem;
+MultistepMenu.Item = MultistepMenuItem;
 
-export default NavigationMenu;
+export default MultistepMenu;

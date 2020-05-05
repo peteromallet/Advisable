@@ -4,6 +4,9 @@ class Types::PreviousProject < Types::BaseType
   field :goal, String, null: true
   field :excerpt, String, null: true
   field :description, String, null: true
+  field :pending_description, String, null: true do
+    authorize :is_specialist
+  end
   field :client_name, String, null: false
   field :company_type, String, null: false
   field :specialist, Types::SpecialistType, null: false

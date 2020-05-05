@@ -3,9 +3,9 @@ import Sticky from "../../components/Sticky";
 import { isEmpty, filter } from "lodash-es";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Back from "../../components/Back";
-import Steps from "../../components/Steps";
 import { useScreenSize } from "../../utilities/screenSizes";
-import { Text, Box, NavigationMenu } from "@advisable/donut";
+import { Text, Box } from "@advisable/donut";
+import MultistepMenu from "../../components/MultistepMenu";
 import { Layout } from "../../components";
 import Terms from "./Terms";
 import Overview from "./Overview";
@@ -112,11 +112,11 @@ const ApplicationFlow = ({ application, match, location }) => {
             <Text py="m" fontSize="xs" lineHeight="s" color="neutral700">
               {application.project.description}
             </Text>
-            <NavigationMenu>
+            <MultistepMenu>
               {activeSteps.map((step, i) => {
                 const previousStep = STEPS[i - 1];
                 return (
-                  <NavigationMenu.Item
+                  <MultistepMenu.Item
                     key={step.name}
                     exact={step.exact}
                     isComplete={step.isComplete}
@@ -127,10 +127,10 @@ const ApplicationFlow = ({ application, match, location }) => {
                     }}
                   >
                     {step.name}
-                  </NavigationMenu.Item>
+                  </MultistepMenu.Item>
                 );
               })}
-            </NavigationMenu>
+            </MultistepMenu>
           </Sticky>
         </Layout.Sidebar>
       )}

@@ -1,25 +1,18 @@
 // Renders a vertical navigation menu. This is most often displayed in sidebars.
 import * as React from "react";
-import { Text } from "@advisable/donut";
-import { NavigationMenu as Container } from "./styles";
+import { Box } from "@advisable/donut";
 import NavigationMenuItem from "./NavigationMenuItem";
 
-const NavigationMenu = ({ title, children }) => {
+const NavigationMenu = ({ children, ...props }) => {
+  const items = React.Children.toArray(children);
+
   return (
-    <Container>
-      {title && (
-        <Text
-          mb="xs"
-          size="xxs"
-          color="neutral.3"
-          weight="medium"
-          css="text-transform: uppercase;"
-        >
-          {title}
-        </Text>
-      )}
-      {children}
-    </Container>
+    <Box {...props}>
+      {items.map((child, i) => {
+        if (child === null) return null;
+        return React.cloneElement(child, { number: i + 1 });
+      })}
+    </Box>
   );
 };
 

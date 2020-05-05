@@ -26,6 +26,7 @@ const previousProjectFields = gql`
     companyType
     confidential
     description
+    pendingDescription
     goal
     publicUse
     contactName

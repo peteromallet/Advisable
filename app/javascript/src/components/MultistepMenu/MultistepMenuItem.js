@@ -25,7 +25,7 @@ function Check() {
   );
 }
 
-export default function NavigationMenuItem({
+export default function MultistepMenuItem({
   to,
   number,
   children,

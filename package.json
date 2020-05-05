@@ -20,6 +20,7 @@
     "@stripe/stripe-js": "^1.5.0",
     "@styled-icons/feather": "^10.0.0",
     "@styled-icons/heroicons-outline": "^10.0.0",
+    "@styled-icons/heroicons-solid": "^10.0.0",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
     "@types/react-router": "^5.1.7",

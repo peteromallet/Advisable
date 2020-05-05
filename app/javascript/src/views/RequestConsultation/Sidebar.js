@@ -1,8 +1,9 @@
 import React from "react";
-import { Box, Text, NavigationMenu } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import { useParams, useLocation } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import StarRating from "../../components/StarRating";
+import MultistepMenu from "../../components/MultistepMenu";
 import useViewer from "../../hooks/useViewer";
 import pluralize from "../../utilities/pluralize";
 
@@ -49,8 +50,8 @@ const Sidebar = ({ data }) => {
           </Text>
         </>
       )}
-      <NavigationMenu>
-        <NavigationMenu.Item
+      <MultistepMenu>
+        <MultistepMenu.Item
           isComplete={stepCompleted("SKILLS")}
           to={{
             pathname: `/request_consultation/${params.specialistId}/skills`,
@@ -58,9 +59,9 @@ const Sidebar = ({ data }) => {
           }}
         >
           Skills
-        </NavigationMenu.Item>
+        </MultistepMenu.Item>
         {!isClient && (
-          <NavigationMenu.Item
+          <MultistepMenu.Item
             isDisabled={!stepCompleted("SKILLS")}
             isComplete={stepCompleted("DETAILS")}
             to={{
@@ -69,9 +70,9 @@ const Sidebar = ({ data }) => {
             }}
           >
             Company Details
-          </NavigationMenu.Item>
+          </MultistepMenu.Item>
         )}
-        <NavigationMenu.Item
+        <MultistepMenu.Item
           isDisabled={
             isClient ? !stepCompleted("SKILLS") : !stepCompleted("DETAILS")
           }
@@ -82,8 +83,8 @@ const Sidebar = ({ data }) => {
           }}
         >
           Availability
-        </NavigationMenu.Item>
-        <NavigationMenu.Item
+        </MultistepMenu.Item>
+        <MultistepMenu.Item
           isDisabled={!stepCompleted("AVAILABILITY")}
           isComplete={stepCompleted("TOPIC")}
           to={{
@@ -92,8 +93,8 @@ const Sidebar = ({ data }) => {
           }}
         >
           Topic
-        </NavigationMenu.Item>
-        <NavigationMenu.Item
+        </MultistepMenu.Item>
+        <MultistepMenu.Item
           isDisabled={!stepCompleted("TOPIC")}
           isComplete={stepCompleted("SEND")}
           to={{
@@ -102,8 +103,8 @@ const Sidebar = ({ data }) => {
           }}
         >
           Send
-        </NavigationMenu.Item>
-      </NavigationMenu>
+        </MultistepMenu.Item>
+      </MultistepMenu>
     </>
   );
 };

@@ -16,6 +16,9 @@ export { default as Availability } from "./components/Availability";
 export { default as Tag } from "./components/Tag";
 export * from "./components/Tag/styles";
 
+export { default as Badge } from "./components/Badge";
+export * from "./components/Badge/styles";
+
 export { default as Container } from "./components/Container";
 export * from "./components/Container/styles";
 
@@ -52,10 +55,6 @@ export * from "./components/Select/styles";
 export * from "reakit/Dialog";
 export { default as Modal, useModal, useRoutedModal } from "./components/Modal";
 export * from "./components/Modal/styles";
-
-export { default as NavigationMenu } from "./components/NavigationMenu";
-export { default as NavigationMenuItem } from "./components/NavigationMenu/NavigationMenuItem";
-export * from "./components/NavigationMenu/styles";
 
 export { default as Button } from "./components/Button";
 export { default as Tooltip } from "./components/Tooltip";

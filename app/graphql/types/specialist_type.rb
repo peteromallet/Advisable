@@ -198,7 +198,7 @@ class Types::SpecialistType < Types::BaseType
     records = object.previous_projects
     records = records.validation_not_failed unless include_validation_failed
     records = records.published unless include_drafts
-    records.order(created_at: :desc)
+    records.order(created_at: :asc)
   end
 
   field :previous_projects_count, Int, null: false

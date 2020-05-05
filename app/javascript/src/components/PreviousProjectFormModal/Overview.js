@@ -157,30 +157,29 @@ export default function Overview({ modal, data, skills }) {
                 </Box>
                 {formik.values.skills.length > 1 && (
                   <Box>
-                    <Label mb="xs">
-                      Which of these was the primary skill for this project?
-                    </Label>
-                    <Field name="primarySkill" as={Select}>
+                    <FormField
+                      as={Select}
+                      name="primarySkill"
+                      label="Which of these was the primary skill for this project?"
+                    >
                       {formik.values.skills.map((skill) => (
                         <option key={skill}>{skill}</option>
                       ))}
-                    </Field>
+                    </FormField>
                   </Box>
                 )}
                 <Box>
-                  <Label mb="xs">
-                    What was your primary goal for this project?
-                  </Label>
-                  <Field
-                    name="goal"
+                  <FormField
                     as={Select}
+                    name="goal"
                     onChange={handleGoalChange(formik)}
+                    label="What was your primary goal for this project?"
                     value={customGoal ? "Other" : formik.values.goal}
                   >
                     {GOALS.map((g) => (
                       <option key={g}>{g}</option>
                     ))}
-                  </Field>
+                  </FormField>
                   {customGoal && (
                     <Field
                       as={Input}

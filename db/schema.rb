@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_27_064317) do
+ActiveRecord::Schema.define(version: 2020_04_30_075252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 2020_04_27_064317) do
     t.datetime "proposal_sent_at"
     t.datetime "started_working_at"
     t.datetime "stopped_working_at"
-    t.string "billing_cycle"
     t.boolean "auto_apply"
     t.boolean "hide_from_profile"
     t.index ["project_id"], name: "index_applications_on_project_id"
@@ -332,6 +331,7 @@ ActiveRecord::Schema.define(version: 2020_04_27_064317) do
     t.integer "location_relevance"
     t.integer "cost_to_hire"
     t.integer "execution_cost"
+    t.string "pending_description"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
@@ -440,12 +440,13 @@ ActiveRecord::Schema.define(version: 2020_04_27_064317) do
     t.integer "deposit"
     t.string "status"
     t.integer "deposit_paid"
-    t.bigint "user_id"
     t.string "primary_skill"
+    t.bigint "user_id"
     t.string "service_type"
     t.string "estimated_budget"
     t.boolean "remote"
     t.string "sales_status"
+    t.string "deposit_payment_intent_id"
     t.string "owner"
     t.string "campaign_source"
     t.datetime "brief_pending_confirmation_at"
@@ -460,7 +461,6 @@ ActiveRecord::Schema.define(version: 2020_04_27_064317) do
     t.datetime "proposal_received_at"
     t.datetime "won_at"
     t.datetime "lost_at"
-    t.string "deposit_payment_intent_id"
     t.string "campaign_name"
     t.string "uid"
     t.string "industry"
@@ -632,7 +632,6 @@ ActiveRecord::Schema.define(version: 2020_04_27_064317) do
     t.text "availability"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "company_name"
     t.string "password_digest"
     t.string "email"
     t.string "uid"
@@ -641,6 +640,7 @@ ActiveRecord::Schema.define(version: 2020_04_27_064317) do
     t.bigint "country_id"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.string "company_name"
     t.text "permissions", default: [], array: true
     t.string "title"
     t.text "completed_tutorials", default: [], array: true
