@@ -6,40 +6,24 @@ import GET_DATA from "./getData";
 import VerifyProject from "./VerifyProject";
 import ValidationInProgress from "./ValidationInProgress";
 
+function OmniauthLogin() {
+  const csrf = document
+    .querySelector("meta[name=csrf-token]")
+    .getAttribute("content");
+
+  return (
+    <form action="/auth/linkedin" method="POST">
+      <input type="hidden" name="authenticity_token" value={csrf} />
+      <button>Go</button>
+    </form>
+  );
+}
+
 const VerifyProjectView = ({ match }) => {
-  const { loading, error, data } = useQuery(GET_DATA, {
-    variables: { id: match.params.id },
-  });
-
-  if (loading) return null;
-  if (error) return <NotFound />;
-
-  const project = data.previousProject;
-
-  let content;
-  switch (project.validationStatus) {
-    case "Pending": {
-      content = <VerifyProject project={project} match={match} />;
-      break;
-    }
-    case "In Progress": {
-      content = <ValidationInProgress project={project} match={match} />;
-      break;
-    }
-    case "Validated": {
-      content = <Text>This project has already been validated</Text>;
-      break;
-    }
-    default: {
-      content = <Text>Validation is not possible for this project</Text>;
-      break;
-    }
-  }
-
   return (
     <Box paddingTop="xxl">
       <Card maxWidth={500} padding="l" margin="0 auto" borderRadius={8}>
-        {content}
+        <OmniauthLogin />
       </Card>
     </Box>
   );
