@@ -13,14 +13,14 @@ const Tabs = ({ label, initialState, tabListProps, children }) => {
     <>
       <StyledTabList {...tabListProps} {...tab} aria-label={label}>
         {React.Children.map(children, (child, i) => (
-          <StyledTab {...tab} stopId={`tab-${i}`}>
+          <StyledTab {...tab} id={`tab-${i}`}>
             {child.props.icon && <Box mr="xs">{child.props.icon}</Box>}
             {child.props.title}
           </StyledTab>
         ))}
       </StyledTabList>
       {React.Children.map(children, (child, i) => (
-        <StyledTabPanel {...tab} stopId={`tab-${i}`}>
+        <StyledTabPanel {...tab} id={`tab-${i}`}>
           {React.cloneElement(child)}
         </StyledTabPanel>
       ))}
