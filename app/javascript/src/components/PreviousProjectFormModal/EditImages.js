@@ -1,47 +1,18 @@
 import React from "react";
-import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
-import { Box, Text, Button, Link } from "@advisable/donut";
-import useLocationStages from "../../hooks/useLocationStages";
+import { Box, Text } from "@advisable/donut";
 import Helper from "./Helper";
 import CoverPhoto from "./CoverPhoto";
 import ImageTiles from "./ImageTiles";
 import useImageReducer from "./useImageReducer";
 
-export default function Portfolio({ modal, data }) {
-  const { navigate, skip, pathWithState } = useLocationStages();
+function EditImages({ data }) {
   const [images, dispatch] = useImageReducer(data.previousProject.images);
-
-  const handleContinue = () => {
-    navigate(
-      `${modal.returnPath}/previous_projects/${data.previousProject.id}/more`,
-    );
-  };
-
-  const handleSkip = () => {
-    skip(
-      "PORTFOLIO",
-      `${modal.returnPath}/previous_projects/${data.previousProject.id}/more`,
-    );
-  };
 
   return (
     <Box display="flex">
       <Box flexGrow={1}>
-        <Link
-          mb="s"
-          fontSize="l"
-          fontWeight="medium"
-          to={pathWithState(
-            `${modal.returnPath}/previous_projects/${data.previousProject.id}/overview`,
-          )}
-        >
-          <Box display="inline-block" mr="xxs">
-            <ArrowLeft size={20} strokeWidth={2} />
-          </Box>
-          Back
-        </Link>
         <Text mb="xs" fontSize="28px" color="blue900" fontWeight="semibold">
-          Portfolio
+          Images
         </Text>
         <Text lineHeight="l" color="neutral600" mb="l">
           Add images related to the work you carried out on this project. You
@@ -57,18 +28,6 @@ export default function Portfolio({ modal, data }) {
             />
           )}
         </Box>
-        <Button
-          size="l"
-          mr="xs"
-          onClick={handleContinue}
-          suffix={<ArrowRight />}
-          disabled={data.previousProject.images.length === 0}
-        >
-          Continue
-        </Button>
-        <Button onClick={handleSkip} variant="subtle" size="l">
-          Skip
-        </Button>
       </Box>
       <Box
         ml="50px"
@@ -90,3 +49,5 @@ export default function Portfolio({ modal, data }) {
     </Box>
   );
 }
+
+export default EditImages;

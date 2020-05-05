@@ -1,31 +1,15 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import {
-  Switch,
-  Route,
-  Redirect,
-  useLocation,
-  useRouteMatch,
-} from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import { Box, Container, Text } from "@advisable/donut";
 import NavigationMenu from "./NavigationMenu";
 import { StyledSidebar } from "./styles";
 import { SELECT_DATA, GET_PREVIOUS_PROJECT } from "./queries";
 import PreviousProjectFormHeader from "./PreviousProjectFormHeader";
-import Overview from "./Overview";
-import Portfolio from "./Portfolio";
-import Validation from "./Validation";
-import ExtraInformation from "./ExtraInformation";
-import UpdateClientDetails from "./UpdateClientDetails";
-import CreatePreviousProject from "./CreatePreviousProject";
 import ErrorBoundary from "./ErrorBoundary";
 import NotFound from "./NotFound";
 import Loading from "./Loading";
-
-function RedirectToFirstStep() {
-  const location = useLocation();
-  return <Redirect to={`${location.pathname}/client`} />;
-}
+import Routes from "./Routes";
 
 export default function PreviousProjectFormContainer({
   modal,
@@ -64,44 +48,14 @@ export default function PreviousProjectFormContainer({
               <NavigationMenu previousProject={data?.previousProject} />
             </StyledSidebar>
             <Container maxWidth="1100px" py="l">
-              <Switch>
-                <Route path="*previous_projects/:id" exact>
-                  <RedirectToFirstStep />
-                </Route>
-                <Route path="*previous_projects/new" exact>
-                  <RedirectToFirstStep />
-                </Route>
-                <Route path="*previous_projects/new/client">
-                  <CreatePreviousProject
-                    specialistId={specialistId}
-                    onCreate={onCreate}
-                    industries={selectDataQuery.data.industries}
-                  />
-                </Route>
-                <Route path="*previous_projects/:id/client">
-                  <UpdateClientDetails
-                    modal={modal}
-                    data={data}
-                    industries={selectDataQuery.data.industries}
-                  />
-                </Route>
-                <Route path="*previous_projects/:id/overview">
-                  <Overview
-                    modal={modal}
-                    data={data}
-                    skills={selectDataQuery.data.skills}
-                  />
-                </Route>
-                <Route path="*previous_projects/:id/portfolio">
-                  <Portfolio modal={modal} data={data} />
-                </Route>
-                <Route path="*previous_projects/:id/more">
-                  <ExtraInformation modal={modal} data={data} />
-                </Route>
-                <Route path="*previous_projects/:id/validation">
-                  <Validation modal={modal} data={data} onPublish={onPublish} />
-                </Route>
-              </Switch>
+              <Routes
+                data={data}
+                modal={modal}
+                onCreate={onCreate}
+                onPublish={onPublish}
+                specialistId={specialistId}
+                selectDataQuery={selectDataQuery}
+              />
             </Container>
           </Box>
         </ErrorBoundary>

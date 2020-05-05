@@ -14,11 +14,17 @@ export const StyledNotice = styled.div`
 
 export const StyledNoticeIcon = styled.div`
   display: flex;
-  margin-right: 16px;
+  margin-right: 8px;
   border-radius: 50%;
   align-items: center;
   justify-content: center;
   color: ${theme.colors.orange[5]};
+
+  svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
+  }
 `;
 
 export const StyledNoticeHeader = styled(StyledText)``;

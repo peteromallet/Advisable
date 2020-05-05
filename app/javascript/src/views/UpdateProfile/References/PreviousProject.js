@@ -1,6 +1,8 @@
 import React from "react";
+import { Edit } from "@styled-icons/feather";
 import {
   Box,
+  Link,
   Card,
   Text,
   Button,
@@ -8,25 +10,43 @@ import {
   DialogDisclosure,
 } from "@advisable/donut";
 import PreviousProjectDetails from "../../../components/PreviousProjectDetails";
-import ProjectValidationStatus from "../../../components/ProjectValidationStatus";
 import ProjectValidationPrompt from "../../../components/ProjectValidationPrompt";
+import ProjectStatus from "./ProjectStatus";
+
+function PreviousProjectTitle({ previousProject, modal }) {
+  if (previousProject.draft) {
+    return (
+      <Text fontSize="20px" color="blue900" fontWeight="semibold">
+        {previousProject.title}
+      </Text>
+    );
+  }
+
+  return (
+    <DialogDisclosure
+      as={Link.External}
+      href="#"
+      fontSize="20px"
+      color="blue900"
+      fontWeight="semibold"
+      {...modal}
+    >
+      {previousProject.title}
+    </DialogDisclosure>
+  );
+}
 
 export default function PreviousProject({ previousProject, editModal }) {
   const modal = useModal();
 
   return (
-    <Card padding="m">
-      {!previousProject.draft && (
-        <Box mb="s">
-          <ProjectValidationStatus
-            status={previousProject.validationStatus}
-            isClient={false}
-          />
-        </Box>
-      )}
-      <Text fontSize="l" color="blue900" fontWeight="medium" mb="xs">
-        {previousProject.title}
-      </Text>
+    <Card padding="l">
+      <Box mb="s">
+        <ProjectStatus previousProject={previousProject} />
+      </Box>
+      <Box mb="xs">
+        <PreviousProjectTitle previousProject={previousProject} modal={modal} />
+      </Box>
       <Text color="neutral700" lineHeight="m" mb="m">
         {previousProject.excerpt}
       </Text>
@@ -38,29 +58,20 @@ export default function PreviousProject({ previousProject, editModal }) {
           </Box>
         )}
 
-      {previousProject.draft && (
-        <DialogDisclosure
-          variant="subtle"
-          as={Button}
-          {...editModal.atPath(`/previous_projects/${previousProject.id}`)}
-        >
-          Edit Project
-        </DialogDisclosure>
-      )}
-
-      {previousProject.draft === false && (
-        <>
-          <DialogDisclosure as={Button} variant="subtle" {...modal}>
-            View Project
-          </DialogDisclosure>
-
-          <PreviousProjectDetails.Modal
-            modal={modal}
-            id={previousProject.id}
-            label={previousProject.title}
-          />
-        </>
-      )}
+      <DialogDisclosure
+        size="s"
+        as={Button}
+        variant="subtle"
+        prefix={<Edit />}
+        {...editModal.atPath(`/previous_projects/${previousProject.id}`)}
+      >
+        Edit Project
+      </DialogDisclosure>
+      <PreviousProjectDetails.Modal
+        modal={modal}
+        id={previousProject.id}
+        label={previousProject.title}
+      />
     </Card>
   );
 }

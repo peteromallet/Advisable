@@ -16,6 +16,7 @@ const FormField = ({
   prefix,
   suffix,
   optional,
+  description,
   ...props
 }) => {
   const [field, meta] = useField(props);
@@ -40,6 +41,11 @@ const FormField = ({
           </Text>
         )}
       </Columns>
+      {description && (
+        <Text fontSize="s" lineHeight="s" color="neutral600" my="-4px" mb="s">
+          {description}
+        </Text>
+      )}
       <InputDecorations prefix={prefix} suffix={suffix}>
         <Component
           {...field}

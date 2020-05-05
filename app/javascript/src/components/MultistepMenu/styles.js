@@ -1,7 +1,7 @@
 import { rgba } from "polished";
 import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
-import theme from "../../theme";
+import { theme } from "@advisable/donut";
 
 export const StyledNavigationMenuItemNumber = styled.div`
   width: 24px;

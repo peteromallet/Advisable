@@ -87,6 +87,17 @@ export function renderRoute(config) {
   );
 }
 
+export function renderComponent(component, config = {}) {
+  return render(
+    <Providers
+      route={config.route || "/"}
+      graphQLMocks={config.graphQLMocks || []}
+    >
+      {React.cloneElement(component)}
+    </Providers>,
+  );
+}
+
 // re-export everything
 export * from "@testing-library/react";
 export * from "./apolloMocks";

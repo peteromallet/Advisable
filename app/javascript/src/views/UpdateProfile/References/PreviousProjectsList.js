@@ -26,7 +26,7 @@ export default function PreviousProjectsList({ previousProjects }) {
           ...previous.viewer,
           previousProjects: {
             ...previous.viewer.previousProjects,
-            nodes: [project, ...previous.viewer.previousProjects.nodes],
+            nodes: [...previous.viewer.previousProjects.nodes, project],
           },
         },
       },
@@ -44,15 +44,18 @@ export default function PreviousProjectsList({ previousProjects }) {
       <Tabs label="Previous projects">
         <Tabs.Tab title="Published">
           <Stack pt="m" spacing="m">
-            <NewProject modal={modal} />
             {published.map((project) => (
-              <PreviousProject key={project.id} previousProject={project} />
+              <PreviousProject
+                key={project.id}
+                editModal={modal}
+                previousProject={project}
+              />
             ))}
+            <NewProject modal={modal} />
           </Stack>
         </Tabs.Tab>
         <Tabs.Tab title={draftsTitle(drafts)}>
           <Stack pt="m" spacing="m">
-            <NewProject modal={modal} />
             {drafts.map((project) => (
               <PreviousProject
                 key={project.id}
@@ -60,6 +63,7 @@ export default function PreviousProjectsList({ previousProjects }) {
                 editModal={modal}
               />
             ))}
+            <NewProject modal={modal} />
           </Stack>
         </Tabs.Tab>
       </Tabs>
