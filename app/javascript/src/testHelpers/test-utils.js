@@ -11,6 +11,8 @@ import i18n from "./i18next";
 import App from "../App";
 import introspectionQueryResultData from "../fragmentTypes.json";
 
+window.focus = jest.fn();
+
 // Mock matchMedia
 Object.defineProperty(window, "matchMedia", {
   writable: true,

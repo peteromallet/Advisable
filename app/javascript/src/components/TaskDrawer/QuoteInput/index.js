@@ -54,7 +54,7 @@ const QuoteInput = ({ task, readOnly, onSubmit }) => {
       <Popover
         {...popover}
         aria-label="Quote"
-        style={{ width: "100%", maxWidth: 320, outline: "none" }}
+        style={{ width: "100%", maxWidth: 320, outline: "none", zIndex: 999 }}
       >
         <Card
           padding="m"

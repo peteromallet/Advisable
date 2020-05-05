@@ -1,7 +1,7 @@
 import React from "react";
 import { filter } from "lodash-es";
 import { Formik } from "formik";
-import moment from "moment-timezone";
+import { DateTime } from "luxon";
 import { Button } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Modal from "src/components/Modal";
@@ -43,7 +43,7 @@ function RequestIntroductionModal(props) {
 
           const initialValues = {
             availability: data.application.project.user.availability,
-            timeZone: moment.tz.guess() || "Europe/Dublin",
+            timeZone: DateTime.local().zoneName || "Europe/Dublin",
           };
 
           return (
@@ -93,7 +93,9 @@ function RequestIntroductionModal(props) {
                     <Availability
                       timeZone={formik.values.timeZone}
                       selected={filter(formik.values.availability, (t) => {
-                        return moment(t).isAfter(moment(), "day");
+                        return (
+                          DateTime.fromISO(t) > DateTime.local().endOf("day")
+                        );
                       })}
                       onSelect={(times) => {
                         formik.setFieldValue("availability", times);

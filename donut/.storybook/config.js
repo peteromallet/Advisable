@@ -2,7 +2,7 @@ import React from "react";
 import Provider from "../src/components/Provider";
 import { configure, addDecorator } from "@storybook/react";
 
-addDecorator(storyFn => {
+addDecorator((storyFn) => {
   return <Provider>{storyFn()}</Provider>;
 });
 
