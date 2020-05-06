@@ -1,32 +1,70 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
-import { Box, Card, Text } from "@advisable/donut";
-import NotFound from "../NotFound";
-import GET_DATA from "./getData";
-import VerifyProject from "./VerifyProject";
-import ValidationInProgress from "./ValidationInProgress";
+import { Switch, Route, Redirect } from "react-router";
+import { Container, Card, Box } from "@advisable/donut";
+import Logo from "../../components/Logo";
+import Loading from "../../components/Loading";
+import { usePreviousProject } from "./queries";
+import NotFound, { isNotFound } from "../NotFound";
+import ValidateProject from "./ValidateProject";
+import ValidationPending from "./ValidationPending";
+import CannotValidate from "./CannotValidate";
+import Review from "./Review";
 
-function OmniauthLogin() {
-  const csrf = document
-    .querySelector("meta[name=csrf-token]")
-    .getAttribute("content");
+function StatusPending({ data }) {
+  if (data.oauthViewer && data.oauthViewer.canValidateProject === false) {
+    return <CannotValidate data={data} />;
+  } else if (data.oauthViewer) {
+    return <ValidateProject data={data} />;
+  } else {
+    return <ValidationPending data={data} />;
+  }
+}
 
+function ValidatedRedirect({ data }) {
+  const { oauthViewer, previousProject } = data;
+  if (oauthViewer?.canValidateProject && previousProject.reviews.length === 0) {
+    return <Redirect to={`/verify_project/${previousProject.id}/review`} />;
+  }
+  return <Redirect to={`/verify_project/${previousProject.id}/validated`} />;
+}
+
+function StatusValidated({ data }) {
   return (
-    <form action="/auth/linkedin" method="POST">
-      <input type="hidden" name="authenticity_token" value={csrf} />
-      <button>Go</button>
-    </form>
+    <Switch>
+      <Route path="/verify_project/:id/review">
+        <Review data={data} />
+      </Route>
+      <Route path="/verify_project/:id/validated">validated</Route>
+      <Route>
+        <ValidatedRedirect data={data} />
+      </Route>
+    </Switch>
   );
 }
 
-const VerifyProjectView = ({ match }) => {
-  return (
-    <Box paddingTop="xxl">
-      <Card maxWidth={500} padding="l" margin="0 auto" borderRadius={8}>
-        <OmniauthLogin />
-      </Card>
-    </Box>
-  );
+const STATUS_MAP = {
+  Pending: StatusPending,
+  Validated: StatusValidated,
 };
+
+function VerifyProjectView() {
+  const { loading, data, error } = usePreviousProject();
+
+  if (loading) return <Loading />;
+  if (isNotFound(error)) return <NotFound />;
+
+  const Component = STATUS_MAP[data.previousProject.validationStatus];
+
+  return (
+    <Container maxWidth="700px">
+      <Box textAlign="center" py="40px">
+        <Logo />
+      </Box>
+      <Card padding="l">
+        <Component data={data} />
+      </Card>
+    </Container>
+  );
+}
 
 export default VerifyProjectView;

@@ -131,8 +131,8 @@ const buttonSize = variant({
       paddingLeft: 28,
       paddingRight: 28,
       svg: {
-        width: 20,
-        height: 20,
+        width: 24,
+        height: 24,
       },
     },
   },

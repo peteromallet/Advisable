@@ -9,19 +9,16 @@ class AuthProvidersController < ApplicationController
   end
 
   def linkedin
-    # session[:omniauth] = auth_hash
-    puts '😉' * 20
-    puts auth_hash
-    puts ' - '
+    reset_session
     user = {
       uid: auth_hash.uid,
       provider: 'linkedin',
       name: auth_hash.info.name,
       first_name: auth_hash.info.first_name,
-      image: auth_hash.info.image
+      image: auth_hash.info.picture_url
     }
 
-    puts user
+    session[:omniauth] = user
     redirect_to request.env['omniauth.origin']
   end
 

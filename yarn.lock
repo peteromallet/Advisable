@@ -2701,6 +2701,22 @@
   resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.5.0.tgz#95540ebadd40875fb5c36c64df366ca370fb987e"
   integrity sha512-KCctMhOYCKtyXf0lnO7D+1aHRC566LQf2I490GqvLHhgjGfzf4O44eUXZsOi5IxJkJTtcCBtxKYXXlwuDif/KA==
 
+"@styled-icons/entypo-social@^10.0.0":
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@styled-icons/entypo-social/-/entypo-social-10.0.0.tgz#3114d8690edc2d1b72d323e0f77eb35863a974c2"
+  integrity sha512-H1uFWET+J+R5pVtRkRsPUbpGkkNCdDBhsXVDAF5M9nVEUx76Dmcl0mfRFg7+tfMvQjvfi/V30Sj/tacLXoTj+w==
+  dependencies:
+    "@styled-icons/styled-icon" "^10.0.0"
+    tslib "^1.11.1"
+
+"@styled-icons/fa-brands@^10.0.0":
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@styled-icons/fa-brands/-/fa-brands-10.0.0.tgz#70ad0fdc53d34ec06ab068e3fbf1b358245feb80"
+  integrity sha512-OzTXI7czu2B0XSHeVqS8QqutsYKGxy1FgY6Hq+QX11iktrOnti9wxz2fvb0CyrJT3jHm2eGb6nP6xXIgjA4YUg==
+  dependencies:
+    "@styled-icons/styled-icon" "^10.0.0"
+    tslib "^1.11.1"
+
 "@styled-icons/feather@^10.0.0":
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/@styled-icons/feather/-/feather-10.0.0.tgz#64cd4c894b5f02f65dfde60e6c98481c9a50cd39"

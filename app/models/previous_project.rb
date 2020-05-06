@@ -6,6 +6,8 @@ class PreviousProject < ApplicationRecord
   belongs_to :specialist
   belongs_to :application, required: false
 
+  has_one_attached :contact_image
+
   has_many :reviews, as: :project
   has_many :images,
            class_name: 'PreviousProjectImage',

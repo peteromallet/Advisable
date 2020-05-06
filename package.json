@@ -18,6 +18,8 @@
     "@sentry/webpack-plugin": "^1.11.1",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.5.0",
+    "@styled-icons/entypo-social": "^10.0.0",
+    "@styled-icons/fa-brands": "^10.0.0",
     "@styled-icons/feather": "^10.0.0",
     "@styled-icons/heroicons-outline": "^10.0.0",
     "@styled-icons/heroicons-solid": "^10.0.0",

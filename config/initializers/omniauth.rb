@@ -3,5 +3,5 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            ENV['LINKEDIN_KEY'],
            ENV['LINKEDIN_SECRET'],
            scope: 'r_basicprofile',
-           fields: %w[id first-name last-name picture-url positions]
+           fields: ['id', 'first-name', 'last-name', 'picture-url']
 end
