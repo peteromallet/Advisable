@@ -5,7 +5,7 @@ import Logo from "../../components/Logo";
 import Loading from "../../components/Loading";
 import { usePreviousProject } from "./queries";
 import NotFound, { isNotFound } from "../NotFound";
-import ValidateProject from "./ValidateProject";
+import ValidateProject from "./Validate";
 import ValidationPending from "./ValidationPending";
 import CannotValidate from "./CannotValidate";
 import Review from "./Review";
