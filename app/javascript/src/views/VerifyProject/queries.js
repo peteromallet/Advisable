@@ -27,6 +27,12 @@ const previousProjectFields = gql`
     reviews {
       id
     }
+    similarSpecialists {
+      id
+      name
+      avatar
+      location
+    }
   }
 `;
 

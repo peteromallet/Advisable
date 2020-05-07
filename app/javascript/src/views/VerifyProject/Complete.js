@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Text, Stack } from "@advisable/donut";
+import { Box, Text, Stack, Avatar } from "@advisable/donut";
 import FormField from "../../components/FormField";
 import SubmitButton from "../../components/SubmitButton";
 
@@ -24,11 +24,24 @@ function ValidationComplete({ data }) {
       >
         Thanks {oauthViewer.firstName}!
       </Text>
-      <Text fontSize="l" lineHeight="l" color="neutral700">
-        We have hundreds of more world-class freelancers with experience working
+      <Text fontSize="l" lineHeight="l" color="neutral700" mb="l">
+        We have hundreds more world-class freelancers with experience working
         with {previousProject.companyType} companies in the{" "}
         {previousProject.primaryIndustry.name} industry.
       </Text>
+      <Stack spacing="s" mb="l">
+        {previousProject.similarSpecialists.map((specialist) => (
+          <Box display="flex" alignItems="center" key={specialist.id}>
+            <Avatar url={specialist.avatar} name={specialist.name} />
+            <Box pl="s">
+              <Text fontSize="l" fontWeight="medium" mb="xxs">
+                {specialist.name}
+              </Text>
+              <Text color="neutral500">{specialist.location}</Text>
+            </Box>
+          </Box>
+        ))}
+      </Stack>
       <Text fontSize="l" fontWeight="medium" mb="xxs">
         Want instant access to them?
       </Text>
@@ -39,9 +52,9 @@ function ValidationComplete({ data }) {
       </Text>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <Form>
-          <Stack spacing="m">
+          <Stack spacing="l">
             <FormField label="Email Address" name="email" />
-            <SubmitButton>Continue</SubmitButton>
+            <SubmitButton size="l">Continue</SubmitButton>
           </Stack>
         </Form>
       </Formik>
