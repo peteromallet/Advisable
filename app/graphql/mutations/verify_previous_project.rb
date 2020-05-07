@@ -12,10 +12,6 @@ class Mutations::VerifyPreviousProject < Mutations::BaseMutation
   def resolve(id:)
     project = PreviousProject.find_by_uid!(id)
     project.update(validation_status: 'Validated')
-    ::SetPreviousProjectContactImageJob.perform_later(
-      project.id,
-      context[:oauth_viewer].image
-    )
 
     { previous_project: project }
   end

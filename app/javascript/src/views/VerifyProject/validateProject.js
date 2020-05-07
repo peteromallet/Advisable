@@ -1,11 +1,19 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { CheckCircle } from "@styled-icons/heroicons-solid";
-import { Text, Box, Button } from "@advisable/donut";
+import {
+  Text,
+  Box,
+  Button,
+  useModal,
+  DialogDisclosure,
+} from "@advisable/donut";
 import { useValidatePreviousProject } from "./queries";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
+import FailValidationModal from "./FailValidationModal";
 
 function ValidateProject({ data }) {
+  const modal = useModal();
   const { id } = useParams();
   const [validate, validateMutation] = useValidatePreviousProject();
 
@@ -46,9 +54,16 @@ function ValidateProject({ data }) {
         >
           Verify Project
         </Button>
-        <Button size="l" mb="xs" variant="subtle">
+        <DialogDisclosure
+          {...modal}
+          as={Button}
+          size="l"
+          mb="xs"
+          variant="subtle"
+        >
           I can&apos;t verify this project
-        </Button>
+        </DialogDisclosure>
+        <FailValidationModal modal={modal} />
       </Box>
     </>
   );

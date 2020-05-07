@@ -9,6 +9,7 @@ import ValidateProject from "./ValidateProject";
 import ValidationPending from "./ValidationPending";
 import CannotValidate from "./CannotValidate";
 import Review from "./Review";
+import Complete from "./Complete";
 
 function StatusPending({ data }) {
   if (data.oauthViewer && data.oauthViewer.canValidateProject === false) {
@@ -34,7 +35,9 @@ function StatusValidated({ data }) {
       <Route path="/verify_project/:id/review">
         <Review data={data} />
       </Route>
-      <Route path="/verify_project/:id/validated">validated</Route>
+      <Route path="/verify_project/:id/validated">
+        <Complete data={data} />
+      </Route>
       <Route>
         <ValidatedRedirect data={data} />
       </Route>
@@ -42,9 +45,14 @@ function StatusValidated({ data }) {
   );
 }
 
+function StatusFailed({ data }) {
+  return <Complete data={data} />;
+}
+
 const STATUS_MAP = {
   Pending: StatusPending,
   Validated: StatusValidated,
+  "Validation Failed": StatusFailed,
 };
 
 function VerifyProjectView() {

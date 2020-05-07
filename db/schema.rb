@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_07_101242) do
+ActiveRecord::Schema.define(version: 2020_05_07_110602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -332,6 +332,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_101242) do
     t.integer "cost_to_hire"
     t.integer "execution_cost"
     t.string "pending_description"
+    t.string "validation_failed_reason"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"

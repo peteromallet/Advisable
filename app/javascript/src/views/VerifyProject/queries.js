@@ -10,7 +10,12 @@ const previousProjectFields = gql`
     description
     validationStatus
     contactName
+    companyType
     primarySkill {
+      id
+      name
+    }
+    primaryIndustry {
       id
       name
     }
@@ -32,6 +37,7 @@ export const GET_PREVIOUS_PROJECT = gql`
     oauthViewer {
       name
       image
+      firstName
       canValidateProject(id: $id)
     }
     previousProject(id: $id) {
@@ -75,4 +81,22 @@ export const REVIEW_PREVIOUS_PROJECT = gql`
 
 export function useReviewPreviousProject() {
   return useMutation(REVIEW_PREVIOUS_PROJECT);
+}
+
+export const FAIL_PREVIOUS_PROJECT_VALIDATION = gql`
+  ${previousProjectFields}
+
+  mutation failPreviousProjectVerification(
+    $input: FailPreviousProjectVerificationInput!
+  ) {
+    failPreviousProjectVerification(input: $input) {
+      previousProject {
+        ...PreviousProjectFields
+      }
+    }
+  }
+`;
+
+export function useFailPreviousProjectValidation() {
+  return useMutation(FAIL_PREVIOUS_PROJECT_VALIDATION);
 }
