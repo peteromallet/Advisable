@@ -11,6 +11,20 @@ class Airtable::SpecialistReview < Airtable::Base
     pull_ratings(review)
   end
 
+  push_data do |review|
+    self['Comment'] = review.comment
+    self['Skills - Rating'] = review.ratings['skills']
+    self['Quality of Work - Rating'] = review.ratings['quality_of_work']
+    self['Adherence to Schedule - Rating'] =
+      review.ratings['adherence_to_schedule']
+    self['Availability - Rating'] = review.ratings['availability']
+    self['Communication - Rating'] = review.ratings['communication']
+
+    if review.project.present? && review.project.is_a?(PreviousProject)
+      self['Previous Project UID'] = review.project.uid
+    end
+  end
+
   private
 
   # Setup the specialist relationship for the review

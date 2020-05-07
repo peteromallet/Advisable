@@ -4,6 +4,10 @@
 # again is a polymorphic assocation and is used to add more context to the
 # review.
 class Review < ApplicationRecord
+  include Uid
+  include Airtable::Syncable
+  airtable_class Airtable::SpecialistReview
+
   # disable STI for the type column
   self.inheritance_column = :_type_disabled
 

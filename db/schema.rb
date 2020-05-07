@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_30_075252) do
+ActiveRecord::Schema.define(version: 2020_05_07_101242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -483,6 +483,7 @@ ActiveRecord::Schema.define(version: 2020_04_30_075252) do
     t.jsonb "ratings"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uid"
     t.index ["airtable_id"], name: "index_reviews_on_airtable_id"
     t.index ["project_type", "project_id"], name: "index_reviews_on_project_type_and_project_id"
     t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id"

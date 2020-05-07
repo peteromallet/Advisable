@@ -14,7 +14,7 @@ function ValidationPending({ data }) {
         lineHeight="26px"
         fontWeight="semibold"
       >
-        Validate {primarySkill.name} project with {specialist.name}
+        Validate {primarySkill?.name} project with {specialist.name}
       </Text>
       <Text lineHeight="m" color="neutral700" mb="l">
         {excerpt}

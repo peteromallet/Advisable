@@ -62,3 +62,17 @@ export const VALIDATE_PREVIOUS_PROJECT = gql`
 export function useValidatePreviousProject() {
   return useMutation(VALIDATE_PREVIOUS_PROJECT);
 }
+
+export const REVIEW_PREVIOUS_PROJECT = gql`
+  mutation reviewPreviousProject($input: ReviewPreviousProjectInput!) {
+    reviewPreviousProject(input: $input) {
+      review {
+        id
+      }
+    }
+  }
+`;
+
+export function useReviewPreviousProject() {
+  return useMutation(REVIEW_PREVIOUS_PROJECT);
+}
