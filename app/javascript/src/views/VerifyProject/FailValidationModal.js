@@ -47,7 +47,12 @@ function FailValidationModal({ modal }) {
               <SubmitButton size="l" variant="dark" mr="xs">
                 Continue
               </SubmitButton>
-              <Button size="l" variant="subtle" onClick={modal.hide}>
+              <Button
+                size="l"
+                type="button"
+                variant="subtle"
+                onClick={modal.hide}
+              >
                 Cancel
               </Button>
             </>

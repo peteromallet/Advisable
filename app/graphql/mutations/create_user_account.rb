@@ -107,8 +107,7 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     rid:,
     gclid:
   )
-    domain = email.split('@').last
-    if BlacklistedDomain.where(domain: domain).any?
+    if BlacklistedDomain.email_allowed?(email)
       raise ApiError::InvalidRequest.new(
               'nonCorporateEmail',
               "The email #{email} is not allowed"

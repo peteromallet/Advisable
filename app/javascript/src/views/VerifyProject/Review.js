@@ -64,7 +64,7 @@ function Review({ data }) {
             mb="l"
             as={Textarea}
             name="comment"
-            label="Anythning else you would like to add?"
+            label="Anything else you would like to add?"
           />
           <SubmitButton size="l" mr="xs">
             Continue

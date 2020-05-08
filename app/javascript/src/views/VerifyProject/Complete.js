@@ -3,15 +3,27 @@ import { Formik, Form } from "formik";
 import { Box, Text, Stack, Avatar } from "@advisable/donut";
 import FormField from "../../components/FormField";
 import SubmitButton from "../../components/SubmitButton";
+import { useCreateUserFromLinkedin } from "./queries";
 
 function ValidationComplete({ data }) {
   const { oauthViewer, previousProject } = data;
+  const [createUser] = useCreateUserFromLinkedin();
 
   const initialValues = {
     email: "",
   };
 
-  const handleSubmit = async (values) => {};
+  const handleSubmit = async (values) => {
+    await createUser({
+      variables: {
+        input: {
+          email: values.email,
+        },
+      },
+    });
+
+    window.location = "https://advisable.com/clients/signup/";
+  };
 
   return (
     <>
@@ -42,13 +54,13 @@ function ValidationComplete({ data }) {
           </Box>
         ))}
       </Stack>
-      <Text fontSize="l" fontWeight="medium" mb="xxs">
-        Want instant access to them?
+      <Text fontSize="l" fontWeight="medium" mb="xs">
+        Apply To Access World-Class Talent
       </Text>
       <Text lineHeight="m" mb="m" color="neutral700">
-        Enter your email below to create an Advisable account and gain instant
-        access to hundreds more {previousProject.primaryIndustry.name}{" "}
-        freelancers.
+        Across 600+ different marketing skills, get instant recommendations of
+        top talent with experience in the {previousProject.primaryIndustry.name}{" "}
+        space, backed by a no questions asked money-back guarantee.
       </Text>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <Form>

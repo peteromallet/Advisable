@@ -15,6 +15,7 @@ class AuthProvidersController < ApplicationController
       provider: 'linkedin',
       name: auth_hash.info.name,
       first_name: auth_hash.info.first_name,
+      last_name: auth_hash.info.last_name,
       image: auth_hash.info.picture_url
     }
 

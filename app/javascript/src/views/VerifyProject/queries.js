@@ -106,3 +106,17 @@ export const FAIL_PREVIOUS_PROJECT_VALIDATION = gql`
 export function useFailPreviousProjectValidation() {
   return useMutation(FAIL_PREVIOUS_PROJECT_VALIDATION);
 }
+
+export const CREATE_USER_FROM_LINKEDIN = gql`
+  mutation createUserFromLinkedin($input: CreateUserFromLinkedinInput!) {
+    createUserFromLinkedin(input: $input) {
+      user {
+        id
+      }
+    }
+  }
+`;
+
+export function useCreateUserFromLinkedin() {
+  return useMutation(CREATE_USER_FROM_LINKEDIN);
+}
