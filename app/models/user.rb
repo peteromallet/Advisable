@@ -21,6 +21,8 @@ class User < ApplicationRecord
 
   attribute :availability, :datetime, default: [], array: true
 
+  has_one_attached :avatar
+
   register_tutorial 'fixedProjects'
   register_tutorial 'flexibleProjects'
 

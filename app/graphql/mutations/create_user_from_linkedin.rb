@@ -15,7 +15,6 @@ class Mutations::CreateUserFromLinkedin < Mutations::BaseMutation
   end
 
   def resolve(email:)
-    puts 'ASDFASDFas' * 20
     viewer = context[:oauth_viewer]
 
     if BlacklistedDomain.email_allowed?(email)
@@ -32,6 +31,7 @@ class Mutations::CreateUserFromLinkedin < Mutations::BaseMutation
 
     if user.save
       user.sync_to_airtable
+      SetUserImageJob.perform_later(user.id, viewer.image)
       return { user: user }
     else
       puts user.errors.full_messages
