@@ -1,9 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import VideoModal from "../VideoModal";
+import useTutorial from "../../hooks/useTutorial";
 
-const FixedProjectTutorial = ({ tutorial, isClient }) => {
+const FixedProjectTutorial = ({ modal, isClient }) => {
   const { t } = useTranslation();
+  const tutorial = useTutorial("fixedProjects");
 
   let summary = isClient ? "clientSummary" : "freelancerSummary";
   let videoId = "bWeHGq9Asl0";
@@ -12,13 +14,17 @@ const FixedProjectTutorial = ({ tutorial, isClient }) => {
   }
   let url = `https://www.youtube.com/embed/${videoId}`;
 
+  const handleDismiss = () => {
+    tutorial.complete();
+    modal.hide();
+  };
+
   return (
     <VideoModal
       url={url}
-      isOpen={tutorial.isActive}
-      onDismiss={tutorial.complete}
-      heading={t(`tutorials.${tutorial.name}.heading`)}
-      summary={t(`tutorials.${tutorial.name}.${summary}`)}
+      onDismiss={handleDismiss}
+      heading={t(`tutorials.fixedProjects.heading`)}
+      summary={t(`tutorials.fixedProjects.${summary}`)}
     />
   );
 };

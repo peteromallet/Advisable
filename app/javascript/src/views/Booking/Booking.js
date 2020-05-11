@@ -1,6 +1,6 @@
 import * as React from "react";
 import { get } from "lodash-es";
-import { Box } from "@advisable/donut";
+import { Box, Modal, useModal } from "@advisable/donut";
 import { useApolloClient } from "@apollo/react-hooks";
 import {
   useParams,
@@ -11,27 +11,21 @@ import {
 import NotFound from "../NotFound";
 import Layout from "../../components/Layout";
 import TaskDrawer from "../../components/TaskDrawer";
+import useViewer from "../../hooks/useViewer";
 import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
-import FixedTutorial from "../../components/Tutorial/FixedProjectTutorial";
-import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
-import useTutorial from "../../hooks/useTutorial";
 import GET_ACTIVE_APPLICATION from "./getActiveApplication";
 import StoppedWorkingNotice from "./StoppedWorkingNotice";
-
-const tutorials = {
-  Fixed: "fixedProjects",
-  Flexible: "flexibleProjects",
-};
+import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
 
 export default function Booking({ data, match }) {
+  const viewer = useViewer();
   const client = useApolloClient();
   const location = useLocation();
   const history = useHistory();
   const { applicationId } = useParams();
-
-  const tutorial = useTutorial(tutorials[data.application.projectType], {
-    autoStart: true,
+  const tutorialModal = useModal({
+    visible: viewer.completedTutorials.indexOf("flexibleProjects") === -1,
   });
 
   let status = get(data, "application.status");
@@ -41,9 +35,6 @@ export default function Booking({ data, match }) {
 
   let application = data.application;
   let specialist = get(data, "application.specialist");
-
-  const TutorialComponent =
-    tutorial.name === "flexibleProjects" ? FlexibleTutorial : FixedTutorial;
 
   const tasks = data.application.tasks;
 
@@ -105,7 +96,15 @@ export default function Booking({ data, match }) {
 
   return (
     <>
-      <TutorialComponent tutorial={tutorial} isClient />
+      {data.application.projectType === "Flexible" && (
+        <Modal
+          modal={tutorialModal}
+          hideOnClickOutside={false}
+          showCloseButton={false}
+        >
+          <FlexibleTutorial modal={tutorialModal} />
+        </Modal>
+      )}
       <TaskDrawer
         isClient
         showStatusNotice
@@ -116,7 +115,7 @@ export default function Booking({ data, match }) {
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
       <Layout>
-        <Sidebar data={data} tutorial={tutorial} />
+        <Sidebar data={data} tutorialModal={tutorialModal} />
         <Layout.Main>
           {status === "Stopped Working" && (
             <Box mb="m">

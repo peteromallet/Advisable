@@ -25,6 +25,7 @@ const Modal = ({
   label,
   children,
   backdrop = true,
+  hideOnClickOutside = true,
   loading,
   width,
   showCloseButton = true,
@@ -35,7 +36,7 @@ const Modal = ({
   const isMobile = !mediumAndUp;
 
   const handleContainerClick = (e) => {
-    if (e.target === ref.current) {
+    if (hideOnClickOutside && e.target === ref.current) {
       modal.hide();
     }
   };

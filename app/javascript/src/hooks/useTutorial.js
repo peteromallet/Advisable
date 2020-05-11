@@ -1,4 +1,3 @@
-import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { useState } from "react";
 import { useApolloClient } from "@apollo/react-hooks";
