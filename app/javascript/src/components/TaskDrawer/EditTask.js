@@ -82,6 +82,7 @@ const EditTask = ({
   isClient,
   isSaving,
   setPrompt,
+  projectType,
   showStatusNotice,
 }) => {
   const [attributes, setAttributes] = React.useState({
@@ -248,6 +249,7 @@ const EditTask = ({
                   setPrompt={setPrompt}
                   isClient={isClient}
                   task={task}
+                  projectType={projectType}
                 />
               )}
             </Padding>

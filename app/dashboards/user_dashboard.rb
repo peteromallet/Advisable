@@ -17,6 +17,7 @@ class UserDashboard < Administrate::BaseDashboard
     projects: Field::HasMany,
     bank_transfers_enabled: Field::Boolean,
     permissions: PermissionsField,
+    completed_tutorials: UserTutorialsField,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze
@@ -39,6 +40,7 @@ class UserDashboard < Administrate::BaseDashboard
     country
     bank_transfers_enabled
     permissions
+    completed_tutorials
     projects
     created_at
     updated_at
@@ -53,6 +55,7 @@ class UserDashboard < Administrate::BaseDashboard
     email
     country
     permissions
+    completed_tutorials
     bank_transfers_enabled
   ].freeze
 

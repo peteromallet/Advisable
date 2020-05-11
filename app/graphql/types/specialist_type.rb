@@ -107,7 +107,8 @@ class Types::SpecialistType < Types::BaseType
       return(
         Rails.application.routes.url_helpers.rails_blob_url(
           object.avatar,
-          host: ENV['ORIGIN']
+          host:
+            ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
         )
       )
     end

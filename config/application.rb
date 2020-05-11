@@ -12,8 +12,11 @@ module Advisable
     config.load_defaults 6.0
     config.active_job.queue_adapter = :sidekiq
 
-    config.action_mailer.default_url_options = { host: ENV['ORIGIN'] }
-    config.action_mailer.asset_host = ENV['ORIGIN']
+    config.action_mailer.default_url_options = {
+      host: ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+    }
+    config.action_mailer.asset_host =
+      ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
     config.action_mailer.preview_path = "#{Rails.root}/test/mailers/previews"
 
     # Settings in config/environments/* take precedence over those specified here.

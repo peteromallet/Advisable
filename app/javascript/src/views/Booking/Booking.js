@@ -103,9 +103,7 @@ export default function Booking({ data, match }) {
     if (completedFixedTutorial) return;
     const tasks = filter(
       data.application.tasks,
-      (task) =>
-        task.dueDate &&
-        ["Not Assigned", "Quote Provided"].indexOf(task.stage) > -1,
+      (task) => ["Not Assigned", "Quote Provided"].indexOf(task.stage) > -1,
     );
     if (tasks.length === 0) return;
     const sorted = tasks.sort(
@@ -135,6 +133,7 @@ export default function Booking({ data, match }) {
         onDeleteTask={handleDeleteTask}
         onCreateRepeatingTask={addNewTaskToCache}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
+        projectType={data.application.projectType}
       />
       <Layout>
         <Sidebar data={data} tutorialModal={tutorialModal} />
