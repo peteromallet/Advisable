@@ -10,6 +10,12 @@ class Mutations::UpdatePreviousProjectImage < Mutations::BaseMutation
     image.position = args[:position] if args[:position]
     image.cover = args[:cover] if args[:cover]
     image.save
+
+    if image.cover
+      image.previous_project.images.where(cover: true).where.not(id: image.id)
+        .update(cover: false)
+    end
+
     { image: image }
   end
 end
