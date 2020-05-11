@@ -1,5 +1,5 @@
 import * as React from "react";
-import { get } from "lodash-es";
+import { get, filter } from "lodash-es";
 import { Box, Modal, useModal } from "@advisable/donut";
 import { useApolloClient } from "@apollo/react-hooks";
 import {
@@ -93,6 +93,28 @@ export default function Booking({ data, match }) {
       },
     });
   };
+
+  // For fixed projects, if they haven't completed tthe fixedProjects tutorial then
+  // we show the first task.
+  React.useEffect(() => {
+    if (data.application.projectType !== "Fixed") return;
+    const completedFixedTutorial =
+      viewer.completedTutorials.indexOf("fixedProjects") > -1;
+    if (completedFixedTutorial) return;
+    const tasks = filter(
+      data.application.tasks,
+      (task) =>
+        task.dueDate &&
+        ["Not Assigned", "Quote Provided"].indexOf(task.stage) > -1,
+    );
+    if (tasks.length === 0) return;
+    const sorted = tasks.sort(
+      (a, b) => new Date(a.dueDate) - new Date(b.dueDate),
+    );
+    history.replace(
+      `/manage/${data.application.airtableId}/tasks/${sorted[0].id}`,
+    );
+  }, []);
 
   return (
     <>

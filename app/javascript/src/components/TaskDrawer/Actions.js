@@ -172,7 +172,7 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
       <Button
         key="assign"
         disabled={!hasNameAndDescription || loading}
-        styling={hasQuote ? "primary" : "dark"}
+        variant={hasQuote ? "primary" : "subtle"}
         loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
