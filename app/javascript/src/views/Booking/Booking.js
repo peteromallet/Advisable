@@ -103,7 +103,10 @@ export default function Booking({ data, match }) {
     if (completedFixedTutorial) return;
     const tasks = filter(
       data.application.tasks,
-      (task) => ["Not Assigned", "Quote Provided"].indexOf(task.stage) > -1,
+      (task) =>
+        ["Not Assigned", "Quote Provided", "Requested To Start"].indexOf(
+          task.stage,
+        ) > -1,
     );
     if (tasks.length === 0) return;
     const sorted = tasks.sort(

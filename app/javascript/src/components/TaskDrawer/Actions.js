@@ -1,6 +1,6 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Info, ArrowDown } from "@styled-icons/feather";
+import { Info, ArrowLeft } from "@styled-icons/feather";
 import { useMutation } from "@apollo/react-hooks";
 import { Box, Button } from "@advisable/donut";
 import Padding from "../Spacing/Padding";
@@ -23,15 +23,15 @@ function AssignButton({ projectType, ...props }) {
     <Box position="relative">
       {showArrow && (
         <Box
-          as={motion.div}
-          animate={{ y: [0, 10, 0] }}
-          transition={{ loop: Infinity }}
-          position="absolute"
-          left="calc(50% - 12px)"
-          top="-40px"
+          right="-32px"
           color="blue500"
+          as={motion.div}
+          position="absolute"
+          top="calc(50% - 13px)"
+          animate={{ x: [0, 10, 0] }}
+          transition={{ loop: Infinity }}
         >
-          <ArrowDown size={24} strokeWidth={2} />
+          <ArrowLeft size={24} strokeWidth={2} />
         </Box>
       )}
       <Button {...props} />
