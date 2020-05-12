@@ -43,7 +43,7 @@ function ValidationComplete({ data }) {
           fontWeight="medium"
           letterSpacing="-0.02em"
         >
-          Thanks {oauthViewer.firstName}!
+          Thanks {oauthViewer?.firstName}!
         </Text>
         <Text mb="50px" fontSize="l" lineHeight="l" color="neutral800">
           We have hundreds more world-class freelancers with experience working
