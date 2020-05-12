@@ -69,7 +69,7 @@ class Types::PreviousProject < Types::BaseType
 
   def title
     return "Project with #{client_name}" if object.primary_skill.nil?
-    "#{object.primary_skill.try(:name)} with #{client_name}"
+    "#{object.primary_skill.try(:name)} project with #{client_name}"
   end
 
   def excerpt
@@ -108,6 +108,6 @@ class Types::PreviousProject < Types::BaseType
       object.company_type
     ).where(
       previous_projects: { industries: { id: object.primary_industry.id } }
-    ).where.not(id: object.specialist.id).uniq
+    ).where.not(id: object.specialist.id).uniq.first(3)
   end
 end

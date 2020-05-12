@@ -22,6 +22,8 @@ const previousProjectFields = gql`
     specialist {
       id
       name
+      avatar
+      location
       firstName
     }
     reviews {
@@ -32,6 +34,9 @@ const previousProjectFields = gql`
       name
       avatar
       location
+      ratings {
+        overall
+      }
     }
   }
 `;

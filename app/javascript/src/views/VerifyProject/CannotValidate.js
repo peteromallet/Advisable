@@ -1,12 +1,12 @@
 import React from "react";
-import { Text, Link } from "@advisable/donut";
+import { Card, Text, Link } from "@advisable/donut";
 import LoginWithLinkedin from "./LoginWithLinkedin";
 
 function ValidationPending({ data }) {
   const { contactName } = data.previousProject;
 
   return (
-    <>
+    <Card padding="l">
       <Text mb="xxs" fontWeight="medium" color="blue900" fontSize="l">
         Unable to validate project
       </Text>
@@ -22,7 +22,7 @@ function ValidationPending({ data }) {
       <Link.External href="mailto:hello@advisable.com">
         Verify via email
       </Link.External>
-    </>
+    </Card>
   );
 }
 

@@ -12,7 +12,7 @@ export const StyledBackdrop = styled(motion.div)`
   right: 0;
   bottom: 0;
   position: fixed;
-  background: ${rgba(theme.colors.neutral[2], 0.9)};
+  background: ${rgba(theme.colors.neutral400, 0.9)};
   ${"" /* Override the display prop that reakit tries to set so that we can handle exit animations */}
   display: block !important;
   pointer-events: ${(props) => (props.hidden ? "none" : "all")};

@@ -99,7 +99,7 @@ function StarRadio({
         <VisuallyHidden>
           {pluralize(Number(value), "star", "stars")}
         </VisuallyHidden>
-        <Star size={32} strokeWidth={0} fill="currentColor" />
+        <Star size={24} strokeWidth={0} fill="currentColor" />
       </label>
     </StyledStarRating>
   );

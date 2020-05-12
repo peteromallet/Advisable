@@ -3,6 +3,8 @@ class PreviousProject < ApplicationRecord
   include Airtable::Syncable
   self.table_name = 'off_platform_projects'
 
+  has_one_attached :contact_image
+
   belongs_to :specialist
   belongs_to :application, required: false
 

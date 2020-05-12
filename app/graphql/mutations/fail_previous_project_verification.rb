@@ -15,6 +15,10 @@ class Mutations::FailPreviousProjectVerification < Mutations::BaseMutation
     project.update(
       validation_status: 'Validation Failed', validation_failed_reason: reason
     )
+    SetPreviousProjectContactImageJob.perform_later(
+      project.id,
+      context[:oauth_viewer].image
+    )
 
     { previous_project: project }
   end

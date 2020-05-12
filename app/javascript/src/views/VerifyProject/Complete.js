@@ -1,9 +1,11 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Box, Text, Stack, Avatar } from "@advisable/donut";
+import { motion } from "framer-motion";
+import { Card, Box, Text, Stack } from "@advisable/donut";
 import FormField from "../../components/FormField";
 import SubmitButton from "../../components/SubmitButton";
 import { useCreateUserFromLinkedin } from "./queries";
+import SimilarSpecialists from "./SimilarSpecialists";
 
 function ValidationComplete({ data }) {
   const { oauthViewer, previousProject } = data;
@@ -13,8 +15,8 @@ function ValidationComplete({ data }) {
     email: "",
   };
 
-  const handleSubmit = async (values) => {
-    await createUser({
+  const handleSubmit = async (values, formik) => {
+    const { data, errors } = await createUser({
       variables: {
         input: {
           email: values.email,
@@ -22,54 +24,67 @@ function ValidationComplete({ data }) {
       },
     });
 
-    window.location = "https://advisable.com/clients/signup/";
+    if (errors) {
+      formik.setStatus("Something went wrong");
+    } else {
+      const uid = data.createUserFromLinkedin.user.id;
+      window.location = `https://advisable.com/clients/signup?uid=${uid}&contactdetails=yes`;
+    }
   };
 
   return (
     <>
-      <Text
-        mb="xs"
-        color="blue900"
-        fontSize="24px"
-        lineHeight="26px"
-        fontWeight="semibold"
+      <Box textAlign="center" maxWidth="520px" mx="auto">
+        <Text
+          mb="12px"
+          color="blue900"
+          fontSize="28px"
+          lineHeight="32px"
+          fontWeight="medium"
+          letterSpacing="-0.02em"
+        >
+          Thanks {oauthViewer.firstName}!
+        </Text>
+        <Text mb="50px" fontSize="l" lineHeight="l" color="neutral800">
+          We have hundreds more world-class freelancers with experience working
+          with {previousProject.companyType} companies in the{" "}
+          {previousProject.primaryIndustry.name} industry.
+        </Text>
+      </Box>
+      <SimilarSpecialists specialists={previousProject.similarSpecialists} />
+      <Card
+        as={motion.div}
+        padding="l"
+        maxWidth="500px"
+        mx="auto"
+        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 20 }}
+        transition={{ delay: 0.24 }}
       >
-        Thanks {oauthViewer.firstName}!
-      </Text>
-      <Text fontSize="l" lineHeight="l" color="neutral700" mb="l">
-        We have hundreds more world-class freelancers with experience working
-        with {previousProject.companyType} companies in the{" "}
-        {previousProject.primaryIndustry.name} industry.
-      </Text>
-      <Stack spacing="s" mb="l">
-        {previousProject.similarSpecialists.map((specialist) => (
-          <Box display="flex" alignItems="center" key={specialist.id}>
-            <Avatar url={specialist.avatar} name={specialist.name} />
-            <Box pl="s">
-              <Text fontSize="l" fontWeight="medium" mb="xxs">
-                {specialist.name}
-              </Text>
-              <Text color="neutral500">{specialist.location}</Text>
-            </Box>
-          </Box>
-        ))}
-      </Stack>
-      <Text fontSize="l" fontWeight="medium" mb="xs">
-        Apply To Access World-Class Talent
-      </Text>
-      <Text lineHeight="m" mb="m" color="neutral700">
-        Across 600+ different marketing skills, get instant recommendations of
-        top talent with experience in the {previousProject.primaryIndustry.name}{" "}
-        space, backed by a no questions asked money-back guarantee.
-      </Text>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        <Form>
-          <Stack spacing="l">
-            <FormField label="Email Address" name="email" />
-            <SubmitButton size="l">Continue</SubmitButton>
-          </Stack>
-        </Form>
-      </Formik>
+        <Text
+          mb="xs"
+          color="blue900"
+          fontSize="22px"
+          fontWeight="medium"
+          letterSpacing="-0.02em"
+        >
+          Apply to acccess world-class talent
+        </Text>
+        <Text lineHeight="m" mb="m" color="neutral700">
+          Across 600+ different marketing skills, get instant recommendations of
+          top talent with experience in the{" "}
+          {previousProject.primaryIndustry.name} space, backed by a no questions
+          asked money-back guarantee.
+        </Text>
+        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+          <Form>
+            <Stack spacing="l">
+              <FormField label="Email Address" name="email" />
+              <SubmitButton size="l">Get Started</SubmitButton>
+            </Stack>
+          </Form>
+        </Formik>
+      </Card>
     </>
   );
 }

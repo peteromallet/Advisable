@@ -31,8 +31,6 @@ class Mutations::ReviewPreviousProject < Mutations::BaseMutation
 
     review.sync_to_airtable
 
-    ::SetReviewerImageJob.perform_later(review.id, context[:oauth_viewer].image)
-
     { review: review }
   end
 end

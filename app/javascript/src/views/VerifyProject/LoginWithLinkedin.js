@@ -13,7 +13,7 @@ const StyledLoginWithLinkedin = styled.button`
   appearance: none;
   font-weight: 600;
   align-items: center;
-  background: #3077b0;
+  background: #2a67bc;
   border-radius: 25px;
   display: inline-flex;
 

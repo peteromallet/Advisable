@@ -5,7 +5,6 @@ import Logo from "../../components/Logo";
 import Loading from "../../components/Loading";
 import { usePreviousProject } from "./queries";
 import NotFound, { isNotFound } from "../NotFound";
-import ValidateProject from "./Validate";
 import ValidationPending from "./ValidationPending";
 import CannotValidate from "./CannotValidate";
 import Review from "./Review";
@@ -14,8 +13,6 @@ import Complete from "./Complete";
 function StatusPending({ data }) {
   if (data.oauthViewer && data.oauthViewer.canValidateProject === false) {
     return <CannotValidate data={data} />;
-  } else if (data.oauthViewer) {
-    return <ValidateProject data={data} />;
   } else {
     return <ValidationPending data={data} />;
   }
@@ -64,14 +61,12 @@ function VerifyProjectView() {
   const Component = STATUS_MAP[data.previousProject.validationStatus];
 
   return (
-    <Container maxWidth="700px">
+    <>
       <Box textAlign="center" py="40px">
         <Logo />
       </Box>
-      <Card padding="l">
-        <Component data={data} />
-      </Card>
-    </Container>
+      <Component data={data} />
+    </>
   );
 }
 
