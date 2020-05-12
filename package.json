@@ -113,6 +113,7 @@
   },
   "scripts": {
     "test": "jest",
+    "lint": "eslint .",
     "storybook": "start-storybook -p 6006 -c donut/.storybook",
     "build-storybook": "build-storybook -c donut/.storybook"
   }
