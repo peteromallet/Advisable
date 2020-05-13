@@ -25,7 +25,7 @@ const SpecialistRating = ({ children, ...props }) => {
   return (
     <StyledSpecialistRating {...props}>
       <Star size={14} fill="white" />
-      {children?.toFixed(1)}
+      {Number(children)?.toFixed(1)}
     </StyledSpecialistRating>
   );
 };

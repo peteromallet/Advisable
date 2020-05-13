@@ -5,7 +5,6 @@ import SpecialistRating from "../../components/SpecialistRating";
 
 function SimilarSpecialists({ specialists }) {
   if (specialists.length === 0) return null;
-  console.log(specialists);
 
   return (
     <Container maxWidth="700px" mx="auto">

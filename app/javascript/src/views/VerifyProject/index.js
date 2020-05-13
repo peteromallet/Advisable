@@ -6,6 +6,7 @@ import Loading from "../../components/Loading";
 import { usePreviousProject } from "./queries";
 import NotFound, { isNotFound } from "../NotFound";
 import ValidationPending from "./ValidationPending";
+import AlreadyValidated from "./AlreadyValidated";
 import CannotValidate from "./CannotValidate";
 import Review from "./Review";
 import Complete from "./Complete";
@@ -27,6 +28,10 @@ function ValidatedRedirect({ data }) {
 }
 
 function StatusValidated({ data }) {
+  if (!data.oauthViewer) {
+    return <AlreadyValidated />;
+  }
+
   return (
     <Switch>
       <Route path="/verify_project/:id/review">
@@ -43,7 +48,11 @@ function StatusValidated({ data }) {
 }
 
 function StatusFailed({ data }) {
-  return <Complete data={data} />;
+  if (data.oauthViewer) {
+    return <Complete data={data} />;
+  }
+
+  return <ValidationPending data={data} />;
 }
 
 const STATUS_MAP = {
