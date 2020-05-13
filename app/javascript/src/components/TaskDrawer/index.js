@@ -43,6 +43,7 @@ const TaskDrawer = ({
   hideStatus,
   onDeleteTask,
   showStatusNotice,
+  projectType,
   onCreateRepeatingTask,
 }) => {
   const query = useQuery(FETCH_TASK, {
@@ -187,6 +188,7 @@ const TaskDrawer = ({
               setPrompt={setPrompt}
               hideStatus={hideStatus}
               showStatusNotice={showStatusNotice}
+              projectType={projectType}
             />
           )}
         </TaskDrawerStyles>

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import Back from "../../components/Back";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
-import { Button } from "@advisable/donut";
+import { Button, DialogDisclosure } from "@advisable/donut";
 import Heading from "../../components/Heading";
 import Padding from "../../components/Spacing/Padding";
 import VideoButton from "../../components/VideoButton";
@@ -15,7 +15,7 @@ import TalkModal from "../../components/TalkModal";
 import { useMobile } from "../../components/Breakpoint";
 import currency from "../../utilities/currency";
 
-const Component = ({ data, tutorial }) => {
+const Component = ({ data, tutorial, tutorialModal }) => {
   const isMobile = useMobile();
   const { t } = useTranslation();
   const application = data.application;
@@ -66,9 +66,9 @@ const Component = ({ data, tutorial }) => {
           </AttributeList>
         </Padding>
         <Padding bottom="xl">
-          <VideoButton onClick={tutorial.start}>
-            {t(`tutorials.${tutorial.name}.prompt`)}
-          </VideoButton>
+          <DialogDisclosure as={VideoButton} {...tutorialModal}>
+            {t(`tutorials.${tutorial}.prompt`)}
+          </DialogDisclosure>
         </Padding>
       </Sticky>
     </Layout.Sidebar>

@@ -32,10 +32,10 @@ export const Status = styled.span`
   ${(props) => STYLES[props.styling]}
 
   svg {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     stroke-width: 2;
-    margin-right: 0px;
+    margin-right: 4px;
     margin-left: -8px;
     display: inline-flex;
   }

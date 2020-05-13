@@ -2,7 +2,7 @@
 # various product tutorials that they have complete.
 module Tutorials
   extend ActiveSupport::Concern
-  
+
   class_methods do
     attr_accessor :tutorials
 
@@ -18,6 +18,10 @@ module Tutorials
   included do
     validate :valid_tutorials
 
+    def completed_tutorials=(tutorials)
+      self[:completed_tutorials] = tutorials.reject(&:empty?)
+    end
+
     # returns the array of completed tutorials
     def completed_tutorials
       self[:completed_tutorials] || []
@@ -30,12 +34,19 @@ module Tutorials
       save
     end
 
+    def has_completed_tutorial?(tutorial)
+      completed_tutorials.include?(tutorial)
+    end
+
     private
 
     def valid_tutorials
       completed_tutorials.each do |tutorial|
         next if self.class.tutorials.include?(tutorial)
-        errors.add(:completed_tutorials, "#{tutorial} is not a registered tutorial")
+        errors.add(
+          :completed_tutorials,
+          "#{tutorial} is not a registered tutorial"
+        )
       end
     end
   end

@@ -1,19 +1,11 @@
 import React from "react";
 import Text from "../Text";
-import Modal from "../Modal";
 import { Button } from "@advisable/donut";
 import Spacing from "../Spacing/Padding";
 
-const VideoModal = ({
-  isOpen,
-  heading,
-  summary,
-  url,
-  buttonLabel,
-  onDismiss,
-}) => {
+const VideoModal = ({ heading, summary, url, buttonLabel, onDismiss }) => {
   return (
-    <Modal isOpen={isOpen}>
+    <>
       <Spacing size="l" css="text-align: center;">
         <Spacing bottom="xs">
           <Text size="l" weight="bold">
@@ -35,7 +27,7 @@ const VideoModal = ({
           {buttonLabel || "Okay"}
         </Button>
       </Spacing>
-    </Modal>
+    </>
   );
 };
 
