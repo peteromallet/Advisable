@@ -58,6 +58,7 @@ function ValidationComplete({ data }) {
           padding="l"
           as={motion.div}
           maxWidth="460px"
+          elevation="l"
           animate={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 30 }}
           transition={{ delay: 0.5 }}
