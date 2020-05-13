@@ -214,6 +214,7 @@ const EditTask = ({
                   />
                   <QuoteInput
                     task={task}
+                    isClient={isClient}
                     readOnly={estimateReadOnly}
                     onSubmit={(values) => {
                       updateField("estimate", values.estimate);
