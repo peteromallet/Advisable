@@ -24,7 +24,7 @@ function Specialist({ image, rating, name, location, opacity = 1, delay = 0 }) {
       animate={{ opacity, scale: 1 }}
       transition={{ delay }}
     >
-      <Avatar size="l" url={image} name="Robert Wilson" mx="auto" mb="20px">
+      <Avatar bg="blue100" size="l" url={image} name={name} mx="auto" mb="20px">
         {rating && (
           <SpecialistRating
             zIndex={1}
@@ -118,9 +118,10 @@ const MoreSpecialists = React.memo(function MoreSpecialists({
 }) {
   let data = PLACEHOLDERS;
 
-  // We only want to show real specialists when there are 3.
-  const hasSpecialists = specialists.length === 3;
-  if (hasSpecialists) {
+  // We only want to show a top row when we have at least 3 specialists.
+  const hasThree = specialists.length >= 3;
+
+  if (specialists.length > 0) {
     data.unshift(
       ...specialists.map((specialist) => ({
         id: specialist.id,
@@ -133,7 +134,7 @@ const MoreSpecialists = React.memo(function MoreSpecialists({
   }
 
   return (
-    <Container maxWidth="750px" mx="auto">
+    <Container maxWidth="720px" mx="auto">
       <Box position="relative">
         <Box display="flex" flexWrap="wrap" justifyContent="space-between">
           {data.slice(0, 12).map((s, i) => (
@@ -164,7 +165,7 @@ const MoreSpecialists = React.memo(function MoreSpecialists({
           position="absolute"
           zIndex={2}
           width="100%"
-          top={hasSpecialists ? "232px" : "40px"}
+          top={hasThree ? "232px" : "40px"}
         >
           {children}
         </Box>

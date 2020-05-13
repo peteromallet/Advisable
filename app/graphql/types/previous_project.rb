@@ -108,6 +108,6 @@ class Types::PreviousProject < Types::BaseType
       object.company_type
     ).where(
       previous_projects: { industries: { id: object.primary_industry.id } }
-    ).where.not(id: object.specialist.id).uniq.first(3)
+    ).where.not(id: object.specialist.id).uniq
   end
 end

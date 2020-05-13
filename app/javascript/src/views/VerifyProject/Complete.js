@@ -1,7 +1,8 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { motion } from "framer-motion";
-import { Card, Box, Text, Stack } from "@advisable/donut";
+import { Lock } from "@styled-icons/feather";
+import { Card, Box, Text, Stack, Circle } from "@advisable/donut";
 import FormField from "../../components/FormField";
 import SubmitButton from "../../components/SubmitButton";
 import { useCreateUserFromLinkedin } from "./queries";
@@ -56,34 +57,41 @@ function ValidationComplete({ data }) {
           mx="auto"
           padding="l"
           as={motion.div}
-          maxWidth="500px"
+          maxWidth="460px"
           animate={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ delay: 0.4 }}
+          initial={{ opacity: 0, y: 30 }}
+          transition={{ delay: 0.5 }}
         >
-          <Text
-            mb="xs"
-            color="blue900"
-            fontSize="22px"
-            fontWeight="medium"
-            letterSpacing="-0.02em"
-          >
-            Apply to acccess world-class talent
-          </Text>
-          <Text lineHeight="m" mb="m" color="neutral700">
-            Across 600+ different marketing skills, get instant recommendations
-            of top talent with experience in the{" "}
-            {previousProject.primaryIndustry.name} space, backed by a no
-            questions asked money-back guarantee.
-          </Text>
-          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-            <Form>
-              <Stack spacing="l">
-                <FormField label="Email Address" name="email" />
-                <SubmitButton size="l">Get Started</SubmitButton>
-              </Stack>
-            </Form>
-          </Formik>
+          <Box textAlign="center">
+            <Circle bg="blue900" color="white.9" mb="20px">
+              <Lock size={24} strokeWidth={2} />
+            </Circle>
+            <Text
+              mb="xs"
+              color="blue900"
+              fontSize="20px"
+              fontWeight="medium"
+              letterSpacing="-0.02em"
+            >
+              Unlock acccess to world-class talent
+            </Text>
+            <Text fontSize="15px" lineHeight="m" mb="l" color="neutral700">
+              Across 600+ different marketing skills, get instant
+              recommendations of top talent with experience in the{" "}
+              {previousProject.primaryIndustry.name} space, backed by a no
+              questions asked money-back guarantee.
+            </Text>
+            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+              <Form>
+                <Stack spacing="m">
+                  <FormField name="email" placeholder="Email address" />
+                  <SubmitButton variant="dark" width="100%" size="l">
+                    Get Started
+                  </SubmitButton>
+                </Stack>
+              </Form>
+            </Formik>
+          </Box>
         </Card>
       </MoreSpecialists>
     </>
