@@ -8,6 +8,8 @@ class TaskDrawerErrorBoundary extends React.Component {
   };
 
   componentDidCatch(error, info) {
+    console.log(error);
+    console.log(info);
     this.setState({ hasError: true });
   }
 

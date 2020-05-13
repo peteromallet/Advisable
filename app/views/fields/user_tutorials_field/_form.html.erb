@@ -1,0 +1,11 @@
+<div class="field-unit__label">
+  <%= f.label field.attribute %>
+</div>
+<div class="field-unit__field">
+  <%= f.hidden_field "#{field.attribute}[]", value: '' %>
+  <%= f.check_box field.attribute, { multiple: true }, 'fixedProjects', false %>
+  Fixed Projects
+  <br />
+  <%= f.check_box field.attribute, { multiple: true }, 'flexibleProjects', false %>
+  Flexible Projects
+</div>

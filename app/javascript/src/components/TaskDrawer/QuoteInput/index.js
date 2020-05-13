@@ -19,7 +19,7 @@ import {
 } from "../styles";
 import QuoteInputPopout from "./QuoteInputPopout";
 
-const QuoteInput = ({ task, readOnly, onSubmit }) => {
+const QuoteInput = ({ isClient, task, readOnly, onSubmit }) => {
   const popover = usePopoverState({ placement: "bottom-start" });
 
   return (
@@ -31,12 +31,12 @@ const QuoteInput = ({ task, readOnly, onSubmit }) => {
         aria-label="Set estimate"
         {...popover}
       >
-        {task.stage === "Quote Requested" && (
+        {!isClient && task.stage === "Quote Requested" && (
           <ArrowPrompt>
             <ArrowUp size={24} strokeWidth={2} />
           </ArrowPrompt>
         )}
-        <DetailIcon prompt={task.stage === "Quote Requested"}>
+        <DetailIcon prompt={!isClient && task.stage === "Quote Requested"}>
           <Clock />
         </DetailIcon>
         <DetailLabel>{hoursLabel(task)}</DetailLabel>

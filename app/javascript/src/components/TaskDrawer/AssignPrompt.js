@@ -37,7 +37,7 @@ const AssignPrompt = ({ task, onClose, onAssign }) => {
         <Padding bottom="l">
           <Text size="s">
             You will not be able to modify this task after it is assigned. You
-            can add additional tasks if more working needs to be done.
+            can add additional tasks if more work needs to be done.
           </Text>
         </Padding>
         {!hasQuote && (
