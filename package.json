@@ -106,6 +106,7 @@
     "jest": "^25.5.3",
     "jest-environment-jsdom-fifteen": "^1.0.2",
     "jest-environment-jsdom-sixteen": "^1.0.3",
+    "jest-styled-components": "^7.0.2",
     "jest-transform-graphql": "^2.1.0",
     "prettier": "^2.0.5",
     "waait": "^1.0.5",
@@ -113,6 +114,7 @@
   },
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "eslint .",
     "storybook": "start-storybook -p 6006 -c donut/.storybook",
     "build-storybook": "build-storybook -c donut/.storybook"
