@@ -64,7 +64,11 @@ function ValidationPending({ data }) {
             {!viewer && <StyledTextMask />}
           </Text>
         </Box>
-        {viewer ? <ValidationActions /> : <AuthenticateWithLinkedin />}
+        {viewer ? (
+          <ValidationActions />
+        ) : (
+          <AuthenticateWithLinkedin data={data} />
+        )}
       </Card>
     </Container>
   );

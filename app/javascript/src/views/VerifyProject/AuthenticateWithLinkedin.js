@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Text, Link } from "@advisable/donut";
 import LoginWithLinkedin from "./LoginWithLinkedin";
 
-function AuthenticateWithLinkedin() {
+function AuthenticateWithLinkedin({ data }) {
   return (
     <Box
       bg="blue50"
@@ -24,7 +24,9 @@ function AuthenticateWithLinkedin() {
       <Text fontWeight="medium" mt="24px" mb="xs">
         Don&apos;t have a LinkedIn account?
       </Text>
-      <Link.External href="mailto:hello@advisable.com">
+      <Link.External
+        href={`mailto:hello@advisable.com?subject=${data.previousProject.title}(${data.previousProject.id})&body=Hi there, I'd like to validate this project via email.`}
+      >
         Verify with email
       </Link.External>
     </Box>
