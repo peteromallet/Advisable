@@ -22,6 +22,21 @@ module.exports = {
   },
   coverageReporters: ["html"],
   coverageDirectory: "<rootDir>/jest-coverage",
-  collectCoverageFrom: ["<rootDir>/app/javascript/src/**/*.{js,tsx,ts}"],
+  collectCoverageFrom: [
+    "<rootDir>/app/javascript/src/**/*.{js,tsx,ts}",
+    "<rootDir>/donut/src/**/*.{js,tsx,ts}",
+  ],
+  coverageThreshold: {
+    global: {
+      statements: 64,
+      branches: 54,
+      functions: 55,
+      lines: 55,
+    },
+  },
   snapshotSerializers: ["jest-styled-components"],
+  watchPlugins: [
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname",
+  ],
 };
