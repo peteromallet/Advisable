@@ -1,5 +1,6 @@
 import React from "react";
 import { nanoid } from "nanoid";
+import { useBreakpoint } from "@advisable/donut";
 import { Star } from "@styled-icons/feather";
 import { VisuallyHidden } from "reakit/VisuallyHidden";
 import pluralize from "../../utilities/pluralize";
@@ -9,7 +10,9 @@ const StarRatingInput = React.memo(function StarRatingInput({
   name,
   value,
   onChange,
+  label,
 }) {
+  const mUp = useBreakpoint("mUp");
   const [hover, setHover] = React.useState(false);
   const [current, setCurrent] = React.useState(value);
 
@@ -23,50 +26,57 @@ const StarRatingInput = React.memo(function StarRatingInput({
     onChange(Number(e.currentTarget.value));
   };
 
+  const handleStarHover = (num) => () => setCurrent(num);
+
   return (
     <StyledStarRatingInput
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={mUp ? handleMouseEnter : null}
+      onMouseLeave={mUp ? handleMouseLeave : null}
     >
       <StarRadio
         value="1"
         name={name}
         onChange={handleChange}
         checked={value === 1}
+        label={label}
         filled={displayValue >= 1}
-        onMouseEnter={() => setCurrent("1")}
+        onMouseEnter={mUp ? handleStarHover("1") : null}
       />
       <StarRadio
         value="2"
         name={name}
         onChange={handleChange}
         checked={value === 2}
+        label={label}
         filled={displayValue >= 2}
-        onMouseEnter={() => setCurrent("2")}
+        onMouseEnter={mUp ? handleStarHover("2") : null}
       />
       <StarRadio
         value="3"
         name={name}
         onChange={handleChange}
         checked={value === 3}
+        label={label}
         filled={displayValue >= 3}
-        onMouseEnter={() => setCurrent("3")}
+        onMouseEnter={mUp ? handleStarHover("3") : null}
       />
       <StarRadio
         value="4"
         name={name}
         onChange={handleChange}
         checked={value === 4}
+        label={label}
         filled={displayValue >= 4}
-        onMouseEnter={() => setCurrent("4")}
+        onMouseEnter={mUp ? handleStarHover("4") : null}
       />
       <StarRadio
         value="5"
         name={name}
         onChange={handleChange}
         checked={value === 5}
+        label={label}
         filled={displayValue === 5}
-        onMouseEnter={() => setCurrent("5")}
+        onMouseEnter={mUp ? handleStarHover("5") : null}
       />
     </StyledStarRatingInput>
   );
@@ -79,6 +89,7 @@ function StarRadio({
   filled,
   checked,
   onChange,
+  label,
   onMouseEnter,
 }) {
   const inputID = React.useMemo(() => id || nanoid(8), [id]);
@@ -97,7 +108,7 @@ function StarRadio({
       </VisuallyHidden>
       <label htmlFor={inputID}>
         <VisuallyHidden>
-          {pluralize(Number(value), "star", "stars")}
+          {`Rate ${label} ${pluralize(Number(value), "star", "stars")}`}
         </VisuallyHidden>
         <Star size={24} strokeWidth={0} fill="currentColor" />
       </label>

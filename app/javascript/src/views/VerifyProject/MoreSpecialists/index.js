@@ -16,15 +16,22 @@ import image09 from "./09.jpg";
 function Specialist({ image, rating, name, location, opacity = 1, delay = 0 }) {
   return (
     <Box
+      maxWidth={["120px", "160px"]}
+      mx="auto"
       as={motion.div}
-      width="180px"
       textAlign="center"
-      mb="40px"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity, scale: 1 }}
       transition={{ delay }}
     >
-      <Avatar bg="blue100" size="l" url={image} name={name} mx="auto" mb="20px">
+      <Avatar
+        bg="blue100"
+        size={["m", "l"]}
+        url={image}
+        name={name}
+        mx="auto"
+        mb="20px"
+      >
         {rating && (
           <SpecialistRating
             zIndex={1}
@@ -36,10 +43,19 @@ function Specialist({ image, rating, name, location, opacity = 1, delay = 0 }) {
           </SpecialistRating>
         )}
       </Avatar>
-      <Text fontSize="l" fontWeight="medium" mb="xxs" color="blue900">
+      <Text
+        fontSize={["13px", "16px"]}
+        fontWeight="medium"
+        mb="xxs"
+        color="blue900"
+      >
         {name}
       </Text>
-      <Text lineHeight="18px" fontSize="14px" color="neutral700">
+      <Text
+        color="neutral700"
+        fontSize={["12px", "14px"]}
+        lineHeight={["14px", "18px"]}
+      >
         {location}
       </Text>
     </Box>
@@ -136,7 +152,11 @@ const MoreSpecialists = React.memo(function MoreSpecialists({
   return (
     <Container maxWidth="720px" mx="auto">
       <Box position="relative">
-        <Box display="flex" flexWrap="wrap" justifyContent="space-between">
+        <Box
+          display="grid"
+          gridRowGap="40px"
+          gridTemplateColumns={["1fr 1fr", "1fr 1fr 1fr"]}
+        >
           {data.slice(0, 12).map((s, i) => (
             <Specialist
               key={s.id}

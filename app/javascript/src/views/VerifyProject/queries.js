@@ -112,16 +112,26 @@ export function useFailPreviousProjectValidation() {
   return useMutation(FAIL_PREVIOUS_PROJECT_VALIDATION);
 }
 
-export const CREATE_USER_FROM_LINKEDIN = gql`
-  mutation createUserFromLinkedin($input: CreateUserFromLinkedinInput!) {
-    createUserFromLinkedin(input: $input) {
+export const CREATE_USER_FROM_PROJECT_VERIFICATION = gql`
+  mutation createUserFromProjectVerification(
+    $input: CreateUserFromProjectVerificationInput!
+  ) {
+    createUserFromProjectVerification(input: $input) {
       user {
         id
+        firstName
+        lastName
+        companyName
+        companyType
+        industry {
+          id
+          name
+        }
       }
     }
   }
 `;
 
-export function useCreateUserFromLinkedin() {
-  return useMutation(CREATE_USER_FROM_LINKEDIN);
+export function useCreateUserFromProjectVerification() {
+  return useMutation(CREATE_USER_FROM_PROJECT_VERIFICATION);
 }

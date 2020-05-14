@@ -48,7 +48,8 @@ class Types::MutationType < GraphQL::Schema::Object
   field :request_password_reset, mutation: Mutations::RequestPasswordReset
   field :reset_password, mutation: Mutations::ResetPassword
   field :create_user_account, mutation: Mutations::CreateUserAccount
-  field :create_user_from_linkedin, mutation: Mutations::CreateUserFromLinkedin
+  field :create_user_from_project_verification,
+        mutation: Mutations::CreateUserFromProjectVerification
 
   field :update_profile, mutation: Mutations::UpdateProfile
 

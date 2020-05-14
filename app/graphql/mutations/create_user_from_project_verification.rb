@@ -1,9 +1,11 @@
-class Mutations::CreateUserFromLinkedin < Mutations::BaseMutation
+class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
+  argument :previous_project, ID, required: true
   argument :email, String, required: true
+  argument :fid, String, required: true
 
   field :user, Types::User, null: true
 
-  def authorized?(email:)
+  def authorized?(previous_project:, email:, fid:)
     unless context[:oauth_viewer]
       raise ApiError::InvalidRequest.new(
               'notAuthenticated',
@@ -14,7 +16,8 @@ class Mutations::CreateUserFromLinkedin < Mutations::BaseMutation
     true
   end
 
-  def resolve(email:)
+  def resolve(previous_project:, email:, fid:)
+    project = PreviousProject.find_by_uid(previous_project)
     viewer = context[:oauth_viewer]
 
     if BlacklistedDomain.email_allowed?(email)
@@ -26,7 +29,15 @@ class Mutations::CreateUserFromLinkedin < Mutations::BaseMutation
 
     user =
       User.new(
-        email: email, first_name: viewer.first_name, last_name: viewer.last_name
+        email: email,
+        first_name: viewer.first_name,
+        last_name: viewer.last_name,
+        company_name: project.client_name,
+        company_type: project.company_type,
+        fid: fid,
+        contact_status: 'Application Started',
+        campaign_source: 'validation',
+        industry: project.primary_industry
       )
 
     if user.save

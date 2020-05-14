@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form, useField } from "formik";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import {
   Container,
   Card,
@@ -14,11 +14,17 @@ import FormField from "../../components/FormField";
 import StarRatingInput from "../../components/StarRatingInput";
 import SubmitButton from "../../components/SubmitButton";
 import { useReviewPreviousProject } from "./queries";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 function Review({ data }) {
+  useScrollToTop;
   const history = useHistory();
-  const { id, specialist } = data.previousProject;
+  const { id, specialist, reviews } = data.previousProject;
   const [reviewPreviousProject] = useReviewPreviousProject();
+
+  if (reviews.length > 0) {
+    return <Redirect to={`/verify_project/${id}/complete`} />;
+  }
 
   const initialValues = {
     comment: "",
@@ -39,28 +45,28 @@ function Review({ data }) {
       },
     });
 
-    history.push(`/verify_project/${id}/validated`);
+    history.push(`/verify_project/${id}/complete`);
   };
 
   const handleSkip = () => {
-    history.push(`/verify_project/${id}/validated`);
+    history.push(`/verify_project/${id}/complete`);
   };
 
   return (
-    <Container maxWidth="700px">
-      <Card padding="l">
+    <Container maxWidth="700px" pb="20px">
+      <Card padding={["m", "l"]}>
         <Text
           mb="12px"
           color="blue900"
-          fontSize="28px"
-          lineHeight="32px"
+          fontSize={{ _: "24px", m: "30px" }}
+          lineHeight={{ _: "28px", m: "32px" }}
           fontWeight="medium"
           letterSpacing="-0.02em"
         >
           How was your experience working with {specialist.firstName} on this
           project?
         </Text>
-        <Text fontSize="17px" lineHeight="24px" color="neutral700" mb="40px">
+        <Text fontSize="16px" lineHeight="24px" color="neutral900" mb="40px">
           Tell us what it was like to work with {specialist.firstName}. How
           would you rate them in the following areas?
         </Text>
@@ -85,12 +91,18 @@ function Review({ data }) {
                 label="Anything else you would like to add?"
                 placeholder="Comment"
               />
-              <SubmitButton size="l" mr="xs">
+              <SubmitButton
+                size="l"
+                mr="xs"
+                mb={["xs", "none"]}
+                width={["100%", "auto"]}
+              >
                 Continue
               </SubmitButton>
               <Button
                 size="l"
                 variant="subtle"
+                width={["100%", "auto"]}
                 onClick={formik.dirty ? handleSubmit : handleSkip}
               >
                 Skip
@@ -115,6 +127,7 @@ function StarRatingField({ name, label }) {
         <StarRatingInput
           name={name}
           value={field.value}
+          label={label}
           onChange={(rating) => helpers.setValue(rating)}
         />
       </Box>

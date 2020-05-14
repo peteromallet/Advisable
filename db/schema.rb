@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_07_110602) do
+ActiveRecord::Schema.define(version: 2020_05_14_065227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -670,6 +670,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_110602) do
     t.string "time_zone"
     t.string "campaign_medium"
     t.bigint "sales_person_id"
+    t.string "contact_status"
+    t.string "fid"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"

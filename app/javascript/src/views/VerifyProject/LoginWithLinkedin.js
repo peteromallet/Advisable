@@ -29,7 +29,7 @@ const StyledLoginWithLinkedin = styled.button`
 function OmniauthLogin() {
   const csrf = document
     .querySelector("meta[name=csrf-token]")
-    .getAttribute("content");
+    ?.getAttribute("content");
 
   return (
     <form action="/auth/linkedin" method="POST">

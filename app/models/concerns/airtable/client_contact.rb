@@ -16,9 +16,11 @@ class Airtable::ClientContact < Airtable::Base
   sync_column 'Type of Company', to: :company_type
   sync_column 'Campaign Name', to: :campaign_name
   sync_column 'Campaign Source', to: :campaign_source
+  sync_column 'Contact Status', to: :contact_status
   sync_column 'Campaign Medium', to: :campaign_medium
   sync_column 'PID', to: :pid
   sync_column 'RID', to: :rid
+  sync_column 'fid', to: :fid
   sync_column 'gclid', to: :gclid
   sync_association 'Industry', to: :industry
   sync_association 'Owner', to: :sales_person
@@ -60,7 +62,8 @@ class Airtable::ClientContact < Airtable::Base
     self['Campaign Medium'] = user.campaign_medium
     self['RID'] = user.rid
     self['gclid'] = user.gclid
-
+    self['fid'] = user.fid
+    self['Contact Status'] = user.contact_status
     self['Address'] = Address.new(user.address).to_s if user.address
   end
 end

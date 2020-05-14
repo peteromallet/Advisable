@@ -4,7 +4,12 @@ import LoginWithLinkedin from "./LoginWithLinkedin";
 
 function AuthenticateWithLinkedin() {
   return (
-    <Box bg="blue50" padding="40px" textAlign="center" borderRadius="20px">
+    <Box
+      bg="blue50"
+      padding={{ _: "20px", m: "40px" }}
+      textAlign="center"
+      borderRadius="20px"
+    >
       <Text
         mb="20px"
         fontSize="17px"

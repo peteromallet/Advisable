@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router";
-import { Container, Card, Box } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 import Logo from "../../components/Logo";
 import Loading from "../../components/Loading";
 import { usePreviousProject } from "./queries";
@@ -19,14 +19,6 @@ function StatusPending({ data }) {
   }
 }
 
-function ValidatedRedirect({ data }) {
-  const { oauthViewer, previousProject } = data;
-  if (oauthViewer?.canValidateProject && previousProject.reviews.length === 0) {
-    return <Redirect to={`/verify_project/${previousProject.id}/review`} />;
-  }
-  return <Redirect to={`/verify_project/${previousProject.id}/validated`} />;
-}
-
 function StatusValidated({ data }) {
   if (!data.oauthViewer) {
     return <AlreadyValidated />;
@@ -37,11 +29,11 @@ function StatusValidated({ data }) {
       <Route path="/verify_project/:id/review">
         <Review data={data} />
       </Route>
-      <Route path="/verify_project/:id/validated">
+      <Route path="/verify_project/:id/complete">
         <Complete data={data} />
       </Route>
       <Route>
-        <ValidatedRedirect data={data} />
+        <Redirect to={`/verify_project/${data.previousProject.id}/review`} />
       </Route>
     </Switch>
   );
@@ -49,7 +41,19 @@ function StatusValidated({ data }) {
 
 function StatusFailed({ data }) {
   if (data.oauthViewer) {
-    return <Complete data={data} />;
+    return (
+      <Switch>
+        <Route path="/verify_project/:id/review">
+          <Review data={data} />
+        </Route>
+        <Route path="/verify_project/:id/complete">
+          <Complete data={data} />
+        </Route>
+        <Route>
+          <ValidationPending data={data} />;
+        </Route>
+      </Switch>
+    );
   }
 
   return <ValidationPending data={data} />;

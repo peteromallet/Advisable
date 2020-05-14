@@ -26,11 +26,11 @@ function FailValidationModal({ modal }) {
   };
 
   return (
-    <Modal modal={modal} padding="l">
+    <Modal modal={modal} padding="l" label="Can't validate">
       <Text lineHeight="m" fontSize="xxl" fontWeight="semibold" mb="xs">
         Can&apos;t verify project
       </Text>
-      <Text lineHeight="m">
+      <Text lineHeight="m" mb="l">
         Thanks for reviewing the details of this project. Please let us know why
         you can&apos;t verify the details of this project?
       </Text>
