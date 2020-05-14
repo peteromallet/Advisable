@@ -1,4 +1,5 @@
 import {
+  user,
   fireEvent,
   renderRoute,
   screen,
@@ -124,7 +125,7 @@ test("Can validate project", async () => {
   });
 
   const btn = await screen.findByLabelText("Verify Project");
-  fireEvent.click(btn);
+  user.click(btn);
   await screen.findByText(/How was your experience/i);
 });
 
@@ -172,10 +173,10 @@ test("Can fail project validation", async () => {
   });
 
   const btn = await screen.findByLabelText(/I can't verify/i);
-  fireEvent.click(btn);
+  user.click(btn);
   const input = await screen.findByPlaceholderText("Reason");
-  fireEvent.change(input, { target: { value: "This is the reason" } });
-  fireEvent.click(screen.getByLabelText("Continue"));
+  user.type(input, "This is the reason");
+  user.click(screen.getByLabelText("Continue"));
   await screen.findByText(/Thanks/i);
 });
 
@@ -229,18 +230,16 @@ test("Can leave a review", async () => {
   });
 
   await screen.findByText(/How was your experience/i);
-  fireEvent.click(screen.getByLabelText(/rate skills 5 stars/i));
-  fireEvent.click(screen.getByLabelText(/rate quality of work 4 stars/i));
-  fireEvent.click(screen.getByLabelText(/rate adherence to schedule 3 stars/i));
-  fireEvent.click(screen.getByLabelText(/rate communication 2 stars/i));
-  fireEvent.click(screen.getByLabelText(/rate availability 1 star/i));
-  fireEvent.change(
+  user.click(screen.getByLabelText(/rate skills 5 stars/i));
+  user.click(screen.getByLabelText(/rate quality of work 4 stars/i));
+  user.click(screen.getByLabelText(/rate adherence to schedule 3 stars/i));
+  user.click(screen.getByLabelText(/rate communication 2 stars/i));
+  user.click(screen.getByLabelText(/rate availability 1 star/i));
+  user.type(
     screen.getByLabelText("Anything else you would like to add?"),
-    {
-      target: { value: "This is the comment" },
-    },
+    "This is the comment",
   );
-  fireEvent.click(screen.getByLabelText("Continue"));
+  user.click(screen.getByLabelText("Continue"));
   await screen.findByText(/Thanks/i);
 });
 
@@ -276,7 +275,7 @@ test("Can skip leaving a review", async () => {
   });
 
   await screen.findByText(/How was your experience/i);
-  fireEvent.click(screen.getByLabelText(/skip/i));
+  user.click(screen.getByLabelText(/skip/i));
   await screen.findByText(/Thanks/i);
 });
 
@@ -343,9 +342,9 @@ test("Can signup for advisable", async () => {
 
   await screen.findByText(/thanks/i);
   const email = screen.getByPlaceholderText("Email address");
-  fireEvent.change(email, { target: { value: "test@test.com" } });
+  user.type(email, "test@test.com");
   const btn = screen.getByLabelText(/Get Started/i);
-  fireEvent.click(btn);
+  user.click(btn);
   await waitFor(() => expect(btn).toHaveAttribute("data-loading", "false"));
 
   expect(window.location.href).toEqual(
@@ -489,7 +488,7 @@ test("Can still validate project when its failed", async () => {
   });
 
   const btn = await screen.findByLabelText("Verify Project");
-  fireEvent.click(btn);
+  user.click(btn);
   await screen.findByText(/How was your experience/i);
 });
 
