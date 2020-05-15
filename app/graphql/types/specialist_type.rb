@@ -150,7 +150,7 @@ class Types::SpecialistType < Types::BaseType
   field :project_skills, Types::Skill.connection_type, null: false
 
   def project_skills
-    object.previous_project_skills
+    object.previous_project_skills.uniq
   end
 
   field :industries, [Types::IndustryType], null: false do
@@ -160,7 +160,7 @@ class Types::SpecialistType < Types::BaseType
   # TODO: This should eventually be updated to include multiple industries associated with an on
   # platform project
   def industries
-    object.previous_project_industries
+    object.previous_project_industries.uniq
   end
 
   field :ratings, Types::Ratings, null: false do
