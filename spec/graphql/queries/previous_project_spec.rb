@@ -46,7 +46,7 @@ describe Types::PreviousProject do
   context 'when confidential is false' do
     it 'includes the company name in the title' do
       expect(response['data']['previousProject']['title']).to eq(
-        "#{previous_project.primary_skill.name} with #{
+        "#{previous_project.primary_skill.name} project with #{
           previous_project.client_name
         }"
       )
@@ -64,7 +64,7 @@ describe Types::PreviousProject do
 
     it 'hides the company name in the title' do
       expect(response['data']['previousProject']['title']).to eq(
-        "#{previous_project.primary_skill.name} with #{
+        "#{previous_project.primary_skill.name} project with #{
           previous_project.primary_industry.name
         } #{previous_project.company_type}"
       )
