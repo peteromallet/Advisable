@@ -29,12 +29,12 @@ const lineHeights = {
 };
 
 export const Text = styled.p`
-  display: ${props => props.inline && "inline"};
-  font-size: ${props => sizes[props.size] || sizes["m"]};
-  line-height: ${props => lineHeights[props.size] || lineHeights["m"]};
-  font-weight: ${props => weights[props.weight || props.variation] || 400};
-  color: ${props => colours[props.colour || props.variation] || "#353E5C"};
-  text-align: ${props => (props.center ? "center" : "inherit")};
+  display: ${(props) => props.inline && "inline"};
+  font-size: ${(props) => sizes[props.size] || sizes["m"]};
+  line-height: ${(props) => lineHeights[props.size] || lineHeights["m"]};
+  font-weight: ${(props) => weights[props.weight || props.variation] || 400};
+  color: ${(props) => colours[props.colour || props.variation] || "#353E5C"};
+  text-align: ${(props) => (props.center ? "center" : "inherit")};
 
   a {
     color: #1232a6;

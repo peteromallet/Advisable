@@ -104,15 +104,21 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^3.0.0",
     "jest": "^25.5.3",
+    "jest-axe": "^3.4.0",
     "jest-environment-jsdom-fifteen": "^1.0.2",
     "jest-environment-jsdom-sixteen": "^1.0.3",
+    "jest-styled-components": "^7.0.2",
     "jest-transform-graphql": "^2.1.0",
+    "jest-watch-typeahead": "^0.6.0",
     "prettier": "^2.0.5",
     "waait": "^1.0.5",
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand --watch",
+    "lint": "eslint .",
     "storybook": "start-storybook -p 6006 -c donut/.storybook",
     "build-storybook": "build-storybook -c donut/.storybook"
   }
