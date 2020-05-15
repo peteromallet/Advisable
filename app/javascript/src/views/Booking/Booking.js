@@ -124,6 +124,7 @@ export default function Booking({ data, match }) {
           modal={tutorialModal}
           hideOnClickOutside={false}
           showCloseButton={false}
+          label="Project tutorial"
         >
           <FlexibleTutorial modal={tutorialModal} />
         </Modal>
