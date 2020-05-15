@@ -234,4 +234,10 @@ class Types::QueryType < Types::BaseType
 
     context[:current_user].searches.find_by_uid!(id)
   end
+
+  field :oauth_viewer, Types::OauthViewer, null: true
+
+  def oauth_viewer
+    context[:oauth_viewer]
+  end
 end

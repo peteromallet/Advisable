@@ -29,8 +29,6 @@ namespace :demo do
         skill = skills.sample
 
         specialist.previous_projects.create(
-          industry: industry.name,
-          primary_skill: skill.name,
           contact_first_name: Faker::Name.first_name,
           contact_last_name: Faker::Name.last_name,
           contact_job_title: Faker::Job.title,

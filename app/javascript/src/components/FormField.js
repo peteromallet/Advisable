@@ -24,23 +24,25 @@ const FormField = ({
 
   return (
     <>
-      <Columns align="top" mb="xs">
-        <Columns.Column expand>
-          <Label htmlFor={id}>{label}</Label>
-        </Columns.Column>
-        {optional && (
-          <Text
-            fontSize="xs"
-            fontWeight="medium"
-            color="neutral400"
-            paddingLeft="20px"
-            letterSpacing="-0.01em"
-            lineHeight="s"
-          >
-            Optional
-          </Text>
-        )}
-      </Columns>
+      {label && (
+        <Columns align="top" mb="xs">
+          <Columns.Column expand>
+            <Label htmlFor={id}>{label}</Label>
+          </Columns.Column>
+          {optional && (
+            <Text
+              fontSize="xs"
+              fontWeight="medium"
+              color="neutral400"
+              paddingLeft="20px"
+              letterSpacing="-0.01em"
+              lineHeight="s"
+            >
+              Optional
+            </Text>
+          )}
+        </Columns>
+      )}
       {description && (
         <Text fontSize="s" lineHeight="s" color="neutral600" my="-4px" mb="s">
           {description}

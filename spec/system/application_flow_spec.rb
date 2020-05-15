@@ -100,7 +100,8 @@ describe 'Application flow' do
         visit "/invites/#{application.airtable_id}/apply/references"
         find(
           'label',
-          text: "#{project.primary_skill.name} with #{project.client_name}"
+          text:
+            "#{project.primary_skill.name} project with #{project.client_name}"
         ).click
         click_on 'Next'
         click_on 'Continue With 1 Reference'

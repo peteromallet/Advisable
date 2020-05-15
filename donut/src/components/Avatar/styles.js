@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { space, border, variant } from "styled-system";
+import { color, space, border, variant } from "styled-system";
 import theme from "../../theme";
 
 const size = variant({
@@ -32,10 +32,10 @@ export const StyledAvatar = styled.div`
   ${size}
   ${space}
   ${border}
+  ${color}
 
   border-radius: 50%;
   position: relative;
-  background-color: ${theme.colors.neutral[1]};
 `;
 
 export const StyledAvatarInitials = styled.div`
@@ -50,10 +50,10 @@ export const StyledAvatarInitials = styled.div`
   display: inline-flex;
   letter-spacing: -0.02em;
   justify-content: center;
-  color: ${theme.colors.neutral[4]};
+  color: inherit;
 `;
 
-export const StyledAvatarImage = styled.div.attrs(props => ({
+export const StyledAvatarImage = styled.div.attrs((props) => ({
   style: {
     backgroundImage: props.url && `url(${props.url})`,
   },
@@ -66,7 +66,7 @@ export const StyledAvatarImage = styled.div.attrs(props => ({
   position: absolute;
   background-size: cover;
   background-position: center;
-  opacity: ${props => (props.url ? 1 : 0)};
+  opacity: ${(props) => (props.url ? 1 : 0)};
   transition: opacity 500ms;
 `;
 

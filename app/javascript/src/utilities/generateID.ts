@@ -1,9 +1,13 @@
 import { customAlphabet } from "nanoid";
 const CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const nanoid = customAlphabet(CHARS, 15);
+
+export const alphanumeric = (length = 15) => {
+  const nanoid = customAlphabet(CHARS, length);
+  return nanoid();
+};
 
 const generateID = (prefix) => {
-  const id = nanoid();
+  const id = alphanumeric();
   return `${prefix}_${id}`;
 };
 

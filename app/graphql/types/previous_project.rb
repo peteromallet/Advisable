@@ -32,6 +32,7 @@ class Types::PreviousProject < Types::BaseType
   field :location_relevance, Integer, null: true
   field :cost_to_hire, Integer, null: true
   field :execution_cost, Integer, null: true
+  field :similar_specialists, [Types::SpecialistType], null: false
 
   def images
     object.images.order(position: :asc)
@@ -68,7 +69,7 @@ class Types::PreviousProject < Types::BaseType
 
   def title
     return "Project with #{client_name}" if object.primary_skill.nil?
-    "#{object.primary_skill.try(:name)} with #{client_name}"
+    "#{object.primary_skill.try(:name)} project with #{client_name}"
   end
 
   def excerpt
@@ -97,5 +98,16 @@ class Types::PreviousProject < Types::BaseType
   def contact_email
     return object.contact_email if object.validation_status == 'In Progress'
     nil
+  end
+
+  def similar_specialists
+    industry = object.primary_industry
+    return [] if industry.nil?
+    Specialist.joins(previous_projects: :industries).where(
+      'average_score >= 65 AND off_platform_projects.company_type = ?',
+      object.company_type
+    ).where(
+      previous_projects: { industries: { id: object.primary_industry.id } }
+    ).where.not(id: object.specialist.id).uniq
   end
 end

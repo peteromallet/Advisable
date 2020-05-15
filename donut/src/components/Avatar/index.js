@@ -33,6 +33,8 @@ const Avatar = ({ url, name, children, ...props }) => {
 
 Avatar.defaultProps = {
   size: "m",
+  color: "neutral400",
+  bg: "blue50",
 };
 
 export default Avatar;

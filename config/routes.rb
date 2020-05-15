@@ -40,6 +40,8 @@ Rails.application.routes.draw do
 
   post '/stripe_events', to: 'stripe_events#create'
 
+  get '/auth/:provider/callback', to: 'auth_providers#create'
+
   # match every other route to the frontend codebase
   root 'application#frontend'
   get '*path',

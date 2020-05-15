@@ -272,6 +272,7 @@ export const previousProject = (fields = {}) => {
       locationRelevance: null,
       costToHire: null,
       executionCost: null,
+      similarSpecialists: [],
     },
     fields,
   );
