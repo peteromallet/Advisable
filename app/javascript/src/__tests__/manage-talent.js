@@ -1,8 +1,10 @@
 import generateID from "../utilities/generateID";
 import {
+  user as screenUser,
   renderRoute,
   fireEvent,
   waitFor,
+  screen,
   waitForElementToBeRemoved,
 } from "test-utils";
 import VIEWER from "../graphql/queries/viewer";
@@ -299,7 +301,9 @@ test("The client can add a task", async () => {
   const createButton = await app.findByText("Add a project");
   fireEvent.click(createButton);
   const name = app.getByTestId("nameField");
-  fireEvent.change(name, { target: { value: "This is a new task" } });
+  screenUser.type(name, "This is a new task");
+  const saving = await screen.findByText(/saving.../i);
+  await waitForElementToBeRemoved(saving);
   const close = app.getByLabelText("Close Drawer");
   fireEvent.click(close);
   await app.findByText("This is a new task");

@@ -300,21 +300,9 @@ export const SavingIndicator = styled.div`
   justify-content: center;
   color: ${theme.colors.blue[7]};
   background-color: ${theme.colors.blue[1]};
-  transition: opacity 200ms, transform 300ms;
-
-  opacity: 0;
-  transform: translateX(100%);
 
   svg {
     margin-right: 4px;
     animation: ${spin} 500ms infinite linear;
   }
-
-  ${(props) =>
-    props.isSaving &&
-    css`
-      opacity: 1;
-      transform: translateX(0);
-      transition: opacity 200ms, transform 300ms;
-    `}
 `;

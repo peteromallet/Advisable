@@ -74,7 +74,7 @@ const TaskDrawer = ({
   };
 
   const handleSave = async (attr, fields) => {
-    setSaving((s) => ({ ...s, [attr]: true }));
+    setSaving({ ...saving, [attr]: true });
     const mutation = mutations[attr];
     await mutation({
       variables: {
@@ -84,7 +84,7 @@ const TaskDrawer = ({
         },
       },
     });
-    setSaving((s) => ({ ...s, [attr]: false }));
+    setSaving({ ...saving, [attr]: false });
   };
 
   const handleDelete = (task) => {

@@ -1,6 +1,10 @@
 import renderApp from "../../testHelpers/renderApp";
 import generateID from "../../utilities/generateID";
-import { fireEvent } from "@testing-library/react";
+import {
+  screen,
+  fireEvent,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
 import generateTypes from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
 import CREATE_TASK from "../../graphql/mutations/createTask";
@@ -9,9 +13,9 @@ import FETCH_APPLICATION from "./fetchApplication";
 import SUBMIT_TASK from "../../components/TaskDrawer/submitTask";
 import {
   updateTaskName as UPDATE_TASK_NAME,
-  updateTaskEstimate as UPDATE_TASK_ESTIMATE,
   updateTaskDescription as UPDATE_TASK_DESCRIPTION,
 } from "../../graphql/mutations/tasks";
+import UPDATE_ESTIMATE from "../../components/TaskDrawer/QuoteInput/updateEstimate";
 
 jest.mock("../../utilities/generateID");
 
@@ -110,10 +114,11 @@ test("Freelancer can create a task", async () => {
       },
       {
         request: {
-          query: UPDATE_TASK_ESTIMATE,
+          query: UPDATE_ESTIMATE,
           variables: {
             input: {
               id: "tas_abc",
+              estimateType: "Hourly",
               estimate: 10,
               flexibleEstimate: 20,
             },
@@ -129,7 +134,6 @@ test("Freelancer can create a task", async () => {
                 estimate: 10,
                 flexibleEstimate: 20,
               }),
-              errors: null,
             },
           },
         },
@@ -168,12 +172,14 @@ test("Freelancer can create a task", async () => {
   fireEvent.click(createButton);
   const name = await findByTestId("nameField");
   fireEvent.change(name, { target: { value: "Task name here" } });
+  let saving = await screen.findByText(/saving.../i);
+  await waitForElementToBeRemoved(saving);
   const estimate = getByText("Add estimate", { exact: false });
   fireEvent.click(estimate);
-  const flexible = getByLabelText("Flexible", { exact: false });
-  fireEvent.click(flexible);
   const from = getByPlaceholderText("10 Hours");
   fireEvent.change(from, { target: { value: 10 } });
+  const flexible = getByLabelText("Flexible", { exact: false });
+  fireEvent.click(flexible);
   const to = getByPlaceholderText("20 Hours");
   fireEvent.change(to, { target: { value: 20 } });
   const save = getByLabelText("Save Quote");
@@ -181,6 +187,8 @@ test("Freelancer can create a task", async () => {
   const description = getByPlaceholderText("Add a description...");
   fireEvent.change(description, { target: { value: "Description here" } });
   fireEvent.blur(description);
+  saving = await screen.findByText(/saving.../i);
+  await waitForElementToBeRemoved(saving);
   const close = getByLabelText("Close Drawer");
   fireEvent.click(close);
   const quote = await findByText("10 - 20 hours");
