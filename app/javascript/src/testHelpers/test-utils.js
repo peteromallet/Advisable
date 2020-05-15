@@ -101,4 +101,5 @@ export function renderComponent(component, config = {}) {
 // re-export everything
 export * from "@testing-library/react";
 export * from "./apolloMocks";
+export { default as user } from "@testing-library/user-event";
 export { default as mockData } from "../__mocks__/graphqlFields";

@@ -1,10 +1,6 @@
 import React from "react";
 import { Refresh } from "@styled-icons/heroicons-outline";
-import {
-  ExclamationCircle,
-  CheckCircle,
-  Pencil,
-} from "@styled-icons/heroicons-solid";
+import { CheckCircle, Pencil } from "@styled-icons/heroicons-solid";
 import { Tooltip, Badge } from "@advisable/donut";
 
 const STATUSES = {
@@ -18,13 +14,7 @@ const STATUSES = {
     variant: "orange",
     label: "Pending Verification",
     icon: <Refresh />,
-    tooltip: "Advisable is working to verify this project with the client",
-  },
-  "In Progress": {
-    variant: "orange",
-    label: "Verification In Progress",
-    icon: <Refresh />,
-    tooltip: "Advisable is in the process of verifying this project",
+    tooltip: "This project has not been validated yet.",
   },
   Validated: {
     variant: "cyan",
@@ -32,11 +22,10 @@ const STATUSES = {
     icon: <CheckCircle />,
   },
   "Validation Failed": {
-    variant: "neutral",
-    label: "Unverified",
-    icon: <ExclamationCircle />,
-    tooltip:
-      "This project didn't happen on Advisable and we weren't able to verify with a 3rd party that it happened.",
+    variant: "orange",
+    label: "Pending",
+    icon: <Refresh />,
+    tooltip: "This project has not been validated yet.",
   },
 };
 

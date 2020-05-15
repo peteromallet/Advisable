@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_30_075252) do
+ActiveRecord::Schema.define(version: 2020_05_14_065227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -332,6 +332,7 @@ ActiveRecord::Schema.define(version: 2020_04_30_075252) do
     t.integer "cost_to_hire"
     t.integer "execution_cost"
     t.string "pending_description"
+    t.string "validation_failed_reason"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
@@ -483,6 +484,7 @@ ActiveRecord::Schema.define(version: 2020_04_30_075252) do
     t.jsonb "ratings"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uid"
     t.index ["airtable_id"], name: "index_reviews_on_airtable_id"
     t.index ["project_type", "project_id"], name: "index_reviews_on_project_type_and_project_id"
     t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id"
@@ -668,6 +670,8 @@ ActiveRecord::Schema.define(version: 2020_04_30_075252) do
     t.string "time_zone"
     t.string "campaign_medium"
     t.bigint "sales_person_id"
+    t.string "contact_status"
+    t.string "fid"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"

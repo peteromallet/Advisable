@@ -9,7 +9,7 @@ class Types::Review < Types::BaseType
   field :company_name, String, null: true
 
   def id
-    object.airtable_id
+    object.uid
   end
 
   def name

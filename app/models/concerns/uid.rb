@@ -2,7 +2,6 @@
 # If a model includes the UID module it is expected to have a uid column
 module Uid
   extend ActiveSupport::Concern
-  CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
   included do
     before_validation :generate_uid, on: :create, unless: :uid?
@@ -30,7 +29,7 @@ module Uid
     # Deposit.generate_uid
     # => dep_8Aymaf6idazxsWa
     def self.generate_uid
-      "#{prefix_for_uid}_#{Nanoid.generate(size: 15, alphabet: CHARS)}"
+      "#{prefix_for_uid}_#{AlphanumericId.generate}"
     end
 
     private
@@ -42,9 +41,11 @@ module Uid
     # Ensure that the UID is valid
     def valid_uid
       return unless uid
-      prefix, uniq = uid.split("_")
-      errors.add(:base, "invalid_id_prefix") if prefix != self.class.prefix_for_uid
-      errors.add(:base, "id_too_short") if uniq.length != 15
+      prefix, uniq = uid.split('_')
+      if prefix != self.class.prefix_for_uid
+        errors.add(:base, 'invalid_id_prefix')
+      end
+      errors.add(:base, 'id_too_short') if uniq.length != 15
     end
   end
 end

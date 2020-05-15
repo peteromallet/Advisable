@@ -24,9 +24,14 @@ class Types::MutationType < GraphQL::Schema::Object
   field :update_project, mutation: Mutations::UpdateProject
   field :confirm_project, mutation: Mutations::ConfirmProject
   field :convert_to_self_service, mutation: Mutations::ConvertToSelfService
+
   field :create_previous_project, mutation: Mutations::CreatePreviousProject
   field :update_previous_project, mutation: Mutations::UpdatePreviousProject
   field :publish_previous_project, mutation: Mutations::PublishPreviousProject
+  field :verify_previous_project, mutation: Mutations::VerifyPreviousProject
+  field :review_previous_project, mutation: Mutations::ReviewPreviousProject
+  field :fail_previous_project_verification,
+        mutation: Mutations::FailPreviousProjectVerification
 
   field :create_previous_project_image,
         mutation: Mutations::CreatePreviousProjectImage
@@ -43,6 +48,8 @@ class Types::MutationType < GraphQL::Schema::Object
   field :request_password_reset, mutation: Mutations::RequestPasswordReset
   field :reset_password, mutation: Mutations::ResetPassword
   field :create_user_account, mutation: Mutations::CreateUserAccount
+  field :create_user_from_project_verification,
+        mutation: Mutations::CreateUserFromProjectVerification
 
   field :update_profile, mutation: Mutations::UpdateProfile
 
@@ -64,7 +71,6 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :update_payment_settings, mutation: Mutations::UpdatePaymentSettings
   field :complete_setup, mutation: Mutations::CompleteSetup
-  field :verify_previous_project, mutation: Mutations::VerifyPreviousProject
 
   field :create_consultation, mutation: Mutations::CreateConsultation
   field :update_consultation, mutation: Mutations::UpdateConsultation
