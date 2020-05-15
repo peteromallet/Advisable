@@ -1,6 +1,6 @@
 import * as React from "react";
-import { get } from "lodash-es";
-import { Box } from "@advisable/donut";
+import { get, filter } from "lodash-es";
+import { Box, Modal, useModal } from "@advisable/donut";
 import { useApolloClient } from "@apollo/react-hooks";
 import {
   useParams,
@@ -11,27 +11,21 @@ import {
 import NotFound from "../NotFound";
 import Layout from "../../components/Layout";
 import TaskDrawer from "../../components/TaskDrawer";
+import useViewer from "../../hooks/useViewer";
 import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
-import FixedTutorial from "../../components/Tutorial/FixedProjectTutorial";
-import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
-import useTutorial from "../../hooks/useTutorial";
 import GET_ACTIVE_APPLICATION from "./getActiveApplication";
 import StoppedWorkingNotice from "./StoppedWorkingNotice";
-
-const tutorials = {
-  Fixed: "fixedProjects",
-  Flexible: "flexibleProjects",
-};
+import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
 
 export default function Booking({ data, match }) {
+  const viewer = useViewer();
   const client = useApolloClient();
   const location = useLocation();
   const history = useHistory();
   const { applicationId } = useParams();
-
-  const tutorial = useTutorial(tutorials[data.application.projectType], {
-    autoStart: true,
+  const tutorialModal = useModal({
+    visible: viewer.completedTutorials.indexOf("flexibleProjects") === -1,
   });
 
   let status = get(data, "application.status");
@@ -41,9 +35,6 @@ export default function Booking({ data, match }) {
 
   let application = data.application;
   let specialist = get(data, "application.specialist");
-
-  const TutorialComponent =
-    tutorial.name === "flexibleProjects" ? FlexibleTutorial : FixedTutorial;
 
   const tasks = data.application.tasks;
 
@@ -103,9 +94,40 @@ export default function Booking({ data, match }) {
     });
   };
 
+  // For fixed projects, if they haven't completed tthe fixedProjects tutorial then
+  // we show the first task.
+  React.useEffect(() => {
+    if (data.application.projectType !== "Fixed") return;
+    const completedFixedTutorial =
+      viewer.completedTutorials.indexOf("fixedProjects") > -1;
+    if (completedFixedTutorial) return;
+    const tasks = filter(
+      data.application.tasks,
+      (task) =>
+        ["Not Assigned", "Quote Provided", "Requested To Start"].indexOf(
+          task.stage,
+        ) > -1,
+    );
+    if (tasks.length === 0) return;
+    const sorted = tasks.sort(
+      (a, b) => new Date(a.dueDate) - new Date(b.dueDate),
+    );
+    history.replace(
+      `/manage/${data.application.airtableId}/tasks/${sorted[0].id}`,
+    );
+  }, []);
+
   return (
     <>
-      <TutorialComponent tutorial={tutorial} isClient />
+      {data.application.projectType === "Flexible" && (
+        <Modal
+          modal={tutorialModal}
+          hideOnClickOutside={false}
+          showCloseButton={false}
+        >
+          <FlexibleTutorial modal={tutorialModal} />
+        </Modal>
+      )}
       <TaskDrawer
         isClient
         showStatusNotice
@@ -114,9 +136,10 @@ export default function Booking({ data, match }) {
         onDeleteTask={handleDeleteTask}
         onCreateRepeatingTask={addNewTaskToCache}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
+        projectType={data.application.projectType}
       />
       <Layout>
-        <Sidebar data={data} tutorial={tutorial} />
+        <Sidebar data={data} tutorialModal={tutorialModal} />
         <Layout.Main>
           {status === "Stopped Working" && (
             <Box mb="m">

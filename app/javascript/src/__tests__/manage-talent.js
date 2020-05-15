@@ -63,7 +63,7 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
             application: generateType.application({
               id: "rec1234",
               airtableId: "rec1234",
-              projecType: "Fixed",
+              projectType: "Flexible",
               tasks: [generateType.task({ name: "This is a test task" })],
               project: generateType.project({
                 user: generateType.user(),
@@ -76,7 +76,7 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
     ],
   });
 
-  await findByText("tutorials.fixedProjects.heading");
+  await findByText(/flexibleProjects.heading/i, {}, { timeout: 10000 });
 });
 
 test("Does not render a tutorial video if the user has completed it", async () => {
@@ -90,7 +90,7 @@ test("Does not render a tutorial video if the user has completed it", async () =
         result: {
           data: {
             viewer: generateType.user({
-              completedTutorials: ["fixedProjects"],
+              completedTutorials: ["flexibleProjects"],
             }),
           },
         },
@@ -108,7 +108,7 @@ test("Does not render a tutorial video if the user has completed it", async () =
             application: generateType.application({
               id: "rec1234",
               airtableId: "rec1234",
-              projecType: "Fixed",
+              projecType: "Flexible",
               tasks: [generateType.task({ name: "This is a test task" })],
               project: generateType.project({
                 user: generateType.user(),
@@ -122,7 +122,7 @@ test("Does not render a tutorial video if the user has completed it", async () =
   });
 
   await findByText("Active Projects"); // wait for page to load
-  expect(queryByText("tutorials.fixedProjects.heading")).toBeNull();
+  expect(queryByText("tutorials.flexibleProjects.heading")).toBeNull();
 });
 
 test("The client can change the project type", async () => {

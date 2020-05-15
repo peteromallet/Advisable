@@ -32,6 +32,8 @@ class Airtable::ClientContact < Airtable::Base
       user.address = Address.parse(self['Address']).to_h
     end
 
+    user.company_name = self['Company Name'].try(:first)
+
     # if there is a client_id and it is not already synced then sync it.
     client_id = fields['Client'].try(:first)
 

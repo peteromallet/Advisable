@@ -82,6 +82,7 @@ const EditTask = ({
   isClient,
   isSaving,
   setPrompt,
+  projectType,
   showStatusNotice,
 }) => {
   const [attributes, setAttributes] = React.useState({
@@ -213,6 +214,7 @@ const EditTask = ({
                   />
                   <QuoteInput
                     task={task}
+                    isClient={isClient}
                     readOnly={estimateReadOnly}
                     onSubmit={(values) => {
                       updateField("estimate", values.estimate);
@@ -248,6 +250,7 @@ const EditTask = ({
                   setPrompt={setPrompt}
                   isClient={isClient}
                   task={task}
+                  projectType={projectType}
                 />
               )}
             </Padding>

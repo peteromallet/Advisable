@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Info } from "@styled-icons/feather";
+import { motion } from "framer-motion";
+import { Info, ArrowLeft } from "@styled-icons/feather";
 import { useMutation } from "@apollo/react-hooks";
-import { Button } from "@advisable/donut";
+import { Box, Button } from "@advisable/donut";
 import Padding from "../Spacing/Padding";
 import { Text } from "@advisable/donut";
 import ButtonGroup from "../ButtonGroup";
@@ -9,9 +10,41 @@ import Notice from "../Notice";
 import START_TASK from "./startTask.graphql";
 import REQUEST_QUOTE from "./requestQuote.graphql";
 import REQUEST_TO_START from "./requestToStart";
+import useViewer from "../../hooks/useViewer";
 import { useMobile } from "../Breakpoint";
 
-export default function TaskDrawerActions({ task, isClient, setPrompt }) {
+function AssignButton({ projectType, ...props }) {
+  const viewer = useViewer();
+  const showArrow =
+    projectType === "Fixed" &&
+    viewer.completedTutorials.indexOf("fixedProjects") === -1;
+
+  return (
+    <Box position="relative">
+      {showArrow && (
+        <Box
+          right="-32px"
+          color="blue500"
+          as={motion.div}
+          position="absolute"
+          top="calc(50% - 13px)"
+          animate={{ x: [0, 10, 0] }}
+          transition={{ loop: Infinity }}
+        >
+          <ArrowLeft size={24} strokeWidth={2} />
+        </Box>
+      )}
+      <Button {...props} />
+    </Box>
+  );
+}
+
+export default function TaskDrawerActions({
+  task,
+  isClient,
+  setPrompt,
+  projectType,
+}) {
   const isMobile = useMobile();
   const [requestQuote] = useMutation(REQUEST_QUOTE);
   const [startTask] = useMutation(START_TASK);
@@ -93,13 +126,14 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
   // an action to assign the task.
   if (isClient && stage === "Requested To Start") {
     actions.push(
-      <Button
+      <AssignButton
+        projectType={projectType}
         key="assign"
         loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
-      </Button>,
+      </AssignButton>,
     );
 
     if (!hasQuote) {
@@ -169,41 +203,44 @@ export default function TaskDrawerActions({ task, isClient, setPrompt }) {
     }
 
     actions.push(
-      <Button
+      <AssignButton
+        projectType={projectType}
         key="assign"
         disabled={!hasNameAndDescription || loading}
-        styling={hasQuote ? "primary" : "dark"}
+        variant={hasQuote ? "primary" : "subtle"}
         loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
-      </Button>,
+      </AssignButton>,
     );
   }
 
   if (isClient && stage === "Quote Requested") {
     actions.push(
-      <Button
+      <AssignButton
+        projectType={projectType}
         key="quote"
         disabled={loading}
         loading={loading === "ASSIGN" ? true : undefined}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
       >
         Assign Task
-      </Button>,
+      </AssignButton>,
     );
   }
 
   if (isClient && stage === "Quote Provided") {
     actions.push(
-      <Button
+      <AssignButton
+        projectType={projectType}
         key="quote"
         disabled={loading}
         onClick={() => setPrompt("ASSIGN_PROMPT")}
         loading={loading === "ASSIGN" ? true : undefined}
       >
         Assign Task
-      </Button>,
+      </AssignButton>,
     );
   }
 

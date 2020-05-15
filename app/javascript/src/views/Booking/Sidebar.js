@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash-es";
-import { Button, Tooltip, Box } from "@advisable/donut";
+import { Button, Tooltip, Box, DialogDisclosure } from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "../../components/Sticky";
@@ -25,7 +25,7 @@ import {
 } from "@styled-icons/feather";
 const TALK_MODAL = "TALK_MODAL";
 
-const Sidebar = ({ data, history, tutorial, match }) => {
+const Sidebar = ({ data, history, tutorialModal, match }) => {
   const isMobile = useMobile();
   const { t } = useTranslation();
   const application = data.application;
@@ -170,9 +170,11 @@ const Sidebar = ({ data, history, tutorial, match }) => {
             </AttributeList>
           </Padding>
           <Padding bottom="xl">
-            <VideoButton onClick={tutorial.start}>
-              {t(`tutorials.${tutorial.name}.prompt`)}
-            </VideoButton>
+            {application.projectType === "Flexible" && (
+              <DialogDisclosure as={VideoButton} {...tutorialModal}>
+                {t(`tutorials.flexibleProjects.prompt`)}
+              </DialogDisclosure>
+            )}
           </Padding>
         </FadeIn>
       </Sticky>

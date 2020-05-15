@@ -69,7 +69,7 @@ function Review({ review }) {
             <Box mr="xxs" display="inline-block">
               <Star />
             </Box>
-            {ratings.overall.toFixed(1)}
+            {ratings.overall?.toFixed(1)}
           </Box>
           <Box>
             <Text

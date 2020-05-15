@@ -1,9 +1,9 @@
 import React from "react";
 import { VideoButton as VideoButtonStyles, PlayIcon } from "./styles";
 
-const VideoButton = ({ children, ...rest }) => {
+const VideoButton = React.forwardRef(({ children, ...rest }, ref) => {
   return (
-    <VideoButtonStyles {...rest}>
+    <VideoButtonStyles ref={ref} {...rest}>
       <PlayIcon>
         <svg
           width="6"
@@ -18,6 +18,6 @@ const VideoButton = ({ children, ...rest }) => {
       {children}
     </VideoButtonStyles>
   );
-};
+});
 
 export default VideoButton;

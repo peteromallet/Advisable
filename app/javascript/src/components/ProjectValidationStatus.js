@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Tooltip } from "@advisable/donut";
+import { Tooltip, Box } from "@advisable/donut";
 import Status from "./Status";
 
 // This component is used in mulitiple places to display the validation status

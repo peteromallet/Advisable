@@ -8,17 +8,19 @@ class Mutations::AssignTask < Mutations::BaseMutation
     task = Task.find_by_uid!(args[:task])
     policy = TaskPolicy.new(context[:current_user], task)
     return true if policy.is_client
-    return false, { errors: [{ code: "not_authorized" }] }
+    return false, { errors: [{ code: 'not_authorized' }] }
   end
 
   def resolve(**args)
     task = Task.find_by_uid!(args[:task])
 
-    {
-      task: Tasks::Assign.call(task: task)
-    }
+    user = task.application.project.user
+    unless user.has_completed_tutorial?('fixedProjects')
+      user.complete_tutorial('fixedProjects')
+    end
 
-    rescue Service::Error => e
-      return { errors: [e] }
+    { task: Tasks::Assign.call(task: task) }
+  rescue Service::Error => e
+    return { errors: [e] }
   end
 end

@@ -2,7 +2,7 @@
 // application
 import React from "react";
 import { get } from "lodash-es";
-import { Box } from "@advisable/donut";
+import { Box, Modal, useModal } from "@advisable/donut";
 import { matchPath } from "react-router-dom";
 import Layout from "../../components/Layout";
 import TaskDrawer from "../../components/TaskDrawer";
@@ -10,10 +10,10 @@ import FixedTutorial from "../../components/Tutorial/FixedProjectTutorial";
 import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
 import Sidebar from "./Sidebar";
 import FETCH_APPLICATION from "./fetchApplication";
-import useTutorial from "../../hooks/useTutorial";
 import Tasks from "./Tasks";
 import SetupPayments from "./SetupPayments";
 import StoppedWorkingNotice from "./StoppedWorkingNotice";
+import useViewer from "../../hooks/useViewer";
 
 const tutorials = {
   Fixed: "fixedProjects",
@@ -22,10 +22,10 @@ const tutorials = {
 
 const ActiveApplication = ({ location, history, match, data, client }) => {
   const application = data.application;
-
-  const tutorial = useTutorial(tutorials[application.projectType], {
-    client,
-    autoStart: true,
+  const tutorial = tutorials[application.projectType];
+  const viewer = useViewer();
+  const tutorialModal = useModal({
+    visible: viewer.completedTutorials.indexOf(tutorial) === -1,
   });
 
   const status = get(data, "application.status");
@@ -33,9 +33,6 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
   if (!hasSetupPayments) {
     return <SetupPayments data={data} />;
   }
-
-  const TutorialComponent =
-    tutorial.name === "flexibleProjects" ? FlexibleTutorial : FixedTutorial;
 
   const handleTaskClick = (task) => {
     history.replace(`/clients/${application.airtableId}/tasks/${task.id}`);
@@ -101,7 +98,17 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
 
   return (
     <Layout>
-      <TutorialComponent tutorial={tutorial} />
+      <Modal
+        modal={tutorialModal}
+        hideOnClickOutside={false}
+        showCloseButton={false}
+      >
+        {tutorial === "flexibleProjects" ? (
+          <FlexibleTutorial modal={tutorialModal} />
+        ) : (
+          <FixedTutorial modal={tutorialModal} />
+        )}
+      </Modal>
       <TaskDrawer
         isClient={false}
         showStatusNotice
@@ -110,7 +117,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
         readOnly={application.status !== "Working"}
         taskId={taskDrawerPath ? taskDrawerPath.params.taskId : null}
       />
-      <Sidebar data={data} tutorial={tutorial} />
+      <Sidebar data={data} tutorial={tutorial} tutorialModal={tutorialModal} />
       <Layout.Main>
         {status === "Stopped Working" && (
           <Box mb="m">

@@ -7,24 +7,13 @@ class PreviousProjectImage < ApplicationRecord
              foreign_key: 'off_platform_project_id'
   has_one_attached :image
 
-  before_save :toggle_cover, if: :cover
   after_destroy :set_first_to_cover, if: :cover
   after_destroy :reduce_positions
 
   private
 
-  # Set any existing cover photo to false
-  def toggle_cover
-    unless previous_project.cover_photo && previous_project.cover_photo != self
-      return
-    end
-    previous_project.images.where(cover: true).where.not(id: id).update(
-      cover: false
-    )
-  end
-
   def reduce_positions
-    previous_project.images.where('position > ?', position).each do |ppi|
+    previous_project.images.where('position > ?', position).find_each do |ppi|
       ppi.update position: ppi.position - 1
     end
   end
