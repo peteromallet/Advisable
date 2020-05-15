@@ -4,7 +4,11 @@ module.exports = {
     es6: true,
     "jest/globals": true,
   },
-  extends: ["eslint:recommended", "plugin:react/recommended"],
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "eslint-config-prettier",
+  ],
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
