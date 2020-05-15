@@ -102,6 +102,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
         modal={tutorialModal}
         hideOnClickOutside={false}
         showCloseButton={false}
+        label="Project tutorial"
       >
         {tutorial === "flexibleProjects" ? (
           <FlexibleTutorial modal={tutorialModal} />
