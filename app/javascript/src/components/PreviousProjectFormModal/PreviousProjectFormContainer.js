@@ -32,7 +32,7 @@ export default function PreviousProjectFormContainer({
 
   return (
     <>
-      <PreviousProjectFormHeader modal={modal} data={data}>
+      <PreviousProjectFormHeader modal={modal}>
         <Text color="blue900">
           {data ? "Edit previous project" : "Add a previous project"}
         </Text>
