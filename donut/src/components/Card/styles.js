@@ -1,6 +1,13 @@
 import { rgba } from "polished";
 import styled from "styled-components";
-import { compose, space, layout, border, variant } from "styled-system";
+import {
+  compose,
+  space,
+  layout,
+  border,
+  variant,
+  typography,
+} from "styled-system";
 import theme from "../../theme";
 
 const elevation = variant({
@@ -28,7 +35,7 @@ const elevation = variant({
 });
 
 export const StyledCard = styled.div`
-  ${compose(space, layout, border, elevation)}
+  ${compose(space, layout, border, elevation, typography)}
 
   outline: none;
   background: white;
