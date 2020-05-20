@@ -7,6 +7,7 @@ class PreviousProject < ApplicationRecord
 
   belongs_to :specialist
   belongs_to :application, required: false
+  belongs_to :reviewed_by, class_name: 'SalesPerson', required: false
 
   has_many :reviews, as: :project
   has_many :images,
