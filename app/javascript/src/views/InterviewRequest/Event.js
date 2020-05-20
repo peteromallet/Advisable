@@ -1,9 +1,10 @@
 import React from "react";
-import moment from "moment-timezone";
 import { Calendar } from "@styled-icons/feather";
 import { Box, Circle, Text } from "@advisable/donut";
 
-export default function Event({ date }) {
+export default function Event({ date, zone }) {
+  const zoned = zone ? date.setZone(zone) : date;
+
   return (
     <Box
       bg="neutral100"
@@ -17,11 +18,12 @@ export default function Event({ date }) {
       </Circle>
       <Box>
         <Text mb="xxs" fontWeight="semibold" color="neutral900">
-          {date.format("dddd, DD MMMM")}
+          {zoned.toFormat("cccc, dd MMMM")}
         </Text>
-        <Text fontSize="s" color="neutral600">
-          {date.format("hh:mma")} -{" "}
-          {moment(date).add(30, "minutes").format("hh:mma")}
+        <Text fontSize="s" color="neutral600" textAlign="left">
+          {`${zoned.toFormat("HH:mm")} - ${zoned
+            .plus({ minutes: 30 })
+            .toFormat("HH:mm")}`}
         </Text>
       </Box>
     </Box>
