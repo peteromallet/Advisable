@@ -1,6 +1,6 @@
 import React from "react";
+import { DateTime } from "luxon";
 import { sortBy, filter } from "lodash-es";
-import moment from "moment-timezone";
 import { Text, Link, Box } from "@advisable/donut";
 import { ArrowLeft } from "@styled-icons/feather";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
@@ -9,15 +9,16 @@ import { Times, Time } from "./styles";
 export default function SelectTime(props) {
   const { availability, timeZone, match, clientName } = props;
   const [selectedTimeZone, setTimeZone] = React.useState(
-    timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone,
+    DateTime.local().zoneName || timeZone,
   );
 
-  const date = moment.tz(match.params.date, timeZone);
+  const date = DateTime.fromISO(match.params.date, { zone: timeZone });
   const times = sortBy(
     filter(availability, (t) => {
-      return date.isSame(t, "day");
+      const time = DateTime.fromISO(t);
+      return time.hasSame(date, "day");
     }),
-    (time) => moment(time).format("HHmm"),
+    (time) => DateTime.fromISO(time).toFormat("T"),
   );
 
   return (
@@ -36,7 +37,7 @@ export default function SelectTime(props) {
         fontWeight="semibold"
         letterSpacing="-0.02em"
       >
-        {date.format("dddd, DD MMMM")}
+        {date.toFormat("cccc, dd LLL yyyy")}
       </Text>
       <Text lineHeight="s" color="neutral800" mb="l">
         Select a time for your call with {clientName}
@@ -47,12 +48,12 @@ export default function SelectTime(props) {
       />
       <Times>
         {times.map((time) => {
-          const parsed = moment.tz(time, selectedTimeZone);
+          const parsed = DateTime.fromISO(time, { zone: selectedTimeZone });
           return (
-            <Time key={time} to={parsed.toISOString(true)}>
-              {parsed.format("hh:mma")}
+            <Time key={time} to={parsed.toUTC().toISO()}>
+              {parsed.toFormat("t")}
               {" - "}
-              {parsed.add(30, "minutes").format("hh:mma")}
+              {parsed.plus({ minutes: 30 }).toFormat("t")}
             </Time>
           );
         })}

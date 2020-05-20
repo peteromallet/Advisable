@@ -1,11 +1,11 @@
 import React from "react";
-import moment from "moment-timezone";
+import { DateTime } from "luxon";
 import { Box, Text } from "@advisable/donut";
 import illustration from "./illustration.png";
 import Event from "./Event";
 
-export default ({ clientName, startsAt, timeZone }) => {
-  const date = moment.tz(startsAt, timeZone);
+export default ({ clientName, startsAt }) => {
+  const date = DateTime.fromISO(startsAt);
 
   return (
     <Box textAlign="center">

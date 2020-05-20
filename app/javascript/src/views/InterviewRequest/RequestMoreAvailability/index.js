@@ -2,7 +2,6 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { Box, Text, Button, Columns } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
-import ButtonGroup from "src/components/ButtonGroup";
 import TextField from "../../../components/TextField";
 import REQUEST_MORE_TIMES from "./requestMoreTimes";
 

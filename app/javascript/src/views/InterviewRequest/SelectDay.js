@@ -1,6 +1,6 @@
-import { reduce } from "lodash-es";
-import moment from "moment-timezone";
-import React, { useState } from "react";
+import React from "react";
+import { DateTime } from "luxon";
+import { sortBy, reduce } from "lodash-es";
 import { Text, Modal, useModal } from "@advisable/donut";
 import { Day, RequestMore } from "./styles";
 import NoAvailability from "./NoAvailability";
@@ -12,7 +12,7 @@ const SelectDay = ({ clientName, availability, timeZone, match }) => {
   const dates = reduce(
     availability,
     (collection, datetime) => {
-      const parsed = moment.tz(datetime, timeZone).format("YYYY-MM-DD");
+      const parsed = DateTime.fromISO(datetime).toISODate();
       if (collection.indexOf(parsed) === -1) {
         return [...collection, parsed];
       }
@@ -20,6 +20,8 @@ const SelectDay = ({ clientName, availability, timeZone, match }) => {
     },
     [],
   );
+
+  const sorted = sortBy(dates, (d) => DateTime.fromISO(d).toISODate());
 
   return (
     <>
@@ -48,12 +50,13 @@ const SelectDay = ({ clientName, availability, timeZone, match }) => {
 
       {dates.length > 0 && (
         <>
-          {dates.map((d) => {
-            const date = moment.tz(d, timeZone);
+          {sorted.map((d) => {
+            const date = DateTime.fromISO(d, { zone: timeZone });
+
             return (
               <Day key={d} to={`${match.url}/${d}`}>
-                <h4>{date.format("dddd")}</h4>
-                <span>{date.format("DD MMMM YYYY")}</span>
+                <h4>{date.toFormat("cccc")}</h4>
+                <span>{date.toFormat("dd MMM yyyy")}</span>
                 <svg width={10} height={18} fill="none">
                   <path d="M1 17l8-8-8-8" stroke="#929DC1" />
                 </svg>

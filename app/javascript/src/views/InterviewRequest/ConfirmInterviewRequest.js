@@ -1,12 +1,12 @@
 import React from "react";
 import { Formik } from "formik";
-import moment from "moment-timezone";
+import { DateTime } from "luxon";
+import { useParams } from "react-router-dom";
 import { ArrowLeft } from "@styled-icons/feather";
 import { useMutation } from "@apollo/react-hooks";
 import { Text, Box, Link, Button } from "@advisable/donut";
-import TextField from "src/components/TextField";
+import TextField from "../../components/TextField";
 import ACCEPT_INTERVIEW_REQUEST from "./acceptInterviewRequest";
-// import { Event } from "./styles";
 import Event from "./Event";
 
 export default function ConfirmInterviewRequest({
@@ -14,7 +14,8 @@ export default function ConfirmInterviewRequest({
   phoneNumber,
   clientName,
 }) {
-  const parsed = moment.parseZone(match.params.datetime);
+  const { datetime } = useParams();
+  const parsed = DateTime.fromISO(datetime);
   const [acceptInterviewRequest] = useMutation(ACCEPT_INTERVIEW_REQUEST);
 
   const handleSubmit = async (values) => {
@@ -26,7 +27,7 @@ export default function ConfirmInterviewRequest({
   };
 
   const initialValues = {
-    startsAt: parsed.toISOString(),
+    startsAt: parsed.toUTC().toISO(),
     phoneNumber,
   };
 
@@ -34,8 +35,8 @@ export default function ConfirmInterviewRequest({
     <>
       <Link
         mb="xs"
-        to={`/interview_request/${match.params.interviewID}/${parsed.format(
-          "YYYY-MM-DD",
+        to={`/interview_request/${match.params.interviewID}/${parsed.toFormat(
+          "yyyy-MM-dd",
         )}`}
       >
         <Box display="inline-block" mr="xxs">
