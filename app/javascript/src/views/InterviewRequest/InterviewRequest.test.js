@@ -85,21 +85,13 @@ test("specialist in Berlin can accept interview request based in new york", asyn
   await screen.findByText(/requested a call/i);
   const day = screen.getByText(times[0].toFormat("cccc"), { exact: false });
   user.click(day);
-  const timeLocal = times[2].setZone("Europe/Berlin");
-  const time = `${timeLocal.toFormat("t")} - ${timeLocal
-    .plus({ minutes: 30 })
-    .toFormat("t")}`;
-  const timeOption = screen.getByText(time);
+  const timeOption = screen.getByText("13:00 - 13:30");
   user.click(timeOption);
   const number = screen.getByLabelText("Your contact number");
   user.type(number, "0861234567");
   user.click(screen.getByLabelText(/confirm call/i));
   await screen.findByText(/has been scheduled/i);
-  const berlintime = times[2].setZone("Europe/Berlin");
-  const berlinTimePeriod = `${berlintime.toFormat("t")} - ${berlintime
-    .plus({ minutes: 30 })
-    .toFormat("t")}`;
-  expect(screen.getByText(berlinTimePeriod)).toBeInTheDocument();
+  expect(screen.getByText("13:00 - 13:30")).toBeInTheDocument();
 });
 
 test("Maintains selected time zone", async () => {
