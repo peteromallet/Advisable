@@ -5,7 +5,7 @@ import VIEWER from "../../graphql/queries/viewer";
 import GET_CONSULTATION from "./getConsultation";
 import ACCEPT_CONSULTATION from "./acceptConsultation";
 import DECLINE_CONSULTATION from "./declineConsultation";
-import FETCH_INTERVIEW from "../InterviewRequest/fetchInterview";
+import { FETCH_INTERVIEW } from "../InterviewRequest/queries";
 
 test("Accepting a consultation request", async () => {
   const user = mockData.user();

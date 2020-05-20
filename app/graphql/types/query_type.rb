@@ -77,9 +77,7 @@ class Types::QueryType < Types::BaseType
   end
 
   def interview(id:)
-    ::Interview.find_by_airtable_id(id)
-  rescue Airrecord::Error => er
-    GraphQL::ExecutionError.new("Could not find interview #{id}")
+    Interview.find_by_airtable_id!(id)
   end
 
   field :user,

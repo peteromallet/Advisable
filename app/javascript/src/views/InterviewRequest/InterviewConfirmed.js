@@ -1,11 +1,13 @@
 import React from "react";
-import moment from "moment-timezone";
+import { DateTime } from "luxon";
+import { useLocation } from "react-router-dom";
 import { Box, Text } from "@advisable/donut";
 import illustration from "./illustration.png";
 import Event from "./Event";
 
-export default ({ clientName, startsAt, timeZone }) => {
-  const date = moment.tz(startsAt, timeZone);
+export default ({ clientName, startsAt }) => {
+  const location = useLocation();
+  const date = DateTime.fromISO(startsAt);
 
   return (
     <Box textAlign="center">
@@ -23,7 +25,7 @@ export default ({ clientName, startsAt, timeZone }) => {
       <Text color="neutral700" mb="xl">
         Your call with {clientName} has been scheduled!
       </Text>
-      <Event date={date} />
+      <Event date={date} zone={location.state?.zone} />
     </Box>
   );
 };
