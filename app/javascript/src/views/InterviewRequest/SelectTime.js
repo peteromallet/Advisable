@@ -44,16 +44,24 @@ export default function SelectTime(props) {
       </Text>
       <TimeZoneSelect
         value={selectedTimeZone}
+        label="Your Timezone"
+        placeholder="Your Timezone"
         onChange={(timeZone) => setTimeZone(timeZone)}
       />
       <Times>
         {times.map((time) => {
           const parsed = DateTime.fromISO(time, { zone: selectedTimeZone });
           return (
-            <Time key={time} to={parsed.toUTC().toISO()}>
-              {parsed.toFormat("t")}
-              {" - "}
-              {parsed.plus({ minutes: 30 }).toFormat("t")}
+            <Time
+              key={time}
+              to={{
+                pathname: parsed.toUTC().toISO(),
+                state: { zone: selectedTimeZone },
+              }}
+            >
+              {`${parsed.toFormat("t")} - ${parsed
+                .plus({ minutes: 30 })
+                .toFormat("t")}`}
             </Time>
           );
         })}

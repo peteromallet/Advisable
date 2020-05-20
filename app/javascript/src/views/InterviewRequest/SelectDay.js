@@ -40,7 +40,7 @@ const SelectDay = ({ clientName, availability, timeZone, match }) => {
         day below.
       </Text>
 
-      <Modal label="Request more time" modal={modal}>
+      <Modal label="Request more availability" modal={modal}>
         <RequestMoreAvailability
           clientName={clientName}
           interviewID={match.params.interviewID}

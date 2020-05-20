@@ -2,7 +2,9 @@ import React from "react";
 import { Calendar } from "@styled-icons/feather";
 import { Box, Circle, Text } from "@advisable/donut";
 
-export default function Event({ date }) {
+export default function Event({ date, zone }) {
+  const zoned = zone ? date.setZone(zone) : date;
+
   return (
     <Box
       bg="neutral100"
@@ -16,10 +18,12 @@ export default function Event({ date }) {
       </Circle>
       <Box>
         <Text mb="xxs" fontWeight="semibold" color="neutral900">
-          {date.toFormat("cccc, dd MMMM")}
+          {zoned.toFormat("cccc, dd MMMM")}
         </Text>
-        <Text fontSize="s" color="neutral600">
-          {date.toFormat("t")} - {date.plus({ minutes: 30 }).toFormat("t")}
+        <Text fontSize="s" color="neutral600" textAlign="left">
+          {`${zoned.toFormat("t")} - ${zoned
+            .plus({ minutes: 30 })
+            .toFormat("t")}`}
         </Text>
       </Box>
     </Box>

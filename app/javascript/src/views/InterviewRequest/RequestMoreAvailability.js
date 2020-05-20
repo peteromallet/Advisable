@@ -2,8 +2,8 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { Box, Text, Button, Columns } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
-import TextField from "../../../components/TextField";
-import REQUEST_MORE_TIMES from "./requestMoreTimes";
+import TextField from "../../components/TextField";
+import { REQUEST_MORE_TIMES } from "./queries";
 
 export default function RequestMoreAvailability({
   onCancel,

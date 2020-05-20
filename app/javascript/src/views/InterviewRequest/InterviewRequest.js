@@ -5,10 +5,10 @@ import { useParams, Route, Switch, Redirect } from "react-router-dom";
 import Loading from "src/components/Loading";
 import SelectDay from "./SelectDay";
 import SelectTime from "./SelectTime";
+import { FETCH_INTERVIEW } from "./queries";
 import InterviewConfirmed from "./InterviewConfirmed";
 import MoreTimesRequested from "./MoreTimesRequested";
 import ConfirmInterviewRequest from "./ConfirmInterviewRequest";
-import FETCH_INTERVIEW from "./fetchInterview.js";
 import NotFound, { isNotFound } from "src/views/NotFound";
 
 const SELECT_TIME_PATH = ":date([0-9]{4}-[0-9]{2}-[0-9]{2})";
@@ -46,17 +46,10 @@ export default function InterviewRequestView({ match }) {
               />
             )}
           />
-          <Route
-            path={`${match.path}/${CONFIRM_PATH}`}
-            render={(route) => (
-              <ConfirmInterviewRequest
-                {...route}
-                phoneNumber={interview.application.specialist.phoneNumber}
-                timeZone={interview.timeZone}
-                clientName={interview.user.companyName}
-              />
-            )}
-          />
+          <Route path={`${match.path}/${CONFIRM_PATH}`}>
+            <ConfirmInterviewRequest interview={interview} />
+          </Route>
+
           <Route
             exact
             path={match.path}
