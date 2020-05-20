@@ -23,7 +23,7 @@ export default function Event({ date, zone }) {
         <Text fontSize="s" color="neutral600" textAlign="left">
           {`${zoned.toFormat("t")} - ${zoned
             .plus({ minutes: 30 })
-            .toFormat("t")}`}
+            .toFormat("HH:mm")}`}
         </Text>
       </Box>
     </Box>
