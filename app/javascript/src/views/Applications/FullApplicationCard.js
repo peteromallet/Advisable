@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather";
 import { Card, Box, Text, Button } from "@advisable/donut";
 
@@ -27,7 +28,9 @@ function FullApplicationCard() {
         Be instantly available for clients on Advisable by filling out a more
         thorough application
       </Text>
-      <Button suffix={<ArrowRight />}>Apply Now</Button>
+      <Link to="/apply">
+        <Button suffix={<ArrowRight />}>Apply Now</Button>
+      </Link>
       <Text mt="12px" fontSize="13px" color="neutral600">
         15 - 20 Minutes
       </Text>

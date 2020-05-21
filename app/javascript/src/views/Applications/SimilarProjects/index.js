@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Card, Stack, Box } from "@advisable/donut";
+import { Text, Card, Stack, Box, Avatar } from "@advisable/donut";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_SIMILAR_PROJECTS } from "./queries";
 import renderLineBreaks from "../../../utilities/renderLineBreaks";
@@ -37,6 +37,28 @@ function SimilarProjects() {
             >
               {project.title}
             </Text>
+            <Box height={1} bg="blue100" mt="16px" mb="16px" />
+            <Box display="flex" alignItems="center">
+              <Avatar
+                size="s"
+                url={project.specialist.avatar}
+                name={project.specialist.name}
+              />
+              <Box pl="12px">
+                <Text
+                  fontSize="16px"
+                  color="blue900"
+                  fontWeight="medium"
+                  mb="2px"
+                >
+                  {project.specialist.name}
+                </Text>
+                <Text color="neutral600" fontSize="14px">
+                  {project.specialist.location}
+                </Text>
+              </Box>
+            </Box>
+            <Box height={1} bg="blue100" mt="16px" mb="20px" />
             <Text mb="l" fontSize="15px" lineHeight="1.3rem" color="neutral700">
               {renderLineBreaks(project.description)}
             </Text>

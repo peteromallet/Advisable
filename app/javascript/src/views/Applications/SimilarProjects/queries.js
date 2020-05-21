@@ -9,6 +9,12 @@ export const GET_SIMILAR_PROJECTS = gql`
           id
           title
           description
+          specialist {
+            id
+            name
+            avatar
+            location
+          }
           skills {
             id
             name
