@@ -13,7 +13,7 @@ const Review = ({ review, companyName }) => {
   return (
     <StyledReview>
       <ReviewHeader>
-        <TotalRating>{review.ratings?.overall.toFixed(1)}</TotalRating>
+        <TotalRating>{review.ratings?.overall?.toFixed(1)}</TotalRating>
         <Text as="h5" fontWeight="medium" mb="xxs">
           {review.name}
         </Text>
