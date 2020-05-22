@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '~> 2.6.1'
+ruby '~> 2.6.6'
 
 # loads env vars from the .env file in dev and test
 gem 'dotenv-rails', groups: %i[development test]
@@ -93,6 +93,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'webmock'
   gem 'rspec-retry'
+  gem 'rspec_junit_formatter'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
