@@ -4,6 +4,7 @@ import { margin, variant } from "styled-system";
 
 export const StyledProgressBar = styled.div`
   height: 100%;
+  max-width: 100%;
 `;
 
 const sizeVariant = variant({
@@ -26,6 +27,12 @@ const color = variant({
       background: theme.colors.blue100,
       [StyledProgressBar]: {
         background: theme.colors.blue500,
+      },
+    },
+    dark: {
+      background: theme.colors.blue100,
+      [StyledProgressBar]: {
+        background: theme.colors.blue900,
       },
     },
   },

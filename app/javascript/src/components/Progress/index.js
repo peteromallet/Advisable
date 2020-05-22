@@ -9,9 +9,14 @@ function Progress({ value, ...props }) {
         as={motion.div}
         initial={{
           width: 0,
+          opacity: 0,
         }}
         animate={{
           width: `${value}%`,
+          opacity: 1,
+        }}
+        transition={{
+          duration: 0.7,
         }}
       />
     </StyledProgress>

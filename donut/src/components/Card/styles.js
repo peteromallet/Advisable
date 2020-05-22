@@ -34,12 +34,24 @@ const elevation = variant({
   },
 });
 
+const cardType = variant({
+  variants: {
+    bordered: {
+      boxShadow: "none",
+      background: "transparent",
+      border: "1px solid #E1E2E9",
+    },
+  },
+});
+
 export const StyledCard = styled.div`
   ${compose(space, layout, border, elevation, typography)}
 
   outline: none;
   background: white;
   border-radius: 2px;
+
+  ${cardType};
 `;
 
 export default StyledCard;

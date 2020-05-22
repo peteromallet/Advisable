@@ -1,6 +1,6 @@
 // Renders the freelancers applications view.
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { Box, Alert } from "@advisable/donut";
 import { useQuery } from "@apollo/react-hooks";
 import { RefreshCcw } from "@styled-icons/feather";
@@ -19,9 +19,14 @@ const Applications = () => {
 
   const viewer = data.viewer;
   const onHold = viewer.applicationStage === "On Hold";
+  const fullApplicationPending = viewer.applicationStage === "Full Application";
 
   if (onHold && viewer.invitations.length === 0) {
     return <AccountOnHold />;
+  }
+
+  if (fullApplicationPending) {
+    return <Redirect to="/apply" />;
   }
 
   const handleViewInvitation = (id) => {

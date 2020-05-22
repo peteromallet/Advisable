@@ -12,31 +12,15 @@ const Notice = ({ icon, children, title, ...props }) => {
     <StyledNotice {...props}>
       {icon && <StyledNoticeIcon>{icon}</StyledNoticeIcon>}
       <Box>
-        {title && (
-          <StyledNoticeHeader
-            mb="xxs"
-            fontSize="s"
-            color="orange.7"
-            fontWeight="medium"
-            letterSpacing="-0.01em"
-          >
-            {title}
-          </StyledNoticeHeader>
-        )}
-        <StyledNoticeContent
-          fontSize="s"
-          color="orange.7"
-          letterSpacing="-0.005em"
-        >
-          {children}
-        </StyledNoticeContent>
+        {title && <StyledNoticeHeader>{title}</StyledNoticeHeader>}
+        <StyledNoticeContent>{children}</StyledNoticeContent>
       </Box>
     </StyledNotice>
   );
 };
 
 Notice.defaultProps = {
-  padding: "s",
+  variant: "neutral",
 };
 
 export default Notice;

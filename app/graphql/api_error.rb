@@ -29,7 +29,7 @@ class ApiError < GraphQL::ExecutionError
 end
 
 class ApiError::NotAuthenticated < ApiError
-  def initialize(message)
+  def initialize(message = 'You are not logged in')
     super('NOT_AUTHENTICATED', 'notAuthenticated', message)
   end
 end
