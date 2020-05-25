@@ -6,10 +6,10 @@ const Testimonial = () => {
   return (
     <TestimonialStyles>
       <Avatar />
-      <Text size="xl" weight="medium" mb="xxs">
+      <Text fontSize="18px" fontWeight="medium" mb="xxs" color="blue900">
         William Boston
       </Text>
-      <Text mb="s" color="neutral.5">
+      <Text mb="s" color="neutral600">
         SEO Freelancer
       </Text>
       <Text
@@ -17,7 +17,7 @@ const Testimonial = () => {
         mb="xs"
         lineHeight="s"
         fontStyle="italic"
-        color="neutral.5"
+        color="neutral700"
       >
         “The Advisible team were diligent with managing every step of the
         contracting process. From the initial acquisition to reporting and the
@@ -26,7 +26,7 @@ const Testimonial = () => {
       </Text>
       <Trustpilot />
       <Stars />
-      <Text size="xs" weight="medium" color="neutral.4">
+      <Text fontSize="xs" fontWeight="medium" color="neutral500">
         9.3 out of 10
       </Text>
     </TestimonialStyles>

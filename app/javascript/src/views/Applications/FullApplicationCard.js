@@ -44,11 +44,10 @@ function FullApplicationCard() {
       <Text
         fontSize="13px"
         lineHeight="1.4em"
-        color="neutral700"
+        color="neutral500"
         letterSpacing="-0.02rem"
       >
-        We’ll let you know when we have project for you. Accepted freelancers
-        get priority on projects.
+        We may not have suitable projects for you at this time.
       </Text>
     </Card>
   );

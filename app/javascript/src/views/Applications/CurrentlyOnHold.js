@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, Link } from "@advisable/donut";
 
 function CurrentlyOnHold() {
   return (
@@ -46,13 +46,14 @@ function CurrentlyOnHold() {
         Your Account
       </Box>
       <Text
-        fontSize="13px"
+        fontSize="14px"
         lineHeight="1.4em"
         color="neutral700"
         letterSpacing="-0.02rem"
       >
-        We’ll let you know when we have project for you. Accepted freelancers
-        get priority on projects.
+        We’ll let you know when we have a project for you based on your{" "}
+        <Link to="/profile">profile</Link>. Accepted freelancers get priority on
+        projects.
       </Text>
     </Box>
   );

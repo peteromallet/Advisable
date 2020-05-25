@@ -76,10 +76,18 @@ const AccountDetails = ({ specialist, history, location }) => {
 
   return (
     <>
-      <Text as="h2" size="xxxl" weight="semibold" color="neutral.9" mb="s">
+      <Text
+        mb="s"
+        as="h2"
+        size="32px"
+        lineHeight="34px"
+        weight="semibold"
+        color="blue900"
+        letterSpacing="-0.02em"
+      >
         Create your account
       </Text>
-      <Text size="s" color="neutral.7" lineHeight="m">
+      <Text size="m" color="neutral700" lineHeight="m">
         Create your Advisable freelancer account below so that you can apply to
         client projects.
       </Text>
