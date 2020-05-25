@@ -1,11 +1,23 @@
 import * as React from "react";
 import ShareModal from "./ShareModal";
 import RejectModal from "./RejectModal";
+import { useHistory } from "react-router-dom";
 import { Text, Stack, Button } from "@advisable/donut";
+import useViewer from "../../hooks/useViewer";
 
 const Actions = ({ onApply, application }) => {
+  const viewer = useViewer();
+  const history = useHistory();
   const [rejectModal, setRejectModal] = React.useState(false);
   const [shareModal, setShareModal] = React.useState(false);
+
+  const handleReject = () => {
+    if (viewer?.applicationStage === "On Hold") {
+      history.push("/applications");
+    } else {
+      setShareModal(true);
+    }
+  };
 
   let actions = null;
 
@@ -54,10 +66,10 @@ const Actions = ({ onApply, application }) => {
           isOpen={rejectModal}
           application={application}
           onClose={() => setRejectModal(false)}
-          onReject={() => setShareModal(true)}
+          onReject={handleReject}
         />
         <Stack>
-          <Button onClick={onApply} size="l" width="100%">
+          <Button onClick={onApply} size="l" width="100%" mb="12px">
             Apply
           </Button>
           <Button

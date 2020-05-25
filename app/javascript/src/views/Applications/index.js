@@ -21,7 +21,19 @@ const Applications = () => {
   const onHold = viewer.applicationStage === "On Hold";
   const fullApplicationPending = viewer.applicationStage === "Full Application";
 
-  if (onHold && viewer.invitations.length === 0) {
+  const invitations = viewer.applications.filter(
+    (a) => a.status === "Invited To Apply",
+  );
+  const applications = viewer.applications.filter(
+    (a) => a.status !== "Invited To Apply",
+  );
+  const hasInvitations = invitations.length > 0;
+
+  if (hasInvitations && (onHold || fullApplicationPending)) {
+    return <Redirect to={`/invites/${invitations[0].id}`} />;
+  }
+
+  if (onHold && invitations.length === 0) {
     return <AccountOnHold />;
   }
 
@@ -51,13 +63,13 @@ const Applications = () => {
           onHold={onHold}
           loading={loading}
           onViewInvitation={handleViewInvitation}
-          applications={loading ? [] : viewer.invitations}
+          applications={loading ? [] : invitations}
         />
         <OpenApplications
           onHold={onHold}
           loading={loading}
           specialist={viewer}
-          applications={loading ? [] : viewer.applications}
+          applications={loading ? [] : applications}
           featuredURL={
             loading
               ? null

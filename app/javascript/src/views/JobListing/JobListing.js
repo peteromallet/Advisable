@@ -1,21 +1,16 @@
 import React from "react";
 import Sticky from "../../components/Sticky";
-import { Text } from "@advisable/donut";
-import {
-  Card,
-  List,
-  Layout,
-  Heading,
-  Padding,
-  BottomBar,
-} from "src/components";
+import { InformationCircle } from "@styled-icons/heroicons-solid";
+import { Box, Text, Card, Notice } from "@advisable/donut";
+import { List, Layout, BottomBar } from "src/components";
 import { useScreenSize } from "src/utilities/screenSizes";
 import ProjectAttributes from "./ProjectAttributes";
 import Actions from "./Actions";
 
 let JobListing = ({ application, history }) => {
   const isMobile = useScreenSize("small");
-  const { project } = application;
+  const { project, specialist } = application;
+  const onHold = specialist.applicationStage === "On Hold";
 
   const gotoApply = () => {
     let url = `/invites/${application.airtableId}/apply`;
@@ -31,31 +26,20 @@ let JobListing = ({ application, history }) => {
         <Layout.Sidebar>
           <Sticky offset={98}>
             <Text
+              mb="8px"
               as="h4"
-              fontSize={22}
-              lineHeight="l"
-              color="blue.9"
-              fontWeight="semibold"
+              fontSize="20px"
+              color="blue900"
+              fontWeight="medium"
             >
-              {project.primarySkill} project
+              New Project Invitation
             </Text>
-            {(project.industry || project.companyType) && (
-              <Text
-                mb="s"
-                fontSize="m"
-                lineHeight="s"
-                mt="xs"
-                color="neutral.8"
-              >
-                {project.industry} {project.companyType}
-              </Text>
-            )}
-            <Text mt="s" mb="l" size="xs" lineHeight="xs" color="neutral.7">
-              You have been invited to apply for a new project
+            <Text mb="l" fontSize="s" lineHeight="18px" color="neutral700">
+              You have been invited to apply to a new project
             </Text>
-            <Padding bottom="xl">
+            <Box marginBottom="xl">
               <ProjectAttributes project={project} />
-            </Padding>
+            </Box>
             <Actions
               stack={true}
               onApply={gotoApply}
@@ -65,40 +49,101 @@ let JobListing = ({ application, history }) => {
         </Layout.Sidebar>
       )}
       <Layout.Main>
-        <Card>
-          <Padding size="xl">
-            <Text
-              as="h2"
-              color="blue.9"
-              fontSize="xxl"
-              fontWeight="semibold"
-              mb="xs"
+        <Card padding="xl">
+          <Text
+            as="h2"
+            mb="xs"
+            color="blue900"
+            fontSize="28px"
+            fontWeight="medium"
+            letterSpacing="-0.02em"
+          >
+            {project.primarySkill} Project
+          </Text>
+          {(project.industry || project.companyType) && (
+            <Text mb="32px" mt="8px" fontSize="s" color="neutral600">
+              {project.industry} {project.companyType}
+            </Text>
+          )}
+          {onHold && (
+            <Notice
+              mb="32px"
+              icon={<InformationCircle />}
+              title="Advisable application"
+              variant="cyan"
             >
-              {project.primarySkill}
+              This project application will be used as part of your Advisable
+              application to figure out if we should accept you into our network
+              of freelancers
+            </Notice>
+          )}
+          <Text
+            as="h6"
+            mb="4px"
+            fontSize="18px"
+            fontWeight="medium"
+            color="blue900"
+          >
+            Client Description
+          </Text>
+          <Text lineHeight="m" color="neutral800" mb="l">
+            {project.companyDescription}
+          </Text>
+          {isMobile && (
+            <Box marginBottom="xl">
+              <ProjectAttributes project={project} />
+            </Box>
+          )}
+          <Box marginBottom="xl">
+            <Text
+              as="h6"
+              mb="12px"
+              fontSize="18px"
+              fontWeight="medium"
+              color="blue900"
+            >
+              Goals
             </Text>
-            <Text lineHeight="m" color="neutral.7" mb="l">
-              {project.companyDescription}
+            <List>
+              {project.goals.map((item) => (
+                <List.Item key={item}>{item}</List.Item>
+              ))}
+            </List>
+          </Box>
+          <Box marginBottom="xl">
+            <Text
+              as="h6"
+              mb="12px"
+              fontSize="18px"
+              fontWeight="medium"
+              color="blue900"
+            >
+              Essential Characteristics
             </Text>
-            {isMobile && (
-              <Padding bottom="xl">
-                <ProjectAttributes project={project} />
-              </Padding>
-            )}
-            <Padding bottom="xl">
-              <Heading level={6}>Goals</Heading>
-              <List items={project.goals} />
-            </Padding>
-            <Padding bottom="xl">
-              <Heading level={6}>Essential Characteristics</Heading>
-              <List items={project.requiredCharacteristics} />
-            </Padding>
-            {project.optionalCharacteristics.length > 0 && (
-              <React.Fragment>
-                <Heading level={6}>Nice-To-Have Characteristics</Heading>
-                <List items={project.optionalCharacteristics} />
-              </React.Fragment>
-            )}
-          </Padding>
+            <List>
+              {project.requiredCharacteristics.map((item) => (
+                <List.Item key={item}>{item}</List.Item>
+              ))}
+            </List>
+          </Box>
+          {project.optionalCharacteristics.length > 0 && (
+            <>
+              <Text
+                as="h6"
+                mb="12px"
+                fontSize="18px"
+                fontWeight="medium"
+                color="blue900"
+              >
+                Nice-To-Have Characteristics
+              </Text>
+              <List>
+                {project.optionalCharacteristics.map((item) => (
+                  <List.Item key={item}>{item}</List.Item>
+                ))}
+              </List>
+            </>
+          )}
         </Card>
 
         {isMobile && (

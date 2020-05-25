@@ -7,6 +7,10 @@ export default gql`
       status
       referralUrl
       airtableId
+      specialist {
+        id
+        applicationStage
+      }
       project {
         id
         airtableId

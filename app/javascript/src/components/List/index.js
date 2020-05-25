@@ -1,23 +1,15 @@
 import React from "react";
-import styled from "styled-components";
+import { StyledList, StyledListItem } from "./styles";
 
-const Container = styled.ul``;
+const List = ({ children, ...props }) => {
+  return <StyledList {...props}>{children}</StyledList>;
+};
 
-const Item = styled.li`
-  color: #323A57;
-  font-size: 15px;
-  line-height: 20px;
-  padding: 12px 15px;
-  border-radius: 8px;
-  background: #f5f6f9;
-  margin-bottom: 5px;
-  &:last-child { margin-bottom: 0; }
-`;
+List.Item = StyledListItem;
 
-const List = ({ items }) => {
-  return (
-    <Container>{items.map((item, i) => <Item key={i}>{item}</Item>)}</Container>
-  );
+List.defaultProps = {
+  color: "neutral800",
+  lineHeight: "20px",
 };
 
 export default List;
