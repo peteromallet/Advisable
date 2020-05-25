@@ -30,6 +30,9 @@ jobs:
     # A series of steps to run, some are similar to those in "build".
     steps:
       - checkout
+      - run:
+          name: Git log
+          command: git log
       - ruby/install-deps
       - restore_cache:
           name: Restore Yarn Package Cache
