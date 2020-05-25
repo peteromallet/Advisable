@@ -47,6 +47,9 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
           cache-key: "yarn.lock"
+      - run:
+          name: JS Tests
+          command: yarn test --runInBand
       # Here we make sure that the secondary container boots
       # up before we run operations on the database.
       - run:
@@ -55,9 +58,6 @@ jobs:
       - run:
           name: Database setup
           command: bundle exec rails db:schema:load --trace
-      - run:
-          name: JS Tests
-          command: yarn test --runInBand
       # Run rspec in parallel
       - ruby/rspec-test
 
