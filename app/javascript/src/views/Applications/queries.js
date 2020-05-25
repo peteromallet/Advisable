@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-export default gql`
+export const GET_APPLICATIONS = gql`
   query {
     viewer {
       ... on Specialist {

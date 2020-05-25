@@ -6,14 +6,14 @@ import { useQuery } from "@apollo/react-hooks";
 import { RefreshCcw } from "@styled-icons/feather";
 import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
-import FETCH_DATA from "./fetchData";
+import { GET_APPLICATIONS } from "./queries";
 import AccountOnHold from "./AccountOnHold";
 import OpenApplications from "./OpenApplications";
 import ApplicationInvitations from "./ApplicationInvitations";
 
 const Applications = () => {
   const history = useHistory();
-  const { loading, data } = useQuery(FETCH_DATA);
+  const { loading, data } = useQuery(GET_APPLICATIONS);
 
   if (loading) return <Loading />;
 

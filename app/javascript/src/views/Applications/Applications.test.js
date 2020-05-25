@@ -5,7 +5,8 @@ import {
   mockQuery,
   mockData,
 } from "test-utils";
-import GET_DATA from "./fetchData";
+import { GET_APPLICATIONS } from "./queries";
+import { GET_APPLICATION } from "../JobListing/queries";
 import { GET_SIMILAR_PROJECTS } from "./SimilarProjects/queries";
 
 const specialist = mockData.specialist();
@@ -16,20 +17,21 @@ test("Shows application invites", async () => {
     graphQLMocks: [
       mockViewer(specialist),
       mockQuery(
-        GET_DATA,
+        GET_APPLICATIONS,
         {},
         {
           viewer: {
             ...specialist,
-            invitations: [
+            applications: [
               mockData.application({
                 status: "Invited To Apply",
                 project: mockData.project({
                   primarySkill: "Testing Invites",
+                  user: mockData.user(),
                 }),
+                interview: null,
               }),
             ],
-            applications: [],
           },
         },
       ),
@@ -49,13 +51,12 @@ test("Shows account on hold view if applicationStage is 'On Hold", async () => {
   const graphQLMocks = [
     mockViewer(specialist),
     mockQuery(
-      GET_DATA,
+      GET_APPLICATIONS,
       {},
       {
         viewer: {
           ...specialist,
           applicationStage: "On Hold",
-          invitations: [],
           applications: [],
         },
       },
@@ -79,4 +80,104 @@ test("Shows account on hold view if applicationStage is 'On Hold", async () => {
 
   await screen.findByText("Your account is currently on hold");
   await screen.findByText(project.title);
+});
+
+test("Redirects to apply if account is on hold and has invitiation waiting", async () => {
+  const graphQLMocks = [
+    mockViewer(specialist),
+    mockQuery(
+      GET_APPLICATIONS,
+      {},
+      {
+        viewer: {
+          ...specialist,
+          applicationStage: "On Hold",
+          applications: [
+            mockData.application({
+              id: "app_123",
+              status: "Invited To Apply",
+              project: mockData.project({
+                primarySkill: "Testing Invites",
+                user: mockData.user(),
+              }),
+              interview: null,
+            }),
+          ],
+        },
+      },
+    ),
+    mockQuery(
+      GET_APPLICATION,
+      {
+        id: "app_123",
+      },
+      {
+        application: mockData.application({
+          specialist: mockData.specialist(),
+          project: mockData.project({
+            user: mockData.user({
+              country: mockData.country(),
+            }),
+          }),
+        }),
+      },
+    ),
+  ];
+
+  renderRoute({
+    route: "/applications",
+    graphQLMocks,
+  });
+
+  await screen.findByText(/you have been invited/i);
+});
+
+test("Redirects to apply if account stage is 'Full Application' and has invitiation waiting", async () => {
+  const graphQLMocks = [
+    mockViewer(specialist),
+    mockQuery(
+      GET_APPLICATIONS,
+      {},
+      {
+        viewer: {
+          ...specialist,
+          applicationStage: "Full Application",
+          applications: [
+            mockData.application({
+              id: "app_123",
+              status: "Invited To Apply",
+              project: mockData.project({
+                primarySkill: "Testing Invites",
+                user: mockData.user(),
+              }),
+              interview: null,
+            }),
+          ],
+        },
+      },
+    ),
+    mockQuery(
+      GET_APPLICATION,
+      {
+        id: "app_123",
+      },
+      {
+        application: mockData.application({
+          specialist: mockData.specialist(),
+          project: mockData.project({
+            user: mockData.user({
+              country: mockData.country(),
+            }),
+          }),
+        }),
+      },
+    ),
+  ];
+
+  renderRoute({
+    route: "/applications",
+    graphQLMocks,
+  });
+
+  await screen.findByText(/you have been invited/i);
 });

@@ -10,7 +10,9 @@ import Actions from "./Actions";
 let JobListing = ({ application, history }) => {
   const isMobile = useScreenSize("small");
   const { project, specialist } = application;
-  const onHold = specialist.applicationStage === "On Hold";
+  const onHold = ["On Hold", "Full Application"].includes(
+    specialist.applicationStage,
+  );
 
   const gotoApply = () => {
     let url = `/invites/${application.airtableId}/apply`;

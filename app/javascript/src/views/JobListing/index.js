@@ -5,7 +5,7 @@ import Loading from "./Loading";
 import JobListing from "./JobListing";
 import NotFound from "../NotFound";
 import ApplicationsClosed from "../ApplicationsClosed";
-import GET_APPLICATION from "./fetchProject";
+import { GET_APPLICATION } from "./queries";
 
 let JobListingContainer = ({ history, match }) => {
   const { loading, data, error } = useQuery(GET_APPLICATION, {

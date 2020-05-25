@@ -5,7 +5,7 @@ import VIEWER from "../../../graphql/queries/viewer";
 import GET_SPECIALIST from "../getProfile";
 import UPDATE_PROFILE from "../updateProfile";
 import COMPLETE_SETUP from "../completeSetup";
-import GET_APPLICATIONS from "../../Applications/fetchData";
+import { GET_APPLICATIONS } from "../../Applications/queries";
 
 test("Completes the setup", async () => {
   const viewer = generateTypes.specialist({
