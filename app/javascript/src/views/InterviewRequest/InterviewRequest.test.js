@@ -7,7 +7,7 @@ import {
   mockQuery,
   mockData,
   mockMutation,
-} from "test-utils";
+} from "../../testHelpers/test-utils";
 import {
   FETCH_INTERVIEW,
   ACCEPT_INTERVIEW_REQUEST,

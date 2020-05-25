@@ -7,7 +7,7 @@ import {
   mockMutation,
   mockData,
   waitForElementToBeRemoved,
-} from "test-utils";
+} from "../../testHelpers/test-utils";
 import { usePreviousProjectModal } from "./usePreviousProjectModal";
 import PreviousProjectFormModal from "./index";
 import {

@@ -6,7 +6,7 @@ import {
   mockQuery,
   mockData,
   mockMutation,
-} from "test-utils";
+} from "../../testHelpers/test-utils";
 import { GET_APPLICATION, REJECT_INVITATION } from "./queries";
 
 test("Renders the view for an application invitation", async () => {

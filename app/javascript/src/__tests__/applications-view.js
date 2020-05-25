@@ -1,5 +1,5 @@
-import { renderRoute } from "test-utils";
-import { mockViewer, mockQuery } from "apolloMocks";
+import { renderRoute } from "../testHelpers/test-utils";
+import { mockViewer, mockQuery } from "../testHelpers/apolloMocks";
 import generateTypes from "../__mocks__/graphqlFields";
 import getApplications from "../views/Project/fetchProject";
 

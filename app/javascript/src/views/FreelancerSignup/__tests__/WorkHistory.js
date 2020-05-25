@@ -5,7 +5,7 @@ import {
   mockQuery,
   mockMutation,
   mockData,
-} from "test-utils";
+} from "../../../testHelpers/test-utils";
 import GET_SPECIALIST from "../getProfile";
 import UPDATE_PROFILE from "../updateProfile";
 import COMPLETE_SETUP from "../completeSetup";

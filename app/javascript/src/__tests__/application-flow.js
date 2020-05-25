@@ -1,5 +1,9 @@
-import { renderRoute, fireEvent } from "test-utils";
-import { mockViewer, mockQuery, mockMutation } from "apolloMocks";
+import { renderRoute, fireEvent } from "../testHelpers/test-utils";
+import {
+  mockViewer,
+  mockQuery,
+  mockMutation,
+} from "../testHelpers/apolloMocks";
 import viewer from "../graphql/queries/viewer";
 import getApplication from "../views/ApplicationFlow/fetchApplication";
 import updateApplication from "../views/ApplicationFlow/updateApplication";

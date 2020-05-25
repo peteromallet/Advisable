@@ -1,12 +1,10 @@
 import { fireEvent } from "@testing-library/react";
-import { mockQuery } from "apolloMocks";
 import renderApp from "../../../testHelpers/renderApp";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_PROJECT from "../fetchProject";
 import GET_PAYMENT_INTENT from "../Steps/Deposit/getPaymentIntent";
 import { GET_DEPOSIT } from "../Steps/Deposit/PaymentPending";
-import getApplications from "../../Project/fetchProject";
 
 test("User can complete deposit step", async () => {
   let user = generateTypes.user();

@@ -4,7 +4,7 @@ import {
   mockViewer,
   mockQuery,
   mockData,
-} from "test-utils";
+} from "../../testHelpers/test-utils";
 import { GET_APPLICATIONS } from "./queries";
 import { GET_APPLICATION } from "../JobListing/queries";
 import { GET_SIMILAR_PROJECTS } from "./SimilarProjects/queries";
