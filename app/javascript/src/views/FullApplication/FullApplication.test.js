@@ -6,7 +6,7 @@ import {
   mockViewer,
   mockQuery,
   mockMutation,
-} from "test-utils";
+} from "../../testHelpers/test-utils";
 import { GET_APPLICATIONS } from "../Applications/queries";
 import { SUBMIT_FULL_APPLICATION } from "./queries";
 import { FETCH_PROJECTS } from "../../components/ManagePreviousProjects/queries";
