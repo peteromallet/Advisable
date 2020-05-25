@@ -43,7 +43,7 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run
+      - run:
           name: Clear Jest Cache
           command: yarn test --clearCache
       - run:
