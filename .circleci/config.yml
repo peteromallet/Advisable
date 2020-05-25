@@ -33,7 +33,7 @@ jobs:
       - ruby/install-deps
       - node/install-packages:
           pkg-manager: yarn
-          cache-key: "yarn.lock"
+          cache-key: "yarn-2.lock"
       - run:
           name: JS Tests
           command: yarn test --runInBand
