@@ -53,4 +53,4 @@ workflows:
   version: 2
   build_and_test: # The name of our workflow is "build_and_test"
     jobs: # The list of jobs we run as part of this workflow.
-      - test:
+      - test
