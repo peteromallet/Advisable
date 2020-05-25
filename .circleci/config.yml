@@ -44,11 +44,8 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run:
-          name: Clear Jest Cache
-          command: yarn test --clearCache
-      - run:
           name: JS Tests
-          command: yarn test --runInBand
+          command: yarn test
       # Here we make sure that the secondary container boots
       # up before we run operations on the database.
       - run:
