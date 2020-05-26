@@ -43,7 +43,11 @@ class TaskPolicy < BasePolicy
   def update_estimate
     return true if has_permission?('admin')
     return false if user.nil?
-    return true if ['Not Assigned', 'Quote Requested'].include?(record.stage)
+    if ['Not Assigned', 'Quote Requested', 'Requested To Start'].include?(
+         record.stage
+       )
+      return true
+    end
     return true if task.stage == 'Quote Provided' && is_specialist
     return true if task.stage == 'Assigned' && is_specialist
     false
