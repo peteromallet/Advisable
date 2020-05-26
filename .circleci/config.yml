@@ -10,7 +10,7 @@ jobs:
   test: # our next job, called "test"
     # we run "parallel job containers" to enable speeding up our tests;
     # this splits our tests across multiple containers.
-    parallelism: 2
+    parallelism: 1
     # here we set TWO docker images.
     docker:
       - image: circleci/ruby:2.6-node-browsers # this is our primary docker image, where step commands run.
