@@ -55,8 +55,7 @@ test("User can submit application when 3 projects are validated", async () => {
   });
 
   await screen.findByText(/project title here/i);
-  const submit = screen.queryByText(/submit application/i);
-  user.click(submit);
+  user.click(await screen.findByText(/submit application/i));
   await screen.findByText(/We have received your application/i);
 });
 

@@ -1,8 +1,6 @@
-import {
-  renderRoute,
-  fireEvent,
-  waitForElementToBeRemoved,
-} from "../../../testHelpers/test-utils";
+import screenUser from "@testing-library/user-event";
+import { screen } from "@testing-library/react";
+import { renderRoute } from "../../../testHelpers/test-utils";
 import {
   mockViewer,
   mockQuery,
@@ -39,7 +37,7 @@ test("User can complete booking setup", async () => {
     specialist,
   });
 
-  const app = renderRoute({
+  renderRoute({
     route: "/book/rec1234",
     graphQLMocks: [
       mockViewer(user),
@@ -153,50 +151,32 @@ test("User can complete booking setup", async () => {
     ],
   });
 
-  await app.findByText(
-    "It look’s like you haven’t added a project payment method yet",
+  screenUser.click(await screen.findByLabelText(/payments with card/i));
+  screenUser.click(await screen.findByLabelText("Continue"));
+  screenUser.click(await screen.findByLabelText(/continue with this card/i));
+  // invoice settings
+  screenUser.type(await screen.findByLabelText(/full name/i), "Test Account");
+  screenUser.type(await screen.findByLabelText(/company name/i), "Test Corp");
+  screenUser.type(
+    await screen.findByLabelText(/billing email/i),
+    "test@test.com",
   );
-  let card = await app.getByLabelText("Payments with Card", { exact: false });
-  fireEvent.click(card);
-  let button = app.getByLabelText("Continue");
-  fireEvent.click(button);
-  button = await app.findByLabelText("Continue with this card");
-  fireEvent.click(button);
-  await app.findByText("Invoice Settings");
-  const name = app.getByLabelText("Full Name");
-  const company = app.getByLabelText("Company Name");
-  const billing = app.getByLabelText("Billing Email");
-  const addressLine1 = app.getByPlaceholderText("Line 1");
-  const city = app.getByPlaceholderText("City");
-  const county = app.getByPlaceholderText("County");
-  const postcode = app.getByPlaceholderText("Postcode");
-  const vat = app.getByPlaceholderText("VAT Number");
-  fireEvent.change(name, { target: { value: "Test Account" } });
-  fireEvent.change(company, { target: { value: "Test Corp" } });
-  fireEvent.change(billing, { target: { value: "test@test.com" } });
-  fireEvent.change(addressLine1, { target: { value: "Bacon Street" } });
-  fireEvent.change(city, { target: { value: "Test City" } });
-  fireEvent.change(county, { target: { value: "Test County" } });
-  fireEvent.change(postcode, { target: { value: "12345" } });
-  fireEvent.change(vat, { target: { value: "12345" } });
-  button = await app.findByLabelText("Continue");
-  fireEvent.click(button);
+  screenUser.type(
+    await screen.findByPlaceholderText(/line 1/i),
+    "Bacon Street",
+  );
+  screenUser.type(await screen.findByPlaceholderText(/city/i), "Test City");
+  screenUser.type(await screen.findByPlaceholderText("County"), "Test County");
+  screenUser.type(await screen.findByPlaceholderText(/postcode/i), "12345");
+  screenUser.type(await screen.findByPlaceholderText(/vat/i), "12345");
+  screenUser.click(await screen.findByLabelText(/continue/i));
+  // payment terms
+  screenUser.click(await screen.findByLabelText(/i accept/i));
+  screenUser.click(await screen.findByLabelText(/continue/i));
+  // project type
+  screenUser.click(await screen.findByLabelText(/predefined projects/i));
+  screenUser.click(await screen.findByLabelText(/i accept/i));
+  screenUser.click(await screen.findByLabelText(/continue/i));
 
-  await app.findByText("Payment Terms");
-  let accept = app.getByLabelText("I accept these payment terms");
-  fireEvent.click(accept);
-  button = await app.findByLabelText("Continue");
-  fireEvent.click(button);
-
-  let fixed = await app.findByLabelText("Projects - Predefined Projects", {
-    exact: false,
-  });
-  fireEvent.click(fixed);
-  let checkbox = await app.findByLabelText("I accept to be", { exact: false });
-  fireEvent.click(checkbox);
-  button = await app.findByLabelText("Continue");
-  fireEvent.click(button);
-  await waitForElementToBeRemoved(button);
-
-  app.getByText("Active Projects");
+  await screen.findByText("Active Projects");
 });
