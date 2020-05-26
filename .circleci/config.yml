@@ -7,6 +7,19 @@ orbs:
   node: circleci/node@2
 
 jobs:
+  build: # our first job, named "build"
+    docker:
+      - image: circleci/ruby:2.6-node-browsers # use a tailored CircleCI docker image.
+    steps:
+      - checkout # pull down our git code.
+      - ruby/install-deps # use the ruby orb to install dependencies
+      # use the node orb to install our packages
+      # specifying that we use `yarn` and to cache dependencies with `yarn.lock`
+      # learn more: https://circleci.com/docs/2.0/caching/
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: "yarn.lock"
+
   test: # our next job, called "test"
     # we run "parallel job containers" to enable speeding up our tests;
     # this splits our tests across multiple containers.
@@ -31,18 +44,21 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: "yarn.lock"
+      # - restore_cache:
+      #     name: Restore Yarn Package Cache
+      #     keys:
+      #       - yarn-packages-{{ checksum "yarn.lock" }}
+      # - run:
+      #     name: Install Dependencies
+      #     command: yarn install --frozen-lockfile
+      # - save_cache:
+      #     name: Save Yarn Package Cache
+      #     key: yarn-packages-{{ checksum "yarn.lock" }}
+      #     paths:
+      #       - ~/.cache/yarn
       - run:
           name: JS Tests
           command: yarn test --runInBand
