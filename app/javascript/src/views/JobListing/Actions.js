@@ -1,11 +1,29 @@
 import * as React from "react";
 import ShareModal from "./ShareModal";
 import RejectModal from "./RejectModal";
-import { Text, Stack, Button } from "@advisable/donut";
+import { useHistory } from "react-router-dom";
+import {
+  Text,
+  Stack,
+  Button,
+  useModal,
+  DialogDisclosure,
+} from "@advisable/donut";
+import useViewer from "../../hooks/useViewer";
 
 const Actions = ({ onApply, application }) => {
-  const [rejectModal, setRejectModal] = React.useState(false);
-  const [shareModal, setShareModal] = React.useState(false);
+  const viewer = useViewer();
+  const history = useHistory();
+  const rejectModal = useModal();
+  const shareModal = useModal();
+
+  const handleReject = () => {
+    if (viewer?.applicationStage === "On Hold") {
+      history.push("/applications");
+    } else {
+      shareModal.show();
+    }
+  };
 
   let actions = null;
 
@@ -51,23 +69,23 @@ const Actions = ({ onApply, application }) => {
     actions = (
       <React.Fragment>
         <RejectModal
-          isOpen={rejectModal}
+          modal={rejectModal}
           application={application}
-          onClose={() => setRejectModal(false)}
-          onReject={() => setShareModal(true)}
+          onReject={handleReject}
         />
         <Stack>
-          <Button onClick={onApply} size="l" width="100%">
+          <Button onClick={onApply} size="l" width="100%" mb="12px">
             Apply
           </Button>
-          <Button
-            variant="subtle"
+          <DialogDisclosure
+            as={Button}
             size="l"
-            onClick={() => setRejectModal(true)}
             width="100%"
+            variant="subtle"
+            {...rejectModal}
           >
             Reject Invitation
-          </Button>
+          </DialogDisclosure>
         </Stack>
       </React.Fragment>
     );
@@ -75,11 +93,7 @@ const Actions = ({ onApply, application }) => {
 
   return (
     <React.Fragment>
-      <ShareModal
-        url={application.referralUrl}
-        isOpen={shareModal}
-        onClose={() => setShareModal(false)}
-      />
+      <ShareModal url={application.referralUrl} modal={shareModal} />
       {actions}
     </React.Fragment>
   );

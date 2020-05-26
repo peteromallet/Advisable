@@ -1,8 +1,12 @@
 import moment from "moment";
-import { renderRoute, fireEvent } from "test-utils";
+import { renderRoute, fireEvent } from "../../testHelpers/test-utils";
 import mockData from "../../__mocks__/graphqlFields";
 import GET_DATA from "./Criteria/getData";
-import { mockViewer, mockQuery, mockMutation } from "apolloMocks";
+import {
+  mockViewer,
+  mockQuery,
+  mockMutation,
+} from "../../testHelpers/apolloMocks";
 import { createSearch } from "./searchQueries";
 import USER_AVAILABILITY from "./Availability/getUserAvailability";
 import UPDATE_AVAILABILITY from "./Availability/updateAvailability";

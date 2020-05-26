@@ -1,97 +1,82 @@
-import renderApp from "../../../testHelpers/renderApp";
 import { fireEvent } from "@testing-library/react";
-import generateTypes from "../../../__mocks__/graphqlFields";
-import VIEWER from "../../../graphql/queries/viewer";
+import {
+  renderRoute,
+  mockViewer,
+  mockQuery,
+  mockMutation,
+  mockData,
+} from "../../../testHelpers/test-utils";
 import GET_SPECIALIST from "../getProfile";
 import UPDATE_PROFILE from "../updateProfile";
 import COMPLETE_SETUP from "../completeSetup";
-import GET_APPLICATIONS from "../../Applications/fetchData";
+import { GET_APPLICATIONS } from "../../Applications/queries";
+import { GET_SIMILAR_PROJECTS } from "../../Applications/SimilarProjects/queries";
 
 test("Completes the setup", async () => {
-  const viewer = generateTypes.specialist({
+  const viewer = mockData.specialist({
     applicationStage: "Started",
     invitations: [],
   });
 
-  const { findByText, getByLabelText } = renderApp({
+  const { findByText, getByLabelText } = renderRoute({
     route: `/freelancers/signup/work`,
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
+      mockViewer(viewer),
+      mockQuery(GET_SPECIALIST, {}, { viewer }),
+      mockMutation(
+        UPDATE_PROFILE,
+        {
+          linkedin: "https://linkedin.com",
+          website: "",
+          resume: null,
         },
-        result: {
-          data: {
-            viewer,
+        {
+          updateProfile: {
+            __typename: "UpdateProfilePayload",
+            specialist: viewer,
           },
         },
-      },
-      {
-        request: {
-          query: GET_SPECIALIST,
-        },
-        result: {
-          data: {
-            viewer,
-          },
-        },
-      },
-      {
-        request: {
-          query: UPDATE_PROFILE,
-          variables: {
-            input: {
-              linkedin: "https://linkedin.com",
-              website: "",
-              resume: null,
-            },
-          },
-        },
-        result: {
-          data: {
-            __typename: "Mutation",
-            updateProfile: {
-              __typename: "UpdateProfilePayload",
-              specialist: viewer,
-            },
-          },
-        },
-      },
-      {
-        request: {
-          query: COMPLETE_SETUP,
-          variables: {
-            input: {},
-          },
-        },
-        result: {
-          data: {
-            __typename: "Mutation",
-            completeSetup: {
-              __typename: "CompleteSetupPayload",
-              specialist: {
-                ...viewer,
-                applicationStage: "On Hold",
-              },
-            },
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_APPLICATIONS,
-        },
-        result: {
-          data: {
-            viewer: {
+      ),
+      mockMutation(
+        COMPLETE_SETUP,
+        {},
+        {
+          completeSetup: {
+            __typename: "CompleteSetupPayload",
+            specialist: {
               ...viewer,
               applicationStage: "On Hold",
-              invitations: [],
-              applications: [],
             },
           },
         },
-      },
+      ),
+      mockQuery(
+        GET_APPLICATIONS,
+        {},
+        {
+          viewer: {
+            ...viewer,
+            applicationStage: "On Hold",
+            applications: [],
+          },
+        },
+      ),
+      mockQuery(
+        GET_SIMILAR_PROJECTS,
+        {},
+        {
+          viewer: {
+            ...viewer,
+            similarPreviousProjects: [
+              mockData.previousProject({
+                title: "Example project",
+                specialist: mockData.specialist(),
+                skills: [],
+              }),
+            ],
+          },
+        },
+      ),
     ],
   });
 
@@ -100,6 +85,6 @@ test("Completes the setup", async () => {
   fireEvent.change(linkedin, { target: { value: "https://linkedin.com" } });
   const button = getByLabelText("Complete Setup");
   fireEvent.click(button);
-  const header = await findByText("You have not applied to any projects yet");
-  expect(header).toBeInTheDocument();
+  await findByText(/account is currently on hold/i);
+  await findByText(/example project/i);
 });

@@ -1,12 +1,16 @@
 import gql from "graphql-tag";
 
-export default gql`
+export const GET_APPLICATION = gql`
   query GetApplicationInvitation($id: ID!) {
     application(id: $id) {
       id
       status
       referralUrl
       airtableId
+      specialist {
+        id
+        applicationStage
+      }
       project {
         id
         airtableId
@@ -29,6 +33,19 @@ export default gql`
             name
           }
         }
+      }
+    }
+  }
+`;
+
+export const REJECT_INVITATION = gql`
+  mutation rejectApplicationInvitation(
+    $input: RejectApplicationInvitationInput!
+  ) {
+    rejectApplicationInvitation(input: $input) {
+      application {
+        id
+        status
       }
     }
   }

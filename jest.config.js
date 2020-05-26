@@ -3,11 +3,7 @@ module.exports = {
   testTimeout: 30000,
   roots: ["app/javascript/src", "donut/src"],
   setupFilesAfterEnv: ["<rootDir>/app/javascript/src/testHelpers/setup.js"],
-  moduleDirectories: [
-    "node_modules",
-    "app/javascript",
-    "app/javascript/src/testHelpers",
-  ],
+  moduleDirectories: ["node_modules", "app/javascript"],
   transformIgnorePatterns: ["<rootDir>/node_modules/(?!lodash-es)"],
   moduleNameMapper: {
     "@advisable/donut": "<rootDir>/donut/src",

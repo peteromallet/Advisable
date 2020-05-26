@@ -1,5 +1,13 @@
-import { fireEvent, renderRoute, waitForElementToBeRemoved } from "test-utils";
-import { mockViewer, mockQuery, mockMutation } from "apolloMocks";
+import {
+  fireEvent,
+  renderRoute,
+  waitForElementToBeRemoved,
+} from "../../testHelpers/test-utils";
+import {
+  mockViewer,
+  mockQuery,
+  mockMutation,
+} from "../../testHelpers/apolloMocks";
 import generateTypes from "../../__mocks__/graphqlFields";
 import GET_APPLICATION from "./fetchApplication";
 import UPDATE_APPLICATION from "./updateApplication";

@@ -19,10 +19,10 @@ function PendingConfirmation() {
       <Card maxWidth={500} mx="auto" padding="xl">
         <Text
           mb="xs"
-          fontSize="xl"
-          color="blue.8"
-          fontWeight="semibold"
-          letterSpacing="-0.01em"
+          fontSize="24px"
+          color="blue900"
+          fontWeight="medium"
+          letterSpacing="-0.02em"
         >
           Please confirm your account
         </Text>

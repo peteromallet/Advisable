@@ -50,6 +50,9 @@ const client = new ApolloClient({
     mutate: {
       errorPolicy: "all",
     },
+    watchQuery: {
+      errorPolicy: "all",
+    },
   },
 });
 

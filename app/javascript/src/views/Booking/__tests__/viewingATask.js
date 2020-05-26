@@ -1,4 +1,4 @@
-import { renderRoute, fireEvent } from "test-utils";
+import { renderRoute, fireEvent } from "../../../testHelpers/test-utils";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
