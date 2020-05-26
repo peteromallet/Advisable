@@ -43,7 +43,9 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - node/test
+      - run:
+          name: JS Tests
+          command: yarn test --runInBand
       # Here we make sure that the secondary container boots
       # up before we run operations on the database.
       - run:
