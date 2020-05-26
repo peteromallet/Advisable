@@ -30,7 +30,7 @@ jobs:
     # A series of steps to run, some are similar to those in "build".
     steps:
       - checkout
-      -
+      - ruby/install-deps
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -43,9 +43,7 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run:
-          name: JS Tests
-          command: yarn test --runInBand
+      - node/test
       # Here we make sure that the secondary container boots
       # up before we run operations on the database.
       - run:
