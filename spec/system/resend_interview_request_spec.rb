@@ -11,7 +11,6 @@ describe 'Resending interview request' do
     visit "/projects/#{interview.application.project.airtable_id}/interviews/#{
             interview.airtable_id
           }/availability"
-    sleep 20
     page.all('div[class^=styles__TimeCell]')[10].click
     page.all('div[class^=styles__TimeCell]')[34].click
     page.all('div[class^=styles__TimeCell]')[58].click

@@ -1,4 +1,4 @@
-import { renderRoute, mockViewer } from "test-utils";
+import { renderRoute, mockViewer } from "../../testHelpers/test-utils";
 import GET_PROJECT from "./fetchProject";
 
 test("redirecs to login if authenticationRequired", async () => {

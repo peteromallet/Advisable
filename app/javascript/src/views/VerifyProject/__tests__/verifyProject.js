@@ -8,7 +8,7 @@ import {
   mockQuery,
   mockMutation,
   waitFor,
-} from "test-utils";
+} from "../../../testHelpers/test-utils";
 import {
   GET_PREVIOUS_PROJECT,
   VALIDATE_PREVIOUS_PROJECT,

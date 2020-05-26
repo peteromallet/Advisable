@@ -1,5 +1,13 @@
-import { renderRoute, waitFor, fireEvent } from "test-utils";
-import { mockViewer, mockQuery, mockMutation } from "apolloMocks";
+import {
+  renderRoute,
+  waitFor,
+  fireEvent,
+} from "../../../testHelpers/test-utils";
+import {
+  mockViewer,
+  mockQuery,
+  mockMutation,
+} from "../../../testHelpers/apolloMocks";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import { RESUME_WORKING } from "../StoppedWorkingNotice";

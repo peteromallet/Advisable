@@ -49,19 +49,20 @@ const Skills = ({ history, location, specialist }) => {
       <Text
         mb="s"
         as="h2"
-        size="xxxl"
-        lineHeight="xxxl"
+        size="32px"
+        lineHeight="34px"
         weight="semibold"
-        color="neutral.9"
+        color="blue900"
+        letterSpacing="-0.02em"
       >
         Apply to join our network of freelancers
       </Text>
-      <Text size="m" color="neutral.7" lineHeight="m">
+      <Text size="m" color="neutral700" lineHeight="m">
         Let us know what kind of projects you are looking for to begin the
         application process. Please add skill’s that you have used in previously
         completed projects.
       </Text>
-      <Box bg="neutral.1" width="100%" height="1px" my="l" />
+      <Box bg="neutral100" width="100%" height="1px" my="l" />
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
@@ -89,7 +90,7 @@ const Skills = ({ history, location, specialist }) => {
                     formik.setFieldValue("skills", skills);
                   }}
                 />
-                <Box bg="neutral.1" width="100%" height="1px" my="l" />
+                <Box bg="neutral100" width="100%" height="1px" my="l" />
                 <Button size="l" type="submit" suffix={<ArrowRight />}>
                   Get Started
                 </Button>
@@ -98,10 +99,10 @@ const Skills = ({ history, location, specialist }) => {
           </Form>
         )}
       </Formik>
-      <Text size="s" weight="medium" color="neutral.7" mt="l" mb="xxs">
+      <Text fontSize="s" fontWeight="medium" color="neutral800" mt="l" mb="xxs">
         Already have an account?
       </Text>
-      <Text size="s" mb="xl">
+      <Text fontSize="s" mb="xl">
         <Link to="/login">Login to your account →</Link>
       </Text>
     </>

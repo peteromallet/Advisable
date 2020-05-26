@@ -342,4 +342,17 @@ class Types::SpecialistType < Types::BaseType
       previous_project.try(:priority) || Float::INFINITY
     end
   end
+
+  field :similar_previous_projects, [Types::PreviousProject], null: false do
+    description <<~HEREDOC
+      Returns up to 3 other previous projects belonging to other specialists
+      on advisable that match the specialists skillset.
+    HEREDOC
+  end
+
+  def similar_previous_projects
+    PreviousProject.left_outer_joins(:skills).where(
+      validation_status: 'Validated', skills: { id: object.skill_ids }
+    ).where.not(specialist_id: object.id).limit(3)
+  end
 end

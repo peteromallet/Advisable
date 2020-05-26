@@ -2,7 +2,7 @@ import fields from "../../__mocks__/graphqlFields";
 import renderApp from "../../testHelpers/renderApp";
 import VIEWER from "../../graphql/queries/viewer";
 import PROJECTS from "./getProjects";
-import FREELANCER_APPLICATIONS from "../Applications/fetchData";
+import { GET_APPLICATIONS } from "../Applications/queries";
 
 test("Loads the clients projects", async () => {
   const project = fields.project({ primarySkill: "Test Primary Skill" });
@@ -56,7 +56,7 @@ test("Redirects to specialist dashboard if not logged in as a user", async () =>
       },
       {
         request: {
-          query: FREELANCER_APPLICATIONS,
+          query: GET_APPLICATIONS,
         },
         result: {
           data: {
@@ -72,7 +72,7 @@ test("Redirects to specialist dashboard if not logged in as a user", async () =>
   });
 
   const header = await app.findByText(
-    "You have not applied to any projects yet"
+    "You have not applied to any projects yet",
   );
   expect(header).toBeInTheDocument();
 });

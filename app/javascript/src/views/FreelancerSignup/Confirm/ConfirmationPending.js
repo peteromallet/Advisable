@@ -2,7 +2,7 @@ import React from "react";
 import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Text, Button } from "@advisable/donut";
+import { Text, Link } from "@advisable/donut";
 import useViewer from "../../../hooks/useViewer";
 import { useNotifications } from "../../../components/Notifications";
 
@@ -26,7 +26,8 @@ const ConfirmationPending = () => {
   const [resent, setResent] = React.useState(false);
   const [resendConfirmationEmail] = useMutation(RESEND);
 
-  const resend = () => {
+  const resend = (e) => {
+    e.preventDefault();
     setResent(true);
     resendConfirmationEmail();
     notifications.notify("Confirmation email has been resent");
@@ -34,12 +35,20 @@ const ConfirmationPending = () => {
 
   return (
     <>
-      <Text as="h2" size="xxxl" weight="semibold" color="neutral.9" mb="s">
+      <Text
+        mb="s"
+        as="h2"
+        size="32px"
+        lineHeight="34px"
+        weight="semibold"
+        color="blue900"
+        letterSpacing="-0.02em"
+      >
         Confirm your account
       </Text>
-      <Text size="s" color="neutral.7" lineHeight="m">
+      <Text size="s" color="neutral700" lineHeight="m">
         Please click the confirmation link in the email that we have sent to{" "}
-        <Text as="span" color="blue.7" weight="medium">
+        <Text as="span" color="neutral900" fontWeight="medium">
           {get(viewer, "email")}
         </Text>
         . If you do not receive the confirmation message within a few minutes
@@ -47,12 +56,18 @@ const ConfirmationPending = () => {
       </Text>
       {!resent && (
         <>
-          <Text size="s" color="neutral.4" mt="l">
+          <Text
+            fontSize="s"
+            fontWeight="medium"
+            color="neutral900"
+            mt="l"
+            mb="xs"
+          >
             Didn't receive an email?
           </Text>
-          <Button onClick={resend} variant="subtle">
+          <Link.External fontSize="s" href="#" onClick={resend}>
             Resend confirmation email
-          </Button>
+          </Link.External>
         </>
       )}
     </>

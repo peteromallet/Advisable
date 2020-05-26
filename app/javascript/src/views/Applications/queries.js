@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-export default gql`
+export const GET_APPLICATIONS = gql`
   query {
     viewer {
       ... on Specialist {
@@ -8,22 +8,6 @@ export default gql`
         email
         airtableId
         applicationStage
-        invitations: applications(
-          status: ["Invited To Apply"]
-          salesStatus: ["Open"]
-        ) {
-          id
-          status
-          airtableId
-          project {
-            id
-            industry
-            companyType
-            primarySkill
-            estimatedBudget
-            companyDescription
-          }
-        }
         applications(
           status: [
             "Applied"
@@ -32,6 +16,7 @@ export default gql`
             "Interview Scheduled"
             "Interview Completed"
             "Proposed"
+            "Invited To Apply"
           ]
           salesStatus: ["Open"]
         ) {

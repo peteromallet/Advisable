@@ -6,9 +6,13 @@ import {
   waitFor,
   screen,
   waitForElementToBeRemoved,
-} from "test-utils";
+} from "../testHelpers/test-utils";
 import VIEWER from "../graphql/queries/viewer";
-import { mockViewer, mockQuery, mockMutation } from "apolloMocks";
+import {
+  mockViewer,
+  mockQuery,
+  mockMutation,
+} from "../testHelpers/apolloMocks";
 import generateType from "../__mocks__/graphqlFields";
 import GET_ACTIVE_APPLICATION from "../views/Booking/getActiveApplication";
 import {
