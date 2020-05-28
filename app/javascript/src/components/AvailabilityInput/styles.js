@@ -60,6 +60,7 @@ export const StyledAvailabilityInputHeaderButton = styled.button`
   border-radius: 6px;
   align-items: center;
   justify-content: center;
+  background: transparent;
 
   svg {
     width: 24px;
@@ -109,7 +110,7 @@ export const StyledAvailabilityInputColumn = styled.div`
   }
 `;
 
-export const StyledAvailabilityInputCellMarker = styled.div`
+export const StyledAvailabilityInputCellMarker = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,6 +139,17 @@ const inactiveCellStyles = css`
   }
 `;
 
+const cellWithEventStyles = css`
+  &[disabled] {
+    background-image: none;
+  }
+
+  ${StyledAvailabilityInputCellMarker} {
+    background: ${theme.colors.cyan900};
+    box-shadow: 0px 1px 2px ${rgba(theme.colors.cyan900, 0.1)};
+  }
+`;
+
 export const StyledAvailabilityInputCell = styled.div`
   display: flex;
   align-items: center;
@@ -153,9 +165,6 @@ export const StyledAvailabilityInputCell = styled.div`
   padding: 0;
   margin: 0;
 
-  ${(props) => (props.isActive ? activeCellStyles : inactiveCellStyles)};
-  ${(props) => props.isSelected && selectedCellStyles};
-
   &[disabled] {
     background-image: url(${disabled});
   }
@@ -163,4 +172,8 @@ export const StyledAvailabilityInputCell = styled.div`
   &:last-child {
     border-bottom: none;
   }
+
+  ${(props) => (props.isActive ? activeCellStyles : inactiveCellStyles)};
+  ${(props) => props.isSelected && selectedCellStyles};
+  ${(props) => props.hasEvent && cellWithEventStyles};
 `;

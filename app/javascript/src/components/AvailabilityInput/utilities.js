@@ -1,5 +1,11 @@
 import { DateTime } from "luxon";
 
+export function timesInZone(times, zone) {
+  return times.map((time) => {
+    return DateTime.fromISO(time).setZone(zone).toISO();
+  });
+}
+
 export function isCellInSelection(selection, column, row) {
   if (!selection) return false;
   const { from, to } = selection;

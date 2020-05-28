@@ -1,7 +1,6 @@
 import React from "react";
-import { Settings, DateTime } from "luxon";
-import { screen, fireEvent } from "@testing-library/react";
-import { renderComponent } from "test-utils";
+import { Settings } from "luxon";
+import { render, screen, fireEvent } from "@testing-library/react";
 import AvailabilityInput from "./";
 
 // Its always 27th may 2020 at midday
@@ -14,7 +13,7 @@ afterEach(() => {
 });
 
 test("can select times", () => {
-  renderComponent(
+  render(
     <AvailabilityInput
       value={[]}
       onChange={changeHandler}
@@ -22,13 +21,14 @@ test("can select times", () => {
     />,
   );
 
-  fireEvent.mouseDown(screen.getByLabelText("2 Jun 2020, 10:00"));
-  fireEvent.mouseUp(screen.getByLabelText("2 Jun 2020, 10:00"));
+  const time = screen.getByLabelText("2 Jun 2020, 10:00");
+  fireEvent.mouseDown(time);
+  fireEvent.mouseUp(time);
   expect(changeHandler).toHaveBeenCalledWith(["2020-06-02T10:00:00.000+02:00"]);
 });
 
 test("can select multiple times", () => {
-  renderComponent(
+  render(
     <AvailabilityInput
       value={[]}
       onChange={changeHandler}
@@ -59,7 +59,7 @@ test("can remove times", () => {
     value = newValue;
   };
 
-  renderComponent(
+  render(
     <AvailabilityInput
       value={value}
       onChange={handleChange}
@@ -76,8 +76,23 @@ test("can remove times", () => {
   expect(value).not.toContain("2020-06-03T10:00:00.000+02:00");
 });
 
+test("selected times are marked as selected", () => {
+  let value = ["2020-06-02T10:00:00.000+02:00"];
+
+  const { rerender } = render(
+    <AvailabilityInput
+      value={value}
+      onChange={() => {}}
+      timezone="Europe/Berlin"
+    />,
+  );
+
+  const time = screen.getByLabelText("2 Jun 2020, 10:00");
+  expect(time).toHaveAttribute("aria-selected", "true");
+});
+
 test("can move forward and back in weeks", () => {
-  renderComponent(
+  render(
     <AvailabilityInput
       value={[]}
       onChange={changeHandler}
@@ -95,7 +110,7 @@ test("can move forward and back in weeks", () => {
 });
 
 test("Passed values are converted to timezone", () => {
-  renderComponent(
+  render(
     <AvailabilityInput
       onChange={changeHandler}
       timezone="America/New_York"
@@ -109,7 +124,7 @@ test("Passed values are converted to timezone", () => {
 });
 
 test("can not select weekends", () => {
-  renderComponent(
+  render(
     <AvailabilityInput
       value={[]}
       onChange={changeHandler}
@@ -134,7 +149,7 @@ test("can not select weekends", () => {
 });
 
 test("can drag select through a weekend", () => {
-  renderComponent(
+  render(
     <AvailabilityInput
       value={[]}
       onChange={changeHandler}
@@ -151,4 +166,23 @@ test("can drag select through a weekend", () => {
     "2020-06-01T10:00:00.000+02:00",
     "2020-06-01T10:30:00.000+02:00",
   ]);
+});
+
+test("Events are disabled", () => {
+  render(
+    <AvailabilityInput
+      onChange={changeHandler}
+      timezone="Europe/Berlin"
+      value={[]}
+      events={[
+        {
+          time: "2020-06-02T12:00:00.000+02:00",
+          label: "Interview with John",
+        },
+      ]}
+    />,
+  );
+
+  const time = screen.getByLabelText("2 Jun 2020, 12:00");
+  expect(time).toHaveAttribute("disabled");
 });

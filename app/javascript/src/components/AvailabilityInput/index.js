@@ -1,3 +1,4 @@
+import { find } from "lodash-es";
 import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { DateTime } from "luxon";
 import { StyledAvailabilityInput } from "./styles";
@@ -6,6 +7,7 @@ import AvailabilityInputDays from "./AvailabilityInputDays";
 import AvailabilityInputTime from "./AvailabilityInputTime";
 import AvailabilityInputHeader from "./AvailabilityInputHeader";
 import {
+  timesInZone,
   isCellInSelection,
   addTimes,
   removeTimes,
@@ -16,6 +18,7 @@ import {
 const AvailabilityInput = React.memo(function AvailabilityInput({
   timezone,
   value,
+  events,
   onChange,
   maxHeight,
   ...props
@@ -25,10 +28,23 @@ const AvailabilityInput = React.memo(function AvailabilityInput({
   const tomorrow = DateTime.local().setZone(timezone).plus({ days: 1 });
 
   const zonedValue = useMemo(() => {
-    return value.map((time) => {
-      return DateTime.fromISO(time).setZone(timezone).toISO();
-    });
+    return timesInZone(value, timezone);
   }, [value, timezone]);
+
+  const eventForTime = (time) => {
+    const parsed = DateTime.fromISO(time).setZone(timezone);
+    return find(events, (event) => {
+      const eventTime = DateTime.fromISO(event.time).setZone(timezone);
+      return +parsed === +eventTime;
+    });
+  };
+
+  const isTimeDisabled = (time) => {
+    if (isWeekend(time, timezone)) return true;
+    const event = eventForTime(time);
+    if (event) return true;
+    return false;
+  };
 
   const times = useMemo(() => {
     let days = [];
@@ -37,19 +53,20 @@ const AvailabilityInput = React.memo(function AvailabilityInput({
       .setZone(timezone)
       .startOf("day");
 
-    for (let d = 0; d <= 6; d++) {
+    for (let column = 0; column <= 6; column++) {
       let dayTimes = [];
-      const startOfDay = startOfWeek.plus({ days: d });
+      const startOfDay = startOfWeek.plus({ days: column });
 
-      for (let t = 0; t <= 47; t++) {
+      for (let row = 0; row <= 47; row++) {
+        const time = startOfDay.plus({ minutes: row * 30 });
+        const event = eventForTime(time.toISO());
+
         dayTimes.push({
-          time: startOfDay.plus({ minutes: t * 30 }).toISO(),
-          row: t,
-          column: d,
-          isDisabled: isWeekend(
-            startOfDay.plus({ minutes: t * 30 }).toISO(),
-            timezone,
-          ),
+          time,
+          row,
+          column,
+          isDisabled: isTimeDisabled(time.toISO()),
+          event,
         });
       }
 
@@ -59,7 +76,7 @@ const AvailabilityInput = React.memo(function AvailabilityInput({
     return days;
   }, [timezone, weekOffset]);
 
-  const startOfWeek = DateTime.fromISO(times[0][0].time).setZone(timezone);
+  const startOfWeek = times[0][0].time;
   const canGoBack = !startOfWeek.hasSame(tomorrow, "day");
 
   const handlePreviousWeek = useCallback(
@@ -72,14 +89,9 @@ const AvailabilityInput = React.memo(function AvailabilityInput({
     [setWeekOffset],
   );
 
-  useEffect(() => {
-    document.addEventListener("mouseup", handleMouseUp);
-    return () => document.removeEventListener("mouseup", handleMouseUp);
-  }, [selection]);
-
   const isCellActive = (column, row) => {
     const time = times[column][row].time;
-    return zonedValue.includes(time);
+    return zonedValue.includes(time.toISO());
   };
 
   const handleMouseDown = useCallback(
@@ -105,34 +117,35 @@ const AvailabilityInput = React.memo(function AvailabilityInput({
     [setSelection],
   );
 
-  const isTimeDisabled = (time) => {
-    return isWeekend(time, timezone);
-  };
+  useEffect(() => {
+    const handleMouseUp = () => {
+      if (!selection) return;
+      const { column, row } = selection.from;
+      const cells = cellsFromSelection(times, selection);
+
+      const selectedTimes = [];
+      cells.forEach((cell) => {
+        if (!cell.isDisabled) {
+          selectedTimes.push(cell.time.toISO());
+        }
+      });
+
+      if (isCellActive(column, row)) {
+        onChange(removeTimes(zonedValue, selectedTimes));
+      } else {
+        onChange(addTimes(zonedValue, selectedTimes));
+      }
+
+      setSelection(null);
+    };
+
+    document.addEventListener("mouseup", handleMouseUp);
+    return () => document.removeEventListener("mouseup", handleMouseUp);
+  }, [selection]);
 
   const isCellSelected = (cell) => {
-    if (isTimeDisabled(cell.time)) return false;
+    if (cell.isDisabled) return false;
     return isCellInSelection(selection, cell.column, cell.row);
-  };
-
-  const handleMouseUp = () => {
-    if (!selection) return;
-    const { column, row } = selection.from;
-    const cells = cellsFromSelection(times, selection);
-
-    const selectedTimes = [];
-    cells.forEach((cell) => {
-      if (!cell.isDisabled) {
-        selectedTimes.push(cell.time);
-      }
-    });
-
-    if (isCellActive(column, row)) {
-      onChange(removeTimes(zonedValue, selectedTimes));
-    } else {
-      onChange(addTimes(zonedValue, selectedTimes));
-    }
-
-    setSelection(null);
   };
 
   return (
@@ -145,19 +158,16 @@ const AvailabilityInput = React.memo(function AvailabilityInput({
         onPreviousWeek={handlePreviousWeek}
       />
       <AvailabilityInputDays maxHeight={maxHeight}>
-        {times.map((day, column) => (
+        {times.map((day) => (
           <AvailabilityInputDay key={day[0].time}>
-            {day.map((cell, row) => (
+            {day.map((cell) => (
               <AvailabilityInputTime
                 {...cell}
                 key={cell.time}
                 onMouseDown={handleMouseDown}
                 onMouseOver={handleMouseOver}
                 isSelected={isCellSelected(cell)}
-                isActive={zonedValue.includes(cell.time)}
-                label={DateTime.fromISO(cell.time)
-                  .setZone(timezone)
-                  .toLocaleString(DateTime.DATETIME_MED)}
+                isActive={isCellActive(cell.column, cell.row)}
               />
             ))}
           </AvailabilityInputDay>
@@ -169,6 +179,7 @@ const AvailabilityInput = React.memo(function AvailabilityInput({
 
 AvailabilityInput.defaultProps = {
   timezone: DateTime.local().zoneName,
+  events: [],
 };
 
 export default AvailabilityInput;

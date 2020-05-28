@@ -1,6 +1,7 @@
 import React from "react";
-import { Check } from "@styled-icons/feather";
-import { Circle } from "@advisable/donut";
+import { DateTime } from "luxon";
+import { Check, Phone } from "@styled-icons/feather";
+import { Circle, Tooltip } from "@advisable/donut";
 import {
   StyledAvailabilityInputCell,
   StyledAvailabilityInputCellMarker,
@@ -14,7 +15,8 @@ const AvailabilityInputTime = React.memo(function AvailabilityInputTime({
   isSelected,
   isActive,
   isDisabled,
-  label,
+  time,
+  event,
 }) {
   const handleMouseDown = React.useCallback(() => {
     if (isDisabled) return;
@@ -25,6 +27,8 @@ const AvailabilityInputTime = React.memo(function AvailabilityInputTime({
     onMouseOver(column, row);
   }, [onMouseOver, column, row]);
 
+  const label = time.toLocaleString(DateTime.DATETIME_MED);
+
   return (
     <StyledAvailabilityInputCell
       role="button"
@@ -33,16 +37,24 @@ const AvailabilityInputTime = React.memo(function AvailabilityInputTime({
       isSelected={isSelected}
       isActive={isActive}
       disabled={isDisabled}
+      hasEvent={Boolean(event)}
       aria-label={label}
       aria-selected={isActive}
     >
-      <StyledAvailabilityInputCellMarker>
-        {isActive && !isSelected && (
-          <Circle size={20} bg="cyan800" color="white.9">
-            <Check size={12} strokeWidth={3} />
-          </Circle>
-        )}
-      </StyledAvailabilityInputCellMarker>
+      <Tooltip content={event?.label}>
+        <StyledAvailabilityInputCellMarker>
+          {isActive && !isSelected && (
+            <Circle size={20} bg="cyan800" color="white.9">
+              <Check size={12} strokeWidth={3} />
+            </Circle>
+          )}
+          {event && !isSelected && (
+            <Circle size={20} bg="cyan900" color="white.9">
+              <Phone size={16} strokeWidth={0} fill="currentColor" />
+            </Circle>
+          )}
+        </StyledAvailabilityInputCellMarker>
+      </Tooltip>
     </StyledAvailabilityInputCell>
   );
 });

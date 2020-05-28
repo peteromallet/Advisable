@@ -7,9 +7,7 @@ function AvailabilityInputDays({ children, maxHeight }) {
   const scrollView = React.useRef(null);
 
   React.useLayoutEffect(() => {
-    // if (scrollView.current) {
-    //   scrollView.current.scrollTo(0, 700);
-    // }
+    scrollView.current.scrollTop = 700;
   }, []);
 
   return (
