@@ -4,12 +4,13 @@ export const Form = styled.form`
   width: 100%;
   height: 100%;
   display: flex;
+  padding: 20px;
   background: white;
   flex-direction: column;
 `;
 
 export const Header = styled.div`
-  padding: 30px;
+  padding-bottom: 20px;
 `;
 
 export const Body = styled.div`
@@ -18,5 +19,5 @@ export const Body = styled.div`
 `;
 
 export const Footer = styled.div`
-  padding: 25px;
+  padding-top: 20px;
 `;

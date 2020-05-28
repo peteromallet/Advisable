@@ -16,41 +16,32 @@ import AvailabilityModal from "./AvailabilityModal";
 // availability into a new array.
 const replaceAvailabilityForDate = (existing, date, availability) => {
   const filtered = existing.filter(
-    v => !DateTime.fromISO(v).hasSame(date, "day")
+    (v) => !DateTime.fromISO(v).hasSame(date, "day"),
   );
 
   return [...filtered, ...availability];
 };
 
-const Availability = ({ value, onChange, timeZone }) => {
+const Availability = ({ value, onChange, timezone }) => {
   const ref = useRef(null);
   const size = useComponentSize(ref);
   const [selectedDay, selectDay] = React.useState(null);
   const [month, setMonth] = React.useState(DateTime.local().startOf("month"));
 
-  // We use react-window to render a large list of scrolling records. This
-  // needs to be told how wide each item is. The first item is a spacer item
-  // and should be 20px wide. Each day is 50px width with 4px spacing so we
-  // return 54px.
-  const getItemSize = index => {
-    if (index === 0) return 20;
-    return 54;
-  };
-
-  const handleItemsRendered = item => {
+  const handleItemsRendered = (item) => {
     const date = DateTime.local().plus({ days: item.visibleStartIndex });
     if (!month.hasSame(date, "month")) {
       setMonth(date.startOf("month"));
     }
   };
 
-  const handleClickItem = day => {
+  const handleClickItem = (day) => {
     selectDay(day);
   };
 
-  const availabilityForDate = date => {
+  const availabilityForDate = (date) => {
     if (date === null) return [];
-    return value.filter(v => {
+    return value.filter((v) => {
       return DateTime.fromISO(v).hasSame(date, "day");
     });
   };
@@ -64,29 +55,24 @@ const Availability = ({ value, onChange, timeZone }) => {
   return (
     <StyledAvailability ref={ref}>
       <AvailabilityModal
-        timeZone={timeZone}
+        timeZone={timezone}
         selectedDay={selectedDay}
         initialAvailability={availabilityForDate(selectedDay)}
         setAvailabilityForDay={setAvailabilityForDay}
       />
-      <Text ml="20px" mb="s" fontSize="l" fontWeight="semibold">
+      <Text mb="s" fontSize="l" fontWeight="semibold">
         {month.toFormat("MMMM yyyy")}
       </Text>
       <List
         height={90}
+        itemSize={() => 54}
         itemCount={367} // we render 365 days to the future
         layout="horizontal"
-        itemSize={getItemSize}
         innerElementType={StyledAvailabilityScrollContainer}
         onItemsRendered={handleItemsRendered}
         width={size.width}
       >
-        {item => {
-          // If its the first item then we are rendering the 20px spacer.
-          if (item.index === 0) {
-            return <Box style={item.style} />;
-          }
-
+        {(item) => {
           const date = DateTime.local().plus({ days: item.index });
 
           return (

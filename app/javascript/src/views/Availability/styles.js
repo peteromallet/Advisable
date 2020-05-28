@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div.attrs(props => ({
+export const Container = styled.div.attrs((props) => ({
   style: {
     height: `${props.height}px`,
   },
@@ -14,11 +14,12 @@ export const Form = styled.form`
   width: 100%;
   height: 100%;
   display: flex;
+  padding: 30px;
   flex-direction: column;
 `;
 
 export const Header = styled.div`
-  padding: 30px;
+  padding-bottom: 20px;
 `;
 
 export const Body = styled.div`
@@ -27,5 +28,5 @@ export const Body = styled.div`
 `;
 
 export const Footer = styled.div`
-  padding: 25px;
+  padding-top: 20px;
 `;

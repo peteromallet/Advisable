@@ -64,11 +64,11 @@ const Availability = ({ data }) => {
   return (
     <Box maxWidth={700} mx="auto">
       <Link
-        fontSize="l"
-        mb="s"
+        mb="xs"
+        fontSize="m"
         fontWeight="medium"
         to="/freelancer_search"
-        letterSpacing="-0.02em"
+        letterSpacing="-0.03em"
       >
         <Box display="inline-block" mr="2px">
           <ArrowLeft size={20} strokeWidth={2} />
@@ -77,14 +77,14 @@ const Availability = ({ data }) => {
       </Link>
       <Text
         mb="xs"
-        fontSize="32px"
+        fontSize="24px"
         color="blue900"
         fontWeight="semibold"
         letterSpacing="-0.02em"
       >
         Availability
       </Text>
-      <Text fontSize="l" lineHeight="m" color="neutral800" mb="l">
+      <Text fontSize="m" lineHeight="20px" color="neutral800" mb="m">
         Select the times you will be available for a consultation. The more
         times you select, the easier it'll be for us to find a time that suits
         them.

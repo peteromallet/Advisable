@@ -3,7 +3,11 @@ module.exports = {
   testTimeout: 30000,
   roots: ["app/javascript/src", "donut/src"],
   setupFilesAfterEnv: ["<rootDir>/app/javascript/src/testHelpers/setup.js"],
-  moduleDirectories: ["node_modules", "app/javascript"],
+  moduleDirectories: [
+    "node_modules",
+    "app/javascript",
+    "app/javascript/src/testHelpers",
+  ],
   transformIgnorePatterns: ["<rootDir>/node_modules/(?!lodash-es)"],
   moduleNameMapper: {
     "@advisable/donut": "<rootDir>/donut/src",
@@ -20,6 +24,7 @@ module.exports = {
   collectCoverageFrom: [
     "<rootDir>/app/javascript/src/**/*.{js,tsx,ts}",
     "<rootDir>/donut/src/**/*.{js,tsx,ts}",
+    "!<rootDir>/app/javascript/src/**/*.stories.js",
   ],
   coverageThreshold: {
     global: {

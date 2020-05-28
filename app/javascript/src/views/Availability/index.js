@@ -1,11 +1,11 @@
 import { Formik } from "formik";
-import { Button } from "@advisable/donut";
+import { Button, Availability, useBreakpoint } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment-timezone";
 import React, { useState } from "react";
 import Heading from "src/components/Heading";
 import Loading from "src/components/Loading";
-import Availability from "src/components/Availability";
+import AvailabilityInput from "src/components/AvailabilityInput";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
 import { withNotifications } from "src/components/Notifications";
 import useWindowSize from "src/utilities/useWindowSize";
@@ -17,6 +17,7 @@ import UPDATE_AVAILABILITY from "./updateAvailability.graphql";
 
 const AvailabilityView = ({ match, notifications }) => {
   const windowSize = useWindowSize();
+  const sup = useBreakpoint("sUp");
   const [updateAvailability] = useMutation(UPDATE_AVAILABILITY);
   const [timeZone, setTimeZone] = useState(
     moment.tz.guess() || "Europe/Dublin",
@@ -60,13 +61,24 @@ const AvailabilityView = ({ match, notifications }) => {
                 />
               </Header>
               <Body>
-                <Availability
-                  timeZone={timeZone}
-                  selected={formik.values.availability}
-                  onSelect={(times) => {
-                    formik.setFieldValue("availability", times);
-                  }}
-                />
+                {sup ? (
+                  <AvailabilityInput
+                    maxHeight="100%"
+                    timezone={timeZone}
+                    value={formik.values.availability}
+                    onChange={(times) => {
+                      formik.setFieldValue("availability", times);
+                    }}
+                  />
+                ) : (
+                  <Availability
+                    timezone={timeZone}
+                    value={formik.values.availability}
+                    onChange={(times) => {
+                      formik.setFieldValue("availability", times);
+                    }}
+                  />
+                )}
               </Body>
               <Footer>
                 <Button size="l" type="submit" isLoading={formik.isLoading}>
