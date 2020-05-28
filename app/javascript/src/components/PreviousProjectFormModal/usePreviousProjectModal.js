@@ -3,7 +3,7 @@ import { useDialogState } from "reakit/Dialog";
 import { useHistory, useLocation } from "react-router-dom";
 
 const CREATE_PATH = "/previous_projects/new";
-export const PATH_REGEX = /\/previous_projects\/(new|pre).*$/;
+export const PATH_REGEX = /\/previous_projects\/(new|pre|opp).*$/;
 
 export function usePreviousProjectModal(initialPath) {
   const history = useHistory();
