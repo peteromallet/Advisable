@@ -6,7 +6,7 @@ import { Info, ArrowRight } from "@styled-icons/feather";
 import { Card, Box, Text, Button, Autocomplete } from "@advisable/donut";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import Loading from "../../components/Loading";
-import AvailabilityInput from "../../components/Availability";
+import AvailabilityInput from "../../components/AvailabilityInput";
 import ZONES from "../../components/TimeZoneSelect/zones";
 import useWindowSize from "../../utilities/useWindowSize";
 import UPDATE_AVAILABILITY from "./updateAvailability";
@@ -76,7 +76,7 @@ const Availability = () => {
   };
 
   return (
-    <Card>
+    <Card padding={["m", "l"]}>
       <Box
         height={[height - 58, "auto"]}
         display={["flex", "block"]}
@@ -91,12 +91,7 @@ const Availability = () => {
         >
           {(formik) => (
             <Form>
-              <Box
-                flexShrink={1}
-                px={["m", "l"]}
-                pt={["m", "l"]}
-                paddingBottom="s"
-              >
+              <Box pb="m" flexShrink={1} paddingBottom="s">
                 <Text
                   mb="xs"
                   as="h2"
@@ -131,15 +126,15 @@ const Availability = () => {
                 flexGrow={1}
               >
                 <AvailabilityInput
-                  selected={formik.values.availability}
-                  timeZone={formik.values.timeZone}
-                  onSelect={(a) => {
+                  value={formik.values.availability}
+                  timezone={formik.values.timeZone}
+                  onChange={(a) => {
                     formik.setFieldTouched("availability", true);
                     formik.setFieldValue("availability", a);
                   }}
                 />
               </Box>
-              <Box padding={["m", "l"]} flexShrink={1}>
+              <Box pt="m" flexShrink={1}>
                 {formik.values.availability.length < 6 && (
                   <Box
                     p="xs"
