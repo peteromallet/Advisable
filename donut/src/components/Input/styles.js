@@ -20,6 +20,8 @@ export const StyledInput = styled.input`
   background: ${theme.colors.neutral[1]};
   width: ${(props) => props.width || "100%"};
   border: 2px solid ${theme.colors.neutral[1]};
+  font-family: poppins, sans-serif;
+  line-height: 1;
 
   ${margin}
 
