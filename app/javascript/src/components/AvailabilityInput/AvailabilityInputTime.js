@@ -27,7 +27,7 @@ const AvailabilityInputTime = React.memo(function AvailabilityInputTime({
     onMouseOver(column, row);
   }, [onMouseOver, column, row]);
 
-  const label = time.toLocaleString(DateTime.DATETIME_MED);
+  const label = time.toFormat("d MMM yyyy, HH:mm");
 
   return (
     <StyledAvailabilityInputCell

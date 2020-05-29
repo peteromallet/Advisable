@@ -67,7 +67,7 @@ const AvailabilityView = ({ match, notifications }) => {
                     onChange={(times) => {
                       formik.setFieldValue("availability", times);
                     }}
-                    events={data.user.interviews.map((i) => ({
+                    events={data.user.interviews?.map((i) => ({
                       time: i.startsAt,
                       label: `Interview with ${i.specialist.firstName}`,
                     }))}

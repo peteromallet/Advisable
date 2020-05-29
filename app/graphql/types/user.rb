@@ -60,7 +60,7 @@ class Types::User < Types::BaseType
     authorize :is_user
   end
 
-  field :interviews, [Types::Interview], null: false do
+  field :interviews, [Types::Interview], null: true do
     authorize :is_user
   end
 
