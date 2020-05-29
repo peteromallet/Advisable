@@ -10,11 +10,20 @@ import AvailabilityInput from "src/components/AvailabilityInput";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
 import { withNotifications } from "src/components/Notifications";
 import { Form, Header, Body, Footer } from "./styles";
-import RESEND_INTERVIEW_REQUEST from "./resendInterviewRequest.graphql";
+import { RESEND_INTERVIEW_REQUEST } from "./queries";
 
-const AvailabilityForInterview = ({ interview, notifications }) => {
+const AvailabilityForInterview = ({ data, notifications }) => {
+  const { viewer, interview } = data;
   const sup = useBreakpoint("sUp");
   const [resendInterviewRequest] = useMutation(RESEND_INTERVIEW_REQUEST);
+
+  const filteredEvents = viewer.interviews.filter((i) => i.id !== interview.id);
+  const events = filteredEvents.map((interview) => ({
+    time: interview.startsAt,
+    label: `Interview with ${interview.specialist.firstName}`,
+  }));
+
+  console.log(events);
 
   return (
     <Formik
@@ -60,6 +69,7 @@ const AvailabilityForInterview = ({ interview, notifications }) => {
               {sup ? (
                 <AvailabilityInput
                   maxHeight="100%"
+                  events={events}
                   timezone={formik.values.timeZone}
                   value={formik.values.availability}
                   onChange={(times) => {

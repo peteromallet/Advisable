@@ -7,7 +7,7 @@ import { ArrowRight } from "@styled-icons/feather";
 
 const TIMEZONE_OPTIONS = ZONES.map((z) => ({ label: z, value: z }));
 
-const AvailabilityDesktopFields = ({ formik }) => {
+const AvailabilityDesktopFields = ({ formik, events }) => {
   return (
     <Card padding="m">
       <Field
@@ -29,6 +29,7 @@ const AvailabilityDesktopFields = ({ formik }) => {
         flexGrow={1}
       >
         <AvailabilityInput
+          events={events}
           maxHeight="100%"
           value={formik.values.availability}
           timezone={formik.values.timeZone}

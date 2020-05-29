@@ -67,6 +67,12 @@ const Availability = () => {
     });
   };
 
+  const interviews = data.consultation.user.interviews;
+  const events = interviews.map((interview) => ({
+    time: interview.startsAt,
+    label: `Interview with ${interview.specialist.firstName}`,
+  }));
+
   const initialValues = {
     timeZone:
       user?.timeZone ||
@@ -126,6 +132,7 @@ const Availability = () => {
                 flexGrow={1}
               >
                 <AvailabilityInput
+                  events={events}
                   value={formik.values.availability}
                   timezone={formik.values.timeZone}
                   onChange={(a) => {

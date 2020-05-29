@@ -15,9 +15,7 @@ import { useNotifications } from "src/components/Notifications";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
 import AvailabilityInput from "src/components/AvailabilityInput";
 import validationSchema from "./validationSchema";
-
-import REQUEST_INTRO from "./requestIntroduction.graphql";
-import FETCH_AVAILABILITY from "./fetchAvailability.graphql";
+import { GET_AVAILABILITY, REQUEST_INTRODUCTION } from "./queries";
 
 function RequestIntroductionModal({ modal, ...props }) {
   return (
@@ -36,8 +34,8 @@ function RequestIntroductionModal({ modal, ...props }) {
 function RequestIntroduction({ modal, application }) {
   const sUp = useBreakpoint("sUp");
   const notifications = useNotifications();
-  const [requestIntroduction] = useMutation(REQUEST_INTRO);
-  const { data, loading } = useQuery(FETCH_AVAILABILITY, {
+  const [requestIntroduction] = useMutation(REQUEST_INTRODUCTION);
+  const { data, loading } = useQuery(GET_AVAILABILITY, {
     variables: { id: application.airtableId },
     skip: !modal.visible,
   });
@@ -73,6 +71,11 @@ function RequestIntroduction({ modal, application }) {
       return DateTime.fromISO(time) > DateTime.local().endOf("day");
     });
   };
+
+  const events = data.application.project.user.interviews.map((interview) => ({
+    time: interview.startsAt,
+    label: `Interview ${interview.specialist.firstName}`,
+  }));
 
   return (
     <Formik
@@ -111,6 +114,7 @@ function RequestIntroduction({ modal, application }) {
               {sUp ? (
                 <AvailabilityInput
                   maxHeight="100%"
+                  events={events}
                   timezone={formik.values.timeZone}
                   value={filterTimes(formik.values.availability)}
                   onChange={(times) => {

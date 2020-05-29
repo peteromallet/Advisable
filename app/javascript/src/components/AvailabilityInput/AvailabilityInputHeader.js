@@ -21,6 +21,7 @@ const AvailabilityInputHeader = React.memo(function AvailabilityInputHeader({
     <StyledAvailabilityInputHeader>
       <StyledAvailabilityInputHeaderColumn>
         <StyledAvailabilityInputHeaderButton
+          type="button"
           disabled={!canGoBack}
           onClick={onPreviousWeek}
           aria-label="Previous week"
@@ -40,6 +41,7 @@ const AvailabilityInputHeader = React.memo(function AvailabilityInputHeader({
       ))}
       <StyledAvailabilityInputHeaderColumn>
         <StyledAvailabilityInputHeaderButton
+          type="button"
           onClick={onNextWeek}
           aria-label="Next week"
         >

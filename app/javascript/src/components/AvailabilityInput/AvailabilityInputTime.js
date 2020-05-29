@@ -43,7 +43,7 @@ const AvailabilityInputTime = React.memo(function AvailabilityInputTime({
     >
       <Tooltip content={event?.label}>
         <StyledAvailabilityInputCellMarker>
-          {isActive && !isSelected && (
+          {isActive && !event && !isSelected && (
             <Circle size={20} bg="cyan800" color="white.9">
               <Check size={12} strokeWidth={3} />
             </Circle>

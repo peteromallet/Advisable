@@ -61,6 +61,12 @@ const Availability = ({ data }) => {
     });
   };
 
+  const interviews = getAvailability.data?.viewer.interviews || [];
+  const events = interviews.map((interview) => ({
+    time: interview.startsAt,
+    label: `Interview with ${interview.specialist.firstName}`,
+  }));
+
   return (
     <Box maxWidth={700} mx="auto">
       <Link
@@ -93,7 +99,7 @@ const Availability = ({ data }) => {
         {(formik) => (
           <Form>
             {sUp ? (
-              <AvailabilityDesktopFields formik={formik} />
+              <AvailabilityDesktopFields formik={formik} events={events} />
             ) : (
               <AvailabilityMobileFields formik={formik} />
             )}
