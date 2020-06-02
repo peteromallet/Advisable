@@ -7,6 +7,14 @@ export default gql`
         id
         timeZone
         availability
+        interviews {
+          id
+          startsAt
+          specialist {
+            id
+            firstName
+          }
+        }
       }
     }
   }

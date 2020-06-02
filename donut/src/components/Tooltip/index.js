@@ -11,17 +11,11 @@ import styled, { css } from "styled-components";
 import theme from "../../theme";
 import LinkStyles from "../Link/styles";
 
-const StyledTooltipReference = styled(TooltipReference)`
-  outline: none;
-  cursor: default;
-  display: inline-flex;
-`;
-
 const TooltipContent = styled.div`
   font-size: 14px;
   max-width: 320px;
   color: white;
-  padding: 12px 14px;
+  padding: 8px 16px;
   line-height: 20px;
   font-weight: 500;
   border-radius: 12px;
@@ -94,7 +88,9 @@ const Tooltip = ({
 
   return (
     <>
-      <StyledTooltipReference {...tooltip}>{children}</StyledTooltipReference>
+      <TooltipReference {...tooltip} ref={children.ref} {...children.props}>
+        {(referenceProps) => React.cloneElement(children, referenceProps)}
+      </TooltipReference>
       <StyledTooltip interactable={interactable} {...tooltip}>
         <TooltipContent>
           <StyledTooltipArrow size={16} {...tooltip} />
