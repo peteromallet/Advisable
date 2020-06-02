@@ -1,7 +1,0 @@
-query client($id: ID!) {
-  user(id: $id) {
-    id
-    airtableId
-    availability
-  }
-}

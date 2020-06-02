@@ -36,9 +36,9 @@ const Modal = ({
 
   React.useEffect(() => {
     if (isOpen) {
-      disableBodyScroll(containerRef);
+      disableBodyScroll(containerRef.current);
     } else {
-      enableBodyScroll(containerRef);
+      enableBodyScroll(containerRef.current);
     }
   }, [isOpen]);
 

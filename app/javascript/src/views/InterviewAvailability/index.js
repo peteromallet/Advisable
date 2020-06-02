@@ -5,10 +5,10 @@ import Loading from "src/components/Loading";
 import { useQuery } from "@apollo/react-hooks";
 import NotFound from "src/views/NotFound";
 import AvailabilityForInterview from "./AvailabilityForInterview";
-import FETCH_DATA from "./fetchData.graphql";
+import { GET_DATA } from "./queries";
 
 const InterviewAvailability = ({ match }) => {
-  const query = useQuery(FETCH_DATA, {
+  const query = useQuery(GET_DATA, {
     variables: { id: match.params.interviewID },
   });
   if (query.loading) return <Loading />;
@@ -16,9 +16,7 @@ const InterviewAvailability = ({ match }) => {
     return <NotFound />;
   }
 
-  return (
-    <AvailabilityForInterview match={match} interview={query.data.interview} />
-  );
+  return <AvailabilityForInterview data={query.data} />;
 };
 
 export default InterviewAvailability;

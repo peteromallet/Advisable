@@ -24,11 +24,14 @@ const Modal = ({
   modal,
   label,
   children,
+  height,
   backdrop = true,
   hideOnClickOutside = true,
   loading,
   width,
   showCloseButton = true,
+  initialFocusRef,
+  tabIndex,
   ...props
 }) => {
   const ref = useRef(null);
@@ -68,10 +71,11 @@ const Modal = ({
         aria-label={label}
         isMobile={isMobile}
         hideOnClickOutside={false}
-        tabIndex={loading ? 0 : null}
+        tabIndex={loading ? 0 : tabIndex}
         onClick={handleContainerClick}
         as={StyledModalWindowContainer}
         preventBodyScroll={false}
+        unstable_initialFocusRef={null}
       >
         <AnimatePresence>
           {modal.visible && loading && (
@@ -90,6 +94,7 @@ const Modal = ({
           {modal.visible && !loading && (
             <StyledWindow
               {...props}
+              height={height}
               width={width}
               isMobile={isMobile}
               transition={{ type: "spring", damping: 35, stiffness: 100 }}

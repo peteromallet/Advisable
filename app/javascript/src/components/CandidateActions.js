@@ -10,7 +10,13 @@ import {
   UserCheck,
   PhoneCall,
 } from "@styled-icons/feather";
-import { Text, Padding, Button } from "@advisable/donut";
+import {
+  Text,
+  Padding,
+  Button,
+  useModal,
+  DialogDisclosure,
+} from "@advisable/donut";
 import { Link } from "react-router-dom";
 import useMobile from "src/utilities/useMobile";
 import RejectModal from "src/components/RejectModal";
@@ -27,13 +33,17 @@ const REJECT_PROPOSAL_MODAL = "REJECT_PROPOSAL_MODAL";
 const REQUEST_REFERENCES_MODAL = "REQUEST_REFERENCES_MODAL";
 
 const statusActions = {
-  Applied: function AppliedActions({ application, stack, modal, setModal }) {
+  Applied: function AppliedActions({
+    requestCallModal,
+    application,
+    modal,
+    setModal,
+  }) {
     return (
       <React.Fragment>
         <RequestIntroduction
-          isOpen={modal === REQUEST_INTRODUCTION}
+          modal={requestCallModal}
           application={application}
-          onClose={() => setModal(null)}
         />
         <RejectModal
           isOpen={modal === REJECT_MODAL}
@@ -41,16 +51,17 @@ const statusActions = {
           application={application}
           onClose={() => setModal(null)}
         />
-        <Button
+        <DialogDisclosure
+          as={Button}
           mb="xs"
           align="left"
           width="100%"
           intent="success"
           prefix={<PhoneCall />}
-          onClick={() => setModal(REQUEST_INTRODUCTION)}
+          {...requestCallModal}
         >
           Request Call
-        </Button>
+        </DialogDisclosure>
         <Button
           align="left"
           width="100%"
@@ -249,6 +260,7 @@ const CandidateActions = ({
   const isMobile = useMobile();
   const [modal, setModal] = useState(null);
   const actions = statusActions[application.status];
+  const requestCallModal = useModal();
 
   return actions
     ? actions({
@@ -260,6 +272,7 @@ const CandidateActions = ({
         modal,
         setModal,
         isMobile,
+        requestCallModal,
       })
     : null;
 };

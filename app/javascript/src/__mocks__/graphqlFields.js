@@ -22,6 +22,7 @@ export const user = (fields = {}) => {
       bankTransfersEnabled: true,
       companyType: "Startup",
       projectPaymentMethod: "Bank Transfer",
+      interviews: [],
       invoiceSettings: {
         __typename: "InvoiceSettings",
         name: "Test Account",

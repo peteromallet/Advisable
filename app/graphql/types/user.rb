@@ -10,7 +10,11 @@ class Types::User < Types::BaseType
   field :projects, [Types::ProjectType], null: true
   field :confirmed, Boolean, null: false
   field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
-    argument :exclude_conflicts, Boolean, required: false, description: 'Exclude any times that conflict with scheduled interviews'
+    argument :exclude_conflicts,
+             Boolean,
+             required: false,
+             description:
+               'Exclude any times that conflict with scheduled interviews'
   end
 
   field :bank_transfers_enabled, Boolean, null: true
@@ -56,6 +60,10 @@ class Types::User < Types::BaseType
     authorize :is_user
   end
 
+  field :interviews, [Types::Interview], null: true do
+    authorize :is_user
+  end
+
   # The customer field returns information from the users stripe customer
   # object.
   field :customer, Types::CustomerType, null: true do
@@ -82,15 +90,16 @@ class Types::User < Types::BaseType
 
   def talk_signature
     user_id = context[:current_user].uid
-    OpenSSL::HMAC.hexdigest('SHA256', ENV["TALKJS_SECRET"], user_id)
+    OpenSSL::HMAC.hexdigest('SHA256', ENV['TALKJS_SECRET'], user_id)
   end
 
   # Exclude any projects where the sales status is 'Lost'. We need to use an
   # or statement here otherwise SQL will also exclude records where sales_status
   # is null.
   def projects
-    object.projects.where.not(sales_status: "Lost")
-      .or(object.projects.where(sales_status: nil))
+    object.projects.where.not(sales_status: 'Lost').or(
+      object.projects.where(sales_status: nil)
+    )
   end
 
   def availability(exclude_conflicts: false)
@@ -102,7 +111,7 @@ class Types::User < Types::BaseType
     times
   end
 
-  # 
+  #
   def applications(status:)
     records = object.applications
     records = records.where(status: status) if status

@@ -67,6 +67,7 @@ export const StyledWindow = styled(motion.div)`
   margin: auto;
   background: white;
   transform-style: preserve-3d;
+  height: ${(props) => props.height};
   max-width: ${(props) => props.width || 500}px;
   box-shadow: 0 8px 30px ${rgba(theme.colors.neutral[9], 0.1)};
   ${(props) => props.isMobile && StyledWindowMobile};

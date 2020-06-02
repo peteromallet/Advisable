@@ -7,6 +7,7 @@ class Types::Interview < Types::BaseType
   field :starts_at, GraphQL::Types::ISO8601DateTime, null: true
   field :application, Types::ApplicationType, null: false
   field :user, Types::User, null: false
+  field :specialist, Types::SpecialistType, null: true
 
   def id
     object.airtable_id
