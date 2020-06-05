@@ -37,14 +37,6 @@ const consultationFragment = gql`
       companyName
       availability
       timeZone
-      interviews {
-        id
-        startsAt
-        specialist {
-          id
-          firstName
-        }
-      }
     }
     specialist {
       id

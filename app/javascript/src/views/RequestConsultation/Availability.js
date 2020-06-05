@@ -15,7 +15,7 @@ import { useConsultation } from "./queries";
 const TIMEZONE_OPTIONS = ZONES.map((z) => ({ label: z, value: z }));
 
 const validationSchmea = object({
-  availability: array().min(6),
+  availability: array().min(5),
 });
 
 const Availability = () => {
@@ -66,12 +66,6 @@ const Availability = () => {
       },
     });
   };
-
-  const interviews = data.consultation.user.interviews;
-  const events = interviews.map((interview) => ({
-    time: interview.startsAt,
-    label: `Interview with ${interview.specialist.firstName}`,
-  }));
 
   const initialValues = {
     timeZone:
@@ -132,7 +126,6 @@ const Availability = () => {
                 flexGrow={1}
               >
                 <AvailabilityInput
-                  events={events}
                   value={formik.values.availability}
                   timezone={formik.values.timeZone}
                   onChange={(a) => {
@@ -156,7 +149,7 @@ const Availability = () => {
                     <Box display="inline-block" mr="xs" color="neutral500">
                       <Info size={20} strokeWidth={2} />
                     </Box>
-                    Please select at least 3 available times
+                    Please select at least 5 available times
                   </Box>
                 )}
                 <Button

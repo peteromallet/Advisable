@@ -50,12 +50,10 @@ const CompanyInformation = ({ data }) => {
     });
 
     if (response.errors) {
-      const error = response.errors[0].extensions.code;
+      const error = response.errors[0]?.extensions?.code;
       if (error === "emailBelongsToFreelancer") {
         formik.setFieldError("email", "This email belongs to a freelancer");
       }
-
-      return;
     }
 
     // Continue to the next step and pass the consultation id in the route
