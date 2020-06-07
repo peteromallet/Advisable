@@ -1,23 +1,20 @@
 import React from "react";
 import { StyledBadge, StyledBadgePrefix, StyledBadgeSuffix } from "./styles";
 
-const Badge = React.memo(function Badge({
-  children,
-  prefix,
-  suffix,
-  ...props
-}) {
-  return (
-    <StyledBadge {...props}>
+const Badge = React.forwardRef(
+  ({ children, prefix, suffix, ...props }, ref) => (
+    <StyledBadge {...props} ref={ref}>
       {prefix && <StyledBadgePrefix>{prefix}</StyledBadgePrefix>}
       {children}
       {suffix && <StyledBadgeSuffix>{suffix}</StyledBadgeSuffix>}
     </StyledBadge>
-  );
-});
+  ),
+);
 
-Badge.defaultProps = {
+const MemoizedBadge = React.memo(Badge);
+
+MemoizedBadge.defaultProps = {
   variant: "cyan",
 };
 
-export default Badge;
+export default MemoizedBadge;
