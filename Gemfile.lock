@@ -356,6 +356,8 @@ GEM
     tilt (2.0.10)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2020.1)
+      tzinfo (>= 1.0.0)
     unicode_utils (1.4.0)
     web-console (4.0.2)
       actionview (>= 6.0.0)
@@ -435,9 +437,6 @@ DEPENDENCIES
   webdrivers
   webmock
   webpacker (~> 5.1.1)
-
-RUBY VERSION
-   ruby 2.6.6p146
 
 BUNDLED WITH
    2.1.4

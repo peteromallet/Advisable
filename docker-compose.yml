@@ -1,0 +1,48 @@
+version: '2'
+
+services:
+  postgres:
+    image: postgres:12-alpine
+    volumes:
+      - ".build/data/postgres:/var/lib/postgresql/data"
+      - ".build/logs/postgres:/var/log"
+    environment:
+      POSTGRES_DATABASE: ad
+      POSTGRES_PASSWORD: ad
+
+  api:
+    restart: always
+    image: advisable/api
+    build:
+      context: ./
+      args:
+        bundle_without: production
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://postgres:ad@postgres/ad?pool=5
+      AIRTABLE_API_KEY: airtable_key
+      AIRTABLE_DATABASE_KEY: airtable_db_key
+      AIRTABLE_CONTENT_BASE: airtable_ct_key
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: adminpass
+      SIDEKIQ_USERNAME: sq
+      SIDEKIQ_PASSWORD: sqpass
+      ENCRYPTION_KEY: enc_key
+      STRIPE_PUBLIC_KEY: stripe_key
+      STRIPE_SECRET_KEY: stripe_sec
+      STRIPE_WEBHOOK_SECRET: stripe_wh_sec
+      JWT_SECRET: secret
+      ORIGIN: '*'
+      SENDGRID_USERNAME: sendgrid_user
+      SENDGRID_DOMAIN: localhost
+      SENDGRID_PASSWORD: sendgrid_pass
+      AWS_ACCESS_KEY: aws_key
+      AWS_SECRET_ACCESS_KEY: aws_secret
+      AWS_S3_BUCKET: aws_s3
+      LINKEDIN_KEY: linkedin_key
+      LINKEDIN_SECRET: linkedin_secret
