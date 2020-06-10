@@ -7,7 +7,6 @@ test("Shows the freelancers active projects", async () => {
   const freelancer = mockData.specialist({
     applications: [
       mockData.application({
-        tasks: [],
         status: "Working",
         project: mockData.project({
           primarySkill: "test project",
