@@ -71,12 +71,12 @@ describe Application do
     end
   end
 
-  describe '.top_three' do
+  describe '.top_three_applied' do
     it 'only includes applications with a score above 65' do
       a = create(:application, status: 'Applied', score: 66)
       b = create(:application, status: 'Applied', score: 65)
-      expect(Application.top_three).to include(a)
-      expect(Application.top_three).to_not include(b)
+      expect(Application.top_three_applied).to include(a)
+      expect(Application.top_three_applied).to_not include(b)
     end
 
     it 'only returns the top three results' do
@@ -84,19 +84,19 @@ describe Application do
       b = create(:application, status: 'Applied', score: 90)
       c = create(:application, status: 'Applied', score: 80)
       d = create(:application, status: 'Applied', score: 70)
-      expect(Application.top_three).to include(a)
-      expect(Application.top_three).to include(b)
-      expect(Application.top_three).to include(c)
-      expect(Application.top_three).to_not include(d)
+      expect(Application.top_three_applied).to include(a)
+      expect(Application.top_three_applied).to include(b)
+      expect(Application.top_three_applied).to include(c)
+      expect(Application.top_three_applied).to_not include(d)
     end
 
     it 'orders the results by score' do
       a = create(:application, status: 'Applied', score: 80)
       b = create(:application, status: 'Applied', score: 100)
       c = create(:application, status: 'Applied', score: 70)
-      expect(Application.top_three[0]).to eq(b)
-      expect(Application.top_three[1]).to eq(a)
-      expect(Application.top_three[2]).to eq(c)
+      expect(Application.top_three_applied[0]).to eq(b)
+      expect(Application.top_three_applied[1]).to eq(a)
+      expect(Application.top_three_applied[2]).to eq(c)
     end
   end
 end

@@ -27,6 +27,7 @@ class Application < ApplicationRecord
   after_save :update_specialist_average_score
   after_destroy :update_specialist_average_score
 
+  scope :applied, -> { where(status: "Applied") }
   scope :accepted_fees, -> { where(accepts_fee: true) }
   scope :accepted_terms, -> { where(accepts_terms: true) }
   scope :featured, -> { where(featured: true) }
@@ -52,7 +53,7 @@ class Application < ApplicationRecord
         }
 
   # Returns the top 3 candidates
-  scope :top_three, -> { where('score > ?', 65.0).order(score: :desc).limit(3) }
+  scope :top_three_applied, -> { applied.where('score > ?', 65.0).order(score: :desc).limit(3) }
 
   def questions
     self[:questions] || []
