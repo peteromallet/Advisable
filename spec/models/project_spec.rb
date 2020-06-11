@@ -105,4 +105,88 @@ describe Project do
       end
     end
   end
+
+  describe "#candidates" do
+    it "only shows the top 3 applied candidates" do
+      project = create(:project)
+      applicationA = create(:application, project: project, score: 70, status: "Applied")
+      applicationB = create(:application, project: project, score: 75, status: "Applied")
+      applicationC = create(:application, project: project, score: 80, status: "Applied")
+      applicationD = create(:application, project: project, score: 85, status: "Applied")
+
+      expect(project.candidates).not_to include(applicationA)
+      expect(project.candidates).to include(applicationB)
+      expect(project.candidates).to include(applicationC)
+      expect(project.candidates).to include(applicationD)
+    end
+
+    it 'excludes any candidates with a score below 65' do
+      project = create(:project)
+      applicationA = create(:application, project: project, score: 60, status: "Applied")
+      applicationB = create(:application, project: project, score: 75, status: "Applied")
+
+      expect(project.candidates).not_to include(applicationA)
+      expect(project.candidates).to include(applicationB)
+    end
+
+    it 'includes any candidates that have a status of "Application Accepted"' do
+      project = create(:project)
+      application = create(:application, project: project, score: 75, status: "Application Accepted")
+      expect(project.candidates).to include(application)
+    end
+
+    it 'includes any candidates that have a status of "Application Rejected"' do
+      project = create(:project)
+      application = create(:application, project: project, score: 75, status: "Application Rejected")
+      expect(project.candidates).to include(application)
+    end
+
+    it 'includes any candidates that have a status of "Interview Scheduled"' do
+      project = create(:project)
+      application = create(:application, project: project, score: 75, status: "Interview Scheduled")
+      expect(project.candidates).to include(application)
+    end
+
+    it 'includes any candidates that have a status of "Interview Completed"' do
+      project = create(:project)
+      application = create(:application, project: project, score: 75, status: "Interview Completed")
+      expect(project.candidates).to include(application)
+    end
+
+    it 'includes any candidates that have a status of "Proposed"' do
+      project = create(:project)
+      application = create(:application, project: project, score: 75, status: "Proposed")
+      expect(project.candidates).to include(application)
+    end
+
+    it 'excludes any candidates that have a status of "Working"' do
+      project = create(:project)
+      application = create(:application, project: project, score: 75, status: "Working")
+      expect(project.candidates).not_to include(application)
+    end
+
+    it 'excludes any candidates that have a status of "Stopped Working"' do
+      project = create(:project)
+      application = create(:application, project: project, score: 75, status: "Stopped Working")
+      expect(project.candidates).not_to include(application)
+    end
+
+    it 'excludes any candidates that have a status of "Invited To Apply"' do
+      project = create(:project)
+      application = create(:application, project: project, score: 75, status: "Invited To Apply")
+      expect(project.candidates).not_to include(application)
+    end
+
+    it 'excludes any candidates that have a status of "Invitation Rejected"' do
+      project = create(:project)
+      application = create(:application, project: project, score: 75, status: "Invitation Rejected")
+      expect(project.candidates).not_to include(application)
+    end
+
+    it 'excludes any candidates that have a status of "To Be Invited"' do
+      project = create(:project)
+      application = create(:application, project: project, score: 75, status: "To Be Invited")
+      expect(project.candidates).not_to include(application)
+    end
+  end
 end
