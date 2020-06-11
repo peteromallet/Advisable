@@ -40,4 +40,22 @@ class Project < ApplicationRecord
   def deposit_owed
     [deposit - deposit_paid, 0].max
   end
+  
+  # Returns an array of applications that are in the 'hiring pipeline' stages.
+  # This includes any candidates that are not in a pre invite stage or working
+  # stage as well as the top 3 candidates in the applied stage.
+  def candidates
+    base = applications.not_hidden
+    
+    applied = base.top_three_applied
+    beyond_applied = base.where(status: [
+      "Application Accepted",
+      "Application Rejected",
+      "Interview Scheduled",
+      "Interview Completed",
+      "Proposed",
+    ])
+
+    (applied + beyond_applied).uniq
+  end
 end

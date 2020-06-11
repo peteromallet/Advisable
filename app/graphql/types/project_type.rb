@@ -49,12 +49,10 @@ class Types::ProjectType < Types::BaseType
     object.user.try(:company_type) || object.company_type
   end
 
-  # The applications for a project are filtered to only include the top 3
-  # candidates plus any applications that have been rejected or featured.
+  # Returns the current 'candidates' for the project. This excludes any
+  # applications in a working or finished working state. 
   def applications(status: nil)
-    base = object.applications.not_hidden
-    applications =
-      (base.rejected.or(base.featured) + base.not_final.top_three).uniq
+    applications = object.candidates
 
     if status
       applications = applications.select { |a| status.include?(a.status) }

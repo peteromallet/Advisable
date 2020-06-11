@@ -52,6 +52,7 @@ export default function ClientDetails({
                     label="Company Name"
                     name="clientName"
                     placeholder="e.g Acme Inc"
+                    autoComplete="off"
                   />
                   <FormField
                     as={Select}
