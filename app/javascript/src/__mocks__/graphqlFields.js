@@ -179,6 +179,7 @@ export const specialist = (fields = {}) => {
       applicationStage: "Accepted",
       avatar: null,
       image: null,
+      publicUse: true,
       country: {
         __typename: "Country",
         id: 1,

@@ -35,23 +35,23 @@ Object.defineProperty(window, "scrollTo", {
 });
 
 jest.mock("talkjs", () => {
-  class User {}
+  class User { }
   class Session {
     getOrCreateConversation() {
       return {
-        setParticipant: (user) => {},
+        setParticipant: (user) => { },
       };
     }
 
     createChatbox(conversation) {
       return {
-        mount: (node) => {},
+        mount: (node) => { },
       };
     }
 
     get unreads() {
       return {
-        on: (event, handler) => {},
+        on: (event, handler) => { },
       };
     }
   }

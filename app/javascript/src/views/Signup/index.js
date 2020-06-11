@@ -3,7 +3,7 @@ import React from "react";
 import { get } from "lodash-es";
 import { Formik } from "formik";
 import queryString from "query-string";
-import { Redirect } from "react-router-dom";
+import { Redirect, useParams, useLocation } from "react-router-dom";
 import { Button } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
@@ -16,18 +16,50 @@ import useScrollRestore from "src/utilities/useScrollRestore";
 import useViewer from "../../hooks/useViewer";
 import validationSchema from "./validationSchema";
 import { Container, Card, Error } from "./styles";
-import SIGNUP from "./signup.graphql";
+import SIGNUP from "./signup"
 
-const Signup = ({ location, match }) => {
+const Signup = () => {
   useScrollRestore();
   const viewer = useViewer();
-  const [signup] = useMutation(SIGNUP);
+  const params = useParams();
+  const location = useLocation()
   const { t } = useTranslation();
+  const [signup] = useMutation(SIGNUP);
   const queryParams = queryString.parse(location.search);
   const notice = get(location, "state.notice");
 
   if (viewer) {
     return <Redirect to="/" />;
+  }
+
+  const handleSubmit = async (values, formikBag) => {
+    const { data } = await signup({
+      variables: {
+        input: {
+          id: params.id,
+          ...values,
+        },
+      },
+    });
+
+    if (data.signup.token) {
+      localStorage.setItem("authToken", data.signup.token);
+      const path = location.state?.from?.pathname || "/"
+      window.location.href = path;
+      return;
+    }
+
+    if (data.signup.errors) {
+      formikBag.setStatus(data.signup.errors[0].code);
+    }
+
+    formikBag.setSubmitting(false);
+  }
+
+  const initialValues = {
+    email: queryParams.email || "",
+    password: "",
+    passwordConfirmation: "",
   }
 
   return (
@@ -48,38 +80,11 @@ const Signup = ({ location, match }) => {
           {notice && t(notice)}
         </Text>
         <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
-          initialValues={{
-            email: queryParams.email || "",
-            password: "",
-            passwordConfirmation: "",
-          }}
-          onSubmit={async (values, formikBag) => {
-            const { data } = await signup({
-              variables: {
-                input: {
-                  id: match.params.id,
-                  ...values,
-                },
-              },
-            });
-
-            if (data.signup.token) {
-              localStorage.setItem("authToken", data.signup.token);
-              let { from } = location.state || {
-                from: { pathname: "/" },
-              };
-              window.location = from.pathname;
-              return;
-            }
-
-            if (data.signup.errors) {
-              formikBag.setStatus(data.signup.errors[0].code);
-            }
-
-            formikBag.setSubmitting(false);
-          }}
-          render={(formik) => (
+        >
+          {formik => (
             <form onSubmit={formik.handleSubmit}>
               <FieldRow>
                 <TextField
@@ -127,11 +132,11 @@ const Signup = ({ location, match }) => {
                 marginTop="s"
               >
                 Signup
-              </Button>
+            </Button>
               {formik.status && <Error>{t(`errors.${formik.status}`)}</Error>}
             </form>
           )}
-        />
+        </Formik>
       </Card>
 
       <Text size="s" center paddingTop="xl">
