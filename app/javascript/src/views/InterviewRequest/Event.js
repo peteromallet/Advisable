@@ -21,9 +21,9 @@ export default function Event({ date, zone }) {
           {zoned.toFormat("cccc, dd MMMM")}
         </Text>
         <Text fontSize="s" color="neutral600" textAlign="left">
-          {`${zoned.toFormat("HH:mm")} - ${zoned
+          {`${zoned.toFormat("h:mm a")} - ${zoned
             .plus({ minutes: 30 })
-            .toFormat("HH:mm")}`}
+            .toFormat("h:mm a")}`}
         </Text>
       </Box>
     </Box>
