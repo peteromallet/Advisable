@@ -45,7 +45,7 @@ gem 'webpacker', '~> 5.1.1'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # Airrecord for querying airtable
-gem 'airrecord', '~> 1.0.2'
+gem 'airrecord', '~> 1.0.5'
 
 # For graphQL endpoint
 gem 'graphql'
