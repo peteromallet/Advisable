@@ -9,7 +9,7 @@ class Types::TaskType < Types::BaseType
   field :final_cost, Int, null: true
   field :flexible_estimate, Int, null: true
   field :estimate_type, String, null: true
-  field :due_date, GraphQL::Types::ISO8601DateTime, null: true
+  field :due_date, GraphQL::Types::ISO8601Date, null: true
   field :description, String, null: true
   field :application, Types::ApplicationType, null: false
   field :created_at, GraphQL::Types::ISO8601DateTime, null: false
