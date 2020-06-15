@@ -2,7 +2,7 @@ class Mutations::UpdateTask < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :name, String, required: false
   argument :description, String, required: false
-  argument :due_date, GraphQL::Types::ISO8601DateTime, required: false
+  argument :due_date, GraphQL::Types::ISO8601Date, required: false
   argument :estimate, Int, required: false
   argument :flexible_estimate, Int, required: false
   argument :trial, Boolean, required: false

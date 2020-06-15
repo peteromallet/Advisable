@@ -3,7 +3,7 @@ class Mutations::CreateTask < Mutations::BaseMutation
   argument :id, String, required: false
   argument :name, String, required: false
   argument :description, String, required: false
-  argument :due_date, GraphQL::Types::ISO8601DateTime, required: false
+  argument :due_date, GraphQL::Types::ISO8601Date, required: false
   argument :estimate, Float, required: false
   argument :estimate_type, String, required: false
   argument :flexible_estimate, Int, required: false
