@@ -59,9 +59,9 @@ export default function SelectTime(props) {
                 state: { zone: selectedTimeZone },
               }}
             >
-              {`${parsed.toFormat("HH:mm")} - ${parsed
+              {`${parsed.toFormat("h:mm a")} - ${parsed
                 .plus({ minutes: 30 })
-                .toFormat("HH:mm")}`}
+                .toFormat("h:mm a")}`}
             </Time>
           );
         })}
