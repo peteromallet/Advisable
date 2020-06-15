@@ -6,7 +6,7 @@ ruby '~> 2.6.6'
 # loads env vars from the .env file in dev and test
 gem 'dotenv-rails', groups: %i[development test]
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
+gem 'rails', '~> 6.0', '>= 6.0.3.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -45,7 +45,7 @@ gem 'webpacker', '~> 5.1.1'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # Airrecord for querying airtable
-gem 'airrecord', '~> 1.0.2'
+gem 'airrecord', '~> 1.0.5'
 
 # For graphQL endpoint
 gem 'graphql'
@@ -68,7 +68,7 @@ group :development, :test do
   gem 'pry'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'rspec-rails', '~> 3.9.0'
+  gem 'rspec-rails', '~> 4.0.0'
   gem 'factory_bot_rails'
 end
 

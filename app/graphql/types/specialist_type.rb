@@ -180,7 +180,7 @@ class Types::SpecialistType < Types::BaseType
     )
   end
 
-  field :reviewsCount, Integer, null: true do
+  field :reviews_count, Integer, null: true do
     description 'The amount of reviews a specialist has'
   end
 

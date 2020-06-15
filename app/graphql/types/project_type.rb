@@ -7,7 +7,7 @@ class Types::ProjectType < Types::BaseType
   field :currency, String, null: true
   field :status, String, null: true
   field :service_type, String, null: true
-  field :clientReferralUrl, String, null: true
+  field :client_referral_url, String, null: true
   field :user, Types::User, null: true
   field :goals, [String], null: true
   field :description, String, null: true
@@ -50,7 +50,7 @@ class Types::ProjectType < Types::BaseType
   end
 
   # Returns the current 'candidates' for the project. This excludes any
-  # applications in a working or finished working state. 
+  # applications in a working or finished working state.
   def applications(status: nil)
     applications = object.candidates
 

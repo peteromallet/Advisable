@@ -140,8 +140,7 @@ describe Mutations::UpdateTask do
       it 'sets the stage to Not Assigned' do
         expect { AdvisableSchema.execute(query, context: context) }.to change {
           task.reload.stage
-        }.from('Quote Provided')
-          .to('Not Assigned')
+        }.from('Quote Provided').to('Not Assigned')
       end
     end
 
@@ -185,8 +184,7 @@ describe Mutations::UpdateTask do
     it 'Updates the task description' do
       expect { AdvisableSchema.execute(query, context: context) }.to change {
         task.reload.description
-      }.from(nil)
-        .to('Updated description')
+      }.from(nil).to('Updated description')
     end
 
     context 'and the stage is Quote Provided' do
@@ -195,13 +193,12 @@ describe Mutations::UpdateTask do
       it 'sets the stage to Not Assigned' do
         expect { AdvisableSchema.execute(query, context: context) }.to change {
           task.reload.stage
-        }.from('Quote Provided')
-          .to('Not Assigned')
+        }.from('Quote Provided').to('Not Assigned')
       end
     end
   end
 
-  context 'when updating the due_Date' do
+  context 'when updating the due_date' do
     let(:due_date) { 2.days.from_now }
     let(:input) do
       <<-GRAPHQL
@@ -215,8 +212,7 @@ describe Mutations::UpdateTask do
     it 'Updates the task due_date' do
       expect { AdvisableSchema.execute(query, context: context) }.to change {
         task.reload.due_date.try(:to_date)
-      }.from(nil)
-        .to(due_date.to_date)
+      }.from(nil).to(due_date.to_date)
     end
 
     context 'and the stage is Quote Provided' do
@@ -227,15 +223,13 @@ describe Mutations::UpdateTask do
       it 'sets the stage to Not Assigned' do
         expect { AdvisableSchema.execute(query, context: context) }.to change {
           task.reload.stage
-        }.from('Quote Provided')
-          .to('Not Assigned')
+        }.from('Quote Provided').to('Not Assigned')
       end
 
       it 'removes the estimate' do
         expect { AdvisableSchema.execute(query, context: context) }.to change {
           task.reload.estimate
-        }.from(4)
-          .to(nil)
+        }.from(4).to(nil)
       end
     end
   end
@@ -253,8 +247,7 @@ describe Mutations::UpdateTask do
     it 'Updates the task estimate' do
       expect { AdvisableSchema.execute(query, context: context) }.to change {
         task.reload.estimate
-      }.from(nil)
-        .to(8)
+      }.from(nil).to(8)
     end
 
     context 'and the stage is Quote Requested' do
@@ -263,8 +256,7 @@ describe Mutations::UpdateTask do
       it "sets the stage to 'Quote Provided'" do
         expect { AdvisableSchema.execute(query, context: context) }.to change {
           task.reload.stage
-        }.from('Quote Requested')
-          .to('Quote Provided')
+        }.from('Quote Requested').to('Quote Provided')
       end
 
       it 'triggers a webhook' do
