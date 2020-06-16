@@ -1,16 +1,16 @@
 FactoryBot.define do
   factory :user do
     country
-    first_name { "MyString" }
-    last_name { "MyString" }
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
     password { "testing123" }
-    company_name { "Test Company" }
+    company_name { Faker::Company.name }
     confirmed_at { 2.weeks.ago }
-    stripe_customer_id { "cus_1234" }
+    stripe_customer_id { SecureRandom.uuid }
     payments_setup { true }
     sequence(:uid) { "use_#{SecureRandom.hex[0..14]}" }
-    sequence(:airtable_id) { |n| "rec_#{n}" }
-    sequence(:email) { |n| "users#{n}@test.com" }
+    airtable_id { SecureRandom.uuid }
+    email { Faker::Internet.email }
 
     availability { [
       2.days.from_now.change({ hour: 12, min: 0, sec: 0 }),
