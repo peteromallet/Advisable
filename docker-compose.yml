@@ -46,6 +46,6 @@ services:
       AWS_S3_BUCKET: aws_s3
       LINKEDIN_KEY: linkedin_key
       LINKEDIN_SECRET: linkedin_secret
-      ZOOM_API_KEYS: zkey1,zkey2,zkey3
+      ZOOM_API_KEYS: zkey1@zsec1,zkey2@zsec2,zkey3@zsec3
       TALKJS_APP_ID: talkjs_aid
       TALKJS_SECRET_KEY: talkjs_secret

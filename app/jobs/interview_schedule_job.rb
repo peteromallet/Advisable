@@ -9,7 +9,9 @@ require 'faraday'
 class InterviewScheduleJob < ApplicationJob
   queue_as :default
 
-  ZOOM_MEETINGS_ENDPOINT = 'https://api.zoom.us/v2/users/%s/meetings'
+  ZOOM_API_URL = 'https://api.zoom.us/'
+  ZOOM_USERS_ENDPOINT = ZOOM_API_URL + 'v2/users'
+  ZOOM_MEETINGS_ENDPOINT = ZOOM_API_URL + 'v2/users/%s/meetings'
 
   # Main job entry point
   #
@@ -23,7 +25,7 @@ class InterviewScheduleJob < ApplicationJob
     zoom_data = nil
 
     zoom_api_keys.each_with_index do |api_key, pos|
-      response = zoom_create_meeting(specialist, api_key)
+      response = zoom_create_meeting(user, api_key)
 
       # Raise an error to self-retry the job if no more API keys are left.
       if pos == zoom_api_keys.length && !response.success?
@@ -39,43 +41,59 @@ class InterviewScheduleJob < ApplicationJob
 
     interview.update!(
       zoom_meeting_id: zoom_data['id'],
-      status: Interview.statuses[:schduled]
+      status: Interview::STATUSES[:schduled]
     )
 
-    InterviewMailer.schduled(interview, interview.user, interview.specialist)
-      .deliver_later
-    InterviewMailer.schduled(interview, interview.specialist, interview.user)
-      .deliver_later
+    InterviewMailer.scheduled(interview, user, specialist).deliver_later
+    InterviewMailer.scheduled(interview, specialist, user).deliver_later
 
-    InterviewMailer.reminder(interview, interview.user, interview.specialist)
+    InterviewMailer.reminder(interview, user, specialist)
       .deliver_later(wait_until: interview.starts_at - 1.hour)
-    InterviewMailer.reminder(interview, interview.specialist, interview.user)
+    InterviewMailer.reminder(interview, specialist, user)
       .deliver_later(wait_until: interview.starts_at - 1.hour)
   end
 
   private
 
+  # Light wrapper to force [Faraday] raise errors
+  #
+  # @return [Faraday::Connection]
+  def api_client
+    @faraday ||= Faraday.new do |f|
+      f.use Faraday::Response::RaiseError
+      f.use Faraday::Adapter::NetHttp
+    end
+  end
+
   # Sends a request to create a new ZOOM meeting
   #
-  # @param specialist [Specialist] the user/host to lead the meeting
+  # @param user [User] the user/host to lead the meeting
   # @param api_key [String] the ZOOM API key to be used
   # @return [Faraday::Response]
-  def zoom_create_meeting(specialist, api_key)
-    url = ZOOM_MEETINGS_ENDPOINT % specialist.uid
+  def zoom_create_meeting(user, api_key)
     headers = {
-      'Authorization': "Bearer: #{zoom_jwt(api_key)}",
+      'Authorization': "Bearer #{zoom_jwt(api_key)}",
       'Content-type': Mime[:json].to_s
     }
 
-    Faraday.post(url, { userId: specialist.email }.to_json, headers)
+    resp = api_client.get(ZOOM_USERS_ENDPOINT, {}, headers)
+
+    userId = MultiJson.load(resp.body)['users'].first['id']
+    url = ZOOM_MEETINGS_ENDPOINT % userId
+
+    api_client.post(url, { schdule_for: user.email }.to_json, headers)
   end
 
   # Generates a ZOOM API JWT token
   #
+  # The key includes also the secret, `@` is used to separate the two.
+  #
   # @param api_key [String] the API key to use
   # @return [String]
   def zoom_jwt(api_key)
-    JWT.generate(iss: api_key, exp: 1.minute.since)
+    zkey, zsecret = api_key.split('@')
+
+    JWT.encode({iss: zkey, exp: 1.minute.since.to_i}, zsecret)
   end
 
   # Returns a list of ZOOM API keys

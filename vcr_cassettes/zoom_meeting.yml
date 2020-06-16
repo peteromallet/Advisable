@@ -1,0 +1,140 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.zoom.us/v2/users
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Authorization:
+      - Bearer ~BEARER_TOKEN~
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Tue, 16 Jun 2020 19:38:37 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Content-Length:
+      - '359'
+      Connection:
+      - keep-alive
+      Server:
+      - ZOOM
+      X-Zm-Trackingid:
+      - WEB_e4ef011ef7e8ea371904a3a7b3643bc0
+      X-Content-Type-Options:
+      - nosniff
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, no-transform
+      Pragma:
+      - no-cache
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Set-Cookie:
+      - _zm_chtaid=""; Domain=.zoom.us; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/;
+        Secure; HttpOnly
+      - _zm_ctaid=""; Domain=.zoom.us; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/;
+        Secure; HttpOnly
+      - cred=07FA11434426746593A0F6D8F546751C; Path=/; Secure; HttpOnly
+      - zm_aid=""; Domain=.zoom.us; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/;
+        Secure; HttpOnly
+      - zm_haid=""; Domain=.zoom.us; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/;
+        Secure; HttpOnly
+      X-Ratelimit-Category:
+      - Medium
+      X-Ratelimit-Limit:
+      - '2000'
+      X-Ratelimit-Remaining:
+      - '1997'
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Xss-Protection:
+      - 1; mode=block
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+    body:
+      encoding: UTF-8
+      string: '{"page_count":1,"page_number":1,"page_size":30,"total_records":1,"users":[{"id":"ff0aYC57RXCVcuXlP0AwMw","first_name":"Sta","last_name":"Su","email":"stas+adv@founden.com","type":1,"pmi":8798816642,"timezone":"","verified":1,"created_at":"2020-06-16T18:27:59Z","last_login_time":"2020-06-16T18:27:59Z","language":"en-US","phone_number":"","status":"active"}]}'
+  recorded_at: Tue, 16 Jun 2020 19:38:38 GMT
+- request:
+    method: post
+    uri: https://api.zoom.us/v2/users/ff0aYC57RXCVcuXlP0AwMw/meetings
+    body:
+      encoding: UTF-8
+      string: '{"schdule_for":"young@schinner.com"}'
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Authorization:
+      - Bearer ~BEARER_TOKEN~
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      Date:
+      - Tue, 16 Jun 2020 19:38:38 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Content-Length:
+      - '1579'
+      Connection:
+      - keep-alive
+      Server:
+      - ZOOM
+      X-Zm-Trackingid:
+      - WEB_5e8d104da242159a4ce6f71f19a1a26f
+      X-Content-Type-Options:
+      - nosniff
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, no-transform
+      Pragma:
+      - no-cache
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Set-Cookie:
+      - _zm_chtaid=""; Domain=.zoom.us; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/;
+        Secure; HttpOnly
+      - _zm_ctaid=""; Domain=.zoom.us; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/;
+        Secure; HttpOnly
+      - cred=481B65E0ED9BD8517CC3F8914726E60B; Path=/; Secure; HttpOnly
+      - zm_aid=""; Domain=.zoom.us; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/;
+        Secure; HttpOnly
+      - zm_haid=""; Domain=.zoom.us; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/;
+        Secure; HttpOnly
+      X-Ratelimit-Category:
+      - Light
+      X-Ratelimit-Limit:
+      - '6000'
+      X-Ratelimit-Remaining:
+      - '5997'
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Xss-Protection:
+      - 1; mode=block
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+    body:
+      encoding: UTF-8
+      string: '{"uuid":"02Yw412AQAC8R1s1Ur3Mxw==","id":92200241719,"host_id":"ff0aYC57RXCVcuXlP0AwMw","topic":"Zoom
+        Meeting","type":2,"status":"waiting","start_time":"2020-06-16T19:38:38Z","duration":60,"timezone":"America/Los_Angeles","created_at":"2020-06-16T19:38:38Z","start_url":"https://zoom.us/s/92200241719?zak=eyJ6bV9za20iOiJ6bV9vMm0iLCJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJjbGllbnQiLCJ1aWQiOiJmZjBhWUM1N1JYQ1ZjdVhsUDBBd013IiwiaXNzIjoid2ViIiwic3R5IjoxMDAsIndjZCI6ImF3MSIsImNsdCI6MCwic3RrIjoiNGVYbE0wb0t0Vi11ZTFBeUM5bTRmWUloUVU2aHBRQ1ppS0xyWHdsQjUzby5CZ1VnVjJwQ2JqRmlTalZWWTNSdE5VZzJlbnByVTJGR1JUWjNiek5KVERNemIwWkFZekZpWTJRME1HTTBOV0ppTVRNME9XRTNabU0wWVRGbFl6UXlNemsyWmpZeE1USmtORFZoWTJNek5qSTNPRGxoT0RGak9USTJNRE0yT0RGaVpXTmlNUUFNTTBOQ1FYVnZhVmxUTTNNOUFBTmhkekUiLCJleHAiOjE1OTIzNDM1MTgsImlhdCI6MTU5MjMzNjMxOCwiYWlkIjoia0c5anVLcS1STmF2SWdublRpaGxEdyIsImNpZCI6IiJ9.wGtgsEkMPm31iZ5EKWxsaVB-4DdtBY5MlOjam3ep5BY","join_url":"https://zoom.us/j/92200241719?pwd=VVlHcUNib1VGTmNFdFdTZGNPVDF5QT09","password":"5zRgtp","h323_password":"578131","pstn_password":"578131","encrypted_password":"VVlHcUNib1VGTmNFdFdTZGNPVDF5QT09","settings":{"host_video":false,"participant_video":false,"cn_meeting":false,"in_meeting":false,"join_before_host":false,"mute_upon_entry":false,"watermark":false,"use_pmi":false,"approval_type":2,"audio":"voip","auto_recording":"none","enforce_login":false,"enforce_login_domains":"","alternative_hosts":"","close_registration":false,"registrants_confirmation_email":true,"waiting_room":true,"registrants_email_notification":true,"meeting_authentication":false}}'
+  recorded_at: Tue, 16 Jun 2020 19:38:38 GMT
+recorded_with: VCR 6.0.0
