@@ -37,7 +37,7 @@ services:
       STRIPE_SECRET_KEY: stripe_sec
       STRIPE_WEBHOOK_SECRET: stripe_wh_sec
       JWT_SECRET: secret
-      ORIGIN: '*'
+      ORIGIN: http://localhost:3000
       SENDGRID_USERNAME: sendgrid_user
       SENDGRID_DOMAIN: localhost
       SENDGRID_PASSWORD: sendgrid_pass
