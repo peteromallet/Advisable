@@ -31,22 +31,17 @@ describe Mutations::AcceptInterviewRequest do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
   end
 
-  it 'sets the interview status to Call Scheduled' do
-    response = AdvisableSchema.execute(query, context: {})
-    status = response['data']['acceptInterviewRequest']['interview']['status']
-    expect(status).to eq('Call Scheduled')
-  end
+  it 'updates the start date, phone number and status' do
+    data = {}
+    expect(specialist.reload.phone).to be_nil
 
-  it 'sets the startsAt attribute' do
-    response = AdvisableSchema.execute(query, context: {})
-    starts_at =
-      response['data']['acceptInterviewRequest']['interview']['startsAt']
-    expect(starts_at).to_not be_nil
-  end
+    assert_enqueued_jobs(2, only: [InterviewScheduleJob, InterviewChatJob]) do
+      response = AdvisableSchema.execute(query, context: {})
+      data = response['data']['acceptInterviewRequest']['interview']
+    end
 
-  it 'sets the specialist phone number' do
-    expect { AdvisableSchema.execute(query, context: {}) }.to change {
-      specialist.reload.phone
-    }.from(nil).to('0123456789')
+    expect(specialist.reload.phone).to eq('0123456789')
+    expect(data['startsAt']).to_not be_nil
+    expect(data['status']).to eq(Interview::STATUSES[:scheduled])
   end
 end

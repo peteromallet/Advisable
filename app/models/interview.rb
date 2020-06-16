@@ -2,10 +2,15 @@ class Interview < ApplicationRecord
   include Airtable::Syncable
   belongs_to :application
   has_one :specialist, through: :application
-  belongs_to :user # An interview is schduled with a specific user (client contact)
+
+  # An interview is scheduled with a specific user (client contact)
+  belongs_to :user
 
   # TODO: Add a list of valid statuses
-  enum status: { scheduled: 'Call Scheduled' }
+  # Don't use `enum` for now, since it brings validations and co&...
+  STATUSES = {
+    scheduled: 'Call Scheduled'
+  }
 
-  scope :scheduled, -> { where(status: statuses[:schduled]) }
+  scope :scheduled, -> { where(status: STATUSES[:scheduled]) }
 end

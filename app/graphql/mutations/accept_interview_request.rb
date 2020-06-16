@@ -8,13 +8,26 @@ class Mutations::AcceptInterviewRequest < Mutations::BaseMutation
 
   def resolve(**args)
     interview = Interview.find_by_airtable_id!(args[:id])
-    interview.update(starts_at: args[:starts_at], status: 'Call Scheduled')
+    # TODO: Consider delegation of the status update to
+    #       the interview scheduling job...
+
+    interview.update(
+      starts_at: args[:starts_at],
+      status: Interview::STATUSES[:scheduled]
+    )
+
     update_specialist_number(
       interview.application.specialist,
       args[:phone_number]
     )
     interview.sync_to_airtable
+
+    # Schedule the interview call and create a new chat.
+    InterviewScheduleJob.perform_later(interview)
+    InterviewChatJob.perform_later(interview)
+
     Webhook.process(interview)
+
     return { interview: interview }
   end
 
