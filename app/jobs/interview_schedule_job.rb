@@ -6,7 +6,7 @@ require 'faraday'
 #
 # For now, we use Zoom via the JWT authentication.
 # See: https://marketplace.zoom.us/docs/guides/auth/jwt
-class CallScheduleJob < ApplicationJob
+class InterviewScheduleJob < ApplicationJob
   queue_as :default
 
   ZOOM_MEETINGS_ENDPOINT = 'https://api.zoom.us/v2/users/%s/meetings'

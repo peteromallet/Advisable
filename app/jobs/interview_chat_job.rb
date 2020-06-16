@@ -3,7 +3,7 @@ require 'faraday'
 # Creates a conversation using the Talk.js API
 #
 # See: https://talkjs.com/docs/Reference/REST_API/index.html
-class TalkjsJob < ApplicationJob
+class InterviewChatJob < ApplicationJob
   queue_as :default
 
   ENDPOINT = "https://api.talkjs.com/v1/#{ENV['TALKJS_APP_ID']}"
@@ -29,6 +29,7 @@ class TalkjsJob < ApplicationJob
 
     update_user(specialist) &&
       update_user(user) &&
+      update_user(user.sale_person) &&
       create_conversation(interview.airtable_id, specialist, user) &&
       send_message(interview.airtable_id)
   end
@@ -64,8 +65,12 @@ class TalkjsJob < ApplicationJob
   def create_conversation(conversation_id, specialist, user)
     url = CONVERSATIONS_ENDPOINT % conversation_id
     data = {
-      participants: [specialist.uid, user.uid],
-      subject: SUBJECT % [specialist.first_name, user.first_name]
+      participants: [
+        specialist.airtable_id,
+        user.airtable_id,
+        sale_person.airtable_id
+      ],
+      subject: SUBJECT % [user.first_name, specialist.first_name]
     }
 
     api_client.put(url, data.to_json, headers)
@@ -78,6 +83,6 @@ class TalkjsJob < ApplicationJob
   def update_user(user)
     data = { name: user.first_name, email: user.email }
 
-    api_client.put((USERS_ENDPOINT % user.uid), data.to_json, HEADERS)
+    api_client.put((USERS_ENDPOINT % user.airtable_id), data.to_json, HEADERS)
   end
 end
