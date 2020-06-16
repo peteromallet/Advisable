@@ -42,10 +42,15 @@ class CallScheduleJob < ApplicationJob
       status: Interview.statuses[:schduled]
     )
 
-    InterviewMailer.schduled(interview).deliver_later
-    InterviewMailer.reminder(interview).deliver_later(
-      wait_until: interview.starts_at - 1.hour
-    )
+    InterviewMailer.schduled(interview, interview.user, interview.specialist)
+      .deliver_later
+    InterviewMailer.schduled(interview, interview.specialist, interview.user)
+      .deliver_later
+
+    InterviewMailer.reminder(interview, interview.user, interview.specialist)
+      .deliver_later(wait_until: interview.starts_at - 1.hour)
+    InterviewMailer.reminder(interview, interview.specialist, interview.user)
+      .deliver_later(wait_until: interview.starts_at - 1.hour)
   end
 
   private

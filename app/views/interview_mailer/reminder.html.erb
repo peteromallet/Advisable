@@ -1,1 +1,53 @@
-<!-- TODO: Add an email layout first -->
+<tr>
+  <td align="center" valign="top" class="copy" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-style: normal;font-weight: normal;line-height: 21px;font-size: 16px;letter-spacing: -.2;color: #445C81;padding: 0 90px;">
+    Hello <%= @user.first_name %>,
+    <br/>
+    you have an upcoming interview with <%= @participant.first_name %>.
+    <br/>
+    <br/>
+    The call will take place in <%= @minutes_before %> minutes.
+    <br/>
+    Make an impression!
+  </td>
+</tr>
+<!-- Copy -->
+
+<!-- Spacer -->
+<tr>
+  <td align="center" valign="top" style="font-size: 0;line-height: 0;padding: 15px 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+    &nbsp;
+  </td>
+</tr>
+<!-- Spacer -->
+
+<!-- Button -->
+<tr>
+  <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="170" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+      <tr>
+        <td align="center" valign="top" class="button" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #ffffff;background-color: #0064ff;font-size: 14px;font-weight: 500;padding: 15px;border-radius: 4px;">
+          <a clicktracking="off" href="https://zoom.us/j/<%= @interview.zoom_meeting_id %>" target="_blank" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #ffffff;text-decoration: none;display: block;">JOIN THE VIDEO CALL</a>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<!-- Button -->
+
+<!-- Spacer -->
+<tr>
+  <td align="center" valign="top" style="font-size: 0;line-height: 0;padding: 15px 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+    &nbsp;
+  </td>
+</tr>
+<!-- Spacer -->
+
+
+<!-- Spacer -->
+<tr>
+  <td align="center" valign="top" style="font-size: 0;line-height: 0;padding: 25px 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+    &nbsp;
+  </td>
+</tr>
+<!-- Spacer -->
