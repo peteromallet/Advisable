@@ -15,7 +15,7 @@ class InterviewChatJob < ApplicationJob
   # TODO: Provide a proper introduction message...
   INTRO = 'Hi there...'
   HEADERS = {
-    'Authorization': "Bearer: #{ENV['TALKJS_SECRET_KEY']}",
+    'Authorization': "Bearer #{ENV['TALKJS_SECRET_KEY']}",
     'Content-type': Mime[:json].to_s
   }
 
@@ -29,7 +29,7 @@ class InterviewChatJob < ApplicationJob
 
     update_user(specialist) &&
       update_user(user) &&
-      update_user(user.sale_person) &&
+      update_user(user.sales_person) &&
       create_conversation(interview.airtable_id, specialist, user) &&
       send_message(interview.airtable_id)
   end
@@ -42,6 +42,7 @@ class InterviewChatJob < ApplicationJob
   def api_client
     @faraday ||= Faraday.new do |f|
       f.use Faraday::Response::RaiseError
+      f.use Faraday::Adapter::NetHttp
     end
   end
 
@@ -51,9 +52,9 @@ class InterviewChatJob < ApplicationJob
   # @return [Faraday::Response]
   def send_message(conversation_id)
     url = MESSAGES_ENDPOINT % conversation_id
-    data = [ { text: INTRO } ]
+    data = [ { text: INTRO, type: 'SystemMessage' } ]
 
-    api_client.post(url, data.to_json, headers)
+    api_client.post(url, data.to_json, HEADERS)
   end
 
   # Sends a request to create a new Talk.js conversation
@@ -68,12 +69,12 @@ class InterviewChatJob < ApplicationJob
       participants: [
         specialist.airtable_id,
         user.airtable_id,
-        sale_person.airtable_id
+        user.sales_person.airtable_id
       ],
       subject: SUBJECT % [user.first_name, specialist.first_name]
     }
 
-    api_client.put(url, data.to_json, headers)
+    api_client.put(url, data.to_json, HEADERS)
   end
 
   # Sends a request to update/sync a new Talk.js user
@@ -81,7 +82,7 @@ class InterviewChatJob < ApplicationJob
   # @param user [User] the data to sync to the conversation participant
   # @return [Faraday::Response]
   def update_user(user)
-    data = { name: user.first_name, email: user.email }
+    data = { name: user.first_name, email: [user.email] }
 
     api_client.put((USERS_ENDPOINT % user.airtable_id), data.to_json, HEADERS)
   end

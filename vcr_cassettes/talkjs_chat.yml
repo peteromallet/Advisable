@@ -1,0 +1,299 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://api.talkjs.com/v1/~TALKJS_APP_ID~/users/s+talkjs@advisable.com
+    body:
+      encoding: UTF-8
+      string: '{"name":"Winston","email":["cornell.kuvalis@jaskolski.io"]}'
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Authorization:
+      - Bearer ~BEARER_TOKEN~
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 16 Jun 2020 20:11:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d07c85399596082e39c154e39ecc7791e1592338302; expires=Thu, 16-Jul-20
+        20:11:42 GMT; path=/; domain=.talkjs.com; HttpOnly; SameSite=Lax
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ''
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - ''
+      X-Request-Id:
+      - FhkfP9t8xLpohC4DzjlB
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 03605b5d6b00005d378aa47200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 5a472e757dbb5d37-LIS
+    body:
+      encoding: UTF-8
+      string: "{}"
+  recorded_at: Tue, 16 Jun 2020 20:11:42 GMT
+- request:
+    method: put
+    uri: https://api.talkjs.com/v1/~TALKJS_APP_ID~/users/u+talkjs@advisable.com
+    body:
+      encoding: UTF-8
+      string: '{"name":"Drema","email":["weldon@reichert.info"]}'
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Authorization:
+      - Bearer ~BEARER_TOKEN~
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 16 Jun 2020 20:11:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d57567e51ff063630378d904d9ccf0de31592338302; expires=Thu, 16-Jul-20
+        20:11:42 GMT; path=/; domain=.talkjs.com; HttpOnly; SameSite=Lax
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ''
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - ''
+      X-Request-Id:
+      - FhkfP-dgsz6ojGMBdREH
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 03605b5e350000da7aea14e200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 5a472e76bd3fda7a-LIS
+    body:
+      encoding: UTF-8
+      string: "{}"
+  recorded_at: Tue, 16 Jun 2020 20:11:42 GMT
+- request:
+    method: put
+    uri: https://api.talkjs.com/v1/~TALKJS_APP_ID~/users/sp+talkjs@advisable.com
+    body:
+      encoding: UTF-8
+      string: '{"name":"Arthur","email":["ezekiel.green@rohan.name"]}'
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Authorization:
+      - Bearer ~BEARER_TOKEN~
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 16 Jun 2020 20:11:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d07c85399596082e39c154e39ecc7791e1592338302; expires=Thu, 16-Jul-20
+        20:11:42 GMT; path=/; domain=.talkjs.com; HttpOnly; SameSite=Lax
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ''
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - ''
+      X-Request-Id:
+      - FhkfP_DBOlllGEUDWLnC
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 03605b5ed600005d377b0e4200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 5a472e77ba725d37-LIS
+    body:
+      encoding: UTF-8
+      string: "{}"
+  recorded_at: Tue, 16 Jun 2020 20:11:42 GMT
+- request:
+    method: put
+    uri: https://api.talkjs.com/v1/~TALKJS_APP_ID~/conversations/i+talkjs@advisable.com
+    body:
+      encoding: UTF-8
+      string: "{\"participants\":[\"s+talkjs@advisable.com\",\"u+talkjs@advisable.com\",\"sp+talkjs@advisable.com\"],\"subject\":\"Drema
+        \U0001F44B Winston\"}"
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Authorization:
+      - Bearer ~BEARER_TOKEN~
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 16 Jun 2020 20:11:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d7e3bb6b8f1d7031dc3401408fb02a15f1592338302; expires=Thu, 16-Jul-20
+        20:11:42 GMT; path=/; domain=.talkjs.com; HttpOnly; SameSite=Lax
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ''
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - ''
+      X-Request-Id:
+      - FhkfP_lbme03C60DzjzB
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 03605b5f600000da86a1029200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 5a472e789da9da86-LIS
+    body:
+      encoding: UTF-8
+      string: "{}"
+  recorded_at: Tue, 16 Jun 2020 20:11:42 GMT
+- request:
+    method: post
+    uri: https://api.talkjs.com/v1/~TALKJS_APP_ID~/conversations/i+talkjs@advisable.com/messages
+    body:
+      encoding: UTF-8
+      string: '[{"text":"Hi there...","type":"SystemMessage"}]'
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Authorization:
+      - Bearer ~BEARER_TOKEN~
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 16 Jun 2020 20:11:43 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d630681331f02ebf4c92626f2bdb30f221592338302; expires=Thu, 16-Jul-20
+        20:11:42 GMT; path=/; domain=.talkjs.com; HttpOnly; SameSite=Lax
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ''
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - ''
+      X-Request-Id:
+      - FhkfQADQp045rLsCIUMG
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 03605b60030000da8a93007200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 5a472e799d0bda8a-LIS
+    body:
+      encoding: UTF-8
+      string: "{}"
+  recorded_at: Tue, 16 Jun 2020 20:11:43 GMT
+recorded_with: VCR 6.0.0
