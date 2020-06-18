@@ -1,0 +1,48 @@
+Hi <%= @user.first_name %>,
+<br/>
+<br/>
+Just a quick reminder that your call with <%= @specialist.name %> for your
+<%= @interview.application.project.primary_skill %> will take place in
+<%= time_ago_in_words(@minutes_before.from_now) %>.
+<br/>
+
+<br/>
+You can join the call at this link: https://zoom.us/j/<%= @interview.zoom_meeting_id %>
+<br/>
+<br/>
+
+If you'd like to join via phone, additional details are in the calendar invite
+you should've received.
+<br/>
+<br/>
+
+The goal from this call should be to:
+<ol>
+  <li>
+    Give <%= @specialist.first_name %> an in-depth understanding of the project
+    and your requirements.
+  </li>
+  <li>
+    Get an understanding of <%= @specialist.first_name %> capabilities and
+    suitability for the project.
+  </li>
+  <li>
+    Figure out the details of how a project with <%= @specialist.first_name %>
+    would work – perhaps an initial paid trial project might make sense.
+  </li>
+</ol>
+
+After the call, we'll send you an email asking you for feedback - I'd highly
+appreciate if you could provide this ASAP.
+<br/>
+<br/>
+
+Good luck!
+
+<br/>
+<br/>
+--
+<br/>
+<%= @user.sales_person.name %>
+<br/>
+Advisable.com

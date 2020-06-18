@@ -1,0 +1,92 @@
+<tr>
+  <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="460" class="inner" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+
+      <!-- Container -->
+      <tr>
+        <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+
+
+          <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+            <tr>
+              <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+                  <tr>
+                    <td align="left" valign="top" class="title-2" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #142b4e;font-size: 16px;font-weight: 600;padding: 0 0px 10px 0px;">
+                      Do you want to continue your conversation with <%= @specialist.name %>?
+                    </td>
+                  </tr>
+
+                  <!-- Spacer -->
+                  <tr>
+                    <td align="center" valign="top" style="font-size: 0;line-height: 0;padding: 3px 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <!-- Spacer -->
+
+                  <!-- BTN -->
+                  <tr>
+                    <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+
+                      <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+                        <tr>
+                          <td align="center" valign="top" class="button-1" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #ffffff;font-size: 13px;font-weight: 700;background-color: #0064FF;border-radius: 5px;padding: 6px;">
+                            <a href="http://advisable.com/client-post-interview-feedback?score=Yes&click-id=<%= @interview.airtable_id %>&email-type=client-post-interview&move_forward=yes&aid=<%= @interview.application.airtable_id %>&specialist=<%= @specialist.first_name %>" target="_blank" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #ffffff;text-decoration: none;display: block;">Yes</a>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                  </tr>
+                  <!-- BTN -->
+
+                  <tr>
+                    <td align="center" valign="top" class="bsb" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #999999;font-size: 12px;padding: 5px 10px 10px 10px;">
+                      Don't worry, you can still speak to other candidates if you'd like.
+                    </td>
+                  </tr>
+
+                  <!-- BTN -->
+
+                  <tr>
+                    <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+
+                      <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+                        <tr>
+                          <td align="center" valign="top" class="button-2" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #000000;font-size: 13px;font-weight: 700;background-color: #d9d9d9;border-radius: 5px;padding: 6px;">
+                            <a href="http://advisable.com/client-post-interview-feedback?score=No&click-id=<%= @interview.airtable_id %>&email-type=client-post-interview&move_forward=no&<%= @interview.application.airtable_id %>&specialist=<%= @specialist.first_name %>" target="_blank" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #000000;text-decoration: none;display: block;">No</a>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                  </tr>
+                  <!-- BTN -->
+
+                  <tr>
+                    <td align="center" valign="top" class="bsb" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #999999;font-size: 12px;padding: 5px 10px 10px 10px;">
+                      We'll let them know that you don't want to proceed.
+                    </td>
+                  </tr>
+
+                  <!-- Spacer -->
+                  <tr>
+                    <td align="center" valign="top" style="font-size: 0;line-height: 0;padding: 10px 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <!-- Spacer -->
+
+                </table>
+
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <!-- Container -->
+    </table>
+  </td>
+</tr>
