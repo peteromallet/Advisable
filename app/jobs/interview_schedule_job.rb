@@ -61,7 +61,7 @@ class InterviewScheduleJob < ApplicationJob
   def api_client
     @faraday ||= Faraday.new do |f|
       f.use Faraday::Response::RaiseError
-      f.use Faraday::Adapter::NetHttp
+      f.adapter Faraday::Adapter::NetHttp
     end
   end
 
