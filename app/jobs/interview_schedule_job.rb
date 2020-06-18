@@ -44,13 +44,20 @@ class InterviewScheduleJob < ApplicationJob
       status: Interview::STATUSES[:schduled]
     )
 
-    InterviewMailer.scheduled(interview, user, specialist).deliver_later
-    InterviewMailer.scheduled(interview, specialist, user).deliver_later
+    InterviewMailer.scheduled(interview).deliver_later
 
-    InterviewMailer.reminder(interview, user, specialist)
-      .deliver_later(wait_until: interview.starts_at - 1.hour)
-    InterviewMailer.reminder(interview, specialist, user)
-      .deliver_later(wait_until: interview.starts_at - 1.hour)
+    reminder_at = interview.starts_at - InterviewMailer::REMINDER_BEFORE
+    feedback_at = interview.starts_at + InterviewMailer::REMINDER_BEFORE / 2
+
+    InterviewMailer.reminder(interview, :specialist, interview.starts_at.to_i)
+      .deliver_later(wait_until: reminder_at)
+    InterviewMailer.reminder(interview, :client, interview.starts_at.to_i)
+      .deliver_later(wait_until: reminder_at)
+
+    InterviewMailer.feedback(interview, :specialist, interview.starts_at.to_i)
+      .deliver_later(wait_until: feedback_at)
+    InterviewMailer.feedback(interview, :client, interview.starts_at.to_i)
+      .deliver_later(wait_until: feedback_at)
   end
 
   private

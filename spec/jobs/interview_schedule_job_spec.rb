@@ -26,10 +26,18 @@ Rails.describe InterviewScheduleJob do
       InterviewScheduleJob.perform_now(interview)
 
       expect(zoom_meeting_id).to eq(interview.reload.zoom_meeting_id)
-      expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq(4)
+      expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq(5)
 
-      jobs = ActiveJob::Base.queue_adapter.enqueued_jobs.map { |j| j[:args][0] }
-      expect(jobs.uniq).to eq([InterviewMailer.name])
+      jobs = ActiveJob::Base.queue_adapter.enqueued_jobs
+        .map { |j| j[:args].slice(0..1).join('#') }
+
+      expect(jobs).to eq([
+        'InterviewMailer#scheduled',
+        'InterviewMailer#reminder',
+        'InterviewMailer#reminder',
+        'InterviewMailer#feedback',
+        'InterviewMailer#feedback'
+      ])
     end
   end
 end
