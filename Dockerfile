@@ -8,7 +8,9 @@ RUN apk add --no-cache \
   # Gems need the dev-headers/compilers.
   build-base \
   # PostgreSQL adapter needs the development headers.
-  postgresql-dev
+  postgresql-dev #\
+  # Add chromium and Node.js for system tests...
+  # chromium chromium-chromedriver nodejs yarn
 
 RUN mkdir /app
 WORKDIR /app
