@@ -12,8 +12,6 @@ class InterviewChatJob < ApplicationJob
   MESSAGES_ENDPOINT = CONVERSATIONS_ENDPOINT + '/messages'
 
   SUBJECT = '%s 👋 %s'
-  # TODO: Provide a proper introduction message...
-  INTRO = 'Hi there...'
   HEADERS = {
     'Authorization': "Bearer #{ENV['TALKJS_SECRET_KEY']}",
     'Content-type': Mime[:json].to_s
@@ -31,7 +29,7 @@ class InterviewChatJob < ApplicationJob
       update_user(user) &&
       update_user(user.sales_person) &&
       create_conversation(interview.airtable_id, specialist, user) &&
-      send_message(interview.airtable_id)
+      send_message(interview.airtable_id, user, specialist)
   end
 
   private
@@ -49,10 +47,29 @@ class InterviewChatJob < ApplicationJob
   # Sends a request to create a new Talk.js conversation message
   #
   # @param conversation_id [String] the conversation unique ID
+  # @param specialist [Specialist] the specialist to lead the conversation
+  # @param user [User] the user participant
   # @return [Faraday::Response]
-  def send_message(conversation_id)
+  def send_message(conversation_id, user, specialist)
     url = MESSAGES_ENDPOINT % conversation_id
-    data = [ { text: INTRO, type: 'SystemMessage' } ]
+
+    message = ApplicationController.render(
+      layout: false,
+      template: 'jobs/interview_chat_intro',
+      locals: {
+        user: user,
+        specialist: specialist,
+        sales_person: user.sales_person
+      }
+    )
+
+    data = [
+      {
+        text: message,
+        sender: user.sales_person.airtable_id,
+        type: 'UserMessage'
+      }
+    ]
 
     api_client.post(url, data.to_json, HEADERS)
   end
