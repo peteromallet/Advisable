@@ -12,9 +12,14 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      db:
-        image: postgres:11
-        ports: ["5432:5432"]
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: advisable
+          POSTGRES_DB: advisable_test
+          POSTGRES_PASSWORD: ""
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -25,7 +30,8 @@ jobs:
       - name: Build and test with Rake
         env:
           PGHOST: 127.0.0.1
-          PGUSER: postgres
+          PGUSER: advisable
+          PGPASSWORD: ""
           RAILS_ENV: test
         run: |
           sudo apt-get -yqq install libpq-dev
