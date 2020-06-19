@@ -55,3 +55,13 @@ jobs:
           bundle install --jobs 4 --retry 3
           bundle exec rails db:create
           bundle exec rails db:migrate
+      
+      -  name: Test
+        env:
+          ADMIN_PASSWORD: testing123
+          ADMIN_USERNAME: admin
+          JWT_SECRET: testing123
+          ORIGIN: http://localhost:3000
+          ENCRYPTION_KEY: 1e29d261483d6ae089a6eab4c44423ccc9224f97f552c969acba9db66303133c
+        run: bundle exec rspec
+
