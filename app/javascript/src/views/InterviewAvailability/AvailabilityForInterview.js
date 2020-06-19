@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import moment from "moment-timezone";
+import { DateTime } from "luxon";
 import { Button, useBreakpoint, Availability } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import React from "react";
@@ -23,7 +23,7 @@ const AvailabilityForInterview = ({ data, notifications }) => {
     label: `Interview with ${interview.specialist.firstName}`,
   }));
 
-  console.log(events);
+  console.log(interview.timeZone);
 
   return (
     <Formik
@@ -42,7 +42,7 @@ const AvailabilityForInterview = ({ data, notifications }) => {
         );
       }}
       initialValues={{
-        timeZone: interview.timeZone || moment.tz.guess() || "Europe/Dublin",
+        timeZone: interview.timeZone || DateTime.local().zoneName || "UTC",
         availability: interview.user.availability,
       }}
     >

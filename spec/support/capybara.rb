@@ -9,6 +9,7 @@ Capybara.register_driver :cuprite do |app|
   Capybara::Cuprite::Driver.new(
     app,
     window_size: [1200, 800],
+    inspector: ENV['INSPECTOR'],
     browser_options: {
       'no-sandbox': nil,
       'headless': nil,
@@ -21,7 +22,5 @@ end
 RSpec.configure do |config|
   config.retry_callback = ->(ex) { Capybara.reset! if ex.metadata[:js] }
 
-  config.before(:each, type: :system) do
-    driven_by :cuprite
-  end
+  config.before(:each, type: :system) { driven_by :cuprite }
 end
