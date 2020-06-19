@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  build_and_test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -17,9 +17,9 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: advisable
-          POSTGRES_DB: advisable_test
-          POSTGRES_PASSWORD: ""
+          POSTGRES\_USER: postgres
+          POSTGRES\_DB: postgres
+          POSTGRES\_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
