@@ -58,6 +58,11 @@ jobs:
 
       - name: Test
         env:
+          PGHOST: 127.0.0.1
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGPORT: 5432
+          RAILS_ENV: test
           ADMIN_PASSWORD: testing123
           ADMIN_USERNAME: admin
           JWT_SECRET: testing123
