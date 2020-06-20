@@ -10,6 +10,7 @@ Capybara.register_driver :cuprite do |app|
     app,
     window_size: [1200, 800],
     inspector: ENV['INSPECTOR'],
+    timeout: 10,
     browser_options: {
       'no-sandbox': nil,
       'headless': nil,
