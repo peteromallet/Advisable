@@ -71,7 +71,7 @@ jobs:
           JWT_SECRET: testing123
           ORIGIN: http://localhost:3000
           ENCRYPTION_KEY: 1e29d261483d6ae089a6eab4c44423ccc9224f97f552c969acba9db66303133c
-          TALKJS: ${{ secrets.TALKJS }}
+          TALKJS_SECRET: ${{ secrets.TALKJS_SECRET }}
           STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
         run: bundle exec rspec
