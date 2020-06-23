@@ -11,6 +11,7 @@ describe InterviewMailer do
     }
 
     it do
+      expect(mail.from).to eq([sales_person.email])
       expect(mail.to).to eq([interview.specialist.email])
       expect(mail.subject).to include(
         InterviewMailer::SCHEDULED_SUBJECT.split('%').first
@@ -40,6 +41,7 @@ describe InterviewMailer do
       let(:scope) { :client }
 
       it do
+        expect(mail.from).to eq([sales_person.email])
         expect(mail.to).to eq([interview.user.email])
         expect(mail.subject).to include(
           InterviewMailer::REMINDER_CLIENT_SUBJECT.split('%').first

@@ -19,7 +19,8 @@ class InterviewMailer < ApplicationMailer
     @specialist = interview.specialist
 
     mail(
-      to: @specialist.email,
+      from: format_email(@user.sales_person.name, @user.sales_person.email),
+      to: format_email(@specialist.name, @specialist.email),
       reply_to: @user.sales_person.email,
       subject: SCHEDULED_SUBJECT % [@user.name, @user.company_name]
     ) do |format|
@@ -44,7 +45,7 @@ class InterviewMailer < ApplicationMailer
     @minutes_before = REMINDER_BEFORE
 
     template_name = "interview_mailer/reminder_#{scope}"
-    email = @specialist.email
+    email = format_email(@specialist.name, @specialist.email)
     subject = REMINDER_SPECIALIST_SUBJECT % [
       @user.name,
       @user.company_name,
@@ -52,7 +53,7 @@ class InterviewMailer < ApplicationMailer
     ]
 
     if scope.to_s == 'client'
-      email = @user.email
+      email = format_email(@user.name, @user.email)
       subject = REMINDER_CLIENT_SUBJECT % [
         @specialist.first_name,
         time_ago_in_words(REMINDER_BEFORE.from_now)
@@ -60,6 +61,7 @@ class InterviewMailer < ApplicationMailer
     end
 
     mail(
+      from: format_email(@user.sales_person.name, @user.sales_person.email),
       to: email,
       subject: subject,
       bcc: @user.sales_person.email,
