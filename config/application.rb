@@ -12,8 +12,10 @@ module Advisable
     config.load_defaults 6.0
     config.active_job.queue_adapter = :sidekiq
 
-    proto, host = ENV['ORIGIN'].to_s.split('://')
+    heroku_origin = "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+    proto, host = (ENV['ORIGIN'] || heroku_origin).to_s.split('://')
 
+    config.action_mailer.asset_host = ENV['ORIGIN'] || heroku_origin
     config.action_mailer.default_url_options = { host: host, protocol: proto }
     config.action_mailer.preview_path = "#{Rails.root}/test/mailers/previews"
 
