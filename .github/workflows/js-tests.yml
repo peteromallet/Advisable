@@ -1,18 +1,18 @@
-# name: JS Tests
+name: JS Tests
 
-# on:
-#   push:
-#     branches: [master]
-#   pull_request:
-#     branches: [master]
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
 
-# jobs:
-#   js_tests:
-#     runs-on: ubuntu-latest
+jobs:
+  js_tests:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Install modules
-#         run: yarn
-#       - name: Javascript Tests
-#         run: yarn test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: yarn
+      - name: Javascript Tests
+        run: yarn test
