@@ -20,7 +20,9 @@ Capybara.register_driver :cuprite do |app|
 end
 
 RSpec.configure do |config|
-  config.retry_callback = ->(ex) { Capybara.reset! if ex.metadata[:js] }
+  if ENV['RSPEC_RETRY']
+    config.retry_callback = ->(ex) { Capybara.reset! if ex.metadata[:js] }
+  end
 
   config.before(:each, type: :system) { driven_by :cuprite }
 end

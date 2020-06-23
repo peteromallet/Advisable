@@ -10,10 +10,8 @@ RSpec.configure do |config|
   config.verbose_retry = true
 
   # run retry only on features
-  if ENV['RSPEC_RETRY']
-    config.around :each, type: :system do |ex|
-      ex.run_with_retry retry: ENV['RSPEC_RETRY']
-    end
+  config.around :each, type: :system do |ex|
+    ex.run_with_retry(retry: ENV['RSPEC_RETRY']) if ENV['RSPEC_RETRY']
   end
 
   config.expect_with :rspec do |expectations|
