@@ -75,4 +75,4 @@ jobs:
           TALKJS_SECRET: ${{ secrets.TALKJS_SECRET }}
           STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-        run: bundle exec rspec spec/system
+        run: bundle exec rspec spec/system/application_flow_spec.rb
