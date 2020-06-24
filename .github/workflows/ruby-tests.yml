@@ -75,6 +75,13 @@ jobs:
         run: |
           bundle exec rails db:create db:schema:load --trace
 
+      - name: Build
+        env:
+          RAILS_ENV: test
+          NODE_ENV: test
+        run: |
+          bundle exec rails webpacker:compile
+
       - name: Test
         env:
           PGHOST: 127.0.0.1
