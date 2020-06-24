@@ -88,7 +88,7 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'cuprite'
+  gem 'webdrivers'
   gem 'shoulda-matchers'
   gem 'webmock'
   gem 'rspec-retry'
