@@ -30,10 +30,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
       - name: Set up Ruby
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.6
+      
+      - name: Install gems
+        run: |
+          gem install bundler
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
 
       - name: install PostgreSQL client
         run: sudo apt-get -yqq install libpq-dev
@@ -51,27 +64,16 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install JS dependencies
-        run: yarn
+        run: yarn --pure-lockfile
 
-      - uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-
-      - name: Build
+      - name: Setup database
         env:
           PGHOST: 127.0.0.1
           PGUSER: postgres
           PGPASSWORD: postgres
           RAILS_ENV: test
         run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
-          bundle exec rails db:create
-          bundle exec rails db:schema:load --trace
-          bundle exec rails webpacker:compile
+          bundle exec rails db:create db:schema:load --trace
 
       - name: Test
         env:
@@ -80,6 +82,7 @@ jobs:
           PGPASSWORD: postgres
           PGPORT: 5432
           RAILS_ENV: test
+          NODE_ENV: test
           ADMIN_PASSWORD: testing123
           ADMIN_USERNAME: admin
           JWT_SECRET: testing123
