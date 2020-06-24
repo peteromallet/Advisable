@@ -3,6 +3,7 @@ require 'capybara/rspec'
 
 Capybara.server = :puma, { Silent: true }
 Capybara.enable_aria_label = true
+Capybara.default_max_wait_time = 5
 
 RSpec.configure do |config|
   config.retry_callback = ->(ex) { Capybara.reset! if ex.metadata[:js] }
