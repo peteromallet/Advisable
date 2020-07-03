@@ -71,7 +71,7 @@
     "react-text-mask": "^5.4.3",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.5",
-    "reakit": "1.1.1",
+    "reakit": "1.0.0-rc.2",
     "stickybits": "^3.7.7",
     "style-loader": "^1.2.1",
     "styled-components": "^5.1.0",

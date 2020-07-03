@@ -99,9 +99,3 @@ jobs:
 
       - name: Test
         run: bundle exec rspec
-
-      - name: Upload screenshots
-        uses: actions/upload-artifact@v1
-        with:
-          name: screenshots
-          path: tmp/screenshots/
