@@ -98,7 +98,7 @@ jobs:
         run: bundle exec rails webpacker:compile
 
       - name: Test
-        run: bundle exec rspec spec/system
+        run: bundle exec rspec
 
       - name: Upload screenshots
         uses: actions/upload-artifact@v1
