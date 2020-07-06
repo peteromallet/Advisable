@@ -44,7 +44,7 @@
     "formik": "^2.1.4",
     "framer-motion": "^1.11.1",
     "fuse.js": "^6.4.0",
-    "graphql": "^15.2.0",
+    "graphql": "^15.3.0",
     "graphql-tag": "^2.10.3",
     "i18next": "^19.5.4",
     "i18next-browser-languagedetector": "^5.0.0",
