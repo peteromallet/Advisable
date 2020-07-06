@@ -53,10 +53,9 @@ RSpec.configure do |config|
   # callback to be run between retries
   config.retry_callback =
     proc do |ex|
-      if # run some additional clean up task - can be filtered by example metadata
-         ex.metadata[
-           :js
-         ]
+      if ex.metadata[:js]
+        # run some additional clean up task - can be filtered by example metadata
+
         Capybara.reset!
       end
     end

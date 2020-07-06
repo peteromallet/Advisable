@@ -393,7 +393,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
   byebug
-  capybara (>= 2.15, < 4.0)
+  capybara
   countries
   dotenv-rails
   factory_bot_rails
