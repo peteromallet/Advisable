@@ -1,7 +1,7 @@
 import { Formik } from "formik";
+import { DateTime } from "luxon";
 import { Button, Availability, useBreakpoint } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import moment from "moment-timezone";
 import React, { useState } from "react";
 import Heading from "src/components/Heading";
 import Loading from "src/components/Loading";
@@ -17,9 +17,7 @@ const AvailabilityView = ({ match, notifications }) => {
   const windowSize = useWindowSize();
   const sup = useBreakpoint("sUp");
   const [updateAvailability] = useMutation(UPDATE_AVAILABILITY);
-  const [timeZone, setTimeZone] = useState(
-    moment.tz.guess() || "Europe/Dublin",
-  );
+  const [timeZone, setTimeZone] = useState(DateTime.local().zoneName || "UTC");
 
   const { data, loading } = useQuery(GET_AVAILABILITY, {
     variables: { id: match.params.userID },

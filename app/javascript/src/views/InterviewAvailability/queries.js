@@ -38,6 +38,7 @@ export const RESEND_INTERVIEW_REQUEST = gql`
   mutation ResendInterviewRequest($input: ResendInterviewRequestInput!) {
     resendInterviewRequest(input: $input) {
       interview {
+        id
         user {
           id
           availability
