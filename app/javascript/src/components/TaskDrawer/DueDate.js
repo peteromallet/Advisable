@@ -21,7 +21,6 @@ export default function DueDate({
   isOpen,
   readOnly,
 }) {
-  console.log(value);
   const selected = value ? DateTime.fromISO(value) : null;
   const initialMonth = selected || new Date();
   const popover = usePopoverState({ placement: "bottom-start" });
