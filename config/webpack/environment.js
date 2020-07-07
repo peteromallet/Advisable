@@ -35,6 +35,4 @@ environment.config.merge({
 });
 
 environment.splitChunks();
-
-environment.loaders.append("typescript", typescript);
 module.exports = environment;
