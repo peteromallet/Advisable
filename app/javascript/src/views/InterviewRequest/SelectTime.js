@@ -15,8 +15,8 @@ export default function SelectTime(props) {
   const date = DateTime.fromISO(match.params.date, { zone: timeZone });
   const times = sortBy(
     filter(availability, (t) => {
-      const time = DateTime.fromISO(t);
-      return time.hasSame(date, "day");
+      const time = DateTime.fromISO(t, { zone: selectedTimeZone });
+      return date.day === time.day;
     }),
     (time) => DateTime.fromISO(time).toFormat("T"),
   );
