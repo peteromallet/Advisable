@@ -65,13 +65,11 @@ const QuoteInput = ({ isClient, task, readOnly, onSubmit }) => {
             opacity: popover.visible ? 1 : 0,
           }}
         >
-          {popover.visible && (
-            <QuoteInputPopout
-              task={task}
-              onCancel={popover.hide}
-              onSuccess={popover.hide}
-            />
-          )}
+          <QuoteInputPopout
+            task={task}
+            onCancel={popover.hide}
+            onSuccess={popover.hide}
+          />
         </Card>
       </Popover>
     </>

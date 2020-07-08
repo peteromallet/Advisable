@@ -178,9 +178,9 @@ test("Freelancer can create a task", async () => {
   fireEvent.click(estimate);
   const from = getByPlaceholderText("10 Hours");
   fireEvent.change(from, { target: { value: 10 } });
-  const flexible = getByLabelText("Flexible", { exact: false });
+  const flexible = screen.getByText("Flexible hours");
   fireEvent.click(flexible);
-  const to = getByPlaceholderText("20 Hours");
+  const to = await screen.findByPlaceholderText("20 Hours");
   fireEvent.change(to, { target: { value: 20 } });
   const save = getByLabelText("Save Quote");
   fireEvent.click(save);
