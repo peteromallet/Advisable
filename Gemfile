@@ -22,7 +22,7 @@ gem 'administrate', git: 'https://github.com/thoughtbot/administrate.git'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'faraday'
-gem 'sidekiq'
+gem 'sidekiq', '< 7'
 gem 'rack-attack'
 
 gem 'bcrypt', '~> 3.1.7'
