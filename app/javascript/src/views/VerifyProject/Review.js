@@ -139,4 +139,9 @@ function StarRatingField({ name, label }) {
   );
 }
 
+StarRatingField.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+};
+
 export default Review;
