@@ -1,8 +1,8 @@
 import { get } from "lodash-es";
 import * as React from "react";
+import { DateTime } from "luxon";
 import { Info } from "@styled-icons/feather";
 import { Text, Link } from "@advisable/donut";
-import * as moment from "moment-timezone";
 import Padding from "../../../components/Spacing/Padding";
 import ApplicationStatus from "../../../components/ApplicationStatus";
 import { Card, Notice } from "./styles";
@@ -125,9 +125,9 @@ const INFORMATION = {
             Your interview with {application.project.user.companyName} has been
             scheduled for{" "}
             <Text weight="semibold" as="span" inline>
-              {moment
-                .tz(interview.startsAt, interview.timeZone)
-                .format("dddd, DD MMMM [at] hh:mma")}
+              {DateTime.fromISO(interview.startsAt, {
+                zone: interview.timeZone,
+              }).toFormat("cccc, dd MMMM' at 'hh:mm a")}
             </Text>
           </Text>
         </React.Fragment>
@@ -155,7 +155,9 @@ const Application = ({ application }) => {
         )}
         <Text size="xxs" color="neutral.6" mt="xs">
           {application.appliedAt && (
-            <span>Applied {moment(application.appliedAt).fromNow()}</span>
+            <span>
+              Applied {DateTime.fromISO(application.appliedAt).toRelative()}
+            </span>
           )}
           {!application.appliedAt && "-"}
         </Text>

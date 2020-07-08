@@ -1,6 +1,6 @@
 // Renders the prompt to repeat a task.
 import React from "react";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { Button } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
@@ -24,7 +24,9 @@ const RepeatPrompt = ({ task, onRepeat, onClose }) => {
           repeat: task.repeat,
           estimateType: task.estimateType,
           flexibleEstimate: task.flexibleEstimate,
-          dueDate: moment(task.dueDate).add(1, "month"),
+          dueDate: DateTime.fromISO(task.dueDate)
+            .plus({ months: 1 })
+            .toISODate(),
         },
       },
     });

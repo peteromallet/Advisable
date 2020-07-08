@@ -54,8 +54,6 @@
     "linkifyjs": "^2.1.9",
     "lodash-es": "^4.17.15",
     "luxon": "^1.22.2",
-    "moment": "^2.24.0",
-    "moment-timezone": "^0.5.31",
     "nanoid": "^3.1.9",
     "polished": "^3.6.3",
     "query-string": "^6.12.1",
