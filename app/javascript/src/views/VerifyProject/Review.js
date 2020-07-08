@@ -115,6 +115,10 @@ function Review({ data }) {
   );
 }
 
+Review.propTypes = {
+  data: PropTypes.object.isRequired,
+};
+
 function StarRatingField({ name, label }) {
   const [field, _, helpers] = useField(name);
 
