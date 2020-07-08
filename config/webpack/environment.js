@@ -1,6 +1,5 @@
 const path = require("path");
 const { environment } = require("@rails/webpacker");
-const typescript = require("./loaders/typescript");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 const version = require("./buildVersion");
@@ -35,6 +34,4 @@ environment.config.merge({
 });
 
 environment.splitChunks();
-
-environment.loaders.append("typescript", typescript);
 module.exports = environment;
