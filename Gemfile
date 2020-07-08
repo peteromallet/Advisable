@@ -16,7 +16,7 @@ gem 'sass-rails', '>= 6'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 # gem "administrate"
-gem 'administrate', git: 'https://github.com/thoughtbot/administrate.git'
+gem 'administrate'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
