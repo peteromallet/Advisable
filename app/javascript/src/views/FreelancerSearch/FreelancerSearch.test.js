@@ -1,4 +1,4 @@
-import moment from "moment";
+import { Settings } from "luxon";
 import { renderRoute, fireEvent } from "../../testHelpers/test-utils";
 import mockData from "../../__mocks__/graphqlFields";
 import GET_DATA from "./Criteria/getData";
@@ -12,30 +12,21 @@ import USER_AVAILABILITY from "./Availability/getUserAvailability";
 import UPDATE_AVAILABILITY from "./Availability/updateAvailability";
 import REQUEST_CONSULTATION from "./Topic/requestConsultations";
 
-const getNextAvailableDate = (date) => {
-  if (["Sa", "Su"].indexOf(moment(date).format("dd")) > -1) {
-    return getNextAvailableDate(moment(date).add(1, "day"));
-  }
-
-  return date.hours(10).minutes(0).seconds(0).milliseconds(0);
-};
+// Its always 27th may 2020 at midday
+Settings.now = () => new Date(2020, 4, 27, 12, 0, 0, 0).valueOf();
 
 test("User can search for freelancers and request consultations with them", async () => {
-  const day1 = getNextAvailableDate(moment().add(1, "day"));
-  const day2 = getNextAvailableDate(moment(day1).add(1, "days"));
-  const day3 = getNextAvailableDate(moment(day2).add(1, "days"));
-
   const skill = mockData.skill({ name: "Marketing" });
   const industry = mockData.industry({ name: "Finance" });
   const user = mockData.user({
     industry,
     availability: [
-      day1.toISOString(),
-      moment(day1).add(30, "minutes").toISOString(),
-      day2.toISOString(),
-      moment(day2).add(30, "minutes").toISOString(),
-      day3.toISOString(),
-      moment(day3).add(30, "minutes").toISOString(),
+      "28-05-2020T10:00:000.000",
+      "28-05-2020T11:00:000.000",
+      "28-05-2020T12:00:000.000",
+      "28-05-2020T13:00:000.000",
+      "28-05-2020T14:00:000.000",
+      "28-05-2020T15:00:000.000",
     ],
   });
 
@@ -189,21 +180,17 @@ test("User can search for freelancers and request consultations with them", asyn
 });
 
 test("User can search for freelancers and get a recommendation", async () => {
-  const day1 = getNextAvailableDate(moment().add(1, "day"));
-  const day2 = getNextAvailableDate(moment(day1).add(1, "days"));
-  const day3 = getNextAvailableDate(moment(day2).add(1, "days"));
-
   const skill = mockData.skill({ name: "Marketing" });
   const industry = mockData.industry({ name: "Finance" });
   const user = mockData.user({
     industry,
     availability: [
-      day1.toISOString(),
-      moment(day1).add(30, "minutes").toISOString(),
-      day2.toISOString(),
-      moment(day2).add(30, "minutes").toISOString(),
-      day3.toISOString(),
-      moment(day3).add(30, "minutes").toISOString(),
+      "28-05-2020T10:00:000.000",
+      "28-05-2020T11:00:000.000",
+      "28-05-2020T12:00:000.000",
+      "28-05-2020T13:00:000.000",
+      "28-05-2020T14:00:000.000",
+      "28-05-2020T15:00:000.000",
     ],
   });
 

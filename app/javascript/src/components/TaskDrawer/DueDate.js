@@ -1,5 +1,5 @@
-import * as moment from "moment";
 import * as React from "react";
+import { DateTime } from "luxon";
 import { Card, Button } from "@advisable/donut";
 import { Calendar } from "@styled-icons/feather";
 import { AnimatePresence, motion } from "framer-motion";
@@ -19,10 +19,9 @@ export default function DueDate({
   onChange,
   onClick,
   isOpen,
-  onClose,
   readOnly,
 }) {
-  const selected = value ? new Date(value) : null;
+  const selected = value ? DateTime.fromISO(value) : null;
   const initialMonth = selected || new Date();
   const popover = usePopoverState({ placement: "bottom-start" });
 
@@ -63,7 +62,7 @@ export default function DueDate({
         </DetailIcon>
         <DetailLabel>Due Date</DetailLabel>
         {selected ? (
-          <DetailValue>{moment(selected).format("DD MMMM YYYY")}</DetailValue>
+          <DetailValue>{selected.toFormat("dd MMM yyyy")}</DetailValue>
         ) : (
           <DetailPlaceholder>+ Add due date</DetailPlaceholder>
         )}

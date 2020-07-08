@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import moment from "moment-timezone";
+import { DateTime } from "luxon";
 import { Button, useBreakpoint, Availability } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import React from "react";
@@ -17,13 +17,13 @@ const AvailabilityForInterview = ({ data, notifications }) => {
   const sup = useBreakpoint("sUp");
   const [resendInterviewRequest] = useMutation(RESEND_INTERVIEW_REQUEST);
 
-  const filteredEvents = viewer.interviews.filter((i) => i.id !== interview.id);
+  const filteredEvents = (viewer?.interviews || []).filter(
+    (i) => i.id !== interview.id,
+  );
   const events = filteredEvents.map((interview) => ({
     time: interview.startsAt,
     label: `Interview with ${interview.specialist.firstName}`,
   }));
-
-  console.log(events);
 
   return (
     <Formik
@@ -42,7 +42,7 @@ const AvailabilityForInterview = ({ data, notifications }) => {
         );
       }}
       initialValues={{
-        timeZone: interview.timeZone || moment.tz.guess() || "Europe/Dublin",
+        timeZone: DateTime.local().zoneName || interview.timeZone || "UTC",
         availability: interview.user.availability,
       }}
     >

@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as moment from "moment";
+import { DateTime } from "luxon";
 import { Text } from "@advisable/donut";
 import { Calendar, Clock } from "@styled-icons/feather";
 import { Task, Title, Detail, TaskContent } from "./styles";
@@ -39,7 +39,10 @@ export default ({
           <Detail>
             <Calendar size={16} strokeWidth={2} />
             <Text fontSize="xs" ml="xs">
-              Due: <strong>{moment(task.dueDate).format("DD MMMM")}</strong>
+              Due:{" "}
+              <strong>
+                {DateTime.fromISO(task.dueDate).toFormat("dd MMMM")}
+              </strong>
             </Text>
           </Detail>
         )}
