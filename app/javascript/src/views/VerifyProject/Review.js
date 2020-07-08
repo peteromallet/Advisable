@@ -17,7 +17,7 @@ import { useReviewPreviousProject } from "./queries";
 import useScrollToTop from "../../hooks/useScrollToTop";
 
 function Review({ data }) {
-  useScrollToTop;
+  useScrollToTop();
   const history = useHistory();
   const { id, specialist, reviews } = data.previousProject;
   const [reviewPreviousProject] = useReviewPreviousProject();
