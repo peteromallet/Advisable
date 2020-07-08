@@ -72,7 +72,7 @@ const Login = ({ location }) => {
           />
         </svg>
       </Box>
-      <Card py="xl" px="l">
+      <Card py="xl" px="xl">
         <Text
           as="h3"
           mb="xxs"
