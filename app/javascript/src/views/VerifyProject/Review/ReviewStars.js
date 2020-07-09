@@ -26,14 +26,14 @@ function ReviewStars({ specialist }) {
   const location = useLocation();
 
   // Describe Formik initial state
-  const starRatingPreserved = location.state && location.state.starRatings;
+  const starRatingsPreserved = location.state && location.state.starRatings;
   const initialValues = {
     skills: undefined,
     qualityOfWork: undefined,
     adherenceToSchedule: undefined,
     communication: undefined,
     availability: undefined,
-    ...starRatingPreserved,
+    ...starRatingsPreserved,
   };
 
   // Trigger on continue button
