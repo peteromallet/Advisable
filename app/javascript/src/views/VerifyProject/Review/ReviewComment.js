@@ -35,9 +35,7 @@ function ReviewComment({ specialist }) {
     history.push(`/verify_project/${id}/complete`);
   };
 
-  const handleSkip = () => {
-    history.push(`/verify_project/${id}/complete`);
-  };
+  const handleSkip = () => handleSubmit(initialValues, true);
 
   return (
     <>
