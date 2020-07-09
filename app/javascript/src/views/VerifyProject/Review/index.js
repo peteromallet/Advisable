@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Redirect, Switch, Route } from "react-router-dom";
-import { Container, Card } from "@advisable/donut";
+// Hooks
 import useScrollToTop from "../../../hooks/useScrollToTop";
+// Components
+import { Container, Card } from "@advisable/donut";
 import ReviewStars from "./ReviewStars";
 import ReviewComment from "./ReviewComment";
 
 function Review({ data }) {
-  useScrollToTop();
+  useScrollToTop(); // For small-height screens
   const { id, specialist, reviews } = data.previousProject;
 
   if (reviews.length > 0) {
