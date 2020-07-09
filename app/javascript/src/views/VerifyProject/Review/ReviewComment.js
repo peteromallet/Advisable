@@ -1,31 +1,41 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
-import { useHistory, useParams } from "react-router-dom";
+// Hooks
+import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useReviewPreviousProject } from "../queries";
+// Components
 import { Text, Button, Textarea } from "@advisable/donut";
 import FormField from "../../../components/FormField";
 import SubmitButton from "../../../components/SubmitButton";
-import { useReviewPreviousProject } from "../queries";
 
 function ReviewComment({ specialist }) {
+  // React Router data
   const { id } = useParams();
-  const [reviewPreviousProject] = useReviewPreviousProject();
   const history = useHistory();
+  const location = useLocation();
 
-  const handleBack = (values) => async () => {
-    history.push(`/verify_project/${id}/review`, { ...values });
-  };
+  // Apollo Mutation action
+  const [reviewPreviousProject] = useReviewPreviousProject();
+
+  // Describe Formik initial state
+  const initialValues = { comment: "" };
 
   const handleSubmit = async (values) => {
+    const starRatings = location.state && location.state.starRatings;
     await reviewPreviousProject({
       variables: {
         input: {
           previousProject: id,
+          ...starRatings,
           ...values,
         },
       },
     });
+    history.push(`/verify_project/${id}/complete`);
+  };
 
+  const handleSkip = () => {
     history.push(`/verify_project/${id}/complete`);
   };
 
@@ -45,11 +55,8 @@ function ReviewComment({ specialist }) {
         Your story might be excited for our users and could open vast
         opportunities for {specialist.firstName} and even for you.
       </Text>
-      <Formik
-        initialValues={{ ...history.location.state }}
-        onSubmit={handleSubmit}
-      >
-        {(formik) => (
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        {() => (
           <Form>
             <FormField
               mb="l"
@@ -68,11 +75,12 @@ function ReviewComment({ specialist }) {
             </SubmitButton>
             <Button
               size="l"
+              type="button"
               variant="subtle"
               width={["100%", "auto"]}
-              onClick={handleBack(formik.values)}
+              onClick={handleSkip}
             >
-              Back
+              Skip
             </Button>
           </Form>
         )}

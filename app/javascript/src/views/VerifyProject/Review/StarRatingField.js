@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+// Hooks
 import { useField } from "formik";
+// Components
 import { Text, Box } from "@advisable/donut";
 import StarRatingInput from "../../../components/StarRatingInput";
 
