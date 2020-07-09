@@ -235,11 +235,13 @@ test("Can leave a review", async () => {
   user.click(screen.getByLabelText(/rate adherence to schedule 3 stars/i));
   user.click(screen.getByLabelText(/rate communication 2 stars/i));
   user.click(screen.getByLabelText(/rate availability 1 star/i));
+  user.click(screen.getByLabelText("Continue"));
+  await screen.findByText(/What did you love/i);
   user.type(
-    screen.getByLabelText("Anything else you would like to add?"),
+    screen.getByPlaceholderText(/is an incredible/i),
     "This is the comment",
   );
-  user.click(screen.getByLabelText("Continue"));
+  user.click(screen.getByLabelText(/Submit/i));
   await screen.findByText(/Thanks/i);
 });
 
