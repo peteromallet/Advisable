@@ -245,6 +245,8 @@ class Types::QueryType < Types::BaseType
 
   def client_application(id:)
     User.find_by_uid_or_airtable_id!(id)
+  end
+
   field :invoice, Types::InvoiceType, null: true do
     argument :id, ID, required: true
   end
