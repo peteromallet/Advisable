@@ -1,22 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
+import * as Yup from "yup";
 import { Formik, Form } from "formik";
+import { isEmpty } from "lodash-es";
 // Hooks
 import { useHistory, useParams, useLocation } from "react-router-dom";
-import { useReviewPreviousProject } from "../queries";
 // Components
-import { Text, Button, Stack } from "@advisable/donut";
+import { Box, Text, Button, Stack, InputError } from "@advisable/donut";
 import StarRatingField from "./StarRatingField";
 import SubmitButton from "../../../components/SubmitButton";
+
+// Formik validation Yup schema
+const reviewStarsValidationSchema = Yup.object().shape({
+  adherenceToSchedule: Yup.number().required(),
+  availability: Yup.number().required(),
+  communication: Yup.number().required(),
+  qualityOfWork: Yup.number().required(),
+  skills: Yup.number().required(),
+});
 
 function ReviewStars({ specialist }) {
   // React Router data
   const { id } = useParams();
   const history = useHistory();
   const location = useLocation();
-
-  // Apollo Mutation action
-  const [reviewPreviousProject] = useReviewPreviousProject();
 
   // Describe Formik initial state
   const starRatingPreserved = location.state && location.state.starRatings;
@@ -40,11 +47,7 @@ function ReviewStars({ specialist }) {
   };
 
   // Trigger on skip button
-  const handleSkip = (dirty, values) => async () => {
-    dirty &&
-      (await reviewPreviousProject({
-        variables: { input: { previousProject: id, ...values } },
-      }));
+  const handleSkip = async () => {
     history.push(`/verify_project/${id}/complete`);
   };
 
@@ -64,10 +67,15 @@ function ReviewStars({ specialist }) {
       <Text fontSize="16px" lineHeight="24px" color="neutral900" mb="40px">
         How would you rate them in the following areas?
       </Text>
-      <Formik initialValues={initialValues} onSubmit={handleContinue}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleContinue}
+        validationSchema={reviewStarsValidationSchema}
+        validateOnChange={false}
+      >
         {(formik) => (
           <Form>
-            <Stack mb="50px" spacing="m" divider="blue50">
+            <Stack mb="m" spacing="m" divider="blue50">
               <StarRatingField label="Skills" name="skills" />
               <StarRatingField label="Quality of work" name="qualityOfWork" />
               <StarRatingField
@@ -77,25 +85,38 @@ function ReviewStars({ specialist }) {
               <StarRatingField label="Communication" name="communication" />
               <StarRatingField label="Availability" name="availability" />
             </Stack>
-            <SubmitButton
-              size="l"
-              mr="xs"
-              mb={["xs", "none"]}
-              width={["100%", "auto"]}
-            >
-              Continue
-            </SubmitButton>
-            <Button
-              size="l"
-              type="button"
-              variant="subtle"
-              mr="xs"
-              mb={["xs", "none"]}
-              width={["100%", "auto"]}
-              onClick={handleSkip(formik.dirty, formik.values)}
-            >
-              Skip
-            </Button>
+            {!isEmpty(formik.errors) && (
+              <Box
+                px="xs"
+                py="xxs"
+                display={["block", "inline-block"]}
+                bg="red100"
+                borderRadius={4}
+              >
+                <InputError>Rate all areas before continue, please.</InputError>
+              </Box>
+            )}
+            <Box mt="xl">
+              <SubmitButton
+                size="l"
+                mr="xs"
+                mb={["xs", "none"]}
+                width={["100%", "auto"]}
+              >
+                Continue
+              </SubmitButton>
+              <Button
+                size="l"
+                type="button"
+                variant="subtle"
+                mr="xs"
+                mb={["xs", "none"]}
+                width={["100%", "auto"]}
+                onClick={handleSkip}
+              >
+                Skip
+              </Button>
+            </Box>
           </Form>
         )}
       </Formik>
