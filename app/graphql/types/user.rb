@@ -84,6 +84,14 @@ class Types::User < Types::BaseType
     object.stripe_customer.invoice_settings.default_payment_method
   end
 
+  field :invoices, [Types::InvoiceType], null: false do
+    authorize :is_user
+  end
+
+  def invoices
+    Stripe::Invoice.list(customer: object.stripe_customer_id)
+  end
+
   def id
     object.uid
   end
