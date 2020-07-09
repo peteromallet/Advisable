@@ -5,7 +5,7 @@ import { Text, Box } from "@advisable/donut";
 import StarRatingInput from "../../../components/StarRatingInput";
 
 function StarRatingField({ name, label }) {
-  const [field, _, helpers] = useField(name);
+  const [field, , helpers] = useField(name);
 
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between">
