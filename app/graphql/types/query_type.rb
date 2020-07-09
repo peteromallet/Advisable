@@ -245,5 +245,23 @@ class Types::QueryType < Types::BaseType
 
   def client_application(id:)
     User.find_by_uid_or_airtable_id!(id)
+  field :invoice, Types::InvoiceType, null: true do
+    argument :id, ID, required: true
+  end
+
+  def invoice(id:)
+    unless context[:current_user].try(:is_a?, User)
+      raise ApiError::NotAuthenticated
+    end
+
+    invoice = Stripe::Invoice.retrieve(id)
+
+    if invoice.customer != context[:current_user].stripe_customer_id
+      raise ApiError::NotAuthorized.new('You dont have access to this')
+    end
+
+    invoice
+  rescue Stripe::InvalidRequestError => e
+    raise ApiError::InvalidRequest.new('notFound', 'Invoice not found')
   end
 end
