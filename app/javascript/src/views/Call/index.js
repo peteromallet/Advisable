@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
+import styled from "styled-components";
 import { connect } from "twilio-video";
 import useViewer from "../../hooks/useViewer";
-import { Artstation } from "@styled-icons/fa-brands";
 
 const client =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzFhMGNjMWI4YzNkY2ZkNDQ1MzViOWM5MGNjYWUzZTU0LTE1OTQyNDc2MTUiLCJpc3MiOiJTSzFhMGNjMWI4YzNkY2ZkNDQ1MzViOWM5MGNjYWUzZTU0Iiwic3ViIjoiQUNjMDI5MWU0MzIwMDY5ZGQ5NjdmNjNlNTlkM2MxODcwZSIsImV4cCI6MTU5NDI1MTIxNSwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiQ2xpZW50IiwidmlkZW8iOnt9fX0.FBd3Iu3ePCSYpHwfpz67NYROip0AK2PgSB8rGMe0iDQ";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzFhMGNjMWI4YzNkY2ZkNDQ1MzViOWM5MGNjYWUzZTU0LTE1OTQzMTM2NjEiLCJpc3MiOiJTSzFhMGNjMWI4YzNkY2ZkNDQ1MzViOWM5MGNjYWUzZTU0Iiwic3ViIjoiQUNjMDI5MWU0MzIwMDY5ZGQ5NjdmNjNlNTlkM2MxODcwZSIsImV4cCI6MTU5NDMxNzI2MSwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiQ2xpZW50IiwidmlkZW8iOnt9fX0.vHTzrTGard-pcr8gIR635B4bEd1sa3p7xRs6coO_bks";
 
 const specialist =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzFhMGNjMWI4YzNkY2ZkNDQ1MzViOWM5MGNjYWUzZTU0LTE1OTQyNDc2NDIiLCJpc3MiOiJTSzFhMGNjMWI4YzNkY2ZkNDQ1MzViOWM5MGNjYWUzZTU0Iiwic3ViIjoiQUNjMDI5MWU0MzIwMDY5ZGQ5NjdmNjNlNTlkM2MxODcwZSIsImV4cCI6MTU5NDI1MTI0MiwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiU3BlY2lhbGlzdCIsInZpZGVvIjp7fX19.j4-QH-P6MaZBK95Ce09eV1pAjVlQe4yDDN4KSGmhvi4";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzFhMGNjMWI4YzNkY2ZkNDQ1MzViOWM5MGNjYWUzZTU0LTE1OTQzMTM2OTkiLCJpc3MiOiJTSzFhMGNjMWI4YzNkY2ZkNDQ1MzViOWM5MGNjYWUzZTU0Iiwic3ViIjoiQUNjMDI5MWU0MzIwMDY5ZGQ5NjdmNjNlNTlkM2MxODcwZSIsImV4cCI6MTU5NDMxNzI5OSwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiU3BlY2lhbGlzdCIsInZpZGVvIjp7fX19.51vl43qSmGTMWp860c5Gwo4xoTUnJz7kgGWXxjMEpsc";
 
 function useRoom(name) {
   const viewer = useViewer();
@@ -20,7 +20,7 @@ function useRoom(name) {
     connect(token, {
       audio: true,
       name,
-      video: { width: 800 },
+      video: { width: 2500 },
     }).then(
       (room) => {
         setRoom(room);
@@ -113,6 +113,23 @@ function Publication({ publication }) {
     return <VideoPublication track={track} />;
   }
 
+  if (track.kind === "audio") {
+    return <AudioTrack track={track} />;
+  }
+
+  return null;
+}
+
+function AudioTrack({ track }) {
+  const ref = React.useRef(null);
+
+  useEffect(() => {
+    ref.current = track.attach();
+    ref.current.setAttribute("data-cy-audio-track-name", track.name);
+    document.body.appendChild(ref.current);
+    return () => track.detach().forEach((el) => el.remove());
+  }, [track]);
+
   return null;
 }
 
@@ -128,23 +145,51 @@ function VideoPublication({ track }) {
     };
   }, [track]);
 
+  const ratio = track.dimensions
+    ? track.dimensions.width / track.dimensions.height
+    : 1;
+
   return (
     <video
       ref={ref}
-      style={{ width: "800px", height: "500px", background: "#eee" }}
+      style={{
+        width: 800,
+        height: 450,
+        background: "#eee",
+        borderRadius: "20px",
+        marginBottom: 20,
+        boxShadow: "0 8px 24px -8px rgba(0, 0, 0, 0.4)",
+      }}
     />
   );
 }
 
-export default function Call() {
-  const { loading, participants } = useRoom("Dunder Mifflin");
+const Container = styled.div`
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+function Connected({ room, participants }) {
+  const publications = usePublications(room.localParticipant);
 
   return (
-    <div>
-      {loading && <>connecting...</>}
+    <Container>
       {participants.map((participant) => (
         <Participant key={participant.sid} participant={participant} />
       ))}
-    </div>
+
+      {publications.map((publication) => (
+        <Publication key={publication.kind} publication={publication} />
+      ))}
+    </Container>
   );
+}
+
+export default function Call() {
+  const { loading, ...rest } = useRoom("Dunder Mifflin");
+
+  return loading ? <div>connecting...</div> : <Connected {...rest} />;
 }
