@@ -8,6 +8,7 @@ import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
 import ApplicationRoutes from "./ApplicationRoutes";
 
+const Call = lazy(() => import("./views/Call"));
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const VerifyProject = lazy(() => import("./views/VerifyProject"));
@@ -20,6 +21,7 @@ const Routes = () => {
     <Suspense fallback={<Loading />}>
       <Switch>
         <AuthenticatedRoute exact path="/" component={RootPath} />
+        <Route path="/call" component={Call} />
         <Route path="/login" component={Login} />
         <Route
           path="/reset_password"
