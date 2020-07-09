@@ -180,6 +180,44 @@ test("Can fail project validation", async () => {
   await screen.findByText(/Thanks/i);
 });
 
+test("Can see stars input error", async () => {
+  const previousProject = mockData.previousProject({
+    id: "pre_1",
+    specialist: mockData.specialist(),
+    primaryIndustry: mockData.industry(),
+    validationStatus: "Validated",
+  });
+
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(
+      GET_PREVIOUS_PROJECT,
+      { id: "pre_1" },
+      {
+        oauthViewer: {
+          __typename: "oauthViewer",
+          name: "Test Account",
+          image: null,
+          firstName: "Test",
+          canValidateProject: true,
+        },
+        previousProject,
+      },
+    ),
+  ];
+
+  renderRoute({
+    route: "/verify_project/pre_1/review",
+    graphQLMocks,
+  });
+
+  await screen.findByText(/How was your experience/i);
+  user.click(screen.getByLabelText(/rate skills 5 stars/i));
+  user.click(screen.getByLabelText(/rate quality of work 4 stars/i));
+  user.click(screen.getByLabelText("Continue"));
+  await screen.findByText(/Rate all areas/i);
+});
+
 test("Can leave a review", async () => {
   const previousProject = mockData.previousProject({
     id: "pre_1",
