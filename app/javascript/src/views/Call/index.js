@@ -3,11 +3,8 @@ import styled from "styled-components";
 import { connect } from "twilio-video";
 import useViewer from "../../hooks/useViewer";
 
-const client =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzFhMGNjMWI4YzNkY2ZkNDQ1MzViOWM5MGNjYWUzZTU0LTE1OTQzMTM2NjEiLCJpc3MiOiJTSzFhMGNjMWI4YzNkY2ZkNDQ1MzViOWM5MGNjYWUzZTU0Iiwic3ViIjoiQUNjMDI5MWU0MzIwMDY5ZGQ5NjdmNjNlNTlkM2MxODcwZSIsImV4cCI6MTU5NDMxNzI2MSwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiQ2xpZW50IiwidmlkZW8iOnt9fX0.vHTzrTGard-pcr8gIR635B4bEd1sa3p7xRs6coO_bks";
-
-const specialist =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzFhMGNjMWI4YzNkY2ZkNDQ1MzViOWM5MGNjYWUzZTU0LTE1OTQzMTM2OTkiLCJpc3MiOiJTSzFhMGNjMWI4YzNkY2ZkNDQ1MzViOWM5MGNjYWUzZTU0Iiwic3ViIjoiQUNjMDI5MWU0MzIwMDY5ZGQ5NjdmNjNlNTlkM2MxODcwZSIsImV4cCI6MTU5NDMxNzI5OSwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiU3BlY2lhbGlzdCIsInZpZGVvIjp7fX19.51vl43qSmGTMWp860c5Gwo4xoTUnJz7kgGWXxjMEpsc";
+const client = process.env.TEST_TOKEN_CLIENT;
+const specialist = process.env.TEST_TOKEN_SPECIALIST;
 
 function useRoom(name) {
   const viewer = useViewer();
@@ -144,10 +141,6 @@ function VideoPublication({ track }) {
       track.detach(el);
     };
   }, [track]);
-
-  const ratio = track.dimensions
-    ? track.dimensions.width / track.dimensions.height
-    : 1;
 
   return (
     <video
