@@ -33,6 +33,7 @@ gem 'sentry-raven'
 gem 'omniauth'
 gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-rails_csrf_protection', '~> 0.1'
+gem 'twilio-ruby'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

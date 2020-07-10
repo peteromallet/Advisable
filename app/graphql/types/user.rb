@@ -117,4 +117,20 @@ class Types::User < Types::BaseType
     records = records.where(status: status) if status
     records
   end
+
+  field :video_token, String, null: true
+
+  def video_token
+    token =
+      Twilio::JWT::AccessToken.new ENV['TWILIO_SID'],
+                                   ENV['TWILIO_API_SID'],
+                                   ENV['TWILIO_SECRET'],
+                                   ttl: 3600, identity: object.uid
+
+    grant = Twilio::JWT::AccessToken::VideoGrant.new
+    grant.room = 'Dunder Mifflin'
+    token.add_grant grant
+
+    token.to_jwt
+  end
 end

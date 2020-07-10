@@ -14,6 +14,7 @@ export const viewerFields = gql`
       companyName
       talkSignature
       completedTutorials
+      videoToken
       country {
         id
         name
@@ -31,6 +32,7 @@ export const viewerFields = gql`
       talkSignature
       applicationStage
       completedTutorials
+      videoToken
       avatar
       image {
         url

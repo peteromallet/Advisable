@@ -3,18 +3,14 @@ import styled from "styled-components";
 import { connect } from "twilio-video";
 import useViewer from "../../hooks/useViewer";
 
-const client = process.env.TEST_TOKEN_CLIENT;
-const specialist = process.env.TEST_TOKEN_SPECIALIST;
-
 function useRoom(name) {
   const viewer = useViewer();
-  const token = viewer.isClient ? client : specialist;
   const [room, setRoom] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [participants, setParticipants] = React.useState([]);
 
   useEffect(() => {
-    connect(token, {
+    connect(viewer.videoToken, {
       audio: true,
       name,
       video: { width: 2500 },
