@@ -54,34 +54,32 @@ function ReviewComment({ specialist }) {
         opportunities for {specialist.firstName} and even for you.
       </Text>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {() => (
-          <Form>
-            <FormField
-              mb="l"
-              minRows={8}
-              as={Textarea}
-              name="comment"
-              placeholder={`E.g. ${specialist.firstName} is an incredible...`}
-            />
-            <SubmitButton
-              size="l"
-              mr="xs"
-              mb={["xs", "none"]}
-              width={["100%", "auto"]}
-            >
-              Submit Review
-            </SubmitButton>
-            <Button
-              size="l"
-              type="button"
-              variant="subtle"
-              width={["100%", "auto"]}
-              onClick={handleSkip}
-            >
-              Skip
-            </Button>
-          </Form>
-        )}
+        <Form>
+          <FormField
+            mb="l"
+            minRows={8}
+            as={Textarea}
+            name="comment"
+            placeholder={`E.g. ${specialist.firstName} is an incredible...`}
+          />
+          <SubmitButton
+            size="l"
+            mr="xs"
+            mb={["xs", "none"]}
+            width={["100%", "auto"]}
+          >
+            Submit Review
+          </SubmitButton>
+          <Button
+            size="l"
+            type="button"
+            variant="subtle"
+            width={["100%", "auto"]}
+            onClick={handleSkip}
+          >
+            Skip
+          </Button>
+        </Form>
       </Formik>
     </>
   );
