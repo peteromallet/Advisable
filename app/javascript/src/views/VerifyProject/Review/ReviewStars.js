@@ -26,7 +26,7 @@ function ReviewStars({ specialist }) {
   const location = useLocation();
 
   // Describe Formik initial state
-  const starRatingsPreserved = location.state && location.state.starRatings;
+  const starRatingsPreserved = location.state?.starRatings;
   const initialValues = {
     skills: undefined,
     qualityOfWork: undefined,

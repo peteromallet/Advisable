@@ -22,7 +22,7 @@ function ReviewComment({ specialist }) {
   const initialValues = { comment: "" };
 
   const handleSubmit = async (values) => {
-    const starRatings = location.state && location.state.starRatings;
+    const starRatings = location.state?.starRatings;
     await reviewPreviousProject({
       variables: {
         input: {
