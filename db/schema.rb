@@ -595,7 +595,6 @@ ActiveRecord::Schema.define(version: 2020_07_14_131608) do
     t.decimal "average_score"
     t.integer "project_count"
     t.string "phone"
-    t.string "sendbird_access_token"
     t.boolean "test_account"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
@@ -676,7 +675,6 @@ ActiveRecord::Schema.define(version: 2020_07_14_131608) do
     t.bigint "sales_person_id"
     t.string "contact_status"
     t.string "fid"
-    t.string "sendbird_access_token"
     t.boolean "test_account"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
