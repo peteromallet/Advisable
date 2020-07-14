@@ -17,6 +17,7 @@ const UpdateProfile = lazy(() => import("./views/UpdateProfile"));
 const Projects = lazy(() => import("./views/Projects"));
 const Project = lazy(() => import("./views/Project"));
 const Booking = lazy(() => import("./views/Booking"));
+const Job = lazy(() => import("./views/Job"));
 const JobListing = lazy(() => import("./views/JobListing"));
 const ApplicationFlow = lazy(() => import("./views/ApplicationFlow"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
@@ -45,6 +46,9 @@ const ApplicationRoutes = () => {
           <Route path="/freelancers/:id" component={FreelancerProfile} />
           {/* Client routes */}
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
+          <AuthenticatedRoute path="/jobs/:id" clientOnly>
+            <Job />
+          </AuthenticatedRoute>
           <Route
             component={Applicant}
             path="/projects/:projectID/applications/:applicationID"

@@ -15,7 +15,7 @@ class Types::ProjectType < Types::BaseType
   field :specialist_description, String, null: true
   field :questions, [String], null: true
   field :required_characteristics, [String], null: true
-  field :optional_characteristics, [String], null: true
+  field :characteristics, [String], null: true
   field :accepted_terms, Boolean, null: false
   field :deposit_owed, Int, null: true
   field :application_count, Int, null: false
@@ -100,7 +100,7 @@ class Types::ProjectType < Types::BaseType
     object.required_characteristics || []
   end
 
-  def optional_characteristics
+  def characteristics
     object.optional_characteristics || []
   end
 

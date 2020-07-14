@@ -8,8 +8,8 @@ class Mutations::UpdateProject < Mutations::BaseMutation
   argument :company_description, String, required: false
   argument :specialist_description, String, required: false
   argument :questions, [String], required: false
+  argument :characteristics, [String], required: false
   argument :required_characteristics, [String], required: false
-  argument :optional_characteristics, [String], required: false
   argument :accepted_terms, Boolean, required: false
 
   field :project, Types::ProjectType, null: true
@@ -18,6 +18,9 @@ class Mutations::UpdateProject < Mutations::BaseMutation
   def resolve(**args)
     project = Project.find_by_uid_or_airtable_id!(args[:id])
     project.assign_attributes(assign_attributes(args))
+    if args[:characteristics].present?
+      project.optional_characteristics = args[:characteristics]
+    end
     update_skills(project, args)
     project.save
 
@@ -36,7 +39,6 @@ class Mutations::UpdateProject < Mutations::BaseMutation
       :specialist_description,
       :questions,
       :required_characteristics,
-      :optional_characteristics,
       :accepted_terms
     )
   end

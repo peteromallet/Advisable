@@ -9,8 +9,11 @@ const Textarea = React.forwardRef((props, ref) => {
 
   function calculateRows() {
     textarea.current.rows = props.minRows;
-    const baseHeight = textarea.current.scrollHeight - PADDING;
-    const currentRows = Math.floor(baseHeight / LINE_HEIGHT);
+    const baseHeight =
+      textarea.current.scrollHeight - (props.padding || PADDING);
+    const currentRows = Math.floor(
+      baseHeight / (props.lineHeight || LINE_HEIGHT),
+    );
     const rows = currentRows >= props.maxRows ? props.maxRows : currentRows;
     textarea.current.rows = rows;
   }

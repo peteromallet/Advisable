@@ -20,7 +20,7 @@ class Types::QueryType < Types::BaseType
   # The corresponding frontend code for these cases can be found in
   # /views/Project/index.js
   def project(**args)
-    project = Project.find_by_airtable_id!(args[:id])
+    project = Project.find_by_uid_or_airtable_id!(args[:id])
     policy = ProjectPolicy.new(context[:current_user], project)
     # Return the project if the user has access to it.
     return project if policy.can_access_project?
