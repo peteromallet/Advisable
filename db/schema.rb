@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_11_131543) do
+ActiveRecord::Schema.define(version: 2020_07_14_131608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -595,6 +595,8 @@ ActiveRecord::Schema.define(version: 2020_06_11_131543) do
     t.decimal "average_score"
     t.integer "project_count"
     t.string "phone"
+    t.string "sendbird_access_token"
+    t.boolean "test_account"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
@@ -674,6 +676,8 @@ ActiveRecord::Schema.define(version: 2020_06_11_131543) do
     t.bigint "sales_person_id"
     t.string "contact_status"
     t.string "fid"
+    t.string "sendbird_access_token"
+    t.boolean "test_account"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"

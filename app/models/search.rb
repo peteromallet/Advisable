@@ -27,9 +27,9 @@ class Search < ApplicationRecord
     @base_search ||=
       begin
         query =
-          Specialist.where('average_score >= ?', 65.0).where.not(
-            hourly_rate: nil
-          )
+          Specialist.where('average_score >= ?', 65.0).where(
+            test_account: [nil, false]
+          ).where.not(hourly_rate: nil)
         query = filter_industry(query)
         query = filter_company_type(query)
         query
