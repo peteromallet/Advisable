@@ -6,7 +6,7 @@ ruby '~> 2.6.6'
 # loads env vars from the .env file in dev and test
 gem 'dotenv-rails', groups: %i[development test]
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0', '>= 6.0.3.1'
+gem 'rails', '~> 6.0', '>= 6.0.3.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -16,13 +16,13 @@ gem 'sass-rails', '>= 6'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 # gem "administrate"
-gem 'administrate', git: 'https://github.com/thoughtbot/administrate.git'
+gem 'administrate'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'faraday'
-gem 'sidekiq'
+gem 'sidekiq', '< 7'
 gem 'rack-attack'
 
 gem 'bcrypt', '~> 3.1.7'
