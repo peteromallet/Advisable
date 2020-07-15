@@ -32,6 +32,14 @@ describe Search do
       expect(search.results).to_not include(specialist)
     end
 
+    it 'excludes test accounts' do
+      skill = create(:skill, name: 'Testing')
+      specialist = create(:specialist, average_score: 70, test_account: true)
+      specialist.skills << skill
+      search = create(:search, skill: skill.name)
+      expect(search.results).to_not include(specialist)
+    end
+
     it 'can filter by industry' do
       skill = create(:skill, name: 'Testing')
       industry = create(:industry, name: 'Tech')

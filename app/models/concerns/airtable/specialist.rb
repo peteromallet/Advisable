@@ -69,6 +69,9 @@ class Airtable::Specialist < Airtable::Base
 
     specialist.remote = true if fields['Remote OK'].try(:include?, 'Yes')
     specialist.remote = false if fields['Remote OK'].try(:include?, 'No')
+    if fields['Test Account'].try(:include?, 'Yes')
+      specialist.test_account = true
+    end
     specialist.referrer = self['Referrer'].try(:first)
   end
 
