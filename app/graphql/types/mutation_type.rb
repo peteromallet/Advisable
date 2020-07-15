@@ -81,4 +81,7 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :create_search, mutation: Mutations::CreateSearch
   field :submit_full_application, mutation: Mutations::SubmitFullApplication
+
+  field :start_client_application, mutation: Mutations::StartClientApplication
+  field :update_client_application, mutation: Mutations::UpdateClientApplication
 end

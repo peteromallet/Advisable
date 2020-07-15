@@ -22,6 +22,7 @@ class Airtable::ClientContact < Airtable::Base
   sync_column 'RID', to: :rid
   sync_column 'fid', to: :fid
   sync_column 'gclid', to: :gclid
+  sync_column 'Same City Importance', to: :locality_importance
   sync_association 'Industry', to: :industry
   sync_association 'Owner', to: :sales_person
 
@@ -42,6 +43,14 @@ class Airtable::ClientContact < Airtable::Base
       client = Airtable::Client.find(client_id).sync if client.nil?
       user.client = client
     end
+
+    sync_budget(user)
+  end
+
+  def sync_budget(user)
+    amount = self['Estimated Annual Freelancer Spend (USD)']
+    return if amount.nil?
+    user.budget = amount * 100
   end
 
   push_data do |user|
@@ -66,6 +75,12 @@ class Airtable::ClientContact < Airtable::Base
     self['gclid'] = user.gclid
     self['fid'] = user.fid
     self['Contact Status'] = user.contact_status
+    self['Same City Importance'] = user.locality_importance
     self['Address'] = Address.new(user.address).to_s if user.address
+    self['Skills Interested In'] = user.skills.map(&:airtable_id).compact
+
+    if user.budget
+      self['Estimated Annual Freelancer Spend (USD)'] = user.budget / 100.0
+    end
   end
 end

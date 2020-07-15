@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_14_131608) do
+ActiveRecord::Schema.define(version: 2020_07_15_110527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -595,6 +595,7 @@ ActiveRecord::Schema.define(version: 2020_07_14_131608) do
     t.decimal "average_score"
     t.integer "project_count"
     t.string "phone"
+    t.string "sendbird_access_token"
     t.boolean "test_account"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
@@ -628,6 +629,15 @@ ActiveRecord::Schema.define(version: 2020_07_14_131608) do
     t.index ["airtable_id"], name: "index_tasks_on_airtable_id"
     t.index ["application_id"], name: "index_tasks_on_application_id"
     t.index ["uid"], name: "index_tasks_on_uid"
+  end
+
+  create_table "user_skills", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "skill_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["skill_id"], name: "index_user_skills_on_skill_id"
+    t.index ["user_id"], name: "index_user_skills_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -675,7 +685,14 @@ ActiveRecord::Schema.define(version: 2020_07_14_131608) do
     t.bigint "sales_person_id"
     t.string "contact_status"
     t.string "fid"
+    t.string "sendbird_access_token"
     t.boolean "test_account"
+    t.string "application_status"
+    t.integer "budget"
+    t.integer "locality_importance"
+    t.datetime "accepted_guarantee_terms_at"
+    t.string "talent_quality"
+    t.string "rejection_reason"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"
@@ -741,6 +758,8 @@ ActiveRecord::Schema.define(version: 2020_07_14_131608) do
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "countries"
+  add_foreign_key "user_skills", "skills"
+  add_foreign_key "user_skills", "users"
   add_foreign_key "users", "countries"
   add_foreign_key "users", "industries"
   add_foreign_key "users", "sales_people"
