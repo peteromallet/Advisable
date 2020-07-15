@@ -238,4 +238,12 @@ class Types::QueryType < Types::BaseType
   def oauth_viewer
     context[:oauth_viewer]
   end
+
+  field :client_application, Types::ClientApplicationType, null: true do
+    argument :id, ID, required: true
+  end
+
+  def client_application(id:)
+    User.find_by_uid_or_airtable_id!(id)
+  end
 end
