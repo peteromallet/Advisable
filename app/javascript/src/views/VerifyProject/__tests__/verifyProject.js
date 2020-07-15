@@ -180,6 +180,44 @@ test("Can fail project validation", async () => {
   await screen.findByText(/Thanks/i);
 });
 
+test("Can see stars input error", async () => {
+  const previousProject = mockData.previousProject({
+    id: "pre_1",
+    specialist: mockData.specialist(),
+    primaryIndustry: mockData.industry(),
+    validationStatus: "Validated",
+  });
+
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(
+      GET_PREVIOUS_PROJECT,
+      { id: "pre_1" },
+      {
+        oauthViewer: {
+          __typename: "oauthViewer",
+          name: "Test Account",
+          image: null,
+          firstName: "Test",
+          canValidateProject: true,
+        },
+        previousProject,
+      },
+    ),
+  ];
+
+  renderRoute({
+    route: "/verify_project/pre_1/review",
+    graphQLMocks,
+  });
+
+  await screen.findByText(/How was your experience/i);
+  user.click(screen.getByLabelText(/rate skills 5 stars/i));
+  user.click(screen.getByLabelText(/rate quality of work 4 stars/i));
+  user.click(screen.getByLabelText("Continue"));
+  await screen.findByText(/Rate all areas/i);
+});
+
 test("Can leave a review", async () => {
   const previousProject = mockData.previousProject({
     id: "pre_1",
@@ -235,11 +273,13 @@ test("Can leave a review", async () => {
   user.click(screen.getByLabelText(/rate adherence to schedule 3 stars/i));
   user.click(screen.getByLabelText(/rate communication 2 stars/i));
   user.click(screen.getByLabelText(/rate availability 1 star/i));
+  user.click(screen.getByLabelText("Continue"));
+  await screen.findByText(/What did you love/i);
   user.type(
-    screen.getByLabelText("Anything else you would like to add?"),
+    screen.getByPlaceholderText(/is an incredible/i),
     "This is the comment",
   );
-  user.click(screen.getByLabelText("Continue"));
+  user.click(screen.getByLabelText(/Submit/i));
   await screen.findByText(/Thanks/i);
 });
 
@@ -276,6 +316,71 @@ test("Can skip leaving a review", async () => {
 
   await screen.findByText(/How was your experience/i);
   user.click(screen.getByLabelText(/skip/i));
+  await screen.findByText(/Thanks/i);
+});
+
+test("Can skip leaving a comment", async () => {
+  const previousProject = mockData.previousProject({
+    id: "pre_1",
+    specialist: mockData.specialist(),
+    primaryIndustry: mockData.industry(),
+    validationStatus: "Validated",
+  });
+
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(
+      GET_PREVIOUS_PROJECT,
+      { id: "pre_1" },
+      {
+        oauthViewer: {
+          __typename: "oauthViewer",
+          name: "Test Account",
+          image: null,
+          firstName: "Test",
+          canValidateProject: true,
+        },
+        previousProject,
+      },
+    ),
+    mockMutation(
+      REVIEW_PREVIOUS_PROJECT,
+      {
+        previousProject: "pre_1",
+        comment: "",
+        skills: 5,
+        qualityOfWork: 4,
+        adherenceToSchedule: 3,
+        communication: 2,
+        availability: 1,
+      },
+      {
+        reviewPreviousProject: {
+          __typename: "ReviewPreviousProjectPayload",
+          review: mockData.review(),
+        },
+      },
+    ),
+  ];
+
+  renderRoute({
+    route: "/verify_project/pre_1/review",
+    graphQLMocks,
+  });
+
+  await screen.findByText(/How was your experience/i);
+  user.click(screen.getByLabelText(/rate skills 5 stars/i));
+  user.click(screen.getByLabelText(/rate quality of work 4 stars/i));
+  user.click(screen.getByLabelText(/rate adherence to schedule 3 stars/i));
+  user.click(screen.getByLabelText(/rate communication 2 stars/i));
+  user.click(screen.getByLabelText(/rate availability 1 star/i));
+  user.click(screen.getByLabelText("Continue"));
+  await screen.findByText(/What did you love/i);
+  user.type(
+    screen.getByPlaceholderText(/is an incredible/i),
+    "This is the comment",
+  );
+  user.click(screen.getByLabelText(/Skip/i));
   await screen.findByText(/Thanks/i);
 });
 
