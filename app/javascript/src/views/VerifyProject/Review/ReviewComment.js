@@ -47,11 +47,11 @@ function ReviewComment({ specialist }) {
         fontWeight="medium"
         letterSpacing="-0.02em"
       >
-        What did you LOVE about working with {specialist.firstName}?
+        What did you love about working with {specialist.firstName}?
       </Text>
       <Text fontSize="16px" lineHeight="24px" color="neutral900" mb="l">
-        Your story might be excited for our users and could open vast
-        opportunities for {specialist.firstName} and even for you.
+        This will help {specialist.firstName} find new opportunities on
+        Advisable.
       </Text>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <Form>
