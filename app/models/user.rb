@@ -1,14 +1,16 @@
 class User < ApplicationRecord
   include Uid
   include Account
+  include StatusMap
   include Airtable::Syncable
   airtable_class Airtable::ClientContact
-
   has_many :projects
   has_many :interviews
   has_many :applications, through: :projects
   has_many :consultations
   has_many :searches
+  has_many :user_skills
+  has_many :skills, through: :user_skills
   has_one :client_user
   has_one :client, through: :client_user
   belongs_to :sales_person, required: false
@@ -23,8 +25,21 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
+  validates :talent_quality,
+            inclusion: { in: %w[cheap budget good top world_class] },
+            allow_nil: true
+
+  validates :rejection_reason,
+            inclusion: { in: %w[cheap_talent not_hiring] }, allow_nil: true
+
   register_tutorial 'fixedProjects'
   register_tutorial 'flexibleProjects'
+
+  map_status application_status: {
+               started: 'Application Started',
+               accepted: 'Application Accepted',
+               rejected: 'Application Rejected'
+             }
 
   def name
     "#{first_name} #{last_name}"

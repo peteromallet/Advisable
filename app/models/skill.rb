@@ -3,6 +3,8 @@ class Skill < ApplicationRecord
   include Airtable::Syncable
   has_many :specialist_skills
   has_many :specialists, through: :specialist_skills
+  has_many :user_skills
+  has_many :users, through: :user_skills
   belongs_to :original, class_name: 'Skill', required: false
   has_many :duplicates, foreign_key: 'original_id', class_name: 'Skill'
   has_many :project_skills
