@@ -78,6 +78,8 @@ class Airtable::ClientContact < Airtable::Base
     self['Same City Importance'] = user.locality_importance
     self['Address'] = Address.new(user.address).to_s if user.address
     self['Skills Interested In'] = user.skills.map(&:airtable_id).compact
+    self['How many freelancers do you plan on hiring over the next 6 months?'] =
+      user.number_of_freelancers
 
     if user.budget
       self['Estimated Annual Freelancer Spend (USD)'] = user.budget / 100.0

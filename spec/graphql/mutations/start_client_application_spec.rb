@@ -23,6 +23,10 @@ describe Mutations::Signup do
     GRAPHQL
   end
 
+  before :each do
+    allow_any_instance_of(User).to receive(:sync_to_airtable)
+  end
+
   it 'creates a new user' do
     expect { AdvisableSchema.execute(query) }.to change { User.count }.by(1)
     user = User.last
