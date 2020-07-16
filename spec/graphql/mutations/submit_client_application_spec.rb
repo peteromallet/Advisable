@@ -7,6 +7,9 @@ describe Mutations::SubmitClientApplication do
       mutation {
         submitClientApplication(input: {
           id: "#{user.uid}",
+          talentQuality: "good",
+          localityImportance: 1,
+          acceptGuaranteeTerms: true
         }) {
           clientApplication {
             id
@@ -27,12 +30,21 @@ describe Mutations::SubmitClientApplication do
   end
 
   context 'when they select cheap talent' do
-    let(:user) do
-      create(
-        :user,
-        application_status: :started,
-        talent_quality: User::TALENT_QUALITY_OPTIONS[0]
-      )
+    let(:query) do
+      <<-GRAPHQL
+        mutation {
+          submitClientApplication(input: {
+            id: "#{user.uid}",
+            talentQuality: "cheap",
+            localityImportance: 1,
+            acceptGuaranteeTerms: true
+          }) {
+            clientApplication {
+              id
+            }
+          }
+        }
+      GRAPHQL
     end
 
     it 'Sets the status to rejected with a reason' do
