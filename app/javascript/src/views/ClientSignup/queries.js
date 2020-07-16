@@ -20,11 +20,34 @@ export const START_CLIENT_APPLICATION = gql`
   ) {
     startClientApplication(
       input: { firstName: $firstName, lastName: $lastName, email: $email }
-    ) @client {
-      id
-      firstName
-      lastName
-      email
+    ) {
+      clientApplication {
+        id
+        firstName
+        lastName
+        # About Your Company
+        companyName
+        industry {
+          id
+          name
+          color
+        }
+        companyType
+        # About Your Requirements
+        skills {
+          id
+          name
+        }
+        numberOfFreelancers
+        budget
+        # About Your Preferences
+        localityImportance
+        acceptedGuaranteeTerms
+        talentQuality
+        # Status on submit
+        status
+        rejectionReason
+      }
     }
   }
 `;
