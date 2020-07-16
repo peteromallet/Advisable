@@ -13,6 +13,8 @@ class Types::ClientApplicationType < Types::BaseType
   field :accepted_guarantee_terms, Boolean, null: true
   field :talent_quality, String, null: true
   field :rejection_reason, String, null: true
+  field :company_type, String, null: true
+  field :number_of_freelancers, String, null: true
 
   def id
     object.uid
