@@ -7,6 +7,7 @@ import { Text, Error } from "@advisable/donut";
 import SubmitButton from "components/SubmitButton";
 import BulletPointInput from "components/BulletPointInput";
 import { UPDATE_PROJECT } from "./queries";
+import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
 export default function JobDescription({ data }) {
   const { id } = useParams();
@@ -38,20 +39,14 @@ export default function JobDescription({ data }) {
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {(formik) => (
         <Form>
-          <Text
-            mb="xs"
-            color="blue900"
-            fontSize="30px"
-            fontWeight="medium"
-            letterSpacing="-0.04em"
-          >
+          <JobSetupStepHeader mb="xs">
             Briefly describe the projects you need them to work on?
-          </Text>
-          <Text color="neutral800" lineHeight="22px" mb="m">
+          </JobSetupStepHeader>
+          <JobSetupStepSubHeader mb="l">
             This is to give the freelancer an idea of what they will be working
             on. You will be able to define more in depth tasks once you start
             working together.
-          </Text>
+          </JobSetupStepSubHeader>
           <Field
             name="goals"
             as={BulletPointInput}

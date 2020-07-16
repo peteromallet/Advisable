@@ -8,6 +8,11 @@ const projectFields = gql`
     characteristics
     user {
       id
+      companyType
+      industry {
+        id
+        name
+      }
       country {
         id
         name

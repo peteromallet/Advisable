@@ -5,9 +5,9 @@ import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form, Field } from "formik";
 import { Box, Text, Autocomplete, Error, Input } from "@advisable/donut";
 import SubmitButton from "components/SubmitButton";
-import MultipleSelect from "components/MultipleSelect";
 import PopularSkills from "./PopularSkills";
 import { UPDATE_PROJECT } from "./queries";
+import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
 export default function JobSkills({ data }) {
   const { id } = useParams();
@@ -32,7 +32,7 @@ export default function JobSkills({ data }) {
     if (response.errors) {
       formik.setStatus("Failed to save skills, please try again.");
     } else {
-      history.push(`/jobs/${id}/location`);
+      history.push(`/jobs/${id}/primary_skill`);
     }
   };
 
@@ -47,19 +47,13 @@ export default function JobSkills({ data }) {
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {(formik) => (
         <Form>
-          <Text
-            mb="xs"
-            color="blue900"
-            fontSize="30px"
-            fontWeight="semibold"
-            letterSpacing="-0.03em"
-          >
+          <JobSetupStepHeader mb="xs">
             What skills are you looking for?
-          </Text>
-          <Text color="neutral800" lineHeight="22px" mb="m">
+          </JobSetupStepHeader>
+          <JobSetupStepSubHeader mb="l">
             Start by letting us know what kind of freelancer you are looking
             for? Please select up to 5 skills that you are looking for.
-          </Text>
+          </JobSetupStepSubHeader>
           <Field
             max={5}
             multiple
@@ -73,15 +67,17 @@ export default function JobSkills({ data }) {
           <Box mb="l">
             <Text
               mb="s"
+              fontSize="17px"
               color="blue900"
               fontWeight="medium"
-              letterSpacing="-0.02rem"
+              letterSpacing="-0.03rem"
             >
               Popular skills for finance startups
             </Text>
             <PopularSkills skills={data.popularSkills.nodes} />
           </Box>
           <SubmitButton
+            size="l"
             disabled={formik.values.skills.length === 0}
             suffix={<ArrowRight />}
           >

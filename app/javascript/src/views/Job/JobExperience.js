@@ -2,17 +2,17 @@ import React from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
-import { Text } from "@advisable/donut";
 import RangeSelection from "components/RangeSelection";
 import { UPDATE_PROJECT } from "./queries";
+import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
-export default function JobLocation({ data }) {
+export default function JobExperience({ data }) {
   const { id } = useParams();
   const history = useHistory();
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
   const initialValues = {
-    location: "",
+    experienceImportance: "",
   };
 
   const handleSubmit = (values, formik) => {
@@ -33,26 +33,19 @@ export default function JobLocation({ data }) {
     formik.submitForm();
   };
 
+  const { user } = data.project;
+
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {(formik) => (
         <Form>
-          <Text
-            mb="xs"
-            color="blue800"
-            fontSize="32px"
-            fontWeight="medium"
-            letterSpacing="-0.04em"
-          >
-            How important is it that they are in{" "}
-            {data.project.user.country?.name}?
-          </Text>
-          <Text color="neutral600" fontSize="17px" lineHeight="22px" mb="l">
-            Do you need this freelancer to spend any time on site or can they
-            complete their work remotely?
-          </Text>
+          <JobSetupStepHeader mb="xl">
+            How important is it that they have worked with a{" "}
+            {user.industry?.name?.toLowerCase()}{" "}
+            {user.companyType.toLowerCase()} before?
+          </JobSetupStepHeader>
           <Field
-            name="location"
+            name="experienceImportance"
             as={RangeSelection}
             onChange={handleSelection(formik)}
           />

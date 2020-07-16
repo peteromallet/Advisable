@@ -8,6 +8,8 @@ import MultistepMenu from "../../components/MultistepMenu";
 import JobSkills from "./JobSkills";
 import JobLocation from "./JobLocation";
 import JobDescription from "./JobDescription";
+import JobExperience from "./JobExperience";
+import JobPrimarySkill from "./JobPrimarySkill";
 import JobCharacteristics from "./JobCharacteristics";
 
 const PageWithSidebar = styled.div`
@@ -36,6 +38,14 @@ const steps = [
     path: "/jobs/:id",
     exact: true,
     component: JobSkills,
+  },
+  {
+    path: "/jobs/:id/primary_skill",
+    component: JobPrimarySkill,
+  },
+  {
+    path: "/jobs/:id/experience",
+    component: JobExperience,
   },
   {
     path: "/jobs/:id/location",
@@ -101,7 +111,7 @@ export default function JobSetup({ data }) {
                 <Route key={step.path} exact={step.exact} path={step.path}>
                   <Card
                     as={motion.div}
-                    padding="l"
+                    padding="xl"
                     width="100%"
                     overflow="hidden"
                     style={{ position: "relative" }}

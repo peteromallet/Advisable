@@ -1,14 +1,15 @@
 import React from "react";
 import { useField } from "formik";
+import { theme } from "@advisable/donut";
 import { Plus } from "@styled-icons/feather";
 import styled from "styled-components";
 
 const StyledPopularSkill = styled.button`
   border: none;
   outline: none;
-  color: #2b2d5f;
+  color: ${theme.colors.blue900};
   line-height: 1;
-  font-size: 14px;
+  font-size: 15px;
   appearance: none;
   font-weight: 500;
   margin-right: 8px;
