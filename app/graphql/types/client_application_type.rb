@@ -4,7 +4,7 @@ class Types::ClientApplicationType < Types::BaseType
   field :id, ID, null: false
   field :status, String, null: true
   field :first_name, String, null: false
-  field :last_name, String, null: false
+  field :last_name, String, null: true
   field :company_name, String, null: true
   field :industry, Types::IndustryType, null: true
   field :budget, Int, null: true
