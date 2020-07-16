@@ -1,6 +1,10 @@
 require 'rails_helper'
 
-describe Mutations::Signup do
+describe Mutations::UpdateClientApplication do
+  before :each do
+    allow_any_instance_of(User).to receive(:sync_to_airtable)
+  end
+
   it 'Can update the company_name' do
     user = create(:user, application_status: :started, company_name: 'Before')
     query = <<-GRAPHQL
@@ -60,6 +64,47 @@ describe Mutations::Signup do
     expect { AdvisableSchema.execute(query) }.to change {
       user.reload.industry
     }.from(design).to(development)
+  end
+
+  it 'Can update the number_of_freelancers' do
+    user =
+      create(:user, application_status: :started, number_of_freelancers: nil)
+    query = <<-GRAPHQL
+      mutation {
+        updateClientApplication(input: {
+          id: "#{user.uid}",
+          numberOfFreelancers: "4-10" 
+        }) {
+          clientApplication {
+            id
+          }
+        }
+      }
+    GRAPHQL
+
+    expect { AdvisableSchema.execute(query) }.to change {
+      user.reload.number_of_freelancers
+    }.from(nil).to('4-10')
+  end
+
+  it 'Returns an error if the record doesnt save' do
+    user = create(:user, application_status: :started)
+    query = <<-GRAPHQL
+      mutation {
+        updateClientApplication(input: {
+          id: "#{user.uid}",
+          numberOfFreelancers: "invalid-value" 
+        }) {
+          clientApplication {
+            id
+          }
+        }
+      }
+    GRAPHQL
+
+    response = AdvisableSchema.execute(query)
+    code = response['errors'][0]['extensions']['code']
+    expect(code).to eq('failedToSave')
   end
 
   it 'Can update the budget' do
@@ -196,21 +241,21 @@ describe Mutations::Signup do
     it "Can't update any data" do
       user = create(:user, application_status: :accepted)
       query = <<-GRAPHQL
-      mutation {
-        updateClientApplication(input: {
-          id: "#{user.uid}",
-          companyName: "After"
-        }) {
-          clientApplication {
-            id
+        mutation {
+          updateClientApplication(input: {
+            id: "#{user.uid}",
+            companyName: "After"
+          }) {
+            clientApplication {
+              id
+            }
           }
         }
-      }
-    GRAPHQL
+      GRAPHQL
 
-      expect { AdvisableSchema.execute(query) }.to change {
+      expect { AdvisableSchema.execute(query) }.not_to change {
         user.reload.company_name
-      }.from('Before').to('After')
+      }
     end
   end
 end
