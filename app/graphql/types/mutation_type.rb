@@ -88,4 +88,5 @@ class Types::MutationType < GraphQL::Schema::Object
   field :update_user, mutation: Mutations::UpdateUser
   field :start_client_application, mutation: Mutations::StartClientApplication
   field :update_client_application, mutation: Mutations::UpdateClientApplication
+  field :submit_client_application, mutation: Mutations::SubmitClientApplication
 end

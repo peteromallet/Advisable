@@ -29,12 +29,21 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
-  validates :talent_quality,
-            inclusion: { in: %w[cheap budget good top world_class] },
-            allow_nil: true
-
   validates :rejection_reason,
             inclusion: { in: %w[cheap_talent not_hiring] }, allow_nil: true
+
+  # talent_quality indicates what qualit of talent the client is looking for.
+  # This value is provided when they are applying.
+  TALENT_QUALITY_OPTIONS = %w[cheap budget good top world_class]
+  validates :talent_quality,
+            inclusion: { in: TALENT_QUALITY_OPTIONS }, allow_nil: true
+
+  # number_of_freelancers represents the number of freelancers the client is
+  # looking to hire over the next 6 months. This value is provided when they are
+  # applying to Advisable.
+  NUMBER_OF_FREELANCERS_OPTIONS = %w[0 1-3 4-10 10+]
+  validates :number_of_freelancers,
+            inclusion: { in: NUMBER_OF_FREELANCERS_OPTIONS }, allow_nil: true
 
   register_tutorial 'fixedProjects'
   register_tutorial 'flexibleProjects'

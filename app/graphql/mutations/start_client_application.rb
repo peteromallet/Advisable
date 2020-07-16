@@ -14,6 +14,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
     if user.application_status == :started
       user.first_name = args[:first_name]
       user.last_name = args[:last_name]
+      user.sync_to_airtable
       user.save
     end
 

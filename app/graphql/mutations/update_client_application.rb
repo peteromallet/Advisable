@@ -4,6 +4,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
   argument :industry, String, required: false
   argument :skills, [String], required: false
   argument :company_type, String, required: false
+  argument :number_of_freelancers, String, required: false
   argument :budget, Int, required: false
   argument :locality_importance, Int, required: false
   argument :talent_quality, String, required: false
@@ -13,22 +14,44 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
 
   def resolve(**args)
     user = User.find_by_uid_or_airtable_id!(args[:id])
-    user.company_name = args[:company_name] if args[:company_name]
-    user.company_type = args[:company_type] if args[:company_type]
-    user.budget = args[:budget] if args[:budget]
-    if args[:locality_importance]
-      user.locality_importance = args[:locality_importance]
+
+    if user.application_status == :started
+      update_assignable_attributes(user, args)
+      update_talent_quality(user, args[:talent_quality])
+      update_industry(user, args[:industry]) if args[:industry]
+      update_skills(user, args[:skills]) if args[:skills]
+      update_guarantee_terms(user, args[:accept_guarantee_terms])
+      user.save
+      failed_to_save(user) if user.errors.any?
+      user.sync_to_airtable
     end
-    update_talent_quality(user, args[:talent_quality])
-    update_industry(user, args[:industry]) if args[:industry]
-    update_skills(user, args[:skills]) if args[:skills]
-    update_guarantee_terms(user, args[:accept_guarantee_terms])
-    user.save
 
     { clientApplication: user }
   end
 
   private
+
+  def failed_to_save(user)
+    message = user.errors.full_messages.first
+    raise ApiError::InvalidRequest.new('failedToSave', message)
+  end
+
+  # which attributes can just be simply assigned
+  def assignable_attributes
+    %i[
+      budget
+      company_name
+      company_type
+      number_of_freelancers
+      locality_importance
+    ]
+  end
+
+  def update_assignable_attributes(user, args)
+    assignable_attributes.each do |attribute|
+      user.send("#{attribute}=", args[attribute]) if args[attribute]
+    end
+  end
 
   def update_talent_quality(user, talent_quality)
     return unless talent_quality
