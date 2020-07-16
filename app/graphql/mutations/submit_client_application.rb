@@ -1,8 +1,8 @@
 class Mutations::SubmitClientApplication < Mutations::BaseMutation
   argument :id, ID, required: true
-  argument :talent_quality, String, required: true
-  argument :locality_importance, Int, required: true
-  argument :accept_guarantee_terms, Boolean, required: true
+  argument :talent_quality, String, required: false
+  argument :locality_importance, Int, required: false
+  argument :accept_guarantee_terms, Boolean, required: false
 
   field :clientApplication, Types::ClientApplicationType, null: true
 
