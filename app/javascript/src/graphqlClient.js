@@ -6,6 +6,7 @@ import {
   InMemoryCache,
   IntrospectionFragmentMatcher,
 } from "apollo-cache-inmemory";
+import clientSignupMockSchema from "./views/ClientSignup/mockSchema";
 
 // setup an IntrospectionFragmentMatcher to inform the cache about the
 // various union types inside our schema.
@@ -54,6 +55,9 @@ const client = new ApolloClient({
       errorPolicy: "all",
     },
   },
+  ...clientSignupMockSchema,
 });
+
+cache.writeData({ data: { ...clientSignupMockSchema.defaults } });
 
 export default client;
