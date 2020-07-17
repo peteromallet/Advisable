@@ -84,6 +84,8 @@ function StartApplication() {
       </motion.div>
     );
 
+  if (location.search) return <React.Fragment />;
+
   // Formik
   const initialValues = {
     firstName: "",
