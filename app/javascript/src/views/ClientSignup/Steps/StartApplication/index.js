@@ -54,6 +54,8 @@ function StartApplication({ pushNextStepPath }) {
     applicationId && pushNextStepPath({ state: { applicationId } });
   }, [data, pushNextStepPath]);
 
+  if (location.search) return <React.Fragment />;
+
   // Formik
   const initialValues = {
     firstName: "",
