@@ -29,6 +29,8 @@ function ClientSignup() {
   const numberOfSteps = numberOfActiveSteps - 1;
   const progressLength = (currentStepNumber / numberOfSteps) * 100;
 
+  const currentStepNumber = currentStepIndex();
+
   return (
     <Box display="flex" flexDirection="row">
       {isDesktop && <Testimonials />}
