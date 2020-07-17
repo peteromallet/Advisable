@@ -34,6 +34,140 @@ const clientApplicationFragment = gql`
   }
 `;
 
+export const ABOUT_COMPANY_QUERY = gql`
+  query ClientApplication($id: ID!) {
+    industries {
+      id
+      name
+      color
+    }
+    clientApplication(id: $id) {
+      # About Your Company step
+      companyName
+      industry {
+        id
+        name
+        color
+      }
+      companyType
+    }
+  }
+`;
+
+export const ABOUT_COMPANY_UPDATE = gql`
+  mutation UpdateClientApplication(
+    $id: ID!
+    $companyName: String!
+    $industry: String!
+    $companyType: String!
+  ) {
+    updateClientApplication(
+      input: {
+        id: $id
+        companyName: $companyName
+        industry: $industry
+        companyType: $companyType
+      }
+    ) {
+      clientApplication {
+        # About Your Company step
+        companyName
+        industry {
+          id
+          name
+          color
+        }
+        companyType
+      }
+    }
+  }
+`;
+
+export const ABOUT_REQUIREMENTS_QUERY = gql`
+  query ClientApplication($id: ID!) {
+    skills(local: true) {
+      id
+      label: name
+      value: name
+    }
+    clientApplication(id: $id) {
+      # About Your Requirements
+      skills {
+        id
+        name
+      }
+      numberOfFreelancers
+      budget
+    }
+  }
+`;
+
+export const ABOUT_REQUIREMENTS_UPDATE = gql`
+  mutation UpdateClientApplication(
+    $id: ID!
+    $skills: [String!]
+    $numberOfFreelancers: String!
+    $budget: Int
+  ) {
+    updateClientApplication(
+      input: {
+        id: $id
+        skills: $skills
+        numberOfFreelancers: $numberOfFreelancers
+        budget: $budget
+      }
+    ) {
+      clientApplication {
+        id
+        skills {
+          id
+          name
+        }
+        numberOfFreelancers
+        budget
+      }
+    }
+  }
+`;
+
+export const ABOUT_PREFERENCES_QUERY = gql`
+  query ClientApplication($id: ID!) {
+    clientApplication(id: $id) {
+      localityImportance
+      acceptedGuaranteeTerms
+      talentQuality
+    }
+  }
+`;
+
+export const ABOUT_PREFERENCES_SUBMIT = gql`
+  mutation UpdateClientApplication(
+    $id: ID!
+    $skills: [String!]
+    $numberOfFreelancers: String!
+    $budget: Int
+  ) {
+    updateClientApplication(
+      input: {
+        id: $id
+        skills: $skills
+        numberOfFreelancers: $numberOfFreelancers
+        budget: $budget
+      }
+    ) {
+      clientApplication {
+        # About Your Requirements
+        skills {
+          id
+          name
+        }
+        numberOfFreelancers
+        budget
+      }
+    }
+  }
+`;
+
 export const GET_CLIENT_APPLICATION = gql`
   ${clientApplicationFragment}
   query ClientApplication($id: ID!) {
