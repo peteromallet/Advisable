@@ -6,6 +6,7 @@ export default function BulletPointInput({
   value,
   placeholder,
   onChange,
+  autoFocus,
   ...rest
 }) {
   const list = [...value, ""];

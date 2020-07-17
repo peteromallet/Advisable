@@ -11,20 +11,22 @@ import JobDescription from "./JobDescription";
 import JobExperience from "./JobExperience";
 import JobPrimarySkill from "./JobPrimarySkill";
 import JobCharacteristics from "./JobCharacteristics";
+import JobRequiredCharacteristics from "./JobRequiredCharacteristics";
+import JobLikelyToHire from "./JobLikelyToHire";
 
 const PageWithSidebar = styled.div`
   display: flex;
 `;
 
 const SidebarContainer = styled.div`
-  width: 240px;
+  width: 280px;
   position: relative;
 `;
 
 const Sidebar = styled.div`
   left: 0;
   top: 60px;
-  width: 240px;
+  width: 280px;
   position: fixed;
   background: white;
   height: calc(100vh - 60px);
@@ -56,8 +58,16 @@ const steps = [
     component: JobCharacteristics,
   },
   {
+    path: "/jobs/:id/required_characteristics",
+    component: JobRequiredCharacteristics,
+  },
+  {
     path: "/jobs/:id/description",
     component: JobDescription,
+  },
+  {
+    path: "/jobs/:id/likely_to_hire",
+    component: JobLikelyToHire,
   },
 ];
 
@@ -73,19 +83,22 @@ export default function JobSetup({ data }) {
           padding="m"
           initial={{ opacity: 0, left: -100 }}
           animate={{ opacity: 1, left: 0 }}
+          transition={{ duration: 0.5 }}
         >
           <MultistepMenu>
-            <MultistepMenu.Item to={`/jobs/${id}`}>Skills</MultistepMenu.Item>
+            <MultistepMenu.Item isComplete to={`/jobs/${id}`} exact>
+              Skills
+            </MultistepMenu.Item>
             <MultistepMenu.Item to={`/jobs/${id}/location`}>
               Location
             </MultistepMenu.Item>
-            <MultistepMenu.Item to={`/jobs/${id}/characteristics`}>
+            <MultistepMenu.Item isDisabled to={`/jobs/${id}/characteristics`}>
               Characteristics
             </MultistepMenu.Item>
-            <MultistepMenu.Item to={`/jobs/${id}/description`}>
+            <MultistepMenu.Item isDisabled to={`/jobs/${id}/description`}>
               Description
             </MultistepMenu.Item>
-            <MultistepMenu.Item to={`/jobs/${id}/results`}>
+            <MultistepMenu.Item isDisabled to={`/jobs/${id}/results`}>
               Results
             </MultistepMenu.Item>
           </MultistepMenu>
@@ -95,11 +108,11 @@ export default function JobSetup({ data }) {
         mt="64px"
         mx="auto"
         width="100%"
-        maxWidth="640px"
+        maxWidth="680px"
         position="relative"
         as={motion.div}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.3 }}
         initial={{ opacity: 0, y: 40 }}
       >
         <AnimatePresence initial={false}>
@@ -109,19 +122,7 @@ export default function JobSetup({ data }) {
 
               return (
                 <Route key={step.path} exact={step.exact} path={step.path}>
-                  <Card
-                    as={motion.div}
-                    padding="xl"
-                    width="100%"
-                    overflow="hidden"
-                    style={{ position: "relative" }}
-                    initial={{ opacity: 0, x: 100 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5 }}
-                    exit={{ opacity: 0, x: -100, position: "absolute" }}
-                  >
-                    <Component data={data} />
-                  </Card>
+                  <Component data={data} />
                 </Route>
               );
             })}

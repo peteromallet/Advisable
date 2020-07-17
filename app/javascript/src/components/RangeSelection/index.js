@@ -1,4 +1,5 @@
 import React from "react";
+import { darken } from "polished";
 import { theme } from "@advisable/donut";
 import { motion } from "framer-motion";
 import {
@@ -6,6 +7,7 @@ import {
   StyledRangeSelectionOption,
   StyledRangeSelectionOptionLabel,
   StyledRangeSelectionOptionCircle,
+  StyledRangeSelectionOptionWrapper,
   StyledRAngeSelectionOptionBackground,
 } from "./styles";
 
@@ -14,12 +16,12 @@ const variants = {
     rest: {
       scaleX: 1,
       scaleY: 1,
-      backgroundColor: "#F5F6FB",
+      backgroundColor: "#F5F5F8",
     },
     hover: {
       scaleX: 1.04,
       scaleY: 1.08,
-      backgroundColor: "#EDEFF5",
+      backgroundColor: darken(0.04, "#F5F5F8"),
     },
     selected: {
       scaleX: 1.04,
@@ -51,29 +53,36 @@ export default function RangeSelection({ value, onChange, options }) {
   const choices = options.map((option, index) => {
     const isSelected = value === option.value;
     return (
-      <StyledRangeSelectionOption
+      <StyledRangeSelectionOptionWrapper
         as={motion.div}
-        initial={isSelected ? "selected" : "rest"}
-        animate={isSelected ? "selected" : "rest"}
-        whileHover={!isSelected && "hover"}
         key={option.value}
-        aria-label={option.label}
-        onClick={() => onChange(option.value)}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.12 }}
       >
-        <StyledRAngeSelectionOptionBackground
+        <StyledRangeSelectionOption
           as={motion.div}
-          variants={variants.background}
-        />
-        <StyledRangeSelectionOptionCircle
-          as={motion.div}
-          variants={variants.circle}
+          initial={isSelected ? "selected" : "rest"}
+          animate={isSelected ? "selected" : "rest"}
+          whileHover={!isSelected && "hover"}
+          aria-label={option.label}
+          onClick={() => onChange(option.value)}
         >
-          {index + 1}
-        </StyledRangeSelectionOptionCircle>
-        <StyledRangeSelectionOptionLabel>
-          {option.label}
-        </StyledRangeSelectionOptionLabel>
-      </StyledRangeSelectionOption>
+          <StyledRAngeSelectionOptionBackground
+            as={motion.div}
+            variants={variants.background}
+          />
+          <StyledRangeSelectionOptionCircle
+            as={motion.div}
+            variants={variants.circle}
+          >
+            {index + 1}
+          </StyledRangeSelectionOptionCircle>
+          <StyledRangeSelectionOptionLabel>
+            {option.label}
+          </StyledRangeSelectionOptionLabel>
+        </StyledRangeSelectionOption>
+      </StyledRangeSelectionOptionWrapper>
     );
   });
 

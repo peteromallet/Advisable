@@ -5,7 +5,6 @@ import { theme } from "@advisable/donut";
 
 export const StyledNavigationMenuItemNumber = styled.div`
   width: 24px;
-  color: white;
   height: 24px;
   display: flex;
   font-size: 11px;
@@ -13,32 +12,32 @@ export const StyledNavigationMenuItemNumber = styled.div`
   border-radius: 50%;
   align-items: center;
   justify-content: center;
-  color: ${theme.colors.neutral300};
-  border: 2px solid ${theme.colors.neutral200};
+  color: #c6c6d0;
+  background: #f2f2f6;
 `;
 
 export const StyledNavigationMenuLink = styled(NavLink)`
   height: 40px;
   display: flex;
   color: inherit;
-  font-size: 15px;
+  font-size: 16px;
   border-radius: 20px;
   align-items: center;
   padding-left: 16px;
   padding-right: 12px;
+  letter-spacing: -0.02rem;
   justify-content: space-between;
 `;
 
 const StyledNavigationMenuItem_Comlete = css`
   ${StyledNavigationMenuItemNumber} {
     color: white;
-    background: ${theme.colors.cyan700};
-    border-color: ${theme.colors.cyan700};
+    background: #2ebcc0;
   }
 `;
 
 const StyledNavigationMenuItem_Disabled = css`
-  color: ${theme.colors.neutral200};
+  color: #bbbcc9;
 
   ${StyledNavigationMenuLink} {
     cursor: default;
@@ -50,20 +49,19 @@ const StyledNavigationMenuItem_Enabled = css`
 
   &:hover {
     ${StyledNavigationMenuLink} {
-      color: ${theme.colors.neutral700};
-      background: ${rgba(theme.colors.blue50, 0.75)};
+      color: #1e234e;
+      background: ${rgba("#f5f5f8", 0.5)};
     }
   }
 
   ${StyledNavigationMenuLink} {
     &.active {
-      color: ${theme.colors.blue900};
-      background: ${theme.colors.blue50};
+      color: #1e234e;
+      background: #f5f5f8;
 
       ${StyledNavigationMenuItemNumber} {
-        color: white;
-        background: ${theme.colors.cyan900};
-        border-color: ${theme.colors.cyan900};
+        color: #2ebcc0;
+        background: white;
       }
     }
   }

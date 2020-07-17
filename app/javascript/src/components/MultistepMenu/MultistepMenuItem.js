@@ -2,7 +2,6 @@ import React from "react";
 import {
   StyledNavigationMenuItem,
   StyledNavigationMenuLink,
-  StyledNavigationMenuItemPrefix,
   StyledNavigationMenuItemNumber,
 } from "./styles";
 
@@ -44,7 +43,7 @@ export default function MultistepMenuItem({
       <StyledNavigationMenuLink to={to} onClick={handleClick} exact={exact}>
         {children}
         <StyledNavigationMenuItemNumber>
-          {isComplete ? <Check /> : number}
+          <Check />
         </StyledNavigationMenuItemNumber>
       </StyledNavigationMenuLink>
     </StyledNavigationMenuItem>

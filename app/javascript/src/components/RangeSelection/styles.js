@@ -10,21 +10,24 @@ export const StyledRAngeSelectionOptionBackground = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 0;
   border-radius: 12px;
-  background: #f5f6fb;
+  background: #f5f5f8;
   position: absolute;
 `;
 
 export const StyledRangeSelectionOption = styled.div`
-  flex: 1;
-  margin: 0 4px;
-  padding: 40px 12px;
   display: flex;
   align-items: center;
   flex-direction: column;
   cursor: pointer;
   user-select: none;
+`;
+
+export const StyledRangeSelectionOptionWrapper = styled.div`
+  flex: 1;
+  margin: 0 4px;
+  padding: 40px 12px;
   position: relative;
 
   &:first-child {
@@ -43,6 +46,7 @@ export const StyledRangeSelectionOptionLabel = styled.label`
   cursor: pointer;
   font-weight: 500;
   letter-spacing: -0.02rem;
+  position: relative;
 `;
 
 export const StyledRangeSelectionOptionCircle = styled.div`
@@ -58,4 +62,5 @@ export const StyledRangeSelectionOptionCircle = styled.div`
   margin-bottom: 24px;
   color: ${theme.colors.blue900};
   background: white;
+  position: relative;
 `;

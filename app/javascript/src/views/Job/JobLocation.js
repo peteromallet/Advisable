@@ -1,10 +1,12 @@
 import React from "react";
+import { motion } from "framer-motion";
+import { Card } from "@advisable/donut";
 import { useParams, useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
-import { Text } from "@advisable/donut";
 import RangeSelection from "components/RangeSelection";
 import { UPDATE_PROJECT } from "./queries";
+import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
 export default function JobLocation({ data }) {
   const { id } = useParams();
@@ -34,30 +36,33 @@ export default function JobLocation({ data }) {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {(formik) => (
-        <Form>
-          <Text
-            mb="xs"
-            color="blue800"
-            fontSize="32px"
-            fontWeight="medium"
-            letterSpacing="-0.04em"
-          >
-            How important is it that they are in{" "}
-            {data.project.user.country?.name}?
-          </Text>
-          <Text color="neutral600" fontSize="17px" lineHeight="22px" mb="l">
-            Do you need this freelancer to spend any time on site or can they
-            complete their work remotely?
-          </Text>
-          <Field
-            name="location"
-            as={RangeSelection}
-            onChange={handleSelection(formik)}
-          />
-        </Form>
-      )}
-    </Formik>
+    <Card
+      as={motion.div}
+      padding="52px"
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ zIndex: 2, opacity: 1, y: 0 }}
+      transition={{ delay: 0.1, duration: 0.4 }}
+      exit={{ y: -40, opacity: 0, zIndex: 1, scale: 0.9, position: "absolute" }}
+    >
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        {(formik) => (
+          <Form>
+            <JobSetupStepHeader mb="xs">
+              How important is it that they are in{" "}
+              {data.project.user.country?.name}?
+            </JobSetupStepHeader>
+            <JobSetupStepSubHeader mb="l">
+              Do you need this freelancer to spend any time on site or can they
+              complete their work remotely?
+            </JobSetupStepSubHeader>
+            <Field
+              name="location"
+              as={RangeSelection}
+              onChange={handleSelection(formik)}
+            />
+          </Form>
+        )}
+      </Formik>
+    </Card>
   );
 }

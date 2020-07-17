@@ -1,20 +1,20 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Card } from "@advisable/donut";
-import { useParams, useHistory } from "react-router-dom";
-import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import RangeSelection from "components/RangeSelection";
 import { UPDATE_PROJECT } from "./queries";
-import { JobSetupStepHeader } from "./styles";
+import { useMutation } from "@apollo/react-hooks";
+import { useParams, useHistory } from "react-router-dom";
+import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
-export default function JobExperience({ data }) {
+export default function JobLikelyToHire({ data }) {
   const { id } = useParams();
   const history = useHistory();
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
   const initialValues = {
-    experienceImportance: "",
+    likelyToHire: "",
   };
 
   const handleSubmit = (values, formik) => {
@@ -27,15 +27,13 @@ export default function JobExperience({ data }) {
       },
     });
 
-    history.push(`/jobs/${id}/location`);
+    history.push(`/jobs/${id}/characteristics`);
   };
 
   const handleSelection = (formik) => (val) => {
-    formik.setFieldValue("location", val);
+    formik.setFieldValue("likelyToHire", val);
     formik.submitForm();
   };
-
-  const { user } = data.project;
 
   return (
     <Card
@@ -49,13 +47,12 @@ export default function JobExperience({ data }) {
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(formik) => (
           <Form>
-            <JobSetupStepHeader mb="xl">
-              How important is it that they have worked with a{" "}
-              {user.industry?.name?.toLowerCase()}{" "}
-              {user.companyType.toLowerCase()} before?
+            <JobSetupStepHeader mb="l">
+              If Advisable finds you the perfect person for this, how likely are
+              you to hire them?
             </JobSetupStepHeader>
             <Field
-              name="experienceImportance"
+              name="likelyToHire"
               as={RangeSelection}
               onChange={handleSelection(formik)}
             />

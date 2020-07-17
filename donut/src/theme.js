@@ -87,7 +87,7 @@ const colors = {
   blue600: "#1038C7",
   blue700: "#1529A5",
   blue800: "#101E71",
-  blue900: "#070F40",
+  blue900: "#1F2452",
   cyan50: "#F2FAFA",
   cyan100: "#DCF4F4",
   cyan200: "#B3EBED",

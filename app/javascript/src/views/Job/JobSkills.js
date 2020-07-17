@@ -1,9 +1,10 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { useParams, useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form, Field } from "formik";
-import { Box, Text, Autocomplete, Error, Input } from "@advisable/donut";
+import { Box, Text, Autocomplete, Error, Card } from "@advisable/donut";
 import SubmitButton from "components/SubmitButton";
 import PopularSkills from "./PopularSkills";
 import { UPDATE_PROJECT } from "./queries";
@@ -44,48 +45,57 @@ export default function JobSkills({ data }) {
   }, [data.skills]);
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {(formik) => (
-        <Form>
-          <JobSetupStepHeader mb="xs">
-            What skills are you looking for?
-          </JobSetupStepHeader>
-          <JobSetupStepSubHeader mb="l">
-            Start by letting us know what kind of freelancer you are looking
-            for? Please select up to 5 skills that you are looking for.
-          </JobSetupStepSubHeader>
-          <Field
-            max={5}
-            multiple
-            name="skills"
-            marginBottom="l"
-            as={Autocomplete}
-            options={skillOptions}
-            placeholder="e.g Facebook Advertising"
-            onChange={(skills) => formik.setFieldValue("skills", skills)}
-          />
-          <Box mb="l">
-            <Text
-              mb="s"
-              fontSize="17px"
-              color="blue900"
-              fontWeight="medium"
-              letterSpacing="-0.03rem"
+    <Card
+      as={motion.div}
+      padding="52px"
+      animate={{ y: 0, opacity: 1 }}
+      initial={{ y: 100, opacity: 0 }}
+      exit={{ y: -40, opacity: 0, zIndex: 1, scale: 0.9, position: "absolute" }}
+      transition={{ duration: 0.4 }}
+    >
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        {(formik) => (
+          <Form>
+            <JobSetupStepHeader mb="xs">
+              What skills are you looking for?
+            </JobSetupStepHeader>
+            <JobSetupStepSubHeader mb="l">
+              Start by letting us know what kind of freelancer you are looking
+              for? Please select up to 5 skills that you are looking for.
+            </JobSetupStepSubHeader>
+            <Field
+              max={5}
+              multiple
+              name="skills"
+              marginBottom="xl"
+              as={Autocomplete}
+              options={skillOptions}
+              placeholder="e.g Facebook Advertising"
+              onChange={(skills) => formik.setFieldValue("skills", skills)}
+            />
+            <Box mb="l">
+              <Text
+                mb="s"
+                fontSize="17px"
+                color="blue900"
+                fontWeight="medium"
+                letterSpacing="-0.03rem"
+              >
+                Popular skills for finance startups
+              </Text>
+              <PopularSkills skills={data.popularSkills.nodes} />
+            </Box>
+            <SubmitButton
+              size="l"
+              disabled={formik.values.skills.length === 0}
+              suffix={<ArrowRight />}
             >
-              Popular skills for finance startups
-            </Text>
-            <PopularSkills skills={data.popularSkills.nodes} />
-          </Box>
-          <SubmitButton
-            size="l"
-            disabled={formik.values.skills.length === 0}
-            suffix={<ArrowRight />}
-          >
-            Continue
-          </SubmitButton>
-          {formik.status && <Error marginTop="m">{formik.status}</Error>}
-        </Form>
-      )}
-    </Formik>
+              Continue
+            </SubmitButton>
+            {formik.status && <Error marginTop="m">{formik.status}</Error>}
+          </Form>
+        )}
+      </Formik>
+    </Card>
   );
 }
