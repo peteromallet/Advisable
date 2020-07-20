@@ -11,8 +11,8 @@ function SignupStatus({ pushInitialStepPath }) {
 
   if (error) pushInitialStepPath();
   if (loading) return <React.Fragment />;
-
   const { status, rejectionReason } = data.clientApplication;
+
   if (status === "ACCEPTED") {
     return <AcceptedStatus />;
   } else if (rejectionReason === "NOT_HIRING") {
