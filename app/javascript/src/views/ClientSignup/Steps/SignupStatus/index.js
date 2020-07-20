@@ -1,16 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useClientApplication } from "../../queries";
+import Loading from "../../../../components/Loading";
 import AcceptedStatus from "./AcceptedStatus";
 import NotHiringStatus from "./NotHiringStatus";
-
 import CheapStatus from "./CheapStatus";
 
 function SignupStatus({ pushInitialStepPath }) {
   const { loading, error, data } = useClientApplication();
 
   if (error) pushInitialStepPath();
-  if (loading) return <React.Fragment />;
+  if (loading) return <Loading />;
   const { status, rejectionReason } = data.clientApplication;
 
   if (status === "ACCEPTED") {
