@@ -48,10 +48,12 @@ class User < ApplicationRecord
   register_tutorial 'fixedProjects'
   register_tutorial 'flexibleProjects'
 
+  alias_attribute :application_status, :contact_status
   map_status application_status: {
                started: 'Application Started',
                accepted: 'Application Accepted',
-               rejected: 'Application Rejected'
+               rejected: 'Application Rejected',
+               remind: 'Requested Reminder'
              }
 
   def name
