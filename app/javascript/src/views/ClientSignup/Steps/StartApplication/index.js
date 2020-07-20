@@ -8,6 +8,7 @@ import { useLocation, useHistory } from "react-router";
 import SubmitButton from "../../../../components/SubmitButton";
 import FormField from "src/components/FormField";
 import { Text, Input, Stack } from "@advisable/donut";
+import Loading from "../../../../components/Loading";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("Provide your First Name, please."),
@@ -51,7 +52,7 @@ function StartApplication({ pushNextStepPath }) {
     applicationId && pushNextStepPath({ state: { applicationId } });
   }, [data, pushNextStepPath]);
 
-  if (location.search) return <React.Fragment />;
+  if (location.search) return <Loading />;
 
   // Formik
   const initialValues = {

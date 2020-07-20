@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import { Text, Stack, Autocomplete } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "../../../../components/SubmitButton";
+import Loading from "../../../../components/Loading";
 import {
   useAboutRequirementsQuery,
   useAboutRequirementsUpdate,
@@ -31,7 +32,7 @@ function AboutRequirements({ pushNextStepPath, pushInitialStepPath }) {
   const { loading, error, data } = useAboutRequirementsQuery();
 
   if (error) pushInitialStepPath();
-  if (loading) return <React.Fragment />;
+  if (loading) return <Loading />;
   const { clientApplication, skills } = data;
 
   // Formik
