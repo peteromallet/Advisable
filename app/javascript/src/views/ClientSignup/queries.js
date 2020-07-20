@@ -74,6 +74,10 @@ export const ABOUT_COMPANY_QUERY = gql`
       label: name
       value: name
     }
+    skills(local: true) {
+      label: name
+      value: name
+    }
     clientApplication(id: $id) {
       ...Application
     }
