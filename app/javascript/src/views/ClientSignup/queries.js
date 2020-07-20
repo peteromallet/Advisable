@@ -71,9 +71,8 @@ export const ABOUT_COMPANY_QUERY = gql`
   ${clientApplicationFragment}
   query ClientApplication($id: ID!) {
     industries {
-      id
-      name
-      color
+      label: name
+      value: name
     }
     clientApplication(id: $id) {
       ...Application
