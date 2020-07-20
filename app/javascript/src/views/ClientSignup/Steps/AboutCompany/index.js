@@ -80,8 +80,8 @@ function AboutCompany({ pushInitialStepPath, pushNextStepPath }) {
             About Your Company
           </Text>
           <Text mb="m">
-            This is for us to tell whether or not your company is a good fit for
-            us.
+            As next steps, we need you to answer a few questions in order to
+            figure out if you&apos;re a good fit for Advisable
           </Text>
           <Form>
             <Stack spacing="m" mb="l">
