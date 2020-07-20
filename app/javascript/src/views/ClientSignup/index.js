@@ -14,7 +14,9 @@ function ClientSignup() {
 
   if (viewer) return <Redirect to="/" />;
 
-  const currentStepNumber = currentStepIndex();
+  const currentStepNumber = currentStepIndex;
+  const numOfSteps = steps.length - 1;
+  const progressLength = (currentStepNumber / numOfSteps) * 100;
 
   return (
     <>
@@ -22,9 +24,9 @@ function ClientSignup() {
       <Box paddingRight={{ _: null, l: 550 }}>
         <Box py="xxl" maxWidth={600} margin="0 auto" px="m">
           <Step>
-            Step {currentStepNumber} of {steps.length - 1}
+            Step {currentStepNumber} of {numOfSteps}
           </Step>
-          <Progress amount={(currentStepNumber / steps.length - 1) * 100} />
+          <Progress amount={progressLength} />
           <Switch>{routes}</Switch>
         </Box>
       </Box>
