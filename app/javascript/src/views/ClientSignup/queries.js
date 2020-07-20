@@ -258,8 +258,8 @@ export const getAboutPreferencesOptimisticResponse = (
 
   return {
     __typename: "Mutation",
-    updateClientApplication: {
-      __typename: "UpdateClientApplicationPayload",
+    submitClientApplication: {
+      __typename: "SubmitClientApplicationPayload",
       clientApplication: {
         __typename: "ClientApplication",
         id,
