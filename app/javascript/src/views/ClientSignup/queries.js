@@ -104,7 +104,6 @@ export const ABOUT_REQUIREMENTS_QUERY = gql`
   ${clientApplicationFragment}
   query AboutRequirementsQuery($id: ID!) {
     skills(local: true) {
-      id
       label: name
       value: name
     }
