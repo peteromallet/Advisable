@@ -1,18 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { string, object, number } from "yup";
 import { Formik, Form } from "formik";
+// Components
 import SubmitButton from "../../../../components/SubmitButton";
 import ScaleInput from "../../../../components/ScaleInput";
-import { Text, Box, Stack, Label, Radio, RadioGroup } from "@advisable/donut";
+import ChoiceList from "../../../../components/ChoiceList";
+import Loading from "../../../../components/Loading";
 import FormField from "src/components/FormField";
-import { string, object, number } from "yup";
+import { Text, Stack } from "@advisable/donut";
+// Queries
 import {
   useAboutPreferencesSubmit,
   useAboutPreferencesQuery,
   getAboutPreferencesOptimisticResponse,
   useApplicationId,
 } from "../../queries";
-import Loading from "../../../../components/Loading";
 
 const validationSchema = object().shape({
   localityImportance: number(),
@@ -50,13 +53,18 @@ function AboutPreferences({ pushNextStepPath, pushInitialStepPath }) {
 
   if (error) pushInitialStepPath();
   if (loading) return <Loading />;
+  const {
+    localityImportance,
+    talentQuality,
+    numberOfFreelancers,
+  } = data.clientApplication;
 
   console.log("about preferences data", data);
   // Formik
   const initialValues = {
-    localityImportance: data.clientApplication.localityImportance || 0,
+    localityImportance: localityImportance || 0,
     acceptedGuaranteeTerms: "",
-    talentQuality: data.clientApplication.talentQuality || "",
+    talentQuality: talentQuality || "",
   };
 
   const handleSubmit = (values) => {
@@ -69,7 +77,7 @@ function AboutPreferences({ pushNextStepPath, pushInitialStepPath }) {
       optimisticResponse: getAboutPreferencesOptimisticResponse(
         applicationId,
         values,
-        data.clientApplication.numberOfFreelancers,
+        numberOfFreelancers,
       ),
       update: () => pushNextStepPath({ state: { applicationId } }),
     });
@@ -96,7 +104,7 @@ function AboutPreferences({ pushNextStepPath, pushInitialStepPath }) {
           </Text>
           <Text mb="m">This is to help tailor our recommendations to you.</Text>
           <Form>
-            <Stack spacing="m" mb="l">
+            <Stack spacing="l" mb="l">
               <FormField
                 as={ScaleInput}
                 name="localityImportance"
@@ -105,57 +113,33 @@ function AboutPreferences({ pushNextStepPath, pushInitialStepPath }) {
                 rightTitle="Very Important"
                 onChange={(n) => formik.setFieldValue("localityImportance", n)}
               />
-              <RadioGroup mb="xs">
-                <Label mb="xs">
-                  In order to avail of our money-back guarantee, are you willing
-                  to provide feedback on every freelancer you hire?
-                </Label>
-                <Box display="flex">
-                  <FormField
-                    as={Radio}
-                    type="radio"
-                    // label="yes"
-                    value="yes"
-                    name="acceptedGuaranteeTerms"
-                    variation="bordered"
-                    data-testid="yes"
-                    description="Yes"
-                  />
-                  <FormField
-                    as={Radio}
-                    type="radio"
-                    // label="no"
-                    value="no"
-                    name="acceptedGuaranteeTerms"
-                    variation="bordered"
-                    data-testid="no"
-                    description="No"
-                  />
-                </Box>
-              </RadioGroup>
-              <RadioGroup mb="l">
-                <Label mb="xs">
-                  What level of talent are you typically looking for?
-                </Label>
-                <>
-                  {talentQualityOptions.map((quality, index) => (
-                    <Box
-                      key={`talent-quality-option-${index}`}
-                      display="flex"
-                      flexDirection="row-reverse"
-                      justifyContent="flex-end"
-                    >
-                      <FormField
-                        as={Radio}
-                        type="radio"
-                        value={quality.value}
-                        name="talentQuality"
-                        description={quality.label}
-                      />
-                    </Box>
-                  ))}
-                </>
-              </RadioGroup>
+              <ChoiceList
+                fullWidth
+                optionsPerRow={2}
+                name="acceptedGuaranteeTerms"
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.talentQuality && formik.errors.talentQuality
+                }
+                label="In order to avail of our money-back guarantee, are you willing to provide feedback on every freelancer you hire?"
+                options={[
+                  { label: "Yes", value: "yes" },
+                  { label: "No", value: "no" },
+                ]}
+                value={formik.values.acceptedGuaranteeTerms}
+              />
+              <ChoiceList
+                fullWidth
+                optionsPerRow={1}
+                name="talentQuality"
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.talentQuality && formik.errors.talentQuality
+                }
+                label="What level of talent are you typically looking for?"
+                options={talentQualityOptions}
+                value={formik.values.talentQuality}
+              />
             </Stack>
             <SubmitButton>Continue</SubmitButton>
           </Form>
