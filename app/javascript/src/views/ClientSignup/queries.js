@@ -248,7 +248,7 @@ export const getAboutPreferencesOptimisticResponse = (
 ) => {
   const { talentQuality } = values;
   let status = "ACCEPTED";
-  let rejectionReason;
+  let rejectionReason = null;
 
   // Might be better to return both reasons
   if (talentQuality === "CHEAP" || talentQuality === "BUDGET") {
