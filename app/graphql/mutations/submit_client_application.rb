@@ -6,7 +6,7 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
 
   field :clientApplication, Types::ClientApplicationType, null: true
 
-  def authorize(**args)
+  def authorized?(**args)
     user = User.find_by_uid_or_airtable_id!(args[:id])
     if user.application_status != :started
       raise ApiError::InvalidRequest.new(

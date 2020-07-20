@@ -36,7 +36,7 @@ module StatusMap
 
         define_method("#{name}=") do |new_value|
           mapped = value[new_value]
-          super(mapped || new_value)
+          write_attribute(name, mapped || new_value)
         end
       end
     end
