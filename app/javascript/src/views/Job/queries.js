@@ -6,6 +6,7 @@ const projectFields = gql`
     status
     goals
     characteristics
+    primarySkill
     user {
       id
       companyType

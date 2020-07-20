@@ -50,7 +50,11 @@ export default function JobPrimarySkill({ data }) {
           animate={{ opacity: 1 }}
           transition={{ delay: i * 0.1 }}
         >
-          <PrimarySkillOption number={i + 1} onClick={handleSelection(skill)}>
+          <PrimarySkillOption
+            selected={data.project.primarySkill === skill.name}
+            number={i + 1}
+            onClick={handleSelection(skill)}
+          >
             {skill.name}
           </PrimarySkillOption>
         </motion.div>
