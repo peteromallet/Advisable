@@ -30,7 +30,62 @@ class Mutations::RequestApplicationCallback < Mutations::BaseMutation
       )
 
     call.sync_to_airtable
+    send_slack_message(user, call)
 
     { client_application: user }
+  end
+
+  private
+
+  def send_slack_message(user, client_call)
+    Slack.message(
+      channel: 'general',
+      text: 'New ASAP call request',
+      blocks: [
+        {
+          "type": 'section',
+          "text": {
+            "type": 'mrkdwn',
+            "text": "<!channel> There's a new ASAP call waiting for you."
+          }
+        },
+        { "type": 'divider' },
+        {
+          "type": 'section',
+          "fields": [
+            { "type": 'mrkdwn', "text": "*Name*\n#{user.name}" },
+            { "type": 'mrkdwn', "text": "*Company*\n#{user.company_name}" }
+          ]
+        },
+        {
+          "type": 'section',
+          "text": {
+            "type": 'mrkdwn',
+            "text":
+              "Mark Call Completed = Yes once you reach them or move them up one if you weren't able to reach them."
+          }
+        },
+        {
+          "type": 'section',
+          "text": {
+            "type": 'mrkdwn',
+            "text":
+              "*<https://airtable.com/tblF2WWM9mC4geYhn/viw0XG7SAtiCcPUeE/#{
+                client_call.airtable_id
+              }|View Details>*"
+          }
+        },
+        { "type": 'section', "text": { "type": 'mrkdwn', "text": ' ' } },
+        { "type": 'divider' },
+        {
+          "type": 'section',
+          "text": {
+            "type": 'mrkdwn',
+            "text":
+              '<https://airtable.com/tblF2WWM9mC4geYhn/viw0XG7SAtiCcPUeE|View All Pending Calls>'
+          }
+        }
+      ]
+    )
   end
 end
