@@ -1,6 +1,74 @@
 import gql from "graphql-tag";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useLocation } from "react-router";
+
+export const useApplicationId = () => {
+  const location = useLocation();
+  return location.state.applicationId;
+};
+
+const clientApplicationFragment = gql`
+  fragment Application on ClientApplication {
+    id
+    firstName
+    lastName
+    # About Your Company
+    companyName
+    industry {
+      name
+    }
+    companyType
+    # About Your Requirements
+    skills {
+      name
+    }
+    numberOfFreelancers
+    budget
+    # About Your Preferences
+    localityImportance
+    acceptedGuaranteeTerms
+    talentQuality
+    # Status on submit
+    status
+    rejectionReason
+  }
+`;
+
+export const GET_CLIENT_APPLICATION = gql`
+  ${clientApplicationFragment}
+  query ClientApplication($id: ID!) {
+    clientApplication(id: $id) {
+      ...Application
+    }
+  }
+`;
+
+/* 0 Step. Start Client Application */
+
+export const START_CLIENT_APPLICATION = gql`
+  ${clientApplicationFragment}
+  mutation StartClientApplication(
+    $firstName: String!
+    $lastName: String
+    $email: String!
+  ) {
+    startClientApplication(
+      input: { firstName: $firstName, lastName: $lastName, email: $email }
+    ) {
+      clientApplication {
+        ...Application
+      }
+    }
+  }
+`;
+
+export const useStartClientApplication = () =>
+  useMutation(START_CLIENT_APPLICATION);
+
+/* 2 Step. About Company */
 
 export const ABOUT_COMPANY_QUERY = gql`
+  ${clientApplicationFragment}
   query ClientApplication($id: ID!) {
     industries {
       id
@@ -8,17 +76,15 @@ export const ABOUT_COMPANY_QUERY = gql`
       color
     }
     clientApplication(id: $id) {
-      # About Your Company step
-      companyName
-      industry {
-        id
-        name
-        color
-      }
-      companyType
+      ...Application
     }
   }
 `;
+
+export const useAboutCompanyQuery = () => {
+  const id = useApplicationId();
+  return useQuery(ABOUT_COMPANY_QUERY, { variables: { id } });
+};
 
 export const ABOUT_COMPANY_UPDATE = gql`
   mutation UpdateClientApplication(
@@ -36,12 +102,11 @@ export const ABOUT_COMPANY_UPDATE = gql`
       }
     ) {
       clientApplication {
-        # About Your Company step
+        id
+        # About Your Company
         companyName
         industry {
-          id
           name
-          color
         }
         companyType
       }
@@ -49,24 +114,44 @@ export const ABOUT_COMPANY_UPDATE = gql`
   }
 `;
 
+export const useAboutCompanyUpdate = () => useMutation(ABOUT_COMPANY_UPDATE);
+
+export const getAboutCompanyOptimisticReponse = (id, values) => ({
+  __typename: "Mutation",
+  updateClientApplication: {
+    __typename: "UpdateClientApplicationPayload",
+    clientApplication: {
+      __typename: "ClientApplication",
+      id,
+      ...values,
+      industry: {
+        __typename: "Industry",
+        name: values.industry,
+      },
+    },
+  },
+});
+
+/* 3 Step. AboutRequirements */
+
 export const ABOUT_REQUIREMENTS_QUERY = gql`
-  query ClientApplication($id: ID!) {
+  ${clientApplicationFragment}
+  query AboutRequirementsQuery($id: ID!) {
     skills(local: true) {
       id
       label: name
       value: name
     }
     clientApplication(id: $id) {
-      # About Your Requirements
-      skills {
-        id
-        name
-      }
-      numberOfFreelancers
-      budget
+      ...Application
     }
   }
 `;
+
+export const useAboutRequirementsQuery = () => {
+  const id = useApplicationId();
+  return useQuery(ABOUT_REQUIREMENTS_QUERY, { variables: { id } });
+};
 
 export const ABOUT_REQUIREMENTS_UPDATE = gql`
   mutation UpdateClientApplication(
@@ -85,46 +170,8 @@ export const ABOUT_REQUIREMENTS_UPDATE = gql`
     ) {
       clientApplication {
         id
-        skills {
-          id
-          name
-        }
-        numberOfFreelancers
-        budget
-      }
-    }
-  }
-`;
-
-export const ABOUT_PREFERENCES_QUERY = gql`
-  query ClientApplication($id: ID!) {
-    clientApplication(id: $id) {
-      localityImportance
-      acceptedGuaranteeTerms
-      talentQuality
-    }
-  }
-`;
-
-export const ABOUT_PREFERENCES_SUBMIT = gql`
-  mutation UpdateClientApplication(
-    $id: ID!
-    $skills: [String!]
-    $numberOfFreelancers: String!
-    $budget: Int
-  ) {
-    updateClientApplication(
-      input: {
-        id: $id
-        skills: $skills
-        numberOfFreelancers: $numberOfFreelancers
-        budget: $budget
-      }
-    ) {
-      clientApplication {
         # About Your Requirements
         skills {
-          id
           name
         }
         numberOfFreelancers
@@ -134,77 +181,26 @@ export const ABOUT_PREFERENCES_SUBMIT = gql`
   }
 `;
 
-export const GET_CLIENT_APPLICATION = gql`
-  query ClientApplication($id: ID!) {
-    clientApplication(id: $id) {
-      id
-      firstName
-      lastName
-      # About Your Company step
-      companyName
-      industry {
-        id
-        name
-        color
-      }
-      companyType
-      # About Your Requirements step
-      skills {
-        id
-        name
-      }
-      numberOfFreelancers
-      budget
-      # About Your Preferences step
-      localityImportance
-      acceptedGuaranteeTerms
-      talentQuality
-      # Status on submit
-      status
-      rejectionReason
-    }
-  }
-`;
+export const getAboutRequirementsOptimisticReponse = (id, values) => ({
+  __typename: "Mutation",
+  updateClientApplication: {
+    __typename: "UpdateClientApplicationPayload",
+    clientApplication: {
+      __typename: "ClientApplication",
+      id,
+      ...values,
+      skills: values.skills.map((skill) => ({
+        name: skill,
+        __typename: "Skill",
+      })),
+    },
+  },
+});
 
-export const START_CLIENT_APPLICATION = gql`
-  mutation StartClientApplication(
-    $firstName: String!
-    $lastName: String
-    $email: String!
-  ) {
-    startClientApplication(
-      input: { firstName: $firstName, lastName: $lastName, email: $email }
-    ) {
-      clientApplication {
-        id
-        firstName
-        lastName
-        # About Your Company
-        companyName
-        industry {
-          id
-          name
-          color
-        }
-        companyType
-        # About Your Requirements
-        skills {
-          id
-          name
-        }
-        numberOfFreelancers
-        budget
-        # About Your Preferences
-        localityImportance
-        acceptedGuaranteeTerms
-        talentQuality
-        # Status on submit
-        status
-        rejectionReason
-      }
-    }
-  }
-`;
+export const useAboutRequirementsUpdate = () =>
+  useMutation(ABOUT_REQUIREMENTS_UPDATE);
+
+/* 4 Step. About Preferences */
 
 export const SUBMIT_CLIENT_APPLICATION = gql`
   mutation SubmitClientApplication(
@@ -223,24 +219,7 @@ export const SUBMIT_CLIENT_APPLICATION = gql`
     ) {
       clientApplication {
         id
-        firstName
-        lastName
-        # About Your Company step
-        companyName
-        industry {
-          id
-          name
-          color
-        }
-        companyType
-        # About Your Requirements step
-        skills {
-          id
-          name
-        }
-        numberOfFreelancers
-        budget
-        # About Your Preferences step
+        # About Your Preferences
         localityImportance
         acceptedGuaranteeTerms
         talentQuality
@@ -251,3 +230,52 @@ export const SUBMIT_CLIENT_APPLICATION = gql`
     }
   }
 `;
+
+export const useAboutPreferencesQuery = () => {
+  const id = useApplicationId();
+  return useQuery(GET_CLIENT_APPLICATION, { variables: { id } });
+};
+
+export const useAboutPreferencesSubmit = () =>
+  useMutation(SUBMIT_CLIENT_APPLICATION);
+
+export const getAboutPreferencesOptimisticResponse = (
+  id,
+  values,
+  numberOfFreelancers,
+) => {
+  const { talentQuality } = values;
+  let status = "ACCEPTED";
+  let rejectionReason;
+
+  // Might be better to return both reasons
+  if (talentQuality === "CHEAP" || talentQuality === "BUDGET") {
+    status = "REJECTED";
+    rejectionReason = "CHEAP_TALENT";
+  }
+  if (numberOfFreelancers === "0") {
+    status = "REJECTED";
+    rejectionReason = "NOT_HIRING";
+  }
+
+  return {
+    __typename: "Mutation",
+    updateClientApplication: {
+      __typename: "UpdateClientApplicationPayload",
+      clientApplication: {
+        __typename: "ClientApplication",
+        id,
+        ...values,
+        status,
+        rejectionReason,
+      },
+    },
+  };
+};
+
+/* Step 5. Application Status page */
+
+export const useClientApplication = () => {
+  const id = useApplicationId();
+  return useQuery(GET_CLIENT_APPLICATION, { variables: { id } });
+};

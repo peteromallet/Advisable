@@ -4,12 +4,12 @@ import { Formik, Form } from "formik";
 import { Text, Stack, Autocomplete } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "../../../../components/SubmitButton";
-import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
-  ABOUT_REQUIREMENTS_QUERY,
-  ABOUT_REQUIREMENTS_UPDATE,
+  useAboutRequirementsQuery,
+  useAboutRequirementsUpdate,
+  getAboutRequirementsOptimisticReponse,
+  useApplicationId,
 } from "../../queries";
-import { useLocation } from "react-router";
 import { string, array, object } from "yup";
 
 const numberOfFreelancersOptions = [
@@ -26,22 +26,12 @@ const validationSchema = object().shape({
 });
 
 function AboutRequirements({ pushNextStepPath, pushInitialStepPath }) {
-  const location = useLocation();
-  const { applicationId } = location.state;
-  const [updateClientApplication, updateResponse] = useMutation(
-    ABOUT_REQUIREMENTS_UPDATE,
-    {
-      variables: { id: applicationId },
-    },
-  );
-  console.log("about requirements app id", applicationId);
-  const { loading, error, data } = useQuery(ABOUT_REQUIREMENTS_QUERY, {
-    variables: { id: applicationId },
-  });
-  console.log("about requirements data", data, error);
+  const applicationId = useApplicationId();
+  const [updateClientApplication] = useAboutRequirementsUpdate();
+  const { loading, error, data } = useAboutRequirementsQuery();
 
   if (error) pushInitialStepPath();
-  if (loading) return <div>loading...</div>;
+  if (loading) return <React.Fragment />;
 
   // Formik
   const initialValues = {
@@ -51,19 +41,18 @@ function AboutRequirements({ pushNextStepPath, pushInitialStepPath }) {
   };
   const handleSubmit = (values) => {
     values.budget = parseInt(values.budget);
-    console.log("values", values);
     updateClientApplication({
       variables: {
         id: applicationId,
         ...values,
       },
+      optimisticResponse: getAboutRequirementsOptimisticReponse(
+        applicationId,
+        values,
+      ),
+      update: () => pushNextStepPath({ state: { applicationId } }),
     });
   };
-
-  updateResponse.data && pushNextStepPath({ state: location.state });
-  console.log("update response", updateResponse);
-
-  console.log("initial values", initialValues);
 
   return (
     <Formik

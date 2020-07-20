@@ -2,9 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
 import SubmitButton from "../../../../components/SubmitButton";
-import { useLocation } from "react-router";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import { ABOUT_COMPANY_UPDATE, ABOUT_COMPANY_QUERY } from "../../queries";
+import {
+  useAboutCompanyQuery,
+  useAboutCompanyUpdate,
+  getAboutCompanyOptimisticReponse,
+  useApplicationId,
+} from "../../queries";
 import FormField from "src/components/FormField";
 import { Text, Stack, Autocomplete } from "@advisable/donut";
 import { object, string } from "yup";
@@ -28,20 +31,9 @@ const validationSchema = object().shape({
 });
 
 function AboutCompany({ pushInitialStepPath, pushNextStepPath }) {
-  const location = useLocation();
-  const { applicationId } = location.state;
-  const [updateClientApplication, updateResponse] = useMutation(
-    ABOUT_COMPANY_UPDATE,
-    {
-      variables: { id: applicationId },
-    },
-  );
-  const { loading, error, data } = useQuery(ABOUT_COMPANY_QUERY, {
-    variables: { id: applicationId },
-  });
-  console.log("applicationid", applicationId);
-  console.log("data", data);
-  console.log("response", updateResponse);
+  const applicationId = useApplicationId();
+  const [updateClientApplication] = useAboutCompanyUpdate();
+  const { loading, error, data } = useAboutCompanyQuery();
 
   if (error) pushInitialStepPath();
   if (loading) return <div>loading...</div>;
@@ -62,10 +54,13 @@ function AboutCompany({ pushInitialStepPath, pushNextStepPath }) {
         id: applicationId,
         ...values,
       },
+      optimisticResponse: getAboutCompanyOptimisticReponse(
+        applicationId,
+        values,
+      ),
+      update: () => pushNextStepPath({ state: { applicationId } }),
     });
   };
-
-  updateResponse.data && pushNextStepPath({ state: location.state });
 
   return (
     <Formik
