@@ -4,16 +4,18 @@ export const Choices = styled.div`
   display: flex;
   margin-left: -10px;
 
-  ${props => props.optionsPerRow && css`
-    flex-wrap: wrap;
+  ${(props) =>
+    props.optionsPerRow &&
+    css`
+      flex-wrap: wrap;
 
-    ${Choice} {
-      flex-grow: 1;
-      margin-bottom: 10px;
-      width: calc(50% - 10px);
-    }
-  `}
-`
+      ${Choice} {
+        flex-grow: 1;
+        margin-bottom: 10px;
+        width: calc(100% / ${props.optionsPerRow} - 10px);
+      }
+    `}
+`;
 
 export const Circle = styled.span`
   width: 18px;
@@ -34,16 +36,15 @@ export const Circle = styled.span`
     margin-left: -5px;
     border-radius: 5px;
     position: absolute;
-    background-color: #173FCD;
+    background-color: #173fcd;
 
     opacity: 0;
     transform: scale(0);
     transition: opacity 300ms, transform 300ms;
   }
-`
+`;
 
-export const Label = styled.span`
-`
+export const Label = styled.span``;
 
 export const Choice = styled.div`
   margin-left: 10px;
@@ -74,7 +75,7 @@ export const Choice = styled.div`
     background: #ecf1fa;
 
     ${Circle} {
-      border-color: #173FCD;
+      border-color: #173fcd;
 
       &:after {
         opacity: 1;
@@ -82,4 +83,4 @@ export const Choice = styled.div`
       }
     }
   }
-`
+`;
