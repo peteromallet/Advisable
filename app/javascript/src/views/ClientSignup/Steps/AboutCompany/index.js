@@ -37,17 +37,14 @@ function AboutCompany({ pushInitialStepPath, pushNextStepPath }) {
 
   if (error) pushInitialStepPath();
   if (loading) return <div>loading...</div>;
+  const { clientApplication, industries } = data;
 
   // Formik
   const initialValues = {
-    companyName: data.clientApplication.companyName || "",
-    industry: data.clientApplication.industry?.name || "",
-    companyType: data.clientApplication.companyType || "",
+    companyName: clientApplication.companyName || "",
+    industry: clientApplication.industry?.name || "",
+    companyType: clientApplication.companyType || "",
   };
-  const industries = data.industries.map((industry) => ({
-    label: industry.name,
-    value: industry.name,
-  }));
   const handleSubmit = (values) => {
     updateClientApplication({
       variables: {
