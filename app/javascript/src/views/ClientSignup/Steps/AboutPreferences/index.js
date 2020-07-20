@@ -6,12 +6,12 @@ import ScaleInput from "../../../../components/ScaleInput";
 import { Text, Box, Stack, Label, Radio, RadioGroup } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import { string, object, number } from "yup";
-import { useMutation, useQuery } from "@apollo/react-hooks";
 import {
-  SUBMIT_CLIENT_APPLICATION,
-  ABOUT_PREFERENCES_QUERY,
+  useAboutPreferencesSubmit,
+  useAboutPreferencesQuery,
+  getAboutPreferencesOptimisticResponse,
+  useApplicationId,
 } from "../../queries";
-import { useLocation } from "react-router";
 
 const validationSchema = object().shape({
   localityImportance: number(),
@@ -22,44 +22,35 @@ const validationSchema = object().shape({
 const talentQualityOptions = [
   {
     label: "Cheap Talent - I don't care about quality",
-    value: "cheap_talent",
+    value: "CHEAP",
   },
   {
     label: "Budget Talent - I'm very cost-conscious",
-    value: "budget_talent",
+    value: "BUDGET",
   },
   {
     label: "Good Talent - I want reliable talent",
-    value: "good_talent",
+    value: "GOOD",
   },
   {
     label: "Top Talent - I want talent I can fully trust",
-    value: "top_talent",
+    value: "TOP",
   },
   {
     label: "World Class - I want the best of the best",
-    value: "world_class",
+    value: "WORLD_CLASS",
   },
 ];
 
 function AboutPreferences({ pushNextStepPath, pushInitialStepPath }) {
-  const location = useLocation();
-  const { applicationId } = location.state;
-  const [submitClientApplication, submitResponse] = useMutation(
-    SUBMIT_CLIENT_APPLICATION,
-    {
-      variables: { id: applicationId },
-    },
-  );
-
-  const { loading, error, data } = useQuery(ABOUT_PREFERENCES_QUERY, {
-    variables: { id: applicationId },
-  });
+  const applicationId = useApplicationId();
+  const [submitClientApplication] = useAboutPreferencesSubmit();
+  const { loading, error, data } = useAboutPreferencesQuery();
 
   if (error) pushInitialStepPath();
-  if (loading) return <div>loading...</div>;
+  if (loading) return <React.Fragment />;
 
-  console.log("about preferences data", data, error);
+  console.log("about preferences data", data);
   // Formik
   const initialValues = {
     localityImportance: data.clientApplication.localityImportance || 0,
@@ -68,20 +59,20 @@ function AboutPreferences({ pushNextStepPath, pushInitialStepPath }) {
   };
 
   const handleSubmit = (values) => {
-    values.acceptGuaranteeTerms = values.acceptedGuaranteeTerms === "yes";
-    delete values.acceptedGuaranteeTerms;
-    console.log("values", values);
+    values.acceptedGuaranteeTerms = values.acceptedGuaranteeTerms === "yes";
     submitClientApplication({
       variables: {
         id: applicationId,
         ...values,
       },
+      optimisticResponse: getAboutPreferencesOptimisticResponse(
+        applicationId,
+        values,
+        data.clientApplication.numberOfFreelancers,
+      ),
+      update: () => pushNextStepPath({ state: { applicationId } }),
     });
   };
-
-  console.log("submit response", submitResponse);
-  submitResponse.data && pushNextStepPath({ state: location.state });
-  console.log("initial values", initialValues);
 
   return (
     <Formik

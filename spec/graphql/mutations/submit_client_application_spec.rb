@@ -9,7 +9,7 @@ describe Mutations::SubmitClientApplication do
           id: "#{user.uid}",
           talentQuality: "good",
           localityImportance: 1,
-          acceptGuaranteeTerms: true
+          acceptedGuaranteeTerms: true
         }) {
           clientApplication {
             id
@@ -37,7 +37,7 @@ describe Mutations::SubmitClientApplication do
             id: "#{user.uid}",
             talentQuality: "cheap",
             localityImportance: 1,
-            acceptGuaranteeTerms: true
+            acceptedGuaranteeTerms: true
           }) {
             clientApplication {
               id

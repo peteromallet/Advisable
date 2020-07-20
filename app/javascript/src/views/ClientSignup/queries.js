@@ -211,13 +211,13 @@ export const SUBMIT_CLIENT_APPLICATION = gql`
     $id: ID!
     $talentQuality: String
     $localityImportance: Int
-    $acceptGuaranteeTerms: Boolean
+    $acceptedGuaranteeTerms: Boolean
   ) {
     submitClientApplication(
       input: {
         id: $id
         localityImportance: $localityImportance
-        acceptGuaranteeTerms: $acceptGuaranteeTerms
+        acceptedGuaranteeTerms: $acceptedGuaranteeTerms
         talentQuality: $talentQuality
       }
     ) {
