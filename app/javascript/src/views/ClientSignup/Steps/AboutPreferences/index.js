@@ -12,6 +12,7 @@ import {
   getAboutPreferencesOptimisticResponse,
   useApplicationId,
 } from "../../queries";
+import Loading from "../../../../components/Loading";
 
 const validationSchema = object().shape({
   localityImportance: number(),
@@ -48,7 +49,7 @@ function AboutPreferences({ pushNextStepPath, pushInitialStepPath }) {
   const { loading, error, data } = useAboutPreferencesQuery();
 
   if (error) pushInitialStepPath();
-  if (loading) return <React.Fragment />;
+  if (loading) return <Loading />;
 
   console.log("about preferences data", data);
   // Formik

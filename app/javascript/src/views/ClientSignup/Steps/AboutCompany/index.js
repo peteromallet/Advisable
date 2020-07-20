@@ -11,6 +11,7 @@ import {
 import FormField from "src/components/FormField";
 import { Text, Stack, Autocomplete } from "@advisable/donut";
 import { object, string } from "yup";
+import Loading from "../../../../components/Loading";
 
 const typesOfCompany = [
   { label: "Individual Entrepreneur", value: "Individual Entrepreneur" },
@@ -36,7 +37,7 @@ function AboutCompany({ pushInitialStepPath, pushNextStepPath }) {
   const { loading, error, data } = useAboutCompanyQuery();
 
   if (error) pushInitialStepPath();
-  if (loading) return <div>loading...</div>;
+  if (loading) return <Loading />;
   const { clientApplication, industries } = data;
 
   // Formik
