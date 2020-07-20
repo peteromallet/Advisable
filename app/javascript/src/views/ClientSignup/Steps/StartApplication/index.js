@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { useMutation } from "@apollo/react-hooks";
 import * as Yup from "yup";
 import queryString from "query-string";
-import { START_CLIENT_APPLICATION } from "../../queries";
+import { useStartClientApplication } from "../../queries";
 import { Formik, Form } from "formik";
 import { useLocation, useHistory } from "react-router";
 import SubmitButton from "../../../../components/SubmitButton";
@@ -17,9 +16,7 @@ const validationSchema = Yup.object().shape({
 });
 
 function StartApplication({ pushNextStepPath }) {
-  const [startClientApplication, { error, data }] = useMutation(
-    START_CLIENT_APPLICATION,
-  );
+  const [startClientApplication, { error, data }] = useStartClientApplication();
   const location = useLocation();
   const history = useHistory();
 
