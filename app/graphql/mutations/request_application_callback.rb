@@ -39,7 +39,7 @@ class Mutations::RequestApplicationCallback < Mutations::BaseMutation
 
   def send_slack_message(user, client_call)
     Slack.message(
-      channel: 'general',
+      channel: 'asap_calls',
       text: 'New ASAP call request',
       blocks: [
         {
