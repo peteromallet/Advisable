@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_16_125121) do
+ActiveRecord::Schema.define(version: 2020_07_20_090111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -687,7 +687,6 @@ ActiveRecord::Schema.define(version: 2020_07_16_125121) do
     t.string "fid"
     t.string "sendbird_access_token"
     t.boolean "test_account"
-    t.string "application_status"
     t.integer "budget"
     t.integer "locality_importance"
     t.datetime "accepted_guarantee_terms_at"
@@ -696,6 +695,7 @@ ActiveRecord::Schema.define(version: 2020_07_16_125121) do
     t.string "number_of_freelancers"
     t.datetime "application_accepted_at"
     t.datetime "application_rejected_at"
+    t.datetime "application_reminder_at"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"
