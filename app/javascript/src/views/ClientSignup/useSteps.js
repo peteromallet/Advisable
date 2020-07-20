@@ -6,7 +6,7 @@ function useSteps(steps) {
   const location = useLocation();
 
   // STEPS search methods
-  const currentStepIndex = useCallback(
+  const currentStepIndex = useMemo(
     () =>
       steps.findIndex((step) =>
         matchPath(location.pathname, {
@@ -17,11 +17,11 @@ function useSteps(steps) {
       ),
     [location, steps],
   );
-  const nextStep = useCallback(() => steps[currentStepIndex() + 1], [
+  const nextStep = useCallback(() => steps[currentStepIndex + 1], [
     currentStepIndex,
     steps,
   ]);
-  const prevStep = useCallback(() => steps[currentStepIndex() - 1], [
+  const prevStep = useCallback(() => steps[currentStepIndex - 1], [
     currentStepIndex,
     steps,
   ]);
