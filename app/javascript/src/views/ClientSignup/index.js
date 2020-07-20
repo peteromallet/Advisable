@@ -4,13 +4,19 @@ import useViewer from "../../hooks/useViewer";
 import useSteps from "./useSteps";
 import steps from "./Steps";
 import Testimonials from "./Testimonials";
-import { Box } from "@advisable/donut";
+import { Box, useTheme } from "@advisable/donut";
 import { Step } from "./styles";
 import Progress from "./Progress";
 
 function ClientSignup() {
   const { routes, currentStepIndex } = useSteps(steps);
   const viewer = useViewer();
+  const theme = useTheme();
+
+  React.useLayoutEffect(() => {
+    theme.updateTheme({ background: "white" });
+    return () => theme.updateTheme({ background: "default" });
+  }, []);
 
   if (viewer) return <Redirect to="/" />;
 
