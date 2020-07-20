@@ -16,14 +16,24 @@ class Airtable::ClientCall < Airtable::Base
   sync_column 'Type Of Call', to: :type_of_call
 
   sync_data do |client_call|
-    client_call.cancelled = true if self['Cancelled'].try(:include?, "Yes")
-    client_call.cancelled = false if self['Cancelled'].try(:include?, "No")
+    client_call.cancelled = true if self['Cancelled'].try(:include?, 'Yes')
+    client_call.cancelled = false if self['Cancelled'].try(:include?, 'No')
 
-    user_id = fields["Client Contact"].try(:first)
+    user_id = fields['Client Contact'].try(:first)
+
     if user_id
       user = ::User.find_by_airtable_id(user_id)
       user = Airtable::ClientContact.find(user_id).sync if user.nil?
       client_call.user = user
     end
+  end
+
+  push_data do |client_call|
+    self['Call Time'] = client_call.call_time
+    self['Phone Number'] = client_call.phone_number
+    self['Event Type'] = client_call.event_type
+    self['Type Of Call'] = client_call.type_of_call
+    self['Client Contact'] = [client_call.user.try(:airtable_id)].compact
+    self['ASAP Call Attempt Count'] = client_call.call_attempt_count
   end
 end

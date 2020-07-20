@@ -14,6 +14,8 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
               'Application has already been submitted'
             )
     end
+
+    true
   end
 
   def resolve(**args)
