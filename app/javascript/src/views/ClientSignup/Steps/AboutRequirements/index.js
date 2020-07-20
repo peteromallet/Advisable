@@ -32,12 +32,13 @@ function AboutRequirements({ pushNextStepPath, pushInitialStepPath }) {
 
   if (error) pushInitialStepPath();
   if (loading) return <React.Fragment />;
+  const { clientApplication, skills } = data;
 
   // Formik
   const initialValues = {
-    skills: data.clientApplication.skills.map((skill) => skill.name) || [],
-    numberOfFreelancers: data.clientApplication.numberOfFreelancers || "",
-    budget: data.clientApplication.budget || "",
+    skills: clientApplication.skills.map((skill) => skill.name) || [],
+    numberOfFreelancers: clientApplication.numberOfFreelancers || "",
+    budget: clientApplication.budget || "",
   };
   const handleSubmit = (values) => {
     values.budget = parseInt(values.budget);
@@ -87,7 +88,7 @@ function AboutRequirements({ pushNextStepPath, pushInitialStepPath }) {
                 name="skills"
                 placeholder="Facebook Ads, Content Marketing, etc."
                 label="What skills are you interested in using freelancers for over the next 6 months?*"
-                options={data.skills}
+                options={skills}
                 onChange={(skill) => formik.setFieldValue("skills", skill)}
               />
               <FormField
