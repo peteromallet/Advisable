@@ -91,4 +91,6 @@ class Types::MutationType < GraphQL::Schema::Object
   field :submit_client_application, mutation: Mutations::SubmitClientApplication
   field :request_application_reminder,
         mutation: Mutations::RequestApplicationReminder
+  field :request_application_callback,
+        mutation: Mutations::RequestApplicationCallback
 end
