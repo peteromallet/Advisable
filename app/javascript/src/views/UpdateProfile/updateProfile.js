@@ -6,6 +6,12 @@ export default gql`
       specialist {
         id
         bio
+        city
+        remote
+        country {
+          id
+          name
+        }
         skills {
           name
         }

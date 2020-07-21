@@ -17,8 +17,7 @@ import Loading from "../../../components/Loading";
 import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
 import { useNotifications } from "../../../components/Notifications";
-import GET_DATA from "./getData";
-import UPDATE_PROFILE from "../updateProfile";
+import { GET_DATA, UPDATE_PROFILE } from "./queries";
 
 const numberMask = createNumberMask({
   prefix: "",
