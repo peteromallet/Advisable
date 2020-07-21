@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useClientApplication } from "../../queries";
+import { useClientApplicationQuery } from "../../queries";
 import Loading from "../../../../components/Loading";
 import AcceptedStatus from "./AcceptedStatus";
 import NotHiringStatus from "./NotHiringStatus";
 import CheapStatus from "./CheapStatus";
 
 function SignupStatus({ pushInitialStepPath }) {
-  const { loading, error, data } = useClientApplication();
+  const { loading, error, data } = useClientApplicationQuery();
 
   if (error) pushInitialStepPath();
   if (loading) return <Loading />;

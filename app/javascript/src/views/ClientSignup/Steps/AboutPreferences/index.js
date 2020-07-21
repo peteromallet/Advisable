@@ -12,9 +12,9 @@ import { Text, Stack } from "@advisable/donut";
 // Queries
 import {
   useAboutPreferencesSubmit,
-  useAboutPreferencesQuery,
   getAboutPreferencesOptimisticResponse,
   useApplicationId,
+  useClientApplicationQuery,
 } from "../../queries";
 
 const validationSchema = object().shape({
@@ -49,7 +49,7 @@ const talentQualityOptions = [
 function AboutPreferences({ pushNextStepPath, pushInitialStepPath }) {
   const applicationId = useApplicationId();
   const [submitClientApplication] = useAboutPreferencesSubmit();
-  const { loading, error, data } = useAboutPreferencesQuery();
+  const { loading, error, data } = useClientApplicationQuery();
 
   if (error) pushInitialStepPath();
   if (loading) return <Loading />;
