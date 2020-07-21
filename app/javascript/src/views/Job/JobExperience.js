@@ -14,7 +14,7 @@ export default function JobExperience({ data }) {
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
   const initialValues = {
-    experienceImportance: "",
+    industryExperienceImportance: data.project.industryExperienceImportance,
   };
 
   const handleSubmit = (values, formik) => {
@@ -22,7 +22,9 @@ export default function JobExperience({ data }) {
       variables: {
         input: {
           id,
-          ...values,
+          industryExperienceImportance: Number(
+            values.industryExperienceImportance,
+          ),
         },
       },
     });
@@ -31,7 +33,7 @@ export default function JobExperience({ data }) {
   };
 
   const handleSelection = (formik) => (val) => {
-    formik.setFieldValue("location", val);
+    formik.setFieldValue("industryExperienceImportance", val);
     formik.submitForm();
   };
 
@@ -55,7 +57,7 @@ export default function JobExperience({ data }) {
               {user.companyType.toLowerCase()} before?
             </JobSetupStepHeader>
             <Field
-              name="experienceImportance"
+              name="industryExperienceImportance"
               as={RangeSelection}
               onChange={handleSelection(formik)}
             />

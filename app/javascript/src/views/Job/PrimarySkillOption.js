@@ -26,7 +26,7 @@ const StyledPrimarySkillOption_Selected = css`
   }
 `;
 
-const StyledPrimarySkillOption = styled.button`
+const StyledPrimarySkillOption = styled.div`
   width: 100%;
   border: none;
   display: flex;
@@ -42,6 +42,7 @@ const StyledPrimarySkillOption = styled.button`
   background: #f5f5f8;
   border-radius: 16px;
   align-items: center;
+  position: relative;
   letter-spacing: -0.03rem;
   border: 2px solid transparent;
   font-family: poppins, sans-serif;
@@ -50,16 +51,19 @@ const StyledPrimarySkillOption = styled.button`
   &:hover {
     background: ${darken(0.02, "#f5f5f8")};
   }
+
+  input {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
 `;
 
-export default function PrimraySkillOption({
-  selected,
-  number,
-  children,
-  ...rest
-}) {
+export default function PrimraySkillOption({ number, children, ...rest }) {
   return (
-    <StyledPrimarySkillOption $selected={selected} {...rest}>
+    <StyledPrimarySkillOption $selected={rest.checked}>
+      <input type="radio" {...rest} />
       <StyledPrimarySkillOptionNumber>{number}</StyledPrimarySkillOptionNumber>
       {children}
     </StyledPrimarySkillOption>

@@ -19,11 +19,12 @@ module Admin
     # for more information
 
     def resource_params
-      params.require(:project).permit(*dashboard.permitted_attributes,
+      params.require(:project).permit(
+        *dashboard.permitted_attributes,
         goals: [],
         questions: [],
         required_characteristics: [],
-        optional_characteristics: []
+        characteristics: []
       )
     end
   end

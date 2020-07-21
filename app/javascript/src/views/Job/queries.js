@@ -6,7 +6,11 @@ const projectFields = gql`
     status
     goals
     characteristics
+    requiredCharacteristics
     primarySkill
+    likelyToHire
+    locationImportance
+    industryExperienceImportance
     user {
       id
       companyType

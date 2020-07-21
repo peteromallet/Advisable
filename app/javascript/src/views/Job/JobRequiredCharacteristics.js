@@ -1,25 +1,40 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Card } from "@advisable/donut";
+import { Card, Box } from "@advisable/donut";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { ArrowRight } from "@styled-icons/feather";
 import { useParams, useHistory } from "react-router-dom";
 import SubmitButton from "components/SubmitButton";
 import { UPDATE_PROJECT } from "./queries";
+import RequiredCharacteristic from "./RequiredCharacteristic";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
 export default function JobRequiredCharacteristics({ data }) {
   const { id } = useParams();
   const history = useHistory();
   const [updateProject] = useMutation(UPDATE_PROJECT);
+  const { requiredCharacteristics, characteristics } = data.project;
 
   const initialValues = {
-    requiredCharacteristics: [],
+    requiredCharacteristics: requiredCharacteristics,
   };
 
-  const handleSubmit = (e) => {
-    history.push(`/jobs/${id}/description`);
+  const handleSubmit = async (values) => {
+    const response = await updateProject({
+      variables: {
+        input: {
+          id,
+          ...values,
+        },
+      },
+    });
+
+    if (response.errors) {
+      formik.setStatus("Failed to update characteristics, please try again.");
+    } else {
+      history.push(`/jobs/${id}/description`);
+    }
   };
 
   return (
@@ -36,16 +51,28 @@ export default function JobRequiredCharacteristics({ data }) {
       </JobSetupStepHeader>
       <JobSetupStepSubHeader mb="xl">
         Which of the characteristics that you have added do you think are
-        essnetial for the freelancer to have?
+        essential for the freelancer to have?
       </JobSetupStepSubHeader>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {(formik) => (
-          <Form>
-            <SubmitButton size="l" suffix={<ArrowRight />}>
-              Continue
-            </SubmitButton>
-          </Form>
-        )}
+        <Form>
+          <Box mb="xl">
+            {characteristics.map((characteristic, i) => (
+              <Field
+                key={i}
+                type="checkbox"
+                value={characteristic}
+                as={RequiredCharacteristic}
+                name="requiredCharacteristics"
+              >
+                {characteristic}
+              </Field>
+            ))}
+          </Box>
+
+          <SubmitButton size="l" suffix={<ArrowRight />}>
+            Continue
+          </SubmitButton>
+        </Form>
       </Formik>
     </Card>
   );

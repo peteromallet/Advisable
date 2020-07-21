@@ -14,7 +14,7 @@ export default function JobLocation({ data }) {
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
   const initialValues = {
-    location: "",
+    locationImportance: data.project.locationImportance,
   };
 
   const handleSubmit = (values, formik) => {
@@ -31,7 +31,7 @@ export default function JobLocation({ data }) {
   };
 
   const handleSelection = (formik) => (val) => {
-    formik.setFieldValue("location", val);
+    formik.setFieldValue("locationImportance", val);
     formik.submitForm();
   };
 
@@ -56,7 +56,7 @@ export default function JobLocation({ data }) {
               complete their work remotely?
             </JobSetupStepSubHeader>
             <Field
-              name="location"
+              name="locationImportance"
               as={RangeSelection}
               onChange={handleSelection(formik)}
             />

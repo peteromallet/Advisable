@@ -91,9 +91,9 @@ export default function RangeSelection({ value, onChange, options }) {
 
 RangeSelection.defaultProps = {
   options: [
-    { label: "Not Important", value: 1 },
-    { label: "Not Sure", value: 2 },
-    { label: "Important", value: 3 },
-    { label: "Very Important", value: 4 },
+    { label: "Not Important", value: 0 },
+    { label: "Not Sure", value: 1 },
+    { label: "Important", value: 2 },
+    { label: "Very Important", value: 3 },
   ],
 };

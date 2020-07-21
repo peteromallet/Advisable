@@ -14,8 +14,6 @@ class Types::ProjectType < Types::BaseType
   field :company_description, String, null: true
   field :specialist_description, String, null: true
   field :questions, [String], null: true
-  field :required_characteristics, [String], null: true
-  field :characteristics, [String], null: true
   field :accepted_terms, Boolean, null: false
   field :deposit_owed, Int, null: true
   field :application_count, Int, null: false
@@ -24,6 +22,22 @@ class Types::ProjectType < Types::BaseType
   field :applications_open, Boolean, null: false
   field :industry, String, null: true
   field :company_type, String, null: true
+
+  field :industry_experience_importance, Int, null: true do
+    description <<~HEREDOC
+      How important indusry experience is for this job. Range from 0 - 3.
+    HEREDOC
+  end
+
+  field :location_importance, Int, null: true do
+    description <<~HEREDOC
+      How important freelancer location is for this job. Range from 0 - 3.
+    HEREDOC
+  end
+
+  # How likely the client is to hire a good match. This is defined when they are
+  # first creating the project.
+  field :likely_to_hire, Int, null: true
 
   field :deposit_payment_intent, Types::PaymentIntentType, null: true
 
@@ -34,6 +48,10 @@ class Types::ProjectType < Types::BaseType
   field :application, Types::ApplicationType, null: true do
     argument :id, ID, required: true
   end
+
+  field :characteristics, [String], null: true
+  field :required_characteristics, [String], null: true
+  field :optional_characteristics, [String], null: true
 
   # we are moving the industry data from the project to the client contact
   # record so first check for it there before falling back to the project.
@@ -94,14 +112,6 @@ class Types::ProjectType < Types::BaseType
 
   def goals
     object.goals || []
-  end
-
-  def required_characteristics
-    object.required_characteristics || []
-  end
-
-  def characteristics
-    object.optional_characteristics || []
   end
 
   def questions

@@ -8,9 +8,18 @@ class Mutations::UpdateProject < Mutations::BaseMutation
   argument :company_description, String, required: false
   argument :specialist_description, String, required: false
   argument :questions, [String], required: false
+  # Set the characteristics for the project.
   argument :characteristics, [String], required: false
+  # Set the list of required characteristics for the project.
   argument :required_characteristics, [String], required: false
   argument :accepted_terms, Boolean, required: false
+  # Set how important industry experience is for the project. This was
+  # introduced after the industry_experience_required and company_type_required
+  # columns. These have been deprecated in favour of this column.
+  argument :industry_experience_importance, Int, required: false
+  # Sets how important location is for the project
+  argument :location_importance, Int, required: false
+  argument :likely_to_hire, Int, required: false
 
   field :project, Types::ProjectType, null: true
   field :errors, [Types::Error], null: true
@@ -18,9 +27,6 @@ class Mutations::UpdateProject < Mutations::BaseMutation
   def resolve(**args)
     project = Project.find_by_uid_or_airtable_id!(args[:id])
     project.assign_attributes(assign_attributes(args))
-    if args[:characteristics].present?
-      project.optional_characteristics = args[:characteristics]
-    end
     update_skills(project, args)
     project.save
 
@@ -38,8 +44,12 @@ class Mutations::UpdateProject < Mutations::BaseMutation
       :company_description,
       :specialist_description,
       :questions,
+      :characteristics,
       :required_characteristics,
-      :accepted_terms
+      :accepted_terms,
+      :likely_to_hire,
+      :location_importance,
+      :industry_experience_importance
     )
   end
 

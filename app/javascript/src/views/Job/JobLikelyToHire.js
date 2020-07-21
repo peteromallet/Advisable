@@ -14,7 +14,7 @@ export default function JobLikelyToHire({ data }) {
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
   const initialValues = {
-    likelyToHire: "",
+    likelyToHire: data.project.likelyToHire,
   };
 
   const handleSubmit = (values, formik) => {
@@ -27,7 +27,7 @@ export default function JobLikelyToHire({ data }) {
       },
     });
 
-    history.push(`/jobs/${id}/characteristics`);
+    history.push(`/jobs/${id}/specialists`);
   };
 
   const handleSelection = (formik) => (val) => {

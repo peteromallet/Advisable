@@ -69,6 +69,12 @@ const steps = [
     path: "/jobs/:id/likely_to_hire",
     component: JobLikelyToHire,
   },
+  {
+    path: "/jobs/:id/specialists",
+    component: function Specialist() {
+      return <>specialists</>;
+    },
+  },
 ];
 
 export default function JobSetup({ data }) {

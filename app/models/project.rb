@@ -11,6 +11,15 @@ class Project < ApplicationRecord
   validates :service_type,
             inclusion: { in: %w[Assisted Self-Service Consultation] },
             allow_nil: true
+
+  validates :industry_experience_importance,
+            inclusion: { in: [0, 1, 2, 3] }, allow_nil: true
+
+  validates :location_importance,
+            inclusion: { in: [0, 1, 2, 3] }, allow_nil: true
+
+  validates :likely_to_hire, inclusion: { in: [0, 1, 2, 3] }, allow_nil: true
+
   belongs_to :user, required: false
   validates :name, presence: true
 
@@ -40,21 +49,36 @@ class Project < ApplicationRecord
   def deposit_owed
     [deposit - deposit_paid, 0].max
   end
-  
+
+  def characteristics
+    self[:characteristics] || []
+  end
+
+  def required_characteristics
+    self[:required_characteristics] || []
+  end
+
+  def optional_characteristics
+    characteristics - required_characteristics
+  end
+
   # Returns an array of applications that are in the 'hiring pipeline' stages.
   # This includes any candidates that are not in a pre invite stage or working
   # stage as well as the top 3 candidates in the applied stage.
   def candidates
     base = applications.not_hidden
-    
+
     applied = base.top_three_applied
-    beyond_applied = base.where(status: [
-      "Application Accepted",
-      "Application Rejected",
-      "Interview Scheduled",
-      "Interview Completed",
-      "Proposed",
-    ])
+    beyond_applied =
+      base.where(
+        status: [
+          'Application Accepted',
+          'Application Rejected',
+          'Interview Scheduled',
+          'Interview Completed',
+          'Proposed'
+        ]
+      )
 
     (applied + beyond_applied).uniq
   end

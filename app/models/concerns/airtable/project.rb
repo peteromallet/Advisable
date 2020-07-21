@@ -116,7 +116,7 @@ class Airtable::Project < Airtable::Base
       self['Required Characteristics'] =
         project.required_characteristics.to_json
     end
-    if project.saved_change_to_optional_characteristics?
+    if project.saved_change_to_characteristics?
       self['Optional Characteristics'] =
         project.optional_characteristics.to_json
     end
@@ -160,11 +160,9 @@ class Airtable::Project < Airtable::Base
         JSON.parse(fields['Required Characteristics'])
     end
     if fields['Optional Characteristics']
-      project.optional_characteristics =
-        JSON.parse(fields['Optional Characteristics'])
+      project.characteristics = JSON.parse(fields['Optional Characteristics'])
     end
   rescue JSON::ParserError
-
   end
 
   def sync_questions(project)
