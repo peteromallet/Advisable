@@ -8,8 +8,7 @@ import {
   mockData,
 } from "test-utils";
 import GET_PROFILE from "./fetchProfile.graphql";
-import GET_PROFILE_DATA from "./Profile/getData";
-import UPDATE_PROFILE from "./updateProfile";
+import { GET_DATA, UPDATE_PROFILE } from "./Profile/queries";
 
 test("User can update their profile", async () => {
   const design = mockData.skill({ name: "Design" });
@@ -30,7 +29,7 @@ test("User can update their profile", async () => {
     graphQLMocks: [
       mockViewer(specialist),
       mockQuery(
-        GET_PROFILE_DATA,
+        GET_DATA,
         {},
         {
           skills: [
