@@ -43,6 +43,11 @@ export const GET_CLIENT_APPLICATION = gql`
   }
 `;
 
+export const useClientApplicationQuery = () => {
+  const id = useApplicationId();
+  return useQuery(GET_CLIENT_APPLICATION, { variables: { id } });
+};
+
 /* 0 Step. Start Client Application */
 
 export const START_CLIENT_APPLICATION = gql`
@@ -233,11 +238,6 @@ export const SUBMIT_CLIENT_APPLICATION = gql`
   }
 `;
 
-export const useAboutPreferencesQuery = () => {
-  const id = useApplicationId();
-  return useQuery(GET_CLIENT_APPLICATION, { variables: { id } });
-};
-
 export const useAboutPreferencesSubmit = () =>
   useMutation(SUBMIT_CLIENT_APPLICATION);
 
@@ -276,8 +276,3 @@ export const getAboutPreferencesOptimisticResponse = (
 };
 
 /* Step 5. Application Status page */
-
-export const useClientApplication = () => {
-  const id = useApplicationId();
-  return useQuery(GET_CLIENT_APPLICATION, { variables: { id } });
-};
