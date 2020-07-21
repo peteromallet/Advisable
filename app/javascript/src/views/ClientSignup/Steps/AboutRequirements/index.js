@@ -5,6 +5,7 @@ import { Text, Stack, Autocomplete } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "../../../../components/SubmitButton";
 import Loading from "../../../../components/Loading";
+import Select from "../../../../components/Select";
 import {
   useAboutRequirementsQuery,
   useAboutRequirementsUpdate,
@@ -12,13 +13,6 @@ import {
   useApplicationId,
 } from "../../queries";
 import { string, array, object } from "yup";
-
-const numberOfFreelancersOptions = [
-  { label: "0", value: "0" },
-  { label: "1-3", value: "1-3" },
-  { label: "4-10", value: "4-10" },
-  { label: "10+", value: "10+" },
-];
 
 const validationSchema = object().shape({
   skills: array().min(1).of(string().required()).required(),
@@ -38,7 +32,7 @@ function AboutRequirements({ pushNextStepPath, pushInitialStepPath }) {
   // Formik
   const initialValues = {
     skills: clientApplication.skills.map((skill) => skill.name) || [],
-    numberOfFreelancers: clientApplication.numberOfFreelancers || "",
+    numberOfFreelancers: clientApplication.numberOfFreelancers || "1-3",
     budget: clientApplication.budget || "",
   };
   const handleSubmit = (values) => {
@@ -92,15 +86,12 @@ function AboutRequirements({ pushNextStepPath, pushInitialStepPath }) {
                 options={skills}
                 onChange={(skill) => formik.setFieldValue("skills", skill)}
               />
-              <FormField
-                as={Autocomplete}
+              <Select
                 name="numberOfFreelancers"
-                placeholder="1-3"
                 label="How many freelancers do you plan on hiring over the next 6 months?*"
-                options={numberOfFreelancersOptions}
-                onChange={(number) =>
-                  formik.setFieldValue("numberOfFreelancers", number)
-                }
+                options={["0", "1-3", "4-10", "10+"]}
+                value={formik.values.numberOfFreelancers}
+                onChange={formik.handleChange}
               />
               <FormField
                 name="budget"
