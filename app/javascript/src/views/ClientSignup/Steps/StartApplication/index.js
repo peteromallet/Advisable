@@ -24,7 +24,7 @@ function StartApplication({ pushNextStepPath }) {
   // Check query params
   useEffect(() => {
     const queryStringParams =
-      location.search && queryString.parse(location.search);
+      location.search && queryString.parse(location.search, { decode: true });
     console.log("query string", queryStringParams);
     queryStringParams &&
       validationSchema
