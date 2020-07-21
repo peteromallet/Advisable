@@ -33,7 +33,11 @@ export default function JobSkills({ data }) {
     if (response.errors) {
       formik.setStatus("Failed to save skills, please try again.");
     } else {
-      history.push(`/jobs/${id}/primary_skill`);
+      if (values.skills.length > 1) {
+        history.push(`/jobs/${id}/primary_skill`);
+      } else {
+        history.push(`/jobs/${id}/experience`);
+      }
     }
   };
 

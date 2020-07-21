@@ -3,6 +3,11 @@ import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
 import { theme } from "@advisable/donut";
 
+export const StyledNavigationProgress = styled.path`
+  opacity: 0;
+  stroke: ${theme.colors.cyan600};
+`;
+
 export const StyledNavigationMenuItemNumber = styled.div`
   width: 24px;
   height: 24px;
@@ -59,8 +64,12 @@ const StyledNavigationMenuItem_Enabled = css`
       color: #1e234e;
       background: #f5f5f8;
 
+      ${StyledNavigationProgress} {
+        opacity: 1;
+      }
+
       ${StyledNavigationMenuItemNumber} {
-        color: #2ebcc0;
+        color: #c6c6d0;
         background: white;
       }
     }
