@@ -48,7 +48,7 @@ export const ABOUT_COMPANY_QUERY = gql`
 `;
 
 export const useAboutCompanyQuery = () => {
-  const id = useApplicationId();
+  const { applicationId: id } = useLocationState();
   return useQuery(ABOUT_COMPANY_QUERY, { variables: { id } });
 };
 
@@ -118,7 +118,7 @@ export const ABOUT_REQUIREMENTS_QUERY = gql`
 `;
 
 export const useAboutRequirementsQuery = () => {
-  const id = useApplicationId();
+  const { applicationId: id } = useLocationState();
   return useQuery(ABOUT_REQUIREMENTS_QUERY, { variables: { id } });
 };
 
