@@ -276,3 +276,44 @@ export const getAboutPreferencesOptimisticResponse = (
 };
 
 /* Step 5. Application Status page */
+
+export const REQUEST_APPLICATION_REMINDER = gql`
+  mutation RequestApplicationReminder($id: ID!) {
+    requestApplicationReminder(input: { id: $id }) {
+      clientApplication {
+        id
+        status
+      }
+    }
+  }
+`;
+
+export const useRequestApplicationReminder = () =>
+  useMutation(REQUEST_APPLICATION_REMINDER);
+
+export const getRequestApplicationReminderOptimisticResponse = (id) => {
+  return {
+    __typename: "Mutation",
+    requestApplicationReminder: {
+      __typename: "RequestApplicationReminderPayload",
+      clientApplication: {
+        __typename: "ClientApplication",
+        id,
+        status: "REMIND",
+      },
+    },
+  };
+};
+
+export const REQUEST_APPLICATION_CALLBACK = gql`
+  mutation RequestApplicationCallback($id: ID!, $phoneNumber: String!) {
+    requestApplicationCallback(input: { id: $id, phoneNumber: $phoneNumber }) {
+      clientApplication {
+        id
+      }
+    }
+  }
+`;
+
+export const useRequestApplicationCallback = () =>
+  useMutation(REQUEST_APPLICATION_CALLBACK);
