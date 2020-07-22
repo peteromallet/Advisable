@@ -1,7 +1,14 @@
 import React from "react";
-import { Text, Button } from "@advisable/donut";
+import PropTypes from "prop-types";
+import { Text } from "@advisable/donut";
+import RequestCallButton from "./RequestCallButton";
+import { useLocationState } from "../../queries";
 
-function AcceptedStatus() {
+function AcceptedStatus({ firstName, lastName }) {
+  const fullName = `${firstName} ${lastName}`;
+  const { email, applicationId } = useLocationState();
+  console.log("full name", fullName, email);
+
   return (
     <>
       <Text
@@ -23,7 +30,9 @@ function AcceptedStatus() {
         aware of the expectations for you as a client when dealing with our
         freelancers.
       </Text>
-      <Button>Schedule A Call</Button>
+      <RequestCallButton fullName={fullName} email={email} id={applicationId}>
+        Schedule A Call
+      </RequestCallButton>
       <Text as="h4">Why do we need to have a call?</Text>
       <Text>
         Advisable offers a money-back guarantee on any freelancer we recommend
@@ -33,5 +42,11 @@ function AcceptedStatus() {
     </>
   );
 }
+
+AcceptedStatus.propTypes = {
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  email: PropTypes.string,
+};
 
 export default AcceptedStatus;
