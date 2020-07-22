@@ -19,16 +19,22 @@ function SignupStatus({ RedirectToInitialStep, RedirectToNextStep }) {
   } = data.clientApplication;
 
   if (status === "ACCEPTED") {
-    return <AcceptedStatus />;
+    return <AcceptedStatus firstName={firstName} lastName={lastName} />;
   } else if (rejectionReason === "NOT_HIRING") {
-    return <NotHiringStatus />;
+    return (
+      <NotHiringStatus
+        RedirectToInitialStep={RedirectToInitialStep}
+        RedirectToNextStep={RedirectToNextStep}
+      />
+    );
   } else {
     return <CheapStatus />;
   }
 }
 
 SignupStatus.propTypes = {
-  pushInitialStepPath: PropTypes.func,
+  RedirectToInitialStep: PropTypes.elementType,
+  RedirectToNextStep: PropTypes.elementType,
 };
 
 export default SignupStatus;

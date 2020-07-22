@@ -1,7 +1,28 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Text, Button } from "@advisable/donut";
+import {
+  useRequestApplicationReminder,
+  useLocationState,
+  getRequestApplicationReminderOptimisticResponse,
+} from "../../queries";
 
-function NotHiringStatus() {
+function NotHiringStatus({ RedirectToNextStep, RedirectToInitialStep }) {
+  const locationState = useLocationState();
+  const [mutation, { error, called }] = useRequestApplicationReminder();
+
+  if (error) return <RedirectToInitialStep />;
+  if (called) return <RedirectToNextStep state={{ ...locationState }} />;
+
+  const requestApplicationReminder = () => {
+    mutation({
+      variables: { id: locationState.applicationId },
+      optimisticResponse: getRequestApplicationReminderOptimisticResponse(
+        locationState.applicationId,
+      ),
+    });
+  };
+
   return (
     <>
       <Text
@@ -20,9 +41,14 @@ function NotHiringStatus() {
         next while. However, we&apos;ll be happy to send you a reminder in six
         months if you click the button below.
       </Text>
-      <Button>Remind Me</Button>
+      <Button onClick={requestApplicationReminder}>Remind Me</Button>
     </>
   );
 }
+
+NotHiringStatus.propTypes = {
+  RedirectToInitialStep: PropTypes.elementType,
+  RedirectToNextStep: PropTypes.elementType,
+};
 
 export default NotHiringStatus;
