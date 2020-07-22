@@ -2,9 +2,9 @@ import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { useLocation } from "react-router";
 
-export const useApplicationId = () => {
+export const useLocationState = () => {
   const location = useLocation();
-  return location.state.applicationId;
+  return location.state;
 };
 
 const clientApplicationFragment = gql`
@@ -44,7 +44,7 @@ export const GET_CLIENT_APPLICATION = gql`
 `;
 
 export const useClientApplicationQuery = () => {
-  const id = useApplicationId();
+  const { applicationId: id } = useLocationState();
   return useQuery(GET_CLIENT_APPLICATION, { variables: { id } });
 };
 
@@ -90,7 +90,7 @@ export const ABOUT_COMPANY_QUERY = gql`
 `;
 
 export const useAboutCompanyQuery = () => {
-  const id = useApplicationId();
+  const { applicationId: id } = useLocationState();
   return useQuery(ABOUT_COMPANY_QUERY, { variables: { id } });
 };
 
@@ -156,7 +156,7 @@ export const ABOUT_REQUIREMENTS_QUERY = gql`
 `;
 
 export const useAboutRequirementsQuery = () => {
-  const id = useApplicationId();
+  const { applicationId: id } = useLocationState();
   return useQuery(ABOUT_REQUIREMENTS_QUERY, { variables: { id } });
 };
 

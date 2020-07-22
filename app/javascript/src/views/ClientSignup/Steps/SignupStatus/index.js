@@ -6,12 +6,17 @@ import AcceptedStatus from "./AcceptedStatus";
 import NotHiringStatus from "./NotHiringStatus";
 import CheapStatus from "./CheapStatus";
 
-function SignupStatus({ pushInitialStepPath }) {
+function SignupStatus({ RedirectToInitialStep, RedirectToNextStep }) {
   const { loading, error, data } = useClientApplicationQuery();
 
-  if (error) pushInitialStepPath();
   if (loading) return <Loading />;
-  const { status, rejectionReason } = data.clientApplication;
+  if (error) return <RedirectToInitialStep />;
+  const {
+    status,
+    rejectionReason,
+    firstName,
+    lastName,
+  } = data.clientApplication;
 
   if (status === "ACCEPTED") {
     return <AcceptedStatus />;

@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import * as Yup from "yup";
 import queryString from "query-string";
 import { useStartClientApplication } from "../../queries";
 import { Formik, Form } from "formik";
-import { useLocation, useHistory } from "react-router";
+import { useLocation, useHistory, Redirect } from "react-router";
 import SubmitButton from "../../../../components/SubmitButton";
 import FormField from "src/components/FormField";
 import { Text, Input, Stack } from "@advisable/donut";
@@ -16,22 +16,23 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email().required("Provide your email, please."),
 });
 
-function StartApplication({ pushNextStepPath }) {
+function StartApplication({ RedirectToNextStep }) {
   const [startClientApplication, { error, data }] = useStartClientApplication();
   const location = useLocation();
   const history = useHistory();
+  const [email, setEmail] = useState();
 
   // Check query params
   useEffect(() => {
     const queryStringParams =
       location.search && queryString.parse(location.search, { decode: true });
-    console.log("query string", queryStringParams);
     queryStringParams &&
       validationSchema
         .validate(queryStringParams)
         .then(() => {
           // Valid query params. Start client application
           startClientApplication({ variables: { ...queryStringParams } });
+          setEmail(queryStringParams.email);
         })
         .catch((err) => {
           // Not valid query string params. Clear them
@@ -40,19 +41,15 @@ function StartApplication({ pushNextStepPath }) {
         });
   }, [history, location.pathname, location.search, startClientApplication]);
 
-  // Handle mutation errors
-  useEffect(() => {
-    error && history.push("/login");
-  }, [error, history]);
-
-  // Handle mutation data
-  useEffect(() => {
-    const applicationId = data?.startClientApplication.clientApplication.id;
-    console.log("application id", applicationId);
-    applicationId && pushNextStepPath({ state: { applicationId } });
-  }, [data, pushNextStepPath]);
-
+  // Loading while handling query string
   if (location.search) return <Loading />;
+  // Handle mutation errors
+  if (error) return <Redirect to="/login" />;
+  // Handle mutation data on response
+  if (data) {
+    const applicationId = data.startClientApplication.clientApplication.id;
+    return <RedirectToNextStep state={{ applicationId, email }} />;
+  }
 
   // Formik
   const initialValues = {
@@ -60,8 +57,10 @@ function StartApplication({ pushNextStepPath }) {
     lastName: "",
     email: "",
   };
-  const handleSubmit = (values) =>
+  const handleSubmit = (values) => {
     startClientApplication({ variables: { ...values } });
+    setEmail(values.email);
+  };
 
   return (
     <Formik
@@ -112,7 +111,7 @@ function StartApplication({ pushNextStepPath }) {
 }
 
 StartApplication.propTypes = {
-  pushNextStepPath: PropTypes.func,
+  RedirectToNextStep: PropTypes.elementType,
 };
 
 export default StartApplication;
