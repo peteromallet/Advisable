@@ -6,7 +6,7 @@ import {
   useAboutCompanyQuery,
   useAboutCompanyUpdate,
   getAboutCompanyOptimisticReponse,
-  useApplicationId,
+  useLocationState,
 } from "../../queries";
 import FormField from "src/components/FormField";
 import { Text, Stack, Autocomplete } from "@advisable/donut";
@@ -31,13 +31,14 @@ const validationSchema = object().shape({
   companyType: string().required("This filed is required"),
 });
 
-function AboutCompany({ pushInitialStepPath, pushNextStepPath }) {
-  const applicationId = useApplicationId();
-  const [updateClientApplication] = useAboutCompanyUpdate();
+function AboutCompany({ RedirectToInitialStep, RedirectToNextStep }) {
+  const locationState = useLocationState();
+  const [updateClientApplication, { called }] = useAboutCompanyUpdate();
   const { loading, error, data } = useAboutCompanyQuery();
 
-  if (error) pushInitialStepPath();
   if (loading) return <Loading />;
+  if (error) return <RedirectToInitialStep />;
+  if (called) return <RedirectToNextStep state={{ ...locationState }} />;
   const { clientApplication, industries } = data;
 
   // Formik
@@ -49,14 +50,13 @@ function AboutCompany({ pushInitialStepPath, pushNextStepPath }) {
   const handleSubmit = (values) => {
     updateClientApplication({
       variables: {
-        id: applicationId,
+        id: locationState.applicationId,
         ...values,
       },
       optimisticResponse: getAboutCompanyOptimisticReponse(
-        applicationId,
+        locationState.applicationId,
         values,
       ),
-      update: () => pushNextStepPath({ state: { applicationId } }),
     });
   };
 
@@ -120,8 +120,8 @@ function AboutCompany({ pushInitialStepPath, pushNextStepPath }) {
 }
 
 AboutCompany.propTypes = {
-  pushNextStepPath: PropTypes.func,
-  pushInitialStepPath: PropTypes.func,
+  RedirectToInitialStep: PropTypes.elementType,
+  RedirectToNextStep: PropTypes.elementType,
 };
 
 export default AboutCompany;

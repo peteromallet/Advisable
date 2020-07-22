@@ -13,7 +13,7 @@ import { Text, Stack } from "@advisable/donut";
 import {
   useAboutPreferencesSubmit,
   getAboutPreferencesOptimisticResponse,
-  useApplicationId,
+  useLocationState,
   useClientApplicationQuery,
 } from "../../queries";
 
@@ -46,20 +46,20 @@ const talentQualityOptions = [
   },
 ];
 
-function AboutPreferences({ pushNextStepPath, pushInitialStepPath }) {
-  const applicationId = useApplicationId();
-  const [submitClientApplication] = useAboutPreferencesSubmit();
+function AboutPreferences({ RedirectToInitialStep, RedirectToNextStep }) {
+  const locationState = useLocationState();
+  const [submitClientApplication, { called }] = useAboutPreferencesSubmit();
   const { loading, error, data } = useClientApplicationQuery();
 
-  if (error) pushInitialStepPath();
   if (loading) return <Loading />;
+  if (error) return <RedirectToInitialStep />;
+  if (called) return <RedirectToNextStep state={{ ...locationState }} />;
   const {
     localityImportance,
     talentQuality,
     numberOfFreelancers,
   } = data.clientApplication;
 
-  console.log("about preferences data", data);
   // Formik
   const initialValues = {
     localityImportance: localityImportance || 0,
@@ -71,15 +71,14 @@ function AboutPreferences({ pushNextStepPath, pushInitialStepPath }) {
     values.acceptedGuaranteeTerms = values.acceptedGuaranteeTerms === "yes";
     submitClientApplication({
       variables: {
-        id: applicationId,
+        id: locationState.applicationId,
         ...values,
       },
       optimisticResponse: getAboutPreferencesOptimisticResponse(
-        applicationId,
+        locationState.applicationId,
         values,
         numberOfFreelancers,
       ),
-      update: () => pushNextStepPath({ state: { applicationId } }),
     });
   };
 
@@ -150,8 +149,8 @@ function AboutPreferences({ pushNextStepPath, pushInitialStepPath }) {
 }
 
 AboutPreferences.propTypes = {
-  pushNextStepPath: PropTypes.func,
-  pushInitialStepPath: PropTypes.func,
+  RedirectToInitialStep: PropTypes.elementType,
+  RedirectToNextStep: PropTypes.elementType,
 };
 
 export default AboutPreferences;
