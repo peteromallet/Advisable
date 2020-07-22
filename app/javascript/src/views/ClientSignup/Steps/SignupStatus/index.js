@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useClientApplicationQuery } from "../../queries";
 import Loading from "../../../../components/Loading";
-import AcceptedStatus from "./AcceptedStatus";
+import AcceptedStatus from "./AcceptedStatus/index";
 import NotHiringStatus from "./NotHiringStatus";
 import CheapStatus from "./CheapStatus";
 
