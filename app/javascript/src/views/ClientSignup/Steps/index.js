@@ -13,11 +13,6 @@ export const STEPS = [
     path: "/clients/signup",
     exact: true,
   },
-  // {
-  //   title: "Continue Your Application",
-  //   component: ContinueApplication,
-  //   path: "/clients/signup/continue_your_application",
-  // },
   {
     title: "About Your Company",
     component: AboutCompany,
