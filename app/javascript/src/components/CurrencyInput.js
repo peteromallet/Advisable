@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from "@advisable/donut";
 
-const NUMBER_REGEX = /^\d+$/;
+const NUMBER_REGEX = /^[0-9]+$/;
 function CurrencyInput(props) {
   const handleChange = (e) => {
     const value = e.target.value;
