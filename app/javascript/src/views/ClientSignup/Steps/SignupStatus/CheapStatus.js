@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Button } from "@advisable/donut";
+import { Text, Button, Link } from "@advisable/donut";
 
 function CheapStatus() {
   return (
@@ -19,7 +19,9 @@ function CheapStatus() {
         Advisable isn&apos;t suitable for companies like you. For people like
         you, we recommend Upwork.com
       </Text>
-      <Button>Go To Upwork</Button>
+      <Link.External href="https://www.upwork.com/">
+        <Button>Go To Upwork</Button>
+      </Link.External>
     </>
   );
 }
