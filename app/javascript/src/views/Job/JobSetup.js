@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import MultistepMenu from "../../components/MultistepMenu";
 import JobSkills from "./JobSkills";
+import PublishJob from "./PublishJob";
 import JobLocation from "./JobLocation";
 import JobDescription from "./JobDescription";
 import JobExperience from "./JobExperience";
@@ -86,11 +87,19 @@ const steps = [
       return <>specialists</>;
     },
   },
+  {
+    path: "/jobs/:id/publish",
+    component: PublishJob,
+  },
 ];
 
 export default function JobSetup({ data }) {
   const { id } = useParams();
   const location = useLocation();
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const filteredSteps = steps.filter((step) => {
     if (step.disabled === undefined) return true;
@@ -104,6 +113,7 @@ export default function JobSetup({ data }) {
     location: project.locationImportance !== null,
     characteristics: project.requiredCharacteristics.length > 0,
     description: project.goals.length > 0,
+    specialists: project.likelyToHire !== null,
   };
 
   return (
@@ -156,19 +166,20 @@ export default function JobSetup({ data }) {
             </MultistepMenu.Item>
             <MultistepMenu.Item
               isDisabled={!completeSteps.description}
+              isComplete={completeSteps.specialists}
               to={`/jobs/${id}/specialists`}
               steps={["/jobs/:id/likely_to_hire", "/jobs/:id/specialists"]}
             >
               Specialists
             </MultistepMenu.Item>
-            <MultistepMenu.Item isDisabled to={`/jobs/${id}/publish`}>
+            <MultistepMenu.Item to={`/jobs/${id}/publish`}>
               Publish
             </MultistepMenu.Item>
           </MultistepMenu>
         </Sidebar>
       </SidebarContainer>
       <Box
-        mt="64px"
+        my="64px"
         mx="auto"
         width="100%"
         maxWidth="680px"

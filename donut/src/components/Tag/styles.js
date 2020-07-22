@@ -5,8 +5,8 @@ import styled from "styled-components";
 const color = variant({
   variants: {
     neutral: {
-      color: theme.colors.neutral700,
-      background: theme.colors.blue100,
+      color: theme.colors.blue900,
+      background: "#EFF0F3",
     },
     dark: {
       color: theme.colors.white[9],
@@ -18,9 +18,17 @@ const color = variant({
 const size = variant({
   prop: "size",
   variants: {
-    m: {
+    s: {
       fontSize: 13,
       padding: "6px 12px",
+      letterSpacing: "-0.01rem",
+      borderRadius: 8,
+    },
+    m: {
+      fontSize: 14,
+      padding: "9px 16px",
+      letterSpacing: "-0.02rem",
+      borderRadius: 12,
     },
   },
 });
@@ -31,7 +39,6 @@ export const StyledTag = styled.div`
   ${size};
 
   font-weight: 500;
-  border-radius: 20px;
   display: inline-flex;
 `;
 

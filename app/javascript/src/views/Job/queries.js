@@ -63,3 +63,15 @@ export const UPDATE_PROJECT = gql`
     }
   }
 `;
+
+export const PUBLISH_PROJECT = gql`
+  ${projectFields}
+
+  mutation publishProject($input: PublishProjectInput!) {
+    publishProject(input: $input) {
+      project {
+        ...ProjectFields
+      }
+    }
+  }
+`;

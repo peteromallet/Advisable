@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Card } from "@advisable/donut";
 import { useParams, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import RangeSelection from "components/RangeSelection";
@@ -11,6 +12,7 @@ import { JobSetupStepHeader } from "./styles";
 export default function JobExperience({ data }) {
   const { id } = useParams();
   const history = useHistory();
+  const { t } = useTranslation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
   const initialValues = {
@@ -38,6 +40,8 @@ export default function JobExperience({ data }) {
   };
 
   const { user } = data.project;
+  const industry = user.industry.name;
+  const companyType = user.companyType;
 
   return (
     <Card
@@ -52,9 +56,7 @@ export default function JobExperience({ data }) {
         {(formik) => (
           <Form>
             <JobSetupStepHeader mb="xl">
-              How important is it that they have worked with a{" "}
-              {user.industry?.name?.toLowerCase()}{" "}
-              {user.companyType.toLowerCase()} before?
+              {t("jobSetup.experience.title", { industry, companyType })}
             </JobSetupStepHeader>
             <Field
               name="industryExperienceImportance"

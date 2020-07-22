@@ -131,5 +131,22 @@
       "clientDescription": "Your freelancer is working up to a maximum monthly limit of hours. You are charged 50% of these hours up front, then retrospectively for each timesheet your freelancer submits within this limit.",
       "proposalDescription": "I want to propose a maximum monthly budget and work flexibly within that hourly limit."
     }
+  },
+  "industryExperienceImportance": {
+    "0": "{{primarySkill, capitalize}} specialist",
+    "1": "$t(industryExperienceImportance.0)",
+    "2": "$t(industryExperienceImportance.0) with experience working with {{industry, lowercase}} $t(companyTypes.{{companyType}}_plural)",
+    "3": "$t(industryExperienceImportance.2)"
+  },
+  "locationImportance": {
+    "0": "Location it not important for this job.",
+    "1": "Location might not be important for this job.",
+    "2": "Location is important for this job.",
+    "3": "Location is very important for this job."
+  },
+  "jobSetup": {
+    "experience": {
+      "title": "How important is it that they have worked with {{industry, lowercase}} $t(companyTypes.{{companyType}}_plural) before?"
+    }
   }
 }

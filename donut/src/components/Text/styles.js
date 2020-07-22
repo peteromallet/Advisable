@@ -1,11 +1,16 @@
 import styled from "styled-components";
-import { space, color, typography } from "styled-system";
+import { space, color, typography, system } from "styled-system";
 import theme from "../../theme";
 
+const textTransform = system({
+  textTransform: true,
+});
+
 export const Text = styled.div`
-  ${space}
-  ${color}
-  ${typography}
+  ${space};
+  ${color};
+  ${typography};
+  ${textTransform};
 
   .linkified {
     color: ${theme.colors.blue700};

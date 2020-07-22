@@ -27,7 +27,7 @@ export default function JobLikelyToHire({ data }) {
       },
     });
 
-    history.push(`/jobs/${id}/specialists`);
+    history.push(`/jobs/${id}/publish`);
   };
 
   const handleSelection = (formik) => (val) => {
@@ -55,6 +55,12 @@ export default function JobLikelyToHire({ data }) {
               name="likelyToHire"
               as={RangeSelection}
               onChange={handleSelection(formik)}
+              options={[
+                { label: "Not Likely", value: 0 },
+                { label: "Maybe", value: 1 },
+                { label: "Likely", value: 2 },
+                { label: "Very Likely", value: 3 },
+              ]}
             />
           </Form>
         )}
