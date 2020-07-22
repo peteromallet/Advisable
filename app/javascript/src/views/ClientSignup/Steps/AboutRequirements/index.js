@@ -35,10 +35,10 @@ function AboutRequirements({ RedirectToInitialStep, RedirectToNextStep }) {
   const initialValues = {
     skills: clientApplication.skills.map((skill) => skill.name) || [],
     numberOfFreelancers: clientApplication.numberOfFreelancers || "1-3",
-    budget: clientApplication.budget || "",
+    budget: clientApplication.budget / 100 || "",
   };
   const handleSubmit = (values) => {
-    values.budget = parseInt(values.budget);
+    values.budget = Number(values.budget) * 100;
     updateClientApplication({
       variables: {
         id: locationState.applicationId,
