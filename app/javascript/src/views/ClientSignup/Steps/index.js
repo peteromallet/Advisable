@@ -1,10 +1,12 @@
 import { matchPath } from "react-router-dom";
-import ContinueApplication from "./ContinueApplication";
 import AboutCompany from "./AboutCompany";
 import AboutRequirements from "./AboutRequirements";
 import AboutPreferences from "./AboutPreferences";
 import SignupStatus from "./SignupStatus";
 import StartApplication from "./StartApplication";
+import ThankYouReminderSet from "./ThankYou/ReminderSet";
+import ThankYouCallBooked from "./ThankYou/CallBooked";
+import ThankYouCallShortly from "./ThankYou/CallShortly";
 
 export const STEPS = [
   {
@@ -32,6 +34,25 @@ export const STEPS = [
     title: "Sign-up Status",
     component: SignupStatus,
     path: "/clients/signup/status",
+  },
+  // Passive steps. Ignored by steps indicator
+  {
+    title: "Reminder Set",
+    component: ThankYouReminderSet,
+    path: "/clients/signup/thank-you-reminder-set",
+    passive: true,
+  },
+  {
+    title: "Your call is booked",
+    component: ThankYouCallBooked,
+    path: "/clients/signup/thank-you-call-is-booked",
+    passive: true,
+  },
+  {
+    title: "We will call you shortly",
+    component: ThankYouCallShortly,
+    path: "/clients/signup/thank-you-call-you-shortly",
+    passive: true,
   },
 ];
 
