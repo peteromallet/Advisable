@@ -5,12 +5,13 @@ import { Text, Stack, Autocomplete } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "../../../../components/SubmitButton";
 import Loading from "../../../../components/Loading";
+import CurrencyInput from "../../../../components/CurrencyInput";
 import Select from "../../../../components/Select";
 import {
   useAboutRequirementsQuery,
   useAboutRequirementsUpdate,
   getAboutRequirementsOptimisticReponse,
-  useApplicationId,
+  useLocationState,
 } from "../../queries";
 import { string, array, object } from "yup";
 
@@ -20,13 +21,14 @@ const validationSchema = object().shape({
   budget: string(),
 });
 
-function AboutRequirements({ pushNextStepPath, pushInitialStepPath }) {
-  const applicationId = useApplicationId();
-  const [updateClientApplication] = useAboutRequirementsUpdate();
+function AboutRequirements({ RedirectToInitialStep, RedirectToNextStep }) {
+  const locationState = useLocationState();
+  const [updateClientApplication, { called }] = useAboutRequirementsUpdate();
   const { loading, error, data } = useAboutRequirementsQuery();
 
-  if (error) pushInitialStepPath();
   if (loading) return <Loading />;
+  if (error) return <RedirectToInitialStep />;
+  if (called) return <RedirectToNextStep state={{ ...locationState }} />;
   const { clientApplication, skills } = data;
 
   // Formik
@@ -39,14 +41,13 @@ function AboutRequirements({ pushNextStepPath, pushInitialStepPath }) {
     values.budget = parseInt(values.budget);
     updateClientApplication({
       variables: {
-        id: applicationId,
+        id: locationState.applicationId,
         ...values,
       },
       optimisticResponse: getAboutRequirementsOptimisticReponse(
-        applicationId,
+        locationState.applicationId,
         values,
       ),
-      update: () => pushNextStepPath({ state: { applicationId } }),
     });
   };
 
@@ -94,6 +95,7 @@ function AboutRequirements({ pushNextStepPath, pushInitialStepPath }) {
                 onChange={formik.handleChange}
               />
               <FormField
+                as={CurrencyInput}
                 name="budget"
                 prefix="$"
                 placeholder="99999"
@@ -108,8 +110,8 @@ function AboutRequirements({ pushNextStepPath, pushInitialStepPath }) {
   );
 }
 AboutRequirements.propTypes = {
-  pushNextStepPath: PropTypes.func,
-  pushInitialStepPath: PropTypes.func,
+  RedirectToInitialStep: PropTypes.elementType,
+  RedirectToNextStep: PropTypes.elementType,
 };
 
 export default AboutRequirements;
