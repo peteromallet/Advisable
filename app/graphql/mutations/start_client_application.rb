@@ -23,8 +23,13 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
     if user.application_status == :started
       user.first_name = args[:first_name]
       user.last_name = args[:last_name]
-      user.sync_to_airtable
-      user.save
+
+      if user.save
+        user.sync_to_airtable
+        if context[:request]
+          GeocodeUserJob.perform_later(user.id, context[:request].remote_ip)
+        end
+      end
     end
 
     { clientApplication: user }
