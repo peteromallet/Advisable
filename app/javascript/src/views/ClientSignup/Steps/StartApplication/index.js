@@ -41,8 +41,6 @@ function StartApplication({ RedirectToNextStep }) {
         });
   }, [history, location.pathname, location.search, startClientApplication]);
 
-  // Loading while handling query string
-  if (location.search) return <Loading />;
   // Handle mutation errors
   if (error) return <Redirect to="/login" />;
   // Handle mutation data on response
@@ -50,6 +48,8 @@ function StartApplication({ RedirectToNextStep }) {
     const applicationId = data.startClientApplication.clientApplication.id;
     return <RedirectToNextStep state={{ applicationId, email }} />;
   }
+  // Loading while handling query string
+  if (location.search) return <Loading />;
 
   // Formik
   const initialValues = {
