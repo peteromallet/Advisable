@@ -1,3 +1,4 @@
+# DEPRECATED in favour of create_job mutation.
 class Mutations::CreateProject < Mutations::BaseMutation
   argument :primary_skill, String, required: true
   argument :service_type, String, required: true
@@ -7,21 +8,17 @@ class Mutations::CreateProject < Mutations::BaseMutation
 
   def resolve(**args)
     if context[:current_user].nil?
-      return {
-        errors: [
-          { code: "authentication.required" }
-        ]
-      }
+      return { errors: [{ code: 'authentication.required' }] }
     end
 
     {
-      project: Projects::Create.call(
-        user: context[:current_user],
-        attributes: args.except(:id, :client_mutation_id),
-      )
+      project:
+        Projects::Create.call(
+          user: context[:current_user],
+          attributes: args.except(:id, :client_mutation_id)
+        )
     }
-
-    rescue Service::Error => e
-      return { errors: [e] }
+  rescue Service::Error => e
+    return { errors: [e] }
   end
 end

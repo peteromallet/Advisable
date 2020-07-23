@@ -65,7 +65,9 @@ export default function PublishJob({ data }) {
             marginBottom="l"
             tags={project.skills.map((s) => s.name)}
           />
-          <RouterLink to={`/jobs/${id}`}>
+          <RouterLink
+            to={{ pathname: `/jobs/${id}`, state: { readyToPublish: true } }}
+          >
             <Button variant="subtle" size="s" prefix={<Pencil size={24} />}>
               Edit Skills
             </Button>
@@ -82,30 +84,64 @@ export default function PublishJob({ data }) {
             Location
           </Text>
           <Text color="neutral700" marginBottom="m">
-            {t(`locationImportance.${project.locationImportance}`)}
+            {t(`locationImportance.${project.locationImportance}`, {
+              location: project.user.location,
+            })}
           </Text>
-          <RouterLink to={`/jobs/${id}/location`}>
+          <RouterLink
+            to={{
+              pathname: `/jobs/${id}/location`,
+              state: { readyToPublish: true },
+            }}
+          >
             <Button variant="subtle" size="s" prefix={<Pencil size={24} />}>
               Edit Location
             </Button>
           </RouterLink>
         </Box>
         <Box>
-          <Text
-            mb="s"
-            fontSize="l"
-            color="blue900"
-            fontWeight="medium"
-            letterSpacing="-0.03rem"
+          {project.optionalCharacteristics.length > 0 && (
+            <>
+              <Text
+                mb="s"
+                fontSize="l"
+                color="blue900"
+                fontWeight="medium"
+                letterSpacing="-0.03rem"
+              >
+                Optional Characteristics
+              </Text>
+              <BulletList marginBottom="l">
+                {project.optionalCharacteristics.map((characteristic, i) => (
+                  <BulletList.Item key={i}>{characteristic}</BulletList.Item>
+                ))}
+              </BulletList>
+            </>
+          )}
+          {project.requiredCharacteristics.length > 0 && (
+            <Box>
+              <Text
+                mb="s"
+                fontSize="l"
+                color="blue900"
+                fontWeight="medium"
+                letterSpacing="-0.03rem"
+              >
+                Required Characteristics
+              </Text>
+              <BulletList marginBottom="l">
+                {project.requiredCharacteristics.map((characteristic, i) => (
+                  <BulletList.Item key={i}>{characteristic}</BulletList.Item>
+                ))}
+              </BulletList>
+            </Box>
+          )}
+          <RouterLink
+            to={{
+              pathname: `/jobs/${id}/characteristics`,
+              state: { readyToPublish: true },
+            }}
           >
-            Characteristics
-          </Text>
-          <BulletList marginBottom="m">
-            {project.characteristics.map((characteristic, i) => (
-              <BulletList.Item key={i}>{characteristic}</BulletList.Item>
-            ))}
-          </BulletList>
-          <RouterLink to={`/jobs/${id}/characteristics`}>
             <Button variant="subtle" size="s" prefix={<Pencil size={24} />}>
               Edit Characteristics
             </Button>
@@ -121,12 +157,17 @@ export default function PublishJob({ data }) {
           >
             Projects
           </Text>
-          <BulletList marginBottom="m">
+          <BulletList marginBottom="l">
             {project.goals.map((goal, i) => (
               <BulletList.Item key={i}>{goal}</BulletList.Item>
             ))}
           </BulletList>
-          <RouterLink to={`/jobs/${id}/description`}>
+          <RouterLink
+            to={{
+              pathname: `/jobs/${id}/description`,
+              state: { readyToPublish: true },
+            }}
+          >
             <Button variant="subtle" size="s" prefix={<Pencil size={24} />}>
               Edit Description
             </Button>

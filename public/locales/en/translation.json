@@ -139,10 +139,10 @@
     "3": "$t(industryExperienceImportance.2)"
   },
   "locationImportance": {
-    "0": "Location it not important for this job.",
+    "0": "It's not important that candidates are near {{location}}",
     "1": "Location might not be important for this job.",
-    "2": "Location is important for this job.",
-    "3": "Location is very important for this job."
+    "2": "Limit candidates to those near {{location}}",
+    "3": "$t(locationImportance.2)"
   },
   "jobSetup": {
     "experience": {

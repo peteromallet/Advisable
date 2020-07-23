@@ -6,6 +6,7 @@ const projectFields = gql`
     status
     goals
     characteristics
+    optionalCharacteristics
     requiredCharacteristics
     primarySkill
     likelyToHire
@@ -13,6 +14,7 @@ const projectFields = gql`
     industryExperienceImportance
     user {
       id
+      location
       companyType
       industry {
         id

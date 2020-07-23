@@ -4,13 +4,14 @@ import { motion } from "framer-motion";
 import { Card } from "@advisable/donut";
 import { UPDATE_PROJECT } from "./queries";
 import { useMutation } from "@apollo/react-hooks";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import PrimarySkillOption from "./PrimarySkillOption";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
 export default function JobPrimarySkill({ data }) {
   const { id } = useParams();
   const history = useHistory();
+  const location = useLocation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
   const skills = data.project.skills;
 
@@ -24,7 +25,7 @@ export default function JobPrimarySkill({ data }) {
       },
     });
 
-    history.push(`/jobs/${id}/experience`);
+    history.push({ ...location, pathname: `/jobs/${id}/experience` });
   };
 
   const initialValues = {

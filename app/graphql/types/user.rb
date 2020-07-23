@@ -74,6 +74,20 @@ class Types::User < Types::BaseType
     Stripe::Customer.retrieve(object.stripe_customer_id)
   end
 
+  field :city, String, null: true
+
+  def city
+    object.address.city
+  end
+
+  field :location, String, null: true
+
+  def location
+    return nil if object.address.city.nil?
+    country = ISO3166::Country.new(object.address.country)
+    "#{object.address.city}, #{country.name}"
+  end
+
   # The paymentMethod field returns the users default payment method from
   # stripe.
   field :payment_method, Types::PaymentMethodType, null: true do

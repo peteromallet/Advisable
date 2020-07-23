@@ -28,6 +28,7 @@ gem 'rack-attack'
 gem 'bcrypt', '~> 3.1.7'
 
 gem 'countries'
+gem 'geocoder'
 gem 'money'
 gem 'sentry-raven'
 gem 'omniauth'

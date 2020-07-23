@@ -82,4 +82,6 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :create_search, mutation: Mutations::CreateSearch
   field :submit_full_application, mutation: Mutations::SubmitFullApplication
+
+  field :create_job, mutation: Mutations::CreateJob
 end

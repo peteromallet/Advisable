@@ -4,7 +4,7 @@ import { Card, Box } from "@advisable/donut";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { ArrowRight } from "@styled-icons/feather";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import SubmitButton from "components/SubmitButton";
 import { UPDATE_PROJECT } from "./queries";
 import RequiredCharacteristic from "./RequiredCharacteristic";
@@ -13,6 +13,7 @@ import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 export default function JobRequiredCharacteristics({ data }) {
   const { id } = useParams();
   const history = useHistory();
+  const location = useLocation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
   const { requiredCharacteristics, characteristics } = data.project;
 
@@ -33,7 +34,11 @@ export default function JobRequiredCharacteristics({ data }) {
     if (response.errors) {
       formik.setStatus("Failed to update characteristics, please try again.");
     } else {
-      history.push(`/jobs/${id}/description`);
+      if (location.state?.readyToPublish) {
+        history.push(`/jobs/${id}/publish`);
+      } else {
+        history.push(`/jobs/${id}/description`);
+      }
     }
   };
 

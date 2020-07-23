@@ -1,6 +1,6 @@
 class Types::ProjectType < Types::BaseType
   field :id, ID, null: false
-  field :airtable_id, String, null: false
+  field :airtable_id, String, null: true
   field :name, String, null: false
   field :primary_skill, String, null: true
   field :skills, [Types::Skill], null: true

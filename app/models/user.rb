@@ -20,6 +20,7 @@ class User < ApplicationRecord
   before_save :remove_past_availabililty
 
   attribute :availability, :datetime, default: [], array: true
+  attribute :address, AddressAttribute::Type.new
 
   has_one_attached :avatar
 

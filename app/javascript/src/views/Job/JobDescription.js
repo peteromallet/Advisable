@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form, Field } from "formik";
@@ -13,6 +13,7 @@ import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 export default function JobDescription({ data }) {
   const { id } = useParams();
   const history = useHistory();
+  const location = useLocation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
   const initialValues = {
@@ -32,7 +33,11 @@ export default function JobDescription({ data }) {
     if (response.errors) {
       formik.setStatus("Failed to update description, please try again.");
     } else {
-      history.push(`/jobs/${id}/likely_to_hire`);
+      if (location.state?.readyToPublish) {
+        history.push(`/jobs/${id}/publish`);
+      } else {
+        history.push(`/jobs/${id}/likely_to_hire`);
+      }
     }
   };
 

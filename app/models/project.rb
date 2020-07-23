@@ -21,7 +21,6 @@ class Project < ApplicationRecord
   validates :likely_to_hire, inclusion: { in: [0, 1, 2, 3] }, allow_nil: true
 
   belongs_to :user, required: false
-  validates :name, presence: true
 
   def accepted_terms=(accepted)
     self.accepted_terms_at = DateTime.now.utc if !accepted_terms && accepted

@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Card } from "@advisable/donut";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
@@ -12,6 +12,7 @@ import { JobSetupStepHeader } from "./styles";
 export default function JobExperience({ data }) {
   const { id } = useParams();
   const history = useHistory();
+  const location = useLocation();
   const { t } = useTranslation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
@@ -31,7 +32,11 @@ export default function JobExperience({ data }) {
       },
     });
 
-    history.push(`/jobs/${id}/location`);
+    if (location.state?.readyToPublish) {
+      history.push(`/jobs/${id}/publish`);
+    } else {
+      history.push(`/jobs/${id}/location`);
+    }
   };
 
   const handleSelection = (formik) => (val) => {
