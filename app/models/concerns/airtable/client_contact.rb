@@ -74,6 +74,7 @@ class Airtable::ClientContact < Airtable::Base
     self['RID'] = user.rid
     self['gclid'] = user.gclid
     self['fid'] = user.fid
+    self['City'] = user.address.try(:[], 'city')
     self['Application Reminder At'] = user.application_reminder_at
     self['Contact Status'] = user.contact_status
     self['Same City Importance'] = user.locality_importance
