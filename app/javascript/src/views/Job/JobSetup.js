@@ -10,6 +10,7 @@ import {
   useLocation,
   useParams,
 } from "react-router-dom";
+import BackButton from "components/BackButton";
 import MultistepMenu from "../../components/MultistepMenu";
 import JobSkills from "./JobSkills";
 import PublishJob from "./PublishJob";
@@ -126,6 +127,7 @@ export default function JobSetup({ data }) {
           animate={{ opacity: 1, left: 0 }}
           transition={{ duration: 0.5 }}
         >
+          <BackButton to="/projects" marginBottom="m" />
           <MultistepMenu>
             <MultistepMenu.Item
               to={`/jobs/${id}`}

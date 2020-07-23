@@ -15,7 +15,7 @@ export default function JobPrimarySkill({ data }) {
   const skills = data.project.skills;
 
   const handleSubmit = async (values) => {
-    await updateProject({
+    updateProject({
       variables: {
         input: {
           id,
