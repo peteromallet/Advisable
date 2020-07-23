@@ -23,19 +23,10 @@ describe Mutations::Signup do
     GRAPHQL
   end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Add submit client application API mutation
   before :each do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 
-<<<<<<< HEAD
-=======
->>>>>>> Add start and update client application API mutations
-=======
->>>>>>> Add submit client application API mutation
   it 'creates a new user' do
     expect { AdvisableSchema.execute(query) }.to change { User.count }.by(1)
     user = User.last
@@ -104,10 +95,7 @@ describe Mutations::Signup do
           create(
             :user,
             email: email,
-<<<<<<< HEAD
             password: nil,
-=======
->>>>>>> Add start and update client application API mutations
             first_name: 'Michael',
             last_name: 'Scott',
             application_status: :accepted
