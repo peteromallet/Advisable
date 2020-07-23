@@ -92,6 +92,8 @@ function StartApplication() {
     const applicationId = data.startClientApplication.clientApplication.id;
     return <RedirectToNextStep state={{ applicationId, email }} />;
   }
+  // Loading while handling query string
+  if (location.search) return <Loading />;
 
   // Formik
   const initialValues = {
