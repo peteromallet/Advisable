@@ -14,5 +14,6 @@ class GeocodeUserJob < ApplicationJob
       country: country,
       address: { city: results.first.city, country: results.first.country }
     )
+    user.sync_to_airtable
   end
 end
