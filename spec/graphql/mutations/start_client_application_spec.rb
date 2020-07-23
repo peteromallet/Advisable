@@ -36,6 +36,41 @@ describe Mutations::Signup do
     expect(user.application_status).to eq(:started)
   end
 
+  context 'when a user account already exists with that email' do
+    it 'returns an error' do
+      create(
+        :user,
+        email: email,
+        first_name: 'Michael',
+        last_name: 'Scott',
+        password: 'testing123'
+      )
+      response = AdvisableSchema.execute(query)
+      error = response['errors'][0]['extensions']['code']
+      expect(error).to eq('existingAccount')
+    end
+  end
+
+  context 'when a specialist account exists with that email' do
+    it 'returns an error' do
+      create(:specialist, email: email)
+      response = AdvisableSchema.execute(query)
+      error = response['errors'][0]['extensions']['code']
+      expect(error).to eq('existingAccount')
+    end
+  end
+
+  context 'when the email is blacklisted' do
+    let(:email) { 'test@gmail.com' }
+
+    it 'returns an error' do
+      create(:blacklisted_domain, domain: 'gmail.com')
+      response = AdvisableSchema.execute(query)
+      error = response['errors'][0]['extensions']['code']
+      expect(error).to eq('emailNotAllowed')
+    end
+  end
+
   context 'when application already exists for that email' do
     context 'and the application status is started' do
       it 'updates that user record' do
@@ -43,6 +78,7 @@ describe Mutations::Signup do
           create(
             :user,
             email: email,
+            password: nil,
             first_name: 'Michael',
             last_name: 'Scott',
             application_status: :started
@@ -59,6 +95,7 @@ describe Mutations::Signup do
           create(
             :user,
             email: email,
+            password: nil,
             first_name: 'Michael',
             last_name: 'Scott',
             application_status: :accepted
