@@ -7,7 +7,7 @@ import { Formik, Form } from "formik";
 import { useLocation, useHistory, Redirect } from "react-router";
 import SubmitButton from "../../../../components/SubmitButton";
 import FormField from "src/components/FormField";
-import { Text, Input, Stack } from "@advisable/donut";
+import { Text, Input, Stack, Box } from "@advisable/donut";
 import Loading from "../../../../components/Loading";
 
 const validationSchema = Yup.object().shape({
@@ -83,18 +83,24 @@ function StartApplication({ RedirectToNextStep }) {
           </Text>
           <Form>
             <Stack spacing="m" mb="l">
-              <FormField
-                as={Input}
-                name="firstName"
-                placeholder="First Name"
-                label="First Name"
-              />
-              <FormField
-                as={Input}
-                name="lastName"
-                placeholder="Last Name"
-                label="Last Name"
-              />
+              <Box display="flex">
+                <Box flex="1" mr="s">
+                  <FormField
+                    as={Input}
+                    name="firstName"
+                    placeholder="First Name"
+                    label="First Name"
+                  />
+                </Box>
+                <Box flex="1">
+                  <FormField
+                    as={Input}
+                    name="lastName"
+                    placeholder="Last Name"
+                    label="Last Name"
+                  />
+                </Box>
+              </Box>
               <FormField
                 as={Input}
                 name="email"
