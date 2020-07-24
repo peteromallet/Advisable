@@ -17,7 +17,9 @@ import { string, array, object } from "yup";
 
 const validationSchema = object().shape({
   skills: array().min(1).of(string().required()).required(),
-  numberOfFreelancers: string().required(),
+  numberOfFreelancers: string().required(
+    "number of freelancers is a required field",
+  ),
   budget: string(),
 });
 
@@ -40,7 +42,7 @@ function AboutRequirements({
   // Formik
   const initialValues = {
     skills: clientApplication.skills.map((skill) => skill.name) || [],
-    numberOfFreelancers: clientApplication.numberOfFreelancers || "1-3",
+    numberOfFreelancers: clientApplication.numberOfFreelancers || "",
     budget: clientApplication.budget / 100 || "",
   };
   const handleSubmit = (values) => {
@@ -93,10 +95,13 @@ function AboutRequirements({
                 options={skills}
                 onChange={(skill) => formik.setFieldValue("skills", skill)}
               />
-              <Select
+              <FormField
+                as={Select}
                 name="numberOfFreelancers"
                 label="How many freelancers do you plan on hiring over the next 6 months?*"
+                placeholder="Number of freelancers"
                 options={["0", "1-3", "4-10", "10+"]}
+                error={null}
                 value={formik.values.numberOfFreelancers}
                 onChange={formik.handleChange}
               />
