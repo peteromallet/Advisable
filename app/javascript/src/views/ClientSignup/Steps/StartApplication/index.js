@@ -42,12 +42,16 @@ function StartApplication({ RedirectToNextStep }) {
   }, [history, location.pathname, location.search, startClientApplication]);
 
   // Handle mutation errors
-  if (error) return <Redirect to="/login" />;
+  const errorCodes = error?.graphQLErrors.map((err) => err.extensions?.code);
+  const emailNotAllowed = errorCodes?.includes("emailNotAllowed");
+  const existingAccount = errorCodes?.includes("existingAccount");
+  if (existingAccount) return <Redirect push to="/login" />;
+  if (emailNotAllowed)
+    return <Redirect push to="/clients/signup/email-not-allowed" />;
   // Handle mutation data on response
-  if (data) {
-    const applicationId = data.startClientApplication.clientApplication.id;
+  const applicationId = data?.startClientApplication?.clientApplication?.id;
+  if (applicationId)
     return <RedirectToNextStep state={{ applicationId, email }} />;
-  }
   // Loading while handling query string
   if (location.search) return <Loading />;
 
