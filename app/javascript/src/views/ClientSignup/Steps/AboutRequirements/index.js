@@ -29,11 +29,20 @@ const validationSchema = object().shape({
   budget: string(),
 });
 
+<<<<<<< HEAD
 function AboutRequirements() {
+=======
+function AboutRequirements({
+  RedirectToInitialStep,
+  RedirectToNextStep,
+  RedirectToLastStep,
+}) {
+>>>>>>> Restrict from going backward after form was submitted
   const locationState = useLocationState();
   const [updateClientApplication, { called }] = useAboutRequirementsUpdate();
   const { loading, error, data } = useAboutRequirementsQuery();
 
+<<<<<<< HEAD
   if (loading || error)
     return (
       <motion.div exit>
@@ -42,6 +51,13 @@ function AboutRequirements() {
       </motion.div>
     );
 
+=======
+  if (loading) return <Loading />;
+  if (error) return <RedirectToInitialStep />;
+  if (called) return <RedirectToNextStep state={{ ...locationState }} />;
+  if (data.clientApplication?.status !== "STARTED")
+    return <RedirectToLastStep state={{ ...locationState }} />;
+>>>>>>> Restrict from going backward after form was submitted
   const { clientApplication, skills } = data;
 
   // Formik

@@ -24,11 +24,20 @@ const validationSchema = object().shape({
   companyType: string().required("Please enter your company type"),
 });
 
+<<<<<<< HEAD
 function AboutCompany() {
+=======
+function AboutCompany({
+  RedirectToInitialStep,
+  RedirectToNextStep,
+  RedirectToLastStep,
+}) {
+>>>>>>> Restrict from going backward after form was submitted
   const locationState = useLocationState();
   const [updateClientApplication, { called }] = useAboutCompanyUpdate();
   const { loading, error, data } = useAboutCompanyQuery();
 
+<<<<<<< HEAD
   if (loading || error)
     return (
       <motion.div exit>
@@ -36,6 +45,13 @@ function AboutCompany() {
         <Loading />
       </motion.div>
     );
+=======
+  if (loading) return <Loading />;
+  if (error) return <RedirectToInitialStep />;
+  if (called) return <RedirectToNextStep state={{ ...locationState }} />;
+  if (data.clientApplication?.status !== "STARTED")
+    return <RedirectToLastStep state={{ ...locationState }} />;
+>>>>>>> Restrict from going backward after form was submitted
   const { clientApplication, industries } = data;
 
   // Formik
