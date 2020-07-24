@@ -1,3 +1,5 @@
+/* DEPRECATED */
+/* Use Select component from Donut design system */
 import React from "react";
 import { uniqueId } from "lodash-es";
 import { Text } from "@advisable/donut";
