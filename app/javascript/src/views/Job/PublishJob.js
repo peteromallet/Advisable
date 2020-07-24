@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/react-hooks";
 import { Pencil } from "@styled-icons/heroicons-solid";
-import { Redirect, useParams, Link as RouterLink } from "react-router-dom";
+import { useHistory, useParams, Link as RouterLink } from "react-router-dom";
 import {
   Card,
   Stack,
@@ -18,18 +18,19 @@ import { PUBLISH_PROJECT } from "./queries";
 
 export default function PublishJob({ data }) {
   const { id } = useParams();
+  const history = useHistory();
   const { t } = useTranslation();
   const [publishProject, publishProjectResponse] = useMutation(PUBLISH_PROJECT);
+
+  const handlePublish = async () => {
+    await publishProject({ variables: { input: { id } } });
+    history.push(`/jobs/${id}/published`);
+  };
 
   const { project } = data;
   const { primarySkill, user } = project;
   const industry = user.industry.name;
   const companyType = user.companyType;
-
-  if (publishProjectResponse.data) {
-    return <Redirect to={`/projects/${id}`} />;
-  }
-
   return (
     <Card
       as={motion.div}
@@ -174,20 +175,24 @@ export default function PublishJob({ data }) {
           </RouterLink>
         </Box>
       </Stack>
-      <Button
-        marginTop="xxl"
-        marginBottom="m"
-        size="l"
-        onClick={() => publishProject({ variables: { input: { id } } })}
-        loading={publishProjectResponse.loading}
-      >
-        Publish Job
-      </Button>
-      <Text fontSize="xs" color="neutral600" lineHeight="s">
-        By publishing this job you feel like you have completed & submitted
-        something substantial. You should feel like you have committed to
-        something.
-      </Text>
+      {project.status === "Draft" && (
+        <>
+          <Button
+            marginTop="xxl"
+            marginBottom="m"
+            size="l"
+            onClick={handlePublish}
+            loading={publishProjectResponse.loading}
+          >
+            Publish Job
+          </Button>
+          <Text fontSize="xs" color="neutral600" lineHeight="s">
+            By publishing this job you feel like you have completed & submitted
+            something substantial. You should feel like you have committed to
+            something.
+          </Text>
+        </>
+      )}
     </Card>
   );
 }

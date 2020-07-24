@@ -16,6 +16,11 @@ const projectFields = gql`
       id
       location
       companyType
+      salesPerson {
+        id
+        firstName
+        name
+      }
       industry {
         id
         name

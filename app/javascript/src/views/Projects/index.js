@@ -4,27 +4,44 @@ import { useQuery } from "@apollo/react-hooks";
 import { Container, Box, Text } from "@advisable/donut";
 import useScrollRestore from "../../utilities/useScrollRestore";
 import Loading from "./Loading";
-import PROJECTS from "./getProjects";
+import { GET_PROJECTS } from "./queries";
 import ProjectsList from "./ProjectsList";
 
 const Projects = () => {
   useScrollRestore();
-  const { loading, data } = useQuery(PROJECTS);
+  const { loading, data } = useQuery(GET_PROJECTS);
+
+  const handleCreate = (cache, response) => {
+    const { viewer } = cache.readQuery({ query: GET_PROJECTS });
+    cache.writeQuery({
+      query: GET_PROJECTS,
+      data: {
+        viewer: {
+          ...viewer,
+          projects: [response.data.createJob.project, ...viewer.projects],
+        },
+      },
+    });
+  };
 
   return (
-    <Container pt="xl">
+    <Container py="xl">
       <Text
+        mb="l"
         as="h2"
-        fontSize="28px"
+        fontSize="24px"
         color="blue900"
-        fontWeight="semibold"
-        letterSpacing="-0.02em"
+        fontWeight="medium"
+        letterSpacing="-0.07rem"
       >
         Your Projects
       </Text>
-      <Box height={1} bg="neutral.2" mt="l" mb="l" />
 
-      {loading ? <Loading /> : <ProjectsList projects={data.viewer.projects} />}
+      {loading ? (
+        <Loading />
+      ) : (
+        <ProjectsList projects={data.viewer.projects} onCreate={handleCreate} />
+      )}
     </Container>
   );
 };

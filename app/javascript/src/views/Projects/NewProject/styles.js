@@ -1,5 +1,5 @@
 import { rgba } from "polished";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { theme, StyledCard } from "@advisable/donut";
 
 export const StyledNewProjectIcon = styled.div`
@@ -30,9 +30,52 @@ export const StyledNewProjectIcon = styled.div`
   }
 `;
 
+const loadingAnimation = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+`;
+
+export const StyledNewProjectLoading = styled.div`
+  display: flex;
+  position: relative;
+
+  div {
+    width: 6px;
+    opacity: 0;
+    height: 6px;
+    margin: 0 2px;
+    background: white;
+    border-radius: 50%;
+  }
+
+  div:nth-child(1) {
+    animation: ${loadingAnimation} 1s infinite;
+  }
+
+  div:nth-child(2) {
+    animation: ${loadingAnimation} 1s 0.2s infinite;
+  }
+
+  div:nth-child(3) {
+    animation: ${loadingAnimation} 1s 0.4s infinite;
+  }
+`;
+
 export const StyledNewProject = styled(StyledCard)`
   width: 100%;
-  height: 280px;
+  height: 300px;
   font-size: 16px;
   cursor: pointer;
   font-weight: 400;
@@ -58,10 +101,6 @@ export const StyledNewProject = styled(StyledCard)`
         transform: scale(1.1);
         background: ${theme.colors.blue[8]};
         box-shadow: 0 4px 12px ${rgba(theme.colors.neutral[9], 0.1)};
-      }
-
-      div {
-        transform: translateY(-60px);
       }
     }
   }

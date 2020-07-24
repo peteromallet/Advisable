@@ -18,6 +18,7 @@ import JobLocation from "./JobLocation";
 import JobDescription from "./JobDescription";
 import JobExperience from "./JobExperience";
 import JobPrimarySkill from "./JobPrimarySkill";
+import JobPendingReview from "./JobPendingReview";
 import JobCharacteristics from "./JobCharacteristics";
 import JobRequiredCharacteristics from "./JobRequiredCharacteristics";
 import JobLikelyToHire from "./JobLikelyToHire";
@@ -92,6 +93,10 @@ const steps = [
     path: "/jobs/:id/publish",
     component: PublishJob,
   },
+  {
+    path: "/jobs/:id/published",
+    component: JobPendingReview,
+  },
 ];
 
 export default function JobSetup({ data }) {
@@ -115,6 +120,7 @@ export default function JobSetup({ data }) {
     characteristics: project.requiredCharacteristics.length > 0,
     description: project.goals.length > 0,
     specialists: project.likelyToHire !== null,
+    published: project.status === "Pending Advisable Confirmation",
   };
 
   return (
@@ -169,13 +175,16 @@ export default function JobSetup({ data }) {
             <MultistepMenu.Item
               isDisabled={!completeSteps.description}
               isComplete={completeSteps.specialists}
-              to={`/jobs/${id}/specialists`}
-              steps={["/jobs/:id/likely_to_hire", "/jobs/:id/specialists"]}
+              to={`/jobs/${id}/likely_to_hire`}
             >
               Specialists
             </MultistepMenu.Item>
-            <MultistepMenu.Item to={`/jobs/${id}/publish`}>
-              Publish
+            <MultistepMenu.Item
+              to={`/jobs/${id}/publish`}
+              isDisabled={!completeSteps.specialists}
+              isComplete={completeSteps.published}
+            >
+              Review
             </MultistepMenu.Item>
           </MultistepMenu>
         </Sidebar>

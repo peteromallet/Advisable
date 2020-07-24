@@ -81,4 +81,12 @@ class Project < ApplicationRecord
 
     (applied + beyond_applied).uniq
   end
+
+  # Updates all of the various application counters
+  def update_application_counts
+    self.candidate_count = applications.active.count
+    self.proposed_count = applications.proposed.count
+    self.hired_count = applications.hired.count
+    save(valiate: false, touch: false)
+  end
 end

@@ -48,6 +48,7 @@ export const StyledCard = styled.div`
   ${compose(space, layout, border, elevation, typography)}
 
   outline: none;
+  display: block;
   background: white;
   border-radius: 2px;
 

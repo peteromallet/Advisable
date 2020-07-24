@@ -94,6 +94,5 @@ RangeSelection.defaultProps = {
     { label: "Not Important", value: 0 },
     { label: "Not Sure", value: 1 },
     { label: "Important", value: 2 },
-    { label: "Very Important", value: 3 },
   ],
 };

@@ -20,6 +20,7 @@ class Types::User < Types::BaseType
   field :bank_transfers_enabled, Boolean, null: true
   field :industry, Types::IndustryType, null: true
   field :company_type, String, null: true
+  field :sales_person, Types::SalesPersonType, null: true
 
   field :talk_signature, String, null: false do
     authorize :is_user
@@ -113,7 +114,7 @@ class Types::User < Types::BaseType
   def projects
     object.projects.where.not(sales_status: 'Lost').or(
       object.projects.where(sales_status: nil)
-    )
+    ).order(created_at: :desc)
   end
 
   def availability(exclude_conflicts: false)

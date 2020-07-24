@@ -13,6 +13,9 @@ class Mutations::CreateJob < Mutations::BaseMutation
     if user.address.city.nil?
       GeocodeUserJob.perform_later(user.id, context[:request].try(:remote_ip))
     end
-    { project: user.projects.create }
+
+    project = user.projects.create(status: 'Draft')
+
+    { project: project }
   end
 end

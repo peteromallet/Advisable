@@ -14,5 +14,4 @@ export default function Job() {
   if (isNotFound(error)) return <NotFound />;
 
   return <JobSetup data={data} />;
-  return <>Job</>;
 }

@@ -1,36 +1,32 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
-import Status from "../../components/Status";
-import pluralize from "../../utilities/pluralize";
+import { motion } from "framer-motion";
+import { Box } from "@advisable/donut";
 import NewProject from "./NewProject";
-import { ProjectCard, ProjectDescription } from "./styles";
+import Project from "./Project";
 
-const ProjectsList = ({ projects }) => {
+const ProjectsList = ({ projects, onCreate }) => {
   return (
-    <Box flexWrap="wrap" display="flex" ml="-10px" mr="-10px">
-      <Box width={[1, 1 / 2, 1 / 3]} px="10px" pb="m">
-        <NewProject />
-      </Box>
-      {projects.map(project => (
-        <Box width={[1, 1 / 2, 1 / 3]} key={project.id} px="10px" pb="m">
-          <ProjectCard to={`/projects/${project.airtableId}`}>
-            <Text
-              as="h4"
-              mb="xxs"
-              fontSize="l"
-              color="blue.9"
-              fontWeight="semibold"
-              letterSpacing="-0.015em"
-            >
-              {project.primarySkill}
-            </Text>
-            <Text fontSize="s" color="neutral.7" marginBottom="l">
-              {pluralize(project.applicationCount, "Candidate", "Candidates")}
-            </Text>
-            <Status>{project.status}</Status>
-            <ProjectDescription>{project.description}</ProjectDescription>
-          </ProjectCard>
-        </Box>
+    <Box
+      display="grid"
+      gridGap="24px"
+      gridTemplateColumns={["1fr", "1fr 1fr", "1fr 1fr", "1fr 1fr 1fr"]}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <NewProject onCreate={onCreate} />
+      </motion.div>
+      {projects.map((project, i) => (
+        <motion.div
+          key={project.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.075 * (i + 1), duration: 0.3 }}
+        >
+          <Project project={project} />
+        </motion.div>
       ))}
     </Box>
   );

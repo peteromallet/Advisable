@@ -1,6 +1,17 @@
 class Application < ApplicationRecord
   include Uid
   include Airtable::Syncable
+
+  ACTIVE_STATUSES = [
+    'Applied',
+    'Application Accepted',
+    'Interview Scheduled',
+    'Interview Completed',
+    'Proposed'
+  ]
+
+  HIRED_STATUSES = ['Working', 'Stopped Working']
+
   belongs_to :specialist
   belongs_to :project
   has_many :bookings
@@ -27,12 +38,20 @@ class Application < ApplicationRecord
   after_save :update_specialist_average_score
   after_destroy :update_specialist_average_score
 
-  scope :applied, -> { where(status: "Applied") }
+  # Every time an application is created, updated or destroyed we want to update
+  # the counts for the associated project.
+  after_save :update_project_counts
+  after_destroy :update_project_counts
+
+  scope :applied, -> { where(status: 'Applied') }
   scope :accepted_fees, -> { where(accepts_fee: true) }
   scope :accepted_terms, -> { where(accepts_terms: true) }
   scope :featured, -> { where(featured: true) }
   scope :rejected, -> { where(status: 'Application Rejected') }
+  scope :proposed, -> { where(status: 'Proposed') }
+  scope :hired, -> { where(status: HIRED_STATUSES) }
   scope :not_hidden, -> { where(hidden: [nil, false]) }
+  scope :active, -> { where(status: ACTIVE_STATUSES) }
 
   # Filters a collection of application based on its associated projects
   # sales status column.
@@ -53,7 +72,8 @@ class Application < ApplicationRecord
         }
 
   # Returns the top 3 candidates
-  scope :top_three_applied, -> { applied.where('score > ?', 65.0).order(score: :desc).limit(3) }
+  scope :top_three_applied,
+        -> { applied.where('score > ?', 65.0).order(score: :desc).limit(3) }
 
   def questions
     self[:questions] || []
@@ -70,6 +90,12 @@ class Application < ApplicationRecord
   end
 
   private
+
+  def update_project_counts
+    return unless project
+    return unless saved_change_to_status?
+    project.update_application_counts
+  end
 
   def update_specialist_average_score
     return unless specialist.present?
