@@ -30,8 +30,8 @@ function useSteps(steps) {
     () => findIndex(activeSteps, matchStepPath),
     [activeSteps, matchStepPath],
   );
-  const numberOfSteps = steps.length - 1;
-  const numberOfActiveSteps = activeSteps.length - 1;
+  const numberOfSteps = steps.length;
+  const numberOfActiveSteps = activeSteps.length;
   const nextStep = useMemo(() => steps[currentStepIndex + 1], [
     currentStepIndex,
     steps,
