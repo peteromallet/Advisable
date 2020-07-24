@@ -50,6 +50,15 @@ function useSteps(steps) {
     ({ state }) => <Redirect push to={{ pathname: nextStep.path, state }} />,
     [nextStep],
   );
+  const RedirectToLastStep = useCallback(
+    ({ state }) => (
+      <Redirect
+        push
+        to={{ pathname: activeSteps[activeSteps.length - 1].path, state }}
+      />
+    ),
+    [activeSteps],
+  );
 
   // Route components for React Router
   const routes = useMemo(
@@ -59,11 +68,13 @@ function useSteps(steps) {
           <step.component
             RedirectToInitialStep={RedirectToInitialStep}
             RedirectToNextStep={RedirectToNextStep}
+            RedirectToLastStep={RedirectToLastStep}
           />
         </Route>
       )),
-    [RedirectToInitialStep, RedirectToNextStep, steps],
+    [RedirectToInitialStep, RedirectToLastStep, RedirectToNextStep, steps],
   );
+
   return {
     nextStep,
     prevStep,
@@ -71,6 +82,7 @@ function useSteps(steps) {
     numberOfActiveSteps,
     RedirectToInitialStep,
     RedirectToNextStep,
+    RedirectToLastStep,
     routes,
     currentStepIndex,
     currentActiveStepIndex,
