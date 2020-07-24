@@ -23,7 +23,8 @@ function ClientSignup() {
   if (viewer) return <Redirect to="/" />;
 
   const currentStepNumber = currentActiveStepIndex;
-  const progressLength = (currentStepNumber / numberOfActiveSteps) * 100;
+  const numberOfSteps = numberOfActiveSteps - 1;
+  const progressLength = (currentStepNumber / numberOfSteps) * 100;
 
   return (
     <>
@@ -34,7 +35,7 @@ function ClientSignup() {
             // Show steps only if route part of steps
             <>
               <Step>
-                Step {currentStepNumber} of {numberOfActiveSteps}
+                Step {currentStepNumber} of {numberOfSteps}
               </Step>
               <Progress amount={progressLength} />
             </>
