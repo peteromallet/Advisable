@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
 import SubmitButton from "../../../../components/SubmitButton";
+import Select from "../../../../components/Select";
 import {
   useAboutCompanyQuery,
   useAboutCompanyUpdate,
@@ -14,15 +15,15 @@ import { object, string } from "yup";
 import Loading from "../../../../components/Loading";
 
 const typesOfCompany = [
-  { label: "Individual Entrepreneur", value: "Individual Entrepreneur" },
-  { label: "Small Business", value: "Small Business" },
-  { label: "Medium-Sized Business", value: "Medium-Sized Business" },
-  { label: "Startup", value: "Startup" },
-  { label: "Growth Stage Startup", value: "Growth Stage Startup" },
-  { label: "Major Corporation", value: "Major Corporation" },
-  { label: "Non-Profit", value: "Non-Profit" },
-  { label: "Education Institution", value: "Education Institution" },
-  { label: "Government", value: "Government" },
+  "Individual Entrepreneur",
+  "Small Business",
+  "Medium-Sized Business",
+  "Startup",
+  "Growth Stage Startup",
+  "Major Corporation",
+  "Non-Profit",
+  "Education Institution",
+  "Government",
 ];
 
 const validationSchema = object().shape({
@@ -102,13 +103,13 @@ function AboutCompany({ RedirectToInitialStep, RedirectToNextStep }) {
                 }
               />
               <FormField
-                as={Autocomplete}
+                as={Select}
                 error={null}
                 options={typesOfCompany}
                 name="companyType"
                 placeholder="Major Corporation"
                 label="What type of company are you?*"
-                onChange={(type) => formik.setFieldValue("companyType", type)}
+                onChange={formik.handleChange}
               />
             </Stack>
             <SubmitButton>Continue</SubmitButton>
