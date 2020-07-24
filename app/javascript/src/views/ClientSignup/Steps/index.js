@@ -7,6 +7,7 @@ import StartApplication from "./StartApplication";
 import ThankYouReminderSet from "./ThankYou/ReminderSet";
 import ThankYouCallBooked from "./ThankYou/CallBooked";
 import ThankYouCallShortly from "./ThankYou/CallShortly";
+import EmailNotAllowed from "./EmailNotAllowed";
 
 export const STEPS = [
   {
@@ -52,6 +53,12 @@ export const STEPS = [
     title: "We will call you shortly",
     component: ThankYouCallShortly,
     path: "/clients/signup/thank-you-call-you-shortly",
+    passive: true,
+  },
+  {
+    title: "Email not allowed",
+    component: EmailNotAllowed,
+    path: "/clients/signup/email-not-allowed",
     passive: true,
   },
 ];
