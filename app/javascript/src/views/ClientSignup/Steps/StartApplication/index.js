@@ -88,10 +88,9 @@ function StartApplication() {
   // Handle mutation errors
   if (error) return <Redirect to="/login" />;
   // Handle mutation data on response
-  if (data) {
-    const applicationId = data.startClientApplication.clientApplication.id;
+  const applicationId = data?.startClientApplication?.clientApplication?.id;
+  if (applicationId)
     return <RedirectToNextStep state={{ applicationId, email }} />;
-  }
   // Loading while handling query string
   if (location.search) return <Loading />;
 
