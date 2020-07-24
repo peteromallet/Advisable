@@ -86,6 +86,12 @@ export const STEPS = [
     path: "/clients/signup/thank-you-call-you-shortly",
     passive: true,
   },
+  {
+    title: "Email not allowed",
+    component: EmailNotAllowed,
+    path: "/clients/signup/email-not-allowed",
+    passive: true,
+  },
 ];
 
 export const currentStep = () =>
