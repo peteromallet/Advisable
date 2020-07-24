@@ -21,7 +21,11 @@ const validationSchema = object().shape({
   budget: string(),
 });
 
-function AboutRequirements({ RedirectToInitialStep, RedirectToNextStep }) {
+function AboutRequirements({
+  RedirectToInitialStep,
+  RedirectToNextStep,
+  RedirectToLastStep,
+}) {
   const locationState = useLocationState();
   const [updateClientApplication, { called }] = useAboutRequirementsUpdate();
   const { loading, error, data } = useAboutRequirementsQuery();
@@ -29,6 +33,8 @@ function AboutRequirements({ RedirectToInitialStep, RedirectToNextStep }) {
   if (loading) return <Loading />;
   if (error) return <RedirectToInitialStep />;
   if (called) return <RedirectToNextStep state={{ ...locationState }} />;
+  if (data.clientApplication?.status !== "STARTED")
+    return <RedirectToLastStep state={{ ...locationState }} />;
   const { clientApplication, skills } = data;
 
   // Formik
@@ -112,6 +118,7 @@ function AboutRequirements({ RedirectToInitialStep, RedirectToNextStep }) {
 AboutRequirements.propTypes = {
   RedirectToInitialStep: PropTypes.elementType,
   RedirectToNextStep: PropTypes.elementType,
+  RedirectToLastStep: PropTypes.elementType,
 };
 
 export default AboutRequirements;

@@ -32,7 +32,11 @@ const validationSchema = object().shape({
   companyType: string().required("This filed is required"),
 });
 
-function AboutCompany({ RedirectToInitialStep, RedirectToNextStep }) {
+function AboutCompany({
+  RedirectToInitialStep,
+  RedirectToNextStep,
+  RedirectToLastStep,
+}) {
   const locationState = useLocationState();
   const [updateClientApplication, { called }] = useAboutCompanyUpdate();
   const { loading, error, data } = useAboutCompanyQuery();
@@ -40,6 +44,8 @@ function AboutCompany({ RedirectToInitialStep, RedirectToNextStep }) {
   if (loading) return <Loading />;
   if (error) return <RedirectToInitialStep />;
   if (called) return <RedirectToNextStep state={{ ...locationState }} />;
+  if (data.clientApplication?.status !== "STARTED")
+    return <RedirectToLastStep state={{ ...locationState }} />;
   const { clientApplication, industries } = data;
 
   // Formik
@@ -123,6 +129,7 @@ function AboutCompany({ RedirectToInitialStep, RedirectToNextStep }) {
 AboutCompany.propTypes = {
   RedirectToInitialStep: PropTypes.elementType,
   RedirectToNextStep: PropTypes.elementType,
+  RedirectToLastStep: PropTypes.elementType,
 };
 
 export default AboutCompany;
