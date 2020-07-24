@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
 import SubmitButton from "../../../../components/SubmitButton";
-import Select from "../../../../components/Select";
 import {
   useAboutCompanyQuery,
   useAboutCompanyUpdate,
@@ -10,21 +9,9 @@ import {
   useLocationState,
 } from "../../queries";
 import FormField from "src/components/FormField";
-import { Text, Stack, Autocomplete } from "@advisable/donut";
+import { Text, Stack, Autocomplete, Select } from "@advisable/donut";
 import { object, string } from "yup";
 import Loading from "../../../../components/Loading";
-
-const typesOfCompany = [
-  "Individual Entrepreneur",
-  "Small Business",
-  "Medium-Sized Business",
-  "Startup",
-  "Growth Stage Startup",
-  "Major Corporation",
-  "Non-Profit",
-  "Education Institution",
-  "Government",
-];
 
 const validationSchema = object().shape({
   companyName: string().required("This field is required"),
@@ -111,12 +98,21 @@ function AboutCompany({
               <FormField
                 as={Select}
                 error={null}
-                options={typesOfCompany}
                 name="companyType"
                 placeholder="Major Corporation"
                 label="What type of company are you?*"
                 onChange={formik.handleChange}
-              />
+              >
+                <option>Individual Entrepreneur</option>
+                <option>Small Business</option>
+                <option>Medium-Sized Business</option>
+                <option>Startup</option>
+                <option>Growth Stage Startup</option>
+                <option>Major Corporation</option>
+                <option>Non-Profit</option>
+                <option>Education Institution</option>
+                <option>Government</option>
+              </FormField>
             </Stack>
             <SubmitButton>Continue</SubmitButton>
           </Form>

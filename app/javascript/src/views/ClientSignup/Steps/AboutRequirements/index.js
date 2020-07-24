@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
-import { Text, Stack, Autocomplete } from "@advisable/donut";
+import { Select, Text, Stack, Autocomplete } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "../../../../components/SubmitButton";
 import Loading from "../../../../components/Loading";
 import CurrencyInput from "../../../../components/CurrencyInput";
-import Select from "../../../../components/Select";
 import {
   useAboutRequirementsQuery,
   useAboutRequirementsUpdate,
@@ -100,11 +99,15 @@ function AboutRequirements({
                 name="numberOfFreelancers"
                 label="How many freelancers do you plan on hiring over the next 6 months?*"
                 placeholder="Number of freelancers"
-                options={["0", "1-3", "4-10", "10+"]}
                 error={null}
                 value={formik.values.numberOfFreelancers}
                 onChange={formik.handleChange}
-              />
+              >
+                <option>0</option>
+                <option>1-3</option>
+                <option>4-10</option>
+                <option>10+</option>
+              </FormField>
               <FormField
                 as={CurrencyInput}
                 name="budget"
