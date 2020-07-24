@@ -48,8 +48,10 @@ export const ABOUT_COMPANY_QUERY = gql`
 `;
 
 export const useAboutCompanyQuery = () => {
-  const { applicationId: id } = useLocationState();
-  return useQuery(ABOUT_COMPANY_QUERY, { variables: { id } });
+  const state = useLocationState();
+  return useQuery(ABOUT_COMPANY_QUERY, {
+    variables: { id: state?.applicationId },
+  });
 };
 
 export const ABOUT_COMPANY_UPDATE = gql`
@@ -118,8 +120,10 @@ export const ABOUT_REQUIREMENTS_QUERY = gql`
 `;
 
 export const useAboutRequirementsQuery = () => {
-  const { applicationId: id } = useLocationState();
-  return useQuery(ABOUT_REQUIREMENTS_QUERY, { variables: { id } });
+  const state = useLocationState();
+  return useQuery(ABOUT_REQUIREMENTS_QUERY, {
+    variables: { id: state?.applicationId },
+  });
 };
 
 export const ABOUT_REQUIREMENTS_UPDATE = gql`
