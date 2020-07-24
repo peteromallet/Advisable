@@ -46,7 +46,11 @@ const talentQualityOptions = [
   },
 ];
 
-function AboutPreferences({ RedirectToInitialStep, RedirectToNextStep }) {
+function AboutPreferences({
+  RedirectToInitialStep,
+  RedirectToNextStep,
+  RedirectToLastStep,
+}) {
   const locationState = useLocationState();
   const [submitClientApplication, { called }] = useAboutPreferencesSubmit();
   const { loading, error, data } = useClientApplicationQuery();
@@ -54,6 +58,8 @@ function AboutPreferences({ RedirectToInitialStep, RedirectToNextStep }) {
   if (loading) return <Loading />;
   if (error) return <RedirectToInitialStep />;
   if (called) return <RedirectToNextStep state={{ ...locationState }} />;
+  if (data.clientApplication?.status !== "STARTED")
+    return <RedirectToLastStep state={{ ...locationState }} />;
   const {
     localityImportance,
     talentQuality,
@@ -151,6 +157,7 @@ function AboutPreferences({ RedirectToInitialStep, RedirectToNextStep }) {
 AboutPreferences.propTypes = {
   RedirectToInitialStep: PropTypes.elementType,
   RedirectToNextStep: PropTypes.elementType,
+  RedirectToLastStep: PropTypes.elementType,
 };
 
 export default AboutPreferences;
