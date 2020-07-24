@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
 import SubmitButton from "../../../../components/SubmitButton";
+import Select from "../../../../components/Select";
 import {
   useAboutCompanyQuery,
   useAboutCompanyUpdate,
