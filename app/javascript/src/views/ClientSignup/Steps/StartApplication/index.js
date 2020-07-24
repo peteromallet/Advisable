@@ -77,7 +77,7 @@ function StartApplication({ RedirectToNextStep }) {
           <Text
             as="h2"
             mb="m"
-            color="blue.8"
+            color="blue800"
             fontSize="xxxl"
             lineHeight="xxxl"
             fontWeight="semibold"
