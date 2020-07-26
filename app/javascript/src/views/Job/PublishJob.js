@@ -38,9 +38,16 @@ export default function PublishJob({ data }) {
       initial={{ opacity: 0, y: 100 }}
       animate={{ zIndex: 2, opacity: 1, y: 0 }}
       transition={{ delay: 0.1, duration: 0.4 }}
-      exit={{ y: -40, opacity: 0, zIndex: 1, scale: 0.9, position: "absolute" }}
+      exit={{
+        y: -40,
+        opacity: 0,
+        zIndex: 1,
+        scale: 0.9,
+        position: "absolute",
+        pointerEvents: "none",
+      }}
     >
-      <JobSetupStepHeader mb="xs">Review and Publish</JobSetupStepHeader>
+      <JobSetupStepHeader mb="xs">Review</JobSetupStepHeader>
       <JobSetupStepSubHeader mb="xl">
         Please review the details below. Once you are happy with everything we
         will begin searching for the perfect freelancer for you.
@@ -49,9 +56,9 @@ export default function PublishJob({ data }) {
         <Box>
           <Text
             mb="s"
-            fontSize="24px"
+            fontSize="22px"
             color="blue900"
-            lineHeight="28px"
+            lineHeight="26px"
             fontWeight="medium"
             letterSpacing="-0.06rem"
           >
@@ -67,7 +74,10 @@ export default function PublishJob({ data }) {
             tags={project.skills.map((s) => s.name)}
           />
           <RouterLink
-            to={{ pathname: `/jobs/${id}`, state: { readyToPublish: true } }}
+            to={{
+              pathname: `/jobs/${id}/skills`,
+              state: { readyToPublish: true },
+            }}
           >
             <Button variant="subtle" size="s" prefix={<Pencil size={24} />}>
               Edit Skills
@@ -175,24 +185,22 @@ export default function PublishJob({ data }) {
           </RouterLink>
         </Box>
       </Stack>
-      {project.status === "Draft" && (
-        <>
-          <Button
-            marginTop="xxl"
-            marginBottom="m"
-            size="l"
-            onClick={handlePublish}
-            loading={publishProjectResponse.loading}
-          >
-            Publish Job
-          </Button>
-          <Text fontSize="xs" color="neutral600" lineHeight="s">
-            By publishing this job you feel like you have completed & submitted
-            something substantial. You should feel like you have committed to
-            something.
-          </Text>
-        </>
-      )}
+      <Button
+        marginTop="xxl"
+        marginBottom="m"
+        size="l"
+        onClick={handlePublish}
+        loading={publishProjectResponse.loading}
+      >
+        {project.status === "Pending Advisable Confirmation"
+          ? "Save Changes"
+          : "Publish Job"}
+      </Button>
+      <Text fontSize="xs" color="neutral600" lineHeight="s">
+        By publishing this job you feel like you have completed & submitted
+        something substantial. You should feel like you have committed to
+        something.
+      </Text>
     </Card>
   );
 }

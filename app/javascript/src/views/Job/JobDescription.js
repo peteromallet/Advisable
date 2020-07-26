@@ -48,7 +48,14 @@ export default function JobDescription({ data }) {
       initial={{ opacity: 0, y: 100 }}
       animate={{ zIndex: 2, opacity: 1, y: 0 }}
       transition={{ delay: 0.1, duration: 0.4 }}
-      exit={{ y: -40, opacity: 0, zIndex: 1, scale: 0.9, position: "absolute" }}
+      exit={{
+        y: -40,
+        opacity: 0,
+        zIndex: 1,
+        scale: 0.9,
+        position: "absolute",
+        pointerEvents: "none",
+      }}
     >
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(formik) => (

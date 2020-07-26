@@ -55,7 +55,14 @@ export default function JobSkills({ data }) {
       padding="52px"
       animate={{ y: 0, opacity: 1 }}
       initial={{ y: 100, opacity: 0 }}
-      exit={{ y: -40, opacity: 0, zIndex: 1, scale: 0.9, position: "absolute" }}
+      exit={{
+        y: -40,
+        opacity: 0,
+        zIndex: 1,
+        scale: 0.9,
+        position: "absolute",
+        pointerEvents: "none",
+      }}
       transition={{ duration: 0.4 }}
     >
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>

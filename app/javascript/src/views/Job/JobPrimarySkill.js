@@ -39,7 +39,14 @@ export default function JobPrimarySkill({ data }) {
       padding="52px"
       initial={{ opacity: 0, y: 100 }}
       animate={{ zIndex: 2, opacity: 1, y: 0 }}
-      exit={{ y: -40, opacity: 0, zIndex: 1, scale: 0.9, position: "absolute" }}
+      exit={{
+        y: -40,
+        opacity: 0,
+        zIndex: 1,
+        scale: 0.9,
+        position: "absolute",
+        pointerEvents: "none",
+      }}
       transition={{ delay: 0.1, duration: 0.4 }}
     >
       <JobSetupStepHeader mb="xs">

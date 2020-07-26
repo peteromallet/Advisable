@@ -50,7 +50,7 @@ const StyledNavigationMenuItem_Disabled = css`
 `;
 
 const StyledNavigationMenuItem_Enabled = css`
-  color: ${theme.colors.neutral500};
+  color: #1f2452;
 
   &:hover {
     ${StyledNavigationMenuLink} {

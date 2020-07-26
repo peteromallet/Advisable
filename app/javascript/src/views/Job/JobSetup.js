@@ -50,8 +50,7 @@ const Sidebar = styled.div`
 // and if return's true will exclude the step from the flow.
 const steps = [
   {
-    path: "/jobs/:id",
-    exact: true,
+    path: "/jobs/:id/skills",
     component: JobSkills,
   },
   {
@@ -90,10 +89,12 @@ const steps = [
     },
   },
   {
-    path: "/jobs/:id/publish",
+    exact: true,
     component: PublishJob,
+    path: "/jobs/:id/publish",
   },
   {
+    exact: true,
     path: "/jobs/:id/published",
     component: JobPendingReview,
   },
@@ -136,10 +137,10 @@ export default function JobSetup({ data }) {
           <BackButton to="/projects" marginBottom="m" />
           <MultistepMenu>
             <MultistepMenu.Item
-              to={`/jobs/${id}`}
+              to={`/jobs/${id}/skills`}
               isComplete={completeSteps.skills}
               steps={[
-                "/jobs/:id",
+                "/jobs/:id/skills",
                 "/jobs/:id/primary_skill",
                 "/jobs/:id/experience",
               ]}
@@ -203,15 +204,17 @@ export default function JobSetup({ data }) {
         <AnimatePresence initial={false}>
           <Switch location={location} key={location.pathname}>
             {filteredSteps.map((step) => {
-              const Component = step.component;
-
               return (
                 <Route key={step.path} exact={step.exact} path={step.path}>
-                  <Component data={data} />
+                  <step.component data={data} />
                 </Route>
               );
             })}
-            <Redirect to={`/jobs/${id}`} />
+            {project.status === "Pending Advisable Confirmation" ? (
+              <Redirect to={`/jobs/${id}/published`} />
+            ) : (
+              <Redirect to={`/jobs/${id}/skills`} />
+            )}
           </Switch>
         </AnimatePresence>
       </Box>
