@@ -107,11 +107,10 @@ function AboutCompany({
                 <option>Small Business</option>
                 <option>Medium-Sized Business</option>
                 <option>Startup</option>
-                <option>Growth Stage Startup</option>
+                <option>Growth-Stage Startup</option>
                 <option>Major Corporation</option>
                 <option>Non-Profit</option>
                 <option>Education Institution</option>
-                <option>Government</option>
               </FormField>
             </Stack>
             <SubmitButton>Continue</SubmitButton>
