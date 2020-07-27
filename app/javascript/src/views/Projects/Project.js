@@ -37,7 +37,7 @@ export default function Project({ project }) {
         fontWeight="medium"
         letterSpacing="-0.05rem"
       >
-        {project.primarySkill || "New Project"}
+        {project.primarySkill?.name || "New Project"}
       </Text>
       <Text mb="12px" fontSize="xs" color="neutral500">
         {DateTime.fromISO(project.createdAt).toRelative()}

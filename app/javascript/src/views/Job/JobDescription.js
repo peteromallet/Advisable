@@ -15,6 +15,8 @@ export default function JobDescription({ data }) {
   const location = useLocation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
+  const { goalPlaceholder } = data.project.primarySkill;
+
   const initialValues = {
     goals: data.project.goals,
   };
@@ -56,7 +58,10 @@ export default function JobDescription({ data }) {
             name="goals"
             as={BulletPointInput}
             marginBottom="l"
-            placeholder="e.g Building a Facebook advertising campaign for launching our new product"
+            placeholder={
+              goalPlaceholder ||
+              "e.g Building a Facebook advertising campaign for launching our new product"
+            }
             onChange={(items) => formik.setFieldValue("goals", items)}
           />
           <SubmitButton

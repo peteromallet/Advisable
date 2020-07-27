@@ -97,7 +97,7 @@ const ApplicationFlow = ({ application, match, location }) => {
               fontWeight="medium"
               letterSpacing="-0.01em"
             >
-              {application.project.primarySkill} project
+              {application.project.primarySkill.name} project
             </Text>
             {(project.industry || project.companyType) && (
               <Text

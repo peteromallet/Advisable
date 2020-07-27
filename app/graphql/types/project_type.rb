@@ -7,7 +7,14 @@ class Types::ProjectType < Types::BaseType
 
   field :airtable_id, String, null: true
   field :name, String, null: false
-  field :primary_skill, String, null: true
+  field :primary_skill, Types::Skill, null: true
+
+  # We are moving away from storing primary skill in the primary_skill text
+  # column.
+  def primary_skill
+    object.project_skills.where(primary: true).first.try(:skill)
+  end
+
   field :skills, [Types::Skill], null: true
   field :currency, String, null: true
   field :status, String, null: true

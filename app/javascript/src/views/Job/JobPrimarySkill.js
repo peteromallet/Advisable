@@ -28,7 +28,7 @@ export default function JobPrimarySkill({ data }) {
   };
 
   const initialValues = {
-    primarySkill: data.project.primarySkill,
+    primarySkill: data.project.primarySkill?.name,
   };
 
   return (

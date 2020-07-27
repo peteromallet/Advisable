@@ -8,7 +8,10 @@ export const GET_PROJECTS = gql`
         projects {
           id
           airtableId
-          primarySkill
+          primarySkill {
+            id
+            name
+          }
           status
           candidateCount
           proposedCount
@@ -26,7 +29,10 @@ export const CREATE_JOB = gql`
       project {
         id
         airtableId
-        primarySkill
+        primarySkill {
+          id
+          name
+        }
         status
         candidateCount
         proposedCount

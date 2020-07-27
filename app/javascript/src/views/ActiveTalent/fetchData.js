@@ -14,7 +14,10 @@ export default gql`
           }
           project {
             id
-            primarySkill
+            primarySkill {
+              id
+              name
+            }
           }
           specialist {
             id

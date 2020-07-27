@@ -37,7 +37,7 @@ const OpenProject = ({ project }) => {
           </Box>
           <Box mt="s" padding="s" bg="neutral.0" borderRadius={8}>
             <Text size="s" weight="medium" mb="xxs" color="neutral.7">
-              {project.primarySkill}
+              {project.primarySkill.name}
             </Text>
             <Text size="xs" color="neutral.6">
               {project.estimatedBudget}

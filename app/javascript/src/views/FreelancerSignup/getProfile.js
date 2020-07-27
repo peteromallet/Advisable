@@ -19,8 +19,11 @@ export const SpecialistFields = gql`
       id
       project {
         id
-        primarySkill
         estimatedBudget
+        primarySkill {
+          id
+          name
+        }
       }
     }
   }

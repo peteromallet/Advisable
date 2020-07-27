@@ -13,7 +13,7 @@ const Component = ({ onClick, application }) => {
     <ActiveProject>
       <Card elevation={1} hoverElevation={3} onClick={onClick}>
         <Padding size="l">
-          <Heading level={4}>{application.project.primarySkill}</Heading>
+          <Heading level={4}>{application.project.primarySkill.name}</Heading>
           <Padding bottom="m">
             <Text size="s">{application.project.user.companyName}</Text>
           </Padding>

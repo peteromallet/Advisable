@@ -44,7 +44,7 @@ export default function PublishJob({ data }) {
             letterSpacing="-0.06rem"
           >
             {t(`industryExperienceImportance.2`, {
-              primarySkill,
+              primarySkill: primarySkill.name,
               companyType,
               industry,
             })}

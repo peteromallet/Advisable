@@ -8,10 +8,15 @@ const projectFields = gql`
     characteristics
     optionalCharacteristics
     requiredCharacteristics
-    primarySkill
     likelyToHire
     locationImportance
     industryExperienceImportance
+    primarySkill {
+      id
+      name
+      goalPlaceholder
+      characteristicPlaceholder
+    }
     user {
       id
       location

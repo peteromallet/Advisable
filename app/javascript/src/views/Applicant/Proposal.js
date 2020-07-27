@@ -42,7 +42,7 @@ const Loaded = ({ data }) => {
         </Back>
       </Padding>
       <Padding left="xl" right="xl" bottom="s">
-        <Heading level={3}>Proposal for "{project.primarySkill}"</Heading>
+        <Heading level={3}>Proposal for "{project.primarySkill.name}"</Heading>
       </Padding>
       <Padding left="xl" right="xl" bottom="l">
         <Text size="s">

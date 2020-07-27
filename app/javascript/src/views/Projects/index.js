@@ -1,5 +1,6 @@
 // Renders the projects view for a user.
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { Container, Box, Text } from "@advisable/donut";
 import useScrollRestore from "../../utilities/useScrollRestore";
@@ -8,8 +9,12 @@ import { GET_PROJECTS } from "./queries";
 import ProjectsList from "./ProjectsList";
 
 const Projects = () => {
-  useScrollRestore();
+  const location = useLocation();
   const { loading, data } = useQuery(GET_PROJECTS);
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const handleCreate = (cache, response) => {
     const { viewer } = cache.readQuery({ query: GET_PROJECTS });
