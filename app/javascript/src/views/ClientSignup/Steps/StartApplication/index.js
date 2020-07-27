@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import * as Yup from "yup";
 import queryString from "query-string";
-import { useStartClientApplication } from "../../queries";
+import { useStartClientApplication, ABOUT_COMPANY_QUERY } from "../../queries";
 import { Formik, Form } from "formik";
-import { useLocation, useHistory, Redirect } from "react-router";
+import { useLocation, useHistory } from "react-router";
 import SubmitButton from "../../../../components/SubmitButton";
 import FormField from "src/components/FormField";
-import { Text, Input, Stack, Box } from "@advisable/donut";
+import { Input, Box, useBreakpoint } from "@advisable/donut";
 import Loading from "../../../../components/Loading";
+import MotionStack from "../MotionStack";
+import Navigation from "../Navigation";
+import { Title } from "../styles";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("Provide your First Name, please."),
@@ -16,10 +19,15 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email().required("Provide your email, please."),
 });
 
-function StartApplication({ RedirectToNextStep }) {
-  const [startClientApplication, { error, data }] = useStartClientApplication();
+function StartApplication() {
+  const [
+    startClientApplication,
+    { error, data, client, called },
+  ] = useStartClientApplication();
   const location = useLocation();
   const history = useHistory();
+  const isMobile = useBreakpoint("m");
+  const [applicationId, setApplicationId] = useState();
   const [email, setEmail] = useState();
 
   // Check query params
@@ -45,15 +53,31 @@ function StartApplication({ RedirectToNextStep }) {
   const errorCodes = error?.graphQLErrors.map((err) => err.extensions?.code);
   const emailNotAllowed = errorCodes?.includes("emailNotAllowed");
   const existingAccount = errorCodes?.includes("existingAccount");
-  if (existingAccount) return <Redirect push to="/login" />;
-  if (emailNotAllowed)
-    return <Redirect push to="/clients/signup/email-not-allowed" />;
-  // Handle mutation data on response
-  const applicationId = data?.startClientApplication?.clientApplication?.id;
-  if (applicationId)
-    return <RedirectToNextStep state={{ applicationId, email }} />;
-  // Loading while handling query string
-  if (location.search) return <Loading />;
+  useEffect(() => {
+    const prefetchNextStep = async (id) => {
+      await client.query({
+        query: ABOUT_COMPANY_QUERY,
+        variables: { id },
+      });
+      setApplicationId(id);
+    };
+    let applicationId = data?.startClientApplication?.clientApplication?.id;
+    applicationId && prefetchNextStep(applicationId);
+  }, [data, client]);
+
+  if (location.search)
+    return (
+      <>
+        <Navigation
+          emailNotAllowed={emailNotAllowed}
+          existingAccount={existingAccount}
+          called={called}
+          email={email}
+          applicationId={applicationId}
+        />
+        <Loading />
+      </>
+    );
 
   // Formik
   const initialValues = {
@@ -62,34 +86,32 @@ function StartApplication({ RedirectToNextStep }) {
     email: "",
   };
   const handleSubmit = (values) => {
-    startClientApplication({ variables: { ...values } });
     setEmail(values.email);
+    startClientApplication({ variables: { ...values } });
   };
 
   return (
-    <Formik
-      onSubmit={handleSubmit}
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-    >
-      {() => (
-        <>
-          <Text
-            as="h2"
-            mb="m"
-            color="blue800"
-            fontSize="xxxl"
-            lineHeight="xxxl"
-            fontWeight="semibold"
-            letterSpacing="-0.02em"
-          >
-            Start your application
-          </Text>
+    <>
+      <Navigation
+        emailNotAllowed={emailNotAllowed}
+        existingAccount={existingAccount}
+        called={called}
+        email={email}
+        applicationId={applicationId}
+      />
+      <Formik
+        onSubmit={handleSubmit}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+      >
+        {() => (
           <Form>
-            <Stack spacing="m" mb="l">
-              <Box display="flex">
-                <Box flex="1" mr="s">
+            <MotionStack>
+              <Title mb="m">Start Your Application</Title>
+              <Box display={isMobile ? "block" : "flex"} mb="s">
+                <Box flex="1" mr={!isMobile && "s"} mb={isMobile && "s"}>
                   <FormField
+                    isRequired
                     as={Input}
                     name="firstName"
                     placeholder="First Name"
@@ -105,23 +127,27 @@ function StartApplication({ RedirectToNextStep }) {
                   />
                 </Box>
               </Box>
-              <FormField
-                as={Input}
-                name="email"
-                placeholder="ospencer@umbrellacorp.com"
-                label="Email"
-              />
-            </Stack>
-            <SubmitButton>Continue</SubmitButton>
+              <Box mb="l">
+                <FormField
+                  isRequired
+                  as={Input}
+                  name="email"
+                  placeholder="ospencer@umbrellacorp.com"
+                  label="Email"
+                />
+              </Box>
+              <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>
+            </MotionStack>
           </Form>
-        </>
-      )}
-    </Formik>
+        )}
+      </Formik>
+    </>
   );
 }
 
 StartApplication.propTypes = {
   RedirectToNextStep: PropTypes.elementType,
+  redirectToNextStep: PropTypes.func,
 };
 
 export default StartApplication;

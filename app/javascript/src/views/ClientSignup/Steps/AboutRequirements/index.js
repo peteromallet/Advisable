@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
-import { Select, Text, Stack, Autocomplete } from "@advisable/donut";
+import { Select, Text, Autocomplete, Box } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "../../../../components/SubmitButton";
 import Loading from "../../../../components/Loading";
@@ -13,6 +13,9 @@ import {
   useLocationState,
 } from "../../queries";
 import { string, array, object } from "yup";
+import MotionStack from "../MotionStack";
+import Navigation from "../Navigation";
+import { Title } from "../styles";
 
 const validationSchema = object().shape({
   skills: array().min(1).of(string().required()).required(),
@@ -22,20 +25,13 @@ const validationSchema = object().shape({
   budget: string(),
 });
 
-function AboutRequirements({
-  RedirectToInitialStep,
-  RedirectToNextStep,
-  RedirectToLastStep,
-}) {
+function AboutRequirements() {
   const locationState = useLocationState();
   const [updateClientApplication, { called }] = useAboutRequirementsUpdate();
   const { loading, error, data } = useAboutRequirementsQuery();
 
   if (loading) return <Loading />;
-  if (error) return <RedirectToInitialStep />;
-  if (called) return <RedirectToNextStep state={{ ...locationState }} />;
-  if (data.clientApplication?.status !== "STARTED")
-    return <RedirectToLastStep state={{ ...locationState }} />;
+
   const { clientApplication, skills } = data;
 
   // Formik
@@ -59,68 +55,71 @@ function AboutRequirements({
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={validationSchema}
-    >
-      {(formik) => (
-        <>
-          <Text
-            as="h2"
-            mb="m"
-            color="blue.8"
-            fontSize="xxxl"
-            lineHeight="xxxl"
-            fontWeight="semibold"
-            letterSpacing="-0.02em"
-          >
-            About Your Requirements
-          </Text>
-          <Text mb="m">
-            This is for us to figure out if your requirements are a good match
-            for our talent.
-          </Text>
+    <>
+      <Navigation
+        called={called}
+        error={error}
+        status={clientApplication.status}
+      />
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+      >
+        {(formik) => (
           <Form>
-            <Stack spacing="m" mb="l">
-              <FormField
-                as={Autocomplete}
-                multiple
-                max={5}
-                error={null}
-                name="skills"
-                placeholder="Facebook Ads, Content Marketing, etc."
-                label="What skills are you interested in using freelancers for over the next 6 months?*"
-                options={skills}
-                onChange={(skill) => formik.setFieldValue("skills", skill)}
-              />
-              <FormField
-                as={Select}
-                name="numberOfFreelancers"
-                label="How many freelancers do you plan on hiring over the next 6 months?*"
-                placeholder="Number of freelancers"
-                error={null}
-                value={formik.values.numberOfFreelancers}
-                onChange={formik.handleChange}
-              >
-                <option>0</option>
-                <option>1-3</option>
-                <option>4-10</option>
-                <option>10+</option>
-              </FormField>
-              <FormField
-                as={CurrencyInput}
-                name="budget"
-                prefix="$"
-                placeholder="99999"
-                label="How much do you currently spend on freelancers per year? (optional)"
-              />
-            </Stack>
-            <SubmitButton>Continue</SubmitButton>
+            <MotionStack spacing="m">
+              <Title>About Your Requirements</Title>
+              <Text mb="m">
+                This is for us to figure out if your requirements are a good
+                match for our talent.
+              </Text>
+              <Box mb="m">
+                <FormField
+                  isRequired
+                  as={Autocomplete}
+                  multiple
+                  max={5}
+                  error={null}
+                  name="skills"
+                  placeholder="Facebook Ads, Content Marketing, etc."
+                  label="What skill are you looking for?"
+                  options={skills}
+                  onChange={(skill) => formik.setFieldValue("skills", skill)}
+                />
+              </Box>
+              <Box mb="m">
+                <FormField
+                  isRequired
+                  as={Select}
+                  name="numberOfFreelancers"
+                  label="How many freelancers would you like to hire over the next 6 months?"
+                  placeholder="Number of freelancers"
+                  error={null}
+                  value={formik.values.numberOfFreelancers}
+                  onChange={formik.handleChange}
+                >
+                  <option>0</option>
+                  <option>1-3</option>
+                  <option>4-10</option>
+                  <option>10+</option>
+                </FormField>
+              </Box>
+              <Box mb="l">
+                <FormField
+                  as={CurrencyInput}
+                  name="budget"
+                  prefix="$"
+                  placeholder="99999"
+                  label="How much do you currently spend on freelancers per year?"
+                />
+              </Box>
+              <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>
+            </MotionStack>
           </Form>
-        </>
-      )}
-    </Formik>
+        )}
+      </Formik>
+    </>
   );
 }
 AboutRequirements.propTypes = {

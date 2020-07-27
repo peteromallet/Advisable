@@ -8,7 +8,7 @@ import ScaleInput from "../../../../components/ScaleInput";
 import ChoiceList from "../../../../components/ChoiceList";
 import Loading from "../../../../components/Loading";
 import FormField from "src/components/FormField";
-import { Text, Stack } from "@advisable/donut";
+import { Text, Box } from "@advisable/donut";
 // Queries
 import {
   useAboutPreferencesSubmit,
@@ -16,6 +16,9 @@ import {
   useLocationState,
   useClientApplicationQuery,
 } from "../../queries";
+import Navigation from "../Navigation";
+import MotionStack from "../MotionStack";
+import { Title } from "../styles";
 
 const validationSchema = object().shape({
   localityImportance: number(),
@@ -46,24 +49,17 @@ const talentQualityOptions = [
   },
 ];
 
-function AboutPreferences({
-  RedirectToInitialStep,
-  RedirectToNextStep,
-  RedirectToLastStep,
-}) {
+function AboutPreferences() {
   const locationState = useLocationState();
   const [submitClientApplication, { called }] = useAboutPreferencesSubmit();
   const { loading, error, data } = useClientApplicationQuery();
 
   if (loading) return <Loading />;
-  if (error) return <RedirectToInitialStep />;
-  if (called) return <RedirectToNextStep state={{ ...locationState }} />;
-  if (data.clientApplication?.status !== "STARTED")
-    return <RedirectToLastStep state={{ ...locationState }} />;
   const {
     localityImportance,
     talentQuality,
     numberOfFreelancers,
+    status,
   } = data.clientApplication;
 
   // Formik
@@ -89,68 +85,69 @@ function AboutPreferences({
   };
 
   return (
-    <Formik
-      validationSchema={validationSchema}
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-    >
-      {(formik) => (
-        <>
-          <Text
-            as="h2"
-            mb="m"
-            color="blue.8"
-            fontSize="xxxl"
-            lineHeight="xxxl"
-            fontWeight="semibold"
-            letterSpacing="-0.02em"
-          >
-            About Your Preferences
-          </Text>
-          <Text mb="m">This is to help tailor our recommendations to you.</Text>
+    <>
+      <Navigation error={error} called={called} status={status} />
+      <Formik
+        validationSchema={validationSchema}
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+      >
+        {(formik) => (
           <Form>
-            <Stack spacing="l" mb="l">
-              <FormField
-                as={ScaleInput}
-                name="localityImportance"
-                label="How important is it that freelancers you hire are in the same city as you?"
-                leftTitle="Not Important"
-                rightTitle="Very Important"
-                onChange={(n) => formik.setFieldValue("localityImportance", n)}
-              />
-              <ChoiceList
-                fullWidth
-                optionsPerRow={2}
-                name="acceptedGuaranteeTerms"
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.talentQuality && formik.errors.talentQuality
-                }
-                label="In order to avail of our money-back guarantee, are you willing to provide feedback on every freelancer you hire?"
-                options={[
-                  { label: "Yes", value: "yes" },
-                  { label: "No", value: "no" },
-                ]}
-                value={formik.values.acceptedGuaranteeTerms}
-              />
-              <ChoiceList
-                fullWidth
-                optionsPerRow={1}
-                name="talentQuality"
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.talentQuality && formik.errors.talentQuality
-                }
-                label="What level of talent are you typically looking for?"
-                options={talentQualityOptions}
-                value={formik.values.talentQuality}
-              />
-            </Stack>
-            <SubmitButton>Continue</SubmitButton>
+            <MotionStack>
+              <Title>About Your Preferences</Title>
+              <Text mb="m">
+                This is to help tailor our recommendations to you.
+              </Text>
+              <Box mb="l">
+                <FormField
+                  as={ScaleInput}
+                  name="localityImportance"
+                  label="How important is it that freelancers you hire should be in your city?"
+                  leftTitle="Not Important"
+                  rightTitle="Very Important"
+                  onChange={(n) =>
+                    formik.setFieldValue("localityImportance", n)
+                  }
+                />
+              </Box>
+              <Box mb="s">
+                <ChoiceList
+                  fullWidth
+                  optionsPerRow={2}
+                  name="acceptedGuaranteeTerms"
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.talentQuality && formik.errors.talentQuality
+                  }
+                  label="In order to avail of our money-back guarantee, are you willing to provide feedback on every freelancer you hire?"
+                  options={[
+                    { label: "Yes", value: "yes" },
+                    { label: "No", value: "no" },
+                  ]}
+                  value={formik.values.acceptedGuaranteeTerms}
+                />
+              </Box>
+              <Box mb="m">
+                <ChoiceList
+                  fullWidth
+                  optionsPerRow={1}
+                  name="talentQuality"
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.talentQuality && formik.errors.talentQuality
+                  }
+                  label="What level of talent are you typically looking for?"
+                  options={talentQualityOptions}
+                  value={formik.values.talentQuality}
+                />
+              </Box>
+              <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>
+            </MotionStack>
           </Form>
-        </>
-      )}
-    </Formik>
+        )}
+      </Formik>
+    </>
   );
 }
 

@@ -69,12 +69,9 @@ export const StyledStar = styled.div`
 `;
 
 export const Sidebar = styled.div`
-  top: 58px;
-  right: 0;
-  right: 0;
   bottom: 0;
   z-index: 1;
-  width: 550px;
+  width: 40%;
   height: calc(100vh - 58px);
   display: flex;
   position: fixed;
