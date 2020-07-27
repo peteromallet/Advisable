@@ -3,7 +3,6 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { Container, Box, Text } from "@advisable/donut";
-import useScrollRestore from "../../utilities/useScrollRestore";
 import Loading from "./Loading";
 import { GET_PROJECTS } from "./queries";
 import ProjectsList from "./ProjectsList";

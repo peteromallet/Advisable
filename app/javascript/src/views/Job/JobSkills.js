@@ -1,10 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { useParams, useHistory, useLocation } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form, Field } from "formik";
-import { Box, Text, Autocomplete, Error, Card } from "@advisable/donut";
+import { Box, Text, Autocomplete, Error } from "@advisable/donut";
 import SubmitButton from "components/SubmitButton";
 import PopularSkills from "./PopularSkills";
 import { UPDATE_PROJECT } from "./queries";
@@ -80,7 +79,10 @@ export default function JobSkills({ data }) {
             >
               Popular skills for finance startups
             </Text>
-            <PopularSkills skills={data.popularSkills.nodes} />
+            <PopularSkills
+              skills={data.popularSkills.nodes}
+              disabled={formik.values.skills.length >= 5}
+            />
           </Box>
           <SubmitButton
             size="l"

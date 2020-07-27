@@ -15,7 +15,7 @@ export default function JobCharacteristics({ data }) {
   const location = useLocation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
-  const { characteristicPlaceholder } = data.project.primarySkill;
+  const { primarySkill } = data.project;
 
   const initialValues = {
     characteristics: data.project.characteristics,
@@ -59,7 +59,8 @@ export default function JobCharacteristics({ data }) {
             marginBottom="xl"
             autoFocus
             placeholder={
-              characteristicPlaceholder || "e.g Strong communication skills"
+              primarySkill?.characteristicPlaceholder ||
+              "e.g Strong communication skills"
             }
             onChange={(items) => formik.setFieldValue("characteristics", items)}
           />
