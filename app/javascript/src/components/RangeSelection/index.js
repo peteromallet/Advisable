@@ -32,18 +32,18 @@ const variants = {
   circle: {
     rest: {
       y: 0,
-      backgroundColor: "white",
+      backgroundColor: "#FFFFFF",
       color: theme.colors.blue900,
       boxShadow: "0 2px 8px rgba(0, 0, 0, 0.06)",
     },
     hover: {
       y: -4,
-      backgroundColor: "white",
+      backgroundColor: "#FFFFFF",
       color: theme.colors.blue700,
       boxShadow: "0 4px 12px rgba(0, 0, 0, 0.12)",
     },
     selected: {
-      color: "white",
+      color: "#FFFFFF",
       backgroundColor: theme.colors.blue700,
     },
   },

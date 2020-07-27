@@ -3,6 +3,10 @@ import { theme } from "@advisable/donut";
 
 export const StyledRangeSelection = styled.div`
   display: flex;
+
+  @media only screen and (max-width: ${theme.breakpoints.m}) {
+    flex-direction: column;
+  }
 `;
 
 export const StyledRAngeSelectionOptionBackground = styled.div`
@@ -22,6 +26,10 @@ export const StyledRangeSelectionOption = styled.div`
   flex-direction: column;
   cursor: pointer;
   user-select: none;
+
+  @media only screen and (max-width: ${theme.breakpoints.m}) {
+    flex-direction: row;
+  }
 `;
 
 export const StyledRangeSelectionOptionWrapper = styled.div`
@@ -36,6 +44,11 @@ export const StyledRangeSelectionOptionWrapper = styled.div`
 
   &:last-child {
     margin-right: 0;
+  }
+
+  @media only screen and (max-width: ${theme.breakpoints.m}) {
+    margin: 0 0 8px 0;
+    padding: 20px 12px;
   }
 `;
 
@@ -63,4 +76,12 @@ export const StyledRangeSelectionOptionCircle = styled.div`
   color: ${theme.colors.blue900};
   background: white;
   position: relative;
+
+  @media only screen and (max-width: ${theme.breakpoints.m}) {
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    margin-right: 12px;
+  }
 `;

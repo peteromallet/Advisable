@@ -34,12 +34,13 @@ export const StyledNavigationMenuLink = styled(NavLink)`
   justify-content: space-between;
 `;
 
-const StyledNavigationMenuItem_Comlete = css`
+const StyledNavigationMenuItem_Complete = css`
   color: ${theme.colors.neutral500};
 
   ${StyledNavigationMenuItemNumber} {
-    color: white;
-    background: #2ebcc0;
+    color: white !important;
+    background: #2ebcc0 !important;
+    border-color: #2ebcc0 !important;
   }
 `;
 
@@ -72,7 +73,8 @@ const StyledNavigationMenuItem_Enabled = css`
 
       ${StyledNavigationMenuItemNumber} {
         color: #c6c6d0;
-        background: white;
+        background: transparent;
+        border: 2px solid ${theme.colors.neutral200};
       }
     }
   }
@@ -88,7 +90,7 @@ export const StyledNavigationMenuItem = styled.div`
 
   ${(props) => props.isDisabled && StyledNavigationMenuItem_Disabled};
   ${(props) => !props.isDisabled && StyledNavigationMenuItem_Enabled};
-  ${(props) => props.isComplete && StyledNavigationMenuItem_Comlete};
+  ${(props) => props.isComplete && StyledNavigationMenuItem_Complete};
 `;
 
 export const StyledNavigationMenuItemSteps = styled.div`

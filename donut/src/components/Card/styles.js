@@ -37,7 +37,6 @@ const elevation = variant({
 const cardType = variant({
   variants: {
     bordered: {
-      boxShadow: "none",
       background: "transparent",
       border: "1px solid #E1E2E9",
     },

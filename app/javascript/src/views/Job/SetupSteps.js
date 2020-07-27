@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Card } from "@advisable/donut";
+import { useBreakpoint, Card } from "@advisable/donut";
 import {
   Switch,
   Route,
@@ -18,6 +18,18 @@ import JobPendingReview from "./JobPendingReview";
 import JobCharacteristics from "./JobCharacteristics";
 import JobRequiredCharacteristics from "./JobRequiredCharacteristics";
 import JobLikelyToHire from "./JobLikelyToHire";
+
+export const setupProgress = (project) => {
+  return {
+    skills: project.industryExperienceImportance !== null,
+    location: project.locationImportance !== null,
+    characteristics: project.requiredCharacteristics.length > 0,
+    description: project.goals.length > 0,
+    specialists: project.likelyToHire !== null,
+    published: project.status === "Pending Advisable Confirmation",
+  };
+};
+
 // The steps are stored in an array. Each step is essentially props for a
 // react router Route component.
 const steps = [
@@ -75,6 +87,7 @@ export default function SetupSteps({ data }) {
   const { id } = useParams();
   const location = useLocation();
   const { project } = data;
+  const largeScreen = useBreakpoint("lUp");
 
   return (
     <AnimatePresence initial={false} exitBeforeEnter>
@@ -84,12 +97,19 @@ export default function SetupSteps({ data }) {
             <Route key={step.path} exact={step.exact} path={step.path}>
               <Card
                 as={motion.div}
-                padding="52px"
-                animate={{ y: 0, opacity: 1 }}
+                padding={{ _: "0", m: "52px" }}
+                elevation={{ _: "none", m: "m" }}
+                variant={["transparent", "default"]}
+                animate={{ x: 0, y: 0, opacity: 1 }}
                 transition={{ duration: 0.4 }}
-                initial={{ y: 80, opacity: 0 }}
+                initial={{
+                  x: largeScreen ? 0 : 80,
+                  y: largeScreen ? 80 : 0,
+                  opacity: 0,
+                }}
                 exit={{
-                  y: -80,
+                  y: largeScreen ? -80 : 0,
+                  x: largeScreen ? 0 : -80,
                   opacity: 0,
                   zIndex: 1,
                   transition: { duration: 0.3 },

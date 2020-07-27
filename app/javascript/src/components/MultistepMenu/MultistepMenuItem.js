@@ -1,6 +1,6 @@
 import React from "react";
-import { matchPath, useLocation, useRouteMatch } from "react-router-dom";
-import { motion, useSpring, useMotionValue, transform } from "framer-motion";
+import { matchPath, useLocation } from "react-router-dom";
+import { motion, transform } from "framer-motion";
 import {
   StyledNavigationMenuItem,
   StyledNavigationMenuLink,
