@@ -23,10 +23,10 @@ const StarRating = () => (
       <Star />
       <br />
       <Text fontSize="xxs" mt="xs" fontWeight="semibold" color="white.9">
-        9.4 out of 10
+        9.6 out of 10
       </Text>
       <Text fontSize="xxs" mt="xxs" color="white.9">
-        40 Ratings
+        49 Ratings
       </Text>
     </StyledStarRating>
   </>
