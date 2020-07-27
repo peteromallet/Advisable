@@ -4,6 +4,7 @@ import { findIndex } from "lodash-es";
 
 function useSteps(steps) {
   const location = useLocation();
+  const history = useHistory();
 
   const activeSteps = useMemo(() => steps.filter((step) => !step.passive), [
     steps,
@@ -33,7 +34,6 @@ function useSteps(steps) {
   // Number of steps
   const numberOfSteps = steps.length;
   const numberOfActiveSteps = activeSteps.length;
-
   const nextStep = useMemo(() => steps[currentStepIndex + 1] || steps[0], [
     currentStepIndex,
     steps,
@@ -49,6 +49,23 @@ function useSteps(steps) {
     activeSteps.length,
     steps,
   ]);
+
+  const redirectToInitialStep = useCallback(() => history.push(steps[0].path), [
+    history,
+    steps,
+  ]);
+  const redirectToNextStep = useCallback(
+    (state) => history.push({ pathname: nextStep.path, state }),
+    [history, nextStep.path],
+  );
+  const redirectToLastStep = useCallback(
+    (state) =>
+      history.push({
+        pathname: activeSteps[activeSteps.length - 1].path,
+        state,
+      }),
+    [activeSteps, history],
+  );
 
   // Route components for React Router
   const routes = useMemo(

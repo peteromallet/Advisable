@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import queryString from "query-string";
 import { useStartClientApplication, ABOUT_COMPANY_QUERY } from "../../queries";
 import { Formik, Form } from "formik";
-import { useLocation, useHistory, Redirect } from "react-router";
+import { useLocation, useHistory } from "react-router";
 import SubmitButton from "../../../../components/SubmitButton";
 import FormField from "src/components/FormField";
 import { Input, Box, useBreakpoint } from "@advisable/donut";

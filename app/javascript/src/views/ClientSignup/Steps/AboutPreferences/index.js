@@ -57,15 +57,7 @@ const talentQualityOptions = [
   },
 ];
 
-<<<<<<< HEAD
 function AboutPreferences() {
-=======
-function AboutPreferences({
-  RedirectToInitialStep,
-  RedirectToNextStep,
-  RedirectToLastStep,
-}) {
->>>>>>> Restrict from going backward after form was submitted
   const locationState = useLocationState();
   const [
     submitClientApplication,
@@ -73,7 +65,6 @@ function AboutPreferences({
   ] = useAboutPreferencesSubmit();
   const { loading, error, data } = useClientApplicationQuery();
 
-<<<<<<< HEAD
   if (loading || error)
     return (
       <motion.div exit>
@@ -82,13 +73,6 @@ function AboutPreferences({
       </motion.div>
     );
 
-=======
-  if (loading) return <Loading />;
-  if (error) return <RedirectToInitialStep />;
-  if (called) return <RedirectToNextStep state={{ ...locationState }} />;
-  if (data.clientApplication?.status !== "STARTED")
-    return <RedirectToLastStep state={{ ...locationState }} />;
->>>>>>> Restrict from going backward after form was submitted
   const {
     localityImportance,
     talentQuality,
