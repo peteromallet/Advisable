@@ -25,23 +25,23 @@ const validationSchema = object().shape({
 
 const talentQualityOptions = [
   {
-    label: "Cheap Talent - I don't care about quality",
+    label: "Cheap Talent — I don't care about quality",
     value: "CHEAP",
   },
   {
-    label: "Budget Talent - I'm very cost-conscious",
+    label: "Budget Talent — I'm very cost-conscious",
     value: "BUDGET",
   },
   {
-    label: "Good Talent - I want reliable talent",
+    label: "Good Talent — I want reliable talent",
     value: "GOOD",
   },
   {
-    label: "Top Talent - I want talent I can fully trust",
+    label: "Top Talent — I want talent I can fully trust",
     value: "TOP",
   },
   {
-    label: "World Class - I want the best of the best",
+    label: "World Class — I want the best of the best",
     value: "WORLD_CLASS",
   },
 ];
