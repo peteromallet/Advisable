@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "@advisable/donut";
+import { Text, Link } from "@advisable/donut";
 import { StyledStarRating, StyledStar } from "./styles";
 
 const Star = () => (
@@ -16,11 +16,16 @@ const Star = () => (
 const StarRating = () => (
   <>
     <StyledStarRating>
-      <Star />
-      <Star />
-      <Star />
-      <Star />
-      <Star />
+      <Link.External
+        href="https://www.trustpilot.com/review/advisable.com"
+        target="_blank"
+      >
+        <Star />
+        <Star />
+        <Star />
+        <Star />
+        <Star />
+      </Link.External>
       <br />
       <Text fontSize="xxs" mt="xs" fontWeight="semibold" color="white.9">
         9.6 out of 10
