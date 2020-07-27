@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
@@ -14,7 +15,7 @@ const Inner = styled(motion.div)`
   background: #17cda1;
 `;
 
-export default ({ amount }) => {
+export default function Progress({ amount }) {
   return (
     <Bar>
       <Inner
@@ -23,4 +24,8 @@ export default ({ amount }) => {
       />
     </Bar>
   );
+}
+
+Progress.propTypes = {
+  amount: PropTypes.number,
 };
