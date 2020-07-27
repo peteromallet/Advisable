@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Box } from "@advisable/donut";
+import { Text, Box, Link } from "@advisable/donut";
 import { Sidebar } from "./styles";
 import StarRating from "./StarRating";
 import trustpilot from "./trustpilot.png";
@@ -28,18 +28,23 @@ const Testimonials = () => {
   return (
     <Sidebar>
       <StarRating />
-      <Box
-        position="absolute"
-        right={20}
-        top={20}
-        width={120}
-        height={30}
-        zIndex={2}
-        css={`
-          background-size: cover;
-          background-image: url(${trustpilot});
-        `}
-      />
+      <Link.External
+        href="https://www.trustpilot.com/review/advisable.com"
+        target="_blank"
+      >
+        <Box
+          position="absolute"
+          right={20}
+          top={20}
+          width={120}
+          height={30}
+          zIndex={2}
+          css={`
+            background-size: cover;
+            background-image: url(${trustpilot});
+          `}
+        />
+      </Link.External>
       <Box width="100%" zIndex={2}>
         <Quotes current={current}>
           {TESTIMONIALS.map((t, i) => (
