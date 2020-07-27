@@ -12,16 +12,7 @@ import {
 } from "react-router-dom";
 import BackButton from "components/BackButton";
 import MultistepMenu from "../../components/MultistepMenu";
-import JobSkills from "./JobSkills";
-import PublishJob from "./PublishJob";
-import JobLocation from "./JobLocation";
-import JobDescription from "./JobDescription";
-import JobExperience from "./JobExperience";
-import JobPrimarySkill from "./JobPrimarySkill";
-import JobPendingReview from "./JobPendingReview";
-import JobCharacteristics from "./JobCharacteristics";
-import JobRequiredCharacteristics from "./JobRequiredCharacteristics";
-import JobLikelyToHire from "./JobLikelyToHire";
+import SetupSteps from "./SetupSteps";
 
 const PageWithSidebar = styled.div`
   display: flex;
@@ -44,62 +35,6 @@ const Sidebar = styled.div`
   ${padding};
 `;
 
-// The steps are stored in an array. Each step is essentially props for a
-// react router Route component. However, a step can also have a disabled
-// property which is a function that is passed the same props as the component
-// and if return's true will exclude the step from the flow.
-const steps = [
-  {
-    path: "/jobs/:id/skills",
-    component: JobSkills,
-  },
-  {
-    path: "/jobs/:id/primary_skill",
-    component: JobPrimarySkill,
-    disabled: ({ data }) => data.project.skills.length === 1,
-  },
-  {
-    path: "/jobs/:id/experience",
-    component: JobExperience,
-  },
-  {
-    path: "/jobs/:id/location",
-    component: JobLocation,
-  },
-  {
-    path: "/jobs/:id/characteristics",
-    component: JobCharacteristics,
-  },
-  {
-    path: "/jobs/:id/required_characteristics",
-    component: JobRequiredCharacteristics,
-  },
-  {
-    path: "/jobs/:id/description",
-    component: JobDescription,
-  },
-  {
-    path: "/jobs/:id/likely_to_hire",
-    component: JobLikelyToHire,
-  },
-  {
-    path: "/jobs/:id/specialists",
-    component: function Specialist() {
-      return <>specialists</>;
-    },
-  },
-  {
-    exact: true,
-    component: PublishJob,
-    path: "/jobs/:id/publish",
-  },
-  {
-    exact: true,
-    path: "/jobs/:id/published",
-    component: JobPendingReview,
-  },
-];
-
 export default function JobSetup({ data }) {
   const { id } = useParams();
   const location = useLocation();
@@ -107,11 +42,6 @@ export default function JobSetup({ data }) {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
-
-  const filteredSteps = steps.filter((step) => {
-    if (step.disabled === undefined) return true;
-    return !step.disabled({ data });
-  });
 
   const { project } = data;
 
@@ -206,40 +136,7 @@ export default function JobSetup({ data }) {
         transition={{ duration: 0.3 }}
         initial={{ opacity: 0, y: 40 }}
       >
-        <AnimatePresence initial={false} exitBeforeEnter>
-          <Switch location={location} key={location.pathname}>
-            {filteredSteps.map((step) => {
-              return (
-                <Route key={step.path} exact={step.exact} path={step.path}>
-                  <Card
-                    as={motion.div}
-                    padding="52px"
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.4 }}
-                    initial={{ y: 80, opacity: 0 }}
-                    exit={{
-                      y: -80,
-                      opacity: 0,
-                      zIndex: 1,
-                      transition: { duration: 0.3 },
-                    }}
-                  >
-                    <step.component data={data} />
-                  </Card>
-                </Route>
-              );
-            })}
-            <Route path="/jobs/:id" exact>
-              <motion.div exit={{}}>
-                {project.status === "Pending Advisable Confirmation" ? (
-                  <Redirect to={`/jobs/${id}/published`} />
-                ) : (
-                  <Redirect to={`/jobs/${id}/skills`} />
-                )}
-              </motion.div>
-            </Route>
-          </Switch>
-        </AnimatePresence>
+        <SetupSteps data={data} />
       </Box>
     </PageWithSidebar>
   );

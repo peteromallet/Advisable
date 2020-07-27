@@ -13,15 +13,19 @@ export default function PublishJob({ data }) {
   const { t } = useTranslation();
   const [publishProject, publishProjectResponse] = useMutation(PUBLISH_PROJECT);
 
-  const handlePublish = async () => {
-    await publishProject({ variables: { input: { id } } });
-    history.push(`/jobs/${id}/published`);
-  };
-
   const { project } = data;
   const { primarySkill, user } = project;
   const industry = user.industry.name;
   const companyType = user.companyType;
+
+  const handlePublish = async () => {
+    if (project.status === "Draft") {
+      await publishProject({ variables: { input: { id } } });
+    }
+
+    history.push(`/jobs/${id}/published`);
+  };
+
   return (
     <>
       <JobSetupStepHeader mb="xs">Review</JobSetupStepHeader>

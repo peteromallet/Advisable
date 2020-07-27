@@ -30,11 +30,13 @@ export const StyledNavigationMenuLink = styled(NavLink)`
   align-items: center;
   padding-left: 16px;
   padding-right: 12px;
-  letter-spacing: -0.02rem;
+  letter-spacing: -0.03rem;
   justify-content: space-between;
 `;
 
 const StyledNavigationMenuItem_Comlete = css`
+  color: ${theme.colors.neutral500};
+
   ${StyledNavigationMenuItemNumber} {
     color: white;
     background: #2ebcc0;
@@ -50,7 +52,7 @@ const StyledNavigationMenuItem_Disabled = css`
 `;
 
 const StyledNavigationMenuItem_Enabled = css`
-  color: #1f2452;
+  color: ${theme.colors.neutral500};
 
   &:hover {
     ${StyledNavigationMenuLink} {

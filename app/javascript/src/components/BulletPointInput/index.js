@@ -13,15 +13,20 @@ export default function BulletPointInput({
 
   const handleKeyDown = (i) => (e) => {
     const inputValue = e.target.value;
+    const previousInput = e.target.parentNode?.previousSibling;
+    const nextInput = e.target.parentNode?.nextSibling;
 
     if (e.keyCode === 13) {
       e.preventDefault();
-      const next = e.target.parentNode?.nextSibling;
-      next?.querySelector("textarea").focus();
+      nextInput?.querySelector("textarea").focus();
     }
 
     // backspace
     if (e.keyCode === 8 && inputValue.length === 0) {
+      if (!nextInput) {
+        previousInput.querySelector("textarea").focus();
+      }
+
       onChange(value.filter((item, index) => index !== i));
     }
   };

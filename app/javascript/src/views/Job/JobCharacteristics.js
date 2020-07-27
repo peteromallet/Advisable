@@ -59,7 +59,11 @@ export default function JobCharacteristics({ data }) {
             placeholder="e.g Strong communication skills"
             onChange={(items) => formik.setFieldValue("characteristics", items)}
           />
-          <SubmitButton size="l" suffix={<ArrowRight />}>
+          <SubmitButton
+            size="l"
+            suffix={<ArrowRight />}
+            disabled={formik.values.characteristics.length === 0}
+          >
             Continue
           </SubmitButton>
           {formik.status && <Error marginTop="m">{formik.status}</Error>}

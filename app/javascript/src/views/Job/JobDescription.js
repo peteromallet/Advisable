@@ -59,7 +59,11 @@ export default function JobDescription({ data }) {
             placeholder="e.g Building a Facebook advertising campaign for launching our new product"
             onChange={(items) => formik.setFieldValue("goals", items)}
           />
-          <SubmitButton size="l" suffix={<ArrowRight />}>
+          <SubmitButton
+            size="l"
+            suffix={<ArrowRight />}
+            disabled={formik.values.goals.length === 0}
+          >
             Continue
           </SubmitButton>
           {formik.status && <Error marginTop="m">{formik.status}</Error>}
