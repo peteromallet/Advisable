@@ -40,22 +40,28 @@ const FormField = ({
       marginBottom={marginBottom}
     >
       {label && (
-        <Box display="flex" alignItems="baseline" mb="xs">
-          <Box flexGrow="1">
-            <Label htmlFor={id}>{label}</Label>
-          </Box>
-          {labelHint && (
-            <Box>
-              <Text
-                fontSize="xs"
-                lineHeight="s"
-                color="neutral400"
-                paddingLeft="20px"
-                letterSpacing="-0.01em"
-              >
-                {labelHint}
-              </Text>
-            </Box>
+        <Columns align="top" mb="xs">
+          <Columns.Column expand>
+            <Label htmlFor={id}>
+              {label}
+              {isRequired && (
+                <Text as="span" color="red300">
+                  *
+                </Text>
+              )}
+            </Label>
+          </Columns.Column>
+          {optional && (
+            <Text
+              fontSize="xs"
+              fontWeight="medium"
+              color="neutral400"
+              paddingLeft="20px"
+              letterSpacing="-0.01em"
+              lineHeight="s"
+            >
+              Optional
+            </Text>
           )}
         </Box>
       )}
