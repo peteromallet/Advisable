@@ -17,6 +17,7 @@ const FormField = ({
   suffix,
   optional,
   description,
+  isRequired,
   ...props
 }) => {
   const [field, meta] = useField(props);
@@ -27,7 +28,14 @@ const FormField = ({
       {label && (
         <Columns align="top" mb="xs">
           <Columns.Column expand>
-            <Label htmlFor={id}>{label}</Label>
+            <Label htmlFor={id}>
+              {label}
+              {isRequired && (
+                <Text as="span" color="red300">
+                  *
+                </Text>
+              )}
+            </Label>
           </Columns.Column>
           {optional && (
             <Text
