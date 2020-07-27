@@ -1,14 +1,18 @@
 import React, { useMemo, useCallback } from "react";
-import { Route, matchPath, useLocation, Redirect } from "react-router-dom";
+import {
+  Route,
+  matchPath,
+  useLocation,
+  Redirect,
+  useHistory,
+} from "react-router-dom";
 import { findIndex } from "lodash-es";
 
 function useSteps(steps) {
   const location = useLocation();
+  const history = useHistory();
 
   const activeSteps = useMemo(() => steps.filter((step) => !step.passive), [
-    steps,
-  ]);
-  const passiveSteps = useMemo(() => steps.filter((step) => step.passive), [
     steps,
   ]);
 
@@ -32,7 +36,7 @@ function useSteps(steps) {
   );
   const numberOfSteps = steps.length;
   const numberOfActiveSteps = activeSteps.length;
-  const nextStep = useMemo(() => steps[currentStepIndex + 1], [
+  const nextStep = useMemo(() => steps[currentStepIndex + 1] || steps[0], [
     currentStepIndex,
     steps,
   ]);
@@ -60,6 +64,23 @@ function useSteps(steps) {
     [activeSteps],
   );
 
+  const redirectToInitialStep = useCallback(() => history.push(steps[0].path), [
+    history,
+    steps,
+  ]);
+  const redirectToNextStep = useCallback(
+    (state) => history.push({ pathname: nextStep.path, state }),
+    [history, nextStep.path],
+  );
+  const redirectToLastStep = useCallback(
+    (state) =>
+      history.push({
+        pathname: activeSteps[activeSteps.length - 1].path,
+        state,
+      }),
+    [activeSteps, history],
+  );
+
   // Route components for React Router
   const routes = useMemo(
     () =>
@@ -67,12 +88,23 @@ function useSteps(steps) {
         <Route key={index} path={step.path} exact={step.exact}>
           <step.component
             RedirectToInitialStep={RedirectToInitialStep}
+            redirectToInitialStep={redirectToInitialStep}
             RedirectToNextStep={RedirectToNextStep}
+            redirectToNextStep={redirectToNextStep}
             RedirectToLastStep={RedirectToLastStep}
+            redirectToLastStep={redirectToLastStep}
           />
         </Route>
       )),
-    [RedirectToInitialStep, RedirectToLastStep, RedirectToNextStep, steps],
+    [
+      RedirectToInitialStep,
+      RedirectToLastStep,
+      RedirectToNextStep,
+      redirectToInitialStep,
+      redirectToLastStep,
+      redirectToNextStep,
+      steps,
+    ],
   );
 
   return {

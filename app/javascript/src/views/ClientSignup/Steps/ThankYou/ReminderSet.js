@@ -1,13 +1,8 @@
 import React from "react";
-import { Text } from "@advisable/donut";
+import ThankYou from ".";
 
 function ThankYouReminderSet() {
-  return (
-    <>
-      <Text>Reminder Set</Text>
-      <Text>We&apos;ll follow up in six months</Text>
-    </>
-  );
+  return <ThankYou title="Reminder Set" text="We'll follow up in six months" />;
 }
 
 export default ThankYouReminderSet;
