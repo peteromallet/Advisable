@@ -9,9 +9,12 @@ import {
   useLocationState,
 } from "../../queries";
 import FormField from "src/components/FormField";
-import { Text, Stack, Autocomplete, Select } from "@advisable/donut";
+import { Text, Autocomplete, Select, Box } from "@advisable/donut";
 import { object, string } from "yup";
-import Loading from "../../../../components/Loading";
+import MotionStack from "../MotionStack";
+import { Loading } from "../../../../components/Loading/styles";
+import Navigation from "../Navigation";
+import { Title } from "../styles";
 
 const validationSchema = object().shape({
   companyName: string().required("This field is required"),
@@ -19,20 +22,12 @@ const validationSchema = object().shape({
   companyType: string().required("This filed is required"),
 });
 
-function AboutCompany({
-  RedirectToInitialStep,
-  RedirectToNextStep,
-  RedirectToLastStep,
-}) {
+function AboutCompany() {
   const locationState = useLocationState();
   const [updateClientApplication, { called }] = useAboutCompanyUpdate();
   const { loading, error, data } = useAboutCompanyQuery();
 
   if (loading) return <Loading />;
-  if (error) return <RedirectToInitialStep />;
-  if (called) return <RedirectToNextStep state={{ ...locationState }} />;
-  if (data.clientApplication?.status !== "STARTED")
-    return <RedirectToLastStep state={{ ...locationState }} />;
   const { clientApplication, industries } = data;
 
   // Formik
@@ -55,69 +50,73 @@ function AboutCompany({
   };
 
   return (
-    <Formik
-      validationSchema={validationSchema}
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-    >
-      {(formik) => (
-        <>
-          <Text
-            as="h2"
-            mb="m"
-            color="blue.8"
-            fontSize="xxxl"
-            lineHeight="xxxl"
-            fontWeight="semibold"
-            letterSpacing="-0.02em"
-          >
-            About Your Company
-          </Text>
-          <Text mb="m">
-            As next steps, we need you to answer a few questions in order to
-            figure out if you&apos;re a good fit for Advisable
-          </Text>
+    <>
+      <Navigation
+        called={called}
+        error={error}
+        status={clientApplication.status}
+      />
+      <Formik
+        validationSchema={validationSchema}
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+      >
+        {(formik) => (
           <Form>
-            <Stack spacing="m" mb="l">
-              <FormField
-                name="companyName"
-                placeholder="Umbrella Corporation"
-                label="What's the name of your company?*"
-              />
-              <FormField
-                as={Autocomplete}
-                error={null}
-                options={industries}
-                name="industry"
-                placeholder="Biotechnology"
-                label="What industry are you in?*"
-                onChange={(industry) =>
-                  formik.setFieldValue("industry", industry)
-                }
-              />
-              <FormField
-                as={Select}
-                error={null}
-                name="companyType"
-                placeholder="Major Corporation"
-                label="What type of company are you?*"
-                onChange={formik.handleChange}
-              >
-                <option>Individual Entrepreneur</option>
-                <option>Small Business</option>
-                <option>Medium-Sized Business</option>
-                <option>Startup</option>
-                <option>Growth-Stage Startup</option>
-                <option>Major Corporation</option>
-                <option>Non-Profit</option>
-                <option>Education Institution</option>
-              </FormField>
-            </Stack>
-            <SubmitButton>Continue</SubmitButton>
+            <MotionStack>
+              <Title>About Your Company</Title>
+              <Text mb="m">
+                As next steps, we need you to answer a few questions in order to
+                figure out if you&apos;re a good fit for Advisable
+              </Text>
+              <Box mb="m">
+                <FormField
+                  name="companyName"
+                  placeholder="Umbrella Corporation"
+                  label="What's the name of your company?"
+                  isRequired
+                />
+              </Box>
+              <Box mb="m">
+                <FormField
+                  isRequired
+                  as={Autocomplete}
+                  error={null}
+                  options={industries}
+                  name="industry"
+                  placeholder="Biotechnology"
+                  label="What industry are you in?"
+                  onChange={(industry) =>
+                    formik.setFieldValue("industry", industry)
+                  }
+                />
+              </Box>
+              <Box mb="l">
+                <FormField
+                  isRequired
+                  as={Select}
+                  error={null}
+                  name="companyType"
+                  placeholder="Major Corporation"
+                  label="What type of company are you?"
+                  onChange={formik.handleChange}
+                >
+                  <option>Individual Entrepreneur</option>
+                  <option>Small Business</option>
+                  <option>Medium-Sized Business</option>
+                  <option>Startup</option>
+                  <option>Growth-Stage Startup</option>
+                  <option>Major Corporation</option>
+                  <option>Non-Profit</option>
+                  <option>Education Institution</option>
+                </FormField>
+              </Box>
+              <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>
+            </MotionStack>
           </Form>
-        </>
-      )}
-    </Formik>
+        )}
+      </Formik>
+    </>
   );
 }
 
