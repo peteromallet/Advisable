@@ -1,18 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/react-hooks";
 import { Pencil } from "@styled-icons/heroicons-solid";
 import { useHistory, useParams, Link as RouterLink } from "react-router-dom";
-import {
-  Card,
-  Stack,
-  Box,
-  Text,
-  BulletList,
-  Button,
-  Tags,
-} from "@advisable/donut";
+import { Stack, Box, Text, BulletList, Button, Tags } from "@advisable/donut";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 import { PUBLISH_PROJECT } from "./queries";
 
@@ -32,21 +23,7 @@ export default function PublishJob({ data }) {
   const industry = user.industry.name;
   const companyType = user.companyType;
   return (
-    <Card
-      as={motion.div}
-      padding="52px"
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ zIndex: 2, opacity: 1, y: 0 }}
-      transition={{ delay: 0.1, duration: 0.4 }}
-      exit={{
-        y: -40,
-        opacity: 0,
-        zIndex: 1,
-        scale: 0.9,
-        position: "absolute",
-        pointerEvents: "none",
-      }}
-    >
+    <>
       <JobSetupStepHeader mb="xs">Review</JobSetupStepHeader>
       <JobSetupStepSubHeader mb="xl">
         Please review the details below. Once you are happy with everything we
@@ -201,6 +178,6 @@ export default function PublishJob({ data }) {
         something substantial. You should feel like you have committed to
         something.
       </Text>
-    </Card>
+    </>
   );
 }

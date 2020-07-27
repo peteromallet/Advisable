@@ -2,7 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styled from "styled-components";
 import { padding } from "styled-system";
-import { Box } from "@advisable/donut";
+import { Card, Box } from "@advisable/donut";
 import {
   Switch,
   Route,
@@ -140,9 +140,9 @@ export default function JobSetup({ data }) {
               to={`/jobs/${id}/skills`}
               isComplete={completeSteps.skills}
               steps={[
-                "/jobs/:id/skills",
-                "/jobs/:id/primary_skill",
-                "/jobs/:id/experience",
+                { label: "Skill Set", to: `/jobs/${id}/skills` },
+                { label: "Primary Skill", to: `/jobs/${id}/primary_skill` },
+                { label: "Experience", to: `/jobs/${id}/experience` },
               ]}
               exact
             >
@@ -160,8 +160,14 @@ export default function JobSetup({ data }) {
               isDisabled={!completeSteps.location}
               isComplete={completeSteps.characteristics}
               steps={[
-                "/jobs/:id/characteristics",
-                "/jobs/:id/required_characteristics",
+                {
+                  label: "Character Traits",
+                  to: `/jobs/${id}/characteristics`,
+                },
+                {
+                  label: "Required",
+                  to: `/jobs/${id}/required_characteristics`,
+                },
               ]}
             >
               Characteristics
@@ -183,7 +189,6 @@ export default function JobSetup({ data }) {
             <MultistepMenu.Item
               to={`/jobs/${id}/publish`}
               isDisabled={!completeSteps.specialists}
-              isComplete={completeSteps.published}
             >
               Review
             </MultistepMenu.Item>
@@ -201,20 +206,38 @@ export default function JobSetup({ data }) {
         transition={{ duration: 0.3 }}
         initial={{ opacity: 0, y: 40 }}
       >
-        <AnimatePresence initial={false}>
+        <AnimatePresence initial={false} exitBeforeEnter>
           <Switch location={location} key={location.pathname}>
             {filteredSteps.map((step) => {
               return (
                 <Route key={step.path} exact={step.exact} path={step.path}>
-                  <step.component data={data} />
+                  <Card
+                    as={motion.div}
+                    padding="52px"
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.4 }}
+                    initial={{ y: 80, opacity: 0 }}
+                    exit={{
+                      y: -80,
+                      opacity: 0,
+                      zIndex: 1,
+                      transition: { duration: 0.3 },
+                    }}
+                  >
+                    <step.component data={data} />
+                  </Card>
                 </Route>
               );
             })}
-            {project.status === "Pending Advisable Confirmation" ? (
-              <Redirect to={`/jobs/${id}/published`} />
-            ) : (
-              <Redirect to={`/jobs/${id}/skills`} />
-            )}
+            <Route path="/jobs/:id" exact>
+              <motion.div exit={{}}>
+                {project.status === "Pending Advisable Confirmation" ? (
+                  <Redirect to={`/jobs/${id}/published`} />
+                ) : (
+                  <Redirect to={`/jobs/${id}/skills`} />
+                )}
+              </motion.div>
+            </Route>
           </Switch>
         </AnimatePresence>
       </Box>

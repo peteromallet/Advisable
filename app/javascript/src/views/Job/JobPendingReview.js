@@ -1,7 +1,6 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
-import { Card, Avatar, Button } from "@advisable/donut";
+import { Box, Avatar, Button } from "@advisable/donut";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
 export default function PublishJob({ data }) {
@@ -9,22 +8,7 @@ export default function PublishJob({ data }) {
   const { salesPerson } = data.project.user;
 
   return (
-    <Card
-      as={motion.div}
-      padding="64px"
-      textAlign="center"
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ zIndex: 2, opacity: 1, y: 0 }}
-      transition={{ delay: 0.1, duration: 0.4 }}
-      exit={{
-        y: -40,
-        opacity: 0,
-        zIndex: 1,
-        scale: 0.9,
-        position: "absolute",
-        pointerEvents: "none",
-      }}
-    >
+    <Box textAlign="center">
       <Avatar
         size="xl"
         name={salesPerson.name}
@@ -43,6 +27,6 @@ export default function PublishJob({ data }) {
       <Button as={Link} to={`/jobs/${id}/publish`} variant="subtle">
         Update Details
       </Button>
-    </Card>
+    </Box>
   );
 }

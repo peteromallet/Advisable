@@ -47,7 +47,7 @@ export default function Project({ project }) {
         <Badge variant="orange">Draft</Badge>
       )}
       {project.status === "Pending Advisable Confirmation" && (
-        <Badge variant="cyan">In Review</Badge>
+        <Badge variant="orange">In Review</Badge>
       )}
       <Box
         left="0"

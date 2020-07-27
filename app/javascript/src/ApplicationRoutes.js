@@ -46,9 +46,7 @@ const ApplicationRoutes = () => {
           <Route path="/freelancers/:id" component={FreelancerProfile} />
           {/* Client routes */}
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
-          <AuthenticatedRoute path="/jobs/:id" clientOnly>
-            <Job />
-          </AuthenticatedRoute>
+          <Route path="/jobs/:id" component={Job} />
           <Route
             component={Applicant}
             path="/projects/:projectID/applications/:applicationID"

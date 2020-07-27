@@ -88,3 +88,22 @@ export const StyledNavigationMenuItem = styled.div`
   ${(props) => !props.isDisabled && StyledNavigationMenuItem_Enabled};
   ${(props) => props.isComplete && StyledNavigationMenuItem_Comlete};
 `;
+
+export const StyledNavigationMenuItemSteps = styled.div`
+  margin: 16px 16px;
+  padding-left: 4px;
+  border-left: 1px solid ${theme.colors.neutral100};
+`;
+
+export const StyledNavigationMenuItemStep = styled(NavLink)`
+  padding: 4px;
+  display: block;
+  margin: 12px 8px;
+  font-size: 15px;
+  letter-spacing: -0.01rem;
+  color: ${theme.colors.neutral400};
+
+  &.active {
+    color: ${theme.colors.blue900};
+  }
+`;

@@ -1,10 +1,12 @@
 import React from "react";
-import { matchPath, useLocation } from "react-router-dom";
+import { matchPath, useLocation, useRouteMatch } from "react-router-dom";
 import { motion, useSpring, useMotionValue, transform } from "framer-motion";
 import {
   StyledNavigationMenuItem,
   StyledNavigationMenuLink,
   StyledNavigationProgress,
+  StyledNavigationMenuItemStep,
+  StyledNavigationMenuItemSteps,
   StyledNavigationMenuItemNumber,
 } from "./styles";
 
@@ -32,7 +34,7 @@ function ProgressCircle({ steps }) {
 
   const currentStepIndex =
     steps.findIndex((step) =>
-      matchPath(location.pathname, { path: step, exact: true }),
+      matchPath(location.pathname, { path: step.to, exact: true }),
     ) || 0;
 
   const range = transform(
@@ -78,35 +80,51 @@ export default function MultistepMenuItem({
   isDisabled,
   exact,
 }) {
+  const location = useLocation();
+
   const handleClick = (e) => {
     if (isDisabled) {
       e.preventDefault();
     }
   };
 
-  const isActive = (match, location) => {
+  const checkIsActive = (match, location) => {
     if (match) return true;
     if (steps.length > 0) {
       return steps.some((step) => {
-        return matchPath(location.pathname, { path: step, exact: true });
+        return matchPath(location.pathname, { path: step.to, exact: true });
       });
     }
   };
+
+  const rootMatched = matchPath(location.pathname, { path: to });
+  const isActive = checkIsActive(rootMatched, location);
 
   return (
     <StyledNavigationMenuItem isComplete={isComplete} isDisabled={isDisabled}>
       <StyledNavigationMenuLink
         to={to}
-        onClick={handleClick}
         exact={exact}
-        isActive={isActive}
+        isActive={checkIsActive}
+        onClick={handleClick}
       >
         {children}
-        <StyledNavigationMenuItemNumber>
-          {steps.length > 0 && <ProgressCircle steps={steps} />}
-          <Check />
-        </StyledNavigationMenuItemNumber>
+        {isComplete !== undefined && (
+          <StyledNavigationMenuItemNumber>
+            {steps.length > 0 && <ProgressCircle steps={steps} />}
+            <Check />
+          </StyledNavigationMenuItemNumber>
+        )}
       </StyledNavigationMenuLink>
+      {steps.length > 0 && isActive && (
+        <StyledNavigationMenuItemSteps>
+          {steps.map((step) => (
+            <StyledNavigationMenuItemStep to={step.to} key={step.label}>
+              {step.label}
+            </StyledNavigationMenuItemStep>
+          ))}
+        </StyledNavigationMenuItemSteps>
+      )}
     </StyledNavigationMenuItem>
   );
 }

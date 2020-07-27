@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { motion } from "framer-motion";
-import { Card } from "@advisable/donut";
 import { UPDATE_PROJECT } from "./queries";
 import { useMutation } from "@apollo/react-hooks";
 import { useParams, useHistory, useLocation } from "react-router-dom";
@@ -33,22 +32,7 @@ export default function JobPrimarySkill({ data }) {
   };
 
   return (
-    <Card
-      layout
-      as={motion.div}
-      padding="52px"
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ zIndex: 2, opacity: 1, y: 0 }}
-      exit={{
-        y: -40,
-        opacity: 0,
-        zIndex: 1,
-        scale: 0.9,
-        position: "absolute",
-        pointerEvents: "none",
-      }}
-      transition={{ delay: 0.1, duration: 0.4 }}
-    >
+    <>
       <JobSetupStepHeader mb="xs">
         Which of these is the most important?
       </JobSetupStepHeader>
@@ -83,6 +67,6 @@ export default function JobPrimarySkill({ data }) {
           </Form>
         )}
       </Formik>
-    </Card>
+    </>
   );
 }
