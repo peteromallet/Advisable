@@ -64,7 +64,7 @@ export const START_CLIENT_APPLICATION = gql`
 `;
 
 export const useStartClientApplication = () =>
-  useMutation(START_CLIENT_APPLICATION);
+  useMutation(START_CLIENT_APPLICATION, { onError: () => {} });
 
 /* 2 Step. About Company */
 
