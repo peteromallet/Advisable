@@ -102,6 +102,7 @@ function AboutCompany() {
                   placeholder="Major Corporation"
                   label="What type of company are you?"
                   onChange={formik.handleChange}
+                  data-testid="companyType"
                 >
                   <option>Individual Entrepreneur</option>
                   <option>Small Business</option>
