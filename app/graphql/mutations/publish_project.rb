@@ -11,6 +11,13 @@ class Mutations::PublishProject < Mutations::BaseMutation
       raise ApiError.not_authorized("You don't have access to this project")
     end
 
+    if project.status != :draft
+      raise ApiError.invalidRequest(
+              'ALREADY_PUBLISHED',
+              'This project is not a draft'
+            )
+    end
+
     true
   end
 
