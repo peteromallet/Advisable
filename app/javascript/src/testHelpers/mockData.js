@@ -357,6 +357,29 @@ export const search = (fields = {}) => {
   );
 };
 
+export const clientApplication = (fields = {}) => {
+  return merge(
+    {
+      __typename: "ClientApplication",
+      id: uniqueId("client_application"),
+      firstName: "Test",
+      lastName: "Account",
+      companyName: null,
+      industry: null,
+      companyType: null,
+      skills: [],
+      numberOfFreelancers: null,
+      budget: null,
+      localityImportance: null,
+      acceptedGuaranteeTerms: false,
+      talentQuality: null,
+      status: "STARTED",
+      rejectionReason: null,
+    },
+    fields,
+  );
+};
+
 export default {
   user,
   task,
@@ -373,4 +396,5 @@ export default {
   specialistSkill,
   previousProject,
   applicationQuestion,
+  clientApplication,
 };
