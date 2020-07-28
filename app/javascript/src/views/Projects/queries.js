@@ -5,6 +5,11 @@ export const GET_PROJECTS = gql`
     viewer {
       ... on User {
         id
+        companyType
+        industry {
+          id
+          name
+        }
         projects {
           id
           airtableId

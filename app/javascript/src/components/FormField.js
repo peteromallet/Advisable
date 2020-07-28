@@ -1,5 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useField } from "formik";
+import { margin } from "styled-system";
+import styled from "styled-components";
 import {
   Columns,
   Text,
@@ -10,6 +13,10 @@ import {
 } from "@advisable/donut";
 import { uniqueId } from "lodash-es";
 
+const StyledFormField = styled.div`
+  ${margin}
+`;
+
 const FormField = ({
   label,
   as: Component = Input,
@@ -17,13 +24,28 @@ const FormField = ({
   suffix,
   optional,
   description,
+  margin,
+  marginTop,
+  marginRight,
+  marginBottom,
+  marginLeft,
+  marginX,
+  marginY,
   ...props
 }) => {
   const [field, meta] = useField(props);
   const id = React.useMemo(() => props.id || uniqueId("formField"), [props.id]);
 
   return (
-    <>
+    <StyledFormField
+      margin={margin}
+      marginX={marginX}
+      marginY={marginY}
+      marginTop={marginTop}
+      marginLeft={marginLeft}
+      marginRight={marginRight}
+      marginBottom={marginBottom}
+    >
       {label && (
         <Columns align="top" mb="xs">
           <Columns.Column expand>
@@ -60,8 +82,15 @@ const FormField = ({
       {meta.touched && meta.error ? (
         <InputError mt="xs">{meta.error}</InputError>
       ) : null}
-    </>
+    </StyledFormField>
   );
+};
+
+FormField.propTypes = {
+  label: PropTypes.string,
+  prefix: PropTypes.string,
+  suffix: PropTypes.string,
+  description: PropTypes.string,
 };
 
 export default FormField;

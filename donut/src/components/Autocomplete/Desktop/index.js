@@ -135,7 +135,6 @@ const AutocompleteDesktop = (props) => {
                     </>
                   )}
                 </Reference>
-                {error && <FieldError>{error}</FieldError>}
                 <Menu
                   max={props.max}
                   popper={popper}
