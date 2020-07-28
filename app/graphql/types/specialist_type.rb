@@ -337,7 +337,7 @@ class Types::SpecialistType < Types::BaseType
   field :profile_projects, [Types::PreviousProject], null: false
 
   def profile_projects
-    object.previous_projects.validation_not_failed.not_hidden
+    object.previous_projects.published.validated.not_hidden
       .sort_by do |previous_project|
       previous_project.try(:priority) || Float::INFINITY
     end
