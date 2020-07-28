@@ -1,15 +1,21 @@
 import styled from "styled-components";
 import { margin } from "styled-system";
-import { StyledInput, StyledTextarea } from "@advisable/donut";
+import {
+  StyledInput,
+  StyledTextarea,
+  StyledTextareaControl,
+} from "@advisable/donut";
 
 export const StyledBulletPointInput = styled(StyledInput).attrs((props) => ({
   as: "div",
 }))`
   ${margin};
-  padding: 12px 24px;
+  padding: 0px 24px;
+  display: block;
 `;
 
 export const StyledBulletPointInputItem = styled.div`
+  width: 100%;
   padding-left: 20px;
   position: relative;
 
@@ -25,10 +31,14 @@ export const StyledBulletPointInputItem = styled.div`
     transform: translateY(-50%);
   }
 
+  ${StyledTextareaControl} {
+    border-color: transparent;
+  }
+
   ${StyledTextarea} {
     margin: 0;
     outline: none;
-    padding: 4px 0;
+    padding: 0 0;
 
     &:focus {
       background: transparent;

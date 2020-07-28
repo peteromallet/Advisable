@@ -12,7 +12,6 @@ import Tag from "../Tag";
 const AutocompleteDesktop = (props) => {
   const {
     size,
-    label,
     error,
     onBlur,
     options,
@@ -76,28 +75,6 @@ const AutocompleteDesktop = (props) => {
           >
             {(downshift) => (
               <AutocompleteStyles {...rest} {...downshift.getRootProps()}>
-                {label && (
-                  <Label
-                    as="label"
-                    fontSize="s"
-                    color="neutral.8"
-                    fontWeight="medium"
-                    {...downshift.getLabelProps()}
-                  >
-                    {label}
-                  </Label>
-                )}
-                {description && (
-                  <Text
-                    mb="12px"
-                    mt="-4px"
-                    fontSize="xs"
-                    lineHeight="xs"
-                    color="neutral600"
-                  >
-                    {description}
-                  </Text>
-                )}
                 <Reference>
                   {(popperRef) => (
                     <>

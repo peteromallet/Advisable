@@ -3,14 +3,7 @@ import PropTypes from "prop-types";
 import { useField } from "formik";
 import { margin } from "styled-system";
 import styled from "styled-components";
-import {
-  Columns,
-  Text,
-  Input,
-  Label,
-  InputError,
-  InputDecorations,
-} from "@advisable/donut";
+import { Box, Text, Input, Label, InputError } from "@advisable/donut";
 import { uniqueId } from "lodash-es";
 
 const StyledFormField = styled.div`
@@ -22,7 +15,7 @@ const FormField = ({
   as: Component = Input,
   prefix,
   suffix,
-  optional,
+  labelHint,
   description,
   margin,
   marginTop,
@@ -47,38 +40,39 @@ const FormField = ({
       marginBottom={marginBottom}
     >
       {label && (
-        <Columns align="top" mb="xs">
-          <Columns.Column expand>
+        <Box display="flex" alignItems="baseline" mb="xs">
+          <Box flexGrow="1">
             <Label htmlFor={id}>{label}</Label>
-          </Columns.Column>
-          {optional && (
-            <Text
-              fontSize="xs"
-              fontWeight="medium"
-              color="neutral400"
-              paddingLeft="20px"
-              letterSpacing="-0.01em"
-              lineHeight="s"
-            >
-              Optional
-            </Text>
+          </Box>
+          {labelHint && (
+            <Box>
+              <Text
+                fontSize="xs"
+                lineHeight="s"
+                color="neutral400"
+                paddingLeft="20px"
+                letterSpacing="-0.01em"
+              >
+                {labelHint}
+              </Text>
+            </Box>
           )}
-        </Columns>
+        </Box>
       )}
       {description && (
         <Text fontSize="s" lineHeight="s" color="neutral600" my="-4px" mb="s">
           {description}
         </Text>
       )}
-      <InputDecorations prefix={prefix} suffix={suffix}>
-        <Component
-          {...field}
-          id={id}
-          error={meta.touched && meta.error}
-          placeholder={props.placeholder || label}
-          {...props}
-        />
-      </InputDecorations>
+      <Component
+        {...field}
+        id={id}
+        prefix={prefix}
+        suffix={suffix}
+        error={meta.touched && meta.error}
+        placeholder={props.placeholder || label}
+        {...props}
+      />
       {meta.touched && meta.error ? (
         <InputError mt="xs">{meta.error}</InputError>
       ) : null}

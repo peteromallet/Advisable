@@ -13,7 +13,6 @@ const AutocompleteMobile = (props) => {
     options,
     placeholder,
     onChange,
-    label,
     error,
     size,
     description,
@@ -43,14 +42,6 @@ const AutocompleteMobile = (props) => {
 
   return (
     <AutocompleteStyles {...rest}>
-      <Label as="label" size="xs" weight="medium" color="neutral.N7">
-        {label}
-      </Label>
-      {description && (
-        <Text mb="xs" mt="-4px" size="xs" lineHeight="xs" color="neutral.5">
-          {description}
-        </Text>
-      )}
       <Input
         size={size}
         value={get(initalSelectedItem, "label", "")}
@@ -74,7 +65,6 @@ const AutocompleteMobile = (props) => {
           ))}
         </Tags>
       )}
-      {error && <FieldError>{error}</FieldError>}
       {open && (
         <Menu
           max={props.max}

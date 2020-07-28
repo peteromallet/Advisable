@@ -7,9 +7,11 @@ const Label = (props) => {
 
 Label.defaultProps = {
   as: "label",
-  color: "neutral900",
-  fontWeight: "medium",
+  color: "neutral800",
+  fontWeight: "normal",
+  fontSize: "15px",
   lineHeight: "s",
+  letterSpacing: "-0.01em",
 };
 
 export default Label;

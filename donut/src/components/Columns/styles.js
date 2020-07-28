@@ -25,6 +25,12 @@ export const StyledColumns = styled.div`
   flex-wrap: ${(p) => (p.wrap ? "wrap" : "nowrap")};
 `;
 
+const StyledColumn_Shrink = css`
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: 0%;
+`;
+
 const StyledColumn_Expanded = css`
   flex-grow: 1;
   flex-shrink: 1;
@@ -42,6 +48,7 @@ export const StyledColumn = styled.div`
   padding-right: ${(p) => theme.space[p.spacing] / 2}px;
 
   ${(p) => (p.expand ? StyledColumn_Expanded : StyledColumn_Default)};
+  ${(p) => p.shrink && StyledColumn_Shrink};
 
   &:first-child {
     padding-left: 0;

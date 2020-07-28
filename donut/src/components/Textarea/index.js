@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { StyledTextarea, StyledTextareaControl } from "./styles";
 
-const LINE_HEIGHT = 18;
+const LINE_HEIGHT = 22;
 const PADDING = 32;
 
 const Textarea = React.forwardRef(function Textarea(
@@ -73,6 +73,8 @@ const Textarea = React.forwardRef(function Textarea(
 Textarea.defaultProps = {
   minRows: 2,
   maxrows: 5,
+  onFocus: () => {},
+  onBlur: () => {},
 };
 
 export default Textarea;

@@ -29,7 +29,6 @@ export { default as Error } from "./components/Error";
 export * from "./components/Error/styles";
 
 export { default as Input } from "./components/Input";
-export { default as InputDecorations } from "./components/Input/InputDecorations";
 export * from "./components/Input/styles";
 
 export { default as InputError } from "./components/InputError";

@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { variant, space } from "styled-system";
 import {
+  BORDER_RADIUS,
   StyledInput,
   StyledInputControl,
   StyledInputDecoration,
@@ -22,13 +23,13 @@ export const StyledSelectControlWraper = styled.div`
   }
 
   &:first-child ${StyledSelectControl} {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-top-left-radius: ${BORDER_RADIUS}px;
+    border-bottom-left-radius: ${BORDER_RADIUS}px;
   }
 
   &:last-child ${StyledSelectControl} {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-top-right-radius: ${BORDER_RADIUS}px;
+    border-bottom-right-radius: ${BORDER_RADIUS}px;
   }
 `;
 

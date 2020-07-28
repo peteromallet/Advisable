@@ -3,6 +3,8 @@ import { variant, margin } from "styled-system";
 import { rgba, darken, lighten } from "polished";
 import styled, { css } from "styled-components";
 
+export const BORDER_RADIUS = 8;
+
 export const StyledInputDecoration = styled.div`
   display: flex;
   font-size: 16px;
@@ -22,13 +24,13 @@ export const StyledInputDecoration = styled.div`
   }
 
   &:first-child {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-top-left-radius: ${BORDER_RADIUS}px;
+    border-bottom-left-radius: ${BORDER_RADIUS}px;
   }
 
   &:last-child {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-top-right-radius: ${BORDER_RADIUS}px;
+    border-bottom-right-radius: ${BORDER_RADIUS}px;
   }
 `;
 
@@ -49,13 +51,13 @@ export const StyledInputControl = styled.input`
   transition: border-color 200ms;
 
   &:first-child {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-top-left-radius: ${BORDER_RADIUS}px;
+    border-bottom-left-radius: ${BORDER_RADIUS}px;
   }
 
   &:last-child {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-top-right-radius: ${BORDER_RADIUS}px;
+    border-bottom-right-radius: ${BORDER_RADIUS}px;
   }
 
   &::placeholder {
@@ -153,8 +155,9 @@ const size = variant({
 });
 
 export const StyledInput = styled.div`
+  width: 100%;
   display: flex;
-  border-radius: 8px;
+  border-radius: ${BORDER_RADIUS}px;
   background: #eff0f3;
   ${(props) => props.$error && StyledInput_Error};
   ${(props) => props.$focused && StyledInput_Focused};
