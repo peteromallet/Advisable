@@ -669,6 +669,14 @@ test("Calendly's call booked page", async () => {
   renderRoute({
     route: "/clients/signup/thank-you-call-is-booked",
   });
+  fireEvent.change(await screen.findByPlaceholderText(/Last Name/i), {
+    target: { value: clientApplication.lastName },
+  });
+  const emailInput = await screen.findByPlaceholderText(
+    "ospencer@umbrellacorp.com",
+  );
+  fireEvent.change(emailInput, { target: { value: email } });
+  fireEvent.click(screen.getByLabelText("Continue"));
 
   await screen.findByText(/your call is booked/i);
 });
