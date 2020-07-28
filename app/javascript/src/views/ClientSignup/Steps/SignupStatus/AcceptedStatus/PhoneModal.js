@@ -5,11 +5,11 @@ import { Text, Modal, Box } from "@advisable/donut";
 import SubmitButton from "../../../../../components/SubmitButton";
 import FormField from "src/components/FormField";
 import { useLocationState } from "../../../queries";
-import { number, object } from "yup";
+import { object, string } from "yup";
 import PhoneInput from "../../../../../components/PhoneInput";
 
 const validationSchema = object().shape({
-  phoneNumber: number().required("required field"),
+  phoneNumber: string().required("required field"),
 });
 
 function PhoneModal({ requestApplicationCallback, modal }) {
@@ -24,7 +24,7 @@ function PhoneModal({ requestApplicationCallback, modal }) {
   };
 
   return (
-    <Modal modal={modal} p="m">
+    <Modal modal={modal} p="m" label="We will call you">
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
