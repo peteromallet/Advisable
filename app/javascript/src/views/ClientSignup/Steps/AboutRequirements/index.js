@@ -100,6 +100,7 @@ function AboutRequirements() {
                   error={null}
                   value={formik.values.numberOfFreelancers}
                   onChange={formik.handleChange}
+                  data-testid="numberOfFreelancers"
                 >
                   <option>0</option>
                   <option>1-3</option>
@@ -112,8 +113,10 @@ function AboutRequirements() {
                   as={CurrencyInput}
                   name="budget"
                   prefix="$"
+                  suffix="per year"
                   placeholder="99999"
                   label="How much do you currently spend on freelancers per year?"
+                  data-testid="budget"
                 />
               </Box>
               <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>
