@@ -22,6 +22,7 @@ export const user = (fields = {}) => {
       bankTransfersEnabled: true,
       companyType: "Startup",
       projectPaymentMethod: "Bank Transfer",
+      location: "Dublin, Ireland",
       invoiceSettings: {
         __typename: "InvoiceSettings",
         name: "Test Account",
@@ -61,39 +62,40 @@ export const country = (fields = {}) => {
 };
 
 export const project = (fields = {}) => {
-  return merge(
-    {
-      __typename: "Project",
-      id: uniqueId("project"),
-      airtableId: uniqueId("rec"),
-      name: "Project",
-      currency: "USD",
-      questions: ["Question?"],
-      applicationsOpen: true,
-      primarySkill: "Testing",
-      description: "desription",
-      applicationCount: 0,
-      status: "Brief Confirmed",
-      industry: "Testing",
-      companyType: "Startup",
-      clientReferralUrl: "https://advisable.com",
-      companyDescription: "company description",
-      specialistDescription: "specialist description",
-      goals: ["This is a goal"],
-      requiredCharacteristics: ["Required characteristic"],
-      optionalCharacteristics: ["Optional characteristic"],
-      estimatedBudget: "€10,000",
-      remote: true,
-      acceptedTerms: true,
-      depositOwed: 0,
-      applications: [],
-      depositPaymentIntent: {
-        __typename: "PaymentIntent",
-        secret: "secret1234",
-      },
+  return {
+    __typename: "Project",
+    id: uniqueId("project"),
+    airtableId: uniqueId("rec"),
+    name: "Project",
+    currency: "USD",
+    questions: ["Question?"],
+    applicationsOpen: true,
+    description: "desription",
+    applicationCount: 0,
+    status: "Brief Confirmed",
+    industry: "Testing",
+    companyType: "Startup",
+    clientReferralUrl: "https://advisable.com",
+    companyDescription: "company description",
+    specialistDescription: "specialist description",
+    goals: ["This is a goal"],
+    characteristics: [],
+    likelyToHire: 2,
+    locationImportance: 2,
+    industryExperienceImportance: 2,
+    requiredCharacteristics: ["Required characteristic"],
+    optionalCharacteristics: ["Optional characteristic"],
+    estimatedBudget: "€10,000",
+    remote: true,
+    acceptedTerms: true,
+    depositOwed: 0,
+    applications: [],
+    depositPaymentIntent: {
+      __typename: "PaymentIntent",
+      secret: "secret1234",
     },
-    fields,
-  );
+    ...fields,
+  };
 };
 
 export const application = (fields = {}) => {
@@ -234,6 +236,8 @@ export const skill = (fields = {}) => {
       __typename: "Skill",
       id: uniqueId("skill"),
       name: "Skill",
+      goalPlaceholder: null,
+      characteristicPlaceholder: null,
     },
     fields,
   );
@@ -357,6 +361,18 @@ export const search = (fields = {}) => {
   );
 };
 
+export const salesPerson = (fields = {}) => {
+  return merge(
+    {
+      __typename: "SalesPerson",
+      id: uniqueId("sal"),
+      firstName: "John",
+      name: "John Doe",
+    },
+    fields,
+  );
+};
+
 export default {
   user,
   task,
@@ -370,6 +386,7 @@ export default {
   application,
   specialist,
   consultation,
+  salesPerson,
   specialistSkill,
   previousProject,
   applicationQuestion,

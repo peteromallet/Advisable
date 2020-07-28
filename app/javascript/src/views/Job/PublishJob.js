@@ -19,7 +19,7 @@ export default function PublishJob({ data }) {
   const companyType = user.companyType;
 
   const handlePublish = async () => {
-    if (project.status === "Draft") {
+    if (project.status === "DRAFT") {
       await publishProject({ variables: { input: { id } } });
     }
 
@@ -92,6 +92,24 @@ export default function PublishJob({ data }) {
           </RouterLink>
         </Box>
         <Box>
+          {project.requiredCharacteristics.length > 0 && (
+            <>
+              <Text
+                mb="s"
+                fontSize="l"
+                color="blue900"
+                fontWeight="medium"
+                letterSpacing="-0.03rem"
+              >
+                Required Characteristics
+              </Text>
+              <BulletList marginBottom="l">
+                {project.requiredCharacteristics.map((characteristic, i) => (
+                  <BulletList.Item key={i}>{characteristic}</BulletList.Item>
+                ))}
+              </BulletList>
+            </>
+          )}
           {project.optionalCharacteristics.length > 0 && (
             <>
               <Text
@@ -109,24 +127,6 @@ export default function PublishJob({ data }) {
                 ))}
               </BulletList>
             </>
-          )}
-          {project.requiredCharacteristics.length > 0 && (
-            <Box>
-              <Text
-                mb="s"
-                fontSize="l"
-                color="blue900"
-                fontWeight="medium"
-                letterSpacing="-0.03rem"
-              >
-                Required Characteristics
-              </Text>
-              <BulletList marginBottom="l">
-                {project.requiredCharacteristics.map((characteristic, i) => (
-                  <BulletList.Item key={i}>{characteristic}</BulletList.Item>
-                ))}
-              </BulletList>
-            </Box>
           )}
           <RouterLink
             to={{
@@ -173,9 +173,7 @@ export default function PublishJob({ data }) {
         onClick={handlePublish}
         loading={publishProjectResponse.loading}
       >
-        {project.status === "Pending Advisable Confirmation"
-          ? "Save Changes"
-          : "Publish Job"}
+        {project.status === "PENDING_REVIEW" ? "Save Changes" : "Publish Job"}
       </Button>
       <Text fontSize="xs" color="neutral600" lineHeight="s">
         By publishing this job you feel like you have completed & submitted

@@ -52,7 +52,7 @@ export default function BulletPointInput({
             padding={8}
             name={rest.name}
             style={{ width: "100%" }}
-            placeholder={placeholder}
+            placeholder={item ? null : placeholder}
             onChange={handleChange(i)}
             onKeyDown={handleKeyDown(i)}
           />

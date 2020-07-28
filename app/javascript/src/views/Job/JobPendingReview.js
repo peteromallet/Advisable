@@ -24,9 +24,9 @@ export default function PublishJob({ data }) {
         this job. {salesPerson.firstName} will review the details of this job
         shortly and will let you know once it is live.
       </JobSetupStepSubHeader>
-      <Button as={Link} to={`/jobs/${id}/publish`} variant="subtle">
-        Update Details
-      </Button>
+      <Link to={`/jobs/${id}/publish`}>
+        <Button variant="subtle">Update Details</Button>
+      </Link>
     </Box>
   );
 }

@@ -26,7 +26,7 @@ const StyledPrimarySkillOption_Selected = css`
   }
 `;
 
-const StyledPrimarySkillOption = styled.div`
+const StyledPrimarySkillOption = styled.label`
   width: 100%;
   border: none;
   display: flex;

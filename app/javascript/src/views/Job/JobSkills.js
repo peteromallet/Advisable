@@ -48,9 +48,9 @@ export default function JobSkills({ data }) {
     }));
   }, [data.skills]);
 
-  const industry = data.viewer.industry;
-  const popularSkills =
-    industry?.popularSkills.nodes || data.popularSkills.nodes;
+  const user = data.project.user;
+  const industrySkils = user.industry?.popularSkills.nodes;
+  const popularSkills = industrySkils || data.popularSkills.nodes;
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
@@ -76,8 +76,8 @@ export default function JobSkills({ data }) {
           <Box mb="l">
             <PopularSkills
               skills={popularSkills}
-              industry={industry?.name}
-              companyType={data.viewer.companyType}
+              industry={user.industry?.name}
+              companyType={user.companyType}
               disabled={formik.values.skills.length >= 5}
             />
           </Box>

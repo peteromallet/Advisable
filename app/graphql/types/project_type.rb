@@ -1,4 +1,11 @@
 class Types::ProjectType < Types::BaseType
+  # There are a lot of random project status's from old Airtable data that we
+  # need to maintain support for. However, we want to move towards more
+  # stable and structured status and follow the convention of returning statuses
+  # in upper case. This map simply maps statuses from the project model status
+  # to their graphql value to allow us to move over one by one.
+  STATUS_VALUES = { draft: 'DRAFT', pending_review: 'PENDING_REVIEW' }
+
   field :id, ID, null: false
 
   def id
@@ -17,7 +24,14 @@ class Types::ProjectType < Types::BaseType
 
   field :skills, [Types::Skill], null: true
   field :currency, String, null: true
+
   field :status, String, null: true
+
+  # Return the value from the STATUS_MAP or just fallback to the original value.
+  def status
+    STATUS_VALUES[object.status] || object.status
+  end
+
   field :service_type, String, null: true
   field :client_referral_url, String, null: true
   field :user, Types::User, null: true

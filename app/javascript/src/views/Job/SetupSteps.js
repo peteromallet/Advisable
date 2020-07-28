@@ -26,7 +26,7 @@ export const setupProgress = (project) => {
     characteristics: project.requiredCharacteristics.length > 0,
     description: project.goals.length > 0,
     specialists: project.likelyToHire !== null,
-    published: project.status === "Pending Advisable Confirmation",
+    published: project.status === "PENDING_REVIEW",
   };
 };
 
@@ -122,7 +122,7 @@ export default function SetupSteps({ data }) {
         })}
         <Route path="/jobs/:id" exact>
           <motion.div exit={{}}>
-            {project.status === "Pending Advisable Confirmation" ? (
+            {project.status === "PENDING_REVIEW" ? (
               <Redirect to={`/jobs/${id}/published`} />
             ) : (
               <Redirect to={`/jobs/${id}/skills`} />

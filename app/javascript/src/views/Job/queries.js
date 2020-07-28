@@ -29,6 +29,12 @@ const projectFields = gql`
       industry {
         id
         name
+        popularSkills(first: 10) {
+          nodes {
+            id
+            name
+          }
+        }
       }
       country {
         id
@@ -46,23 +52,6 @@ export const GET_JOB = gql`
   ${projectFields}
 
   query getJob($id: ID!) {
-    viewer {
-      ... on User {
-        id
-        companyType
-        industry {
-          id
-          name
-          popularSkills(first: 10) {
-            nodes {
-              id
-              name
-            }
-          }
-        }
-      }
-    }
-
     skills(local: true) {
       id
       name

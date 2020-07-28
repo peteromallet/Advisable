@@ -14,7 +14,7 @@ class Mutations::CreateJob < Mutations::BaseMutation
       GeocodeUserJob.perform_later(user.id, context[:request].try(:remote_ip))
     end
 
-    project = user.projects.create(status: 'Draft')
+    project = user.projects.create(status: :draft)
 
     { project: project }
   end

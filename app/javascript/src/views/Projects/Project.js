@@ -21,10 +21,7 @@ const StyledProject = styled(StyledCard)`
 export default function Project({ project }) {
   let url = `/projects/${project.airtableId}`;
 
-  if (
-    project.status === "Draft" ||
-    project.status === "Pending Advisable Confirmation"
-  ) {
+  if (project.status === "DRAFT" || project.status === "PENDING_REVIEW") {
     url = `/jobs/${project.id}`;
   }
 
@@ -42,11 +39,11 @@ export default function Project({ project }) {
       <Text mb="12px" fontSize="xs" color="neutral500">
         {DateTime.fromISO(project.createdAt).toRelative()}
       </Text>
-      {project.status === "Draft" && <Badge variant="orange">Draft</Badge>}
+      {project.status === "DRAFT" && <Badge variant="orange">Draft</Badge>}
       {project.status === "Brief Pending Confirmation" && (
         <Badge variant="orange">Draft</Badge>
       )}
-      {project.status === "Pending Advisable Confirmation" && (
+      {project.status === "PENDING_REVIEW" && (
         <Badge variant="orange">In Review</Badge>
       )}
       <Box

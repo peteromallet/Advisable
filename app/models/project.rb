@@ -1,6 +1,7 @@
 class Project < ApplicationRecord
   include Uid
   include Airtable::Syncable
+  include StatusMap
   has_many :applications
   has_many :bookings, through: :applications
   has_many :reviews, as: :project
@@ -21,6 +22,10 @@ class Project < ApplicationRecord
   validates :likely_to_hire, inclusion: { in: [0, 1, 2, 3] }, allow_nil: true
 
   belongs_to :user, required: false
+
+  map_status status: {
+               draft: 'Draft', pending_review: 'Pending Advisable Confirmation'
+             }
 
   def accepted_terms=(accepted)
     self.accepted_terms_at = DateTime.now.utc if !accepted_terms && accepted

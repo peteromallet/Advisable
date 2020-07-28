@@ -28,7 +28,7 @@ const StyledRequiredCharacteristic_Selected = css`
   }
 `;
 
-const StyledRequiredCharacteristic = styled.div`
+const StyledRequiredCharacteristic = styled.label`
   padding: 12px;
   font-size: 15px;
   font-weight: 400;
@@ -37,6 +37,7 @@ const StyledRequiredCharacteristic = styled.div`
   position: relative;
   border-radius: 12px;
   padding-left: 52px;
+  display: block;
   background-color: #f5f5f8;
   color: ${theme.colors.neutral900};
   border: 2px solid transparent;
