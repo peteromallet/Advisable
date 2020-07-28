@@ -2,19 +2,16 @@ import React from "react";
 import { Manager, Reference, Popper } from "react-popper";
 import useComponentSize from "@rehooks/component-size";
 import Text from "../../Text";
+import Input from "../../Input";
 import FieldError from "../../FieldError";
 import Menu from "./Menu";
-import {
-  Autocomplete as AutocompleteStyles,
-  Input,
-  Label,
-  Tags,
-} from "../styles";
+import { Autocomplete as AutocompleteStyles, Label, Tags } from "../styles";
 import Downshift, { stateChangeTypes } from "../Downshift";
 import Tag from "../Tag";
 
 const AutocompleteDesktop = (props) => {
   const {
+    size,
     label,
     error,
     onBlur,
@@ -106,6 +103,7 @@ const AutocompleteDesktop = (props) => {
                     <>
                       <div ref={popperRef.ref}>
                         <Input
+                          size={size}
                           {...downshift.getInputProps({
                             ref: inputRef,
                             placeholder,
