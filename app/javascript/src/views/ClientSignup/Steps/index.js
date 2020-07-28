@@ -11,7 +11,7 @@ import EmailNotAllowed from "./EmailNotAllowed";
 
 export const STEPS = [
   {
-    title: "Personal Data",
+    title: "Start Application",
     component: StartApplication,
     path: "/clients/signup",
     exact: true,
