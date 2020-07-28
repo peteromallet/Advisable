@@ -54,14 +54,8 @@ export const useClientApplicationQuery = () => {
 
 export const START_CLIENT_APPLICATION = gql`
   ${clientApplicationFragment}
-  mutation StartClientApplication(
-    $firstName: String!
-    $lastName: String
-    $email: String!
-  ) {
-    startClientApplication(
-      input: { firstName: $firstName, lastName: $lastName, email: $email }
-    ) {
+  mutation StartClientApplication($input: StartClientApplicationInput!) {
+    startClientApplication(input: $input) {
       clientApplication {
         ...Application
       }
@@ -99,20 +93,8 @@ export const useAboutCompanyQuery = () => {
 };
 
 export const ABOUT_COMPANY_UPDATE = gql`
-  mutation UpdateClientApplication(
-    $id: ID!
-    $companyName: String!
-    $industry: String!
-    $companyType: String!
-  ) {
-    updateClientApplication(
-      input: {
-        id: $id
-        companyName: $companyName
-        industry: $industry
-        companyType: $companyType
-      }
-    ) {
+  mutation UpdateClientApplication($input: UpdateClientApplicationInput!) {
+    updateClientApplication(input: $input) {
       clientApplication {
         id
         # About Your Company
@@ -167,20 +149,8 @@ export const useAboutRequirementsQuery = () => {
 };
 
 export const ABOUT_REQUIREMENTS_UPDATE = gql`
-  mutation UpdateClientApplication(
-    $id: ID!
-    $skills: [String!]
-    $numberOfFreelancers: String!
-    $budget: Int
-  ) {
-    updateClientApplication(
-      input: {
-        id: $id
-        skills: $skills
-        numberOfFreelancers: $numberOfFreelancers
-        budget: $budget
-      }
-    ) {
+  mutation UpdateClientApplication($input: UpdateClientApplicationInput!) {
+    updateClientApplication(input: $input) {
       clientApplication {
         id
         # About Your Requirements
@@ -216,20 +186,8 @@ export const useAboutRequirementsUpdate = () =>
 /* 4 Step. About Preferences */
 
 export const SUBMIT_CLIENT_APPLICATION = gql`
-  mutation SubmitClientApplication(
-    $id: ID!
-    $talentQuality: String
-    $localityImportance: Int
-    $acceptedGuaranteeTerms: Boolean
-  ) {
-    submitClientApplication(
-      input: {
-        id: $id
-        localityImportance: $localityImportance
-        acceptedGuaranteeTerms: $acceptedGuaranteeTerms
-        talentQuality: $talentQuality
-      }
-    ) {
+  mutation SubmitClientApplication($input: SubmitClientApplicationInput!) {
+    submitClientApplication(input: $input) {
       clientApplication {
         id
         # About Your Preferences
@@ -284,8 +242,10 @@ export const getAboutPreferencesOptimisticResponse = (
 /* Step 5. Application Status page */
 
 export const REQUEST_APPLICATION_REMINDER = gql`
-  mutation RequestApplicationReminder($id: ID!) {
-    requestApplicationReminder(input: { id: $id }) {
+  mutation RequestApplicationReminder(
+    $input: RequestApplicationReminderInput!
+  ) {
+    requestApplicationReminder(input: $input) {
       clientApplication {
         id
         status
@@ -312,8 +272,10 @@ export const getRequestApplicationReminderOptimisticResponse = (id) => {
 };
 
 export const REQUEST_APPLICATION_CALLBACK = gql`
-  mutation RequestApplicationCallback($id: ID!, $phoneNumber: String!) {
-    requestApplicationCallback(input: { id: $id, phoneNumber: $phoneNumber }) {
+  mutation RequestApplicationCallback(
+    $input: RequestApplicationCallbackInput!
+  ) {
+    requestApplicationCallback(input: $input) {
       clientApplication {
         id
       }

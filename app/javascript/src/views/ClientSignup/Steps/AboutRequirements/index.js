@@ -44,8 +44,10 @@ function AboutRequirements() {
     values.budget = Number(values.budget) * 100;
     updateClientApplication({
       variables: {
-        id: locationState.applicationId,
-        ...values,
+        input: {
+          id: locationState.applicationId,
+          ...values,
+        },
       },
       optimisticResponse: getAboutRequirementsOptimisticReponse(
         locationState.applicationId,

@@ -18,7 +18,7 @@ function PhoneModal({ requestApplicationCallback, modal }) {
   const initialValues = { phoneNumber: "" };
   const handleSubmit = ({ phoneNumber }) => {
     requestApplicationCallback({
-      variables: { id: applicationId, phoneNumber },
+      variables: { input: { id: applicationId, phoneNumber } },
     });
     modal.hide();
   };

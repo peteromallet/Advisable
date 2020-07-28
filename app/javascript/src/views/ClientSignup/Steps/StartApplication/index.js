@@ -39,7 +39,9 @@ function StartApplication() {
         .validate(queryStringParams)
         .then(() => {
           // Valid query params. Start client application
-          startClientApplication({ variables: { ...queryStringParams } });
+          startClientApplication({
+            variables: { input: { ...queryStringParams } },
+          });
           setEmail(queryStringParams.email);
         })
         .catch((err) => {
@@ -87,7 +89,7 @@ function StartApplication() {
   };
   const handleSubmit = (values) => {
     setEmail(values.email);
-    startClientApplication({ variables: { ...values } });
+    startClientApplication({ variables: { input: { ...values } } });
   };
 
   return (
