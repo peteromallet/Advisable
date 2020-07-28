@@ -1,261 +1,706 @@
-import { times } from "lodash-es";
 import {
+  fireEvent,
+  renderRoute,
+  screen,
   mockViewer,
+  mockData,
   mockQuery,
   mockMutation,
-} from "../../testHelpers/apolloMocks";
-import { fireEvent } from "@testing-library/react";
-import renderApp from "../../testHelpers/renderApp";
-import generateTypes from "../../__mocks__/graphqlFields";
-import GET_DATA from "./Criteria/getData";
-import SEARCH from "./Specialists/search";
-import CREATE_ACCOUNT from "./SaveSearch/createAccount";
-import GET_PROJECTS from "../Projects/getProjects";
+} from "../../testHelpers/test-utils";
 
-test("Criteria step", async () => {
-  const skill = generateTypes.skill();
-  const industry = generateTypes.industry();
-  const project = generateTypes.project();
+import {
+  ABOUT_COMPANY_QUERY,
+  GET_CLIENT_APPLICATION,
+  START_CLIENT_APPLICATION,
+  ABOUT_COMPANY_UPDATE,
+  ABOUT_REQUIREMENTS_QUERY,
+  ABOUT_REQUIREMENTS_UPDATE,
+  SUBMIT_CLIENT_APPLICATION,
+  REQUEST_APPLICATION_CALLBACK,
+  REQUEST_APPLICATION_REMINDER,
+} from "./queries";
 
-  const graphQLMocks = [
-    mockViewer(null),
-    mockQuery(
-      GET_DATA,
-      {},
-      {
-        popularSkills: {
-          __typename: "SkillsConnection",
-          nodes: [skill],
+// Mock data
+const skill = mockData.skill();
+const industry = mockData.industry();
+const mockClientApplication = mockData.clientApplication;
+const clientApplication = mockClientApplication();
+const email = "test@test.com";
+const companyName = "Test Corp";
+const companyType = "Startup";
+const numberOfFreelancers = "1-3";
+const budget = "10000";
+const localityImportance = 3;
+const acceptedGuaranteeTerms = false;
+const talentQuality = "GOOD";
+const phoneNumber = "+380(93)555-66-99";
+
+const graphQLMocks = [
+  mockViewer(null),
+  mockQuery(
+    ABOUT_COMPANY_QUERY,
+    { id: clientApplication.id },
+    {
+      industries: [
+        {
+          __typename: "Industry",
+          label: industry.name,
+          value: industry.name,
         },
-        skills: [
-          {
-            ...skill,
-            label: skill.name,
-            value: skill.name,
+      ],
+      skills: [
+        {
+          __typename: "Skill",
+          label: skill.name,
+          value: skill.name,
+        },
+      ],
+      clientApplication,
+    },
+  ),
+  mockQuery(
+    GET_CLIENT_APPLICATION,
+    { id: clientApplication.id },
+    { clientApplication },
+  ),
+  mockQuery(
+    ABOUT_REQUIREMENTS_QUERY,
+    { id: clientApplication.id },
+    {
+      skills: [
+        {
+          __typename: "Skill",
+          label: skill.name,
+          value: skill.name,
+        },
+      ],
+      clientApplication,
+    },
+  ),
+  mockMutation(
+    START_CLIENT_APPLICATION,
+    {
+      firstName: clientApplication.firstName,
+      lastName: clientApplication.lastName,
+      email,
+    },
+    {
+      startClientApplication: {
+        __typename: "StartClientApplicationPayload",
+        clientApplication,
+      },
+    },
+  ),
+  mockMutation(
+    ABOUT_COMPANY_UPDATE,
+    {
+      id: clientApplication.id,
+      companyName,
+      industry: industry.name,
+      companyType,
+    },
+    {
+      updateClientApplication: {
+        __typename: "UpdateClientApplicationPayload",
+        clientApplication: {
+          __typename: "ClientApplication",
+          id: clientApplication.id,
+          companyName,
+          industry: {
+            __typename: "Industry",
+            name: industry.name,
           },
-        ],
-        industries: [
-          {
-            ...industry,
-            label: industry.name,
-            value: industry.name,
-          },
-        ],
-      },
-    ),
-    mockQuery(
-      SEARCH,
-      {
-        skill: skill.name,
-        industry: industry.name,
-        industryRequired: true,
-        companyType: "Growth-Stage Startup",
-        companyTypeRequired: true,
-      },
-      {
-        specialists: {
-          __typename: "SpecialistConnection",
-          totalCount: 25,
-          nodes: times(25, (t) =>
-            generateTypes.specialist({
-              id: `spe_${t}`,
-              airtableId: `recSpecialist${t}`,
-              hourlyRate: t * 10,
-              name: `Specialist ${t}`,
-            }),
-          ),
+          companyType,
         },
       },
-    ),
-    mockMutation(
-      CREATE_ACCOUNT,
-      {
-        skill: skill.name,
-        industry: industry.name,
-        industryExperienceRequired: true,
-        companyType: "Growth-Stage Startup",
-        companyTypeExperienceRequired: true,
-        email: "test@test.com",
-        specialists: ["spe_0", "spe_1"],
-      },
-      {
-        createUserAccount: {
-          __typename: "CreateUserAccountPayload",
-          project: project,
+    },
+  ),
+  mockMutation(
+    REQUEST_APPLICATION_CALLBACK,
+    {
+      id: clientApplication.id,
+      phoneNumber,
+    },
+    {
+      requestApplicationCallback: {
+        __typename: "RequestApplicationCallbackPayload",
+        clientApplication: {
+          __typename: "ClientApplication",
+          id: clientApplication.id,
         },
       },
-    ),
-  ];
+    },
+  ),
+];
 
-  const app = renderApp({
+test("Successful client application flow and ASAP call", async () => {
+  renderRoute({
     route: "/clients/signup",
-    graphQLMocks,
+    graphQLMocks: [
+      ...graphQLMocks,
+      mockMutation(
+        ABOUT_REQUIREMENTS_UPDATE,
+        {
+          id: clientApplication.id,
+          skills: [skill.name],
+          numberOfFreelancers: "1-3",
+          budget: Number(budget) * 100,
+        },
+        {
+          updateClientApplication: {
+            __typename: "UpdateClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              skills: [{ __typename: "Skill", name: skill.name }],
+              numberOfFreelancers: "1-3",
+              budget,
+            },
+          },
+        },
+      ),
+      mockMutation(
+        SUBMIT_CLIENT_APPLICATION,
+        {
+          id: clientApplication.id,
+          localityImportance,
+          acceptedGuaranteeTerms,
+          talentQuality,
+        },
+        {
+          submitClientApplication: {
+            __typename: "SubmitClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              localityImportance,
+              acceptedGuaranteeTerms,
+              talentQuality,
+              status: "ACCEPTED",
+              rejectionReason: null,
+            },
+          },
+        },
+      ),
+    ],
   });
 
-  const skillsInput = await app.findByPlaceholderText(
-    "Search for a skill",
+  // 0 Step. Start application
+  fireEvent.change(await screen.findByPlaceholderText(/First Name/i), {
+    target: { value: clientApplication.firstName },
+  });
+  fireEvent.change(await screen.findByPlaceholderText(/Last Name/i), {
+    target: { value: clientApplication.lastName },
+  });
+  const emailInput = await screen.findByPlaceholderText(
+    "ospencer@umbrellacorp.com",
+  );
+  fireEvent.change(emailInput, { target: { value: email } });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 1 Step. About Your Company
+  await screen.findByText("About Your Company");
+  fireEvent.change(screen.getByPlaceholderText("Umbrella Corporation"), {
+    target: { value: companyName },
+  });
+  const industryInput = await screen.findByPlaceholderText("Biotechnology");
+  fireEvent.click(industryInput);
+  fireEvent.keyDown(industryInput, { key: "ArrowDown" });
+  fireEvent.keyDown(industryInput, { key: "Enter" });
+  fireEvent.change(screen.getByTestId("companyType"), {
+    target: { value: companyType },
+  });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 2 Step. About Your Requirements
+  await screen.findByText("About Your Requirements");
+  const skillsInput = await screen.findByPlaceholderText(
+    /Facebook Ads/i,
     {},
     { timeout: 5000 },
   );
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
-  const industryInput = app.getByPlaceholderText("Industry");
+  fireEvent.change(screen.getByTestId("numberOfFreelancers"), {
+    target: { value: numberOfFreelancers },
+  });
+  fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 3 Step. About Your Preferences
+  await screen.findByText("About Your Preferences");
+  fireEvent.click(screen.getByLabelText("3"));
+  fireEvent.click(screen.getByLabelText(/No/i));
+  fireEvent.click(screen.getByLabelText(/good/i));
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 4 Step. Let's get started
+  await screen.findByText(/Let’s get started/i);
+  fireEvent.click(screen.getByLabelText(/call me/i));
+  fireEvent.change(await screen.getByPlaceholderText(/contact number/i), {
+    target: { value: phoneNumber },
+  });
+  const submitBtn = screen.getByLabelText(/submit/i);
+  fireEvent.click(submitBtn);
+  await screen.findByText("Your call is booked");
+});
+
+test("Successful client application flow via query string params", async () => {
+  renderRoute({
+    route: `/clients/signup?firstName=${clientApplication.firstName}&lastName=${clientApplication.lastName}&email=${email}`,
+    graphQLMocks: [
+      ...graphQLMocks,
+      mockMutation(
+        ABOUT_REQUIREMENTS_UPDATE,
+        {
+          id: clientApplication.id,
+          skills: [skill.name],
+          numberOfFreelancers: "1-3",
+          budget: Number(budget) * 100,
+        },
+        {
+          updateClientApplication: {
+            __typename: "UpdateClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              skills: [{ __typename: "Skill", name: skill.name }],
+              numberOfFreelancers: "1-3",
+              budget,
+            },
+          },
+        },
+      ),
+      mockMutation(
+        SUBMIT_CLIENT_APPLICATION,
+        {
+          id: clientApplication.id,
+          localityImportance,
+          acceptedGuaranteeTerms,
+          talentQuality,
+        },
+        {
+          submitClientApplication: {
+            __typename: "SubmitClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              localityImportance,
+              acceptedGuaranteeTerms,
+              talentQuality,
+              status: "ACCEPTED",
+              rejectionReason: null,
+            },
+          },
+        },
+      ),
+    ],
+  });
+
+  // 1 Step. About Your Company
+  await screen.findByText("About Your Company");
+  fireEvent.change(screen.getByPlaceholderText("Umbrella Corporation"), {
+    target: { value: companyName },
+  });
+  const industryInput = await screen.findByPlaceholderText("Biotechnology");
   fireEvent.click(industryInput);
   fireEvent.keyDown(industryInput, { key: "ArrowDown" });
   fireEvent.keyDown(industryInput, { key: "Enter" });
-  fireEvent.click(app.getByLabelText("Industry experience is important to me"));
-  fireEvent.click(
-    app.getByLabelText("Experience with this type of company is important"),
-  );
-  const button = app.getByLabelText("Find a specialist");
-  fireEvent.click(button);
+  fireEvent.change(screen.getByTestId("companyType"), {
+    target: { value: companyType },
+  });
+  fireEvent.click(screen.getByLabelText("Continue"));
 
-  const budget = await app.findByLabelText(
-    /Select Budget/i,
+  // 2 Step. About Your Requirements
+  await screen.findByText("About Your Requirements");
+  const skillsInput = await screen.findByPlaceholderText(
+    /Facebook Ads/i,
     {},
-    { timeout: 3000 },
+    { timeout: 5000 },
   );
-  fireEvent.click(budget);
-  fireEvent.click(app.getByLabelText("Select Specialist 0"));
-  fireEvent.click(app.getByLabelText("Select Specialist 1"));
-  fireEvent.click(app.getByLabelText("Continue"));
-  const email = await app.findByLabelText("Email Address");
-  fireEvent.change(email, { target: { value: "test@test.com" } });
-  const btn = await app.findByLabelText("Continue");
-  fireEvent.click(btn);
+  fireEvent.click(skillsInput);
+  fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
+  fireEvent.keyDown(skillsInput, { key: "Enter" });
+  fireEvent.change(screen.getByTestId("numberOfFreelancers"), {
+    target: { value: numberOfFreelancers },
+  });
+  fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
+  fireEvent.click(screen.getByLabelText("Continue"));
 
-  await app.findByText("Tell us more");
+  // 3 Step. About Your Preferences
+  await screen.findByText("About Your Preferences");
+  fireEvent.click(screen.getByLabelText("3"));
+  fireEvent.click(screen.getByLabelText(/No/i));
+  fireEvent.click(screen.getByLabelText(/good/i));
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 4 Step. Let's get started
+  await screen.findByText(/Let’s get started/i);
+  fireEvent.click(screen.getByLabelText(/call me/i));
+  fireEvent.change(await screen.getByPlaceholderText(/contact number/i), {
+    target: { value: phoneNumber },
+  });
+  const submitBtn = screen.getByLabelText(/submit/i);
+  fireEvent.click(submitBtn);
+  await screen.findByText("Your call is booked");
 });
 
-test("Alternative flow", async () => {
-  const skill = generateTypes.skill({ name: "Twitter Marketing" });
-  const industry = generateTypes.industry();
-  const project = generateTypes.project();
-
-  const graphQLMocks = [
-    mockViewer(null),
-    mockQuery(
-      GET_DATA,
-      {},
+const emailNotAllowedRejection = {
+  request: {
+    query: START_CLIENT_APPLICATION,
+    variables: {
+      input: {
+        firstName: clientApplication.firstName,
+        lastName: clientApplication.lastName,
+        email: "test@gmail.com",
+      },
+    },
+  },
+  result: {
+    data: {
+      __typename: "Mutation",
+      startClientApplication: null,
+    },
+    errors: [
       {
-        popularSkills: {
-          __typename: "SkillsConnection",
-          nodes: [skill],
-        },
-        skills: [
+        message: "This email is not allowed",
+        locations: [
           {
-            ...skill,
-            label: skill.name,
-            value: skill.name,
+            line: 27,
+            column: 3,
           },
         ],
-        industries: [
-          {
-            ...industry,
-            label: industry.name,
-            value: industry.name,
-          },
-        ],
-      },
-    ),
-    mockQuery(
-      SEARCH,
-      {
-        skill: skill.name,
-        industry: industry.name,
-        industryRequired: true,
-        companyType: "Growth-Stage Startup",
-        companyTypeRequired: true,
-      },
-      {
-        specialists: {
-          __typename: "SpecialistConnection",
-          totalCount: 25,
-          nodes: times(25, (t) =>
-            generateTypes.specialist({
-              id: `spe_${t}`,
-              airtableId: `recSpecialist${t}`,
-              hourlyRate: t * 10,
-              name: `Specialist ${t}`,
-            }),
-          ),
+        path: ["startClientApplication"],
+        extensions: {
+          type: "INVALID_REQUEST",
+          code: "emailNotAllowed",
         },
       },
-    ),
-    mockMutation(
-      CREATE_ACCOUNT,
-      {
-        skill: skill.name,
-        industry: industry.name,
-        industryExperienceRequired: true,
-        companyType: "Growth-Stage Startup",
-        companyTypeExperienceRequired: true,
-        email: "test@test.com",
-        specialists: ["spe_0", "spe_1"],
-      },
-      {
-        createUserAccount: {
-          __typename: "CreateUserAccountPayload",
-          project: project,
-        },
-      },
-    ),
-  ];
+    ],
+  },
+};
 
-  const app = renderApp({
-    route: `/clients/signup?alternative=true&skill=Twitter%20Marketing`,
-    graphQLMocks,
+test("Reject public gmail for client's signup form via query string params", async () => {
+  renderRoute({
+    route: `/clients/signup?firstName=${clientApplication.firstName}&lastName=${clientApplication.lastName}&email=test@gmail.com`,
+    graphQLMocks: [emailNotAllowedRejection],
+  });
+  await screen.findByText(/public emails/i);
+});
+
+test("Reject public gmail for client's signup form", async () => {
+  renderRoute({
+    route: `/clients/signup`,
+    graphQLMocks: [emailNotAllowedRejection],
+  });
+  // 0 Step. Start application
+  fireEvent.change(await screen.findByPlaceholderText(/First Name/i), {
+    target: { value: clientApplication.firstName },
+  });
+  fireEvent.change(await screen.findByPlaceholderText(/Last Name/i), {
+    target: { value: clientApplication.lastName },
+  });
+  const emailInput = await screen.findByPlaceholderText(
+    "ospencer@umbrellacorp.com",
+  );
+  fireEvent.change(emailInput, { target: { value: "test@gmail.com" } });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  await screen.findByText(/public emails/i);
+});
+
+const accountExistsRejection = {
+  request: {
+    query: START_CLIENT_APPLICATION,
+    variables: {
+      input: {
+        firstName: clientApplication.firstName,
+        lastName: clientApplication.lastName,
+        email: "exists@test.com",
+      },
+    },
+  },
+  result: {
+    data: {
+      __typename: "Mutation",
+      startClientApplication: null,
+    },
+    errors: [
+      {
+        extensions: {
+          type: "INVALID_REQUEST",
+          code: "existingAccount",
+        },
+      },
+    ],
+  },
+};
+
+test("Account already exists with this email via query string params", async () => {
+  renderRoute({
+    route: `/clients/signup?firstName=${clientApplication.firstName}&lastName=${clientApplication.lastName}&email=exists@test.com`,
+    graphQLMocks: [accountExistsRejection],
   });
 
-  const checkbox = await app.findByLabelText(
-    "Experience working at companies similar to mine is important",
-  );
+  await screen.findByText(/welcome back/i);
+});
 
-  fireEvent.click(checkbox);
-  const industryInput = app.getByPlaceholderText("What industry are you in?");
+test("Account already exists with this email", async () => {
+  renderRoute({
+    route: `/clients/signup`,
+    graphQLMocks: [accountExistsRejection],
+  });
+  fireEvent.change(await screen.findByPlaceholderText(/First Name/i), {
+    target: { value: clientApplication.firstName },
+  });
+  fireEvent.change(await screen.findByPlaceholderText(/Last Name/i), {
+    target: { value: clientApplication.lastName },
+  });
+  const emailInput = await screen.findByPlaceholderText(
+    "ospencer@umbrellacorp.com",
+  );
+  fireEvent.change(emailInput, { target: { value: "exists@test.com" } });
+  fireEvent.click(screen.getByLabelText("Continue"));
+  await screen.findByText(/welcome back/i);
+});
+
+test("Cheap talents client application rejection flow", async () => {
+  renderRoute({
+    route: "/clients/signup",
+    graphQLMocks: [
+      ...graphQLMocks,
+      mockMutation(
+        ABOUT_REQUIREMENTS_UPDATE,
+        {
+          id: clientApplication.id,
+          skills: [skill.name],
+          numberOfFreelancers: "1-3",
+          budget: Number(budget) * 100,
+        },
+        {
+          updateClientApplication: {
+            __typename: "UpdateClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              skills: [{ __typename: "Skill", name: skill.name }],
+              numberOfFreelancers: "1-3",
+              budget,
+            },
+          },
+        },
+      ),
+      mockMutation(
+        SUBMIT_CLIENT_APPLICATION,
+        {
+          id: clientApplication.id,
+          localityImportance,
+          acceptedGuaranteeTerms,
+          talentQuality: "CHEAP",
+        },
+        {
+          submitClientApplication: {
+            __typename: "SubmitClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              localityImportance,
+              acceptedGuaranteeTerms,
+              talentQuality: "CHEAP",
+              status: "REJECTED",
+              rejectionReason: "CHEAP_TALENT",
+            },
+          },
+        },
+      ),
+    ],
+  });
+
+  // 0 Step. Start application
+  fireEvent.change(await screen.findByPlaceholderText(/First Name/i), {
+    target: { value: clientApplication.firstName },
+  });
+  fireEvent.change(await screen.findByPlaceholderText(/Last Name/i), {
+    target: { value: clientApplication.lastName },
+  });
+  const emailInput = await screen.findByPlaceholderText(
+    "ospencer@umbrellacorp.com",
+  );
+  fireEvent.change(emailInput, { target: { value: email } });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 1 Step. About Your Company
+  await screen.findByText("About Your Company");
+  fireEvent.change(screen.getByPlaceholderText("Umbrella Corporation"), {
+    target: { value: companyName },
+  });
+  const industryInput = await screen.findByPlaceholderText("Biotechnology");
   fireEvent.click(industryInput);
   fireEvent.keyDown(industryInput, { key: "ArrowDown" });
   fireEvent.keyDown(industryInput, { key: "Enter" });
-  const button = app.getByLabelText("Find a specialist");
-  fireEvent.click(button);
+  fireEvent.change(screen.getByTestId("companyType"), {
+    target: { value: companyType },
+  });
+  fireEvent.click(screen.getByLabelText("Continue"));
 
-  const budget = await app.findByLabelText(
-    /Select Budget/i,
+  // 2 Step. About Your Requirements
+  await screen.findByText("About Your Requirements");
+  const skillsInput = await screen.findByPlaceholderText(
+    /Facebook Ads/i,
     {},
-    { timeout: 3000 },
+    { timeout: 5000 },
   );
-  fireEvent.click(budget);
+  fireEvent.click(skillsInput);
+  fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
+  fireEvent.keyDown(skillsInput, { key: "Enter" });
+  fireEvent.change(screen.getByTestId("numberOfFreelancers"), {
+    target: { value: numberOfFreelancers },
+  });
+  fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
+  fireEvent.click(screen.getByLabelText("Continue"));
 
-  fireEvent.click(app.getByLabelText("Select Specialist 0"));
-  fireEvent.click(app.getByLabelText("Select Specialist 1"));
-  fireEvent.click(app.getByLabelText("Continue"));
+  // 3 Step. About Your Preferences
+  await screen.findByText("About Your Preferences");
+  fireEvent.click(screen.getByLabelText("3"));
+  fireEvent.click(screen.getByLabelText(/No/i));
+  fireEvent.click(screen.getByLabelText(/cheap/i));
+  fireEvent.click(screen.getByLabelText("Continue"));
 
-  const email = await app.findByLabelText("Email Address");
-  fireEvent.change(email, { target: { value: "test@test.com" } });
-  const btn = await app.findByLabelText("Continue");
-  fireEvent.click(btn);
-
-  const more = await app.findByText("Tell us more");
-  expect(more).toBeInTheDocument();
+  // 4 Step. Unfortunately, we're not a good fit
+  await screen.findByText(/unfortunately/i);
+  await screen.findByLabelText(/upwork/i);
 });
 
-test("Redirects when there is already a viewer", async () => {
-  const user = generateTypes.user({
-    projects: [],
+test("Not hiring client application rejection flow", async () => {
+  renderRoute({
+    route: "/clients/signup",
+    graphQLMocks: [
+      ...graphQLMocks,
+      mockMutation(
+        ABOUT_REQUIREMENTS_UPDATE,
+        {
+          id: clientApplication.id,
+          skills: [skill.name],
+          numberOfFreelancers: "0",
+          budget: Number(budget) * 100,
+        },
+        {
+          updateClientApplication: {
+            __typename: "UpdateClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              skills: [{ __typename: "Skill", name: skill.name }],
+              numberOfFreelancers: "0",
+              budget,
+            },
+          },
+        },
+      ),
+      mockMutation(
+        SUBMIT_CLIENT_APPLICATION,
+        {
+          id: clientApplication.id,
+          localityImportance,
+          acceptedGuaranteeTerms,
+          talentQuality: "GOOD",
+        },
+        {
+          submitClientApplication: {
+            __typename: "SubmitClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              localityImportance,
+              acceptedGuaranteeTerms,
+              talentQuality: "GOOD",
+              status: "REJECTED",
+              rejectionReason: "NOT_HIRING",
+            },
+          },
+        },
+      ),
+      mockMutation(
+        REQUEST_APPLICATION_REMINDER,
+        {
+          id: clientApplication.id,
+        },
+        {
+          requestApplicationReminder: {
+            __typename: "RequestApplicationReminderPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              status: "REMIND",
+            },
+          },
+        },
+      ),
+    ],
   });
 
-  const graphQLMocks = [
-    mockViewer(user),
-    mockQuery(
-      GET_PROJECTS,
-      {},
-      {
-        viewer: user,
-      },
-    ),
-  ];
+  // 0 Step. Start application
+  fireEvent.change(await screen.findByPlaceholderText(/First Name/i), {
+    target: { value: clientApplication.firstName },
+  });
+  fireEvent.change(await screen.findByPlaceholderText(/Last Name/i), {
+    target: { value: clientApplication.lastName },
+  });
+  const emailInput = await screen.findByPlaceholderText(
+    "ospencer@umbrellacorp.com",
+  );
+  fireEvent.change(emailInput, { target: { value: email } });
+  fireEvent.click(screen.getByLabelText("Continue"));
 
-  const app = renderApp({ route: "/clients/signup", graphQLMocks });
-  await app.findByText("Find a new freelancer");
+  // 1 Step. About Your Company
+  await screen.findByText("About Your Company");
+  fireEvent.change(screen.getByPlaceholderText("Umbrella Corporation"), {
+    target: { value: companyName },
+  });
+  const industryInput = await screen.findByPlaceholderText("Biotechnology");
+  fireEvent.click(industryInput);
+  fireEvent.keyDown(industryInput, { key: "ArrowDown" });
+  fireEvent.keyDown(industryInput, { key: "Enter" });
+  fireEvent.change(screen.getByTestId("companyType"), {
+    target: { value: companyType },
+  });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 2 Step. About Your Requirements
+  await screen.findByText("About Your Requirements");
+  const skillsInput = await screen.findByPlaceholderText(
+    /Facebook Ads/i,
+    {},
+    { timeout: 5000 },
+  );
+  fireEvent.click(skillsInput);
+  fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
+  fireEvent.keyDown(skillsInput, { key: "Enter" });
+  fireEvent.change(screen.getByTestId("numberOfFreelancers"), {
+    target: { value: "0" },
+  });
+  fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 3 Step. About Your Preferences
+  await screen.findByText("About Your Preferences");
+  fireEvent.click(screen.getByLabelText("3"));
+  fireEvent.click(screen.getByLabelText(/No/i));
+  fireEvent.click(screen.getByLabelText(/good/i));
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 4 Step. Unfortunately, we're not a good fit
+  await screen.findByText(/unfortunately/i);
+  await screen.findByText(/hiring/i);
+  fireEvent.click(screen.getByLabelText(/remind/i));
+  await screen.findByText(/reminder set/i);
+});
+
+test("Calendly's call booked page", async () => {
+  renderRoute({
+    route: "/clients/signup/thank-you-call-is-booked",
+  });
+
+  await screen.findByText(/your call is booked/i);
 });
