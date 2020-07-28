@@ -20,7 +20,7 @@ function NotHiringStatus({ RedirectToNextStep, RedirectToInitialStep }) {
 
   const requestApplicationReminder = () => {
     mutation({
-      variables: { id: locationState.applicationId },
+      variables: { input: { id: locationState.applicationId } },
       optimisticResponse: getRequestApplicationReminderOptimisticResponse(
         locationState.applicationId,
       ),
