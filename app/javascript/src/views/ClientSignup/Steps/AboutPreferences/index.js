@@ -73,8 +73,10 @@ function AboutPreferences() {
     values.acceptedGuaranteeTerms = values.acceptedGuaranteeTerms === "yes";
     submitClientApplication({
       variables: {
-        id: locationState.applicationId,
-        ...values,
+        input: {
+          id: locationState.applicationId,
+          ...values,
+        },
       },
       optimisticResponse: getAboutPreferencesOptimisticResponse(
         locationState.applicationId,

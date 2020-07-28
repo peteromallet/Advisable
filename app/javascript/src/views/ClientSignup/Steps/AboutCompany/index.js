@@ -39,8 +39,10 @@ function AboutCompany() {
   const handleSubmit = (values) => {
     updateClientApplication({
       variables: {
-        id: locationState.applicationId,
-        ...values,
+        input: {
+          id: locationState.applicationId,
+          ...values,
+        },
       },
       optimisticResponse: getAboutCompanyOptimisticReponse(
         locationState.applicationId,
