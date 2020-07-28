@@ -25,10 +25,10 @@ i18n
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
       format: function (value, format, lng) {
-        if (format === "lowercase") return value.toLowerCase();
-        if (format === "uppercase") return value.toUpperCase();
+        if (format === "lowercase") return value?.toLowerCase();
+        if (format === "uppercase") return value?.toUpperCase();
         if (format === "capitalize") {
-          return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+          return value.charAt(0)?.toUpperCase() + value.slice(1)?.toLowerCase();
         }
         return value;
       },

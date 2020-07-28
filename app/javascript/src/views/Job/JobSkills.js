@@ -48,6 +48,10 @@ export default function JobSkills({ data }) {
     }));
   }, [data.skills]);
 
+  const industry = data.viewer.industry;
+  const popularSkills =
+    industry?.popularSkills.nodes || data.popularSkills.nodes;
+
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {(formik) => (
@@ -70,17 +74,10 @@ export default function JobSkills({ data }) {
             onChange={(skills) => formik.setFieldValue("skills", skills)}
           />
           <Box mb="l">
-            <Text
-              mb="s"
-              fontSize="17px"
-              color="blue900"
-              fontWeight="medium"
-              letterSpacing="-0.03rem"
-            >
-              Popular skills for finance startups
-            </Text>
             <PopularSkills
-              skills={data.popularSkills.nodes}
+              skills={popularSkills}
+              industry={industry?.name}
+              companyType={data.viewer.companyType}
               disabled={formik.values.skills.length >= 5}
             />
           </Box>

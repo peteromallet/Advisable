@@ -12,7 +12,7 @@ function Dot({ paths = [] }) {
   return <Circle mr="6px" size="8px" bg={active ? "blue600" : "neutral200"} />;
 }
 
-export default function SetupDots({ current, number, ...props }) {
+export default function SetupDots(props) {
   return (
     <Box display="flex" {...props}>
       <Dot

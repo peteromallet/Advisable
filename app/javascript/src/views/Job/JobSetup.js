@@ -30,23 +30,21 @@ export default function JobSetup({ data }) {
     <PageWithSidebar>
       {largeScreen && <JobSetupSidebar data={data} />}
       <Box
-        my={{ _: 0, m: "64px" }}
         mx="auto"
         width="100%"
-        padding={{ _: "24px", m: "0" }}
-        maxWidth={{ _: "100%", m: "680px" }}
-        position="relative"
         as={motion.div}
+        position="relative"
+        my={{ _: 0, m: "64px" }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
         initial={{ opacity: 0, y: 40 }}
+        padding={{ _: "24px", m: "0" }}
+        maxWidth={{ _: "100%", m: "680px" }}
       >
         {!largeScreen && data.project.status === "Draft" && (
           <SetupDots
-            justifyContent={{ _: "start", m: "center" }}
             marginBottom={{ _: "m", m: "l" }}
-            current={1}
-            number={5}
+            justifyContent={{ _: "start", m: "center" }}
           />
         )}
         <SetupSteps data={data} />

@@ -145,6 +145,7 @@
     "3": "$t(locationImportance.2)"
   },
   "jobSetup": {
+    "popularSkills": "Popular skills for {{industry, lowercase}} $t(companyTypes.{{companyType}}_plural)",
     "experience": {
       "title": "How important is it that they have worked with {{industry, lowercase}} $t(companyTypes.{{companyType}}_plural) before?"
     }

@@ -1,8 +1,9 @@
 import React from "react";
 import { rgba } from "polished";
 import { useField } from "formik";
-import { theme } from "@advisable/donut";
+import { Text, theme } from "@advisable/donut";
 import { Plus } from "@styled-icons/feather";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 const StyledPopularSkills = styled.div`
@@ -56,30 +57,53 @@ const StyledPopularSkill = styled.button`
   }
 `;
 
-export default function PopularSkills({ skills, disabled }) {
+export default function PopularSkills({
+  industry,
+  companyType,
+  skills,
+  disabled,
+}) {
+  const { t } = useTranslation();
   const [field, meta, helpers] = useField("skills");
 
   const filtered = React.useMemo(() => {
     return skills.filter((s) => field.value.indexOf(s.name) === -1);
   }, [skills, field.value]);
 
+  if (filtered.length === 0) return null;
+
   return (
-    <StyledPopularSkills>
-      {disabled && (
-        <StyledPopularSkillDisabled>
-          <span>You can not add more than 5 skills.</span>
-        </StyledPopularSkillDisabled>
-      )}
-      {filtered.map((skill, i) => (
-        <StyledPopularSkill
-          key={skill.id}
-          disabled={disabled}
-          onClick={() => helpers.setValue([...field.value, skill.name])}
-        >
-          <Plus size={16} strokeWidth={2} />
-          {skill.name}
-        </StyledPopularSkill>
-      ))}
-    </StyledPopularSkills>
+    <>
+      <Text
+        mb="s"
+        fontSize="17px"
+        color="blue900"
+        fontWeight="medium"
+        letterSpacing="-0.03rem"
+      >
+        {t("jobSetup.popularSkills", {
+          industry,
+          companyType,
+        })}
+      </Text>
+      <StyledPopularSkills>
+        {disabled && (
+          <StyledPopularSkillDisabled>
+            <span>You can not add more than 5 skills.</span>
+          </StyledPopularSkillDisabled>
+        )}
+        {filtered.map((skill, i) => (
+          <StyledPopularSkill
+            type="button"
+            key={skill.id}
+            disabled={disabled}
+            onClick={() => helpers.setValue([...field.value, skill.name])}
+          >
+            <Plus size={16} strokeWidth={2} />
+            {skill.name}
+          </StyledPopularSkill>
+        ))}
+      </StyledPopularSkills>
+    </>
   );
 }
