@@ -4,7 +4,6 @@ mutation UpdateProject($input: UpdateProjectInput!) {
       id
       goals
       status
-      primarySkill
       questions
       description
       depositOwed
@@ -14,6 +13,10 @@ mutation UpdateProject($input: UpdateProjectInput!) {
       requiredCharacteristics
       optionalCharacteristics
       skills {
+        id
+        name
+      }
+      primarySkill {
         id
         name
       }

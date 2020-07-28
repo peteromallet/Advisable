@@ -1,4 +1,5 @@
 import React from "react";
+import { darken } from "polished";
 import styled, { css } from "styled-components";
 import { theme } from "@advisable/donut";
 
@@ -41,6 +42,10 @@ const StyledRequiredCharacteristic = styled.label`
   background-color: #f5f5f8;
   color: ${theme.colors.neutral900};
   border: 2px solid transparent;
+
+  &:hover {
+    background: ${darken(0.04, "#f5f5f8")};
+  }
 
   input {
     top: 0;

@@ -39,7 +39,6 @@ class Mutations::UpdateProject < Mutations::BaseMutation
   def assign_attributes(**args)
     args.slice(
       :goals,
-      :primary_skill,
       :description,
       :service_type,
       :company_description,
@@ -65,9 +64,9 @@ class Mutations::UpdateProject < Mutations::BaseMutation
     end
   end
 
-  def update_primary_skill(project, name)
-    return unless name.present?
-    primary_skill = Skill.find_by_name(name)
+  def update_primary_skill(project, skill_name)
+    return unless skill_name.present?
+    primary_skill = Skill.find_by_name(skill_name)
     # TODO:
     # For now we still store the primary skill in a text column. This should
     # be removed in favour of the project_skills association
