@@ -9,12 +9,12 @@ import {
   useLocationState,
 } from "../../queries";
 import FormField from "src/components/FormField";
-import { Text, Autocomplete, Select, Box } from "@advisable/donut";
+import { Autocomplete, Select, Box } from "@advisable/donut";
 import { object, string } from "yup";
 import MotionStack from "../MotionStack";
 import { Loading } from "../../../../components/Loading/styles";
 import Navigation from "../Navigation";
-import { Title } from "../styles";
+import { Title, Description } from "../styles";
 
 const validationSchema = object().shape({
   companyName: string().required("This field is required"),
@@ -67,10 +67,10 @@ function AboutCompany() {
           <Form>
             <MotionStack>
               <Title>About Your Company</Title>
-              <Text mb="m">
+              <Description>
                 As next steps, we need you to answer a few questions in order to
                 figure out if you&apos;re a good fit for Advisable
-              </Text>
+              </Description>
               <Box mb="m">
                 <FormField
                   name="companyName"
