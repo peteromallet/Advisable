@@ -362,22 +362,7 @@ const emailNotAllowedRejection = {
       __typename: "Mutation",
       startClientApplication: null,
     },
-    errors: [
-      {
-        message: "This email is not allowed",
-        locations: [
-          {
-            line: 27,
-            column: 3,
-          },
-        ],
-        path: ["startClientApplication"],
-        extensions: {
-          type: "INVALID_REQUEST",
-          code: "emailNotAllowed",
-        },
-      },
-    ],
+    errors: [{ extensions: { code: "emailNotAllowed" } }],
   },
 };
 
@@ -426,14 +411,7 @@ const accountExistsRejection = {
       __typename: "Mutation",
       startClientApplication: null,
     },
-    errors: [
-      {
-        extensions: {
-          type: "INVALID_REQUEST",
-          code: "existingAccount",
-        },
-      },
-    ],
+    errors: [{ extensions: { code: "existingAccount" } }],
   },
 };
 
