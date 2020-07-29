@@ -1,6 +1,12 @@
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
-import { Text, Box, useModal, Button } from "@advisable/donut";
+import {
+  Text,
+  Box,
+  useModal,
+  Button,
+  DialogDisclosure,
+} from "@advisable/donut";
 import RequestCallButton from "../RequestCallButton";
 import {
   useLocationState,
@@ -58,9 +64,14 @@ function AcceptedStatus({ firstName, lastName }) {
           >
             Schedule A Call
           </RequestCallButton>
-          <Button loading={called} onClick={modal.show} variant="subtle">
+          <DialogDisclosure
+            as={Button}
+            loading={called}
+            variant="subtle"
+            {...modal}
+          >
             Call Me ASAP
-          </Button>
+          </DialogDisclosure>
           <PhoneModal
             requestApplicationCallback={requestApplicationCallback}
             modal={modal}
