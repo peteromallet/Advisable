@@ -30,7 +30,7 @@ function MotionStack({ children, ...props }) {
     <Box
       {...props}
       as={motion.ul}
-      variants={!disable && container}
+      variants={container}
       initial="initial"
       animate="show"
       exit="exit"
