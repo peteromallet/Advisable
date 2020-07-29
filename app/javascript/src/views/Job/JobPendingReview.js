@@ -14,7 +14,7 @@ export default function PublishJob({ data }) {
         name={salesPerson.name}
         mb="l"
         mx="auto"
-        url="https://images.unsplash.com/photo-1557425747-929b65a39785?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+        url={salesPerson.image}
       />
       <JobSetupStepHeader mb="xs">
         {salesPerson.firstName} is reviewing your job!

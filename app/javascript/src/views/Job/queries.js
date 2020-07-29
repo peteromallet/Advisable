@@ -25,6 +25,7 @@ const projectFields = gql`
         id
         firstName
         name
+        image
       }
       industry {
         id
