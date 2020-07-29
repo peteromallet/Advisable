@@ -65,6 +65,7 @@ export const Choice = styled.div`
     display: inline-flex;
     padding: 0 15px 0 10px;
     background: rgba(29, 39, 75, 0.06);
+    cursor: pointer;
   }
 
   label:hover {
