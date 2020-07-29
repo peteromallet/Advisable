@@ -9,7 +9,11 @@ function ScaleInput({ value, onChange, leftTitle, rightTitle }) {
 
   return (
     <StyledScaleInput>
-      <Box display="flex">
+      <Box
+        display="grid"
+        gridTemplateColumns="repeat(5, auto)"
+        gridColumnGap="8px"
+      >
         {[1, 2, 3, 4, 5].map((n) => (
           <StyledScaleInputOption
             key={n}
