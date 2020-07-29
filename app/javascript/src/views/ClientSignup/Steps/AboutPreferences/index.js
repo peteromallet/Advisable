@@ -21,9 +21,13 @@ import MotionStack from "../MotionStack";
 import { Title } from "../styles";
 
 const validationSchema = object().shape({
-  localityImportance: number(),
-  acceptedGuaranteeTerms: string(),
-  talentQuality: string(),
+  localityImportance: number().required(
+    "locality importance is a required field",
+  ),
+  acceptedGuaranteeTerms: string().required(
+    "accepted guarantee terms is a required field",
+  ),
+  talentQuality: string().required("talent quality is a required field"),
 });
 
 const talentQualityOptions = [
@@ -64,7 +68,7 @@ function AboutPreferences() {
 
   // Formik
   const initialValues = {
-    localityImportance: localityImportance || 0,
+    localityImportance: localityImportance || undefined,
     acceptedGuaranteeTerms: "",
     talentQuality: talentQuality || "",
   };
@@ -98,11 +102,12 @@ function AboutPreferences() {
           <Form>
             <MotionStack>
               <Title>About Your Preferences</Title>
-              <Text mb="m">
+              <Text mb="l">
                 This is to help tailor our recommendations to you.
               </Text>
-              <Box mb="l">
+              <Box mb="xl">
                 <FormField
+                  isRequired
                   as={ScaleInput}
                   name="localityImportance"
                   label="How important is it that freelancers you hire should be in your city?"
@@ -113,15 +118,15 @@ function AboutPreferences() {
                   }
                 />
               </Box>
-              <Box mb="s">
-                <ChoiceList
+              <Box mb="l">
+                <FormField
+                  isRequired
+                  as={ChoiceList}
                   fullWidth
+                  error={null}
                   optionsPerRow={2}
                   name="acceptedGuaranteeTerms"
                   onChange={formik.handleChange}
-                  error={
-                    formik.touched.talentQuality && formik.errors.talentQuality
-                  }
                   label="In order to avail of our money-back guarantee, are you willing to provide feedback on every freelancer you hire?"
                   options={[
                     { label: "Yes", value: "yes" },
@@ -131,14 +136,14 @@ function AboutPreferences() {
                 />
               </Box>
               <Box mb="m">
-                <ChoiceList
+                <FormField
+                  isRequired
+                  as={ChoiceList}
                   fullWidth
                   optionsPerRow={1}
                   name="talentQuality"
                   onChange={formik.handleChange}
-                  error={
-                    formik.touched.talentQuality && formik.errors.talentQuality
-                  }
+                  error={null}
                   label="What level of talent are you typically looking for?"
                   options={talentQualityOptions}
                   value={formik.values.talentQuality}
