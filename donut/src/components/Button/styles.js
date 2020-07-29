@@ -148,6 +148,7 @@ export const StyledButton = styled.button`
   outline: none;
   line-height: 1;
   padding-top: 0;
+  cursor: pointer;
   padding-bottom: 0;
   appearance: none;
   user-select: none;
