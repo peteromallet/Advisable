@@ -20,9 +20,9 @@ const item = {
   exit: { x: -100, opacity: 0, transition: { duration: 0.1 } },
 };
 
-function MotionStack({ disable, children, ...props }) {
+function MotionStack({ children, ...props }) {
   const newChildren = React.Children.map(children, (child, index) => (
-    <motion.li key={index} variants={!disable && item}>
+    <motion.li key={index} variants={item}>
       {child}
     </motion.li>
   ));
@@ -30,7 +30,7 @@ function MotionStack({ disable, children, ...props }) {
     <Box
       {...props}
       as={motion.ul}
-      variants={!disable && container}
+      variants={container}
       initial="initial"
       animate="show"
       exit="exit"
