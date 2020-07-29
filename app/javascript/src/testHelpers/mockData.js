@@ -68,6 +68,7 @@ export const project = (fields = {}) => {
     airtableId: uniqueId("rec"),
     name: "Project",
     currency: "USD",
+    primarySkill: skill({ name: "Testing" }),
     questions: ["Question?"],
     applicationsOpen: true,
     description: "desription",
@@ -368,6 +369,7 @@ export const salesPerson = (fields = {}) => {
       id: uniqueId("sal"),
       firstName: "John",
       name: "John Doe",
+      image: null,
     },
     fields,
   );

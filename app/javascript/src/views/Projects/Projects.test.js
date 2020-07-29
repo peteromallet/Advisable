@@ -1,11 +1,12 @@
 import fields from "../../__mocks__/graphqlFields";
 import renderApp from "../../testHelpers/renderApp";
 import VIEWER from "../../graphql/queries/viewer";
-import PROJECTS from "./getProjects";
+import { GET_PROJECTS } from "./queries";
 import { GET_APPLICATIONS } from "../Applications/queries";
 
 test("Loads the clients projects", async () => {
-  const project = fields.project({ primarySkill: "Test Primary Skill" });
+  const skill = fields.skill({ name: "Primary Skill" });
+  const project = fields.project({ primarySkill: skill });
   const user = fields.user({ projects: [project] });
 
   let { findByText } = renderApp({
@@ -23,7 +24,7 @@ test("Loads the clients projects", async () => {
       },
       {
         request: {
-          query: PROJECTS,
+          query: GET_PROJECTS,
         },
         result: {
           data: {
@@ -34,7 +35,7 @@ test("Loads the clients projects", async () => {
     ],
   });
 
-  let projectTitle = await findByText("Test Primary Skill");
+  let projectTitle = await findByText(skill.name);
   expect(projectTitle).toBeInTheDocument();
 });
 

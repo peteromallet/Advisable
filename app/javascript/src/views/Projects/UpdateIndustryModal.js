@@ -65,7 +65,7 @@ export default function UpdateIndustryModal({ industry, companyType }) {
       loading={loading}
       hideOnClickOutside={false}
       showCloseButton={false}
-      aria-label="Update industry"
+      label="Update industry"
     >
       <Text
         fontSize="24px"
