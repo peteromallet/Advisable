@@ -4,7 +4,7 @@ import { Text, Box, Circle } from "@advisable/donut";
 import { Check } from "@styled-icons/feather";
 import MotionStack from "../MotionStack";
 
-function ThankYou({ title, text }) {
+function Component({ title, text }) {
   return (
     <Box py="xxl">
       <MotionStack
@@ -32,9 +32,46 @@ function ThankYou({ title, text }) {
   );
 }
 
-ThankYou.propTypes = {
+Component.propTypes = {
   title: PropTypes.string,
   text: PropTypes.string,
+};
+
+function CallBooked() {
+  return (
+    <Component
+      title="Your call is booked"
+      text="We look forward to speaking!"
+    />
+  );
+}
+
+function CallShortly() {
+  return (
+    <Component
+      title="Your call is booked"
+      text="We look forward to speaking!"
+    />
+  );
+}
+
+function ReminderSet() {
+  return (
+    <Component title="Reminder Set" text="We'll follow up in six months" />
+  );
+}
+
+const ThankYou = (type) => {
+  switch (type) {
+    case "CallBooked":
+      return CallBooked;
+    case "CallShortly":
+      return CallShortly;
+    case "ReminderSet":
+      return ReminderSet;
+    default:
+      return null;
+  }
 };
 
 export default ThankYou;

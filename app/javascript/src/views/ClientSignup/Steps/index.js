@@ -4,10 +4,8 @@ import AboutRequirements from "./AboutRequirements";
 import AboutPreferences from "./AboutPreferences";
 import SignupStatus from "./SignupStatus";
 import StartApplication from "./StartApplication";
-import ThankYouReminderSet from "./ThankYou/ReminderSet";
-import ThankYouCallBooked from "./ThankYou/CallBooked";
-import ThankYouCallShortly from "./ThankYou/CallShortly";
 import EmailNotAllowed from "./EmailNotAllowed";
+import ThankYou from "./ThankYou";
 
 export const STEPS = [
   {
@@ -39,19 +37,19 @@ export const STEPS = [
   // Passive steps. Ignored by steps indicator
   {
     title: "Reminder Set",
-    component: ThankYouReminderSet,
+    component: ThankYou("ReminderSet"),
     path: "/clients/signup/thank-you-reminder-set",
     passive: true,
   },
   {
     title: "Your call is booked",
-    component: ThankYouCallBooked,
+    component: ThankYou("CallBooked"),
     path: "/clients/signup/thank-you-call-is-booked",
     passive: true,
   },
   {
     title: "We will call you shortly",
-    component: ThankYouCallShortly,
+    component: ThankYou("CallShortly"),
     path: "/clients/signup/thank-you-call-you-shortly",
     passive: true,
   },
