@@ -25,7 +25,7 @@ export default ({ project, match, history }) => {
       </Text>
       <Formik
         initialValues={{
-          optionalCharacteristics: project.optionalCharacteristics,
+          characteristics: project.optionalCharacteristics,
         }}
         onSubmit={async (values) => {
           const id = match.params.projectID;
@@ -45,13 +45,11 @@ export default ({ project, match, history }) => {
             <ListInput
               marginBottom="xl"
               name="optionalCharacteristics"
-              value={formik.values.optionalCharacteristics}
+              value={formik.values.characteristics}
               placeholder="+ Add a characteristic"
-              error={
-                formik.submitCount > 0 && formik.errors.optionalCharacteristics
-              }
+              error={formik.submitCount > 0 && formik.errors.characteristics}
               onChange={(characteristics) =>
-                formik.setFieldValue("optionalCharacteristics", characteristics)
+                formik.setFieldValue("characteristics", characteristics)
               }
             />
             <Button

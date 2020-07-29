@@ -15,7 +15,7 @@ describe Mutations::UpdateProject do
         specialistDescription: "specialist description",
         questions: ["This is a question?"],
         requiredCharacteristics: ["Required"],
-        optionalCharacteristics: ["Optional"],
+        characteristics: ["Optional"],
         acceptedTerms: true
       }) {
         project {
