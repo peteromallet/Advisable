@@ -7,6 +7,13 @@ class Project < ApplicationRecord
   has_many :reviews, as: :project
   has_many :project_skills, as: :project
   has_many :skills, through: :project_skills
+
+  has_one :primary_project_skill,
+          -> { where(primary: true) },
+          class_name: 'ProjectSkill', as: :project
+
+  has_one :primary_skill, through: :primary_project_skill, source: :skill
+
   has_many :project_industries, as: :project
   has_many :industries, through: :project_industries
   validates :service_type,

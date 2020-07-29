@@ -20,7 +20,6 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :update_availability, mutation: Mutations::UpdateAvailability
 
-  field :create_project, mutation: Mutations::CreateProject
   field :update_project, mutation: Mutations::UpdateProject
   field :confirm_project, mutation: Mutations::ConfirmProject
   field :convert_to_self_service, mutation: Mutations::ConvertToSelfService

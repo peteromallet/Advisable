@@ -171,7 +171,7 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
         user: user,
         name: skill.name,
         status: 'Project Created',
-        primary_skill: skill.name,
+        primary_skill: skill,
         sales_status: 'Pending',
         industry_experience_required: industry_experience_required,
         company_type_experience_required: company_type_experience_required

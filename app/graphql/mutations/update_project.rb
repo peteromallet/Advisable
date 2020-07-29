@@ -59,7 +59,7 @@ class Mutations::UpdateProject < Mutations::BaseMutation
     project.skills = skills
 
     if !args[:primary_skill] && skills.length == 1
-      project.primary_skill = project.skills.first.name
+      project[:primary_skill] = project.skills.first.name
       project.project_skills.first.update(primary: true)
     end
   end
@@ -70,7 +70,7 @@ class Mutations::UpdateProject < Mutations::BaseMutation
     # TODO:
     # For now we still store the primary skill in a text column. This should
     # be removed in favour of the project_skills association
-    project.primary_skill = primary_skill.name
+    project[:primary_skill] = primary_skill.name
     project.project_skills.where(primary: true).update(primary: false)
     project.project_skills.find_or_create_by(skill: primary_skill).update(
       primary: true
