@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Text, Box } from "@advisable/donut";
+import { Text, Box, Circle } from "@advisable/donut";
+import { Check } from "@styled-icons/feather";
 import MotionStack from "../MotionStack";
-import check from "./check.png";
 
 function ThankYou({ title, text }) {
   return (
@@ -13,9 +13,9 @@ function ThankYou({ title, text }) {
         flexDirection="column"
         alignItems="center"
       >
-        <Box mb="m">
-          <img src={check} width={55} alt="" />
-        </Box>
+        <Circle bg="blue100" size={60} color="blue600" mb="m">
+          <Check strokeWidth={3} size={24} />
+        </Circle>
         <Text
           as="h2"
           color="blue800"
