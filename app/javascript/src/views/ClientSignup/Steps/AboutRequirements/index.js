@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
-import { Select, Text, Autocomplete, Box } from "@advisable/donut";
+import { Select, Autocomplete, Box } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "../../../../components/SubmitButton";
 import Loading from "../../../../components/Loading";
@@ -15,7 +15,7 @@ import {
 import { string, array, object } from "yup";
 import MotionStack from "../MotionStack";
 import Navigation from "../Navigation";
-import { Title } from "../styles";
+import { Title, Description } from "../styles";
 
 const validationSchema = object().shape({
   skills: array().min(1).of(string().required()).required(),
@@ -72,10 +72,10 @@ function AboutRequirements() {
           <Form>
             <MotionStack spacing="m">
               <Title>About Your Requirements</Title>
-              <Text mb="m">
+              <Description>
                 This is for us to figure out if your requirements are a good
                 match for our talent.
-              </Text>
+              </Description>
               <Box mb="m">
                 <FormField
                   isRequired

@@ -8,7 +8,7 @@ import ScaleInput from "../../../../components/ScaleInput";
 import ChoiceList from "../../../../components/ChoiceList";
 import Loading from "../../../../components/Loading";
 import FormField from "src/components/FormField";
-import { Text, Box } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 // Queries
 import {
   useAboutPreferencesSubmit,
@@ -18,7 +18,7 @@ import {
 } from "../../queries";
 import Navigation from "../Navigation";
 import MotionStack from "../MotionStack";
-import { Title } from "../styles";
+import { Title, Description } from "../styles";
 
 const validationSchema = object().shape({
   localityImportance: number().required(
@@ -102,9 +102,9 @@ function AboutPreferences() {
           <Form>
             <MotionStack>
               <Title>About Your Preferences</Title>
-              <Text mb="l">
+              <Description>
                 This is to help tailor our recommendations to you.
-              </Text>
+              </Description>
               <Box mb="xl">
                 <FormField
                   isRequired
