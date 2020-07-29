@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
-import { Text, Modal, Box } from "@advisable/donut";
+import { Modal, Box } from "@advisable/donut";
 import SubmitButton from "../../../../../components/SubmitButton";
 import FormField from "src/components/FormField";
 import { useLocationState } from "../../../queries";
 import { object, string } from "yup";
 import PhoneInput from "../../../../../components/PhoneInput";
+import { Title } from "../../styles";
 
 const validationSchema = object().shape({
   phoneNumber: string().required("required field"),
@@ -32,15 +33,7 @@ function PhoneModal({ requestApplicationCallback, modal }) {
         validationSchema={validationSchema}
       >
         <Form>
-          <Text
-            fontSize="xxxl"
-            lineHeight="xxxl"
-            color="blue.8"
-            fontWeight="semibold"
-            mb="m"
-          >
-            We will call you
-          </Text>
+          <Title mb="m">We will call you</Title>
           <Box mb="m">
             <FormField
               type="tel"

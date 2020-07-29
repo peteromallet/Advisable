@@ -1,25 +1,16 @@
 import React from "react";
-import { Text, Button, Link } from "@advisable/donut";
+import { Button, Link } from "@advisable/donut";
 import MotionStack from "../MotionStack";
+import { Title, Description } from "../styles";
 
 function CheapStatus() {
   return (
     <MotionStack>
-      <Text
-        as="h2"
-        mb="s"
-        color="blue.8"
-        fontSize="xxxl"
-        lineHeight="xxxl"
-        fontWeight="semibold"
-        letterSpacing="-0.02em"
-      >
-        Unfortunately, we&apos;re not a good fit
-      </Text>
-      <Text mb="m">
+      <Title mb="m">Unfortunately, we&apos;re not a good fit</Title>
+      <Description>
         Advisable isn&apos;t suitable for companies like you. For people like
         you, we recommend Upwork.com.
-      </Text>
+      </Description>
       <Link.External href="https://www.upwork.com/">
         <Button width={[1, "auto"]}>Go To Upwork</Button>
       </Link.External>
