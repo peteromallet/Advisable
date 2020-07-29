@@ -12,6 +12,7 @@ import Loading from "../../../../components/Loading";
 import MotionStack from "../MotionStack";
 import Navigation from "../Navigation";
 import { Title } from "../styles";
+import { motion } from "framer-motion";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("Provide your first name, please."),
@@ -69,7 +70,7 @@ function StartApplication() {
 
   if (location.search)
     return (
-      <MotionStack disable>
+      <motion.div exit>
         <Navigation
           emailNotAllowed={emailNotAllowed}
           existingAccount={existingAccount}
@@ -78,7 +79,7 @@ function StartApplication() {
           applicationId={applicationId}
         />
         <Loading />
-      </MotionStack>
+      </motion.div>
     );
 
   // Formik
