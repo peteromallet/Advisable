@@ -23,6 +23,10 @@ class AddressAttribute
     as_json[key.to_sym]
   end
 
+  def provided?
+    city.present? && country.present?
+  end
+
   class Type < ActiveRecord::Type::Value
     def type
       :jsonb

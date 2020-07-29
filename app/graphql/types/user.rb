@@ -84,8 +84,10 @@ class Types::User < Types::BaseType
   field :location, String, null: true
 
   def location
-    return nil if object.address.city.nil?
+    city = object.address.city
+    return nil if city.nil?
     country = ISO3166::Country.new(object.address.country)
+    return city if country.nil?
     "#{object.address.city}, #{country.name}"
   end
 

@@ -10,7 +10,7 @@ class Mutations::CreateJob < Mutations::BaseMutation
   def resolve(**args)
     user = context[:current_user]
     # If the users city has not yet been set then schedule the geocode job
-    if user.address.city.nil?
+    unless user.address.provided?
       GeocodeUserJob.perform_later(user.id, context[:request].try(:remote_ip))
     end
 
