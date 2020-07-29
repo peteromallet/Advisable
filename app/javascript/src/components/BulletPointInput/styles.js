@@ -10,8 +10,8 @@ export const StyledBulletPointInput = styled(StyledInput).attrs((props) => ({
   as: "div",
 }))`
   ${margin};
-  padding: 0px 24px;
   display: block;
+  padding: 8px 24px;
 `;
 
 export const StyledBulletPointInputItem = styled.div`
@@ -32,13 +32,13 @@ export const StyledBulletPointInputItem = styled.div`
   }
 
   ${StyledTextareaControl} {
+    padding: 8px 0;
     border-color: transparent;
   }
 
   ${StyledTextarea} {
     margin: 0;
     outline: none;
-    padding: 0 0;
 
     &:focus {
       background: transparent;

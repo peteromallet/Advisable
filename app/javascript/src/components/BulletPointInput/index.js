@@ -13,8 +13,8 @@ export default function BulletPointInput({
 
   const handleKeyDown = (i) => (e) => {
     const inputValue = e.target.value;
-    const previousInput = e.target.parentNode?.previousSibling;
-    const nextInput = e.target.parentNode?.nextSibling;
+    const previousInput = e.target.parentNode?.parentNode?.previousSibling;
+    const nextInput = e.target.parentNode?.parentNode?.nextSibling;
 
     if (e.keyCode === 13) {
       e.preventDefault();
@@ -49,7 +49,7 @@ export default function BulletPointInput({
           <Textarea
             minRows={1}
             value={item}
-            padding={8}
+            padding={2}
             name={rest.name}
             style={{ width: "100%" }}
             placeholder={item ? null : placeholder}
