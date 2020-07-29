@@ -1,3 +1,6 @@
+# A Specialist specifically represents a specialist account. A client account is
+# represented by the User model. Ideally these two models will eventually be
+# merged to be different types of users.
 class Specialist < ApplicationRecord
   include Uid
   include Account

@@ -1,3 +1,6 @@
+# A User specifically represents a client looking to hire a freelancer.
+# A freelancer account is represented by the Specialist model. Ideally these
+# two models will eventually be merged to be different types of users.
 class User < ApplicationRecord
   include Uid
   include Account

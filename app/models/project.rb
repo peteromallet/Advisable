@@ -1,7 +1,16 @@
+# A project is essentially a job posting. When a client (user) wants to hire
+# a freelancer, they create a new project that details what kind of freelancer
+# they are looking to hire. This model was one of the first models introduced
+# to the app and overtime has grown quite a lot. Even though we still use the
+# term 'project' it is best to think of it as a 'job' listing.
+#
+# Freelancers (specialists) are associated to projects via an 'Application'
+# record. See the app/modals/application.rb for more details.
+#
 class Project < ApplicationRecord
   include Uid
-  include Airtable::Syncable
   include StatusMap
+  include Airtable::Syncable
   has_many :applications
   has_many :bookings, through: :applications
   has_many :reviews, as: :project

@@ -1,3 +1,43 @@
+# An application record represents a freelancers (Specialist) association to
+# a project. Similar to the Project model, the Application model was one of the
+# first models added to the app and has since out grown it's name. Initially
+# an application record was createid when a freelancer applied to a project.
+# However, now an application record represents a freelancers assoiation to a
+# project the entire way throughout the flow, even after they have been hired.
+#
+# Ideally this record would be broken down into separate models that represent
+# different stages of the process of working with a freelancer.
+#
+# == Statuses
+# The state of an application is represented by the 'status' column. This
+# was setup to sync with Airtable and so the statuses are not normalied and are
+# simply capitalized strings.
+#
+# [Invited To Apply] Indicates that a freelancer has been invited to apply to
+# the project but has not yet applied.
+#
+# [Applied] When a freelacer has actually applied to a project.
+#
+# [Invitation Rejected] The freelancer has rejected the invitiation to apply
+# to the projet. The reason for the rejection will be set in the
+# invitation_rejection_reason collumn.
+#
+# [Application Rejected] The client has rejected a freelancers application.
+# The reason for rejection will be provided in the rejection_reason and
+# rejection_reason_comment columns.
+#
+# [Application Accepted] This is the first step of the hiring process. At this
+# point the client will have sent an interview request to the freelancer.
+#
+# [Proposed] The freelancer has sent the client a proposal.
+#
+# [Working] The freelancer is actively working with the client. Check the
+# associated 'tasks' to see the work being done.
+#
+# [Stopped Working] The freelancer is no longer working with the client. They
+# may still resumt working with the freelancer, at which point the status will
+# be set back to Working.
+#
 class Application < ApplicationRecord
   include Uid
   include Airtable::Syncable
