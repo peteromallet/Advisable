@@ -49,7 +49,7 @@ function ClientSignup() {
             <Progress amount={progressLength} />
           </>
         )}
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence exitBeforeEnter initial={false}>
           <Switch location={location} key={location.pathname}>
             {routes}
           </Switch>
