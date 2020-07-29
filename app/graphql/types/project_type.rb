@@ -17,9 +17,12 @@ class Types::ProjectType < Types::BaseType
   field :primary_skill, Types::Skill, null: true
 
   # We are moving away from storing primary skill in the primary_skill text
-  # column.
+  # column. First we check the project_skills association and if one isn't
+  # set then we fall back to finding by the primary_skill text column.
   def primary_skill
-    object.project_skills.where(primary: true).first.try(:skill)
+    skill = object.project_skills.where(primary: true).first.try(:skill)
+    return skill if skill.present?
+    Skill.find_by_name(object[:primary_skill])
   end
 
   field :skills, [Types::Skill], null: true

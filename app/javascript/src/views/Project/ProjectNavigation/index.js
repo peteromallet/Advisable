@@ -74,7 +74,7 @@ export default function ProjectNavigation({ match, data }) {
     <Layout.Sidebar>
       <Sticky enabled={!isMobile} offset={98}>
         <Text mb="xxs" fontSize="xl" fontWeight="medium" color="blue900">
-          {data.project.primarySkill.name}
+          {data.project.primarySkill?.name}
         </Text>
         <Text color="neutral700">
           {pluralize(filtered.length, "Applicant", "Applicants")}
