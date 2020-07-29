@@ -7,7 +7,10 @@ export default gql`
       name
       currency
       airtableId
-      primarySkill
+      primarySkill {
+        id
+        name
+      }
       application(id: $applicationID) {
         id
         airtableId
