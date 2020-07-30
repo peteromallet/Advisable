@@ -22,12 +22,14 @@ import { Title, Description } from "../styles";
 
 const validationSchema = object().shape({
   localityImportance: number().required(
-    "locality importance is a required field",
+    "Please enter your freelancer locality importance",
   ),
   acceptedGuaranteeTerms: string().required(
-    "accepted guarantee terms is a required field",
+    "Please enter your feedback guarantee",
   ),
-  talentQuality: string().required("talent quality is a required field"),
+  talentQuality: string().required(
+    "Please enter your required level of talent",
+  ),
 });
 
 const talentQualityOptions = [

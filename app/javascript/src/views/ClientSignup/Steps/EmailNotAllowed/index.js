@@ -6,14 +6,14 @@ import { Title, Description } from "../styles";
 function EmailNotAllowed() {
   return (
     <MotionStack>
-      <Title mb="m">Public emails are not allowed</Title>
+      <Title mb="m">Personal emails are not allowed</Title>
       <Description>
-        You could either email{" "}
+        Please try again with your company email address. If you don&apos;t have
+        a company email address, you can email us at{" "}
         <Link.External href="mailto:hello@advisable.com">
           hello@advisable.com
         </Link.External>{" "}
-        to tell us why you should be considered for Advisable or try again with
-        your corporate email.
+        to tell us why you should be considered.
       </Description>
     </MotionStack>
   );
