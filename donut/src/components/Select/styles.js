@@ -16,10 +16,7 @@ export const StyledSelectDecoration = styled(StyledInputDecoration)``;
 
 export const StyledSelectControlWraper = styled.div`
   width: 100%;
-<<<<<<< HEAD
-=======
   display: flex;
->>>>>>> Add new input components
   position: relative;
 
   ${StyledSelectControl} {

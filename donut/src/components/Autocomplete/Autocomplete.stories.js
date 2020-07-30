@@ -6,11 +6,7 @@ import Card from "../Card";
 import Autocomplete from "./";
 
 export default {
-<<<<<<< HEAD
   title: "Forms|Autocomplete",
-=======
-  title: "Autocomplete",
->>>>>>> Add new input components
   decorators: [withKnobs],
 };
 
