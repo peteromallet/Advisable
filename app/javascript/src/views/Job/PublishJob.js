@@ -28,10 +28,10 @@ export default function PublishJob({ data }) {
 
   return (
     <>
-      <JobSetupStepHeader mb="xs">Review</JobSetupStepHeader>
+      <JobSetupStepHeader mb="xs">Review Project</JobSetupStepHeader>
       <JobSetupStepSubHeader mb="xl">
-        Please review the details below. Once you are happy with everything we
-        will begin searching for the perfect freelancer for you.
+        Please review the details below. Once you're happy with everything,
+        submit it to our team.
       </JobSetupStepSubHeader>
       <Stack spacing="xxxl" divider="neutral100">
         <Box>
@@ -173,12 +173,13 @@ export default function PublishJob({ data }) {
         onClick={handlePublish}
         loading={publishProjectResponse.loading}
       >
-        {project.status === "PENDING_REVIEW" ? "Save Changes" : "Publish Job"}
+        {project.status === "PENDING_REVIEW"
+          ? "Save Changes"
+          : "Submit Project"}
       </Button>
       <Text fontSize="xs" color="neutral600" lineHeight="s">
-        By publishing this job you feel like you have completed & submitted
-        something substantial. You should feel like you have committed to
-        something.
+        Once you've submitted this project, it'll be sent to the Advisable team
+        for review.
       </Text>
     </>
   );

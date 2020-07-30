@@ -174,7 +174,7 @@ export const StyledButton = styled.button`
   text-decoration: none;
   vertical-align: middle;
   justify-content: center;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   background: transparent;
   transition: background 100ms;
   ${(props) => props.align === "left" && { justifyContent: "flex-start" }}

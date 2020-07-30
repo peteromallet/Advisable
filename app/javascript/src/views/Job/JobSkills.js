@@ -57,11 +57,10 @@ export default function JobSkills({ data }) {
       {(formik) => (
         <Form>
           <JobSetupStepHeader mb="xs">
-            What skills are you looking for?
+            What skills should this specialist have?
           </JobSetupStepHeader>
           <JobSetupStepSubHeader mb="l">
-            Start by letting us know what kind of freelancer you are looking
-            for? Please select up to 5 skills that you are looking for.
+            This is to help us know which specialists to invite to this project.
           </JobSetupStepSubHeader>
           <Field
             max={5}

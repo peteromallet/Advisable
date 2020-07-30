@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import RangeSelection from "components/RangeSelection";
 import { UPDATE_PROJECT } from "./queries";
-import { JobSetupStepHeader } from "./styles";
+import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
 export default function JobExperience({ data }) {
   const { id } = useParams();
@@ -50,9 +50,13 @@ export default function JobExperience({ data }) {
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {(formik) => (
         <Form>
-          <JobSetupStepHeader mb="xl">
+          <JobSetupStepHeader mb="xs">
             {t("jobSetup.experience.title", { industry, companyType })}
           </JobSetupStepHeader>
+          <JobSetupStepSubHeader mb="xl">
+            If this is important, we'll only match you with specialists who've
+            worked with similar companies before.
+          </JobSetupStepSubHeader>
           <Field
             name="industryExperienceImportance"
             as={RangeSelection}

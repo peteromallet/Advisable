@@ -46,12 +46,10 @@ export default function JobCharacteristics({ data }) {
       {(formik) => (
         <Form>
           <JobSetupStepHeader mb="xs">
-            What character traits are you looking for?
+            What characteristics should this specialist have?
           </JobSetupStepHeader>
           <JobSetupStepSubHeader mb="l">
-            Use charateristics to describe the ideal freelancer. We will use
-            these to find people who not only have the right skillset but are
-            also a right fit.
+            We'll check this list against every specialist we match you with.
           </JobSetupStepSubHeader>
           <Field
             name="characteristics"

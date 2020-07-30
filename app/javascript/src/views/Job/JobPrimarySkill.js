@@ -37,8 +37,8 @@ export default function JobPrimarySkill({ data }) {
         Which of these is the most important?
       </JobSetupStepHeader>
       <JobSetupStepSubHeader mb="xl">
-        You have added multiple skills. Which of these do you think is the most
-        important?
+        We'll make sure that the specialists we match you with have a strong
+        proven track record in this skill.
       </JobSetupStepSubHeader>
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         {(formik) => (

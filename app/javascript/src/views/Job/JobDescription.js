@@ -47,12 +47,11 @@ export default function JobDescription({ data }) {
       {(formik) => (
         <Form>
           <JobSetupStepHeader mb="xs">
-            Briefly describe the projects you need them to work on?
+            Briefly describe your goals from working with this specialist
           </JobSetupStepHeader>
           <JobSetupStepSubHeader mb="l">
-            This is to give the freelancer an idea of what they will be working
-            on. You will be able to define more in depth tasks once you start
-            working together.
+            We'll make this that specialists we match you with have experience
+            helping companies achieve similar goals.
           </JobSetupStepSubHeader>
           <Field
             name="goals"

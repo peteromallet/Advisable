@@ -130,7 +130,7 @@ class Airtable::Project < Airtable::Base
       self['Accepted Terms'] = project.accepted_terms
     end
     self['Skills Required'] = project.skills.map(&:airtable_id).uniq
-    self['Primary Skill Required'] = project.primary_skill
+    self['Primary Skill Required'] = project.primary_skill.try(:name)
     if project.industry_experience_required
       self['Industry Experience Required'] = 'Yes'
     end

@@ -47,8 +47,8 @@ export default function JobRequiredCharacteristics({ data }) {
         Which of these characteristics are essential?
       </JobSetupStepHeader>
       <JobSetupStepSubHeader mb="xl">
-        Which of the characteristics that you have added do you think are
-        essential for the freelancer to have?
+        We'll make sure that whichever specialists we match you with have these
+        characteristics.
       </JobSetupStepSubHeader>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <Form>
