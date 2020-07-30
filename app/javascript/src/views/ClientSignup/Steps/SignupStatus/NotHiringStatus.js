@@ -35,8 +35,8 @@ function NotHiringStatus({ RedirectToNextStep, RedirectToInitialStep }) {
         <Title mb="m">Unfortunately, we&apos;re not a good fit</Title>
         <Description>
           It seems like you&apos;re not planning on hiring freelancers over the
-          next while. However, we&apos;ll be happy to send you a reminder in six
-          months if you click the button below.
+          next while. We&apos;ll be happy to send you a reminder in six months
+          if you click the button below.
         </Description>
         <Button width={[1, "auto"]} onClick={requestApplicationReminder}>
           Remind Me

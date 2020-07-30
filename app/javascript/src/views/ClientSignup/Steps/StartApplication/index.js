@@ -15,9 +15,11 @@ import { Title } from "../styles";
 import { motion } from "framer-motion";
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required("Provide your first name, please."),
+  firstName: Yup.string().required("Please enter your first name"),
   lastName: Yup.string(),
-  email: Yup.string().email().required("Provide your email, please."),
+  email: Yup.string()
+    .email("Please provide a valid email address")
+    .required("Please enter your company email address"),
 });
 
 function StartApplication() {
@@ -117,16 +119,16 @@ function StartApplication() {
                     isRequired
                     as={Input}
                     name="firstName"
-                    placeholder="First Name"
-                    label="First Name"
+                    placeholder="James"
+                    label="First name"
                   />
                 </Box>
                 <Box flex="1">
                   <FormField
                     as={Input}
                     name="lastName"
-                    placeholder="Last Name"
-                    label="Last Name"
+                    placeholder="Smith"
+                    label="Last name"
                   />
                 </Box>
               </Box>
@@ -135,8 +137,8 @@ function StartApplication() {
                   isRequired
                   as={Input}
                   name="email"
-                  placeholder="ospencer@umbrellacorp.com"
-                  label="Email"
+                  placeholder="name@company.com"
+                  label="Company email address"
                 />
               </Box>
               <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>

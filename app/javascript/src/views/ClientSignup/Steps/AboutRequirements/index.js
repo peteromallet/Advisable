@@ -18,9 +18,12 @@ import Navigation from "../Navigation";
 import { Title, Description } from "../styles";
 
 const validationSchema = object().shape({
-  skills: array().min(1).of(string().required()).required(),
+  skills: array()
+    .min(1, "Please enter your skill requirements")
+    .of(string().required())
+    .required(),
   numberOfFreelancers: string().required(
-    "number of freelancers is a required field",
+    "Please enter how many freelancers you might require",
   ),
   budget: string(),
 });
@@ -84,8 +87,8 @@ function AboutRequirements() {
                   max={5}
                   error={null}
                   name="skills"
-                  placeholder="Facebook Ads, Content Marketing, etc."
-                  label="What skill are you looking for?"
+                  placeholder="Select the skills you're looking for"
+                  label="What freelancer skills are you looking for?"
                   options={skills}
                   onChange={(skill) => formik.setFieldValue("skills", skill)}
                 />
@@ -96,7 +99,7 @@ function AboutRequirements() {
                   as={Select}
                   name="numberOfFreelancers"
                   label="How many freelancers would you like to hire over the next 6 months?"
-                  placeholder="Number of freelancers"
+                  placeholder="Select the number of freelancers"
                   error={null}
                   value={formik.values.numberOfFreelancers}
                   onChange={formik.handleChange}
@@ -114,7 +117,7 @@ function AboutRequirements() {
                   name="budget"
                   prefix="$"
                   suffix="yearly"
-                  placeholder="99999"
+                  placeholder="Enter your estimated spend"
                   label="How much do you currently spend on freelancers per year?"
                   data-testid="budget"
                 />

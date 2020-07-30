@@ -57,7 +57,10 @@ function CallShortly() {
 
 function ReminderSet() {
   return (
-    <Component title="Reminder Set" text="We'll follow up in six months" />
+    <Component
+      title="Reminder Set"
+      text="We'll send you a reminder in six months."
+    />
   );
 }
 
