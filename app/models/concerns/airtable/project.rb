@@ -6,7 +6,6 @@ class Airtable::Project < Airtable::Base
   # in airtable.
   sync_column 'Project', to: :name
   sync_column 'Project Stage', to: :status
-  sync_column 'Primary Skill Required', to: :primary_skill
   sync_column 'Company Description', to: :company_description
   sync_column 'Project Description', to: :description
   sync_column 'Specialist Requirement Description', to: :specialist_description
@@ -52,6 +51,9 @@ class Airtable::Project < Airtable::Base
       user = Airtable::ClientContact.find(user_id).sync if user.nil?
       project.user = user
     end
+
+    # Still sync the old primary_skill text column for now.
+    project[:primary_skill] = fields['Primary Skill Required']
 
     required_skills = fields['Skills Required'] || []
     required_skills.each do |skill_id|
