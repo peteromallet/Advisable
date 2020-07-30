@@ -74,7 +74,7 @@ function AboutCompany() {
               <Box mb="m">
                 <FormField
                   name="companyName"
-                  placeholder="Umbrella Corporation"
+                  placeholder="Company name"
                   label="What's the name of your company?"
                   isRequired
                 />
