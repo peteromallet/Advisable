@@ -80,7 +80,7 @@ class Application < ApplicationRecord
 
   # Every time an application is created, updated or destroyed we want to update
   # the counts for the associated project.
-  after_save :update_project_counts
+  after_save :update_project_counts, if: :saved_change_to_status?
   after_destroy :update_project_counts
 
   scope :applied, -> { where(status: 'Applied') }
@@ -133,7 +133,6 @@ class Application < ApplicationRecord
 
   def update_project_counts
     return unless project
-    return unless saved_change_to_status?
     project.update_application_counts
   end
 

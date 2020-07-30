@@ -12,7 +12,7 @@ class Mutations::DeleteJob < Mutations::BaseMutation
       ApiError.not_authorized('You do not have access to this project')
     end
 
-    if project.status != :draft
+    unless %i[draft pending_review].include?(project.status)
       ApiError.invalid_request(message: 'Project must be a draft')
     end
 

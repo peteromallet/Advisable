@@ -42,7 +42,7 @@ describe Mutations::DeleteTask do
   end
 
   context 'wen the project status is not draft' do
-    let(:project) { create(:project, user: user, status: :pending_review) }
+    let(:project) { create(:project, user: user, status: 'Brief Confirmed') }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: { current_user: user })

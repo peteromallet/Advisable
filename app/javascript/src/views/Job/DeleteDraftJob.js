@@ -66,7 +66,7 @@ export default function DeleteDraftJob({ id }) {
         variant="minimal"
         {...modal}
       >
-        Delete Draft
+        Delete
       </DialogDisclosure>
     </>
   );

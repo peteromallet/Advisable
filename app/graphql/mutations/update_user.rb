@@ -1,6 +1,6 @@
 class Mutations::UpdateUser < Mutations::BaseMutation
-  argument :industry, String, required: true
-  argument :company_type, String, required: true
+  argument :industry, String, required: false
+  argument :company_type, String, required: false
 
   field :user, Types::User, null: true
 

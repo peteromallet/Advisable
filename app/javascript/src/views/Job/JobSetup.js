@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styled from "styled-components";
 import { Box, useBreakpoint, useTheme } from "@advisable/donut";
 import { useLocation } from "react-router-dom";
