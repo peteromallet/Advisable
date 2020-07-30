@@ -1,12 +1,6 @@
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
-import {
-  Text,
-  Box,
-  useModal,
-  Button,
-  DialogDisclosure,
-} from "@advisable/donut";
+import { Box, useModal, Button, DialogDisclosure } from "@advisable/donut";
 import RequestCallButton from "../RequestCallButton";
 import {
   useLocationState,
@@ -15,7 +9,8 @@ import {
 import { Redirect } from "react-router";
 import PhoneModal from "./PhoneModal";
 import MotionStack from "../../MotionStack";
-import { Title, Description } from "../../styles";
+import { Title, Description, BulletListItem } from "../../styles";
+import { Triangle, Square, Hexagon } from "@styled-icons/feather";
 
 function AcceptedStatus({ firstName, lastName }) {
   const [
@@ -37,14 +32,25 @@ function AcceptedStatus({ firstName, lastName }) {
       <Navigation />
       <MotionStack>
         <Title mb="m">Let’s get started!</Title>
-        <Description color="neutral500">
+        <Description mb="s">
           The final step before being able to access Advisable’s elite pool of
-          talent is a ~10-minute with one of our team. On this call, we’ll ask
-          you a couple of clarification questions to ensure that you’re a good
-          fit for Advisable, give you an overview of how Advisable works and
-          make you aware of the expectations for you as a client when dealing
-          with our freelancers.
+          talent is a ~10-minute call with us to:
         </Description>
+        <BulletListItem
+          text="Give you an overview of how Advisable works"
+          Icon={Triangle}
+        />
+        <BulletListItem
+          text="Ask you a couple of clarification questions to ensure that you’re a
+            good fit for Advisable"
+          Icon={Square}
+        />
+        <BulletListItem
+          text="Make you aware of the expectations for you as a client when dealing
+            with our freelancers"
+          Icon={Hexagon}
+          mb="l"
+        />
         <Box mb="l" display="flex" flexDirection={["column", "row"]}>
           <RequestCallButton
             mr={[null, "s"]}
@@ -68,21 +74,6 @@ function AcceptedStatus({ firstName, lastName }) {
             modal={modal}
           />
         </Box>
-        <Text
-          as="h4"
-          fontSize="xl"
-          lineHeight="xl"
-          mb="xs"
-          fontWeight="semibold"
-          color="blue900"
-        >
-          Why do we need to have a call?
-        </Text>
-        <Description>
-          Advisable offers a money-back guarantee on any freelancer we recommend
-          so we want to make sure we fully understand your requirements so we
-          can make a perfect recommendation.
-        </Description>
       </MotionStack>
     </>
   );
