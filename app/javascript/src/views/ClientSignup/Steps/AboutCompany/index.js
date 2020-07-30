@@ -17,9 +17,9 @@ import Navigation from "../Navigation";
 import { Title, Description } from "../styles";
 
 const validationSchema = object().shape({
-  companyName: string().required("This field is required"),
-  industry: string().required("This field is required"),
-  companyType: string().required("This filed is required"),
+  companyName: string().required("Please enter your company name"),
+  industry: string().required("Please enter your company industry"),
+  companyType: string().required("Please enter your company type"),
 });
 
 function AboutCompany() {
@@ -86,8 +86,8 @@ function AboutCompany() {
                   error={null}
                   options={industries}
                   name="industry"
-                  placeholder="Biotechnology"
-                  label="What industry are you in?"
+                  placeholder="Select your company industry"
+                  label="What industry is your company in?"
                   onChange={(industry) =>
                     formik.setFieldValue("industry", industry)
                   }
@@ -99,7 +99,7 @@ function AboutCompany() {
                   as={Select}
                   error={null}
                   name="companyType"
-                  placeholder="Major Corporation"
+                  placeholder="Select your company type"
                   label="What type of company are you?"
                   onChange={formik.handleChange}
                   data-testid="companyType"

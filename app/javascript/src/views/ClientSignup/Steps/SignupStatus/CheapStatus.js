@@ -8,8 +8,9 @@ function CheapStatus() {
     <MotionStack>
       <Title mb="m">Unfortunately, we&apos;re not a good fit</Title>
       <Description>
-        Advisable isn&apos;t suitable for companies like you. For people like
-        you, we recommend Upwork.com.
+        Advisable only provides high-end talent. Since you&apos;re looking for
+        cheap talent, we recommend{" "}
+        <Link.External href="https://www.upwork.com/">Upwork.com</Link.External>
       </Description>
       <Link.External href="https://www.upwork.com/">
         <Button width={[1, "auto"]}>Go To Upwork</Button>
