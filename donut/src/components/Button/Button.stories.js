@@ -4,9 +4,10 @@ import Button from "./";
 import Box from "../Box";
 import Card from "../Card";
 import { Download, ArrowRight, Plus } from "@styled-icons/heroicons-outline";
+import { VARIANTS } from "./styles";
 
 export default {
-  title: "Button",
+  title: "Forms|Button",
   decorators: [withKnobs],
 };
 
@@ -15,11 +16,7 @@ export const basic = () => {
   const size = select("Size", ["s", "m", "l"], "m");
   const disabled = boolean("Disabled", false);
   const loading = boolean("Loading", false);
-  const variant = select(
-    "Variant",
-    ["primary", "secondary", "subtle", "ghost"],
-    "primary",
-  );
+  const variant = select("Variant", Object.keys(VARIANTS), "primary");
   return (
     <Card maxWidth="600px" mx="auto" my="60px" padding="xl">
       <Box display="flex" alignItems="center" justifyContent="center">

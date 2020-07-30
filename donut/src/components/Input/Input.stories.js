@@ -5,7 +5,7 @@ import Input from "./";
 import Card from "../Card";
 
 export default {
-  title: "Input",
+  title: "Forms|Input",
   decorators: [withKnobs],
 };
 

@@ -57,11 +57,10 @@ const secondaryStyles = css`
   }
 `;
 
-const VARIANTS = {
+export const VARIANTS = {
   primary: primaryStyles,
   secondary: secondaryStyles,
   dark: secondaryStyles, // deprecated: use secondary variant instead
-  green: primaryStyles, // deprecated: use primary variant instead
   subtle: css`
     color: #242473;
     background: #e8e8f6;
@@ -99,7 +98,7 @@ const VARIANTS = {
     }
   `,
   minimal: css`
-    padding: 0;
+    padding: 2px 0;
     height: auto;
     color: ${theme.colors.neutral500};
 

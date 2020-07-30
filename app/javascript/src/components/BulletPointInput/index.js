@@ -49,7 +49,7 @@ export default function BulletPointInput({
           <Textarea
             minRows={1}
             value={item}
-            padding={2}
+            rowPadding={2}
             name={rest.name}
             style={{ width: "100%" }}
             placeholder={item ? null : placeholder}

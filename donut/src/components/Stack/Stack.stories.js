@@ -4,7 +4,7 @@ import Card from "../Card";
 import Stack from "./index";
 
 export default {
-  title: "Stack",
+  title: "Utilities|Stack",
 };
 
 export const verticalStack = () => {

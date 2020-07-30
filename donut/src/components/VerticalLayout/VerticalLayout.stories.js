@@ -4,7 +4,7 @@ import Box from "../Box";
 import VerticalLayout from "./";
 
 export default {
-  title: "VerticalLayout",
+  title: "Content|VerticalLayout",
 };
 
 const Header = () => (
