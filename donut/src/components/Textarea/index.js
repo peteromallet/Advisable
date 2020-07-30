@@ -1,7 +1,11 @@
 import React, { useRef, useState } from "react";
 import { StyledTextarea, StyledTextareaControl } from "./styles";
 
+<<<<<<< HEAD
 const LINE_HEIGHT = 18;
+=======
+const LINE_HEIGHT = 22;
+>>>>>>> Add new input components
 const PADDING = 32;
 
 const Textarea = React.forwardRef(function Textarea(
@@ -35,7 +39,11 @@ const Textarea = React.forwardRef(function Textarea(
   function calculateRows() {
     textarea.current.rows = props.minRows;
     const baseHeight =
+<<<<<<< HEAD
       textarea.current.scrollHeight - (props.rowPadding || PADDING);
+=======
+      textarea.current.scrollHeight - (props.padding || PADDING);
+>>>>>>> Add new input components
     const currentRows = Math.floor(
       baseHeight / (props.lineHeight || LINE_HEIGHT),
     );
@@ -73,7 +81,10 @@ const Textarea = React.forwardRef(function Textarea(
 Textarea.defaultProps = {
   minRows: 2,
   maxrows: 5,
+<<<<<<< HEAD
   size: "md",
+=======
+>>>>>>> Add new input components
   onFocus: () => {},
   onBlur: () => {},
 };

@@ -4,7 +4,11 @@ import Card from "../Card";
 import { withKnobs, text, boolean, select } from "@storybook/addon-knobs";
 
 export default {
+<<<<<<< HEAD
   title: "Forms|Select",
+=======
+  title: "Select",
+>>>>>>> Add new input components
   decorators: [withKnobs],
 };
 
