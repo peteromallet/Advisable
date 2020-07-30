@@ -45,7 +45,6 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
       SetUserImageJob.perform_later(user.id, viewer.image)
       return { user: user }
     else
-      puts user.errors.full_messages
       if user.errors.added?(:email, :taken)
         raise ApiError::InvalidRequest.new(
                 'emailTaken',
