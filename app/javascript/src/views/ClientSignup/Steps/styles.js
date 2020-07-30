@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Text } from "@advisable/donut";
+import { Text, Box } from "@advisable/donut";
 
 export const Title = ({ children, ...props }) => (
   <Text
@@ -26,3 +26,29 @@ export const Description = ({ children, ...props }) => (
 );
 
 Description.propTypes = { children: PropTypes.node };
+
+export const BulletListItem = ({ text, Icon, ...props }) => (
+  <Box
+    display="flex"
+    border="1px solid"
+    borderColor="neutral100"
+    mb="s"
+    py="s"
+    px="m"
+    borderRadius="12px"
+    {...props}
+  >
+    <Box color="yellow500" my="auto">
+      <Icon size={18} strokeWidth={2} />
+    </Box>
+    <Text lineHeight="21px" color="neutral600" ml="m" fontWeight="light">
+      {text}
+    </Text>
+  </Box>
+);
+
+BulletListItem.propTypes = {
+  children: PropTypes.node,
+  Icon: PropTypes.node,
+  text: PropTypes.string,
+};
