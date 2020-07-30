@@ -113,7 +113,7 @@ function AboutRequirements() {
                   as={CurrencyInput}
                   name="budget"
                   prefix="$"
-                  suffix="per year"
+                  suffix="yearly"
                   placeholder="99999"
                   label="How much do you currently spend on freelancers per year?"
                   data-testid="budget"
