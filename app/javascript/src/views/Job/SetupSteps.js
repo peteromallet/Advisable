@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useBreakpoint, Card } from "@advisable/donut";
 import {
   Switch,
   Route,
   Redirect,
+  matchPath,
   useLocation,
   useParams,
 } from "react-router-dom";
@@ -16,6 +17,7 @@ import JobExperience from "./JobExperience";
 import JobPrimarySkill from "./JobPrimarySkill";
 import JobPendingReview from "./JobPendingReview";
 import JobCharacteristics from "./JobCharacteristics";
+import usePrevious from "../../utilities/usePrevious";
 import JobRequiredCharacteristics from "./JobRequiredCharacteristics";
 import JobLikelyToHire from "./JobLikelyToHire";
 
@@ -26,7 +28,6 @@ export const setupProgress = (project) => {
     characteristics: project.requiredCharacteristics.length > 0,
     description: project.goals.length > 0,
     specialists: project.likelyToHire !== null,
-    published: project.status === "PENDING_REVIEW",
   };
 };
 
@@ -66,22 +67,39 @@ const steps = [
     component: JobLikelyToHire,
   },
   {
-    path: "/jobs/:id/specialists",
-    component: function Specialist() {
-      return <>specialists</>;
-    },
-  },
-  {
-    exact: true,
     component: PublishJob,
     path: "/jobs/:id/publish",
   },
   {
-    exact: true,
     path: "/jobs/:id/published",
     component: JobPendingReview,
   },
 ];
+
+const cardAnimations = {
+  enter: ({ largeScreen, forwards }) => {
+    return {
+      x: largeScreen ? 0 : forwards ? 80 : -80,
+      y: largeScreen ? (forwards ? 80 : -80) : 0,
+      opacity: 0,
+    };
+  },
+  center: {
+    x: 0,
+    y: 0,
+    zIndex: 1,
+    opacity: 1,
+  },
+  exit: ({ largeScreen, forwards }) => {
+    return {
+      y: largeScreen ? (forwards ? -80 : 80) : 0,
+      x: largeScreen ? 0 : forwards ? -80 : 80,
+      opacity: 0,
+      zIndex: 1,
+      transition: { duration: 0.3 },
+    };
+  },
+};
 
 export default function SetupSteps({ data }) {
   const { id } = useParams();
@@ -89,31 +107,34 @@ export default function SetupSteps({ data }) {
   const { project } = data;
   const largeScreen = useBreakpoint("lUp");
 
+  const currentStep = steps.findIndex((step) => {
+    return matchPath(location.pathname, { path: step.path });
+  });
+
+  const previousStep = usePrevious(currentStep);
+  const forwards = previousStep <= currentStep;
+
   return (
-    <AnimatePresence initial={false} exitBeforeEnter>
+    <AnimatePresence
+      initial={false}
+      exitBeforeEnter
+      custom={{ largeScreen, forwards }}
+    >
       <Switch location={location} key={location.pathname}>
         {steps.map((step) => {
           return (
-            <Route key={step.path} exact={step.exact} path={step.path}>
+            <Route key={step.path} exact path={step.path}>
               <Card
+                custom={{ largeScreen, forwards }}
                 as={motion.div}
                 padding={{ _: "0", m: "52px" }}
                 elevation={{ _: "none", m: "m" }}
                 variant={["transparent", "default"]}
-                animate={{ x: 0, y: 0, opacity: 1 }}
                 transition={{ duration: 0.4 }}
-                initial={{
-                  x: largeScreen ? 0 : 80,
-                  y: largeScreen ? 80 : 0,
-                  opacity: 0,
-                }}
-                exit={{
-                  y: largeScreen ? -80 : 0,
-                  x: largeScreen ? 0 : -80,
-                  opacity: 0,
-                  zIndex: 1,
-                  transition: { duration: 0.3 },
-                }}
+                variants={cardAnimations}
+                initial="enter"
+                animate="center"
+                exit="exit"
               >
                 <step.component data={data} />
               </Card>

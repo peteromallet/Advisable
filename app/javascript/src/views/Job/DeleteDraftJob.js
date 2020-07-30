@@ -32,7 +32,7 @@ export default function DeleteDraftJob({ id }) {
 
   return (
     <>
-      <Modal modal={modal} padding="40px">
+      <Modal modal={modal} padding="40px" label="Delete project">
         <Box textAlign="center">
           <Text
             mb="xs"

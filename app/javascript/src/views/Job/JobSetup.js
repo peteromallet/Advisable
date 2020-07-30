@@ -32,12 +32,8 @@ export default function JobSetup({ data }) {
       <Box
         mx="auto"
         width="100%"
-        as={motion.div}
         position="relative"
         my={{ _: 0, m: "64px" }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        initial={{ opacity: 0, y: 40 }}
         padding={{ _: "24px", m: "0" }}
         maxWidth={{ _: "100%", m: "680px" }}
       >

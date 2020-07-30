@@ -3,7 +3,7 @@ import { useParams, useHistory, useLocation } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form, Field } from "formik";
-import { Box, Text, Autocomplete, Error } from "@advisable/donut";
+import { Box, Autocomplete, Error } from "@advisable/donut";
 import SubmitButton from "components/SubmitButton";
 import PopularSkills from "./PopularSkills";
 import { UPDATE_PROJECT } from "./queries";
