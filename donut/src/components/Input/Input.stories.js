@@ -1,16 +1,31 @@
 import React from "react";
+import { Phone } from "@styled-icons/feather";
+import { withKnobs, text, boolean, select } from "@storybook/addon-knobs";
 import Input from "./";
 import Card from "../Card";
-import InputDecorations from "./InputDecorations";
 
 export default {
   title: "Input",
+  decorators: [withKnobs],
 };
 
 export const basicInput = () => {
+  const prefix = text("Prefix", null);
+  const suffix = text("Suffix", null);
+  const disabled = boolean("Disabled", false);
+  const error = boolean("Error", false);
+  const size = select("Size", ["sm", "md", "lg"], "md");
+
   return (
-    <Card padding="xl" maxWidth={500} mx="auto">
-      <Input placeholder="Type something" />
+    <Card marginTop="l" padding="xl" maxWidth={500} mx="auto">
+      <Input
+        size={size}
+        error={error}
+        prefix={prefix}
+        suffix={suffix}
+        disabled={disabled}
+        placeholder="Type something"
+      />
     </Card>
   );
 };
@@ -18,19 +33,33 @@ export const basicInput = () => {
 export const prefix = () => {
   return (
     <Card padding="xl" maxWidth={500} mx="auto">
-      <InputDecorations prefix="$">
-        <Input placeholder="https://" />
-      </InputDecorations>
+      <Input prefix={<Phone />} placeholder="Phone Number" />
     </Card>
   );
 };
 
-export const suffix = () => {
+export const error = () => {
   return (
     <Card padding="xl" maxWidth={500} mx="auto">
-      <InputDecorations suffix="Suffix">
-        <Input placeholder="https://" />
-      </InputDecorations>
+      <Input error placeholder="This has an error" />
+    </Card>
+  );
+};
+
+export const sizes = () => {
+  return (
+    <Card padding="xl" maxWidth={500} mx="auto">
+      <Input marginBottom="m" size="sm" placeholder="Type something" />
+      <Input marginBottom="m" size="md" placeholder="Type something" />
+      <Input marginBottom="m" size="lg" placeholder="Type something" />
+    </Card>
+  );
+};
+
+export const password = () => {
+  return (
+    <Card padding="xl" maxWidth={500} mx="auto">
+      <Input type="password" placeholder="Password" />
     </Card>
   );
 };

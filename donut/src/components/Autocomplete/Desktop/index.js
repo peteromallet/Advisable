@@ -2,20 +2,16 @@ import React from "react";
 import { Manager, Reference, Popper } from "react-popper";
 import useComponentSize from "@rehooks/component-size";
 import Text from "../../Text";
+import Input from "../../Input";
 import FieldError from "../../FieldError";
 import Menu from "./Menu";
-import {
-  Autocomplete as AutocompleteStyles,
-  Input,
-  Label,
-  Tags,
-} from "../styles";
+import { Autocomplete as AutocompleteStyles, Label, Tags } from "../styles";
 import Downshift, { stateChangeTypes } from "../Downshift";
 import Tag from "../Tag";
 
 const AutocompleteDesktop = (props) => {
   const {
-    label,
+    size,
     error,
     onBlur,
     options,
@@ -79,33 +75,12 @@ const AutocompleteDesktop = (props) => {
           >
             {(downshift) => (
               <AutocompleteStyles {...rest} {...downshift.getRootProps()}>
-                {label && (
-                  <Label
-                    as="label"
-                    fontSize="s"
-                    color="neutral.8"
-                    fontWeight="medium"
-                    {...downshift.getLabelProps()}
-                  >
-                    {label}
-                  </Label>
-                )}
-                {description && (
-                  <Text
-                    mb="12px"
-                    mt="-4px"
-                    fontSize="xs"
-                    lineHeight="xs"
-                    color="neutral600"
-                  >
-                    {description}
-                  </Text>
-                )}
                 <Reference>
                   {(popperRef) => (
                     <>
                       <div ref={popperRef.ref}>
                         <Input
+                          size={size}
                           {...downshift.getInputProps({
                             ref: inputRef,
                             placeholder,
@@ -135,7 +110,6 @@ const AutocompleteDesktop = (props) => {
                     </>
                   )}
                 </Reference>
-                {error && <FieldError>{error}</FieldError>}
                 <Menu
                   max={props.max}
                   popper={popper}
