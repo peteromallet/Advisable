@@ -33,7 +33,7 @@ const budget = "10000";
 const localityImportance = 3;
 const acceptedGuaranteeTerms = false;
 const talentQuality = "GOOD";
-const phoneNumber = "+380(93)555-66-99";
+const phoneNumber = "380935556699";
 
 const graphQLMocks = [
   mockViewer(null),
@@ -186,24 +186,22 @@ test("Successful client application flow and ASAP call", async () => {
   });
 
   // 0 Step. Start application
-  fireEvent.change(await screen.findByPlaceholderText(/First Name/i), {
+  fireEvent.change(await screen.findByPlaceholderText(/first name/i), {
     target: { value: clientApplication.firstName },
   });
-  fireEvent.change(await screen.findByPlaceholderText(/Last Name/i), {
+  fireEvent.change(await screen.findByPlaceholderText(/last name/i), {
     target: { value: clientApplication.lastName },
   });
-  const emailInput = await screen.findByPlaceholderText(
-    "ospencer@umbrellacorp.com",
-  );
+  const emailInput = await screen.findByPlaceholderText(/name@company.com/i);
   fireEvent.change(emailInput, { target: { value: email } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
   // 1 Step. About Your Company
   await screen.findByText("About Your Company");
-  fireEvent.change(screen.getByPlaceholderText("Umbrella Corporation"), {
+  fireEvent.change(screen.getByPlaceholderText(/company name/i), {
     target: { value: companyName },
   });
-  const industryInput = await screen.findByPlaceholderText("Biotechnology");
+  const industryInput = await screen.findByPlaceholderText(/company industry/i);
   fireEvent.click(industryInput);
   fireEvent.keyDown(industryInput, { key: "ArrowDown" });
   fireEvent.keyDown(industryInput, { key: "Enter" });
@@ -215,7 +213,7 @@ test("Successful client application flow and ASAP call", async () => {
   // 2 Step. About Your Requirements
   await screen.findByText("About Your Requirements");
   const skillsInput = await screen.findByPlaceholderText(
-    /Facebook Ads/i,
+    /select the skills/i,
     {},
     { timeout: 5000 },
   );
@@ -241,7 +239,7 @@ test("Successful client application flow and ASAP call", async () => {
   fireEvent.change(await screen.getByPlaceholderText(/contact number/i), {
     target: { value: phoneNumber },
   });
-  const submitBtn = screen.getByLabelText(/submit/i);
+  const submitBtn = screen.getByLabelText("Submit");
   fireEvent.click(submitBtn);
   await screen.findByText("Your call is booked");
 });
@@ -300,10 +298,10 @@ test("Successful client application flow via query string params", async () => {
 
   // 1 Step. About Your Company
   await screen.findByText("About Your Company");
-  fireEvent.change(screen.getByPlaceholderText("Umbrella Corporation"), {
+  fireEvent.change(screen.getByPlaceholderText(/company name/i), {
     target: { value: companyName },
   });
-  const industryInput = await screen.findByPlaceholderText("Biotechnology");
+  const industryInput = await screen.findByPlaceholderText(/company industry/i);
   fireEvent.click(industryInput);
   fireEvent.keyDown(industryInput, { key: "ArrowDown" });
   fireEvent.keyDown(industryInput, { key: "Enter" });
@@ -315,7 +313,7 @@ test("Successful client application flow via query string params", async () => {
   // 2 Step. About Your Requirements
   await screen.findByText("About Your Requirements");
   const skillsInput = await screen.findByPlaceholderText(
-    /Facebook Ads/i,
+    /select the skills/i,
     {},
     { timeout: 5000 },
   );
@@ -371,7 +369,7 @@ test("Reject public gmail for client's signup form via query string params", asy
     route: `/clients/signup?firstName=${clientApplication.firstName}&lastName=${clientApplication.lastName}&email=test@gmail.com`,
     graphQLMocks: [emailNotAllowedRejection],
   });
-  await screen.findByText(/public emails/i);
+  await screen.findByText(/personal emails/i);
 });
 
 test("Reject public gmail for client's signup form", async () => {
@@ -380,19 +378,17 @@ test("Reject public gmail for client's signup form", async () => {
     graphQLMocks: [emailNotAllowedRejection],
   });
   // 0 Step. Start application
-  fireEvent.change(await screen.findByPlaceholderText(/First Name/i), {
+  fireEvent.change(await screen.findByPlaceholderText(/first name/i), {
     target: { value: clientApplication.firstName },
   });
-  fireEvent.change(await screen.findByPlaceholderText(/Last Name/i), {
+  fireEvent.change(await screen.findByPlaceholderText(/last name/i), {
     target: { value: clientApplication.lastName },
   });
-  const emailInput = await screen.findByPlaceholderText(
-    "ospencer@umbrellacorp.com",
-  );
+  const emailInput = await screen.findByPlaceholderText(/name@company.com/i);
   fireEvent.change(emailInput, { target: { value: "test@gmail.com" } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
-  await screen.findByText(/public emails/i);
+  await screen.findByText(/personal emails/i);
 });
 
 const accountExistsRejection = {
@@ -429,15 +425,13 @@ test("Account already exists with this email", async () => {
     route: `/clients/signup`,
     graphQLMocks: [accountExistsRejection],
   });
-  fireEvent.change(await screen.findByPlaceholderText(/First Name/i), {
+  fireEvent.change(await screen.findByPlaceholderText(/first name/i), {
     target: { value: clientApplication.firstName },
   });
-  fireEvent.change(await screen.findByPlaceholderText(/Last Name/i), {
+  fireEvent.change(await screen.findByPlaceholderText(/last name/i), {
     target: { value: clientApplication.lastName },
   });
-  const emailInput = await screen.findByPlaceholderText(
-    "ospencer@umbrellacorp.com",
-  );
+  const emailInput = await screen.findByPlaceholderText(/name@company.com/i);
   fireEvent.change(emailInput, { target: { value: "exists@test.com" } });
   fireEvent.click(screen.getByLabelText("Continue"));
   await screen.findByText(/welcome back/i);
@@ -496,24 +490,22 @@ test("Cheap talents client application rejection flow", async () => {
   });
 
   // 0 Step. Start application
-  fireEvent.change(await screen.findByPlaceholderText(/First Name/i), {
+  fireEvent.change(await screen.findByPlaceholderText(/first name/i), {
     target: { value: clientApplication.firstName },
   });
-  fireEvent.change(await screen.findByPlaceholderText(/Last Name/i), {
+  fireEvent.change(await screen.findByPlaceholderText(/last name/i), {
     target: { value: clientApplication.lastName },
   });
-  const emailInput = await screen.findByPlaceholderText(
-    "ospencer@umbrellacorp.com",
-  );
+  const emailInput = await screen.findByPlaceholderText(/name@company.com/i);
   fireEvent.change(emailInput, { target: { value: email } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
   // 1 Step. About Your Company
   await screen.findByText("About Your Company");
-  fireEvent.change(screen.getByPlaceholderText("Umbrella Corporation"), {
+  fireEvent.change(screen.getByPlaceholderText(/company name/i), {
     target: { value: companyName },
   });
-  const industryInput = await screen.findByPlaceholderText("Biotechnology");
+  const industryInput = await screen.findByPlaceholderText(/company industry/i);
   fireEvent.click(industryInput);
   fireEvent.keyDown(industryInput, { key: "ArrowDown" });
   fireEvent.keyDown(industryInput, { key: "Enter" });
@@ -525,7 +517,7 @@ test("Cheap talents client application rejection flow", async () => {
   // 2 Step. About Your Requirements
   await screen.findByText("About Your Requirements");
   const skillsInput = await screen.findByPlaceholderText(
-    /Facebook Ads/i,
+    /select the skills/i,
     {},
     { timeout: 5000 },
   );
@@ -619,24 +611,22 @@ test("Not hiring client application rejection flow", async () => {
   });
 
   // 0 Step. Start application
-  fireEvent.change(await screen.findByPlaceholderText(/First Name/i), {
+  fireEvent.change(await screen.findByPlaceholderText(/first name/i), {
     target: { value: clientApplication.firstName },
   });
-  fireEvent.change(await screen.findByPlaceholderText(/Last Name/i), {
+  fireEvent.change(await screen.findByPlaceholderText(/last name/i), {
     target: { value: clientApplication.lastName },
   });
-  const emailInput = await screen.findByPlaceholderText(
-    "ospencer@umbrellacorp.com",
-  );
+  const emailInput = await screen.findByPlaceholderText(/name@company.com/i);
   fireEvent.change(emailInput, { target: { value: email } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
   // 1 Step. About Your Company
   await screen.findByText("About Your Company");
-  fireEvent.change(screen.getByPlaceholderText("Umbrella Corporation"), {
+  fireEvent.change(screen.getByPlaceholderText(/company name/i), {
     target: { value: companyName },
   });
-  const industryInput = await screen.findByPlaceholderText("Biotechnology");
+  const industryInput = await screen.findByPlaceholderText(/company industry/i);
   fireEvent.click(industryInput);
   fireEvent.keyDown(industryInput, { key: "ArrowDown" });
   fireEvent.keyDown(industryInput, { key: "Enter" });
@@ -648,7 +638,7 @@ test("Not hiring client application rejection flow", async () => {
   // 2 Step. About Your Requirements
   await screen.findByText("About Your Requirements");
   const skillsInput = await screen.findByPlaceholderText(
-    /Facebook Ads/i,
+    /select the skills/i,
     {},
     { timeout: 5000 },
   );
