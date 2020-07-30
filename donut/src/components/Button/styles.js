@@ -1,5 +1,6 @@
 import { rgba } from "polished";
 import styled, { css, keyframes } from "styled-components";
+import theme from "../../theme";
 import { margin, layout, variant } from "styled-system";
 
 const spin = keyframes`
@@ -97,6 +98,19 @@ const VARIANTS = {
       background: ${rgba("#3f3bff", 0.04)};
     }
   `,
+  minimal: css`
+    padding: 0;
+    height: auto;
+    color: ${theme.colors.neutral500};
+
+    &:not(:disabled):hover {
+      color: ${theme.colors.neutral800};
+    }
+
+    &:not(:disabled):active {
+      color: ${theme.colors.neutral400};
+    }
+  `,
 };
 
 const buttonSize = variant({
@@ -116,7 +130,7 @@ const buttonSize = variant({
     m: {
       height: 42,
       fontSize: 16,
-      fontWeight: 600,
+      fontWeight: 500,
       paddingLeft: 24,
       paddingRight: 24,
       svg: {
@@ -127,7 +141,7 @@ const buttonSize = variant({
     l: {
       height: 50,
       fontSize: 17,
-      fontWeight: 500,
+      fontWeight: 400,
       paddingLeft: 24,
       paddingRight: 24,
       svg: {

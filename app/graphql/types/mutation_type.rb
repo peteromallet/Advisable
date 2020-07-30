@@ -83,6 +83,7 @@ class Types::MutationType < GraphQL::Schema::Object
   field :submit_full_application, mutation: Mutations::SubmitFullApplication
 
   field :create_job, mutation: Mutations::CreateJob
+  field :delete_job, mutation: Mutations::DeleteJob
 
   field :update_user, mutation: Mutations::UpdateUser
 end

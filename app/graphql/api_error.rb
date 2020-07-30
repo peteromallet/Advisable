@@ -27,8 +27,16 @@ class ApiError < GraphQL::ExecutionError
     raise ApiError::InvalidRequest.new(code, message)
   end
 
+  def self.invalid_request(code: nil, message:)
+    raise ApiError::InvalidRequest.new(code, message)
+  end
+
   def self.not_authorized(message)
     raise ApiError::NotAuthorized.new(message)
+  end
+
+  def self.not_authenticated
+    raise ApiError::NotAuthenticated.new
   end
 end
 

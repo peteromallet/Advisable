@@ -2,6 +2,8 @@ import React from "react";
 import { padding } from "styled-system";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { Box } from "@advisable/donut";
+import DeleteDraftJob from "./DeleteDraftJob";
 import { useLocation, useParams } from "react-router-dom";
 import BackButton from "components/BackButton";
 import MultistepMenu from "../../components/MultistepMenu";
@@ -103,6 +105,9 @@ export default function JobSetupSidebar({ data }) {
             Review
           </MultistepMenu.Item>
         </MultistepMenu>
+        <Box position="absolute" bottom="24px" left="24px">
+          <DeleteDraftJob id={id} />
+        </Box>
       </Sidebar>
     </SidebarContainer>
   );

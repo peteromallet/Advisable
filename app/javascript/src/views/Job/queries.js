@@ -94,3 +94,11 @@ export const PUBLISH_PROJECT = gql`
     }
   }
 `;
+
+export const DELETE_JOB = gql`
+  mutation deleteJob($input: DeleteJobInput!) {
+    deleteJob(input: $input) {
+      id
+    }
+  }
+`;
