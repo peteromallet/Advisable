@@ -119,7 +119,7 @@ function StartApplication() {
                     isRequired
                     as={Input}
                     name="firstName"
-                    placeholder="James"
+                    placeholder="First name"
                     label="First name"
                   />
                 </Box>
@@ -127,7 +127,7 @@ function StartApplication() {
                   <FormField
                     as={Input}
                     name="lastName"
-                    placeholder="Smith"
+                    placeholder="Last name"
                     label="Last name"
                   />
                 </Box>
