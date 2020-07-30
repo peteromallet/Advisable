@@ -49,6 +49,6 @@ export const BulletListItem = ({ text, Icon, ...props }) => (
 
 BulletListItem.propTypes = {
   children: PropTypes.node,
-  Icon: PropTypes.node,
+  Icon: PropTypes.elementType,
   text: PropTypes.string,
 };
