@@ -43,12 +43,14 @@ const FormField = ({
       {label && (
         <Box display="flex" alignItems="baseline" mb="xs">
           <Box flexGrow="1">
-            <Label htmlFor={id}>{label}</Label>
-            {isRequired && (
-              <Text pl="4px" as="span" color="red300" fontWeight="medium">
-                *
-              </Text>
-            )}
+            <Label htmlFor={id}>
+              {label}
+              {isRequired && (
+                <Text pl="4px" as="span" color="red300" fontWeight="medium">
+                  *
+                </Text>
+              )}
+            </Label>
           </Box>
           {labelHint && (
             <Box>
