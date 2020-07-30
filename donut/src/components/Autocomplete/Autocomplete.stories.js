@@ -1,19 +1,23 @@
 import React from "react";
 import { find, sortBy } from "lodash-es";
+import { withKnobs, select } from "@storybook/addon-knobs";
 import Text from "../Text";
 import Card from "../Card";
 import Autocomplete from "./";
 
 export default {
   title: "Autocomplete",
+  decorators: [withKnobs],
 };
 
 export const singleSelect = () => {
   const [value, setValue] = React.useState("");
+  const size = select("Size", ["sm", "md", "lg"], "md");
 
   return (
     <Card maxWidth={600} margin="50px auto" padding="l">
       <Autocomplete
+        size={size}
         value={value}
         label="Choose a country"
         placeholder="Country"
