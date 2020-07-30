@@ -10,7 +10,7 @@ import { Redirect } from "react-router";
 import PhoneModal from "./PhoneModal";
 import MotionStack from "../../MotionStack";
 import { Title, Description, BulletListItem } from "../../styles";
-import { Triangle, Square, Hexagon } from "@styled-icons/feather";
+import { Eye, Smile, Coffee } from "@styled-icons/feather";
 
 function AcceptedStatus({ firstName, lastName }) {
   const [
@@ -38,17 +38,17 @@ function AcceptedStatus({ firstName, lastName }) {
         </Description>
         <BulletListItem
           text="Give you an overview of how Advisable works"
-          Icon={Triangle}
+          Icon={Eye}
         />
         <BulletListItem
           text="Ask you a couple of clarification questions to ensure that you’re a
             good fit for Advisable"
-          Icon={Square}
+          Icon={Coffee}
         />
         <BulletListItem
           text="Make you aware of the expectations for you as a client when dealing
             with our freelancers"
-          Icon={Hexagon}
+          Icon={Smile}
           mb="l"
         />
         <Box mb="l" display="flex" flexDirection={["column", "row"]}>
