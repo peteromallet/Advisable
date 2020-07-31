@@ -15,6 +15,7 @@ class Types::ClientApplicationType < Types::BaseType
   field :rejection_reason, String, null: true
   field :company_type, String, null: true
   field :number_of_freelancers, String, null: true
+  field :country, Types::CountryType, null: true
 
   def id
     object.uid
