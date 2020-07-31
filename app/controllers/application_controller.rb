@@ -2,10 +2,6 @@ class ApplicationController < ActionController::Base
   before_action :set_sentry_context
 
   def frontend
-    puts '=='
-    puts headers
-    puts '-------'
-    puts request.env['HTTP_X_FORWARDED_FOR']
     respond_to(&:html)
   rescue ActionController::UnknownFormat
     render status: 404, json: { error: 'Not Found' }
@@ -20,6 +16,11 @@ class ApplicationController < ActionController::Base
   def auth_token
     header = request.headers['Authorization']
     header.gsub('Bearer ', '') unless header.blank?
+  end
+
+  def client_ip
+    request.env['HTTP_X_FORWARDED_FOR'].try(:split, ',').try(:first) ||
+      request.env['REMOTE_ADDR']
   end
 
   private
