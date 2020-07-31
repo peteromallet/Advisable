@@ -89,7 +89,7 @@ export default function JobSetupSidebar({ data }) {
             isDisabled={!completeSteps.characteristics}
             to={`/jobs/${id}/description`}
           >
-            Description
+            Goals
           </MultistepMenu.Item>
           <MultistepMenu.Item
             isDisabled={!completeSteps.description}

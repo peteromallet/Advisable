@@ -147,7 +147,7 @@
   "jobSetup": {
     "popularSkills": "Popular skills for {{industry, lowercase}} $t(companyTypes.{{companyType}}_plural)",
     "experience": {
-      "title": "How important is it this specialist has worked with {{industry, lowercase}} $t(companyTypes.{{companyType}}_plural) before?"
+      "title": "How important is it that this specialist has worked with {{industry, lowercase}} $t(companyTypes.{{companyType}}_plural) before?"
     }
   }
 }

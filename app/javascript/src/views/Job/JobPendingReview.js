@@ -22,8 +22,7 @@ export default function PublishJob({ data }) {
       <JobSetupStepSubHeader marginBottom="l">
         We're making sure that this is a project that's suitable for our
         specialists before sending it to them. {salesPerson.firstName} will
-        review the details of this job shortly and will let you know once it's
-        live.
+        review it and will let you know once it's live.
       </JobSetupStepSubHeader>
       <Link to={`/jobs/${id}/publish`}>
         <Button variant="subtle">Update Details</Button>

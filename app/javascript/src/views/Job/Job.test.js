@@ -228,7 +228,7 @@ test("User can publish a job", async () => {
     ],
   });
 
-  await screen.findByText(/what skills are you looking for?/i);
+  await screen.findByText(/What skills should this specialist have?/i);
   userEvent.click(screen.getByText(/linkedin marketing/i));
   const skillsInput = screen.getByPlaceholderText("e.g Facebook Advertising");
   fireEvent.click(skillsInput);
@@ -246,7 +246,7 @@ test("User can publish a job", async () => {
   await screen.findByText(/how important is it that they are in/i);
   userEvent.click(screen.getByText("Important"));
 
-  await screen.findByText(/what character traits/i);
+  await screen.findByText(/What characteristics should/i);
   userEvent.type(screen.getByPlaceholderText(/communication skills/i), "One");
   userEvent.tab();
   userEvent.type(screen.getByPlaceholderText(/communication skills/i), "Two");
@@ -259,7 +259,7 @@ test("User can publish a job", async () => {
   userEvent.click(screen.getByText("Two"));
   userEvent.click(screen.getByLabelText(/continue/i));
 
-  await screen.findByText(/briefly describe the projects you need/i);
+  await screen.findByText(/Briefly describe your goals /i);
   userEvent.type(
     screen.getByPlaceholderText(/Building a facebook/i),
     "Goal one",
@@ -271,13 +271,13 @@ test("User can publish a job", async () => {
   );
   userEvent.click(screen.getByLabelText(/continue/i));
 
-  await screen.findByText(/If Advisable finds you the perfect person/i);
-  userEvent.click(screen.getByText("Likely"));
+  await screen.findByText(/If Advisable finds you the perfect/i);
+  userEvent.click(screen.getByText("Very Likely"));
 
-  await screen.findByText("Review");
-  userEvent.click(screen.getByLabelText(/publish job/i));
+  await screen.findByText("Review Project");
+  userEvent.click(screen.getByLabelText(/submit project/i));
 
-  await screen.findByText(/we will need to review the details/i);
+  await screen.findByText(/reviewing your job/i);
 });
 
 test("When pending review redirects to published page", async () => {
@@ -328,5 +328,5 @@ test("When pending review redirects to published page", async () => {
     ],
   });
 
-  await screen.findByText(/we will need to review the details/i);
+  await screen.findByText(/reviewing your job/i);
 });

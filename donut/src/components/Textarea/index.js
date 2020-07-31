@@ -73,6 +73,7 @@ const Textarea = React.forwardRef(function Textarea(
 Textarea.defaultProps = {
   minRows: 2,
   maxrows: 5,
+  size: "md",
   onFocus: () => {},
   onBlur: () => {},
 };

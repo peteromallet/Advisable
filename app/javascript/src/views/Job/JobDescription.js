@@ -50,7 +50,7 @@ export default function JobDescription({ data }) {
             Briefly describe your goals from working with this specialist
           </JobSetupStepHeader>
           <JobSetupStepSubHeader mb="l">
-            We'll make this that specialists we match you with have experience
+            We'll make sure that specialists we match you with have experience
             helping companies achieve similar goals.
           </JobSetupStepSubHeader>
           <Field

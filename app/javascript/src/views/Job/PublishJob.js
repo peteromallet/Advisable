@@ -30,8 +30,9 @@ export default function PublishJob({ data }) {
     <>
       <JobSetupStepHeader mb="xs">Review Project</JobSetupStepHeader>
       <JobSetupStepSubHeader mb="xl">
-        Please review the details below. Once you're happy with everything,
-        submit it to our team.
+        Please review the details below. These details will be shown to
+        potential specialists so please ensure it's accurate and compelling in
+        order to attract the perfect person.
       </JobSetupStepSubHeader>
       <Stack spacing="xxxl" divider="neutral100">
         <Box>
@@ -43,11 +44,14 @@ export default function PublishJob({ data }) {
             fontWeight="medium"
             letterSpacing="-0.06rem"
           >
-            {t(`industryExperienceImportance.2`, {
-              primarySkill: primarySkill.name,
-              companyType,
-              industry,
-            })}
+            {t(
+              `industryExperienceImportance.${project.industryExperienceImportance}`,
+              {
+                primarySkill: primarySkill.name,
+                companyType,
+                industry,
+              },
+            )}
           </Text>
           <Tags
             size="m"
@@ -147,7 +151,7 @@ export default function PublishJob({ data }) {
             fontWeight="medium"
             letterSpacing="-0.03rem"
           >
-            Projects
+            Goals
           </Text>
           <BulletList marginBottom="l">
             {project.goals.map((goal, i) => (
@@ -161,7 +165,7 @@ export default function PublishJob({ data }) {
             }}
           >
             <Button variant="subtle" size="s" prefix={<Pencil size={24} />}>
-              Edit Description
+              Edit Goals
             </Button>
           </RouterLink>
         </Box>
