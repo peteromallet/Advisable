@@ -19,6 +19,8 @@ import {
 import Navigation from "../Navigation";
 import MotionStack from "../MotionStack";
 import { Title, Description } from "../styles";
+import ProcessingApplication from "./ProcessingApplication";
+import { motion } from "framer-motion";
 
 const validationSchema = object().shape({
   localityImportance: number().required(
@@ -57,10 +59,20 @@ const talentQualityOptions = [
 
 function AboutPreferences() {
   const locationState = useLocationState();
-  const [submitClientApplication, { called }] = useAboutPreferencesSubmit();
+  const [
+    submitClientApplication,
+    { called, data: processing },
+  ] = useAboutPreferencesSubmit();
   const { loading, error, data } = useClientApplicationQuery();
 
-  if (loading) return <Loading />;
+  if (loading || error)
+    return (
+      <motion.div exit>
+        <Navigation error={error} />
+        <Loading />
+      </motion.div>
+    );
+
   const {
     localityImportance,
     talentQuality,
@@ -94,7 +106,7 @@ function AboutPreferences() {
 
   return (
     <>
-      <Navigation error={error} called={called} status={status} />
+      <Navigation called={called} status={status} delay={5000} />
       <Formik
         validationSchema={validationSchema}
         initialValues={initialValues}
@@ -102,7 +114,8 @@ function AboutPreferences() {
       >
         {(formik) => (
           <Form>
-            <MotionStack>
+            <MotionStack position="relative">
+              {processing && <ProcessingApplication />}
               <Title>About Your Preferences</Title>
               <Description>
                 This is to help tailor our recommendations to you.
@@ -151,7 +164,9 @@ function AboutPreferences() {
                   value={formik.values.talentQuality}
                 />
               </Box>
-              <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>
+              <SubmitButton width={[1, "auto"]} loading={called && !processing}>
+                Continue
+              </SubmitButton>
             </MotionStack>
           </Form>
         )}
