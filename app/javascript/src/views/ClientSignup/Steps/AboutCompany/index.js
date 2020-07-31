@@ -15,6 +15,7 @@ import MotionStack from "../MotionStack";
 import { Loading } from "../../../../components/Loading/styles";
 import Navigation from "../Navigation";
 import { Title, Description } from "../styles";
+import { motion } from "framer-motion";
 
 const validationSchema = object().shape({
   companyName: string().required("Please enter your company name"),
@@ -27,7 +28,13 @@ function AboutCompany() {
   const [updateClientApplication, { called }] = useAboutCompanyUpdate();
   const { loading, error, data } = useAboutCompanyQuery();
 
-  if (loading) return <Loading />;
+  if (loading || error)
+    return (
+      <motion.div exit>
+        <Navigation error={error} />
+        <Loading />
+      </motion.div>
+    );
   const { clientApplication, industries } = data;
 
   // Formik
@@ -53,11 +60,7 @@ function AboutCompany() {
 
   return (
     <>
-      <Navigation
-        called={called}
-        error={error}
-        status={clientApplication.status}
-      />
+      <Navigation called={called} status={clientApplication.status} />
       <Formik
         validationSchema={validationSchema}
         initialValues={initialValues}

@@ -16,6 +16,7 @@ import { string, array, object } from "yup";
 import MotionStack from "../MotionStack";
 import Navigation from "../Navigation";
 import { Title, Description } from "../styles";
+import { motion } from "framer-motion";
 
 const validationSchema = object().shape({
   skills: array()
@@ -33,7 +34,13 @@ function AboutRequirements() {
   const [updateClientApplication, { called }] = useAboutRequirementsUpdate();
   const { loading, error, data } = useAboutRequirementsQuery();
 
-  if (loading) return <Loading />;
+  if (loading || error)
+    return (
+      <motion.div exit>
+        <Navigation error={error} />
+        <Loading />
+      </motion.div>
+    );
 
   const { clientApplication, skills } = data;
 
@@ -61,11 +68,7 @@ function AboutRequirements() {
 
   return (
     <>
-      <Navigation
-        called={called}
-        error={error}
-        status={clientApplication.status}
-      />
+      <Navigation called={called} status={clientApplication.status} />
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}

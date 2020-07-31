@@ -5,12 +5,20 @@ import Loading from "../../../../components/Loading";
 import AcceptedStatus from "./AcceptedStatus/index";
 import NotHiringStatus from "./NotHiringStatus";
 import CheapStatus from "./CheapStatus";
+import { motion } from "framer-motion";
+import Navigation from "../Navigation";
 
 function SignupStatus({ RedirectToInitialStep, RedirectToNextStep }) {
   const { loading, error, data } = useClientApplicationQuery();
 
-  if (loading) return <Loading />;
-  if (error) return <RedirectToInitialStep />;
+  if (loading || error)
+    return (
+      <motion.div exit>
+        <Navigation error={error} />
+        <Loading />
+      </motion.div>
+    );
+
   const {
     status,
     rejectionReason,
