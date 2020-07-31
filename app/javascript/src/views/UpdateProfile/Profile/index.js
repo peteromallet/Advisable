@@ -105,17 +105,15 @@ const Profile = () => {
               caption="A well structured bio demonstrates your experience and expertise by referencing past projects and achievements, including notable clients or numeric results. You will have a chance to customize this each time you apply for a project."
             />
             <Box height={1} bg="neutral.1" my="l" />
-            <Autocomplete
+            <FormField
               multiple
               max={10}
               name="skills"
+              as={Autocomplete}
               description="Add up to 10 skill’s that you have used in previously completed projects."
               label="What type of projects are you looking for?"
               placeholder="e.g Online Marketing"
               options={sortBy(data.skills, ["label"])}
-              onBlur={formik.handleBlur}
-              value={formik.values.skills}
-              error={formik.touched.skills && formik.errors.skills}
               onChange={(skills) => {
                 formik.setFieldTouched("skills", true);
                 formik.setFieldValue("skills", skills);

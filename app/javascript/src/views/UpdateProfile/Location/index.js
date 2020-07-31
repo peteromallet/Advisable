@@ -1,16 +1,15 @@
 // Renders the view for updating a freelancer location in their profile
 // settings
 import * as React from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import { get } from "lodash-es";
-import { Button, Select } from "@advisable/donut";
+import { Button, Select, Checkbox } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Text from "../../../components/Text";
 import Card from "../../../components/Card";
 import Loading from "../../../components/Loading";
 import Heading from "../../../components/Heading";
 import FieldRow from "../../../components/FieldRow";
-import Checkbox from "../../../components/Checkbox";
 import FormField from "../../../components/FormField";
 import Padding from "../../../components/Spacing/Padding";
 import { useNotifications } from "../../../components/Notifications";
@@ -76,22 +75,24 @@ let Location = () => {
                 <Padding bottom="m">
                   <Checkbox
                     name="remote"
-                    value={formik.values.remote}
-                    label="Yes, I’m happy to work remote"
+                    checked={formik.values.remote}
                     onChange={(e) => {
                       formik.setFieldValue("remote", true);
                     }}
-                  />
+                  >
+                    Yes, I’m happy to work remote
+                  </Checkbox>
                 </Padding>
                 <Padding bottom="xl">
                   <Checkbox
                     name="remote"
-                    value={formik.values.remote === false}
-                    label="No, I only work with clients in person"
+                    checked={formik.values.remote === false}
                     onChange={(e) => {
                       formik.setFieldValue("remote", false);
                     }}
-                  />
+                  >
+                    No, I only work with clients in person
+                  </Checkbox>
                 </Padding>
                 <Button loading={formik.isSubmitting}>Save Changes</Button>
               </Form>
