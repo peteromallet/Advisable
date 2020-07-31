@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
 import { Redirect } from "react-router-dom";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Box, Card, Button, Textarea } from "@advisable/donut";
 import Heading from "../../components/Heading";
 import FormField from "../../components/FormField";

@@ -2,7 +2,7 @@ import React from "react";
 import { I18nextProvider } from "react-i18next";
 import { MemoryRouter } from "react-router-dom";
 import { render } from "@testing-library/react";
-import { MockedProvider } from "@apollo/react-testing";
+import { MockedProvider } from "@apollo/client/testing";
 import {
   InMemoryCache,
   IntrospectionFragmentMatcher,
@@ -35,23 +35,23 @@ Object.defineProperty(window, "scrollTo", {
 });
 
 jest.mock("talkjs", () => {
-  class User { }
+  class User {}
   class Session {
     getOrCreateConversation() {
       return {
-        setParticipant: (user) => { },
+        setParticipant: (user) => {},
       };
     }
 
     createChatbox(conversation) {
       return {
-        mount: (node) => { },
+        mount: (node) => {},
       };
     }
 
     get unreads() {
       return {
-        on: (event, handler) => { },
+        on: (event, handler) => {},
       };
     }
   }

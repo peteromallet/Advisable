@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import { useState } from "react";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 import useViewer from "./useViewer";
 
 const COMPLETE_TUTORIAL = gql`

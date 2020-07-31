@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash-es";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import {
   Box,

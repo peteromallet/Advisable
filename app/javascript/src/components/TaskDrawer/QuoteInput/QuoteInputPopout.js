@@ -1,6 +1,6 @@
 import { object, boolean, string, number, ref } from "yup";
 import React from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import { Box, Checkbox, Button, Text } from "@advisable/donut";
 import CurrencyInput from "../../CurrencyInput";

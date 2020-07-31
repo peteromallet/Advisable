@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
 import FormField from "components/FormField";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import SubmitButton from "components/SubmitButton";
 import { Modal, Text, Autocomplete, Select, useModal } from "@advisable/donut";
 

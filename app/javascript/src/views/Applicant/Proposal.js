@@ -1,7 +1,7 @@
 import React from "react";
 import { Info } from "@styled-icons/feather";
 import { camelCase } from "lodash-es";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import { Box, Card } from "@advisable/donut";
 import Text from "../../components/Text";

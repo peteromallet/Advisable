@@ -2,7 +2,7 @@
 import React from "react";
 import { DateTime } from "luxon";
 import { Box, Button } from "@advisable/donut";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import Text from "../Text";
 import CREATE_TASK from "../../graphql/mutations/createTask";
 import { Confirmation, ConfirmationContainer } from "./styles";

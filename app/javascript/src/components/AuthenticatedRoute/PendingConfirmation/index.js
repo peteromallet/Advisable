@@ -1,5 +1,5 @@
 import React from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Box, Card, Text, Link } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import RESEND_CONFIRMATION_EMAIL from "./resendConfirmationEmail";

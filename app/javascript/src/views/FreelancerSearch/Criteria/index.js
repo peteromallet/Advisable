@@ -13,7 +13,7 @@ import {
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { Container } from "./styles";
 import FormField from "../../../components/FormField";
 import Loading from "../../../components/Loading";

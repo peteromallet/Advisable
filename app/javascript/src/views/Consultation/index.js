@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@advisable/donut";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { useParams, Redirect } from "react-router-dom";
 import NotFound from "../NotFound";
 import Loading from "../../components/Loading";

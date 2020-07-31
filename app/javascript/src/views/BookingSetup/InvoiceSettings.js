@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Card, Text, Button } from "@advisable/donut";
 import InvoiceFields from "../../components/InvoiceSettingsFields";
 import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";

@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash-es";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import Layout from "../../components/Layout";
 import Loading from "./Loading";
 import FETCH_DATA from "./fetchData";

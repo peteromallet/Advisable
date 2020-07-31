@@ -2,7 +2,7 @@
 // of a single interview
 import React from "react";
 import Loading from "src/components/Loading";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import NotFound from "src/views/NotFound";
 import AvailabilityForInterview from "./AvailabilityForInterview";
 import { GET_DATA } from "./queries";

@@ -5,7 +5,7 @@ import { Formik } from "formik";
 import queryString from "query-string";
 import { Redirect, useParams, useLocation } from "react-router-dom";
 import { Button } from "@advisable/donut";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import Text from "src/components/Text";
 import Link from "src/components/Link";

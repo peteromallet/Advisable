@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { DateTime } from "luxon";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import {
   Box,
   Modal,

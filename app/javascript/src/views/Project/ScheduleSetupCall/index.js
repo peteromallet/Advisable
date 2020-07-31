@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card } from "@advisable/donut";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import View from "src/components/View";
 import Text from "src/components/Text";
 import Loading from "src/components/Loading";

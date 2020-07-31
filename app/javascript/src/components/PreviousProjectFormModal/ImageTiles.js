@@ -5,7 +5,7 @@ import { rgba } from "polished";
 import { X, Plus } from "@styled-icons/feather";
 import styled, { css } from "styled-components";
 import { theme, Icon } from "@advisable/donut";
-import { useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useMutation, useApolloClient } from "@apollo/client";
 import { DirectUpload } from "@rails/activestorage";
 import {
   GET_PREVIOUS_PROJECT,

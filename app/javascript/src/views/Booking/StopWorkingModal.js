@@ -3,7 +3,7 @@ import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { Formik, Form } from "formik";
 import FormField from "components/FormField";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/apollo";
 import { Text, Box, Button, Columns, Textarea } from "@advisable/donut";
 import Modal from "../../components/Modal";
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { get, filter } from "lodash-es";
 import { Box, Modal, useModal } from "@advisable/donut";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 import {
   useParams,
   useLocation,

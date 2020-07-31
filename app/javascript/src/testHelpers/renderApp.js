@@ -5,7 +5,7 @@ import { createMemoryHistory } from "history";
 import { I18nextProvider } from "react-i18next";
 import { render } from "@testing-library/react";
 import { Elements } from "@stripe/react-stripe-js";
-import { MockedProvider } from "@apollo/react-testing";
+import { MockedProvider } from "@apollo/client/testing";
 import {
   InMemoryCache,
   IntrospectionFragmentMatcher,

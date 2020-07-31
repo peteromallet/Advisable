@@ -6,7 +6,7 @@ import { Formik, Form } from "formik";
 import { useTranslation } from "react-i18next";
 import FormField from "components/FormField";
 import SubmitButton from "components/SubmitButton";
-import { useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useMutation, useApolloClient } from "@apollo/client";
 import { Box, Card, Text, Link, theme } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import useScrollRestore from "../../utilities/useScrollRestore";

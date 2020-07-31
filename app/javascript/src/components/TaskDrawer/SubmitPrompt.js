@@ -1,6 +1,6 @@
 // Renders the prompt to submit a task
 import React from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Box, Columns, Button } from "@advisable/donut";
 import Text from "../Text";
 import Slider from "../Slider";

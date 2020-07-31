@@ -1,6 +1,6 @@
 import React from "react";
 import { object, boolean, string } from "yup";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import {
   Card,

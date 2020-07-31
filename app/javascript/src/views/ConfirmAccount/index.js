@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import queryString from "query-string";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Redirect } from "react-router-dom";
 import Loading from "src/components/Loading";
 import { useNotifications } from "src/components/Notifications";

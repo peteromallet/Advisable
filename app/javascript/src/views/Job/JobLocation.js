@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, useHistory, useLocation } from "react-router-dom";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import RangeSelection from "components/RangeSelection";
 import { UPDATE_PROJECT } from "./queries";

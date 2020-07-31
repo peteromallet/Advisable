@@ -1,5 +1,5 @@
 import React from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Formik, Field } from "formik";
 import Modal from "src/components/Modal";
 import Text from "src/components/Text";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Columns, Button, Modal, Text, Select } from "@advisable/donut";
 import { REJECT_INVITATION } from "./queries";
 import FormField from "../../components/FormField";

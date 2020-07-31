@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 import { useHistory, useParams } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import { Box, Autocomplete, Select, Button } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import Loading from "src/components/Loading";

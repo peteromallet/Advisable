@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 import { Text } from "@advisable/donut";
 import React, { Fragment } from "react";
 import Loading from "src/components/Loading";

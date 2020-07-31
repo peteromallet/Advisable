@@ -12,7 +12,7 @@ import {
   Select,
   Label,
 } from "@advisable/donut";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import FormField from "components/FormField";
 import Avatar from "../../../components/Avatar";
 import FileUpload from "../../../components/FileUpload";

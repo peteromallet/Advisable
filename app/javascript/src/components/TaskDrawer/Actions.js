@@ -1,7 +1,7 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 import { Info, ArrowLeft } from "@styled-icons/feather";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Box, Button, Text } from "@advisable/donut";
 import ButtonGroup from "../ButtonGroup";
 import Notice from "../Notice";
