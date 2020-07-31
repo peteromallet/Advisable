@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
   before_action :set_sentry_context
 
   def frontend
+    puts '=='
+    puts headers
+    puts '-------'
+    puts request.env['HTTP_X_FORWARDED_FOR']
     respond_to(&:html)
   rescue ActionController::UnknownFormat
     render status: 404, json: { error: 'Not Found' }
