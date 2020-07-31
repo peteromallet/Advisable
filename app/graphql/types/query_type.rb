@@ -120,11 +120,9 @@ class Types::QueryType < Types::BaseType
     end
   end
 
-  field :popular_skills, Types::Skill.connection_type, null: false do
-    argument :industry, String, required: false
-  end
+  field :popular_skills, Types::Skill.connection_type, null: false
 
-  def popular_skills(industry: nil)
+  def popular_skills
     Skill.where(active: true, original: nil).popular
   end
 
