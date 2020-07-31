@@ -27,6 +27,6 @@ class Airtable::SalesPerson < Airtable::Base
     airtable_filename = self['Image'].try(:first).try(:[], 'filename')
     return if filename == airtable_filename
     url = self['Image'].first['url']
-    SetRemoteAttachment.perform_later(sales_person, :image, url)
+    SetSalesPersonImageJob.perform_later(id, url)
   end
 end

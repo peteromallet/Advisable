@@ -18,6 +18,11 @@ class ApplicationController < ActionController::Base
     header.gsub('Bearer ', '') unless header.blank?
   end
 
+  def client_ip
+    request.env['HTTP_X_FORWARDED_FOR'].try(:split, ',').try(:first) ||
+      request.env['REMOTE_ADDR']
+  end
+
   private
 
   def set_sentry_context
