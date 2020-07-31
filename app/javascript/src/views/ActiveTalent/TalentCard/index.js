@@ -27,7 +27,7 @@ const TalentCard = ({ onClick, application }) => {
           {application.specialist.name}
         </Text>
         <Text color="neutral.7" mb="m">
-          {application.project.primarySkill}
+          {application.project.primarySkill.name}
         </Text>
         <Status>{pluralize(application.tasks.length, "Task", "Tasks")}</Status>
       </Card>

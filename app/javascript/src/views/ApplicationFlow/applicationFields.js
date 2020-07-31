@@ -36,7 +36,10 @@ export default gql`
       currency
       questions
       airtableId
-      primarySkill
+      primarySkill {
+        id
+        name
+      }
       description
       industry
       companyType

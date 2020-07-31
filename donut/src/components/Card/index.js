@@ -1,7 +1,7 @@
 import React from "react";
 import StyledCard from "./styles";
 
-const Card = props => {
+const Card = (props) => {
   return <StyledCard {...props} />;
 };
 

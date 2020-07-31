@@ -28,7 +28,10 @@ export const GET_APPLICATIONS = gql`
             id
             industry
             companyType
-            primarySkill
+            primarySkill {
+              id
+              name
+            }
             user {
               id
               companyName

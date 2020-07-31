@@ -29,7 +29,7 @@ const PROPS = [
   "paddingX",
   "px",
   "paddingY",
-  "y",
+  "py",
 ];
 
 const extractSpacingProps = (props) => {

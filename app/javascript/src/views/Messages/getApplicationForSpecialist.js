@@ -18,7 +18,10 @@ export default gql`
       project {
         id
         airtableId
-        primarySkill
+        primarySkill {
+          id
+          name
+        }
         user {
           id
           companyName

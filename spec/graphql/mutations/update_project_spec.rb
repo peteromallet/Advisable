@@ -15,12 +15,11 @@ describe Mutations::UpdateProject do
         specialistDescription: "specialist description",
         questions: ["This is a question?"],
         requiredCharacteristics: ["Required"],
-        optionalCharacteristics: ["Optional"],
+        characteristics: ["Optional"],
         acceptedTerms: true
       }) {
         project {
           goals
-          primarySkill
           description
           serviceType
           companyDescription
@@ -29,6 +28,10 @@ describe Mutations::UpdateProject do
           requiredCharacteristics
           optionalCharacteristics
           acceptedTerms
+          primarySkill {
+            id
+            name
+          }
         }
         errors {
           code
@@ -51,7 +54,8 @@ describe Mutations::UpdateProject do
   end
 
   it 'sets the primarySkill' do
-    primarySkill = response['data']['updateProject']['project']['primarySkill']
+    primarySkill =
+      response['data']['updateProject']['project']['primarySkill']['name']
     expect(primarySkill).to eq('Sales')
   end
 

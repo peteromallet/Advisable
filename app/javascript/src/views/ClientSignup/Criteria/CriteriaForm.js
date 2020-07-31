@@ -4,6 +4,7 @@ import { object, string } from "yup";
 import queryString from "query-string";
 import { Formik, Form, Field } from "formik";
 import { useLocation } from "react-router-dom";
+import FormField from "components/FormField";
 import {
   Box,
   Label,
@@ -57,12 +58,12 @@ function CriteriaForm({ onSubmit, data }) {
       {(formik) => (
         <Form>
           <Box mb="l">
-            <Autocomplete
+            <FormField
               name="skill"
-              value={formik.values.skill}
+              as={Autocomplete}
+              options={data.skills}
               placeholder="Search for a skill"
               label="What skill are you looking for?"
-              options={data.skills}
               error={formik.submitCount > 0 && formik.errors.skill}
               onChange={(skill) => {
                 formik.setFieldValue("skill", skill);
@@ -70,7 +71,8 @@ function CriteriaForm({ onSubmit, data }) {
             />
           </Box>
           <Box mb="s">
-            <Autocomplete
+            <FormField
+              as={Autocomplete}
               name="industry"
               placeholder="Industry"
               value={formik.values.industry}
@@ -86,10 +88,12 @@ function CriteriaForm({ onSubmit, data }) {
           <Field as={Checkbox} type="checkbox" name="industryRequired" mb="l">
             Industry experience is important to me
           </Field>
-          <Label htmlFor="companyType" mb="xs">
-            What type of company are you?
-          </Label>
-          <Field as={Select} id="companyType" name="companyType" mb="s">
+          <FormField
+            as={Select}
+            name="companyType"
+            marginBottom="s"
+            label="What type of company are you?"
+          >
             <option>Individual Entrepreneur</option>
             <option>Small Business</option>
             <option>Medium-Sized Business</option>
@@ -99,7 +103,7 @@ function CriteriaForm({ onSubmit, data }) {
             <option>Non-Profit</option>
             <option>Education Institution</option>
             <option>Government</option>
-          </Field>
+          </FormField>
           <Field
             as={Checkbox}
             type="checkbox"

@@ -29,6 +29,7 @@ environment.config.merge({
   resolve: {
     alias: {
       "@advisable/donut": path.join(__dirname, "../../donut/src"),
+      components: path.join(__dirname, "../../app/javascript/src/components"),
     },
   },
 });

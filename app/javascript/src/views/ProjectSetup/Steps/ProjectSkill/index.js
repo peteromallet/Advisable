@@ -18,12 +18,12 @@ export default function ProjectSkillsStep({ project }) {
 
   let initialValues = {
     skills: project.skills.map((skill) => skill.name),
-    primarySkill: project.primarySkill || "",
+    primarySkill: project.primarySkill?.name || "",
   };
 
   if (project) {
     initialValues.id = project.airtableId;
-    initialValues.primarySkill = project.primarySkill || "";
+    initialValues.primarySkill = project.primarySkill?.name || "";
   }
 
   const handleSubmit = async (values) => {

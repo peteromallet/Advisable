@@ -2,7 +2,11 @@ class Industry < ApplicationRecord
   include Uid
   validates :name, presence: true
   has_many :project_industries
-  has_many :projects, through: :project_industries
+  has_many :previous_projects,
+           through: :project_industries,
+           source: :project,
+           source_type: 'PreviousProject'
+  has_many :skills, -> { distinct }, through: :previous_projects
 
   before_validation :set_color, on: :create
 

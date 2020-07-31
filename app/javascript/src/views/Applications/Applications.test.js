@@ -26,7 +26,9 @@ test("Shows application invites", async () => {
               mockData.application({
                 status: "Invited To Apply",
                 project: mockData.project({
-                  primarySkill: "Testing Invites",
+                  primarySkill: mockData.skill({
+                    name: "Testing Invites",
+                  }),
                   user: mockData.user(),
                 }),
                 interview: null,
@@ -97,7 +99,9 @@ test("Redirects to apply if account is on hold and has invitiation waiting", asy
               id: "app_123",
               status: "Invited To Apply",
               project: mockData.project({
-                primarySkill: "Testing Invites",
+                primarySkill: mockData.skill({
+                  name: "Testing Invites",
+                }),
                 user: mockData.user(),
               }),
               interview: null,
@@ -147,7 +151,9 @@ test("Redirects to apply if account stage is 'Full Application' and has invitiat
               id: "app_123",
               status: "Invited To Apply",
               project: mockData.project({
-                primarySkill: "Testing Invites",
+                primarySkill: mockData.skill({
+                  name: "Testing Invites",
+                }),
                 user: mockData.user(),
               }),
               interview: null,

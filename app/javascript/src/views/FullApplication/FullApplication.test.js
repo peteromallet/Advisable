@@ -181,7 +181,7 @@ test("Redirects to root path if application stage is 'Accepted'", async () => {
               mockData.application({
                 status: "Invited To Apply",
                 project: mockData.project({
-                  primarySkill: "Testing Invites",
+                  primarySkill: mockData.skill({ name: "Testing Invites" }),
                   user: mockData.user(),
                 }),
                 interview: null,

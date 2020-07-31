@@ -11,7 +11,7 @@ describe 'Project setup flow' do
         goals: %w[goal],
         specialist_description: 'specialist overview',
         required_characteristics: %w[characteristic],
-        optional_characteristics: %w[characteristic],
+        characteristics: %w[characteristic],
         questions: %w[question?],
         accepted_terms: true,
         deposit: 100_00

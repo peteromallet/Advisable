@@ -3,14 +3,12 @@ import { HelpCircle, ArrowRight } from "@styled-icons/feather";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import { Box, Link, Text, Tooltip, Checkbox, Card } from "@advisable/donut";
-import createNumberMask from "text-mask-addons/dist/createNumberMask";
-import { TextField } from "../../../components";
+import FormField from "components/FormField";
+import CurrencyInput from "components/CurrencyInput";
 import SubmitButton from "../../../components/SubmitButton";
 import SUBMIT_APPLICATION from "../submitApplication";
 import UPDATE_APPLICATION from "../updateApplication";
 import validationSchema from "./validationSchema";
-
-const numberMask = createNumberMask({ prefix: "" });
 
 function Terms({ match, history, application, steps, currentStep, location }) {
   const [updateApplication] = useMutation(UPDATE_APPLICATION);
@@ -24,6 +22,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
       variables: {
         input: {
           ...values,
+          rate: parseFloat(values.rate),
           id: applicationId,
         },
       },
@@ -57,6 +56,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
         onSubmit={handleSubmit}
         initialValues={initialValues}
         validationSchema={validationSchema}
+        validateOnMount
       >
         {(formik) => (
           <Form>
@@ -72,22 +72,13 @@ function Terms({ match, history, application, steps, currentStep, location }) {
                 Payment Terms
               </Text>
               <Box mb="l">
-                <Field
+                <FormField
                   prefix="$"
                   name="rate"
-                  as={TextField}
-                  mask={numberMask}
+                  as={CurrencyInput}
                   error={formik.touched.rate && formik.errors.rate}
                   label="Including Advisable's fee, what's your estimated hourly rate for projects like this?"
                   placeholder="0"
-                  onChange={(e) => {
-                    if (e.target.value.length > 0) {
-                      const amount = Number(e.target.value.replace(/\,/, ""));
-                      formik.setFieldValue("rate", amount);
-                    } else {
-                      formik.setFieldValue("rate", null);
-                    }
-                  }}
                 />
               </Box>
               <Field as={Checkbox} type="checkbox" name="autoApply" mb="m">
@@ -200,7 +191,12 @@ function Terms({ match, history, application, steps, currentStep, location }) {
                 </Field>
               </Box>
 
-              <SubmitButton mt="xl" size="l" suffix={<ArrowRight />}>
+              <SubmitButton
+                mt="xl"
+                size="l"
+                suffix={<ArrowRight />}
+                disabled={!formik.isValid}
+              >
                 Submit Application
               </SubmitButton>
             </Box>

@@ -60,7 +60,7 @@ let JobListing = ({ application, history }) => {
             fontWeight="medium"
             letterSpacing="-0.02em"
           >
-            {project.primarySkill} Project
+            {project.primarySkill?.name} Project
           </Text>
           {(project.industry || project.companyType) && (
             <Text mb="32px" mt="8px" fontSize="s" color="neutral600">

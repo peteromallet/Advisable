@@ -1,45 +1,38 @@
 import React from "react";
 import Select from "./";
 import Card from "../Card";
-import InputDecorations from "../Input/InputDecorations";
+import { withKnobs, text, boolean, select } from "@storybook/addon-knobs";
 
 export default {
-  title: "Select",
+  title: "Forms|Select",
+  decorators: [withKnobs],
 };
 
-export const select = () => {
-  const [value, setValue] = React.useState("");
+export const basic = () => {
+  const [value, setValue] = React.useState(null);
+  const prefix = text("Prefix", null);
+  const suffix = text("Suffix", null);
+  const disabled = boolean("Disabled", false);
+  const error = boolean("Error", false);
+  const size = select("Size", ["sm", "md", "lg"], "md");
+
   return (
-    <Card maxWidth={500} mx="auto" p="xl">
+    <Card marginTop="l" padding="xl" maxWidth={500} mx="auto">
       <Select
+        size={size}
+        error={error}
+        prefix={prefix}
+        suffix={suffix}
+        disabled={disabled}
         value={value}
-        placeholder="Choose a number"
-        onChange={e => setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="Select something"
       >
-        <option>One</option>
-        <option>Two</option>
-        <option>Three</option>
-        <option>Four</option>
+        <option>Red</option>
+        <option>Blue</option>
+        <option>Orange</option>
+        <option>Purple</option>
       </Select>
-    </Card>
-  );
-};
-
-export const withPrefix = () => {
-  const [value, setValue] = React.useState("Europe/Dublin");
-  return (
-    <Card maxWidth={500} mx="auto" p="xl">
-      <InputDecorations prefix={<label htmlFor="timezone">Timezone</label>}>
-        <Select
-          id="timezone"
-          value={value}
-          onChange={e => setValue(e.target.value)}
-        >
-          <option>Europe/Dublin</option>
-          <option>America/New_York</option>
-          <option>America/Chicago</option>
-        </Select>
-      </InputDecorations>
     </Card>
   );
 };

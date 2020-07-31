@@ -4,7 +4,7 @@ import Button from "../Button";
 import Modal, { useModal } from "./";
 
 export default {
-  title: "Modal",
+  title: "Content|Modal",
 };
 
 export const basicModal = () => {
@@ -12,7 +12,7 @@ export const basicModal = () => {
 
   return (
     <>
-      <Button margin="l" {...modal} onClick={modal.show} as={Modal.Disclosure}>
+      <Button margin="l" {...modal} as={Modal.Disclosure}>
         Open Modal
       </Button>
       <Modal modal={modal} padding="l" label="An example modal">
@@ -36,23 +36,13 @@ export const nestedModals = () => {
 
   return (
     <>
-      <Button
-        margin="l"
-        {...modalA}
-        onClick={modalA.show}
-        as={Modal.Disclosure}
-      >
+      <Button margin="l" {...modalA} as={Modal.Disclosure}>
         Open Modal
       </Button>
       <Modal modal={modalA} padding="l" label="An example modal">
         This is the first modal.
         <br />
-        <Button
-          {...modalB}
-          marginTop="l"
-          onClick={modalB.show}
-          as={Modal.Disclosure}
-        >
+        <Button {...modalB} marginTop="l" as={Modal.Disclosure}>
           Open Modal
         </Button>
         <Modal
@@ -81,7 +71,7 @@ export const scrolling = () => {
 
   return (
     <>
-      <Button margin="l" {...modal} onClick={modal.show} as={Modal.Disclosure}>
+      <Button margin="l" {...modal} as={Modal.Disclosure}>
         Open Modal
       </Button>
       <Modal modal={modal} padding="l" label="An example modal">

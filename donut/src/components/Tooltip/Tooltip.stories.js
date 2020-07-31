@@ -4,7 +4,7 @@ import Text from "../Text";
 import Link from "../Link";
 
 export default {
-  title: "Tooltip",
+  title: "Content|Tooltip",
 };
 
 export const basicTooltip = () => {

@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :project_skill do
-    skill { nil }
+    skill
   end
 end

@@ -25,7 +25,7 @@ test("Submitting the overview step continues to the questions step", async () =>
             questions: [],
             specialist: generateTypes.specialist(),
             project: generateTypes.project({
-              primarySkill: "Testing",
+              primarySkill: generateTypes.skill({ name: "Testing" }),
               questions: ["This is the first question?"],
             }),
           }),

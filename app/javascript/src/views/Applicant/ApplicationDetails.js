@@ -12,7 +12,7 @@ import Questions from "./Questions";
 import PreviousProjects from "./PreviousProjects";
 import MoreApplicants from "./MoreApplicants";
 
-export default ({ data, history }) => {
+export default function ApplicationDetails({ data, history }) {
   const project = data.project;
   const application = data.project.application;
 
@@ -22,7 +22,9 @@ export default ({ data, history }) => {
         <Padding bottom="l">
           <Card>
             <Padding left="xl" top="l" bottom="l">
-              <Heading level={4}>Applied to {project.primarySkill}</Heading>
+              <Heading level={4}>
+                Applied to {project.primarySkill.name}
+              </Heading>
             </Padding>
             <Divider />
             <Padding size="xl">
@@ -52,8 +54,11 @@ export default ({ data, history }) => {
         <PreviousProjects data={data} />
       </FadeInUp>
       <FadeInUp duration="500ms" delay="300ms">
-        <MoreApplicants data={data} onClick={a => history.push(a.airtableId)} />
+        <MoreApplicants
+          data={data}
+          onClick={(a) => history.push(a.airtableId)}
+        />
       </FadeInUp>
     </>
   );
-};
+}

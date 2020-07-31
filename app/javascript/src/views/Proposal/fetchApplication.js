@@ -34,7 +34,10 @@ export default gql`
       project {
         id
         currency
-        primarySkill
+        primarySkill {
+          id
+          name
+        }
         user {
           id
           companyName

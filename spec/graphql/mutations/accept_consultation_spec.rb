@@ -39,7 +39,7 @@ describe Mutations::AcceptConsultation do
       sales_status: 'Open',
       status: 'Project Created',
       service_type: 'Consultation',
-      primary_skill: consultation.skill.name,
+      primary_skill: an_instance_of(Skill),
       owner: ENV['CONSULTATION_PROJECT_OWNER'],
       name: instance_of(String)
     ).and_return(project)
@@ -64,7 +64,7 @@ describe Mutations::AcceptConsultation do
     let!(:project) do
       create(
         :project,
-        user: consultation.user, primary_skill: consultation.skill.name
+        user: consultation.user, primary_skill: consultation.skill
       )
     end
 

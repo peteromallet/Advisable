@@ -1,98 +1,168 @@
-import styled, { css } from "styled-components";
-import { margin } from "styled-system";
 import theme from "../../theme";
+import { variant, margin } from "styled-system";
+import { rgba, darken, lighten } from "polished";
+import styled, { css } from "styled-components";
 
-const StyledInput_WithError = css`
-  border: 2px solid ${theme.colors.red200};
-  background: ${theme.colors.red50};
-`;
+export const BORDER_RADIUS = 8;
 
-export const StyledInput = styled.input`
-  margin: 0;
-  outline: none;
-  font-size: 16px;
-  font-weight: 500;
-  box-shadow: none;
-  border-radius: 8px;
-  appearance: none;
-  padding: 8px 12px 10px 12px;
-  color: ${theme.colors.neutral[9]};
-  background: ${theme.colors.neutral[1]};
-  width: ${(props) => props.width || "100%"};
-  border: 2px solid ${theme.colors.neutral[1]};
-  font-family: poppins, sans-serif;
-  line-height: 1;
-
-  ${margin}
-
-  &::placeholder {
-    color: ${theme.colors.neutral[6]};
-  }
-
-  &:focus {
-    border-color: ${theme.colors.blue800};
-    background: ${theme.colors.neutral50};
-  }
-
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-  }
-
-  ${(props) => props.error && StyledInput_WithError};
-`;
-
-export const StyledInputDecorator = styled.div`
+export const StyledInputDecoration = styled.div`
   display: flex;
-  flex-shrink: 0;
-  font-weight: 500;
-  font-size: 15px;
+  font-size: 16px;
   align-items: center;
-  padding: 8px 0 10px 0;
-  letter-spacing: -0.02em;
-  color: ${theme.colors.neutral[7]};
-  background: ${theme.colors.neutral[2]};
+  padding-top: 1px;
+  padding-bottom: 1px;
+  justify-content: center;
+  color: ${theme.colors.blue900};
+  font-family: system-ui, poppins, sans-serif;
+  background-color: ${darken(0.05, "#eff0f3")};
+  transition: background-color 200ms, color 200ms;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2px;
+  }
 
   &:first-child {
-    padding-left: 16px;
-    padding-right: 12px;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-top-left-radius: ${BORDER_RADIUS}px;
+    border-bottom-left-radius: ${BORDER_RADIUS}px;
   }
 
   &:last-child {
-    padding-left: 12px;
-    padding-right: 16px;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-top-right-radius: ${BORDER_RADIUS}px;
+    border-bottom-right-radius: ${BORDER_RADIUS}px;
   }
 `;
 
-export const StyledInputDecorationsChildren = styled.div`
+export const StyledInputControl = styled.input`
   width: 100%;
-`;
+  border: none;
+  height: 48px;
+  outline: none;
+  font-size: 16px;
+  box-sizing: border-box;
+  background: transparent;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border-radius: 0px;
+  color: ${theme.colors.neutra900};
+  font-family: system-ui, poppins, sans-serif;
+  border: 2px solid transparent;
+  transition: border-color 200ms;
 
-export const StyledInputDecorations = styled.div`
-  display: flex;
+  &:first-child {
+    border-top-left-radius: ${BORDER_RADIUS}px;
+    border-bottom-left-radius: ${BORDER_RADIUS}px;
+  }
 
-  ${StyledInputDecorationsChildren} {
-    flex-grow: 1;
-    flex-shrink: 1;
-    position: relative;
+  &:last-child {
+    border-top-right-radius: ${BORDER_RADIUS}px;
+    border-bottom-right-radius: ${BORDER_RADIUS}px;
+  }
 
-    ${StyledInput} {
-      border-radius: 0;
-    }
-
-    &:first-child ${StyledInput} {
-      border-top-left-radius: 8px;
-      border-bottom-left-radius: 8px;
-    }
-
-    &:last-child ${StyledInput} {
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
-    }
+  &::placeholder {
+    color: ${theme.colors.neutral400};
   }
 `;
 
-export default StyledInput;
+const StyledInput_Error = css`
+  ${StyledInputControl} {
+    border-color: ${theme.colors.red300};
+    background-color: ${theme.colors.red50};
+  }
+
+  ${StyledInputDecoration} {
+    color: ${theme.colors.neutral900};
+    background-color: ${theme.colors.red300};
+  }
+
+  ${StyledInputControl}::placeholder {
+    color: ${rgba(theme.colors.neutral900, 0.32)};
+  }
+`;
+
+const StyledInput_Focused = css`
+  ${StyledInputControl} {
+    background-color: #eff0f3;
+    border-color: ${theme.colors.blue900};
+  }
+
+  ${StyledInputDecoration} {
+    color: white;
+    background-color: ${theme.colors.blue900};
+  }
+`;
+
+const StyledInput_Disabled = css`
+  cursor: not-allowed;
+
+  ${StyledInputControl} {
+    cursor: not-allowed;
+    border-color: transparent;
+    color: ${theme.colors.neutral600};
+    background-color: ${lighten(0.024, "#eff0f3")};
+
+    &::placeholder {
+      color: ${lighten(0.12, theme.colors.neutral400)};
+    }
+  }
+
+  ${StyledInputDecoration} {
+    background-color: #eff0f3;
+    color: ${theme.colors.neutral600};
+  }
+`;
+
+const size = variant({
+  prop: "size",
+  variants: {
+    sm: {
+      [StyledInputControl]: {
+        height: 40,
+        paddingLeft: "12px",
+        paddingRight: "12px",
+      },
+      [StyledInputDecoration]: {
+        paddingLeft: "12px",
+        paddingRight: "12px",
+      },
+    },
+    md: {
+      [StyledInputControl]: {
+        height: 48,
+        paddingLeft: "16px",
+        paddingRight: "16px",
+      },
+      [StyledInputDecoration]: {
+        paddingLeft: "16px",
+        paddingRight: "16px",
+      },
+    },
+    lg: {
+      [StyledInputControl]: {
+        height: 56,
+        fontSize: 18,
+        paddingLeft: 20,
+        paddingRight: 20,
+      },
+      [StyledInputDecoration]: {
+        fontSize: "17px",
+        paddingLeft: "20px",
+        paddingRight: "20px",
+      },
+    },
+  },
+});
+
+export const StyledInput = styled.div`
+  width: 100%;
+  display: flex;
+  border-radius: ${BORDER_RADIUS}px;
+  background: #eff0f3;
+  ${(props) => props.$error && StyledInput_Error};
+  ${(props) => props.$focused && StyledInput_Focused};
+  ${(props) => props.$disabled && StyledInput_Disabled};
+
+  ${size}
+  ${margin};
+`;

@@ -23,6 +23,9 @@ export const StyledCheckboxToggle = styled.div`
   position: relative;
   border-radius: 6px;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: ${theme.colors.neutral[0]};
   border: 2px solid ${theme.colors.neutral[3]};
   transition: background 200ms;
@@ -49,6 +52,10 @@ export const StyledCheckboxToggle = styled.div`
     position: absolute;
     transform: translate(-50%, -50%);
   }
+`;
+
+export const StyledCheckboxToggleCheck = styled.div`
+  position: relative;
 `;
 
 export const StyledCheckboxContent = styled.div``;

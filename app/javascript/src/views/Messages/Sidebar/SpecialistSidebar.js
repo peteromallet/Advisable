@@ -66,7 +66,7 @@ const SpecialistSidebar = (props) => {
       </Padding>
       <Padding bottom="s">
         <Text size="xs" color="neutral.N7">
-          {get(application, "project.primarySkill")}
+          {get(application, "project.primarySkill.name")}
         </Text>
       </Padding>
       <Padding bottom="l">

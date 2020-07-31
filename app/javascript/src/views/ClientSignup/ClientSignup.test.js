@@ -10,7 +10,7 @@ import generateTypes from "../../__mocks__/graphqlFields";
 import GET_DATA from "./Criteria/getData";
 import SEARCH from "./Specialists/search";
 import CREATE_ACCOUNT from "./SaveSearch/createAccount";
-import GET_PROJECTS from "../Projects/getProjects";
+import { GET_PROJECTS } from "../Projects/queries";
 
 test("Criteria step", async () => {
   const skill = generateTypes.skill();
@@ -257,5 +257,5 @@ test("Redirects when there is already a viewer", async () => {
   ];
 
   const app = renderApp({ route: "/clients/signup", graphQLMocks });
-  await app.findByText("Find a new freelancer");
+  await app.findByText("Find new talent");
 });
