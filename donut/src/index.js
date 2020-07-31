@@ -45,6 +45,9 @@ export * from "./components/Avatar/styles";
 export { default as Circle } from "./components/Circle";
 export * from "./components/Circle/styles";
 
+export { default as FieldError } from "./components/FieldError";
+export * from "./components/FieldError/styles";
+
 export { default as Stack } from "./components/Stack";
 export * from "./components/Stack/styles";
 

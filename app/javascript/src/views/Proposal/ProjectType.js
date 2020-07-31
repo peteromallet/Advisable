@@ -3,24 +3,16 @@ import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
 import { Box, Text, Checkbox, NumberedList, Button } from "@advisable/donut";
-import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Card from "../../components/Card";
-import TextField from "../../components/TextField";
-import ButtonGroup from "../../components/ButtonGroup";
+import FormField from "../../components/FormField";
+import CurrencyInput from "../../components/CurrencyInput";
 import Radio from "../../components/Radio";
 import Heading from "../../components/Heading";
 import { Padding } from "../../components/Spacing";
-import { useMobile } from "../../components/Breakpoint";
 import { projectTypeValidationSchema } from "./validationSchema";
 import UPDATE_APPLICATION from "./updateApplication.js";
 
-const numberMask = createNumberMask({
-  prefix: "",
-  suffix: " hours",
-});
-
 const ProjectType = ({ history, application }) => {
-  const isMobile = useMobile();
   const { t } = useTranslation();
   const [updateApplication] = useMutation(UPDATE_APPLICATION);
 
@@ -30,7 +22,7 @@ const ProjectType = ({ history, application }) => {
         input: {
           id: application.airtableId,
           projectType: values.projectType,
-          monthlyLimit: values.monthlyLimit,
+          monthlyLimit: Number(values.monthlyLimit),
         },
       },
     });
@@ -47,19 +39,6 @@ const ProjectType = ({ history, application }) => {
     projectType: application.projectType || "",
     monthlyLimit: application.monthlyLimit || undefined,
     accept: false,
-  };
-
-  const handleLimitChange = (formik) => (e) => {
-    let value = e.target.value;
-    if (value) {
-      value = value.replace(" hours", "");
-      value = value.replace(/\,/g, "");
-      value = Number(value);
-    } else {
-      value = undefined;
-    }
-    formik.setFieldTouched("monthlyLimit", true);
-    formik.setFieldValue("monthlyLimit", value);
   };
 
   return (
@@ -115,17 +94,13 @@ const ProjectType = ({ history, application }) => {
               {formik.values.projectType === "Flexible" && (
                 <>
                   <Box mb="l" height={1} bg="neutral.1" />
-                  <TextField
+                  <FormField
                     autoFocus
+                    prefix="Hours"
+                    as={CurrencyInput}
                     name="monthlyLimit"
-                    mask={numberMask}
                     placeholder="Monthly limit"
                     label="Set suggested monthly hour cap (to 200-hour max)"
-                    onChange={handleLimitChange(formik)}
-                    value={formik.values.monthlyLimit}
-                    error={
-                      formik.touched.monthlyLimit && formik.errors.monthlyLimit
-                    }
                   />
                 </>
               )}

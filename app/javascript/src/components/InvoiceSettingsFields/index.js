@@ -6,7 +6,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Box } from "@advisable/donut";
 import Loading from "../Loading";
-import TextField from "../TextField";
+import FormField from "../FormField";
 import AddressFields from "../AddressFields";
 
 export const GET_DATA = gql`
@@ -46,46 +46,40 @@ const InvoiceSettingsFields = ({ formik }) => {
     if (!value) return errorMessage;
   };
 
+  const { touched, errors } = formik;
+
   return (
     <>
-      <Box mb="s">
-        <Field
-          as={TextField}
-          label="Full Name"
-          placeholder="Full Name"
-          name="invoiceSettings.name"
-          validate={required("Please provide your full name")}
-          error={
-            get(formik.touched, "invoiceSettings.name") &&
-            get(formik.errors, "invoiceSettings.name")
-          }
-        />
-      </Box>
+      <FormField
+        marginBottom="s"
+        label="Full Name"
+        placeholder="Full Name"
+        name="invoiceSettings.name"
+        validate={required("Please provide your full name")}
+        error={touched.invoiceSettings?.name && errors.invoiceSettings?.name}
+      />
+
+      <FormField
+        marginBottom="s"
+        name="invoiceSettings.companyName"
+        validate={required("Please provide your company name")}
+        label="Company Name"
+        placeholder="Company Name"
+        error={
+          touched.invoiceSettings?.companyName &&
+          errors.invoiceSettings?.companyName
+        }
+      />
 
       <Box mb="s">
-        <Field
-          as={TextField}
-          name="invoiceSettings.companyName"
-          validate={required("Please provide your company name")}
-          label="Company Name"
-          placeholder="Company Name"
-          error={
-            get(formik.touched, "invoiceSettings.companyName") &&
-            get(formik.errors, "invoiceSettings.companyName")
-          }
-        />
-      </Box>
-
-      <Box mb="s">
-        <Field
-          as={TextField}
+        <FormField
           label="Billing Email"
           placeholder="Billing Email"
           name="invoiceSettings.billingEmail"
           validate={runValidation(emailValidation)}
           error={
-            get(formik.touched, "invoiceSettings.billingEmail") &&
-            get(formik.errors, "invoiceSettings.billingEmail")
+            touched.invoiceSettings?.billingEmail &&
+            errors.invoiceSettings?.billingEmail
           }
         />
       </Box>
@@ -100,16 +94,11 @@ const InvoiceSettingsFields = ({ formik }) => {
 
       {country && country.eu && (
         <Box mb="m">
-          <Field
-            as={TextField}
+          <FormField
             name="invoiceSettings.vatNumber"
             validate={required("Please provide your VAT number")}
             label="VAT Number"
             placeholder="VAT Number"
-            error={
-              get(formik.touched, "invoiceSettings.vatNumber") &&
-              get(formik.errors, "invoiceSettings.vatNumber")
-            }
           />
         </Box>
       )}

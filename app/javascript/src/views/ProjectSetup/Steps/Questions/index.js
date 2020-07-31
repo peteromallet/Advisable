@@ -1,12 +1,12 @@
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import React, { Fragment, useEffect } from "react";
 import Text from "src/components/Text";
-import { Button } from "@advisable/donut";
-import TextField from "src/components/TextField";
+import FormField from "src/components/FormField";
+import { Button, Textarea } from "@advisable/donut";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history }) => {
+export default function Questions({ project, match, history }) {
   const [mutate] = useMutation(UPDATE_PROJECT);
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/nice_to_have`);
@@ -44,25 +44,19 @@ export default ({ project, match, history }) => {
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
-            <TextField
-              multiline
+            <FormField
+              as={Textarea}
               label="Question 1"
               name="questions[0]"
               marginBottom="l"
-              value={formik.values.questions[0]}
               placeholder="Question"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
             />
-            <TextField
-              multiline
+            <FormField
+              as={Textarea}
               label="Question 2"
               name="questions[1]"
               marginBottom="l"
-              value={formik.values.questions[1]}
               placeholder="Question"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
             />
             <Button
               mr="xs"
@@ -81,4 +75,4 @@ export default ({ project, match, history }) => {
       </Formik>
     </Fragment>
   );
-};
+}

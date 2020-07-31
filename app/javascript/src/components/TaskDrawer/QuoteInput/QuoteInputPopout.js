@@ -2,21 +2,18 @@ import { object, boolean, string, number, ref } from "yup";
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
-import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { Box, Checkbox, Button, Text } from "@advisable/donut";
-import TextField from "../../TextField";
+import CurrencyInput from "../../CurrencyInput";
 import UPDATE_ESTIMATE from "./updateEstimate";
 import SegmentedControl from "../../SegmentedControl";
 import priceInputProps from "../../../utilities/priceInputProps";
 import QuoteInputPriceCalcuation from "./QuoteInputPriceCalculation";
 
-const hourMask = createNumberMask({ prefix: "" });
-
 const CONTENT = {
   Hourly: {
     label: "How long will this take you?",
-    amountPlaceholder: "10 Hours",
-    flexibleAmountPlaceholder: "20 Hours",
+    amountPlaceholder: "10",
+    flexibleAmountPlaceholder: "20",
     flexibleToggle: "Flexible hours",
   },
   Fixed: {
@@ -103,11 +100,11 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
           <Box pt="xs" display="flex" alignItems="center">
             <Box width="100%">
               <Field
-                size="s"
+                size="sm"
+                as={CurrencyInput}
                 id="estimate"
                 name="estimate"
-                as={TextField}
-                mask={hourMask}
+                prefix={formik.values.estimateType === "Fixed" ? "$" : "Hours"}
                 autoFocus={formik.values.estimateType !== "Fixed"}
                 placeholder={
                   CONTENT[`${formik.values.estimateType}`].amountPlaceholder
@@ -124,12 +121,13 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
                 </Text>
                 <Box width="100%">
                   <Field
-                    size="s"
-                    as={TextField}
-                    name="flexibleEstimate"
+                    size="sm"
                     autoFocus
-                    mask={hourMask}
-                    prefix={formik.values.estimateType === "Fixed" && "$"}
+                    as={CurrencyInput}
+                    name="flexibleEstimate"
+                    prefix={
+                      formik.values.estimateType === "Fixed" ? "$" : "Hours"
+                    }
                     placeholder={
                       CONTENT[`${formik.values.estimateType}`]
                         .flexibleAmountPlaceholder

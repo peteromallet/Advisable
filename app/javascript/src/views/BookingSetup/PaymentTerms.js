@@ -2,8 +2,16 @@ import React from "react";
 import { object, boolean, string } from "yup";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
-import { Card, Box, Text, Button, Radio, RadioGroup } from "@advisable/donut";
-import TextField from "../../components/TextField";
+import {
+  Card,
+  Box,
+  Text,
+  Button,
+  Radio,
+  RadioGroup,
+  Textarea,
+} from "@advisable/donut";
+import FormField from "../../components/FormField";
 import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
 
 const validationSchema = object().shape({
@@ -101,20 +109,14 @@ const PaymentTerms = ({ nextStep }) => {
             </RadioGroup>
 
             {formik.values.acceptTerms === false && (
-              <Box mb="xl">
-                <Field
-                  multiline
-                  as={TextField}
-                  name="exceptionalTerms"
-                  label="What payment terms do you suggest?"
-                  placeholder="What payment terms do you suggest?"
-                  description="Please outline the precise payment method and terms you wish to receive and the reason why. Please include a phone number so an account manager can contact you to discuss your request. Note that while Advisable endeavour to facilitate custom terms, we do so only in exceptional circumstances."
-                  error={
-                    formik.touched.exceptionalTerms &&
-                    formik.errors.exceptionalTerms
-                  }
-                />
-              </Box>
+              <FormField
+                as={Textarea}
+                marginBottom="xl"
+                name="exceptionalTerms"
+                label="What payment terms do you suggest?"
+                placeholder="What payment terms do you suggest?"
+                description="Please outline the precise payment method and terms you wish to receive and the reason why. Please include a phone number so an account manager can contact you to discuss your request. Note that while Advisable endeavour to facilitate custom terms, we do so only in exceptional circumstances."
+              />
             )}
             <Button
               size="l"

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Text, Box, Card, Button, theme } from "@advisable/donut";
-import Heading from "src/components/Heading";
 import RequestResetForm from "./RequestResetForm";
 
 // The constants below define the various stages or states of the request
@@ -38,7 +37,7 @@ function RequestPasswordReset() {
   };
 
   return (
-    <Box maxWidth={400} mx="auto" pt="xxl" pb="l">
+    <Box maxWidth={460} mx="auto" pt="xxl" pb="l">
       <Box textAlign="center" mb="l">
         <svg className="Logo" width={120} height={22} fill="none">
           <path
@@ -49,12 +48,19 @@ function RequestPasswordReset() {
           />
         </svg>
       </Box>
-      <Card py="xl" px="l">
+      <Card padding="xl">
         {status === SENT && (
           <>
-            <Heading center marginBottom="l">
+            <Text
+              textAlign="center"
+              fontSize="28px"
+              color="blue900"
+              fontWeight="medium"
+              letterSpacing="-0.03em"
+              marginBottom="l"
+            >
               Instructions sent!
-            </Heading>
+            </Text>
             <Text center>
               Instructions for resetting your password have been sent to your
               email.
@@ -104,9 +110,9 @@ function RequestPasswordReset() {
 
         {status === APPLICATION_IN_PROCESS && (
           <>
-            <Heading center marginBottom="l">
+            <Text textAlign="center" fontSize="xl" marginBottom="l">
               Application not complete
-            </Heading>
+            </Text>
             <Text center>
               It looks like you haven't finished your Advisable application.
               We've sent you an email with details on how to continue your

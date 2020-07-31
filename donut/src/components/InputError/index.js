@@ -7,7 +7,7 @@ function InputError({ children, ...props }) {
       color="red700"
       letterSpacing="-0.01em"
       lineHeight="s"
-      fontSize="s"
+      fontSize="14px"
       {...props}
     >
       {children}

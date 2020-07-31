@@ -2,9 +2,9 @@ import React from "react";
 import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { Formik, Form } from "formik";
+import FormField from "components/FormField";
 import { useMutation } from "@apollo/react-hooks";
-import { Text, Box, Button, Columns } from "@advisable/donut";
-import TextField from "../../components/TextField";
+import { Text, Box, Button, Columns, Textarea } from "@advisable/donut";
 import Modal from "../../components/Modal";
 
 export const STOP_WORKING = gql`
@@ -49,12 +49,12 @@ const StopWorkingModal = ({ isOpen, onClose, application }) => {
           mb="xs"
           size="xl"
           lineHeight="l"
-          weight="medium"
-          color="neutral.9"
+          fontWeight="medium"
+          color="blue900"
         >
           Are you sure you want to stop working with {name}?
         </Text>
-        <Text size="xs" color="neutral.5" lineHeight="s" mb="l">
+        <Text size="xs" color="neutral700" lineHeight="s" mb="l">
           You wont be able to add or edit any tasks. Don't worry though, If you
           want to start working with {name} again you will be able to restart
           this project when you need.
@@ -62,12 +62,9 @@ const StopWorkingModal = ({ isOpen, onClose, application }) => {
         <Formik onSubmit={handleSubmit} initialValues={{ reason: "" }}>
           {(formik) => (
             <Form>
-              <TextField
-                multiline
+              <FormField
+                as={Textarea}
                 name="reason"
-                onBlur={formik.handleBlur}
-                value={formik.values.reason}
-                onChange={formik.handleChange}
                 label="Let us know why you are stopping this work"
                 placeholder={`What is your reason for stopping your work with ${name}`}
               />

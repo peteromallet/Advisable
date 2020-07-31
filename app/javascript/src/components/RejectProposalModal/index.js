@@ -1,13 +1,11 @@
 import React from "react";
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "src/components/Text";
 import Modal from "src/components/Modal";
-import Select from "src/components/Select";
-import { Button, Columns } from "@advisable/donut";
+import { Button, Columns, Select, Textarea } from "@advisable/donut";
 import Heading from "src/components/Heading";
 import { Padding } from "src/components/Spacing";
-import TextField from "src/components/TextField";
 import { useNotifications } from "src/components/Notifications";
 import REJECT_PROPOSAL from "./rejectProposal.graphql";
 import validationSchema from "./validationSchema";
@@ -79,22 +77,21 @@ const RejectProposalModal = ({
                 </Text>
               </Padding>
               <Padding bottom="m">
-                <Select
-                  block
+                <Field
+                  as={Select}
                   name="reason"
-                  onChange={formik.handleChange}
-                  value={formik.values.reason}
-                  placeholder="Select reason for rejection"
-                  options={REASONS}
                   error={formik.errors.reason}
-                />
+                  placeholder="Select reason for rejection"
+                >
+                  {REASONS.map((reason) => (
+                    <option key={reason}>{reason}</option>
+                  ))}
+                </Field>
               </Padding>
               <Padding bottom="m">
-                <TextField
-                  multiline
+                <Field
+                  as={Textarea}
                   name="comment"
-                  value={formik.values.comment}
-                  onChange={formik.handleChange}
                   placeholder="Let us know why you are declining this proposal..."
                 />
               </Padding>

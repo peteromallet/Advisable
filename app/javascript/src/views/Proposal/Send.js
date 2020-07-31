@@ -2,17 +2,15 @@ import * as React from "react";
 import { Formik, Form } from "formik";
 import { Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
-import { Button } from "@advisable/donut";
+import { Button, Textarea } from "@advisable/donut";
 import Card from "../../components/Card";
 import Heading from "../../components/Heading";
-import TextField from "../../components/TextField";
+import FormField from "../../components/FormField";
 import { Padding } from "../../components/Spacing";
 import SEND_PROPOSAL from "./sendProposal.graphql";
-import { useMobile } from "../../components/Breakpoint";
 import { hasCompleteTasksStep } from "./validationSchema";
 
 const Send = ({ application, history }) => {
-  const isMobile = useMobile();
   const [sendProposal] = useMutation(SEND_PROPOSAL);
 
   // If they haven't complete the tasks step then redirect back
@@ -45,18 +43,13 @@ const Send = ({ application, history }) => {
         >
           {(formik) => (
             <Form>
-              <Padding bottom="l">
-                <TextField
-                  multiline
-                  autoHeight
-                  name="proposalComment"
-                  onBlur={formik.handleBlur}
-                  value={formik.values.proposalComment}
-                  onChange={formik.handleChange}
-                  label="Include a short message"
-                  placeholder="Add a message..."
-                />
-              </Padding>
+              <FormField
+                as={Textarea}
+                marginBottom="l"
+                name="proposalComment"
+                label="Include a short message"
+                placeholder="Add a message..."
+              />
               <Button type="submit" loading={formik.isSubmitting}>
                 Send Proposal
               </Button>

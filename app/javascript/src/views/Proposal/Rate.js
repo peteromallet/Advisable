@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { Button } from "@advisable/donut";
 import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Heading from "../../components/Heading";
-import TextField from "../../components/TextField";
+import FormField from "../../components/FormField";
+import CurrencyInput from "../../components/CurrencyInput";
 import { Padding } from "../../components/Spacing";
 import currency from "../../utilities/currency";
 import { rateValidationSchema } from "./validationSchema";
@@ -64,33 +64,19 @@ const Rate = ({ history, application }) => {
                   remember to account for this in your hourly rate.
                 </Text>
               </Padding>
-              <Padding bottom="xl">
-                <TextField
-                  labelHidden
-                  name="rate"
-                  label="Hourly Rate"
-                  placeholder={`$0.00`}
-                  value={formik.values.rate}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.rate && formik.errors.rate}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const stripped = value.replace(/[^0-9\.-]+/g, "");
-                    const val = stripped ? Number(stripped) : null;
-                    formik.setFieldValue("rate", val);
-                  }}
-                  mask={createNumberMask({
-                    prefix: "$",
-                    allowDecimal: true,
-                  })}
-                  description={
-                    Number(formik.values.rate) > 0 &&
-                    `You would earn ${calculateRate(
-                      formik.values.rate,
-                    )} per hour`
-                  }
-                />
-              </Padding>
+              <FormField
+                labelHidden
+                prefix="$"
+                name="rate"
+                marginBottom="xl"
+                label="Hourly Rate"
+                placeholder="$0.00"
+                as={CurrencyInput}
+                caption={
+                  Number(formik.values.rate) > 0 &&
+                  `You would earn ${calculateRate(formik.values.rate)} per hour`
+                }
+              />
               <Button
                 type="submit"
                 disabled={!formik.isValid}

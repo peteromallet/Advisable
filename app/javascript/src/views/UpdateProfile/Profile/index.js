@@ -12,17 +12,14 @@ import {
   Button,
   Checkbox,
   Avatar,
+  Textarea,
 } from "@advisable/donut";
-import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Loading from "../../../components/Loading";
-import TextField from "../../../components/TextField";
+import FormField from "../../../components/FormField";
+import CurrencyInput from "../../../components/CurrencyInput";
 import FileUpload from "../../../components/FileUpload";
 import { useNotifications } from "../../../components/Notifications";
 import { GET_DATA, UPDATE_PROFILE } from "./queries";
-
-const numberMask = createNumberMask({
-  prefix: "",
-});
 
 const Profile = () => {
   const { loading, data } = useQuery(GET_DATA);
@@ -98,18 +95,14 @@ const Profile = () => {
               />
             </Box>
             <Box height={1} bg="neutral.1" my="l" />
-            <TextField
+            <FormField
+              as={Textarea}
               name="bio"
-              multiline
-              autoHeight
               minRows={8}
               label="About me"
-              value={formik.values.bio}
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              subLabel="Add a short 2 - 3 sectence bio to describe who you are."
+              description="Add a short 2 - 3 sectence bio to describe who you are."
               placeholder="Add a short 2 - 3 sectence bio to describe who you are."
-              description="A well structured bio demonstrates your experience and expertise by referencing past projects and achievements, including notable clients or numeric results. You will have a chance to customize this each time you apply for a project."
+              caption="A well structured bio demonstrates your experience and expertise by referencing past projects and achievements, including notable clients or numeric results. You will have a chance to customize this each time you apply for a project."
             />
             <Box height={1} bg="neutral.1" my="l" />
             <Autocomplete
@@ -137,25 +130,13 @@ const Profile = () => {
               </Text>
             )}
             <Box height={1} bg="neutral.1" my="l" />
-            <TextField
+            <FormField
+              as={CurrencyInput}
               prefix="$"
               name="hourlyRate"
-              mask={numberMask}
               placeholder="Hourly rate"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              onChange={(e) => {
-                if (e.target.value.length > 0) {
-                  const amount = Number(e.target.value.replace(/\,/, ""));
-                  formik.setFieldValue(e.target.name, amount);
-                } else {
-                  formik.setFieldValue(e.target.name, null);
-                }
-              }}
-              value={formik.values.hourlyRate}
               label="What is your typical hourly rate in USD?"
               description="This is just to get an idea of your rate. You will be able to set your rate on a per project basis when working with clients on Advisable."
-              error={formik.touched.hourlyRate && formik.errors.hourlyRate}
             />
             <Box height={1} bg="neutral.1" my="l" />
             <Box mb="l">

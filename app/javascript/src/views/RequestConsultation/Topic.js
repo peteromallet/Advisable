@@ -3,8 +3,8 @@ import { ArrowRight } from "@styled-icons/feather";
 import React from "react";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Card, Box, Text, Button } from "@advisable/donut";
-import TextField from "../../components/TextField";
+import { Card, Box, Text, Button, Textarea } from "@advisable/donut";
+import FormField from "../../components/FormField";
 import { useUpdateConsultation } from "./queries";
 
 const validationSchema = object({
@@ -77,12 +77,11 @@ const Topic = ({ data }) => {
         {(formik) => (
           <Form>
             <Box mb="xl">
-              <Field
+              <FormField
                 autoFocus
-                multiline
                 minRows={6}
                 name="topic"
-                as={TextField}
+                as={Textarea}
                 placeholder="What would you like to talk about..."
               />
             </Box>

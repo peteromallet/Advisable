@@ -1,13 +1,12 @@
 import React, { Fragment } from "react";
-import { Formik } from "formik";
-import { Button } from "@advisable/donut";
+import { Formik, Field } from "formik";
+import { Button, Textarea } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "src/components/Text";
-import TextField from "src/components/TextField";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history }) => {
+export default function CompanyOverview({ project, match, history }) {
   const [mutate] = useMutation(UPDATE_PROJECT);
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}`);
@@ -39,15 +38,13 @@ export default ({ project, match, history }) => {
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
-            <TextField
-              multiline
-              autoHeight
-              name="companyDescription"
-              value={formik.values.companyDescription}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="Company overview.."
+            <Field
+              minRows={4}
+              autoFocus
+              as={Textarea}
               marginBottom="xl"
+              name="companyDescription"
+              placeholder="Company overview.."
               error={formik.submitCount > 0 && formik.errors.companyDescription}
             />
             <Button
@@ -67,4 +64,4 @@ export default ({ project, match, history }) => {
       </Formik>
     </Fragment>
   );
-};
+}

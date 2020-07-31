@@ -1,9 +1,9 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { Box, Text, Button, theme } from "@advisable/donut";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { CardField } from "./styles";
-import TextField from "../TextField";
+import FormField from "../FormField";
 import InputLabel from "../InputLabel";
 import validationSchema from "./validationSchema";
 
@@ -42,12 +42,10 @@ const PaymentMethodForm = ({
       {(formik) => (
         <Form>
           <Box mb="s">
-            <Field
-              as={TextField}
+            <FormField
               name="cardholder"
               label="Cardholder Name"
               placeholder="Cardholder Name"
-              error={formik.touched.cardholder && formik.errors.cardholder}
             />
           </Box>
           <InputLabel>Card Details</InputLabel>

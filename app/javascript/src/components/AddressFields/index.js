@@ -3,9 +3,7 @@ import gql from "graphql-tag";
 import { get } from "lodash-es";
 import { useQuery } from "@apollo/react-hooks";
 import { connect, Field } from "formik";
-import { Box } from "@advisable/donut";
-import Select from "../Select";
-import TextField from "../TextField";
+import { Box, Input, Select, Label, FieldError } from "@advisable/donut";
 
 export const addressFieldsFragment = gql`
   fragment AddressFieldsFragment on Country {
@@ -31,67 +29,74 @@ const AddressFields = ({ label, name, formik }) => {
 
   if (loading) return <>loading...</>;
 
+  const touched = get(formik.touched, name);
+  const errors = get(formik.errors, name);
+
+  const line1Error = touched?.line1 && errors?.line1;
+  const line2Error = touched?.line2 && errors?.line2;
+  const cityError = touched?.city && errors?.city;
+  const stateError = touched?.state && errors?.state;
+  const countryError = touched?.country && errors?.country;
+  const postcodeError = touched?.postcode && errors?.postcode;
+  const error =
+    line1Error ||
+    line2Error ||
+    cityError ||
+    stateError ||
+    countryError ||
+    postcodeError;
+
   return (
     <>
-      <Box mb="xxs">
-        <Field
-          label={label}
-          as={TextField}
-          name={`${name}.line1`}
-          placeholder="Line 1"
-          error={
-            get(formik.touched, `${name}.line1`) &&
-            get(formik.errors, `${name}.line1`)
-          }
-        />
-      </Box>
-      <Box mb="xxs">
-        <Field
-          as={TextField}
-          name={`${name}.line2`}
-          placeholder="Line 2"
-          error={
-            get(formik.touched, `${name}.line2`) &&
-            get(formik.errors, `${name}.line2`)
-          }
-        />
-      </Box>
+      {label && <Label mb="xs">{label}</Label>}
+      <Field
+        as={Input}
+        marginBottom="xxs"
+        name={`${name}.line1`}
+        placeholder="Line 1"
+        error={line1Error}
+      />
+      <Field
+        as={Input}
+        marginBottom="xxs"
+        name={`${name}.line2`}
+        placeholder="Line 2"
+        error={line2Error}
+      />
       <Box mb="xxs" display="flex">
-        <Box width="100%" mr="xxs">
-          <Field
-            as={TextField}
-            name={`${name}.city`}
-            placeholder="City"
-            error={
-              get(formik.touched, `${name}.city`) &&
-              get(formik.errors, `${name}.city`)
-            }
-          />
-        </Box>
-        <Box width="100%">
-          <Field as={TextField} name={`${name}.state`} placeholder="County" />
-        </Box>
+        <Field
+          as={Input}
+          marginRight="2px"
+          name={`${name}.city`}
+          placeholder="City"
+          error={cityError}
+        />
+        <Field
+          as={Input}
+          marginLeft="2px"
+          name={`${name}.state`}
+          placeholder="State"
+          error={stateError}
+        />
       </Box>
       <Box mb="xs" display="flex">
         <Box width="100%" mr="xxs">
-          <Field
-            as={Select}
-            name={`${name}.country`}
-            options={countries.map((c, i) => ({
-              key: i,
-              value: c.code || c.name,
-              label: c.name,
-            }))}
-          />
+          <Field as={Select} error={countryError} name={`${name}.country`}>
+            {countries.map((c, i) => (
+              <option key={c.code} value={c.code}>
+                {c.name}
+              </option>
+            ))}
+          </Field>
         </Box>
-        <Box width="100%">
-          <Field
-            as={TextField}
-            placeholder="Postcode"
-            name={`${name}.postcode`}
-          />
-        </Box>
+        <Field
+          as={Input}
+          placeholder="Postcode"
+          name={`${name}.postcode`}
+          error={postcodeError}
+        />
       </Box>
+      {error && <FieldError>{error}</FieldError>}
     </>
   );
 };

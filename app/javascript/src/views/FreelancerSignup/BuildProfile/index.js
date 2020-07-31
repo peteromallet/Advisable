@@ -2,11 +2,19 @@ import React from "react";
 import { get } from "lodash-es";
 import gql from "graphql-tag";
 import { Formik, Form, Field } from "formik";
-import { Button, Text, Box, Checkbox } from "@advisable/donut";
+import {
+  Button,
+  Text,
+  Box,
+  Checkbox,
+  Textarea,
+  Input,
+  Select,
+  Label,
+} from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import Select from "../../../components/Select";
+import FormField from "components/FormField";
 import Avatar from "../../../components/Avatar";
-import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
@@ -88,43 +96,38 @@ const BuildProfile = ({ history, specialist }) => {
               label="Upload a profile photo"
             />
           </Box>
-          <Box mb="m">
-            <TextField
-              name="bio"
-              multiline
-              autoHeight
-              label="Add a short bio"
-              value={formik.values.bio}
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              placeholder="Write a short introduction"
-              error={formik.touched.bio && formik.errors.bio}
-            />
-          </Box>
-          <Text color="neutral.8" weight="medium" mb="xs">
-            Where are you based?
-          </Text>
+          <FormField
+            name="bio"
+            as={Textarea}
+            marginBottom="m"
+            label="Add a short bio"
+            placeholder="Write a short introduction"
+          />
+          <Label marginBottom="xs">Where are you based?</Label>
           <Box mb="m" display="flex">
             <Box flex={1} pr="xxs">
-              <TextField
+              <Field
+                as={Input}
                 name="city"
                 placeholder="City"
-                value={formik.values.city}
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
                 error={formik.touched.city && formik.errors.city}
               />
             </Box>
             <Box flex={1} pl="xxs">
-              <Select
+              <Field
+                as={Select}
                 name="country"
                 placeholder="Country"
                 data-testid="country"
-                value={formik.values.country}
-                onChange={formik.handleChange}
                 options={countriesQuery.data.countries}
                 error={formik.touched.country && formik.errors.country}
-              />
+              >
+                {countriesQuery.data.countries.map((c) => (
+                  <option key={c.value} value={c.value}>
+                    {c.label}
+                  </option>
+                ))}
+              </Field>
             </Box>
           </Box>
           <Box mb="l">

@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { Formik } from "formik";
 import { Button } from "@advisable/donut";
 import Text from "src/components/Text";
-import ListInput from "src/components/ListInput";
+import BulletPointInput from "components/BulletPointInput";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
@@ -43,7 +43,7 @@ export default ({ project, match, history }) => {
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
-            <ListInput
+            <BulletPointInput
               name="goals"
               autoFocus
               marginBottom="xl"

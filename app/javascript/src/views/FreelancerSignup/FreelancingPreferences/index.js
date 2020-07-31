@@ -3,9 +3,9 @@ import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { Text, Box, Button } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
+import FormField from "../../../components/FormField";
 import Radio from "../../../components/Radio";
 import Choices from "../../../components/Choices";
-import TextField from "../../../components/TextField";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
 import { ArrowRight } from "@styled-icons/feather";
@@ -106,17 +106,12 @@ const FreelancingPreferences = ({ history }) => {
           </Box>
 
           <Box mb="l">
-            <TextField
+            <FormField
               prefix="$"
               name="hourlyRate"
-              mask={numberMask}
               placeholder="Hourly rate"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.hourlyRate}
               label="What is your typical hourly rate in USD?"
-              description="This is just to get an idea of your rate. You will be able to set your rate on a per project basis when working with clients on Advisable."
-              error={formik.touched.hourlyRate && formik.errors.hourlyRate}
+              caption="This is just to get an idea of your rate. You will be able to set your rate on a per project basis when working with clients on Advisable."
             />
           </Box>
 

@@ -13,7 +13,6 @@ export { default as Spacing } from "./Spacing";
 export { default as Loading } from "./Loading";
 export { default as FieldRow } from "./FieldRow";
 export { default as Checkbox } from "./Checkbox";
-export { default as TextField } from "./TextField";
 export { default as BottomBar } from "./BottomBar";
 export { default as ChoiceList } from "./ChoiceList";
 export { default as ButtonGroup } from "./ButtonGroup";

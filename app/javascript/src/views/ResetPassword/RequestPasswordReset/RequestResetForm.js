@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { Box, Text, Label, Input, Button } from "@advisable/donut";
+import FormField from "components/FormField";
 import validationSchema from "./validationSchema";
 import REQUEST_PASSWORD_RESET from "./requestPasswordReset.graphql";
 
@@ -28,32 +29,22 @@ function RequestResetForm({ onSubmit }) {
       {(formik) => (
         <Form>
           <Text
-            mb="l"
             as="h3"
-            color="blue.9"
-            fontSize="xxl"
-            textAlign="center"
-            fontWeight="semibold"
+            mb="l"
+            fontSize="28px"
+            color="blue900"
+            fontWeight="medium"
             letterSpacing="-0.03em"
           >
             Forgot your password?
           </Text>
-          <Label htmlFor="email" mb="xs">
-            Email Address
-          </Label>
-          <Box mb="l">
-            <Field
-              id="email"
-              as={Input}
-              name="email"
-              placeholder="Email Address"
-            />
-            {formik.touched.email && formik.errors.email && (
-              <Text fontSize="s" color="red.6" mt="xs">
-                {formik.errors.email}
-              </Text>
-            )}
-          </Box>
+          <FormField
+            marginBottom="l"
+            label="Email Address"
+            name="email"
+            placeholder="Email Address"
+          />
+
           <Button
             size="l"
             type="submit"

@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
 import { get } from "lodash-es";
-import { Button } from "@advisable/donut";
+import { Button, Select } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Text from "../../../components/Text";
 import Card from "../../../components/Card";
@@ -11,8 +11,7 @@ import Loading from "../../../components/Loading";
 import Heading from "../../../components/Heading";
 import FieldRow from "../../../components/FieldRow";
 import Checkbox from "../../../components/Checkbox";
-import Select from "../../../components/Select";
-import TextField from "../../../components/TextField";
+import FormField from "../../../components/FormField";
 import Padding from "../../../components/Spacing/Padding";
 import { useNotifications } from "../../../components/Notifications";
 import FETCH_PROFILE from "../fetchProfile.graphql";
@@ -56,21 +55,18 @@ let Location = () => {
             <Padding size="l">
               <Form>
                 <FieldRow>
-                  <TextField
+                  <FormField
                     name="city"
                     label="City"
-                    value={formik.values.city}
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
                     placeholder="e.g Berlin"
                   />
-                  <Select
-                    name="country"
-                    label="Country"
-                    value={formik.values.country}
-                    onChange={formik.handleChange}
-                    options={countriesQuery.data.countries}
-                  />
+                  <FormField as={Select} name="country" label="Country">
+                    {countriesQuery.data.countries.map((c) => (
+                      <option key={c.value} value={c.value}>
+                        {c.label}
+                      </option>
+                    ))}
+                  </FormField>
                 </FieldRow>
                 <Padding bottom="m">
                   <Text weight="semibold" colour="dark">
