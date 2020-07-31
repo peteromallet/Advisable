@@ -38,7 +38,6 @@ function useSteps(steps) {
     currentStepIndex,
     steps,
   ]);
-
   const prevStep = useMemo(() => steps[currentStepIndex - 1], [
     currentStepIndex,
     steps,
