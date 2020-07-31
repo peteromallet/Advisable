@@ -99,4 +99,24 @@ describe Application do
       expect(Application.top_three_applied[2]).to eq(c)
     end
   end
+
+  context 'update_project_counts' do
+    it 'is called when the status is updated' do
+      application = create(:application, status: 'Applied')
+      expect(application).to receive(:update_project_counts)
+      application.update status: 'Application Accepted'
+    end
+
+    it 'is called when the application is destroyed' do
+      application = create(:application, status: 'Applied')
+      expect(application).to receive(:update_project_counts)
+      application.destroy
+    end
+
+    it 'is not called when the status isnt updated' do
+      application = create(:application, status: 'Applied')
+      expect(application).to_not receive(:update_project_counts)
+      application.update introduction: 'Changed'
+    end
+  end
 end

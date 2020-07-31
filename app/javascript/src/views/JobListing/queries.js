@@ -16,7 +16,6 @@ export const GET_APPLICATION = gql`
         airtableId
         name
         applicationsOpen
-        primarySkill
         description
         companyDescription
         goals
@@ -26,6 +25,10 @@ export const GET_APPLICATION = gql`
         optionalCharacteristics
         estimatedBudget
         remote
+        primarySkill {
+          id
+          name
+        }
         user {
           id
           country {

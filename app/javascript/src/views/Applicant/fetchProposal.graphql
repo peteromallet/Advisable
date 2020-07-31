@@ -14,7 +14,10 @@ query project($id: ID!) {
       id
       currency
       airtableId
-      primarySkill
+      primarySkill {
+        id
+        name
+      }
     }
     tasks {
       id

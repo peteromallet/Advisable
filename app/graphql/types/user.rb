@@ -20,6 +20,7 @@ class Types::User < Types::BaseType
   field :bank_transfers_enabled, Boolean, null: true
   field :industry, Types::IndustryType, null: true
   field :company_type, String, null: true
+  field :sales_person, Types::SalesPersonType, null: true
 
   field :talk_signature, String, null: false do
     authorize :is_user
@@ -74,6 +75,22 @@ class Types::User < Types::BaseType
     Stripe::Customer.retrieve(object.stripe_customer_id)
   end
 
+  field :city, String, null: true
+
+  def city
+    object.address.city
+  end
+
+  field :location, String, null: true
+
+  def location
+    city = object.address.city
+    return nil if city.nil?
+    country = ISO3166::Country.new(object.address.country)
+    return city if country.nil?
+    "#{object.address.city}, #{country.name}"
+  end
+
   # The paymentMethod field returns the users default payment method from
   # stripe.
   field :payment_method, Types::PaymentMethodType, null: true do
@@ -99,7 +116,7 @@ class Types::User < Types::BaseType
   def projects
     object.projects.where.not(sales_status: 'Lost').or(
       object.projects.where(sales_status: nil)
-    )
+    ).order(created_at: :desc)
   end
 
   def availability(exclude_conflicts: false)

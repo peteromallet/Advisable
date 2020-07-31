@@ -15,11 +15,14 @@ export default gql`
       description
       depositOwed
       acceptedTerms
-      primarySkill
       companyDescription
       specialistDescription
       requiredCharacteristics
       optionalCharacteristics
+      primarySkill {
+        id
+        name
+      }
     }
   }
 `;

@@ -1,5 +1,6 @@
 import { rgba } from "polished";
 import styled, { css, keyframes } from "styled-components";
+import theme from "../../theme";
 import { margin, layout, variant } from "styled-system";
 
 const spin = keyframes`
@@ -56,11 +57,10 @@ const secondaryStyles = css`
   }
 `;
 
-const VARIANTS = {
+export const VARIANTS = {
   primary: primaryStyles,
   secondary: secondaryStyles,
   dark: secondaryStyles, // deprecated: use secondary variant instead
-  green: primaryStyles, // deprecated: use primary variant instead
   subtle: css`
     color: #242473;
     background: #e8e8f6;
@@ -97,6 +97,19 @@ const VARIANTS = {
       background: ${rgba("#3f3bff", 0.04)};
     }
   `,
+  minimal: css`
+    padding: 2px 0;
+    height: auto;
+    color: ${theme.colors.neutral500};
+
+    &:not(:disabled):hover {
+      color: ${theme.colors.neutral800};
+    }
+
+    &:not(:disabled):active {
+      color: ${theme.colors.neutral400};
+    }
+  `,
 };
 
 const buttonSize = variant({
@@ -105,7 +118,7 @@ const buttonSize = variant({
     s: {
       height: 35,
       fontSize: 15,
-      fontWeight: 600,
+      fontWeight: 500,
       paddingLeft: 18,
       paddingRight: 18,
       svg: {
@@ -116,7 +129,7 @@ const buttonSize = variant({
     m: {
       height: 42,
       fontSize: 16,
-      fontWeight: 600,
+      fontWeight: 500,
       paddingLeft: 24,
       paddingRight: 24,
       svg: {
@@ -127,9 +140,9 @@ const buttonSize = variant({
     l: {
       height: 50,
       fontSize: 17,
-      fontWeight: 600,
-      paddingLeft: 28,
-      paddingRight: 28,
+      fontWeight: 400,
+      paddingLeft: 24,
+      paddingRight: 24,
       svg: {
         width: 24,
         height: 24,
@@ -160,7 +173,7 @@ export const StyledButton = styled.button`
   text-decoration: none;
   vertical-align: middle;
   justify-content: center;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   background: transparent;
   transition: background 100ms;
   ${(props) => props.align === "left" && { justifyContent: "flex-start" }}

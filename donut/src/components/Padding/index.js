@@ -1,3 +1,4 @@
+// DEPRECATED: You should use the Box component with padding props instead.
 import React from "react";
 import { Padding as PaddingStyles } from "./styles";
 

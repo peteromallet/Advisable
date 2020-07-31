@@ -6,6 +6,7 @@ module.exports = {
   moduleDirectories: [
     "node_modules",
     "app/javascript",
+    "app/javascript/src",
     "app/javascript/src/testHelpers",
   ],
   transformIgnorePatterns: ["<rootDir>/node_modules/(?!lodash-es)"],

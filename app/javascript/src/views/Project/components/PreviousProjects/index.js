@@ -14,7 +14,7 @@ const PreviousProjects = ({ project, application }) => {
   return (
     <>
       <Heading level="6" marginBottom="s">
-        <>Previous Projects related to "{project.primarySkill}"</>
+        <>Previous Projects related to "{project.primarySkill.name}"</>
       </Heading>
 
       {!hasProjects && (

@@ -1,12 +1,13 @@
 import React from "react";
 import { get, sortBy } from "lodash-es";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   Box,
   Card,
   Text,
   Link,
+  InputError,
   Autocomplete,
   Button,
   Checkbox,
@@ -127,6 +128,7 @@ const Profile = () => {
                 formik.setFieldValue("skills", skills);
               }}
             />
+            <ErrorMessage mt="xs" name="skills" component={InputError} />
             {formik.values.skills.length >= 10 && (
               <Text mt="m" size="s" lineHeight="s">
                 You can't add more than 10 primary skills. If you want to add

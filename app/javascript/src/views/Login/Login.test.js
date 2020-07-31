@@ -3,7 +3,7 @@ import VIEWER from "../../graphql/queries/viewer";
 import renderApp from "../../testHelpers/renderApp";
 import mockData from "../../__mocks__/graphqlFields";
 import LOGIN from "./login";
-import PROJECTS from "../Projects/getProjects";
+import { GET_PROJECTS } from "../Projects/queries";
 
 test("User can login", async () => {
   const user = mockData.user();
@@ -54,7 +54,7 @@ test("User can login", async () => {
       },
       {
         request: {
-          query: PROJECTS,
+          query: GET_PROJECTS,
         },
         result: {
           data: {
@@ -74,7 +74,7 @@ test("User can login", async () => {
   fireEvent.change(password, { target: { value: "testing123" } });
   let login = await app.findByLabelText("Login");
   fireEvent.click(login);
-  await app.findByText("Find a new freelancer");
+  await app.findByText("Find new talent");
 });
 
 test("User is redirected if already logged in", async () => {
@@ -95,7 +95,7 @@ test("User is redirected if already logged in", async () => {
       },
       {
         request: {
-          query: PROJECTS,
+          query: GET_PROJECTS,
         },
         result: {
           data: {
@@ -109,7 +109,7 @@ test("User is redirected if already logged in", async () => {
     ],
   });
 
-  await app.findByText("Find a new freelancer");
+  await app.findByText("Find new talent");
 });
 
 test("It shows API errors", async () => {

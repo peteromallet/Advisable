@@ -9,7 +9,7 @@ test("Shows the freelancers active projects", async () => {
       mockData.application({
         status: "Working",
         project: mockData.project({
-          primarySkill: "test project",
+          primarySkill: mockData.skill({ name: "test project" }),
           user: mockData.user(),
         }),
       }),
@@ -50,7 +50,7 @@ test("Shows the freelancers active projects", async () => {
         tasks: [],
         status: "Stopped Working",
         project: mockData.project({
-          primarySkill: "test project",
+          primarySkill: mockData.skill({ name: "test project" }),
           user: mockData.user(),
         }),
       }),

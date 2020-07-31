@@ -14,7 +14,8 @@ import UPDATE_APPLICATION from "./updateApplication";
 
 test("Rate step continues to the project type step", async () => {
   const user = generateTypes.user({ companyName: "Test Inc" });
-  const project = generateTypes.project({ user, primarySkill: "Testing" });
+  const primarySkill = generateTypes.skill({ name: "Testing" });
+  const project = generateTypes.project({ user, primarySkill });
   const specialist = generateTypes.specialist();
   const application = generateTypes.application({
     id: "rec123",
@@ -61,7 +62,8 @@ test("Rate step continues to the project type step", async () => {
 
 test("Project type step continues to the tasks step", async () => {
   const user = generateTypes.user({ companyName: "Test Inc" });
-  const project = generateTypes.project({ user, primarySkill: "Testing" });
+  const primarySkill = generateTypes.skill({ name: "Testing" });
+  const project = generateTypes.project({ user, primarySkill });
   const specialist = generateTypes.specialist();
   const application = generateTypes.application({
     id: "rec123",

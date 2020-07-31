@@ -25,6 +25,10 @@ const size = variant({
       width: 80,
       height: 80,
     },
+    xl: {
+      width: 120,
+      height: 120,
+    },
   },
 });
 

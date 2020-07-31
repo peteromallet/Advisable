@@ -6,7 +6,7 @@ function Tag({ children, ...props }) {
 }
 
 Tag.defaultProps = {
-  size: "m",
+  size: "s",
   variant: "neutral",
 };
 

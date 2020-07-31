@@ -1,4 +1,4 @@
-require "administrate/base_dashboard"
+require 'administrate/base_dashboard'
 
 class ProjectDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -16,7 +16,7 @@ class ProjectDashboard < Administrate::BaseDashboard
     goals: TextArrayField,
     questions: TextArrayField,
     required_characteristics: TextArrayField,
-    optional_characteristics: TextArrayField,
+    characteristics: TextArrayField,
     company_description: Field::Text,
     specialist_description: Field::Text,
     deposit: Field::Number,
@@ -24,7 +24,7 @@ class ProjectDashboard < Administrate::BaseDashboard
     airtable_id: Field::String,
     sync_changes_to_airtable: Field::Boolean,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -32,42 +32,40 @@ class ProjectDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = [
-    :name,
-  ].freeze
+  COLLECTION_ATTRIBUTES = %i[name].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :id,
-    :name,
-    :status,
-    :deposit,
-    :description,
-    :specialist_description,
-    :company_description,
-    :airtable_id,
-    :created_at,
-    :updated_at,
-    :applications,
+  SHOW_PAGE_ATTRIBUTES = %i[
+    id
+    name
+    status
+    deposit
+    description
+    specialist_description
+    company_description
+    airtable_id
+    created_at
+    updated_at
+    applications
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = [
-    :name,
-    :client,
-    :status,
-    :company_description,
-    :description,
-    :specialist_description,
-    :goals,
-    :questions,
-    :required_characteristics,
-    :optional_characteristics,
-    :deposit,
-    :sync_changes_to_airtable
+  FORM_ATTRIBUTES = %i[
+    name
+    client
+    status
+    company_description
+    description
+    specialist_description
+    goals
+    questions
+    required_characteristics
+    characteristics
+    deposit
+    sync_changes_to_airtable
   ].freeze
 
   # Overwrite this method to customize how projects are displayed

@@ -11,38 +11,35 @@ namespace :data do
     domains.each { |domain| BlacklistedDomain.create(domain: domain) }
   end
 
-  task migrate_previous_projects: :environment do
-    ProjectSkill.where(project_type: 'OffPlatformProject').update_all(
-      project_type: 'PreviousProject'
-    )
+  task migrate_project_counts: :environment do
+    projects =
+      Project.joins(:applications).where(
+        applications: {
+          status: [
+            (
+              Application::ACTIVE_STATUSES + %w[Proposed] +
+                Application::HIRED_STATUSES
+            )
+          ]
+        }
+      )
 
-    ProjectIndustry.where(project_type: 'OffPlatformProject').update_all(
-      project_type: 'PreviousProject'
-    )
-
-    Review.where(project_type: 'OffPlatformProject').update_all(
-      project_type: 'PreviousProject'
-    )
+    projects.find_each(&:update_application_counts)
   end
 
-  task migrate_references: :environment do
-    ApplicationReference.where(project_type: 'OffPlatformProject').update_all(
-      project_type: 'PreviousProject'
-    )
-
-    ApplicationReference.where(project_type: 'Project').each do |ar|
-      project = Project.find(ar.project_id)
-      previous_project =
-        PreviousProject.for_project(
-          specialist: ar.application.specialist, project: project
-        )
-
-      if previous_project.nil?
-        puts "NO PREVIOUS PROJECT FOUND FOR PROJECT REFERENCE #{ar.id}"
-        next
-      end
-
-      ar.update(project: previous_project)
+  # Migrates projects from using the primary_skill text column to the
+  # primary_skill association.
+  task migrate_project_primary_skills: :environment do
+    projects =
+      Project.left_outer_joins(:primary_project_skill).where(
+        project_skills: { id: nil }
+      )
+    projects.find_each do |project|
+      next if project[:primary_skill].nil?
+      skill = Skill.find_by_name(project[:primary_skill])
+      next if skill.nil?
+      project.primary_skill = skill
+      project.save
     end
   end
 end

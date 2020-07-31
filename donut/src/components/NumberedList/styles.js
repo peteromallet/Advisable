@@ -9,11 +9,11 @@ export const StyledNumberedList = styled.ul`
 
 export const StyledNumberedListItem = styled.li`
   font-size: 15px;
-  line-height: 18px;
+  line-height: 20px;
   position: relative;
   padding-left: 24px;
   margin-bottom: 12px;
-  color: ${theme.colors.neutral[8]};
+  color: ${theme.colors.neutral700};
   ${space}
 `;
 
@@ -27,5 +27,5 @@ export const StyledNumberedListItemNumber = styled.div`
   align-items: center;
   justify-content: center;
   transform: translateY(-50%);
-  color: ${theme.colors.neutral[4]};
+  color: ${theme.colors.neutral400};
 `;

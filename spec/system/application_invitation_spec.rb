@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe 'Application invitation view' do
-  let(:project) { create(:project, primary_skill: 'Testing') }
+  let(:project) { create(:project) }
+
   before :each do
     airtable_record = double(Airtable::Application)
     allow(airtable_record).to receive(:push)
@@ -16,7 +17,7 @@ describe 'Application invitation view' do
     it 'allows the user to appy' do
       visit "/invites/#{application.airtable_id}"
       click_on 'Apply'
-      expect(page).to have_content('Testing project')
+      expect(page).to have_content(project.primary_skill.name)
     end
 
     it 'allows the user to decline the invitation' do
@@ -38,7 +39,7 @@ describe 'Application invitation view' do
     it 'allows the user to update their application' do
       visit "/invites/#{application.airtable_id}"
       click_on 'Update Application'
-      expect(page).to have_content('Testing project')
+      expect(page).to have_content(project.primary_skill.name)
     end
   end
 
@@ -50,7 +51,7 @@ describe 'Application invitation view' do
     it 'allows the user to change their mind and apply' do
       visit "/invites/#{application.airtable_id}"
       click_on 'Apply Now'
-      expect(page).to have_content('Testing project')
+      expect(page).to have_content(project.primary_skill.name)
     end
   end
 
@@ -62,7 +63,7 @@ describe 'Application invitation view' do
     it 'allows the user to re-apply' do
       visit "/invites/#{application.airtable_id}"
       click_on 'Apply Now'
-      expect(page).to have_content('Testing project')
+      expect(page).to have_content(project.primary_skill.name)
     end
   end
 end

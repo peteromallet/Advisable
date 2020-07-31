@@ -25,7 +25,12 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
 
   def get_project(consultation)
     user = consultation.user
-    project = user.projects.find_by_primary_skill(consultation.skill.name)
+    project =
+      user.projects.joins(project_skills: :skill).where(
+        project_skills: {
+          primary: true, skills: { name: consultation.skill.name }
+        }
+      ).first
     project = create_new_project(consultation) if project.nil?
     project
   end
@@ -38,7 +43,7 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
         sales_status: 'Open',
         status: 'Project Created',
         service_type: 'Consultation',
-        primary_skill: consultation.skill.name,
+        primary_skill: Skill.find_by_name(consultation.skill.name),
         owner: ENV['CONSULTATION_PROJECT_OWNER'],
         name: "#{consultation.user.company_name} - #{consultation.skill.name}"
       )

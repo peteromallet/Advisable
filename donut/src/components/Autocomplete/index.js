@@ -4,7 +4,7 @@ import Desktop from "./Desktop";
 import Mobile from "./Mobile";
 import useBreakpoint from "../../hooks/useBreakpoint";
 
-const Autocomplete = ({ options: selectOptions, value, ...rest }) => {
+const Autocomplete = ({ options: selectOptions, size, value, ...rest }) => {
   // Wether or not we are on mobile
   const isMobile = useBreakpoint("s");
 
@@ -34,6 +34,7 @@ const Autocomplete = ({ options: selectOptions, value, ...rest }) => {
   if (isMobile) {
     return (
       <Mobile
+        size={size}
         isMax={isMax}
         options={options}
         value={filteredValue}
@@ -46,6 +47,7 @@ const Autocomplete = ({ options: selectOptions, value, ...rest }) => {
   // fallback to the desktop experience
   return (
     <Desktop
+      size={size}
       isMax={isMax}
       options={options}
       value={filteredValue}

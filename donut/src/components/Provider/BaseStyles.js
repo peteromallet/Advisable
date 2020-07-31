@@ -2,15 +2,13 @@ import { createGlobalStyle } from "styled-components";
 import { StyledBackdrop, StyledModalWindowContainer } from "../Modal/styles";
 
 const BACKGROUND = {
-  default: "#F9FAFF",
+  default: "#F5F5F8",
   white: "#FFFFFF",
 };
 
 const BaseStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   html, body {

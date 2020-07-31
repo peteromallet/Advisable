@@ -1,6 +1,7 @@
+import { isFunction } from "lodash-es";
 import VIEWER from "../graphql/queries/viewer";
 
-export const mockViewer = viewer => {
+export const mockViewer = (viewer) => {
   return {
     request: {
       query: VIEWER,
@@ -26,6 +27,12 @@ export const mockQuery = (query, variables, data) => {
 };
 
 export const mockMutation = (query, input, data) => {
+  let result = { data };
+
+  if (isFunction(data)) {
+    result = () => ({ data: data() });
+  }
+
   return {
     request: {
       query,
@@ -33,8 +40,6 @@ export const mockMutation = (query, input, data) => {
         input,
       },
     },
-    result: {
-      data,
-    },
+    result,
   };
 };

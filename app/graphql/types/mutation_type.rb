@@ -20,10 +20,10 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :update_availability, mutation: Mutations::UpdateAvailability
 
-  field :create_project, mutation: Mutations::CreateProject
   field :update_project, mutation: Mutations::UpdateProject
   field :confirm_project, mutation: Mutations::ConfirmProject
   field :convert_to_self_service, mutation: Mutations::ConvertToSelfService
+  field :publish_project, mutation: Mutations::PublishProject
 
   field :create_previous_project, mutation: Mutations::CreatePreviousProject
   field :update_previous_project, mutation: Mutations::UpdatePreviousProject
@@ -81,4 +81,9 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :create_search, mutation: Mutations::CreateSearch
   field :submit_full_application, mutation: Mutations::SubmitFullApplication
+
+  field :create_job, mutation: Mutations::CreateJob
+  field :delete_job, mutation: Mutations::DeleteJob
+
+  field :update_user, mutation: Mutations::UpdateUser
 end

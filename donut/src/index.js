@@ -16,6 +16,9 @@ export { default as Availability } from "./components/Availability";
 export { default as Tag } from "./components/Tag";
 export * from "./components/Tag/styles";
 
+export { default as Tags } from "./components/Tags";
+export * from "./components/Tags/styles";
+
 export { default as Badge } from "./components/Badge";
 export * from "./components/Badge/styles";
 
@@ -26,7 +29,6 @@ export { default as Error } from "./components/Error";
 export * from "./components/Error/styles";
 
 export { default as Input } from "./components/Input";
-export { default as InputDecorations } from "./components/Input/InputDecorations";
 export * from "./components/Input/styles";
 
 export { default as InputError } from "./components/InputError";
@@ -64,6 +66,8 @@ export { default as Skeleton } from "./components/Skeleton";
 export { default as Checkbox } from "./components/Checkbox";
 export { default as RadioGroup } from "./components/RadioGroup";
 export { default as NumberedList } from "./components/NumberedList";
+export { default as BulletList } from "./components/BulletList";
+export * from "./components/BulletList/styles";
 export { default as Autocomplete } from "./components/Autocomplete";
 export { default as useBreakpoint } from "./hooks/useBreakpoint";
 export { default as useTheme } from "./hooks/useTheme";

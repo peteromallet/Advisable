@@ -13,7 +13,10 @@ export const getActiveApplication = gql`
       project {
         id
         currency
-        primarySkill
+        primarySkill {
+          id
+          name
+        }
         user {
           id
           companyName
@@ -44,7 +47,10 @@ export const getApplicationInvitation = gql`
         airtableId
         name
         applicationsOpen
-        primarySkill
+        primarySkill {
+          id
+          name
+        }
         description
         companyDescription
         goals

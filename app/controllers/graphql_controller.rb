@@ -8,6 +8,7 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
+      request: request,
       current_user: current_user,
       oauth_viewer:
         session[:omniauth] ? OauthViewer.new(session[:omniauth]) : nil

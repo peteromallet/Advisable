@@ -83,7 +83,7 @@ export default function ExtraInfo({ data, modal }) {
                 name="industryRelevance"
                 placeholder="Select"
                 label={`How important is industry experience for ${skill} projects?`}
-                optional
+                labelHint="Optional"
                 as={Select}
               >
                 <option value="2">Very Important</option>
@@ -94,7 +94,7 @@ export default function ExtraInfo({ data, modal }) {
                 name="locationRelevance"
                 placeholder="Select"
                 label={`How important is geography/language for ${skill} projects?`}
-                optional
+                labelHint="Optional"
                 as={Select}
               >
                 <option value="2">Very Important</option>
@@ -102,7 +102,7 @@ export default function ExtraInfo({ data, modal }) {
                 <option value="0">Not Important</option>
               </FormField>
               <FormField
-                optional
+                labelHint="Optional"
                 prefix="$"
                 as={CurrencyInput}
                 name="costToHire"
@@ -116,7 +116,7 @@ export default function ExtraInfo({ data, modal }) {
                 placeholder="0"
                 as={CurrencyInput}
                 label="Excluding the cost of hiring you, what was the cost of executing this project?"
-                optional
+                labelHint="Optional"
               />
             </Stack>
 

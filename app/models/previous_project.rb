@@ -1,3 +1,22 @@
+# A previous project represents previous work that a specialist has done with
+# a client. This project can be a project that was completed off of the
+# Advisable platform or one that was done on the advsiable platform.
+#
+# If the project was one completed on the Advisable platform, the specialits
+# application record with that client will be set.
+#
+# A previous project can either be a draft or published. A project is marked as
+# a draft by setting 'draft' to true.
+#
+# Previous projects that are added by the specialist in their profile need to
+# be verified by a contact who worked on the project. This is done via linkedin
+# by comparing the client contact name with their linkedin name.
+#
+# == validation_status options
+# [Pending] The project is pending verification.
+# [Validated] The project has been verified.
+# [Failed] The project validation has failed.
+#
 class PreviousProject < ApplicationRecord
   include Uid
   include Airtable::Syncable

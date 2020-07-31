@@ -1,9 +1,9 @@
 class Airtable::Skill < Airtable::Base
-  self.table_name = "Skills"
+  self.table_name = 'Skills'
 
   def self.active
-    all(view: "Selectable Skills", sort: { "Name" => "asc" }).reject do |s|
-      s.fields["Name"].blank?
+    all(view: 'Selectable Skills', sort: { 'Name' => 'asc' }).reject do |s|
+      s.fields['Name'].blank?
     end
   end
 
@@ -18,10 +18,10 @@ class Airtable::Skill < Airtable::Base
   sync_data do |skill|
     skill.category = self['Category'].try(:first)
     skill.profile = self['Profile Skill'] == 'Yes'
-    skill.active = self['Active'].try(:include?, "Yes")
+    skill.active = self['Active'].try(:include?, 'Yes')
+    skill.goal_placeholder = self['Goal Placeholder']
+    skill.characteristic_placeholder = self['Characteristic Placeholder']
   end
 
-  push_data do |skill|
-    self['Name'] = skill.name
-  end
+  push_data { |skill| self['Name'] = skill.name }
 end

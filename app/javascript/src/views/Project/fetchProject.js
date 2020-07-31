@@ -8,7 +8,10 @@ export default gql`
       status
       airtableId
       currency
-      primarySkill
+      primarySkill {
+        id
+        name
+      }
       clientReferralUrl
       applicationCount
       user {

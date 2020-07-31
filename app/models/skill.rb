@@ -6,6 +6,10 @@ class Skill < ApplicationRecord
   belongs_to :original, class_name: 'Skill', required: false
   has_many :duplicates, foreign_key: 'original_id', class_name: 'Skill'
   has_many :project_skills
+  has_many :previous_projects,
+           through: :project_skills,
+           source: :project,
+           source_type: 'PreviousProject'
   validates :name, presence: true
   validates :airtable_id, presence: true
 
