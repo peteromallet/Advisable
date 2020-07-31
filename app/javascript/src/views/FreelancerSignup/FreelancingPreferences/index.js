@@ -1,10 +1,9 @@
 import React from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import { Text, Box, Button } from "@advisable/donut";
+import { Text, Box, Button, RadioGroup, Radio } from "@advisable/donut";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import FormField from "../../../components/FormField";
-import Radio from "../../../components/Radio";
 import Choices from "../../../components/Choices";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
@@ -57,17 +56,21 @@ const FreelancingPreferences = ({ history }) => {
               Is freelancing your primary occupation?
             </Text>
             <Box mb="xs">
-              <Radio
+              <Field
+                as={Radio}
+                type="radio"
                 name="primarilyFreelance"
-                label="Yes, freelancing is my primary occupation."
                 checked={formik.values.primarilyFreelance === true}
+                label="Yes, freelancing is my primary occupation"
                 onChange={() => {
                   formik.setFieldTouched("primarilyFreelance", true);
                   formik.setFieldValue("primarilyFreelance", true);
                 }}
               />
             </Box>
-            <Radio
+            <Field
+              as={Radio}
+              type="radio"
               name="primarilyFreelance"
               label="No, I freelance alongside a full-time job."
               checked={formik.values.primarilyFreelance === false}
