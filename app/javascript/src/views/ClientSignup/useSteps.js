@@ -1,16 +1,9 @@
 import React, { useMemo, useCallback } from "react";
-import {
-  Route,
-  matchPath,
-  useLocation,
-  Redirect,
-  useHistory,
-} from "react-router-dom";
+import { Route, matchPath, useLocation } from "react-router-dom";
 import { findIndex } from "lodash-es";
 
 function useSteps(steps) {
   const location = useLocation();
-  const history = useHistory();
 
   const activeSteps = useMemo(() => steps.filter((step) => !step.passive), [
     steps,
@@ -26,6 +19,8 @@ function useSteps(steps) {
       }),
     [location],
   );
+
+  // Indexes
   const currentStepIndex = useMemo(() => findIndex(steps, matchStepPath), [
     matchStepPath,
     steps,
@@ -34,88 +29,46 @@ function useSteps(steps) {
     () => findIndex(activeSteps, matchStepPath),
     [activeSteps, matchStepPath],
   );
+
+  // Number of steps
   const numberOfSteps = steps.length;
   const numberOfActiveSteps = activeSteps.length;
+
   const nextStep = useMemo(() => steps[currentStepIndex + 1] || steps[0], [
     currentStepIndex,
     steps,
   ]);
+
   const prevStep = useMemo(() => steps[currentStepIndex - 1], [
     currentStepIndex,
     steps,
   ]);
 
-  // Redirect with component
-  const RedirectToInitialStep = useCallback(
-    () => <Redirect push to={steps[0].path} />,
-    [steps],
-  );
-  const RedirectToNextStep = useCallback(
-    ({ state }) => <Redirect push to={{ pathname: nextStep.path, state }} />,
-    [nextStep],
-  );
-  const RedirectToLastStep = useCallback(
-    ({ state }) => (
-      <Redirect
-        push
-        to={{ pathname: activeSteps[activeSteps.length - 1].path, state }}
-      />
-    ),
-    [activeSteps],
-  );
-
-  const redirectToInitialStep = useCallback(() => history.push(steps[0].path), [
-    history,
+  const initialStep = useMemo(() => steps[0], [steps]);
+  const lastStep = useMemo(() => steps[activeSteps.length - 1], [
+    activeSteps.length,
     steps,
   ]);
-  const redirectToNextStep = useCallback(
-    (state) => history.push({ pathname: nextStep.path, state }),
-    [history, nextStep.path],
-  );
-  const redirectToLastStep = useCallback(
-    (state) =>
-      history.push({
-        pathname: activeSteps[activeSteps.length - 1].path,
-        state,
-      }),
-    [activeSteps, history],
-  );
 
   // Route components for React Router
   const routes = useMemo(
     () =>
       steps.map((step, index) => (
         <Route key={index} path={step.path} exact={step.exact}>
-          <step.component
-            RedirectToInitialStep={RedirectToInitialStep}
-            redirectToInitialStep={redirectToInitialStep}
-            RedirectToNextStep={RedirectToNextStep}
-            redirectToNextStep={redirectToNextStep}
-            RedirectToLastStep={RedirectToLastStep}
-            redirectToLastStep={redirectToLastStep}
-          />
+          <step.component />
         </Route>
       )),
-    [
-      RedirectToInitialStep,
-      RedirectToLastStep,
-      RedirectToNextStep,
-      redirectToInitialStep,
-      redirectToLastStep,
-      redirectToNextStep,
-      steps,
-    ],
+    [steps],
   );
 
   return {
+    routes,
     nextStep,
     prevStep,
+    lastStep,
+    initialStep,
     numberOfSteps,
     numberOfActiveSteps,
-    RedirectToInitialStep,
-    RedirectToNextStep,
-    RedirectToLastStep,
-    routes,
     currentStepIndex,
     currentActiveStepIndex,
   };
