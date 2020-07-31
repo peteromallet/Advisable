@@ -1,12 +1,12 @@
 import * as React from "react";
 import Linkify from "linkifyjs/react";
 import Text from "../../components/Text";
-import Card from "../../components/Card";
+import { Card } from "@advisable/donut";
 import Heading from "../../components/Heading";
 import Divider from "../../components/Divider";
 import { Padding } from "../../components/Spacing";
 
-export default ({ questions }) => {
+export default function Questions({ questions }) {
   if (questions.length === 0) return null;
 
   return (
@@ -48,4 +48,4 @@ export default ({ questions }) => {
       </Padding>
     </>
   );
-};
+}

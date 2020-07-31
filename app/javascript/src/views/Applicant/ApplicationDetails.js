@@ -1,6 +1,6 @@
 import React from "react";
 import Linkify from "linkifyjs/react";
-import Card from "src/components/Card";
+import { Card } from "@advisable/donut";
 import Text from "src/components/Text";
 import Skills from "../../components/Skills";
 import Divider from "src/components/Divider";

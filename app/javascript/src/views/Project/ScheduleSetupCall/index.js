@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { Card } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import View from "src/components/View";
-import Card from "src/components/Card";
 import Text from "src/components/Text";
 import Loading from "src/components/Loading";
 import Divider from "src/components/Divider";

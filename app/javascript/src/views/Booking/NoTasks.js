@@ -1,18 +1,14 @@
 import * as React from "react";
 import { get } from "lodash-es";
+import { Card } from "@advisable/donut";
 import Text from "../../components/Text";
-import Card from "../../components/Card";
 import NewTask from "../../components/NewTask";
 import { Padding } from "../../components/Spacing";
 import illustration from "./no_tasks.png";
 
-interface Props {
-  application: any;
-  onNewTask: (e: React.SyntheticEvent) => void;
-}
-
-export default ({ onNewTask, application }: Props) => {
+export default function NoTasks({ onNewTask, application }) {
   let firstName = get(application, "specialist.firstName");
+
   return (
     <Card>
       <Padding size="xxl" style={{ textAlign: "center" }}>
@@ -38,4 +34,4 @@ export default ({ onNewTask, application }: Props) => {
       </Padding>
     </Card>
   );
-};
+}

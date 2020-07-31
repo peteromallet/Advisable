@@ -1,9 +1,9 @@
 import styled, { keyframes } from "styled-components";
-import { default as CardStyles } from "../../../components/Card";
+import { StyledCard } from "@advisable/donut";
 import Text from "../../../components/Text";
 import { Status } from "../../../components/Status/styles";
 
-export const Card = styled(CardStyles)`
+export const Card = styled(StyledCard)`
   position: relative;
 
   ${Status} {

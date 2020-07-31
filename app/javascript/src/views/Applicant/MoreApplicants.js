@@ -1,7 +1,7 @@
 import * as React from "react";
 import { get } from "lodash-es";
+import { Card } from "@advisable/donut";
 import Link from "../../components/Link";
-import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Avatar from "../../components/Avatar";
 import Heading from "../../components/Heading";
@@ -11,7 +11,7 @@ import FeaturedBadge from "../../components/FeaturedBadge";
 import { OtherApplication } from "./styles";
 import useMobile from "../../utilities/useMobile";
 
-export default ({ data, onClick }) => {
+export default function MoreApplicants({ data, onClick }) {
   const isMobile = useMobile();
   const specialist = data.project.application.specialist;
   const applications = data.project.applications;
@@ -61,4 +61,4 @@ export default ({ data, onClick }) => {
       </Padding>
     </Card>
   );
-};
+}

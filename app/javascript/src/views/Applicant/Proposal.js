@@ -3,7 +3,7 @@ import { Info } from "@styled-icons/feather";
 import { camelCase } from "lodash-es";
 import { useQuery } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
-import Card from "../../components/Card";
+import { Card } from "@advisable/donut";
 import Text from "../../components/Text";
 import Back from "../../components/Back";
 import { FadeInUp } from "../../components/Animation";

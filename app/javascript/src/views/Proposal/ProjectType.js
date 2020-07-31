@@ -2,11 +2,17 @@ import * as React from "react";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
-import { Box, Text, Checkbox, NumberedList, Button } from "@advisable/donut";
-import Card from "../../components/Card";
+import {
+  Box,
+  Text,
+  Checkbox,
+  NumberedList,
+  Button,
+  Radio,
+  Card,
+} from "@advisable/donut";
 import FormField from "../../components/FormField";
 import CurrencyInput from "../../components/CurrencyInput";
-import Radio from "../../components/Radio";
 import Heading from "../../components/Heading";
 import { Padding } from "../../components/Spacing";
 import { projectTypeValidationSchema } from "./validationSchema";

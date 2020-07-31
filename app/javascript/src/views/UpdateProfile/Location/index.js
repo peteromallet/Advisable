@@ -1,12 +1,11 @@
 // Renders the view for updating a freelancer location in their profile
 // settings
 import * as React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { get } from "lodash-es";
-import { Button, Select, Checkbox } from "@advisable/donut";
+import { Card, Button, Select, Checkbox } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Text from "../../../components/Text";
-import Card from "../../../components/Card";
 import Loading from "../../../components/Loading";
 import Heading from "../../../components/Heading";
 import FieldRow from "../../../components/FieldRow";

@@ -1,6 +1,6 @@
 import * as React from "react";
 import Text from "../../components/Text";
-import Card from "../../components/Card";
+import { Card } from "@advisable/donut";
 import Link from "../../components/Link";
 import Heading from "../../components/Heading";
 import { Padding } from "../../components/Spacing";

@@ -1,19 +1,21 @@
 import React from "react";
-import Card from "src/components/Card";
-import SkeletonText from "src/components/SkeletonText";
-import SkeletonHeading from "src/components/SkeletonHeading";
+import { Box, Stack, Skeleton } from "@advisable/donut";
 
-export default () => {
+export default function PreviousProjectsLoading() {
   return (
-    <React.Fragment>
-      <Card marginBottom="m" padding="xl">
-        <SkeletonHeading />
-        <SkeletonText />
-      </Card>
-      <Card marginBottom="m" padding="xl">
-        <SkeletonHeading />
-        <SkeletonText />
-      </Card>
-    </React.Fragment>
+    <Stack paddingY="l" spacing="l">
+      <Box>
+        <Skeleton mb="8px" height="16px" width="24%" />
+        <Skeleton mb="8px" height="8px" />
+        <Skeleton mb="8px" height="8px" />
+        <Skeleton mb="8px" height="8px" width="80%" />
+      </Box>
+      <Box>
+        <Skeleton mb="8px" height="16px" width="24%" />
+        <Skeleton mb="8px" height="8px" />
+        <Skeleton mb="8px" height="8px" />
+        <Skeleton mb="8px" height="8px" width="80%" />
+      </Box>
+    </Stack>
   );
-};
+}

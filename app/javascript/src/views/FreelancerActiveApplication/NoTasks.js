@@ -1,11 +1,11 @@
 import React from "react";
+import { Card } from "@advisable/donut";
 import Text from "../../components/Text";
-import Card from "../../components/Card";
 import NewTask from "../../components/NewTask";
 import { Padding } from "../../components/Spacing";
 import illustration from "../../illustrations/relax.png";
 
-export default ({ onNewTask, application }) => {
+export default function NoTasks({ onNewTask, application }) {
   return (
     <Card>
       <Padding size="xxl" style={{ textAlign: "center" }}>
@@ -31,4 +31,4 @@ export default ({ onNewTask, application }) => {
       </Padding>
     </Card>
   );
-};
+}

@@ -143,7 +143,7 @@ const Application = ({ application }) => {
   const { project } = application;
 
   return (
-    <Card>
+    <Card elevation="m">
       <Padding size="m">
         <Text weight="semibold" colour="blue.9">
           {application.project.primarySkill.name}
