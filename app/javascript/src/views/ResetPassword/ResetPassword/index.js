@@ -5,7 +5,6 @@ import { useMutation } from "@apollo/react-hooks";
 import { Button } from "@advisable/donut";
 import { withNotifications } from "src/components/Notifications";
 import Heading from "src/components/Heading";
-import FieldRow from "src/components/FieldRow";
 import FormField from "src/components/FormField";
 import validationSchema from "./validationSchema";
 import RESET_PASSWORD from "./resetPassword.graphql";
@@ -62,22 +61,20 @@ export default withNotifications(
                 <Heading center marginBottom="l">
                   Reset Password
                 </Heading>
-                <FieldRow>
-                  <FormField
-                    name="password"
-                    type="password"
-                    label="New Password"
-                    placeholder="Password"
-                  />
-                </FieldRow>
-                <FieldRow>
-                  <FormField
-                    name="passwordConfirmation"
-                    type="password"
-                    label="Confirm Password"
-                    placeholder="Password Confirmation"
-                  />
-                </FieldRow>
+                <FormField
+                  name="password"
+                  type="password"
+                  marginBottom="l"
+                  label="New Password"
+                  placeholder="Password"
+                />
+                <FormField
+                  type="password"
+                  marginBottom="l"
+                  label="Confirm Password"
+                  name="passwordConfirmation"
+                  placeholder="Password Confirmation"
+                />
                 <Button loading={formik.isSubmitting} type="submit">
                   Reset Password
                 </Button>

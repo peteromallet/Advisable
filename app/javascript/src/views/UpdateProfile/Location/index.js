@@ -8,7 +8,6 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import Text from "../../../components/Text";
 import Loading from "../../../components/Loading";
 import Heading from "../../../components/Heading";
-import FieldRow from "../../../components/FieldRow";
 import FormField from "../../../components/FormField";
 import { useNotifications } from "../../../components/Notifications";
 import FETCH_PROFILE from "../fetchProfile.graphql";
@@ -51,26 +50,30 @@ let Location = () => {
           <Card>
             <Box padding="l">
               <Form>
-                <FieldRow>
-                  <FormField
-                    name="city"
-                    label="City"
-                    placeholder="e.g Berlin"
-                  />
-                  <FormField as={Select} name="country" label="Country">
-                    {countriesQuery.data.countries.map((c) => (
-                      <option key={c.value} value={c.value}>
-                        {c.label}
-                      </option>
-                    ))}
-                  </FormField>
-                </FieldRow>
-                <Box paddingBottom="m">
+                <Box display="flex" marginBottom="l">
+                  <Box flex={1} paddingRight="8px">
+                    <FormField
+                      name="city"
+                      label="City"
+                      placeholder="e.g Berlin"
+                    />
+                  </Box>
+                  <Box flex={1} paddingLeft="8px">
+                    <FormField as={Select} name="country" label="Country">
+                      {countriesQuery.data.countries.map((c) => (
+                        <option key={c.value} value={c.value}>
+                          {c.label}
+                        </option>
+                      ))}
+                    </FormField>
+                  </Box>
+                </Box>
+                <Box paddingBottom="xs">
                   <Text weight="semibold" colour="dark">
                     Are you happy to work remotely?
                   </Text>
                 </Box>
-                <Box paddingBottom="m">
+                <Box paddingBottom="xs">
                   <Checkbox
                     name="remote"
                     checked={formik.values.remote}

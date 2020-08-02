@@ -8,7 +8,6 @@ export { default as Divider } from "./Divider";
 export { default as Heading } from "./Heading";
 export { default as CopyURL } from "./CopyURL";
 export { default as Loading } from "./Loading";
-export { default as FieldRow } from "./FieldRow";
 export { default as BottomBar } from "./BottomBar";
 export { default as ChoiceList } from "./ChoiceList";
 export { default as ButtonGroup } from "./ButtonGroup";

@@ -9,7 +9,6 @@ import { useMutation } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
 import Text from "src/components/Text";
 import Link from "src/components/Link";
-import FieldRow from "src/components/FieldRow";
 import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
 import useScrollRestore from "src/utilities/useScrollRestore";
