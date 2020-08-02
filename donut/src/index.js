@@ -63,7 +63,6 @@ export * from "./components/Modal/styles";
 
 export { default as Button } from "./components/Button";
 export { default as Tooltip } from "./components/Tooltip";
-export { default as Padding } from "./components/Padding";
 export { default as Provider } from "./components/Provider";
 export { default as Skeleton } from "./components/Skeleton";
 export { default as Checkbox } from "./components/Checkbox";

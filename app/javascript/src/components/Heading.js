@@ -1,22 +1,22 @@
 import styled, { css } from "styled-components";
-import { withSpacing } from "./Spacing";
+import { padding } from "styled-system";
 import colors from "../colors";
 
 const sizes = {
   xxs: "13px",
   s: "18px",
   m: "20px",
-  l: "28px"
+  l: "28px",
 };
 
 const textTransform = {
-  xxs: "uppercase"
+  xxs: "uppercase",
 };
 
 const lineHeighs = {
   s: "24px",
   m: "22px",
-  l: "34px"
+  l: "34px",
 };
 
 const weights = {
@@ -24,29 +24,29 @@ const weights = {
   m: 600,
   l: "bold",
   semibold: 600,
-  xxs: 500
+  xxs: 500,
 };
 
 const colours = {
-  default: "#1E1A48"
+  default: "#1E1A48",
 };
 
 const letterSpacing = {
   m: "-0.015em",
   l: "-0.025em",
-  xxs: ""
+  xxs: "",
 };
 
 const levels = {
   1: css`
-    color: #0A1745;
+    color: #0a1745;
     font-size: 30px;
     font-weight: 600;
     line-height: 32px;
     letter-spacing: -0.03em;
   `,
   2: css`
-    color: #0A1745;
+    color: #0a1745;
     font-size: 24px;
     font-weight: 600;
     line-height: 28px;
@@ -72,7 +72,7 @@ const levels = {
     font-weight: 600;
     letter-spacing: 0;
     text-transform: uppercase;
-  `
+  `,
 };
 
 const ELEMENTS = {
@@ -82,19 +82,22 @@ const ELEMENTS = {
   4: "h4",
   5: "h5",
   6: "h6",
-}
+};
 
-export default withSpacing(styled.h3.attrs(props => ({
-  as: props.as || ELEMENTS[props.level]
+export default styled.h3.attrs((props) => ({
+  as: props.as || ELEMENTS[props.level],
 }))`
-  color: ${props => colours["default"]};
-  font-size: ${props => sizes[props.size] || sizes["m"]};
-  font-weight: ${props => weights[props.weight || props.size] || weights["m"]};
-  line-height: ${props => lineHeighs[props.size] || lineHeighs["m"]};
-  letter-spacing: ${props => letterSpacing[props.size] || letterSpacing["m"]};
-  display: ${props => (props.block ? "block" : "auto")};
-  text-align: ${props => (props.center ? "center" : "inherit")};
-  text-transform: ${props => textTransform[props.size]};
+  ${padding};
 
-  ${props => levels[props.level]};
-`);
+  color: ${(props) => colours["default"]};
+  font-size: ${(props) => sizes[props.size] || sizes["m"]};
+  font-weight: ${(props) =>
+    weights[props.weight || props.size] || weights["m"]};
+  line-height: ${(props) => lineHeighs[props.size] || lineHeighs["m"]};
+  letter-spacing: ${(props) => letterSpacing[props.size] || letterSpacing["m"]};
+  display: ${(props) => (props.block ? "block" : "auto")};
+  text-align: ${(props) => (props.center ? "center" : "inherit")};
+  text-transform: ${(props) => textTransform[props.size]};
+
+  ${(props) => levels[props.level]};
+`;

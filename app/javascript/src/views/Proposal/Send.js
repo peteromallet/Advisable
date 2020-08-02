@@ -2,10 +2,9 @@ import * as React from "react";
 import { Formik, Form } from "formik";
 import { Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
-import { Card, Button, Textarea } from "@advisable/donut";
+import { Box, Card, Button, Textarea } from "@advisable/donut";
 import Heading from "../../components/Heading";
 import FormField from "../../components/FormField";
-import { Padding } from "../../components/Spacing";
 import SEND_PROPOSAL from "./sendProposal.graphql";
 import { hasCompleteTasksStep } from "./validationSchema";
 
@@ -32,10 +31,10 @@ const Send = ({ application, history }) => {
 
   return (
     <Card>
-      <Padding size="l">
-        <Padding bottom="l">
+      <Box padding="l">
+        <Box paddingBottom="l">
           <Heading level={3}>Send Proposal</Heading>
-        </Padding>
+        </Box>
         <Formik
           onSubmit={handleSubmit}
           initialValues={{ proposalComment: application.proposalComment || "" }}
@@ -55,7 +54,7 @@ const Send = ({ application, history }) => {
             </Form>
           )}
         </Formik>
-      </Padding>
+      </Box>
     </Card>
   );
 };

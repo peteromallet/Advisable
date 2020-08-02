@@ -1,9 +1,8 @@
 import * as React from "react";
 import { get } from "lodash-es";
-import { Card } from "@advisable/donut";
+import { Box, Card } from "@advisable/donut";
 import Text from "../../components/Text";
 import NewTask from "../../components/NewTask";
-import { Padding } from "../../components/Spacing";
 import illustration from "./no_tasks.png";
 
 export default function NoTasks({ onNewTask, application }) {
@@ -11,14 +10,14 @@ export default function NoTasks({ onNewTask, application }) {
 
   return (
     <Card>
-      <Padding size="xxl" style={{ textAlign: "center" }}>
+      <Box padding="xxl" style={{ textAlign: "center" }}>
         <img src={illustration} width={300} />
-        <Padding bottom="xs">
+        <Box paddingBottom="xs">
           <Text weight="semibold" colour="dark">
             No active projects
           </Text>
-        </Padding>
-        <Padding bottom="l">
+        </Box>
+        <Box paddingBottom="l">
           <Text
             size="s"
             style={{
@@ -29,9 +28,9 @@ export default function NoTasks({ onNewTask, application }) {
             You must now assign a project in order for {firstName} to start
             work.
           </Text>
-        </Padding>
+        </Box>
         <NewTask onCreate={onNewTask} application={application} />
-      </Padding>
+      </Box>
     </Card>
   );
 }

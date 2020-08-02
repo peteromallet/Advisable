@@ -2,8 +2,7 @@ import { get } from "lodash-es";
 import * as React from "react";
 import { DateTime } from "luxon";
 import { Info } from "@styled-icons/feather";
-import { Text, Link } from "@advisable/donut";
-import Padding from "../../../components/Spacing/Padding";
+import { Box, Text, Link } from "@advisable/donut";
 import ApplicationStatus from "../../../components/ApplicationStatus";
 import { Card, Notice } from "./styles";
 
@@ -144,7 +143,7 @@ const Application = ({ application }) => {
 
   return (
     <Card elevation="m">
-      <Padding size="m">
+      <Box padding="m">
         <Text weight="semibold" colour="blue.9">
           {application.project.primarySkill.name}
         </Text>
@@ -163,14 +162,14 @@ const Application = ({ application }) => {
         </Text>
         <ApplicationStatus>{application.status}</ApplicationStatus>
         {InfoComponent && (
-          <Padding top="m">
+          <Box paddingTop="m">
             <Notice>
               <Info size={24} strokeWidth={2} />
               <InfoComponent application={application} />
             </Notice>
-          </Padding>
+          </Box>
         )}
-      </Padding>
+      </Box>
     </Card>
   );
 };

@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { padding } from "styled-system";
 import { Link } from "react-router-dom";
-import { withSpacing, extractSpacingProps } from "src/components/Spacing";
 
-let Back = styled.a.attrs(props => ({
-  as: props.to ? Link : "a"
+let Back = styled.a.attrs((props) => ({
+  as: props.to ? Link : "a",
 }))`
+  ${padding};
+
   fill: #5c6782;
   color: #5c6782;
   cursor: pointer;
@@ -29,8 +31,6 @@ let Back = styled.a.attrs(props => ({
     color: #0064ff;
   }
 `;
-
-Back = withSpacing(Back);
 
 export default ({ children, ...props }) => {
   return (

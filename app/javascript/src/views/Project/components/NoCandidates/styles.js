@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import Spacing from 'src/components/Spacing';
+import styled from "styled-components";
 
 export const Card = styled.div`
   padding: 50px;
@@ -11,4 +10,4 @@ export const Card = styled.div`
   @media screen and (max-width: 500px) {
     padding: 30px;
   }
-`
+`;

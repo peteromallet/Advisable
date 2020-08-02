@@ -1,11 +1,10 @@
 import React from "react";
 import Linkify from "linkifyjs/react";
-import { Card } from "@advisable/donut";
+import { Box, Card } from "@advisable/donut";
 import Text from "src/components/Text";
 import Skills from "../../components/Skills";
 import Divider from "src/components/Divider";
 import Heading from "src/components/Heading";
-import { Padding } from "src/components/Spacing";
 import { FadeInUp } from "src/components/Animation";
 import AdvisableMessage from "./AdvisableMessage";
 import Questions from "./Questions";
@@ -19,33 +18,33 @@ export default function ApplicationDetails({ data, history }) {
   return (
     <>
       <FadeInUp duration="500ms">
-        <Padding bottom="l">
+        <Box paddingBottom="l">
           <Card>
-            <Padding left="xl" top="l" bottom="l">
+            <Box paddingLeft="xl" paddingY="l">
               <Heading level={4}>
                 Applied to {project.primarySkill.name}
               </Heading>
-            </Padding>
+            </Box>
             <Divider />
-            <Padding size="xl">
-              <Padding bottom="l">
+            <Box padding="xl">
+              <Box paddingBottom="l">
                 <Heading level={6}>Introduction</Heading>
                 <Linkify options={{ attributes: { rel: "nofollow" } }}>
                   <Text size="s">{data.project.application.introduction}</Text>
                 </Linkify>
-              </Padding>
-              <Padding bottom="xs">
+              </Box>
+              <Box paddingBottom="xs">
                 <Heading level={6}>Skills</Heading>
-              </Padding>
+              </Box>
               <Skills skills={data.project.application.specialist.skills} />
               {application.comment && (
-                <Padding top="l">
+                <Box paddingTop="l">
                   <AdvisableMessage>{application.comment}</AdvisableMessage>
-                </Padding>
+                </Box>
               )}
-            </Padding>
+            </Box>
           </Card>
-        </Padding>
+        </Box>
       </FadeInUp>
       <FadeInUp duration="500ms" delay="100ms">
         <Questions questions={application.questions} />

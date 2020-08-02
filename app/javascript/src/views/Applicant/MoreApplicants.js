@@ -1,12 +1,11 @@
 import * as React from "react";
 import { get } from "lodash-es";
-import { Card } from "@advisable/donut";
+import { Box, Card } from "@advisable/donut";
 import Link from "../../components/Link";
 import Text from "../../components/Text";
 import Avatar from "../../components/Avatar";
 import Heading from "../../components/Heading";
 import Divider from "../../components/Divider";
-import { Padding } from "../../components/Spacing";
 import FeaturedBadge from "../../components/FeaturedBadge";
 import { OtherApplication } from "./styles";
 import useMobile from "../../utilities/useMobile";
@@ -23,9 +22,9 @@ export default function MoreApplicants({ data, onClick }) {
 
   return (
     <Card>
-      <Padding left="xl" top="l" bottom="l">
+      <Box paddingY="l" paddingLeft="xl">
         <Heading level={4}>More candidates like {specialist.name}</Heading>
-      </Padding>
+      </Box>
       <Divider />
       {applications.map((application) => {
         if (application.id == data.project.application.id) return;
@@ -52,13 +51,13 @@ export default function MoreApplicants({ data, onClick }) {
           </OtherApplication>
         );
       })}
-      <Padding left="xl" size="l">
+      <Box paddingLeft="xl" padding="l">
         <Text size="s">
           <Link to={`/projects/${data.project.airtableId}`}>
             View all applications
           </Link>
         </Text>
-      </Padding>
+      </Box>
     </Card>
   );
 }

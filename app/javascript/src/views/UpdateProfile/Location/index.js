@@ -3,14 +3,13 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
 import { get } from "lodash-es";
-import { Card, Button, Select, Checkbox } from "@advisable/donut";
+import { Box, Card, Button, Select, Checkbox } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Text from "../../../components/Text";
 import Loading from "../../../components/Loading";
 import Heading from "../../../components/Heading";
 import FieldRow from "../../../components/FieldRow";
 import FormField from "../../../components/FormField";
-import Padding from "../../../components/Spacing/Padding";
 import { useNotifications } from "../../../components/Notifications";
 import FETCH_PROFILE from "../fetchProfile.graphql";
 import UPDATE_PROFILE from "../updateProfile";
@@ -46,11 +45,11 @@ let Location = () => {
     >
       {(formik) => (
         <React.Fragment>
-          <Padding bottom="m">
+          <Box paddingBottom="m">
             <Heading level={2}>Location</Heading>
-          </Padding>
+          </Box>
           <Card>
-            <Padding size="l">
+            <Box padding="l">
               <Form>
                 <FieldRow>
                   <FormField
@@ -66,12 +65,12 @@ let Location = () => {
                     ))}
                   </FormField>
                 </FieldRow>
-                <Padding bottom="m">
+                <Box paddingBottom="m">
                   <Text weight="semibold" colour="dark">
                     Are you happy to work remotely?
                   </Text>
-                </Padding>
-                <Padding bottom="m">
+                </Box>
+                <Box paddingBottom="m">
                   <Checkbox
                     name="remote"
                     checked={formik.values.remote}
@@ -81,8 +80,8 @@ let Location = () => {
                   >
                     Yes, I’m happy to work remote
                   </Checkbox>
-                </Padding>
-                <Padding bottom="xl">
+                </Box>
+                <Box paddingBottom="xl">
                   <Checkbox
                     name="remote"
                     checked={formik.values.remote === false}
@@ -92,10 +91,10 @@ let Location = () => {
                   >
                     No, I only work with clients in person
                   </Checkbox>
-                </Padding>
+                </Box>
                 <Button loading={formik.isSubmitting}>Save Changes</Button>
               </Form>
-            </Padding>
+            </Box>
           </Card>
         </React.Fragment>
       )}

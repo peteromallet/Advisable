@@ -2,8 +2,7 @@
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
-import { Button } from "@advisable/donut";
-import Padding from "../Spacing/Padding";
+import { Button, Box } from "@advisable/donut";
 import { Confirmation, ConfirmationContainer } from "./styles";
 import APPROVE_TASK from "./approveTask.graphql";
 
@@ -27,18 +26,18 @@ const ApprovePrompt = ({ task, onClose, onApprove }) => {
   return (
     <Confirmation>
       <ConfirmationContainer>
-        <Padding bottom="s">
+        <Box paddingBottom="s">
           <Text weight="semibold" colour="dark">
             Approve Work
           </Text>
-        </Padding>
-        <Padding bottom="l">
+        </Box>
+        <Box paddingBottom="l">
           <Text size="s">
             Once you approve the work, the freelancer will be paid for this
             task. If you have any issues, please make sure to resolve them in
             advance.
           </Text>
-        </Padding>
+        </Box>
         <Button loading={loading} onClick={handleSubmit} mr="xs">
           Approve
         </Button>

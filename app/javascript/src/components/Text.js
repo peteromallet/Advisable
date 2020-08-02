@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { withSpacing } from "./Spacing";
+import { padding } from "styled-system";
 
 const weights = {
   strong: 600,
@@ -29,6 +29,8 @@ const lineHeights = {
 };
 
 export const Text = styled.p`
+  ${padding};
+
   display: ${(props) => props.inline && "inline"};
   font-size: ${(props) => sizes[props.size] || sizes["m"]};
   line-height: ${(props) => lineHeights[props.size] || lineHeights["m"]};
@@ -46,4 +48,4 @@ export const Text = styled.p`
   }
 `;
 
-export default withSpacing(Text);
+export default Text;

@@ -1,10 +1,9 @@
 import * as React from "react";
 import { DateTime } from "luxon";
-import { Card, Button } from "@advisable/donut";
+import { Card, Button, Box } from "@advisable/donut";
 import { Calendar } from "@styled-icons/feather";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
-import { Padding } from "../Spacing";
 import DatePicker from "../DatePicker";
 import {
   Detail,
@@ -90,11 +89,11 @@ export default function DueDate({
                 onDayClick={handleSelection(popover)}
               />
               {selected && (
-                <Padding top="m">
+                <Box paddingTop="m">
                   <Button width="100%" onClick={handleRemove(popover)}>
                     Remove due date
                   </Button>
-                </Padding>
+                </Box>
               )}
             </Card>
           )}

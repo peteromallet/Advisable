@@ -3,9 +3,8 @@ import { Formik, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "src/components/Text";
 import Modal from "src/components/Modal";
-import { Button, Columns, Select, Textarea } from "@advisable/donut";
+import { Box, Button, Columns, Select, Textarea } from "@advisable/donut";
 import Heading from "src/components/Heading";
-import { Padding } from "src/components/Spacing";
 import { useNotifications } from "src/components/Notifications";
 import REJECT_PROPOSAL from "./rejectProposal.graphql";
 import validationSchema from "./validationSchema";
@@ -67,16 +66,16 @@ const RejectProposalModal = ({
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
-            <Padding size="xl">
-              <Padding bottom="s">
+            <Box padding="xl">
+              <Box paddingBottom="s">
                 <Heading level={3}>Reject {specialist.name}</Heading>
-              </Padding>
-              <Padding bottom="l">
+              </Box>
+              <Box paddingBottom="l">
                 <Text size="s">
                   Please provide feedback by selecting a reason for rejection
                 </Text>
-              </Padding>
-              <Padding bottom="m">
+              </Box>
+              <Box paddingBottom="m">
                 <Field
                   as={Select}
                   name="reason"
@@ -87,14 +86,14 @@ const RejectProposalModal = ({
                     <option key={reason}>{reason}</option>
                   ))}
                 </Field>
-              </Padding>
-              <Padding bottom="m">
+              </Box>
+              <Box paddingBottom="m">
                 <Field
                   as={Textarea}
                   name="comment"
                   placeholder="Let us know why you are declining this proposal..."
                 />
-              </Padding>
+              </Box>
               <Columns spacing="s">
                 <Button
                   type="submit"
@@ -113,7 +112,7 @@ const RejectProposalModal = ({
                   Cancel
                 </Button>
               </Columns>
-            </Padding>
+            </Box>
           </form>
         )}
       </Formik>

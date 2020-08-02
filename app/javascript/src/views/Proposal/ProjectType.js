@@ -14,7 +14,6 @@ import {
 import FormField from "../../components/FormField";
 import CurrencyInput from "../../components/CurrencyInput";
 import Heading from "../../components/Heading";
-import { Padding } from "../../components/Spacing";
 import { projectTypeValidationSchema } from "./validationSchema";
 import UPDATE_APPLICATION from "./updateApplication.js";
 
@@ -57,17 +56,17 @@ const ProjectType = ({ history, application }) => {
       >
         {(formik) => (
           <Form>
-            <Padding size="xl">
-              <Padding bottom="s">
+            <Box padding="xl">
+              <Box paddingBottom="s">
                 <Heading level={3}>Project Type</Heading>
-              </Padding>
-              <Padding bottom="l">
+              </Box>
+              <Box paddingBottom="l">
                 <Text size="s">
                   How do you think it makes sense to work with{" "}
                   {application.project.user.companyName}?
                 </Text>
-              </Padding>
-              <Padding bottom="m">
+              </Box>
+              <Box paddingBottom="m">
                 <Field
                   as={Radio}
                   type="radio"
@@ -81,8 +80,8 @@ const ProjectType = ({ history, application }) => {
                   label={t("projectTypes.Fixed.label")}
                   description={t("projectTypes.Fixed.proposalDescription")}
                 />
-              </Padding>
-              <Padding bottom="xl">
+              </Box>
+              <Box paddingBottom="xl">
                 <Field
                   as={Radio}
                   type="radio"
@@ -96,7 +95,7 @@ const ProjectType = ({ history, application }) => {
                   label={t("projectTypes.Flexible.label")}
                   description={t("projectTypes.Flexible.proposalDescription")}
                 />
-              </Padding>
+              </Box>
               {formik.values.projectType === "Flexible" && (
                 <>
                   <Box mb="l" height={1} bg="neutral.1" />
@@ -164,7 +163,7 @@ const ProjectType = ({ history, application }) => {
               >
                 Continue
               </Button>
-            </Padding>
+            </Box>
           </Form>
         )}
       </Formik>

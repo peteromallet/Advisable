@@ -3,7 +3,7 @@ import { get } from "lodash-es";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { ChevronRight } from "@styled-icons/feather";
-import { Text, Padding, Flex } from "@advisable/donut";
+import { Text, Box, Flex } from "@advisable/donut";
 import Avatar from "../../../components/Avatar";
 import Status from "../../../components/Status";
 import GET_APPLICATION from "../getApplicationForClient";
@@ -46,40 +46,40 @@ const ClientTopbar = (props) => {
 
   return (
     <>
-      <Padding bottom="xs">
+      <Box paddingBottom="xs">
         <Topbar>
           <Flex align="center">
-            <Padding size="s">
+            <Box padding="s">
               <Avatar
                 size="s"
                 name={specialist.name}
                 url={get(specialist, "image.url")}
               />
-            </Padding>
+            </Box>
             <Flex.Item fill>
-              <Padding bottom="xxs">
+              <Box paddingBottom="xxs">
                 <Text weight="semibold">{specialist.name}</Text>
-              </Padding>
+              </Box>
               <Status>{application.status}</Status>
             </Flex.Item>
           </Flex>
         </Topbar>
-      </Padding>
+      </Box>
 
-      <Padding bottom="xxs">
+      <Box paddingBottom="xxs">
         <Topbar style={{ height: 50 }}>
           <Flex align="center" onClick={handleClick}>
             <Flex.Item fill>
-              <Padding left="s">
+              <Box paddingLeft="s">
                 <Text weight="medium">{actionText}</Text>
-              </Padding>
+              </Box>
             </Flex.Item>
-            <Padding right="s">
+            <Box paddingRight="s">
               <ChevronRight size={24} strokeWidth={2} />
-            </Padding>
+            </Box>
           </Flex>
         </Topbar>
-      </Padding>
+      </Box>
     </>
   );
 };

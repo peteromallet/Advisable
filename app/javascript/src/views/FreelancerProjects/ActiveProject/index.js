@@ -3,11 +3,10 @@ import React from "react";
 import { rgba } from "polished";
 import styled from "styled-components";
 import { ActiveProject } from "./styles";
-import { StyledCard, theme } from "@advisable/donut";
+import { Box, StyledCard, theme } from "@advisable/donut";
 import Text from "../../../components/Text";
 import Status from "../../../components/Status";
 import Heading from "../../../components/Heading";
-import { Padding } from "../../../components/Spacing";
 import pluralize from "../../../utilities/pluralize";
 
 const Card = styled(StyledCard)`
@@ -25,15 +24,15 @@ const Component = ({ onClick, application }) => {
   return (
     <ActiveProject>
       <Card onClick={onClick}>
-        <Padding size="l">
+        <Box padding="l">
           <Heading level={4}>{application.project.primarySkill?.name}</Heading>
-          <Padding bottom="m">
+          <Box paddingBottom="m">
             <Text size="s">{application.project.user.companyName}</Text>
-          </Padding>
+          </Box>
           <Status>
             {pluralize(application.tasks.length, "Task", "Tasks")}
           </Status>
-        </Padding>
+        </Box>
       </Card>
     </ActiveProject>
   );

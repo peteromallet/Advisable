@@ -1,9 +1,8 @@
 // Renders the description of a task in its various stages.
 import React from "react";
 import { Info, AlertCircle } from "@styled-icons/feather";
-import Padding from "../Spacing/Padding";
 import Notice from "../Notice";
-import { Text } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import { useTranslation } from "react-i18next";
 import { StageDescription } from "./styles";
 
@@ -12,16 +11,16 @@ const FOR_CLIENT = {
     if (task.name && task.description) return null;
 
     return (
-      <Padding bottom="m">
+      <Box paddingBottom="m">
         <StageDescription>
           <AlertCircle />
           {t("tasks.stageDescriptions.client.nameAndDescriptionRequired")}
         </StageDescription>
-      </Padding>
+      </Box>
     );
   },
   "Requested To Start": ({ t, task }) => (
-    <Padding bottom="m">
+    <Box paddingBottom="m">
       <Notice icon={<Info />}>
         <Text size="xs" mb="xxs" weight="medium" color="neutral.9">
           {t("tasks.stageDescriptions.client.requestedToStart.title", { task })}
@@ -30,26 +29,26 @@ const FOR_CLIENT = {
           {t("tasks.stageDescriptions.client.requestedToStart.description")}
         </Text>
       </Notice>
-    </Padding>
+    </Box>
   ),
   "Quote Requested": ({ t }) => {
     return (
-      <Padding bottom="m">
+      <Box paddingBottom="m">
         <StageDescription>
           <Info />
           {t("tasks.stageDescriptions.client.quoteRequested")}
         </StageDescription>
-      </Padding>
+      </Box>
     );
   },
   "Quote Provided": ({ t, task }) => {
     return (
-      <Padding bottom="m">
+      <Box paddingBottom="m">
         <StageDescription>
           <Info />
           {t("tasks.stageDescriptions.client.quoteProvided", { task })}
         </StageDescription>
-      </Padding>
+      </Box>
     );
   },
   Assigned: ({ t, task }) => {
@@ -70,12 +69,12 @@ const FOR_CLIENT = {
   },
   Submitted: ({ t, task }) => {
     return (
-      <Padding bottom="m">
+      <Box paddingBottom="m">
         <StageDescription>
           <Info />
           {t("tasks.stageDescriptions.client.submitted", { task })}
         </StageDescription>
-      </Padding>
+      </Box>
     );
   },
   Approved: ({ t, task }) => {
@@ -125,22 +124,22 @@ const FOR_SPECIALIST = {
     }
 
     return (
-      <Padding bottom="m">
+      <Box paddingBottom="m">
         <StageDescription>
           <Info />
           {t(`tasks.stageDescriptions.specialist.${key}`, { task })}
         </StageDescription>
-      </Padding>
+      </Box>
     );
   },
   Working: ({ t, task }) => {
     return (
-      <Padding bottom="m">
+      <Box paddingBottom="m">
         <StageDescription>
           <Info />
           {t("tasks.stageDescriptions.specialist.working", { task })}
         </StageDescription>
-      </Padding>
+      </Box>
     );
   },
   Submitted: ({ t, task }) => {

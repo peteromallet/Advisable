@@ -1,3 +1,4 @@
+import { padding } from "styled-system";
 import styled, { keyframes, css } from "styled-components";
 
 const fadeIn = keyframes`
@@ -32,6 +33,8 @@ export const WindowContainer = styled.div`
 `;
 
 export const Window = styled.div`
+  ${padding};
+
   width: 100%;
   z-index: 500;
   display: flex;

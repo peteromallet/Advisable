@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 import Div100vh from "react-div-100vh";
 import { X } from "@styled-icons/feather";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
-import { extractSpacingProps } from "../Spacing";
 import {
   ModalContainer,
   Backdrop,
@@ -23,9 +22,21 @@ const Modal = ({
   children,
   size,
   expandOnMobile,
+  padding,
+  paddingTop,
+  paddingRight,
+  paddingBottom,
+  paddingLeft,
   ...componentProps
 }) => {
   const containerRef = React.useRef(null);
+  const paddingProps = {
+    padding,
+    paddingTop,
+    paddingRight,
+    paddingBottom,
+    paddingLeft,
+  };
 
   let modalRoot = document.getElementById("js-modal-root");
   if (!modalRoot) {
@@ -55,11 +66,7 @@ const Modal = ({
         }}
       >
         <WindowContainer size={size}>
-          <Window
-            role="dialog"
-            className="ModalWindow"
-            {...extractSpacingProps(componentProps)}
-          >
+          <Window role="dialog" className="ModalWindow" {...paddingProps}>
             {onClose && (
               <CloseModal aria-label="Close Modal" onClick={onClose}>
                 <X size={20} strokWidth={1.5} />

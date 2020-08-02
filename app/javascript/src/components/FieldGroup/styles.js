@@ -1,10 +1,18 @@
 import styled, { css } from "styled-components";
-import SPACING from "../Spacing/sizes";
+
+const SPACING = {
+  xs: 4,
+  s: 8,
+  m: 16,
+  l: 20,
+  xl: 32,
+  xxl: 52,
+};
 
 export const FieldGroup = styled.div`
   display: flex;
   flex-wrap: none;
-  ${props =>
+  ${(props) =>
     props.spacing &&
     css`
       margin-left: -${SPACING[props.spacing]}px;
@@ -13,7 +21,7 @@ export const FieldGroup = styled.div`
 
 export const FieldGroupItem = styled.div`
   flex: 1 0 0%;
-  ${props =>
+  ${(props) =>
     props.spacing &&
     css`
       margin-left: ${SPACING[props.spacing]}px;

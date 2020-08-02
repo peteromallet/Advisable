@@ -9,7 +9,6 @@ import Avatar from "../../components/Avatar";
 import Layout from "../../components/Layout";
 import Heading from "../../components/Heading";
 import currency from "../../utilities/currency";
-import { Padding } from "../../components/Spacing";
 import { FadeIn } from "../../components/Animation";
 import VideoButton from "../../components/VideoButton";
 import AttributeList from "../../components/AttributeList";
@@ -41,13 +40,13 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
     <Layout.Sidebar size="m">
       <Sticky offset={98} enabled={!isMobile}>
         <FadeIn duration="500ms">
-          <Padding bottom="l">
+          <Box paddingBottom="l">
             <Avatar
               size="l"
               name={specialist.name}
               url={get(specialist, "image.url")}
             />
-          </Padding>
+          </Box>
           <Heading level={3}>{specialist.name}</Heading>
           <Text size="xs">
             {specialist.city}
@@ -60,7 +59,7 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
             participants={[application.specialist]}
           />
 
-          <Padding top="xl">
+          <Box paddingTop="xl">
             <Button
               mb="xs"
               width="100%"
@@ -95,8 +94,8 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
                 </Button>
               </>
             )}
-          </Padding>
-          <Padding top="xl" bottom="xl">
+          </Box>
+          <Box paddingY="xl">
             <AttributeList>
               {Boolean(application.rate) && (
                 <AttributeList.Item
@@ -168,14 +167,14 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
                 {get(data, "viewer.projectPaymentMethod")}
               </AttributeList.Item>
             </AttributeList>
-          </Padding>
-          <Padding bottom="xl">
+          </Box>
+          <Box paddingBottom="xl">
             {application.projectType === "Flexible" && (
               <DialogDisclosure as={VideoButton} {...tutorialModal}>
                 {t(`tutorials.flexibleProjects.prompt`)}
               </DialogDisclosure>
             )}
-          </Padding>
+          </Box>
         </FadeIn>
       </Sticky>
     </Layout.Sidebar>
