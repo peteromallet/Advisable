@@ -111,12 +111,6 @@ const StyledInput_Disabled = css`
   ${StyledInputDecoration} {
     background-color: #eff0f3;
     color: ${theme.colors.neutral600};
->>>>>>> Add new input components
-  }
-
-  ${StyledInputDecoration} {
-    background-color: #eff0f3;
-    color: ${theme.colors.neutral600};
   }
 `;
 
