@@ -1,5 +1,4 @@
-import React, { useCallback } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { Button } from "@advisable/donut";
 import {
   useRequestApplicationReminder,
@@ -8,16 +7,11 @@ import {
 } from "../../queries";
 import MotionStack from "../MotionStack";
 import { Title, Description } from "../styles";
+import Navigation from "../Navigation";
 
-function NotHiringStatus({ RedirectToNextStep, RedirectToInitialStep }) {
+function NotHiringStatus() {
   const locationState = useLocationState();
   const [mutation, { error, called }] = useRequestApplicationReminder();
-
-  const Navigation = useCallback(() => {
-    if (error) return <RedirectToInitialStep />;
-    if (called) return <RedirectToNextStep state={{ ...locationState }} />;
-    return null;
-  }, [called, error, locationState]);
 
   const requestApplicationReminder = () => {
     mutation({
@@ -30,7 +24,7 @@ function NotHiringStatus({ RedirectToNextStep, RedirectToInitialStep }) {
 
   return (
     <>
-      <Navigation />
+      <Navigation error={error} called={called} />
       <MotionStack>
         <Title mb="m">Unfortunately, we&apos;re not a good fit</Title>
         <Description>
@@ -45,10 +39,5 @@ function NotHiringStatus({ RedirectToNextStep, RedirectToInitialStep }) {
     </>
   );
 }
-
-NotHiringStatus.propTypes = {
-  RedirectToInitialStep: PropTypes.elementType,
-  RedirectToNextStep: PropTypes.elementType,
-};
 
 export default NotHiringStatus;

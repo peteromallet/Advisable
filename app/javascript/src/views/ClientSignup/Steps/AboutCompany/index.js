@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
 import SubmitButton from "../../../../components/SubmitButton";
 import {
@@ -125,11 +124,5 @@ function AboutCompany() {
     </>
   );
 }
-
-AboutCompany.propTypes = {
-  RedirectToInitialStep: PropTypes.elementType,
-  RedirectToNextStep: PropTypes.elementType,
-  RedirectToLastStep: PropTypes.elementType,
-};
 
 export default AboutCompany;

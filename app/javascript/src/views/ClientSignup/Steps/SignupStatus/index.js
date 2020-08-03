@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useClientApplicationQuery } from "../../queries";
 import Loading from "../../../../components/Loading";
 import AcceptedStatus from "./AcceptedStatus/index";
@@ -8,7 +7,7 @@ import CheapStatus from "./CheapStatus";
 import { motion } from "framer-motion";
 import Navigation from "../Navigation";
 
-function SignupStatus({ RedirectToInitialStep, RedirectToNextStep }) {
+function SignupStatus() {
   const { loading, error, data } = useClientApplicationQuery();
 
   if (loading || error)
@@ -29,20 +28,10 @@ function SignupStatus({ RedirectToInitialStep, RedirectToNextStep }) {
   if (status === "ACCEPTED") {
     return <AcceptedStatus firstName={firstName} lastName={lastName} />;
   } else if (rejectionReason === "NOT_HIRING") {
-    return (
-      <NotHiringStatus
-        RedirectToInitialStep={RedirectToInitialStep}
-        RedirectToNextStep={RedirectToNextStep}
-      />
-    );
+    return <NotHiringStatus />;
   } else {
     return <CheapStatus />;
   }
 }
-
-SignupStatus.propTypes = {
-  RedirectToInitialStep: PropTypes.elementType,
-  RedirectToNextStep: PropTypes.elementType,
-};
 
 export default SignupStatus;

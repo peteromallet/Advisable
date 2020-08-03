@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { string, object, number } from "yup";
 import { Formik, Form } from "formik";
 // Components
@@ -174,11 +173,5 @@ function AboutPreferences() {
     </>
   );
 }
-
-AboutPreferences.propTypes = {
-  RedirectToInitialStep: PropTypes.elementType,
-  RedirectToNextStep: PropTypes.elementType,
-  RedirectToLastStep: PropTypes.elementType,
-};
 
 export default AboutPreferences;

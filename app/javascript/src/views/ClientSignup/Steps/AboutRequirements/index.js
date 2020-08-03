@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
 import { Select, Autocomplete, Box } from "@advisable/donut";
 import FormField from "src/components/FormField";
@@ -133,10 +132,5 @@ function AboutRequirements() {
     </>
   );
 }
-AboutRequirements.propTypes = {
-  RedirectToInitialStep: PropTypes.elementType,
-  RedirectToNextStep: PropTypes.elementType,
-  RedirectToLastStep: PropTypes.elementType,
-};
 
 export default AboutRequirements;
