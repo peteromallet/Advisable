@@ -49,14 +49,6 @@ export const BulletListItem = ({ text, Icon, ...props }) => (
 
 BulletListItem.propTypes = {
   children: PropTypes.node,
-<<<<<<< HEAD
-<<<<<<< HEAD
   Icon: PropTypes.elementType,
-=======
-  Icon: PropTypes.node,
->>>>>>> Update 'Lets get started' step content
-=======
-  Icon: PropTypes.elementType,
->>>>>>> Fix propTypes issue for BulletListItem component
   text: PropTypes.string,
 };

@@ -84,16 +84,6 @@ function StartApplication() {
       </motion.div>
     );
 
-  if (location.search) return <Loading />;
-  // Handle mutation errors
-  if (error) return <Redirect to="/login" />;
-  // Handle mutation data on response
-  const applicationId = data?.startClientApplication?.clientApplication?.id;
-  if (applicationId)
-    return <RedirectToNextStep state={{ applicationId, email }} />;
-  // Loading while handling query string
-  if (location.search) return <Loading />;
-
   // Formik
   const initialValues = {
     firstName: "",
