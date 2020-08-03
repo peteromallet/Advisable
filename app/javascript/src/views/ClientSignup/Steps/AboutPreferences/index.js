@@ -114,7 +114,7 @@ function AboutPreferences() {
         {(formik) => (
           <Form>
             <MotionStack position="relative">
-              {processing && <ProcessingApplication />}
+              {called && <ProcessingApplication />}
               <Title>About Your Preferences</Title>
               <Description>
                 This is to help tailor our recommendations to you.
