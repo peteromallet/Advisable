@@ -1,4 +1,3 @@
-import { rgba } from "polished";
 import styled from "styled-components";
 import { space, variant } from "styled-system";
 import theme from "../../theme";
@@ -14,9 +13,10 @@ export const StyledNoticeIcon = styled.div`
   color: ${theme.colors.neutral500};
 
   svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     stroke-width: 2;
+    margin-top: 2px;
   }
 `;
 
@@ -37,24 +37,18 @@ const noticeTypes = variant({
   variants: {
     orange: {
       background: theme.colors.orange50,
-      borderTop: `3px solid ${theme.colors.orange400}`,
-      boxShadow: `0 1px 2px ${rgba(theme.colors.orange900, 0.18)}`,
       [StyledNoticeIcon]: {
         color: theme.colors.orange700,
       },
     },
     neutral: {
-      background: theme.colors.neutral50,
-      borderTop: `3px solid ${theme.colors.neutral500}`,
-      boxShadow: `0 1px 2px ${rgba(theme.colors.neutral900, 0.18)}`,
+      background: "#eff0f3",
       [StyledNoticeIcon]: {
         color: theme.colors.neutral600,
       },
     },
     cyan: {
       background: theme.colors.cyan50,
-      borderTop: `3px solid ${theme.colors.cyan600}`,
-      boxShadow: `0 1px 2px ${rgba(theme.colors.cyan900, 0.24)}`,
       [StyledNoticeIcon]: {
         color: theme.colors.cyan700,
       },
@@ -68,7 +62,7 @@ export const StyledNotice = styled.div`
 
   display: flex;
   padding: 18px;
-  border-radius: 2px;
+  border-radius: 12px;
   align-items: flex-start;
 `;
 

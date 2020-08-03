@@ -19,7 +19,7 @@ export const notice = () => {
         variant={variant}
         title="This is an alert"
       >
-        This is the content for an alerrt message.
+        This is the content for an alert message.
       </Notice>
     </Card>
   );
