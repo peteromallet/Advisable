@@ -28,23 +28,21 @@ const Testimonials = () => {
   return (
     <Sidebar>
       <StarRating />
-      <Link.External
-        href="https://www.trustpilot.com/review/advisable.com"
-        target="_blank"
-      >
-        <Box
-          position="absolute"
-          right={20}
-          top={20}
-          width={120}
-          height={30}
-          zIndex={2}
-          css={`
-            background-size: cover;
-            background-image: url(${trustpilot});
-          `}
-        />
-      </Link.External>
+      <Box position="absolute" right="24px" top="24px" zIndex={2}>
+        <Link.External
+          href="https://www.trustpilot.com/review/advisable.com"
+          target="_blank"
+        >
+          <Box
+            width={120}
+            height={30}
+            css={`
+              background-size: cover;
+              background-image: url(${trustpilot});
+            `}
+          />
+        </Link.External>
+      </Box>
       <Box width="100%" zIndex={2}>
         <Quotes current={current}>
           {TESTIMONIALS.map((t, i) => (
