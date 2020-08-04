@@ -22,7 +22,7 @@ export default function DueDate({
   readOnly,
 }) {
   const selected = value ? DateTime.fromISO(value) : null;
-  const initialMonth = selected || new Date();
+  const initialMonth = selected || DateTime.local();
   const popover = usePopoverState({ placement: "bottom-start" });
 
   React.useEffect(() => {
@@ -69,7 +69,7 @@ export default function DueDate({
       </PopoverDisclosure>
       <Popover
         {...popover}
-        style={{ zIndex: 99 }}
+        style={{ zIndex: 999 }}
         aria-label="Provide due date"
       >
         <AnimatePresence>
@@ -85,7 +85,7 @@ export default function DueDate({
               <DatePicker
                 showOutsideDays={false}
                 selectedDays={selected}
-                initialMonth={initialMonth}
+                initialMonth={initialMonth.toJSDate()}
                 disabledDays={isDayDisabled}
                 onDayClick={handleSelection(popover)}
               />

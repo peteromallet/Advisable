@@ -21,7 +21,6 @@ describe 'Updating a proposal' do
     click_on 'Add a task'
     fill_in 'name', with: 'This is a task'
     click_on 'Due Date'
-    find('.DayPicker-wrapper').send_keys :right
     first("div[aria-disabled='false']").click
     click_on '+ Add estimate'
     fill_in 'estimate', with: '8'
