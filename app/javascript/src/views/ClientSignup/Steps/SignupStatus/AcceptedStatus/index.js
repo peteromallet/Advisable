@@ -5,6 +5,7 @@ import RequestCallButton from "../RequestCallButton";
 import {
   useLocationState,
   useRequestApplicationCallback,
+  useCoutryCode,
 } from "../../../queries";
 import { Redirect } from "react-router";
 import PhoneModal from "./PhoneModal";
@@ -15,17 +16,19 @@ import { Eye, Smile, Coffee } from "@styled-icons/feather";
 function AcceptedStatus({ firstName, lastName }) {
   const [
     requestApplicationCallback,
-    { data, called },
+    { data: callback, called },
   ] = useRequestApplicationCallback();
+  const { data } = useCoutryCode();
+  const countryCode = data?.clientApplication?.country?.code;
   const fullName = `${firstName} ${lastName}`;
   const { email, applicationId } = useLocationState();
   const modal = useModal();
 
   const Navigation = useCallback(() => {
-    if (data)
+    if (callback)
       return <Redirect push to="/clients/signup/thank-you-call-you-shortly" />;
     return null;
-  }, [data]);
+  }, [callback]);
 
   return (
     <>
@@ -71,6 +74,7 @@ function AcceptedStatus({ firstName, lastName }) {
           </DialogDisclosure>
           <PhoneModal
             requestApplicationCallback={requestApplicationCallback}
+            countryCode={countryCode}
             modal={modal}
           />
         </Box>

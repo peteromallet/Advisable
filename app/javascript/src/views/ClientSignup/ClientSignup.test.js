@@ -33,7 +33,7 @@ const budget = "10000";
 const localityImportance = 3;
 const acceptedGuaranteeTerms = false;
 const talentQuality = "GOOD";
-const phoneNumber = "380935556699";
+const phoneNumber = "+380935556699";
 
 const graphQLMocks = [
   mockViewer(null),

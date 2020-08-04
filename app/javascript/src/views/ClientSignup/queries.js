@@ -285,3 +285,20 @@ export const REQUEST_APPLICATION_CALLBACK = gql`
 
 export const useRequestApplicationCallback = () =>
   useMutation(REQUEST_APPLICATION_CALLBACK);
+
+export const QUERY_COUNTRY_CODE = gql`
+  query ClientApplication($id: ID!) {
+    clientApplication(id: $id) {
+      country {
+        code
+      }
+    }
+  }
+`;
+
+export const useCoutryCode = () => {
+  const state = useLocationState();
+  return useQuery(QUERY_COUNTRY_CODE, {
+    variables: { id: state?.applicationId },
+  });
+};
