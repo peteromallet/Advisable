@@ -604,7 +604,6 @@ ActiveRecord::Schema.define(version: 2020_07_27_094242) do
     t.decimal "average_score"
     t.integer "project_count"
     t.string "phone"
-    t.string "sendbird_access_token"
     t.boolean "test_account"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
@@ -694,7 +693,6 @@ ActiveRecord::Schema.define(version: 2020_07_27_094242) do
     t.bigint "sales_person_id"
     t.string "contact_status"
     t.string "fid"
-    t.string "sendbird_access_token"
     t.boolean "test_account"
     t.integer "budget"
     t.integer "locality_importance"
