@@ -154,7 +154,6 @@ ActiveRecord::Schema.define(version: 2020_07_27_094242) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "call_attempt_count"
     t.index ["airtable_id"], name: "index_client_calls_on_airtable_id"
     t.index ["project_id"], name: "index_client_calls_on_project_id"
     t.index ["sales_person_id"], name: "index_client_calls_on_sales_person_id"
@@ -604,7 +603,6 @@ ActiveRecord::Schema.define(version: 2020_07_27_094242) do
     t.decimal "average_score"
     t.integer "project_count"
     t.string "phone"
-    t.string "sendbird_access_token"
     t.boolean "test_account"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
@@ -638,15 +636,6 @@ ActiveRecord::Schema.define(version: 2020_07_27_094242) do
     t.index ["airtable_id"], name: "index_tasks_on_airtable_id"
     t.index ["application_id"], name: "index_tasks_on_application_id"
     t.index ["uid"], name: "index_tasks_on_uid"
-  end
-
-  create_table "user_skills", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "skill_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["skill_id"], name: "index_user_skills_on_skill_id"
-    t.index ["user_id"], name: "index_user_skills_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -694,17 +683,7 @@ ActiveRecord::Schema.define(version: 2020_07_27_094242) do
     t.bigint "sales_person_id"
     t.string "contact_status"
     t.string "fid"
-    t.string "sendbird_access_token"
     t.boolean "test_account"
-    t.integer "budget"
-    t.integer "locality_importance"
-    t.datetime "accepted_guarantee_terms_at"
-    t.string "talent_quality"
-    t.string "rejection_reason"
-    t.string "number_of_freelancers"
-    t.datetime "application_accepted_at"
-    t.datetime "application_rejected_at"
-    t.datetime "application_reminder_at"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"
@@ -770,8 +749,6 @@ ActiveRecord::Schema.define(version: 2020_07_27_094242) do
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "countries"
-  add_foreign_key "user_skills", "skills"
-  add_foreign_key "user_skills", "users"
   add_foreign_key "users", "countries"
   add_foreign_key "users", "industries"
   add_foreign_key "users", "sales_people"
