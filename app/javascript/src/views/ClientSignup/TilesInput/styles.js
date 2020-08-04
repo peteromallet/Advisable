@@ -29,6 +29,7 @@ export const StyledTilesInputOption = styled.button`
   &[data-selected="true"] {
     color: ${theme.colors.neutral900};
     transition: 0.3s box-shadow;
+    background: ${theme.colors.blue100};
     box-shadow: inset 0px 0px 0px 2px ${theme.colors.blue900};
   }
 
