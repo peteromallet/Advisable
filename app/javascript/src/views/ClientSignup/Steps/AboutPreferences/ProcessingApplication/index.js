@@ -10,6 +10,7 @@ function ProcessingApplication() {
       as={motion.div}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      exit={{ x: -100, opacity: 0, transition: { duration: 0.1 } }}
       position="absolute"
       display="flex"
       justifyContent="center"
