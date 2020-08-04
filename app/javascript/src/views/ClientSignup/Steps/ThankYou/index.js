@@ -1,34 +1,41 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Text, Box, Circle } from "@advisable/donut";
+import { Text, Circle, useBreakpoint } from "@advisable/donut";
 import { Check } from "@styled-icons/feather";
 import MotionStack from "../MotionStack";
 
 function Component({ title, text }) {
+  const isDesktop = useBreakpoint("lUp");
   return (
-    <Box py="xxl">
-      <MotionStack
-        justifyContent="center"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
+    <MotionStack
+      position="absolute"
+      width="256px"
+      pb="15%"
+      left={isDesktop ? "40%" : "0"}
+      top="0"
+      right="0"
+      bottom="0"
+      m="auto"
+      justifyContent="center"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+    >
+      <Circle bg="blue100" size={60} color="blue600" mb="m">
+        <Check strokeWidth={3} size={24} />
+      </Circle>
+      <Text
+        as="h2"
+        color="blue800"
+        fontSize="xxl"
+        fontWeight="semibold"
+        letterSpacing="-0.02em"
+        mb="xxs"
       >
-        <Circle bg="blue100" size={60} color="blue600" mb="m">
-          <Check strokeWidth={3} size={24} />
-        </Circle>
-        <Text
-          as="h2"
-          color="blue800"
-          fontSize="xxl"
-          fontWeight="semibold"
-          letterSpacing="-0.02em"
-          mb="xxs"
-        >
-          {title}
-        </Text>
-        <Text>{text}</Text>
-      </MotionStack>
-    </Box>
+        {title}
+      </Text>
+      <Text>{text}</Text>
+    </MotionStack>
   );
 }
 
