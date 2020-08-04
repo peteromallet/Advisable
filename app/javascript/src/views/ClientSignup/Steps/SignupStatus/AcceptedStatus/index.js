@@ -40,7 +40,7 @@ function AcceptedStatus({ firstName, lastName }) {
           talent is a ~10-minute call with us to:
         </Description>
         <BulletListItem
-          text="Give you an overview of how Advisable works"
+          text="Give you an overview of how Advisable works & how to get the most from our talent"
           Icon={Eye}
         />
         <BulletListItem
