@@ -33,10 +33,10 @@ function ClientSignup() {
     <Box display="flex" flexDirection="row">
       {isDesktop && <Testimonials />}
       <Box
-        py={["l", "xxxl"]}
+        ml={isDesktop ? "calc(40% + 3%)" : "auto"}
+        py={["l", "4%"]}
         maxWidth={600}
         width="100%"
-        ml={isDesktop ? "calc(40% + 60px)" : "auto"}
         mr="auto"
         px="m"
       >
