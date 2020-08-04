@@ -28,7 +28,6 @@ const clientApplication = mockClientApplication();
 const email = "test@test.com";
 const companyName = "Test Corp";
 const companyType = "Startup";
-const numberOfFreelancers = "1-3";
 const budget = "10000";
 const localityImportance = 3;
 const acceptedGuaranteeTerms = false;
@@ -220,9 +219,7 @@ test("Successful client application flow and ASAP call", async () => {
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
-  fireEvent.change(screen.getByTestId("numberOfFreelancers"), {
-    target: { value: numberOfFreelancers },
-  });
+  fireEvent.click(screen.getByLabelText("1–3"));
   fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
@@ -320,9 +317,7 @@ test("Successful client application flow via query string params", async () => {
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
-  fireEvent.change(screen.getByTestId("numberOfFreelancers"), {
-    target: { value: numberOfFreelancers },
-  });
+  fireEvent.click(screen.getByLabelText("1–3"));
   fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
@@ -524,9 +519,7 @@ test("Cheap talents client application rejection flow", async () => {
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
-  fireEvent.change(screen.getByTestId("numberOfFreelancers"), {
-    target: { value: numberOfFreelancers },
-  });
+  fireEvent.click(screen.getByLabelText("1–3"));
   fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
@@ -645,9 +638,7 @@ test("Not hiring client application rejection flow", async () => {
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
-  fireEvent.change(screen.getByTestId("numberOfFreelancers"), {
-    target: { value: "0" },
-  });
+  fireEvent.click(screen.getByLabelText("0"));
   fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
