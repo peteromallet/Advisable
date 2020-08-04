@@ -80,13 +80,3 @@ front-end for the app. The frontend codebase follows a certain folder structure.
 
 Donut is the design system for Advisable. The source code for it can be found
 at /donut/src.
-
-## Environment variables
-
-Environment variables can be set in development by creating a `.env` file
-in the root directory.
-
-- `ADMIN_PASSWORD`: Sets the password for the admin dashboard
-- `ADMIN_USERNAME`: Sets the username for the admin dashboard
-- `AIRTABLE_API_KEY`: The API key for the Airtable database.
-- `AIRTABLE_DATABASE_KEY`: The database key for the Airtable database.
