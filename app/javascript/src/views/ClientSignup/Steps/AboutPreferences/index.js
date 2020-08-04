@@ -3,8 +3,6 @@ import { string, object, number } from "yup";
 import { Formik, Form } from "formik";
 // Components
 import SubmitButton from "../../../../components/SubmitButton";
-import ScaleInput from "../../../../components/ScaleInput";
-import ChoiceList from "../../../../components/ChoiceList";
 import Loading from "../../../../components/Loading";
 import FormField from "src/components/FormField";
 import { Box } from "@advisable/donut";
@@ -20,6 +18,16 @@ import MotionStack from "../MotionStack";
 import { Title, Description } from "../styles";
 import ProcessingApplication from "./ProcessingApplication";
 import { motion } from "framer-motion";
+import TilesInput from "../../TilesInput";
+import {
+  Meh,
+  Sliders,
+  Sunrise,
+  Sun,
+  Award,
+  Check,
+  X,
+} from "@styled-icons/feather";
 
 const validationSchema = object().shape({
   localityImportance: number().required(
@@ -35,24 +43,34 @@ const validationSchema = object().shape({
 
 const talentQualityOptions = [
   {
-    label: "Cheap Talent — I don't care about quality",
+    label: "Cheap Talent",
     value: "CHEAP",
+    comment: "I don't care about quality",
+    icon: Meh,
   },
   {
-    label: "Budget Talent — I'm very cost-conscious",
+    label: "Budget Talent",
     value: "BUDGET",
+    comment: "I'm very cost-conscious",
+    icon: Sliders,
   },
   {
-    label: "Good Talent — I want reliable talent",
+    label: "Good Talent",
     value: "GOOD",
+    comment: "I want reliable talent",
+    icon: Sunrise,
   },
   {
-    label: "Top Talent — I want talent I can fully trust",
+    label: "Top Talent",
     value: "TOP",
+    comment: "I want talent I can fully trust",
+    icon: Sun,
   },
   {
-    label: "World Class — I want the best of the best",
+    label: "World Class",
     value: "WORLD_CLASS",
+    comment: "I want the best of the best",
+    icon: Award,
   },
 ];
 
@@ -87,17 +105,21 @@ function AboutPreferences() {
   };
 
   const handleSubmit = (values) => {
-    values.acceptedGuaranteeTerms = values.acceptedGuaranteeTerms === "yes";
+    const convertedValues = {
+      ...values,
+      acceptedGuaranteeTerms: values.acceptedGuaranteeTerms === "yes",
+      localityImportance: Number(values.localityImportance),
+    };
     submitClientApplication({
       variables: {
         input: {
           id: locationState.applicationId,
-          ...values,
+          ...convertedValues,
         },
       },
       optimisticResponse: getAboutPreferencesOptimisticResponse(
         locationState.applicationId,
-        values,
+        convertedValues,
         numberOfFreelancers,
       ),
     });
@@ -105,7 +127,7 @@ function AboutPreferences() {
 
   return (
     <>
-      <Navigation called={called} status={status} delay={5000} />
+      <Navigation called={called} status={status} delay={called ? 5000 : 0} />
       <Formik
         validationSchema={validationSchema}
         initialValues={initialValues}
@@ -119,44 +141,55 @@ function AboutPreferences() {
               <Description>
                 This is to help tailor our recommendations to you.
               </Description>
-              <Box mb="xl">
+              <Box mb="l">
                 <FormField
                   isRequired
-                  as={ScaleInput}
+                  as={TilesInput}
+                  fullWidth
+                  optionsPerRow={1}
                   name="localityImportance"
-                  label="How important is it that freelancers you hire should be in your city?"
-                  leftTitle="Not Important"
-                  rightTitle="Very Important"
                   onChange={(n) =>
                     formik.setFieldValue("localityImportance", n)
                   }
+                  error={null}
+                  label="How important is it that freelancers you hire should be in your city?"
+                  options={[
+                    { label: "1", value: "1" },
+                    { label: "2", value: "2" },
+                    { label: "3", value: "3" },
+                    { label: "4", value: "4" },
+                    { label: "5", value: "5" },
+                  ]}
+                  value={formik.values.localityImportance}
                 />
               </Box>
               <Box mb="l">
                 <FormField
                   isRequired
-                  as={ChoiceList}
+                  as={TilesInput}
                   fullWidth
-                  error={null}
-                  optionsPerRow={2}
+                  optionsPerRow={1}
                   name="acceptedGuaranteeTerms"
-                  onChange={formik.handleChange}
+                  onChange={(v) =>
+                    formik.setFieldValue("acceptedGuaranteeTerms", v)
+                  }
+                  error={null}
                   label="In order to avail of our money-back guarantee, are you willing to provide feedback on every freelancer you hire?"
                   options={[
-                    { label: "Yes", value: "yes" },
-                    { label: "No", value: "no" },
+                    { label: "Yes", value: "yes", icon: Check },
+                    { label: "No", value: "no", icon: X },
                   ]}
                   value={formik.values.acceptedGuaranteeTerms}
                 />
               </Box>
-              <Box mb="m">
+              <Box mb="l">
                 <FormField
                   isRequired
-                  as={ChoiceList}
+                  as={TilesInput}
                   fullWidth
                   optionsPerRow={1}
                   name="talentQuality"
-                  onChange={formik.handleChange}
+                  onChange={(v) => formik.setFieldValue("talentQuality", v)}
                   error={null}
                   label="What level of talent are you typically looking for?"
                   options={talentQualityOptions}
