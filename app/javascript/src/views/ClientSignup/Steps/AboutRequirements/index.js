@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Select, Autocomplete, Box } from "@advisable/donut";
+import { Autocomplete, Box } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "../../../../components/SubmitButton";
 import Loading from "../../../../components/Loading";
@@ -16,6 +16,7 @@ import MotionStack from "../MotionStack";
 import Navigation from "../Navigation";
 import { Title, Description } from "../styles";
 import { motion } from "framer-motion";
+import TilesInput from "../../TilesInput";
 
 const validationSchema = object().shape({
   skills: array()
@@ -50,17 +51,20 @@ function AboutRequirements() {
     budget: clientApplication.budget / 100 || "",
   };
   const handleSubmit = (values) => {
-    values.budget = Number(values.budget) * 100;
+    const convertedValues = {
+      ...values,
+      budget: Number(values.budget) * 100,
+    };
     updateClientApplication({
       variables: {
         input: {
           id: locationState.applicationId,
-          ...values,
+          ...convertedValues,
         },
       },
       optimisticResponse: getAboutRequirementsOptimisticReponse(
         locationState.applicationId,
-        values,
+        convertedValues,
       ),
     });
   };
@@ -98,20 +102,23 @@ function AboutRequirements() {
               <Box mb="m">
                 <FormField
                   isRequired
-                  as={Select}
+                  as={TilesInput}
+                  fullWidth
+                  optionsPerRow={1}
                   name="numberOfFreelancers"
-                  label="How many freelancers would you like to hire over the next 6 months?"
-                  placeholder="Select the number of freelancers"
+                  onChange={(n) =>
+                    formik.setFieldValue("numberOfFreelancers", n)
+                  }
                   error={null}
+                  label="How many freelancers would you like to hire over the next 6 months?"
+                  options={[
+                    { label: "0", value: "0" },
+                    { label: "1–3", value: "1-3" },
+                    { label: "4–10", value: "4-10" },
+                    { label: "10+", value: "10+" },
+                  ]}
                   value={formik.values.numberOfFreelancers}
-                  onChange={formik.handleChange}
-                  data-testid="numberOfFreelancers"
-                >
-                  <option>0</option>
-                  <option>1-3</option>
-                  <option>4-10</option>
-                  <option>10+</option>
-                </FormField>
+                />
               </Box>
               <Box mb="l">
                 <FormField
