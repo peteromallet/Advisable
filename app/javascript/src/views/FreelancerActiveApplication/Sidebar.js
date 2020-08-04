@@ -27,7 +27,7 @@ const Component = ({ data, tutorial, tutorialModal }) => {
         <Padding bottom="xl">
           <Back to="/clients">All Clients</Back>
         </Padding>
-        <Heading level={3}>{application.project.primarySkill.name}</Heading>
+        <Heading level={3}>{application.project.primarySkill?.name}</Heading>
         <Text>{application.project.user.companyName}</Text>
         <TalkModal
           isOpen={talkModal}
