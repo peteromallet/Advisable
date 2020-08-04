@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { string, object, number } from "yup";
 import { Formik, Form } from "formik";
 // Components
@@ -6,6 +7,21 @@ import SubmitButton from "../../../../components/SubmitButton";
 import Loading from "../../../../components/Loading";
 import FormField from "src/components/FormField";
 import { Box } from "@advisable/donut";
+import Navigation from "../Navigation";
+import MotionStack from "../MotionStack";
+import { Title, Description } from "../styles";
+import ProcessingApplication from "./ProcessingApplication";
+import TilesInput from "../../TilesInput";
+// Icons
+import {
+  X,
+  Check,
+  Tag,
+  DollarSign,
+  UserCheck,
+  Star,
+  Award,
+} from "@styled-icons/feather";
 // Queries
 import {
   useAboutPreferencesSubmit,
@@ -13,21 +29,6 @@ import {
   useLocationState,
   useClientApplicationQuery,
 } from "../../queries";
-import Navigation from "../Navigation";
-import MotionStack from "../MotionStack";
-import { Title, Description } from "../styles";
-import ProcessingApplication from "./ProcessingApplication";
-import { motion } from "framer-motion";
-import TilesInput from "../../TilesInput";
-import {
-  Meh,
-  Sliders,
-  Sunrise,
-  Sun,
-  Award,
-  Check,
-  X,
-} from "@styled-icons/feather";
 
 const validationSchema = object().shape({
   localityImportance: number().required(
@@ -46,25 +47,25 @@ const talentQualityOptions = [
     label: "Cheap Talent",
     value: "CHEAP",
     comment: "I don't care about quality",
-    icon: Meh,
+    icon: Tag,
   },
   {
     label: "Budget Talent",
     value: "BUDGET",
     comment: "I'm very cost-conscious",
-    icon: Sliders,
+    icon: DollarSign,
   },
   {
     label: "Good Talent",
     value: "GOOD",
     comment: "I want reliable talent",
-    icon: Sunrise,
+    icon: UserCheck,
   },
   {
     label: "Top Talent",
     value: "TOP",
     comment: "I want talent I can fully trust",
-    icon: Sun,
+    icon: Star,
   },
   {
     label: "World Class",
