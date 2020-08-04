@@ -1,11 +1,8 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+import { ApolloClient, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import createCache from "./apolloCache";
 
-const cache = new InMemoryCache({
-  possibleTypes: {
-    ViewerUnion: ["User", "Specialist"],
-  },
-});
+const cache = createCache();
 
 const authLink = setContext((_, { headers }) => {
   const token =

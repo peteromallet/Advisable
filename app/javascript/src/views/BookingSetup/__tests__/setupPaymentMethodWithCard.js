@@ -114,30 +114,23 @@ test("User can complete booking setup", async () => {
           },
         },
       ),
-      {
-        request: {
-          query: START_WORKING,
-          variables: {
-            input: {
-              application: "rec1234",
+      mockMutation(
+        START_WORKING,
+        {
+          application: "rec1234",
+          projectType: "Fixed",
+          monthlyLimit: undefined,
+        },
+        {
+          startWorking: {
+            __typename: "StartWorkingPayload",
+            application: {
+              ...application,
               projectType: "Fixed",
-              monthlyLimit: null,
             },
           },
         },
-        result: {
-          data: {
-            __typename: "Mutation",
-            startWorking: {
-              __typename: "StartWorkingPayload",
-              application: {
-                ...application,
-                projectType: "Fixed",
-              },
-            },
-          },
-        },
-      },
+      ),
       {
         request: {
           query: GET_ACTIVE_APPLICATION,

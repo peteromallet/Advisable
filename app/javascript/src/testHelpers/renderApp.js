@@ -5,18 +5,10 @@ import { createMemoryHistory } from "history";
 import { I18nextProvider } from "react-i18next";
 import { render } from "@testing-library/react";
 import { Elements } from "@stripe/react-stripe-js";
+import { InMemoryCache } from "@apollo/client";
 import { MockedProvider } from "@apollo/client/testing";
-import {
-  InMemoryCache,
-  IntrospectionFragmentMatcher,
-} from "apollo-cache-inmemory";
 import App from "../App";
 import i18n from "./i18next.js";
-import introspectionQueryResultData from "../fragmentTypes.json";
-
-const fragmentMatcher = new IntrospectionFragmentMatcher({
-  introspectionQueryResultData,
-});
 
 const defaultConfig = {
   route: "/",
@@ -121,7 +113,11 @@ export const renderComponent = (component, config = {}) => {
   };
 
   const history = createMemoryHistory({ initialEntries: [config.route] });
-  const cache = new InMemoryCache({ fragmentMatcher });
+  const cache = new InMemoryCache({
+    possibleTypes: {
+      ViewerUnion: ["User", "Specialist"],
+    },
+  });
 
   return {
     ...render(

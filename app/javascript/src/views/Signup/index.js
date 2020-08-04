@@ -32,12 +32,15 @@ const Signup = () => {
   }
 
   const handleSubmit = async (values, formikBag) => {
+    const input = values;
+
+    if (params.id) {
+      input.id = params.id;
+    }
+
     const { data } = await signup({
       variables: {
-        input: {
-          id: params.id,
-          ...values,
-        },
+        input,
       },
     });
 
