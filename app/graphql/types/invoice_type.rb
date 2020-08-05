@@ -16,6 +16,10 @@ class Types::InvoiceType < Types::BaseType
     Time.at(object.created).utc.iso8601
   end
 
+  def amount
+    object.amount_due
+  end
+
   def due_date
     return if object.due_date.nil?
     Time.at(object.due_date).utc.iso8601
