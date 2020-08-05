@@ -1,5 +1,5 @@
 import React from "react";
-import { CreditCard } from "@styled-icons/feather";
+import { CreditCard, FileText, Settings } from "@styled-icons/feather";
 import Layout from "../../../components/Layout";
 import NavigationMenu from "../../../components/NavigationMenu";
 
@@ -11,7 +11,19 @@ const Sidebar = () => {
           to="/settings/payments"
           icon={<CreditCard size={20} strokeWidth={2} />}
         >
-          Payment Preferences
+          Payments
+        </NavigationMenu.Item>
+        <NavigationMenu.Item
+          to="/settings/invoices"
+          icon={<FileText size={20} strokeWidth={2} />}
+        >
+          Invoices
+        </NavigationMenu.Item>
+        <NavigationMenu.Item
+          to="/settings/account"
+          icon={<Settings size={20} strokeWidth={2} />}
+        >
+          Account
         </NavigationMenu.Item>
       </NavigationMenu>
     </Layout.Sidebar>
