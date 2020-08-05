@@ -4,14 +4,17 @@
 class User < ApplicationRecord
   include Uid
   include Account
+  include StatusMap
   include Airtable::Syncable
   airtable_class Airtable::ClientContact
-
   has_many :projects
   has_many :interviews
   has_many :applications, through: :projects
   has_many :consultations
   has_many :searches
+  has_many :user_skills
+  has_many :skills, through: :user_skills
+  has_many :client_calls
   has_one :client_user
   has_one :client, through: :client_user
   belongs_to :sales_person, required: false
@@ -27,8 +30,32 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
+  validates :rejection_reason,
+            inclusion: { in: %w[cheap_talent not_hiring] }, allow_nil: true
+
+  # talent_quality indicates what qualit of talent the client is looking for.
+  # This value is provided when they are applying.
+  TALENT_QUALITY_OPTIONS = %w[cheap budget good top world_class]
+  validates :talent_quality,
+            inclusion: { in: TALENT_QUALITY_OPTIONS }, allow_nil: true
+
+  # number_of_freelancers represents the number of freelancers the client is
+  # looking to hire over the next 6 months. This value is provided when they are
+  # applying to Advisable.
+  NUMBER_OF_FREELANCERS_OPTIONS = %w[0 1-3 4-10 10+]
+  validates :number_of_freelancers,
+            inclusion: { in: NUMBER_OF_FREELANCERS_OPTIONS }, allow_nil: true
+
   register_tutorial 'fixedProjects'
   register_tutorial 'flexibleProjects'
+
+  alias_attribute :application_status, :contact_status
+  map_status application_status: {
+               started: 'Application Started',
+               accepted: 'Application Accepted',
+               rejected: 'Application Rejected',
+               remind: 'Requested Reminder'
+             }
 
   def name
     "#{first_name} #{last_name}"

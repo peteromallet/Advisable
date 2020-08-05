@@ -92,7 +92,9 @@ jobs:
         run: bin/rails yarn:install
 
       - name: Setup database
-        run: bundle exec rails db:prepare
+        run: |
+          bin/rails db:create
+          bin/rails db:migrate
 
       - name: Compile assets
         run: bundle exec rails webpacker:compile

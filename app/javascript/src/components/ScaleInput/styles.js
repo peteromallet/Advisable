@@ -7,8 +7,6 @@ export const StyledScaleInput = styled.div`
 `;
 
 export const StyledScaleInputOption = styled.button`
-  width: 20%;
-  margin: 0 4px;
   border: none;
   padding: 20px;
   outline: none;

@@ -22,6 +22,7 @@ class Airtable::ClientContact < Airtable::Base
   sync_column 'RID', to: :rid
   sync_column 'fid', to: :fid
   sync_column 'gclid', to: :gclid
+  sync_column 'Same City Importance', to: :locality_importance
   sync_association 'Industry', to: :industry
   sync_association 'Owner', to: :sales_person
 
@@ -42,6 +43,14 @@ class Airtable::ClientContact < Airtable::Base
       client = Airtable::Client.find(client_id).sync if client.nil?
       user.client = client
     end
+
+    sync_budget(user)
+  end
+
+  def sync_budget(user)
+    amount = self['Estimated Annual Freelancer Spend (USD)']
+    return if amount.nil?
+    user.budget = amount * 100
   end
 
   push_data do |user|
@@ -65,7 +74,19 @@ class Airtable::ClientContact < Airtable::Base
     self['RID'] = user.rid
     self['gclid'] = user.gclid
     self['fid'] = user.fid
+    self['City'] = user.address.try(:[], 'city')
+    self['Application Reminder At'] = user.application_reminder_at
     self['Contact Status'] = user.contact_status
+    self['Same City Importance'] = user.locality_importance
     self['Address'] = Address.new(user.address).to_s if user.address
+    self['Skills Interested In'] = user.skills.map(&:airtable_id).compact
+    self['Application Accepted Timestamp'] = user.application_accepted_at
+    self['Application Rejected Timestamp'] = user.application_rejected_at
+    self['How many freelancers do you plan on hiring over the next 6 months?'] =
+      user.number_of_freelancers
+
+    if user.budget
+      self['Estimated Annual Freelancer Spend (USD)'] = user.budget / 100.0
+    end
   end
 end
