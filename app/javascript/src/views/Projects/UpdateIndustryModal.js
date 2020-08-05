@@ -1,5 +1,5 @@
 import React from "react";
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
 import FormField from "components/FormField";

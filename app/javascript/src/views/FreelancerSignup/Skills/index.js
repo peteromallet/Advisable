@@ -1,5 +1,5 @@
 import React from "react";
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { get, sortBy } from "lodash-es";
 import { Formik, Form } from "formik";
 import { useQuery } from "@apollo/client";

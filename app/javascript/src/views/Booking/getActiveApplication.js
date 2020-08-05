@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { taskFields } from "../../graphql/fragments/tasks";
 import { specialistFields } from "../../graphql/fragments/specialists";
 import { applicationFields } from "../../graphql/fragments/applications";

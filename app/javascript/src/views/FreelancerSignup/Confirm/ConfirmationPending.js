@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash-es";
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client";
 import { Text, Link } from "@advisable/donut";
 import useViewer from "../../../hooks/useViewer";

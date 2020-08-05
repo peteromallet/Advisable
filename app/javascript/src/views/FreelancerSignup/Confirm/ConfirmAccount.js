@@ -1,5 +1,5 @@
 import React from "react";
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client";
 import Loading from "../../../components/Loading";
 import VIEWER, { viewerFields } from "../../../graphql/queries/viewer";

@@ -1,5 +1,5 @@
 import React from "react";
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { useMutation, useApolloClient } from "@apollo/client";
 import Loading from "../Loading";
 import useViewer from "../../hooks/useViewer";

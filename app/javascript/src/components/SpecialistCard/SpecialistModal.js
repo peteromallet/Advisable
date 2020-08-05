@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash-es";
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { useLazyQuery } from "@apollo/client";
 import { Box, Text, Modal } from "@advisable/donut";
 import Avatar from "../Avatar";

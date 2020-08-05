@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams, useLocation } from "react-router";
 

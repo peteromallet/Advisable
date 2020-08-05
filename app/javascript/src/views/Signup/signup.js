@@ -1,12 +1,12 @@
-import gql from 'graphql-tag';
+import { gql } from "@apollo/client";
 
 export default gql`
-mutation Signup($input: SignupInput!) {
-  signup(input: $input) {
-    token
-    errors {
-      code
+  mutation Signup($input: SignupInput!) {
+    signup(input: $input) {
+      token
+      errors {
+        code
+      }
     }
   }
-}
-`
+`;

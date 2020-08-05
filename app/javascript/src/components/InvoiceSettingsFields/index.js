@@ -1,7 +1,7 @@
 import React from "react";
 import { string } from "yup";
 import { find, get } from "lodash-es";
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import { Box } from "@advisable/donut";
 import Loading from "../Loading";

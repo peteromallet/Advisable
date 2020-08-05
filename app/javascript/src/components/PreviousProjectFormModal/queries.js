@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client";
 
 export const SELECT_DATA = gql`
