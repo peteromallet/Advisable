@@ -27,23 +27,30 @@ const Tasks = ({ application, match, location, history }) => {
 
   const handleNewTask = (task) => {
     const newData = client.readQuery(applicationQuery);
-    newData.application.tasks.push(task);
     client.writeQuery({
       ...applicationQuery,
-      data: newData,
+      data: {
+        ...newData,
+        application: {
+          ...newData.application,
+          tasks: [...newData.application.tasks, task],
+        },
+      },
     });
 
     history.push(`${match.url}/${task.id}`);
   };
 
   const handleDeleteTask = (task) => {
-    const newData = client.readQuery(applicationQuery);
-    newData.application.tasks = application.tasks.filter((t) => {
-      return t.id !== task.id;
-    });
-    client.writeQuery({
-      ...applicationQuery,
-      data: newData,
+    client.cache.modify({
+      id: client.cache.identify(application),
+      fields: {
+        tasks(existingTasks, { readField }) {
+          return existingTasks.filter((taskRef) => {
+            return task.id !== readField("id", taskRef);
+          });
+        },
+      },
     });
     history.push(match.url);
   };
@@ -64,7 +71,6 @@ const Tasks = ({ application, match, location, history }) => {
     history.push("send");
   };
 
-  const hasTasks = application.tasks.length > 0;
   // Wether or not the continue button should be visible
   const canContinue = hasCompleteTasksStep(application);
 

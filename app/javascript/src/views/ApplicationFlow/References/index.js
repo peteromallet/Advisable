@@ -77,11 +77,26 @@ const References = ({
       query: FETCH_APPLICATION,
       variables: { id: applicationId },
     });
-    previous.application.specialist.previousProjects.nodes.unshift(project);
+
     client.writeQuery({
       query: FETCH_APPLICATION,
       variables: { id: applicationId },
-      data: previous,
+      data: {
+        ...previous,
+        application: {
+          ...previous.application,
+          specialist: {
+            ...previous.application.specialist,
+            previousProjects: {
+              ...previous.application.specialist.previousProjects,
+              nodes: [
+                project,
+                ...previous.application.specialist.previousProjects.nodes,
+              ],
+            },
+          },
+        },
+      },
     });
   };
 
