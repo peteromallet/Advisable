@@ -10,6 +10,7 @@ function Component({ title, text }) {
     <MotionStack
       position="absolute"
       width="256px"
+      textAlign="center"
       pb="15%"
       left={isDesktop ? "40%" : "0"}
       top="0"
@@ -34,7 +35,7 @@ function Component({ title, text }) {
       >
         {title}
       </Text>
-      <Text>{text}</Text>
+      <Text lineHeight="21px">{text}</Text>
     </MotionStack>
   );
 }
