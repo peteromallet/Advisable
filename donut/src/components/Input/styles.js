@@ -35,7 +35,8 @@ export const StyledInputDecoration = styled.div`
 `;
 
 export const StyledInputControl = styled.input`
-  width: 100%;
+  flex: 1;
+  margin: 0;
   border: none;
   height: 48px;
   outline: none;
@@ -45,7 +46,7 @@ export const StyledInputControl = styled.input`
   padding-top: 1px;
   padding-bottom: 1px;
   border-radius: 0px;
-  color: ${theme.colors.neutra900};
+  color: ${theme.colors.neutral900};
   font-family: system-ui, poppins, sans-serif;
   border: 2px solid transparent;
   transition: border-color 200ms;

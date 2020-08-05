@@ -15,16 +15,14 @@ class Types::CountryType < Types::BaseType
   end
 
   def currency
-    Rails.cache.fetch("#{object.name}_currency") do
-      object.data.try(:currency)
-    end
+    Rails.cache.fetch("#{object.name}_currency") { object.data.try(:currency) }
   end
 
   def states
     Rails.cache.fetch("#{object.name}_states", expires_in: 7.days) do
       states = object.data.try(:states)
       return [] if states.nil?
-      states.map { |code, data| data["name"] }.compact
+      states.map { |code, data| data['name'] }.compact
     end
   end
 end

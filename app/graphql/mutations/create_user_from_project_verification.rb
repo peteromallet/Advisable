@@ -20,7 +20,7 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
     project = PreviousProject.find_by_uid(previous_project)
     viewer = context[:oauth_viewer]
 
-    if BlacklistedDomain.email_allowed?(email)
+    unless BlacklistedDomain.email_allowed?(email)
       raise ApiError::InvalidRequest.new(
               'nonCorporateEmail',
               "The email #{email} is not allowed"

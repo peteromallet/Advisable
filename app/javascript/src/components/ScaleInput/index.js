@@ -2,15 +2,19 @@ import React from "react";
 import { Box, Text } from "@advisable/donut";
 import { StyledScaleInput, StyledScaleInputOption } from "./styles";
 
-function ScaleInput({ value, onChange }) {
-  const createClickHandler = value => () => {
+function ScaleInput({ value, onChange, leftTitle, rightTitle }) {
+  const createClickHandler = (value) => () => {
     onChange(value);
   };
 
   return (
     <StyledScaleInput>
-      <Box display="flex">
-        {[1, 2, 3, 4, 5].map(n => (
+      <Box
+        display="grid"
+        gridTemplateColumns="repeat(5, auto)"
+        gridColumnGap="8px"
+      >
+        {[1, 2, 3, 4, 5].map((n) => (
           <StyledScaleInputOption
             key={n}
             type="button"
@@ -29,7 +33,7 @@ function ScaleInput({ value, onChange }) {
           fontWeight="medium"
           letterSpacing="-0.02em"
         >
-          Unlikely
+          {leftTitle || "Unlikely"}
         </Text>
         <Text
           fontSize="s"
@@ -37,7 +41,7 @@ function ScaleInput({ value, onChange }) {
           fontWeight="medium"
           letterSpacing="-0.02em"
         >
-          Very Likely
+          {rightTitle || "Very Likely"}
         </Text>
       </Box>
     </StyledScaleInput>
