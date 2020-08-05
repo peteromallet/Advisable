@@ -78,6 +78,14 @@ export const Sidebar = styled.div`
   overflow: hidden;
   align-items: center;
   background-size: cover;
-  background-image: url(${background});
   background-color: ${theme.colors.blue[4]};
+`;
+
+export const BackgroundImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;

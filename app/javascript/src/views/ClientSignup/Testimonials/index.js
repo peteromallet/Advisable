@@ -1,8 +1,9 @@
 import React from "react";
 import { Text, Box, Link } from "@advisable/donut";
-import { Sidebar } from "./styles";
+import { Sidebar, BackgroundImage } from "./styles";
 import StarRating from "./StarRating";
 import trustpilot from "./trustpilot.png";
+import background from "./bg.png";
 import { Quotes, Quote, Logos, Logo } from "./styles";
 import TESTIMONIALS from "./data";
 import useInterval from "../../../hooks/useInterval";
@@ -28,6 +29,7 @@ const Testimonials = () => {
   return (
     <Sidebar>
       <StarRating />
+      <BackgroundImage src={background} alt="background image" />
       <Box position="absolute" right="24px" top="24px" zIndex={2}>
         <Link.External
           href="https://www.trustpilot.com/review/advisable.com"
