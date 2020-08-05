@@ -34,7 +34,7 @@ function AcceptedStatus({ firstName, lastName }) {
     <>
       <Navigation />
       <MotionStack>
-        <Title mb="m">Let’s get started!</Title>
+        <Title mb="m">We think you might be a good fit</Title>
         <Description mb="s">
           The final step before being able to access Advisable’s elite pool of
           talent is a ~10-minute call with us to:
