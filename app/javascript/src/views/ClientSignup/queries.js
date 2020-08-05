@@ -297,6 +297,7 @@ export const useRequestApplicationCallback = () =>
 export const QUERY_COUNTRY_CODE = gql`
   query ClientApplication($id: ID!) {
     clientApplication(id: $id) {
+      id
       country {
         id
         code
