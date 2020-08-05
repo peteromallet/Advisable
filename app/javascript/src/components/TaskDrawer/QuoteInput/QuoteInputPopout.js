@@ -40,9 +40,9 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
 
   const initialValues = {
     isFlexible: Boolean(task.flexibleEstimate),
-    estimate: task.estimate ? task.estimate : undefined,
+    estimate: task.estimate ? task.estimate : "",
     estimateType: task.estimateType || "Hourly",
-    flexibleEstimate: task.flexibleEstimate ? task.flexibleEstimate : undefined,
+    flexibleEstimate: task.flexibleEstimate ? task.flexibleEstimate : "",
   };
 
   const handleChangePricingType = (formik) => (e) => {

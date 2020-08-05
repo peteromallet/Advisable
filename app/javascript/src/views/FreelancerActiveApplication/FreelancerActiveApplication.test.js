@@ -176,11 +176,11 @@ test("Freelancer can create a task", async () => {
   await waitForElementToBeRemoved(saving);
   const estimate = getByText("Add estimate", { exact: false });
   fireEvent.click(estimate);
-  const from = getByPlaceholderText("10 Hours");
+  const from = getByPlaceholderText("10");
   fireEvent.change(from, { target: { value: 10 } });
   const flexible = screen.getByText("Flexible hours");
   fireEvent.click(flexible);
-  const to = await screen.findByPlaceholderText("20 Hours");
+  const to = await screen.findByPlaceholderText("20");
   fireEvent.change(to, { target: { value: 20 } });
   const save = getByLabelText("Save Quote");
   fireEvent.click(save);

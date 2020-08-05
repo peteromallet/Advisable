@@ -2,26 +2,22 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { Text, Box, Button, RadioGroup, Radio } from "@advisable/donut";
-import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import FormField from "../../../components/FormField";
 import Choices from "../../../components/Choices";
+import CurrencyInput from "../../../components/CurrencyInput";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
 import { ArrowRight } from "@styled-icons/feather";
-
-const numberMask = createNumberMask({
-  prefix: "",
-});
 
 const FreelancingPreferences = ({ history }) => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);
 
   const handleSubmit = async (values) => {
-    const { data, errors } = await updateProfile({
+    await updateProfile({
       variables: {
         input: {
           ...values,
-          hourlyRate: values.hourlyRate * 100,
+          hourlyRate: Number(values.hourlyRate) * 100,
         },
       },
     });
@@ -30,9 +26,9 @@ const FreelancingPreferences = ({ history }) => {
   };
 
   const initialValues = {
-    primarilyFreelance: null,
-    numberOfProjects: null,
-    hourlyRate: null,
+    primarilyFreelance: undefined,
+    numberOfProjects: undefined,
+    hourlyRate: "",
   };
 
   return (
@@ -111,6 +107,7 @@ const FreelancingPreferences = ({ history }) => {
           <Box mb="l">
             <FormField
               prefix="$"
+              as={CurrencyInput}
               name="hourlyRate"
               placeholder="Hourly rate"
               label="What is your typical hourly rate in USD?"

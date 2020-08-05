@@ -1,6 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { get } from "lodash-es";
+import { VisuallyHidden } from "reakit/VisuallyHidden";
 import { useQuery } from "@apollo/react-hooks";
 import { connect, Field } from "formik";
 import { Box, Input, Select, Label, FieldError } from "@advisable/donut";
@@ -81,7 +82,15 @@ const AddressFields = ({ label, name, formik }) => {
       </Box>
       <Box mb="xs" display="flex">
         <Box width="100%" mr="xxs">
-          <Field as={Select} error={countryError} name={`${name}.country`}>
+          <VisuallyHidden>
+            <label htmlFor={`${name}.country`}>Country</label>
+          </VisuallyHidden>
+          <Field
+            as={Select}
+            error={countryError}
+            id={`${name}.country`}
+            name={`${name}.country`}
+          >
             {countries.map((c, i) => (
               <option key={c.code} value={c.code}>
                 {c.name}
