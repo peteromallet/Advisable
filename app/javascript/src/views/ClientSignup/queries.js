@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 import { useLocation } from "react-router";
 
 export const useLocationState = () => {
@@ -15,11 +15,13 @@ const clientApplicationFragment = gql`
     # About Your Company
     companyName
     industry {
+      id
       name
     }
     companyType
     # About Your Requirements
     skills {
+      id
       name
     }
     numberOfFreelancers
@@ -72,10 +74,12 @@ export const ABOUT_COMPANY_QUERY = gql`
   ${clientApplicationFragment}
   query ClientApplication($id: ID!) {
     industries {
+      id
       label: name
       value: name
     }
     skills(local: true) {
+      id
       label: name
       value: name
     }
@@ -100,6 +104,7 @@ export const ABOUT_COMPANY_UPDATE = gql`
         # About Your Company
         companyName
         industry {
+          id
           name
         }
         companyType
@@ -120,6 +125,7 @@ export const getAboutCompanyOptimisticReponse = (id, values) => ({
       ...values,
       industry: {
         __typename: "Industry",
+        id: "industry",
         name: values.industry,
       },
     },
@@ -155,6 +161,7 @@ export const ABOUT_REQUIREMENTS_UPDATE = gql`
         id
         # About Your Requirements
         skills {
+          id
           name
         }
         numberOfFreelancers
@@ -174,6 +181,7 @@ export const getAboutRequirementsOptimisticReponse = (id, values) => ({
       ...values,
       skills: values.skills.map((skill) => ({
         name: skill,
+        id: `skill_${skill}`,
         __typename: "Skill",
       })),
     },
@@ -290,6 +298,7 @@ export const QUERY_COUNTRY_CODE = gql`
   query ClientApplication($id: ID!) {
     clientApplication(id: $id) {
       country {
+        id
         code
       }
     }

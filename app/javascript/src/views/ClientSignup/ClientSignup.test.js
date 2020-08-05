@@ -9,6 +9,7 @@ import {
 } from "../../testHelpers/test-utils";
 
 import {
+  QUERY_COUNTRY_CODE,
   ABOUT_COMPANY_QUERY,
   GET_CLIENT_APPLICATION,
   START_CLIENT_APPLICATION,
@@ -43,6 +44,7 @@ const graphQLMocks = [
       industries: [
         {
           __typename: "Industry",
+          id: industry.id,
           label: industry.name,
           value: industry.name,
         },
@@ -50,6 +52,7 @@ const graphQLMocks = [
       skills: [
         {
           __typename: "Skill",
+          id: skill.id,
           label: skill.name,
           value: skill.name,
         },
@@ -69,11 +72,22 @@ const graphQLMocks = [
       skills: [
         {
           __typename: "Skill",
+          id: skill.id,
           label: skill.name,
           value: skill.name,
         },
       ],
       clientApplication,
+    },
+  ),
+  mockQuery(
+    QUERY_COUNTRY_CODE,
+    { id: clientApplication.id },
+    {
+      clientApplication: {
+        ...clientApplication,
+        country: mockData.country(),
+      },
     },
   ),
   mockMutation(
@@ -105,10 +119,7 @@ const graphQLMocks = [
           __typename: "ClientApplication",
           id: clientApplication.id,
           companyName,
-          industry: {
-            __typename: "Industry",
-            name: industry.name,
-          },
+          industry,
           companyType,
         },
       },
@@ -151,7 +162,7 @@ test("Successful client application flow and ASAP call", async () => {
             clientApplication: {
               __typename: "ClientApplication",
               id: clientApplication.id,
-              skills: [{ __typename: "Skill", name: skill.name }],
+              skills: [skill],
               numberOfFreelancers: "1-3",
               budget,
             },
@@ -260,7 +271,7 @@ test("Successful client application flow via query string params", async () => {
             clientApplication: {
               __typename: "ClientApplication",
               id: clientApplication.id,
-              skills: [{ __typename: "Skill", name: skill.name }],
+              skills: [skill],
               numberOfFreelancers: "1-3",
               budget,
             },
@@ -362,7 +373,7 @@ const emailNotAllowedRejection = {
 test("Reject public gmail for client's signup form via query string params", async () => {
   renderRoute({
     route: `/clients/signup?firstName=${clientApplication.firstName}&lastName=${clientApplication.lastName}&email=test@gmail.com`,
-    graphQLMocks: [emailNotAllowedRejection],
+    graphQLMocks: [mockViewer(null), emailNotAllowedRejection],
   });
   await screen.findByText(/personal emails/i);
 });
@@ -370,7 +381,7 @@ test("Reject public gmail for client's signup form via query string params", asy
 test("Reject public gmail for client's signup form", async () => {
   renderRoute({
     route: `/clients/signup`,
-    graphQLMocks: [emailNotAllowedRejection],
+    graphQLMocks: [mockViewer(null), emailNotAllowedRejection],
   });
   // 0 Step. Start application
   fireEvent.change(await screen.findByPlaceholderText(/first name/i), {
@@ -409,7 +420,7 @@ const accountExistsRejection = {
 test("Account already exists with this email via query string params", async () => {
   renderRoute({
     route: `/clients/signup?firstName=${clientApplication.firstName}&lastName=${clientApplication.lastName}&email=exists@test.com`,
-    graphQLMocks: [accountExistsRejection],
+    graphQLMocks: [mockViewer(null), accountExistsRejection],
   });
 
   await screen.findByText(/welcome back/i);
@@ -418,7 +429,7 @@ test("Account already exists with this email via query string params", async () 
 test("Account already exists with this email", async () => {
   renderRoute({
     route: `/clients/signup`,
-    graphQLMocks: [accountExistsRejection],
+    graphQLMocks: [mockViewer(null), accountExistsRejection],
   });
   fireEvent.change(await screen.findByPlaceholderText(/first name/i), {
     target: { value: clientApplication.firstName },
@@ -451,7 +462,7 @@ test("Cheap talents client application rejection flow", async () => {
             clientApplication: {
               __typename: "ClientApplication",
               id: clientApplication.id,
-              skills: [{ __typename: "Skill", name: skill.name }],
+              skills: [skill],
               numberOfFreelancers: "1-3",
               budget,
             },
@@ -554,7 +565,7 @@ test("Not hiring client application rejection flow", async () => {
             clientApplication: {
               __typename: "ClientApplication",
               id: clientApplication.id,
-              skills: [{ __typename: "Skill", name: skill.name }],
+              skills: [skill],
               numberOfFreelancers: "0",
               budget,
             },
@@ -659,6 +670,7 @@ test("Not hiring client application rejection flow", async () => {
 test("Calendly's call booked page", async () => {
   renderRoute({
     route: "/clients/signup/thank-you-call-is-booked",
+    graphQLMocks: [mockViewer(null)],
   });
 
   await screen.findByText(/your call is booked/i);
