@@ -1,6 +1,5 @@
 import React from "react";
 import { string } from "yup";
-import { Field } from "formik";
 import { find, get } from "lodash-es";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";

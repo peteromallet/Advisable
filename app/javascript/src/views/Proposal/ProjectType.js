@@ -27,7 +27,9 @@ const ProjectType = ({ history, application }) => {
         input: {
           id: application.airtableId,
           projectType: values.projectType,
-          monthlyLimit: Number(values.monthlyLimit),
+          monthlyLimit: values.monthlyLimit
+            ? Number(values.monthlyLimit)
+            : undefined,
         },
       },
     });
@@ -42,7 +44,7 @@ const ProjectType = ({ history, application }) => {
 
   const initialValues = {
     projectType: application.projectType || "",
-    monthlyLimit: application.monthlyLimit || undefined,
+    monthlyLimit: application.monthlyLimit || "",
     accept: false,
   };
 

@@ -13,7 +13,14 @@ const InvoiceSettings = ({ nextStep }) => {
       name: "",
       companyName: "",
       billingEmail: "",
-      address: {},
+      address: {
+        line1: "",
+        line2: "",
+        city: "",
+        state: "",
+        country: "",
+        postcode: "",
+      },
       vatNumber: "",
     },
   };

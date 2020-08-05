@@ -14,7 +14,7 @@ const ProjectTypeModal = ({ isOpen, onClose, application }) => {
 
   const initialValues = {
     projectType: application.projectType,
-    monthlyLimit: application.monthlyLimit,
+    monthlyLimit: application.monthlyLimit || "",
     acceptCharges: false,
     acceptUpfrontCharges: false,
   };
@@ -25,7 +25,9 @@ const ProjectTypeModal = ({ isOpen, onClose, application }) => {
         input: {
           application: application.airtableId,
           projectType: values.projectType,
-          monthlyLimit: values.monthlyLimit,
+          monthlyLimit: values.monthlyLimit
+            ? Number(values.monthlyLimit)
+            : null,
         },
       },
     });
