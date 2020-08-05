@@ -8,7 +8,7 @@ const authLink = setContext((_, { headers }) => {
   const token =
     sessionStorage?.getItem("authToken") || localStorage?.getItem("authToken");
   const csrfElement = document.querySelector("meta[name=csrf-token]");
-  const csrf = csrfElement.getAttribute("content");
+  const csrf = csrfElement?.getAttribute("content");
 
   return {
     headers: {

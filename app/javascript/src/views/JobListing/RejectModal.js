@@ -26,7 +26,7 @@ const RejectModal = ({ modal, onReject, application }) => {
         fontWeight="medium"
         letterSpacing="-0.02em"
       >
-        Reject invitation to {application.project.primarySkill.name} project
+        Reject invitation to {application.project.primarySkill?.name} project
       </Text>
       <Formik
         initialValues={{ reason: REJECTION_REASONS[0] }}
