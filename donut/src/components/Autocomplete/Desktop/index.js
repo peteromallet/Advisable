@@ -39,7 +39,9 @@ const AutocompleteDesktop = (props) => {
       ) > -1
     ) {
       downshift.setState({
-        inputValue: props.multiple ? "" : changes.inputValue,
+        inputValue: props.multiple
+          ? ""
+          : changes.inputValue || downshift.inputValue,
         isOpen: false,
       });
     }

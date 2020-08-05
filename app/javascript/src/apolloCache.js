@@ -12,6 +12,13 @@ const createCache = () => {
       ViewerUnion: ["User", "Specialist"],
     },
     typePolicies: {
+      PreviousProject: {
+        fields: {
+          skills: {
+            merge: replaceArrayMerge,
+          },
+        },
+      },
       Project: {
         fields: {
           characteristics: {

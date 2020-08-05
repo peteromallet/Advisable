@@ -25,6 +25,7 @@ function RequestIntroductionModal({ modal, ...props }) {
       width={700}
       padding={["m", "l"]}
       tabIndex={0}
+      label="Request introduction"
     >
       <RequestIntroduction modal={modal} {...props} />
     </Modal>
