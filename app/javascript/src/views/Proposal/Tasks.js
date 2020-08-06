@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Box, Card, Button } from "@advisable/donut";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 import { matchPath } from "react-router";
 import Text from "../../components/Text";
 import Modal from "../../components/Modal";

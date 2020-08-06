@@ -119,7 +119,7 @@ test("User can complete booking setup", async () => {
         {
           application: "rec1234",
           projectType: "Fixed",
-          monthlyLimit: undefined,
+          monthlyLimit: null,
         },
         {
           startWorking: {
