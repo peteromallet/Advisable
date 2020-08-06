@@ -1,5 +1,8 @@
 class Mutations::UpdateClientApplication < Mutations::BaseMutation
   argument :id, ID, required: true
+  argument :first_name, String, required: false
+  argument :last_name, String, required: false
+  argument :email, String, required: false
   argument :company_name, String, required: false
   argument :industry, String, required: false
   argument :skills, [String], required: false
@@ -10,9 +13,11 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
   field :clientApplication, Types::ClientApplicationType, null: true
 
   def resolve(**args)
+    email_blacklisted?(args[:email]) if args[:email]
+    check_existing_account(args[:email]) if args[:email]
     user = User.find_by_uid_or_airtable_id!(args[:id])
 
-    if user.application_status == :started
+    if %i[started rejected].include?(user.application_status)
       update_assignable_attributes(user, args)
       update_industry(user, args[:industry]) if args[:industry]
       update_skills(user, args[:skills]) if args[:skills]
@@ -33,7 +38,15 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
 
   # which attributes can just be simply assigned
   def assignable_attributes
-    %i[budget company_name company_type number_of_freelancers]
+    %i[
+      first_name
+      last_name
+      email
+      budget
+      company_name
+      company_type
+      number_of_freelancers
+    ]
   end
 
   def update_assignable_attributes(user, args)
@@ -50,5 +63,19 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
   def update_skills(user, skills)
     records = Skill.where(name: skills)
     user.skill_ids = records.map(&:id)
+  end
+
+  def email_blacklisted?(email)
+    return if BlacklistedDomain.email_allowed?(email)
+    ApiError.invalidRequest('emailNotAllowed', 'This email is not allowed')
+  end
+
+  def check_existing_account(email)
+    account = Account.find_by_email(email)
+    return if account.nil?
+    ApiError.invalidRequest(
+      'existingAccount',
+      'This email belongs to an existing account'
+    )
   end
 end

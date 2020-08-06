@@ -8,7 +8,7 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
 
   def authorized?(**args)
     user = User.find_by_uid_or_airtable_id!(args[:id])
-    if user.application_status != :started
+    unless %i[started rejected].include?(user.application_status)
       raise ApiError::InvalidRequest.new(
               'alreadySubmitted',
               'Application has already been submitted'
