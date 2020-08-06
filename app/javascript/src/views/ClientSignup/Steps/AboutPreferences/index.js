@@ -153,6 +153,7 @@ function AboutPreferences() {
                     formik.setFieldValue("localityImportance", n)
                   }
                   error={null}
+                  importanceScale={true}
                   label="How important is it that freelancers you hire should be in your city?"
                   options={[
                     { label: "1", value: "1" },

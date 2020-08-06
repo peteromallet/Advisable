@@ -22,7 +22,6 @@ export const StyledTilesInputOption = styled.button`
 
   &:hover {
     color: ${theme.colors.neutral[9]};
-    // background: ${theme.colors.neutral[2]};
     box-shadow: inset 0px 0px 0px 2px ${theme.colors.neutral200};
   }
 
