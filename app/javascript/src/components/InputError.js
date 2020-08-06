@@ -1,9 +1,8 @@
-import styled from 'styled-components';
-import { withSpacing } from './Spacing';
+import styled from "styled-components";
 
-export default withSpacing(styled.span`
-  color: #FF0073;
+export default styled.span`
+  color: #ff0073;
   font-size: 13px;
   padding-top: 6px;
   display: inline-block;
-`)
+`;

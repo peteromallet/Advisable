@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
+import { Box } from "@advisable/donut";
 import Text from "src/components/Text";
 import Avatar from "src/components/Avatar";
 import Linkify from "linkifyjs/react";
-import Spacing, { Padding } from "src/components/Spacing";
 import FeaturedBadge from "src/components/FeaturedBadge";
 import Questions from "./Questions";
 import Skills from "src/components/Skills";
@@ -70,7 +70,7 @@ const Candidate = ({ application, project }) => {
         </Text>
       </Linkify>
 
-      <Padding bottom="xl">
+      <Box paddingBottom="xl">
         <ViewMore className="ViewMore" onClick={handleExpand}>
           {expanded ? (
             <svg width={13} height={6}>
@@ -91,22 +91,20 @@ const Candidate = ({ application, project }) => {
           )}
           {expanded ? "View Less" : "View More"}
         </ViewMore>
-      </Padding>
+      </Box>
 
       {expanded && (
         <React.Fragment>
           <Questions questions={application.questions} />
           {application.specialist.skills.length > 0 && (
-            <Padding bottom="l">
-              <Spacing>
-                <Skills skills={application.specialist.skills} />
-              </Spacing>
-            </Padding>
+            <Box paddingBottom="l">
+              <Skills skills={application.specialist.skills} />
+            </Box>
           )}
 
-          <Padding bottom="xl">
+          <Box paddingBottom="xl">
             <PreviousProjects project={project} application={application} />
-          </Padding>
+          </Box>
         </React.Fragment>
       )}
 

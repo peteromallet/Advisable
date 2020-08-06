@@ -6,11 +6,11 @@
 import * as React from "react";
 import { withRouter } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
+import { Box } from "@advisable/donut";
 import { get, filter } from "lodash-es";
 import Drawer from "../Drawer";
 import { TaskDrawer as TaskDrawerStyles } from "./styles";
 import EditTask from "./EditTask";
-import { Padding } from "../Spacing";
 import SkeletonText from "../SkeletonText";
 import SkeletonHeading from "../SkeletonHeading";
 import DrawerActions from "./DrawerActions";
@@ -116,12 +116,12 @@ const TaskDrawer = ({
       <TaskDrawerErrorBoundary>
         <TaskDrawerStyles>
           {query.loading && (
-            <Padding size="l">
-              <Padding bottom="l">
+            <Box padding="l">
+              <Box paddingBottom="l">
                 <SkeletonHeading />
-              </Padding>
+              </Box>
               <SkeletonText />
-            </Padding>
+            </Box>
           )}
 
           {prompt === DELETE_PROMPT && (

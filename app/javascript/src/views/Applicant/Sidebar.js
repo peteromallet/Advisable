@@ -1,8 +1,9 @@
 import * as React from "react";
 import { get } from "lodash-es";
 import { Route } from "react-router-dom";
+import { Box } from "@advisable/donut";
 import Sticky from "../../components/Sticky";
-import { Text, Padding } from "../../../../../donut/src";
+import { Text } from "../../../../../donut/src";
 import Avatar from "../../components/Avatar";
 import Layout from "../../components/Layout";
 import { FadeIn } from "../../components/Animation";
@@ -13,7 +14,7 @@ import { useMobile } from "../../components/Breakpoint";
 import ProposalActions from "./ProposalActions";
 import CandidateAttributeList from "../../components/CandidateAttributeList";
 
-export default ({ data, match }) => {
+export default function Sidebar({ data, match }) {
   const isMobile = useMobile();
   const project = data.project;
   const application = project.application;
@@ -23,14 +24,14 @@ export default ({ data, match }) => {
     <Layout.Sidebar size="m">
       <Sticky offset={98} enabled={!isMobile}>
         <FadeIn duration="500ms">
-          <Padding bottom="m">
+          <Box paddingBottom="m">
             <Avatar
               size="l"
               name={specialist.name}
               url={get(specialist, "image.url")}
             />
-          </Padding>
-          <Padding bottom="xxs">
+          </Box>
+          <Box paddingBottom="xxs">
             <Text
               size="xxl"
               as="h3"
@@ -40,25 +41,25 @@ export default ({ data, match }) => {
             >
               {specialist.name}
             </Text>
-          </Padding>
-          <Padding bottom="m">
+          </Box>
+          <Box paddingBottom="m">
             <Text size="xs" color="neutral.N6">
               {specialist.city}
               {specialist.country && `, ${specialist.country.name}`}
             </Text>
-          </Padding>
+          </Box>
           {get(specialist, "ratings.overall") && (
-            <Padding bottom="l">
+            <Box paddingBottom="l">
               <StarRating size="l" rating={specialist.ratings.overall} />
-            </Padding>
+            </Box>
           )}
           {data.project.application.featured && (
-            <Padding top="s" bottom="xl">
+            <Box paddingTop="s" paddingBottom="xl">
               <FeaturedBadge leftAligned />
-            </Padding>
+            </Box>
           )}
           <CandidateAttributeList application={application} />
-          <Padding top="l" bottom="xl">
+          <Box paddingTop="l" paddingBottom="xl">
             <Route
               path={match.path}
               exact
@@ -81,9 +82,9 @@ export default ({ data, match }) => {
                 />
               )}
             />
-          </Padding>
+          </Box>
         </FadeIn>
       </Sticky>
     </Layout.Sidebar>
   );
-};
+}

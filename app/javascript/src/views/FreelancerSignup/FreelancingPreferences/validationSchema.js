@@ -11,9 +11,7 @@ const validationSchema = object().shape({
     .required(
       "Please select how many previous freelance projects you have completed.",
     ),
-  hourlyRate: number()
-    .nullable()
-    .required("Please define your hourly rate in USD."),
+  hourlyRate: number().nullable().required("Please define your hourly rate."),
 });
 
 export default validationSchema;

@@ -7,14 +7,15 @@ import {
   Autocomplete,
   Button,
   useTheme,
+  Textarea,
+  Select,
 } from "@advisable/donut";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { useQuery } from "@apollo/react-hooks";
 import { Container } from "./styles";
-import Select from "../../../components/Select";
-import TextField from "../../../components/TextField";
+import FormField from "../../../components/FormField";
 import Loading from "../../../components/Loading";
 import Images from "./Images";
 import validationSchema from "./validationSchema";
@@ -83,26 +84,24 @@ const FreelancerSearchCriteria = () => {
           {(formik) => (
             <Form>
               <Box mb="m">
-                <Field
+                <FormField
                   name="skill"
                   as={Autocomplete}
                   options={data.skills}
                   placeholder="Search for a skill"
                   label="What skill are you looking for?"
-                  error={formik.submitCount > 0 && formik.errors.skill}
                   onChange={(skill) => {
                     formik.setFieldValue("skill", skill);
                   }}
                 />
               </Box>
               <Box mb="m">
-                <Field
+                <FormField
                   as={Autocomplete}
                   name="industry"
                   placeholder="Industry"
                   label="What industry are you in?"
                   options={data.industries}
-                  error={formik.submitCount > 0 && formik.errors.industry}
                   onChange={(industry) => {
                     formik.setFieldTouched("industry", true);
                     formik.setFieldValue("industry", industry);
@@ -118,22 +117,21 @@ const FreelancerSearchCriteria = () => {
                 </Field>
               </Box>
               <Box mb="l">
-                <Field
+                <FormField
                   as={Select}
                   name="companyType"
                   label="What type of company are you?"
-                  options={[
-                    "Individual Entrepreneur",
-                    "Small Business",
-                    "Medium-Sized Business",
-                    "Startup",
-                    "Growth-Stage Startup",
-                    "Major Corporation",
-                    "Non-Profit",
-                    "Education Institution",
-                    "Government",
-                  ]}
-                />
+                >
+                  <option>Individual Entrepreneur</option>
+                  <option>Small Business</option>
+                  <option>Medium-Sized Business</option>
+                  <option>Startup</option>
+                  <option>Growth-Stage Startup</option>
+                  <option>Major Corporation</option>
+                  <option>Non-Profit</option>
+                  <option>Education Institution</option>
+                  <option>Government</option>
+                </FormField>
                 <Field
                   mt="s"
                   as={Checkbox}
@@ -144,15 +142,12 @@ const FreelancerSearchCriteria = () => {
                 </Field>
               </Box>
               <Box mb="xl">
-                <Field
+                <FormField
                   multiline
                   minRows={2}
-                  as={TextField}
+                  as={Textarea}
                   name="description"
                   label="Please briefly describe what you're looking for"
-                  error={
-                    formik.touched.description && formik.errors.description
-                  }
                 />
               </Box>
               <Button size="l" type="submit" prefix={<Search />}>

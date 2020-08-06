@@ -1,7 +1,7 @@
 // Renders the freelancers applications view.
 import React from "react";
 import { useHistory, Redirect } from "react-router-dom";
-import { Box, Alert } from "@advisable/donut";
+import { Box, Notice } from "@advisable/donut";
 import { useQuery } from "@apollo/react-hooks";
 import { RefreshCcw } from "@styled-icons/feather";
 import Layout from "../../components/Layout";
@@ -50,13 +50,13 @@ const Applications = () => {
       <Layout.Main>
         {onHold && (
           <Box mb="l">
-            <Alert
+            <Notice
               mb="m"
               icon={<RefreshCcw />}
               title="Your account is currently on hold"
             >
               We evaluate and accept freelancers as they apply for projects.
-            </Alert>
+            </Notice>
           </Box>
         )}
         <ApplicationInvitations

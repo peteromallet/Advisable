@@ -1,11 +1,10 @@
 // Renders the prompt to submit a task
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { Columns, Button } from "@advisable/donut";
+import { Box, Columns, Button } from "@advisable/donut";
 import Text from "../Text";
 import Slider from "../Slider";
 import Heading from "../Heading";
-import Padding from "../Spacing/Padding";
 import SUBMIT_TASK from "./submitTask";
 import currency from "../../utilities/currency";
 import { Confirmation, ConfirmationContainer } from "./styles";
@@ -61,18 +60,18 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
       <ConfirmationContainer>
         {step === CONFIRM_APPROVED && (
           <>
-            <Padding bottom="s">
+            <Box paddingBottom="s">
               <Text weight="semibold" colour="dark">
                 Is the work approved?
               </Text>
-            </Padding>
-            <Padding bottom="l">
+            </Box>
+            <Box paddingBottom="l">
               <Text size="s">
                 Before you mark this as complete, please make sure that you've
                 completed this batch of work and the client has already approved
                 it.
               </Text>
-            </Padding>
+            </Box>
             <Columns spacing="xs">
               <Button
                 width="100%"
@@ -91,7 +90,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
         )}
         {step === HOURS_WORKED && (
           <>
-            <Padding bottom="s">
+            <Box paddingBottom="s">
               <Text weight="semibold" colour="dark">
                 {isFixedPricing ? (
                   <>How much did this project cost?</>
@@ -99,8 +98,8 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
                   <>How many hours did this take you?</>
                 )}
               </Text>
-            </Padding>
-            <Padding bottom="l">
+            </Box>
+            <Box paddingBottom="l">
               <Text size="s">
                 {isFixedPricing ? (
                   <>
@@ -114,16 +113,16 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
                   </>
                 )}
               </Text>
-            </Padding>
-            <Padding bottom="m">
+            </Box>
+            <Box paddingBottom="m">
               <Heading size="m">
                 {isFixedPricing ? currency(estimate) : estimate}
               </Heading>
               <Text>
                 {task.estimateType === "Fixed" ? "Cost" : "Hours Worked"}
               </Text>
-            </Padding>
-            <Padding bottom="xl">
+            </Box>
+            <Box paddingBottom="xl">
               <Slider
                 labelHidden
                 value={estimate}
@@ -133,7 +132,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
                 step={isFixedPricing ? "5000" : "1"}
                 onChange={(e) => setCost(e.target.value)}
               />
-            </Padding>
+            </Box>
             <Columns spacing="xs">
               <Button
                 width="100%"

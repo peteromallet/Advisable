@@ -1,28 +1,23 @@
 import React from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import { Text, Box, Button } from "@advisable/donut";
-import createNumberMask from "text-mask-addons/dist/createNumberMask";
-import Radio from "../../../components/Radio";
+import { Text, Box, Button, RadioGroup, Radio } from "@advisable/donut";
+import FormField from "../../../components/FormField";
 import Choices from "../../../components/Choices";
-import TextField from "../../../components/TextField";
+import CurrencyInput from "../../../components/CurrencyInput";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
 import { ArrowRight } from "@styled-icons/feather";
-
-const numberMask = createNumberMask({
-  prefix: "",
-});
 
 const FreelancingPreferences = ({ history }) => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);
 
   const handleSubmit = async (values) => {
-    const { data, errors } = await updateProfile({
+    await updateProfile({
       variables: {
         input: {
           ...values,
-          hourlyRate: values.hourlyRate * 100,
+          hourlyRate: Number(values.hourlyRate) * 100,
         },
       },
     });
@@ -31,9 +26,9 @@ const FreelancingPreferences = ({ history }) => {
   };
 
   const initialValues = {
-    primarilyFreelance: null,
-    numberOfProjects: null,
-    hourlyRate: null,
+    primarilyFreelance: undefined,
+    numberOfProjects: undefined,
+    hourlyRate: "",
   };
 
   return (
@@ -57,17 +52,21 @@ const FreelancingPreferences = ({ history }) => {
               Is freelancing your primary occupation?
             </Text>
             <Box mb="xs">
-              <Radio
+              <Field
+                as={Radio}
+                type="radio"
                 name="primarilyFreelance"
-                label="Yes, freelancing is my primary occupation."
                 checked={formik.values.primarilyFreelance === true}
+                label="Yes, freelancing is my primary occupation"
                 onChange={() => {
                   formik.setFieldTouched("primarilyFreelance", true);
                   formik.setFieldValue("primarilyFreelance", true);
                 }}
               />
             </Box>
-            <Radio
+            <Field
+              as={Radio}
+              type="radio"
               name="primarilyFreelance"
               label="No, I freelance alongside a full-time job."
               checked={formik.values.primarilyFreelance === false}
@@ -106,17 +105,13 @@ const FreelancingPreferences = ({ history }) => {
           </Box>
 
           <Box mb="l">
-            <TextField
+            <FormField
               prefix="$"
+              as={CurrencyInput}
               name="hourlyRate"
-              mask={numberMask}
               placeholder="Hourly rate"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.hourlyRate}
               label="What is your typical hourly rate in USD?"
-              description="This is just to get an idea of your rate. You will be able to set your rate on a per project basis when working with clients on Advisable."
-              error={formik.touched.hourlyRate && formik.errors.hourlyRate}
+              caption="This is just to get an idea of your rate. You will be able to set your rate on a per project basis when working with clients on Advisable."
             />
           </Box>
 

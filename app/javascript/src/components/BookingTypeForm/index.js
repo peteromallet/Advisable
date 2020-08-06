@@ -1,15 +1,10 @@
 import React from "react";
-import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { Formik, Form, Field } from "formik";
 import { Box, Button, Radio, RadioGroup, Checkbox } from "@advisable/donut";
-import TextField from "../TextField";
+import FormField from "components/FormField";
+import CurrencyInput from "components/CurrencyInput";
 import currency from "../../utilities/currency";
 import { object, string, boolean, number } from "yup";
-
-const numberMask = createNumberMask({
-  prefix: "",
-  suffix: " hours",
-});
 
 const validation = object().shape({
   projectType: string().required("Please select a project type"),
@@ -51,30 +46,19 @@ const BookingTypeForm = ({
     if (!formik.values.monthlyLimit) return null;
     if (formik.values.monthlyLimit > 200) return null;
     const cost = ((rate * formik.values.monthlyLimit) / 2) * 100;
-    return `You will be charged ${currency(cost)}`;
+    return `${firstName} chrages ${currency(
+      rate * 100,
+    )} per hour. You will be charged ${currency(cost)}`;
   };
 
   const handleSubmit = async (values, formik) => {
     await onSubmit(
       {
         projectType: values.projectType,
-        monthlyLimit: values.monthlyLimit,
+        monthlyLimit: Number(values.monthlyLimit),
       },
       formik,
     );
-  };
-
-  const handleLimitChange = (formik) => (e) => {
-    let value = e.target.value;
-    if (Boolean(value)) {
-      value = value.replace(" hours", "");
-      value = value.replace(/\,/g, "");
-      value = Number(value);
-    } else {
-      value = undefined;
-    }
-    formik.setFieldTouched("monthlyLimit", true);
-    formik.setFieldValue("monthlyLimit", value);
   };
 
   return (
@@ -132,26 +116,18 @@ const BookingTypeForm = ({
           )}
           {formik.values.projectType === "Flexible" && (
             <>
-              <Box mb="m">
-                <TextField
-                  autoFocus={!formik.values.monthlyLimit}
-                  name="monthlyLimit"
-                  mask={numberMask}
-                  placeholder="Monthly limit"
-                  subLabel={
-                    rate &&
-                    `${firstName} charges ${currency(rate * 100)} per hour`
-                  }
-                  label="Set a monthly hour cap (to 200-hour max)"
-                  onChange={handleLimitChange(formik)}
-                  description={calculateCost(formik)}
-                  value={formik.values.monthlyLimit}
-                  error={
-                    formik.touched.monthlyLimit && formik.errors.monthlyLimit
-                  }
-                />
-              </Box>
-              <Box mb="s">
+              <FormField
+                size="sm"
+                marginBottom="l"
+                as={CurrencyInput}
+                name="monthlyLimit"
+                prefix="Hours"
+                placeholder="0"
+                autoFocus={!formik.values.monthlyLimit}
+                label="Set a monthly hour cap (to 200-hour max)"
+                caption={calculateCost(formik)}
+              />
+              <Box mt="m" mb="s">
                 <Field
                   as={Checkbox}
                   type="checkbox"

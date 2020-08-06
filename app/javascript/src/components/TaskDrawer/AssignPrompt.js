@@ -1,9 +1,8 @@
 // Renders the prompt to assign a task
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { Button } from "@advisable/donut";
+import { Button, Box } from "@advisable/donut";
 import Text from "../Text";
-import Padding from "../Spacing/Padding";
 import ASSIGN_TASK from "./assignTask.graphql";
 import { Confirmation, ConfirmationContainer } from "./styles";
 
@@ -29,23 +28,23 @@ const AssignPrompt = ({ task, onClose, onAssign }) => {
   return (
     <Confirmation>
       <ConfirmationContainer>
-        <Padding bottom="s">
+        <Box paddingBottom="s">
           <Text weight="semibold" colour="dark">
             Assign Task
           </Text>
-        </Padding>
-        <Padding bottom="l">
+        </Box>
+        <Box paddingBottom="l">
           <Text size="s">
             You will not be able to modify this task after it is assigned. You
             can add additional tasks if more work needs to be done.
           </Text>
-        </Padding>
+        </Box>
         {!hasQuote && (
-          <Padding bottom="l">
+          <Box paddingBottom="l">
             <Text size="s">
               This task has no estimate. You may want to request a quote first.
             </Text>
-          </Padding>
+          </Box>
         )}
         <Button loading={loading} onClick={handleAssign} mr="xs">
           Assign

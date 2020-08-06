@@ -1,21 +1,20 @@
 import React from "react";
+import { Box, Card } from "@advisable/donut";
 import Text from "../../components/Text";
-import Card from "../../components/Card";
 import NewTask from "../../components/NewTask";
-import { Padding } from "../../components/Spacing";
 import illustration from "../../illustrations/relax.png";
 
-export default ({ onNewTask, application }) => {
+export default function NoTasks({ onNewTask, application }) {
   return (
     <Card>
-      <Padding size="xxl" style={{ textAlign: "center" }}>
+      <Box padding="xxl" style={{ textAlign: "center" }}>
         <img src={illustration} width={300} />
-        <Padding bottom="xs">
+        <Box paddingBottom="xs">
           <Text weight="semibold" colour="dark">
             No active tasks
           </Text>
-        </Padding>
-        <Padding bottom="l">
+        </Box>
+        <Box paddingBottom="l">
           <Text
             size="s"
             style={{
@@ -26,9 +25,9 @@ export default ({ onNewTask, application }) => {
             You have no active tasks with {application.project.user.companyName}
             .
           </Text>
-        </Padding>
+        </Box>
         <NewTask onCreate={onNewTask} application={application} />
-      </Padding>
+      </Box>
     </Card>
   );
-};
+}

@@ -1,8 +1,8 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import { Box, Text, Button, Columns } from "@advisable/donut";
+import { Box, Text, Button, Columns, Textarea } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
-import TextField from "../../components/TextField";
+import FormField from "../../components/FormField";
 import { REQUEST_MORE_TIMES } from "./queries";
 
 export default function RequestMoreAvailability({
@@ -47,9 +47,8 @@ export default function RequestMoreAvailability({
         {(formik) => (
           <Form>
             <Box mb="l">
-              <Field
-                as={TextField}
-                multiline
+              <FormField
+                as={Textarea}
                 name="availabilityNote"
                 label="When suits for you?"
                 placeholder="Please add a note on your availability"

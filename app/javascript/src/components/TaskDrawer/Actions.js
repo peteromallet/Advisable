@@ -2,9 +2,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { Info, ArrowLeft } from "@styled-icons/feather";
 import { useMutation } from "@apollo/react-hooks";
-import { Box, Button } from "@advisable/donut";
-import Padding from "../Spacing/Padding";
-import { Text } from "@advisable/donut";
+import { Box, Button, Text } from "@advisable/donut";
 import ButtonGroup from "../ButtonGroup";
 import Notice from "../Notice";
 import START_TASK from "./startTask.graphql";
@@ -173,7 +171,7 @@ export default function TaskDrawerActions({
 
     if (!hasName || !hasDescription) {
       notice = (
-        <Padding bottom="m">
+        <Box paddingBottom="m">
           <Notice icon={<Info />}>
             <Text size="xs" mb="xxs" weight="medium" color="neutral.9">
               Not Assigned
@@ -183,7 +181,7 @@ export default function TaskDrawerActions({
               can request to start working on it.
             </Text>
           </Notice>
-        </Padding>
+        </Box>
       );
     }
   }

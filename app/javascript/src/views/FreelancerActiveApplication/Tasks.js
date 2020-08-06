@@ -1,13 +1,12 @@
 import React from "react";
-import { Text, Tabs } from "@advisable/donut";
-import Card from "../../components/Card";
+import { Text, Tabs, Card } from "@advisable/donut";
 import ActiveTasks from "./ActiveTasks";
 import CompletedTasks from "./CompletedTasks";
 
 // Renders the tasks inside the freelancer active project view.
-const Tasks = props => {
+const Tasks = (props) => {
   return (
-    <Card elevation={1}>
+    <Card>
       <Text as="h4" size="xl" padding="m" weight="medium" color="neutral.9">
         My Tasks
       </Text>

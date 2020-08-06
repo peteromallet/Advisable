@@ -50,7 +50,7 @@ export default function BulletPointInput({
             minRows={1}
             value={item}
             rowPadding={2}
-            name={rest.name}
+            name={`${rest.name}[${i}]`}
             style={{ width: "100%" }}
             placeholder={item ? null : placeholder}
             onChange={handleChange(i)}

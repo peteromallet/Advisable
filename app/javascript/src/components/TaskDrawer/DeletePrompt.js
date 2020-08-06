@@ -1,9 +1,8 @@
 // Renders the prompt to submit a task
 import React from "react";
-import { Button } from "@advisable/donut";
+import { Button, Box } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
-import Padding from "../Spacing/Padding";
 import DELETE_TASK from "./deleteTask.graphql";
 import { Confirmation, ConfirmationContainer } from "./styles";
 
@@ -27,11 +26,11 @@ const DeletePrompt = ({ task, onClose, onDelete }) => {
   return (
     <Confirmation>
       <ConfirmationContainer>
-        <Padding bottom="l">
+        <Box paddingBottom="l">
           <Text weight="semibold" colour="dark">
             Are you sure you want to delete this task?
           </Text>
-        </Padding>
+        </Box>
         <Button loading={loading} onClick={handleDelete} variant="dark">
           Delete
         </Button>

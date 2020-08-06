@@ -1,5 +1,5 @@
 import React from "react";
-import Spacing from "../Spacing";
+import { Box } from "@advisable/donut";
 import styled from "styled-components";
 import colors from "../../colors";
 
@@ -18,10 +18,10 @@ const Skill = styled.div`
 
 export default ({ skills, ...props }) => {
   return (
-    <Spacing {...props}>
+    <Box {...props}>
       {skills.map((skill, i) => (
         <Skill key={i}>{skill.name}</Skill>
       ))}
-    </Spacing>
+    </Box>
   );
 };

@@ -1,10 +1,9 @@
 // Renders the prompt to repeat a task.
 import React from "react";
 import { DateTime } from "luxon";
-import { Button } from "@advisable/donut";
+import { Box, Button } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "../Text";
-import Padding from "../Spacing/Padding";
 import CREATE_TASK from "../../graphql/mutations/createTask";
 import { Confirmation, ConfirmationContainer } from "./styles";
 
@@ -36,17 +35,17 @@ const RepeatPrompt = ({ task, onRepeat, onClose }) => {
   return (
     <Confirmation>
       <ConfirmationContainer>
-        <Padding bottom="s">
+        <Box paddingBottom="s">
           <Text weight="semibold" colour="dark">
             Repeating Task
           </Text>
-        </Padding>
-        <Padding bottom="l">
+        </Box>
+        <Box paddingBottom="l">
           <Text size="s">
             This has been marked as a repeating task. Do you want to repeat it
             for another month?
           </Text>
-        </Padding>
+        </Box>
         <Button loading={loading} onClick={handleRepeat} mr="xs">
           Yes
         </Button>

@@ -56,9 +56,9 @@ test("Setting the estimate for a task", async () => {
   fireEvent.click(estimateButton);
   const flexible = comp.getByLabelText("Flexible", { exact: false });
   fireEvent.click(flexible);
-  const estimate = await comp.findByPlaceholderText("10 Hours");
+  const estimate = await comp.findByPlaceholderText("10");
   fireEvent.change(estimate, { target: { value: "10" } });
-  const flexibleEstimate = comp.getByPlaceholderText("20 Hours");
+  const flexibleEstimate = comp.getByPlaceholderText("20");
   fireEvent.change(flexibleEstimate, { target: { value: "20" } });
   await waitFor(() => {}); // wait for validations to finish!
   const save = comp.getByLabelText("Save Quote");

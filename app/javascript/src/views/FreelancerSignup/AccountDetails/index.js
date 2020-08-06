@@ -7,8 +7,8 @@ import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Text, Box, Button } from "@advisable/donut";
+import FormField from "components/FormField";
 import VIEWER from "../../../graphql/queries/viewer";
-import TextField from "../../../components/TextField";
 import validationSchema from "./validationSchema";
 import CREATE_FREELANCER_ACCOUNT from "./createFreelancerAccount";
 
@@ -101,63 +101,43 @@ const AccountDetails = ({ specialist, history, location }) => {
           <Form>
             <Box display="flex" mb="s">
               <Box pr="xxs" flex={1}>
-                <TextField
+                <FormField
                   name="firstName"
                   label="First name"
                   placeholder="First name"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.firstName}
-                  error={formik.touched.firstName && formik.errors.firstName}
                 />
               </Box>
               <Box pl="xxs" flex={1}>
-                <TextField
+                <FormField
                   name="lastName"
                   label="Last name"
                   placeholder="Last name"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.lastName}
-                  error={formik.touched.lastName && formik.errors.lastName}
                 />
               </Box>
             </Box>
             <Box mb="s">
-              <TextField
+              <FormField
                 type="tel"
                 name="phone"
                 label="Contact number"
                 placeholder="Contact number"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.phone}
-                error={formik.touched.phone && formik.errors.phone}
               />
             </Box>
             <Box mb="s">
-              <TextField
+              <FormField
                 type="email"
                 name="email"
                 label="Email Address"
                 placeholder="Email address"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.email}
-                error={formik.touched.email && formik.errors.email}
               />
             </Box>
-            <TextField
+            <FormField
               type="password"
               label="Password"
               name="password"
               placeholder="Password"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.password}
-              error={formik.touched.password && formik.errors.password}
             />
-            <Box bg="neutral.1" width="100%" height="1px" my="l" />
+            <Box bg="neutral100" width="100%" height="1px" my="l" />
             <Button
               size="l"
               type="submit"

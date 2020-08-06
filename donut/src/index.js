@@ -10,7 +10,6 @@ export { default as StyledText } from "./components/Text/styles";
 export { default as Flex } from "./components/Flex";
 export { default as Tabs } from "./components/Tabs";
 export { default as Radio } from "./components/Radio";
-export { default as Alert } from "./components/Alert";
 export { default as Availability } from "./components/Availability";
 
 export { default as Tag } from "./components/Tag";
@@ -45,6 +44,9 @@ export * from "./components/Avatar/styles";
 export { default as Circle } from "./components/Circle";
 export * from "./components/Circle/styles";
 
+export { default as FieldError } from "./components/FieldError";
+export * from "./components/FieldError/styles";
+
 export { default as Stack } from "./components/Stack";
 export * from "./components/Stack/styles";
 
@@ -60,7 +62,6 @@ export * from "./components/Modal/styles";
 
 export { default as Button } from "./components/Button";
 export { default as Tooltip } from "./components/Tooltip";
-export { default as Padding } from "./components/Padding";
 export { default as Provider } from "./components/Provider";
 export { default as Skeleton } from "./components/Skeleton";
 export { default as Checkbox } from "./components/Checkbox";

@@ -60,7 +60,15 @@ test("User can complete booking setup", async () => {
         },
       ),
       mockQuery(GET_PAYMENT_METHOD, {}, { viewer: user }),
-      mockQuery(GET_DATA, {}, { countries: [graphqlFields.country()] }),
+      mockQuery(
+        GET_DATA,
+        {},
+        {
+          countries: [
+            graphqlFields.country({ code: "IE", name: "Ireland", eu: true }),
+          ],
+        },
+      ),
       mockMutation(
         UPDATE_PROJECT_PAYMENT_METHOD,
         {
@@ -70,6 +78,7 @@ test("User can complete booking setup", async () => {
             billingEmail: "test@test.com",
             address: {
               line1: "Bacon Street",
+              line2: "",
               country: "IE",
               city: "Test City",
               state: "Test County",
@@ -112,6 +121,7 @@ test("User can complete booking setup", async () => {
             input: {
               application: "rec1234",
               projectType: "Fixed",
+              monthlyLimit: null,
             },
           },
         },
@@ -166,9 +176,10 @@ test("User can complete booking setup", async () => {
     "Bacon Street",
   );
   screenUser.type(await screen.findByPlaceholderText(/city/i), "Test City");
-  screenUser.type(await screen.findByPlaceholderText("County"), "Test County");
+  screenUser.type(await screen.findByPlaceholderText(/state/i), "Test County");
+  screenUser.selectOptions(await screen.findByLabelText(/country/i), ["IE"]);
   screenUser.type(await screen.findByPlaceholderText(/postcode/i), "12345");
-  screenUser.type(await screen.findByPlaceholderText(/vat/i), "12345");
+  screenUser.type(await screen.findByLabelText(/vat/i), "12345");
   screenUser.click(await screen.findByLabelText(/continue/i));
   // payment terms
   screenUser.click(await screen.findByLabelText(/i accept/i));

@@ -1,28 +1,23 @@
 import * as React from "react";
 import { get } from "lodash-es";
+import { Box, Card } from "@advisable/donut";
 import Text from "../../components/Text";
-import Card from "../../components/Card";
 import NewTask from "../../components/NewTask";
-import { Padding } from "../../components/Spacing";
 import illustration from "./no_tasks.png";
 
-interface Props {
-  application: any;
-  onNewTask: (e: React.SyntheticEvent) => void;
-}
-
-export default ({ onNewTask, application }: Props) => {
+export default function NoTasks({ onNewTask, application }) {
   let firstName = get(application, "specialist.firstName");
+
   return (
     <Card>
-      <Padding size="xxl" style={{ textAlign: "center" }}>
+      <Box padding="xxl" style={{ textAlign: "center" }}>
         <img src={illustration} width={300} />
-        <Padding bottom="xs">
+        <Box paddingBottom="xs">
           <Text weight="semibold" colour="dark">
             No active projects
           </Text>
-        </Padding>
-        <Padding bottom="l">
+        </Box>
+        <Box paddingBottom="l">
           <Text
             size="s"
             style={{
@@ -33,9 +28,9 @@ export default ({ onNewTask, application }: Props) => {
             You must now assign a project in order for {firstName} to start
             work.
           </Text>
-        </Padding>
+        </Box>
         <NewTask onCreate={onNewTask} application={application} />
-      </Padding>
+      </Box>
     </Card>
   );
-};
+}

@@ -1,6 +1,5 @@
-import { theme } from "@advisable/donut";
+import { theme, StyledCard } from "@advisable/donut";
 import styled, { keyframes } from "styled-components";
-import { default as BaseCard } from "src/components/Card";
 import { Avatar } from "src/components/Avatar/styles";
 import { AdvisableComment } from "../AdvisableComment";
 import { FeaturedBadge } from "src/components/FeaturedBadge";
@@ -35,7 +34,7 @@ export const ViewMore = styled.button`
   }
 `;
 
-export const Card = styled(BaseCard)`
+export const Card = styled(StyledCard)`
   opacity: 0;
   margin-bottom: 20px;
   transition: box-shadow 300ms ease-out;

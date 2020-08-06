@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash-es";
 import { useQuery } from "@apollo/react-hooks";
-import { Text, Padding } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import currency from "../../../utilities/currency";
 import Status from "../../../components/Status";
 import Skeleton from "../../../components/Skeleton";
@@ -20,13 +20,13 @@ const SpecialistSidebar = (props) => {
   if (loading) {
     return (
       <>
-        <Padding bottom="xs">
+        <Box paddingBottom="xs">
           <Skeleton style={{ height: 18, width: 140 }} />
-        </Padding>
-        <Padding bottom="l">
+        </Box>
+        <Box paddingBottom="l">
           <Skeleton style={{ height: 14, width: 120 }} />
-        </Padding>
-        <Padding bottom="l">
+        </Box>
+        <Box paddingBottom="l">
           <AttributeList>
             <AttributeList.Item
               label={<Skeleton style={{ height: 14, width: 70 }} />}
@@ -41,7 +41,7 @@ const SpecialistSidebar = (props) => {
               value={<Skeleton style={{ height: 14, width: 75 }} />}
             />
           </AttributeList>
-        </Padding>
+        </Box>
         <Skeleton style={{ height: 40, width: "100%" }} />
       </>
     );
@@ -59,20 +59,20 @@ const SpecialistSidebar = (props) => {
 
   return (
     <>
-      <Padding bottom="xxs">
+      <Box paddingBottom="xxs">
         <Text size="l" weight="semibold" color="neutral.N9">
           {get(application, "project.user.companyName")}
         </Text>
-      </Padding>
-      <Padding bottom="s">
+      </Box>
+      <Box paddingBottom="s">
         <Text size="xs" color="neutral.N7">
           {get(application, "project.primarySkill.name")}
         </Text>
-      </Padding>
-      <Padding bottom="l">
+      </Box>
+      <Box paddingBottom="l">
         <Status>{data.application.status}</Status>
-      </Padding>
-      <Padding bottom="l">
+      </Box>
+      <Box paddingBottom="l">
         <AttributeList>
           <AttributeList.Item
             label="Hourly Rate"
@@ -98,7 +98,7 @@ const SpecialistSidebar = (props) => {
             />
           )}
         </AttributeList>
-      </Padding>
+      </Box>
       <SpecialistActions application={application} />
     </>
   );

@@ -72,7 +72,7 @@ test("Continues to the build profile step", async () => {
   });
 
   await findByText("Freelancing Preferences");
-  const radio = getByLabelText("Yes, freelancing is my primary occupation.");
+  const radio = getByLabelText("Yes, freelancing is my primary occupation");
   fireEvent.click(radio);
   const numberOfProjects = getByLabelText("20+");
   fireEvent.click(numberOfProjects);

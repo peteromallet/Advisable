@@ -5,8 +5,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { Button } from "@advisable/donut";
 import { withNotifications } from "src/components/Notifications";
 import Heading from "src/components/Heading";
-import FieldRow from "src/components/FieldRow";
-import TextField from "src/components/TextField";
+import FormField from "src/components/FormField";
 import validationSchema from "./validationSchema";
 import RESET_PASSWORD from "./resetPassword.graphql";
 import { Container, Card } from "../styles";
@@ -62,33 +61,20 @@ export default withNotifications(
                 <Heading center marginBottom="l">
                   Reset Password
                 </Heading>
-                <FieldRow>
-                  <TextField
-                    name="password"
-                    type="password"
-                    label="New Password"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    placeholder="Password"
-                    error={formik.touched.password && formik.errors.password}
-                  />
-                </FieldRow>
-                <FieldRow>
-                  <TextField
-                    name="passwordConfirmation"
-                    type="password"
-                    label="Confirm Password"
-                    value={formik.values.passwordConfirmation}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    placeholder="Password Confirmation"
-                    error={
-                      formik.touched.passwordConfirmation &&
-                      formik.errors.passwordConfirmation
-                    }
-                  />
-                </FieldRow>
+                <FormField
+                  name="password"
+                  type="password"
+                  marginBottom="l"
+                  label="New Password"
+                  placeholder="Password"
+                />
+                <FormField
+                  type="password"
+                  marginBottom="l"
+                  label="Confirm Password"
+                  name="passwordConfirmation"
+                  placeholder="Password Confirmation"
+                />
                 <Button loading={formik.isSubmitting} type="submit">
                   Reset Password
                 </Button>

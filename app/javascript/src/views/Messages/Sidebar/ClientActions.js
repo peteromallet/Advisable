@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Padding, Button } from "@advisable/donut";
+import { Box, Button } from "@advisable/donut";
 import CreateBookingButton from "../../../components/CreateBookingButton";
 import DeclineApplicationButton from "../../../components/DeclineApplicationButton";
 import { FileText, Check } from "@styled-icons/feather";
@@ -15,15 +15,15 @@ const ClientActions = ({ application }) => {
   // in an accepted state.
   if (!isBooking && application.status === "Application Accepted") {
     actions.push(
-      <Padding bottom="xs" key="createBooking">
+      <Box paddingBottom="xs" key="createBooking">
         <CreateBookingButton application={application} />
-      </Padding>,
+      </Box>,
     );
   }
 
   if (!isBooking && application.status === "Proposed") {
     actions.push(
-      <Padding bottom="xs" key="viewProposal">
+      <Box paddingBottom="xs" key="viewProposal">
         <Button
           as={Link}
           width="100%"
@@ -32,13 +32,13 @@ const ClientActions = ({ application }) => {
         >
           View Proposal
         </Button>
-      </Padding>,
+      </Box>,
     );
   }
 
   if (!isBooking) {
     actions.push(
-      <Padding bottom="xs" key="viewApplication">
+      <Box paddingBottom="xs" key="viewApplication">
         <Button
           as={Link}
           width="100%"
@@ -48,7 +48,7 @@ const ClientActions = ({ application }) => {
         >
           View Application
         </Button>
-      </Padding>,
+      </Box>,
     );
 
     actions.push(

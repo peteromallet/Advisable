@@ -1,11 +1,11 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import { FixedSizeList as List } from "react-window";
+import { Box } from "@advisable/donut";
 import MenuItem from "../MenuItem";
 import filterItems from "../filterItems";
 import Back from "./Back";
 import Text from "../../Text";
-import Padding from "../../Padding";
 import getPortalTarget from "../portralTarget";
 import Downshift from "../Downshift";
 import {
@@ -15,7 +15,7 @@ import {
   MobileContainerSearch,
 } from "../styles";
 
-const AutocompleteMobileMenu = props => {
+const AutocompleteMobileMenu = (props) => {
   const {
     options,
     placeholder,
@@ -34,9 +34,9 @@ const AutocompleteMobileMenu = props => {
       onChange={onChange}
       initialSelectedItem={initalSelectedItem}
       initialInputValue=""
-      itemToString={item => (item ? item.label : "")}
+      itemToString={(item) => (item ? item.label : "")}
     >
-      {downshift => {
+      {(downshift) => {
         let items = filterItems(downshift, options);
 
         if (props.isMax) {
@@ -57,12 +57,12 @@ const AutocompleteMobileMenu = props => {
               </MobileContainerSearch>
             </MobileContainerTop>
             {props.isMax && (
-              <Padding size="s">
+              <Box padding="s">
                 <Text multiline color="neutral.N8">
                   You can not add more than {props.max} items. Please remove one
                   of the following selections to add another.
                 </Text>
-              </Padding>
+              </Box>
             )}
             <List
               width="100%"
@@ -83,7 +83,7 @@ const AutocompleteMobileMenu = props => {
         );
       }}
     </Downshift>,
-    portalRoot
+    portalRoot,
   );
 };
 
