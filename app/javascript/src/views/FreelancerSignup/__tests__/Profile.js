@@ -61,6 +61,7 @@ test("Continues to the work history step", async () => {
               city: "Dublin",
               country: "IE",
               publicUse: true,
+              avatar: undefined,
             },
           },
         },

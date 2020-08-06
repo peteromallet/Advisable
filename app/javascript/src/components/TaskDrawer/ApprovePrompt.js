@@ -1,6 +1,6 @@
 // Displays the prompt for when a client approves a task.
 import React from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import Text from "../Text";
 import { Button, Box } from "@advisable/donut";
 import { Confirmation, ConfirmationContainer } from "./styles";

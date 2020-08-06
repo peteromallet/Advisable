@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { DateTime } from "luxon";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import {
   Box,
   Modal,
@@ -25,6 +25,7 @@ function RequestIntroductionModal({ modal, ...props }) {
       width={700}
       padding={["m", "l"]}
       tabIndex={0}
+      label="Request introduction"
     >
       <RequestIntroduction modal={modal} {...props} />
     </Modal>

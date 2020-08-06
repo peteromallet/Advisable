@@ -1,8 +1,8 @@
 import React from "react";
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { get } from "lodash-es";
 import { VisuallyHidden } from "reakit/VisuallyHidden";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { connect, Field } from "formik";
 import { Box, Input, Select, Label, FieldError } from "@advisable/donut";
 

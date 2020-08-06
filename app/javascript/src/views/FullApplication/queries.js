@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 
 export const SUBMIT_FULL_APPLICATION = gql`
   mutation submitFullApplication($input: SubmitFullApplicationInput!) {

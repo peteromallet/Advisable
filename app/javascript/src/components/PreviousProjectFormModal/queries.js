@@ -1,5 +1,5 @@
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
+import { gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 export const SELECT_DATA = gql`
   {

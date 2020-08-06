@@ -1,5 +1,5 @@
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
 export const FETCH_PROJECTS = gql`
   query {

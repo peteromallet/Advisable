@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Formik, Form, Field } from "formik";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import {
   Box,

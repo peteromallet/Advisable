@@ -1,6 +1,6 @@
 import React, { lazy } from "react";
 import { useParams, useLocation, Redirect } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import Loading from "../../components/Loading";
 import AccessDenied from "../../components/AccessDenied";
 import handleAuthError from "../../utilities/handleAuthError";

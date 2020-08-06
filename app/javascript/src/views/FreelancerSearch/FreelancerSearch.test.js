@@ -117,6 +117,7 @@ test("User can search for freelancers and request consultations with them", asyn
             topic: "This is the topic",
             specialists: [specialists[0].id, specialists[1].id],
             search: "sea_123",
+            likelyToHire: 5,
           },
         },
       },
@@ -171,6 +172,7 @@ test("User can search for freelancers and request consultations with them", asyn
     "What would you like to talk about...",
   );
   fireEvent.change(topic, { target: { value: "This is the topic" } });
+  fireEvent.click(app.getByLabelText("Very Likely"));
   fireEvent.click(app.getByLabelText("Request Consultation"));
 
   const header = await app.findByText(
@@ -293,6 +295,7 @@ test("User can search for freelancers and get a recommendation", async () => {
             topic: "This is the topic",
             specialists: [specialists[0].id],
             search: "sea_123",
+            likelyToHire: 5,
           },
         },
       },
@@ -342,6 +345,7 @@ test("User can search for freelancers and get a recommendation", async () => {
     "What would you like to talk about...",
   );
   fireEvent.change(topic, { target: { value: "This is the topic" } });
+  fireEvent.click(app.getByLabelText("Very Likely"));
   fireEvent.click(app.getByLabelText("Request Consultation"));
 
   const header = await app.findByText(

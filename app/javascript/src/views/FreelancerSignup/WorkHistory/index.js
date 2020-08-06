@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { Button, Text, Box } from "@advisable/donut";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import FileUpload from "../../../components/FileUpload";
 import FormField from "components/FormField";
 import UPDATE_PROFILE from "../updateProfile";

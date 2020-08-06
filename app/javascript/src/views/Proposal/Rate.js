@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Box, Button, Card } from "@advisable/donut";
 import Text from "../../components/Text";
 import Heading from "../../components/Heading";

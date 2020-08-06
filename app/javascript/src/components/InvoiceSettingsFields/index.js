@@ -1,8 +1,8 @@
 import React from "react";
 import { string } from "yup";
 import { find, get } from "lodash-es";
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Box } from "@advisable/donut";
 import Loading from "../Loading";
 import FormField from "../FormField";

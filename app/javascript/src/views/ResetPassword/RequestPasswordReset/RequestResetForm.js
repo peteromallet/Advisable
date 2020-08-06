@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Box, Text, Label, Input, Button } from "@advisable/donut";
 import FormField from "components/FormField";
 import validationSchema from "./validationSchema";

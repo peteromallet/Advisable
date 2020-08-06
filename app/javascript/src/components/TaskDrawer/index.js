@@ -5,7 +5,7 @@
 // become very bloated from when it was a simple task drawer.
 import * as React from "react";
 import { withRouter } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import { Box } from "@advisable/donut";
 import { get, filter } from "lodash-es";
 import Drawer from "../Drawer";

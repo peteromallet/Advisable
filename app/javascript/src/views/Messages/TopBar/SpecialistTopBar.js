@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash-es";
 import { useHistory } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { ChevronRight } from "@styled-icons/feather";
 import { Text, Box, Flex } from "@advisable/donut";
 import Avatar from "../../../components/Avatar";

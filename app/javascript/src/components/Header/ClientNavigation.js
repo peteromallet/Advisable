@@ -1,16 +1,12 @@
 import * as React from "react";
 import { X } from "@styled-icons/feather";
-import useViewer from "../../hooks/useViewer";
 import { useMobile } from "../../components/Breakpoint";
 import useMessageCount from "../../hooks/useMessageCount";
 import { CloseNav, NavContainer, Nav, NavItem, Badge } from "./styles";
 
 const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
-  const viewer = useViewer();
   const isMobile = useMobile();
   const messageCount = useMessageCount();
-
-  if (!viewer?.isClient) return null;
 
   return (
     <NavContainer isOpen={navOpen}>

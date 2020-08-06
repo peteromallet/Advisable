@@ -1,5 +1,5 @@
 // Renders the confirmation steps for a project.
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import React from "react";
 import { Route, Switch, Redirect, useLocation } from "react-router";
 import NotFound from "src/views/NotFound";

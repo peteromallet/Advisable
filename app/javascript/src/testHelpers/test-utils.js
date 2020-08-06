@@ -2,14 +2,10 @@ import React from "react";
 import { I18nextProvider } from "react-i18next";
 import { MemoryRouter } from "react-router-dom";
 import { render } from "@testing-library/react";
-import { MockedProvider } from "@apollo/react-testing";
-import {
-  InMemoryCache,
-  IntrospectionFragmentMatcher,
-} from "apollo-cache-inmemory";
+import { MockedProvider } from "@apollo/client/testing";
 import i18n from "./i18next";
 import App from "../App";
-import introspectionQueryResultData from "../fragmentTypes.json";
+import createCache from "../apolloCache";
 
 window.focus = jest.fn();
 
@@ -35,23 +31,23 @@ Object.defineProperty(window, "scrollTo", {
 });
 
 jest.mock("talkjs", () => {
-  class User { }
+  class User {}
   class Session {
     getOrCreateConversation() {
       return {
-        setParticipant: (user) => { },
+        setParticipant: (user) => {},
       };
     }
 
     createChatbox(conversation) {
       return {
-        mount: (node) => { },
+        mount: (node) => {},
       };
     }
 
     get unreads() {
       return {
-        on: (event, handler) => { },
+        on: (event, handler) => {},
       };
     }
   }
@@ -64,11 +60,7 @@ jest.mock("talkjs", () => {
 });
 
 function Providers({ children, route, graphQLMocks }) {
-  const fragmentMatcher = new IntrospectionFragmentMatcher({
-    introspectionQueryResultData,
-  });
-
-  const cache = new InMemoryCache({ fragmentMatcher });
+  const cache = createCache();
 
   return (
     <I18nextProvider i18n={i18n}>

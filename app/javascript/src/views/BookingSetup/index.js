@@ -2,7 +2,7 @@
 // required for the booking to be in a working state.
 import React from "react";
 import { Box } from "@advisable/donut";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import {
   Switch,
   Route,

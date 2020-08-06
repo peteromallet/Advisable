@@ -2,14 +2,11 @@ import * as React from "react";
 import { X } from "@styled-icons/feather";
 import { useMobile } from "../../components/Breakpoint";
 import useMessageCount from "../../hooks/useMessageCount";
-import useViewer from "../../hooks/useViewer";
 import { CloseNav, NavContainer, Nav, NavItem, Badge } from "./styles";
 
 const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
   const isMobile = useMobile();
   const messageCount = useMessageCount();
-  const viewer = useViewer();
-  if (!viewer?.isSpecialist) return null;
 
   return (
     <NavContainer isOpen={navOpen}>

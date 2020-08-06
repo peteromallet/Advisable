@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { useRouteMatch } from "react-router-dom";
 import { Box, Container, Text } from "@advisable/donut";
 import NavigationMenu from "./NavigationMenu";

@@ -2,7 +2,21 @@ import React from "react";
 import { Box, Text } from "@advisable/donut";
 import { StyledScaleInput, StyledScaleInputOption } from "./styles";
 
-function ScaleInput({ value, onChange, leftTitle, rightTitle }) {
+const LABELS = [
+  "Very Unlikely",
+  "Unlikely",
+  "Not Sure",
+  "Likely",
+  "Very Likely",
+];
+
+function ScaleInput({
+  value,
+  onChange,
+  leftTitle,
+  rightTitle,
+  labels = LABELS,
+}) {
   const createClickHandler = (value) => () => {
     onChange(value);
   };
@@ -18,7 +32,7 @@ function ScaleInput({ value, onChange, leftTitle, rightTitle }) {
           <StyledScaleInputOption
             key={n}
             type="button"
-            aria-label={n}
+            aria-label={labels[n - 1]}
             data-selected={value === n}
             onClick={createClickHandler(n)}
           >

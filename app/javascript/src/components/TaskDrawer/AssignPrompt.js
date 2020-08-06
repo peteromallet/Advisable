@@ -1,6 +1,6 @@
 // Renders the prompt to assign a task
 import React from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Button, Box } from "@advisable/donut";
 import Text from "../Text";
 import ASSIGN_TASK from "./assignTask.graphql";

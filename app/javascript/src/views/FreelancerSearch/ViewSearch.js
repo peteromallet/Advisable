@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { useParams, Switch, Route, Redirect } from "react-router-dom";
 import Sent from "./Sent";
 import Topic from "./Topic";

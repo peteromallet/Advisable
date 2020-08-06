@@ -1,7 +1,7 @@
 import React from "react";
 import { get, sortBy } from "lodash-es";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import {
   Box,
   Card,

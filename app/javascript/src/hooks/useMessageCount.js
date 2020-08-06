@@ -7,7 +7,7 @@ const useMessageCount = () => {
   const viewer = useViewer();
   const [messageCount, setMessageCount] = useState(0);
 
-  const handleUnread = conversations => {
+  const handleUnread = (conversations) => {
     setMessageCount(conversations.length);
   };
 

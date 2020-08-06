@@ -55,7 +55,7 @@ const BookingTypeForm = ({
     await onSubmit(
       {
         projectType: values.projectType,
-        monthlyLimit: Number(values.monthlyLimit),
+        monthlyLimit: values.monthlyLimit ? Number(values.monthlyLimit) : null,
       },
       formik,
     );

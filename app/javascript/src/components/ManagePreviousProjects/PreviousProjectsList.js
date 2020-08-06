@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs, Stack, useModal } from "@advisable/donut";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 import useViewer from "../../hooks/useViewer";
 import PreviousProjectFormModal, {
   usePreviousProjectModal,

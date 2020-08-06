@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { Text } from "@advisable/donut";
 import Loading from "../../../components/Loading";
 import PREVIOUS_PROJECTS from "./previousProjects";

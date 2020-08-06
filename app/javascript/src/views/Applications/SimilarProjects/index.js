@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, Card, Stack, Box, Avatar } from "@advisable/donut";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_SIMILAR_PROJECTS } from "./queries";
 import renderLineBreaks from "../../../utilities/renderLineBreaks";
 

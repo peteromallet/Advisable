@@ -35,16 +35,20 @@ const Header = (props) => {
           <Logo href={logoURL}>
             <img src={logo} alt="" />
           </Logo>
-          <ClientNavigation
-            navOpen={navOpen}
-            onCloseNav={() => setNavOpen(false)}
-            onLogout={() => handleLogout()}
-          />
-          <FreelancerNavigation
-            navOpen={navOpen}
-            onLogout={() => handleLogout()}
-            onCloseNav={() => setNavOpen(false)}
-          />
+          {viewer && viewer.isClient && (
+            <ClientNavigation
+              navOpen={navOpen}
+              onCloseNav={() => setNavOpen(false)}
+              onLogout={() => handleLogout()}
+            />
+          )}
+          {viewer && viewer.isSpecialist && (
+            <FreelancerNavigation
+              navOpen={navOpen}
+              onLogout={() => handleLogout()}
+              onCloseNav={() => setNavOpen(false)}
+            />
+          )}
           {!isMobile && (
             <CurrentUser user={viewer} onLogout={() => handleLogout()} />
           )}

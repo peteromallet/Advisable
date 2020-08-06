@@ -2,7 +2,7 @@
 import React from "react";
 import { useHistory, Redirect } from "react-router-dom";
 import { Box, Notice } from "@advisable/donut";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { RefreshCcw } from "@styled-icons/feather";
 import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";

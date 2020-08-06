@@ -1,6 +1,6 @@
 // Renders all of the previous projects for a specialist
 import * as React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { Modal, Text } from "@advisable/donut";
 import Loading from "../Loading";
 import PreviousProject from "../PreviousProject";
