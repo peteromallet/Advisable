@@ -34,6 +34,6 @@ class Airtable::ClientCall < Airtable::Base
     self['Event Type'] = client_call.event_type
     self['Type Of Call'] = client_call.type_of_call
     self['Client Contact'] = [client_call.user.try(:airtable_id)].compact
-    self['ASAP Call Attempt Count'] = client_call.call_attempt_count
+    self['ASAP Call Attempt Count'] = [client_call.call_attempt_count].compact
   end
 end

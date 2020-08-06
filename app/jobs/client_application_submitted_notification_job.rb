@@ -7,7 +7,7 @@ class ClientApplicationSubmittedNotificationJob < ApplicationJob
 
     Slack.message(
       channel: 'new_client_application',
-      text: 'New ASAP call request',
+      text: 'New client application',
       blocks: [
         {
           "type": 'section',

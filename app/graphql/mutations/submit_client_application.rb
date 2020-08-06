@@ -50,6 +50,7 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
 
     user.save
     user.sync_to_airtable
+    ClientApplicationSubmittedNotificationJob.perform_later(user.id)
 
     { clientApplication: user }
   end
