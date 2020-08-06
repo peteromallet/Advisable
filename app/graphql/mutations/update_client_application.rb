@@ -1,8 +1,5 @@
 class Mutations::UpdateClientApplication < Mutations::BaseMutation
   argument :id, ID, required: true
-  argument :first_name, String, required: false
-  argument :last_name, String, required: false
-  argument :email, String, required: false
   argument :company_name, String, required: false
   argument :industry, String, required: false
   argument :skills, [String], required: false
@@ -13,11 +10,9 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
   field :clientApplication, Types::ClientApplicationType, null: true
 
   def resolve(**args)
-    email_blacklisted?(args[:email]) if args[:email]
-    check_existing_account(args[:email]) if args[:email]
     user = User.find_by_uid_or_airtable_id!(args[:id])
 
-    if %i[started rejected].include?(user.application_status)
+    if %i[started].include?(user.application_status)
       update_assignable_attributes(user, args)
       update_industry(user, args[:industry]) if args[:industry]
       update_skills(user, args[:skills]) if args[:skills]
@@ -38,15 +33,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
 
   # which attributes can just be simply assigned
   def assignable_attributes
-    %i[
-      first_name
-      last_name
-      email
-      budget
-      company_name
-      company_type
-      number_of_freelancers
-    ]
+    %i[budget company_name company_type number_of_freelancers]
   end
 
   def update_assignable_attributes(user, args)
