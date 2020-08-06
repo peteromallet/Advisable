@@ -113,9 +113,11 @@ function Invoice() {
           </tfoot>
         </Box>
         <Box>
-          <Link.External href={paymentUrl}>
-            <Button mr="s">Pay Invoice</Button>
-          </Link.External>
+          {status === "due" && (
+            <Link.External href={paymentUrl}>
+              <Button mr="s">Pay Invoice</Button>
+            </Link.External>
+          )}
           <Link.External href={downloadUrl}>
             <Button variant="subtle">Download PDF</Button>
           </Link.External>
