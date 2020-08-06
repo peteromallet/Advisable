@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import * as Yup from "yup";
 import queryString from "query-string";
@@ -31,13 +31,20 @@ function StartApplication() {
   const history = useHistory();
   const isMobile = useBreakpoint("m");
   const [applicationId, setApplicationId] = useState();
-  const [email, setEmail] = useState();
+
+  const updateLocationState = useCallback(
+    (params) => {
+      history.replace({ ...location, state: { ...location.state, ...params } });
+    },
+    [history, location],
+  );
 
   // Check query params
   useEffect(() => {
     const queryStringParams =
       location.search && queryString.parse(location.search, { decode: true });
     queryStringParams &&
+      !called &&
       validationSchema
         .validate(queryStringParams)
         .then(() => {
@@ -45,14 +52,18 @@ function StartApplication() {
           startClientApplication({
             variables: { input: { ...queryStringParams } },
           });
-          setEmail(queryStringParams.email);
+          updateLocationState({
+            firstName: queryStringParams.firstName,
+            lastName: queryStringParams.lastName,
+            email: queryStringParams.email,
+          });
         })
         .catch((err) => {
           // Not valid query string params. Clear them
           console.error("Your query params are not valid", err);
           history.push(location.pathname);
         });
-  }, [history, location.pathname, location.search, startClientApplication]);
+  }, [called, history, location, startClientApplication, updateLocationState]);
 
   // Handle mutation errors
   const errorCodes = error?.graphQLErrors.map((err) => err.extensions?.code);
@@ -77,7 +88,6 @@ function StartApplication() {
           emailNotAllowed={emailNotAllowed}
           existingAccount={existingAccount}
           called={called}
-          email={email}
           applicationId={applicationId}
         />
         <Loading />
@@ -86,12 +96,16 @@ function StartApplication() {
 
   // Formik
   const initialValues = {
-    firstName: "",
-    lastName: "",
+    firstName: location.state?.firstName || "",
+    lastName: location.state?.lastName || "",
     email: "",
   };
   const handleSubmit = (values) => {
-    setEmail(values.email);
+    updateLocationState({
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+    });
     startClientApplication({ variables: { input: { ...values } } });
   };
 
@@ -101,7 +115,6 @@ function StartApplication() {
         emailNotAllowed={emailNotAllowed}
         existingAccount={existingAccount}
         called={called}
-        email={email}
         applicationId={applicationId}
       />
       <Formik

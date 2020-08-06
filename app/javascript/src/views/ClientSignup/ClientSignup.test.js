@@ -376,6 +376,8 @@ test("Reject public gmail for client's signup form via query string params", asy
     graphQLMocks: [mockViewer(null), emailNotAllowedRejection],
   });
   await screen.findByText(/personal emails/i);
+  fireEvent.click(screen.getByLabelText(/try again/i));
+  await screen.findByText(/start your application/i);
 });
 
 test("Reject public gmail for client's signup form", async () => {

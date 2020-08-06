@@ -12,7 +12,6 @@ const Navigation = ({
   status,
   existingAccount,
   emailNotAllowed,
-  email,
   applicationId,
 }) => {
   const { nextStep, lastStep, initialStep } = useSteps(STEPS);
@@ -32,7 +31,10 @@ const Navigation = ({
         case "EMAIL_NOT_ALLOWED":
           return {
             push: true,
-            to: { pathname: "/clients/signup/email-not-allowed" },
+            to: {
+              pathname: "/clients/signup/email-not-allowed",
+              state: { ...locationState },
+            },
           };
         case "LAST_STEP":
           return {
@@ -44,7 +46,7 @@ const Navigation = ({
             push: !!nextStep.push,
             to: {
               pathname: nextStep.path,
-              state: { applicationId, email, ...locationState },
+              state: { applicationId, ...locationState },
             },
           };
         default:
@@ -60,14 +62,13 @@ const Navigation = ({
       if (
         called &&
         (locationState?.applicationId || applicationId) &&
-        (locationState?.email || email)
+        locationState?.email
       )
         setParams(reduce("NEXT_STEP"));
     }, delay || 0);
 
     return () => clearTimeout(timer);
   }, [
-    email,
     delay,
     error,
     status,
@@ -93,7 +94,6 @@ Navigation.propTypes = {
   existingAccount: PropTypes.bool,
   emailNotAllowed: PropTypes.bool,
   applicationId: PropTypes.string,
-  email: PropTypes.string,
 };
 
 export default Navigation;
