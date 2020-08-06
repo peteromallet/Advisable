@@ -27,7 +27,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
       if user.save
         user.sync_to_airtable
         if context[:request]
-          GeocodeUserJob.perform_later(user.id, context[:request].remote_ip)
+          GeocodeUserJob.perform_later(user.id, context[:client_ip])
         end
       end
     end
