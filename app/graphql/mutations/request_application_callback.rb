@@ -19,6 +19,7 @@ class Mutations::RequestApplicationCallback < Mutations::BaseMutation
 
   def resolve(**args)
     user = User.find_by_uid_or_airtable_id!(args[:id])
+    user.update contact_status: 'Call Scheduled'
 
     call =
       user.client_calls.create(
@@ -30,6 +31,7 @@ class Mutations::RequestApplicationCallback < Mutations::BaseMutation
       )
 
     call.sync_to_airtable
+    user.sync_to_airtable
     send_slack_message(user, call)
 
     { client_application: user }
