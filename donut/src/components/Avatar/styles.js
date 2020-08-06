@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { color, space, border, variant } from "styled-system";
-import theme from "../../theme";
 
 const size = variant({
   prop: "size",

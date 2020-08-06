@@ -1,15 +1,13 @@
 import * as React from "react";
-import { Button } from "@advisable/donut";
+import { Box, Card, Button } from "@advisable/donut";
 import { useApolloClient } from "@apollo/react-hooks";
 import { matchPath } from "react-router";
-import Card from "../../components/Card";
 import Text from "../../components/Text";
 import Modal from "../../components/Modal";
 import Heading from "../../components/Heading";
 import NewTask from "../../components/NewTask";
 import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
-import { Padding } from "../../components/Spacing";
 import FETCH_APPLICATION from "./fetchApplication";
 import { hasCompleteTasksStep } from "./validationSchema";
 
@@ -86,17 +84,17 @@ const Tasks = ({ application, match, location, history }) => {
 
   return (
     <Card>
-      <Padding size="l">
-        <Padding bottom="s">
+      <Box padding="l">
+        <Box paddingBottom="s">
           <Heading level={3}>Project Tasks</Heading>
-        </Padding>
+        </Box>
         <Text size="s">
           Tasks allow you and {application.project.user.companyName} to easily
           define and track the work that you would be doing throughout this
           project. Add at least one task that you would suggest for this
           project.
         </Text>
-      </Padding>
+      </Box>
       <TaskList
         hideStatus
         tasks={application.tasks}
@@ -112,30 +110,30 @@ const Tasks = ({ application, match, location, history }) => {
         onDeleteTask={handleDeleteTask}
       />
       <Modal isOpen={confirmModal} onClose={() => setConfirmModal(false)}>
-        <Padding size="l">
-          <Padding bottom="s">
+        <Box padding="l">
+          <Box paddingBottom="s">
             <Heading level={3}>You haven't proposed a trial task</Heading>
-          </Padding>
-          <Padding bottom="m">
+          </Box>
+          <Box paddingBottom="m">
             <Text size="s">
               Proposing a guaranteed trial task increases your chance of closing
               a client. To set one of your tasks as a trial task, click into the
               task and click "Set as trial task"
             </Text>
-          </Padding>
+          </Box>
           <Button onClick={nextStep} mr="xs">
             Continue without trial task
           </Button>
           <Button variant="subtle" onClick={() => setConfirmModal(false)}>
             Cancel
           </Button>
-        </Padding>
+        </Box>
       </Modal>
-      <Padding size="l">
+      <Box padding="l">
         <Button onClick={handleContinue} disabled={!canContinue}>
           Continue
         </Button>
-      </Padding>
+      </Box>
     </Card>
   );
 };

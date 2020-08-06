@@ -1,13 +1,10 @@
 import React from "react";
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import Text from "src/components/Text";
 import Modal from "src/components/Modal";
-import Select from "src/components/Select";
-import { Button, Columns } from "@advisable/donut";
+import { Box, Button, Columns, Select, Textarea } from "@advisable/donut";
 import Heading from "src/components/Heading";
-import { Padding } from "src/components/Spacing";
-import TextField from "src/components/TextField";
 import { useNotifications } from "src/components/Notifications";
 import REJECT_PROPOSAL from "./rejectProposal.graphql";
 import validationSchema from "./validationSchema";
@@ -69,35 +66,34 @@ const RejectProposalModal = ({
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
-            <Padding size="xl">
-              <Padding bottom="s">
+            <Box padding="xl">
+              <Box paddingBottom="s">
                 <Heading level={3}>Reject {specialist.name}</Heading>
-              </Padding>
-              <Padding bottom="l">
+              </Box>
+              <Box paddingBottom="l">
                 <Text size="s">
                   Please provide feedback by selecting a reason for rejection
                 </Text>
-              </Padding>
-              <Padding bottom="m">
-                <Select
-                  block
+              </Box>
+              <Box paddingBottom="m">
+                <Field
+                  as={Select}
                   name="reason"
-                  onChange={formik.handleChange}
-                  value={formik.values.reason}
-                  placeholder="Select reason for rejection"
-                  options={REASONS}
                   error={formik.errors.reason}
-                />
-              </Padding>
-              <Padding bottom="m">
-                <TextField
-                  multiline
+                  placeholder="Select reason for rejection"
+                >
+                  {REASONS.map((reason) => (
+                    <option key={reason}>{reason}</option>
+                  ))}
+                </Field>
+              </Box>
+              <Box paddingBottom="m">
+                <Field
+                  as={Textarea}
                   name="comment"
-                  value={formik.values.comment}
-                  onChange={formik.handleChange}
                   placeholder="Let us know why you are declining this proposal..."
                 />
-              </Padding>
+              </Box>
               <Columns spacing="s">
                 <Button
                   type="submit"
@@ -116,7 +112,7 @@ const RejectProposalModal = ({
                   Cancel
                 </Button>
               </Columns>
-            </Padding>
+            </Box>
           </form>
         )}
       </Formik>

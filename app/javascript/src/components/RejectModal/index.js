@@ -1,12 +1,10 @@
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import Modal from "src/components/Modal";
 import Text from "src/components/Text";
 import Heading from "src/components/Heading";
-import Select from "src/components/Select";
-import { Button, Columns } from "@advisable/donut";
-import TextField from "src/components/TextField";
+import { Button, Columns, Select, Textarea } from "@advisable/donut";
 import { withNotifications } from "src/components/Notifications";
 import validationSchema from "./validationSchema";
 
@@ -68,20 +66,18 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
     default: {
       return (
         <React.Fragment>
-          <TextField
-            block
-            multiline
+          <Field
             autoFocus
+            as={Textarea}
+            minRows={3}
+            maxRows={5}
             name="rejectionReasonComment"
             marginTop="m"
             marginBottom="m"
-            onBlur={formik.handleBlur}
+            placeholder={PLACEHOLDERS[formik.values.rejectionReason]}
             error={
               formik.submitCount > 0 && formik.errors.rejectionReasonComment
             }
-            value={formik.values.rejectionReasonComment}
-            onChange={formik.handleChange}
-            placeholder={PLACEHOLDERS[formik.values.rejectionReason]}
           />
           <Columns spacing="xs">
             <Button
@@ -152,14 +148,15 @@ const RejectModal = ({
                 Please provide feedback to our recruitment team to help us find
                 you a better candidate
               </Text>
-              <Select
-                block
+              <Field
+                as={Select}
                 name="rejectionReason"
-                value={formik.values.rejectionReason}
-                onChange={formik.handleChange}
                 placeholder="Select reason for rejection"
-                options={optionsForApplication(application)}
-              />
+              >
+                {optionsForApplication(application).map((option) => (
+                  <option key={option}>{option}</option>
+                ))}
+              </Field>
               <SelectedOption
                 formik={formik}
                 onClose={onClose}

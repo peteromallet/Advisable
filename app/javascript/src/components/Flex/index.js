@@ -1,10 +1,10 @@
 import React from "react";
+import { padding } from "styled-system";
 import styled from "styled-components";
-import { withSpacing } from "src/components/Spacing";
 
 const justifyContent = {
   center: "center",
-  equalSpacing: "space-between"
+  equalSpacing: "space-between",
 };
 
 const spacing = {
@@ -12,40 +12,42 @@ const spacing = {
   s: "5px",
   m: "7px",
   l: "10px",
-  xl: "15px"
+  xl: "15px",
 };
 
 const align = {
   center: "center",
   detault: "stretch",
-  baseline: "baseline"
+  baseline: "baseline",
 };
 
 const FlexWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: ${props => props.vertical ? '100%' : 'auto'};
-  align-items: ${props => align[props.align || "default"]};
-  justify-content: ${props => justifyContent[props.distribute]};
-  flex-direction: ${props => props.vertical ? 'column' : 'row'};
+  height: ${(props) => (props.vertical ? "100%" : "auto")};
+  align-items: ${(props) => align[props.align || "default"]};
+  justify-content: ${(props) => justifyContent[props.distribute]};
+  flex-direction: ${(props) => (props.vertical ? "column" : "row")};
 `;
 
 const flex = {
   default: "0 0 auto",
   fillEvenly: "1 0 0%",
-  fill: "1"
+  fill: "1",
 };
 
 const flexItemWidth = {
   default: "auto",
   fill: "100%",
-}
+};
 
-const FlexItem = withSpacing(styled.div`
+const FlexItem = styled.div`
+  ${padding};
+
   min-width: 0;
-  flex: ${props => flex[props.distribute || 'default']};
-  width: ${props => flexItemWidth[props.distribute] || 'default'};
-`);
+  flex: ${(props) => flex[props.distribute || "default"]};
+  width: ${(props) => flexItemWidth[props.distribute] || "default"};
+`;
 
 FlexItem.displayName = "FlexItem";
 

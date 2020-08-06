@@ -1,19 +1,18 @@
 import React from "react";
 import Text from "../Text";
-import { Button } from "@advisable/donut";
-import Spacing from "../Spacing/Padding";
+import { Box, Button } from "@advisable/donut";
 
 const VideoModal = ({ heading, summary, url, buttonLabel, onDismiss }) => {
   return (
     <>
-      <Spacing size="l" css="text-align: center;">
-        <Spacing bottom="xs">
+      <Box padding="l" css="text-align: center;">
+        <Box paddingBottom="xs">
           <Text size="l" weight="bold">
             {heading}
           </Text>
-        </Spacing>
+        </Box>
         <Text size="s">{summary}</Text>
-      </Spacing>
+      </Box>
       <iframe
         width="100%"
         height="280"
@@ -22,11 +21,11 @@ const VideoModal = ({ heading, summary, url, buttonLabel, onDismiss }) => {
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       />
-      <Spacing size="l" css="text-align: center;">
+      <Box padding="l" css="text-align: center;">
         <Button size="l" onClick={onDismiss}>
           {buttonLabel || "Okay"}
         </Button>
-      </Spacing>
+      </Box>
     </>
   );
 };

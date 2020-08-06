@@ -2,8 +2,8 @@ import React from "react";
 import { createPortal } from "react-dom";
 import { FixedSizeList as List } from "react-window";
 import { motion } from "framer-motion";
+import { Box } from "@advisable/donut";
 import Text from "../../Text";
-import Padding from "../../Padding";
 import { Menu as MenuStyles, StyledMenuContainer } from "../styles";
 import MenuItem from "../MenuItem";
 import filterItems from "../filterItems";
@@ -35,11 +35,11 @@ const Menu = ({
     >
       <MenuStyles {...downshift.getMenuProps()}>
         {isMax ? (
-          <Padding size="m">
+          <Box padding="m">
             <Text color="neutral.N5" size="xs" css="text-align: center;">
               You can not add more than {max} items
             </Text>
-          </Padding>
+          </Box>
         ) : (
           <List
             width={width}

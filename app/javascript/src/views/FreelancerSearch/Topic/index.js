@@ -3,8 +3,8 @@ import { useMutation } from "@apollo/react-hooks";
 import { Formik, Form, Field } from "formik";
 import REQUEST_CONSULTATIONS from "./requestConsultations";
 import { useParams, useLocation, useHistory, Redirect } from "react-router-dom";
-import { Box, Link, Text, Card, Button } from "@advisable/donut";
-import TextField from "../../../components/TextField";
+import { Box, Link, Text, Card, Button, Textarea } from "@advisable/donut";
+import FormField from "../../../components/FormField";
 import ScaleInput from "../../../components/ScaleInput";
 import validationSchema from "./validationSchema";
 import { ArrowRight, ArrowLeft } from "@styled-icons/feather";
@@ -83,14 +83,12 @@ const Topic = ({ data }) => {
           {(formik) => (
             <Form>
               <Box mb="l">
-                <Field
+                <FormField
                   autoFocus
-                  multiline
                   minRows={6}
                   name="topic"
-                  as={TextField}
+                  as={Textarea}
                   placeholder="What would you like to talk about..."
-                  error={formik.touched.topic && formik.errors.topic}
                 />
               </Box>
               <Box mb="l">

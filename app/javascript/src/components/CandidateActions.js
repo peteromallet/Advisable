@@ -12,7 +12,7 @@ import {
 } from "@styled-icons/feather";
 import {
   Text,
-  Padding,
+  Box,
   Button,
   useModal,
   DialogDisclosure,
@@ -101,7 +101,7 @@ const statusActions = {
           conversationId={application.id}
           participants={[application.specialist]}
         />
-        <Padding bottom="xs">
+        <Box paddingBottm="xs">
           <Button
             mb="xs"
             width="100%"
@@ -141,22 +141,22 @@ const statusActions = {
           >
             Provide Feedback
           </Button>
-        </Padding>
+        </Box>
         {application.referencesRequested && (
-          <Padding top="m">
+          <Box paddingTop="m">
             <Notice icon={<Info />}>
-              <Padding bottom="xxs">
+              <Box paddingBottom="xxs">
                 <Text size="xxs" weight="medium">
                   References requested
                 </Text>
-              </Padding>
+              </Box>
               <Text size="xxs" color="neutral.N7" multiline>
                 You have requested references from{" "}
                 {application.specialist.firstName} and will add them here once
                 we receive them.
               </Text>
             </Notice>
-          </Padding>
+          </Box>
         )}
       </Fragment>
     );
@@ -187,7 +187,7 @@ const statusActions = {
           conversationId={application.id}
           participants={[application.specialist]}
         />
-        <Padding bottom="xs">
+        <Box paddingBottom="xs">
           <Button
             align="left"
             as={Link}
@@ -228,22 +228,22 @@ const statusActions = {
           >
             Provide Feedback
           </Button>
-        </Padding>
+        </Box>
         {application.referencesRequested && (
-          <Padding top="m">
+          <Box paddingTop="m">
             <Notice icon={<Info />}>
-              <Padding bottom="xxs">
+              <Box paddingBottom="xxs">
                 <Text size="xxs" weight="medium">
                   References requested
                 </Text>
-              </Padding>
+              </Box>
               <Text size="xxs" color="neutral.N7" multiline>
                 You have requested references from{" "}
                 {application.specialist.firstName} and will add them here once
                 we receive them.
               </Text>
             </Notice>
-          </Padding>
+          </Box>
         )}
       </Fragment>
     );

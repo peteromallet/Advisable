@@ -3,17 +3,12 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
 import { get } from "lodash-es";
-import { Button } from "@advisable/donut";
+import { Box, Card, Button, Select, Checkbox } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Text from "../../../components/Text";
-import Card from "../../../components/Card";
 import Loading from "../../../components/Loading";
 import Heading from "../../../components/Heading";
-import FieldRow from "../../../components/FieldRow";
-import Checkbox from "../../../components/Checkbox";
-import Select from "../../../components/Select";
-import TextField from "../../../components/TextField";
-import Padding from "../../../components/Spacing/Padding";
+import FormField from "../../../components/FormField";
 import { useNotifications } from "../../../components/Notifications";
 import FETCH_PROFILE from "../fetchProfile.graphql";
 import UPDATE_PROFILE from "../updateProfile";
@@ -49,57 +44,60 @@ let Location = () => {
     >
       {(formik) => (
         <React.Fragment>
-          <Padding bottom="m">
+          <Box paddingBottom="m">
             <Heading level={2}>Location</Heading>
-          </Padding>
+          </Box>
           <Card>
-            <Padding size="l">
+            <Box padding="l">
               <Form>
-                <FieldRow>
-                  <TextField
-                    name="city"
-                    label="City"
-                    value={formik.values.city}
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    placeholder="e.g Berlin"
-                  />
-                  <Select
-                    name="country"
-                    label="Country"
-                    value={formik.values.country}
-                    onChange={formik.handleChange}
-                    options={countriesQuery.data.countries}
-                  />
-                </FieldRow>
-                <Padding bottom="m">
+                <Box display="flex" marginBottom="l">
+                  <Box flex={1} paddingRight="8px">
+                    <FormField
+                      name="city"
+                      label="City"
+                      placeholder="e.g Berlin"
+                    />
+                  </Box>
+                  <Box flex={1} paddingLeft="8px">
+                    <FormField as={Select} name="country" label="Country">
+                      {countriesQuery.data.countries.map((c) => (
+                        <option key={c.value} value={c.value}>
+                          {c.label}
+                        </option>
+                      ))}
+                    </FormField>
+                  </Box>
+                </Box>
+                <Box paddingBottom="xs">
                   <Text weight="semibold" colour="dark">
                     Are you happy to work remotely?
                   </Text>
-                </Padding>
-                <Padding bottom="m">
+                </Box>
+                <Box paddingBottom="xs">
                   <Checkbox
                     name="remote"
-                    value={formik.values.remote}
-                    label="Yes, I’m happy to work remote"
+                    checked={formik.values.remote}
                     onChange={(e) => {
                       formik.setFieldValue("remote", true);
                     }}
-                  />
-                </Padding>
-                <Padding bottom="xl">
+                  >
+                    Yes, I’m happy to work remote
+                  </Checkbox>
+                </Box>
+                <Box paddingBottom="xl">
                   <Checkbox
                     name="remote"
-                    value={formik.values.remote === false}
-                    label="No, I only work with clients in person"
+                    checked={formik.values.remote === false}
                     onChange={(e) => {
                       formik.setFieldValue("remote", false);
                     }}
-                  />
-                </Padding>
+                  >
+                    No, I only work with clients in person
+                  </Checkbox>
+                </Box>
                 <Button loading={formik.isSubmitting}>Save Changes</Button>
               </Form>
-            </Padding>
+            </Box>
           </Card>
         </React.Fragment>
       )}

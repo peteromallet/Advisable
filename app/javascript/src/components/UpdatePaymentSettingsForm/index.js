@@ -1,10 +1,9 @@
 import React from "react";
 import { get } from "lodash-es";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { Formik, Form, Field } from "formik";
-import { Button, Box, Text } from "@advisable/donut";
-import Select from "../Select";
-import TextField from "../TextField";
+import { Formik, Form } from "formik";
+import { Button, Box, Text, Select } from "@advisable/donut";
+import FormField from "../FormField";
 import AddressFields from "../AddressFields";
 import validationSchema from "./validationSchema";
 import { GET_PAYMENT_SETTINGS, UPDATE_PAYMENT_SETTINGS } from "./queries";
@@ -62,51 +61,39 @@ const UpdatePaymentSettingsForm = ({
     >
       {(formik) => (
         <Form>
-          <Box mb="m">
-            <Field
-              name="bankHolderName"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Bank account holder name"
-                  placeholder="Full name or company name..."
-                  description="Please provide the name of the bank account holder. Either your full name or company name."
-                  error={
-                    get(formik.touched, `bankHolderName`) &&
-                    get(formik.errors, `bankHolderName`)
-                  }
-                />
-              )}
-            />
-          </Box>
+          <FormField
+            marginBottom="m"
+            name="bankHolderName"
+            label="Bank account holder name"
+            placeholder="Full name or company name..."
+            description="Please provide the name of the bank account holder. Either your full name or company name."
+          />
           <Box mb="m">
             <AddressFields
               label="Bank holder address"
               name="bankHolderAddress"
             />
           </Box>
-          <Box mb="m">
-            <Field
-              name="bankCurrency"
-              render={({ field }) => (
-                <Select {...field} label="Bank currency" options={currencies} />
-              )}
-            />
-          </Box>
-          <Box mb="m">
-            <Field
-              name="vatNumber"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="VAT Number"
-                  placeholder="VAT Number..."
-                  description="Provide your VAT number if you have one."
-                />
-              )}
-            />
-          </Box>
-          <Text size="xxs" color="neutral.5" lineHeight="xs" mb="l">
+          <FormField
+            label="Bank account currency"
+            marginBottom="m"
+            as={Select}
+            name="bankCurrency"
+          >
+            {currencies.map((c) => (
+              <option key={c.value} value={c.value}>
+                {c.label}
+              </option>
+            ))}
+          </FormField>
+          <FormField
+            marginBottom="m"
+            name="vatNumber"
+            label="VAT Number"
+            placeholder="VAT Number..."
+            description="Provide your VAT number if you have one."
+          />
+          <Text size="xs" color="neutral600" lineHeight="s" mb="l">
             All payments are made directly to your bank account via
             TransferWise: once your payment has been processed, TransferWise
             will send you an email where you can securely enter your bank

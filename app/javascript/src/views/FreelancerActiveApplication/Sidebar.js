@@ -6,9 +6,8 @@ import { useTranslation } from "react-i18next";
 import Back from "../../components/Back";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
-import { Button, DialogDisclosure } from "@advisable/donut";
+import { Box, Button, DialogDisclosure } from "@advisable/donut";
 import Heading from "../../components/Heading";
-import Padding from "../../components/Spacing/Padding";
 import VideoButton from "../../components/VideoButton";
 import AttributeList from "../../components/AttributeList";
 import TalkModal from "../../components/TalkModal";
@@ -24,9 +23,9 @@ const Component = ({ data, tutorial, tutorialModal }) => {
   return (
     <Layout.Sidebar>
       <Sticky offset={98} enabled={!isMobile}>
-        <Padding bottom="xl">
+        <Box paddingBottom="xl">
           <Back to="/clients">All Clients</Back>
-        </Padding>
+        </Box>
         <Heading level={3}>{application.project.primarySkill?.name}</Heading>
         <Text>{application.project.user.companyName}</Text>
         <TalkModal
@@ -35,7 +34,7 @@ const Component = ({ data, tutorial, tutorialModal }) => {
           conversationId={application.id}
           participants={[application.project.user]}
         />
-        <Padding top="xl">
+        <Box paddingTop="xl">
           <Button
             width="100%"
             variant="subtle"
@@ -44,8 +43,8 @@ const Component = ({ data, tutorial, tutorialModal }) => {
           >
             Message {application.project.user.firstName}
           </Button>
-        </Padding>
-        <Padding top="l" bottom="xl">
+        </Box>
+        <Box paddingTop="l" paddingBottom="xl">
           <AttributeList>
             {Boolean(application.rate) && (
               <AttributeList.Item
@@ -64,12 +63,12 @@ const Component = ({ data, tutorial, tutorialModal }) => {
               value={application.projectType}
             />
           </AttributeList>
-        </Padding>
-        <Padding bottom="xl">
+        </Box>
+        <Box paddingBottom="xl">
           <DialogDisclosure as={VideoButton} {...tutorialModal}>
             {t(`tutorials.${tutorial}.prompt`)}
           </DialogDisclosure>
-        </Padding>
+        </Box>
       </Sticky>
     </Layout.Sidebar>
   );

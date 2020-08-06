@@ -2,8 +2,8 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { Button, Text, Box } from "@advisable/donut";
 import { useMutation } from "@apollo/react-hooks";
-import TextField from "../../../components/TextField";
 import FileUpload from "../../../components/FileUpload";
+import FormField from "components/FormField";
 import UPDATE_PROFILE from "../updateProfile";
 import COMPLETE_SETUP from "../completeSetup";
 import validationSchema from "./validationSchema";
@@ -47,25 +47,17 @@ const WorkHistory = ({ specialist, history }) => {
           </Text>
           <Box bg="neutral.1" width="100%" height="1px" my="l" />
           <Box mb="m">
-            <TextField
+            <FormField
               name="linkedin"
-              onBlur={formik.handleBlur}
-              value={formik.values.linkedin}
-              onChange={formik.handleChange}
               label="Linkedin URL (Recommended)"
               placeholder="https://linkedin.com/..."
-              error={formik.touched.linkedin && formik.errors.linkedin}
             />
           </Box>
           <Box mb="m">
-            <TextField
+            <FormField
               name="website"
-              onBlur={formik.handleBlur}
-              value={formik.values.website}
-              onChange={formik.handleChange}
               label="Website/Porfolio"
               placeholder="https://"
-              error={formik.touched.website && formik.errors.website}
             />
           </Box>
           <Text size="s" color="neutral.8" mb="xs" weight="medium">

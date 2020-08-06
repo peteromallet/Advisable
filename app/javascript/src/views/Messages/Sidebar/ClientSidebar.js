@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash-es";
 import { useQuery } from "@apollo/react-hooks";
-import { Text, Padding } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import Avatar from "../../../components/Avatar";
 import Status from "../../../components/Status";
 import Skeleton from "../../../components/Skeleton";
@@ -21,13 +21,13 @@ const ClientSidebar = (props) => {
   if (loading) {
     return (
       <>
-        <Padding bottom="xs">
+        <Box paddingBottom="xs">
           <Skeleton style={{ height: 18, width: 140 }} />
-        </Padding>
-        <Padding bottom="l">
+        </Box>
+        <Box paddingBottom="l">
           <Skeleton style={{ height: 14, width: 120 }} />
-        </Padding>
-        <Padding bottom="l">
+        </Box>
+        <Box paddingBottom="l">
           <AttributeList>
             <AttributeList.Item
               label={<Skeleton style={{ height: 14, width: 70 }} />}
@@ -42,7 +42,7 @@ const ClientSidebar = (props) => {
               value={<Skeleton style={{ height: 14, width: 75 }} />}
             />
           </AttributeList>
-        </Padding>
+        </Box>
         <Skeleton style={{ height: 40, width: "100%" }} />
       </>
     );
@@ -61,27 +61,27 @@ const ClientSidebar = (props) => {
 
   return (
     <>
-      <Padding bottom="m">
+      <Box paddingBottom="m">
         <Avatar
           size="l"
           name={specialist.name}
           url={get(specialist, "image.url")}
         />
-      </Padding>
-      <Padding bottom="xxs">
+      </Box>
+      <Box paddingBottom="xxs">
         <Text size="l" weight="semibold" color="neutral.N9">
           {specialist.name}
         </Text>
-      </Padding>
-      <Padding bottom="s">
+      </Box>
+      <Box paddingBottom="s">
         <Text size="xs" color="neutral.N7">
           {specialist.city}, {get(specialist, "country.name")}
         </Text>
-      </Padding>
-      <Padding bottom="l">
+      </Box>
+      <Box paddingBottom="l">
         <Status>{data.application.status}</Status>
-      </Padding>
-      <Padding bottom="l">
+      </Box>
+      <Box paddingBottom="l">
         {application.status === "Working" ? (
           <AttributeList>
             {Boolean(application.rate) && (
@@ -106,7 +106,7 @@ const ClientSidebar = (props) => {
         ) : (
           <CandidateAttributeList application={data.application} />
         )}
-      </Padding>
+      </Box>
       <ClientActions application={data.application} />
     </>
   );

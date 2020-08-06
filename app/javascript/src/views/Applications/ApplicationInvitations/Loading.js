@@ -1,16 +1,18 @@
 import * as React from "react";
 import { Box } from "@advisable/donut";
 import SkeletonHeading from "../../../components/SkeletonHeading";
-import { SkeletonApplication } from "./styles";
+import { InvitationsWrapper, Invitations, LoadingTile } from "./styles";
 
 const Loading = () => (
   <React.Fragment>
-    <Box paddingBottom="m">
+    <Box paddingBottom="xs">
       <SkeletonHeading />
     </Box>
-    <SkeletonApplication />
-    <SkeletonApplication />
-    <SkeletonApplication />
+    <InvitationsWrapper>
+      <Invitations>
+        <LoadingTile />
+      </Invitations>
+    </InvitationsWrapper>
   </React.Fragment>
 );
 

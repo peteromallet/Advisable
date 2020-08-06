@@ -1,19 +1,14 @@
 import * as React from "react";
+import { Box } from "@advisable/donut";
 import Text from "../../components/Text";
 import Back from "../../components/Back";
 import Steps from "../../components/Steps";
 import Layout from "../../components/Layout";
 import Heading from "../../components/Heading";
-import { Padding } from "../../components/Spacing";
 import { useMobile } from "../../components/Breakpoint";
-import { ApplicationType } from "../../types";
 import { hasCompleteTasksStep } from "./validationSchema";
 
-interface Props {
-  application: ApplicationType;
-}
-
-let SideBar = (props: any) => {
+let SideBar = (props) => {
   const isMobile = useMobile();
   const { application } = props;
 
@@ -29,21 +24,21 @@ let SideBar = (props: any) => {
 
   return (
     <Layout.Sidebar>
-      <Padding bottom="m">
+      <Box paddingBottom="m">
         <Back to="/applications">All Applications</Back>
-      </Padding>
-      <Padding bottom="s">
+      </Box>
+      <Box paddingBottom="s">
         <Heading level={4}>
           Proposal for "{application.project.primarySkill.name}" with{" "}
           {application.project.user.companyName}
         </Heading>
-      </Padding>
-      <Padding bottom="l">
+      </Box>
+      <Box paddingBottom="l">
         <Text size="s">
           Send {application.project.user.companyName} a proposal to start
           working together.
         </Text>
-      </Padding>
+      </Box>
       {!isMobile && (
         <Steps>
           <Steps.Step

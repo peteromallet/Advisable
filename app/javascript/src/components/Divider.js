@@ -1,10 +1,12 @@
-import React from 'react';
+import React from "react";
 import { rgba } from "polished";
+import { padding } from "styled-system";
 import styled from "styled-components";
-import { withSpacing } from "./Spacing";
 import colors from "../colors";
 
 let Divider = styled.div`
+  ${padding};
+
   width: 100%;
   display: flex;
   text-align: center;
@@ -19,8 +21,6 @@ let Divider = styled.div`
   }
 `;
 
-Divider = withSpacing(Divider);
-
 const DividerText = styled.div`
   flex-shrink: 0;
   color: #4d536e;
@@ -28,9 +28,25 @@ const DividerText = styled.div`
   padding: 0 15px;
 `;
 
-export default ({ children, ...props }) => {
+export default ({
+  children,
+  padding,
+  paddingTop,
+  paddingLeft,
+  paddingRight,
+  paddingBottom,
+  ...props
+}) => {
+  const paddingProps = {
+    padding,
+    paddingTop,
+    paddingRight,
+    paddingBottom,
+    paddingLeft,
+  };
+
   return (
-    <Divider {...props}>
+    <Divider {...paddingProps} {...props}>
       {children && <DividerText>{children}</DividerText>}
     </Divider>
   );

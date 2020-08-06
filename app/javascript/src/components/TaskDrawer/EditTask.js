@@ -1,11 +1,10 @@
 import * as React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Div100vh from "react-div-100vh";
-import { Button } from "@advisable/donut";
+import { Box, Button } from "@advisable/donut";
 import TaskStatus from "../TaskStatus";
 import Text from "../Text";
 import Scrollable from "../Scrollable";
-import Padding from "../Spacing/Padding";
 import VerticalLayout from "../VerticalLayout";
 import Title from "./Title";
 import DueDate from "./DueDate";
@@ -170,12 +169,12 @@ const EditTask = ({
       {confirmPrompt && (
         <Confirmation>
           <ConfirmationContainer>
-            <Padding bottom="l">
+            <Box paddingBottom="l">
               <Text size="s">
                 Editing this task will remove the quote that has been provided.
                 Are you sure you want to continue?
               </Text>
-            </Padding>
+            </Box>
             <Button onClick={handleConfirm} mr="xs">
               Continue
             </Button>
@@ -188,7 +187,7 @@ const EditTask = ({
       <Div100vh style={{ height: "calc(100rvh - 60px)" }}>
         <VerticalLayout>
           <VerticalLayout.Header>
-            <Padding left="m" right="m">
+            <Box paddingX="m">
               {!hideStatus && <TaskStatus>{task.stage}</TaskStatus>}
               <Title
                 data-testid="nameField"
@@ -199,11 +198,11 @@ const EditTask = ({
                 onChange={handleChangeWithTimeout("name")}
                 isFocused={editAllowed && focusedElement === "name"}
               />
-            </Padding>
+            </Box>
           </VerticalLayout.Header>
           <VerticalLayout.Content style={{ flexDirection: "column" }}>
             <Scrollable>
-              <Padding left="m" bottom="m" right="m">
+              <Box paddingX="m" paddingBottom="m">
                 <TaskDetails>
                   <DueDate
                     readOnly={dueDateReadOnly}
@@ -238,11 +237,11 @@ const EditTask = ({
                     isFocused={editAllowed && focusedElement === "description"}
                   />
                 </div>
-              </Padding>
+              </Box>
             </Scrollable>
           </VerticalLayout.Content>
           <VerticalLayout.Footer style={{ background: "white" }}>
-            <Padding size="l">
+            <Box padding="l">
               {!readOnly && showStatusNotice && (
                 <StageDescription isClient={isClient} task={task} />
               )}
@@ -254,7 +253,7 @@ const EditTask = ({
                   projectType={projectType}
                 />
               )}
-            </Padding>
+            </Box>
             <AnimatePresence>
               {isSaving && (
                 <SavingIndicator

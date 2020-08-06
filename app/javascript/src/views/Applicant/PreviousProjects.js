@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Card, Text, Box } from "@advisable/donut";
-import { Padding } from "../../components/Spacing";
 import PreviousProjects from "../../components/PreviousProjects";
 import PreviousProjectsEmptyState from "../../components/PreviousProjectsEmptyState";
 
@@ -8,7 +7,7 @@ export default ({ data }) => {
   const { application } = data.project;
 
   return (
-    <Padding bottom="l">
+    <Box paddingBottom="l">
       {application.previousProjects.length > 0 ? (
         <Card>
           <Text
@@ -37,6 +36,6 @@ export default ({ data }) => {
           referencesRequested={application.referencesRequested}
         />
       )}
-    </Padding>
+    </Box>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
+import { padding } from "styled-system";
 import styled, { css } from "styled-components";
-import { withSpacing } from "src/components/Spacing";
 import { Link } from "react-router-dom";
 
 const STYLES = {
@@ -14,6 +14,8 @@ const STYLES = {
 };
 
 let RouterLink = styled(Link)`
+  ${padding};
+
   color: #0064ff;
   align-items: center;
   display: inline-flex;
@@ -28,9 +30,7 @@ let RouterLink = styled(Link)`
     color: #003890;
   }
 
-  ${props => STYLES[props.styling]}
+  ${(props) => STYLES[props.styling]}
 `;
 
-RouterLink = withSpacing(RouterLink);
-
-export default props => <RouterLink as={props.href && "a"} {...props} />;
+export default (props) => <RouterLink as={props.href && "a"} {...props} />;

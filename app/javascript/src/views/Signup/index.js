@@ -9,20 +9,19 @@ import { useMutation } from "@apollo/react-hooks";
 import { useTranslation } from "react-i18next";
 import Text from "src/components/Text";
 import Link from "src/components/Link";
-import FieldRow from "src/components/FieldRow";
 import Heading from "src/components/Heading";
-import TextField from "src/components/TextField";
+import FormField from "src/components/FormField";
 import useScrollRestore from "src/utilities/useScrollRestore";
 import useViewer from "../../hooks/useViewer";
 import validationSchema from "./validationSchema";
 import { Container, Card, Error } from "./styles";
-import SIGNUP from "./signup"
+import SIGNUP from "./signup";
 
 const Signup = () => {
   useScrollRestore();
   const viewer = useViewer();
   const params = useParams();
-  const location = useLocation()
+  const location = useLocation();
   const { t } = useTranslation();
   const [signup] = useMutation(SIGNUP);
   const queryParams = queryString.parse(location.search);
@@ -44,7 +43,7 @@ const Signup = () => {
 
     if (data.signup.token) {
       localStorage.setItem("authToken", data.signup.token);
-      const path = location.state?.from?.pathname || "/"
+      const path = location.state?.from?.pathname || "/";
       window.location.href = path;
       return;
     }
@@ -54,13 +53,13 @@ const Signup = () => {
     }
 
     formikBag.setSubmitting(false);
-  }
+  };
 
   const initialValues = {
     email: queryParams.email || "",
     password: "",
     passwordConfirmation: "",
-  }
+  };
 
   return (
     <Container>
@@ -84,46 +83,28 @@ const Signup = () => {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          {formik => (
+          {(formik) => (
             <form onSubmit={formik.handleSubmit}>
-              <FieldRow>
-                <TextField
-                  name="email"
-                  label="Email"
-                  placeholder="Email"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.email && formik.errors.email}
-                />
-              </FieldRow>
-              <FieldRow>
-                <TextField
-                  type="password"
-                  name="password"
-                  label="Password"
-                  placeholder="Password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.password && formik.errors.password}
-                />
-              </FieldRow>
-              <FieldRow>
-                <TextField
-                  type="password"
-                  name="passwordConfirmation"
-                  label="Confirm Password"
-                  placeholder="Password"
-                  value={formik.values.passwordConfirmation}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.passwordConfirmation &&
-                    formik.errors.passwordConfirmation
-                  }
-                />
-              </FieldRow>
+              <FormField
+                marginBottom="m"
+                name="email"
+                label="Email"
+                placeholder="Email"
+              />
+              <FormField
+                type="password"
+                name="password"
+                label="Password"
+                placeholder="Password"
+                marginBottom="m"
+              />
+              <FormField
+                type="password"
+                marginBottom="m"
+                name="passwordConfirmation"
+                label="Confirm Password"
+                placeholder="Password"
+              />
               <Button
                 loading={formik.isSubmitting}
                 type="submit"
@@ -132,7 +113,7 @@ const Signup = () => {
                 marginTop="s"
               >
                 Signup
-            </Button>
+              </Button>
               {formik.status && <Error>{t(`errors.${formik.status}`)}</Error>}
             </form>
           )}

@@ -17,6 +17,7 @@ const FormField = ({
   prefix,
   suffix,
   labelHint,
+  caption,
   description,
   margin,
   marginTop,
@@ -29,6 +30,8 @@ const FormField = ({
 }) => {
   const [field, meta] = useField(props);
   const id = React.useMemo(() => props.id || uniqueId("formField"), [props.id]);
+
+  const hasError = meta.touched && meta.error;
 
   return (
     <StyledFormField
@@ -68,7 +71,13 @@ const FormField = ({
         </Box>
       )}
       {description && (
-        <Text fontSize="s" lineHeight="s" color="neutral600" my="-4px" mb="s">
+        <Text
+          fontSize="14px"
+          lineHeight="s"
+          color="neutral600"
+          my="-4px"
+          mb="8px"
+        >
           {description}
         </Text>
       )}
@@ -81,8 +90,17 @@ const FormField = ({
         placeholder={props.placeholder || label}
         {...props}
       />
-      {meta.touched && meta.error ? (
-        <InputError mt="xs">{meta.error}</InputError>
+      {hasError ? <InputError mt="xs">{meta.error}</InputError> : null}
+      {!hasError && caption ? (
+        <Text
+          fontSize="14px"
+          letterSpacing="-0.02em"
+          lineHeight="s"
+          color="neutral600"
+          marginTop="8px"
+        >
+          {caption}
+        </Text>
       ) : null}
     </StyledFormField>
   );

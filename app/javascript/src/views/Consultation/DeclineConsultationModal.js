@@ -1,8 +1,8 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import { Modal, Box, Text, Button } from "@advisable/donut";
-import TextField from "../../components/TextField";
+import { Modal, Box, Text, Button, Textarea } from "@advisable/donut";
+import FormField from "../../components/FormField";
 import DECLINE from "./declineConsultation";
 
 export default function DeclineConsultationModal({ consultation, modal }) {
@@ -32,14 +32,13 @@ export default function DeclineConsultationModal({ consultation, modal }) {
                 Decline consultation with {consultation.user.companyName}
               </Text>
               <Box mb="l">
-                <Field
-                  as={TextField}
-                  multiline
-                  placeholder="reason"
-                  label="What is your reason for declining this consultation?"
-                  description="Optional"
+                <FormField
+                  as={Textarea}
                   minRows={3}
                   name="reason"
+                  labelHint="Optional"
+                  placeholder="reason"
+                  label="What is your reason for declining this consultation?"
                 />
               </Box>
               <Button

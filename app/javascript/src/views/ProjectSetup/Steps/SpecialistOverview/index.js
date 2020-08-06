@@ -1,13 +1,12 @@
 import React, { Fragment, useEffect } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import Text from "src/components/Text";
-import { Button } from "@advisable/donut";
-import TextField from "src/components/TextField";
+import { Button, Textarea } from "@advisable/donut";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history }) => {
+export default function SpecialistOverview({ project, match, history }) {
   const [mutate] = useMutation(UPDATE_PROJECT);
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/goals`);
@@ -43,15 +42,12 @@ export default ({ project, match, history }) => {
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
-            <TextField
-              multiline
-              autoHeight
-              name="specialistDescription"
-              value={formik.values.specialistDescription}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="Specialist overview.."
+            <Field
+              minRows={4}
+              as={Textarea}
               marginBottom="xl"
+              name="specialistDescription"
+              placeholder="Specialist overview.."
               error={
                 formik.submitCount > 0 && formik.errors.specialistDescription
               }
@@ -73,4 +69,4 @@ export default ({ project, match, history }) => {
       </Formik>
     </Fragment>
   );
-};
+}

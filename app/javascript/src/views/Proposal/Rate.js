@@ -1,13 +1,11 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/react-hooks";
-import createNumberMask from "text-mask-addons/dist/createNumberMask";
-import { Button } from "@advisable/donut";
-import Card from "../../components/Card";
+import { Box, Button, Card } from "@advisable/donut";
 import Text from "../../components/Text";
 import Heading from "../../components/Heading";
-import TextField from "../../components/TextField";
-import { Padding } from "../../components/Spacing";
+import FormField from "../../components/FormField";
+import CurrencyInput from "../../components/CurrencyInput";
 import currency from "../../utilities/currency";
 import { rateValidationSchema } from "./validationSchema";
 import UPDATE_APPLICATION from "./updateApplication.js";
@@ -52,45 +50,31 @@ const Rate = ({ history, application }) => {
       >
         {(formik) => (
           <Form>
-            <Padding size="l">
-              <Padding bottom="s">
+            <Box padding="l">
+              <Box paddingBottom="s">
                 <Heading level={3}>
                   What is your hourly rate for this project?
                 </Heading>
-              </Padding>
-              <Padding bottom="l">
+              </Box>
+              <Box paddingBottom="l">
                 <Text size="s">
                   Advisable charge a fee of 20% of the price you charge. Please
                   remember to account for this in your hourly rate.
                 </Text>
-              </Padding>
-              <Padding bottom="xl">
-                <TextField
-                  labelHidden
-                  name="rate"
-                  label="Hourly Rate"
-                  placeholder={`$0.00`}
-                  value={formik.values.rate}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.rate && formik.errors.rate}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const stripped = value.replace(/[^0-9\.-]+/g, "");
-                    const val = stripped ? Number(stripped) : null;
-                    formik.setFieldValue("rate", val);
-                  }}
-                  mask={createNumberMask({
-                    prefix: "$",
-                    allowDecimal: true,
-                  })}
-                  description={
-                    Number(formik.values.rate) > 0 &&
-                    `You would earn ${calculateRate(
-                      formik.values.rate,
-                    )} per hour`
-                  }
-                />
-              </Padding>
+              </Box>
+              <FormField
+                labelHidden
+                prefix="$"
+                name="rate"
+                marginBottom="xl"
+                label="Hourly Rate"
+                placeholder="$0.00"
+                as={CurrencyInput}
+                caption={
+                  Number(formik.values.rate) > 0 &&
+                  `You would earn ${calculateRate(formik.values.rate)} per hour`
+                }
+              />
               <Button
                 type="submit"
                 disabled={!formik.isValid}
@@ -99,7 +83,7 @@ const Rate = ({ history, application }) => {
               >
                 Continue
               </Button>
-            </Padding>
+            </Box>
           </Form>
         )}
       </Formik>
