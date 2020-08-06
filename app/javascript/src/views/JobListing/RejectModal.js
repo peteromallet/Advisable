@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Columns, Button, Modal, Text, Select } from "@advisable/donut";
 import { REJECT_INVITATION } from "./queries";
 import FormField from "../../components/FormField";
@@ -26,7 +26,7 @@ const RejectModal = ({ modal, onReject, application }) => {
         fontWeight="medium"
         letterSpacing="-0.02em"
       >
-        Reject invitation to {application.project.primarySkill.name} project
+        Reject invitation to {application.project.primarySkill?.name} project
       </Text>
       <Formik
         initialValues={{ reason: REJECTION_REASONS[0] }}

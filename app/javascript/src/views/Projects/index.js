@@ -1,7 +1,7 @@
 // Renders the projects view for a user.
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { Container, Text } from "@advisable/donut";
 import Loading from "./Loading";
 import { GET_PROJECTS } from "./queries";

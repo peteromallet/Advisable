@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Card } from "@advisable/donut";
-import { useMutation } from "@apollo/react-hooks";
-import View from "src/components/View";
+import { useMutation } from "@apollo/client";
 import Text from "src/components/Text";
 import Loading from "src/components/Loading";
 import Divider from "src/components/Divider";
@@ -45,22 +44,20 @@ const ScheduleSetupCall = ({ project }) => {
   };
 
   return (
-    <View>
-      <Container size="s">
-        <Card center padding="xl">
-          <Heading marginBottom="m">Request a call back</Heading>
-          <Text marginBottom="l">
-            Have an Advisable team member setup your project with you making
-            sure you don’t miss anything!
-          </Text>
-          <Action onClick={openCalendly}>Schedule a call</Action>
-          <Divider marginTop="xl" marginBottom="xl">
-            Or
-          </Divider>
-          <Action onClick={convertToSelfService}>Continue by yourself</Action>
-        </Card>
-      </Container>
-    </View>
+    <Container size="s">
+      <Card center padding="xl">
+        <Heading marginBottom="m">Request a call back</Heading>
+        <Text marginBottom="l">
+          Have an Advisable team member setup your project with you making sure
+          you don’t miss anything!
+        </Text>
+        <Action onClick={openCalendly}>Schedule a call</Action>
+        <Divider marginTop="xl" marginBottom="xl">
+          Or
+        </Divider>
+        <Action onClick={convertToSelfService}>Continue by yourself</Action>
+      </Card>
+    </Container>
   );
 };
 

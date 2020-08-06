@@ -1,7 +1,7 @@
 import React from "react";
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { Menu } from "@advisable/donut";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import { MenuItem } from "reakit";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";

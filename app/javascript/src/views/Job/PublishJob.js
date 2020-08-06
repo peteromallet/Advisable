@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Pencil } from "@styled-icons/heroicons-solid";
 import { useHistory, useParams, Link as RouterLink } from "react-router-dom";
 import { Stack, Box, Text, BulletList, Button, Tags } from "@advisable/donut";

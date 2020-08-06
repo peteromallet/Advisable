@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Box, Button, Text } from "@advisable/donut";
 import Modal from "../Modal";
 import { withNotifications } from "../Notifications";

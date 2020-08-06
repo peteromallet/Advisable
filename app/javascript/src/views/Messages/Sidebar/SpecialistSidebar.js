@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash-es";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { Box, Text } from "@advisable/donut";
 import currency from "../../../utilities/currency";
 import Status from "../../../components/Status";

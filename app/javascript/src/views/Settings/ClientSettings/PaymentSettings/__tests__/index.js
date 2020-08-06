@@ -22,6 +22,16 @@ test("Bank transer option is disabled if bankTransfersEnabled is false", async (
     },
     {
       request: {
+        query: GET_DATA,
+      },
+      result: {
+        data: {
+          countries: [mockData.country()],
+        },
+      },
+    },
+    {
+      request: {
         query: GET_PAYMENT_SETTINGS,
       },
       result: {
@@ -55,6 +65,16 @@ test("Bank transer option is enabled if bankTransfersEnabled is true", async () 
       result: {
         data: {
           viewer: user,
+        },
+      },
+    },
+    {
+      request: {
+        query: GET_DATA,
+      },
+      result: {
+        data: {
+          countries: [mockData.country()],
         },
       },
     },
@@ -164,7 +184,7 @@ test("user can update invoice settings", async () => {
   const button = app.getByLabelText("Save Changes");
   fireEvent.click(button);
   const notice = await app.findByText(
-    "Your payment preferences have been updated"
+    "Your payment preferences have been updated",
   );
   expect(notice).toBeInTheDocument();
 });

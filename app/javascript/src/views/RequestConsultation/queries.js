@@ -1,5 +1,5 @@
-import gql from "graphql-tag";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { gql } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useParams, useLocation } from "react-router";
 
 export const GET_SPECIALIST = gql`

@@ -51,6 +51,10 @@ test("When logged in the skills step continues to availability", async () => {
     mockMutation(
       CREATE_CONSULTATION,
       {
+        utmSource: undefined,
+        utmCampaign: undefined,
+        utmMedium: undefined,
+        gclid: undefined,
         specialist: specialist.airtableId,
         skill: "Testing",
       },
@@ -93,6 +97,10 @@ test("company details step continues to availability", async () => {
     mockMutation(
       CREATE_CONSULTATION,
       {
+        utmSource: undefined,
+        utmCampaign: undefined,
+        utmMedium: undefined,
+        gclid: undefined,
         specialist: specialist.airtableId,
         firstName: "Jane",
         lastName: "Doe",
@@ -278,7 +286,7 @@ test("Send step sends the consultation request", async () => {
   });
 
   await app.findByText("If you're impressed", { exact: false });
-  const rating = app.getByLabelText("4");
+  const rating = app.getByLabelText("Likely");
   fireEvent.click(rating);
   const btn = app.getByLabelText("Request Consultation");
   fireEvent.click(btn);

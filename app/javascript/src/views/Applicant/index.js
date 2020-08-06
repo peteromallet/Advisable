@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash-es";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "src/components/Layout";
 import Loading from "src/components/Loading";

@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Button } from "@advisable/donut";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Formik } from "formik";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";

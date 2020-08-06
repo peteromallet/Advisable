@@ -1,9 +1,9 @@
 import React from "react";
 import { get } from "lodash-es";
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { Formik, Form } from "formik";
 import FormField from "components/FormField";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Text, Box, Button, Columns, Textarea } from "@advisable/donut";
 import Modal from "../../components/Modal";
 

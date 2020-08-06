@@ -1,7 +1,7 @@
 import React from "react";
 import { get } from "lodash-es";
 import { Button } from "@advisable/donut";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { Redirect } from "react-router-dom";
 import { Box, Text } from "@advisable/donut";
 import { useStripe } from "@stripe/react-stripe-js";

@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 import queryString from "query-string";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Button } from "@advisable/donut";
 import { withNotifications } from "src/components/Notifications";
 import Heading from "src/components/Heading";

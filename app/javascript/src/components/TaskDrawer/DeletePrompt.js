@@ -1,7 +1,7 @@
 // Renders the prompt to submit a task
 import React from "react";
 import { Button, Box } from "@advisable/donut";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import Text from "../Text";
 import DELETE_TASK from "./deleteTask.graphql";
 import { Confirmation, ConfirmationContainer } from "./styles";

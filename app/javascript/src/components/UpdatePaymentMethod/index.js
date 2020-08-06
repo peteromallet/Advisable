@@ -1,6 +1,6 @@
 import React from "react";
-import gql from "graphql-tag";
-import { useMutation, useApolloClient } from "@apollo/react-hooks";
+import { gql } from "@apollo/client";
+import { useMutation, useApolloClient } from "@apollo/client";
 import Loading from "../Loading";
 import useViewer from "../../hooks/useViewer";
 import PaymentMethodForm from "../PaymentMethodForm";

@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import { DateTime } from "luxon";
 import { Button, useBreakpoint, Availability } from "@advisable/donut";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import React from "react";
 import Div100vh from "react-div-100vh";
 import Text from "src/components/Text";

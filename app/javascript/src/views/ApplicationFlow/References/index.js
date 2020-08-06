@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
-import { useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useMutation, useApolloClient } from "@apollo/client";
 import { Text, useModal } from "@advisable/donut";
 import FETCH_APPLICATION from "../fetchApplication.js";
 import UPDATE_APPLICATION from "../updateApplication.js";
@@ -77,11 +77,26 @@ const References = ({
       query: FETCH_APPLICATION,
       variables: { id: applicationId },
     });
-    previous.application.specialist.previousProjects.nodes.unshift(project);
+
     client.writeQuery({
       query: FETCH_APPLICATION,
       variables: { id: applicationId },
-      data: previous,
+      data: {
+        ...previous,
+        application: {
+          ...previous.application,
+          specialist: {
+            ...previous.application.specialist,
+            previousProjects: {
+              ...previous.application.specialist.previousProjects,
+              nodes: [
+                project,
+                ...previous.application.specialist.previousProjects.nodes,
+              ],
+            },
+          },
+        },
+      },
     });
   };
 

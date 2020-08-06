@@ -12,7 +12,7 @@ const InvitationComponent = ({ application, onViewInvitation }) => {
     <Invitation onClick={handleView}>
       <Content>
         <Text fontSize="xl" color="white.9" mb="xs" fontWeight="medium">
-          {application.project.primarySkill.name}
+          {application.project.primarySkill?.name}
         </Text>
         <Text mb="s" fontSize="xs" color="white.7" lineHeight="xs">
           {application.project.industry} {application.project.companyType}

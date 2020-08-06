@@ -1,6 +1,6 @@
 import React from "react";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
+import { gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Box, Button, Text, Link } from "@advisable/donut";
 
 export const UPDATE_TASK = gql`

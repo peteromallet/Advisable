@@ -33,13 +33,18 @@ export default function BulletPointInput({
 
   const handleChange = (i) => (e) => {
     const inputValue = e.target.value;
-    let nextValue = value;
+    const nextValue = value || [];
 
-    if (inputValue.length >= 0) {
-      nextValue[i] = inputValue;
+    if (nextValue[i] === null || nextValue[i] === undefined) {
+      onChange([...nextValue, inputValue]);
+    } else {
+      onChange(
+        nextValue.map((item, index) => {
+          if (index !== i) return item;
+          return inputValue;
+        }),
+      );
     }
-
-    onChange(nextValue);
   };
 
   return (

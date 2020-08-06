@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 
 export const viewerFields = gql`
   fragment ViewerFields on ViewerUnion {

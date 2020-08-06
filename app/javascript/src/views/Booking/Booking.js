@@ -1,7 +1,7 @@
 import * as React from "react";
 import { get, filter } from "lodash-es";
 import { Box, Modal, useModal } from "@advisable/donut";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 import {
   useParams,
   useLocation,
@@ -51,16 +51,22 @@ export default function Booking({ data, match }) {
   });
 
   const addNewTaskToCache = (task) => {
-    const newData = client.readQuery({
+    const existing = client.readQuery({
       query: GET_ACTIVE_APPLICATION,
       variables: {
         id: applicationId,
       },
     });
-    newData.application.tasks.push(task);
+
     client.writeQuery({
       query: GET_ACTIVE_APPLICATION,
-      data: newData,
+      data: {
+        ...existing,
+        application: {
+          ...existing.application,
+          tasks: [...existing.application.tasks, task],
+        },
+      },
       variables: {
         id: applicationId,
       },
@@ -70,28 +76,18 @@ export default function Booking({ data, match }) {
   };
 
   const handleDeleteTask = (task) => {
-    const newData = client.readQuery({
-      query: GET_ACTIVE_APPLICATION,
-      variables: {
-        id: applicationId,
-      },
-    });
-    history.push(match.url);
-    client.writeQuery({
-      query: GET_ACTIVE_APPLICATION,
-      variables: {
-        id: applicationId,
-      },
-      data: {
-        ...newData,
-        application: {
-          ...newData.application,
-          tasks: tasks.filter((t) => {
-            return t.id !== task.id;
-          }),
+    client.cache.modify({
+      id: client.cache.identify(application),
+      fields: {
+        tasks(existingTasks, { readField }) {
+          return existingTasks.filter((taskRef) => {
+            return task.id !== readField("id", taskRef);
+          });
         },
       },
     });
+
+    history.push(match.url);
   };
 
   // For fixed projects, if they haven't completed tthe fixedProjects tutorial then

@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Field } from "formik";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import Text from "src/components/Text";
 import Modal from "src/components/Modal";
 import { Box, Button, Columns, Select, Textarea } from "@advisable/donut";

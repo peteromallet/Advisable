@@ -37,6 +37,7 @@ test("Renders the manage view for a specialist", async () => {
           application: generateType.application({
             id: "rec1234",
             airtableId: "rec1234",
+            projectType: "Flexible",
             tasks: [generateType.task({ name: "This is a test task" })],
             project: generateType.project({
               user: generateType.user(),
@@ -52,10 +53,11 @@ test("Renders the manage view for a specialist", async () => {
 });
 
 test("Renders a tutorial video if it's the first time viewing", async () => {
+  const viewer = generateType.user();
   const { findByText } = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
-      mockViewer(generateType.user()),
+      mockViewer(viewer),
       {
         request: {
           query: GET_ACTIVE_APPLICATION,
@@ -65,7 +67,7 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
         },
         result: {
           data: {
-            viewer: generateType.user(),
+            viewer,
             application: generateType.application({
               id: "rec1234",
               airtableId: "rec1234",
@@ -86,6 +88,10 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
 });
 
 test("Does not render a tutorial video if the user has completed it", async () => {
+  const viewer = generateType.user({
+    completedTutorials: ["flexibleProjects"],
+  });
+
   const { findByText, queryByText } = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
@@ -95,9 +101,7 @@ test("Does not render a tutorial video if the user has completed it", async () =
         },
         result: {
           data: {
-            viewer: generateType.user({
-              completedTutorials: ["flexibleProjects"],
-            }),
+            viewer,
           },
         },
       },
@@ -110,11 +114,11 @@ test("Does not render a tutorial video if the user has completed it", async () =
         },
         result: {
           data: {
-            viewer: generateType.user(),
+            viewer,
             application: generateType.application({
               id: "rec1234",
               airtableId: "rec1234",
-              projecType: "Flexible",
+              projectType: "Flexible",
               tasks: [generateType.task({ name: "This is a test task" })],
               project: generateType.project({
                 user: generateType.user(),
@@ -132,25 +136,25 @@ test("Does not render a tutorial video if the user has completed it", async () =
 });
 
 test("The client can change the project type", async () => {
+  const viewer = generateType.user({
+    completedTutorials: ["fixedProjects"],
+  });
+
   const app = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
-      mockViewer(
-        generateType.user({
-          completedTutorials: ["fixedProjects"],
-        }),
-      ),
+      mockViewer(viewer),
       mockQuery(
         GET_ACTIVE_APPLICATION,
         {
           id: "rec1234",
         },
         {
-          viewer: generateType.user(),
+          viewer,
           application: generateType.application({
             id: "rec1234",
             airtableId: "rec1234",
-            projecType: "Fixed",
+            projectType: "Fixed",
             tasks: [generateType.task({ name: "This is a test task" })],
             project: generateType.project({
               user: generateType.user(),
@@ -211,6 +215,7 @@ test("The client can add a task", async () => {
   const application = generateType.application({
     id: "rec1324",
     airtableId: "rec1234",
+    projectType: "Flexible",
     project,
     specialist,
   });

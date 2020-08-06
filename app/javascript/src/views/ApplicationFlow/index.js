@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { Switch, Route, Redirect } from "react-router-dom";
 import NotFound from "../NotFound";
 import { Loading } from "../../components";

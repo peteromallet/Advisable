@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 import { viewerFields } from "../../../graphql/queries/viewer";
 import { SpecialistFields } from "../getProfile";
 

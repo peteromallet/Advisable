@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Plus } from "@styled-icons/feather";
-import { useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useMutation, useApolloClient } from "@apollo/client";
 import { NewTask, NewTaskIcon } from "./styles";
 import generateID from "../../utilities/generateID";
 import CREATE_TASK from "../../graphql/mutations/createTask";

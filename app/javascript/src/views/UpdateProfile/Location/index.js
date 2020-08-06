@@ -4,7 +4,7 @@ import * as React from "react";
 import { Formik, Form } from "formik";
 import { get } from "lodash-es";
 import { Box, Card, Button, Select, Checkbox } from "@advisable/donut";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import Text from "../../../components/Text";
 import Loading from "../../../components/Loading";
 import Heading from "../../../components/Heading";
