@@ -13,53 +13,60 @@ const Wrapper = styled.div`
 const StyledScaleButton = styled.div`
   cursor: pointer;
   min-height: 48px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
+  box-sizing: border-box;
   letter-spacing: 1px;
-  box-shadow: inset -1px 0px 0px 0px ${theme.colors.neutral100};
   background-color: transparent;
+  border-style: solid;
+  border-color: ${theme.colors.neutral100};
+  border-width: 0 1px 0 0;
 
-  &[data-selected="true"] {
-    box-shadow: inset 0px 0px 0px 0px ${theme.colors.neutral200};
+  &[data-last="true"] {
+    border-width: 0;
+    border-radius: 0 8px 8px 0;
   }
-  &[data-hover-inrange="true"] {
-    box-shadow: inset -1px 0px 0px 0px ${theme.colors.neutral200};
+  &[data-first="true"] {
+    border-radius: 8px 0 0 8px;
+  }
+
+  /* hover borders */
+  &:hover {
+    border-width: 2px 2px 2px 0;
+    border-color: ${theme.colors.neutral100};
+  }
+  &:hover[data-first="true"] {
+    border-width: 2px;
+  }
+  /* inrange hover border */
+  ${Wrapper}:hover &[data-hover-inrange="true"][data-selected="false"] {
+    border-width: 2px 1px 2px 0;
+  }
+  ${Wrapper}:hover &[data-hover-inrange="true"][data-selected="false"][data-first="true"] {
+    border-width: 2px 1px 2px 2px;
+  }
+
+  /* selected borders */
+  &[data-selected="true"] {
+    background-color: ${theme.colors.blue100};
+    border-width: 2px 2px 2px 0;
+    border-color: ${theme.colors.blue900};
+  }
+  &[data-selected="true"][data-first="true"] {
+    border-width: 2px;
+    border-color: ${theme.colors.blue900};
   }
   &[data-selected-inrange="true"] {
-    box-shadow: inset -1px 0px 0px 0px ${theme.colors.blue900};
+    background-color: ${theme.colors.blue100};
+    border-width: 2px 1px 2px 0;
+    border-color: ${theme.colors.blue900};
   }
-  &[data-last="true"] {
-    box-shadow: inset 0px 0px 0px 0px ${theme.colors.neutral200};
+  &[data-selected="true"] {
+    border-width: 2px 2px 2px 0;
+    border-color: ${theme.colors.blue900};
   }
-`;
-
-const StyledScaleIndicator = styled.div`
-  position: absolute;
-  display: none;
-  left: 0;
-  top: 0;
-  height: 48px;
-  pointer-events: none;
-  border-radius: 8px 0 0 8px;
-  box-shadow: inset 0px 0px 0px 2px ${theme.colors.neutral200};
-
-  ${Wrapper}:hover & {
-    display: block;
-  }
-
-  &[data-last="true"] {
-    border-radius: 8px;
-  }
-`;
-
-const StyledDisplayValue = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  background-color: ${theme.colors.blue100};
-  box-shadow: inset 0px 0px 0px 2px ${theme.colors.blue900};
-  border-radius: 8px 0 0 8px;
-  &[data-last="true"] {
-    border-radius: 8px;
+  &[data-selected-inrange="true"][data-first="true"] {
+    border-width: 2px 1px 2px 2px;
+    border-color: ${theme.colors.blue900};
   }
 `;
 
@@ -69,54 +76,47 @@ function ScaleInput({ onChange, value, options, importanceScale }) {
   return (
     <Box
       as={Wrapper}
-      position="relative"
-      display="flex"
-      minHeight="48px"
       alignItems="center"
       justifyContent="space-around"
       borderRadius="8px"
     >
-      <Box
-        as={StyledScaleIndicator}
-        position="absolute"
-        left="0"
-        minHeight="48px"
-        data-last={hoverInd === 5}
-        width={`${hoverInd * 20}%`}
-      />
-      <Box
-        as={StyledDisplayValue}
-        width={`${Number(value) * 20}%`}
-        data-last={value === 5}
-        height="48px"
-      />
       {[1, 2, 3, 4, 5].map((num, index) => (
-        <Box
-          as={StyledScaleButton}
-          key={num}
-          width="100%"
-          textAlign="center"
-          minHeight="48px"
-          aria-label={num}
-          data-selected={value === num}
-          data-hover={num === hoverInd}
-          data-last={num === 5}
-          data-selected-inrange={num <= value}
-          data-hover-inrange={num <= hoverInd}
-          onMouseOver={() => setHoverInd(num)}
-          onMouseLeave={() => setHoverInd(0)}
-          onClick={createClickHandler(num)}
-          zIndex="2"
-        >
-          <Text
-            lineHeight="48px"
-            fontSize="xxs"
-            fontWeight="light"
-            color="neutral400"
+        <Box key={num} position="relative" display="inline-block" width="100%">
+          <Box
+            as={StyledScaleButton}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            textAlign="left"
+            key={num}
+            width="100%"
+            minHeight="48px"
+            aria-label={num}
+            data-last={num === 5}
+            data-first={num === 1}
+            data-selected={value === num}
+            data-selected-inrange={num < value}
+            data-hover-inrange={num < hoverInd}
+            onMouseOver={() => setHoverInd(num)}
+            onClick={createClickHandler(num)}
+            zIndex="2"
           >
-            {index === 0 && "least"}
-            {index === 4 && "most"}
-          </Text>
+            <Box
+              position="absolute"
+              left="0"
+              top="0"
+              right="0"
+              bottom="0"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Text px="xxs" fontSize="xxs" color="neutral300">
+                {index === 0 && "not important"}
+                {index === 4 && "very important"}
+              </Text>
+            </Box>
+          </Box>
         </Box>
       ))}
     </Box>
