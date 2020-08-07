@@ -20,19 +20,22 @@ export const StyledTilesInputOption = styled.button`
   background: #eff0f3;
   box-shadow: inset 0px 0px 0px 0px ${theme.colors.blue[5]};
 
+  & span {
+    color: ${theme.colors.neutral500};
+  }
+
   &:hover {
-    color: ${theme.colors.neutral[9]};
     box-shadow: inset 0px 0px 0px 2px ${theme.colors.neutral200};
   }
 
   &[data-selected="true"] {
-    color: ${theme.colors.neutral900};
+    color: ${theme.colors.blue900};
     transition: 0.3s box-shadow, 0.3s background;
     background: ${theme.colors.blue100};
     box-shadow: inset 0px 0px 0px 2px ${theme.colors.blue900};
   }
 
-  &[data-selected="true"] svg {
+  &[data-selected="true"] span {
     color: ${theme.colors.blue900};
   }
 `;

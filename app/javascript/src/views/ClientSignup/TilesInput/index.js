@@ -34,11 +34,11 @@ function TilesInput({ onChange, value, options, importanceScale }) {
             onClick={createClickHandler(option.value)}
           >
             {option.icon && (
-              <Box width="32px" height="32px" mb="xxs">
-                <option.icon />
+              <Box width="32px" height="32px" mt="xxs" mb="xs">
+                <option.icon strokeWidth={1.3} />
               </Box>
             )}
-            <Text fontSize="xs" color="neutral500" fontWeight="light">
+            <Text as="span" fontSize="xs">
               {option.label}
             </Text>
           </StyledTilesInputOption>
