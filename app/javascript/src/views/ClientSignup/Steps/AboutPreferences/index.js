@@ -29,6 +29,7 @@ import {
   useLocationState,
   useClientApplicationQuery,
 } from "../../queries";
+import ScaleInput from "./ScaleInput";
 
 const validationSchema = object().shape({
   localityImportance: number().required(
@@ -145,7 +146,7 @@ function AboutPreferences() {
               <Box mb="l">
                 <FormField
                   isRequired
-                  as={TilesInput}
+                  as={ScaleInput}
                   fullWidth
                   optionsPerRow={1}
                   name="localityImportance"
@@ -155,13 +156,6 @@ function AboutPreferences() {
                   error={null}
                   importanceScale={true}
                   label="How important is it that freelancers you hire should be in your city?"
-                  options={[
-                    { label: "1", value: "1" },
-                    { label: "2", value: "2" },
-                    { label: "3", value: "3" },
-                    { label: "4", value: "4" },
-                    { label: "5", value: "5" },
-                  ]}
                   value={formik.values.localityImportance}
                 />
               </Box>
