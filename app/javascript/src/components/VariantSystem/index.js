@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
+import PropTypes from "prop-types";
 import { Box, Text, theme } from "@advisable/donut";
 import { useApolloClient, gql, useQuery } from "@apollo/client";
 import { useEffect } from "react";
-import { times } from "lodash-es";
+import { range } from "lodash-es";
 import { useCallback } from "react";
 import styled from "styled-components";
 
@@ -63,9 +64,32 @@ const VariantButton = styled.div`
   }
 `;
 
-function VariantSystem() {
-  const { cache } = useApolloClient();
+function VariantSystem({ variantsRange }) {
   const { data } = useQuery(NUM_OF_VARIANTS);
+  const activeVariant = data?.variant;
+
+  const variants = useMemo(
+    () =>
+      range(variantsRange[0], variantsRange[1]).map((num) => (
+        <Box
+          as={VariantButton}
+          key={`variant-${num}`}
+          data-active={num === activeVariant}
+          onClick={() => updateActiveVariant(num)}
+        >
+          <Text
+            fontSize="xxs"
+            color={num === activeVariant ? "neutral800" : "neutral400"}
+          >
+            {num}
+          </Text>
+        </Box>
+      )),
+    [activeVariant, updateActiveVariant, variantsRange],
+  );
+
+  const numOfVariants = variants.length;
+  const { cache } = useApolloClient();
 
   const updateActiveVariant = useCallback((variant) => {
     cache.writeQuery({ query: CURRENT_VARIANT, data: { variant } });
@@ -73,29 +97,20 @@ function VariantSystem() {
   }, []);
 
   useEffect(() => {
-    updateActiveVariant(0);
-  }, [cache, updateActiveVariant]);
+    updateActiveVariant(variantsRange[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const numOfVariants = data?.numOfVariants;
-  const activeVariant = data?.variant;
-
-  const variants = times(numOfVariants, (i) => i + 1).map((num) => (
-    <Box
-      as={VariantButton}
-      key={`variant-${num}`}
-      data-active={num === activeVariant}
-      onClick={() => updateActiveVariant(num)}
-    >
-      <Text
-        fontSize="xxs"
-        color={num === activeVariant ? "neutral800" : "neutral400"}
-      >
-        {num}
-      </Text>
-    </Box>
-  ));
+  useEffect(() => {
+    cache.writeQuery({ query: NUM_OF_VARIANTS, data: { numOfVariants } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return <Wrapper>{variants}</Wrapper>;
 }
+
+VariantSystem.propTypes = {
+  variantsRange: PropTypes.array,
+};
 
 export default VariantSystem;
