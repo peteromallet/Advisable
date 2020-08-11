@@ -104,6 +104,7 @@ function AboutRequirements() {
                   isRequired
                   as={TilesInput}
                   fullWidth
+                  alignWidth
                   optionsPerRow={1}
                   name="numberOfFreelancers"
                   onChange={(n) =>
