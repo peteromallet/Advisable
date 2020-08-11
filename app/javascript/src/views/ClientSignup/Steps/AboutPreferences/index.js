@@ -204,8 +204,9 @@ function AboutPreferences() {
                     value={formik.values.localityImportance}
                     options={[
                       { label: "Not Important", value: 1 },
-                      { label: "Important", value: 2 },
-                      { label: "Very Important", value: 3 },
+                      { label: "Not Sure", value: 2 },
+                      { label: "Important", value: 3 },
+                      // { label: "Very Important", value: 4 },
                     ]}
                   />
                 </Box>
