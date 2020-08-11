@@ -22,6 +22,7 @@ const item = {
 
 function MotionStack({ children, ...props }) {
   const newChildren = React.Children.map(children, (child, index) => {
+    if (!child) return child;
     if (child.props.ignore) return child;
     return (
       <motion.li key={index} variants={item}>
