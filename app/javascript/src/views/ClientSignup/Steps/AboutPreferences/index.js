@@ -94,7 +94,7 @@ const talentQualityOptionsAlt = [
     icon: Star,
   },
   {
-    label: "Superb",
+    label: "World-class",
     value: "WORLD_CLASS",
     comment: "I want the best of the best",
     icon: Award,
