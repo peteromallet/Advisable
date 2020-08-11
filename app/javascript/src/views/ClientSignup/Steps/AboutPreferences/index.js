@@ -30,6 +30,7 @@ import {
   useClientApplicationQuery,
 } from "../../queries";
 import ScaleInput from "./ScaleInput";
+import useVariants from "../../../../components/VariantSystem/useVariants";
 
 const validationSchema = object().shape({
   localityImportance: number().required(
@@ -47,29 +48,53 @@ const talentQualityOptions = [
   {
     label: "Cheap Talent",
     value: "CHEAP",
-    comment: "I don't care about quality",
     icon: Tag,
   },
   {
     label: "Budget Talent",
     value: "BUDGET",
-    comment: "I'm very cost-conscious",
     icon: DollarSign,
   },
   {
     label: "Good Talent",
     value: "GOOD",
-    comment: "I want reliable talent",
     icon: UserCheck,
   },
   {
     label: "Top Talent",
     value: "TOP",
-    comment: "I want talent I can fully trust",
     icon: Star,
   },
   {
     label: "World Class",
+    value: "WORLD_CLASS",
+    icon: Award,
+  },
+];
+
+const talentQualityOptionsAlt = [
+  {
+    label: "Cheap",
+    value: "CHEAP",
+    icon: Tag,
+  },
+  {
+    label: "Budget",
+    value: "BUDGET",
+    icon: DollarSign,
+  },
+  {
+    label: "Good",
+    value: "GOOD",
+    icon: UserCheck,
+  },
+  {
+    label: "Top",
+    value: "TOP",
+    icon: Star,
+  },
+  {
+    label: "Superb",
     value: "WORLD_CLASS",
     comment: "I want the best of the best",
     icon: Award,
@@ -78,6 +103,7 @@ const talentQualityOptions = [
 
 function AboutPreferences() {
   const locationState = useLocationState();
+  const { variant } = useVariants();
   const [
     submitClientApplication,
     { called, data: processing },
@@ -143,25 +169,51 @@ function AboutPreferences() {
               <Description>
                 This is to help tailor our recommendations to you.
               </Description>
+              {variant < 6 && (
+                <Box mb="l">
+                  <FormField
+                    isRequired
+                    as={ScaleInput}
+                    fullWidth
+                    optionsPerRow={1}
+                    name="localityImportance"
+                    onChange={(n) =>
+                      formik.setFieldValue("localityImportance", n)
+                    }
+                    error={null}
+                    importanceScale={true}
+                    label="How important is it that freelancers you hire should be in your city?"
+                    value={formik.values.localityImportance}
+                  />
+                </Box>
+              )}
+              {variant >= 6 && (
+                <Box mb="l">
+                  <FormField
+                    isRequired
+                    alignWidth={variant >= 7}
+                    as={TilesInput}
+                    fullWidth
+                    optionsPerRow={1}
+                    name="localityImportance"
+                    onChange={(n) =>
+                      formik.setFieldValue("localityImportance", n)
+                    }
+                    error={null}
+                    label="How important is it that freelancers you hire should be in your city?"
+                    value={formik.values.localityImportance}
+                    options={[
+                      { label: "Not Important", value: 1 },
+                      { label: "Important", value: 2 },
+                      { label: "Very Important", value: 3 },
+                    ]}
+                  />
+                </Box>
+              )}
               <Box mb="l">
                 <FormField
                   isRequired
-                  as={ScaleInput}
-                  fullWidth
-                  optionsPerRow={1}
-                  name="localityImportance"
-                  onChange={(n) =>
-                    formik.setFieldValue("localityImportance", n)
-                  }
-                  error={null}
-                  importanceScale={true}
-                  label="How important is it that freelancers you hire should be in your city?"
-                  value={formik.values.localityImportance}
-                />
-              </Box>
-              <Box mb="l">
-                <FormField
-                  isRequired
+                  alignWidth
                   as={TilesInput}
                   fullWidth
                   optionsPerRow={1}
@@ -178,20 +230,40 @@ function AboutPreferences() {
                   value={formik.values.acceptedGuaranteeTerms}
                 />
               </Box>
-              <Box mb="l">
-                <FormField
-                  isRequired
-                  as={TilesInput}
-                  fullWidth
-                  optionsPerRow={1}
-                  name="talentQuality"
-                  onChange={(v) => formik.setFieldValue("talentQuality", v)}
-                  error={null}
-                  label="What level of talent are you typically looking for?"
-                  options={talentQualityOptions}
-                  value={formik.values.talentQuality}
-                />
-              </Box>
+              {variant <= 7 && (
+                <Box mb="l">
+                  <FormField
+                    isRequired
+                    as={TilesInput}
+                    fullWidth
+                    alignWidth={variant === 7}
+                    optionsPerRow={1}
+                    name="talentQuality"
+                    onChange={(v) => formik.setFieldValue("talentQuality", v)}
+                    error={null}
+                    label="What level of talent are you typically looking for?"
+                    options={talentQualityOptions}
+                    value={formik.values.talentQuality}
+                  />
+                </Box>
+              )}
+              {variant > 7 && (
+                <Box mb="l">
+                  <FormField
+                    isRequired
+                    as={TilesInput}
+                    alignWidth
+                    fullWidth
+                    optionsPerRow={1}
+                    name="talentQuality"
+                    onChange={(v) => formik.setFieldValue("talentQuality", v)}
+                    error={null}
+                    label="What level of talent are you typically looking for?"
+                    options={talentQualityOptionsAlt}
+                    value={formik.values.talentQuality}
+                  />
+                </Box>
+              )}
               <SubmitButton width={[1, "auto"]} loading={called && !processing}>
                 Continue
               </SubmitButton>

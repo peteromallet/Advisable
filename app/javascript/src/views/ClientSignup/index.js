@@ -8,6 +8,7 @@ import { Box, useTheme, useBreakpoint } from "@advisable/donut";
 import { Step } from "./styles";
 import Progress from "./Progress";
 import { AnimatePresence } from "framer-motion";
+import VariantSystem from "../../components/VariantSystem";
 
 function ClientSignup() {
   const { routes, currentActiveStepIndex, numberOfActiveSteps } = useSteps(
@@ -21,6 +22,7 @@ function ClientSignup() {
   React.useLayoutEffect(() => {
     theme.updateTheme({ background: "white" });
     return () => theme.updateTheme({ background: "default" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (viewer) return <Redirect to="/" />;
@@ -32,6 +34,7 @@ function ClientSignup() {
   return (
     <Box display="flex" flexDirection="row">
       {isDesktop && <Testimonials />}
+      <VariantSystem variantsRange={[0, 9]} />
       <Box
         ml={isDesktop ? "calc(40% + 3%)" : "auto"}
         py={["l", "4%"]}

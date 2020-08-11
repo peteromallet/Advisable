@@ -3,7 +3,7 @@ import { Box, Text } from "@advisable/donut";
 import PropTypes from "prop-types";
 import { StyledTilesInputOption } from "./styles";
 
-function TilesInput({ onChange, value, options, importanceScale }) {
+function TilesInput({ onChange, value, options, importanceScale, alignWidth }) {
   const createClickHandler = (value) => () => onChange(value);
   const numberOfTiles = options.length;
 
@@ -22,7 +22,9 @@ function TilesInput({ onChange, value, options, importanceScale }) {
     <Box>
       <Box
         display="grid"
-        gridTemplateColumns={`repeat(${numberOfTiles}, auto)`}
+        gridTemplateColumns={`repeat(${numberOfTiles}, ${
+          alignWidth ? "minmax(0, 1fr)" : "auto"
+        })`}
         gridColumnGap="8px"
       >
         {options.map((option) => (
@@ -54,6 +56,7 @@ TilesInput.propTypes = {
   onChange: PropTypes.func,
   value: PropTypes.string,
   importanceScale: PropTypes.bool,
+  alignWidth: PropTypes.bool,
 };
 
 export default TilesInput;
