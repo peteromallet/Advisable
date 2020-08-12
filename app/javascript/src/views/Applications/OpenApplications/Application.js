@@ -145,7 +145,7 @@ const Application = ({ application }) => {
     <Card elevation="m">
       <Box padding="m">
         <Text weight="semibold" colour="blue.9">
-          {application.project.primarySkill.name}
+          {application.project.primarySkill?.name}
         </Text>
         {(project.industry || project.companyType) && (
           <Text mt="xxs" fontSize="xs" color="neutral.7">
