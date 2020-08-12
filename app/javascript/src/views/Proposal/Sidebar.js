@@ -29,7 +29,7 @@ let SideBar = (props) => {
       </Box>
       <Box paddingBottom="s">
         <Heading level={4}>
-          Proposal for "{application.project.primarySkill.name}" with{" "}
+          Proposal for "{application.project.primarySkill?.name}" with{" "}
           {application.project.user.companyName}
         </Heading>
       </Box>

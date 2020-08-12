@@ -22,7 +22,7 @@ export default function ApplicationDetails({ data, history }) {
           <Card>
             <Box paddingLeft="xl" paddingY="l">
               <Heading level={4}>
-                Applied to {project.primarySkill.name}
+                Applied to {project.primarySkill?.name}
               </Heading>
             </Box>
             <Divider />
