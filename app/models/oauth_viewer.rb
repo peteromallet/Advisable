@@ -11,9 +11,7 @@ class OauthViewer
   end
 
   def can_validate_project?(project)
-    return false if project.contact_name.nil?
-    dif = Levenshtein.compare(project.contact_name, name)
-    return true if dif <= 1
-    false
+    verifier = PreviousProject::Verifier.new(self, project)
+    verifier.can_verify?
   end
 end

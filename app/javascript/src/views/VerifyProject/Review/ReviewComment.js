@@ -56,10 +56,10 @@ function ReviewComment({ specialist }) {
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <Form>
           <FormField
-            mb="l"
             minRows={8}
             as={Textarea}
             name="comment"
+            marginBottom="l"
             placeholder={`E.g. ${specialist.firstName} is an incredible...`}
           />
           <SubmitButton
