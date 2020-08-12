@@ -22,6 +22,9 @@ const createCache = () => {
       },
       Project: {
         fields: {
+          applications: {
+            merge: replaceArrayMerge,
+          },
           characteristics: {
             merge: replaceArrayMerge,
           },

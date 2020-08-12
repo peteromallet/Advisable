@@ -1,60 +1,40 @@
 import React from "react";
-import { get } from "lodash-es";
 import { useQuery } from "@apollo/client";
-import { Redirect } from "react-router-dom";
-import Loading from "src/components/Loading";
-import Project from "./Project";
-import NotFound from "../NotFound";
-import FETCH_PROJECT from "./fetchProject";
-import ScheduleSetupCall from "./ScheduleSetupCall";
-import STATUSES from "./statuses";
-import AccessDenied from "../../components/AccessDenied";
+import { Container } from "@advisable/donut";
+import { useParams, useLocation, Redirect } from "react-router-dom";
+import View from "components/View";
+import Loading from "components/Loading";
+import AccessDenied from "components/AccessDenied";
 import handleAuthError from "../../utilities/handleAuthError";
+import NotFound, { isNotFound } from "../NotFound";
+import { GET_PROJECT } from "./queries";
+import ProjectRoutes from "./ProjectRoutes";
 
-const ProjectContainer = ({ match, location, ...rest }) => {
-  const { loading, error, data } = useQuery(FETCH_PROJECT, {
-    variables: {
-      id: match.params.projectId,
-    },
-  });
+export default function Project() {
+  const { id } = useParams();
+  const location = useLocation();
+  const { loading, data, error } = useQuery(GET_PROJECT, { variables: { id } });
 
-  const statusParam = get(match.params, "status");
-  const project = get(data, "project");
   if (loading) return <Loading />;
 
-  // If there is an error check that the API hasn't returned redirect
-  // instructions. This is a rare case where we want to redirect users
-  // to either signup or login based on wether the project client has
-  // an account
-  if (error && error.graphQLErrors.length > 0) {
-    let theError = error.graphQLErrors[0];
-    let redirect = handleAuthError(theError, location);
-    if (redirect) {
-      return <Redirect to={redirect} />;
-    }
-
-    if (theError.code.match(/invalidPermissions/)) {
+  // Handle API errors.
+  if (error?.graphQLErrors.length > 0) {
+    const theError = error.graphQLErrors[0];
+    const redirect = handleAuthError(theError, location);
+    if (redirect) return <Redirect to={redirect} />;
+    if (theError.extensions.code.match(/invalidPermissions/))
       return <AccessDenied />;
-    }
+    if (isNotFound(error)) return <NotFound />;
   }
 
-  // Render not found if there is no project
-  if (!project) return <NotFound />;
-
-  // If the status is not a valid status then render not found
-  if (Boolean(statusParam) && !STATUSES[statusParam]) return <NotFound />;
-
-  // If the project is in a created state then load the schedule call component
-  if (project && project.status === "Project Created") {
-    return <ScheduleSetupCall project={project} />;
-  }
-
-  // If the project has not been setup yet then redirect to the project setup
-  if (project && project.status === "Brief Pending Confirmation") {
-    return <Redirect to={`/project_setup/${project.airtableId}`} />;
-  }
-
-  return <Project data={data} match={match} location={location} {...rest} />;
-};
-
-export default ProjectContainer;
+  return (
+    <View>
+      <View.Sidebar>Sidebar</View.Sidebar>
+      <View.Content>
+        <Container maxWidth="1100px">
+          <ProjectRoutes />
+        </Container>
+      </View.Content>
+    </View>
+  );
+}
