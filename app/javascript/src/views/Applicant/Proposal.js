@@ -41,7 +41,7 @@ const Loaded = ({ data }) => {
         </Back>
       </Box>
       <Box paddingX="xl" paddingBottom="s">
-        <Heading level={3}>Proposal for "{project.primarySkill.name}"</Heading>
+        <Heading level={3}>Proposal for "{project.primarySkill?.name}"</Heading>
       </Box>
       <Box paddingX="xl" paddingBottom="l">
         <Text size="s">
