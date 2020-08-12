@@ -24,7 +24,7 @@ export default function Matches({ matches, onNext }) {
           <MatchMetaInfo match={application} />
         </Sticky>
       </Box>
-      <Box flexGrow="1" position="relative">
+      <Box flexGrow="1" position="relative" paddingBottom="100px">
         <AnimatePresence exitBeforeEnter>
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -34,7 +34,9 @@ export default function Matches({ matches, onNext }) {
             key={application.id}
           >
             <SpecialistIntroduction application={application} />
-            <SpecialistProjects projects={application.projects} />
+            {application.previousProjects.length > 0 && (
+              <SpecialistProjects projects={application.previousProjects} />
+            )}
           </motion.div>
         </AnimatePresence>
         <ActionBar>

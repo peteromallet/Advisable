@@ -18,6 +18,19 @@ export const GET_MATCHES = gql`
         rate
         introduction
         availability
+        previousProjects {
+          id
+          title
+          excerpt
+          skills {
+            id
+            name
+          }
+          coverPhoto {
+            id
+            url
+          }
+        }
         specialist {
           id
           name

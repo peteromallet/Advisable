@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { rgba } from "polished";
+import { theme } from "@advisable/donut";
 
 const StyledActionBar = styled.div`
   left: 50%;
@@ -9,8 +11,9 @@ const StyledActionBar = styled.div`
   background: white;
   border-radius: 32px;
   transform: translateX(calc(-50%));
-  box-shadow: 0px 4px 8px rgba(95, 95, 117, 0.08),
-    0px 1px 60px rgba(14, 31, 91, 0.16);
+  box-shadow: 0 24px 64px ${rgba(theme.colors.neutral900, 0.24)},
+    0 16px 40px -16px ${rgba(theme.colors.neutral900, 0.16)},
+    0 4px 12px -4px ${rgba(theme.colors.neutral900, 0.16)};
 `;
 
 const StyledActionBarItem = styled.button`
