@@ -59,7 +59,12 @@ function ValidationComplete({ data }) {
         >
           Thanks {oauthViewer.firstName}!
         </Text>
-        <Text fontSize="16px" lineHeight="24px" color="neutral900" mb="50px">
+        <Text
+          fontSize="16px"
+          lineHeight="24px"
+          color="neutral900"
+          marginBottom="50px"
+        >
           We have hundreds more world-class freelancers with experience working
           with {previousProject.companyType} companies in the{" "}
           {previousProject.primaryIndustry.name} industry
