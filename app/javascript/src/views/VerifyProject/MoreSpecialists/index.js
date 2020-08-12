@@ -175,9 +175,9 @@ const MoreSpecialists = React.memo(function MoreSpecialists({
           height={595}
           width="100%"
           backgroundImage={`linear-gradient(180deg, ${rgba(
-            "#F9FAFF",
+            "#F5F5F8",
             0.6,
-          )} 0%, #F9FAFF 100%)`}
+          )} 0%, #F5F5F8 100%)`}
           zIndex={1}
           position="absolute"
         />
