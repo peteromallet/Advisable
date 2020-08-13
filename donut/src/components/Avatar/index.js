@@ -17,7 +17,7 @@ const Avatar = ({ url, name, children, ...props }) => {
   }, [url]);
 
   const initials = reduce(
-    name.trim().split(/\s+/),
+    name?.trim().split(/\s+/),
     (sum, name) => `${sum}${name[0]}`,
     "",
   );

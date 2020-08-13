@@ -5,7 +5,7 @@ import { Modal, Link, Avatar, Box, Text, Tag } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
 import IndustryTag from "../IndustryTag";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
-import Review from "./Review";
+import Review from "components/Review";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
 
 function PreviousProjectDetails({ id }) {
@@ -105,10 +105,8 @@ function PreviousProjectDetails({ id }) {
       </Box>
       {project.reviews.length > 0 && (
         <>
-          <Box height={1} bg="neutral100" />
-          <Box mb="xl">
-            <Review review={project.reviews[0]} />
-          </Box>
+          <Box height={1} bg="neutral100" marginBottom="xl" />
+          <Review review={project.reviews[0]} />
         </>
       )}
     </>

@@ -37,6 +37,22 @@ export const GET_MATCHES = gql`
           firstName
           avatar
           location
+          reviews {
+            id
+            name
+            role
+            avatar
+            companyName
+            comment
+            ratings {
+              overall
+              skills
+              availability
+              adherenceToSchedule
+              qualityOfWork
+              communication
+            }
+          }
         }
       }
     }

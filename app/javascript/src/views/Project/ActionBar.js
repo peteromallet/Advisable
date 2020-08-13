@@ -1,16 +1,15 @@
 import React from "react";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import { rgba } from "polished";
 import { theme } from "@advisable/donut";
 
 const StyledActionBar = styled.div`
-  left: 50%;
-  bottom: 24px;
-  padding: 12px;
+  bottom: 16px;
   position: fixed;
+  padding: 12px;
   background: white;
   border-radius: 32px;
-  transform: translateX(calc(-50%));
   box-shadow: 0 24px 64px ${rgba(theme.colors.neutral900, 0.24)},
     0 16px 40px -16px ${rgba(theme.colors.neutral900, 0.16)},
     0 4px 12px -4px ${rgba(theme.colors.neutral900, 0.16)};
@@ -19,9 +18,10 @@ const StyledActionBar = styled.div`
 const StyledActionBarItem = styled.button`
   appearance: none;
   width: 80px;
-  height: 64px;
+  height: 72px;
   border: none;
   outline: none;
+  cursor: pointer;
   align-items: center;
   display: inline-flex;
   flex-direction: column;
@@ -29,15 +29,31 @@ const StyledActionBarItem = styled.button`
   background: transparent;
   border-radius: 24px;
 
-  &:hover {
-    background: #eff0f3;
+  svg {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 2px;
+    color: ${theme.colors.blue900};
   }
 
-  svg {
-    width: 28px;
-    height: 28px;
-    stroke-width: 2;
-    margin-bottom: 4px;
+  span {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    color: ${theme.colors.neutral600};
+  }
+
+  &:hover {
+    background: #eff0f3;
+    color: ${theme.colors.blue700};
+
+    svg {
+      color: currentColor;
+    }
+
+    span {
+      color: currentColor;
+    }
   }
 `;
 
@@ -46,8 +62,9 @@ function ActionBar({ children }) {
 
   const reposition = React.useCallback(() => {
     const offset = bar.current.parentNode.offsetLeft;
-    const width = bar.current.parentNode.clientWidth;
-    const left = offset + width / 2;
+    const parentWidth = bar.current.parentNode.clientWidth;
+    const width = bar.current.clientWidth;
+    const left = offset + parentWidth / 2 - width / 2;
     bar.current.style.left = `${left}px`;
   }, [bar]);
 
@@ -59,7 +76,24 @@ function ActionBar({ children }) {
     };
   }, [reposition]);
 
-  return <StyledActionBar ref={bar}>{children}</StyledActionBar>;
+  return (
+    <StyledActionBar
+      as={motion.div}
+      initial={{ y: 60, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      ref={bar}
+    >
+      {React.Children.map(children, (child, i) =>
+        React.cloneElement(child, {
+          as: motion.div,
+          initial: { opacity: 0, y: 12 },
+          animate: { opacity: 1, y: 0 },
+          transition: { delay: 0.08 * i },
+        }),
+      )}
+    </StyledActionBar>
+  );
 }
 
 ActionBar.Item = function ActionBarItem({ icon, label, ...props }) {

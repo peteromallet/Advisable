@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import MatchQueue from "./MatchQueue";
-import { UserCheck } from "@styled-icons/feather";
+import { CheckCircle, Trash } from "@styled-icons/heroicons-solid";
 import { AnimatePresence, motion } from "framer-motion";
 import { Box } from "@advisable/donut";
 import Sticky from "components/Sticky";
 import ActionBar from "./ActionBar";
 import MatchMetaInfo from "./MatchMetaInfo";
+import SpecialistReviews from "./SpecialistReviews";
 import SpecialistProjects from "./SpecialistProjects";
 import SpecialistIntroduction from "./SpecialistIntroduction";
 
@@ -37,19 +38,21 @@ export default function Matches({ matches, onNext }) {
             {application.previousProjects.length > 0 && (
               <SpecialistProjects projects={application.previousProjects} />
             )}
+            {application.specialist.reviews.length > 0 && (
+              <SpecialistReviews reviews={application.specialist.reviews} />
+            )}
           </motion.div>
         </AnimatePresence>
         <ActionBar>
           <ActionBar.Item
             onClick={onNext}
-            icon={<UserCheck />}
+            icon={<CheckCircle />}
             label="Accept"
           />
-          <ActionBar.Item
-            onClick={onNext}
-            icon={<UserCheck />}
-            label="Reject"
-          />
+          <ActionBar.Item onClick={onNext} icon={<Trash />} label="Reject" />
+          <ActionBar.Item onClick={onNext} icon={<Trash />} label="Reject" />
+          <ActionBar.Item onClick={onNext} icon={<Trash />} label="Reject" />
+          <ActionBar.Item onClick={onNext} icon={<Trash />} label="Reject" />
         </ActionBar>
       </Box>
     </Box>

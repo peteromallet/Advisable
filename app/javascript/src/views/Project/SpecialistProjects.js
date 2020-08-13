@@ -5,7 +5,6 @@ import Masonry from "components/Masonry";
 import ProjectDetails from "components/PreviousProjectDetails";
 import {
   theme,
-  Modal,
   useModal,
   Box,
   StyledCard,
@@ -34,9 +33,7 @@ function Project({ project }) {
 
   return (
     <>
-      <Modal modal={modal} width={800} padding="40px">
-        <ProjectDetails id={project.id} />
-      </Modal>
+      <ProjectDetails.Modal modal={modal} id={project.id} />
       <DialogDisclosure {...modal} as={StyledSpecialistProject} padding="24px">
         {project.coverPhoto && (
           <Box
