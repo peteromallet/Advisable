@@ -94,7 +94,7 @@ function Invoices() {
             You have no invoices yet
           </Text>
           <Text color="blue900" lineHeight="21px">
-            Invoices will appear here once a specialist sends it to you.
+            Invoices will appear here once a specialist sent it to you.
           </Text>
         </>
       )}
