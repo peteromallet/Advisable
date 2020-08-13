@@ -85,13 +85,7 @@ function Invoice() {
       <Card p="24px">
         <Box display="flex" alignItems="flex-start" justifyContent="flex-end">
           <Box mr="auto" mb="l">
-            <Text
-              fontSize="xl"
-              color="blue800"
-              mb="xxs"
-              fontWeight="medium"
-              // lineHeight="normal"
-            >
+            <Text fontSize="xl" color="blue800" mb="xxs" fontWeight="medium">
               {formatTime(createdAt)}
             </Text>
             <Text
@@ -112,7 +106,6 @@ function Invoice() {
               lineHeight="140%"
               fontWeight="medium"
               fontSize="s"
-              // mb="xxs"
             >
               Billed To
             </Text>
@@ -121,19 +114,13 @@ function Invoice() {
                 {customerName}
               </Text>
             )}
-            {customerAddress ? (
+            {customerAddress && (
               <>
                 <Text color="neutral700" lineHeight="140%" fontSize="s">
                   {customerAddress.line1 || "Ranchview, CA, United States"}
                 </Text>
                 <Text color="neutral700" lineHeight="140%" fontSize="s">
                   {customerAddress.line2}
-                </Text>
-              </>
-            ) : (
-              <>
-                <Text color="neutral700" lineHeight="140%" fontSize="s">
-                  {"Ranchview, CA, United States"}
                 </Text>
               </>
             )}
