@@ -69,10 +69,35 @@ function Invoices() {
 
   return (
     <Box>
-      <Text as="h2" fontSize="xl" color="blue900" mb="m" fontWeight="medium">
-        Invoices
-      </Text>
-      <Stack spacing="xs">{invoices}</Stack>
+      {invoices.length ? (
+        <>
+          <Text
+            as="h2"
+            fontSize="xl"
+            color="blue900"
+            mb="m"
+            fontWeight="medium"
+          >
+            Invoices
+          </Text>
+          <Stack spacing="xs">{invoices}</Stack>
+        </>
+      ) : (
+        <>
+          <Text
+            fontSize="xxxl"
+            fontWeight="semibold"
+            color="blue900"
+            lineHeight="normal"
+            mb="xxs"
+          >
+            You have no invoices yet
+          </Text>
+          <Text color="blue900" lineHeight="21px">
+            Invoices will appear here once a specialist sends it to you.
+          </Text>
+        </>
+      )}
     </Box>
   );
 }
