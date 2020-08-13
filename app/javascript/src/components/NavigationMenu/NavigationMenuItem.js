@@ -1,11 +1,12 @@
 import * as React from "react";
-import { StyledNavigationMenuItem } from "./styles";
+import { StyledNavigationMenuItem, ArrowIcon, PrefixIcon } from "./styles";
 
 const NavigationMenuItem = ({ children, icon, ...props }) => {
   return (
     <StyledNavigationMenuItem {...props}>
-      {icon && icon}
+      <PrefixIcon>{icon && icon}</PrefixIcon>
       {children}
+      <ArrowIcon />
     </StyledNavigationMenuItem>
   );
 };
