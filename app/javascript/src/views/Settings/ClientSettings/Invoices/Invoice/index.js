@@ -1,10 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useParams } from "react-router";
-import { Box, Card, Text, Button, Link } from "@advisable/donut";
-import { useGetInvoices } from "../queries";
-import Loading from "../../../../../components/Loading";
 import { DateTime } from "luxon";
+// Components
+import { Box, Card, Text, Button, Link, useBreakpoint } from "@advisable/donut";
+import { Badge } from "../styles";
+import NotFound from "../../../../NotFound";
+import Loading from "./Loading";
+import { StyledTable, StyledTitle } from "./styles";
+// Queries
+import { useGetInvoices } from "../queries";
 
 const createTimeFormatter = (timezone) => (iso) =>
   DateTime.fromISO(iso).setZone(timezone).toFormat("d MMMM yyyy");
@@ -14,8 +18,10 @@ function Invoice() {
   const formatTime = createTimeFormatter(timezone);
   const { invoice_id } = useParams();
   const { loading, error, data } = useGetInvoices(invoice_id);
+  const isWidescreen = useBreakpoint("sUp");
 
   if (loading) return <Loading />;
+  if (error) return <NotFound />;
 
   const {
     amount,
@@ -30,103 +36,208 @@ function Invoice() {
     status,
   } = data?.invoice;
 
-  console.log("invoice", data);
-
   const items =
     lineItems &&
     lineItems.map((item) => (
-      <tr key={item.id}>
-        <Text as="th" textAlign="left" p="m">
+      <StyledTitle key={item.id}>
+        <Text as="th" textAlign="left" lineHeight="120%" color="neutral700">
           {item.title}
         </Text>
-        <Text as="th" textAlign="right" p="m">
-          {item.quantity} x ${item.unitPrice / 100}
-        </Text>
-        <Text as="th" textAlign="right" p="m">
+        {isWidescreen && (
+          <Text
+            as="th"
+            textAlign="right"
+            lineHeight="normal"
+            fontSize="s"
+            color="neutral700"
+          >
+            {item.quantity} x ${item.unitPrice / 100}
+          </Text>
+        )}
+        <Text
+          as="th"
+          textAlign="right"
+          fontWeight="medium"
+          fontSize="s"
+          lineHeight="normal"
+          color="neutral900"
+        >
           ${(item.quantity * item.unitPrice) / 100}
         </Text>
-      </tr>
+      </StyledTitle>
     ));
 
   return (
     <Box>
-      <Box display="flex" mb="m">
+      <Box display="flex" mb="m" fontSize="s">
         <Link to="/settings/invoices/">
-          <Text mr="xs">Invoices</Text>
+          <Text mr="xs" color="neutral400" fontWeight="medium" fontSize="s">
+            Invoices
+          </Text>
         </Link>
-        <Text mr="xs">&gt;</Text>
-        <Text>#{number}</Text>
+        <Text mr="xs" color="neutral400" fontSize="s">
+          &gt;
+        </Text>
+        <Text color="neutral700" fontWeight="medium" fontSize="s">
+          #{number}
+        </Text>
       </Box>
       <Card p="24px">
-        <Box display="flex" alignItems="center" justifyContent="flex-end">
+        <Box display="flex" alignItems="flex-start" justifyContent="flex-end">
           <Box mr="auto" mb="l">
-            <Text>{formatTime(createdAt)}</Text>
-            <Text>#{number}</Text>
+            <Text
+              fontSize="xl"
+              color="blue800"
+              mb="xxs"
+              fontWeight="medium"
+              // lineHeight="normal"
+            >
+              {formatTime(createdAt)}
+            </Text>
+            <Text
+              color="neutral500"
+              fontWeight="medium"
+              fontSize="xs"
+              lineHeight="140%"
+            >
+              #{number}
+            </Text>
           </Box>
-          <Text>{status}</Text>
+          <Badge variant={status}>{status}</Badge>
         </Box>
-        <Box mb="l">
-          <Text>Billed To</Text>
-          <Text>{customerName}</Text>
-          {customerAddress && (
-            <>
-              <Text>{customerAddress.line1}</Text>
-              <Text>{customerAddress.line2}</Text>
-            </>
-          )}
-        </Box>
-        <Box mb="l">
-          <Text>Note</Text>
-          <Text>{description}</Text>
-        </Box>
+        {(customerName || customerAddress) && (
+          <Box mb="l">
+            <Text
+              color="#252C4D"
+              lineHeight="140%"
+              fontWeight="medium"
+              fontSize="s"
+              // mb="xxs"
+            >
+              Billed To
+            </Text>
+            {customerName && (
+              <Text color="neutral700" lineHeight="140%" fontSize="s">
+                {customerName}
+              </Text>
+            )}
+            {customerAddress ? (
+              <>
+                <Text color="neutral700" lineHeight="140%" fontSize="s">
+                  {customerAddress.line1 || "Ranchview, CA, United States"}
+                </Text>
+                <Text color="neutral700" lineHeight="140%" fontSize="s">
+                  {customerAddress.line2}
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text color="neutral700" lineHeight="140%" fontSize="s">
+                  {"Ranchview, CA, United States"}
+                </Text>
+              </>
+            )}
+          </Box>
+        )}
 
-        <Box as="table" width="100%">
-          <colgroup>
-            <col span="1" style={{ width: "65%" }} />
-            <col span="1" style={{ width: "20%" }} />
-            <col span="1" style={{ width: "15%" }} />
-          </colgroup>
-          <Box as="thead">
-            <tr>
-              <Text as="th" textAlign="left" p="m">
-                Title
-              </Text>
-              <Text as="th" textAlign="right" p="m">
-                Unit Price
-              </Text>
-              <Text as="th" textAlign="right" p="m">
-                Amount
-              </Text>
-            </tr>
+        {description && (
+          <Box mb="l">
+            <Text
+              color="#252C4D"
+              fontWeight="medium"
+              lineHeight="140%"
+              fontSize="s"
+            >
+              Note
+            </Text>
+            <Text fontSize="s" color="neutral700" lineHeight="140%">
+              {description}
+            </Text>
           </Box>
+        )}
+
+        <Box as={StyledTable} width="100%">
+          {isWidescreen ? (
+            <colgroup>
+              <col span="1" style={{ width: "65%" }} />
+              <col span="1" style={{ width: "20%" }} />
+              <col span="1" style={{ width: "15%" }} />
+            </colgroup>
+          ) : (
+            <colgroup>
+              <col span="1" style={{ width: "90%" }} />
+              <col span="1" style={{ width: "10%" }} />
+            </colgroup>
+          )}
+          {isWidescreen && (
+            <Box as="thead">
+              <tr>
+                <Text
+                  as="th"
+                  textAlign="left"
+                  fontWeight="medium"
+                  color="#252C4D"
+                  fontSize="s"
+                >
+                  Title
+                </Text>
+                <Text
+                  as="th"
+                  textAlign="right"
+                  fontWeight="medium"
+                  color="#252C4D"
+                  fontSize="s"
+                >
+                  Unit Price
+                </Text>
+                <Text
+                  as="th"
+                  textAlign="right"
+                  fontSize="s"
+                  fontWeight="medium"
+                  color="#252C4D"
+                >
+                  Amount
+                </Text>
+              </tr>
+            </Box>
+          )}
           <tbody>{items}</tbody>
           <tfoot>
             <tr>
-              <th />
-              <Text as="th" textAlign="right" p="m">
+              {isWidescreen && <th />}
+              <Text as="th" textAlign="right" color="neutral700" fontSize="s">
                 Amount Due
               </Text>
-              <Text as="th" textAlign="right" p="m">
+              <Text
+                as="th"
+                textAlign="right"
+                fontWeight="medium"
+                fontSize="17px"
+                color="neutral900"
+              >
                 ${amount / 100}
               </Text>
             </tr>
           </tfoot>
         </Box>
-        <Box>
+        <Box display="flex" flexDirection={["column", "row"]}>
           {status === "due" && (
-            <Link.External href={paymentUrl}>
-              <Button mr="s">Pay Invoice</Button>
+            <Link.External href={paymentUrl} notInline>
+              <Button mr={[0, "s"]} mb={["xs", 0]} width={[1, "auto"]}>
+                Pay Invoice
+              </Button>
             </Link.External>
           )}
-          <Link.External href={downloadUrl}>
-            <Button variant="subtle">Download PDF</Button>
+          <Link.External href={downloadUrl} notInline>
+            <Button variant="subtle" width={[1, "auto"]}>
+              Download PDF
+            </Button>
           </Link.External>
         </Box>
       </Card>
     </Box>
   );
 }
-
-Invoice.propTypes = {};
 
 export default Invoice;
