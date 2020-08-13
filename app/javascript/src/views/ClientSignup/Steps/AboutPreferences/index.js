@@ -6,7 +6,7 @@ import { Formik, Form } from "formik";
 import SubmitButton from "../../../../components/SubmitButton";
 import Loading from "../../../../components/Loading";
 import FormField from "src/components/FormField";
-import { Box } from "@advisable/donut";
+import { Box, useBreakpoint } from "@advisable/donut";
 import Navigation from "../Navigation";
 import MotionStack from "../MotionStack";
 import { Title, Description } from "../styles";
@@ -29,8 +29,6 @@ import {
   useLocationState,
   useClientApplicationQuery,
 } from "../../queries";
-import ScaleInput from "./ScaleInput";
-import useVariants from "../../../../components/VariantSystem/useVariants";
 
 const validationSchema = object().shape({
   localityImportance: number().required(
@@ -44,7 +42,7 @@ const validationSchema = object().shape({
   ),
 });
 
-const talentQualityOptions = [
+const talentQualityMobileOptions = [
   {
     label: "Cheap Talent",
     value: "CHEAP",
@@ -72,7 +70,7 @@ const talentQualityOptions = [
   },
 ];
 
-const talentQualityOptionsAlt = [
+const talentQualityOptions = [
   {
     label: "Cheap",
     value: "CHEAP",
@@ -103,12 +101,12 @@ const talentQualityOptionsAlt = [
 
 function AboutPreferences() {
   const locationState = useLocationState();
-  const { variant } = useVariants();
   const [
     submitClientApplication,
     { called, data: processing },
   ] = useAboutPreferencesSubmit();
   const { loading, error, data } = useClientApplicationQuery();
+  const isMobile = useBreakpoint("s");
 
   if (loading || error)
     return (
@@ -169,48 +167,27 @@ function AboutPreferences() {
               <Description>
                 This is to help tailor our recommendations to you.
               </Description>
-              {variant < 6 && (
-                <Box mb="l">
-                  <FormField
-                    isRequired
-                    as={ScaleInput}
-                    fullWidth
-                    optionsPerRow={1}
-                    name="localityImportance"
-                    onChange={(n) =>
-                      formik.setFieldValue("localityImportance", n)
-                    }
-                    error={null}
-                    importanceScale={true}
-                    label="How important is it that freelancers you hire should be in your city?"
-                    value={formik.values.localityImportance}
-                  />
-                </Box>
-              )}
-              {variant >= 6 && (
-                <Box mb="l">
-                  <FormField
-                    isRequired
-                    alignWidth={variant >= 7}
-                    as={TilesInput}
-                    fullWidth
-                    optionsPerRow={1}
-                    name="localityImportance"
-                    onChange={(n) =>
-                      formik.setFieldValue("localityImportance", n)
-                    }
-                    error={null}
-                    label="How important is it that freelancers you hire should be in your city?"
-                    value={formik.values.localityImportance}
-                    options={[
-                      { label: "Not Important", value: 1 },
-                      { label: "Not Sure", value: 2 },
-                      { label: "Important", value: 3 },
-                      // { label: "Very Important", value: 4 },
-                    ]}
-                  />
-                </Box>
-              )}
+              <Box mb="l">
+                <FormField
+                  isRequired
+                  alignWidth
+                  as={TilesInput}
+                  fullWidth
+                  optionsPerRow={1}
+                  name="localityImportance"
+                  onChange={(n) =>
+                    formik.setFieldValue("localityImportance", n)
+                  }
+                  error={null}
+                  label="How important is it that freelancers you hire should be in your city?"
+                  value={formik.values.localityImportance}
+                  options={[
+                    { label: "Not Important", value: 1 },
+                    { label: "Not Sure", value: 3 },
+                    { label: "Important", value: 5 },
+                  ]}
+                />
+              </Box>
               <Box mb="l">
                 <FormField
                   isRequired
@@ -231,40 +208,23 @@ function AboutPreferences() {
                   value={formik.values.acceptedGuaranteeTerms}
                 />
               </Box>
-              {variant <= 7 && (
-                <Box mb="l">
-                  <FormField
-                    isRequired
-                    as={TilesInput}
-                    fullWidth
-                    alignWidth={variant === 7}
-                    optionsPerRow={1}
-                    name="talentQuality"
-                    onChange={(v) => formik.setFieldValue("talentQuality", v)}
-                    error={null}
-                    label="What level of talent are you typically looking for?"
-                    options={talentQualityOptions}
-                    value={formik.values.talentQuality}
-                  />
-                </Box>
-              )}
-              {variant > 7 && (
-                <Box mb="l">
-                  <FormField
-                    isRequired
-                    as={TilesInput}
-                    alignWidth
-                    fullWidth
-                    optionsPerRow={1}
-                    name="talentQuality"
-                    onChange={(v) => formik.setFieldValue("talentQuality", v)}
-                    error={null}
-                    label="What level of talent are you typically looking for?"
-                    options={talentQualityOptionsAlt}
-                    value={formik.values.talentQuality}
-                  />
-                </Box>
-              )}
+              <Box mb="l">
+                <FormField
+                  isRequired
+                  as={TilesInput}
+                  alignWidth
+                  fullWidth
+                  optionsPerRow={1}
+                  name="talentQuality"
+                  onChange={(v) => formik.setFieldValue("talentQuality", v)}
+                  error={null}
+                  label="What level of talent are you typically looking for?"
+                  options={
+                    isMobile ? talentQualityMobileOptions : talentQualityOptions
+                  }
+                  value={formik.values.talentQuality}
+                />
+              </Box>
               <SubmitButton width={[1, "auto"]} loading={called && !processing}>
                 Continue
               </SubmitButton>
