@@ -40,7 +40,11 @@ function TilesInput({ onChange, value, options, importanceScale, alignWidth }) {
                 <option.icon strokeWidth={1.3} />
               </Box>
             )}
-            <Text as="span" fontSize="xs">
+            <Text
+              as="span"
+              fontSize={["13px", "xs"]}
+              lineHeight={["16px", "normal"]}
+            >
               {option.label}
             </Text>
           </StyledTilesInputOption>
