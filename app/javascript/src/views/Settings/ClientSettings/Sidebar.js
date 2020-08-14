@@ -1,7 +1,7 @@
 import React from "react";
 import { padding } from "styled-system";
 import { motion } from "framer-motion";
-import { CreditCard, FileText, Settings } from "@styled-icons/feather";
+import { CreditCard, FileText } from "@styled-icons/feather";
 import NavigationMenu from "../../../components/NavigationMenu";
 import styled from "styled-components";
 import { Text, useBreakpoint } from "@advisable/donut";

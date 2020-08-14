@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // Components
-import { Box, Text, Stack, theme, StyledCard } from "@advisable/donut";
+import { Box, Text, Stack, Badge, theme, StyledCard } from "@advisable/donut";
 import NotFound from "../../../NotFound";
-import { Badge } from "./styles";
 import Loading from "./Loading";
 // Queries
 import { useInvoices, GET_INVOICE } from "./queries";
@@ -29,6 +28,12 @@ function Invoices() {
 
   if (loading) return <Loading />;
   if (error) return <NotFound />;
+
+  const badgeVariants = {
+    due: "neutral",
+    open: "orange",
+    paid: "cyan",
+  };
 
   const invoices = data?.viewer?.invoices.map((i) => {
     return (
@@ -57,7 +62,7 @@ function Invoices() {
               #{i.number}
             </Text>
           </Box>
-          <Badge variant={i.status}>{i.status}</Badge>
+          <Badge variant={badgeVariants[i.status]}>{i.status}</Badge>
           <Text
             ml={["xs", "s"]}
             fontSize="17px"

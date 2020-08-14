@@ -2,8 +2,15 @@ import React from "react";
 import { useParams } from "react-router";
 import isoToLocalFormat from "../../../../../utilities/isoToLocalFormat";
 // Components
-import { Box, Card, Text, Button, Link, useBreakpoint } from "@advisable/donut";
-import { Badge } from "../styles";
+import {
+  Box,
+  Badge,
+  Card,
+  Text,
+  Button,
+  Link,
+  useBreakpoint,
+} from "@advisable/donut";
 import NotFound from "../../../../NotFound";
 import Loading from "./Loading";
 import { StyledTable, StyledTitle } from "./styles";
@@ -78,6 +85,12 @@ function Invoice() {
       </StyledTitle>
     ));
 
+  const badgeVariants = {
+    due: "neutral",
+    open: "orange",
+    paid: "cyan",
+  };
+
   return (
     <Box>
       <Breadcrumbs number={number} />
@@ -96,7 +109,7 @@ function Invoice() {
               #{number}
             </Text>
           </Box>
-          <Badge variant={status}>{status}</Badge>
+          <Badge variant={badgeVariants[status]}>{status}</Badge>
         </Box>
         {(customerName || customerAddress) && (
           <Box mb="l">
