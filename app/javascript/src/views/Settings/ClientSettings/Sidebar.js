@@ -78,12 +78,6 @@ const SettingsSidebar = () => {
           >
             Invoices
           </NavigationMenu.Item>
-          <NavigationMenu.Item
-            to="/settings/account"
-            icon={<Settings size={20} strokeWidth={2} />}
-          >
-            Account
-          </NavigationMenu.Item>
         </NavigationMenu>
       </Sidebar>
     </SidebarContainer>
