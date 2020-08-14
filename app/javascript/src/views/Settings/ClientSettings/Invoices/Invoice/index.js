@@ -209,7 +209,7 @@ function Invoice() {
           </tfoot>
         </Box>
         <Box display="flex" flexDirection={["column", "row"]}>
-          {status === "due" && (
+          {status !== "paid" && (
             <Link.External href={paymentUrl} notInline>
               <Button mr={[0, "s"]} mb={["xs", 0]} width={[1, "auto"]}>
                 Pay Invoice
