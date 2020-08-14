@@ -93,44 +93,21 @@ class Airtable::Project < Airtable::Base
 
   push_data do |project|
     self['Client Contacts'] = [project.user.try(:airtable_id)].compact
-    if !project.status.blank? && project.saved_change_to_status?
-      self['Project Stage'] = project[:status]
-    end
+    self['Project Stage'] = project[:status]
     if project.saved_change_to_deposit?
       self['Deposit Amount Required'] = project.deposit / 100.0
     end
     self['Deposit Amount Paid'] = project.deposit_paid / 100.0
-    if project.saved_change_to_company_description?
-      self['Company Description'] = project.company_description
-    end
-    if project.saved_change_to_description?
-      self['Project Description'] = project.description
-    end
-    if project.saved_change_to_specialist_description?
-      self['Specialist Requirement Description'] =
-        project.specialist_description
-    end
-    self['Goals'] = project.goals.to_json if project.saved_change_to_goals?
-    if project.saved_change_to_service_type?
-      self['Service Type'] = project.service_type
-    end
-    if project.saved_change_to_required_characteristics?
-      self['Required Characteristics'] =
-        project.required_characteristics.to_json
-    end
-    if project.saved_change_to_characteristics?
-      self['Optional Characteristics'] =
-        project.optional_characteristics.to_json
-    end
-    if project.saved_change_to_questions?
-      self['Qualification Question 1'] = project.questions.try(:[], 0)
-    end
-    if project.saved_change_to_questions?
-      self['Qualification Question 2'] = project.questions.try(:[], 1)
-    end
-    if project.saved_change_to_accepted_terms_at?
-      self['Accepted Terms'] = project.accepted_terms
-    end
+    self['Company Description'] = project.company_description
+    self['Project Description'] = project.description
+    self['Specialist Requirement Description'] = project.specialist_description
+    self['Goals'] = project.goals.to_json
+    self['Service Type'] = project.service_type
+    self['Required Characteristics'] = project.required_characteristics.to_json
+    self['Optional Characteristics'] = project.optional_characteristics.to_json
+    self['Qualification Question 1'] = project.questions.try(:[], 0)
+    self['Qualification Question 2'] = project.questions.try(:[], 1)
+    self['Accepted Terms'] = project.accepted_terms
     self['Skills Required'] = project.skills.map(&:airtable_id).uniq
     self['Primary Skill Required'] = project.primary_skill.try(:name)
     if project.industry_experience_required
