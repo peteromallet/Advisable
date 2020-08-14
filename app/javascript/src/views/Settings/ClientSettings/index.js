@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Layout from "../../../components/Layout";
 import { useBreakpoint } from "@advisable/donut";
@@ -37,6 +38,10 @@ const ClientSettings = ({ match }) => {
       </Layout.Main>
     </Layout>
   );
+};
+
+ClientSettings.propTypes = {
+  match: PropTypes.object,
 };
 
 export default ClientSettings;
