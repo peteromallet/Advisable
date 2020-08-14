@@ -17,7 +17,7 @@ function Loading() {
             <Skeleton width={140} height={20} mb="xxs" />
             <Skeleton width={120} height={19} />
           </Box>
-          <Skeleton width={55} height={24} borderRadius={12} />
+          <Skeleton width={43} height={20} borderRadius={6} />
         </Box>
         <Box mb="36px">
           <Skeleton width={63} height={17} mb="xxs" />

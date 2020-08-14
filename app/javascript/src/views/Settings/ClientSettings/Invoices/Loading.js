@@ -15,7 +15,7 @@ function Loading() {
           <Skeleton width={120} height={17} mb="xxs" />
           <Skeleton width={120} height={14} />
         </Box>
-        <Skeleton width={55} height={24} borderRadius={12} />
+        <Skeleton width={43} height={20} borderRadius={6} />
         <Skeleton height={17} width={43} ml={["xs", "s"]} />
       </Box>
     </Card>
@@ -23,7 +23,7 @@ function Loading() {
 
   return (
     <Box>
-      <Skeleton width={83} height={20} mb="m" />
+      <Skeleton width={62} height={14} mb="m" />
       <Stack spacing="xs">{loadingInvoicesCards}</Stack>
     </Box>
   );
