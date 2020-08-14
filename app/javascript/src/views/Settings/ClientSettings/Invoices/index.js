@@ -1,5 +1,4 @@
 import React from "react";
-import { DateTime } from "luxon";
 import { Link } from "react-router-dom";
 // Components
 import { Box, Text, Stack, theme, StyledCard } from "@advisable/donut";
@@ -11,9 +10,7 @@ import { useInvoices, GET_INVOICE } from "./queries";
 import styled from "styled-components";
 import { rgba } from "polished";
 import Breadcrumbs from "./Breadcrumbs";
-
-const createTimeFormatter = (timezone) => (iso) =>
-  DateTime.fromISO(iso).setZone(timezone).toFormat("d MMMM yyyy");
+import isoToLocalFormat from "../../../../utilities/isoToLocalFormat";
 
 const StyledInvoiceCard = styled(StyledCard)`
   transition: box-shadow 0.3s, transform 0.2s;
@@ -27,8 +24,7 @@ const StyledInvoiceCard = styled(StyledCard)`
 `;
 
 function Invoices() {
-  const timezone = Intl.DateTimeFormat()?.resolvedOptions()?.timeZone;
-  const formatTime = createTimeFormatter(timezone);
+  const formatTime = isoToLocalFormat("d MMMM yyyy");
   const { loading, error, data, client } = useInvoices();
 
   if (loading) return <Loading />;

@@ -1,22 +1,18 @@
 import React from "react";
 import { useParams } from "react-router";
-import { DateTime } from "luxon";
+import isoToLocalFormat from "../../../../../utilities/isoToLocalFormat";
 // Components
 import { Box, Card, Text, Button, Link, useBreakpoint } from "@advisable/donut";
 import { Badge } from "../styles";
 import NotFound from "../../../../NotFound";
 import Loading from "./Loading";
 import { StyledTable, StyledTitle } from "./styles";
+import Breadcrumbs from "../Breadcrumbs";
 // Queries
 import { useGetInvoices } from "../queries";
-import Breadcrumbs from "../Breadcrumbs";
-
-const createTimeFormatter = (timezone) => (iso) =>
-  DateTime.fromISO(iso).setZone(timezone).toFormat("d MMMM yyyy");
 
 function Invoice() {
-  const timezone = Intl.DateTimeFormat()?.resolvedOptions()?.timeZone;
-  const formatTime = createTimeFormatter(timezone);
+  const formatTime = isoToLocalFormat("d MMMM yyyy");
   const { invoice_id } = useParams();
   const { loading, error, data } = useGetInvoices(invoice_id);
   const isWidescreen = useBreakpoint("sUp");
