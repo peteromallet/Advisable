@@ -36,6 +36,20 @@ function Invoice() {
     status,
   } = data?.invoice;
 
+  const address =
+    customerAddress &&
+    [
+      customerAddress.postcode,
+      customerAddress.city,
+      customerAddress.state,
+      customerAddress.country,
+    ]
+      .reduce((acc, value) => {
+        value && acc.push(value);
+        return acc;
+      }, [])
+      .join(", ");
+
   const items =
     lineItems &&
     lineItems.map((item) => (
@@ -117,7 +131,10 @@ function Invoice() {
             {customerAddress && (
               <>
                 <Text color="neutral700" lineHeight="140%" fontSize="s">
-                  {customerAddress.line1 || "Ranchview, CA, United States"}
+                  {address}
+                </Text>
+                <Text color="neutral700" lineHeight="140%" fontSize="s">
+                  {customerAddress.line1}
                 </Text>
                 <Text color="neutral700" lineHeight="140%" fontSize="s">
                   {customerAddress.line2}

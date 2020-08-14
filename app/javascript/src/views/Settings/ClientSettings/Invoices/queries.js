@@ -30,12 +30,12 @@ export const GET_INVOICE = gql`
       # Billed to
       customerName
       customerAddress {
+        postcode
         city
+        state
         country
         line1
         line2
-        postcode
-        state
       }
       # Note
       description
