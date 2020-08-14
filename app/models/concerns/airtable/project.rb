@@ -70,7 +70,6 @@ class Airtable::Project < Airtable::Base
       end
     end
 
-    sync_arrays(project)
     sync_questions(project)
 
     project.accepted_terms = fields['Accepted Terms']
