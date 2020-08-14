@@ -10,6 +10,7 @@ import Loading from "./Loading";
 import { useInvoices, GET_INVOICE } from "./queries";
 import styled from "styled-components";
 import { rgba } from "polished";
+import Breadcrumbs from "./Breadcrumbs";
 
 const createTimeFormatter = (timezone) => (iso) =>
   DateTime.fromISO(iso).setZone(timezone).toFormat("d MMMM yyyy");
@@ -78,15 +79,7 @@ function Invoices() {
     <Box>
       {invoices.length ? (
         <>
-          <Text
-            as="h2"
-            fontSize="xl"
-            color="blue900"
-            mb="m"
-            fontWeight="medium"
-          >
-            Invoices
-          </Text>
+          <Breadcrumbs />
           <Stack spacing="xs">{invoices}</Stack>
         </>
       ) : (

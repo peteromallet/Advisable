@@ -9,6 +9,7 @@ import Loading from "./Loading";
 import { StyledTable, StyledTitle } from "./styles";
 // Queries
 import { useGetInvoices } from "../queries";
+import Breadcrumbs from "../Breadcrumbs";
 
 const createTimeFormatter = (timezone) => (iso) =>
   DateTime.fromISO(iso).setZone(timezone).toFormat("d MMMM yyyy");
@@ -83,19 +84,7 @@ function Invoice() {
 
   return (
     <Box>
-      <Box display="flex" mb="m" fontSize="s">
-        <Link to="/settings/invoices/">
-          <Text mr="xs" color="neutral400" fontWeight="medium" fontSize="s">
-            Invoices
-          </Text>
-        </Link>
-        <Text mr="xs" color="neutral400" fontSize="s">
-          &gt;
-        </Text>
-        <Text color="neutral700" fontWeight="medium" fontSize="s">
-          #{number}
-        </Text>
-      </Box>
+      <Breadcrumbs number={number} />
       <Card p="24px">
         <Box display="flex" alignItems="flex-start" justifyContent="flex-end">
           <Box mr="auto" mb="l">
