@@ -54,7 +54,7 @@ function TilesInput({ onChange, value, options, importanceScale, alignWidth }) {
 TilesInput.propTypes = {
   options: PropTypes.array,
   onChange: PropTypes.func,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   importanceScale: PropTypes.bool,
   alignWidth: PropTypes.bool,
 };
