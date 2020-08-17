@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_05_101816) do
+ActiveRecord::Schema.define(version: 2020_08_14_232432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -605,6 +605,7 @@ ActiveRecord::Schema.define(version: 2020_08_05_101816) do
     t.integer "project_count"
     t.string "phone"
     t.boolean "test_account"
+    t.string "remember_token"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
@@ -703,6 +704,7 @@ ActiveRecord::Schema.define(version: 2020_08_05_101816) do
     t.datetime "application_accepted_at"
     t.datetime "application_rejected_at"
     t.datetime "application_reminder_at"
+    t.string "remember_token"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"

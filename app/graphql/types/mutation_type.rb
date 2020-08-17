@@ -41,6 +41,7 @@ class Types::MutationType < GraphQL::Schema::Object
         mutation: Mutations::DeletePreviousProjectImage
 
   field :login, mutation: Mutations::Login
+  field :logout, mutation: Mutations::Logout
   field :signup, mutation: Mutations::Signup
   field :confirm_account, mutation: Mutations::ConfirmAccount
   field :create_freelancer_account, mutation: Mutations::CreateFreelancerAccount

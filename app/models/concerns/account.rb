@@ -31,6 +31,19 @@ module Account
       confirmed_at.present?
     end
 
+    def self.remember_token
+      loop do
+        token = Nanoid.generate(size: 25)
+        existing = find_by_remember_token(token)
+        break token unless existing
+      end
+    end
+
+    def generate_remember_token
+      self.remember_token = self.class.remember_token
+      save(validate: false)
+    end
+
     def create_confirmation_token
       token = Token.new
       self.confirmation_digest = Token.digest(token)
@@ -89,5 +102,10 @@ module Account
     record = find_by_email(email)
     return record if record.present?
     raise ActiveRecord::RecordNotFound
+  end
+
+  def self.find_by_remember_token(token)
+    User.find_by_remember_token(token) ||
+      Specialist.find_by_remember_token(token)
   end
 end

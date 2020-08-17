@@ -2,14 +2,40 @@ class Mutations::Login < Mutations::BaseMutation
   argument :email, String, required: true
   argument :password, String, required: true
 
-  field :token, String, null: true
-  field :errors, [Types::Error], null: true
+  field :viewer, Types::ViewerUnion, null: true
 
-  def resolve(**args)
-    token = Accounts::Login.call(args)
-    { token: token }
+  def resolve(email:, password:)
+    account = Account.find_by_email(email.downcase)
+    no_account_error unless has_account?(account)
+    invalid_credentials unless account.authenticate(password)
 
-    rescue Service::Error => e
-      return { errors: [e] }
+    account.generate_remember_token
+    cookies = context[:cookies]
+    cookies.signed[:remember] = {
+      value: account.remember_token, httponly: true, expires: 2.weeks.from_now
+    }
+
+    session = context[:session]
+    session[:account_uid] = account.uid
+    { viewer: account }
+  end
+
+  private
+
+  def no_account_error
+    ApiError.invalid_request(
+      code: 'AUTHENTICATION_FAILED', message: 'Account does not exist'
+    )
+  end
+
+  def invalid_credentials
+    ApiError.invalid_request(
+      code: 'AUTHENTICATION_FAILED', message: 'Invalid credentials'
+    )
+  end
+
+  def has_account?(account)
+    return false if account.nil?
+    account.password_digest?
   end
 end
