@@ -17,7 +17,7 @@ function ProcessingApplication() {
       alignItems="center"
       width="100%"
       height="100%"
-      zIndex="2"
+      zIndex="4"
     >
       <Box mt="-35%">
         <Loading />

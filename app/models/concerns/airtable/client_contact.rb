@@ -54,6 +54,7 @@ class Airtable::ClientContact < Airtable::Base
   end
 
   push_data do |user|
+    self['UID'] = user.uid
     self['Email Address'] = user.email
     self['First Name'] = user.first_name
     self['Last Name'] = user.last_name
