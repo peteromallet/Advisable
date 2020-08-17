@@ -61,9 +61,8 @@ export const StyledNavigationMenuItem = styled(NavLink)`
     margin-bottom: 0;
     padding: 16px 0 16px 4px;
     border-radius: 0;
-    &:not(:last-child):not(:first-child) {
+    &:not(:last-child) {
       border-bottom: 1px solid #dbdde6;
-      border-top: 1px solid #dbdde6;
     }
     &.active {
       background: none;
