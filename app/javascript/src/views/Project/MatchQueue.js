@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Box } from "@advisable/donut";
 import { AnimatePresence, motion } from "framer-motion";
+import ApplicantScore from "./ApplicantScore";
 
 const StyledMatch = styled(motion.div)`
   width: 100%;
@@ -65,6 +66,9 @@ const IMAGE_ANIMATIONS = {
 export default function MatchQueue({ matches }) {
   return (
     <Box position="relative" width="100%" height="240px" marginBottom="32px">
+      <Box position="absolute" right="-12px" top="-12px" zIndex="5">
+        <ApplicantScore score={matches[0].score} />
+      </Box>
       <AnimatePresence>
         {matches.map((application, index) => {
           const animation = ANIMATIONS[index] || ANIMATIONS.default;

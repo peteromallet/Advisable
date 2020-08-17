@@ -13,16 +13,16 @@ function Rating({ label, rating }) {
   );
 }
 
-const Review = ({ review, companyName }) => {
+const Review = ({ review }) => {
   return (
     <Box>
       <Box display="flex" alignItems="center" marginBottom="m">
         <Avatar
           size="s"
-          url={null}
           bg="neutral100"
           marginRight="12px"
-          name={review.companyName}
+          url={review.avatar}
+          name={review.contactName}
         />
         <Box>
           <Text color="neutral900" marginBottom="2px">

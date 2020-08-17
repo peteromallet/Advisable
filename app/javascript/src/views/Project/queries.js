@@ -13,9 +13,21 @@ export const GET_MATCHES = gql`
   query getMatches($id: ID!) {
     project(id: $id) {
       id
+      user {
+        id
+        salesPerson {
+          id
+          name
+          image
+          firstName
+        }
+      }
       matches: applications(status: ["Applied"]) {
         id
         rate
+        comment
+        score
+        appliedAt
         introduction
         availability
         previousProjects {

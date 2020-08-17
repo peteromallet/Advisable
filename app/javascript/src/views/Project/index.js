@@ -9,6 +9,7 @@ import handleAuthError from "../../utilities/handleAuthError";
 import NotFound, { isNotFound } from "../NotFound";
 import { GET_PROJECT } from "./queries";
 import ProjectRoutes from "./ProjectRoutes";
+import Navigation from "./Navigation";
 
 export default function Project() {
   const { id } = useParams();
@@ -29,7 +30,9 @@ export default function Project() {
 
   return (
     <View>
-      <View.Sidebar>Sidebar</View.Sidebar>
+      <View.Sidebar>
+        <Navigation />
+      </View.Sidebar>
       <View.Content>
         <Container maxWidth="1100px">
           <ProjectRoutes />

@@ -5,6 +5,7 @@ class Types::ApplicationType < Types::BaseType
   field :airtable_id, String, null: false
   field :featured, Boolean, null: true
   field :hidden, Boolean, null: true
+  field :score, Int, null: true
   field :references_requested, Boolean, null: true
   field :availability, String, null: true
   field :specialist, Types::SpecialistType, null: true
@@ -62,7 +63,7 @@ class Types::ApplicationType < Types::BaseType
   def previous_projects(fallback: true)
     projects = object.previous_projects
     if fallback && projects.empty?
-      projects = object.specialist.previous_projects
+      projects = object.specialist.previous_projects.validated
     end
     projects
   end

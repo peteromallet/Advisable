@@ -33,11 +33,9 @@ export default function Inbox() {
     });
   };
 
-  const { matches } = data.project;
-
-  if (matches.length === 0) {
+  if (data.project.matches.length === 0) {
     return <>No Mathces</>;
   }
 
-  return <Matches matches={matches} onNext={handleNext} />;
+  return <Matches data={data} onNext={handleNext} />;
 }

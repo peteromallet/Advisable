@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import MatchQueue from "./MatchQueue";
-import { CheckCircle, Trash } from "@styled-icons/heroicons-solid";
+import { CheckCircle, XCircle } from "@styled-icons/boxicons-solid";
 import { AnimatePresence, motion } from "framer-motion";
 import { Box } from "@advisable/donut";
 import Sticky from "components/Sticky";
@@ -8,10 +8,14 @@ import ActionBar from "./ActionBar";
 import MatchMetaInfo from "./MatchMetaInfo";
 import SpecialistReviews from "./SpecialistReviews";
 import SpecialistProjects from "./SpecialistProjects";
+import RecommendationComment from "./RecommendationComment";
 import SpecialistIntroduction from "./SpecialistIntroduction";
 
-export default function Matches({ matches, onNext }) {
+export default function Matches({ data, onNext }) {
+  const matches = data.project.matches;
   const application = matches[0];
+
+  const hasRecommendationComment = Boolean(application.comment);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,6 +38,7 @@ export default function Matches({ matches, onNext }) {
             transition={{ duration: 0.3 }}
             key={application.id}
           >
+            {hasRecommendationComment && <RecommendationComment data={data} />}
             <SpecialistIntroduction application={application} />
             {application.previousProjects.length > 0 && (
               <SpecialistProjects projects={application.previousProjects} />
@@ -45,14 +50,11 @@ export default function Matches({ matches, onNext }) {
         </AnimatePresence>
         <ActionBar>
           <ActionBar.Item
+            label="Accept"
             onClick={onNext}
             icon={<CheckCircle />}
-            label="Accept"
           />
-          <ActionBar.Item onClick={onNext} icon={<Trash />} label="Reject" />
-          <ActionBar.Item onClick={onNext} icon={<Trash />} label="Reject" />
-          <ActionBar.Item onClick={onNext} icon={<Trash />} label="Reject" />
-          <ActionBar.Item onClick={onNext} icon={<Trash />} label="Reject" />
+          <ActionBar.Item onClick={onNext} icon={<XCircle />} label="Reject" />
         </ActionBar>
       </Box>
     </Box>

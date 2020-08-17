@@ -30,9 +30,9 @@ const StyledActionBarItem = styled.button`
   border-radius: 24px;
 
   svg {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 2px;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 6px;
     color: ${theme.colors.blue900};
   }
 
