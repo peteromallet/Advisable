@@ -1,9 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Layout from "../../../components/Layout";
 import { useBreakpoint } from "@advisable/donut";
 import Sidebar from "./Sidebar";
 import PaymentSettings from "./PaymentSettings";
+import Invoices from "./Invoices";
+import Account from "./Account";
+import Invoice from "./Invoices/Invoice";
 
 // Renders the settings view for a client user type.
 const ClientSettings = ({ match }) => {
@@ -18,6 +22,9 @@ const ClientSettings = ({ match }) => {
       <Layout.Main>
         <Switch>
           <Route path="/settings/payments" component={PaymentSettings} />
+          <Route path="/settings/invoices" exact component={Invoices} />
+          <Route path="/settings/invoices/:invoice_id" component={Invoice} />
+          <Route path="/settings/account" component={Account} />
           {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
           {breakpointS && (
@@ -31,6 +38,10 @@ const ClientSettings = ({ match }) => {
       </Layout.Main>
     </Layout>
   );
+};
+
+ClientSettings.propTypes = {
+  match: PropTypes.object,
 };
 
 export default ClientSettings;

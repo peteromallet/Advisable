@@ -37,7 +37,7 @@ const styles = css`
   outline: none;
   position: relative;
   align-items: center;
-  display: inline-flex;
+  display: ${(props) => (props.notInline ? "flex" : "inline-flex")};
   text-decoration: none;
   transition: color 200ms;
 
