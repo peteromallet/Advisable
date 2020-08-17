@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import MatchQueue from "./MatchQueue";
-import { CheckCircle, XCircle } from "@styled-icons/boxicons-solid";
+import { CheckCircle, XCircle, Moon } from "@styled-icons/boxicons-solid";
 import { AnimatePresence, motion } from "framer-motion";
 import { Box } from "@advisable/donut";
 import Sticky from "components/Sticky";
 import ActionBar from "./ActionBar";
 import MatchMetaInfo from "./MatchMetaInfo";
+import ApplicationQuestions from "./ApplicationQuestions";
 import SpecialistReviews from "./SpecialistReviews";
 import SpecialistProjects from "./SpecialistProjects";
 import RecommendationComment from "./RecommendationComment";
@@ -40,6 +41,9 @@ export default function Matches({ data, onNext }) {
           >
             {hasRecommendationComment && <RecommendationComment data={data} />}
             <SpecialistIntroduction application={application} />
+            {application.questions.length > 0 && (
+              <ApplicationQuestions questions={application.questions} />
+            )}
             {application.previousProjects.length > 0 && (
               <SpecialistProjects projects={application.previousProjects} />
             )}
@@ -54,6 +58,7 @@ export default function Matches({ data, onNext }) {
             onClick={onNext}
             icon={<CheckCircle />}
           />
+          <ActionBar.Item onClick={onNext} icon={<Moon />} label="Not Sure" />
           <ActionBar.Item onClick={onNext} icon={<XCircle />} label="Reject" />
         </ActionBar>
       </Box>

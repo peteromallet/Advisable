@@ -5,6 +5,10 @@ export const GET_PROJECT = gql`
     project(id: $id) {
       id
       status
+      primarySkill {
+        id
+        name
+      }
     }
   }
 `;
@@ -30,6 +34,10 @@ export const GET_MATCHES = gql`
         appliedAt
         introduction
         availability
+        questions {
+          question
+          answer
+        }
         previousProjects {
           id
           title

@@ -31,7 +31,7 @@ export default function Project() {
   return (
     <View>
       <View.Sidebar>
-        <Navigation />
+        <Navigation data={data} />
       </View.Sidebar>
       <View.Content>
         <Container maxWidth="1100px">
