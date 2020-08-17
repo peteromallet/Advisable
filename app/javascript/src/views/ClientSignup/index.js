@@ -21,6 +21,7 @@ function ClientSignup() {
   React.useLayoutEffect(() => {
     theme.updateTheme({ background: "white" });
     return () => theme.updateTheme({ background: "default" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (viewer) return <Redirect to="/" />;

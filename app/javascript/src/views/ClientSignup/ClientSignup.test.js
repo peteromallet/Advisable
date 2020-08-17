@@ -236,8 +236,8 @@ test("Successful client application flow and ASAP call", async () => {
 
   // 3 Step. About Your Preferences
   await screen.findByText("About Your Preferences");
-  fireEvent.click(screen.getByLabelText("3"));
-  fireEvent.click(screen.getByLabelText(/No/i));
+  fireEvent.click(screen.getByLabelText("Not Sure"));
+  fireEvent.click(screen.getByLabelText("No"));
   fireEvent.click(screen.getByLabelText(/good/i));
   fireEvent.click(screen.getByLabelText("Continue"));
 
@@ -334,8 +334,8 @@ test("Successful client application flow via query string params", async () => {
 
   // 3 Step. About Your Preferences
   await screen.findByText("About Your Preferences");
-  fireEvent.click(screen.getByLabelText("3"));
-  fireEvent.click(screen.getByLabelText(/No/i));
+  fireEvent.click(screen.getByLabelText("Not Sure"));
+  fireEvent.click(screen.getByLabelText("No"));
   fireEvent.click(screen.getByLabelText(/good/i));
   fireEvent.click(screen.getByLabelText("Continue"));
 
@@ -376,6 +376,8 @@ test("Reject public gmail for client's signup form via query string params", asy
     graphQLMocks: [mockViewer(null), emailNotAllowedRejection],
   });
   await screen.findByText(/personal emails/i);
+  fireEvent.click(screen.getByLabelText(/try again/i));
+  await screen.findByText(/start your application/i);
 });
 
 test("Reject public gmail for client's signup form", async () => {
@@ -536,8 +538,8 @@ test("Cheap talents client application rejection flow", async () => {
 
   // 3 Step. About Your Preferences
   await screen.findByText("About Your Preferences");
-  fireEvent.click(screen.getByLabelText("3"));
-  fireEvent.click(screen.getByLabelText(/No/i));
+  fireEvent.click(screen.getByLabelText("Not Sure"));
+  fireEvent.click(screen.getByLabelText("No"));
   fireEvent.click(screen.getByLabelText(/cheap/i));
   fireEvent.click(screen.getByLabelText("Continue"));
 
@@ -655,8 +657,8 @@ test("Not hiring client application rejection flow", async () => {
 
   // 3 Step. About Your Preferences
   await screen.findByText("About Your Preferences");
-  fireEvent.click(screen.getByLabelText("3"));
-  fireEvent.click(screen.getByLabelText(/No/i));
+  fireEvent.click(screen.getByLabelText("Not Sure"));
+  fireEvent.click(screen.getByLabelText("No"));
   fireEvent.click(screen.getByLabelText(/good/i));
   fireEvent.click(screen.getByLabelText("Continue"));
 

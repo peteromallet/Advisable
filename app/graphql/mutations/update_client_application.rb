@@ -12,7 +12,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
   def resolve(**args)
     user = User.find_by_uid_or_airtable_id!(args[:id])
 
-    if user.application_status == :started
+    if %i[started].include?(user.application_status)
       update_assignable_attributes(user, args)
       update_industry(user, args[:industry]) if args[:industry]
       update_skills(user, args[:skills]) if args[:skills]
@@ -50,5 +50,19 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
   def update_skills(user, skills)
     records = Skill.where(name: skills)
     user.skill_ids = records.map(&:id)
+  end
+
+  def email_blacklisted?(email)
+    return if BlacklistedDomain.email_allowed?(email)
+    ApiError.invalidRequest('emailNotAllowed', 'This email is not allowed')
+  end
+
+  def check_existing_account(email)
+    account = Account.find_by_email(email)
+    return if account.nil?
+    ApiError.invalidRequest(
+      'existingAccount',
+      'This email belongs to an existing account'
+    )
   end
 end
