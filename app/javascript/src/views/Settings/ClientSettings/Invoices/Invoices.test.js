@@ -128,7 +128,6 @@ test("Render invoices list", async () => {
   });
 
   await screen.findByText("Invoices");
-  await screen.findAllByText("5 August 2020");
   await screen.findByText("#5F6791B5-0001");
   await screen.findAllByText(/paid/);
   await screen.findAllByText(/2500/);
