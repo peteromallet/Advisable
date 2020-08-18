@@ -1,4 +1,6 @@
 class Mutations::Login < Mutations::BaseMutation
+  include Mutations::Helpers::Authentication
+
   argument :email, String, required: true
   argument :password, String, required: true
 
@@ -8,15 +10,7 @@ class Mutations::Login < Mutations::BaseMutation
     account = Account.find_by_email(email.downcase)
     no_account_error unless has_account?(account)
     invalid_credentials unless account.authenticate(password)
-
-    account.generate_remember_token
-    cookies = context[:cookies]
-    cookies.signed[:remember] = {
-      value: account.remember_token, httponly: true, expires: 2.weeks.from_now
-    }
-
-    session = context[:session]
-    session[:account_uid] = account.uid
+    login_as(account)
     { viewer: account }
   end
 

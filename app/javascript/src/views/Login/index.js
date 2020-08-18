@@ -12,6 +12,7 @@ import useViewer from "../../hooks/useViewer";
 import useScrollRestore from "../../utilities/useScrollRestore";
 import validationSchema from "./validationSchema";
 import { SignupLinks, SignupLink } from "./styles";
+import VIEWER from "../../graphql/queries/viewer";
 import LOGIN from "./login";
 
 const Login = ({ location }) => {
@@ -33,23 +34,24 @@ const Login = ({ location }) => {
   };
 
   const handleSubmit = async (input, formikBag) => {
-    const { data } = await login({
+    const { data, errors } = await login({
       variables: { input },
     });
 
-    if (data.login.token) {
-      window.localStorage.setItem("authToken", data.login.token);
-      const { from } = location.state || {
-        from: { pathname: "/" },
-      };
+    const errorCode = errors.graphQLErrors?.[0]?.extensions?.code;
 
-      await client.resetStore();
-      history.replace(from);
-      return;
-    } else {
-      formikBag.setStatus(data.login.errors[0].code);
+    if (errorCode) {
+      formikBag.setState(errorCode);
       formikBag.setSubmitting(false);
+      return;
     }
+
+    const { from } = location.state || {
+      from: { pathname: "/" },
+    };
+
+    await client.resetStore();
+    history.replace(from);
   };
 
   return (
