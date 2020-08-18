@@ -1,34 +1,48 @@
 class Mutations::RequestIntroduction < Mutations::BaseMutation
-  description "Allows a client to request introduction to a specialist"
-  argument :application_id, ID, required: true, description: 'The airtable ID of the application record'
-  argument :availability, [String], required: true, description: "The clients availability for a call with the specialist. Should be an array of ISO strings"
-  argument :time_zone, String, required: false, description: 'The time zone that the client is in'
+  argument :application, ID, required: true
+  argument :availability, [GraphQL::Types::ISO8601DateTime], required: false
+  argument :time_zone, String, required: false
 
   field :interview, Types::Interview, null: true
-  field :errors, [String], null: true
+  field :application, Types::ApplicationType, null: true
+
+  def authorized?(**args)
+    application = Application.find_by_uid_or_airtable_id!(args[:application])
+    ApiError.not_authenticated unless current_user.present?
+    policy = ApplicationPolicy.new(current_user, application)
+    return true if policy.write
+    ApiError.not_authorized('You do not have access to this')
+  end
 
   def resolve(**args)
-    application = Application.find_by_airtable_id(args[:application_id])
-    application.project.user.update(availability: args[:availability])
+    application = Application.find_by_uid_or_airtable_id!(args[:application])
 
-    interview = application.interviews.new(
-      user: application.project.user,
-      time_zone: args[:time_zone],
-      status: "Call Requested"
-    )
+    if args[:availability]
+      current_user.update(availability: args[:availability])
+    end
 
-    interview.save
-    interview.sync_to_airtable
-    Webhook.process(interview)
+    interview = create_interview(application, args[:time_zone])
     update_application_status(application)
-    return { interview: interview }
+
+    return { interview: interview, application: application }
   end
 
   private
 
+  def create_interview(application, time_zone)
+    interview =
+      application.interviews.create(
+        user: application.project.user,
+        time_zone: time_zone || current_user.time_zone,
+        status: 'Call Requested'
+      )
+
+    interview.sync_to_airtable
+    interview
+  end
+
   def update_application_status(application)
     application.update(status: 'Application Accepted')
     application.sync_to_airtable
-    Webhook.process(application)
   end
 end

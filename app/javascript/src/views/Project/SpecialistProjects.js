@@ -33,7 +33,11 @@ function Project({ project }) {
 
   return (
     <>
-      <ProjectDetails.Modal modal={modal} id={project.id} />
+      <ProjectDetails.Modal
+        label={project.title}
+        modal={modal}
+        id={project.id}
+      />
       <DialogDisclosure {...modal} as={StyledSpecialistProject} padding="24px">
         {project.coverPhoto && (
           <Box

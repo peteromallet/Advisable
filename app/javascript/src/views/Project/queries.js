@@ -1,4 +1,5 @@
-import { gql } from "@apollo/client";
+import { useParams } from "react-router-dom";
+import { gql, useMutation, useApolloClient } from "@apollo/client";
 
 export const GET_PROJECT = gql`
   query project($id: ID!) {
@@ -78,3 +79,57 @@ export const GET_MATCHES = gql`
     }
   }
 `;
+
+export const REQUEST_INTRODUCTION = gql`
+  mutation requestIntroduction($input: RequestIntroductionInput!) {
+    requestIntroduction(input: $input) {
+      application {
+        id
+        status
+      }
+    }
+  }
+`;
+
+export function useRequestIntroduction(application) {
+  const params = useParams();
+  const client = useApolloClient();
+  const projectId = params.id;
+
+  return useMutation(REQUEST_INTRODUCTION, {
+    optimisticResponse: {
+      __typename: "Mutation",
+      requestIntroduction: {
+        __typename: "RequestIntroductionPayload",
+        application: {
+          ...application,
+          status: "Application Accepted",
+        },
+      },
+    },
+    update() {
+      const data = client.readQuery({
+        query: GET_MATCHES,
+        variables: {
+          id: projectId,
+        },
+      });
+
+      client.writeQuery({
+        query: GET_MATCHES,
+        variables: {
+          id: projectId,
+        },
+        data: {
+          ...data,
+          project: {
+            ...data.project,
+            matches: data.project.matches.filter((app) => {
+              return app.id !== application.id;
+            }),
+          },
+        },
+      });
+    },
+  });
+}

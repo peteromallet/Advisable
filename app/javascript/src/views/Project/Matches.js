@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import MatchQueue from "./MatchQueue";
-import { CheckCircle, XCircle, Moon } from "@styled-icons/boxicons-solid";
+import { XCircle, Moon } from "@styled-icons/boxicons-solid";
 import { AnimatePresence, motion } from "framer-motion";
 import { Box } from "@advisable/donut";
 import Sticky from "components/Sticky";
 import ActionBar from "./ActionBar";
 import MatchMetaInfo from "./MatchMetaInfo";
 import ApplicationQuestions from "./ApplicationQuestions";
+import AcceptApplication from "./AcceptApplication";
 import SpecialistReviews from "./SpecialistReviews";
 import SpecialistProjects from "./SpecialistProjects";
 import RecommendationComment from "./RecommendationComment";
@@ -41,11 +42,11 @@ export default function Matches({ data, onNext }) {
           >
             {hasRecommendationComment && <RecommendationComment data={data} />}
             <SpecialistIntroduction application={application} />
-            {application.questions.length > 0 && (
-              <ApplicationQuestions questions={application.questions} />
-            )}
             {application.previousProjects.length > 0 && (
               <SpecialistProjects projects={application.previousProjects} />
+            )}
+            {application.questions.length > 0 && (
+              <ApplicationQuestions questions={application.questions} />
             )}
             {application.specialist.reviews.length > 0 && (
               <SpecialistReviews reviews={application.specialist.reviews} />
@@ -53,11 +54,7 @@ export default function Matches({ data, onNext }) {
           </motion.div>
         </AnimatePresence>
         <ActionBar>
-          <ActionBar.Item
-            label="Accept"
-            onClick={onNext}
-            icon={<CheckCircle />}
-          />
+          <AcceptApplication application={application} />
           <ActionBar.Item onClick={onNext} icon={<Moon />} label="Not Sure" />
           <ActionBar.Item onClick={onNext} icon={<XCircle />} label="Reject" />
         </ActionBar>
