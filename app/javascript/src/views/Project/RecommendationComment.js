@@ -14,7 +14,7 @@ function RecommendationComment({ data }) {
   const applied = match.appliedAt;
 
   return (
-    <Card padding="24px" marginBottom="52px">
+    <Card padding="24px" marginBottom="32px">
       <Box marginBottom="16px" display="flex" alignItems="center">
         <Avatar size="s" name={salesPerson.name} url={salesPerson.image} />
         <Box paddingLeft="12px">

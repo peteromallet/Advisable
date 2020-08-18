@@ -1,27 +1,22 @@
 class Mutations::RejectApplication < Mutations::BaseMutation
   argument :id, ID, required: true
-  argument :rejection_reason, String, required: true
-  argument :rejection_reason_comment, String, required: true
+  argument :reason, String, required: true
+  argument :comment, String, required: true
 
   field :application, Types::ApplicationType, null: true
-  field :errors, [String], null: false
 
   def resolve(**args)
-    application = Application.find_by_airtable_id!(args[:id])
-    application.assign_attributes({
-      status: 'Application Rejected',
-      rejection_reason: args[:rejection_reason],
-      rejection_reason_comment: args[:rejection_reason_comment]
-    })
+    application = Application.find_by_uid_or_airtable_id!(args[:id])
+    application.assign_attributes(
+      {
+        status: 'Application Rejected',
+        rejection_reason: args[:reason],
+        rejection_reason_comment: args[:comment]
+      }
+    )
 
-    if application.save
-      application.sync_to_airtable
-      Webhook.process(application)
-    end
+    application.sync_to_airtable if application.save
 
-    return {
-      application: application,
-      errors: application.errors.full_messages
-    }
+    { application: application }
   end
 end

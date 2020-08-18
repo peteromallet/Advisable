@@ -133,3 +133,57 @@ export function useRequestIntroduction(application) {
     },
   });
 }
+
+export const REJECT_APPLICATION = gql`
+  mutation rejectApplication($input: RejectApplicationInput!) {
+    rejectApplication(input: $input) {
+      application {
+        id
+        status
+      }
+    }
+  }
+`;
+
+export function useRejectApplication(application) {
+  const params = useParams();
+  const client = useApolloClient();
+  const projectId = params.id;
+
+  return useMutation(REJECT_APPLICATION, {
+    optimisticResponse: {
+      __typename: "Mutation",
+      rejectApplication: {
+        __typename: "RejectApplicationPayload",
+        application: {
+          ...application,
+          status: "Application Rejected",
+        },
+      },
+    },
+    update() {
+      const data = client.readQuery({
+        query: GET_MATCHES,
+        variables: {
+          id: projectId,
+        },
+      });
+
+      client.writeQuery({
+        query: GET_MATCHES,
+        variables: {
+          id: projectId,
+        },
+        data: {
+          ...data,
+          project: {
+            ...data.project,
+            matches: data.project.matches.filter((app) => {
+              return app.id !== application.id;
+            }),
+          },
+        },
+      });
+    },
+  });
+}

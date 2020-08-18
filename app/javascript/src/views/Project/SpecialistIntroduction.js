@@ -1,10 +1,10 @@
 import React from "react";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
-import { Box, Text } from "@advisable/donut";
+import { Card, Text } from "@advisable/donut";
 
 export default function SpecialistIntroduction({ application }) {
   return (
-    <Box marginBottom="52px">
+    <Card padding="32px" marginBottom="52px">
       <Text
         fontSize="18px"
         color="neutral900"
@@ -22,6 +22,6 @@ export default function SpecialistIntroduction({ application }) {
       >
         {renderLineBreaks(application.introduction)}
       </Text>
-    </Box>
+    </Card>
   );
 }

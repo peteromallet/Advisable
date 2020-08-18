@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { rgba } from "polished";
 import { theme } from "@advisable/donut";
+import AcceptApplication from "./AcceptApplication";
+import RejectApplication from "./RejectApplication";
+import { ActionBarContext } from "./ActionBarContainer";
 
 const StyledActionBar = styled.div`
   bottom: 16px;
@@ -57,16 +60,15 @@ const StyledActionBarItem = styled.button`
   }
 `;
 
-function ActionBar({ children }) {
+function ActionBar({ application }) {
   const bar = React.useRef(null);
+  const barContext = useContext(ActionBarContext);
 
   const reposition = React.useCallback(() => {
-    const offset = bar.current.parentNode.offsetLeft;
-    const parentWidth = bar.current.parentNode.clientWidth;
     const width = bar.current.clientWidth;
-    const left = offset + parentWidth / 2 - width / 2;
+    const left = barContext.left + barContext.width / 2 - width / 2;
     bar.current.style.left = `${left}px`;
-  }, [bar]);
+  }, [barContext, bar]);
 
   React.useEffect(() => {
     reposition();
@@ -78,31 +80,28 @@ function ActionBar({ children }) {
 
   return (
     <StyledActionBar
+      ref={bar}
       as={motion.div}
       initial={{ y: 60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4 }}
-      ref={bar}
     >
-      {React.Children.map(children, (child, i) =>
-        React.cloneElement(child, {
-          as: motion.div,
-          initial: { opacity: 0, y: 12 },
-          animate: { opacity: 1, y: 0 },
-          transition: { delay: 0.08 * i },
-        }),
-      )}
+      <AcceptApplication application={application} />
+      <RejectApplication application={application} />
     </StyledActionBar>
   );
 }
 
-ActionBar.Item = function ActionBarItem({ icon, label, ...props }) {
+ActionBar.Item = React.forwardRef(function ActionBarItem(
+  { icon, label, ...props },
+  ref,
+) {
   return (
-    <StyledActionBarItem {...props}>
+    <StyledActionBarItem ref={ref} {...props}>
       {icon}
       <span>{label}</span>
     </StyledActionBarItem>
   );
-};
+});
 
 export default ActionBar;
