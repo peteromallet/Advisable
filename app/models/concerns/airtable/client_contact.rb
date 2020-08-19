@@ -80,7 +80,7 @@ class Airtable::ClientContact < Airtable::Base
     self['Contact Status'] = user.contact_status
     self['Same City Importance'] = user.locality_importance
     self['Address'] = Address.new(user.address).to_s if user.address
-    self['Skills Interested In'] = user.skills.map(&:airtable_id).compact
+    self['Skills Interested In'] = user.skills.map(&:airtable_id).compact.uniq
     self['Application Accepted Timestamp'] = user.application_accepted_at
     self['Application Rejected Timestamp'] = user.application_rejected_at
     self['How many freelancers do you plan on hiring over the next 6 months?'] =
