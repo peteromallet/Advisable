@@ -124,6 +124,8 @@ export function useRequestIntroduction(application) {
         },
       });
 
+      const isLastApplication = data.project.matches.length === 1;
+
       client.writeQuery({
         query: GET_MATCHES,
         variables: {
@@ -133,6 +135,8 @@ export function useRequestIntroduction(application) {
           ...data,
           project: {
             ...data.project,
+            sourcing: isLastApplication ? false : true,
+            accepted: [...data.project.accepted, application],
             matches: data.project.matches.filter((app) => {
               return app.id !== application.id;
             }),
@@ -178,6 +182,9 @@ export function useRejectApplication(application) {
         },
       });
 
+      const isLastApplication = data.project.matches.length === 1;
+      const hasRequestedIntroductions = data.project.accepted.length > 0;
+
       client.writeQuery({
         query: GET_MATCHES,
         variables: {
@@ -187,6 +194,7 @@ export function useRejectApplication(application) {
           ...data,
           project: {
             ...data.project,
+            sourcing: !(isLastApplication && hasRequestedIntroductions),
             matches: data.project.matches.filter((app) => {
               return app.id !== application.id;
             }),
