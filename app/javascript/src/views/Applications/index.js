@@ -70,13 +70,6 @@ const Applications = () => {
           loading={loading}
           specialist={viewer}
           applications={loading ? [] : applications}
-          featuredURL={
-            loading
-              ? null
-              : encodeURI(
-                  `https://advisable.com/request_feature_invitation?field75221875=${viewer.email}&sid=${viewer.airtableId}`,
-                )
-          }
         />
       </Layout.Main>
     </Layout>
