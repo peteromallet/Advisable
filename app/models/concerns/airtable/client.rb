@@ -1,5 +1,5 @@
 class Airtable::Client < Airtable::Base
-  self.table_name = "Clients"
+  self.table_name = 'Clients'
 
   sync_with ::Client
   sync_column 'Client Name', to: :name
@@ -8,5 +8,6 @@ class Airtable::Client < Airtable::Base
   push_data do |client|
     self['Client Name'] = client.name
     self['Domain'] = client.domain
+    self['Client Contacts'] = client.users.map(&:airtable_id).compact.uniq
   end
 end

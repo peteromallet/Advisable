@@ -14,6 +14,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
 
     if %i[started].include?(user.application_status)
       update_assignable_attributes(user, args)
+      update_company_name(user, args[:company_name]) if args[:company_name]
       update_industry(user, args[:industry]) if args[:industry]
       update_skills(user, args[:skills]) if args[:skills]
       user.save
@@ -33,7 +34,13 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
 
   # which attributes can just be simply assigned
   def assignable_attributes
-    %i[budget company_name company_type number_of_freelancers]
+    %i[budget company_type number_of_freelancers]
+  end
+
+  def update_company_name(user, company_name)
+    user.company_name = company_name
+    user.client&.update(name: company_name)
+    user.client&.sync_to_airtable
   end
 
   def update_assignable_attributes(user, args)
