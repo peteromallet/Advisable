@@ -5,6 +5,14 @@ class Mutations::RejectApplication < Mutations::BaseMutation
 
   field :application, Types::ApplicationType, null: true
 
+  def authorized?(**args)
+    application = Application.find_by_uid_or_airtable_id!(args[:id])
+    ApiError.not_authenticated unless current_user.present?
+    policy = ApplicationPolicy.new(current_user, application)
+    return true if policy.write
+    ApiError.not_authorized('You do not have access to this')
+  end
+
   def resolve(**args)
     application = Application.find_by_uid_or_airtable_id!(args[:id])
     application.assign_attributes(
@@ -16,6 +24,7 @@ class Mutations::RejectApplication < Mutations::BaseMutation
     )
 
     application.sync_to_airtable if application.save
+    application.project.update_sourcing
 
     { application: application }
   end

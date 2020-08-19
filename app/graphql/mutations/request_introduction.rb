@@ -23,6 +23,7 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
 
     interview = create_interview(application, args[:time_zone])
     update_application_status(application)
+    application.project.update_sourcing
 
     return { interview: interview, application: application }
   end

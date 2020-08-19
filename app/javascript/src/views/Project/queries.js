@@ -18,6 +18,7 @@ export const GET_MATCHES = gql`
   query getMatches($id: ID!) {
     project(id: $id) {
       id
+      sourcing
       user {
         id
         salesPerson {
@@ -25,6 +26,14 @@ export const GET_MATCHES = gql`
           name
           image
           firstName
+        }
+      }
+      accepted: applications(status: ["Application Accepted"]) {
+        id
+        specialist {
+          id
+          avatar
+          name
         }
       }
       matches: applications(status: ["Applied"]) {

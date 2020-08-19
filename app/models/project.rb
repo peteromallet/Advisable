@@ -88,20 +88,8 @@ class Project < ApplicationRecord
   # stage as well as the top 3 candidates in the applied stage.
   def candidates
     base = applications.not_hidden
-
-    applied = base.top_three_applied
-    beyond_applied =
-      base.where(
-        status: [
-          'Application Accepted',
-          'Application Rejected',
-          'Interview Scheduled',
-          'Interview Completed',
-          'Proposed'
-        ]
-      )
-
-    (applied + beyond_applied).uniq
+    base.active.or(base.matched)
+    base.order(score: :desc)
   end
 
   # Updates all of the various application counters
@@ -110,5 +98,15 @@ class Project < ApplicationRecord
     self.proposed_count = applications.proposed.count
     self.hired_count = applications.hired.count
     save(valiate: false, touch: false)
+  end
+
+  # This is called after a client accepts or rejects a match to determin if the
+  # sourcing attribute should be updated from true to false.
+  def update_sourcing
+    return if sourcing == false
+    # If there is still matches left then dont do anything.
+    return if applications.matched.any?
+    accepted = applications.accepted.any?
+    update(sourcing: false) if accepted
   end
 end

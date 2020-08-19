@@ -4,6 +4,8 @@ import { useQuery, useApolloClient } from "@apollo/client";
 import Loading from "components/Loading";
 import { GET_MATCHES } from "./queries";
 import Matches from "./Matches";
+import SearchingForMatches from "./SearchingForMatches";
+import RequestedIntroductions from "./RequestedIntroductions";
 
 export default function Inbox() {
   const { id } = useParams();
@@ -20,22 +22,15 @@ export default function Inbox() {
     return <>Something went wrong</>;
   }
 
-  const handleNext = () => {
-    client.writeQuery({
-      query: GET_MATCHES,
-      variables: { id },
-      data: {
-        project: {
-          ...data.project,
-          matches: [...data.project.matches.slice(1)],
-        },
-      },
-    });
-  };
+  const { accepted, sourcing } = data.project;
 
-  if (data.project.matches.length === 0) {
-    return <>No Mathces</>;
+  if (!sourcing && accepted.length > 0) {
+    return <RequestedIntroductions accepted={accepted} />;
   }
 
-  return <Matches data={data} onNext={handleNext} />;
+  if (data.project.matches.length === 0) {
+    return <SearchingForMatches />;
+  }
+
+  return <Matches data={data} />;
 }
