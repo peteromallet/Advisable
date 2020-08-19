@@ -3,9 +3,9 @@ import React from "react";
 import { get } from "lodash-es";
 import { Formik } from "formik";
 import queryString from "query-string";
-import { Redirect, useParams, useLocation } from "react-router-dom";
+import { Redirect, useParams, useLocation, useHistory } from "react-router-dom";
 import { Button } from "@advisable/donut";
-import { useMutation } from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import Text from "src/components/Text";
 import Link from "src/components/Link";
@@ -21,8 +21,10 @@ const Signup = () => {
   useScrollRestore();
   const viewer = useViewer();
   const params = useParams();
+  const history = useHistory();
   const location = useLocation();
   const { t } = useTranslation();
+  const client = useApolloClient();
   const [signup] = useMutation(SIGNUP);
   const queryParams = queryString.parse(location.search);
   const notice = get(location, "state.notice");
@@ -38,24 +40,20 @@ const Signup = () => {
       input.id = params.id;
     }
 
-    const { data } = await signup({
+    const { errors } = await signup({
       variables: {
         input,
       },
     });
 
-    if (data.signup.token) {
-      localStorage.setItem("authToken", data.signup.token);
+    if (errors) {
+      formikBag.setStatus(errors[0].extensions?.code);
+      formikBag.setSubmitting(false);
+    } else {
+      await client.resetStore();
       const path = location.state?.from?.pathname || "/";
-      window.location.href = path;
-      return;
+      history.replace(path);
     }
-
-    if (data.signup.errors) {
-      formikBag.setStatus(data.signup.errors[0].code);
-    }
-
-    formikBag.setSubmitting(false);
   };
 
   const initialValues = {
@@ -82,8 +80,8 @@ const Signup = () => {
           {notice && t(notice)}
         </Text>
         <Formik
-          initialValues={initialValues}
           onSubmit={handleSubmit}
+          initialValues={initialValues}
           validationSchema={validationSchema}
         >
           {(formik) => (

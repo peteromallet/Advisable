@@ -1,5 +1,7 @@
 # Creates a new freelancer account
 class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
+  include Mutations::Helpers::Authentication
+
   description <<~HEREDOC
     Creates a new freelancer account
   HEREDOC
@@ -44,7 +46,6 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     description 'The rerrer they signed up from'
   end
 
-  field :token, String, null: false
   field :viewer, Types::ViewerUnion, null: false
 
   def resolve(**args)
@@ -92,9 +93,9 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     end
 
     context[:current_user] = account
-    token = Accounts::Jwt.call(account)
+    login_as(account)
 
-    { token: token, viewer: account.reload }
+    { viewer: account.reload }
   end
 
   private

@@ -83,6 +83,16 @@ module Account
     raise ActiveRecord::RecordNotFound
   end
 
+  def self.find_by_uid_or_airtable_id(id)
+    find_by_uid(id) || find_by_airtable_id(id)
+  end
+
+  def self.find_by_uid_or_airtable_id!(id)
+    record = find_by_uid_or_airtable_id(id)
+    return record if record.present?
+    raise ActiveRecord::RecordNotFound
+  end
+
   def self.find_by_airtable_id(id)
     User.find_by_airtable_id(id) || Specialist.find_by_airtable_id(id)
   end
