@@ -2,7 +2,7 @@ import * as React from "react";
 import { Box, Card, Text, Link } from "@advisable/donut";
 import illustration from "./illustration.png";
 
-const Empty = props => {
+const Empty = (props) => {
   return (
     <Card borderRadius={8} p="xxl">
       <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -34,9 +34,6 @@ const Empty = props => {
           <Box mb="s">
             <Link to="/profile">Update your profile →</Link>
           </Box>
-          <Link.External target="_blank" href={props.featuredURL}>
-            Become a featured freelancer →
-          </Link.External>
         </Box>
         <Box display={{ _: "none", m: "block" }}>
           <img src={illustration} alt="" width={400} />

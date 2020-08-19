@@ -11,7 +11,7 @@ const OpenApplications = (props) => {
   if (props.loading) return <Loading />;
 
   if (props.applications.length === 0) {
-    return <Empty featuredURL={props.featuredURL} />;
+    return <Empty />;
   }
 
   return (
