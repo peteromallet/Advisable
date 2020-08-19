@@ -91,7 +91,7 @@ class Airtable::Project < Airtable::Base
   end
 
   push_data do |project|
-    self['Client Contacts'] = [project.user.try(:airtable_id)].compact
+    self['Client Contacts'] = [project.user.try(:airtable_id)].compact.uniq
     self['Project Stage'] = project[:status]
     if project.saved_change_to_deposit?
       self['Deposit Amount Required'] = project.deposit / 100.0
