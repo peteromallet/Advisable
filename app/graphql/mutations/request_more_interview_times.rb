@@ -4,10 +4,16 @@ class Mutations::RequestMoreInterviewTimes < Mutations::BaseMutation
 
   field :interview, Types::Interview, null: true
 
+  ALLOWED_STATUSES = [
+    'Call Requested',
+    'Need More Time Options',
+    'More Time Options Added'
+  ]
+
   def resolve(**args)
     interview = Interview.find_by_airtable_id!(args[:id])
 
-    if interview.status != 'Call Requested'
+    unless ALLOWED_STATUSES.include?(interview.status)
       raise ApiError::InvalidRequest.new(
               'interview.notRequested',
               'Interview is not in a requested state'
