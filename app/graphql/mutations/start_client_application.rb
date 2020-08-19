@@ -26,6 +26,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
 
       if user.save
         user.sync_to_airtable
+        create_client_record(user)
         if context[:request]
           GeocodeUserJob.perform_later(user.id, context[:client_ip])
         end
@@ -36,6 +37,13 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
   end
 
   private
+
+  def create_client_record(user)
+    return if user.client.present?
+    client = Client.create(domain: user.email.split('@').last)
+    client.users << user
+    client.reload.sync_to_airtable
+  end
 
   def email_blacklisted?(email)
     return if BlacklistedDomain.email_allowed?(email)
