@@ -10,26 +10,11 @@ class ApplicationController < ActionController::Base
   protected
 
   def current_user
-    @current_user ||=
-      begin
-        if session[:account_uid]
-          return Account.find_by_uid(session[:account_uid])
-        end
-        restore_session
-      end
+    session_manager.current_user
   end
 
-  def restore_session
-    token = cookies.signed[:remember]
-    return unless token
-    account = Account.find_by_remember_token(token)
-    if account
-      session[:account_uid] = account.uid
-    else
-      cookies.delete[:remember]
-    end
-
-    account
+  def session_manager
+    @session_manager ||= SessionManager.new(session: session, cookies: cookies)
   end
 
   def client_ip

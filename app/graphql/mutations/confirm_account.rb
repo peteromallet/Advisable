@@ -7,9 +7,7 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
 
   def resolve(email:, token:)
     account = Account.find_by_email!(email)
-
     ApiError.invalid_request(code: 'ALREADY_CONFIRMED') if account.confirmed
-
     validate_token(account, token)
     account.confirmed_at = DateTime.now
     account.confirmation_digest = nil
@@ -26,8 +24,8 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
     valid =
       BCrypt::Password.new(account.confirmation_digest).is_password?(token)
     return if valid
-    ApiError.invalid_request(code: 'IVALID_CONFIRMATION_TOKEN')
+    ApiError.invalid_request(code: 'INVALID_CONFIRMATION_TOKEN')
   rescue BCrypt::Errors::InvalidHash => e
-    ApiError.invalid_request(code: 'IVALID_CONFIRMATION_TOKEN')
+    ApiError.invalid_request(code: 'INVALID_CONFIRMATION_TOKEN')
   end
 end

@@ -17,7 +17,7 @@ const ConfirmAccount = ({ match, location, history }) => {
       variables: { input: { token: match.params.token, email: parsed.email } },
     });
 
-    const errorCode = errors?.graphQLErrors?.[0]?.extensions?.code;
+    const errorCode = errors?.[0]?.extensions?.code;
 
     if (errorCode === "ALREADY_CONFIRMED") {
       notifications.notify("Your account has already been confirmed");

@@ -44,6 +44,11 @@ module Account
       save(validate: false)
     end
 
+    def clear_remember_token
+      self.remember_token = nil
+      save(validate: false)
+    end
+
     def create_confirmation_token
       token = Token.new
       self.confirmation_digest = Token.digest(token)
