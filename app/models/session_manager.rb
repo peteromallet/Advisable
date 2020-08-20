@@ -23,10 +23,12 @@ class SessionManager
     token = cookies.signed[:remember]
     return unless token
     account = Account.find_by_remember_token(token)
+
     if account
+      @current_user = account
       session[:account_uid] = account.uid
     else
-      cookies.delete[:remember]
+      cookies.delete(:remember)
     end
 
     account
@@ -48,4 +50,8 @@ class SessionManager
     session.delete(:account_uid)
     @current_user = nil
   end
+
+  private
+
+  def create_remember_cookie(account); end
 end
