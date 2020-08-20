@@ -1,19 +1,55 @@
 import * as React from "react";
-import Sticky from "../../components/Sticky";
 import { isEmpty, filter } from "lodash-es";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Back from "../../components/Back";
+import VariantSystem from "../../components/VariantSystem";
 import { useScreenSize } from "../../utilities/screenSizes";
-import { Text, Box } from "@advisable/donut";
+import { Text, Box, useBreakpoint } from "@advisable/donut";
 import MultistepMenu from "../../components/MultistepMenu";
 import { Layout } from "../../components";
+import Helper from "./Helper";
 import Terms from "./Terms";
 import Overview from "./Overview";
 import Questions from "./Questions";
 import References from "./References";
+import { motion } from "framer-motion";
+import styled from "styled-components";
+import { padding } from "styled-system";
+
+const SidebarContainer = styled.div`
+  width: 280px;
+  position: relative;
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
+`;
+
+const Sidebar = styled.div`
+  left: 0;
+  top: 60px;
+  width: 280px;
+  position: fixed;
+  height: calc(100vh - 60px);
+  background: white;
+  box-shadow: 0px 1px 20px rgba(14, 31, 91, 0.04);
+
+  @media (max-width: 900px) {
+    position: relative;
+    height: auto;
+    background: none;
+    box-shadow: none;
+    top: 0;
+    width: 100%;
+    padding: 0 0 20px 0;
+  }
+
+  ${padding};
+`;
 
 const ApplicationFlow = ({ application, match, location }) => {
   const isMobile = useScreenSize("small");
+  const isDesktop = useBreakpoint("lUp");
   const applicationId = match.params.applicationId;
 
   // Some steps are able to be skipped. e.g the references step. The skipped
@@ -80,61 +116,68 @@ const ApplicationFlow = ({ application, match, location }) => {
   const { project } = application;
 
   return (
-    <Layout>
-      {!isMobile && (
-        <Layout.Sidebar size="l">
-          <Sticky offset={98}>
-            <Box marginBottom="s">
-              <Back to={`/invites/${match.params.applicationId}`}>
-                View project details
-              </Back>
-            </Box>
-            <Text
-              as="h4"
-              fontSize="xl"
-              lineHeight="l"
-              color="blue900"
-              fontWeight="medium"
-              letterSpacing="-0.01em"
-            >
-              {application.project.primarySkill?.name} project
+    <Box display="flex">
+      <VariantSystem variantsRange={[0, 2]} />
+      <SidebarContainer>
+        <Sidebar
+          as={isDesktop ? motion.div : "div"}
+          padding="m"
+          initial={{ opacity: 0, left: -100 }}
+          animate={{ opacity: 1, left: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Box marginBottom="s">
+            <Back to={`/invites/${match.params.applicationId}`}>
+              View project details
+            </Back>
+          </Box>
+          <Text
+            as="h4"
+            fontSize="xl"
+            lineHeight="l"
+            color="blue900"
+            fontWeight="medium"
+            letterSpacing="-0.01em"
+          >
+            {application.project.primarySkill?.name} project
+          </Text>
+          {(project.industry || project.companyType) && (
+            <Text mt="xxs" fontSize="s" color="neutral500" fontWeight="medium">
+              {project.industry} {project.companyType}
             </Text>
-            {(project.industry || project.companyType) && (
-              <Text
-                mt="xxs"
-                fontSize="s"
-                color="neutral500"
-                fontWeight="medium"
-              >
-                {project.industry} {project.companyType}
-              </Text>
-            )}
-            <Text py="m" fontSize="xs" lineHeight="s" color="neutral700">
-              {application.project.description}
-            </Text>
-            <MultistepMenu>
-              {activeSteps.map((step, i) => {
-                const previousStep = STEPS[i - 1];
-                return (
-                  <MultistepMenu.Item
-                    key={step.name}
-                    exact={step.exact}
-                    isComplete={step.isComplete}
-                    isDisabled={previousStep ? !previousStep.isComplete : false}
-                    to={{
-                      ...location,
-                      pathname: `/invites/${applicationId}/apply${step.to}`,
-                    }}
-                  >
-                    {step.name}
-                  </MultistepMenu.Item>
-                );
-              })}
-            </MultistepMenu>
-          </Sticky>
-        </Layout.Sidebar>
-      )}
-      <Layout.Main>
+          )}
+          <Text py="m" fontSize="xs" lineHeight="s" color="neutral700">
+            {application.project.description}
+          </Text>
+          <MultistepMenu>
+            {activeSteps.map((step, i) => {
+              const previousStep = STEPS[i - 1];
+              return (
+                <MultistepMenu.Item
+                  key={step.name}
+                  exact={step.exact}
+                  isComplete={step.isComplete}
+                  isDisabled={previousStep ? !previousStep.isComplete : false}
+                  to={{
+                    ...location,
+                    pathname: `/invites/${applicationId}/apply${step.to}`,
+                  }}
+                >
+                  {step.name}
+                </MultistepMenu.Item>
+              );
+            })}
+          </MultistepMenu>
+        </Sidebar>
+      </SidebarContainer>
+      <Box
+        mx="auto"
+        width="100%"
+        position="relative"
+        my={{ _: 0, m: "64px" }}
+        padding={{ _: "24px", m: "0" }}
+        maxWidth={{ _: "100%", m: "680px" }}
+      >
         <Switch>
           {STEPS.map((step, i) => {
             const Component = step.component;
@@ -167,8 +210,8 @@ const ApplicationFlow = ({ application, match, location }) => {
             );
           })}
         </Switch>
-      </Layout.Main>
-    </Layout>
+      </Box>
+    </Box>
   );
 };
 
