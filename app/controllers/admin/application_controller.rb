@@ -32,5 +32,14 @@ module Admin
       session[:account_uid] = account.uid
       redirect_to '/'
     end
+
+    def reset_test
+      return unless ENV['STAGING'] || Rails.env.development?
+
+      Application.update_all status: 'Applied'
+      Project.update_all sourcing: true
+
+      redirect_to '/admin', notice: 'Test data has been reset'
+    end
   end
 end

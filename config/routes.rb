@@ -34,6 +34,10 @@ Rails.application.routes.draw do
     post 'resync', to: 'application#resync', as: :resync if ENV['STAGING']
     get 'login/:uid', to: 'application#login_as', as: :login_as
 
+    if ENV['STAGING'] || rails.env.development?
+      post 'reset_test', to: 'application#reset_test', as: :reset_test
+    end
+
     root to: 'applications#index'
   end
 
