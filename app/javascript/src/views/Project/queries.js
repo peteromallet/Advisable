@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { gql, useMutation, useApolloClient } from "@apollo/client";
+import { gql, useQuery, useMutation, useApolloClient } from "@apollo/client";
 
 export const GET_PROJECT = gql`
   query project($id: ID!) {
@@ -21,6 +21,7 @@ export const GET_MATCHES = gql`
       sourcing
       user {
         id
+        availability
         salesPerson {
           id
           name
@@ -203,4 +204,41 @@ export function useRejectApplication(application) {
       });
     },
   });
+}
+
+export const GET_AVAILABILITY = gql`
+  query getAvailability {
+    viewer {
+      ... on User {
+        id
+        interviews(status: "Call Scheduled") {
+          id
+          startsAt
+          specialist {
+            id
+            firstName
+          }
+        }
+      }
+    }
+  }
+`;
+
+export function useAvailability(opts) {
+  return useQuery(GET_AVAILABILITY, opts);
+}
+
+export const UPDATE_AVAILABILITY = gql`
+  mutation UpdateAvailability($input: UpdateAvailabilityInput!) {
+    updateAvailability(input: $input) {
+      user {
+        id
+        availability
+      }
+    }
+  }
+`;
+
+export function useUpdateAvailability() {
+  return useMutation(UPDATE_AVAILABILITY);
 }

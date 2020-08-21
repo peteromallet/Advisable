@@ -36,6 +36,7 @@ module Admin
     def reset_test
       return unless ENV['STAGING'] || Rails.env.development?
 
+      User.update_all availability: []
       Application.update_all status: 'Applied'
       Project.update_all sourcing: true
 

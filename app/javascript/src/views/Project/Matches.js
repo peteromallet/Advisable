@@ -55,7 +55,7 @@ export default function Matches({ data, onNext }) {
               )}
             </motion.div>
           </AnimatePresence>
-          <ActionBar application={application} />
+          <ActionBar application={application} project={data.project} />
         </ActionBarContainer>
       </Box>
     </Box>

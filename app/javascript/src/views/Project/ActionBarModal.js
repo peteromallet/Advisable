@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styled from "styled-components";
 import { rgba } from "polished";
 import { theme } from "@advisable/donut";
 import { Dialog, DialogBackdrop } from "reakit/Dialog";
-import { ActionBarContext } from "./ActionBarContainer";
 
 const StyledDialogBackdrop = styled(motion.div)`
   top: 60px;
+  right: 0;
   bottom: 0;
-  left: 650px;
+  left: 280px;
   z-index: 100;
   position: fixed;
   display: flex;
@@ -19,16 +19,19 @@ const StyledDialogBackdrop = styled(motion.div)`
 `;
 
 const StyledDialog = styled(motion.div)`
-  width: 500px;
+  width: ${(p) => p.$width}px;
   padding: 32px;
   outline: none;
   background: white;
   box-shadow: 0 24px 64px -24px ${rgba(theme.colors.neutral900, 0.6)};
 `;
 
-export default function ActionBarModal({ dialog, label, children }) {
-  const barContainer = useContext(ActionBarContext);
-
+export default function ActionBarModal({
+  width = 500,
+  dialog,
+  label,
+  children,
+}) {
   return (
     <AnimatePresence>
       <DialogBackdrop {...dialog}>
@@ -39,8 +42,6 @@ export default function ActionBarModal({ dialog, label, children }) {
             initial={{ opacity: 0 }}
             animate={{
               opacity: dialog.visible ? 1 : 0,
-              left: barContainer.left - 20,
-              width: barContainer.width + 40,
               pointerEvents: dialog.visible ? "all" : "none",
             }}
           >
@@ -48,10 +49,11 @@ export default function ActionBarModal({ dialog, label, children }) {
               {(dialogProps) => (
                 <StyledDialog
                   {...dialogProps}
+                  $width={width}
                   transition={{ duration: 0.32 }}
                   initial={{ opacity: 0 }}
                   animate={{
-                    display: "flex",
+                    display: "block",
                     opacity: dialog.visible ? 1 : 0,
                     y: dialog.visible ? 0 : 40,
                   }}

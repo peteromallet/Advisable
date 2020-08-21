@@ -62,7 +62,14 @@ class Types::User < Types::BaseType
   end
 
   field :interviews, [Types::Interview], null: true do
+    argument :status, String, required: false
     authorize :is_user
+  end
+
+  def interviews(status:)
+    interviews = object.interviews
+    interviews = interviews.where(status: status) if status
+    interviews
   end
 
   # The customer field returns information from the users stripe customer

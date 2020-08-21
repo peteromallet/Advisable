@@ -60,7 +60,7 @@ const StyledActionBarItem = styled.button`
   }
 `;
 
-function ActionBar({ application }) {
+function ActionBar({ application, project }) {
   const bar = React.useRef(null);
   const barContext = useContext(ActionBarContext);
 
@@ -86,7 +86,7 @@ function ActionBar({ application }) {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      <AcceptApplication application={application} />
+      <AcceptApplication application={application} project={project} />
       <RejectApplication application={application} />
     </StyledActionBar>
   );
