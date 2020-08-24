@@ -50,8 +50,4 @@ class SessionManager
     session.delete(:account_uid)
     @current_user = nil
   end
-
-  private
-
-  def create_remember_cookie(account); end
 end
