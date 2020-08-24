@@ -1,9 +1,17 @@
 import React from "react";
-import user from "@testing-library/user-event";
-import { screen, waitFor } from "@testing-library/react";
-import { renderComponent, mockViewer, mockMutation } from "test-utils";
+import userEvent from "@testing-library/user-event";
+import { screen } from "@testing-library/react";
+import {
+  renderComponent,
+  renderRoute,
+  mockQuery,
+  mockViewer,
+  mockMutation,
+  mockData,
+} from "test-utils";
 import Signup from "./index";
 import SIGNUP from "./signup";
+import { GET_PROJECTS } from "../Projects/queries";
 
 const previousLocation = window.location;
 
@@ -19,15 +27,16 @@ afterAll(() => {
 });
 
 test("User can signup", async () => {
-  renderComponent(<Signup />, {
-    route: {
-      state: {},
-    },
+  const user = mockData.user();
+
+  renderRoute({
+    route: `/signup/${user.id}`,
     graphQLMocks: [
       mockViewer(null),
       mockMutation(
         SIGNUP,
         {
+          id: user.id,
           email: "test@test.com",
           password: "testing123",
           passwordConfirmation: "testing123",
@@ -35,8 +44,19 @@ test("User can signup", async () => {
         {
           signup: {
             __typename: "SignupPayload",
-            token: "123.456.789",
-            errors: [],
+            viewer: user,
+          },
+        },
+      ),
+      mockViewer(user),
+      mockQuery(
+        GET_PROJECTS,
+        {},
+        {
+          viewer: {
+            ...user,
+            industry: mockData.industry(),
+            projects: [],
           },
         },
       ),
@@ -46,51 +66,11 @@ test("User can signup", async () => {
   const email = await screen.findByLabelText(/email/i);
   const password = screen.getByLabelText("Password");
   const passwordConfirmation = screen.getByLabelText("Confirm Password");
-  user.type(email, "test@test.com");
-  user.type(password, "testing123");
-  user.type(passwordConfirmation, "testing123");
-  user.click(screen.getByLabelText(/signup/i));
-  await waitFor(() => expect(window.location.href).toEqual("/"));
-});
-
-test("User get's redirected to where they came from", async () => {
-  const initialPath = "/testing";
-  renderComponent(<Signup />, {
-    route: {
-      state: {
-        from: {
-          pathname: initialPath,
-        },
-      },
-    },
-    graphQLMocks: [
-      mockViewer(null),
-      mockMutation(
-        SIGNUP,
-        {
-          email: "test@test.com",
-          password: "testing123",
-          passwordConfirmation: "testing123",
-        },
-        {
-          signup: {
-            __typename: "SignupPayload",
-            token: "123.456.789",
-            errors: [],
-          },
-        },
-      ),
-    ],
-  });
-
-  const email = await screen.findByLabelText(/email/i);
-  const password = screen.getByLabelText("Password");
-  const passwordConfirmation = screen.getByLabelText("Confirm Password");
-  user.type(email, "test@test.com");
-  user.type(password, "testing123");
-  user.type(passwordConfirmation, "testing123");
-  user.click(screen.getByLabelText(/signup/i));
-  await waitFor(() => expect(window.location.href).toEqual(initialPath));
+  userEvent.type(email, "test@test.com");
+  userEvent.type(password, "testing123");
+  userEvent.type(passwordConfirmation, "testing123");
+  userEvent.click(screen.getByLabelText(/signup/i));
+  await screen.findByText(/your projects/i);
 });
 
 test("Displays a notice if one is passed", async () => {
@@ -114,65 +94,44 @@ test("Displays an error if one is returned from API", async () => {
     },
     graphQLMocks: [
       mockViewer(null),
-      mockMutation(
-        SIGNUP,
-        {
-          email: "test@test.com",
-          password: "testing123",
-          passwordConfirmation: "testing123",
-        },
-        {
-          signup: {
-            __typename: "SignupPayload",
-            token: null,
-            errors: [
-              {
-                __typename: "Error",
-                code: "signupError",
-              },
-            ],
+      {
+        request: {
+          query: SIGNUP,
+          variables: {
+            input: {
+              email: "test@test.com",
+              password: "testing123",
+              passwordConfirmation: "testing123",
+            },
           },
         },
-      ),
+        result: {
+          errors: [
+            {
+              extensions: {
+                code: "SIGNUP_FAILED",
+              },
+            },
+          ],
+        },
+      },
     ],
   });
 
   const email = await screen.findByLabelText(/email/i);
   const password = screen.getByLabelText("Password");
   const passwordConfirmation = screen.getByLabelText("Confirm Password");
-  user.type(email, "test@test.com");
-  user.type(password, "testing123");
-  user.type(passwordConfirmation, "testing123");
-  user.click(screen.getByLabelText(/signup/i));
-  await screen.findByText("errors.signupError");
+  userEvent.type(email, "test@test.com");
+  userEvent.type(password, "testing123");
+  userEvent.type(passwordConfirmation, "testing123");
+  userEvent.click(screen.getByLabelText(/signup/i));
+  await screen.findByText(/SIGNUP_FAILED/i);
 });
 
 test("can prepopulate the email with query params", async () => {
   renderComponent(<Signup />, {
     route: "/signup?email=test@test.com",
-    graphQLMocks: [
-      mockViewer(null),
-      mockMutation(
-        SIGNUP,
-        {
-          email: "test@test.com",
-          password: "testing123",
-          passwordConfirmation: "testing123",
-        },
-        {
-          signup: {
-            __typename: "SignupPayload",
-            token: null,
-            errors: [
-              {
-                __typename: "Error",
-                code: "signupError",
-              },
-            ],
-          },
-        },
-      ),
-    ],
+    graphQLMocks: [mockViewer(null)],
   });
 
   const email = await screen.findByLabelText("Email");

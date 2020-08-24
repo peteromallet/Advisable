@@ -30,8 +30,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     await logout();
-    await client.resetStore();
-    history.replace("/login");
+    window.location = "/login";
   };
 
   return (

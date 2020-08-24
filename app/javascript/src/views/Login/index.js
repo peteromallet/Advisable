@@ -38,10 +38,10 @@ const Login = ({ location }) => {
       variables: { input },
     });
 
-    const errorCode = errors.graphQLErrors?.[0]?.extensions?.code;
+    const errorCode = errors?.[0]?.extensions?.code;
 
     if (errorCode) {
-      formikBag.setState(errorCode);
+      formikBag.setStatus(errorCode);
       formikBag.setSubmitting(false);
       return;
     }
