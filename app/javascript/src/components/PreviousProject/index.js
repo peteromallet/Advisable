@@ -3,7 +3,6 @@ import { get } from "lodash-es";
 import useViewer from "../../hooks/useViewer";
 import { DialogDisclosure } from "reakit/Dialog";
 import { useModal, Box } from "@advisable/donut";
-import Flex from "../Flex";
 import StarRating from "../StarRating";
 import { useMobile } from "../Breakpoint";
 import ProjectValidationStatus from "../ProjectValidationStatus";
@@ -32,7 +31,7 @@ export default function PreviousProjectContainer({
       <DialogDisclosure as={PreviousProject} onClick={modal.show}>
         <ProjectTitle>{project.title}</ProjectTitle>
         <ProjectDescription>{project.excerpt}</ProjectDescription>
-        <Flex align="center">
+        <Box display="flex" alignItems="center">
           {!isMobile && (
             <Box paddingRight="s">
               <ProjectValidationStatus
@@ -44,7 +43,7 @@ export default function PreviousProjectContainer({
           {reviews.length > 0 && (
             <StarRating rating={reviews[0].ratings.overall} />
           )}
-        </Flex>
+        </Box>
       </DialogDisclosure>
     </>
   );

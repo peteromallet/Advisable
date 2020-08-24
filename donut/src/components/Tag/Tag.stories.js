@@ -4,7 +4,7 @@ import Tags from "../Tags";
 import Card from "../Card";
 
 export default {
-  title: "Content|Tags",
+  title: 'Content/Tags',
   decorators: [withKnobs],
 };
 

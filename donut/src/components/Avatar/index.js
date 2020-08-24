@@ -23,7 +23,7 @@ const Avatar = ({ url, name, children, ...props }) => {
   );
 
   return (
-    <StyledAvatar url={loaded && url} {...props}>
+    <StyledAvatar url={loaded && url} aria-label={name} {...props}>
       {initials && <StyledAvatarInitials>{initials}</StyledAvatarInitials>}
       {children}
       <StyledAvatarImage url={loaded && url} />

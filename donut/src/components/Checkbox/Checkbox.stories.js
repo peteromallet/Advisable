@@ -5,7 +5,7 @@ import Checkbox from "./";
 import Card from "../Card";
 
 export default {
-  title: "Forms|Checkbox",
+  title: 'Forms/Checkbox',
   decorators: [withKnobs],
 };
 

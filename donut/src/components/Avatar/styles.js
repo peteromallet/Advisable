@@ -39,6 +39,7 @@ export const StyledAvatar = styled.div`
 
   border-radius: 50%;
   position: relative;
+  display: inline-flex;
 `;
 
 export const StyledAvatarInitials = styled.div`
@@ -70,7 +71,7 @@ export const StyledAvatarImage = styled.div.attrs((props) => ({
   background-size: cover;
   background-position: center;
   opacity: ${(props) => (props.url ? 1 : 0)};
-  transition: opacity 500ms;
+  transition: opacity 900ms;
 `;
 
 export default StyledAvatar;

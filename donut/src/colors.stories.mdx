@@ -1,0 +1,22 @@
+<!--- Checkbox.stories.mdx -->
+
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+import { Box, theme } from "./index";
+const colors = Object.keys(theme.colors);
+
+<Meta title="Basics/Color" />
+
+# Colors
+
+<div>
+  {colors.map((c) => (
+    <>
+      <Box
+        width="10%"
+        height="100px"
+        bg={theme.colors[c]}
+        display="inline-block"
+      />
+    </>
+  ))}
+</div>
