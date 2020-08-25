@@ -1,0 +1,1 @@
+export const guildHostPath = `${window.location.protocol}//guild.${window.location.host}`;

@@ -8,6 +8,7 @@ import {
   CurrentUserDropdown,
 } from "./styles";
 import useViewer from "../../hooks/useViewer";
+import { guildHostPath } from "../../utilities/guild";
 
 const CurrentUser = ({ user, onLogout }) => {
   const viewer = useViewer();
@@ -46,6 +47,7 @@ const CurrentUser = ({ user, onLogout }) => {
         <a href="#" onClick={onLogout}>
           Logout
         </a>
+        {user.guild && <a href={guildHostPath}>Guild</a>}
       </CurrentUserDropdown>
     </CurrentUserWrapper>
   );

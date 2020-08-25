@@ -3,10 +3,13 @@ import { X } from "@styled-icons/feather";
 import { useMobile } from "../../components/Breakpoint";
 import useMessageCount from "../../hooks/useMessageCount";
 import { CloseNav, NavContainer, Nav, NavItem, Badge } from "./styles";
+import useViewer from "../../hooks/useViewer";
+import { guildHostPath } from "../../utilities/guild";
 
 const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
   const isMobile = useMobile();
   const messageCount = useMessageCount();
+  const viewer = useViewer();
 
   return (
     <NavContainer isOpen={navOpen}>
@@ -29,9 +32,16 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
         </NavItem>
 
         {isMobile && (
-          <NavItem as="a" href="#" onClick={onLogout}>
-            Logout
-          </NavItem>
+          <>
+            {viewer?.guild && (
+              <NavItem as="a" href={guildHostPath}>
+                Guild
+              </NavItem>
+            )}
+            <NavItem as="a" href="#" onClick={onLogout}>
+              Logout
+            </NavItem>
+          </>
         )}
       </Nav>
     </NavContainer>
