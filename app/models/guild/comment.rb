@@ -10,6 +10,8 @@ module Guild
     # @guild_comment.reactions.create!(specialist: current_user, kind: Guild::Reaction.kinds["like"])
     has_many :reactions, as: :reactionable
 
+    validates :body, length: {maximum: 2_500, minimum: 4}
+
     before_validation(on: :create) do
       self.post = parent_comment.post if parent_comment
       self.status = Comment.statuses["published"]

@@ -4,7 +4,7 @@ FactoryBot.define do
     specialist
 
     trait :with_guild_post do 
-      guild_post
+      post { association(:guild_post) }
     end
   end
 end

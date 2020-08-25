@@ -285,7 +285,7 @@ class Types::QueryType < Types::BaseType
 
   field :guild_posts,
         Types::Guild::PostInterface.connection_type,
-        null: false,
+        null: true,
         max_page_size: 10 do
     description "Returns a list of guild posts that match a given search criteria"
 
@@ -299,5 +299,22 @@ class Types::QueryType < Types::BaseType
       .includes(:specialist, parent_comments: [child_comments: [:post]])
       .published
       .order(created_at: :desc)
+      # TODO: parse connection_type cursors for pagination
+  end
+
+  field :guild_activity, 
+        Types::Guild::ActivityUnion.connection_type, # interface?
+        null: true,
+        max_page_size: 20 do
+    description "Returns a list of guild activity notifications"
+  end
+
+  def guild_activity
+    unless context[:current_user].try(:guild)
+      raise GraphQL::ExecutionError.new('Invalid Permissions', options: { code: 'invalidPermissions' })
+    end
+
+    context[:current_user].guild_activity
+    # TODO: parse connection_type cursors for pagination
   end
 end

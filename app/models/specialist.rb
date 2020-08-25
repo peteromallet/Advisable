@@ -22,6 +22,8 @@ class Specialist < ApplicationRecord
   include Uid
   include Account
   include Airtable::Syncable
+  include Guild::SpecialistsConcern
+
   belongs_to :country, required: false
   has_many :reviews
 
@@ -47,10 +49,6 @@ class Specialist < ApplicationRecord
 
   has_one_attached :avatar
   has_one_attached :resume
-
-  # Guild relations
-  has_many :guild_posts, class_name: "Guild::Post"
-  has_many :guild_comments, class_name: "Guild::Comment"
 
   # DEPRECATED IN FAVOUR OF phone column
   attr_encrypted :phone_number, key: [ENV['ENCRYPTION_KEY']].pack('H*')
