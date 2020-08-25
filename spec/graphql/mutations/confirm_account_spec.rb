@@ -6,6 +6,9 @@ describe Mutations::ConfirmAccount do
   let(:digest) { Token.digest(token) }
   let(:user) { create(:user, confirmation_digest: digest, confirmed_at: nil) }
   let(:email) { user.email }
+  let(:session_manager) do
+    SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new)
+  end
 
   let(:query) do
     <<-GRAPHQL
@@ -16,27 +19,44 @@ describe Mutations::ConfirmAccount do
       }) {
         viewer {
           ... on User {
+            id
             confirmed
           }
-        }
-        errors {
-          code
+          ... on Specialist {
+            id
+            confirmed
+          }
         }
       }
     }
     GRAPHQL
   end
 
+  before :each do
+    allow(session_manager).to receive(:login)
+  end
+
+  def response
+    AdvisableSchema.execute(
+      query,
+      context: { session_manager: session_manager }
+    )
+  end
+
   it 'returns the viewer' do
-    response = AdvisableSchema.execute(query)
     viewer = response['data']['confirmAccount']['viewer']
     expect(viewer['confirmed']).to be_truthy
   end
 
   it 'confirms the account' do
     expect(user.reload.confirmed_at).to be_nil
-    AdvisableSchema.execute(query)
+    response
     expect(user.reload.confirmed_at).to_not be_nil
+  end
+
+  it 'logs in the user' do
+    expect(session_manager).to receive(:login).with(user)
+    response
   end
 
   context 'when the account has already been confirmed' do
@@ -45,9 +65,13 @@ describe Mutations::ConfirmAccount do
     end
 
     it 'returns an error' do
-      response = AdvisableSchema.execute(query)
       error = response['errors'][0]
-      expect(error['extensions']['code']).to eq('accounts.already_confirmed')
+      expect(error['extensions']['code']).to eq('ALREADY_CONFIRMED')
+    end
+
+    it 'does not login the user' do
+      expect(session_manager).to_not receive(:login)
+      response
     end
   end
 
@@ -55,9 +79,13 @@ describe Mutations::ConfirmAccount do
     let(:input_token) { Token.new }
 
     it 'returns an error' do
-      response = AdvisableSchema.execute(query)
       error = response['errors'][0]
-      expect(error['extensions']['code']).to eq('accounts.invalid_token')
+      expect(error['extensions']['code']).to eq('INVALID_CONFIRMATION_TOKEN')
+    end
+
+    it 'does not login the user' do
+      expect(session_manager).to_not receive(:login)
+      response
     end
   end
 end

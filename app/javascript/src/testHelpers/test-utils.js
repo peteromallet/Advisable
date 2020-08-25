@@ -64,7 +64,15 @@ function Providers({ children, route, graphQLMocks }) {
 
   return (
     <I18nextProvider i18n={i18n}>
-      <MockedProvider mocks={graphQLMocks} cache={cache}>
+      <MockedProvider
+        mocks={graphQLMocks}
+        cache={cache}
+        defaultOptions={{
+          mutate: {
+            errorPolicy: "all",
+          },
+        }}
+      >
         <MemoryRouter initialEntries={[route]}>{children}</MemoryRouter>
       </MockedProvider>
     </I18nextProvider>

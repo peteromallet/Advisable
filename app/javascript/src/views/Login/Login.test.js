@@ -1,6 +1,6 @@
 import { fireEvent } from "@testing-library/react";
 import VIEWER from "../../graphql/queries/viewer";
-import renderApp from "../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import mockData from "../../__mocks__/graphqlFields";
 import LOGIN from "./login";
 import { GET_PROJECTS } from "../Projects/queries";
@@ -8,7 +8,7 @@ import { GET_PROJECTS } from "../Projects/queries";
 test("User can login", async () => {
   const user = mockData.user();
 
-  let app = renderApp({
+  let app = renderRoute({
     route: "/login",
     graphQLMocks: [
       {
@@ -36,8 +36,7 @@ test("User can login", async () => {
             __typename: "Mutation",
             login: {
               __typename: "LoginPayload",
-              token: "jwt1234",
-              errors: null,
+              viewer: user,
             },
           },
         },
@@ -74,13 +73,13 @@ test("User can login", async () => {
   fireEvent.change(password, { target: { value: "testing123" } });
   let login = await app.findByLabelText("Login");
   fireEvent.click(login);
-  await app.findByText("Find new talent");
+  await app.findByText(/your projects/i);
 });
 
 test("User is redirected if already logged in", async () => {
   const user = mockData.user();
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/login",
     graphQLMocks: [
       {
@@ -113,7 +112,7 @@ test("User is redirected if already logged in", async () => {
 });
 
 test("It shows API errors", async () => {
-  const app = renderApp({
+  const app = renderRoute({
     route: "/login",
     graphQLMocks: [
       {
@@ -137,19 +136,13 @@ test("It shows API errors", async () => {
           },
         },
         result: {
-          data: {
-            __typename: "Mutation",
-            login: {
-              __typename: "LoginPayload",
-              token: null,
-              errors: [
-                {
-                  __typename: "Error",
-                  code: "emailTaken",
-                },
-              ],
+          errors: [
+            {
+              extensions: {
+                code: "AUTHENTICATION_FAILED",
+              },
             },
-          },
+          ],
         },
       },
     ],
@@ -161,6 +154,6 @@ test("It shows API errors", async () => {
   fireEvent.change(password, { target: { value: "testing123" } });
   const login = await app.findByLabelText("Login");
   fireEvent.click(login);
-  const error = await app.findByText("errors.emailTaken");
+  const error = await app.findByText(/AUTHENTICATION_FAILED/i);
   expect(error).toBeInTheDocument();
 });

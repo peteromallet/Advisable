@@ -10,6 +10,7 @@ class GraphqlController < ApplicationController
     context = {
       request: request,
       client_ip: client_ip,
+      session_manager: session_manager,
       current_user: current_user,
       oauth_viewer:
         session[:omniauth] ? OauthViewer.new(session[:omniauth]) : nil

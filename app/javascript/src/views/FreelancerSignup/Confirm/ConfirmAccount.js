@@ -10,12 +10,8 @@ export const CONFIRM = gql`
 
   mutation ConfirmAccount($input: ConfirmAccountInput!) {
     confirmAccount(input: $input) {
-      token
       viewer {
         ...ViewerFields
-      }
-      errors {
-        code
       }
     }
   }

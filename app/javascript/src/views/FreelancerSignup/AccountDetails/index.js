@@ -68,8 +68,6 @@ const AccountDetails = ({ specialist, history, location }) => {
         formik.setSubmitting(false);
       }
     } else {
-      const token = data.createFreelancerAccount.token;
-      window.localStorage.setItem("authToken", token);
       history.replace("/freelancers/signup/confirm");
     }
   };

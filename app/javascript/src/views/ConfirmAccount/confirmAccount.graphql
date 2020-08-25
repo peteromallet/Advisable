@@ -10,8 +10,5 @@ mutation ConfirmAccount($input: ConfirmAccountInput!) {
         confirmed
       }
     }
-    errors {
-      code
-    }
   }
 }
