@@ -26,5 +26,11 @@ module Admin
       Airtable.sync
       redirect_to '/admin', notice: 'Airtable has been synced'
     end
+
+    def login_as
+      account = Account.find_by_uid(params[:uid])
+      session[:account_uid] = account.uid
+      redirect_to '/'
+    end
   end
 end

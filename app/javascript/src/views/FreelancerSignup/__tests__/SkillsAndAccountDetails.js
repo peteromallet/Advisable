@@ -72,7 +72,6 @@ test("Continues to the confirmation step", async () => {
                 applicationStage: "Started",
                 invitations: [],
               }),
-              token: "token1234",
             },
           },
         },

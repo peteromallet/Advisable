@@ -5,6 +5,9 @@ describe Mutations::Signup do
   let(:id) { user.airtable_id }
   let(:email) { user.email }
   let(:password) { 'testing123' }
+  let(:session_manager) do
+    SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new)
+  end
 
   let(:query) do
     <<-GRAPHQL
@@ -15,33 +18,43 @@ describe Mutations::Signup do
         password: "#{password}",
         passwordConfirmation: "#{password}"
       }) {
-        token
-        errors {
-          code
+        viewer {
+          ... on User {
+            id
+          }
+          ... on Specialist {
+            id
+          }
         }
       }
     }
     GRAPHQL
   end
 
-  let(:response) { AdvisableSchema.execute(query) }
-
   before :each do
+    allow(session_manager).to receive(:login)
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
   end
 
-  it 'returns a JWT' do
-    token = response['data']['signup']['token']
-    expect(token).to_not be_nil
+  def response
+    AdvisableSchema.execute(
+      query,
+      context: { session_manager: session_manager }
+    )
+  end
+
+  it 'returns a viewer' do
+    id = response['data']['signup']['viewer']['id']
+    expect(id).to eq(user.uid)
   end
 
   context 'when the user is a specialist' do
     let(:user) { create(:specialist, password: nil) }
 
-    it 'returns a JWT' do
-      token = response['data']['signup']['token']
-      expect(token).to_not be_nil
+    it 'returns a viewer' do
+      id = response['data']['signup']['viewer']['id']
+      expect(id).to eq(user.uid)
     end
   end
 
@@ -49,8 +62,8 @@ describe Mutations::Signup do
     let(:id) { 'wrong_id' }
 
     it 'returns an error' do
-      error = response['data']['signup']['errors'][0]
-      expect(error['code']).to eq('account_not_found')
+      error = response['errors'][0]['extensions']['code']
+      expect(error).to eq('notFound')
     end
   end
 
@@ -58,8 +71,13 @@ describe Mutations::Signup do
     let(:user) { create(:user, password: 'testing123') }
 
     it 'returns an error' do
-      error = response['data']['signup']['errors'][0]
-      expect(error['code']).to eq('account_already_exists')
+      error = response['errors'][0]['extensions']['code']
+      expect(error).to eq('ACCOUNT_EXISTS')
+    end
+
+    it 'doesnt login the user' do
+      expect(session_manager).to_not receive(:login)
+      response
     end
   end
 end

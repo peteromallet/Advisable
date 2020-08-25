@@ -10,12 +10,11 @@ class ApplicationController < ActionController::Base
   protected
 
   def current_user
-    Accounts::Authenticate.call(auth_token)
+    session_manager.current_user
   end
 
-  def auth_token
-    header = request.headers['Authorization']
-    header.gsub('Bearer ', '') unless header.blank?
+  def session_manager
+    @session_manager ||= SessionManager.new(session: session, cookies: cookies)
   end
 
   def client_ip

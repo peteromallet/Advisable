@@ -8,7 +8,6 @@ export default gql`
 
   mutation createFreelancerAccount($input: CreateFreelancerAccountInput!) {
     createFreelancerAccount(input: $input) {
-      token
       viewer {
         ...ViewerFields
         ...SpecialistFields

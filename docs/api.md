@@ -1,27 +1,12 @@
 The react frontend communicates with the backend via a GraphQL API. The graphql API is built using the [graphql-ruby](https://github.com/rmosolgo/graphql-ruby) gem. All of the classes can be found inside [/app/graphql](https://github.com/peteradvisable/Advisable/tree/master/app/graphql).
 
 # Authentication
+
 Although the API does not require the user to be authenticated to query data,
 some resources will return null if it requires an authorized user to access it.
-You can make an authenticated request by passing a JWT in the Authorization
-header as a bearer token.
-
-## Obtaining a JWT
-You can obtain a usrs JWT by calling the `login` mutation in graphq.
-
-```graphql
-login(input: {
-  email: "example@example.com",
-  password: "testing123"
-}) {
-  token
-  errors {
-    code
-  }
-}
-```
 
 # Authorization Logic
+
 Graphql requests are authorized using pundit policies. The logic for this can
 be seen in the `BaseField` class.
 

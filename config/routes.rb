@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     resources :webhooks, only: %i[index show]
 
     post 'resync', to: 'application#resync', as: :resync if ENV['STAGING']
+    get 'login/:uid', to: 'application#login_as', as: :login_as
 
     root to: 'applications#index'
   end

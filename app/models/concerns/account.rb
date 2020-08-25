@@ -31,6 +31,24 @@ module Account
       confirmed_at.present?
     end
 
+    def self.remember_token
+      loop do
+        token = Nanoid.generate(size: 25)
+        existing = find_by_remember_token(token)
+        break token unless existing
+      end
+    end
+
+    def generate_remember_token
+      self.remember_token = self.class.remember_token
+      save(validate: false)
+    end
+
+    def clear_remember_token
+      self.remember_token = nil
+      save(validate: false)
+    end
+
     def create_confirmation_token
       token = Token.new
       self.confirmation_digest = Token.digest(token)
@@ -70,6 +88,16 @@ module Account
     raise ActiveRecord::RecordNotFound
   end
 
+  def self.find_by_uid_or_airtable_id(id)
+    find_by_uid(id) || find_by_airtable_id(id)
+  end
+
+  def self.find_by_uid_or_airtable_id!(id)
+    record = find_by_uid_or_airtable_id(id)
+    return record if record.present?
+    raise ActiveRecord::RecordNotFound
+  end
+
   def self.find_by_airtable_id(id)
     User.find_by_airtable_id(id) || Specialist.find_by_airtable_id(id)
   end
@@ -89,5 +117,10 @@ module Account
     record = find_by_email(email)
     return record if record.present?
     raise ActiveRecord::RecordNotFound
+  end
+
+  def self.find_by_remember_token(token)
+    User.find_by_remember_token(token) ||
+      Specialist.find_by_remember_token(token)
   end
 end
