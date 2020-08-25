@@ -38,6 +38,7 @@ class Project < ApplicationRecord
   validates :likely_to_hire, inclusion: { in: [0, 1, 2, 3] }, allow_nil: true
 
   belongs_to :user, required: false
+  belongs_to :sales_person, required: false
 
   map_status status: {
                draft: 'Draft', pending_review: 'Pending Advisable Confirmation'

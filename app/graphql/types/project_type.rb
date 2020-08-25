@@ -25,6 +25,12 @@ class Types::ProjectType < Types::BaseType
     Skill.find_by_name(object[:primary_skill])
   end
 
+  field :sales_person, Types::SalesPersonType, null: true
+
+  def sales_person
+    object.sales_person || object.user&.sales_person
+  end
+
   field :skills, [Types::Skill], null: true
   field :currency, String, null: true
 

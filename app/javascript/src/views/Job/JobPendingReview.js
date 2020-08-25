@@ -5,7 +5,7 @@ import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
 export default function PublishJob({ data }) {
   const { id } = useParams();
-  const { salesPerson } = data.project.user;
+  const { salesPerson } = data.project;
 
   return (
     <Box textAlign="center">
