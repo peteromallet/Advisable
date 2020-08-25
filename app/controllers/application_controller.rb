@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
-  before_action :set_sentry_context
+  before_action :set_sentry_context, :responder
   helper_method :user_logged_in?, :current_user
 
   def frontend
-    respond_to(&:html)
-  rescue ActionController::UnknownFormat
-    render status: 404, json: { error: 'Not Found' }
+  end
+
+  def guild
   end
 
   protected
@@ -28,6 +28,12 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def responder
+    respond_to(&:html)
+  rescue ActionController::UnknownFormat
+    render status: 404, json: { error: 'Not Found' }
+  end
 
   def set_sentry_context
     user = current_user

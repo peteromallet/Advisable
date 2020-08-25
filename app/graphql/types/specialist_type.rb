@@ -188,6 +188,11 @@ class Types::SpecialistType < Types::BaseType
     description 'Wether or not the specialist will work remotely'
   end
 
+  field :guild, Boolean, null: true do
+    authorize :is_specialist, :is_admin
+    description 'Whether or not the specialist is a Guild user'
+  end
+
   field :previous_projects,
         Types::PreviousProject.connection_type,
         null: false do
