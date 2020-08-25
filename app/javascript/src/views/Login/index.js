@@ -12,7 +12,6 @@ import useViewer from "../../hooks/useViewer";
 import useScrollRestore from "../../utilities/useScrollRestore";
 import validationSchema from "./validationSchema";
 import { SignupLinks, SignupLink } from "./styles";
-import VIEWER from "../../graphql/queries/viewer";
 import LOGIN from "./login";
 
 const Login = ({ location }) => {
