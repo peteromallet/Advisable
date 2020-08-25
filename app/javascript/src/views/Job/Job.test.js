@@ -11,7 +11,6 @@ import { GET_JOB, UPDATE_PROJECT, PUBLISH_PROJECT } from "./queries";
 
 test("User can publish a job", async () => {
   const user = mockData.user({
-    salesPerson: mockData.salesPerson(),
     industry: mockData.industry({
       popularSkills: {
         __typename: "SkillsConnection",
@@ -25,6 +24,7 @@ test("User can publish a job", async () => {
 
   const project = mockData.project({
     user,
+    salesPerson: mockData.salesPerson(),
     status: "DRAFT",
     goals: [],
     characteristics: [],
@@ -282,7 +282,6 @@ test("User can publish a job", async () => {
 
 test("When pending review redirects to published page", async () => {
   const user = mockData.user({
-    salesPerson: mockData.salesPerson(),
     industry: mockData.industry({
       popularSkills: {
         __typename: "SkillsConnection",
@@ -297,6 +296,7 @@ test("When pending review redirects to published page", async () => {
   const project = mockData.project({
     user,
     status: "PENDING_REVIEW",
+    salesPerson: mockData.salesPerson(),
     skills: [mockData.skill({ name: "Linkedin Marketing" })],
     primarySkill: mockData.skill({ name: "Linkedin Marketing" }),
   });

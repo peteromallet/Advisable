@@ -17,16 +17,16 @@ const projectFields = gql`
       goalPlaceholder
       characteristicPlaceholder
     }
+    salesPerson {
+      id
+      firstName
+      name
+      image
+    }
     user {
       id
       location
       companyType
-      salesPerson {
-        id
-        firstName
-        name
-        image
-      }
       industry {
         id
         name

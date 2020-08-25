@@ -29,6 +29,7 @@ class Airtable::Project < Airtable::Base
   sync_column 'Won - Timestamp', to: :won_at
   sync_column 'Lost - Timestamp', to: :lost_at
   sync_column 'Plain Text Industry', to: :industry
+  sync_association 'Owner', to: :sales_person
 
   # sync_data is used to sync more complicated parts of the airtable record that
   # dont fit into a simple column mapping like above. It takes the ActiveRecord
