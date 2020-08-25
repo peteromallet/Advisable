@@ -19,7 +19,7 @@ const StyledProject = styled(StyledCard)`
 `;
 
 export default function Project({ project }) {
-  let url = `/projects/${project.airtableId}`;
+  let url = `/projects/${project.id}`;
 
   if (project.status === "DRAFT" || project.status === "PENDING_REVIEW") {
     url = `/jobs/${project.id}`;

@@ -1,6 +1,6 @@
 class Types::User < Types::BaseType
   field :id, ID, null: false
-  field :airtable_id, String, null: false
+  field :airtable_id, String, null: true
   field :name, String, null: true
   field :first_name, String, null: true
   field :last_name, String, null: true

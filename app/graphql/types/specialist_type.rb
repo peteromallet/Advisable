@@ -25,7 +25,7 @@ class Types::SpecialistType < Types::BaseType
     object.uid
   end
 
-  field :airtable_id, String, null: false do
+  field :airtable_id, String, null: true do
     description 'The airtable ID for the specialist'
   end
 

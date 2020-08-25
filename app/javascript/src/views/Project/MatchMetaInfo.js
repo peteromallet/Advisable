@@ -21,7 +21,7 @@ export default function MatchMetaInfo({ match }) {
       >
         {match.specialist.location}
       </Text>
-      <Box height="1px" bg="neutral100" />
+      <Box height="1px" bg="neutral200" />
       <Box paddingY="16px" display="flex" justifyContent="space-between">
         <Text fontSize="14px" color="neutral500">
           Hourly Rate
@@ -30,7 +30,7 @@ export default function MatchMetaInfo({ match }) {
           ${match.rate}
         </Text>
       </Box>
-      <Box height="1px" bg="neutral100" />
+      <Box height="1px" bg="neutral200" />
       <Box paddingY="16px" display="flex" justifyContent="space-between">
         <Text fontSize="14px" color="neutral500">
           Availability

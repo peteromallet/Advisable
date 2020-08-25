@@ -3,7 +3,7 @@ class Types::Review < Types::BaseType
   field :avatar, String, null: true
   field :comment, String, null: true
   field :type, String, null: true
-  field :ratings, Types::Ratings, null: false
+  field :ratings, Types::Ratings, null: true
   field :name, String, null: true
   field :role, String, null: true
   field :specialist, Types::SpecialistType, null: false
