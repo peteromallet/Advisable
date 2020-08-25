@@ -13,7 +13,7 @@ if (process.env.SENTRY_FRONTEND_DSN) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.createElement("div");
-  root.id = "AppRoot";
+  root.id = "GuildAppRoot";
   document.body.appendChild(root);
   ReactDOM.render(<Root />, root);
 });

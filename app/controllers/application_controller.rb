@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_sentry_context, :responder
-  helper_method :user_logged_in?, :current_user
-
+  
   def frontend
   end
 
