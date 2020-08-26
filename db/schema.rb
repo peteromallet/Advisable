@@ -292,6 +292,19 @@ ActiveRecord::Schema.define(version: 2020_08_26_024210) do
     t.index ["user_id"], name: "index_guild_posts_on_user_id"
   end
 
+  create_table "guild_reactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "reactionable_type"
+    t.uuid "reactionable_id"
+    t.bigint "user_id"
+    t.integer "kind", default: 0, null: false
+    t.integer "status", default: 0, null: false
+    t.jsonb "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reactionable_type", "reactionable_id"], name: "index_guild_reactions_on_reactionable_type_and_reactionable_id"
+    t.index ["user_id"], name: "index_guild_reactions_on_user_id"
+  end
+
   create_table "industries", force: :cascade do |t|
     t.string "name"
     t.string "uid"
@@ -794,6 +807,7 @@ ActiveRecord::Schema.define(version: 2020_08_26_024210) do
   add_foreign_key "guild_comments", "guild_posts", on_delete: :cascade
   add_foreign_key "guild_comments", "users", on_delete: :cascade
   add_foreign_key "guild_posts", "users"
+  add_foreign_key "guild_reactions", "users", on_delete: :cascade
   add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "users"
   add_foreign_key "matches", "projects"

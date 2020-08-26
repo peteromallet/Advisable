@@ -4,11 +4,10 @@ module Guild
   class Post < ApplicationRecord
     self.store_full_sti_class = false
 
-    has_many :comments, -> { published }, foreign_key: 'guild_post_id', class_name: 'Guild::Comment'
-    # has_many :parent_comments, -> { where(parent_comment_id: nil).published }, class_name: "Comment"
-    # has_many :reactions, as: :reactionable
-    # has_many :mentionables, through: :comments, source: :user
     belongs_to :user
+    has_many :reactions, as: :reactionable
+    has_many :comments, -> { published }, foreign_key: 'guild_post_id', class_name: 'Guild::Comment'
+    has_many :parent_comments, -> { where(parent_comment_id: nil).published }, class_name: "Guild::Comment", foreign_key: 'guild_post_id'
 
     enum status: {
       draft: 0,
