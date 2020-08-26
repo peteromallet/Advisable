@@ -43,7 +43,7 @@ export default function Validation({ data, modal, onPublish }) {
 
   return (
     <Box display="flex">
-      <Box flexGrow={1}>
+      <Box flexGrow={1} width="100%">
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}

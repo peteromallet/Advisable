@@ -74,7 +74,7 @@ export default function Overview({ modal, data, skills }) {
 
   return (
     <Box display="flex">
-      <Box flexGrow={1}>
+      <Box flexGrow={1} width="100%">
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
