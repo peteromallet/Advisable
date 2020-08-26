@@ -19,7 +19,7 @@ import {
 import FormField from "../../../components/FormField";
 import SubmitButton from "../../../components/SubmitButton";
 import useScrollRestore from "../../../utilities/useScrollRestore";
-import UPDATE_APPLICATION from "../updateApplication";
+import { updateApplication as UPDATE_APPLICATION } from "../queries";
 import validationSchema from "./validationSchema";
 import useVariants from "../../../components/VariantSystem/useVariants";
 import Helper from "../Helper";

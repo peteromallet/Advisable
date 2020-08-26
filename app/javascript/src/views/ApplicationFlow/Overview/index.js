@@ -6,7 +6,7 @@ import { Box, Text, Card, Textarea } from "@advisable/donut";
 import { ChoiceList } from "../../../components";
 import FormField from "../../../components/FormField";
 import SubmitButton from "../../../components/SubmitButton";
-import UPDATE_APPLICATION from "../updateApplication";
+import { updateApplication as UPDATE_APPLICATION } from "../queries";
 import validationSchema from "./validationSchema";
 
 function Overview({ application, history, location, steps, currentStep }) {

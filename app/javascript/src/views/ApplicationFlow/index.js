@@ -5,7 +5,7 @@ import NotFound from "../NotFound";
 import { Loading } from "../../components";
 import ApplicationFlow from "./ApplicationFlow";
 import ApplicationSent from "./ApplicationSent";
-import FETCH_APPLICATION from "./fetchApplication";
+import { fetchApplication as FETCH_APPLICATION } from "./queries";
 import ApplicationsClosed from "../ApplicationsClosed";
 
 // Renders the application flow

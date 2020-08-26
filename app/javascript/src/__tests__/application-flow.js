@@ -5,8 +5,10 @@ import {
   mockMutation,
 } from "../testHelpers/apolloMocks";
 import viewer from "../graphql/queries/viewer";
-import getApplication from "../views/ApplicationFlow/fetchApplication";
-import updateApplication from "../views/ApplicationFlow/updateApplication";
+import {
+  fetchApplication as getApplication,
+  updateApplication,
+} from "../views/ApplicationFlow/queries";
 import generateTypes from "../__mocks__/graphqlFields";
 
 test("Submitting the overview step continues to the questions step", async () => {

@@ -1,8 +1,10 @@
 import { fireEvent } from "@testing-library/react";
 import renderApp from "../../testHelpers/renderApp";
 import mockData from "../../__mocks__/graphqlFields";
-import GET_APPLICATION from "./fetchApplication";
-import UPDATE from "./updateApplication";
+import {
+  fetchApplication as GET_APPLICATION,
+  updateApplication as UPDATE,
+} from "./queries";
 import {
   mockViewer,
   mockQuery,
