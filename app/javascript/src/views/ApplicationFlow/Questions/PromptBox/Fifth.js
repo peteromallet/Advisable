@@ -99,8 +99,7 @@ function PromptBox({ meta, widgetIsActive }) {
                   collapsed: { opacity: 0, transition: { duration: 0.6 } },
                   open: { opacity: 1, transition: { duration: 0.7 } },
                 }}
-                // transition={{ duration: 0.4 }}
-                alignItems="center"
+                alignItems="start"
                 pt="12px"
                 pb="10px"
                 pr="s"
@@ -110,9 +109,9 @@ function PromptBox({ meta, widgetIsActive }) {
                 <Box
                   bg="#ECEDF1"
                   color="#404F76"
+                  mt="6px"
                   mr="12px"
                   ml="0"
-                  mb="xxs"
                   p="xs"
                   borderRadius="50%"
                 >
