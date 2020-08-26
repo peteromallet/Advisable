@@ -9,6 +9,7 @@ import {
   Checkbox,
   Columns,
   Autocomplete,
+  useBreakpoint,
 } from "@advisable/donut";
 import Helper from "./Helper";
 import { clientDetailsValidationSchema } from "./validationSchemas";
@@ -20,6 +21,7 @@ export default function ClientDetails({
   industries,
   initialValues = {},
 }) {
+  const isWidescreen = useBreakpoint("xlUp");
   const formInitialValues = {
     clientName: "",
     industries: [],
@@ -31,7 +33,7 @@ export default function ClientDetails({
 
   return (
     <Box display="flex">
-      <Box flexGrow={1}>
+      <Box flexGrow={1} width="100%">
         <Text mb="xs" fontSize="28px" color="blue900" fontWeight="semibold">
           Client Details
         </Text>
@@ -47,7 +49,10 @@ export default function ClientDetails({
           {(formik) => (
             <Form>
               <Stack spacing="l" mb="xl">
-                <Columns spacing="s">
+                <Box
+                  as={isWidescreen ? Columns : Stack}
+                  spacing={isWidescreen ? "s" : "l"}
+                >
                   <FormField
                     label="Company Name"
                     name="clientName"
@@ -69,7 +74,7 @@ export default function ClientDetails({
                     <option>Education Institution</option>
                     <option>Government</option>
                   </FormField>
-                </Columns>
+                </Box>
                 <IndustriesSelection industries={industries} />
                 {formik.values.industries.length > 1 && <PrimaryIndustry />}
                 <FormField as={Checkbox} type="checkbox" name="confidential">
