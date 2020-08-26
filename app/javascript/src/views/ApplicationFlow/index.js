@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from "prop-types";
 import { useQuery } from "@apollo/client";
 import { Switch, Route, Redirect } from "react-router-dom";
 import NotFound from "../NotFound";
@@ -60,5 +61,10 @@ function ApplicationFlowContainer(props) {
     </Switch>
   );
 }
+
+ApplicationFlowContainer.propTypes = {
+  match: PropTypes.object,
+  location: PropTypes.object,
+};
 
 export default ApplicationFlowContainer;

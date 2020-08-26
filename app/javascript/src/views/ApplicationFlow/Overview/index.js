@@ -8,6 +8,7 @@ import FormField from "../../../components/FormField";
 import SubmitButton from "../../../components/SubmitButton";
 import { updateApplication as UPDATE_APPLICATION } from "../queries";
 import validationSchema from "./validationSchema";
+import StepCard from "../StepCard";
 
 function Overview({ application, history, location, steps, currentStep }) {
   const { airtableId } = application;
@@ -32,7 +33,7 @@ function Overview({ application, history, location, steps, currentStep }) {
   };
 
   return (
-    <Card>
+    <StepCard>
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
@@ -40,7 +41,7 @@ function Overview({ application, history, location, steps, currentStep }) {
       >
         {(formik) => (
           <Form>
-            <Box padding={{ _: "l", m: "xl" }}>
+            <Box>
               <Text
                 as="h1"
                 mb="l"
@@ -84,7 +85,7 @@ function Overview({ application, history, location, steps, currentStep }) {
           </Form>
         )}
       </Formik>
-    </Card>
+    </StepCard>
   );
 }
 

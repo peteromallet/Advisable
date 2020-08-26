@@ -11,6 +11,7 @@ import {
   updateApplication as UPDATE_APPLICATION,
 } from "../queries";
 import validationSchema from "./validationSchema";
+import StepCard from "../StepCard";
 
 function Terms({ match, history, application, steps, currentStep, location }) {
   const [updateApplication] = useMutation(UPDATE_APPLICATION);
@@ -53,7 +54,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
   };
 
   return (
-    <Card>
+    <StepCard>
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
@@ -62,7 +63,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
       >
         {(formik) => (
           <Form>
-            <Box padding={{ _: "l", m: "xl" }}>
+            <Box>
               <Text
                 as="h1"
                 mb="l"
@@ -205,7 +206,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
           </Form>
         )}
       </Formik>
-    </Card>
+    </StepCard>
   );
 }
 

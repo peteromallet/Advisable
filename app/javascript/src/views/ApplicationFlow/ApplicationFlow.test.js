@@ -161,11 +161,15 @@ test("Questions step continues to the references step", async () => {
   fireEvent.change(question1, { target: { value: "The first answer" } });
   let submit = app.getByLabelText("Next");
   fireEvent.click(submit);
+  await app.findByText("Are you sure?");
+  fireEvent.click(app.getByLabelText("Ignore"));
 
   const question2 = await app.findByLabelText(project.questions[1]);
   fireEvent.change(question2, { target: { value: "The second answer" } });
   submit = app.getByLabelText("Next");
   fireEvent.click(submit);
+  await app.findByText("Are you sure?");
+  fireEvent.click(app.getByLabelText("Ignore"));
 
   const text = await app.findByText(
     "We require references from all freelancers",
