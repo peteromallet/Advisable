@@ -34,7 +34,7 @@ const NoReferences = ({ confirmationModal, newProjectModal }) => {
         </DialogDisclosure>
         <DialogDisclosure as={Button} variant="subtle" {...confirmationModal}>
           {isWidescreen
-            ? "I don&apos;t want to provide references"
+            ? "I don't want to provide references"
             : "Reject to provide references"}
         </DialogDisclosure>
       </Box>
