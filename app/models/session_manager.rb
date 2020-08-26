@@ -23,15 +23,14 @@ class SessionManager
     token = cookies.signed[:remember]
     return unless token
     account = Account.find_by_remember_token(token)
-
-    if account
-      @current_user = account
-      session[:account_uid] = account.uid
-    else
-      cookies.delete(:remember)
-    end
-
+    account ? start_session(account) : cookies.delete(:remember)
     account
+  end
+
+  def start_session(account)
+    @current_user = account
+    cookies.permanent[:uid] = account.uid
+    session[:account_uid] = account.uid
   end
 
   def login(account)
@@ -40,12 +39,12 @@ class SessionManager
       value: account.remember_token, httponly: true, expires: 2.weeks.from_now
     }
 
-    session[:account_uid] = account.uid
-    @current_user = account
+    start_session(account)
   end
 
   def logout
     current_user.clear_remember_token
+    cookies.delete(:uid)
     cookies.delete(:remember)
     session.delete(:account_uid)
     @current_user = nil

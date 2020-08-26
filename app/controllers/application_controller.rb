@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_sentry_context
+  helper_method :user_logged_in?, :current_user
 
   def frontend
     respond_to(&:html)
@@ -8,6 +9,10 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def user_logged_in?
+    current_user.present?
+  end
 
   def current_user
     session_manager.current_user
