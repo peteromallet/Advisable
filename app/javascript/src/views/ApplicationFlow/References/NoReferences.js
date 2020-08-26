@@ -6,17 +6,13 @@ import {
   Text,
   Card,
   Box,
-  theme,
+  useBreakpoint,
 } from "@advisable/donut";
 
 const NoReferences = ({ confirmationModal, newProjectModal }) => {
+  const isWidescreen = useBreakpoint("sUp");
   return (
-    <Card
-      padding={["none", "l"]}
-      pt="l"
-      elevation={["none", "m"]}
-      borderTop={[`1px solid ${theme.colors.neutral200}`, "none"]}
-    >
+    <Box as={Card} padding={["m", "l"]} elevation="m">
       <Text as="h2" mb="xs" fontSize="xl" color="blue900" fontWeight="medium">
         It looks like you haven&apos;t added any previous projects.
       </Text>
@@ -37,10 +33,12 @@ const NoReferences = ({ confirmationModal, newProjectModal }) => {
           Add a previous project
         </DialogDisclosure>
         <DialogDisclosure as={Button} variant="subtle" {...confirmationModal}>
-          I don&apos;t want to provide references
+          {isWidescreen
+            ? "I don&apos;t want to provide references"
+            : "Reject to provide references"}
         </DialogDisclosure>
       </Box>
-    </Card>
+    </Box>
   );
 };
 
