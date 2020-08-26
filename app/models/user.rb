@@ -21,10 +21,6 @@ class User < ApplicationRecord
   belongs_to :industry, required: false
   belongs_to :country, required: false
 
-  # Guild relations
-  has_many :guild_posts, class_name: "Guild::Post"
-  has_many :guild_comments, class_name: "Guild::Comment"
-
   serialize :available_payment_methods, Array
 
   before_save :remove_past_availabililty

@@ -4,7 +4,7 @@ class CreateGuildComments < ActiveRecord::Migration[6.0]
       t.text :body, null: false
       t.integer :reactionable_count, default: 0, null: false
       t.references :guild_post, foreign_key: {on_delete: :cascade}, type: :uuid
-      t.references :user, foreign_key: {on_delete: :cascade}
+      t.references :specialist, foreign_key: {on_delete: :cascade}
       t.references :parent_comment, type: :uuid
       t.integer :status, null: false, default: 0
 

@@ -266,4 +266,21 @@ class Types::QueryType < Types::BaseType
   rescue Stripe::InvalidRequestError => e
     raise ApiError::InvalidRequest.new('notFound', 'Invoice not found')
   end
+
+  # Guild
+
+  field :guild_post, Types::Guild::PostType, null: true do
+    argument :id, ID, required: true
+  end
+  
+  def guild_post(id:)
+    post = Guild::Post.find(id)
+    policy = Guild::PostPolicy.new(context[:current_user], post)
+
+    return post if policy.show
+
+    if context[:current_user]
+      raise GraphQL::ExecutionError.new('Invalid Permissions', options: { code: 'invalidPermissions' })
+    end
+  end
 end

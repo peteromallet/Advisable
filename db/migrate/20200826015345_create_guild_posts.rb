@@ -11,7 +11,7 @@ class CreateGuildPosts < ActiveRecord::Migration[6.0]
       t.integer :comments_count, default: 0, null: false
       t.boolean :reactionable, null: false, default: true
       t.integer :reactionable_count, default: 0, null: false
-      t.references :user, foreign_key: true
+      t.references :specialist, foreign_key: true
       t.jsonb :data, null: false, default: {}
 
       t.timestamps

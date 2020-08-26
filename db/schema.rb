@@ -262,7 +262,7 @@ ActiveRecord::Schema.define(version: 2020_08_26_024210) do
     t.text "body", null: false
     t.integer "reactionable_count", default: 0, null: false
     t.uuid "guild_post_id"
-    t.bigint "user_id"
+    t.bigint "specialist_id"
     t.uuid "parent_comment_id"
     t.integer "status", default: 0, null: false
     t.jsonb "data"
@@ -270,7 +270,7 @@ ActiveRecord::Schema.define(version: 2020_08_26_024210) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["guild_post_id"], name: "index_guild_comments_on_guild_post_id"
     t.index ["parent_comment_id"], name: "index_guild_comments_on_parent_comment_id"
-    t.index ["user_id"], name: "index_guild_comments_on_user_id"
+    t.index ["specialist_id"], name: "index_guild_comments_on_specialist_id"
   end
 
   create_table "guild_posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -284,25 +284,25 @@ ActiveRecord::Schema.define(version: 2020_08_26_024210) do
     t.integer "comments_count", default: 0, null: false
     t.boolean "reactionable", default: true, null: false
     t.integer "reactionable_count", default: 0, null: false
-    t.bigint "user_id"
+    t.bigint "specialist_id"
     t.jsonb "data", default: {}, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["data"], name: "index_guild_posts_on_data", using: :gin
-    t.index ["user_id"], name: "index_guild_posts_on_user_id"
+    t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
   end
 
   create_table "guild_reactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "reactionable_type"
     t.uuid "reactionable_id"
-    t.bigint "user_id"
+    t.bigint "specialist_id"
     t.integer "kind", default: 0, null: false
     t.integer "status", default: 0, null: false
     t.jsonb "data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["reactionable_type", "reactionable_id"], name: "index_guild_reactions_on_reactionable_type_and_reactionable_id"
-    t.index ["user_id"], name: "index_guild_reactions_on_user_id"
+    t.index ["specialist_id"], name: "index_guild_reactions_on_specialist_id"
   end
 
   create_table "industries", force: :cascade do |t|
@@ -805,9 +805,9 @@ ActiveRecord::Schema.define(version: 2020_08_26_024210) do
   add_foreign_key "consultations", "specialists"
   add_foreign_key "consultations", "users"
   add_foreign_key "guild_comments", "guild_posts", on_delete: :cascade
-  add_foreign_key "guild_comments", "users", on_delete: :cascade
-  add_foreign_key "guild_posts", "users"
-  add_foreign_key "guild_reactions", "users", on_delete: :cascade
+  add_foreign_key "guild_comments", "specialists", on_delete: :cascade
+  add_foreign_key "guild_posts", "specialists"
+  add_foreign_key "guild_reactions", "specialists", on_delete: :cascade
   add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "users"
   add_foreign_key "matches", "projects"
