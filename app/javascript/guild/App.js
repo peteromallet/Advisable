@@ -5,7 +5,7 @@ import RootErrorBoundary from "@advisable-main/views/RootErrorBoundary";
 import Loading from "@advisable-main/components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 
-const Feed = () => <div>This is the Guild App Feed</div>
+const Feed = lazy(() => import("./views/Feed"));
 
 const App = () => {
   return (
