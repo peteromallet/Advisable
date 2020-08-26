@@ -73,6 +73,8 @@ describe 'Application flow' do
         visit "/invites/#{application.airtable_id}/apply/questions/2"
         fill_in :answer, with: 'This is my answer'
         click_on 'Next'
+        expect(page).to have_content('Are you sure?')
+        click_on 'Ignore'
         expect(page).to have_content('We require references from all')
       end
     end
