@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { find } from "lodash-es";
-import { ArrowRight, Info, Feather } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { Redirect } from "react-router-dom";
 import {
   Box,
   Text,
-  Card,
   Textarea,
   useModal,
-  Circle,
   DialogDisclosure,
   Button,
-  useBreakpoint,
-  theme,
 } from "@advisable/donut";
 import FormField from "../../../components/FormField";
 import SubmitButton from "../../../components/SubmitButton";
 import useScrollRestore from "../../../utilities/useScrollRestore";
 import { updateApplication as UPDATE_APPLICATION } from "../queries";
 import validationSchema from "./validationSchema";
-import PromptBox from "./PromptBox/index";
+import PromptBox from "./PromptBox";
 import ConfirmationModal from "./ConfirmationModal";
 import StepCard from "../StepCard";
 
@@ -36,7 +32,6 @@ const Questions = ({
   const [updateApplication, { loading }] = useMutation(UPDATE_APPLICATION);
   const [prompt, setPrompt] = useState(false);
   const [numOfWords, setNumOfWords] = useState(0);
-  const largeScreen = useBreakpoint("lUp");
   const confirmationModal = useModal();
   const step = steps[currentStep];
   const { applicationId } = match.params;

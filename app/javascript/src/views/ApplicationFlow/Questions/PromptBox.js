@@ -70,8 +70,6 @@ function PromptBox({ meta, widgetIsActive }) {
             <Box
               width={`${numOfWords > 100 ? 100 : numOfWords}%`}
               height="100%"
-              // bg="blue800"
-              // opacity={0.7}
               bg="blue400"
               css={`
                 transition: width 0.4s;
