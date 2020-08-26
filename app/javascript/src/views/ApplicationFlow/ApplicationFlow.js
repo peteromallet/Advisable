@@ -89,6 +89,7 @@ const ApplicationFlow = ({ application, match }) => {
       name: "References",
       to: "/references",
       path: "/references",
+      key: "/references",
       component: References,
       isComplete:
         !isApplying ||
@@ -130,6 +131,7 @@ const ApplicationFlow = ({ application, match }) => {
   }, [mediumAndUp, currentStepIndex]);
 
   const forwards = previousStepIndex <= currentStepIndex;
+  const currentStepKey = STEPS[currentStepIndex].key || location.pathname;
 
   return (
     <Box display="flex">
@@ -159,7 +161,7 @@ const ApplicationFlow = ({ application, match }) => {
           exitBeforeEnter
           custom={{ largeScreen, forwards }}
         >
-          <Switch location={location} key={location.pathname}>
+          <Switch location={location} key={currentStepKey}>
             {STEPS.map((step, i) => {
               const Component = step.component;
               const previousStep = STEPS[i - 1];
