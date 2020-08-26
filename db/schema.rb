@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_100203) do
+ActiveRecord::Schema.define(version: 2020_08_26_024210) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -254,6 +256,40 @@ ActiveRecord::Schema.define(version: 2020_08_25_100203) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["airtable_id"], name: "index_featured_specialist_contents_on_airtable_id"
+  end
+
+  create_table "guild_comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "body", null: false
+    t.integer "reactionable_count", default: 0, null: false
+    t.uuid "guild_post_id"
+    t.bigint "user_id"
+    t.uuid "parent_comment_id"
+    t.integer "status", default: 0, null: false
+    t.jsonb "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["guild_post_id"], name: "index_guild_comments_on_guild_post_id"
+    t.index ["parent_comment_id"], name: "index_guild_comments_on_parent_comment_id"
+    t.index ["user_id"], name: "index_guild_comments_on_user_id"
+  end
+
+  create_table "guild_posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type", default: "Post", null: false
+    t.text "body", null: false
+    t.text "body_raw", default: "", null: false
+    t.string "title", null: false
+    t.integer "status", default: 0, null: false
+    t.integer "audience", default: 0, null: false
+    t.boolean "commentable", default: true, null: false
+    t.integer "comments_count", default: 0, null: false
+    t.boolean "reactionable", default: true, null: false
+    t.integer "reactionable_count", default: 0, null: false
+    t.bigint "user_id"
+    t.jsonb "data", default: {}, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["data"], name: "index_guild_posts_on_data", using: :gin
+    t.index ["user_id"], name: "index_guild_posts_on_user_id"
   end
 
   create_table "industries", force: :cascade do |t|
@@ -755,6 +791,9 @@ ActiveRecord::Schema.define(version: 2020_08_25_100203) do
   add_foreign_key "consultations", "skills"
   add_foreign_key "consultations", "specialists"
   add_foreign_key "consultations", "users"
+  add_foreign_key "guild_comments", "guild_posts", on_delete: :cascade
+  add_foreign_key "guild_comments", "users", on_delete: :cascade
+  add_foreign_key "guild_posts", "users"
   add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "users"
   add_foreign_key "matches", "projects"
