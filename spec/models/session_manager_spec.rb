@@ -4,7 +4,9 @@ describe SessionManager do
   def mock_cookies(token = nil)
     cookies = double
     signed_cookies = double
+    permanent_cookies = double
     allow(cookies).to receive(:signed).and_return(signed_cookies)
+    allow(cookies).to receive(:permanent).and_return(permanent_cookies)
     allow(signed_cookies).to receive(:[]).with(:remember).and_return(token)
     cookies
   end
@@ -49,6 +51,7 @@ describe SessionManager do
       cookies = mock_cookies
       manager = SessionManager.new(session: session, cookies: cookies)
       expect(user).to receive(:generate_remember_token)
+      expect(cookies.permanent).to receive(:[]=).with(:uid, user.uid)
       expect(cookies.signed).to receive(:[]=).with(
         :remember,
         hash_including(value: user.remember_token, httponly: true)
@@ -64,6 +67,7 @@ describe SessionManager do
       session = mock_session(user.uid)
       cookies = mock_cookies(user.remember_token)
       manager = SessionManager.new(session: session, cookies: cookies)
+      expect(cookies).to receive(:delete).with(:uid)
       expect(cookies).to receive(:delete).with(:remember)
       expect(session).to receive(:delete).with(:account_uid)
       manager.logout
@@ -84,6 +88,7 @@ describe SessionManager do
       session = mock_session
       cookies = mock_cookies(user.remember_token)
       manager = SessionManager.new(session: session, cookies: cookies)
+      expect(cookies.permanent).to receive(:[]=).with(:uid, user.uid)
       expect(session).to receive(:[]=).with(:account_uid, user.uid)
       manager.restore_session
     end
