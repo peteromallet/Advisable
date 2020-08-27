@@ -3,7 +3,9 @@ import renderApp from "../../testHelpers/renderApp";
 import mockData from "../../__mocks__/graphqlFields";
 import {
   fetchApplication as GET_APPLICATION,
-  updateApplication as UPDATE,
+  updateOverviewStep,
+  updateQuestionStep,
+  updateReferencesStep,
 } from "./queries";
 import {
   mockViewer,
@@ -40,7 +42,7 @@ test("Overview step continues to the questions step", async () => {
     mockViewer(specialist),
     mockQuery(GET_APPLICATION, { id: application.airtableId }, { application }),
     mockMutation(
-      UPDATE,
+      updateOverviewStep,
       {
         id: application.airtableId,
         introduction: "This is an overview",
@@ -51,7 +53,8 @@ test("Overview step continues to the questions step", async () => {
           __typename: "UpdateApplicationPayload",
           errors: null,
           application: {
-            ...application,
+            __typename: "Application",
+            id: application.airtableId,
             introduction: "This is an overview",
             availability: "2 - 4 weeks",
           },
@@ -89,7 +92,7 @@ test("Questions step continues to the references step", async () => {
     mockViewer(specialist),
     mockQuery(GET_APPLICATION, { id: application.airtableId }, { application }),
     mockMutation(
-      UPDATE,
+      updateQuestionStep,
       {
         id: application.airtableId,
         questions: [
@@ -104,7 +107,8 @@ test("Questions step continues to the references step", async () => {
           __typename: "UpdateApplicationPayload",
           errors: null,
           application: {
-            ...application,
+            __typename: "Application",
+            id: application.airtableId,
             questions: [
               mockData.applicationQuestion({
                 question: project.questions[0],
@@ -116,7 +120,7 @@ test("Questions step continues to the references step", async () => {
       },
     ),
     mockMutation(
-      UPDATE,
+      updateQuestionStep,
       {
         id: application.airtableId,
         questions: [
@@ -131,7 +135,8 @@ test("Questions step continues to the references step", async () => {
           __typename: "UpdateApplicationPayload",
           errors: null,
           application: {
-            ...application,
+            __typename: "Application",
+            id: application.airtableId,
             questions: [
               mockData.applicationQuestion({
                 question: project.questions[0],
@@ -162,19 +167,20 @@ test("Questions step continues to the references step", async () => {
   let submit = app.getByLabelText("Next");
   fireEvent.click(submit);
   await app.findByText("Are you sure?");
-  fireEvent.click(app.getByLabelText("Ignore"));
+  fireEvent.click(await app.findByLabelText("Ignore"));
 
   const question2 = await app.findByLabelText(project.questions[1]);
   fireEvent.change(question2, { target: { value: "The second answer" } });
   submit = app.getByLabelText("Next");
   fireEvent.click(submit);
   await app.findByText("Are you sure?");
-  fireEvent.click(app.getByLabelText("Ignore"));
+  fireEvent.click(await app.findByLabelText("Ignore"));
 
   const text = await app.findByText(
-    "We require references from all freelancers",
+    /Previous projects are the most effective way/i,
     { exact: false },
   );
+  app.debug();
   expect(text).toBeInTheDocument();
 });
 
@@ -207,7 +213,7 @@ test("References continue to payment terms step", async () => {
     mockViewer(specialist),
     mockQuery(GET_APPLICATION, { id: application.airtableId }, { application }),
     mockMutation(
-      UPDATE,
+      updateReferencesStep,
       {
         id: application.airtableId,
         references: [project1.id, project2.id],
@@ -216,7 +222,14 @@ test("References continue to payment terms step", async () => {
         updateApplication: {
           __typename: "UpdateApplicationPayload",
           errors: null,
-          application: application,
+          application: {
+            __typename: "Application",
+            id: application.airtableId,
+            previousProjects: application.previousProjects.map((ref) => ({
+              __typename: "PreviousProject",
+              id: ref.id,
+            })),
+          },
         },
       },
     ),
