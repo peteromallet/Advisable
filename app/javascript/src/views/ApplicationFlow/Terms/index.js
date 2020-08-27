@@ -8,7 +8,8 @@ import CurrencyInput from "components/CurrencyInput";
 import SubmitButton from "../../../components/SubmitButton";
 import {
   submitApplication as SUBMIT_APPLICATION,
-  updateApplication as UPDATE_APPLICATION,
+  updateTermsStep as UPDATE_APPLICATION,
+  getUpdateTermsStepOptimisticResponse as getOptimisticResponse,
 } from "../queries";
 import validationSchema from "./validationSchema";
 import StepCard from "../StepCard";
@@ -21,7 +22,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
   let locationState = location.state || {};
 
   const handleSubmit = async (values) => {
-    await updateApplication({
+    updateApplication({
       variables: {
         input: {
           ...values,
@@ -29,6 +30,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
           id: applicationId,
         },
       },
+      optimisticResponse: getOptimisticResponse(applicationId, values),
     });
 
     if (locationState.allowApply || application.status === "Invited To Apply") {
