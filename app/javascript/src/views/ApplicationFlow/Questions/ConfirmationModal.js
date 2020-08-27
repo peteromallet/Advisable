@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Box, Text, Button, Modal } from "@advisable/donut";
+import pluralize from "../../../utilities/pluralize";
 
 const ConfirmationModal = ({ modal, formik, loading, numOfWords }) => {
   return (
@@ -18,9 +19,9 @@ const ConfirmationModal = ({ modal, formik, loading, numOfWords }) => {
 
         <Text color="neutral800" fontSize="s" lineHeight="m" mb="l">
           The average successful response to a qualifying question is 100 words.
-          Yours is {numOfWords} word{numOfWords !== 1 && "s"}. Try to add more
-          content to describing your experience in order to make the best
-          possible impression on the client!
+          Yours is {numOfWords} {pluralize(numOfWords, "word", "words")}. Try to
+          add more content to describing your experience in order to make the
+          best possible impression on the client!
         </Text>
 
         <Box display="flex" flexDirection={["column", "row"]}>
