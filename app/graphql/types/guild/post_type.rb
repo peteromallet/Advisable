@@ -1,6 +1,20 @@
 class Types::Guild::PostType < Types::BaseType
   include ActionView::Helpers::DateHelper
 
+  class Types::Guild::PostTypeEdgeType < GraphQL::Types::Relay::BaseEdge
+    node_type(Types::Guild::PostUnion)
+  end
+
+  class Types::Guild::PostTypeConnectionType < GraphQL::Types::Relay::BaseConnection
+    edge_type(Types::Guild::PostTypeEdgeType)
+
+    field :total_count, Integer, null: false
+
+    def total_count
+      object.nodes.size
+    end
+  end
+
   field :id, ID, null: false do
     description 'The unique ID for the guild post'
   end
@@ -68,12 +82,11 @@ class Types::Guild::PostType < Types::BaseType
   end
 
   field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
-    # authorize :is_admin
     description 'The timestamp for when the guild post record was created'
   end
 
   field :updated_at, GraphQL::Types::ISO8601DateTime, null: true do
-    # authorize :is_admin
+    authorize :is_admin
     description 'The timestamp for when the guild post record was last updated'
   end
 

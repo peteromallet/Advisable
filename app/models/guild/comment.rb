@@ -7,7 +7,7 @@ module Guild
     belongs_to :parent_comment, class_name: "Guild::Comment", optional: true
     has_many :child_comments, class_name: "Guild::Comment", foreign_key: "parent_comment_id", dependent: :destroy
 
-    # reactions.create!(user: current_user, kind: Guild::Reaction.kinds["like"])
+    # @guild_comment.reactions.create!(specialist: current_user, kind: Guild::Reaction.kinds["like"])
     has_many :reactions, as: :reactionable
   
     enum status: {
