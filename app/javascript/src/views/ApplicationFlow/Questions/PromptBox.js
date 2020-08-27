@@ -133,7 +133,7 @@ function PromptBox({ meta, widgetIsActive }) {
                         fontWeight="medium"
                         color="neutral400"
                       >
-                        {numOfWords}/100
+                        {numOfWords || 0}/100
                       </Text>
                     )}
                   </Box>
