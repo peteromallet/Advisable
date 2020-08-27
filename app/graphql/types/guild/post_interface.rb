@@ -3,7 +3,11 @@ module Types::Guild::PostInterface
   include ActionView::Helpers::DateHelper
 
   field_class BaseField
-  orphan_types Types::Guild::Post::AdviceRequiredType, Types::Guild::Post::GeneralType
+  
+  orphan_types Types::Guild::Post::GeneralType,
+               Types::Guild::Post::AdviceRequiredType, 
+               Types::Guild::Post::CaseStudyType, 
+               Types::Guild::Post::OpportunityType
 
   POST_TYPES = %w[
     General

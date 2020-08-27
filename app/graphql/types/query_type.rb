@@ -283,22 +283,38 @@ class Types::QueryType < Types::BaseType
     end
   end
 
-  # field :guild_posts, [Types::Guild::Pos], null: true
+  field :guild_posts,
+        Types::Guild::PostInterface.connection_type,
+        null: false,
+        max_page_size: 10 do
+    description <<~HEREDOC
+      Returns a list of guild posts that match a given search criteria
+    HEREDOC
 
-  # TODO: interface instead
-  # field :guild_posts,
-  #       Types::Guild::PostTypes.collection_type,
-  #       null: true do
-  #   description <<~HEREDOC
-  #     Returns a list of guild posts that match a given search criteria
-  #   HEREDOC
+    argument :type, String, required: false do
+      description 'Filters guild posts by type.'
+    end
+  end
 
-  #   argument :type, String, required: false do
-  #     description 'Filters guild posts by type.'
-  #   end
-  #   argument :page, Integer, required: false
-  #   argument :limit, Integer, required: false
-  # end
+  # {
+  #   guildPosts {
+  #     pageInfo {
+  #       hasNextPage
+  #       hasPreviousPage
+  #       startCursor
+  #       endCursor
+  #     }
+  #     nodes {
+  #       id
+  #       title
+  #       body
+  #       createdAtTimeAgo
+  #       ... on GuildPostAdviceRequiredType {
+  #         needHelp
+  #       }
+  #     }
+  #   }
+  # }
 
   def guild_posts
     Guild::Post
