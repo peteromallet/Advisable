@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import * as React from "react";
 import { Formik, Form } from "formik";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { Text, useModal } from "@advisable/donut";
 import {
   fetchApplication as FETCH_APPLICATION,
-  updateReferencesStep as UPDATE_APPLICATION,
-  getUpdateReferencesStepOptimisticResponse as getOptimisticResponse,
+  updateApplication as UPDATE_APPLICATION,
 } from "../queries";
 import { useNotifications } from "../../../components/Notifications";
 import PreviousProjectFormModal, {
@@ -14,6 +13,7 @@ import PreviousProjectFormModal, {
 import NoReferences from "./NoReferences";
 import PreviousProjects from "./PreviousProjects";
 import ConfirmationModal from "./ConfirmationModal";
+import StepCard from "../StepCard.js";
 
 const References = ({
   application,
@@ -43,18 +43,14 @@ const References = ({
     await submit(values);
   };
 
-  const submit = (values) => {
-    updateApplication({
+  const submit = async (values) => {
+    await updateApplication({
       variables: {
         input: {
           ...values,
           id: applicationId,
         },
       },
-      optimisticResponse: getOptimisticResponse(
-        applicationId,
-        values.references,
-      ),
     });
 
     skipStep();

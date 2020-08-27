@@ -6,10 +6,7 @@ import { Box, Text, Card, Textarea } from "@advisable/donut";
 import { ChoiceList } from "../../../components";
 import FormField from "../../../components/FormField";
 import SubmitButton from "../../../components/SubmitButton";
-import {
-  updateOverviewStep as UPDATE_APPLICATION,
-  getUpdateOverviewStepOptimisticResponse as optimisticResponse,
-} from "../queries";
+import { updateApplication as UPDATE_APPLICATION } from "../queries";
 import validationSchema from "./validationSchema";
 import StepCard from "../StepCard";
 
@@ -17,16 +14,16 @@ function Overview({ application, history, location, steps, currentStep }) {
   const { airtableId } = application;
   const [mutate] = useMutation(UPDATE_APPLICATION);
 
-  const handleSubmit = (values) => {
-    mutate({
+  const handleSubmit = async (values) => {
+    await mutate({
       variables: {
         input: {
           id: airtableId,
           ...values,
         },
       },
-      optimisticResponse: optimisticResponse(airtableId, values),
     });
+
     history.push(`/invites/${airtableId}/apply/questions`, location.state);
   };
 

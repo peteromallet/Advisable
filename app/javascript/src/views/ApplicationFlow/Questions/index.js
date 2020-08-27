@@ -15,10 +15,7 @@ import {
 import FormField from "../../../components/FormField";
 import SubmitButton from "../../../components/SubmitButton";
 import useScrollRestore from "../../../utilities/useScrollRestore";
-import {
-  updateQuestionStep as UPDATE_APPLICATION,
-  getUpdateQuestionStepOptimisticResponse as getOptimisticResponse,
-} from "../queries";
+import { updateApplication as UPDATE_APPLICATION } from "../queries";
 import validationSchema from "./validationSchema";
 import PromptBox from "./PromptBox";
 import ConfirmationModal from "./ConfirmationModal";
@@ -100,8 +97,8 @@ const Questions = ({
     });
   };
 
-  const handleSubmit = (values, formikBag) => {
-    updateApplication({
+  const handleSubmit = async (values, formikBag) => {
+    await updateApplication({
       variables: {
         input: {
           id: applicationId,
@@ -113,22 +110,18 @@ const Questions = ({
           ],
         },
       },
-      optimisticResponse: getOptimisticResponse(
-        applicationId,
-        application.questions,
-        question,
-        values,
-      ),
     });
 
     formikBag.resetForm();
     const nextQuestion = application.questions[number] || {};
     formikBag.setFieldValue("answer", nextQuestion.answer || "");
 
-    const url =
-      number === questions.length
-        ? `/invites/${applicationId}/apply/references`
-        : `/invites/${applicationId}/apply/questions/${number + 1}`;
+    let url;
+    if (number === questions.length) {
+      url = `/invites/${applicationId}/apply/references`;
+    } else {
+      url = `/invites/${applicationId}/apply/questions/${number + 1}`;
+    }
 
     history.push({ ...location, pathname: url });
   };
