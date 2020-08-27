@@ -1,19 +1,30 @@
-class Types::Guild::PostType < Types::BaseType
+module Types::Guild::PostInterface
+  include Types::BaseInterface 
   include ActionView::Helpers::DateHelper
 
-  class Types::Guild::PostTypeEdgeType < GraphQL::Types::Relay::BaseEdge
-    node_type(Types::Guild::PostUnion)
-  end
+  field_class BaseField
+  orphan_types Types::Guild::Post::AdviceRequiredType, Types::Guild::Post::GeneralType
 
-  class Types::Guild::PostTypeConnectionType < GraphQL::Types::Relay::BaseConnection
-    edge_type(Types::Guild::PostTypeEdgeType)
+  POST_TYPES = %w[
+    General
+    AdviceRequired
+    CaseStudy
+    Opportunity
+  ].freeze
 
-    field :total_count, Integer, null: false
+  # class Types::Guild::PostTypeEdgeType < GraphQL::Types::Relay::BaseEdge
+  #   node_type(Types::Guild::PostUnion)
+  # end
 
-    def total_count
-      object.nodes.size
-    end
-  end
+  # class Types::Guild::PostTypeConnectionType < GraphQL::Types::Relay::BaseConnection
+  #   edge_type(Types::Guild::PostTypeEdgeType)
+
+  #   field :total_count, Integer, null: false
+
+  #   def total_count
+  #     object.nodes.size
+  #   end
+  # end
 
   field :id, ID, null: false do
     description 'The unique ID for the guild post'
@@ -86,7 +97,7 @@ class Types::Guild::PostType < Types::BaseType
   end
 
   field :updated_at, GraphQL::Types::ISO8601DateTime, null: true do
-    authorize :is_admin
+    # authorize :is_admin
     description 'The timestamp for when the guild post record was last updated'
   end
 
@@ -95,5 +106,15 @@ class Types::Guild::PostType < Types::BaseType
   end
   def created_at_time_ago
     time_ago_in_words(object.created_at)
+  end
+
+  definition_methods do
+    def resolve_type(object, context)
+      if POST_TYPES.include?(object.type)
+        "Types::Guild::Post::#{object.type}Type".constantize
+      else
+        raise "Unexpected Post Type: #{object.inspect}"
+      end
+    end
   end
 end

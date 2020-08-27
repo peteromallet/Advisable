@@ -268,7 +268,7 @@ class Types::QueryType < Types::BaseType
   end
 
   # Guild
-  field :guild_post, Types::Guild::PostType, null: true do
+  field :guild_post, Types::Guild::PostInterface, null: false do
     argument :id, ID, required: true
   end
   
@@ -283,27 +283,27 @@ class Types::QueryType < Types::BaseType
     end
   end
 
+  # field :guild_posts, [Types::Guild::Pos], null: true
+
   # TODO: interface instead
-  field :guild_posts,
-        Types::Guild::PostType.collection_type,
-        null: true do
-    description <<~HEREDOC
-      Returns a list of guild posts that match a given search criteria
-    HEREDOC
+  # field :guild_posts,
+  #       Types::Guild::PostTypes.collection_type,
+  #       null: true do
+  #   description <<~HEREDOC
+  #     Returns a list of guild posts that match a given search criteria
+  #   HEREDOC
 
-    argument :type, String, required: false do
-      description 'Filters guild posts by type.'
-    end
-    argument :page, Integer, required: false
-    argument :limit, Integer, required: false
-  end
+  #   argument :type, String, required: false do
+  #     description 'Filters guild posts by type.'
+  #   end
+  #   argument :page, Integer, required: false
+  #   argument :limit, Integer, required: false
+  # end
 
-  def guild_posts(page: 1, limit: 20)
+  def guild_posts
     Guild::Post
       .includes(:specialist, parent_comments: [:child_comments])
       .published
       .order(created_at: :desc)
-      .page(page)
-      .per(limit)
   end
 end
