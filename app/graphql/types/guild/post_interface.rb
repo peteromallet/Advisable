@@ -7,7 +7,7 @@ module Types::Guild::PostInterface
   include Types::Guild::AuthorInterface
   include Types::Guild::ReactionInterface
   
-  orphan_types Types::Guild::Post::GeneralType,
+  orphan_types Types::Guild::Post::PostType,
                Types::Guild::Post::AdviceRequiredType, 
                Types::Guild::Post::CaseStudyType, 
                Types::Guild::Post::OpportunityType

@@ -307,6 +307,7 @@ class Types::QueryType < Types::BaseType
   #       id
   #       title
   #       body
+  #       bodyRaw
   #       reacted
   #       reactionsCount
   #       author {

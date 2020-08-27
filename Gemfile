@@ -67,8 +67,6 @@ gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 
 # Guild 
 gem "jsonb_accessor", "~> 1.0.0"
-gem 'graphql-pagination'
-gem 'kaminari-activerecord'
 
 group :development, :test do
   gem 'pry'
