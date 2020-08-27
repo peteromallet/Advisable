@@ -3,18 +3,14 @@ module Types::Guild::PostInterface
   include ActionView::Helpers::DateHelper
 
   field_class BaseField
+
+  include Types::Guild::AuthorInterface
+  include Types::Guild::ReactionInterface
   
   orphan_types Types::Guild::Post::GeneralType,
                Types::Guild::Post::AdviceRequiredType, 
                Types::Guild::Post::CaseStudyType, 
                Types::Guild::Post::OpportunityType
-
-  POST_TYPES = %w[
-    General
-    AdviceRequired
-    CaseStudy
-    Opportunity
-  ].freeze
 
   # class Types::Guild::PostTypeEdgeType < GraphQL::Types::Relay::BaseEdge
   #   node_type(Types::Guild::PostUnion)
@@ -54,20 +50,6 @@ module Types::Guild::PostInterface
     description 'The total count of comments for a guild post'
   end
 
-  field :reactions_count, Integer, null: false do
-    description 'The total count of reactions for a guild post'
-  end
-  def reactions_count
-    object.reactionable_count
-  end
-
-  field :reacted, Boolean, null: false do
-    description 'Whether the current user has reacted to the guild post'
-  end
-  def reacted
-    object.reactions.exists?(specialist: context[:current_user])
-  end
-
   field :type, String, null: false do
     description 'The guild post type'
   end
@@ -75,25 +57,11 @@ module Types::Guild::PostInterface
     object.normalized_type
   end
 
-  field :authored, Boolean, null: false do
-    description 'Whether the current user is the guild post author'
-  end
-  def authored
-    object.specialist_id == context[:current_user]&.id
-  end
-
   field :commented, Boolean, null: false do
     description 'Whether the current user has commented on the guild post'
   end
   def commented
     object.comments.exists?(specialist: context[:current_user])
-  end
-
-  field :author, Types::SpecialistType, null: false do
-    description "The author of the guild post"
-  end
-  def author
-    object.specialist
   end
 
   field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
@@ -112,9 +80,15 @@ module Types::Guild::PostInterface
     time_ago_in_words(object.created_at)
   end
 
+  field :comments, [Types::Guild::CommentType], null: false
+  def comments
+    object.parent_comments
+    # TODO: include child comments
+  end
+
   definition_methods do
     def resolve_type(object, context)
-      if POST_TYPES.include?(object.type)
+      if Guild::Post::POST_TYPES.include?(object.type)
         "Types::Guild::Post::#{object.type}Type".constantize
       else
         raise "Unexpected Post Type: #{object.inspect}"

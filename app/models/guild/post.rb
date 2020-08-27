@@ -4,6 +4,13 @@ module Guild
   class Post < ApplicationRecord
     self.store_full_sti_class = false
 
+    POST_TYPES = %w[
+      General
+      AdviceRequired
+      CaseStudy
+      Opportunity
+    ].freeze
+
     belongs_to :specialist
     has_many :reactions, as: :reactionable
     has_many :comments, -> { published }, foreign_key: 'guild_post_id', class_name: 'Guild::Comment'

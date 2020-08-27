@@ -267,7 +267,8 @@ class Types::QueryType < Types::BaseType
     raise ApiError::InvalidRequest.new('notFound', 'Invoice not found')
   end
 
-  # Guild
+
+    # Guild
   field :guild_post, Types::Guild::PostInterface, null: false do
     argument :id, ID, required: true
   end
@@ -287,9 +288,7 @@ class Types::QueryType < Types::BaseType
         Types::Guild::PostInterface.connection_type,
         null: false,
         max_page_size: 10 do
-    description <<~HEREDOC
-      Returns a list of guild posts that match a given search criteria
-    HEREDOC
+    description "Returns a list of guild posts that match a given search criteria"
 
     argument :type, String, required: false do
       description 'Filters guild posts by type.'
@@ -308,9 +307,27 @@ class Types::QueryType < Types::BaseType
   #       id
   #       title
   #       body
+  #       reacted
+  #       reactionsCount
+  #       author {
+  #         name
+  #       }
   #       createdAtTimeAgo
-  #       ... on GuildPostAdviceRequiredType {
+  #       ... on GuildPostAdviceRequired {
   #         needHelp
+  #       }
+  #       comments {
+  #         id
+  #         authored
+  #         reacted
+  #         reactionsCount
+  #         author {
+  #           id 
+  #           name
+  #         }
+  #         post {
+  #           id
+  #         }
   #       }
   #     }
   #   }
@@ -318,7 +335,7 @@ class Types::QueryType < Types::BaseType
 
   def guild_posts
     Guild::Post
-      .includes(:specialist, parent_comments: [:child_comments])
+      .includes(:specialist, parent_comments: [child_comments: [:post]])
       .published
       .order(created_at: :desc)
   end
