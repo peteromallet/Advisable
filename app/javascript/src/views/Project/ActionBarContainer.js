@@ -14,10 +14,10 @@ export default function ActionBarContainer({ children }) {
 
   const calculatePosition = useCallback(() => {
     setPosition({
-      left: container.current.offsetLeft,
-      width: container.current.clientWidth,
+      left: container.current?.offsetLeft,
+      width: container.current?.clientWidth,
     });
-  }, []);
+  }, [container, setPosition]);
 
   useEffect(() => {
     calculatePosition();

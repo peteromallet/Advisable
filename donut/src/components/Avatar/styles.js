@@ -15,16 +15,22 @@ const size = variant({
     s: {
       width: 40,
       height: 40,
+      fontSize: "15px",
     },
     m: {
       width: 60,
       height: 60,
+      fontSize: "18px",
     },
     l: {
       width: 80,
       height: 80,
     },
     xl: {
+      width: 100,
+      height: 100,
+    },
+    xxl: {
       width: 120,
       height: 120,
     },
@@ -47,7 +53,7 @@ export const StyledAvatarInitials = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  font-size: 18px;
+  font-size: inherit;
   font-weight: 500;
   position: absolute;
   align-items: center;

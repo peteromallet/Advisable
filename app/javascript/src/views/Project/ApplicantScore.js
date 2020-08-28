@@ -14,7 +14,6 @@ const StyledApplicantScore = styled.div`
   flex-direction: column;
   justify-content: center;
   border: 4px solid white;
-  box-shadow: 0 2px 4px ${rgba(theme.colors.neutral900, 0.4)};
 `;
 
 const StyledApplicantScoreCircle = styled.svg`

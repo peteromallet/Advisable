@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Box } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 import { useParams } from "react-router-dom";
 import { Slider } from "@styled-icons/boxicons-regular";
 import { Inbox, User } from "@styled-icons/boxicons-solid";
@@ -17,7 +17,7 @@ function ProjectNavigation({ data }) {
         <NavigationMenu.Item icon={<Inbox />} to={`/projects/${id}`} exact>
           Inbox
         </NavigationMenu.Item>
-        <NavigationMenu.Item icon={<User />} to={`/projects/${id}/applicants`}>
+        <NavigationMenu.Item icon={<User />} to={`/projects/${id}/candidates`}>
           Applicants
         </NavigationMenu.Item>
         <NavigationMenu.Item icon={<Slider />} to={`/projects/${id}/settings`}>

@@ -4,7 +4,7 @@ import { useDialogState } from "reakit/Dialog";
 import ActionBar from "./ActionBar";
 import { useRequestIntroduction } from "./queries";
 import UpdateAvailability from "./UpdateAvailability";
-import { CheckCircle } from "@styled-icons/boxicons-solid";
+import { PersonAdd } from "@styled-icons/ionicons-solid";
 
 export default function AcceptApplication({ application, project }) {
   const dialog = useDialogState();
@@ -44,8 +44,9 @@ export default function AcceptApplication({ application, project }) {
       <UpdateAvailability dialog={dialog} onUpdate={afterUpdateAvailability} />
       <ActionBar.Item
         label="Accept"
+        variant="primary"
         onClick={handleClick}
-        icon={<CheckCircle />}
+        icon={<PersonAdd />}
       />
     </>
   );

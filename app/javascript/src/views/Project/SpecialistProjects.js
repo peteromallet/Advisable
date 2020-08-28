@@ -17,10 +17,13 @@ const StyledSpecialistProject = styled(StyledCard)`
   cursor: pointer;
   user-select: none;
   transition: box-shadow 300ms;
-  box-shadow: 0 12px 24px -12px ${rgba(theme.colors.neutral900, 0.16)};
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px -4px ${rgba(theme.colors.neutral900, 0.04)},
+    0px 4px 20px -4px ${rgba(theme.colors.neutral900, 0.08)};
 
   &:hover {
-    box-shadow: 0 24px 40px -24px ${rgba(theme.colors.neutral900, 0.24)};
+    box-shadow: 0px 12px 24px -12px ${rgba(theme.colors.neutral900, 0.08)},
+      0px 24px 40px -24px ${rgba(theme.colors.neutral900, 0.12)};
 
     .projectTitle {
       color: ${theme.colors.blue600};
@@ -43,7 +46,7 @@ function Project({ project }) {
           <Box
             width="100%"
             height="160px"
-            borderRadius="2px"
+            borderRadius="12px"
             marginBottom="24px"
             backgroundSize="cover"
             backgroundPosition="center"
@@ -81,9 +84,9 @@ export default function SpecialistProjects({ projects }) {
   return (
     <Box marginBottom="52px">
       <Text
-        fontSize="18px"
-        color="neutral900"
+        fontSize="19px"
         fontWeight="500"
+        color="neutral900"
         marginBottom="16px"
         letterSpacing="-0.02em"
       >

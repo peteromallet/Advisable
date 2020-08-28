@@ -1,24 +1,63 @@
 import React from "react";
-import Review from "components/Review";
-import { Card, Box, Stack, Text } from "@advisable/donut";
+import { Box, Stack, Text, Avatar } from "@advisable/donut";
+import renderLineBreaks from "../../utilities/renderLineBreaks";
 
 export default function SpecialistReviews({ reviews }) {
   return (
-    <Card padding="32px" marginBottom="52px">
+    <Box marginBottom="52px">
       <Text
-        fontSize="18px"
+        fontSize="19px"
         fontWeight="500"
         color="neutral900"
-        marginBottom="32px"
+        marginBottom="16px"
         letterSpacing="-0.02em"
       >
         Reviews
       </Text>
-      <Stack spacing={64} divider="neutral100">
-        {reviews.map((r) => (
-          <Review key={r.id} review={r} />
+      <Stack spacing="m">
+        {reviews.map((review) => (
+          <Box
+            key={review.id}
+            padding="16px"
+            borderRadius="12px"
+            bg="neutral100"
+          >
+            <Box display="flex" alignItems="center" marginBottom="s">
+              <Avatar
+                size="s"
+                bg="neutral200"
+                marginRight="12px"
+                url={review.avatar}
+                name={review.name}
+              />
+              <Box>
+                <Text
+                  color="neutral900"
+                  fontWeight="500"
+                  lineHeight="20px"
+                  letterSpacing="-0.02em"
+                >
+                  {review.name}
+                </Text>
+                <Text fontSize="15px" color="neutral600">
+                  {review.role} at {review.companyName}
+                </Text>
+              </Box>
+            </Box>
+            <Text
+              autoLink
+              fontSize="15px"
+              fontWeight="300"
+              lineHeight="20px"
+              color="neutral800"
+              fontStyle="italic"
+              letterSpacing="0.01em"
+            >
+              {renderLineBreaks(`"${review.comment}"`)}
+            </Text>
+          </Box>
         ))}
       </Stack>
-    </Card>
+    </Box>
   );
 }

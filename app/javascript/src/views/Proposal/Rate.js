@@ -17,7 +17,7 @@ const Rate = ({ history, application }) => {
     const response = await updateApplication({
       variables: {
         input: {
-          id: application.airtableId,
+          id: application.id,
           rate: parseFloat(values.rate),
         },
       },
@@ -26,7 +26,7 @@ const Rate = ({ history, application }) => {
     const { errors, booking } = response.data.updateApplication;
 
     if (!errors) {
-      const urlPrefix = `/applications/${application.airtableId}/proposal`;
+      const urlPrefix = `/applications/${application.id}/proposal`;
       history.push(`${urlPrefix}/type`);
     }
   };

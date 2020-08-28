@@ -12,27 +12,26 @@
 // receipient of the message. This object is expected to have an id, name and
 // __typename attribute.
 import React from "react";
-import Modal from "../Modal";
 import Talk from "talkjs";
 import Div100vh from "react-div-100vh";
-import { useBreakpoint } from "@advisable/donut";
+import { Modal, useBreakpoint } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import createTalkSession from "../../utilities/createTalkSession";
 
-const TalkModal = ({ isOpen, onClose, conversationId, participants }) => {
+const TalkModal = ({ dialog, conversationId, participants }) => {
   const viewer = useViewer();
   const isMobile = useBreakpoint("s");
   const messengerRef = React.useRef(null);
 
   React.useEffect(() => {
-    if (isOpen === false) return;
+    if (!dialog.visible) return;
 
     Talk.ready.then(() => {
       const session = createTalkSession(viewer);
       const conversation = session.getOrCreateConversation(conversationId);
       conversation.setParticipant(session.me);
 
-      participants.forEach(participant => {
+      participants.forEach((participant) => {
         const user = new Talk.User({
           id: participant.id,
           name: participant.name,
@@ -46,10 +45,10 @@ const TalkModal = ({ isOpen, onClose, conversationId, participants }) => {
       const chatbox = session.createChatbox(conversation);
       chatbox.mount(messengerRef.current);
     });
-  }, [isOpen]);
+  }, [dialog]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} expandOnMobile>
+    <Modal modal={dialog} expandOnMobile label="Message">
       <Div100vh style={{ height: isMobile ? "100rvh" : "auto" }}>
         <div
           ref={messengerRef}

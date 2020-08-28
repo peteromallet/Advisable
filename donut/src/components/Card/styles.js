@@ -49,9 +49,12 @@ export const StyledCard = styled.div`
   outline: none;
   display: block;
   background: white;
-  border-radius: 2px;
 
   ${cardType};
 `;
+
+StyledCard.defaltProps = {
+  borderRadius: "2px",
+};
 
 export default StyledCard;

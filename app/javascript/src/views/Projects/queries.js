@@ -22,6 +22,14 @@ export const GET_PROJECTS = gql`
           proposedCount
           hiredCount
           createdAt
+          matches: applications(status: ["Applied"]) {
+            id
+            specialist {
+              id
+              avatar
+              name
+            }
+          }
         }
       }
     }
@@ -43,6 +51,9 @@ export const CREATE_JOB = gql`
         proposedCount
         hiredCount
         createdAt
+        matches {
+          id
+        }
       }
     }
   }

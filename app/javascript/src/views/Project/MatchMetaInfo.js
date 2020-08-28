@@ -6,7 +6,7 @@ export default function MatchMetaInfo({ match }) {
     <>
       <Text
         fontSize="22px"
-        color="blue900"
+        color="neutral900"
         marginBottom="4px"
         fontWeight="medium"
         letterSpacing="-0.03em"

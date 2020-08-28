@@ -6,17 +6,11 @@ import Sticky from "components/Sticky";
 import ActionBar from "./ActionBar";
 import ActionBarContainer from "./ActionBarContainer";
 import MatchMetaInfo from "./MatchMetaInfo";
-import ApplicationQuestions from "./ApplicationQuestions";
-import SpecialistReviews from "./SpecialistReviews";
-import SpecialistProjects from "./SpecialistProjects";
-import RecommendationComment from "./RecommendationComment";
-import SpecialistIntroduction from "./SpecialistIntroduction";
+import ApplicationDetails from "./ApplicationDetails";
 
-export default function Matches({ data, onNext }) {
+export default function Matches({ data, project }) {
   const matches = data.project.matches;
   const application = matches[0];
-
-  const hasRecommendationComment = Boolean(application.comment);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,22 +34,10 @@ export default function Matches({ data, onNext }) {
               transition={{ duration: 0.3 }}
               key={application.id}
             >
-              {hasRecommendationComment && (
-                <RecommendationComment data={data} />
-              )}
-              <SpecialistIntroduction application={application} />
-              {application.previousProjects.length > 0 && (
-                <SpecialistProjects projects={application.previousProjects} />
-              )}
-              {application.questions.length > 0 && (
-                <ApplicationQuestions questions={application.questions} />
-              )}
-              {application.specialist.reviews.length > 0 && (
-                <SpecialistReviews reviews={application.specialist.reviews} />
-              )}
+              <ApplicationDetails application={application} project={project} />
             </motion.div>
           </AnimatePresence>
-          <ActionBar application={application} project={data.project} />
+          <ActionBar application={application} project={project} />
         </ActionBarContainer>
       </Box>
     </Box>

@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import { StyledBackdrop, StyledModalWindowContainer } from "../Modal/styles";
 
 const BACKGROUND = {
-  default: "#F5F5F8",
+  default: "#F8F8F9",
   white: "#FFFFFF",
 };
 

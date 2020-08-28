@@ -6,7 +6,7 @@ import ActionBarModal from "./ActionBarModal";
 import { Text, Select, Button, Textarea } from "@advisable/donut";
 import FormField from "components/FormField";
 import SubmitButton from "components/SubmitButton";
-import { XCircle, TrashAlt } from "@styled-icons/boxicons-solid";
+import { Trash } from "@styled-icons/ionicons-solid";
 import { useRejectApplication } from "./queries";
 
 const OPTIONS = [
@@ -61,7 +61,7 @@ export default function RejectApplication({ application }) {
         {...dialog}
         as={ActionBar.Item}
         label="Reject"
-        icon={<XCircle />}
+        icon={<Trash />}
       />
       <ActionBarModal dialog={dialog} label={`Reject ${firstName}`}>
         <Formik onSubmit={handleSubmit} initialValues={initialValues}>
@@ -98,7 +98,7 @@ export default function RejectApplication({ application }) {
                 placeholder={optionByValue(formik.values.reason).placeholder}
               />
               <SubmitButton
-                prefix={<TrashAlt />}
+                prefix={<Trash />}
                 variant="dark"
                 marginRight="12px"
               >

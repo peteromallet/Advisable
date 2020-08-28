@@ -1,24 +1,59 @@
 import { useParams } from "react-router-dom";
 import { gql, useQuery, useMutation, useApolloClient } from "@apollo/client";
 
-export const GET_PROJECT = gql`
-  query project($id: ID!) {
-    project(id: $id) {
+const applicationDetails = gql`
+  fragment ApplicationDetails on Application {
+    id
+    rate
+    comment
+    score
+    status
+    appliedAt
+    excerpt
+    introduction
+    availability
+    proposalComment
+    questions {
+      question
+      answer
+    }
+    previousProjects {
       id
-      status
-      primarySkill {
+      title
+      excerpt
+      skills {
         id
         name
+      }
+      coverPhoto {
+        id
+        url
+      }
+    }
+    specialist {
+      id
+      name
+      email
+      firstName
+      avatar
+      location
+      reviews {
+        id
+        name
+        role
+        avatar
+        companyName
+        comment
       }
     }
   }
 `;
 
-export const GET_MATCHES = gql`
-  query getMatches($id: ID!) {
+export const GET_PROJECT = gql`
+  query project($id: ID!) {
     project(id: $id) {
       id
-      sourcing
+      status
       user {
         id
         availability
@@ -29,6 +64,99 @@ export const GET_MATCHES = gql`
           firstName
         }
       }
+      primarySkill {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const GET_CANDIDATES = gql`
+  query getCandidates($id: ID!) {
+    project(id: $id) {
+      id
+      candidates: applications(
+        status: [
+          "Application Accepted"
+          "Interview Scheduled"
+          "Interview Completed"
+          "Proposed"
+        ]
+      ) {
+        id
+        rate
+        score
+        availability
+        excerpt
+        specialist {
+          id
+          name
+          avatar
+          location
+        }
+      }
+    }
+  }
+`;
+
+export function useCandidates(opts) {
+  return useQuery(GET_CANDIDATES, opts);
+}
+
+export const GET_CANDIDATE = gql`
+  ${applicationDetails}
+
+  query getCandidate($id: ID!) {
+    application(id: $id) {
+      ...ApplicationDetails
+    }
+  }
+`;
+
+export function useCandidate(opts) {
+  return useQuery(GET_CANDIDATE, opts);
+}
+
+export const GET_PROPOSAL = gql`
+  query getPropposal($id: ID!) {
+    application(id: $id) {
+      id
+      proposedAt
+      projectType
+      proposalComment
+      specialist {
+        id
+        avatar
+        firstName
+        name
+      }
+      tasks {
+        id
+        name
+        dueDate
+        estimate
+        estimateType
+        flexibleEstimate
+      }
+    }
+  }
+`;
+
+export function useProposal(opts) {
+  return useQuery(GET_PROPOSAL, opts);
+}
+
+export const GET_MATCHES = gql`
+  ${applicationDetails}
+
+  query getMatches($id: ID!) {
+    project(id: $id) {
+      id
+      sourcing
+      user {
+        id
+      }
       accepted: applications(status: ["Application Accepted"]) {
         id
         specialist {
@@ -38,53 +166,7 @@ export const GET_MATCHES = gql`
         }
       }
       matches: applications(status: ["Applied"]) {
-        id
-        rate
-        comment
-        score
-        appliedAt
-        introduction
-        availability
-        questions {
-          question
-          answer
-        }
-        previousProjects {
-          id
-          title
-          excerpt
-          skills {
-            id
-            name
-          }
-          coverPhoto {
-            id
-            url
-          }
-        }
-        specialist {
-          id
-          name
-          firstName
-          avatar
-          location
-          reviews {
-            id
-            name
-            role
-            avatar
-            companyName
-            comment
-            ratings {
-              overall
-              skills
-              availability
-              adherenceToSchedule
-              qualityOfWork
-              communication
-            }
-          }
-        }
+        ...ApplicationDetails
       }
     }
   }
@@ -117,7 +199,16 @@ export function useRequestIntroduction(application) {
         },
       },
     },
+    refetchQueries: [
+      {
+        query: GET_CANDIDATES,
+        variables: {
+          id: projectId,
+        },
+      },
+    ],
     update() {
+      // First update the inbox queries
       const data = client.readQuery({
         query: GET_MATCHES,
         variables: {

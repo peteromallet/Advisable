@@ -2,7 +2,10 @@ class Types::ApplicationType < Types::BaseType
   field :id, ID, null: false
   field :rate, String, null: true
   field :applied_at, String, null: true
-  field :airtable_id, String, null: false
+  field :airtable_id, String, null: true
+  field :proposed_at,
+        GraphQL::Types::ISO8601DateTime,
+        null: true, method: :proposal_sent_at
   field :featured, Boolean, null: true
   field :hidden, Boolean, null: true
   field :score, Int, null: true
@@ -73,5 +76,11 @@ class Types::ApplicationType < Types::BaseType
   def has_more_projects
     return false if object.references.empty?
     object.previous_projects.count < object.specialist.previous_projects.count
+  end
+
+  field :excerpt, String, null: true
+
+  def excerpt
+    object.introduction&.truncate(140)
   end
 end
