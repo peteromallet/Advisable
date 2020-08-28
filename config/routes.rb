@@ -43,12 +43,8 @@ Rails.application.routes.draw do
 
   get '/auth/:provider/callback', to: 'auth_providers#create'
 
-  get '/', 
-    to: 'application#guild', 
-    constraints: ->(req) { req.subdomain == 'guild' }
-  get '*guild_path',
-    to: 'application#guild',
-    constraints: ->(req) { req.subdomain == 'guild' }
+  get '/guild', to: 'application#guild', as: :guild_root
+  get '/guild/*guild_path', to: 'application#guild'
   
   # match every other route to the frontend codebase
   root 'application#frontend'

@@ -8,7 +8,7 @@ import App from "./App";
 const Root = () => {
   return (
     <ApolloProvider client={client}>
-      <BrowserRouter>
+      <BrowserRouter basename="/guild">
         <App />
       </BrowserRouter>
     </ApolloProvider>

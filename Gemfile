@@ -88,6 +88,7 @@ group :development do
   gem 'graphql_playground-rails'
   gem 'pry-rails'
   gem 'niceql'
+  gem 'graphql-rails_logger'
 end
 
 group :test do

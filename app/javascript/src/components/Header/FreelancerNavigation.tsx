@@ -4,7 +4,6 @@ import { useMobile } from "../../components/Breakpoint";
 import useMessageCount from "../../hooks/useMessageCount";
 import { CloseNav, NavContainer, Nav, NavItem, Badge } from "./styles";
 import useViewer from "../../hooks/useViewer";
-import { guildHostPath } from "../../utilities/guild";
 
 const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
   const isMobile = useMobile();
@@ -34,7 +33,7 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
         {isMobile && (
           <>
             {viewer?.guild && (
-              <NavItem as="a" href={guildHostPath}>
+              <NavItem as="a" href="/guild">
                 Guild
               </NavItem>
             )}
