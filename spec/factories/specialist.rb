@@ -21,5 +21,9 @@ FactoryBot.define do
       "country" => "country",
       "postcode" => "postcode",
     }}
+
+    trait :guild do
+      guild { true }
+    end
   end
 end
