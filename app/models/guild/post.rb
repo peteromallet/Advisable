@@ -5,7 +5,7 @@ module Guild
     self.store_full_sti_class = false
 
     POST_TYPES = %w[
-      General
+      Post
       AdviceRequired
       CaseStudy
       Opportunity

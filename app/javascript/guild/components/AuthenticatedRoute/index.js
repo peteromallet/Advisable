@@ -20,7 +20,7 @@ const AuthenticatedRoute = ({
     <Route
       {...rest}
       render={(props) => {
-        if (!guildUser) return window.location.href = advisableHost();
+        // if (!guildUser) return window.location.href = advisableHost();
 
         return Component ? <Component {...props} /> : render(props);
       }}

@@ -32,7 +32,7 @@ environment.config.merge({
       components: path.join(__dirname, "../../app/javascript/src/components"),
       /* Guild */
       '@advisable-main': path.resolve(__dirname, '..', '..', 'app/javascript/src'),
-      '@guild/components': path.resolve(__dirname, '..', '..', 'app/javascript/guild/components'),
+      '@guild': path.resolve(__dirname, '..', '..', 'app/javascript/guild'),
     },
   },
 });
