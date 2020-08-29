@@ -11,11 +11,13 @@ const App = () => {
   return (
     <ApplicationProvider>
       <RootErrorBoundary>
-        <Suspense 
-          fallback={<Loading />}
-        >
+        <Suspense fallback={<Loading />}>
           <Switch>
-            <AuthenticatedRoute exact path="/" component={() => <Redirect to="/feed"/>} />
+            <AuthenticatedRoute
+              exact
+              path="/"
+              component={() => <Redirect to="/feed" />}
+            />
             <AuthenticatedRoute exact path="/feed" component={Feed} />
           </Switch>
         </Suspense>

@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import GuildPostFields from "@guild/graphql/fragments/guildPostFields"
+import GuildPostFields from "@guild/graphql/fragments/guildPostFields";
 
 export const GUILD_POSTS_QUERY = gql`
   ${GuildPostFields}
