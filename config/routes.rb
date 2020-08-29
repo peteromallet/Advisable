@@ -50,5 +50,5 @@ Rails.application.routes.draw do
   root 'application#frontend'
   get '*path',
       to: 'application#frontend',
-      constraints: ->(req) { req.subdomain != 'guild' && req.path.exclude?('rails/active_storage') }
+      constraints: ->(req) { req.path.exclude?('rails/active_storage') }
 end

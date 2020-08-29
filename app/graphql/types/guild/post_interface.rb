@@ -12,20 +12,6 @@ module Types::Guild::PostInterface
                Types::Guild::Post::CaseStudyType, 
                Types::Guild::Post::OpportunityType
 
-  # class Types::Guild::PostTypeEdgeType < GraphQL::Types::Relay::BaseEdge
-  #   node_type(Types::Guild::PostUnion)
-  # end
-
-  # class Types::Guild::PostTypeConnectionType < GraphQL::Types::Relay::BaseConnection
-  #   edge_type(Types::Guild::PostTypeEdgeType)
-
-  #   field :total_count, Integer, null: false
-
-  #   def total_count
-  #     object.nodes.size
-  #   end
-  # end
-
   field :id, ID, null: false do
     description 'The unique ID for the guild post'
   end

@@ -85,7 +85,7 @@ describe Types::Guild::PostInterface do
     end
 
     # TODO: comments ...
-    it "includes the parent_comments"
-    it "includes whether the current_user has commented on the guild_post"
+    # it "includes the parent_comments"
+    # it "includes whether the current_user has commented on the guild_post"
   end
 end

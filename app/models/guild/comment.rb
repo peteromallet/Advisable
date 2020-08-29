@@ -9,6 +9,11 @@ module Guild
 
     # @guild_comment.reactions.create!(specialist: current_user, kind: Guild::Reaction.kinds["like"])
     has_many :reactions, as: :reactionable
+
+    before_validation(on: :create) do
+      self.post = parent_comment.post if parent_comment
+      self.status = Comment.statuses["published"]
+    end
   
     enum status: {
       draft: 0,

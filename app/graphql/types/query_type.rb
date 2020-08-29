@@ -294,45 +294,6 @@ class Types::QueryType < Types::BaseType
     end
   end
 
-  # {
-  #   guildPosts {
-  #     pageInfo {
-  #       hasNextPage
-  #       hasPreviousPage
-  #       startCursor
-  #       endCursor
-  #     }
-  #     nodes {
-  #       id
-  #       title
-  #       body
-  #       bodyRaw
-  #       reacted
-  #       reactionsCount
-  #       author {
-  #         name
-  #       }
-  #       createdAtTimeAgo
-  #       ... on GuildPostAdviceRequired {
-  #         needHelp
-  #       }
-  #       comments {
-  #         id
-  #         authored
-  #         reacted
-  #         reactionsCount
-  #         author {
-  #           id 
-  #           name
-  #         }
-  #         post {
-  #           id
-  #         }
-  #       }
-  #     }
-  #   }
-  # }
-
   def guild_posts
     Guild::Post
       .includes(:specialist, parent_comments: [child_comments: [:post]])

@@ -38,7 +38,7 @@ const Feed = () => {
     return <span>Error: {error.message}</span>;
   }
 
-  console.log(data?.guildPosts);
+  // console.log(data?.guildPosts);
 
   return (
     <Render.Container>
