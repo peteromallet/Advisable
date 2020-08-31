@@ -1,15 +1,25 @@
+import React, { useState, useEffect } from "react";
 import { find } from "lodash-es";
 import { ArrowRight } from "@styled-icons/feather";
-import * as React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { Redirect } from "react-router-dom";
-import { Box, Text, Card, Textarea } from "@advisable/donut";
+import {
+  Box,
+  Text,
+  Textarea,
+  useModal,
+  DialogDisclosure,
+  Button,
+} from "@advisable/donut";
 import FormField from "../../../components/FormField";
 import SubmitButton from "../../../components/SubmitButton";
 import useScrollRestore from "../../../utilities/useScrollRestore";
-import UPDATE_APPLICATION from "../updateApplication";
+import { updateApplication as UPDATE_APPLICATION } from "../queries";
 import validationSchema from "./validationSchema";
+import PromptBox from "./PromptBox";
+import ConfirmationModal from "./ConfirmationModal";
+import StepCard from "../StepCard";
 
 const Questions = ({
   application,
@@ -19,7 +29,10 @@ const Questions = ({
   currentStep,
   location,
 }) => {
-  const [updateApplication] = useMutation(UPDATE_APPLICATION);
+  const [updateApplication, { loading }] = useMutation(UPDATE_APPLICATION);
+  const [prompt, setPrompt] = useState(false);
+  const [numOfWords, setNumOfWords] = useState(0);
+  const confirmationModal = useModal();
   const step = steps[currentStep];
   const { applicationId } = match.params;
   const number = parseInt(match.params.number);
@@ -31,6 +44,11 @@ const Questions = ({
     find(application.questions, {
       question: questions[number - 2],
     }) || {};
+
+  useEffect(() => {
+    const answer = applicationQuestion.answer;
+    answer && setNumOfWords(answer.match(/\S+/g)?.length || 0);
+  }, [applicationQuestion.answer]);
 
   // if the step is hidden then redirect to the references step.
   if (step.hidden) {
@@ -112,8 +130,14 @@ const Questions = ({
     answer: applicationQuestion.answer || "",
   };
 
+  const handleChange = (setFieldValue) => (e, formikBag) => {
+    const value = e.target.value;
+    setFieldValue("answer", value);
+    value && setNumOfWords(value.match(/\S+/g)?.length || 0);
+  };
+
   return (
-    <Card>
+    <StepCard>
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
@@ -121,11 +145,17 @@ const Questions = ({
       >
         {(formik) => (
           <Form>
-            <Box padding={{ _: "l", m: "xl" }}>
+            <ConfirmationModal
+              formik={formik}
+              modal={confirmationModal}
+              loading={loading}
+              numOfWords={numOfWords}
+            />
+            <Box>
               <Text
+                fontSize="30px"
                 mb="s"
                 as="h1"
-                fontSize="30px"
                 color="blue.9"
                 fontWeight="semibold"
                 letterSpacing="-0.03em"
@@ -143,23 +173,40 @@ const Questions = ({
                 Question {number} of {questions.length}
               </Text>
               <Box mb="m">
-                <FormField
-                  name="answer"
-                  minRows={10}
-                  as={Textarea}
-                  label={question}
-                  placeholder={question}
-                />
+                <Box position="relative">
+                  <FormField
+                    name="answer"
+                    minRows={10}
+                    as={Textarea}
+                    Widget={PromptBox}
+                    label={question}
+                    placeholder={question}
+                    onChange={handleChange(formik.setFieldValue)}
+                    onClick={() => setPrompt(true)}
+                    widgetIsActive={prompt && numOfWords < 10}
+                  />
+                </Box>
               </Box>
-
-              <SubmitButton mt="m" size="l" suffix={<ArrowRight />}>
-                Next
-              </SubmitButton>
+              {numOfWords >= 100 || !formik.isValid || !formik.dirty ? (
+                <SubmitButton mt="m" size="l" suffix={<ArrowRight />}>
+                  Next
+                </SubmitButton>
+              ) : (
+                <DialogDisclosure
+                  as={Button}
+                  suffix={<ArrowRight />}
+                  mt="m"
+                  size="l"
+                  {...confirmationModal}
+                >
+                  Next
+                </DialogDisclosure>
+              )}
             </Box>
           </Form>
         )}
       </Formik>
-    </Card>
+    </StepCard>
   );
 };
 

@@ -2,8 +2,10 @@ import * as React from "react";
 import { Formik, Form } from "formik";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { Text, useModal } from "@advisable/donut";
-import FETCH_APPLICATION from "../fetchApplication.js";
-import UPDATE_APPLICATION from "../updateApplication.js";
+import {
+  fetchApplication as FETCH_APPLICATION,
+  updateApplication as UPDATE_APPLICATION,
+} from "../queries";
 import { useNotifications } from "../../../components/Notifications";
 import PreviousProjectFormModal, {
   usePreviousProjectModal,
@@ -11,6 +13,7 @@ import PreviousProjectFormModal, {
 import NoReferences from "./NoReferences";
 import PreviousProjects from "./PreviousProjects";
 import ConfirmationModal from "./ConfirmationModal";
+import StepCard from "../StepCard.js";
 
 const References = ({
   application,

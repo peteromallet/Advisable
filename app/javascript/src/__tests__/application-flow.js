@@ -5,8 +5,10 @@ import {
   mockMutation,
 } from "../testHelpers/apolloMocks";
 import viewer from "../graphql/queries/viewer";
-import getApplication from "../views/ApplicationFlow/fetchApplication";
-import updateApplication from "../views/ApplicationFlow/updateApplication";
+import {
+  fetchApplication as getApplication,
+  updateApplication,
+} from "../views/ApplicationFlow/queries";
 import generateTypes from "../__mocks__/graphqlFields";
 
 test("Submitting the overview step continues to the questions step", async () => {
@@ -60,7 +62,7 @@ test("Submitting the overview step continues to the questions step", async () =>
     ],
   });
 
-  await app.findByText(/Testing project/i, {}, { timeout: 10000 });
+  await app.findByText("Overview", {}, { timeout: 10000 });
   const intro = app.getByLabelText(
     "Give a 2-3 line description of your background as it related to this project.",
   );
@@ -163,6 +165,8 @@ test("Submitting a question answer continues to the next question", async () => 
   fireEvent.change(intro, { target: { value: "This is the first answer" } });
   const next = await findByLabelText("Next");
   fireEvent.click(next);
+  await findByText("Are you sure?");
+  fireEvent.click(await findByLabelText("Ignore"));
   const question = await findByText("This is the second question?");
   expect(question).toBeInTheDocument();
 });
@@ -270,6 +274,8 @@ test("when submitting the last question answer it continues to the references st
   fireEvent.change(intro, { target: { value: "This is the second answer" } });
   const next = await findByLabelText("Next");
   fireEvent.click(next);
+  await findByText("Are you sure?");
+  fireEvent.click(await findByLabelText("Ignore"));
   const description = await findByText(
     "We require references from all freelancers prior to their first project on Advisable. We do this to ensure that their self-reported experience is verified by a third party. Only once verified will these references be shown on your profile and visible to clients.",
   );

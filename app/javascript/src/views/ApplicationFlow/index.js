@@ -1,11 +1,12 @@
 import * as React from "react";
+import PropTypes from "prop-types";
 import { useQuery } from "@apollo/client";
 import { Switch, Route, Redirect } from "react-router-dom";
 import NotFound from "../NotFound";
 import { Loading } from "../../components";
 import ApplicationFlow from "./ApplicationFlow";
 import ApplicationSent from "./ApplicationSent";
-import FETCH_APPLICATION from "./fetchApplication";
+import { fetchApplication as FETCH_APPLICATION } from "./queries";
 import ApplicationsClosed from "../ApplicationsClosed";
 
 // Renders the application flow
@@ -60,5 +61,10 @@ function ApplicationFlowContainer(props) {
     </Switch>
   );
 }
+
+ApplicationFlowContainer.propTypes = {
+  match: PropTypes.object,
+  location: PropTypes.object,
+};
 
 export default ApplicationFlowContainer;

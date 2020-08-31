@@ -31,48 +31,50 @@ const ConfirmationModal = ({
           The average successful application attaches at least two references of
           relevant previous projects they have completed.
         </Text>
-        {noOfSelectedProjects === 0 && noOfAvailableProjects === 0 && (
-          <DialogDisclosure
-            as={Button}
-            mr="xs"
-            type="button"
+        <Box display="flex" flexDirection="column">
+          {noOfSelectedProjects === 0 && noOfAvailableProjects === 0 && (
+            <DialogDisclosure
+              as={Button}
+              mb="xs"
+              type="button"
+              variant="dark"
+              {...newProjectModal}
+            >
+              Add a Reference
+            </DialogDisclosure>
+          )}
+
+          {noOfSelectedProjects === 0 && noOfAvailableProjects > 0 && (
+            <Button mb="xs" type="button" onClick={modal.hide} variant="subtle">
+              Cancel
+            </Button>
+          )}
+
+          {noOfSelectedProjects > 0 && (
+            <DialogDisclosure
+              as={Button}
+              mb="xs"
+              type="button"
+              {...newProjectModal}
+              onClick={() => {
+                newProjectModal.show();
+                modal.hide();
+              }}
+            >
+              Add Another Project
+            </DialogDisclosure>
+          )}
+          <Button
             variant="dark"
-            {...newProjectModal}
-          >
-            Add a Reference
-          </DialogDisclosure>
-        )}
-
-        {noOfSelectedProjects === 0 && noOfAvailableProjects > 0 && (
-          <Button mr="xs" type="button" onClick={modal.hide} variant="subtle">
-            Cancel
-          </Button>
-        )}
-
-        {noOfSelectedProjects > 0 && (
-          <DialogDisclosure
-            as={Button}
-            mr="xs"
             type="button"
-            {...newProjectModal}
-            onClick={() => {
-              newProjectModal.show();
-              modal.hide();
-            }}
+            loading={loading}
+            onClick={onSubmit}
           >
-            Add Another Project
-          </DialogDisclosure>
-        )}
-        <Button
-          variant="dark"
-          type="button"
-          loading={loading}
-          onClick={onSubmit}
-        >
-          {noOfSelectedProjects === 0
-            ? "Continue Without References"
-            : "Continue With 1 Reference"}
-        </Button>
+            {noOfSelectedProjects === 0
+              ? "Continue Without References"
+              : "Continue With 1 Reference"}
+          </Button>
+        </Box>
       </Box>
     </Modal>
   );
