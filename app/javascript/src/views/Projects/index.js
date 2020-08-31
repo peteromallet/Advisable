@@ -7,6 +7,7 @@ import Loading from "./Loading";
 import { GET_PROJECTS } from "./queries";
 import ProjectsList from "./ProjectsList";
 import UpdateIndustryModal from "./UpdateIndustryModal";
+import dataLayer from "../../utilities/dataLayer";
 
 const Projects = () => {
   const location = useLocation();
@@ -18,6 +19,13 @@ const Projects = () => {
 
   const handleCreate = (cache, response) => {
     const { viewer } = cache.readQuery({ query: GET_PROJECTS });
+
+    dataLayer.push({
+      event: "projectStarted",
+      projectId: response.data.createJob.project.id,
+      projectCount: viewer.projects.length + 1,
+    });
+
     cache.writeQuery({
       query: GET_PROJECTS,
       data: {
