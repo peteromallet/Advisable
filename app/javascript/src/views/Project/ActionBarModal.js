@@ -23,6 +23,7 @@ const StyledDialog = styled(motion.div)`
   padding: 32px;
   outline: none;
   background: white;
+  border-radius: 12px;
   box-shadow: 0 24px 64px -24px ${rgba(theme.colors.neutral900, 0.6)};
 `;
 

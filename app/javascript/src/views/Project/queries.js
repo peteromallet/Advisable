@@ -333,3 +333,21 @@ export const UPDATE_AVAILABILITY = gql`
 export function useUpdateAvailability() {
   return useMutation(UPDATE_AVAILABILITY);
 }
+
+export const GET_TASK = gql`
+  query getTask($id: ID!) {
+    task(id: $id) {
+      id
+      name
+      dueDate
+      estimate
+      description
+      estimateType
+      flexibleEstimate
+    }
+  }
+`;
+
+export function useTask(opts) {
+  return useQuery(GET_TASK, opts);
+}

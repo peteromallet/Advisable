@@ -3,15 +3,24 @@ import { DateTime } from "luxon";
 import styled from "styled-components";
 import { Box, Text, theme } from "@advisable/donut";
 import { Calendar, Time } from "@styled-icons/ionicons-outline";
+import { useDialogState, DialogDisclosure } from "reakit/Dialog";
+import TaskDetailsModal from "./TaskDetailsModal";
 import { displayTaskQuote } from "../../utilities/tasks";
 
-const StyledTask = styled.li`
+const StyledTask = styled(DialogDisclosure)`
+  border: none;
+  outline: none;
+  display: block;
   margin: 0 -12px;
   cursor: pointer;
   margin-top: -1px;
+  appearance: none;
+  text-align: left;
   user-select: none;
   padding: 16px 12px;
   border-radius: 12px;
+  background: transparent;
+  width: calc(100% + 24px);
 
   &:hover {
     background-color: ${theme.colors.neutral100};
@@ -54,8 +63,12 @@ function TaskAttribute({ icon, label, value }) {
 }
 
 export default function ProposalTasks({ tasks }) {
+  const dialog = useDialogState();
+  const [selectedTaskId, setSelectedTaskId] = React.useState(null);
+
   return (
     <Box marginBottom="48px">
+      <TaskDetailsModal dialog={dialog} id={selectedTaskId} />
       <Text
         color="neutral900"
         marginBottom="12px"
@@ -67,7 +80,11 @@ export default function ProposalTasks({ tasks }) {
       <StyledTaskList>
         {tasks.map((task) => (
           <>
-            <StyledTask key={task.id}>
+            <StyledTask
+              {...dialog}
+              onClick={() => setSelectedTaskId(task.id)}
+              key={task.id}
+            >
               <Text color="neutral900" fontSize="15px" lineHeight="18px">
                 {task.name}
               </Text>

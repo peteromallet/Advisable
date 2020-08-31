@@ -96,6 +96,7 @@ class TestData
     application.score = [70, 75, 80, 85, 90, 95].sample
     application.comment = Faker::Hipster.sentence(word_count: 16)
     application.applied_at = 2.days.ago
+    application.proposal_sent_at = attrs.fetch(:proposal_sent_at, nil)
     application.proposal_comment = attrs.fetch(:proposal_comment, nil)
     application.questions = [
       {
@@ -130,10 +131,11 @@ class TestData
         project: project,
         specialist: specialist,
         status: 'Proposed',
+        proposal_sent_at: 1.day.ago,
         proposal_comment:
-          "#{Faker::Hipster.sentence(word_count: 24)}\n\n#{
-            Faker::Hipster.sentence(word_count: 12)
-          }",
+          "Hey #{project.user.first_name}!\n\n Was nice chatting with you. #{
+            Faker::Hipster.sentence(word_count: 24)
+          }\n\n#{Faker::Hipster.sentence(word_count: 12)}",
         project_type: 'Fixed'
       )
 
