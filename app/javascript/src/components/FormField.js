@@ -14,6 +14,7 @@ const FormField = ({
   label,
   isRequired,
   as: Component = Input,
+  Widget,
   prefix,
   suffix,
   labelHint,
@@ -81,15 +82,18 @@ const FormField = ({
           {description}
         </Text>
       )}
-      <Component
-        {...field}
-        id={id}
-        prefix={prefix}
-        suffix={suffix}
-        error={meta.touched && meta.error}
-        placeholder={props.placeholder || label}
-        {...props}
-      />
+      <Box position="relative">
+        <Component
+          {...field}
+          id={id}
+          prefix={prefix}
+          suffix={suffix}
+          error={meta.touched && meta.error}
+          placeholder={props.placeholder || label}
+          {...props}
+        />
+        {Widget && <Widget field={field} meta={meta} {...props} />}
+      </Box>
       {hasError ? <InputError mt="xs">{meta.error}</InputError> : null}
       {!hasError && caption ? (
         <Text
@@ -111,6 +115,7 @@ FormField.propTypes = {
   prefix: PropTypes.string,
   suffix: PropTypes.string,
   description: PropTypes.string,
+  Widget: PropTypes.func,
 };
 
 export default FormField;

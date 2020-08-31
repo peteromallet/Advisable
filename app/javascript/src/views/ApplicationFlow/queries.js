@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export default gql`
+export const applicationFields = gql`
   fragment ApplicationFields on Application {
     id
     status
@@ -48,4 +48,41 @@ export default gql`
       specialistDescription
     }
   }
+`;
+
+export const fetchApplication = gql`
+  query Application($id: ID!) {
+    application(id: $id) {
+      ...ApplicationFields
+    }
+  }
+  ${applicationFields}
+`;
+
+export const submitApplication = gql`
+  mutation SubmitApplication($input: SubmitApplicationInput!) {
+    submitApplication(input: $input) {
+      application {
+        id
+        status
+      }
+      errors {
+        code
+      }
+    }
+  }
+`;
+
+export const updateApplication = gql`
+  mutation UpdateApplication($input: UpdateApplicationInput!) {
+    updateApplication(input: $input) {
+      application {
+        ...ApplicationFields
+      }
+      errors {
+        code
+      }
+    }
+  }
+  ${applicationFields}
 `;
