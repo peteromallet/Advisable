@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Card, Text } from "@advisable/donut";
 import BookingTypeForm from "../../components/BookingTypeForm";
 import START_WORKING from "./startWorking";
+import dataLayer from "../../utilities/dataLayer";
 
 const BookingType = ({ data }) => {
   const history = useHistory();
@@ -19,6 +20,12 @@ const BookingType = ({ data }) => {
           application: id,
         },
       },
+    });
+
+    dataLayer.push({
+      event: "hiredFreelancer",
+      projectId: data.application.project.id,
+      applicationId: id,
     });
 
     history.push(`/manage/${id}`);

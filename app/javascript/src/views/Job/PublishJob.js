@@ -6,6 +6,7 @@ import { useHistory, useParams, Link as RouterLink } from "react-router-dom";
 import { Stack, Box, Text, BulletList, Button, Tags } from "@advisable/donut";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 import { PUBLISH_PROJECT } from "./queries";
+import dataLayer from "../../utilities/dataLayer";
 
 export default function PublishJob({ data }) {
   const { id } = useParams();
@@ -21,6 +22,7 @@ export default function PublishJob({ data }) {
   const handlePublish = async () => {
     if (project.status === "DRAFT") {
       await publishProject({ variables: { input: { id } } });
+      dataLayer.push({ event: "projectPublished", projectId: id });
     }
 
     history.push(`/jobs/${id}/published`);
