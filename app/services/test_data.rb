@@ -195,6 +195,8 @@ class TestData
         u.sales_person = sales_person
       end
 
+    user.update(availability: [], completed_tutorials: [])
+
     client =
       Client.find_or_create_by(name: 'Dunder Mifflin') do |c|
         c.domain = 'advisable.com'

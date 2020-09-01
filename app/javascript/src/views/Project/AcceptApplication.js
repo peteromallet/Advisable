@@ -47,6 +47,7 @@ export default function AcceptApplication({ application, project }) {
         variant="primary"
         onClick={handleClick}
         icon={<PersonAdd />}
+        data-walkthrough="actionBarAccept"
       />
     </>
   );

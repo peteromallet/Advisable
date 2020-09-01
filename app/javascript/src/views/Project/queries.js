@@ -151,6 +151,12 @@ export const GET_MATCHES = gql`
   ${applicationDetails}
 
   query getMatches($id: ID!) {
+    viewer {
+      ... on User {
+        id
+        walkthroughComplete: hasCompletedTutorial(tutorial: "RECOMMENDATIONS")
+      }
+    }
     project(id: $id) {
       id
       sourcing
@@ -350,4 +356,21 @@ export const GET_TASK = gql`
 
 export function useTask(opts) {
   return useQuery(GET_TASK, opts);
+}
+
+export const COMPLETE_TUTORIAL = gql`
+  mutation completeTutorial($input: CompleteTutorialInput!) {
+    completeTutorial(input: $input) {
+      viewer {
+        ... on User {
+          id
+          walkthroughComplete: hasCompletedTutorial(tutorial: "RECOMMENDATIONS")
+        }
+      }
+    }
+  }
+`;
+
+export function useCompleteTutorial(opts) {
+  return useMutation(COMPLETE_TUTORIAL, opts);
 }

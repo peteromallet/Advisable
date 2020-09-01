@@ -30,6 +30,15 @@ class Types::User < Types::BaseType
     authorize :is_user
   end
 
+  field :has_completed_tutorial, Boolean, null: false do
+    argument :tutorial, String, required: true
+    authorize :is_user
+  end
+
+  def has_completed_tutorial(tutorial:)
+    object.has_completed_tutorial?(tutorial)
+  end
+
   field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
     authorize :is_user
   end

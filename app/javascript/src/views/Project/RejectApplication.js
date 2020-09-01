@@ -62,6 +62,7 @@ export default function RejectApplication({ application }) {
         as={ActionBar.Item}
         label="Reject"
         icon={<Trash />}
+        data-walkthrough="actionBarReject"
       />
       <ActionBarModal dialog={dialog} label={`Reject ${firstName}`}>
         <Formik onSubmit={handleSubmit} initialValues={initialValues}>

@@ -128,6 +128,7 @@ function ActionBar({ application, project }) {
       initial={{ y: 60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4 }}
+      data-walkthrough="actionBar"
     >
       {application.status === "Applied" ? (
         <AcceptApplication application={application} project={project} />
