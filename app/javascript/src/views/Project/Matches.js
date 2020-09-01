@@ -10,6 +10,8 @@ import MatchMetaInfo from "./MatchMetaInfo";
 import ApplicationDetails from "./ApplicationDetails";
 import { useWalkthrough, Walkthrough } from "./Walkthrough";
 import { useCompleteTutorial } from "./queries";
+import queryString from "query-string";
+import { useLocation } from "react-router";
 
 const steps = [
   {
@@ -142,6 +144,19 @@ const steps = [
   },
 ];
 
+function useOrderedMatches(matches) {
+  const location = useLocation();
+  const { candidate } = queryString.parse(location.search);
+
+  if (!candidate) return matches;
+
+  const index = matches.findIndex((match) => match.id === candidate);
+  if (index === -1) return matches;
+  const record = matches[index];
+
+  return [record, ...matches.filter((match) => match.id !== candidate)];
+}
+
 export default function Matches({ data, project }) {
   const [completeTutorial] = useCompleteTutorial();
   const walkthrough = useWalkthrough(steps, {
@@ -156,7 +171,8 @@ export default function Matches({ data, project }) {
       });
     },
   });
-  const matches = data.project.matches;
+
+  const matches = useOrderedMatches(data.project.matches);
   const application = matches[0];
 
   useEffect(() => {
