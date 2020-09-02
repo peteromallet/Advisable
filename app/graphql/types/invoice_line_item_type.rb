@@ -10,6 +10,6 @@ class Types::InvoiceLineItemType < Types::BaseType
   end
 
   def unit_price
-    object.amount
+    object.price&.unit_amount
   end
 end
