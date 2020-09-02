@@ -6,6 +6,7 @@ import { GET_MATCHES } from "./queries";
 import Matches from "./Matches";
 import SearchingForMatches from "./SearchingForMatches";
 import RequestedIntroductions from "./RequestedIntroductions";
+import SourcingDisabled from "./SourcingDisabled";
 
 export default function Inbox({ project }) {
   const { id } = useParams();
@@ -20,14 +21,18 @@ export default function Inbox({ project }) {
     return <>Something went wrong</>;
   }
 
-  const { accepted, sourcing } = data.project;
+  const { accepted, matches, sourcing } = data.project;
 
   if (!sourcing && accepted.length > 0) {
     return <RequestedIntroductions accepted={accepted} />;
   }
 
-  if (data.project.matches.length === 0) {
+  if (sourcing && matches.length === 0) {
     return <SearchingForMatches />;
+  }
+
+  if (!sourcing && matches.length === 0) {
+    return <SourcingDisabled />;
   }
 
   return <Matches data={data} project={project} />;

@@ -1,10 +1,18 @@
 import React, { useEffect } from "react";
-import { Text, Button } from "@advisable/donut";
+import { DateTime } from "luxon";
+import { Box, Text, Button, Paragraph } from "@advisable/donut";
 import AvailabilityInput from "components/AvailabilityInput";
 import ActionBarModal from "./ActionBarModal";
 import { useAvailability, useUpdateAvailability } from "./queries";
 
-export default function UpdateAvailability({ dialog, onUpdate }) {
+function onlyFutureAvailability(availability) {
+  const today = DateTime.local().endOf("day");
+  return availability.filter((time) => {
+    return today < DateTime.fromISO(time).endOf("day");
+  });
+}
+
+export default function UpdateAvailability({ firstName, dialog, onUpdate }) {
   const { loading, data } = useAvailability({
     skip: !dialog.visible,
   });
@@ -17,7 +25,7 @@ export default function UpdateAvailability({ dialog, onUpdate }) {
 
   useEffect(() => {
     if (!loading) {
-      setAvailability(data?.viewer?.availability || []);
+      setAvailability(onlyFutureAvailability(data?.viewer?.availability || []));
     }
   }, [data, loading, setAvailability]);
 
@@ -45,27 +53,41 @@ export default function UpdateAvailability({ dialog, onUpdate }) {
         <>loading..</>
       ) : (
         <>
-          <Text fontSize="xxl" letterSpacing="-0.04em" marginBottom="8px">
-            You have not added any availability
+          <Text
+            fontSize="xxl"
+            color="neutral900"
+            marginBottom="8px"
+            fontWeight="medium"
+            letterSpacing="-0.04em"
+          >
+            Schedule a call with {firstName}
           </Text>
-          <Text lineHeight="20px" color="neutral700" marginBottom="24px">
-            You have not added any availability yet. We will offer these times
-            to freelancers you accept to schedule a call with them.
-          </Text>
+          <Paragraph size="sm" marginBottom="24px">
+            Let us know what times suit you for a 30 minute call with{" "}
+            {firstName}. We'll send these times to {firstName} for them to
+            schedule a call.
+          </Paragraph>
           <AvailabilityInput
             maxHeight="350px"
             value={availability}
             onChange={setAvailability}
             events={events}
           />
-          <Button
-            marginTop="24px"
-            variant="dark"
-            onClick={handleContinue}
-            loading={updateAvailabilityResponse.loading}
-          >
-            Request Call
-          </Button>
+          <Box marginTop="24px">
+            {availability.length >= 6 ? (
+              <Button
+                variant="dark"
+                onClick={handleContinue}
+                loading={updateAvailabilityResponse.loading}
+              >
+                Request Call
+              </Button>
+            ) : (
+              <Text fontSize="15px" color="neutral700">
+                Please select at least 6 available times
+              </Text>
+            )}
+          </Box>
         </>
       )}
     </ActionBarModal>

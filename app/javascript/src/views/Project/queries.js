@@ -308,6 +308,7 @@ export const GET_AVAILABILITY = gql`
     viewer {
       ... on User {
         id
+        availability
         interviews(status: "Call Scheduled") {
           id
           startsAt
