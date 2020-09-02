@@ -64,7 +64,7 @@ export default function UpdateAvailability({ dialog, onUpdate }) {
             onClick={handleContinue}
             loading={updateAvailabilityResponse.loading}
           >
-            Continue
+            Request Call
           </Button>
         </>
       )}

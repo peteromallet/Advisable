@@ -2,6 +2,7 @@ import React from "react";
 import { DateTime } from "luxon";
 import { Link, useParams } from "react-router-dom";
 import { Box, Button, Text, Avatar } from "@advisable/donut";
+import { ArrowBack } from "@styled-icons/ionicons-outline";
 import { Card } from "./styles";
 import { useProposal } from "./queries";
 import ProposalTasks from "./ProposalTasks";
@@ -21,7 +22,12 @@ export default function Proposal() {
   return (
     <Card>
       <Link to={`/projects/${id}/candidates/${applicationId}`}>
-        <Button size="s" variant="subtle" marginBottom="16px">
+        <Button
+          prefix={<ArrowBack />}
+          size="s"
+          variant="subtle"
+          marginBottom="24px"
+        >
           Back
         </Button>
       </Link>

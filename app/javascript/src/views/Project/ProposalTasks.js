@@ -10,7 +10,7 @@ import { displayTaskQuote } from "../../utilities/tasks";
 const StyledTask = styled(DialogDisclosure)`
   border: none;
   outline: none;
-  display: block;
+  display: flex;
   margin: 0 -12px;
   cursor: pointer;
   margin-top: -1px;
@@ -18,6 +18,7 @@ const StyledTask = styled(DialogDisclosure)`
   text-align: left;
   user-select: none;
   padding: 16px 12px;
+  align-items: center;
   border-radius: 12px;
   background: transparent;
   width: calc(100% + 24px);
@@ -25,6 +26,12 @@ const StyledTask = styled(DialogDisclosure)`
   &:hover {
     background-color: ${theme.colors.neutral100};
   }
+`;
+
+const StyledTaskName = styled(Text)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const StyledTaskDivider = styled.div`
@@ -44,7 +51,7 @@ function dueDate(task) {
 function TaskAttribute({ icon, label, value }) {
   return (
     <Box
-      marginTop="8px"
+      marginTop="4px"
       marginRight="16px"
       alignItems="center"
       display="inline-flex"
@@ -82,26 +89,32 @@ export default function ProposalTasks({ tasks }) {
           <>
             <StyledTask
               {...dialog}
-              onClick={() => setSelectedTaskId(task.id)}
               key={task.id}
+              onClick={() => setSelectedTaskId(task.id)}
             >
-              <Text color="neutral900" fontSize="15px" lineHeight="18px">
-                {task.name}
-              </Text>
-              {task.dueDate && (
-                <TaskAttribute
-                  icon={<Calendar />}
-                  label="Due"
-                  value={dueDate(task)}
-                />
-              )}
-              {task.estimate && (
-                <TaskAttribute
-                  icon={<Time />}
-                  label="Quote"
-                  value={displayTaskQuote(task)}
-                />
-              )}
+              <Box flexShrink="1" minWidth="0">
+                <StyledTaskName
+                  color="neutral900"
+                  fontSize="15px"
+                  lineHeight="18px"
+                >
+                  {task.name}
+                </StyledTaskName>
+                {task.dueDate && (
+                  <TaskAttribute
+                    icon={<Calendar />}
+                    label="Due"
+                    value={dueDate(task)}
+                  />
+                )}
+                {task.estimate && (
+                  <TaskAttribute
+                    icon={<Time />}
+                    label="Quote"
+                    value={displayTaskQuote(task)}
+                  />
+                )}
+              </Box>
             </StyledTask>
             <StyledTaskDivider />
           </>

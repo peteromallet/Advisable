@@ -84,8 +84,6 @@ class Project < ApplicationRecord
   end
 
   # Returns an array of applications that are in the 'hiring pipeline' stages.
-  # This includes any candidates that are not in a pre invite stage or working
-  # stage as well as the top 3 candidates in the applied stage.
   def candidates
     base = applications.not_hidden
     base.active.or(base.matched)

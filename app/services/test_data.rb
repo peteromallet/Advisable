@@ -140,8 +140,9 @@ class TestData
       )
 
     if application.tasks.empty?
-      4.times do
+      4.times do |i|
         application.tasks.create(
+          trial: i == 0,
           name: Faker::Hipster.sentence(word_count: 8),
           stage: 'Not Assigned',
           due_date: [

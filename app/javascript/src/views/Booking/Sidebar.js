@@ -1,6 +1,7 @@
 import React from "react";
 import { get } from "lodash-es";
-import { Button, Tooltip, Box, DialogDisclosure } from "@advisable/donut";
+import { useDialogState, DialogDisclosure } from "reakit/Dialog";
+import { Button, Tooltip, Box } from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "../../components/Sticky";
@@ -22,14 +23,13 @@ import {
   PauseCircle,
   Edit,
 } from "@styled-icons/feather";
-const TALK_MODAL = "TALK_MODAL";
 
 const Sidebar = ({ data, history, tutorialModal, match }) => {
   const isMobile = useMobile();
+  const dialog = useDialogState();
   const { t } = useTranslation();
   const application = data.application;
   const specialist = application.specialist;
-  const [modal, setModal] = React.useState(null);
   const [projectTypeModal, setProjectTypeModal] = React.useState(false);
 
   const handleEditPayment = () => {
@@ -53,23 +53,23 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
             {specialist.country && `, ${specialist.country.name}`}
           </Text>
           <TalkModal
-            isOpen={modal === TALK_MODAL}
-            onClose={() => setModal(null)}
+            dialog={dialog}
             conversationId={application.id}
             participants={[application.specialist]}
           />
 
           <Box paddingTop="xl">
-            <Button
+            <DialogDisclosure
+              as={Button}
               mb="xs"
               width="100%"
               align="left"
               variant="subtle"
               prefix={<MessageCircle />}
-              onClick={() => setModal(TALK_MODAL)}
+              {...dialog}
             >
               Message {specialist.firstName}
-            </Button>
+            </DialogDisclosure>
             {application.status === "Working" && (
               <>
                 <Route
