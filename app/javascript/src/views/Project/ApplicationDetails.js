@@ -16,11 +16,11 @@ export default function ApplicationDetails({ application, project }) {
         <RecommendationComment application={application} project={project} />
       )}
       <SpecialistIntroduction application={application} />
-      {application.previousProjects.length > 0 && (
-        <SpecialistProjects projects={application.previousProjects} />
-      )}
       {application.questions.length > 0 && (
         <ApplicationQuestions questions={application.questions} />
+      )}
+      {application.previousProjects.length > 0 && (
+        <SpecialistProjects projects={application.previousProjects} />
       )}
       {application.specialist.reviews.length > 0 && (
         <SpecialistReviews reviews={application.specialist.reviews} />
