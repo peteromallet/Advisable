@@ -1,7 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Link as RouterLink } from "react-router-dom";
-import { Modal, Link, Avatar, Box, Text, Tag } from "@advisable/donut";
+import { Modal, Avatar, Box, Text, Tag } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
 import IndustryTag from "../IndustryTag";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
@@ -46,15 +45,9 @@ function PreviousProjectDetails({ id }) {
           />
         </Box>
         <Box>
-          <Link
-            mb="1px"
-            as={RouterLink}
-            color="blue700"
-            to={`/freelancers/${project.specialist.id}`}
-            fontWeight="medium"
-          >
+          <Text mb="1px" color="neutral900" fontWeight="medium">
             {project.specialist.name}
-          </Link>
+          </Text>
           <Text mt="1px" color="neutral500" fontSize="s">
             {project.specialist.location}
           </Text>
