@@ -11,8 +11,8 @@ export default function MessageAction({ application }) {
 
   return (
     <>
-      <ActionBarModal dialog={dialog} label="Message">
-        <Box height="500px" paddingTop="24px">
+      <ActionBarModal padding="8px" dialog={dialog} label="Message">
+        <Box height="500px">
           <TalkConversation
             conversationId={application.id}
             participants={[application.specialist]}

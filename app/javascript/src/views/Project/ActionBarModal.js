@@ -1,8 +1,10 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CloseCircle } from "@styled-icons/ionicons-solid";
 import styled from "styled-components";
+import { padding } from "styled-system";
 import { rgba } from "polished";
-import { theme } from "@advisable/donut";
+import { theme, Box, Button } from "@advisable/donut";
 import { Dialog, DialogBackdrop } from "reakit/Dialog";
 
 const StyledDialogBackdrop = styled(motion.div)`
@@ -23,13 +25,34 @@ const StyledDialogBackdrop = styled(motion.div)`
 `;
 
 const StyledDialog = styled(motion.div)`
+  ${padding};
+
   width: ${(p) => p.$width}px;
   margin: auto;
-  padding: 32px;
   outline: none;
   background: white;
+  position: relative;
   border-radius: 12px;
   box-shadow: 0 24px 64px -24px ${rgba(theme.colors.neutral900, 0.6)};
+`;
+
+const StyledCloseButton = styled.button`
+  border: none;
+  outline: none;
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  padding: 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: ${theme.colors.neutral300};
+
+  &:hover {
+    color: ${theme.colors.neutral700};
+  }
 `;
 
 export default function ActionBarModal({
@@ -37,6 +60,7 @@ export default function ActionBarModal({
   dialog,
   label,
   children,
+  padding = "32px",
 }) {
   return (
     <AnimatePresence>
@@ -56,6 +80,7 @@ export default function ActionBarModal({
                 <StyledDialog
                   {...dialogProps}
                   $width={width}
+                  padding={padding}
                   transition={{ duration: 0.32 }}
                   initial={{ opacity: 0 }}
                   animate={{
@@ -64,6 +89,11 @@ export default function ActionBarModal({
                     y: dialog.visible ? 0 : 40,
                   }}
                 >
+                  <Box position="absolute" top="12px" right="12px">
+                    <StyledCloseButton onClick={dialog.hide}>
+                      <CloseCircle size="32px" />
+                    </StyledCloseButton>
+                  </Box>
                   {children}
                 </StyledDialog>
               )}
