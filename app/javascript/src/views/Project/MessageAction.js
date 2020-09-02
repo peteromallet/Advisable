@@ -1,7 +1,9 @@
 import React from "react";
 import { Chatbubbles } from "@styled-icons/ionicons-solid";
+import ActionBarModal from "./ActionBarModal";
+import { Box } from "@advisable/donut";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
-import TalkModal from "components/TalkModal";
+import TalkConversation from "components/TalkConversation";
 import ActionBar from "./ActionBar";
 
 export default function MessageAction({ application }) {
@@ -9,11 +11,14 @@ export default function MessageAction({ application }) {
 
   return (
     <>
-      <TalkModal
-        dialog={dialog}
-        conversationId={application.id}
-        participants={[application.specialist]}
-      />
+      <ActionBarModal dialog={dialog} label="Message">
+        <Box height="500px" paddingTop="24px">
+          <TalkConversation
+            conversationId={application.id}
+            participants={[application.specialist]}
+          />
+        </Box>
+      </ActionBarModal>
       <DialogDisclosure
         {...dialog}
         as={ActionBar.Item}

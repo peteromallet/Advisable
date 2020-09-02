@@ -6,7 +6,7 @@ import { theme } from "@advisable/donut";
 import { Dialog, DialogBackdrop } from "reakit/Dialog";
 
 const StyledDialogBackdrop = styled(motion.div)`
-  top: 60px;
+  top: 58px;
   right: 0;
   bottom: 0;
   left: 280px;
@@ -16,10 +16,15 @@ const StyledDialogBackdrop = styled(motion.div)`
   align-items: center;
   justify-content: center;
   background: rgba(245, 246, 251, 0.9);
+
+  overflow-y: scroll;
+  padding-top: 32px;
+  padding-bottom: 64px;
 `;
 
 const StyledDialog = styled(motion.div)`
   width: ${(p) => p.$width}px;
+  margin: auto;
   padding: 32px;
   outline: none;
   background: white;

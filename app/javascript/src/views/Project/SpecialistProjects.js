@@ -2,16 +2,10 @@ import React from "react";
 import { rgba } from "polished";
 import styled from "styled-components";
 import Masonry from "components/Masonry";
+import { useDialogState, DialogDisclosure } from "reakit/Dialog";
+import ActionBarModal from "./ActionBarModal";
 import ProjectDetails from "components/PreviousProjectDetails";
-import {
-  theme,
-  useModal,
-  Box,
-  StyledCard,
-  Text,
-  Tags,
-  DialogDisclosure,
-} from "@advisable/donut";
+import { theme, Box, StyledCard, Text, Tags } from "@advisable/donut";
 
 const StyledSpecialistProject = styled(StyledCard)`
   cursor: pointer;
@@ -32,16 +26,14 @@ const StyledSpecialistProject = styled(StyledCard)`
 `;
 
 function Project({ project }) {
-  const modal = useModal();
+  const dialog = useDialogState();
 
   return (
     <>
-      <ProjectDetails.Modal
-        label={project.title}
-        modal={modal}
-        id={project.id}
-      />
-      <DialogDisclosure {...modal} as={StyledSpecialistProject} padding="24px">
+      <ActionBarModal width={700} dialog={dialog} label={project.title}>
+        {dialog.visible && <ProjectDetails id={project.id} />}
+      </ActionBarModal>
+      <DialogDisclosure {...dialog} as={StyledSpecialistProject} padding="24px">
         {project.coverPhoto && (
           <Box
             width="100%"
