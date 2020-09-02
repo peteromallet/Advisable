@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useCandidates } from "./queries";
 import { Box, Skeleton } from "@advisable/donut";
 import CandidateCard from "./CandidateCard";
+import CandidatesEmptyState from "./CandidatesEmptyState";
 
 export default function Candidates() {
   const { id } = useParams();
@@ -12,6 +13,11 @@ export default function Candidates() {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const candidates = data?.project.candidates || [];
+  const hasCandidates = !loading && candidates.length > 0;
+
+  if (!hasCandidates) return <CandidatesEmptyState />;
 
   return (
     <Box
@@ -29,7 +35,7 @@ export default function Candidates() {
           <Skeleton borderRadius="12px" height="420px" />
         </>
       ) : (
-        data.project.candidates.map((candidate, i) => (
+        candidates.map((candidate, i) => (
           <motion.div
             key={candidate.id}
             initial={{ opacity: 0, y: 12 }}

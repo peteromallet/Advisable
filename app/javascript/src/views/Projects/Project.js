@@ -51,7 +51,7 @@ export default function Project({ project }) {
       )}
       {matches.length > 0 && (
         <Box>
-          <Badge marginBottom="4px">2 New</Badge>
+          <Badge marginBottom="4px">{matches.length} New</Badge>
           <AvatarStack size="s">
             {matches.map((application) => (
               <Avatar
