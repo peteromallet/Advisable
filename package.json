@@ -41,7 +41,7 @@
     "draft-js": "^0.11.7",
     "file-loader": "^6.0.0",
     "formik": "^2.1.4",
-    "framer-motion": "^2.3.0",
+    "framer-motion": "^2.6.5",
     "fuse.js": "^6.4.0",
     "graphql": "^15.3.0",
     "graphql-tag": "^2.10.3",

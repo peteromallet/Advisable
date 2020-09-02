@@ -17,7 +17,6 @@ export default function Inbox({ project }) {
   }
 
   if (error) {
-    console.error(error);
     return <>Something went wrong</>;
   }
 

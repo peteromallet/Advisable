@@ -17,6 +17,7 @@ export const StyledSidebar = styled.div`
 
   left: 0;
   top: 60px;
+  z-index: 3;
   width: 280px;
   position: fixed;
   background: white;

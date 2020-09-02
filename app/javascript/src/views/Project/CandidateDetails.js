@@ -3,6 +3,7 @@ import Sticky from "components/Sticky";
 import { Helmet } from "react-helmet";
 import { Box, Avatar } from "@advisable/donut";
 import { Switch, Route, useParams } from "react-router-dom";
+import Loading from "components/Loading";
 import MatchMetaInfo from "./MatchMetaInfo";
 import Proposal from "./Proposal";
 import ApplicationDetails from "./ApplicationDetails";
@@ -19,7 +20,7 @@ export default function CandidateDetails({ project }) {
     window.scrollTo(0, 0);
   }, []);
 
-  if (loading) return <>loading...</>;
+  if (loading) return <Loading />;
 
   const application = data?.application;
 
