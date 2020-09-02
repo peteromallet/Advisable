@@ -59,10 +59,10 @@ const StyledActionBarItemIcon = styled.div`
 
 const StyledActionBarItem = styled.button`
   appearance: none;
-  width: 80px;
+  width: 100px;
+  padding: 0;
   height: 72px;
   border: none;
-  margin: 0 2px;
   outline: none;
   color: #4c5061;
   cursor: pointer;
@@ -75,6 +75,21 @@ const StyledActionBarItem = styled.button`
   font-size: 14px;
   font-weight: 400;
   letter-spacing: -0.03em;
+  position: relative;
+
+  &::before {
+    top: 12px;
+    left: -1px;
+    content: "";
+    height: 48px;
+    width: 1px;
+    position: absolute;
+    background: ${theme.colors.neutral200};
+  }
+
+  &:first-child::before {
+    display: none;
+  }
 
   &:hover {
     color: ${theme.colors.blue700};
@@ -141,7 +156,6 @@ function ActionBar({ application, project }) {
           to={`/book/${application.id}`}
         />
       )}
-      <ActionBar.Item icon={<Moon />} label="Not Sure" />
       {application.status !== "Applied" && (
         <MessageAction application={application} />
       )}
