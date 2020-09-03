@@ -38,12 +38,12 @@ export default ({ value, ...props }) => {
     }
   }, [ref.current]);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     calculateRows();
     props.onChange(e.target.value);
   };
 
-  const handleKeyDown = e => {
+  const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
       e.preventDefault();
       ref.current.blur();
