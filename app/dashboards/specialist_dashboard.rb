@@ -18,6 +18,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     linkedin: Field::String,
     travel_availability: Field::String,
     city: Field::String,
+    guild: Field::Boolean,
     airtable_id: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
@@ -41,6 +42,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     travel_availability
     city
     country
+    guild
     airtable_id
     created_at
     updated_at
@@ -58,6 +60,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     travel_availability
     city
     country
+    guild
     airtable_id
   ].freeze
 

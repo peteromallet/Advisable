@@ -46,6 +46,7 @@ const CurrentUser = ({ user, onLogout }) => {
         <a href="#" onClick={onLogout}>
           Logout
         </a>
+        {user.guild && <a href="/guild">Guild</a>}
       </CurrentUserDropdown>
     </CurrentUserWrapper>
   );

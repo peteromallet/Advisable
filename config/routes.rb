@@ -43,9 +43,12 @@ Rails.application.routes.draw do
 
   get '/auth/:provider/callback', to: 'auth_providers#create'
 
+  get '/guild', to: 'application#guild', as: :guild_root
+  get '/guild/*guild_path', to: 'application#guild'
+  
   # match every other route to the frontend codebase
   root 'application#frontend'
   get '*path',
       to: 'application#frontend',
-      constraints: ->(req) { req.path.exclude? 'rails/active_storage' }
+      constraints: ->(req) { req.path.exclude?('rails/active_storage') }
 end
