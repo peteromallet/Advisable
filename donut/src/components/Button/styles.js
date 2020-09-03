@@ -161,7 +161,7 @@ const buttonSize = variant({
     },
     m: {
       height: 42,
-      fontSize: 16,
+      fontSize: 17,
       fontWeight: 500,
       paddingLeft: 24,
       paddingRight: 24,
@@ -215,13 +215,13 @@ export const StyledButton = styled.button`
   align-items: center;
   white-space: nowrap;
   display: inline-flex;
-  font-family: poppins;
   text-decoration: none;
   vertical-align: middle;
   justify-content: center;
   letter-spacing: -0.01em;
   background: transparent;
   transition: background 100ms;
+  font-family: TTHoves, poppins, sans-serif;
   ${(props) => props.align === "left" && { justifyContent: "flex-start" }}
 
   svg {

@@ -32,13 +32,12 @@ export const StyledNavigationMenuItem = styled(NavLink)`
   display: flex;
   color: inherit;
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 500;
   border-radius: 20px;
   align-items: center;
   padding-left: 16px;
   margin-bottom: 4px;
   margin-left: -8px;
-  letter-spacing: -0.02em;
   color: ${theme.colors.neutral500};
 
   &:hover {

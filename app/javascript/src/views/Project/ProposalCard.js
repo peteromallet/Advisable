@@ -33,14 +33,15 @@ export default function ProposalCard({ application }) {
       </Box>
       <Box paddingX="12px" flex={1} minWidth={0}>
         <Text
-          color="neutral900"
-          mb="2px"
+          mb="4px"
+          fontSize="lg"
           fontWeight="500"
-          letterSpacing="-0.03em"
+          color="neutral900"
+          letterSpacing="-0.02em"
         >
           {application.specialist.firstName} sent you a proposal.
         </Text>
-        <Comment color="neutral600" fontSize="14px">
+        <Comment color="neutral600" fontSize="sm">
           {application.proposalComment}
         </Comment>
       </Box>

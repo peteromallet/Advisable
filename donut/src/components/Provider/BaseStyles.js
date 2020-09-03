@@ -1,6 +1,11 @@
 import { createGlobalStyle } from "styled-components";
 import { StyledBackdrop, StyledModalWindowContainer } from "../Modal/styles";
 
+import hovesRegularWoff from "./fonts/TTHoves-Regular/font.woff";
+import hovesRegularWoff2 from "./fonts/TTHoves-Regular/font.woff2";
+import hovesMediumWoff from "./fonts/TTHoves-Medium/font.woff";
+import hovesMediumWoff2 from "./fonts/TTHoves-Medium/font.woff2";
+
 import normsRegularWoff from "./fonts/TTNormsPro-Regular/font.woff";
 import normsRegularWoff2 from "./fonts/TTNormsPro-Regular/font.woff2";
 import normsMediumWoff from "./fonts/TTNormsPro-Medium/font.woff";
@@ -14,6 +19,18 @@ const BACKGROUND = {
 const BaseStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
+  }
+
+  @font-face {
+    font-family: 'TTHoves';
+    font-weight: 400;
+    src: url(${hovesRegularWoff2}) format('woff2'), url(${hovesRegularWoff}) format('woff');
+  }
+
+  @font-face {
+    font-family: 'TTHoves';
+    font-weight: 500;
+    src: url(${hovesMediumWoff2}) format('woff2'), url(${hovesMediumWoff}) format('woff');
   }
 
   @font-face {
@@ -57,7 +74,7 @@ const BaseStyles = createGlobalStyle`
     font: inherit;
     box-sizing: border-box;
     vertical-align: baseline;
-    font-family: poppins, sans-serif;
+    font-family: TTHoves, poppins, sans-serif;
   }
 
   /* HTML5 display-role reset for older browsers */

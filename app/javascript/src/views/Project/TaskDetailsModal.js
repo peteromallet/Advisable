@@ -2,7 +2,7 @@ import React from "react";
 import { displayTaskQuote, displayTaskDueDate } from "../../utilities/tasks";
 import ActionBarModal from "./ActionBarModal";
 import { Calendar, Time } from "@styled-icons/ionicons-outline";
-import { Circle, Box, Text, Skeleton, Notice } from "@advisable/donut";
+import { Circle, Box, Text, Skeleton, Paragraph } from "@advisable/donut";
 import { useTask } from "./queries";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
 
@@ -20,9 +20,9 @@ export default function TaskDetailsModal({ dialog, id }) {
       {!loading && task && (
         <>
           <Text
-            fontSize="24px"
+            fontSize="3xl"
             fontWeight="medium"
-            letterSpacing="-0.04em"
+            letterSpacing="-0.03em"
             color="neutral900"
             marginBottom="24px"
           >
@@ -88,9 +88,7 @@ export default function TaskDetailsModal({ dialog, id }) {
             </Box>
           </Box>
           <Box height={1} bg="neutral100" marginBottom="24px" />
-          <Text autoLink lineHeight="20px" color="neutral800">
-            {renderLineBreaks(task.description)}
-          </Text>
+          <Paragraph autoLink>{renderLineBreaks(task.description)}</Paragraph>
         </>
       )}
     </ActionBarModal>

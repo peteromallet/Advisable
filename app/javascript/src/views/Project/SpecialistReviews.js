@@ -10,9 +10,9 @@ export default function SpecialistReviews({ reviews }) {
         fontWeight="medium"
         color="neutral900"
         marginBottom="16px"
-        letterSpacing="-0.02em"
+        letterSpacing="-0.01em"
       >
-        Reviews
+        Testimonials
       </Text>
       <Stack spacing="m">
         {reviews.map((review) => (
@@ -46,7 +46,6 @@ export default function SpecialistReviews({ reviews }) {
             </Box>
             <Text
               autoLink
-              fontSize="sm"
               lineHeight="20px"
               color="neutral800"
               fontStyle="italic"

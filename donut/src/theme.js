@@ -36,15 +36,18 @@ const fontSizes = {
   xs: 14,
   s: 15,
   sm: 15,
-  m: 17,
-  md: 17,
-  l: 20,
-  lg: 19,
-  xl: 21,
-  "2xl": 23,
-  xxl: 24,
-  xxxl: 32,
-  xxxxl: 32,
+  m: 16,
+  md: 16,
+  l: 18,
+  lg: 18,
+  xl: 20,
+  "2xl": 22,
+  xxl: 22,
+  "3xl": 24,
+  xxxl: 24,
+  "4xl": 28,
+  xxxxl: 28,
+  "5xl": 32,
 };
 
 // Font weights
@@ -58,7 +61,7 @@ const fontWeights = {
 };
 
 const fonts = {
-  body: "poppins, sans-serif",
+  body: "TTHoves, poppins, sans-serif",
   heading: "TTNormsPro, poppins, sans-serif",
 };
 

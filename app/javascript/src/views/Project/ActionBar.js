@@ -72,8 +72,8 @@ const StyledActionBarItem = styled.button`
   flex-direction: column;
   justify-content: center;
   background: transparent;
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 15px;
+  font-weight: 600;
   letter-spacing: -0.03em;
   position: relative;
 

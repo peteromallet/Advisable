@@ -46,7 +46,6 @@ const Projects = () => {
         color="neutral900"
         fontWeight="medium"
         letterSpacing="-0.04rem"
-        fontFamily="heading"
       >
         Projects
       </Text>

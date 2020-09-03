@@ -1,7 +1,7 @@
 import React from "react";
 import { DateTime } from "luxon";
 import { Link, useParams } from "react-router-dom";
-import { Box, Button, Text, Avatar } from "@advisable/donut";
+import { Box, Button, Text, Avatar, Paragraph } from "@advisable/donut";
 import { ArrowBack } from "@styled-icons/ionicons-outline";
 import { Card } from "./styles";
 import { useProposal } from "./queries";
@@ -32,20 +32,20 @@ export default function Proposal() {
         </Button>
       </Link>
       <Text
-        fontSize="24px"
-        fontWeight="500"
+        fontSize="3xl"
         marginBottom="8px"
         color="neutral900"
-        letterSpacing="-0.05em"
+        fontWeight="medium"
+        letterSpacing="-0.03em"
       >
         {specialist.name} sent you a proposal.
       </Text>
-      <Text marginBottom="32px" color="neutral700" lineHeight="20px">
+      <Paragraph marginBottom="32px">
         {specialist.firstName} has suggested some tasks to get started.
         Accepting this proposal wont assign any tasks. You’ll have the
         opportunity to assign and add more tasks once you start working
         together.
-      </Text>
+      </Paragraph>
       <Box
         padding="16px"
         borderRadius="12px"
@@ -56,35 +56,27 @@ export default function Proposal() {
           <Avatar
             size="s"
             bg="neutral200"
-            marginRight="12px"
+            marginRight="8px"
             url={specialist.avatar}
             name={specialist.name}
           />
           <Box>
             <Text
               color="neutral900"
-              fontWeight="500"
-              lineHeight="20px"
+              marginBottom="4px"
+              fontWeight="medium"
               letterSpacing="-0.02em"
             >
               {specialist.name}
             </Text>
-            <Text fontSize="14px" color="neutral600">
+            <Text fontSize="xs" color="neutral600">
               {proposedAt.toFormat("dd MMM yyyy, HH:mma")}
             </Text>
           </Box>
         </Box>
-        <Text
-          autoLink
-          fontSize="15px"
-          fontWeight="300"
-          lineHeight="20px"
-          color="neutral800"
-          fontStyle="italic"
-          letterSpacing="0.01em"
-        >
+        <Paragraph autoLink fontStyle="italic" letterSpacing="0.01em">
           {renderLineBreaks(application.proposalComment)}
-        </Text>
+        </Paragraph>
       </Box>
       <ProposalTasks tasks={application.tasks} />
       <MoneyBackGuarantee />

@@ -54,15 +54,15 @@ export default function UpdateAvailability({ firstName, dialog, onUpdate }) {
       ) : (
         <>
           <Text
-            fontSize="xxl"
+            fontSize="3xl"
             color="neutral900"
-            marginBottom="8px"
+            marginBottom="4px"
             fontWeight="medium"
             letterSpacing="-0.04em"
           >
             Schedule a call with {firstName}
           </Text>
-          <Paragraph size="sm" marginBottom="24px">
+          <Paragraph marginBottom="24px">
             Let us know what times suit you for a 30 minute call with{" "}
             {firstName}. We'll send these times to {firstName} for them to
             schedule a call.

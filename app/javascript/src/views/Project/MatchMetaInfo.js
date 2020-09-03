@@ -5,11 +5,11 @@ export default function MatchMetaInfo({ match }) {
   return (
     <>
       <Text
-        fontSize="2xl"
+        fontSize="3xl"
         color="neutral900"
         marginBottom="4px"
         fontWeight="medium"
-        letterSpacing="-0.04em"
+        letterSpacing="-0.02em"
       >
         {match.specialist.name}
       </Text>

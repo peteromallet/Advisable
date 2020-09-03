@@ -48,21 +48,20 @@ function Project({ project }) {
         )}
         <Text
           fontSize="xl"
-          lineHeight="24px"
+          lineHeight="22px"
           color="neutral900"
-          marginBottom="12px"
+          marginBottom="8px"
           fontWeight="medium"
-          letterSpacing="-0.03em"
+          letterSpacing="-0.02em"
           className="projectTitle"
         >
           {project.title}
         </Text>
         <Text
           fontSize="sm"
-          color="neutral700"
+          color="neutral800"
           lineHeight="20px"
           marginBottom="24px"
-          letterSpacing="-0.01em"
         >
           {project.excerpt}
         </Text>
@@ -77,9 +76,10 @@ export default function SpecialistProjects({ projects }) {
     <Box marginBottom="52px">
       <Text
         fontSize="xl"
-        fontWeight="medium"
         color="neutral900"
         marginBottom="16px"
+        fontWeight="medium"
+        letterSpacing="-0.02em"
       >
         Similar Previous Projects
       </Text>

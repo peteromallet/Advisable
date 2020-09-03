@@ -20,14 +20,14 @@ const steps = [
       return (
         <Box padding="32px">
           <Text
-            fontSize="24px"
+            fontSize="4xl"
             fontWeight="medium"
             marginBottom="12px"
             letterSpacing="-0.03em"
           >
             You have received your first recommendation!
           </Text>
-          <Paragraph size="sm" marginBottom="24px">
+          <Paragraph size="md" marginBottom="32px">
             We think we have found a suitable freelancer for this job! As this
             is your first recommendation we would like to take a quick minute to
             show you around.
@@ -47,14 +47,14 @@ const steps = [
       return (
         <Box padding="24px">
           <Text
-            fontSize="18px"
+            fontSize="xl"
             fontWeight="medium"
             marginBottom="8px"
             letterSpacing="-0.02em"
           >
             Match Score
           </Text>
-          <Paragraph size="sm" marginBottom="24px">
+          <Paragraph marginBottom="24px">
             Each recommended freelancer has a match score. This is an indicator
             of how suitable we think a freelancer is for a job.
           </Paragraph>
@@ -73,7 +73,7 @@ const steps = [
       return (
         <Box padding="24px">
           <Text
-            fontSize="18px"
+            fontSize="xl"
             fontWeight="medium"
             marginBottom="8px"
             letterSpacing="-0.02em"
@@ -100,7 +100,7 @@ const steps = [
       return (
         <Box padding="24px">
           <Text
-            fontSize="18px"
+            fontSize="xl"
             fontWeight="medium"
             marginBottom="8px"
             letterSpacing="-0.02em"
@@ -124,14 +124,14 @@ const steps = [
       return (
         <Box padding="32px">
           <Text
-            fontSize="18px"
+            fontSize="4xl"
             fontWeight="medium"
             marginBottom="8px"
             letterSpacing="-0.02em"
           >
             That’s it!
           </Text>
-          <Paragraph size="sm" marginBottom="24px">
+          <Paragraph marginBottom="24px">
             That’s everything you need to know about recommendations. We’ll let
             you take it from here
           </Paragraph>

@@ -16,12 +16,12 @@ function RecommendationComment({ application, project }) {
   const comment = application.comment;
 
   return (
-    <Card marginBottom="52px">
+    <Card marginBottom="3xl">
       <Box display="flex" alignItems="center">
-        <Text color="blue700" marginRight="8px">
+        <Text color="blue700" marginRight="4px">
           <Flash size="20px" />
         </Text>
-        <Text fontSize="14px" color="neutral600">
+        <Text fontSize="sm" color="neutral800">
           This candidate was hand picked by Advisable
         </Text>
       </Box>
@@ -34,18 +34,15 @@ function RecommendationComment({ application, project }) {
             url={salesPerson.image}
           />
           <Box paddingLeft="12px">
-            <Text marginBottom="2px">{salesPerson.name}</Text>
-            <Text fontSize="14px" color="neutral500">
+            <Text fontWeight="medium" marginBottom="2px">
+              {salesPerson.name}
+            </Text>
+            <Text fontSize="xs" color="neutral600">
               Advisable Team
             </Text>
           </Box>
         </Box>
-        <Text
-          fontSize="15px"
-          lineHeight="20px"
-          fontStyle="italic"
-          color="neutral800"
-        >
+        <Text lineHeight="20px" fontStyle="italic" color="neutral800">
           &quot;{comment}&quot;
         </Text>
       </Box>

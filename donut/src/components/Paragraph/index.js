@@ -18,7 +18,7 @@ const SIZES = {
   },
   md: {
     fontSize: "md",
-    lineHeight: "23px",
+    lineHeight: "22px",
   },
   lg: {
     fontSize: "lg",
@@ -32,6 +32,7 @@ const Paragraph = forwardRef(function Paragraph({ size, ...props }, ref) {
 });
 
 Paragraph.defaultProps = {
+  size: "md",
   color: "neutral800",
 };
 

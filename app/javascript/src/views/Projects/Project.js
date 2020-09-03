@@ -36,7 +36,6 @@ export default function Project({ project }) {
         color="neutral900"
         fontWeight="medium"
         letterSpacing="-0.05rem"
-        fontFamily="heading"
       >
         {project.primarySkill?.name || "New Project"}
       </Text>

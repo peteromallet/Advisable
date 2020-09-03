@@ -77,10 +77,11 @@ export default function ProposalTasks({ tasks }) {
     <Box marginBottom="48px">
       <TaskDetailsModal dialog={dialog} id={selectedTaskId} />
       <Text
+        fontSize="lg"
         color="neutral900"
         marginBottom="12px"
         fontWeight="medium"
-        letterSpacing="-0.03em"
+        letterSpacing="-0.01em"
       >
         Suggested Tasks
       </Text>
@@ -95,8 +96,8 @@ export default function ProposalTasks({ tasks }) {
               <Box flexShrink="1" minWidth="0">
                 <StyledTaskName
                   color="neutral900"
-                  fontSize="15px"
-                  lineHeight="18px"
+                  fontSize="16px"
+                  letterSpacing="-0.01em"
                 >
                   {task.name}
                 </StyledTaskName>

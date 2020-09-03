@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Modal, Avatar, Box, Text, Tag } from "@advisable/donut";
+import { Modal, Avatar, Box, Text, Tag, Paragraph } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
 import IndustryTag from "../IndustryTag";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
@@ -26,10 +26,10 @@ function PreviousProjectDetails({ id }) {
       <Box mb="m" width="80%">
         <Text
           as="h2"
-          fontSize="28px"
-          color="blue900"
+          fontSize="4xl"
+          color="neutral900"
           lineHeight="30px"
-          fontWeight="semibold"
+          fontWeight="medium"
           letterSpacing="-0.02em"
         >
           {project.title}
@@ -54,19 +54,24 @@ function PreviousProjectDetails({ id }) {
         </Box>
       </Box>
       <Box height={1} bg="neutral100" mb="l" />
-      <Text mb="xs" color="blue900" fontWeight="medium" letterSpacing="-0.02em">
+      <Text
+        mb="xs"
+        fontSize="lg"
+        color="neutral900"
+        fontWeight="medium"
+        letterSpacing="-0.01em"
+      >
         Project description
       </Text>
-      <Text mb="xl" fontSize="m" color="neutral800" lineHeight="m">
-        {renderLineBreaks(project.description)}
-      </Text>
+      <Paragraph mb="xl">{renderLineBreaks(project.description)}</Paragraph>
       <Box display={["block", "flex"]}>
         <Box width="100%" mb="xl">
           <Text
             mb="xs"
-            color="blue900"
+            fontSize="lg"
+            color="neutral900"
             fontWeight="medium"
-            letterSpacing="-0.02em"
+            letterSpacing="-0.01em"
           >
             Skills Used
           </Text>
@@ -81,9 +86,10 @@ function PreviousProjectDetails({ id }) {
         <Box width="100%" mb="xl">
           <Text
             mb="xs"
-            color="blue900"
+            fontSize="lg"
+            color="neutral900"
             fontWeight="medium"
-            letterSpacing="-0.02em"
+            letterSpacing="-0.01em"
           >
             Industries
           </Text>
