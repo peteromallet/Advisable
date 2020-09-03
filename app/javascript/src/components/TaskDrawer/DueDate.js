@@ -71,14 +71,7 @@ export default function DueDate({
         style={{ zIndex: 999 }}
         aria-label="Provide due date"
       >
-        <Card
-          padding="m"
-          elevation="xl"
-          as={motion.div}
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 20, opacity: 0 }}
-        >
+        <Card padding="m" elevation="xl">
           <DatePicker
             showOutsideDays={false}
             selectedDays={selected}
