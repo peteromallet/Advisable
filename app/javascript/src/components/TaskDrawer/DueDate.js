@@ -68,7 +68,7 @@ export default function DueDate({
       </PopoverDisclosure>
       <Popover
         {...popover}
-        style={{ zIndex: 999 }}
+        style={{ zIndex: 9999 }}
         aria-label="Provide due date"
       >
         <AnimatePresence>
