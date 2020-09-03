@@ -32,6 +32,7 @@ export const viewerFields = gql`
       applicationStage
       completedTutorials
       avatar
+      guild
       image {
         url
       }

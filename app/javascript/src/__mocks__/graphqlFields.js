@@ -205,6 +205,7 @@ export const specialist = (fields = {}) => {
       },
       skills: [],
       previousProjectsCount: 0,
+      guild: false,
     },
     fields,
   );

@@ -30,6 +30,9 @@ environment.config.merge({
     alias: {
       "@advisable/donut": path.join(__dirname, "../../donut/src"),
       components: path.join(__dirname, "../../app/javascript/src/components"),
+      /* Guild */
+      '@advisable-main': path.resolve(__dirname, '..', '..', 'app/javascript/src'),
+      '@guild': path.resolve(__dirname, '..', '..', 'app/javascript/guild'),
     },
   },
 });

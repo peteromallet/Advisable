@@ -65,6 +65,9 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'image_processing', '~> 1.0'
 gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 
+# Guild 
+gem "jsonb_accessor", "~> 1.0.0"
+
 group :development, :test do
   gem 'pry'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -83,6 +86,9 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'prettier'
   gem 'graphql_playground-rails'
+  gem 'pry-rails'
+  gem 'niceql'
+  gem 'graphql-rails_logger'
 end
 
 group :test do

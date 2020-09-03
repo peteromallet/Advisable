@@ -266,4 +266,38 @@ class Types::QueryType < Types::BaseType
   rescue Stripe::InvalidRequestError => e
     raise ApiError::InvalidRequest.new('notFound', 'Invoice not found')
   end
+
+    # Guild
+  field :guild_post, Types::Guild::PostInterface, null: true do
+    argument :id, ID, required: true
+  end
+  
+  def guild_post(id:)
+    post = Guild::Post.find(id)
+    policy = Guild::PostPolicy.new(context[:current_user], post)
+
+    return post if policy.show
+
+    if context[:current_user]
+      raise GraphQL::ExecutionError.new('Invalid Permissions', options: { code: 'invalidPermissions' })
+    end
+  end
+
+  field :guild_posts,
+        Types::Guild::PostInterface.connection_type,
+        null: false,
+        max_page_size: 10 do
+    description "Returns a list of guild posts that match a given search criteria"
+
+    argument :type, String, required: false do
+      description 'Filters guild posts by type.'
+    end
+  end
+
+  def guild_posts
+    Guild::Post
+      .includes(:specialist, parent_comments: [child_comments: [:post]])
+      .published
+      .order(created_at: :desc)
+  end
 end
