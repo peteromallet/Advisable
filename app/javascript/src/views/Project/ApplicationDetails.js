@@ -1,5 +1,4 @@
 import React from "react";
-import ApplicationQuestions from "./ApplicationQuestions";
 import ProposalCard from "./ProposalCard";
 import SpecialistReviews from "./SpecialistReviews";
 import SpecialistProjects from "./SpecialistProjects";
@@ -16,9 +15,6 @@ export default function ApplicationDetails({ application, project }) {
         <RecommendationComment application={application} project={project} />
       )}
       <SpecialistIntroduction application={application} />
-      {application.questions.length > 0 && (
-        <ApplicationQuestions questions={application.questions} />
-      )}
       {application.previousProjects.length > 0 && (
         <SpecialistProjects projects={application.previousProjects} />
       )}

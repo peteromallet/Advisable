@@ -31,8 +31,8 @@ export const StyledNavigationMenuItem = styled(NavLink)`
   height: 40px;
   display: flex;
   color: inherit;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 17px;
+  font-weight: 600;
   border-radius: 20px;
   align-items: center;
   padding-left: 16px;

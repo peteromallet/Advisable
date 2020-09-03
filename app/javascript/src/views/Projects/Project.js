@@ -32,14 +32,15 @@ export default function Project({ project }) {
     <StyledProject as={Link} to={url} padding="l">
       <Text
         mb="4px"
-        fontSize="20px"
-        color="blue900"
+        fontSize="2xl"
+        color="neutral900"
         fontWeight="medium"
         letterSpacing="-0.05rem"
+        fontFamily="heading"
       >
         {project.primarySkill?.name || "New Project"}
       </Text>
-      <Text mb="12px" fontSize="xs" color="neutral500">
+      <Text mb="12px" fontSize="sm" color="neutral500">
         {DateTime.fromISO(project.createdAt).toRelative()}
       </Text>
       {project.status === "DRAFT" && <Badge variant="orange">Draft</Badge>}

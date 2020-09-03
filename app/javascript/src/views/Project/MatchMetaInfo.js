@@ -5,16 +5,16 @@ export default function MatchMetaInfo({ match }) {
   return (
     <>
       <Text
-        fontSize="22px"
+        fontSize="2xl"
         color="neutral900"
         marginBottom="4px"
         fontWeight="medium"
-        letterSpacing="-0.03em"
+        letterSpacing="-0.04em"
       >
         {match.specialist.name}
       </Text>
       <Text
-        fontSize="15px"
+        fontSize="sm"
         fontWeight="light"
         color="neutral600"
         marginBottom="24px"
@@ -23,19 +23,19 @@ export default function MatchMetaInfo({ match }) {
       </Text>
       <Box height="1px" bg="neutral200" />
       <Box paddingY="16px" display="flex" justifyContent="space-between">
-        <Text fontSize="14px" color="neutral500">
+        <Text fontSize="sm" color="neutral700">
           Hourly Rate
         </Text>
-        <Text fontSize="14px" color="neutral900">
+        <Text fontSize="sm" fontWeight="medium" color="neutral900">
           ${match.rate}
         </Text>
       </Box>
       <Box height="1px" bg="neutral200" />
       <Box paddingY="16px" display="flex" justifyContent="space-between">
-        <Text fontSize="14px" color="neutral500">
+        <Text fontSize="14px" color="neutral700">
           Availability
         </Text>
-        <Text fontSize="14px" color="neutral900">
+        <Text fontSize="14px" fontWeight="medium" color="neutral900">
           {match.availability}
         </Text>
       </Box>

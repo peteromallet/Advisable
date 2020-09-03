@@ -42,12 +42,13 @@ const Projects = () => {
       <Text
         mb="l"
         as="h2"
-        fontSize="24px"
-        color="blue900"
+        fontSize="28px"
+        color="neutral900"
         fontWeight="medium"
-        letterSpacing="-0.07rem"
+        letterSpacing="-0.04rem"
+        fontFamily="heading"
       >
-        Your Projects
+        Projects
       </Text>
 
       {!loading && (

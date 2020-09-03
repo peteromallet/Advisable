@@ -47,18 +47,18 @@ function Project({ project }) {
           />
         )}
         <Text
-          fontSize="20px"
+          fontSize="xl"
           lineHeight="24px"
           color="neutral900"
           marginBottom="12px"
           fontWeight="medium"
-          letterSpacing="-0.04em"
+          letterSpacing="-0.03em"
           className="projectTitle"
         >
           {project.title}
         </Text>
         <Text
-          fontSize="14px"
+          fontSize="sm"
           color="neutral700"
           lineHeight="20px"
           marginBottom="24px"
@@ -76,13 +76,12 @@ export default function SpecialistProjects({ projects }) {
   return (
     <Box marginBottom="52px">
       <Text
-        fontSize="19px"
-        fontWeight="500"
+        fontSize="xl"
+        fontWeight="medium"
         color="neutral900"
         marginBottom="16px"
-        letterSpacing="-0.02em"
       >
-        Previous Projects
+        Similar Previous Projects
       </Text>
       <Masonry gutter={24}>
         {projects.map((project) => (

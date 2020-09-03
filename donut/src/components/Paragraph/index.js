@@ -18,7 +18,7 @@ const SIZES = {
   },
   md: {
     fontSize: "md",
-    lineHeight: "24px",
+    lineHeight: "23px",
   },
   lg: {
     fontSize: "lg",

@@ -29,11 +29,6 @@ space["3xl"] = space[8];
 space["4xl"] = space[9];
 space["5xl"] = space[10];
 
-const fonts = {
-  body: "poppins, sans-serif",
-  heading: "metropolis, poppins, sans-serif",
-};
-
 // Font sizes
 const fontSizes = {
   xxs: 12,
@@ -41,11 +36,12 @@ const fontSizes = {
   xs: 14,
   s: 15,
   sm: 15,
-  m: 16,
-  md: 16,
-  l: 18,
-  lg: 18,
-  xl: 20,
+  m: 17,
+  md: 17,
+  l: 20,
+  lg: 19,
+  xl: 21,
+  "2xl": 23,
   xxl: 24,
   xxxl: 32,
   xxxxl: 32,
@@ -59,6 +55,11 @@ const fontWeights = {
   semibold: 600,
   bold: 700,
   extraBold: 800,
+};
+
+const fonts = {
+  body: "poppins, sans-serif",
+  heading: "TTNormsPro, poppins, sans-serif",
 };
 
 // Line heights

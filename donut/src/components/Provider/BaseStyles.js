@@ -1,6 +1,11 @@
 import { createGlobalStyle } from "styled-components";
 import { StyledBackdrop, StyledModalWindowContainer } from "../Modal/styles";
 
+import normsRegularWoff from "./fonts/TTNormsPro-Regular/font.woff";
+import normsRegularWoff2 from "./fonts/TTNormsPro-Regular/font.woff2";
+import normsMediumWoff from "./fonts/TTNormsPro-Medium/font.woff";
+import normsMediumWoff2 from "./fonts/TTNormsPro-Medium/font.woff2";
+
 const BACKGROUND = {
   default: "#F8F8F9",
   white: "#FFFFFF",
@@ -11,10 +16,21 @@ const BaseStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  @font-face {
+    font-family: 'TTNormsPro';
+    font-weight: 400;
+    src: url(${normsRegularWoff2}) format('woff2'), url(${normsRegularWoff}) format('woff');
+  }
+
+  @font-face {
+    font-family: 'TTNormsPro';
+    font-weight: 500;
+    src: url(${normsMediumWoff2}) format('woff2'), url(${normsMediumWoff}) format('woff');
+  }
+
   html, body {
     font-size: 16px;
     box-sizing: border-box;
-    font-family: poppins, sans-serif;
   }
 
   *, *:before, *:after {
