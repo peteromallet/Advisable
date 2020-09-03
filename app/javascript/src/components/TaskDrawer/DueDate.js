@@ -68,7 +68,7 @@ export default function DueDate({
       </PopoverDisclosure>
       <Popover
         {...popover}
-        style={{ zIndex: 999 }}
+        style={{ zIndex: 999, position: "absolute" }}
         aria-label="Provide due date"
       >
         <Card padding="m" elevation="xl">
