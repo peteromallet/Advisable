@@ -101,3 +101,10 @@ jobs:
 
       - name: Test
         run: bundle exec rspec
+
+      - name: Test screenshots
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: screenshots
+          path: tmp/screenshots

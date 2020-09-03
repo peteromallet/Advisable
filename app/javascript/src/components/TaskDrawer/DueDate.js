@@ -68,36 +68,25 @@ export default function DueDate({
       </PopoverDisclosure>
       <Popover
         {...popover}
-        style={{ zIndex: 999 }}
+        style={{ zIndex: 999, position: "absolute" }}
         aria-label="Provide due date"
       >
-        <AnimatePresence>
-          {popover.visible && (
-            <Card
-              padding="m"
-              elevation="xl"
-              as={motion.div}
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-            >
-              <DatePicker
-                showOutsideDays={false}
-                selectedDays={selected}
-                initialMonth={initialMonth.toJSDate()}
-                disabledDays={isDayDisabled}
-                onDayClick={handleSelection(popover)}
-              />
-              {selected && (
-                <Box paddingTop="m">
-                  <Button width="100%" onClick={handleRemove(popover)}>
-                    Remove due date
-                  </Button>
-                </Box>
-              )}
-            </Card>
+        <Card padding="m" elevation="xl">
+          <DatePicker
+            showOutsideDays={false}
+            selectedDays={selected}
+            initialMonth={initialMonth.toJSDate()}
+            disabledDays={isDayDisabled}
+            onDayClick={handleSelection(popover)}
+          />
+          {selected && (
+            <Box paddingTop="m">
+              <Button width="100%" onClick={handleRemove(popover)}>
+                Remove due date
+              </Button>
+            </Box>
           )}
-        </AnimatePresence>
+        </Card>
       </Popover>
     </>
   );
