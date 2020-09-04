@@ -85,6 +85,7 @@ class Types::MutationType < GraphQL::Schema::Object
 
   field :create_job, mutation: Mutations::CreateJob
   field :delete_job, mutation: Mutations::DeleteJob
+  field :toggle_sourcing, mutation: Mutations::ToggleSourcing
 
   field :update_user, mutation: Mutations::UpdateUser
   field :start_client_application, mutation: Mutations::StartClientApplication

@@ -127,7 +127,7 @@ export const NavItem = styled(NavLink)`
   height: 58px;
   color: #aabdff;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 400;
   align-items: center;
   user-select: none;
   margin-left: 28px;

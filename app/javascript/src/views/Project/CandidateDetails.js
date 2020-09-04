@@ -43,11 +43,7 @@ export default function CandidateDetails({ project }) {
             marginBottom="24px"
             url={application.specialist.avatar}
             name={application.specialist.name}
-          >
-            <Box position="absolute" right="-12px" top="-12px" zIndex="5">
-              <ApplicantScore score={application.score} />
-            </Box>
-          </Avatar>
+          />
           <MatchMetaInfo match={application} />
           <Box paddingTop="12px">
             <ApplicationStatus application={application} />

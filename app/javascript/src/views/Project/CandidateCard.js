@@ -52,11 +52,7 @@ export default function CandidateCard({ application }) {
         marginBottom="16px"
         url={application.specialist.avatar}
         name={application.specialist.name}
-      >
-        <Box position="absolute" right="-12px" top="-12px" zIndex="4">
-          <ApplicantScore score={application.score} />
-        </Box>
-      </Avatar>
+      />
       <Text
         fontSize="22px"
         fontWeight="500"

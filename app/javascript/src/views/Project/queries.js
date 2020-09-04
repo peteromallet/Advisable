@@ -384,3 +384,18 @@ export const COMPLETE_TUTORIAL = gql`
 export function useCompleteTutorial(opts) {
   return useMutation(COMPLETE_TUTORIAL, opts);
 }
+
+export const TOGGLE_SOURCING = gql`
+  mutation toggleSourcing($input: ToggleSourcingInput!) {
+    toggleSourcing(input: $input) {
+      project {
+        id
+        sourcing
+      }
+    }
+  }
+`;
+
+export function useToggleSourcing(opts) {
+  return useMutation(TOGGLE_SOURCING, opts);
+}

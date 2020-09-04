@@ -1,9 +1,27 @@
 import React from "react";
+import { motion } from "framer-motion";
+import { useParams } from "react-router-dom";
 import pluralize from "../../utilities/pluralize";
 import AvatarStack from "components/AvatarStack";
-import { Box, Card, Text, Stack, Link, Avatar } from "@advisable/donut";
+import { ArrowForward } from "@styled-icons/ionicons-solid";
+import { Box, Card, Text, Paragraph, Link, Avatar } from "@advisable/donut";
+import { useToggleSourcing } from "./queries";
 
 export default function RequestedIntroductions({ accepted }) {
+  const { id } = useParams();
+
+  const [toggleSourcing, { loading }] = useToggleSourcing();
+
+  const handleToggle = async () => {
+    await toggleSourcing({
+      variables: {
+        input: {
+          project: id,
+        },
+      },
+    });
+  };
+
   return (
     <Box
       height="60vh"
@@ -11,8 +29,16 @@ export default function RequestedIntroductions({ accepted }) {
       alignItems="center"
       justifyContent="center"
     >
-      <Card width="100%" maxWidth="500px" padding="32px">
-        <AvatarStack size="l" marginBottom="m">
+      <Card
+        as={motion.div}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        width="100%"
+        maxWidth="540px"
+        padding="3xl"
+        borderRadius="12px"
+      >
+        <AvatarStack size="l" marginBottom="l">
           {accepted.map((a) => (
             <Avatar
               key={a.id}
@@ -22,36 +48,36 @@ export default function RequestedIntroductions({ accepted }) {
           ))}
         </AvatarStack>
         <Text
-          fontSize="24px"
+          fontSize="4xl"
           color="neutral900"
           fontWeight="medium"
-          marginBottom="12px"
-          letterSpacing="-0.04em"
-        >
-          You have requested{" "}
-          {pluralize(accepted.length, "introduction", "introductions")}!
-        </Text>
-        <Text
-          lineHeight="20px"
           marginBottom="xs"
-          color="neutral700"
           letterSpacing="-0.02em"
         >
+          You have been matched with{" "}
+          {pluralize(accepted.length, "candidate", "candidates")}!
+        </Text>
+        <Paragraph marginBottom="m">
           Looks like you might have found someone you like! We have sent your
           availability to the freelancers you accepted and will let you know
           when they respond.
+        </Paragraph>
+        <Text marginBottom="2xl">
+          <Link to={`/projects/${id}/candidates`}>
+            View accepted candidates
+            <ArrowForward size="16px" />
+          </Link>
         </Text>
-        <Link marginBottom="xl">View accepted candidates</Link>
-        <Text
-          lineHeight="20px"
-          marginBottom="xs"
-          color="neutral700"
-          letterSpacing="-0.02em"
-        >
+        <Text marginBottom="xs" fontWeight="medium">
+          Matching has been turned off
+        </Text>
+        <Paragraph size="sm" marginBottom="xs">
           We’ll stop recommending new candidates until after you have spoken
           with these freelancers.
-        </Text>
-        <Link>I still want to recieve new candidates</Link>
+        </Paragraph>
+        <Link onClick={handleToggle}>
+          I still want to recieve new candidates
+        </Link>
       </Card>
     </Box>
   );
