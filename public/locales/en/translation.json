@@ -12,6 +12,24 @@
       }
     }
   },
+  "applicationStatus": {
+    "Application Accepted": {
+      "title": "Call Requested",
+      "description": "We have requested a call with {{specialistName}}. We will let you know when they respond."
+    },
+    "Interview Scheduled": {
+      "title": "Call Scheduled",
+      "description": "You have a call with {{specialistName}} scheduled for {{interviewDate}}"
+    },
+    "Interview Completed": {
+      "title": "Call Completed",
+      "description": "Now that you have spoken with {{specialistName}} you can decide wether to work together or not."
+    },
+    "Proposed": {
+      "title": "{{specialistName}} sent a proposal",
+      "description": "{{specialistName}} has sent you a proposal and is waiting for your response."
+    }
+  },
   "errors": {
     "emailTaken": "This email address is already associated with an existing account.",
     "account_not_found": "Your account could not be found. You must first go through our application process.",
@@ -29,18 +47,6 @@
       "description": {
         "client": "Advisable offers clients a risk-free trial period of up to 8 hours when working with a new freelancer. If you're not entirely satisfied during this period, you will not be charged for any work completed and we will find you a replacement freelancer free of charge. The only requirement is that you provide us with feedback as per Advisable's Professional Standards.",
         "freelancer": "Advisable offers clients a trial period of up to 8 hours when working with a new freelancer. You will be paid for work completed during this trial as long as the client agrees you adhered to Advisable's Professional Standards."
-      }
-    }
-  },
-  "proposals": {
-    "projectType": {
-      "fixed": {
-        "title": "{{firstName}} has suggested a 'Fixed' project",
-        "description": "Fixed projects allow you to work with freelancers on one big project or a number of smaller tasks"
-      },
-      "flexible": {
-        "title": "{{firstName}} has suggested a 'Flexible' project with a monthly limit of {{monthlyLimit}} hours",
-        "description": "Flexible projects allow you to work with freelaners on a flexible basis with monthly limits."
       }
     }
   },

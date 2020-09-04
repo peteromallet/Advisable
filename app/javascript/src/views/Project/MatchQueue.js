@@ -6,7 +6,7 @@ import ApplicantScore from "./ApplicantScore";
 
 const StyledMatch = styled(motion.div)`
   width: 100%;
-  height: 260px;
+  height: 280px;
   overflow: hidden;
   border-radius: 12px;
   background: #b5b8ca;
@@ -65,7 +65,7 @@ const IMAGE_ANIMATIONS = {
 
 export default function MatchQueue({ matches }) {
   return (
-    <Box position="relative" width="100%" height="260px" marginBottom="32px">
+    <Box position="relative" width="100%" height="280px" marginBottom="32px">
       <Box
         data-walkthrough="matchScore"
         position="absolute"

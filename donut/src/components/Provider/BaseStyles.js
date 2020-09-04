@@ -1,16 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { StyledBackdrop, StyledModalWindowContainer } from "../Modal/styles";
 
-import hovesRegularWoff from "./fonts/TTHoves-Regular/font.woff";
-import hovesRegularWoff2 from "./fonts/TTHoves-Regular/font.woff2";
-import hovesMediumWoff from "./fonts/TTHoves-Medium/font.woff";
-import hovesMediumWoff2 from "./fonts/TTHoves-Medium/font.woff2";
-
-import normsRegularWoff from "./fonts/TTNormsPro-Regular/font.woff";
-import normsRegularWoff2 from "./fonts/TTNormsPro-Regular/font.woff2";
-import normsMediumWoff from "./fonts/TTNormsPro-Medium/font.woff";
-import normsMediumWoff2 from "./fonts/TTNormsPro-Medium/font.woff2";
-
 const BACKGROUND = {
   default: "#F8F8F9",
   white: "#FFFFFF",
@@ -19,30 +9,6 @@ const BACKGROUND = {
 const BaseStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
-  }
-
-  @font-face {
-    font-family: 'TTHoves';
-    font-weight: 400;
-    src: url(${hovesRegularWoff2}) format('woff2'), url(${hovesRegularWoff}) format('woff');
-  }
-
-  @font-face {
-    font-family: 'TTHoves';
-    font-weight: 500;
-    src: url(${hovesMediumWoff2}) format('woff2'), url(${hovesMediumWoff}) format('woff');
-  }
-
-  @font-face {
-    font-family: 'TTNormsPro';
-    font-weight: 400;
-    src: url(${normsRegularWoff2}) format('woff2'), url(${normsRegularWoff}) format('woff');
-  }
-
-  @font-face {
-    font-family: 'TTNormsPro';
-    font-weight: 500;
-    src: url(${normsMediumWoff2}) format('woff2'), url(${normsMediumWoff}) format('woff');
   }
 
   html, body {

@@ -13,7 +13,7 @@ function ProjectNavigation({ data }) {
       <BackButton to="/projects" marginBottom="m" />
 
       <NavigationMenu>
-        <NavigationMenu.Item icon={<FileTray />} to={`/projects/${id}`} exact>
+        <NavigationMenu.Item icon={<FileTray />} to={`/projects/${id}/matches`}>
           Inbox
         </NavigationMenu.Item>
         <NavigationMenu.Item

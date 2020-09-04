@@ -119,7 +119,10 @@ class TestData
         project: project, specialist: specialist, status: 'Application Accepted'
       )
 
-    interview = application.interviews.find_or_create_by(user: project.user)
+    interview =
+      application.interviews.find_or_create_by(
+        airtable_id: AlphanumericId.generate, user: project.user
+      )
     interview.status = 'Call Requested'
     interview.save
     application
@@ -298,7 +301,24 @@ class TestData
           "Ryan Bailey Howard is a fictional character on the US television series The Office. He is portrayed by the show's writer, director, and executive producer B. J. Novak, and is based upon Ricky Howard from the original British version of The Office (as well as Neil Godwin, during the fourth season).[2] During this time, his role is significantly expanded to that of a main character."
       )
 
-    create_accepted_application(project, ryan)
+    application = create_accepted_application(project, ryan)
+    application.interviews.first.update starts_at: 2.days.from_now,
+                                        status: 'Call Scheduled'
+    application.update status: 'Interview Scheduled'
+
+    erin =
+      create_specialist(
+        first_name: 'Erin',
+        last_name: 'Hannon',
+        email: 'staging+erin@advisable.com',
+        bio:
+          "Kelly Erin Hannon (born May 1, 1986)[1] is a fictional character from the U.S. comedy television series The Office. She is the office receptionist for the Scranton branch of Dunder Mifflin, a position previously held by Pam Beesly before she quit to go work for the Michael Scott Paper Company. Erin is portrayed by Ellie Kemper. She is an original character, although her closest equivalent in the British version of the series would be Mel the receptionist, who appears briefly in The Office Christmas specials, as Dawn Tinsley's replacement."
+      )
+
+    application = create_accepted_application(project, erin)
+    application.interviews.first.update starts_at: 2.days.ago,
+                                        status: 'Call Completed'
+    application.update status: 'Interview Completed'
 
     toby =
       create_specialist(

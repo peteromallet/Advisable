@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Container } from "@advisable/donut";
-import { useParams, useLocation, Redirect } from "react-router-dom";
+import { Container, useBreakpoint } from "@advisable/donut";
+import { Route, useParams, useLocation, Redirect } from "react-router-dom";
 import View from "components/View";
 import Loading from "components/Loading";
 import AccessDenied from "components/AccessDenied";
@@ -14,6 +14,7 @@ import Navigation from "./Navigation";
 export default function Project() {
   const { id } = useParams();
   const location = useLocation();
+  const isLargerScreen = useBreakpoint("lUp");
   const { loading, data, error } = useQuery(GET_PROJECT, { variables: { id } });
 
   if (loading) return <Loading />;
@@ -30,9 +31,11 @@ export default function Project() {
 
   return (
     <View>
-      <View.Sidebar>
-        <Navigation data={data} />
-      </View.Sidebar>
+      <Route path="/projects/:id" exact={!isLargerScreen}>
+        <View.Sidebar width={["100%", "100%", "100%", "280px"]}>
+          <Navigation data={data} />
+        </View.Sidebar>
+      </Route>
       <View.Content>
         <Container maxWidth="1100px">
           <ProjectRoutes project={data.project} />

@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
 import { DateTime } from "luxon";
-import { Box, Text, Button, Paragraph } from "@advisable/donut";
+import {
+  Box,
+  Text,
+  Button,
+  Paragraph,
+  Availability,
+  useBreakpoint,
+} from "@advisable/donut";
 import AvailabilityInput from "components/AvailabilityInput";
 import ActionBarModal from "./ActionBarModal";
 import { useAvailability, useUpdateAvailability } from "./queries";
@@ -13,6 +20,7 @@ function onlyFutureAvailability(availability) {
 }
 
 export default function UpdateAvailability({ firstName, dialog, onUpdate }) {
+  const isLargerScreen = useBreakpoint("lUp");
   const { loading, data } = useAvailability({
     skip: !dialog.visible,
   });
@@ -67,12 +75,20 @@ export default function UpdateAvailability({ firstName, dialog, onUpdate }) {
             {firstName}. We'll send these times to {firstName} for them to
             schedule a call.
           </Paragraph>
-          <AvailabilityInput
-            maxHeight="350px"
-            value={availability}
-            onChange={setAvailability}
-            events={events}
-          />
+          {isLargerScreen ? (
+            <AvailabilityInput
+              maxHeight="350px"
+              value={availability}
+              onChange={setAvailability}
+              events={events}
+            />
+          ) : (
+            <Availability
+              value={availability}
+              onChange={setAvailability}
+              events={events}
+            />
+          )}
           <Box marginTop="24px">
             {availability.length >= 6 ? (
               <Button

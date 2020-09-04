@@ -1,7 +1,7 @@
 import React from "react";
 import Sticky from "components/Sticky";
 import { Helmet } from "react-helmet";
-import { Box, Avatar } from "@advisable/donut";
+import { Box, Avatar, useBreakpoint } from "@advisable/donut";
 import { Switch, Route, useParams } from "react-router-dom";
 import Loading from "components/Loading";
 import MatchMetaInfo from "./MatchMetaInfo";
@@ -11,9 +11,11 @@ import { useCandidate } from "./queries";
 import ActionBar from "./ActionBar";
 import ActionBarContainer from "./ActionBarContainer";
 import ApplicantScore from "./ApplicantScore";
+import ApplicationStatus from "./ApplicationStatus";
 
 export default function CandidateDetails({ project }) {
   const { applicationId } = useParams();
+  const isLargeScreen = useBreakpoint("mUp");
   const { loading, data } = useCandidate({ variables: { id: applicationId } });
 
   React.useEffect(() => {
@@ -25,12 +27,17 @@ export default function CandidateDetails({ project }) {
   const application = data?.application;
 
   return (
-    <Box paddingTop="40px" display="flex">
+    <Box paddingTop="40px" display={[null, null, "flex"]}>
       <Helmet>
         <title>Advisable | {application.specialist.name}</title>
       </Helmet>
-      <Box width="220px" marginRight="64px" flexShrink="0">
-        <Sticky offset={100}>
+      <Box
+        flexShrink="0"
+        marginBottom="xl"
+        width={["100%", "100%", "240px"]}
+        marginRight={[null, null, "64px"]}
+      >
+        <Sticky offset={40} enabled={isLargeScreen}>
           <Avatar
             size="xxl"
             marginBottom="24px"
@@ -42,6 +49,9 @@ export default function CandidateDetails({ project }) {
             </Box>
           </Avatar>
           <MatchMetaInfo match={application} />
+          <Box paddingTop="12px">
+            <ApplicationStatus application={application} />
+          </Box>
         </Sticky>
       </Box>
       <Box flexGrow="1" minWidth={0} paddingBottom="140px">

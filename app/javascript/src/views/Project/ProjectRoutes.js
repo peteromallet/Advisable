@@ -1,15 +1,24 @@
 import React from "react";
-import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { useBreakpoint } from "@advisable/donut";
+import {
+  Switch,
+  Route,
+  useParams,
+  useRouteMatch,
+  Redirect,
+} from "react-router-dom";
 import Inbox from "./Inbox";
 import Candidates from "./Candidates";
 import CandidateDetails from "./CandidateDetails";
 
 export default function ProjectRoutes({ project }) {
-  const { path } = useRouteMatch();
+  const { id } = useParams();
+  const { path, url } = useRouteMatch();
+  const isLargerScreen = useBreakpoint("lUp");
 
   return (
     <Switch>
-      <Route path={path} exact>
+      <Route path={`${path}/matches`} exact>
         <Inbox project={project} />
       </Route>
       <Route path={`${path}/candidates/:applicationId`}>
@@ -19,7 +28,13 @@ export default function ProjectRoutes({ project }) {
         <Candidates project={project} />
       </Route>
       <Route path={`${path}/settings`}>Settings</Route>
-      <Route path="*">Not Found</Route>
+      <Route path="*">
+        {isLargerScreen ? (
+          <Redirect to={`${url}/matches`} />
+        ) : (
+          <Redirect to={`/projects/${id}`} />
+        )}
+      </Route>
     </Switch>
   );
 }

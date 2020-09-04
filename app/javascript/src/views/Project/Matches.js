@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import MatchQueue from "./MatchQueue";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowForward } from "@styled-icons/ionicons-outline";
-import { Box, Text, Paragraph, Button } from "@advisable/donut";
+import { Box, Text, Paragraph, Button, useBreakpoint } from "@advisable/donut";
 import Sticky from "components/Sticky";
 import ActionBar from "./ActionBar";
 import ActionBarContainer from "./ActionBarContainer";
@@ -158,6 +158,7 @@ function useOrderedMatches(matches) {
 }
 
 export default function Matches({ data, project }) {
+  const isLargeScreen = useBreakpoint("mUp");
   const [completeTutorial] = useCompleteTutorial();
   const walkthrough = useWalkthrough(steps, {
     visible: !data.viewer.walkthroughComplete,
@@ -176,14 +177,19 @@ export default function Matches({ data, project }) {
   const application = matches[0];
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    document.getElementById("view")?.scrollTo(0, 0);
   }, [application.id]);
 
   return (
-    <Box paddingTop="40px" display="flex">
-      <Walkthrough {...walkthrough} />
-      <Box width="220px" marginRight="64px" flexShrink="0">
-        <Sticky offset={100}>
+    <Box paddingTop="40px" display={[null, null, "flex"]}>
+      {isLargeScreen && <Walkthrough {...walkthrough} />}
+      <Box
+        flexShrink="0"
+        marginBottom="xl"
+        width={["100%", "100%", "240px"]}
+        marginRight={[null, null, "64px"]}
+      >
+        <Sticky offset={40} enabled={isLargeScreen}>
           <div data-walkthrough="matchDetails">
             <MatchQueue matches={matches} />
             <MatchMetaInfo match={application} />

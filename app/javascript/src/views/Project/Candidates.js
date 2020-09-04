@@ -2,18 +2,13 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useParams } from "react-router-dom";
 import { useCandidates } from "./queries";
-import { Box, Skeleton, Text } from "@advisable/donut";
+import { Box, Skeleton } from "@advisable/donut";
 import CandidateCard from "./CandidateCard";
 import CandidatesEmptyState from "./CandidatesEmptyState";
 
 function Loading() {
   return (
-    <Box
-      display="grid"
-      gridGap="24px"
-      paddingY="24px"
-      gridTemplateColumns="1fr 1fr 1fr"
-    >
+    <Box display="grid" gridGap="24px" gridTemplateColumns="1fr 1fr 1fr">
       <Skeleton borderRadius="12px" height="400px" />
       <Skeleton borderRadius="12px" height="400px" />
       <Skeleton borderRadius="12px" height="400px" />
@@ -28,8 +23,13 @@ function CandidatesGrid({ candidates }) {
     <Box
       display="grid"
       gridGap="24px"
-      paddingY="24px"
-      gridTemplateColumns="1fr 1fr 1fr"
+      gridTemplateColumns={[
+        "1fr",
+        "1fr 1fr",
+        "1fr 1fr",
+        "1fr 1fr",
+        "1fr 1fr 1fr",
+      ]}
     >
       {candidates.map((candidate, i) => (
         <motion.div
@@ -58,14 +58,6 @@ export default function Candidates() {
 
   return (
     <Box paddingTop="32px">
-      <Text
-        fontSize="18px"
-        fontWeight="medium"
-        color="neutral900"
-        letterSpacing="-0.03em"
-      >
-        Candidates
-      </Text>
       {loading && <Loading />}
       {!loading && hasCandidates && <CandidatesGrid candidates={candidates} />}
       {!loading && !hasCandidates && <CandidatesEmptyState />}

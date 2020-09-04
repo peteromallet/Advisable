@@ -9,7 +9,6 @@ const applicationDetails = gql`
     score
     status
     appliedAt
-    excerpt
     introduction
     availability
     proposalComment
@@ -87,13 +86,18 @@ export const GET_CANDIDATES = gql`
         id
         rate
         score
+        status
         availability
-        excerpt
+        interview {
+          id
+          startsAt
+        }
         specialist {
           id
           name
           avatar
           location
+          firstName
         }
       }
     }
@@ -110,6 +114,11 @@ export const GET_CANDIDATE = gql`
   query getCandidate($id: ID!) {
     application(id: $id) {
       ...ApplicationDetails
+
+      interview {
+        id
+        startsAt
+      }
     }
   }
 `;

@@ -12,7 +12,7 @@ const StyledDialogBackdrop = styled(motion.div)`
   right: 0;
   bottom: 0;
   left: 280px;
-  z-index: 100;
+  z-index: 10;
   position: fixed;
   display: flex;
   align-items: center;
@@ -22,18 +22,30 @@ const StyledDialogBackdrop = styled(motion.div)`
   overflow-y: scroll;
   padding-top: 32px;
   padding-bottom: 64px;
+
+  @media (max-width: 1024px) {
+    left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 `;
 
 const StyledDialog = styled(motion.div)`
   ${padding};
 
-  width: ${(p) => p.$width}px;
+  width: 100%;
   margin: auto;
   outline: none;
   background: white;
   position: relative;
   border-radius: 12px;
+  max-width: ${(p) => p.$width}px;
   box-shadow: 0 24px 64px -24px ${rgba(theme.colors.neutral900, 0.6)};
+
+  @media (max-width: 1024px) {
+    height: 100%;
+    max-width: 100%;
+  }
 `;
 
 const StyledCloseButton = styled.button`
@@ -75,7 +87,7 @@ export default function ActionBarModal({
               pointerEvents: dialog.visible ? "all" : "none",
             }}
           >
-            <Dialog {...dialog} aria-label={label}>
+            <Dialog {...dialog} aria-label={label} preventBodyScroll={false}>
               {(dialogProps) => (
                 <StyledDialog
                   {...dialogProps}

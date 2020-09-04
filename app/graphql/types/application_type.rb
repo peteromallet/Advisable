@@ -77,10 +77,4 @@ class Types::ApplicationType < Types::BaseType
     return false if object.references.empty?
     object.previous_projects.count < object.specialist.previous_projects.count
   end
-
-  field :excerpt, String, null: true
-
-  def excerpt
-    object.introduction&.truncate(140)
-  end
 end

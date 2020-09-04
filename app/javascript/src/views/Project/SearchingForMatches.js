@@ -15,7 +15,7 @@ const StyledQueue = styled.div`
   height: 140px;
   margin: 0 auto;
   position: relative;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 `;
 
 const StyledQueueCard = styled.div`
@@ -53,7 +53,7 @@ export default function SearchingForMatches() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
-        <Box width="100%" maxWidth="400px" marginX="auto">
+        <Box width="100%" maxWidth="360px" marginX="auto">
           <StyledQueue>
             <StyledQueueCard
               as={motion.div}
@@ -81,10 +81,11 @@ export default function SearchingForMatches() {
             />
           </StyledQueue>
           <Text
-            marginBottom="12px"
-            fontWeight="medium"
-            fontSize="18px"
+            fontSize="xl"
+            color="neutral900"
             textAlign="center"
+            fontWeight="medium"
+            marginBottom="8px"
           >
             Searching for candidates
           </Text>

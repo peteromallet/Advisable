@@ -94,7 +94,7 @@ export default function RejectApplication({ application }) {
               <FormField
                 minRows={3}
                 as={Textarea}
-                marginBottom="l"
+                marginBottom="xl"
                 name="comment"
                 placeholder={optionByValue(formik.values.reason).placeholder}
               />

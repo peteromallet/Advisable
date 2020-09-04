@@ -5,9 +5,10 @@ import { Link, useParams } from "react-router-dom";
 import { StyledCard, Text, Box, Avatar, theme } from "@advisable/donut";
 import ApplicantScore from "./ApplicantScore";
 import currency from "../../utilities/currency";
+import ApplicationStatus from "./ApplicationStatus";
 
 const Card = styled(StyledCard)`
-  height: 420px;
+  height: 440px;
   padding: 32px;
   border-radius: 12px;
   box-shadow: 0px 4px 12px -4px ${rgba(theme.colors.neutral900, 0.04)},
@@ -60,7 +61,7 @@ export default function CandidateCard({ application }) {
         fontSize="22px"
         fontWeight="500"
         color="neutral900"
-        marginBottom="4px"
+        marginBottom="2px"
         letterSpacing="-0.03em"
       >
         {application.specialist.name}
@@ -79,14 +80,9 @@ export default function CandidateCard({ application }) {
       </Attribute>
       <Box my="12px" height="1px" bg="neutral100" />
       <Attribute label="Availability">{application.availability}</Attribute>
-      <Text
-        fontSize="14px"
-        marginTop="32px"
-        color="neutral700"
-        lineHeight="18px"
-      >
-        {application.excerpt}
-      </Text>
+      <Box paddingTop="28px">
+        <ApplicationStatus application={application} />
+      </Box>
     </Card>
   );
 }

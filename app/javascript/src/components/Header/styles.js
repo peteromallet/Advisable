@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
 import colors from "../../colors";
+import { theme } from "@advisable/donut";
 
 export const Spacer = styled.div`
   width: 100%;
@@ -15,7 +16,7 @@ export const Header = styled.header`
   height: 58px;
   display: flex;
   position: fixed;
-  background: #173fcd;
+  background: ${theme.colors.blue600};
   align-items: center;
   padding: 0 15px 0 25px;
   box-shadow: 0px 2px 3px rgba(0, 25, 116, 0.14);
@@ -109,7 +110,7 @@ export const NavContainer = styled.div`
     visibility: hidden;
     opacity: 0;
 
-    ${props =>
+    ${(props) =>
       props.isOpen &&
       css`
         opacity: 1;
@@ -125,7 +126,7 @@ export const NavContainer = styled.div`
 export const NavItem = styled(NavLink)`
   height: 58px;
   color: #aabdff;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   align-items: center;
   user-select: none;
@@ -192,12 +193,12 @@ export const CurrentUserToggle = styled.div`
 
   strong {
     display: block;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
   }
 
   span {
-    color: #6797e5;
+    color: ${theme.colors.blue200};
     font-size: 13px;
   }
 
@@ -234,9 +235,9 @@ export const CurrentUserDropdown = styled.div`
   transition: opacity 250ms cubic-bezier(0, 1, 0.4, 1),
     transform 250ms cubic-bezier(0.18, 1.25, 0.4, 1);
 
-  opacity: ${props => (props.open ? "1" : "0")};
-  pointer-events: ${props => (props.open ? "all" : "none")};
-  transform: ${props => (props.open ? "scale(1)" : "scale(0.7)")};
+  opacity: ${(props) => (props.open ? "1" : "0")};
+  pointer-events: ${(props) => (props.open ? "all" : "none")};
+  transform: ${(props) => (props.open ? "scale(1)" : "scale(0.7)")};
 
   a {
     color: #4d5880;

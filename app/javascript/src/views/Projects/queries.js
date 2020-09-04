@@ -51,7 +51,7 @@ export const CREATE_JOB = gql`
         proposedCount
         hiredCount
         createdAt
-        matches {
+        matches: applications {
           id
         }
       }

@@ -5,9 +5,9 @@ export function JobSetupStepHeader(props) {
   return (
     <Text
       color="blue900"
-      fontSize={{ _: "28px", m: "30px" }}
+      fontSize={{ _: "28px", m: "4xl" }}
       fontWeight="medium"
-      letterSpacing="-0.05em"
+      letterSpacing="-0.03em"
       {...props}
     />
   );
@@ -16,11 +16,11 @@ export function JobSetupStepHeader(props) {
 export function JobSetupStepSubHeader(props) {
   return (
     <Text
-      fontSize={{ _: "16px", m: "17px" }}
+      fontSize={{ _: "16px", m: "lg" }}
       fontWeight="400"
       lineHeight={{ _: "20px", m: "24px" }}
-      color="#4A4D66"
-      letterSpacing="-0.02em"
+      color="neutral800"
+      letterSpacing="-0.01em"
       {...props}
     />
   );

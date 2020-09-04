@@ -66,15 +66,14 @@ const StyledActionBarItem = styled.button`
   outline: none;
   color: #4c5061;
   cursor: pointer;
-  font-weight: 500;
   align-items: center;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
   background: transparent;
   font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  letter-spacing: -0.01em;
   position: relative;
 
   &::before {

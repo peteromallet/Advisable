@@ -4,7 +4,13 @@ import { Card, Skeleton, Box, Text, Paragraph } from "@advisable/donut";
 export default function CandidatesEmptyState() {
   return (
     <Box maxWidth="400px" marginX="auto" paddingY="64px">
-      <Card width="280px" marginX="auto" padding="24px" marginBottom="40px">
+      <Card
+        borderRadius="12px"
+        width="280px"
+        marginX="auto"
+        padding="24px"
+        marginBottom="40px"
+      >
         <Skeleton height="64px" width="64px" borderRadius="50%" mb="24px" />
         <Skeleton height="16px" width="60%" mb="8px" />
         <Skeleton height="12px" width="82%" mb="24px" />
@@ -20,16 +26,16 @@ export default function CandidatesEmptyState() {
         </Box>
       </Card>
       <Text
-        fontSize="18px"
+        fontSize="xl"
         color="neutral900"
         textAlign="center"
         marginBottom="8px"
         fontWeight="medium"
-        letterSpacing="-0.03em"
+        letterSpacing="-0.01em"
       >
         No Candidates
       </Text>
-      <Paragraph size="sm" textAlign="center">
+      <Paragraph textAlign="center">
         You have not accepted any candidates yet. Once you accept a candidate
         they will show up here.
       </Paragraph>

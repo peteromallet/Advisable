@@ -178,8 +178,8 @@ const buttonSize = variant({
     },
     l: {
       height: 50,
-      fontSize: 17,
-      fontWeight: 400,
+      fontSize: 18,
+      fontWeight: 600,
       paddingLeft: 24,
       paddingRight: 24,
       svg: {
@@ -204,7 +204,6 @@ export const StyledButton = styled.button`
   border: none;
   color: white;
   outline: none;
-  line-height: 1;
   padding-top: 0;
   cursor: pointer;
   padding-bottom: 0;

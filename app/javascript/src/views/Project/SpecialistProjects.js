@@ -5,7 +5,14 @@ import Masonry from "components/Masonry";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import ActionBarModal from "./ActionBarModal";
 import ProjectDetails from "components/PreviousProjectDetails";
-import { theme, Box, StyledCard, Text, Tags } from "@advisable/donut";
+import {
+  theme,
+  Box,
+  StyledCard,
+  Text,
+  Tags,
+  useBreakpoint,
+} from "@advisable/donut";
 
 const StyledSpecialistProject = styled(StyledCard)`
   cursor: pointer;
@@ -72,6 +79,7 @@ function Project({ project }) {
 }
 
 export default function SpecialistProjects({ projects }) {
+  const isLargeScreen = useBreakpoint("mUp");
   return (
     <Box marginBottom="52px">
       <Text
@@ -83,7 +91,7 @@ export default function SpecialistProjects({ projects }) {
       >
         Similar Previous Projects
       </Text>
-      <Masonry gutter={24}>
+      <Masonry gutter={24} columns={isLargeScreen ? 2 : 1}>
         {projects.map((project) => (
           <Project key={project.id} project={project} />
         ))}
