@@ -20,6 +20,21 @@ const BaseStyles = createGlobalStyle`
     box-sizing: inherit;
   }
 
+  @font-face {
+    font-family: "TTHoves";
+    font-weight: 400;
+    src: url("/fonts/TTHoves-Regular/font.woff2") format("woff2"),
+      url("/fonts/TTHoves-Regular/font.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "TTHoves";
+    font-weight: 500;
+    src: url("/fonts/TTHoves-Medium/font.woff2") format("woff2"),
+      url("/fonts/TTHoves-Medium/font.woff") format("woff");
+  }
+
+
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,

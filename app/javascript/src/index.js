@@ -1,5 +1,4 @@
 import "intersection-observer"; // Intersection observer polyfill
-import "./app.scss";
 import React from "react";
 import ReactDOM from "react-dom";
 import Root from "./Root";
