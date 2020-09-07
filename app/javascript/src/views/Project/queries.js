@@ -413,11 +413,14 @@ const projectFields = gql`
     goals
     locationImportance
     industryExperienceImportance
+    characteristics
     requiredCharacteristics
     optionalCharacteristics
     primarySkill {
       id
       name
+      goalPlaceholder
+      characteristicPlaceholder
     }
     skills {
       id

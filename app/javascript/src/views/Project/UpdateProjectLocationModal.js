@@ -7,7 +7,7 @@ import SubmitButton from "components/SubmitButton";
 import { Text, Stack } from "@advisable/donut";
 import { useUpdateProject } from "./queries";
 
-export default function UpdateSkillsModal({ dialog, project }) {
+export default function UpdateProjectLocationModal({ dialog, project }) {
   const [updateProject] = useUpdateProject();
 
   const location = project.user.location;

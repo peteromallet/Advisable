@@ -197,6 +197,7 @@ class TestData
         u.company_type = 'Startup'
         u.industry = industry
         u.sales_person = sales_person
+        u.address = { city: 'Dublin', country: 'IE' }
       end
 
     user.update(availability: [], completed_tutorials: [])

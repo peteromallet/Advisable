@@ -5,7 +5,9 @@ import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Box, Card, Text, Stack, Button } from "@advisable/donut";
 import { useProjectSettings } from "./queries";
 import UpdateSkillsModal from "./UpdateSkillsModal";
+import UpdateProjectGoals from "./UpdateProjectGoals";
 import UpdateProjectLocationModal from "./UpdateProjectLocationModal";
+import UpdateProjectRequirementsModal from "./UpdateProjectRequirementsModal";
 import GoalsSummary from "./components/GoalsSummary";
 import SkillsSummary from "./components/SkillsSummary";
 import LocationSummary from "./components/LocationSummary";
@@ -14,6 +16,8 @@ import CharacteristicsSummary from "./components/CharacteristicsSummary";
 export default function ProjectSettings() {
   const skillsDialog = useDialogState();
   const locationDialog = useDialogState();
+  const characteristicsDialog = useDialogState();
+  const goalsDialog = useDialogState();
   const { loading, data } = useProjectSettings();
 
   React.useEffect(() => {
@@ -37,6 +41,11 @@ export default function ProjectSettings() {
         </Text>
         <UpdateSkillsModal project={project} dialog={skillsDialog} />
         <UpdateProjectLocationModal project={project} dialog={locationDialog} />
+        <UpdateProjectRequirementsModal
+          project={project}
+          dialog={characteristicsDialog}
+        />
+        <UpdateProjectGoals project={project} dialog={goalsDialog} />
         <Stack spacing="4xl" divider="neutral100">
           <SkillsSummary project={project}>
             <DialogDisclosure
@@ -60,8 +69,28 @@ export default function ProjectSettings() {
               Edit Location
             </DialogDisclosure>
           </LocationSummary>
-          <CharacteristicsSummary project={project} />
-          <GoalsSummary project={project} />
+          <CharacteristicsSummary project={project}>
+            <DialogDisclosure
+              {...characteristicsDialog}
+              size="s"
+              as={Button}
+              variant="subtle"
+              prefix={<Pencil />}
+            >
+              Edit Characteristics
+            </DialogDisclosure>
+          </CharacteristicsSummary>
+          <GoalsSummary project={project}>
+            <DialogDisclosure
+              {...goalsDialog}
+              size="s"
+              as={Button}
+              variant="subtle"
+              prefix={<Pencil />}
+            >
+              Edit Goals
+            </DialogDisclosure>
+          </GoalsSummary>
         </Stack>
       </Card>
     </Box>

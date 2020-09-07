@@ -1,8 +1,7 @@
 import React from "react";
-import { Box, Text, Button, BulletList } from "@advisable/donut";
-import { Pencil } from "@styled-icons/ionicons-solid";
+import { Box, Text, BulletList } from "@advisable/donut";
 
-export default function GoalsSummary({ project }) {
+export default function GoalsSummary({ project, children }) {
   return (
     <Box>
       <Text
@@ -19,9 +18,7 @@ export default function GoalsSummary({ project }) {
           <BulletList.Item key={i}>{goal}</BulletList.Item>
         ))}
       </BulletList>
-      <Button size="s" prefix={<Pencil />} variant="subtle">
-        Edit Goals
-      </Button>
+      {children}
     </Box>
   );
 }

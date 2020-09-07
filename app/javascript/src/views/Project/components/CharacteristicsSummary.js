@@ -1,8 +1,7 @@
 import React from "react";
-import { Box, Text, Button, BulletList } from "@advisable/donut";
-import { Pencil } from "@styled-icons/ionicons-solid";
+import { Box, Text, BulletList } from "@advisable/donut";
 
-export default function CharacteristicsSummary({ project }) {
+export default function CharacteristicsSummary({ project, children }) {
   return (
     <Box>
       <Text
@@ -33,9 +32,7 @@ export default function CharacteristicsSummary({ project }) {
           <BulletList.Item key={i}>{item}</BulletList.Item>
         ))}
       </BulletList>
-      <Button size="s" prefix={<Pencil />} variant="subtle">
-        Edit Characteristics
-      </Button>
+      {children}
     </Box>
   );
 }
