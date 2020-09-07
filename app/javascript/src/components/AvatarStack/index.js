@@ -6,7 +6,7 @@ import { StyledAvatar } from "@advisable/donut";
 const MARGINS = {
   s: "-8px",
   m: "-16px",
-  l: "-24px",
+  l: "-32px",
 };
 
 const StyledAvatarStack = styled.div`

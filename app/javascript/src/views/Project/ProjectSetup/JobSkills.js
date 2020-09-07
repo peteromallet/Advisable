@@ -16,7 +16,6 @@ export default function JobSkills({ data }) {
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
   const initialValues = {
-    test: "",
     skills: data.project.skills.map((s) => s.name),
   };
 

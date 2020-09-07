@@ -73,8 +73,8 @@ const FormField = ({
       )}
       {description && (
         <Text
-          fontSize="14px"
-          lineHeight="s"
+          fontSize="15px"
+          lineHeight="18px"
           color="neutral600"
           my="-4px"
           mb="8px"

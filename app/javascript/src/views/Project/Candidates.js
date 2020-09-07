@@ -50,14 +50,14 @@ export default function Candidates() {
   const { loading, data, error } = useCandidates({ variables: { id } });
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    document.getElementById("view").scrollTo(0, 0);
   }, []);
 
   const candidates = data?.project.candidates || [];
   const hasCandidates = !loading && candidates.length > 0;
 
   return (
-    <Box paddingTop="32px">
+    <Box paddingY="32px">
       {loading && <Loading />}
       {!loading && hasCandidates && <CandidatesGrid candidates={candidates} />}
       {!loading && !hasCandidates && <CandidatesEmptyState />}

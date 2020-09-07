@@ -4,7 +4,7 @@ import { use100vh } from "react-div-100vh";
 import { StyledView, StyledViewContent, StyledSidebar } from "./styles";
 
 function ViewContent({ children }) {
-  return <StyledViewContent>{children}</StyledViewContent>;
+  return <StyledViewContent id="view">{children}</StyledViewContent>;
 }
 
 ViewContent.propTypes = {
@@ -27,7 +27,6 @@ function View({ children }) {
   const height = use100vh();
   return (
     <StyledView
-      id="view"
       style={{
         height: height ? `${height - 58}px` : "100%",
       }}

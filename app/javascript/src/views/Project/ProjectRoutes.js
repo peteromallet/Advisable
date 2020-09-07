@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Inbox from "./Inbox";
 import Candidates from "./Candidates";
+import ProjectSettings from "./ProjectSettings";
 import CandidateDetails from "./CandidateDetails";
 
 export default function ProjectRoutes({ project }) {
@@ -27,7 +28,9 @@ export default function ProjectRoutes({ project }) {
       <Route path={`${path}/candidates`}>
         <Candidates project={project} />
       </Route>
-      <Route path={`${path}/settings`}>Settings</Route>
+      <Route path={`${path}/settings`}>
+        <ProjectSettings project={project} />
+      </Route>
       <Redirect
         from={`${path}/applications/:applicationId`}
         to={`${path}/candidates/:applicationId`}

@@ -172,7 +172,14 @@ export const GET_MATCHES = gql`
       user {
         id
       }
-      accepted: applications(status: ["Application Accepted"]) {
+      accepted: applications(
+        status: [
+          "Application Accepted"
+          "Interview Scheduled"
+          "Interview Completed"
+          "Proposed"
+        ]
+      ) {
         id
         specialist {
           id
@@ -398,4 +405,78 @@ export const TOGGLE_SOURCING = gql`
 
 export function useToggleSourcing(opts) {
   return useMutation(TOGGLE_SOURCING, opts);
+}
+
+const projectFields = gql`
+  fragment ProjectFields on Project {
+    id
+    goals
+    locationImportance
+    industryExperienceImportance
+    requiredCharacteristics
+    optionalCharacteristics
+    primarySkill {
+      id
+      name
+    }
+    skills {
+      id
+      name
+    }
+  }
+`;
+
+export const GET_PROJECT_SETTINGS = gql`
+  ${projectFields}
+  query projectSettings($id: ID!) {
+    project(id: $id) {
+      ...ProjectFields
+      id
+      user {
+        id
+        location
+        companyType
+        industry {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
+export function useProjectSettings() {
+  const { id } = useParams();
+  return useQuery(GET_PROJECT_SETTINGS, {
+    variables: { id },
+  });
+}
+
+export const GET_SKILLS = gql`
+  query skills {
+    skills(local: true) {
+      id
+      name
+    }
+  }
+`;
+
+export function useSkills(opts) {
+  return useQuery(GET_SKILLS, opts);
+}
+
+export const UPDATE_PROJECT = gql`
+  ${projectFields}
+
+  mutation updateProject($input: UpdateProjectInput!) {
+    updateProject(input: $input) {
+      project {
+        ...ProjectFields
+      }
+    }
+  }
+`;
+
+export function useUpdateProject(opts) {
+  return useMutation(UPDATE_PROJECT, opts);
 }
