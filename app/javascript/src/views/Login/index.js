@@ -68,15 +68,15 @@ const Login = ({ location }) => {
       <Card py="xl" px="xl">
         <Text
           as="h3"
-          mb="xs"
-          fontSize="28px"
-          color="blue900"
+          mb="2xs"
+          fontSize="4xl"
+          color="neutral900"
           fontWeight="medium"
-          letterSpacing="-0.03em"
+          letterSpacing="-0.02em"
         >
-          Welcome back!
+          Welcome Back!
         </Text>
-        <Text color="neutral600" mb="l">
+        <Text color="neutral700" mb="l">
           Please sign in to your account
         </Text>
         <Formik
@@ -88,7 +88,7 @@ const Login = ({ location }) => {
             <Form>
               <FormField
                 name="email"
-                marginBottom="m"
+                marginBottom="l"
                 placeholder="Email"
                 label="Email Address"
               />

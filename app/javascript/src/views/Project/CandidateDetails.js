@@ -2,7 +2,7 @@ import React from "react";
 import Sticky from "components/Sticky";
 import { Helmet } from "react-helmet";
 import { Box, Avatar, useBreakpoint } from "@advisable/donut";
-import { Switch, Route, useParams } from "react-router-dom";
+import { Switch, Route, useParams, Redirect } from "react-router-dom";
 import Loading from "components/Loading";
 import MatchMetaInfo from "./MatchMetaInfo";
 import Proposal from "./Proposal";
@@ -10,11 +10,10 @@ import ApplicationDetails from "./ApplicationDetails";
 import { useCandidate } from "./queries";
 import ActionBar from "./ActionBar";
 import ActionBarContainer from "./ActionBarContainer";
-import ApplicantScore from "./ApplicantScore";
 import ApplicationStatus from "./ApplicationStatus";
 
 export default function CandidateDetails({ project }) {
-  const { applicationId } = useParams();
+  const { id, applicationId } = useParams();
   const isLargeScreen = useBreakpoint("mUp");
   const { loading, data } = useCandidate({ variables: { id: applicationId } });
 
@@ -25,6 +24,12 @@ export default function CandidateDetails({ project }) {
   if (loading) return <Loading />;
 
   const application = data?.application;
+
+  if (application?.status === "Applied") {
+    return (
+      <Redirect to={`/projects/${id}/matches?candidate=${application.id}`} />
+    );
+  }
 
   return (
     <Box paddingTop="40px" display={[null, null, "flex"]}>

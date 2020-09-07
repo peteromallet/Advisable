@@ -28,6 +28,10 @@ export default function ProjectRoutes({ project }) {
         <Candidates project={project} />
       </Route>
       <Route path={`${path}/settings`}>Settings</Route>
+      <Redirect
+        from={`${path}/applications/:applicationId`}
+        to={`${path}/candidates/:applicationId`}
+      />
       <Route path="*">
         {isLargerScreen ? (
           <Redirect to={`${url}/matches`} />

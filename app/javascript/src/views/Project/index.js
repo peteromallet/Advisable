@@ -37,7 +37,7 @@ export default function Project() {
         </View.Sidebar>
       </Route>
       <View.Content>
-        <Container maxWidth="1100px">
+        <Container height="100%" maxWidth="1100px">
           <ProjectRoutes project={data.project} />
         </Container>
       </View.Content>

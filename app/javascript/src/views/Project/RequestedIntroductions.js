@@ -24,7 +24,7 @@ export default function RequestedIntroductions({ accepted }) {
 
   return (
     <Box
-      height="60vh"
+      height="100%"
       display="flex"
       alignItems="center"
       justifyContent="center"
@@ -37,6 +37,7 @@ export default function RequestedIntroductions({ accepted }) {
         maxWidth="540px"
         padding="3xl"
         borderRadius="12px"
+        marginTop="-32px"
       >
         <AvatarStack size="l" marginBottom="l">
           {accepted.map((a) => (
