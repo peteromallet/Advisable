@@ -25,6 +25,7 @@ class Mutations::PublishProject < Mutations::BaseMutation
     project = Project.find_by_uid_or_airtable_id!(id)
     project.status = :pending_review
     project.sales_status = 'Open'
+    project.sourcing = true
     project.sync_to_airtable if project.save
     { project: project }
   end

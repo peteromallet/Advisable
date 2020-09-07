@@ -24,7 +24,7 @@ export default function JobPrimarySkill({ data }) {
       },
     });
 
-    history.push({ ...location, pathname: `/jobs/${id}/experience` });
+    history.push({ ...location, pathname: `/projects/${id}/setup/experience` });
   };
 
   const initialValues = {

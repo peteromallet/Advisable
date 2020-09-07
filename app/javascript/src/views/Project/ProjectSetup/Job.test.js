@@ -38,7 +38,7 @@ test("User can publish a job", async () => {
   });
 
   renderRoute({
-    route: `/jobs/${project.id}`,
+    route: `/projects/${project.id}/setup`,
     graphQLMocks: [
       mockViewer(user),
       mockQuery(
@@ -302,7 +302,7 @@ test("When pending review redirects to published page", async () => {
   });
 
   renderRoute({
-    route: `/jobs/${project.id}`,
+    route: `/projects/${project.id}/setup`,
     graphQLMocks: [
       mockViewer(user),
       mockQuery(

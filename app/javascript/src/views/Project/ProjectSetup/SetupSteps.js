@@ -17,7 +17,7 @@ import JobExperience from "./JobExperience";
 import JobPrimarySkill from "./JobPrimarySkill";
 import JobPendingReview from "./JobPendingReview";
 import JobCharacteristics from "./JobCharacteristics";
-import usePrevious from "../../utilities/usePrevious";
+import usePrevious from "../../../utilities/usePrevious";
 import JobRequiredCharacteristics from "./JobRequiredCharacteristics";
 import JobLikelyToHire from "./JobLikelyToHire";
 
@@ -35,43 +35,43 @@ export const setupProgress = (project) => {
 // react router Route component.
 const steps = [
   {
-    path: "/jobs/:id/skills",
+    path: "/projects/:id/setup/skills",
     component: JobSkills,
   },
   {
-    path: "/jobs/:id/primary_skill",
+    path: "/projects/:id/setup/primary_skill",
     component: JobPrimarySkill,
   },
   {
-    path: "/jobs/:id/experience",
+    path: "/projects/:id/setup/experience",
     component: JobExperience,
   },
   {
-    path: "/jobs/:id/location",
+    path: "/projects/:id/setup/location",
     component: JobLocation,
   },
   {
-    path: "/jobs/:id/characteristics",
+    path: "/projects/:id/setup/characteristics",
     component: JobCharacteristics,
   },
   {
-    path: "/jobs/:id/required_characteristics",
+    path: "/projects/:id/setup/required_characteristics",
     component: JobRequiredCharacteristics,
   },
   {
-    path: "/jobs/:id/description",
+    path: "/projects/:id/setup/description",
     component: JobDescription,
   },
   {
-    path: "/jobs/:id/likely_to_hire",
+    path: "/projects/:id/setup/likely_to_hire",
     component: JobLikelyToHire,
   },
   {
     component: PublishJob,
-    path: "/jobs/:id/publish",
+    path: "/projects/:id/setup/publish",
   },
   {
-    path: "/jobs/:id/published",
+    path: "/projects/:id/setup/published",
     component: JobPendingReview,
   },
 ];
@@ -141,12 +141,12 @@ export default function SetupSteps({ data }) {
             </Route>
           );
         })}
-        <Route path="/jobs/:id" exact>
+        <Route path="/projects/:id/setup" exact>
           <motion.div exit={{}}>
             {project.status === "PENDING_REVIEW" ? (
-              <Redirect to={`/jobs/${id}/published`} />
+              <Redirect to={`/projects/${id}/setup/published`} />
             ) : (
-              <Redirect to={`/jobs/${id}/skills`} />
+              <Redirect to={`/projects/${id}/setup/skills`} />
             )}
           </motion.div>
         </Route>

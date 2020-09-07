@@ -25,7 +25,7 @@ const NewProject = ({ onCreate }) => {
       notifications.notify("Something went wrong");
     } else {
       const id = response.data?.createJob.project.id;
-      history.push(`/jobs/${id}`);
+      history.push(`/projects/${id}`);
     }
   };
 

@@ -1,21 +1,19 @@
 import React from "react";
 import { useParams, useHistory, useLocation } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import RangeSelection from "components/RangeSelection";
 import { UPDATE_PROJECT } from "./queries";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
-export default function JobExperience({ data }) {
+export default function JobLocation({ data }) {
   const { id } = useParams();
   const history = useHistory();
   const location = useLocation();
-  const { t } = useTranslation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
   const initialValues = {
-    industryExperienceImportance: data.project.industryExperienceImportance,
+    locationImportance: data.project.locationImportance,
   };
 
   const handleSubmit = (values, formik) => {
@@ -23,42 +21,38 @@ export default function JobExperience({ data }) {
       variables: {
         input: {
           id,
-          industryExperienceImportance: Number(
-            values.industryExperienceImportance,
-          ),
+          ...values,
         },
       },
     });
 
     if (location.state?.readyToPublish) {
-      history.push(`/jobs/${id}/publish`);
+      history.push(`/projects/${id}/setup/publish`);
     } else {
-      history.push(`/jobs/${id}/location`);
+      history.push(`/projects/${id}/setup/characteristics`);
     }
   };
 
   const handleSelection = (formik) => (val) => {
-    formik.setFieldValue("industryExperienceImportance", val);
+    formik.setFieldValue("locationImportance", val);
     formik.submitForm();
   };
 
   const { user } = data.project;
-  const industry = user.industry.name;
-  const companyType = user.companyType;
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {(formik) => (
         <Form>
           <JobSetupStepHeader mb="xs">
-            {t("jobSetup.experience.title", { industry, companyType })}
+            How important is it that they are in {user.location}?
           </JobSetupStepHeader>
-          <JobSetupStepSubHeader mb="xl">
-            If this is important, we'll only match you with specialists who've
-            worked with similar companies before.
+          <JobSetupStepSubHeader mb="l">
+            The broader the location, the more likely we'll have the perfect
+            match for your project.
           </JobSetupStepSubHeader>
           <Field
-            name="industryExperienceImportance"
+            name="locationImportance"
             as={RangeSelection}
             onChange={handleSelection(formik)}
           />

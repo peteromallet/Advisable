@@ -6,7 +6,7 @@ import { Box } from "@advisable/donut";
 import DeleteDraftJob from "./DeleteDraftJob";
 import { useLocation, useParams } from "react-router-dom";
 import BackButton from "components/BackButton";
-import MultistepMenu from "../../components/MultistepMenu";
+import MultistepMenu from "components/MultistepMenu";
 import { setupProgress } from "./SetupSteps";
 
 const SidebarContainer = styled.div`
@@ -49,12 +49,15 @@ export default function JobSetupSidebar({ data }) {
         <BackButton to="/projects" marginBottom="m" />
         <MultistepMenu>
           <MultistepMenu.Item
-            to={`/jobs/${id}/skills`}
+            to={`/projects/${id}/setup/skills`}
             isComplete={completeSteps.skills}
             steps={[
-              { label: "Skill Set", to: `/jobs/${id}/skills` },
-              { label: "Primary Skill", to: `/jobs/${id}/primary_skill` },
-              { label: "Experience", to: `/jobs/${id}/experience` },
+              { label: "Skill Set", to: `/projects/${id}/setup/skills` },
+              {
+                label: "Primary Skill",
+                to: `/projects/${id}/setup/primary_skill`,
+              },
+              { label: "Experience", to: `/projects/${id}/setup/experience` },
             ]}
             exact
           >
@@ -63,22 +66,22 @@ export default function JobSetupSidebar({ data }) {
           <MultistepMenu.Item
             isDisabled={!completeSteps.skills}
             isComplete={completeSteps.location}
-            to={`/jobs/${id}/location`}
+            to={`/projects/${id}/setup/location`}
           >
             Location
           </MultistepMenu.Item>
           <MultistepMenu.Item
-            to={`/jobs/${id}/characteristics`}
+            to={`/projects/${id}/setup/characteristics`}
             isDisabled={!completeSteps.location}
             isComplete={completeSteps.characteristics}
             steps={[
               {
                 label: "Character Traits",
-                to: `/jobs/${id}/characteristics`,
+                to: `/projects/${id}/setup/characteristics`,
               },
               {
                 label: "Required",
-                to: `/jobs/${id}/required_characteristics`,
+                to: `/projects/${id}/setup/required_characteristics`,
               },
             ]}
           >
@@ -87,19 +90,19 @@ export default function JobSetupSidebar({ data }) {
           <MultistepMenu.Item
             isComplete={completeSteps.description}
             isDisabled={!completeSteps.characteristics}
-            to={`/jobs/${id}/description`}
+            to={`/projects/${id}/setup/description`}
           >
             Goals
           </MultistepMenu.Item>
           <MultistepMenu.Item
             isDisabled={!completeSteps.description}
             isComplete={completeSteps.specialists}
-            to={`/jobs/${id}/likely_to_hire`}
+            to={`/projects/${id}/setup/likely_to_hire`}
           >
             Specialists
           </MultistepMenu.Item>
           <MultistepMenu.Item
-            to={`/jobs/${id}/publish`}
+            to={`/projects/${id}/setup/publish`}
             isDisabled={!completeSteps.specialists}
           >
             Review

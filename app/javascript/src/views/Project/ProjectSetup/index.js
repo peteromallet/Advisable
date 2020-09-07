@@ -1,16 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import { useQuery } from "@apollo/client";
 import { Box, useBreakpoint, useTheme } from "@advisable/donut";
-import { useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import Loading from "components/Loading";
 import SetupDots from "./SetupDots";
 import SetupSteps from "./SetupSteps";
 import JobSetupSidebar from "./JobSetupSidebar";
+import { GET_JOB } from "./queries";
 
 const PageWithSidebar = styled.div`
   display: flex;
 `;
 
-export default function JobSetup({ data }) {
+export default function JobSetup({}) {
+  const { id } = useParams();
+  const { data, loading, error } = useQuery(GET_JOB, {
+    variables: { id },
+  });
+
   const theme = useTheme();
   const location = useLocation();
   const mediumAndUp = useBreakpoint("mUp");
@@ -24,6 +32,8 @@ export default function JobSetup({ data }) {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  if (loading) return <Loading />;
 
   return (
     <PageWithSidebar>

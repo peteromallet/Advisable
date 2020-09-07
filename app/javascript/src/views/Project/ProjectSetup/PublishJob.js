@@ -6,7 +6,7 @@ import { useHistory, useParams, Link as RouterLink } from "react-router-dom";
 import { Stack, Box, Text, BulletList, Button, Tags } from "@advisable/donut";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 import { PUBLISH_PROJECT } from "./queries";
-import dataLayer from "../../utilities/dataLayer";
+import dataLayer from "../../../utilities/dataLayer";
 
 export default function PublishJob({ data }) {
   const { id } = useParams();
@@ -25,7 +25,7 @@ export default function PublishJob({ data }) {
       dataLayer.push({ event: "projectPublished", projectId: id });
     }
 
-    history.push(`/jobs/${id}/published`);
+    history.push(`/projects/${id}/setup/published`);
   };
 
   return (
@@ -62,7 +62,7 @@ export default function PublishJob({ data }) {
           />
           <RouterLink
             to={{
-              pathname: `/jobs/${id}/skills`,
+              pathname: `/projects/${id}/setup/skills`,
               state: { readyToPublish: true },
             }}
           >
@@ -88,7 +88,7 @@ export default function PublishJob({ data }) {
           </Text>
           <RouterLink
             to={{
-              pathname: `/jobs/${id}/location`,
+              pathname: `/projects/${id}/setup/location`,
               state: { readyToPublish: true },
             }}
           >
@@ -136,7 +136,7 @@ export default function PublishJob({ data }) {
           )}
           <RouterLink
             to={{
-              pathname: `/jobs/${id}/characteristics`,
+              pathname: `/projects/${id}/setup/characteristics`,
               state: { readyToPublish: true },
             }}
           >
@@ -162,7 +162,7 @@ export default function PublishJob({ data }) {
           </BulletList>
           <RouterLink
             to={{
-              pathname: `/jobs/${id}/description`,
+              pathname: `/projects/${id}/setup/description`,
               state: { readyToPublish: true },
             }}
           >

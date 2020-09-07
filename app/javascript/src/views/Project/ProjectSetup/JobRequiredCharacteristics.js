@@ -34,9 +34,9 @@ export default function JobRequiredCharacteristics({ data }) {
       formik.setStatus("Failed to update characteristics, please try again.");
     } else {
       if (location.state?.readyToPublish) {
-        history.push(`/jobs/${id}/publish`);
+        history.push(`/projects/${id}/setup/publish`);
       } else {
-        history.push(`/jobs/${id}/description`);
+        history.push(`/projects/${id}/setup/description`);
       }
     }
   };

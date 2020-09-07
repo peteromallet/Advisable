@@ -36,7 +36,7 @@ export default function JobCharacteristics({ data }) {
     } else {
       history.push({
         ...location,
-        pathname: `/jobs/${id}/required_characteristics`,
+        pathname: `/projects/${id}/setup/required_characteristics`,
       });
     }
   };

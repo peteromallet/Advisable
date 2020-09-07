@@ -25,7 +25,7 @@ export default function JobLikelyToHire({ data }) {
       },
     });
 
-    history.push(`/jobs/${id}/publish`);
+    history.push(`/projects/${id}/setup/publish`);
   };
 
   const handleSelection = (formik) => (val) => {
