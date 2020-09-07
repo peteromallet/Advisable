@@ -5,6 +5,7 @@ import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Box, Card, Text, Stack, Button } from "@advisable/donut";
 import { useProjectSettings } from "./queries";
 import UpdateSkillsModal from "./UpdateSkillsModal";
+import UpdateProjectLocationModal from "./UpdateProjectLocationModal";
 import GoalsSummary from "./components/GoalsSummary";
 import SkillsSummary from "./components/SkillsSummary";
 import LocationSummary from "./components/LocationSummary";
@@ -12,6 +13,7 @@ import CharacteristicsSummary from "./components/CharacteristicsSummary";
 
 export default function ProjectSettings() {
   const skillsDialog = useDialogState();
+  const locationDialog = useDialogState();
   const { loading, data } = useProjectSettings();
 
   React.useEffect(() => {
@@ -34,6 +36,7 @@ export default function ProjectSettings() {
           Project Settings
         </Text>
         <UpdateSkillsModal project={project} dialog={skillsDialog} />
+        <UpdateProjectLocationModal project={project} dialog={locationDialog} />
         <Stack spacing="4xl" divider="neutral100">
           <SkillsSummary project={project}>
             <DialogDisclosure
@@ -46,7 +49,17 @@ export default function ProjectSettings() {
               Edit Skills
             </DialogDisclosure>
           </SkillsSummary>
-          <LocationSummary project={project} />
+          <LocationSummary project={project}>
+            <DialogDisclosure
+              {...locationDialog}
+              size="s"
+              as={Button}
+              variant="subtle"
+              prefix={<Pencil />}
+            >
+              Edit Location
+            </DialogDisclosure>
+          </LocationSummary>
           <CharacteristicsSummary project={project} />
           <GoalsSummary project={project} />
         </Stack>

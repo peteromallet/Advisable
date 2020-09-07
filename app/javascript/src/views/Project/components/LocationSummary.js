@@ -1,9 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Box, Text, Button } from "@advisable/donut";
-import { Pencil } from "@styled-icons/ionicons-solid";
+import { Box, Text } from "@advisable/donut";
 
-export default function GoalsSummary({ project }) {
+export default function GoalsSummary({ project, children }) {
   const { t } = useTranslation();
 
   return (
@@ -22,9 +21,7 @@ export default function GoalsSummary({ project }) {
           location: project.user.location,
         })}
       </Text>
-      <Button size="s" prefix={<Pencil />} variant="subtle">
-        Edit Location
-      </Button>
+      {children}
     </Box>
   );
 }
