@@ -143,6 +143,7 @@ function ActionBar({ application, project }) {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4 }}
       data-walkthrough="actionBar"
+      data-testid="actionBar"
     >
       {application.status === "Applied" ? (
         <AcceptApplication application={application} project={project} />
@@ -168,7 +169,12 @@ ActionBar.Item = React.forwardRef(function ActionBarItem(
   ref,
 ) {
   return (
-    <StyledActionBarItem variant={variant} ref={ref} {...props}>
+    <StyledActionBarItem
+      aria-label={label}
+      variant={variant}
+      ref={ref}
+      {...props}
+    >
       <StyledActionBarItemIcon>{icon}</StyledActionBarItemIcon>
       <span>{label}</span>
     </StyledActionBarItem>

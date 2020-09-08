@@ -80,11 +80,12 @@ export default function ActionBarModal({
         {(backdrop) => (
           <StyledDialogBackdrop
             {...backdrop}
-            style={{}}
+            style={{
+              pointerEvents: dialog.visible ? "all" : "none",
+            }}
             initial={{ opacity: 0 }}
             animate={{
               opacity: dialog.visible ? 1 : 0,
-              pointerEvents: dialog.visible ? "all" : "none",
             }}
           >
             <Dialog {...dialog} aria-label={label} preventBodyScroll={false}>

@@ -34,23 +34,27 @@ const ANIMATIONS = {
     scale: 0.9,
     zIndex: 3,
     opacity: 0.8,
+    boxShadow: "0px 0px 0px 0px rgba(37, 38, 50, 0)",
   },
   2: {
     y: -40,
     scale: 0.8,
     zIndex: 2,
     opacity: 0.4,
+    boxShadow: "0px 0px 0px 0px rgba(37, 38, 50, 0)",
   },
   default: {
     y: -72,
     scale: 0.7,
     zIndex: 1,
     opacity: 0,
+    boxShadow: "0px 0px 0px 0px rgba(37, 38, 50, 0)",
   },
   initial: {
     y: -24,
     scale: 0.9,
     zIndex: 1,
+    boxShadow: "0px 0px 0px 0px rgba(37, 38, 50, 0)",
   },
 };
 

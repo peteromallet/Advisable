@@ -2,12 +2,36 @@ import React from "react";
 import { I18nextProvider } from "react-i18next";
 import { MemoryRouter } from "react-router-dom";
 import { render } from "@testing-library/react";
+import useBreakpoints from "../../../../donut/src/hooks/useBreakpoints";
 import { MockedProvider } from "@apollo/client/testing";
 import i18n from "./i18next";
 import App from "../App";
 import createCache from "../apolloCache";
 
 window.focus = jest.fn();
+
+jest.mock("../../../../donut/src/hooks/useBreakpoints", () => jest.fn());
+
+const BREAKPOINTS = ["sUp", "mUp", "lUp", "xlUp"];
+beforeEach(() => {
+  useBreakpoints.mockReturnValue({
+    sUp: false,
+    mUp: false,
+    lUp: false,
+    xlUp: false,
+  });
+});
+
+export function mockBreakpoint(size) {
+  const index = BREAKPOINTS.indexOf(size);
+  const activeSizes = BREAKPOINTS.slice(0, index + 1);
+  useBreakpoints.mockReturnValue({
+    sUp: activeSizes.includes("sUp"),
+    mUp: activeSizes.includes("mUp"),
+    lUp: activeSizes.includes("lUp"),
+    xlUp: activeSizes.includes("xlUp"),
+  });
+}
 
 // Mock matchMedia
 Object.defineProperty(window, "matchMedia", {
@@ -29,6 +53,12 @@ Object.defineProperty(window, "scrollTo", {
   writable: false,
   value: jest.fn(),
 });
+
+Element.prototype.scrollTo = () => {};
+
+if (!SVGElement.prototype.getTotalLength) {
+  SVGElement.prototype.getTotalLength = () => 1;
+}
 
 jest.mock("talkjs", () => {
   class User {}

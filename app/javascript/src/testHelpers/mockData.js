@@ -106,6 +106,7 @@ export const application = (fields = {}) => {
       id: uniqueId("application"),
       airtableId: uniqueId("rec"),
       rate: "75",
+      score: 90,
       currency: "USD",
       status: "Working",
       featured: false,
@@ -186,6 +187,7 @@ export const specialist = (fields = {}) => {
         id: 1,
         name: "Ireland",
       },
+      reviews: [],
       linkedin: "https://linkedin.com",
       previousProjects: {
         __typename: "PreviousProjectsConnection",

@@ -10,7 +10,7 @@ import {
 } from "@advisable/donut";
 import AvailabilityInput from "components/AvailabilityInput";
 import ActionBarModal from "./ActionBarModal";
-import { useAvailability, useUpdateAvailability } from "./queries";
+import { useAvailability, useRequestIntroduction } from "./queries";
 
 function onlyFutureAvailability(availability) {
   const today = DateTime.local().endOf("day");
@@ -19,16 +19,17 @@ function onlyFutureAvailability(availability) {
   });
 }
 
-export default function UpdateAvailability({ firstName, dialog, onUpdate }) {
+export default function UpdateAvailability({ application, dialog, onUpdate }) {
   const isLargerScreen = useBreakpoint("lUp");
   const { loading, data } = useAvailability({
     skip: !dialog.visible,
   });
 
-  const [
-    updateAvailability,
-    updateAvailabilityResponse,
-  ] = useUpdateAvailability();
+  const firstName = application?.specialist.firstName;
+
+  const [requestIntro, requestIntroResponse] = useRequestIntroduction(
+    application,
+  );
   const [availability, setAvailability] = React.useState([]);
 
   useEffect(() => {
@@ -38,10 +39,10 @@ export default function UpdateAvailability({ firstName, dialog, onUpdate }) {
   }, [data, loading, setAvailability]);
 
   const handleContinue = async () => {
-    await updateAvailability({
+    const response = await requestIntro({
       variables: {
         input: {
-          id: data.viewer.id,
+          application: application.id,
           availability,
         },
       },
@@ -94,7 +95,7 @@ export default function UpdateAvailability({ firstName, dialog, onUpdate }) {
               <Button
                 variant="dark"
                 onClick={handleContinue}
-                loading={updateAvailabilityResponse.loading}
+                loading={requestIntroResponse.loading}
               >
                 Request Call
               </Button>

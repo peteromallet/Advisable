@@ -342,21 +342,6 @@ export function useAvailability(opts) {
   return useQuery(GET_AVAILABILITY, opts);
 }
 
-export const UPDATE_AVAILABILITY = gql`
-  mutation UpdateAvailability($input: UpdateAvailabilityInput!) {
-    updateAvailability(input: $input) {
-      user {
-        id
-        availability
-      }
-    }
-  }
-`;
-
-export function useUpdateAvailability() {
-  return useMutation(UPDATE_AVAILABILITY);
-}
-
 export const GET_TASK = gql`
   query getTask($id: ID!) {
     task(id: $id) {
