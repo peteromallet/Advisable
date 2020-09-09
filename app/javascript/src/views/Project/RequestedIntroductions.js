@@ -76,9 +76,9 @@ export default function RequestedIntroductions({ accepted }) {
           We’ll stop recommending new candidates until after you have spoken
           with these freelancers.
         </Paragraph>
-        <Link onClick={handleToggle}>
+        <Link.External href="#" onClick={handleToggle}>
           I still want to recieve new candidates
-        </Link>
+        </Link.External>
       </Card>
     </Box>
   );

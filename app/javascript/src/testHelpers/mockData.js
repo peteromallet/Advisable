@@ -126,6 +126,7 @@ export const application = (fields = {}) => {
       hasMoreProjects: false,
       appliedAt: "2020-05-25T12:00:00",
       proposalComment: "",
+      interview: null,
       questions: [
         {
           __typename: "ApplicationQuestion",
@@ -252,6 +253,7 @@ export const previousProject = (fields = {}) => {
     {
       __typename: "PreviousProject",
       id: uniqueId("pre_"),
+      coverPhoto: null,
       title: "Previous project title",
       goal: "This was the project goal",
       excerpt: "This is the excerpt...",
@@ -339,6 +341,7 @@ export const review = (fields = {}) => {
       comment: "This is a review comment",
       name: "Jane Doe",
       role: "CEO",
+      avatar: null,
       companyName: "Acme Inc",
       ratings: {
         __typename: "Ratings",

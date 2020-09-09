@@ -29,6 +29,9 @@ export default function UpdateAvailability({ application, dialog, onUpdate }) {
 
   const [requestIntro, requestIntroResponse] = useRequestIntroduction(
     application,
+    {
+      update: onUpdate,
+    },
   );
   const [availability, setAvailability] = React.useState([]);
 
@@ -39,7 +42,7 @@ export default function UpdateAvailability({ application, dialog, onUpdate }) {
   }, [data, loading, setAvailability]);
 
   const handleContinue = async () => {
-    const response = await requestIntro({
+    await requestIntro({
       variables: {
         input: {
           application: application.id,
@@ -47,8 +50,6 @@ export default function UpdateAvailability({ application, dialog, onUpdate }) {
         },
       },
     });
-
-    onUpdate();
   };
 
   const events = data?.viewer?.interviews?.map((i) => ({

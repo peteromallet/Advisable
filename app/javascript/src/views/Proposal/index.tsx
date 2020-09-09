@@ -25,7 +25,7 @@ const Proposals = ({ match }) => {
 
   const application = data.application;
   if (!application) return <Notfound />;
-  const urlPrefix = `/applications/${application.id}/proposal`;
+  const urlPrefix = `/applications/:applicationId/proposal`;
 
   return (
     <Layout>

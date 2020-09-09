@@ -6,7 +6,7 @@ import { GET_APPLICATIONS } from "../Applications/queries";
 
 test("Loads the clients projects", async () => {
   const skill = fields.skill({ name: "Primary Skill" });
-  const project = fields.project({ primarySkill: skill });
+  const project = fields.project({ primarySkill: skill, matches: [] });
   const user = fields.user({ projects: [project] });
 
   let { findByText } = renderApp({
@@ -95,6 +95,6 @@ test("Redirects to login page if not logged in", async () => {
     ],
   });
 
-  const header = await app.findByText("Welcome back!");
+  const header = await app.findByText(/Welcome back/i);
   expect(header).toBeInTheDocument();
 });

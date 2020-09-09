@@ -70,7 +70,7 @@ test("User can signup", async () => {
   userEvent.type(password, "testing123");
   userEvent.type(passwordConfirmation, "testing123");
   userEvent.click(screen.getByLabelText(/signup/i));
-  await screen.findByText(/your projects/i);
+  await screen.findByText(/projects/i);
 });
 
 test("Displays a notice if one is passed", async () => {

@@ -201,26 +201,24 @@ export const REQUEST_INTRODUCTION = gql`
         id
         status
       }
+      interview {
+        id
+        user {
+          id
+          availability
+        }
+      }
     }
   }
 `;
 
-export function useRequestIntroduction(application) {
+export function useRequestIntroduction(application, opts) {
   const params = useParams();
   const client = useApolloClient();
   const projectId = params.id;
 
   return useMutation(REQUEST_INTRODUCTION, {
-    optimisticResponse: {
-      __typename: "Mutation",
-      requestIntroduction: {
-        __typename: "RequestIntroductionPayload",
-        application: {
-          ...application,
-          status: "Application Accepted",
-        },
-      },
-    },
+    ...opts,
     refetchQueries: [
       {
         query: GET_CANDIDATES,
@@ -230,6 +228,7 @@ export function useRequestIntroduction(application) {
       },
     ],
     update() {
+      opts.update();
       // First update the inbox queries
       const data = client.readQuery({
         query: GET_MATCHES,

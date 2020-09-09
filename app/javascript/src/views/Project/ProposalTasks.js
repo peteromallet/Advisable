@@ -87,12 +87,8 @@ export default function ProposalTasks({ tasks }) {
       </Text>
       <StyledTaskList>
         {tasks.map((task) => (
-          <>
-            <StyledTask
-              {...dialog}
-              key={task.id}
-              onClick={() => setSelectedTaskId(task.id)}
-            >
+          <React.Fragment key={task.id}>
+            <StyledTask {...dialog} onClick={() => setSelectedTaskId(task.id)}>
               <Box flexShrink="1" minWidth="0">
                 <StyledTaskName
                   color="neutral900"
@@ -118,7 +114,7 @@ export default function ProposalTasks({ tasks }) {
               </Box>
             </StyledTask>
             <StyledTaskDivider />
-          </>
+          </React.Fragment>
         ))}
       </StyledTaskList>
     </Box>

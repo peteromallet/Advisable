@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 const projectFields = gql`
-  fragment ProjectFields on Project {
+  fragment ProjectSetupFields on Project {
     id
     status
     goals
@@ -66,7 +66,7 @@ export const GET_JOB = gql`
     }
 
     project(id: $id) {
-      ...ProjectFields
+      ...ProjectSetupFields
     }
   }
 `;
@@ -77,7 +77,7 @@ export const UPDATE_PROJECT = gql`
   mutation updateProject($input: UpdateProjectInput!) {
     updateProject(input: $input) {
       project {
-        ...ProjectFields
+        ...ProjectSetupFields
       }
     }
   }
@@ -89,7 +89,7 @@ export const PUBLISH_PROJECT = gql`
   mutation publishProject($input: PublishProjectInput!) {
     publishProject(input: $input) {
       project {
-        ...ProjectFields
+        ...ProjectSetupFields
       }
     }
   }

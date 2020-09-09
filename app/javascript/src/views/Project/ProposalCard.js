@@ -25,29 +25,36 @@ export default function ProposalCard({ application }) {
   const url = `/projects/${id}/candidates/${application.id}/proposal`;
 
   return (
-    <Card as={Link} to={url} marginBottom="24px">
-      <Box>
-        <Circle bg="blue100" size="40px" color="blue900">
-          <ChatbubbleEllipses size="22px" />
-        </Circle>
-      </Box>
-      <Box paddingX="12px" flex={1} minWidth={0}>
-        <Text
-          mb="4px"
-          fontSize="lg"
-          fontWeight="500"
-          color="neutral900"
-          letterSpacing="-0.02em"
+    <Box marginBottom="24px">
+      <Card as={Link} to={url}>
+        <Box>
+          <Circle bg="blue100" size="40px" color="blue900">
+            <ChatbubbleEllipses size="22px" />
+          </Circle>
+        </Box>
+        <Box paddingX="12px" flex={1} minWidth={0}>
+          <Text
+            mb="4px"
+            fontSize="lg"
+            fontWeight="500"
+            color="neutral900"
+            letterSpacing="-0.02em"
+          >
+            {application.specialist.firstName} sent you a proposal.
+          </Text>
+          <Comment color="neutral600" fontSize="sm">
+            {application.proposalComment}
+          </Comment>
+        </Box>
+        <Button
+          aria-label="View proposal"
+          size="s"
+          variant="primary"
+          suffix={<ArrowForward />}
         >
-          {application.specialist.firstName} sent you a proposal.
-        </Text>
-        <Comment color="neutral600" fontSize="sm">
-          {application.proposalComment}
-        </Comment>
-      </Box>
-      <Button size="s" variant="primary" suffix={<ArrowForward />}>
-        View
-      </Button>
-    </Card>
+          View
+        </Button>
+      </Card>
+    </Box>
   );
 }
