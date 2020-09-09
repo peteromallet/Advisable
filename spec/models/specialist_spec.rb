@@ -45,4 +45,23 @@ RSpec.describe Specialist do
       expect(specialist.has_setup_payments).to be_truthy
     end
   end
+
+  context "guild" do
+    let(:specialist) { create(:specialist) }
+
+    describe "guild_joined_date" do
+      it "sets a date when a specialist joins the guild" do
+        expect {
+          specialist.update!(guild: true)
+        }.to change(specialist.reload, :guild_joined_date)
+      end
+
+      it "does not overwrite the original date" do
+        specialist.update!(guild: true)
+        expect {
+          specialist.update!(guild: false)
+        }.to_not change(specialist.reload, :guild_joined_date)
+      end
+    end
+  end
 end

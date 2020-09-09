@@ -27,6 +27,7 @@ RSpec.describe Guild::Post, type: :model do
     it { expect(guild_post).to belong_to(:specialist) }
     it { expect(guild_post).to have_many(:reactions) }
     it { expect(guild_post).to have_many(:comments).conditions(status: Guild::Comment.statuses["published"]) }
+    it { expect(guild_post).to have_many(:guild_topics) }
   end
 
   describe "with comments" do

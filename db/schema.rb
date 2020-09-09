@@ -269,6 +269,20 @@ ActiveRecord::Schema.define(version: 2020_09_16_154148) do
     t.index ["airtable_id"], name: "index_featured_specialist_contents_on_airtable_id"
   end
 
+  create_table "follows", force: :cascade do |t|
+    t.string "followable_type", null: false
+    t.uuid "followable_id", null: false
+    t.string "follower_type", null: false
+    t.bigint "follower_id", null: false
+    t.boolean "blocked", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["followable_id", "followable_type"], name: "fk_followables"
+    t.index ["followable_type", "followable_id"], name: "index_follows_on_followable_type_and_followable_id"
+    t.index ["follower_id", "follower_type"], name: "fk_follows"
+    t.index ["follower_type", "follower_id"], name: "index_follows_on_follower_type_and_follower_id"
+  end
+
   create_table "guild_comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "body", null: false
     t.integer "reactionable_count", default: 0, null: false
@@ -352,14 +366,6 @@ ActiveRecord::Schema.define(version: 2020_09_16_154148) do
     t.string "status"
     t.index ["project_id"], name: "index_matches_on_project_id"
     t.index ["specialist_id"], name: "index_matches_on_specialist_id"
-  end
-
-  create_table "notes", force: :cascade do |t|
-    t.bigint "application_id", null: false
-    t.text "content"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["application_id"], name: "index_notes_on_application_id"
   end
 
   create_table "off_platform_projects", force: :cascade do |t|
@@ -546,8 +552,8 @@ ActiveRecord::Schema.define(version: 2020_09_16_154148) do
     t.integer "candidate_count", default: 0
     t.integer "proposed_count", default: 0
     t.integer "hired_count", default: 0
-    t.boolean "sourcing"
     t.bigint "sales_person_id"
+    t.boolean "sourcing"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["sales_person_id"], name: "index_projects_on_sales_person_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
@@ -684,10 +690,39 @@ ActiveRecord::Schema.define(version: 2020_09_16_154148) do
     t.integer "project_count"
     t.string "phone"
     t.boolean "test_account"
-    t.string "remember_token"
     t.boolean "guild", default: false
     t.string "community_status"
+    t.string "remember_token"
+    t.datetime "guild_joined_date"
     t.index ["country_id"], name: "index_specialists_on_country_id"
+  end
+
+  create_table "taggings", id: :serial, force: :cascade do |t|
+    t.uuid "tag_id"
+    t.string "taggable_type"
+    t.uuid "taggable_id"
+    t.string "tagger_type"
+    t.integer "tagger_id"
+    t.string "context", limit: 128
+    t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "context"], name: "taggings_taggable_context_idx"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+  end
+
+  create_table "tags", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "alias_tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -786,7 +821,6 @@ ActiveRecord::Schema.define(version: 2020_09_16_154148) do
     t.datetime "application_rejected_at"
     t.datetime "application_reminder_at"
     t.string "remember_token"
-    t.string "username"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"
@@ -844,7 +878,6 @@ ActiveRecord::Schema.define(version: 2020_09_16_154148) do
   add_foreign_key "interviews", "users"
   add_foreign_key "matches", "projects"
   add_foreign_key "matches", "specialists"
-  add_foreign_key "notes", "applications"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
   add_foreign_key "previous_project_images", "off_platform_projects"
@@ -860,6 +893,7 @@ ActiveRecord::Schema.define(version: 2020_09_16_154148) do
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "countries"
+  add_foreign_key "taggings", "tags"
   add_foreign_key "user_skills", "skills"
   add_foreign_key "user_skills", "users"
   add_foreign_key "users", "countries"

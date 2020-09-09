@@ -4,42 +4,38 @@ module Guild
   class Post < ApplicationRecord
     self.store_full_sti_class = false
 
-    POST_TYPES = %w[
-      Post
-      AdviceRequired
-      CaseStudy
-      Opportunity
-    ].freeze
+    acts_as_ordered_taggable_on :guild_topics
+
+    POST_TYPES = %w[Post AdviceRequired CaseStudy Opportunity].freeze
 
     belongs_to :specialist
     has_many :reactions, as: :reactionable
-    has_many :comments, -> { published }, foreign_key: 'guild_post_id', class_name: 'Guild::Comment'
-    has_many :parent_comments, -> { where(parent_comment_id: nil).published }, class_name: "Guild::Comment", foreign_key: 'guild_post_id'
+    has_many :comments,
+             -> { published },
+             foreign_key: 'guild_post_id', class_name: 'Guild::Comment'
+    has_many :parent_comments,
+             -> { where(parent_comment_id: nil).published },
+             class_name: 'Guild::Comment', foreign_key: 'guild_post_id'
 
-    enum status: {
-      draft: 0,
-      published: 1,
-      removed: 2
-    }
+    enum status: {draft: 0, published: 1, removed: 2}
 
     validates :title, :body, :body_raw, :type, :status, presence: true
-    validates :title, length: {maximum: 250,  minimum: 4}
+    validates :title, length: {maximum: 250, minimum: 4}
     validates :body, length: {maximum: 10_000, minimum: 4}
 
-    before_validation(on: :create) do
-      self.status = Post.statuses["published"]
-    end
+    before_validation(on: :create) {
+      self.status = Post.statuses['published']
+    }
 
     # General, Opportunity, Advice Required, Case Study
     def normalized_type
       case type
-      when "Post"
-        "General"
+      when 'Post'
+        'General'
       else
         type.demodulize.titleize
       end
     end
-
   end
 end
 

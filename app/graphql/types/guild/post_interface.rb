@@ -72,6 +72,8 @@ module Types::Guild::PostInterface
     # TODO: include child comments
   end
 
+  field :guild_topics, [Types::Guild::TopicType], null: true
+
   definition_methods do
     def resolve_type(object, context)
       if Guild::Post::POST_TYPES.include?(object.type)

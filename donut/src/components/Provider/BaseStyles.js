@@ -4,6 +4,7 @@ import { StyledBackdrop, StyledModalWindowContainer } from "../Modal/styles";
 const BACKGROUND = {
   default: "#F8F8F9",
   white: "#FFFFFF",
+  ghostWhite: "#F9FAFF",
 };
 
 const BaseStyles = createGlobalStyle`
