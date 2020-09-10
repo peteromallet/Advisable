@@ -32,10 +32,10 @@ export default function MatchMetaInfo({ match }) {
       </Box>
       <Box height="1px" bg="neutral200" />
       <Box paddingY="16px" display="flex" justifyContent="space-between">
-        <Text fontSize="14px" color="neutral700">
-          Availability
+        <Text fontSize="sm" color="neutral700">
+          Available to start
         </Text>
-        <Text fontSize="14px" fontWeight="medium" color="neutral900">
+        <Text fontSize="sm" fontWeight="medium" color="neutral900">
           {match.availability}
         </Text>
       </Box>

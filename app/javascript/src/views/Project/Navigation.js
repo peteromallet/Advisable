@@ -23,7 +23,7 @@ function ProjectNavigation({ data }) {
           Candidates
         </NavigationMenu.Item>
         <NavigationMenu.Item icon={<Options />} to={`/projects/${id}/settings`}>
-          Settings
+          Project Details
         </NavigationMenu.Item>
       </NavigationMenu>
     </Box>

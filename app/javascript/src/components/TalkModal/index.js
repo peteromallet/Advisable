@@ -13,13 +13,14 @@
 // __typename attribute.
 import React from "react";
 import Talk from "talkjs";
-import Div100vh from "react-div-100vh";
+import { use100vh } from "react-div-100vh";
 import { Modal, useBreakpoint } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import createTalkSession from "../../utilities/createTalkSession";
 
 const TalkModal = ({ dialog, conversationId, participants }) => {
   const viewer = useViewer();
+  const height = use100vh();
   const isMobile = useBreakpoint("s");
   const messengerRef = React.useRef(null);
 
@@ -49,7 +50,7 @@ const TalkModal = ({ dialog, conversationId, participants }) => {
 
   return (
     <Modal modal={dialog} expandOnMobile label="Message">
-      <Div100vh style={{ height: isMobile ? "100rvh" : "auto" }}>
+      <div style={{ height: isMobile ? height : "auto" }}>
         <div
           ref={messengerRef}
           style={{
@@ -57,7 +58,7 @@ const TalkModal = ({ dialog, conversationId, participants }) => {
             maxHeight: "100%",
           }}
         />
-      </Div100vh>
+      </div>
     </Modal>
   );
 };

@@ -114,9 +114,6 @@ function StarRadio({
           "stars",
         )}`}
       >
-        <VisuallyHidden>
-          {`Rate ${label} ${pluralize(Number(value), "star", "stars")}`}
-        </VisuallyHidden>
         <Star size={24} strokeWidth={0} fill="currentColor" />
       </label>
     </StyledStarRating>

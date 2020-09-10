@@ -1,12 +1,7 @@
 import React from "react";
-import Div100vh from "react-div-100vh";
+import { use100vh } from "react-div-100vh";
 import { rgba, darken } from "polished";
-import {
-  Box,
-  Checkbox,
-  theme,
-  useBreakpoint,
-} from "@advisable/donut";
+import { Box, Checkbox, theme, useBreakpoint } from "@advisable/donut";
 import { useMenuState, Menu, MenuItem, MenuButton } from "reakit/Menu";
 import styled from "styled-components";
 
@@ -134,16 +129,17 @@ const DoneButton = styled(FilterButton)`
 `;
 
 function Filter({ label, options, selected, onChange }) {
+  const height = use100vh();
   const isDesktop = useBreakpoint("mUp");
 
   const menu = useMenuState({
     placement: "top-end",
   });
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const option = e.target.value;
     if (selected.indexOf(option) > -1) {
-      onChange(selected.filter(s => s !== option));
+      onChange(selected.filter((s) => s !== option));
     } else {
       onChange([...selected, option]);
     }
@@ -154,7 +150,7 @@ function Filter({ label, options, selected, onChange }) {
     menu.hide();
   };
 
-  const isSelected = option => {
+  const isSelected = (option) => {
     return selected.indexOf(option) > -1;
   };
 
@@ -166,11 +162,10 @@ function Filter({ label, options, selected, onChange }) {
         <StyledMenuToggleLabel>{label}</StyledMenuToggleLabel>
         <StyledMenuToggleValue>{value}</StyledMenuToggleValue>
       </StyledMenuToggle>
-      <Div100vh
+      <StyledMenu
         {...menu}
-        as={StyledMenu}
         aria-label={label}
-        style={{ height: isDesktop ? "300px" : "100rvh" }}
+        style={{ height: isDesktop ? "300px" : height }}
       >
         <Box
           flexShrink={1}
@@ -181,7 +176,7 @@ function Filter({ label, options, selected, onChange }) {
           overflowY="scroll"
           position="relative"
         >
-          {options.map(option => (
+          {options.map((option) => (
             <MenuItem
               {...menu}
               mb="xs"
@@ -201,7 +196,7 @@ function Filter({ label, options, selected, onChange }) {
           </DoneButton>
           <ClearButton onClick={handleClear}>Clear</ClearButton>
         </Box>
-      </Div100vh>
+      </StyledMenu>
     </>
   );
 }

@@ -71,11 +71,13 @@ export default function CandidateCard({ application }) {
         {application.specialist.location}
       </Text>
       <Box my="12px" height="1px" bg="neutral100" />
-      <Attribute label="Hourly Rate">
+      <Attribute label="Hourly rate">
         {currency(application.rate * 100)}
       </Attribute>
       <Box my="12px" height="1px" bg="neutral100" />
-      <Attribute label="Availability">{application.availability}</Attribute>
+      <Attribute label="Available to start">
+        {application.availability}
+      </Attribute>
       <Box paddingTop="28px">
         <ApplicationStatus application={application} />
       </Box>

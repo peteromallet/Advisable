@@ -184,7 +184,7 @@ const EditTask = ({
           </ConfirmationContainer>
         </Confirmation>
       )}
-      <Div100vh style={{ height: "calc(100rvh - 60px)" }}>
+      <Div100vh>
         <VerticalLayout>
           <VerticalLayout.Header>
             <Box paddingX="m" paddingTop="60px">
