@@ -103,9 +103,6 @@ describe 'Freelancer active project view' do
       visit "/clients/#{application.airtable_id}"
       find('h5', text: 'This is an existing task').click
       click_on 'Start Working'
-      expect(page).to have_content(
-        'You have marked this project as in progress.'
-      )
     end
   end
 

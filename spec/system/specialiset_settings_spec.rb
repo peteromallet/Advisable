@@ -33,6 +33,17 @@ describe 'Specialist settings' do
       make_visible: true
     )
 
+    attach_file(
+      'upload-image',
+      Rails.root + 'spec/support/02.jpg',
+      make_visible: true
+    )
+
+    expect(page).not_to have_css('*[data-uploading]')
+    second_image = find_all('*[class^=ImageTiles__StyledImageTile-]')[1]
+    second_image.click
+    within(second_image) { click_on 'Remove image' }
+
     click_on 'Continue'
     click_on 'Skip'
 
