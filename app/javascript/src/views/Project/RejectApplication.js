@@ -1,11 +1,13 @@
 import React from "react";
 import ActionBar from "./ActionBar";
 import { Formik, Form } from "formik";
+import { useParams, useHistory } from "react-router-dom";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import ActionBarModal from "./ActionBarModal";
 import { Text, Select, Button, Textarea } from "@advisable/donut";
 import FormField from "components/FormField";
 import SubmitButton from "components/SubmitButton";
+import { useNotifications } from "components/Notifications";
 import { Trash } from "@styled-icons/ionicons-solid";
 import { useRejectApplication } from "./queries";
 
@@ -32,12 +34,16 @@ const OPTIONS = [
 const optionByValue = (value) => OPTIONS.find((o) => o.value === value);
 
 export default function RejectApplication({ application }) {
+  const { id } = useParams();
+  const history = useHistory();
   const dialog = useDialogState();
+  const notifications = useNotifications();
   const firstName = application.specialist.firstName;
+  const isApplied = application.status === "Applied";
   const [rejectApplication] = useRejectApplication(application);
 
-  const handleSubmit = (values, formikBag) => {
-    rejectApplication({
+  const handleSubmit = async (values, formikBag) => {
+    await rejectApplication({
       variables: {
         input: {
           id: application.id,
@@ -46,8 +52,14 @@ export default function RejectApplication({ application }) {
       },
     });
 
+    notifications.notify(`You have rejected ${firstName}`);
+
     dialog.hide();
     formikBag.resetForm();
+
+    if (!isApplied) {
+      history.replace(`/projects/${id}/candidates`);
+    }
   };
 
   const initialValues = {

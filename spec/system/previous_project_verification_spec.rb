@@ -3,16 +3,7 @@ require 'rails_helper'
 describe 'Previous project verification', type: :system do
   before :each do
     allow_any_instance_of(Review).to receive(:sync_to_airtable)
-  end
 
-  let(:previous_project) do
-    create(
-      :previous_project,
-      validation_status: 'Pending', contact_name: 'John Doe'
-    )
-  end
-
-  it 'allows viewer to verify and review the project' do
     OmniAuth.config.test_mode = true
     OmniAuth.config.add_mock(
       :linkedin,
@@ -24,7 +15,16 @@ describe 'Previous project verification', type: :system do
         }
       }
     )
+  end
 
+  let(:previous_project) do
+    create(
+      :previous_project,
+      validation_status: 'Pending', contact_name: 'John Doe'
+    )
+  end
+
+  it 'allows viewer to verify and review the project' do
     visit "/verify_project/#{previous_project.uid}"
     click_on text: /login with/i
     click_on 'Verify Project'
@@ -36,6 +36,15 @@ describe 'Previous project verification', type: :system do
     click_on 'Continue'
     fill_in 'comment', with: 'Really great'
     click_on 'Submit Review'
+    expect(page).to have_text(/thanks/i)
+  end
+
+  it 'allows user to fail validation' do
+    visit "/verify_project/#{previous_project.uid}"
+    click_on text: /login with/i
+    click_on "I can't verify this project"
+    fill_in 'reason', with: 'It didnt happen'
+    click_on 'Continue'
     expect(page).to have_text(/thanks/i)
   end
 end

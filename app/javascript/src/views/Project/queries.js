@@ -277,43 +277,71 @@ export function useRejectApplication(application) {
   const projectId = params.id;
 
   return useMutation(REJECT_APPLICATION, {
-    optimisticResponse: {
-      __typename: "Mutation",
-      rejectApplication: {
-        __typename: "RejectApplicationPayload",
-        application: {
-          ...application,
-          status: "Application Rejected",
-        },
-      },
-    },
     update() {
-      const data = client.readQuery({
-        query: GET_MATCHES,
-        variables: {
-          id: projectId,
-        },
-      });
-
-      const isLastApplication = data.project.matches.length === 1;
-      const hasRequestedIntroductions = data.project.accepted.length > 0;
-
-      client.writeQuery({
-        query: GET_MATCHES,
-        variables: {
-          id: projectId,
-        },
-        data: {
-          ...data,
-          project: {
-            ...data.project,
-            sourcing: !(isLastApplication && hasRequestedIntroductions),
-            matches: data.project.matches.filter((app) => {
-              return app.id !== application.id;
-            }),
+      // Apollo annoyingly throws an error when readQuery is called with a query
+      // that is not in the cache.
+      // The user may be rejected a candidate from the view accepted candidate
+      // page in which case the matches query wont be in the apollo cache and so
+      // we need to wrap in a try catch.
+      try {
+        const data = client.readQuery({
+          query: GET_MATCHES,
+          variables: {
+            id: projectId,
           },
-        },
-      });
+        });
+
+        const isLastApplication = data.project.matches.length === 1;
+        const hasRequestedIntroductions = data.project.accepted.length > 0;
+        client.writeQuery({
+          query: GET_MATCHES,
+          variables: {
+            id: projectId,
+          },
+          data: {
+            ...data,
+            project: {
+              ...data.project,
+              sourcing: !(isLastApplication && hasRequestedIntroductions),
+              matches: data.project.matches.filter((app) => {
+                return app.id !== application.id;
+              }),
+            },
+          },
+        });
+      } catch (_) {
+        // Cache isnt populated
+      }
+
+      // The user may be rejecting the candidate by going straight to the detail
+      // view in which case the candidates query wont be in the cache and so we
+      // need to use try catch to rescue from apollo throwing error on readQuery
+      try {
+        const data = client.readQuery({
+          query: GET_CANDIDATES,
+          variables: {
+            id: projectId,
+          },
+        });
+
+        client.writeQuery({
+          query: GET_CANDIDATES,
+          variables: {
+            id: projectId,
+          },
+          data: {
+            ...data,
+            project: {
+              ...data.project,
+              candidates: data.project.candidates.filter((app) => {
+                return app.id !== application.id;
+              }),
+            },
+          },
+        });
+      } catch (_) {
+        // cache isnt populated
+      }
     },
   });
 }

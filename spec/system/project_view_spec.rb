@@ -53,4 +53,16 @@ describe 'Project view', type: :system do
 
     expect(page).to have_text(/you have been matched with 2/i)
   end
+
+  it 'allows the viewer to reject an accepted candidate' do
+    candidate =
+      create(:application, project: project, status: 'Application Accepted')
+    authenticate_as project.user
+    visit "/projects/#{project.uid}/candidates/#{candidate.uid}"
+    click_on 'Reject'
+    within '*[role=dialog]' do
+      click_on 'Reject'
+    end
+    expect(page).to have_text('No Candidates')
+  end
 end

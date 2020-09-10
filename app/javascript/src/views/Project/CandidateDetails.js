@@ -65,7 +65,9 @@ export default function CandidateDetails({ project }) {
               <ApplicationDetails application={application} project={project} />
             </Route>
           </Switch>
-          <ActionBar application={application} project={project} />
+          {application.status !== "Application Rejected" && (
+            <ActionBar application={application} project={project} />
+          )}
         </ActionBarContainer>
       </Box>
     </Box>

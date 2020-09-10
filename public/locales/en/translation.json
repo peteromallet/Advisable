@@ -28,6 +28,10 @@
     "Proposed": {
       "title": "{{specialistName}} sent a proposal",
       "description": "{{specialistName}} has sent you a proposal and is waiting for your response."
+    },
+    "Application Rejected": {
+      "title": "{{specialistName}} has been rejected",
+      "description": "You have rejected this candidate."
     }
   },
   "errors": {

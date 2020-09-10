@@ -3,6 +3,7 @@ import { DateTime } from "luxon";
 import { useTranslation } from "react-i18next";
 import {
   Call,
+  Trash,
   ChatbubbleEllipses,
   Calendar,
   CheckmarkCircle,
@@ -13,6 +14,7 @@ const ICONS = {
   "Application Accepted": Call,
   "Interview Scheduled": Calendar,
   "Interview Completed": CheckmarkCircle,
+  "Application Rejected": Trash,
   Proposed: ChatbubbleEllipses,
 };
 
