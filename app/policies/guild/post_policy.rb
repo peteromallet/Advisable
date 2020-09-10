@@ -1,5 +1,14 @@
 class Guild::PostPolicy < Guild::BasePolicy
   def show
-    record&.published? && is_guild_user?
+    public_and_guild?
+  end
+
+  def create_comment
+    public_and_guild?
+  end
+
+  private
+  def public_and_guild?
+    return record&.published? && is_guild_user?
   end
 end

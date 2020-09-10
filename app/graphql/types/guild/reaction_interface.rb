@@ -4,7 +4,7 @@ module Types::Guild::ReactionInterface
 
   orphan_types Types::Guild::CommentType
 
-  field :reactions_count, Integer, null: false do
+  field :reactions_count, Integer, null: true do
     description 'The number of reactions for the guild resource'
   end
   def reactions_count
