@@ -11,7 +11,10 @@ import {
   DialogDisclosure,
 } from "@advisable/donut";
 
-const StyledNewProject = styled.div`
+const StyledNewProject = styled.button`
+  appearance: none;
+  background: transparent;
+  width: 100%;
   ${margin};
   padding: 16px;
   outline: none;
