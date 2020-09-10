@@ -24,4 +24,12 @@ class Types::Guild::CommentType < Types::BaseType
   def commented
     object.child_comments.exists?(specialist_id: context[:current_user])
   end
+
+  field :parent_comment, Types::Guild::CommentType, null: true do
+    description "The parent comment"
+  end
+
+  field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
+    description 'The timestamp for when the activity resource was created'
+  end
 end

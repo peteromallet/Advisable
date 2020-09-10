@@ -30,8 +30,6 @@ module Guild
       self.status = Post.statuses["published"]
     end
 
-    after_validation :set_audience
-
     # General, Opportunity, Advice Required, Case Study 
     def normalized_type
       case type
@@ -42,10 +40,5 @@ module Guild
       end
     end
 
-    protected
-    def set_audience
-      # TODO ....
-    end
-  
   end
 end
