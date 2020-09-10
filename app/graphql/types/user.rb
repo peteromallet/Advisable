@@ -75,7 +75,7 @@ class Types::User < Types::BaseType
     authorize :is_user
   end
 
-  def interviews(status:)
+  def interviews(status: nil)
     interviews = object.interviews
     interviews = interviews.where(status: status) if status
     interviews

@@ -106,7 +106,14 @@ function StarRadio({
           checked={checked}
         />
       </VisuallyHidden>
-      <label htmlFor={inputID}>
+      <label
+        htmlFor={inputID}
+        aria-label={`Rate ${label} ${pluralize(
+          Number(value),
+          "star",
+          "stars",
+        )}`}
+      >
         <VisuallyHidden>
           {`Rate ${label} ${pluralize(Number(value), "star", "stars")}`}
         </VisuallyHidden>

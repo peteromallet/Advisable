@@ -9,7 +9,6 @@ class AuthProvidersController < ApplicationController
   end
 
   def linkedin
-    reset_session
     user = {
       uid: auth_hash.uid,
       provider: 'linkedin',

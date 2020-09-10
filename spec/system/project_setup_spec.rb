@@ -178,7 +178,7 @@ describe 'Project setup flow' do
         check 'acceptedTerms'
         click_button 'Continue'
         expect(page).to have_current_path(
-          "/projects/#{project.airtable_id}/applied"
+          "/projects/#{project.airtable_id}/matches"
         )
       end
     end

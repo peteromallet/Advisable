@@ -10,7 +10,7 @@ class Types::Interview < Types::BaseType
   field :specialist, Types::SpecialistType, null: true
 
   def id
-    object.airtable_id
+    object.uid || object.airtable_id
   end
 
   def time_zone

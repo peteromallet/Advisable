@@ -85,9 +85,9 @@ class Project < ApplicationRecord
 
   # Returns an array of applications that are in the 'hiring pipeline' stages.
   def candidates
-    base = applications.not_hidden
-    base.active.or(base.matched)
-    base.order(score: :desc)
+    query = applications.not_hidden
+    query = query.active.or(query.matched)
+    query.order(score: :desc)
   end
 
   # Updates all of the various application counters

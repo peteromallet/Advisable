@@ -40,6 +40,10 @@ export default function Project() {
 
   const { project } = data;
 
+  if (project?.status === "Brief Pending Confirmation") {
+    return <Redirect to={`/project_setup/${project.id}`} />;
+  }
+
   if (SETUP_STATUSES.includes(project.status)) {
     return (
       <Switch>
