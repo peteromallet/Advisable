@@ -9,13 +9,13 @@ describe 'Project view', type: :system do
 
   let!(:project) { create(:project, status: 'Brief Confirmed') }
   let!(:application1) do
-    create(:application, status: 'Applied', score: 90, project: project)
+    create(:full_application, status: 'Applied', score: 90, project: project)
   end
   let!(:application2) do
-    create(:application, status: 'Applied', score: 90, project: project)
+    create(:full_application, status: 'Applied', score: 90, project: project)
   end
   let!(:application3) do
-    create(:application, status: 'Applied', score: 90, project: project)
+    create(:full_application, status: 'Applied', score: 90, project: project)
   end
 
   it 'allows user to accept and reject matches' do
@@ -64,5 +64,17 @@ describe 'Project view', type: :system do
       click_on 'Reject'
     end
     expect(page).to have_text('No Candidates')
+  end
+
+  context 'when the user hasnt added a password' do
+    it 'allows the user to signup' do
+      allow_any_instance_of(User).to receive(:sync_to_airtable)
+      project.user.update(password: nil)
+      visit "/projects/#{project.uid}"
+      fill_in 'password', with: 'testing123'
+      fill_in 'passwordConfirmation', with: 'testing123'
+      click_on 'Signup'
+      expect(page).to have_current_path("/projects/#{project.uid}")
+    end
   end
 end
