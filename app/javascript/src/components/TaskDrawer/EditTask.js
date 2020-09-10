@@ -187,7 +187,7 @@ const EditTask = ({
       <Div100vh style={{ height: "calc(100rvh - 60px)" }}>
         <VerticalLayout>
           <VerticalLayout.Header>
-            <Box paddingX="m">
+            <Box paddingX="m" paddingTop="60px">
               {!hideStatus && <TaskStatus>{task.stage}</TaskStatus>}
               <Title
                 data-testid="nameField"

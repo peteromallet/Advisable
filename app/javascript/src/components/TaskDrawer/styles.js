@@ -21,7 +21,6 @@ const placeholderColor = (color) => css`
 
 export const TaskDrawer = styled.div`
   height: 100%;
-  padding-top: 60px;
   position: relative;
 
   ${Status} {
