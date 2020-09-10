@@ -37,7 +37,7 @@ export default function ProjectSettings() {
           fontWeight="medium"
           letterSpacing="-0.03em"
         >
-          Project Settings
+          Project Details
         </Text>
         <UpdateSkillsModal project={project} dialog={skillsDialog} />
         <UpdateProjectLocationModal project={project} dialog={locationDialog} />
