@@ -1,18 +1,21 @@
 import React from "react";
+import { use100vh } from "react-div-100vh";
 import { Chatbubbles } from "@styled-icons/ionicons-solid";
 import ActionBarModal from "./ActionBarModal";
-import { Box } from "@advisable/donut";
+import { Box, useBreakpoint } from "@advisable/donut";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import TalkConversation from "components/TalkConversation";
 import ActionBar from "./ActionBar";
 
 export default function MessageAction({ application }) {
+  const height = use100vh();
   const dialog = useDialogState();
+  const isLarge = useBreakpoint("mUp");
 
   return (
     <>
       <ActionBarModal padding="8px" dialog={dialog} label="Message">
-        <Box height="500px">
+        <Box style={{ height: isLarge ? "60vh" : height - 100 }}>
           <TalkConversation
             conversationId={application.id}
             participants={[application.specialist]}
