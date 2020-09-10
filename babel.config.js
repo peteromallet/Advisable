@@ -36,7 +36,6 @@ module.exports = function (api) {
           exclude: ["transform-typeof-symbol"],
         },
       ],
-      "@babel/preset-typescript",
       [
         "@babel/preset-react",
         {
@@ -44,6 +43,7 @@ module.exports = function (api) {
           useBuiltIns: true,
         },
       ],
+      ["@babel/preset-typescript", { allExtensions: true, isTSX: true }],
     ].filter(Boolean),
     plugins: [
       "babel-plugin-macros",
