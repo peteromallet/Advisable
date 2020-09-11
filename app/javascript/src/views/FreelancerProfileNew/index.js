@@ -19,7 +19,6 @@ function FreelancerProfileNew() {
   useLogoURL("https://advisable.com");
   const params = useParams();
   const viewer = useViewer();
-
   const { loading, data, error } = useQuery(GET_PROFILE, {
     variables: {
       id: params.id,
