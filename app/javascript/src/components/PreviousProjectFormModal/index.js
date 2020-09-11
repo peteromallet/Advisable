@@ -2,7 +2,6 @@ import React from "react";
 import { Dialog } from "reakit/Dialog";
 import { StyledDialog, StyledDialogScrollable } from "./styles";
 export * from "./usePreviousProjectModal";
-import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import PreviousProjectFormContainer from "./PreviousProjectFormContainer";
 
 export default function PreviousProjectFormModal({
