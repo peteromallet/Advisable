@@ -37,6 +37,7 @@ class TestData
   def self.create_previous_project(attrs = {})
     previous_project =
       PreviousProject.create(
+        company_type: 'Startup',
         specialist: attrs.fetch(:specialist),
         validation_status: attrs.fetch(:validation_status, 'Validated'),
         contact_name: Faker::Name.name,

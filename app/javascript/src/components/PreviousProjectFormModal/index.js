@@ -9,16 +9,6 @@ export default function PreviousProjectFormModal({
   unstable_finalFocusRef,
   ...props
 }) {
-  const scrollRef = React.useRef();
-
-  React.useEffect(() => {
-    const scrollBox = scrollRef.current;
-    if (props.modal.visible) {
-      disableBodyScroll(scrollBox);
-    }
-    return () => enableBodyScroll(scrollBox);
-  }, [props.modal.visible]);
-
   return (
     <Dialog
       {...props.modal}
