@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const getProfileData = gql`
+export const GET_PROFILE = gql`
   query getProfileData($id: ID!) {
     specialist(id: $id) {
       id
@@ -29,6 +29,10 @@ const getProfileData = gql`
       profileProjects {
         id
         title
+        clientName
+        coverPhoto {
+          url
+        }
         excerpt
         primaryIndustry {
           id
@@ -42,6 +46,13 @@ const getProfileData = gql`
         industries {
           id
           name
+        }
+        reviews {
+          id
+          name
+          role
+          comment
+          companyName
         }
       }
 
@@ -63,5 +74,3 @@ const getProfileData = gql`
     }
   }
 `;
-
-export default getProfileData;
