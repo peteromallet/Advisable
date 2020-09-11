@@ -3,8 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '~> 2.6.6'
 
-# loads env vars from the .env file in dev and test
-gem 'dotenv-rails', groups: %i[development test]
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0', '>= 6.0.3.2'
 # Use postgresql as the database for Active Record
@@ -65,11 +63,12 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'image_processing', '~> 1.0'
 gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 
-# Guild 
-gem "jsonb_accessor", "~> 1.0.0"
+# Guild
+gem 'jsonb_accessor', '~> 1.0.0'
 
 group :development, :test do
   gem 'pry'
+  gem 'dotenv-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails', '~> 4.0.0'
