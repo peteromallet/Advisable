@@ -38,13 +38,4 @@ describe 'Previous project verification', type: :system do
     click_on 'Submit Review'
     expect(page).to have_text(/thanks/i)
   end
-
-  it 'allows user to fail validation' do
-    visit "/verify_project/#{previous_project.uid}"
-    click_on text: /login with/i
-    click_on "I can't verify this project"
-    fill_in 'reason', with: 'It didnt happen'
-    click_on 'Continue'
-    expect(page).to have_text(/thanks/i)
-  end
 end
