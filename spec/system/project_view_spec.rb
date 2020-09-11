@@ -12,10 +12,10 @@ describe 'Project view', type: :system do
     create(:full_application, status: 'Applied', score: 90, project: project)
   end
   let!(:application2) do
-    create(:full_application, status: 'Applied', score: 90, project: project)
+    create(:full_application, status: 'Applied', score: 85, project: project)
   end
   let!(:application3) do
-    create(:full_application, status: 'Applied', score: 90, project: project)
+    create(:full_application, status: 'Applied', score: 80, project: project)
   end
 
   it 'allows user to accept and reject matches' do
