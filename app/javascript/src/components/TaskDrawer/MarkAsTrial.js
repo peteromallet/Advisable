@@ -56,11 +56,11 @@ const MarkAsTrial = ({ task }) => {
   };
 
   return (
-    <Box mt="m" p="m" borderRadius={12} bg="neutral.0">
+    <Box mt="m" p="m" borderRadius={12} bg="neutral100">
       <Text fontSize="s" fontWeight="medium" mb="xxs">
         Would you like to mark this as a guaranteed trial task?
       </Text>
-      <Text fontSize="xs" lineHeight="xs" mb="xs" color="neutral.7">
+      <Text fontSize="xs" lineHeight="xs" mb="xs" color="neutral700">
         Proposing a trial task increases your chance of closing a client. It
         gives the client a chance to work with you risk-free: they don't pay
         unless they want to continue working with you after. However, you will

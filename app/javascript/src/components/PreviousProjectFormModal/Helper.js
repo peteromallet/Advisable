@@ -18,7 +18,7 @@ function HelperText({ heading, children, ...props }) {
 function Helper({ children }) {
   return (
     <Box bg="cyan100" borderRadius="20px" padding="m">
-      <Circle size="40px" bg="cyan500" mb="m" color="white.9">
+      <Circle size="40px" bg="cyan500" mb="m" color="white">
         <Bell size={24} strokeWidth={2} />
       </Circle>
       {children}

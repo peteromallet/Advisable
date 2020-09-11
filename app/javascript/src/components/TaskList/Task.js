@@ -55,7 +55,7 @@ export default ({
           </Detail>
         )}
         {notice && (
-          <Text fontSize="xs" color="orange.7" mb="xxs">
+          <Text fontSize="xs" color="orange700" mb="xxs">
             {notice}
           </Text>
         )}

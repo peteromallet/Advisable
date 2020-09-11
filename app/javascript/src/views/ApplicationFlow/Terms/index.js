@@ -68,7 +68,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
                 as="h1"
                 mb="l"
                 fontSize="30px"
-                color="blue.9"
+                color="blue900"
                 fontWeight="semibold"
                 letterSpacing="-0.04em"
               >

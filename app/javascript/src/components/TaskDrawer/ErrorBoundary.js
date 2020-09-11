@@ -28,7 +28,7 @@ class TaskDrawerErrorBoundary extends React.Component {
             <Box
               width={50}
               height={50}
-              bg="yellow.0"
+              bg="yellow100"
               display="flex"
               margin="0 auto"
               borderRadius="50%"
@@ -44,7 +44,7 @@ class TaskDrawerErrorBoundary extends React.Component {
             <Text
               fontSize="s"
               lineHeight="s"
-              color="neutral.6"
+              color="neutral600"
               textAlign="center"
             >
               An unexpected error has occured. We have been notified and are

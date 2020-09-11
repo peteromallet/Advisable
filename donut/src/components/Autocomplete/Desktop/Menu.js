@@ -36,7 +36,7 @@ const Menu = ({
       <MenuStyles {...downshift.getMenuProps()}>
         {isMax ? (
           <Box padding="m">
-            <Text color="neutral.N5" size="xs" css="text-align: center;">
+            <Text color="neutral500" size="xs" css="text-align: center;">
               You can not add more than {max} items
             </Text>
           </Box>

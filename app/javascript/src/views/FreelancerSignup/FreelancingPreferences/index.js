@@ -39,16 +39,16 @@ const FreelancingPreferences = ({ history }) => {
     >
       {(formik) => (
         <Form>
-          <Text as="h2" size="xxxl" weight="semibold" color="neutral.9" mb="s">
+          <Text as="h2" size="xxxl" weight="semibold" color="neutral900" mb="s">
             Freelancing Preferences
           </Text>
-          <Text size="s" color="neutral.7" lineHeight="m">
+          <Text size="s" color="neutral700" lineHeight="m">
             Let us know how you operate as a freelancer. This will help us
             choose projects that are better suited to you.
           </Text>
-          <Box bg="neutral.1" width="100%" height="1px" my="l" />
+          <Box bg="neutral100" width="100%" height="1px" my="l" />
           <Box mb="xl">
-            <Text color="neutral.8" weight="medium" mb="s">
+            <Text color="neutral800" weight="medium" mb="s">
               Is freelancing your primary occupation?
             </Text>
             <Box mb="xs">
@@ -77,14 +77,14 @@ const FreelancingPreferences = ({ history }) => {
             />
             {formik.touched.primarilyFreelance &&
               formik.errors.primarilyFreelance && (
-                <Text size="xs" color="red.5" mt="xs" lineHeight="xs">
+                <Text size="xs" color="red500" mt="xs" lineHeight="xs">
                   {formik.errors.primarilyFreelance}
                 </Text>
               )}
           </Box>
 
           <Box mb="l">
-            <Text weight="medium" mb="xs" color="neutral.8">
+            <Text weight="medium" mb="xs" color="neutral800">
               How many freelancing projects have you completed?
             </Text>
             <Choices

@@ -5,7 +5,7 @@ import { Choices, Choice, Circle } from "./styles";
 export default ({ choices, name, value, onChange, error }) => (
   <>
     <Choices>
-      {choices.map(choice => (
+      {choices.map((choice) => (
         <Choice key={choice.value}>
           <input
             name={name}
@@ -17,11 +17,11 @@ export default ({ choices, name, value, onChange, error }) => (
           />
           <label htmlFor={choice.value}>
             <Circle />
-            <Text size="xs" color="neutral.8" weight="medium">
+            <Text size="xs" color="neutral800" weight="medium">
               {choice.name}
             </Text>
             {choice.description && (
-              <Text size="xs" color="neutral.5" lineHeight="xs" mt="xxs">
+              <Text size="xs" color="neutral500" lineHeight="xs" mt="xxs">
                 {choice.description}
               </Text>
             )}
@@ -30,7 +30,7 @@ export default ({ choices, name, value, onChange, error }) => (
       ))}
     </Choices>
     {error && (
-      <Text size="xs" color="red.5" mt="xs" lineHeight="xs">
+      <Text size="xs" color="red500" mt="xs" lineHeight="xs">
         {error}
       </Text>
     )}

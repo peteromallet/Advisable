@@ -33,19 +33,19 @@ const Sidebar = ({ data }) => {
         as="h1"
         mb="xxs"
         fontSize="xl"
-        color="blue.8"
+        color="blue800"
         fontWeight="semibold"
         letterSpacing="-0.02em"
       >
         {data.specialist.name}
       </Text>
-      <Text color="neutral.6" letterSpacing="-0.02em" mb="xs">
+      <Text color="neutral600" letterSpacing="-0.02em" mb="xs">
         {data.specialist.location}
       </Text>
       {rating > 0 && (
         <>
           <StarRating showNumber={false} rating={rating} />
-          <Text color="neutral.5" fontSize="xxs" mb="m">
+          <Text color="neutral500" fontSize="xxs" mb="m">
             {pluralize(data.specialist.reviewsCount || 0, "review", "reviews")}
           </Text>
         </>

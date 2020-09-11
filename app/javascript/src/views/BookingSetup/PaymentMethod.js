@@ -102,7 +102,7 @@ const PaymentMethod = ({ data, nextStep }) => {
                 </Text>
               )}
               {formik.errors.paymentMethod ? (
-                <Text color="red.6" mb="l">
+                <Text color="red600" mb="l">
                   {formik.errors.paymentMethod}
                 </Text>
               ) : undefined}

@@ -28,20 +28,20 @@ export const SegmentedControlRadio = styled.div`
     display: inline-flex;
     justify-content: center;
     letter-spacing: -0.01em;
-    color: ${theme.colors.neutral[7]};
+    color: ${theme.colors.neutral700};
     transition: background-color 200ms;
   }
 
   label:hover {
-    color: ${theme.colors.neutral[8]};
-    background: ${darken(0.02, theme.colors.neutral[1])};
+    color: ${theme.colors.neutral800};
+    background: ${darken(0.02, theme.colors.neutral100)};
   }
 
   input:checked + label {
     background: white;
-    color: ${theme.colors.blue[5]};
-    box-shadow: 0 2px 4px ${rgba(theme.colors.neutral[8], 0.1)},
-      0 1px 3px ${rgba(theme.colors.neutral[8], 0.1)};
+    color: ${theme.colors.blue500};
+    box-shadow: 0 2px 4px ${rgba(theme.colors.neutral800, 0.1)},
+      0 1px 3px ${rgba(theme.colors.neutral800, 0.1)};
   }
 `;
 
@@ -51,7 +51,7 @@ export const SegmentedControl = styled.div`
   height: 36px;
   display: flex;
   border-radius: 8px;
-  background: ${theme.colors.neutral[1]};
+  background: ${theme.colors.neutral100};
 
   ${SegmentedControlRadio}:first-child label {
     border-top-left-radius: 8px;

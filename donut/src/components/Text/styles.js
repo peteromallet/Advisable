@@ -27,7 +27,7 @@ export const Text = styled.div`
 `;
 
 Text.defaultProps = {
-  color: "neutral.9",
+  color: "neutral900",
   fontSize: "md",
 };
 

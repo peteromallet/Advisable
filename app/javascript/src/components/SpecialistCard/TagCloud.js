@@ -8,8 +8,8 @@ const Tag = styled.div`
   margin-right: 4px;
   margin-bottom: 4px;
   display: inline-flex;
-  color: ${theme.colors.blue[8]};
-  background: ${theme.colors.neutral[1]};
+  color: ${theme.colors.blue900};
+  background: ${theme.colors.neutral100};
   border-radius: 15px;
   padding: 0 10px;
   font-size: 12px;
@@ -33,7 +33,7 @@ const Circle = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: ${theme.colors.blue[5]};
+  background: ${theme.colors.blue500};
 `;
 
 const TagCloud = ({ tags, maxRows, name }) => {

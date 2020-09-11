@@ -20,19 +20,19 @@ const AvailabilityDay = ({ date, style, availability, onClick }) => {
       <StyledAvailabilityDay
         disabled={isWeekend}
         aria-label={`Set availability for ${date.toFormat(
-          "EEEE, dd MMMM YYYY"
+          "EEEE, dd MMMM YYYY",
         )}`}
         hasAvailability={hasAvailability}
         onClick={isWeekday ? handleClick : null}
       >
-        <Text fontSize="xs" color="neutral.7" mb="xxs">
+        <Text fontSize="xs" color="neutral700" mb="xxs">
           {date.toFormat("EEE")}
         </Text>
-        <Text fontSize="l" fontWeight="medium" color="blue.8">
+        <Text fontSize="l" fontWeight="medium" color="blue800">
           {date.toFormat("dd")}
         </Text>
         {hasAvailability && (
-          <Circle mt="12px" width={6} height={6} bg="blue.5" />
+          <Circle mt="12px" width={6} height={6} bg="blue500" />
         )}
       </StyledAvailabilityDay>
     </Box>

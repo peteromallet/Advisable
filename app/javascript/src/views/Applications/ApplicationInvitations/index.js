@@ -22,14 +22,14 @@ const ApplicationInvitations = (props) => {
           mb="xs"
           size="xxl"
           lineHeight="xxl"
-          color="neutral.9"
+          color="neutral900"
           weight="semibold"
         >
           Good news! We found a project that might be suitable for you.
         </Text>
       </Box>
       <Box maxWidth={650} mb="xs">
-        <Text color="neutral.7" lineHeight="m">
+        <Text color="neutral700" lineHeight="m">
           {props.onHold
             ? "We have found a project we think you might be interested in. Please apply below to get accepted to Advisable and get priority access to projects."
             : "We have found a project we think you might be interested in."}

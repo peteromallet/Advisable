@@ -81,15 +81,15 @@ export const Choice = styled.div`
     align-items: center;
     padding: 14px 15px 16px 46px;
     border: 2px solid transparent;
-    background: ${rgba(theme.colors.neutral[1], 0.7)};
+    background: ${rgba(theme.colors.neutral100, 0.7)};
 
     &:hover {
-      background: ${rgba(theme.colors.neutral[1], 0.8)};
+      background: ${rgba(theme.colors.neutral100, 0.8)};
     }
   }
 
   input:checked + label {
-    border-color: ${theme.colors.neutral[2]};
+    border-color: ${theme.colors.neutral200};
 
     ${Circle} {
       border-color: #173fcd;

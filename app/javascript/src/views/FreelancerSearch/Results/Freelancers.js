@@ -50,7 +50,7 @@ const Freelancers = ({ data }) => {
         <Text
           as="h2"
           mb="xs"
-          color="blue.8"
+          color="blue800"
           fontSize="26px"
           lineHeight="24px"
           fontWeight="semibold"
@@ -62,7 +62,7 @@ const Freelancers = ({ data }) => {
           mb="l"
           fontSize="l"
           lineHeight="s"
-          color="neutral.8"
+          color="neutral800"
           letterSpacing="-0.01em"
         >
           Please select the freelancers you would like to request a consultation
@@ -79,7 +79,7 @@ const Freelancers = ({ data }) => {
               specialist={s}
               elevation={selectedFreelancers.indexOf(s.id) > -1 ? "l" : "m"}
               border="2px solid white"
-              borderColor={selectedFreelancers.indexOf(s.id) > -1 && "blue.6"}
+              borderColor={selectedFreelancers.indexOf(s.id) > -1 && "blue600"}
               action={
                 <Button
                   aria-label={`Select ${s.name}`}
@@ -102,7 +102,7 @@ const Freelancers = ({ data }) => {
           </Box>
         ))}
       </Box>
-      <Box height={1} width={200} bg="neutral.2" my="xl" mx="auto" />
+      <Box height={1} width={200} bg="neutral200" my="xl" mx="auto" />
       <Box maxWidth={500} mx="auto" textAlign="center" mb="xxl">
         <Text mb="xs" fontWeight="semibold">
           Don’t see anyone you like?

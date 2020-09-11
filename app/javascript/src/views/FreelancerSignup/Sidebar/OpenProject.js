@@ -16,7 +16,7 @@ const OpenProject = ({ project }) => {
               <Box
                 width={40}
                 height={40}
-                bg="blue.0"
+                bg="blue50"
                 display="flex"
                 borderRadius="50%"
                 alignItems="center"
@@ -30,16 +30,16 @@ const OpenProject = ({ project }) => {
               <Text size="s" weight="medium" mb="xxs">
                 Good news! We’ve have a project for you.
               </Text>
-              <Text size="xs" color="neutral.6">
+              <Text size="xs" color="neutral600">
                 Complete the application process to apply.
               </Text>
             </Box>
           </Box>
-          <Box mt="s" padding="s" bg="neutral.0" borderRadius={8}>
-            <Text size="s" weight="medium" mb="xxs" color="neutral.7">
+          <Box mt="s" padding="s" bg="neutral50" borderRadius={8}>
+            <Text size="s" weight="medium" mb="xxs" color="neutral700">
               {project.primarySkill?.name}
             </Text>
-            <Text size="xs" color="neutral.6">
+            <Text size="xs" color="neutral600">
               {project.estimatedBudget}
             </Text>
           </Box>

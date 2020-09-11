@@ -22,10 +22,10 @@ const FOR_CLIENT = {
   "Requested To Start": ({ t, task }) => (
     <Box paddingBottom="m">
       <Notice icon={<Info />}>
-        <Text size="xs" mb="xxs" weight="medium" color="neutral.9">
+        <Text size="xs" mb="xxs" weight="medium" color="neutral900">
           {t("tasks.stageDescriptions.client.requestedToStart.title", { task })}
         </Text>
-        <Text size="xs" color="neutral.6" lineHeight="xs">
+        <Text size="xs" color="neutral600" lineHeight="xs">
           {t("tasks.stageDescriptions.client.requestedToStart.description")}
         </Text>
       </Notice>

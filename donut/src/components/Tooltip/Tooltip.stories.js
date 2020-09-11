@@ -4,7 +4,7 @@ import Text from "../Text";
 import Link from "../Link";
 
 export default {
-  title: 'Content/Tooltip',
+  title: "Content/Tooltip",
 };
 
 export const basicTooltip = () => {
@@ -30,7 +30,7 @@ export const basicTooltip = () => {
           </>
         }
       >
-        <Text color="blue.6">Advisable professional standards</Text>
+        <Text color="blue600">Advisable professional standards</Text>
       </Tooltip>
     </div>
   );

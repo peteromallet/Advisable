@@ -15,17 +15,17 @@ export const StyledScaleInputOption = styled.button`
   font-weight: 600;
   appearance: none;
   border-radius: 12px;
-  color: ${theme.colors.neutral[8]};
-  background: ${theme.colors.neutral[1]};
+  color: ${theme.colors.neutral800};
+  background: ${theme.colors.neutral100};
 
   &:hover {
-    color: ${theme.colors.neutral[9]};
-    background: ${theme.colors.neutral[2]};
+    color: ${theme.colors.neutral900};
+    background: ${theme.colors.neutral200};
   }
 
   &[data-selected="true"] {
     color: white;
-    background: ${theme.colors.blue[7]};
+    background: ${theme.colors.blue700};
   }
 `;
 

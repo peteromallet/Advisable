@@ -57,7 +57,7 @@ export const StyledModalLoading = styled.div`
   align-items: center;
   justify-content: center;
   transform: translate(-50%, -50%);
-  color: ${theme.colors.neutral[5]};
+  color: ${theme.colors.neutral500};
   animation: ${spin} 700ms infinite linear;
 `;
 
@@ -69,7 +69,7 @@ export const StyledWindow = styled(motion.div)`
   transform-style: preserve-3d;
   height: ${(props) => props.height};
   max-width: ${(props) => props.width || 500}px;
-  box-shadow: 0 8px 30px ${rgba(theme.colors.neutral[9], 0.1)};
+  box-shadow: 0 8px 30px ${rgba(theme.colors.neutral900, 0.1)};
   ${(props) => props.isMobile && StyledWindowMobile};
 `;
 
@@ -91,6 +91,6 @@ export const StyledModalCloseButton = styled.button`
   position: absolute;
   align-items: center;
   justify-content: center;
-  color: ${theme.colors.neutral[5]};
-  border: 1px solid ${theme.colors.neutral[2]};
+  color: ${theme.colors.neutral500};
+  border: 1px solid ${theme.colors.neutral200};
 `;

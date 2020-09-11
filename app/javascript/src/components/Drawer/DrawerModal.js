@@ -33,8 +33,8 @@ const StyledWindow = styled.div`
   max-width: 400px;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 8px 40px ${rgba(theme.colors.neutral[8], 0.2)},
-    0 2px 4px ${rgba(theme.colors.neutral[8], 0.1)};
+  box-shadow: 0 8px 40px ${rgba(theme.colors.neutral800, 0.2)},
+    0 2px 4px ${rgba(theme.colors.neutral800, 0.1)};
 `;
 
 const DrawerModal = ({ dialog, children, ...props }) => {

@@ -78,7 +78,7 @@ export const Sidebar = styled.div`
   overflow: hidden;
   align-items: center;
   background-size: cover;
-  background-color: ${theme.colors.blue[4]};
+  background-color: ${theme.colors.blue400};
 `;
 
 export const BackgroundImage = styled.img`

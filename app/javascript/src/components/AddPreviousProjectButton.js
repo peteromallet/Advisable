@@ -46,7 +46,7 @@ export default function AddPreviousProjectButton({ modal, ...props }) {
       {...props}
       aria-label="Add a previous project"
     >
-      <Circle size={40} bg="blue800" mr="s" color="white.9">
+      <Circle size={40} bg="blue800" mr="s" color="white">
         <Plus size={24} strokeWidth={2} />
       </Circle>
       <Text color="blue700">Add a previous project</Text>

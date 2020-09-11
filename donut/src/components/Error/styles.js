@@ -8,8 +8,8 @@ export const StyledError = styled.div`
   font-size: 15px;
   padding: 6px 8px;
   border-radius: 8px;
-  color: ${theme.colors.red[7]};
-  background: ${theme.colors.red[0]};
+  color: ${theme.colors.red800};
+  background: ${theme.colors.red100};
 `;
 
 export default StyledError;

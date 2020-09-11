@@ -41,7 +41,7 @@ function Send({ data }) {
         as="h2"
         fontSize="xxl"
         fontWeight="semibold"
-        color="blue.8"
+        color="blue800"
         letterSpacing="-0.025em"
       >
         If you're impressed by {data.specialist.firstName}, how likely are you

@@ -64,7 +64,7 @@ const Testimonials = () => {
               <Text color="white" fontSize="xs" mb="xxs">
                 {t.role}
               </Text>
-              <Text color="white" fontSize="xs" color="white.6">
+              <Text color="white" fontSize="xs" color="white">
                 {t.company}
               </Text>
             </Quote>

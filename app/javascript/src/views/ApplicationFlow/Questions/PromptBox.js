@@ -46,7 +46,7 @@ function PromptBox({ meta, widgetIsActive }) {
         style={{ originX: "0px", originY: "0px" }}
         transition={{ duration: 0.3 }}
         borderRadius={show ? (isWidescreen ? "2px 2px 8px 8px" : "8px") : "2px"}
-        boxShadow={`0 1px 2px ${rgba(theme.colors.neutral[8], 0.1)}`}
+        boxShadow={`0 1px 2px ${rgba(theme.colors.neutral800, 0.1)}`}
         minHeight="4px"
         width="100%"
         css={`

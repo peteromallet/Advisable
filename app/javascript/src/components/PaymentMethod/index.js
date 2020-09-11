@@ -12,9 +12,9 @@ const PaymentMethod = ({ paymentMethod }) => {
         src={`https://unpkg.com/simple-icons@latest/icons/${paymentMethod.brand}.svg`}
       />
       <Box flexGrow={1}>
-        <Text color="neutral.7">•••• •••• •••• {paymentMethod.last4}</Text>
+        <Text color="neutral700">•••• •••• •••• {paymentMethod.last4}</Text>
       </Box>
-      <Text size="xs" color="neutral.5">
+      <Text size="xs" color="neutral500">
         {paymentMethod.expMonth}/{paymentMethod.expYear}
       </Text>
     </PaymentMethodStyles>

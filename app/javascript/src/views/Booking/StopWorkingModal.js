@@ -87,7 +87,7 @@ const StopWorkingModal = ({ isOpen, onClose, application }) => {
                 </Button>
               </Columns>
               {formik.status && (
-                <Text color="red.6" mt="m">
+                <Text color="red600" mt="m">
                   {formik.status}
                 </Text>
               )}

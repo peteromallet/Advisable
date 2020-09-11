@@ -60,12 +60,12 @@ const SpecialistSidebar = (props) => {
   return (
     <>
       <Box paddingBottom="xxs">
-        <Text size="l" weight="semibold" color="neutral.N9">
+        <Text size="l" weight="semibold" color="neutral900">
           {get(application, "project.user.companyName")}
         </Text>
       </Box>
       <Box paddingBottom="s">
-        <Text size="xs" color="neutral.N7">
+        <Text size="xs" color="neutral700">
           {get(application, "project.primarySkill.name")}
         </Text>
       </Box>

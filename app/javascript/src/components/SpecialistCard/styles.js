@@ -7,7 +7,7 @@ export const StyledSpecialistName = styled.h4`
   margin-bottom: 4px;
   letter-spacing: -0.03em;
   transition: color 300ms;
-  color: ${theme.colors.blue[8]};
+  color: ${theme.colors.blue800};
 `;
 
 export const StyledSpecialistCard = styled(StyledCard)`

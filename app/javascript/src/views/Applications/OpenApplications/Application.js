@@ -144,15 +144,15 @@ const Application = ({ application }) => {
   return (
     <Card elevation="m">
       <Box padding="m">
-        <Text weight="semibold" colour="blue.9">
+        <Text weight="semibold" colour="blue900">
           {application.project.primarySkill?.name}
         </Text>
         {(project.industry || project.companyType) && (
-          <Text mt="xxs" fontSize="xs" color="neutral.7">
+          <Text mt="xxs" fontSize="xs" color="neutral700">
             {project.industry} {project.companyType}
           </Text>
         )}
-        <Text size="xxs" color="neutral.6" mt="xs">
+        <Text size="xxs" color="neutral600" mt="xs">
           {application.appliedAt && (
             <span>
               Applied {DateTime.fromISO(application.appliedAt).toRelative()}

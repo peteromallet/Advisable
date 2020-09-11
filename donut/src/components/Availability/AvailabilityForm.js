@@ -17,7 +17,7 @@ const AvailabilityFormTimes = ({ selectedDay, formik }) => {
     const t = start.plus({ minutes: 30 * n });
 
     return (
-      <Box key={n} borderBottom="1px solid" borderColor="neutral.1">
+      <Box key={n} borderBottom="1px solid" borderColor="neutral100">
         <StyledTime htmlFor={`time-${n}`}>
           <Field
             type="checkbox"
@@ -76,7 +76,7 @@ const AvailabilityForm = ({
               <Box padding="m" boxShadow="s">
                 <Text
                   fontSize="xxl"
-                  color="neutral.9"
+                  color="neutral900"
                   fontWeight="semibold"
                   letterSpacing="-0.02em"
                 >

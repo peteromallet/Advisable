@@ -7,7 +7,7 @@ export const PaymentMethod = styled.div`
   position: relative;
   align-items: center;
   padding: 20px 20px 20px 70px;
-  background: ${theme.colors.neutral[0]};
+  background: ${theme.colors.neutral100};
 
   img {
     top: 50%;

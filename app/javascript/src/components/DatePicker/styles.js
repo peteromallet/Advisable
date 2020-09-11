@@ -1,6 +1,6 @@
 import { rgba } from "polished";
 import styled from "styled-components";
-import colors from "../../colors";
+import { theme } from "@advisable/donut";
 
 export const Wrapper = styled.div`
   .DayPicker-wrapper {
@@ -19,12 +19,12 @@ export const Wrapper = styled.div`
       appearance: none;
       position: absolute;
       border-radius: 6px;
-      color: ${colors.neutral.s7};
-      background: ${rgba(colors.neutral.s2, 0.5)};
+      color: ${theme.colors.neutral700};
+      background: ${rgba(theme.colors.neutral200, 0.5)};
 
       &:hover {
-        color: ${colors.blue.base};
-        background: ${rgba(colors.neutral.s2, 0.7)};
+        color: ${theme.colors.blue500};
+        background: ${rgba(theme.colors.neutral200, 0.7)};
       }
     }
 
@@ -56,7 +56,7 @@ export const Wrapper = styled.div`
     font-size: 10px;
     font-weight: 500;
     text-transform: uppercase;
-    color: ${colors.neutral.s7};
+    color: ${theme.colors.neutral700};
   }
 
   .DayPicker-Day {
@@ -67,36 +67,35 @@ export const Wrapper = styled.div`
     font-size: 12px;
     font-weight: 500;
     border-radius: 0;
-    color: ${colors.neutral.s9};
-    border-top: 1px solid ${colors.neutral.s1};
-    border-left: 1px solid ${colors.neutral.s1};
+    color: ${theme.colors.neutral900};
+    border-top: 1px solid ${theme.colors.neutral100};
+    border-left: 1px solid ${theme.colors.neutral100};
     transition: background-color 100ms;
 
     &:focus {
       outline: none;
-      color: ${colors.neutral.s10};
-      background-color: ${colors.neutral.s1};
-
+      color: ${theme.colors.neutral900};
+      background-color: ${theme.colors.neutral100};
     }
 
     &:not(.DayPicker-Day--selected):not(.DayPicker-Day--disabled):hover {
-      color: ${colors.neutral.s10};
-      background-color: ${colors.neutral.s1};
+      color: ${theme.colors.neutral900};
+      background-color: ${theme.colors.neutral100};
     }
 
     &.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
       font-weight: 700;
-      background: ${colors.blue.base};
+      background: ${theme.colors.blue500};
     }
   }
 
   .DayPicker-Week {
     .DayPicker-Day:last-child {
-      border-right: 1px solid ${colors.neutral.s1};
+      border-right: 1px solid ${theme.colors.neutral100};
     }
 
     &:last-child .DayPicker-Day {
-      border-bottom: 1px solid ${colors.neutral.s1};
+      border-bottom: 1px solid ${theme.colors.neutral100};
     }
   }
 

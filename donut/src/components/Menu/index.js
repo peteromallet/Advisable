@@ -18,7 +18,7 @@ const Menu = ({
   return (
     <MenuContext.Provider value={menu}>
       <MenuButton {...menu}>
-        {disclosureProps =>
+        {(disclosureProps) =>
           React.cloneElement(React.Children.only(trigger), disclosureProps)
         }
       </MenuButton>
@@ -34,7 +34,7 @@ const MenuItem = React.forwardRef(({ title, description, ...props }, ref) => {
 
   let onClick;
   if (props.onClick) {
-    onClick = e => {
+    onClick = (e) => {
       props.onClick(e, menu);
     };
   }
@@ -48,7 +48,7 @@ const MenuItem = React.forwardRef(({ title, description, ...props }, ref) => {
           fontSize="xxs"
           lineHeight="xxs"
           fontWeight={300}
-          color="white.7"
+          color="white"
         >
           {description}
         </Text>

@@ -34,7 +34,7 @@ export default function RequestedIntroductions({ accepted }) {
         maxWidth="460px"
         textAlign="center"
       >
-        <Circle size="64px" marginBottom="xl" bg="neutral900" color="white.9">
+        <Circle size="64px" marginBottom="xl" bg="neutral900" color="white">
           <Pause size="24px" />
         </Circle>
         <Text

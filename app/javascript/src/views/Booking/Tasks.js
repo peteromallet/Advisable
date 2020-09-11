@@ -10,7 +10,7 @@ export default function Tasks({ onNewTask, application, onSelectTask }) {
 
   return (
     <Card>
-      <Text as="h4" size="l" padding="m" weight="medium" color="neutral.9">
+      <Text as="h4" size="l" padding="m" weight="medium" color="neutral900">
         {t("tasks.title", application.specialist)}
       </Text>
       <Tabs label="Tasks" tabListProps={{ pl: "m" }}>

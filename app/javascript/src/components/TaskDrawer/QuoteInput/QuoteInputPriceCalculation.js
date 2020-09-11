@@ -15,7 +15,7 @@ const QuoteInputPriceCalculation = ({
   const flexibleEarnings = calculateEarnings(flexibleEstimate, rate);
 
   return (
-    <Text fontSize="xs" color="neutral.7" mt="xs" lineHeight="xs">
+    <Text fontSize="xs" color="neutral700" mt="xs" lineHeight="xs">
       {flexibleEarnings ? (
         <>
           You would earn between {currency(earnings)} and{" "}

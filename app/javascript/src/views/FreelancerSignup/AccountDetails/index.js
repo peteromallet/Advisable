@@ -89,7 +89,7 @@ const AccountDetails = ({ specialist, history, location }) => {
         Create your Advisable freelancer account below so that you can apply to
         client projects.
       </Text>
-      <Box bg="neutral.1" width="100%" height="1px" my="l" />
+      <Box bg="neutral100" width="100%" height="1px" my="l" />
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}

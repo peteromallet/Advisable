@@ -38,14 +38,14 @@ const WorkHistory = ({ specialist, history }) => {
     >
       {(formik) => (
         <Form>
-          <Text as="h2" size="xxxl" weight="semibold" color="neutral.9" mb="s">
+          <Text as="h2" size="xxxl" weight="semibold" color="neutral900" mb="s">
             Work history
           </Text>
-          <Text size="s" color="neutral.7" lineHeight="m">
+          <Text size="s" color="neutral700" lineHeight="m">
             This information will be shared with clients when you apply to
             projects. You can update your profile in your user settings.
           </Text>
-          <Box bg="neutral.1" width="100%" height="1px" my="l" />
+          <Box bg="neutral100" width="100%" height="1px" my="l" />
           <Box mb="m">
             <FormField
               name="linkedin"
@@ -60,7 +60,7 @@ const WorkHistory = ({ specialist, history }) => {
               placeholder="https://"
             />
           </Box>
-          <Text size="s" color="neutral.8" mb="xs" weight="medium">
+          <Text size="s" color="neutral800" mb="xs" weight="medium">
             Resume
           </Text>
           <Box mb="l">
@@ -78,7 +78,7 @@ const WorkHistory = ({ specialist, history }) => {
               }}
             />
             {formik.errors.resume && (
-              <Text size="xs" color="red.5" mt="xs">
+              <Text size="xs" color="red500" mt="xs">
                 {formik.errors.resume}
               </Text>
             )}

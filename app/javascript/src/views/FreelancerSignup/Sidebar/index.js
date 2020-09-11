@@ -12,7 +12,7 @@ const Sidebar = ({ specialist }) => {
       top={0}
       right={0}
       width="40%"
-      bg="neutral.0"
+      bg="neutral50"
       display={{ _: "none", m: "flex" }}
       position="fixed"
       minHeight="100vh"

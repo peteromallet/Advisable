@@ -69,12 +69,12 @@ const ClientSidebar = (props) => {
         />
       </Box>
       <Box paddingBottom="xxs">
-        <Text size="l" weight="semibold" color="neutral.N9">
+        <Text size="l" weight="semibold" color="neutral900">
           {specialist.name}
         </Text>
       </Box>
       <Box paddingBottom="s">
-        <Text size="xs" color="neutral.N7">
+        <Text size="xs" color="neutral700">
           {specialist.city}, {get(specialist, "country.name")}
         </Text>
       </Box>

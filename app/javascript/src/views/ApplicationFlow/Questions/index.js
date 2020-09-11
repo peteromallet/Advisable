@@ -156,7 +156,7 @@ const Questions = ({
                 fontSize="30px"
                 mb="s"
                 as="h1"
-                color="blue.9"
+                color="blue900"
                 fontWeight="semibold"
                 letterSpacing="-0.03em"
               >
@@ -166,7 +166,7 @@ const Questions = ({
                 mb="l"
                 as="h6"
                 fontSize="xxs"
-                color="neutral.7"
+                color="neutral700"
                 fontWeight="semibold"
                 style={{ textTransform: "uppercase" }}
               >

@@ -11,10 +11,10 @@ const InvitationComponent = ({ application, onViewInvitation }) => {
   return (
     <Invitation onClick={handleView}>
       <Content>
-        <Text fontSize="xl" color="white.9" mb="xs" fontWeight="medium">
+        <Text fontSize="xl" color="white" mb="xs" fontWeight="medium">
           {application.project.primarySkill?.name}
         </Text>
-        <Text mb="s" fontSize="xs" color="white.7" lineHeight="xs">
+        <Text mb="s" fontSize="xs" color="white" lineHeight="xs">
           {application.project.industry} {application.project.companyType}
         </Text>
         <Description>

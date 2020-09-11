@@ -17,7 +17,7 @@ const OpenApplications = (props) => {
   return (
     <>
       {props.onHold && (
-        <Text color="neutral.9" mb="m" size="l" weight="medium">
+        <Text color="neutral900" mb="m" size="l" weight="medium">
           We're currently evaluating the projects you've applied for
         </Text>
       )}

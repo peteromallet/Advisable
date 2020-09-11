@@ -10,13 +10,13 @@ const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
           <Text
             mb="xxs"
             fontSize="l"
-            color="neutral.7"
+            color="neutral700"
             fontWeight="semibold"
             letterSpacing="-0.01rem"
           >
             Card Details
           </Text>
-          <Text fontSize="s" color="neutral.8" mb="s">
+          <Text fontSize="s" color="neutral800" mb="s">
             This card will be charged in order to collect payment for
             freelancers.
           </Text>
@@ -37,13 +37,13 @@ const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
           <Text
             mb="xxs"
             fontSize="l"
-            color="neutral.7"
+            color="neutral700"
             fontWeight="semibold"
             letterSpacing="-0.01rem"
           >
             Card Details
           </Text>
-          <Text fontSize="s" color="neutral.7" mb="s">
+          <Text fontSize="s" color="neutral700" mb="s">
             You have not added any card details yet.
           </Text>
           <Button type="button" variant="dark" onClick={openCardModal}>
@@ -52,7 +52,7 @@ const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
         </>
       )}
 
-      <Box height={1} bg="neutral.1" my="l" />
+      <Box height={1} bg="neutral100" my="l" />
     </Box>
   );
 };

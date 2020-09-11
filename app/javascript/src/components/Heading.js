@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { padding } from "styled-system";
-import colors from "../colors";
+import { theme } from "@advisable/donut";
 
 const sizes = {
   xxs: "13px",
@@ -67,7 +67,7 @@ const levels = {
     letter-spacing: 0;
   `,
   6: css`
-    color: ${colors.neutral.s6};
+    color: ${theme.colors.neutral600};
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0;
@@ -89,7 +89,7 @@ export default styled.h3.attrs((props) => ({
 }))`
   ${padding};
 
-  color: ${(props) => colours["default"]};
+  color: ${(props) => theme.colors.neutral900};
   font-size: ${(props) => sizes[props.size] || sizes["m"]};
   font-weight: ${(props) =>
     weights[props.weight || props.size] || weights["m"]};

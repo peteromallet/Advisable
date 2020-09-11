@@ -1,7 +1,6 @@
 import React from "react";
-import { Box } from "@advisable/donut";
+import { Box, theme } from "@advisable/donut";
 import styled from "styled-components";
-import colors from "../../colors";
 
 const Skill = styled.div`
   font-size: 13px;
@@ -12,8 +11,8 @@ const Skill = styled.div`
   border-radius: 15px;
   align-items: center;
   display: inline-flex;
-  color: ${colors.neutral.s9};
-  background: ${colors.neutral.s2};
+  color: ${theme.colors.neutral900};
+  background: ${theme.colors.neutral200};
 `;
 
 export default ({ skills, ...props }) => {

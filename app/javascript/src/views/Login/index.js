@@ -108,10 +108,10 @@ const Login = ({ location }) => {
               {formik.status && (
                 <Box
                   mt="s"
-                  bg="red.0"
+                  bg="red100"
                   padding="s"
                   fontSize="s"
-                  color="red.6"
+                  color="red600"
                   borderRadius="12px"
                 >
                   {t(`errors.${formik.status}`)}
@@ -126,7 +126,7 @@ const Login = ({ location }) => {
         mt="l"
         mb="s"
         fontSize="s"
-        color="neutral.7"
+        color="neutral700"
         textAlign="center"
         fontWeight="medium"
         letterSpacing="-0.01em"

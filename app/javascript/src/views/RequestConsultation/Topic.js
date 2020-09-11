@@ -58,13 +58,13 @@ const Topic = ({ data }) => {
         as="h2"
         fontSize="xxl"
         fontWeight="semibold"
-        color="blue.8"
+        color="blue800"
         letterSpacing="-0.025em"
       >
         What would you like to cover with {data.specialist.firstName} during
         this consultation?
       </Text>
-      <Text color="neutral.8" lineHeight="s" mb="l">
+      <Text color="neutral800" lineHeight="s" mb="l">
         Please describe briefly what you'd like to cover in a 30-minute
         consultation with {data.specialist.firstName}. This is for us to share
         with {data.specialist.firstName} when requesting their time.

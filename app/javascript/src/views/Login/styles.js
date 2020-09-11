@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import colors from "../../colors";
+import { theme } from "@advisable/donut";
 
 export const Container = styled.div`
   width: 96%;
@@ -47,12 +47,12 @@ export const SignupLink = styled(Link)`
   border-radius: 8px;
   text-align: center;
   text-decoration: none;
-  color: ${colors.neutral.s7};
-  border: 1px solid ${colors.neutral.s2};
+  color: ${theme.colors.neutral700};
+  border: 1px solid ${theme.colors.neutral200};
   margin-bottom: 10px;
 
   &:hover {
-    color: ${colors.neutral.s8};
-    border-color: ${colors.neutral.s3};
+    color: ${theme.colors.neutral800};
+    border-color: ${theme.colors.neutral300};
   }
 `;

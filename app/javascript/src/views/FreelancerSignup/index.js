@@ -91,7 +91,7 @@ const FreelancerSignup = ({ location }) => {
                     height={6}
                     key={step.path}
                     borderRadius={3}
-                    bg={isActive ? "blue.3" : "neutral.1"}
+                    bg={isActive ? "blue300" : "neutral100"}
                     css="transition: width 300ms; background 300ms;"
                   />
                 );

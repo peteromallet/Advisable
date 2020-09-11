@@ -79,7 +79,7 @@ const PaymentSettings = () => {
         mb="l"
         as="h1"
         fontSize="xxl"
-        color="blue.9"
+        color="blue900"
         fontWeight="semibold"
         letterSpacing="-0.015em"
       >
@@ -91,13 +91,13 @@ const PaymentSettings = () => {
             <Text
               mb="xxs"
               fontSize="l"
-              color="neutral.7"
+              color="neutral700"
               fontWeight="semibold"
               letterSpacing="-0.01rem"
             >
               Payment Method
             </Text>
-            <Text fontSize="s" color="neutral.7" mb="s">
+            <Text fontSize="s" color="neutral700" mb="s">
               This is what we will use to collect payment for the freelancers
               you work with.
             </Text>
@@ -121,7 +121,7 @@ const PaymentSettings = () => {
               />
             </RadioGroup>
             {!data.viewer.bankTransfersEnabled && (
-              <Text fontSize="xs" color="neutral.7" mt="m">
+              <Text fontSize="xs" color="neutral700" mt="m">
                 Please contact{" "}
                 <Link.External href="mailto:payments@advisable.com">
                   payments@advisable.com
@@ -129,7 +129,7 @@ const PaymentSettings = () => {
                 to enable bank transfers for larger payments.
               </Text>
             )}
-            <Box height={1} bg="neutral.1" my="l" />
+            <Box height={1} bg="neutral100" my="l" />
 
             {formik.values.paymentMethod === "Card" && (
               <CardPaymentSettings
@@ -141,13 +141,13 @@ const PaymentSettings = () => {
             <Text
               fontSize="l"
               fontWeight="semibold"
-              color="neutral.7"
+              color="neutral700"
               mb="xxs"
               letterSpacing="-0.01rem"
             >
               Invoice Settings
             </Text>
-            <Text fontSize="s" color="neutral.7" mb="s">
+            <Text fontSize="s" color="neutral700" mb="s">
               The information below will be used to generate your invoice
             </Text>
 

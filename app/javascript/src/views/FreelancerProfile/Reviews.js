@@ -23,14 +23,14 @@ function Reviews({ data }) {
     <>
       <Text
         fontSize="xl"
-        color="blue.9"
+        color="blue900"
         fontWeight="semibold"
         letterSpacing="-0.02em"
       >
         {t("nouns.reviewCount", { count: reviews.length })}
       </Text>
-      <Box width="100%" mt="m" height={1} bg="neutral.3" />
-      {reviews.map(review => (
+      <Box width="100%" mt="m" height={1} bg="neutral300" />
+      {reviews.map((review) => (
         <Review key={review.id} review={review} />
       ))}
     </>

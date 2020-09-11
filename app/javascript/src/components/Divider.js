@@ -2,7 +2,7 @@ import React from "react";
 import { rgba } from "polished";
 import { padding } from "styled-system";
 import styled from "styled-components";
-import colors from "../colors";
+import { theme } from "@advisable/donut";
 
 let Divider = styled.div`
   ${padding};
@@ -17,7 +17,7 @@ let Divider = styled.div`
     height: 1px;
     width: 100%;
     content: "";
-    background: ${rgba(colors.neutral.s8, 0.1)};
+    background: ${rgba(theme.colors.neutral800, 0.1)};
   }
 `;
 

@@ -72,7 +72,7 @@ export const Rating = styled.div`
     margin-top: 5px;
     font-weight: 500;
     margin-bottom: 5px;
-    color: ${theme.colors.neutral[7]};
+    color: ${theme.colors.neutral700};
   }
 
   @media screen and (max-width: 750px) {

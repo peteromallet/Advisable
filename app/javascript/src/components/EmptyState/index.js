@@ -9,7 +9,7 @@ export default ({ heading, text }) => (
         {heading}
       </Text>
     )}
-    <Text size="s" color="neutral.7" lineHeight="m">
+    <Text size="s" color="neutral700" lineHeight="m">
       {text}
     </Text>
   </Wrapper>

@@ -31,7 +31,7 @@ const ToggleWithConfirmation = React.forwardRef(
               <Text mb="xs" fontWeight="medium">
                 You can only have one trial task
               </Text>
-              <Text mb="l" size="xs" lineHeight="xs" color="neutral.7">
+              <Text mb="l" size="xs" lineHeight="xs" color="neutral700">
                 Marking this as a trial task will remove the existing trial
                 offer from the task "{trialTask.name}"
               </Text>

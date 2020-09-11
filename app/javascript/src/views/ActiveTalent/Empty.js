@@ -11,10 +11,10 @@ export default () => {
         <img src={illustration} width={250} alt="" />
       </Box>
       <div style={{ maxWidth: 460, margin: "0 auto" }}>
-        <Text fontWeight="semibold" color="neutral.8" mb="xs">
+        <Text fontWeight="semibold" color="neutral800" mb="xs">
           No active bookings
         </Text>
-        <Text fontSize="s" mb="l" lineHeight="s" color="neutral.7">
+        <Text fontSize="s" mb="l" lineHeight="s" color="neutral700">
           It looks like you haven't hired any freelancers yet. Once you start a
           project with a freelancer you will be able to manage their work from
           here.

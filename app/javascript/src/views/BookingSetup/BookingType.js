@@ -36,7 +36,7 @@ const BookingType = ({ data }) => {
       <Text
         mb="l"
         fontSize="xxl"
-        color="neutral.8"
+        color="neutral800"
         fontWeight="bold"
         letterSpacing="-0.02em"
       >

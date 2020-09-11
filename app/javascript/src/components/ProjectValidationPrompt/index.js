@@ -8,16 +8,16 @@ const ProjectValidationPrompt = ({ project }) => {
   if (project.contactLastName) name += ` ${project.contactLastName}`;
 
   return (
-    <Box borderRadius={12} bg="yellow.0" padding="s">
+    <Box borderRadius={12} bg="orange50" padding="s">
       <Box display="flex">
-        <Box color="yellow700">
+        <Box color="orange800">
           <AlertCircle size={24} strokeWidth={2} />
         </Box>
         <Box ml="xs">
-          <Text fontSize="s" fontWeight="medium" color="neutral.9" mb="xxs">
+          <Text fontSize="s" fontWeight="medium" color="neutral900" mb="xxs">
             Verification required
           </Text>
-          <Text fontSize="xs" lineHeight="s" color="neutral.8" mb="s">
+          <Text fontSize="xs" lineHeight="s" color="neutral800" mb="s">
             Please send the following verification URL to {name} from{" "}
             {project.clientName} so they can verify the project.
           </Text>
