@@ -23,7 +23,7 @@ type Props = {
 const TaskList = (props: Props) => {
   const tasks = props.tasks;
 
-  const sorted = tasks.sort((a, b) => {
+  const sorted = tasks.slice().sort((a, b) => {
     const dateA = Date.parse(a.createdAt);
     const dateB = Date.parse(b.createdAt);
     return dateA - dateB;
@@ -31,7 +31,7 @@ const TaskList = (props: Props) => {
 
   return (
     <Container>
-      {sorted.map(task => (
+      {sorted.map((task) => (
         <Task
           key={task.id}
           task={task}

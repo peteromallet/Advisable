@@ -8,9 +8,9 @@ import { ChevronRight } from "@styled-icons/feather";
 export const PrefixIcon = styled.div`
   color: ${theme.colors.neutral500};
   svg {
-    width: 20px;
-    height: 20px;
-    stroke-width: 2.25;
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
     margin-right: 8px;
   }
 `;
@@ -31,7 +31,7 @@ export const StyledNavigationMenuItem = styled(NavLink)`
   height: 40px;
   display: flex;
   color: inherit;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
   border-radius: 20px;
   align-items: center;

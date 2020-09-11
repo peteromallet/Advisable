@@ -1,6 +1,5 @@
 export { default as Text } from "./Text";
 export { default as List } from "./List";
-export { default as Flex } from "./Flex";
 export { default as Modal } from "./Modal";
 export { default as Layout } from "./Layout";
 export { default as Header } from "./Header";

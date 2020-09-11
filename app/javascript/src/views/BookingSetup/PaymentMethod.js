@@ -11,6 +11,7 @@ import {
   Radio,
   RadioGroup,
   Button,
+  Paragraph,
   Link,
 } from "@advisable/donut";
 import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
@@ -47,24 +48,24 @@ const PaymentMethod = ({ data, nextStep }) => {
 
   return (
     <Card>
-      <Box padding="l">
+      <Box padding="xl">
         <Text
-          mb="xxs"
-          fontSize="xxl"
-          color="neutral.8"
-          fontWeight="bold"
+          mb="2xs"
+          fontSize="4xl"
+          color="neutral900"
+          fontWeight="medium"
           letterSpacing="-0.02em"
         >
           Setup Payments
         </Text>
-        <Text mb="s" fontSize="l" lineHeight="s" color="neutral.7">
+        <Paragraph fontSize="lg" marginBottom="sm">
           It look’s like you haven’t added a project payment method yet
-        </Text>
-        <Text color="neutral.7" lineHeight="s" mb="l">
+        </Paragraph>
+        <Paragraph marginBottom="xl">
           Before you start working with {specialist.firstName}, we need to know
           how to collect payment for them. Please select your preferred project
           payment method below.
-        </Text>
+        </Paragraph>
         <Formik
           onSubmit={handleSubmit}
           initialValues={initialValues}
@@ -72,7 +73,7 @@ const PaymentMethod = ({ data, nextStep }) => {
         >
           {(formik) => (
             <Form>
-              <RadioGroup mb="l">
+              <RadioGroup mb="xl">
                 <Field
                   as={Radio}
                   type="radio"
@@ -92,7 +93,7 @@ const PaymentMethod = ({ data, nextStep }) => {
                 />
               </RadioGroup>
               {!data.viewer.bankTransfersEnabled && (
-                <Text fontSize="xs" color="neutral.7" mb="l" lineHeight="s">
+                <Text fontSize="sm" color="neutral700" mb="l" lineHeight="s">
                   Please contact{" "}
                   <Link.External href="mailto:payments@advisable.com">
                     payments@advisable.com

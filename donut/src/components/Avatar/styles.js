@@ -15,16 +15,22 @@ const size = variant({
     s: {
       width: 40,
       height: 40,
+      fontSize: "15px",
     },
     m: {
       width: 60,
       height: 60,
+      fontSize: "18px",
     },
     l: {
       width: 80,
       height: 80,
     },
     xl: {
+      width: 100,
+      height: 100,
+    },
+    xxl: {
       width: 120,
       height: 120,
     },
@@ -39,6 +45,7 @@ export const StyledAvatar = styled.div`
 
   border-radius: 50%;
   position: relative;
+  display: inline-flex;
 `;
 
 export const StyledAvatarInitials = styled.div`
@@ -46,7 +53,7 @@ export const StyledAvatarInitials = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  font-size: 18px;
+  font-size: inherit;
   font-weight: 500;
   position: absolute;
   align-items: center;
@@ -70,7 +77,7 @@ export const StyledAvatarImage = styled.div.attrs((props) => ({
   background-size: cover;
   background-position: center;
   opacity: ${(props) => (props.url ? 1 : 0)};
-  transition: opacity 500ms;
+  transition: opacity 900ms;
 `;
 
 export default StyledAvatar;

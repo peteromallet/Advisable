@@ -1,9 +1,0 @@
-mutation ConvertToSelfService($input: ConvertToSelfServiceInput!) {
-  convertToSelfService(input: $input) {
-    project {
-      id
-      airtableId
-      serviceType
-    }
-  }
-}

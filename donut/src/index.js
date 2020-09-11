@@ -5,6 +5,7 @@ export { default as Card } from "./components/Card";
 export * from "./components/Card/styles";
 
 export { default as Text } from "./components/Text";
+export { default as Paragraph } from "./components/Paragraph";
 export { default as StyledText } from "./components/Text/styles";
 
 export { default as Flex } from "./components/Flex";

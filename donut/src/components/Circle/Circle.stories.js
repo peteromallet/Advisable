@@ -5,7 +5,7 @@ import Circle from "./";
 import Card from "../Card";
 
 export default {
-  title: "Utilities|Circle",
+  title: 'Utilities/Circle',
   decorators: [withKnobs],
 };
 

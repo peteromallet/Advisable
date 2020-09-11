@@ -15,6 +15,8 @@ class Types::ProjectType < Types::BaseType
   field :airtable_id, String, null: true
   field :name, String, null: false
   field :primary_skill, Types::Skill, null: true
+  # Wether or not we are actively searching for candidates
+  field :sourcing, Boolean, null: true
 
   # We are moving away from storing primary skill in the primary_skill text
   # column. First we check the project_skills association and if one isn't

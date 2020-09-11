@@ -4,7 +4,7 @@ import Availability from "./";
 import Card from "../Card";
 
 export default {
-  title: "Forms|Availability",
+  title: 'Forms/Availability',
 };
 
 export const availabilityInput = () => {

@@ -7,7 +7,6 @@ const textTransform = system({
 });
 
 export const Text = styled.div`
-  letter-spacing: -0.012em;
   ${space};
   ${color};
   ${typography};
@@ -29,7 +28,7 @@ export const Text = styled.div`
 
 Text.defaultProps = {
   color: "neutral.9",
-  fontSize: "m",
+  fontSize: "md",
 };
 
 export default Text;

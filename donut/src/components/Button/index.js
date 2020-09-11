@@ -1,7 +1,3 @@
-// Button is a new style of button added to Donut in Nov 2019. It should
-// be used instead of the Button component.
-// TODO: Eventually all buttons should be moved over to use this component and
-// it should simply be renamed to Button.
 import React from "react";
 import {
   StyledButton,

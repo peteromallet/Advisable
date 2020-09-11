@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { Search } from "@styled-icons/heroicons-outline";
+import { useNotifications } from "components/Notifications";
 import { CREATE_JOB } from "../queries";
 import {
   StyledNewProject,
@@ -11,6 +12,7 @@ import {
 
 const NewProject = ({ onCreate }) => {
   const history = useHistory();
+  const notifications = useNotifications();
   const [createJob, { loading, data }] = useMutation(CREATE_JOB, {
     update: onCreate,
   });
@@ -18,8 +20,13 @@ const NewProject = ({ onCreate }) => {
   const handleClick = async () => {
     if (loading) return;
     const response = await createJob({ variables: { input: {} } });
-    const id = response.data?.createJob.project.id;
-    history.push(`/jobs/${id}`);
+
+    if (response.errors) {
+      notifications.notify("Something went wrong");
+    } else {
+      const id = response.data?.createJob.project.id;
+      history.push(`/projects/${id}`);
+    }
   };
 
   return (

@@ -4,7 +4,7 @@ import Sticky from "react-stickynode";
 import { Box, useBreakpoint } from "@advisable/donut";
 import About from "./About";
 import Reviews from "./Reviews";
-import Masonry from "./Masonry";
+import Masonry from "components/Masonry";
 import NoProjects from "./NoProjects";
 import ProjectCard from "./ProjectCard";
 import ProfileImage from "./ProfileImage";

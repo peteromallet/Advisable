@@ -1,4 +1,5 @@
 class Interview < ApplicationRecord
+  include Uid
   include Airtable::Syncable
   belongs_to :application
   has_one :specialist, through: :application

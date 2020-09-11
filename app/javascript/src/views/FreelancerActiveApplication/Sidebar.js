@@ -6,7 +6,8 @@ import { useTranslation } from "react-i18next";
 import Back from "../../components/Back";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
-import { Box, Button, DialogDisclosure } from "@advisable/donut";
+import { useDialogState, DialogDisclosure } from "reakit/Dialog";
+import { Box, Button } from "@advisable/donut";
 import Heading from "../../components/Heading";
 import VideoButton from "../../components/VideoButton";
 import AttributeList from "../../components/AttributeList";
@@ -17,8 +18,8 @@ import currency from "../../utilities/currency";
 const Component = ({ data, tutorial, tutorialModal }) => {
   const isMobile = useMobile();
   const { t } = useTranslation();
+  const dialog = useDialogState();
   const application = data.application;
-  const [talkModal, setTalkModal] = React.useState(false);
 
   return (
     <Layout.Sidebar>
@@ -29,20 +30,20 @@ const Component = ({ data, tutorial, tutorialModal }) => {
         <Heading level={3}>{application.project.primarySkill?.name}</Heading>
         <Text>{application.project.user.companyName}</Text>
         <TalkModal
-          isOpen={talkModal}
-          onClose={() => setTalkModal(false)}
+          dialog={dialog}
           conversationId={application.id}
           participants={[application.project.user]}
         />
         <Box paddingTop="xl">
-          <Button
+          <DialogDisclosure
+            as={Button}
             width="100%"
             variant="subtle"
             prefix={<MessageCircle />}
-            onClick={() => setTalkModal(true)}
+            {...dialog}
           >
             Message {application.project.user.firstName}
-          </Button>
+          </DialogDisclosure>
         </Box>
         <Box paddingTop="l" paddingBottom="xl">
           <AttributeList>

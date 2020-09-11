@@ -20,7 +20,7 @@ const elevation = variant({
       boxShadow: `0 1px 2px ${rgba(theme.colors.neutral[8], 0.1)}`,
     },
     m: {
-      boxShadow: `0 16px 32px -16px ${rgba(theme.colors.blue900, 0.12)}`,
+      boxShadow: `0 8px 16px ${rgba(theme.colors.neutral900, 0.08)}`,
     },
     l: {
       boxShadow: `0px 20px 80px rgba(26, 35, 67, 0.12)`,
@@ -49,9 +49,12 @@ export const StyledCard = styled.div`
   outline: none;
   display: block;
   background: white;
-  border-radius: 2px;
 
   ${cardType};
 `;
+
+StyledCard.defaltProps = {
+  borderRadius: "2px",
+};
 
 export default StyledCard;

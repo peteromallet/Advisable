@@ -17,8 +17,12 @@ as defined by the routes in the `admin/` namespace
   <% end %>
 
   <% if ENV["STAGING"] %>
-    <div style="margin-top: 50px">
+    <div style="margin-top: 50px; margin-bottom: 20px;">
       <%= button_to "Resync Airtable", admin_resync_path, method: :post %>
+    </div>
+
+    <div>
+      <%= button_to "Reset test data", admin_reset_test_path, method: :post %>
     </div>
   <% end %>
 </nav>

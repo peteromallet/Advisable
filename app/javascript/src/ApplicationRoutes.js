@@ -7,7 +7,6 @@ import Loading from "./components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Settings from "./views/Settings";
 
-const Applicant = lazy(() => import("./views/Applicant"));
 const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
 const Applications = lazy(() => import("./views/Applications"));
@@ -17,7 +16,6 @@ const UpdateProfile = lazy(() => import("./views/UpdateProfile"));
 const Projects = lazy(() => import("./views/Projects"));
 const Project = lazy(() => import("./views/Project"));
 const Booking = lazy(() => import("./views/Booking"));
-const Job = lazy(() => import("./views/Job"));
 const JobListing = lazy(() => import("./views/JobListing"));
 const ApplicationFlow = lazy(() => import("./views/ApplicationFlow"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
@@ -46,16 +44,11 @@ const ApplicationRoutes = () => {
           <Route path="/freelancers/:id" component={FreelancerProfile} />
           {/* Client routes */}
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
-          <Route path="/jobs/:id" component={Job} />
-          <Route
-            component={Applicant}
-            path="/projects/:projectID/applications/:applicationID"
-          />
           <Route
             path="/projects/:projectID/interviews/:interviewID/availability"
             component={InterviewAvailability}
           />
-          <Route path="/projects/:projectId/:status?" component={Project} />
+          <Route path="/projects/:id" component={Project} />
           <AuthenticatedRoute
             clientOnly
             path="/projects"

@@ -46,7 +46,7 @@ const styles = css`
   }
 
   svg {
-    margin-right: 4px;
+    margin:0  4px;
   }
 `;
 

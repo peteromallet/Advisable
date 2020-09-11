@@ -8,14 +8,14 @@ class Mutations::ResendInterviewRequest < Mutations::BaseMutation
 
   def resolve(**args)
     {
-      interview: Interviews::ResendInterviewRequest.call(
-        interview: Interview.find_by_airtable_id(args[:id]),
-        availability: args[:availability],
-        time_zone: args[:time_zone]
-      ),
+      interview:
+        Interviews::ResendInterviewRequest.call(
+          interview: Interview.find_by_uid_or_airtable_id!(args[:id]),
+          availability: args[:availability],
+          time_zone: args[:time_zone]
+        )
     }
-
-    rescue Service::Error => e
-      return { errors: [e] }
+  rescue Service::Error => e
+    return { errors: [e] }
   end
 end

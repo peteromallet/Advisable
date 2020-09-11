@@ -21,7 +21,7 @@ const Tasks = ({ application, match, location, history }) => {
   const applicationQuery = {
     query: FETCH_APPLICATION,
     variables: {
-      id: application.airtableId,
+      id: application.id,
     },
   };
 

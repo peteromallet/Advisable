@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router-dom";
 import { Provider as DonutProvider } from "@advisable/donut";
@@ -25,6 +26,9 @@ let ApplicationProvider = ({ children }) => {
 
   return (
     <ApplicationContext.Provider value={context}>
+      <Helmet>
+        <title>Advisable</title>
+      </Helmet>
       <DonutProvider>{children}</DonutProvider>
     </ApplicationContext.Provider>
   );

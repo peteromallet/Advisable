@@ -3,7 +3,8 @@ import { DateTime } from "luxon";
 import { rgba } from "polished";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { theme, StyledCard, Text, Badge, Box } from "@advisable/donut";
+import AvatarStack from "components/AvatarStack";
+import { theme, StyledCard, Text, Badge, Box, Avatar } from "@advisable/donut";
 
 const StyledProject = styled(StyledCard)`
   width: 100%;
@@ -19,32 +20,44 @@ const StyledProject = styled(StyledCard)`
 `;
 
 export default function Project({ project }) {
-  let url = `/projects/${project.airtableId}`;
+  const url = `/projects/${project.id}`;
 
-  if (project.status === "DRAFT" || project.status === "PENDING_REVIEW") {
-    url = `/jobs/${project.id}`;
-  }
+  const matches = project.matches;
+  const isDraft = ["DRAFT", "Brief Pending Confirmation"].includes(
+    project.status,
+  );
 
   return (
     <StyledProject as={Link} to={url} padding="l">
       <Text
         mb="4px"
-        fontSize="20px"
-        color="blue900"
+        fontSize="2xl"
+        color="neutral900"
         fontWeight="medium"
         letterSpacing="-0.05rem"
       >
         {project.primarySkill?.name || "New Project"}
       </Text>
-      <Text mb="12px" fontSize="xs" color="neutral500">
+      <Text mb="12px" fontSize="sm" color="neutral500">
         {DateTime.fromISO(project.createdAt).toRelative()}
       </Text>
-      {project.status === "DRAFT" && <Badge variant="orange">Draft</Badge>}
-      {project.status === "Brief Pending Confirmation" && (
-        <Badge variant="orange">Draft</Badge>
-      )}
+      {isDraft && <Badge variant="orange">Draft</Badge>}
       {project.status === "PENDING_REVIEW" && (
         <Badge variant="orange">In Review</Badge>
+      )}
+      {!isDraft && matches.length > 0 && (
+        <Box>
+          <Badge marginBottom="4px">{matches.length} New</Badge>
+          <AvatarStack size="s">
+            {matches.map((application) => (
+              <Avatar
+                key={application.id}
+                url={application.specialist.avatar}
+                name={application.specialist.name}
+              />
+            ))}
+          </AvatarStack>
+        </Box>
       )}
       <Box
         left="0"
@@ -56,7 +69,7 @@ export default function Project({ project }) {
         position="absolute"
         gridTemplateColumns="1fr 1fr 1fr"
       >
-        <ProjectCount label="Matches" count={project.candidateCount} />
+        <ProjectCount label="Candidates" count={project.candidateCount} />
         <ProjectCount label="Proposals" count={project.proposedCount} />
         <ProjectCount label="Hired" count={project.hiredCount} />
       </Box>

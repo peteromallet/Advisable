@@ -2,7 +2,6 @@ class Country < ApplicationRecord
   include Uid
   has_many :specialists
   validates_presence_of :name
-  validates_presence_of :airtable_id
 
   # We use Countries gem to load additional information about the country
   def data
@@ -10,6 +9,6 @@ class Country < ApplicationRecord
   end
 
   def name_stripped
-    name.gsub(/\s\(.*\)$/, "")
+    name.gsub(/\s\(.*\)$/, '')
   end
 end

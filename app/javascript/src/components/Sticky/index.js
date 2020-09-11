@@ -2,7 +2,7 @@ import React from "react";
 import stickybits from "stickybits";
 import usePrevious from "../../utilities/usePrevious";
 
-const Sticky = ({ children, offset, enabled = true }) => {
+const Sticky = ({ children, offset = 0, enabled = true }) => {
   const ref = React.useRef(null);
   const previouslyEnabled = usePrevious(enabled);
 

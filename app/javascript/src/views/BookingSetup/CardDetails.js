@@ -65,12 +65,12 @@ const CardDetails = ({ data, nextStep }) => {
   }
 
   return (
-    <Card padding="l">
+    <Card padding="xl">
       <Text
         mb="m"
-        fontSize="xxl"
-        color="neutral.8"
-        fontWeight="semibold"
+        fontSize="4xl"
+        color="neutral900"
+        fontWeight="medium"
         letterSpacing="-0.02em"
       >
         Add payment method

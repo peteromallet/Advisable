@@ -2,7 +2,7 @@ class Applications::Update < ApplicationService
   attr_reader :application, :attributes
 
   def initialize(id:, attributes:)
-    @application = Application.find_by_airtable_id!(id)
+    @application = Application.find_by_uid_or_airtable_id!(id)
     @attributes = attributes
   rescue ActiveRecord::RecordNotFound => e
     raise Service::Error.new(:record_not_found)
@@ -47,8 +47,7 @@ class Applications::Update < ApplicationService
     attributes[:questions].each do |hash|
       unless (
                # Check that the passed quesion is in the projects questions array.
-               application.project.questions ||
-                 []
+               application.project.questions || []
              ).include?(hash[:question])
         raise Service::Error.new(:invalid_question)
       end

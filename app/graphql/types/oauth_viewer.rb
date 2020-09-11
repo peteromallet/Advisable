@@ -1,7 +1,7 @@
 class Types::OauthViewer < Types::BaseType
   field :name, String, null: false
   field :first_name, String, null: false
-  field :image, String, null: false
+  field :image, String, null: true
   field :can_validate_project, Boolean, null: false do
     argument :id, ID, required: true
   end

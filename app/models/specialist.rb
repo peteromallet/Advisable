@@ -47,7 +47,10 @@ class Specialist < ApplicationRecord
   has_many :specialist_skills, dependent: :destroy
   has_many :skills, through: :specialist_skills
 
+  # We also have an 'image' column in the specalists table. This is a deprecated
+  # column that we used to use to store the avatar from airtable in.
   has_one_attached :avatar
+
   has_one_attached :resume
 
   # DEPRECATED IN FAVOUR OF phone column

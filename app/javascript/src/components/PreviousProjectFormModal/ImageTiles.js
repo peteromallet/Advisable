@@ -232,6 +232,7 @@ function Upload({ previousProjectId, image, dispatch, onClick }) {
       image={upload.preview}
       isCover={image.cover}
       onClick={onClick}
+      data-uploading
     >
       <StyledImageTileProgress>
         <StyledImageTileProgressBar percentage={upload.percentage} />
@@ -280,7 +281,7 @@ const PortfolioImage = React.memo(({ image, onClick, dispatch }) => {
       isCover={image.cover}
       onClick={handleClick}
     >
-      <StyledRemovePhotoButton onClick={handleRemove}>
+      <StyledRemovePhotoButton aria-label="Remove image" onClick={handleRemove}>
         <X size={16} strokeWidth={2} />
       </StyledRemovePhotoButton>
     </StyledImageTile>
@@ -356,7 +357,12 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
       {tiles}
       <StyledNewImageTile>
         <Plus size={24} strokeWidth={2} />
-        <input type="file" multiple onChange={handleChange} />
+        <input
+          type="file"
+          name="upload-image"
+          multiple
+          onChange={handleChange}
+        />
       </StyledNewImageTile>
     </StyledImageTiles>
   );

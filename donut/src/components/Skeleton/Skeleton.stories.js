@@ -4,7 +4,7 @@ import Skeleton from "./";
 import Card from "../Card";
 
 export default {
-  title: "Content|Skeleton",
+  title: 'Content/Skeleton',
   decorators: [withKnobs],
 };
 
