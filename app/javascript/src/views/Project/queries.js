@@ -467,19 +467,6 @@ export function useProjectSettings() {
   });
 }
 
-export const GET_SKILLS = gql`
-  query skills {
-    skills(local: true) {
-      id
-      name
-    }
-  }
-`;
-
-export function useSkills(opts) {
-  return useQuery(GET_SKILLS, opts);
-}
-
 export const UPDATE_PROJECT = gql`
   ${projectFields}
 

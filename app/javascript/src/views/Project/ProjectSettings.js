@@ -4,7 +4,6 @@ import { Pencil } from "@styled-icons/ionicons-solid";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Box, Card, Text, Stack, Button } from "@advisable/donut";
 import { useProjectSettings } from "./queries";
-import UpdateSkillsModal from "./UpdateSkillsModal";
 import UpdateProjectGoals from "./UpdateProjectGoals";
 import UpdateProjectLocationModal from "./UpdateProjectLocationModal";
 import UpdateProjectRequirementsModal from "./UpdateProjectRequirementsModal";
@@ -14,7 +13,6 @@ import LocationSummary from "./components/LocationSummary";
 import CharacteristicsSummary from "./components/CharacteristicsSummary";
 
 export default function ProjectSettings() {
-  const skillsDialog = useDialogState();
   const locationDialog = useDialogState();
   const characteristicsDialog = useDialogState();
   const goalsDialog = useDialogState();
@@ -39,7 +37,6 @@ export default function ProjectSettings() {
         >
           Project Details
         </Text>
-        <UpdateSkillsModal project={project} dialog={skillsDialog} />
         <UpdateProjectLocationModal project={project} dialog={locationDialog} />
         <UpdateProjectRequirementsModal
           project={project}
@@ -48,15 +45,9 @@ export default function ProjectSettings() {
         <UpdateProjectGoals project={project} dialog={goalsDialog} />
         <Stack spacing="4xl" divider="neutral100">
           <SkillsSummary project={project}>
-            <DialogDisclosure
-              {...skillsDialog}
-              size="s"
-              as={Button}
-              variant="subtle"
-              prefix={<Pencil />}
-            >
-              Edit Skills
-            </DialogDisclosure>
+            <Text fontSize="sm" color="neutral700">
+              You cannot edit skills for a published project.
+            </Text>
           </SkillsSummary>
           <LocationSummary project={project}>
             <DialogDisclosure

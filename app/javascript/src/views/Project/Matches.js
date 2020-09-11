@@ -5,6 +5,7 @@ import { ArrowForward } from "@styled-icons/ionicons-outline";
 import { Box, Text, Paragraph, Button, useBreakpoint } from "@advisable/donut";
 import Sticky from "components/Sticky";
 import ActionBar from "./ActionBar";
+import WalkthroughTrigger from "./WalkthroughTrigger";
 import ActionBarContainer from "./ActionBarContainer";
 import MatchMetaInfo from "./MatchMetaInfo";
 import ApplicationDetails from "./ApplicationDetails";
@@ -16,7 +17,7 @@ import { useLocation } from "react-router";
 const steps = [
   {
     width: 460,
-    component: function TutorialStart({ nextStep }) {
+    component: function TutorialStart({ nextStep, end }) {
       return (
         <Box padding="32px">
           <Text
@@ -25,15 +26,23 @@ const steps = [
             marginBottom="12px"
             letterSpacing="-0.03em"
           >
-            You have received your first recommendation!
+            You have received a freelancer recommendation!
           </Text>
           <Paragraph size="md" marginBottom="32px">
             We think we have found a suitable freelancer for this job! As this
             is your first recommendation we would like to take a quick minute to
             show you around.
           </Paragraph>
-          <Button suffix={<ArrowForward />} variant="dark" onClick={nextStep}>
+          <Button
+            marginRight="sm"
+            suffix={<ArrowForward />}
+            variant="dark"
+            onClick={nextStep}
+          >
             Next
+          </Button>
+          <Button variant="subtle" onClick={end}>
+            Skip
           </Button>
         </Box>
       );
@@ -160,8 +169,9 @@ function useOrderedMatches(matches) {
 export default function Matches({ data, project }) {
   const isLargeScreen = useBreakpoint("mUp");
   const [completeTutorial] = useCompleteTutorial();
+  const walkthroughComplete = data.viewer.walkthroughComplete;
   const walkthrough = useWalkthrough(steps, {
-    visible: !data.viewer.walkthroughComplete,
+    visible: !walkthroughComplete,
     onComplete: () => {
       completeTutorial({
         variables: {
@@ -182,6 +192,9 @@ export default function Matches({ data, project }) {
 
   return (
     <Box paddingTop="40px" display={[null, null, "flex"]}>
+      {isLargeScreen && walkthroughComplete && (
+        <WalkthroughTrigger walkthrough={walkthrough} />
+      )}
       {isLargeScreen && <Walkthrough {...walkthrough} />}
       <Box
         flexShrink="0"
