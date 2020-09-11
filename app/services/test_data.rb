@@ -217,6 +217,7 @@ class TestData
 
     project =
       user.projects.find_or_create_by(uid: 'pro_7zWkGfiwr21yz16') do |p|
+        p.sales_status = 'Open'
         p.location_importance = 0
         p.industry_experience_importance = 0
         p.status = 'Brief Confirmed'

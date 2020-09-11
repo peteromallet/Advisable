@@ -18,13 +18,7 @@ const ApplicationInvitations = (props) => {
   return (
     <Box mb="l">
       <Box maxWidth={550}>
-        <Text
-          mb="xs"
-          size="xxl"
-          lineHeight="xxl"
-          color="neutral900"
-          weight="semibold"
-        >
+        <Text mb="xs" fontSize="3xl" color="neutral900" fontWeight="medium">
           Good news! We found a project that might be suitable for you.
         </Text>
       </Box>

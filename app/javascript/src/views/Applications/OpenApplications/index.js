@@ -3,16 +3,11 @@
 // concluded status.
 import * as React from "react";
 import { Text, Box } from "@advisable/donut";
-import Empty from "./Empty";
 import Loading from "./Loading";
 import Application from "./Application";
 
 const OpenApplications = (props) => {
   if (props.loading) return <Loading />;
-
-  if (props.applications.length === 0) {
-    return <Empty />;
-  }
 
   return (
     <>

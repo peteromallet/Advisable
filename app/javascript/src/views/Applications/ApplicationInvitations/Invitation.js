@@ -5,7 +5,7 @@ import { Invitation, Background, Content, Description, Button } from "./styles";
 
 const InvitationComponent = ({ application, onViewInvitation }) => {
   const handleView = () => {
-    onViewInvitation(application.airtableId);
+    onViewInvitation(application.id);
   };
 
   return (
