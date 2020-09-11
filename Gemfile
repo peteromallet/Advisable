@@ -38,7 +38,7 @@ gem 'omniauth-rails_csrf_protection', '~> 0.1'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem 'webpacker', '~> 5.1.1'
+gem 'webpacker', '~> 5.1'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -52,10 +52,6 @@ gem 'parser'
 gem 'stripe', '~> 5.14'
 gem 'attr_encrypted', '~> 3.1.0'
 
-gem 'jwt'
-
-# For geneating test coverage reports
-gem 'simplecov', require: false, group: :test
 gem 'pundit'
 gem 'nanoid'
 
@@ -100,6 +96,7 @@ group :test do
   gem 'webmock'
   gem 'rspec-retry'
   gem 'rspec_junit_formatter'
+  gem 'simplecov', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
