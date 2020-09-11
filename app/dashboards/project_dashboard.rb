@@ -10,10 +10,13 @@ class ProjectDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     applications: Field::HasMany,
     id: Field::Number,
+    uid: Field::String,
     name: Field::String,
+    sourcing: Field::Boolean,
     status: Field::String,
     description: Field::Text,
     goals: TextArrayField,
+    primary_skill: Field::HasOne.with_options(class_name: Skill),
     questions: TextArrayField,
     required_characteristics: TextArrayField,
     characteristics: TextArrayField,
@@ -32,7 +35,7 @@ class ProjectDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = %i[name].freeze
+  COLLECTION_ATTRIBUTES = %i[uid primary_skill].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
@@ -41,6 +44,7 @@ class ProjectDashboard < Administrate::BaseDashboard
     name
     status
     deposit
+    sourcing
     description
     specialist_description
     company_description
@@ -55,13 +59,10 @@ class ProjectDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     name
-    client
     status
-    company_description
+    sourcing
     description
-    specialist_description
     goals
-    questions
     required_characteristics
     characteristics
     deposit
@@ -72,6 +73,6 @@ class ProjectDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(project)
-    project.name
+    project.name || project.primary_skill&.name
   end
 end

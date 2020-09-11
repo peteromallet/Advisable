@@ -15,7 +15,7 @@ class Airtable::Interview < Airtable::Base
   push_data do |interview|
     self['Interview Time'] = interview.starts_at
     self['Call Status'] = interview.status
-    self['Application'] = [interview.application.try(:airtable_id)]
+    self['Application'] = [interview.application.try(:airtable_id)].compact
     self['Creation Time'] = DateTime.now.utc
     self['Availability Note'] = interview.availability_note
 

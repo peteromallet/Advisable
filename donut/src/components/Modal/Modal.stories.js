@@ -4,7 +4,7 @@ import Button from "../Button";
 import Modal, { useModal } from "./";
 
 export default {
-  title: "Content|Modal",
+  title: 'Content/Modal',
 };
 
 export const basicModal = () => {

@@ -13,6 +13,16 @@ const spin = keyframes`
   }
 `;
 
+export const StyledButtonPrefix = styled.div`
+  align-items: center;
+  display: inline-flex;
+`;
+
+export const StyledButtonSuffix = styled.div`
+  align-items: center;
+  display: inline-flex;
+`;
+
 export const Loading = styled.div`
   top: 50%;
   left: 50%;
@@ -115,6 +125,23 @@ export const VARIANTS = {
 const buttonSize = variant({
   prop: "buttonSize",
   variants: {
+    xs: {
+      height: 28,
+      fontSize: 14,
+      fontWeight: 500,
+      paddingLeft: 12,
+      paddingRight: 12,
+      svg: {
+        width: 16,
+        height: 16,
+      },
+      [StyledButtonPrefix]: {
+        marginRight: "2px",
+      },
+      [StyledButtonSuffix]: {
+        marginLeft: "2px",
+      },
+    },
     s: {
       height: 35,
       fontSize: 15,
@@ -125,10 +152,16 @@ const buttonSize = variant({
         width: 16,
         height: 16,
       },
+      [StyledButtonPrefix]: {
+        marginRight: "8px",
+      },
+      [StyledButtonSuffix]: {
+        marginLeft: "8px",
+      },
     },
     m: {
       height: 42,
-      fontSize: 16,
+      fontSize: 17,
       fontWeight: 500,
       paddingLeft: 24,
       paddingRight: 24,
@@ -136,16 +169,28 @@ const buttonSize = variant({
         width: 20,
         height: 20,
       },
+      [StyledButtonPrefix]: {
+        marginRight: "8px",
+      },
+      [StyledButtonSuffix]: {
+        marginLeft: "8px",
+      },
     },
     l: {
       height: 50,
-      fontSize: 17,
-      fontWeight: 400,
+      fontSize: 18,
+      fontWeight: 600,
       paddingLeft: 24,
       paddingRight: 24,
       svg: {
         width: 24,
         height: 24,
+      },
+      [StyledButtonPrefix]: {
+        marginRight: "8px",
+      },
+      [StyledButtonSuffix]: {
+        marginLeft: "8px",
       },
     },
   },
@@ -159,7 +204,6 @@ export const StyledButton = styled.button`
   border: none;
   color: white;
   outline: none;
-  line-height: 1;
   padding-top: 0;
   cursor: pointer;
   padding-bottom: 0;
@@ -170,13 +214,13 @@ export const StyledButton = styled.button`
   align-items: center;
   white-space: nowrap;
   display: inline-flex;
-  font-family: poppins;
   text-decoration: none;
   vertical-align: middle;
   justify-content: center;
   letter-spacing: -0.01em;
   background: transparent;
   transition: background 100ms;
+  font-family: TTHoves, poppins, sans-serif;
   ${(props) => props.align === "left" && { justifyContent: "flex-start" }}
 
   svg {
@@ -194,18 +238,6 @@ export const StyledButton = styled.button`
   }
 
   ${(props) => VARIANTS[props.variant || "primary"]}
-`;
-
-export const StyledButtonPrefix = styled.div`
-  margin-right: 8px;
-  align-items: center;
-  display: inline-flex;
-`;
-
-export const StyledButtonSuffix = styled.div`
-  margin-left: 8px;
-  align-items: center;
-  display: inline-flex;
 `;
 
 export default StyledButton;

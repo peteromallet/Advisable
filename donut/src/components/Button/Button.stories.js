@@ -7,7 +7,7 @@ import { Download, ArrowRight, Plus } from "@styled-icons/heroicons-outline";
 import { VARIANTS } from "./styles";
 
 export default {
-  title: "Forms|Button",
+  title: 'Forms/Button',
   decorators: [withKnobs],
 };
 

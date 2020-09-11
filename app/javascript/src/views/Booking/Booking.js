@@ -36,8 +36,6 @@ export default function Booking({ data, match }) {
   let application = data.application;
   let specialist = get(data, "application.specialist");
 
-  const tasks = data.application.tasks;
-
   const openTask = (task) => {
     history.replace(`/manage/${applicationId}/tasks/${task.id}`);
   };

@@ -110,6 +110,10 @@ export const renderComponent = (component, config = {}) => {
     unobserve() {
       return null;
     }
+
+    disconnect() {
+      return null;
+    }
   };
 
   const history = createMemoryHistory({ initialEntries: [config.route] });

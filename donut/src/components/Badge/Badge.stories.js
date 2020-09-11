@@ -6,7 +6,7 @@ import Card from "../Card";
 import Box from "../Box";
 
 export default {
-  title: "Content|Badge",
+  title: 'Content/Badge',
   decorators: [withKnobs],
 };
 

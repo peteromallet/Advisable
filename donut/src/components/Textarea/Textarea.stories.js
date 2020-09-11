@@ -4,7 +4,7 @@ import Card from "../Card";
 import { withKnobs, boolean, select, number } from "@storybook/addon-knobs";
 
 export default {
-  title: "Forms|Textarea",
+  title: 'Forms/Textarea',
   decorators: [withKnobs],
 };
 

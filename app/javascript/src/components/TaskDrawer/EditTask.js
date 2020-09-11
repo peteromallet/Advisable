@@ -184,10 +184,10 @@ const EditTask = ({
           </ConfirmationContainer>
         </Confirmation>
       )}
-      <Div100vh style={{ height: "calc(100rvh - 60px)" }}>
+      <Div100vh>
         <VerticalLayout>
           <VerticalLayout.Header>
-            <Box paddingX="m">
+            <Box paddingX="m" paddingTop="60px">
               {!hideStatus && <TaskStatus>{task.stage}</TaskStatus>}
               <Title
                 data-testid="nameField"

@@ -4,7 +4,7 @@ import Tabs from "./";
 import Card from "../Card";
 
 export default {
-  title: "Navigation|Tabs",
+  title: 'Navigation/Tabs',
 };
 
 export const tabs = () => {

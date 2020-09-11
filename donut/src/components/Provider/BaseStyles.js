@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import { StyledBackdrop, StyledModalWindowContainer } from "../Modal/styles";
 
 const BACKGROUND = {
-  default: "#F5F5F8",
+  default: "#F8F8F9",
   white: "#FFFFFF",
 };
 
@@ -14,12 +14,26 @@ const BaseStyles = createGlobalStyle`
   html, body {
     font-size: 16px;
     box-sizing: border-box;
-    font-family: poppins, sans-serif;
   }
 
   *, *:before, *:after {
     box-sizing: inherit;
   }
+
+  @font-face {
+    font-family: "TTHoves";
+    font-weight: 400;
+    src: url("/fonts/TTHoves-Regular/font.woff2") format("woff2"),
+      url("/fonts/TTHoves-Regular/font.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "TTHoves";
+    font-weight: 500;
+    src: url("/fonts/TTHoves-Medium/font.woff2") format("woff2"),
+      url("/fonts/TTHoves-Medium/font.woff") format("woff");
+  }
+
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -41,7 +55,7 @@ const BaseStyles = createGlobalStyle`
     font: inherit;
     box-sizing: border-box;
     vertical-align: baseline;
-    font-family: poppins, sans-serif;
+    font-family: TTHoves, poppins, sans-serif;
   }
 
   /* HTML5 display-role reset for older browsers */

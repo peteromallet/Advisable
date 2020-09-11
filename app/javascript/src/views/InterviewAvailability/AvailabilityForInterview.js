@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 import { Button, useBreakpoint, Availability } from "@advisable/donut";
 import { useMutation } from "@apollo/client";
 import React from "react";
-import Div100vh from "react-div-100vh";
+import { use100vh } from "react-div-100vh";
 import Text from "src/components/Text";
 import Heading from "src/components/Heading";
 import AvailabilityInput from "src/components/AvailabilityInput";
@@ -15,6 +15,7 @@ import { RESEND_INTERVIEW_REQUEST } from "./queries";
 const AvailabilityForInterview = ({ data, notifications }) => {
   const { viewer, interview } = data;
   const sup = useBreakpoint("sUp");
+  const height = use100vh();
   const [resendInterviewRequest] = useMutation(RESEND_INTERVIEW_REQUEST);
 
   const filteredEvents = (viewer?.interviews || []).filter(
@@ -47,7 +48,7 @@ const AvailabilityForInterview = ({ data, notifications }) => {
       }}
     >
       {(formik) => (
-        <Div100vh style={{ height: "calc(100rvh - 58px)" }}>
+        <div style={{ height: height - 58 }}>
           <Form onSubmit={formik.handleSubmit}>
             <Header>
               <Heading>
@@ -92,7 +93,7 @@ const AvailabilityForInterview = ({ data, notifications }) => {
               </Button>
             </Footer>
           </Form>
-        </Div100vh>
+        </div>
       )}
     </Formik>
   );

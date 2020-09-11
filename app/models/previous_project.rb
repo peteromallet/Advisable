@@ -25,6 +25,8 @@ class PreviousProject < ApplicationRecord
   has_one_attached :contact_image
 
   belongs_to :specialist
+  # If the prpevious project belongs to an application then we know it is a
+  # previous project that happened on Advisable.
   belongs_to :application, required: false
   belongs_to :reviewed_by, class_name: 'SalesPerson', required: false
 

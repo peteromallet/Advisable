@@ -9,8 +9,7 @@ Label.defaultProps = {
   as: "label",
   color: "neutral800",
   fontWeight: "medium",
-  fontSize: "15px",
-  lineHeight: "s",
+  fontSize: "md",
   letterSpacing: "-0.01em",
 };
 

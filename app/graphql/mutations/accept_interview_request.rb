@@ -7,7 +7,7 @@ class Mutations::AcceptInterviewRequest < Mutations::BaseMutation
   field :errors, [String], null: true
 
   def resolve(**args)
-    interview = Interview.find_by_airtable_id!(args[:id])
+    interview = Interview.find_by_uid_or_airtable_id!(args[:id])
     interview.update(starts_at: args[:starts_at], status: 'Call Scheduled')
     update_specialist_number(
       interview.application.specialist,

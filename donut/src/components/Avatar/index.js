@@ -17,13 +17,13 @@ const Avatar = ({ url, name, children, ...props }) => {
   }, [url]);
 
   const initials = reduce(
-    name.trim().split(/\s+/),
+    name?.trim().split(/\s+/),
     (sum, name) => `${sum}${name[0]}`,
     "",
   );
 
   return (
-    <StyledAvatar url={loaded && url} {...props}>
+    <StyledAvatar url={loaded && url} aria-label={name} {...props}>
       {initials && <StyledAvatarInitials>{initials}</StyledAvatarInitials>}
       {children}
       <StyledAvatarImage url={loaded && url} />

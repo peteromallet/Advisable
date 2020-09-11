@@ -4,7 +4,7 @@ import Avatar from "./";
 import Card from "../Card";
 
 export default {
-  title: "Content|Avatar",
+  title: 'Content/Avatar',
   decorators: [withKnobs],
 };
 
@@ -19,6 +19,7 @@ export const avatar = () => {
   return (
     <Card maxWidth="600px" mx="auto" my="60px" padding="xl">
       <Avatar name={name} size={size} url={url} />
+      <Avatar name="John Doe" siz={size} />
     </Card>
   );
 };

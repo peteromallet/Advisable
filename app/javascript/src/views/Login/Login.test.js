@@ -73,7 +73,7 @@ test("User can login", async () => {
   fireEvent.change(password, { target: { value: "testing123" } });
   let login = await app.findByLabelText("Login");
   fireEvent.click(login);
-  await app.findByText(/your projects/i);
+  await app.findByText(/projects/i);
 });
 
 test("User is redirected if already logged in", async () => {

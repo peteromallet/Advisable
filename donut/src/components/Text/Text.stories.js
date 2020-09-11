@@ -6,7 +6,7 @@ import Card from "../Card";
 import Box from "../Box";
 
 export default {
-  title: "Content|Text",
+  title: 'Content/Text',
   decorators: [withKnobs],
 };
 

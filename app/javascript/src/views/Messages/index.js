@@ -1,6 +1,6 @@
 import React from "react";
 import Talk from "talkjs";
-import Div100vh from "react-div-100vh";
+import { use100vh } from "react-div-100vh";
 import queryString from "query-string";
 import { useBreakpoint } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
@@ -10,6 +10,7 @@ import Sidebar from "./Sidebar";
 import createTalkSession from "../../utilities/createTalkSession";
 
 const Messages = ({ location }) => {
+  const height = use100vh();
   const isMobile = useBreakpoint("m");
   const container = React.useRef(null);
   const [applicationId, setAppliationId] = React.useState(null);
@@ -27,7 +28,7 @@ const Messages = ({ location }) => {
 
       inbox.mount(container.current);
 
-      inbox.on("conversationSelected", e => {
+      inbox.on("conversationSelected", (e) => {
         if (e.conversation) {
           setAppliationId(e.conversation.id);
         } else {
@@ -48,9 +49,9 @@ const Messages = ({ location }) => {
       )}
       <Container>
         <Main>
-          <Div100vh
+          <div
             style={{
-              height: isMobile ? "calc(100rvh - 180px)" : "calc(100rvh - 60px)",
+              height: isMobile ? height - 180 : height - 60,
             }}
           >
             <div
@@ -59,7 +60,7 @@ const Messages = ({ location }) => {
                 height: "100%",
               }}
             />
-          </Div100vh>
+          </div>
         </Main>
         {Boolean(applicationId) && <Sidebar applicationId={applicationId} />}
       </Container>

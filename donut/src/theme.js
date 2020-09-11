@@ -1,4 +1,3 @@
-import { find, isObject } from "lodash-es";
 import { rgba } from "polished";
 
 // Breakpoints
@@ -9,33 +8,46 @@ breakpoints.l = breakpoints[2];
 breakpoints.xl = breakpoints[3];
 
 // Spacing
-const space = [0, 4, 8, 16, 20, 32, 40, 60, 80, 100, 150];
+// You should prefer the sizes 'sm' over 's' and 'md' over 'm' as well as '3xl'
+// over 'xxxl'
+const space = [0, 4, 8, 12, 16, 24, 32, 40, 48, 64, 96];
 space.none = space[0];
+space["2xs"] = space[1];
 space.xxs = space[1];
 space.xs = space[2];
 space.s = space[3];
+space.sm = space[3];
 space.m = space[4];
+space.md = space[4];
 space.l = space[5];
+space.lg = space[4];
 space.xl = space[6];
 space.xxl = space[7];
+space["2xl"] = space[7];
 space.xxxl = space[8];
-
-const fonts = {
-  body: "poppins, sans-serif",
-  heading: "metropolis, poppins, sans-serif",
-};
+space["3xl"] = space[8];
+space["4xl"] = space[9];
+space["5xl"] = space[10];
 
 // Font sizes
 const fontSizes = {
   xxs: 12,
+  "2xs": 12,
   xs: 14,
   s: 15,
+  sm: 15,
   m: 16,
+  md: 16,
   l: 18,
+  lg: 18,
   xl: 20,
-  xxl: 24,
-  xxxl: 32,
-  xxxxl: 32,
+  "2xl": 22,
+  xxl: 22,
+  "3xl": 24,
+  xxxl: 24,
+  "4xl": 28,
+  xxxxl: 28,
+  "5xl": 32,
 };
 
 // Font weights
@@ -46,6 +58,11 @@ const fontWeights = {
   semibold: 600,
   bold: 700,
   extraBold: 800,
+};
+
+const fonts = {
+  body: "TTHoves, poppins, sans-serif",
+  heading: "TTNormsPro, poppins, sans-serif",
 };
 
 // Line heights
@@ -68,16 +85,16 @@ const boxShadow = {
 
 const colors = {
   // NEW COLORS USE A NUMERIC SCALE
-  neutral50: "#F9FAFF",
-  neutral100: "#E0E3EC",
-  neutral200: "#CFD3DB",
-  neutral300: "#B5B7C3",
-  neutral400: "#8C8EA5",
-  neutral500: "#717588",
-  neutral600: "#4F5266",
-  neutral700: "#3B3D54",
-  neutral800: "#2A2C42",
-  neutral900: "#1B1B35",
+  neutral50: "#F9F9F9",
+  neutral100: "#EEEEF0",
+  neutral200: "#E2E2E4",
+  neutral300: "#CCCCD1",
+  neutral400: "#AFAFB5",
+  neutral500: "#93939B",
+  neutral600: "#73737A",
+  neutral700: "#55555F",
+  neutral800: "#31313A",
+  neutral900: "#1C1C25",
   blue50: "#F2F4FF",
   blue100: "#E7EAFF",
   blue200: "#C0C9FC",
@@ -241,13 +258,6 @@ const shadows = {
 
 export default {
   background: "default",
-  responsiveProp: (prop) => {
-    if (!isObject(prop)) return prop;
-    let propForBreakpoint = find(prop, (_, breakpoint) => {
-      return breakpoints[breakpoint];
-    });
-    return propForBreakpoint || prop.default || prop.all;
-  },
   colors,
   space,
   fonts,

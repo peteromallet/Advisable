@@ -43,7 +43,6 @@ class Application < ApplicationRecord
   include Airtable::Syncable
 
   ACTIVE_STATUSES = [
-    'Applied',
     'Application Accepted',
     'Interview Scheduled',
     'Interview Completed',
@@ -84,6 +83,10 @@ class Application < ApplicationRecord
   after_destroy :update_project_counts
 
   scope :applied, -> { where(status: 'Applied') }
+  scope :high_score, -> { where('score > ?', 65) }
+  # A candidate is only "matched" once its score is set above 65.
+  scope :matched, -> { applied.high_score }
+  scope :accepted, -> { where(status: 'Application Accepted') }
   scope :accepted_fees, -> { where(accepts_fee: true) }
   scope :accepted_terms, -> { where(accepts_terms: true) }
   scope :featured, -> { where(featured: true) }

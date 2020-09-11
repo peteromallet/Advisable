@@ -1,6 +1,6 @@
 class Types::User < Types::BaseType
   field :id, ID, null: false
-  field :airtable_id, String, null: false
+  field :airtable_id, String, null: true
   field :name, String, null: true
   field :first_name, String, null: true
   field :last_name, String, null: true
@@ -28,6 +28,15 @@ class Types::User < Types::BaseType
 
   field :completed_tutorials, [String], null: false do
     authorize :is_user
+  end
+
+  field :has_completed_tutorial, Boolean, null: false do
+    argument :tutorial, String, required: true
+    authorize :is_user
+  end
+
+  def has_completed_tutorial(tutorial:)
+    object.has_completed_tutorial?(tutorial)
   end
 
   field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
@@ -62,7 +71,14 @@ class Types::User < Types::BaseType
   end
 
   field :interviews, [Types::Interview], null: true do
+    argument :status, String, required: false
     authorize :is_user
+  end
+
+  def interviews(status: nil)
+    interviews = object.interviews
+    interviews = interviews.where(status: status) if status
+    interviews
   end
 
   # The customer field returns information from the users stripe customer

@@ -5,6 +5,7 @@ class User < ApplicationRecord
   include Uid
   include Account
   include StatusMap
+  include Tutorials
   include Airtable::Syncable
   airtable_class Airtable::ClientContact
   has_many :projects
@@ -48,6 +49,9 @@ class User < ApplicationRecord
 
   register_tutorial 'fixedProjects'
   register_tutorial 'flexibleProjects'
+  # The recommenations tutorial is used to show the recommendations product
+  # walkthrough.
+  register_tutorial 'RECOMMENDATIONS'
 
   alias_attribute :application_status, :contact_status
   map_status application_status: {

@@ -22,7 +22,7 @@ export const StyledAvailabilityInputHeader = styled.div`
   align-items: center;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  border: 1px solid ${theme.colors.neutral100};
+  border: 1px solid ${theme.colors.neutral200};
   box-shadow: 0 1px 2px ${rgba(theme.colors.neutral900, 0.12)};
 `;
 
@@ -34,7 +34,7 @@ export const StyledAvailabilityInputHeaderColumn = styled.div`
   flex-direction: column;
   justify-content: center;
   height: ${HEADER_HEIGHT}px;
-  box-shadow: inset -1px 0 0 ${theme.colors.neutral100};
+  box-shadow: inset -1px 0 0 ${theme.colors.neutral200};
 
   &:first-child {
     width: 52px;
@@ -94,7 +94,7 @@ export const StyledAvailabilityInputColumn = styled.div`
   flex-grow: 1;
   height: 100%;
   flex-basis: 0;
-  box-shadow: inset -1px 0 0 ${theme.colors.neutral100};
+  box-shadow: inset -1px 0 0 ${theme.colors.neutral200};
 
   &:first-child {
     width: 53px;
@@ -156,7 +156,7 @@ export const StyledAvailabilityInputCell = styled.div`
   justify-content: center;
   height: ${CELL_HEIGHT}px;
   border: none;
-  border-bottom: 1px solid ${theme.colors.neutral100};
+  border-bottom: 1px solid ${theme.colors.neutral200};
   user-select: none;
   width: 100%;
   appearance: none;

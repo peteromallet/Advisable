@@ -1,76 +1,30 @@
 import React from "react";
-import { Text } from "@advisable/donut";
-import StarRating from "src/components/StarRating";
-import {
-  Review as StyledReview,
-  ReviewHeader,
-  TotalRating,
-  Ratings,
-  Rating,
-} from "./styles";
+import { Box, Avatar, Text } from "@advisable/donut";
 
-const Review = ({ review, companyName }) => {
+const Review = ({ review }) => {
   return (
-    <StyledReview>
-      <ReviewHeader>
-        <TotalRating>{review.ratings?.overall?.toFixed(1)}</TotalRating>
-        <Text as="h5" fontWeight="medium" mb="xxs">
-          {review.name}
-        </Text>
-        <Text size="xs" color="neutral.6">
-          {review.role} at {companyName}
-        </Text>
-      </ReviewHeader>
-      <Ratings>
-        {review.ratings.skills && (
-          <Rating>
-            <strong>Skills</strong>
-            <StarRating showNumber={false} rating={review.ratings.skills} />
-          </Rating>
-        )}
-        {review.ratings.qualityOfWork && (
-          <Rating>
-            <strong>Quality of work</strong>
-            <StarRating
-              showNumber={false}
-              rating={review.ratings.qualityOfWork}
-            />
-          </Rating>
-        )}
-        {review.ratings.adherenceToSchedule && (
-          <Rating>
-            <strong>Schedule adherence</strong>
-            <StarRating
-              showNumber={false}
-              rating={review.ratings.adherenceToSchedule}
-            />
-          </Rating>
-        )}
-        {review.ratings.availability && (
-          <Rating>
-            <strong>Availability</strong>
-            <StarRating
-              showNumber={false}
-              rating={review.ratings.availability}
-            />
-          </Rating>
-        )}
-        {review.ratings.communication && (
-          <Rating>
-            <strong>Communication</strong>
-            <StarRating
-              showNumber={false}
-              rating={review.ratings.communication}
-            />
-          </Rating>
-        )}
-      </Ratings>
-      {review.comment && (
-        <Text fontSize="xs" lineHeight="s" color="neutral.7" fontStyle="italic">
-          "{review.comment}"
-        </Text>
-      )}
-    </StyledReview>
+    <Box>
+      <Box display="flex" alignItems="center" marginBottom="s">
+        <Avatar
+          size="s"
+          bg="neutral100"
+          marginRight="12px"
+          url={review.avatar}
+          name={review.name}
+        />
+        <Box>
+          <Text color="neutral900" marginBottom="2px">
+            {review.name}
+          </Text>
+          <Text fontSize="14px" color="neutral500">
+            {review.role} at {review.companyName}
+          </Text>
+        </Box>
+      </Box>
+      <Text fontSize="15px" lineHeight="22px" color="neutral800">
+        &quot;{review.comment}&quot;
+      </Text>
+    </Box>
   );
 };
 

@@ -37,7 +37,12 @@ function CoverPhoto({ images, dispatch }) {
       {cover && <StyledCoverPhotoTag>Cover Photo</StyledCoverPhotoTag>}
       {!cover && (
         <Box>
-          <input type="file" onChange={handleChange} multiple />
+          <input
+            type="file"
+            name="upload-image"
+            onChange={handleChange}
+            multiple
+          />
           <Text color="blue900" mb="xxs" className="title">
             Add images to this project
           </Text>

@@ -69,7 +69,7 @@ function Review({ review }) {
             <Box mr="xxs" display="inline-block">
               <Star />
             </Box>
-            {ratings.overall?.toFixed(1)}
+            {ratings?.overall?.toFixed(1)}
           </Box>
           <Box>
             <Text
@@ -87,13 +87,13 @@ function Review({ review }) {
           </Box>
         </Box>
         <Box display="flex" flexWrap="wrap">
-          <Rating label="Skills" rating={ratings.skills} />
-          <Rating label="Communication" rating={ratings.communication} />
-          <Rating label="Quality of Work" rating={ratings.qualityOfWork} />
-          <Rating label="Availability" rating={ratings.availability} />
+          <Rating label="Skills" rating={ratings?.skills} />
+          <Rating label="Communication" rating={ratings?.communication} />
+          <Rating label="Quality of Work" rating={ratings?.qualityOfWork} />
+          <Rating label="Availability" rating={ratings?.availability} />
           <Rating
             label="Time Management"
-            rating={ratings.adherenceToSchedule}
+            rating={ratings?.adherenceToSchedule}
           />
         </Box>
         {review.comment && (

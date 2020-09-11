@@ -1,7 +1,7 @@
 // DEPRECATED: Please use the Modal component from Donut instead.
-import React from "react";
+import React, { useCallback } from "react";
 import ReactDOM from "react-dom";
-import Div100vh from "react-div-100vh";
+import { use100vh } from "react-div-100vh";
 import { X } from "@styled-icons/feather";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import {
@@ -29,6 +29,7 @@ const Modal = ({
   paddingLeft,
   ...componentProps
 }) => {
+  const height = use100vh();
   const containerRef = React.useRef(null);
   const paddingProps = {
     padding,
@@ -58,9 +59,9 @@ const Modal = ({
 
   return ReactDOM.createPortal(
     <ModalContainer ref={containerRef} expandOnMobile={expandOnMobile}>
-      <Div100vh
+      <div
         style={{
-          height: "100rvh",
+          height,
           display: "flex",
           alignItems: "center",
         }}
@@ -75,7 +76,7 @@ const Modal = ({
             {children}
           </Window>
         </WindowContainer>
-      </Div100vh>
+      </div>
       <Backdrop onClick={onClose} />
     </ModalContainer>,
     modalRoot,

@@ -5,7 +5,7 @@ import Notice from "./";
 import Card from "../Card";
 
 export default {
-  title: "Content|Notice",
+  title: 'Content/Notice',
   decorators: [withKnobs],
 };
 

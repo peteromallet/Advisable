@@ -17,9 +17,12 @@ export const NotificationsProvider = ({ children }) => {
     setTimeout(() => remove(id), duration);
   };
 
-  const remove = (id) => {
-    setQueue((items) => items.filter((i) => i.id !== id));
-  };
+  const remove = React.useCallback(
+    (id) => {
+      setQueue((items) => items.filter((i) => i.id !== id));
+    },
+    [setQueue],
+  );
 
   const variants = {
     initial: {

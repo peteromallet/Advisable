@@ -1,60 +1,70 @@
-import React from "react";
-import { get } from "lodash-es";
+import React, { lazy } from "react";
 import { useQuery } from "@apollo/client";
-import { Redirect } from "react-router-dom";
-import Loading from "src/components/Loading";
-import Project from "./Project";
-import NotFound from "../NotFound";
-import FETCH_PROJECT from "./fetchProject";
-import ScheduleSetupCall from "./ScheduleSetupCall";
-import STATUSES from "./statuses";
-import AccessDenied from "../../components/AccessDenied";
+import { Container, useBreakpoint } from "@advisable/donut";
+import {
+  Route,
+  useParams,
+  useLocation,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import View from "components/View";
+import Loading from "components/Loading";
+import AccessDenied from "components/AccessDenied";
 import handleAuthError from "../../utilities/handleAuthError";
+import NotFound, { isNotFound } from "../NotFound";
+import { GET_PROJECT } from "./queries";
+import ProjectRoutes from "./ProjectRoutes";
+import Navigation from "./Navigation";
 
-const ProjectContainer = ({ match, location, ...rest }) => {
-  const { loading, error, data } = useQuery(FETCH_PROJECT, {
-    variables: {
-      id: match.params.projectId,
-    },
-  });
+const ProjectSetup = lazy(() => import("./ProjectSetup"));
+const SETUP_STATUSES = ["DRAFT", "PENDING_REVIEW"];
 
-  const statusParam = get(match.params, "status");
-  const project = get(data, "project");
+export default function Project() {
+  const { id } = useParams();
+  const location = useLocation();
+  const isLargerScreen = useBreakpoint("lUp");
+  const { loading, data, error } = useQuery(GET_PROJECT, { variables: { id } });
+
   if (loading) return <Loading />;
 
-  // If there is an error check that the API hasn't returned redirect
-  // instructions. This is a rare case where we want to redirect users
-  // to either signup or login based on wether the project client has
-  // an account
-  if (error && error.graphQLErrors.length > 0) {
-    let theError = error.graphQLErrors[0];
-    let redirect = handleAuthError(theError, location);
-    if (redirect) {
-      return <Redirect to={redirect} />;
-    }
-
-    if (theError.code.match(/invalidPermissions/)) {
+  // Handle API errors.
+  if (error?.graphQLErrors.length > 0) {
+    const theError = error.graphQLErrors[0];
+    const redirect = handleAuthError(theError, location);
+    if (redirect) return <Redirect to={redirect} />;
+    if (theError.extensions.code.match(/invalidPermissions/))
       return <AccessDenied />;
-    }
+    if (isNotFound(error)) return <NotFound />;
   }
 
-  // Render not found if there is no project
-  if (!project) return <NotFound />;
+  const { project } = data;
 
-  // If the status is not a valid status then render not found
-  if (Boolean(statusParam) && !STATUSES[statusParam]) return <NotFound />;
-
-  // If the project is in a created state then load the schedule call component
-  if (project && project.status === "Project Created") {
-    return <ScheduleSetupCall project={project} />;
+  if (project?.status === "Brief Pending Confirmation") {
+    return <Redirect to={`/project_setup/${project.id}`} />;
   }
 
-  // If the project has not been setup yet then redirect to the project setup
-  if (project && project.status === "Brief Pending Confirmation") {
-    return <Redirect to={`/project_setup/${project.airtableId}`} />;
+  if (SETUP_STATUSES.includes(project.status)) {
+    return (
+      <Switch>
+        <Route path="/projects/:id/setup" component={ProjectSetup} />
+        <Redirect to={`/projects/${project.id}/setup`} />
+      </Switch>
+    );
   }
 
-  return <Project data={data} match={match} location={location} {...rest} />;
-};
-
-export default ProjectContainer;
+  return (
+    <View>
+      <Route path="/projects/:id" exact={!isLargerScreen}>
+        <View.Sidebar width={["100%", "100%", "100%", "280px"]}>
+          <Navigation data={data} />
+        </View.Sidebar>
+      </Route>
+      <View.Content>
+        <Container height="100%" maxWidth="1100px">
+          <ProjectRoutes project={data.project} />
+        </Container>
+      </View.Content>
+    </View>
+  );
+}

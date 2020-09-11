@@ -25,7 +25,7 @@ const ProjectType = ({ history, application }) => {
     const response = await updateApplication({
       variables: {
         input: {
-          id: application.airtableId,
+          id: application.id,
           projectType: values.projectType,
           monthlyLimit: values.monthlyLimit
             ? Number(values.monthlyLimit)
@@ -37,7 +37,7 @@ const ProjectType = ({ history, application }) => {
     const { errors } = response.data.updateApplication;
 
     if (!errors) {
-      const urlPrefix = `/applications/${application.airtableId}/proposal`;
+      const urlPrefix = `/applications/${application.id}/proposal`;
       history.push(`${urlPrefix}/tasks`);
     }
   };

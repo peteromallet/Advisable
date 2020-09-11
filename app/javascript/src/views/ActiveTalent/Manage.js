@@ -16,9 +16,9 @@ export default ({ onClick, applications }) => {
         mb="l"
         as="h2"
         fontSize="28px"
-        color="blue900"
-        fontWeight="semibold"
-        letterSpacing="-0.02em"
+        color="neutral900"
+        fontWeight="medium"
+        letterSpacing="-0.04rem"
       >
         Manage Talent
       </Text>
