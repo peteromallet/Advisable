@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     post 'resync', to: 'application#resync', as: :resync if ENV['STAGING']
     get 'login/:uid', to: 'application#login_as', as: :login_as
 
-    if ENV['STAGING'] || rails.env.development?
+    if ENV['STAGING'] || Rails.env.development?
       post 'reset_test', to: 'application#reset_test', as: :reset_test
     end
 
@@ -49,7 +49,7 @@ Rails.application.routes.draw do
 
   get '/guild', to: 'application#guild', as: :guild_root
   get '/guild/*guild_path', to: 'application#guild'
-  
+
   # match every other route to the frontend codebase
   root 'application#frontend'
   get '*path',
