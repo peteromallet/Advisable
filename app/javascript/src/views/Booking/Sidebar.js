@@ -1,5 +1,6 @@
 import React from "react";
 import { get } from "lodash-es";
+import { motion } from "framer-motion";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Button, Tooltip, Box } from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
@@ -10,7 +11,6 @@ import Avatar from "../../components/Avatar";
 import Layout from "../../components/Layout";
 import Heading from "../../components/Heading";
 import currency from "../../utilities/currency";
-import { FadeIn } from "../../components/Animation";
 import VideoButton from "../../components/VideoButton";
 import AttributeList from "../../components/AttributeList";
 import { useMobile } from "../../components/Breakpoint";
@@ -39,7 +39,7 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
   return (
     <Layout.Sidebar size="m">
       <Sticky offset={98} enabled={!isMobile}>
-        <FadeIn duration="500ms">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <Box paddingBottom="l">
             <Avatar
               size="l"
@@ -172,7 +172,7 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
               </DialogDisclosure>
             )}
           </Box>
-        </FadeIn>
+        </motion.div>
       </Sticky>
     </Layout.Sidebar>
   );

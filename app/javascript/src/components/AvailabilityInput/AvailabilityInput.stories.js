@@ -7,7 +7,7 @@ export default {
   title: "Availability Input",
 };
 
-export const basic = () => {
+export const Basic = () => {
   const [value, setValue] = React.useState([]);
   const [timezone, setTimezone] = React.useState("Europe/Dublin");
 
@@ -34,7 +34,7 @@ export const basic = () => {
   );
 };
 
-export const withEvents = () => {
+export const WithEvents = () => {
   const [value, setValue] = React.useState([]);
   const [timezone, setTimezone] = React.useState("Europe/Dublin");
 

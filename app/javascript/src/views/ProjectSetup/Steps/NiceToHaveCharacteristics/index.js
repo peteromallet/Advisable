@@ -15,7 +15,7 @@ export default function NiceToHaveCharacteristics({ project, match, history }) {
     if (project.requiredCharacteristics.length === 0) {
       history.replace("must_have");
     }
-  }, []);
+  }, [history, project.requiredCharacteristics]);
 
   return (
     <Fragment>

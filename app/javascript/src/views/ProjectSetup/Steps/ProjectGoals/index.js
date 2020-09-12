@@ -16,7 +16,7 @@ export default function ProjectSetupGoals({ project, match, history }) {
     if (!project.description) {
       history.replace("project_overview");
     }
-  }, []);
+  }, [history, project.description]);
 
   return (
     <Fragment>

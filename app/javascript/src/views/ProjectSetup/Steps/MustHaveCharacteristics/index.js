@@ -16,7 +16,7 @@ export default function MustHaveCharacteritsics({ project, match, history }) {
     if (!project.specialistDescription) {
       history.replace("specialist_overview");
     }
-  }, []);
+  }, [history, project.specialistDescription]);
 
   return (
     <Fragment>
