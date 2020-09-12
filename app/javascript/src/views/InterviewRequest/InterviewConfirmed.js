@@ -5,7 +5,7 @@ import { Box, Text } from "@advisable/donut";
 import illustration from "./illustration.png";
 import Event from "./Event";
 
-export default ({ clientName, startsAt }) => {
+export default function InterviewConfirmed({ clientName, startsAt }) {
   const location = useLocation();
   const date = DateTime.fromISO(startsAt);
 
@@ -28,4 +28,4 @@ export default ({ clientName, startsAt }) => {
       <Event date={date} zone={location.state?.zone} />
     </Box>
   );
-};
+}

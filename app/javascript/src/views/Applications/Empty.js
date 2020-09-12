@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Box, Card, Text, Paragraph, Link } from "@advisable/donut";
+import { Box, Text, Paragraph, Link } from "@advisable/donut";
 import illustration from "./illustration.png";
 
-const Empty = (props) => {
+const Empty = () => {
   return (
     <Box
       height="calc(100vh - 200px)"

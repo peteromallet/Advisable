@@ -38,7 +38,7 @@ const BuildProfile = ({ history, specialist }) => {
   );
 
   const handleSubmit = async (values) => {
-    const { data, errors } = await updateProfile({
+    await updateProfile({
       variables: {
         input: values,
       },

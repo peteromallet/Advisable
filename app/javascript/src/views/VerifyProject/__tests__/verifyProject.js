@@ -1,6 +1,5 @@
 import {
   user,
-  fireEvent,
   renderRoute,
   screen,
   mockViewer,

@@ -1,7 +1,6 @@
 // Renders the primary header for the app
-import { useHistory } from "react-router-dom";
 import React, { Fragment } from "react";
-import { gql, useMutation, useApolloClient } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { Header as Wrapper, Spacer, Logo, Hamburger } from "./styles";
 import logo from "./logo.svg";
 import CurrentUser from "./CurrentUser";
@@ -22,8 +21,6 @@ const LOGOUT = gql`
 const Header = () => {
   const viewer = useViewer();
   const isMobile = useMobile();
-  const history = useHistory();
-  const client = useApolloClient();
   const [logout] = useMutation(LOGOUT, { variables: { input: {} } });
   const [navOpen, setNavOpen] = React.useState(false);
   const logoURL = useLogoURL();

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 
 function Star() {
   return (

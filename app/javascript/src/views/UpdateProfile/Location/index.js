@@ -77,7 +77,7 @@ let Location = () => {
                   <Checkbox
                     name="remote"
                     checked={formik.values.remote}
-                    onChange={(e) => {
+                    onChange={() => {
                       formik.setFieldValue("remote", true);
                     }}
                   >
@@ -88,7 +88,7 @@ let Location = () => {
                   <Checkbox
                     name="remote"
                     checked={formik.values.remote === false}
-                    onChange={(e) => {
+                    onChange={() => {
                       formik.setFieldValue("remote", false);
                     }}
                   >

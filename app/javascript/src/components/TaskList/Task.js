@@ -2,7 +2,7 @@ import * as React from "react";
 import { DateTime } from "luxon";
 import { Text } from "@advisable/donut";
 import { Calendar, Clock } from "@styled-icons/feather";
-import { Task, Title, Detail, TaskContent } from "./styles";
+import { Task as StyledTask, Title, Detail, TaskContent } from "./styles";
 import TaskStatus from "../TaskStatus";
 import { hoursLabel, displayTaskQuote } from "../../utilities/tasks";
 import TrialIndicator from "./TrialIndicator";
@@ -15,14 +15,14 @@ const shouldShowPrompt = (isClient, task) => {
   if (task.stage === "Submitted" && isClient) return true;
 };
 
-export default ({
+export default function Task({
   task,
   hideStatus,
   onClick,
   isClient,
   showPromptForTask,
   notice,
-}) => {
+}) {
   let showPrompt = shouldShowPrompt(isClient, task);
 
   if (showPromptForTask) {
@@ -30,7 +30,7 @@ export default ({
   }
 
   return (
-    <Task onClick={onClick} showPrompt={showPrompt}>
+    <StyledTask onClick={onClick} showPrompt={showPrompt}>
       {showPrompt && <Prompt />}
       {task.trial && <TrialIndicator isClient={isClient} />}
       <TaskContent>
@@ -61,6 +61,6 @@ export default ({
         )}
       </TaskContent>
       {!hideStatus && <TaskStatus isClient={true}>{task.stage}</TaskStatus>}
-    </Task>
+    </StyledTask>
   );
-};
+}

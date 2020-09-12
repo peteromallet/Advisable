@@ -22,7 +22,7 @@ export const GET_PAYMENT_METHOD = gql`
   }
 `;
 
-const CardDetails = ({ data, nextStep }) => {
+const CardDetails = ({ nextStep }) => {
   const [newCard, setNewCard] = React.useState(false);
   const paymentMethodQuery = useQuery(GET_PAYMENT_METHOD);
 

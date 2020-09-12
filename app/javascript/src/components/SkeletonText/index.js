@@ -3,7 +3,7 @@
 import React from "react";
 import { SkeletonTextLine, SkeletonTextContainer } from "./styles";
 
-export default ({ lines = 3, ...props }) => {
+export default function SkeletonText({ lines = 3 }) {
   const lineElements = [];
 
   for (let i = 0; i < lines; i++) {
@@ -11,4 +11,4 @@ export default ({ lines = 3, ...props }) => {
   }
 
   return <SkeletonTextContainer>{lineElements}</SkeletonTextContainer>;
-};
+}

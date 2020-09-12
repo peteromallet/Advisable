@@ -1,4 +1,3 @@
-import { get } from "lodash-es";
 import * as React from "react";
 import { DateTime } from "luxon";
 import { Info } from "@styled-icons/feather";
@@ -20,66 +19,23 @@ const INFORMATION = {
       </React.Fragment>
     );
   },
-  Offered: ({ application }) => {
-    const { offer } = application;
-
-    if (offer && offer.status === "Declined") {
-      return (
-        <React.Fragment>
-          <Text size="s">
-            You have declined the offer from{" "}
-            {application.project.user.companyName}
-          </Text>
-        </React.Fragment>
-      );
-    }
-
-    if (offer && offer.status === "Accepted") {
-      return (
-        <React.Fragment>
-          <Text size="s">
-            You have accepted an offer from{" "}
-            {application.project.user.companyName}
-          </Text>
-          <Link
-            target="_blank"
-            to={`/offers/${get(application, "offer.airtableId")}`}
-          >
-            View Offer
-          </Link>
-        </React.Fragment>
-      );
-    }
-
+  Proposed: function ApplicationProposed({ application }) {
     return (
       <React.Fragment>
         <Text size="s">
-          {application.project.user.companyName} has sent you an offer
+          Your proposal has been sent to {application.project.user.companyName}.
+          We will let you know when they respond.
         </Text>
         <Link
           target="_blank"
-          to={`/offers/${get(application, "offer.airtableId")}`}
+          to={`/applications/${application.airtableId}/proposal`}
         >
-          View Offer
+          Update Proposal
         </Link>
       </React.Fragment>
     );
   },
-  Proposed: ({ application }) => (
-    <React.Fragment>
-      <Text size="s">
-        Your proposal has been sent to {application.project.user.companyName}.
-        We will let you know when they respond.
-      </Text>
-      <Link
-        target="_blank"
-        to={`/applications/${application.airtableId}/proposal`}
-      >
-        Update Proposal
-      </Link>
-    </React.Fragment>
-  ),
-  "Application Accepted": ({ application }) => {
+  "Application Accepted": function ApplicationAccepted({ application }) {
     const { interview } = application;
 
     if (interview && interview.status === "Call Completed") {

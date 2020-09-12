@@ -43,7 +43,7 @@ const PendingConsultation = ({ data }) => {
       </Text>
 
       <Text fontWeight="medium" mb="xxs">
-        What they'd like to cover in a consultation:
+        What they&apos;d like to cover in a consultation:
       </Text>
       <Text lineHeight="s" color="neutral700" mb="xl">
         {topic}

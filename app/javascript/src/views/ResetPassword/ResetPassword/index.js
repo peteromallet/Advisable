@@ -38,7 +38,7 @@ export default withNotifications(
               passwordConfirmation: "",
               token: match.params.token,
             }}
-            onSubmit={async (values, formikBag) => {
+            onSubmit={async (values) => {
               const { data } = await resetPassword({
                 variables: {
                   input: values,

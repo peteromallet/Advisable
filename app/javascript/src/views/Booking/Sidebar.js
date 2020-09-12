@@ -72,16 +72,13 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
             </DialogDisclosure>
             {application.status === "Working" && (
               <>
-                <Route
-                  path={`${match.path}/stop`}
-                  render={(route) => (
-                    <StopWorkingModal
-                      isOpen
-                      application={application}
-                      onClose={() => history.replace(match.url)}
-                    />
-                  )}
-                />
+                <Route path={`${match.path}/stop`}>
+                  <StopWorkingModal
+                    isOpen
+                    application={application}
+                    onClose={() => history.replace(match.url)}
+                  />
+                </Route>
                 <Button
                   width="100%"
                   align="left"

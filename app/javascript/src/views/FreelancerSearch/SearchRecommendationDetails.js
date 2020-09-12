@@ -18,7 +18,7 @@ function SearchRecommendationDetails({ data }) {
             color="blue900"
             mb="m"
           >
-            "{review.comment}"
+            &quot;{review.comment}&quot;
           </Text>
           <Text fontWeight="medium" color="neutral900" mb="xxs">
             {review.name}, {review.role}

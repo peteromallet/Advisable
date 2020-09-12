@@ -49,7 +49,8 @@ export default function JobCharacteristics({ data }) {
             What characteristics should this specialist have?
           </JobSetupStepHeader>
           <JobSetupStepSubHeader mb="l">
-            We'll check this list against every specialist we match you with.
+            We&apos;ll check this list against every specialist we match you
+            with.
           </JobSetupStepSubHeader>
           <Field
             name="characteristics"

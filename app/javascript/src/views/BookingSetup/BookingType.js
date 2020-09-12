@@ -11,7 +11,7 @@ const BookingType = ({ data }) => {
   const [startWorking] = useMutation(START_WORKING);
   const firstName = data.application.specialist.firstName;
 
-  const handleSubmit = async (values, formik) => {
+  const handleSubmit = async (values) => {
     const id = data.application.airtableId;
     await startWorking({
       variables: {

@@ -27,10 +27,6 @@ const weights = {
   xxs: 500,
 };
 
-const colours = {
-  default: "#1E1A48",
-};
-
 const letterSpacing = {
   m: "-0.015em",
   l: "-0.025em",
@@ -89,7 +85,7 @@ export default styled.h3.attrs((props) => ({
 }))`
   ${padding};
 
-  color: ${(props) => theme.colors.neutral900};
+  color: ${theme.colors.neutral900};
   font-size: ${(props) => sizes[props.size] || sizes["m"]};
   font-weight: ${(props) =>
     weights[props.weight || props.size] || weights["m"]};

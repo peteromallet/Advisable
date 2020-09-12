@@ -25,7 +25,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
   );
 
   const handleConfirmApproved = () => {
-    if (Boolean(task.flexibleEstimate)) {
+    if (task.flexibleEstimate) {
       setStep(HOURS_WORKED);
     } else {
       submit();
@@ -67,9 +67,9 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
             </Box>
             <Box paddingBottom="l">
               <Text size="s">
-                Before you mark this as complete, please make sure that you've
-                completed this batch of work and the client has already approved
-                it.
+                Before you mark this as complete, please make sure that
+                you&apos;ve completed this batch of work and the client has
+                already approved it.
               </Text>
             </Box>
             <Columns spacing="xs">

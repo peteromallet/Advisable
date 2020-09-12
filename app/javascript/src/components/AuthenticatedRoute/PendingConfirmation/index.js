@@ -38,7 +38,7 @@ function PendingConfirmation() {
         {!data && (
           <>
             <Text fontSize="s" mb="xxs" fontWeight="medium">
-              Didn't receive an email?
+              Didn&apos;t receive an email?
             </Text>
             <Link.External fontSize="s" href="#" onClick={handleResend}>
               Resend confirmation email

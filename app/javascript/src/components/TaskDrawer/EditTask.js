@@ -118,7 +118,7 @@ const EditTask = ({
     setEditAllowed(true);
   };
 
-  const handleBlur = (attribute) => () => {
+  const handleBlur = () => () => {
     setEditAllowed(false);
   };
 

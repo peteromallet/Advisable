@@ -15,7 +15,7 @@ const Skill = styled.div`
   background: ${theme.colors.neutral200};
 `;
 
-export default ({ skills, ...props }) => {
+export default function Skills({ skills, ...props }) {
   return (
     <Box {...props}>
       {skills.map((skill, i) => (
@@ -23,4 +23,4 @@ export default ({ skills, ...props }) => {
       ))}
     </Box>
   );
-};
+}

@@ -64,7 +64,7 @@ export default function PopularSkills({
   disabled,
 }) {
   const { t } = useTranslation();
-  const [field, meta, helpers] = useField("skills");
+  const [field, , helpers] = useField("skills");
 
   const filtered = React.useMemo(() => {
     return skills.filter((s) => field.value.indexOf(s.name) === -1);
@@ -92,7 +92,7 @@ export default function PopularSkills({
             <span>You can not add more than 5 skills.</span>
           </StyledPopularSkillDisabled>
         )}
-        {filtered.map((skill, i) => (
+        {filtered.map((skill) => (
           <StyledPopularSkill
             type="button"
             key={skill.id}

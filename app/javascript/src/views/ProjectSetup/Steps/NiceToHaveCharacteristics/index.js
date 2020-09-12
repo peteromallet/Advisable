@@ -6,7 +6,7 @@ import Text from "src/components/Text";
 import BulletPointInput from "components/BulletPointInput";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history }) => {
+export default function NiceToHaveCharacteristics({ project, match, history }) {
   const [mutate] = useMutation(UPDATE_PROJECT);
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/must_have`);
@@ -69,4 +69,4 @@ export default ({ project, match, history }) => {
       </Formik>
     </Fragment>
   );
-};
+}

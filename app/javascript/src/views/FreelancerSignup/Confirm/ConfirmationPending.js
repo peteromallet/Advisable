@@ -63,7 +63,7 @@ const ConfirmationPending = () => {
             mt="l"
             mb="xs"
           >
-            Didn't receive an email?
+            Didn&apos;t receive an email?
           </Text>
           <Link.External fontSize="s" href="#" onClick={resend}>
             Resend confirmation email

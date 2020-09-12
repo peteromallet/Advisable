@@ -33,7 +33,7 @@ const Login = ({ location }) => {
   };
 
   const handleSubmit = async (input, formikBag) => {
-    const { data, errors } = await login({
+    const { errors } = await login({
       variables: { input },
     });
 
@@ -131,7 +131,7 @@ const Login = ({ location }) => {
         fontWeight="medium"
         letterSpacing="-0.01em"
       >
-        Don't have an account?
+        Don&apos;t have an account?
       </Text>
       <SignupLinks>
         <SignupLink to="/clients/signup">Apply to be a client</SignupLink>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Bell } from "@styled-icons/feather";
-import { Box, Text, Icon, Circle } from "@advisable/donut";
+import { Box, Text, Circle } from "@advisable/donut";
 
 function HelperText({ heading, children, ...props }) {
   return (

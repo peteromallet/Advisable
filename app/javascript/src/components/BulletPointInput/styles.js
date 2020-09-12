@@ -6,7 +6,7 @@ import {
   StyledTextareaControl,
 } from "@advisable/donut";
 
-export const StyledBulletPointInput = styled(StyledInput).attrs((props) => ({
+export const StyledBulletPointInput = styled(StyledInput).attrs(() => ({
   as: "div",
 }))`
   ${margin};

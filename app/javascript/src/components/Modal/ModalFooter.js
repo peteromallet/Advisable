@@ -1,3 +1,2 @@
-import React from "react";
-import { ModalFooter } from './styles';
-export default ModalFooter
+import { ModalFooter } from "./styles";
+export default ModalFooter;

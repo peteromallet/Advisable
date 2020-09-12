@@ -44,8 +44,8 @@ function Send({ data }) {
         color="blue800"
         letterSpacing="-0.025em"
       >
-        If you're impressed by {data.specialist.firstName}, how likely are you
-        to hire them as a freelancer?
+        If you&apos;re impressed by {data.specialist.firstName}, how likely are
+        you to hire them as a freelancer?
       </Text>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(formik) => (

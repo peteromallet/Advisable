@@ -69,7 +69,7 @@ const TagCloud = ({ tags, maxRows, name }) => {
                 </Text>
                 <Text size="xxs" lineHeight="xs" color="white">
                   This means that {name} has completed a project with the skill
-                  "{tag.name}"
+                  &quot;{tag.name}&quot;
                 </Text>
               </>
             )

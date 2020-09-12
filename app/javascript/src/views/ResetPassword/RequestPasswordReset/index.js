@@ -82,7 +82,7 @@ function RequestPasswordReset() {
               Account Not Found
             </Text>
             <Text textAlign="center" color="neutral800" mb="l" lineHeight="s">
-              We couldn't find an account for the email you provided.
+              We couldn&apos;t find an account for the email you provided.
             </Text>
             <Button
               mb="xs"
@@ -114,9 +114,9 @@ function RequestPasswordReset() {
               Application not complete
             </Text>
             <Text center>
-              It looks like you haven't finished your Advisable application.
-              We've sent you an email with details on how to continue your
-              application.
+              It looks like you haven&apos;t finished your Advisable
+              application. We&apos;ve sent you an email with details on how to
+              continue your application.
             </Text>
           </>
         )}

@@ -10,8 +10,12 @@ module.exports = {
     "eslint-config-prettier",
   ],
   globals: {
+    process: "readonly",
+    global: "readonly",
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
+    Calendly: "readonly",
+    module: "readonly",
   },
   parser: "babel-eslint",
   parserOptions: {
@@ -23,7 +27,8 @@ module.exports = {
   },
   plugins: ["jest", "react", "react-hooks"],
   rules: {
-    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/rules-of-hooks": "warn",
     "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": 0,
   },
 };

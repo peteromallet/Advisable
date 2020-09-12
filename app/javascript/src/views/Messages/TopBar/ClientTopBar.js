@@ -32,7 +32,7 @@ const ClientTopbar = (props) => {
   let application = data.application;
   let specialist = data.application.specialist;
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     let url = `/projects/${application.project.airtableId}/applications/${application.airtableId}`;
     if (application.status === "Working") {
       url = `/manage/${application.airtableId}`;

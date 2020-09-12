@@ -46,7 +46,7 @@ const AccountDetails = ({ specialist, history, location }) => {
 
   const handleSubmit = async (values, formik) => {
     const queryParams = queryString.parse(location.search);
-    const { data, errors } = await signup({
+    const { errors } = await signup({
       variables: {
         input: {
           ...values,

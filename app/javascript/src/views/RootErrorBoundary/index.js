@@ -14,7 +14,7 @@ class RootErrorBoundary extends React.Component {
     };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return {
       error: true,
     };

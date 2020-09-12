@@ -1,5 +1,5 @@
 import { rgba } from "polished";
-import { padding, display } from "styled-system";
+import { display } from "styled-system";
 import styled, { css, keyframes } from "styled-components";
 import { theme } from "@advisable/donut";
 

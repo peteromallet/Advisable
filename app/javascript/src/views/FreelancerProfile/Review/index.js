@@ -98,7 +98,7 @@ function Review({ review }) {
         </Box>
         {review.comment && (
           <Text mt="s" lineHeight="m" fontStyle="italic" color="neutral800">
-            "{review.comment}"
+            &quot;{review.comment}&quot;
           </Text>
         )}
       </Box>

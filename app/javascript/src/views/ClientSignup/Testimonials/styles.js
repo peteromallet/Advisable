@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { theme } from "@advisable/donut";
 import TESTIMONIALS from "./data";
-import background from "./bg.png";
 
 export const Quotes = styled.div`
   display: flex;

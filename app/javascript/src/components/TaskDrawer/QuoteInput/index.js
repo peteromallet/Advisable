@@ -19,7 +19,7 @@ import {
 } from "../styles";
 import QuoteInputPopout from "./QuoteInputPopout";
 
-const QuoteInput = ({ isClient, task, readOnly, onSubmit }) => {
+const QuoteInput = ({ isClient, task, readOnly }) => {
   const popover = usePopoverState({ placement: "bottom-start" });
 
   return (

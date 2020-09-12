@@ -15,7 +15,7 @@ const Freelancers = ({ data }) => {
   const skill = data.search.skill.name;
   const results = data.search.results;
 
-  const handleClickFreelancer = (specialist) => (e) => {
+  const handleClickFreelancer = (specialist) => () => {
     let nextSelected;
     if (selectedFreelancers.indexOf(specialist.id) > -1) {
       nextSelected = selectedFreelancers.filter((s) => s !== specialist.id);
@@ -70,7 +70,7 @@ const Freelancers = ({ data }) => {
         </Text>
       </motion.div>
       <Box flexWrap="wrap" display="flex" ml="-10px" mr="-10px">
-        {results.nodes.map((s, i) => (
+        {results.nodes.map((s) => (
           <Box key={s.id} width={{ _: "100%", s: "50%", l: "33.3333%" }}>
             <SpecialistCard
               mx="10px"

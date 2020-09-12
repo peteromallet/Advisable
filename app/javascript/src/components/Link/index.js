@@ -1,7 +1,7 @@
 import React from "react";
 import { padding } from "styled-system";
 import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
+import { Link as ReactRouterLink } from "react-router-dom";
 
 const STYLES = {
   subtle: css`
@@ -13,7 +13,7 @@ const STYLES = {
   `,
 };
 
-let RouterLink = styled(Link)`
+let RouterLink = styled(ReactRouterLink)`
   ${padding};
 
   color: #0064ff;
@@ -33,4 +33,6 @@ let RouterLink = styled(Link)`
   ${(props) => STYLES[props.styling]}
 `;
 
-export default (props) => <RouterLink as={props.href && "a"} {...props} />;
+export default function Link(props) {
+  return <RouterLink as={props.href && "a"} {...props} />;
+}

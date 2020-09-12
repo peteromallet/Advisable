@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { StageDescription } from "./styles";
 
 const FOR_CLIENT = {
-  "Not Assigned": ({ t, task }) => {
+  "Not Assigned": function NotAssignedDescription({ t, task }) {
     if (task.name && task.description) return null;
 
     return (
@@ -19,19 +19,23 @@ const FOR_CLIENT = {
       </Box>
     );
   },
-  "Requested To Start": ({ t, task }) => (
-    <Box paddingBottom="m">
-      <Notice icon={<Info />}>
-        <Text size="xs" mb="xxs" weight="medium" color="neutral900">
-          {t("tasks.stageDescriptions.client.requestedToStart.title", { task })}
-        </Text>
-        <Text size="xs" color="neutral600" lineHeight="xs">
-          {t("tasks.stageDescriptions.client.requestedToStart.description")}
-        </Text>
-      </Notice>
-    </Box>
-  ),
-  "Quote Requested": ({ t }) => {
+  "Requested To Start": function RequestedToStartDescription({ t, task }) {
+    return (
+      <Box paddingBottom="m">
+        <Notice icon={<Info />}>
+          <Text size="xs" mb="xxs" weight="medium" color="neutral900">
+            {t("tasks.stageDescriptions.client.requestedToStart.title", {
+              task,
+            })}
+          </Text>
+          <Text size="xs" color="neutral600" lineHeight="xs">
+            {t("tasks.stageDescriptions.client.requestedToStart.description")}
+          </Text>
+        </Notice>
+      </Box>
+    );
+  },
+  "Quote Requested": function QuoteRequestedDescription({ t }) {
     return (
       <Box paddingBottom="m">
         <StageDescription>
@@ -41,7 +45,7 @@ const FOR_CLIENT = {
       </Box>
     );
   },
-  "Quote Provided": ({ t, task }) => {
+  "Quote Provided": function QuoteProvidedDescription({ t, task }) {
     return (
       <Box paddingBottom="m">
         <StageDescription>
@@ -51,7 +55,7 @@ const FOR_CLIENT = {
       </Box>
     );
   },
-  Assigned: ({ t, task }) => {
+  Assigned: function AssignedDescription({ t, task }) {
     return (
       <StageDescription>
         <Info />
@@ -59,7 +63,7 @@ const FOR_CLIENT = {
       </StageDescription>
     );
   },
-  Working: ({ t, task }) => {
+  Working: function WorkingDescription({ t, task }) {
     return (
       <StageDescription>
         <Info />
@@ -67,7 +71,7 @@ const FOR_CLIENT = {
       </StageDescription>
     );
   },
-  Submitted: ({ t, task }) => {
+  Submitted: function SubmittedDescription({ t, task }) {
     return (
       <Box paddingBottom="m">
         <StageDescription>
@@ -77,7 +81,7 @@ const FOR_CLIENT = {
       </Box>
     );
   },
-  Approved: ({ t, task }) => {
+  Approved: function ApprovedDescription({ t, task }) {
     return (
       <StageDescription>
         <Info />
@@ -88,7 +92,7 @@ const FOR_CLIENT = {
 };
 
 const FOR_SPECIALIST = {
-  "Quote Requested": ({ t }) => {
+  "Quote Requested": function QuoteRequestedSpecialistDescription({ t }) {
     return (
       <StageDescription>
         <Info />
@@ -96,7 +100,7 @@ const FOR_SPECIALIST = {
       </StageDescription>
     );
   },
-  "Requested To Start": ({ t }) => {
+  "Requested To Start": function RequestedToStartSpecialistDescription({ t }) {
     return (
       <StageDescription>
         <Info />
@@ -104,7 +108,7 @@ const FOR_SPECIALIST = {
       </StageDescription>
     );
   },
-  "Quote Provided": ({ t }) => {
+  "Quote Provided": function QuoteProvidedSpecialistDescription({ t }) {
     return (
       <StageDescription>
         <Info />
@@ -112,7 +116,7 @@ const FOR_SPECIALIST = {
       </StageDescription>
     );
   },
-  Assigned: ({ t, task }) => {
+  Assigned: function AssignedSpecialistDescription({ t, task }) {
     let key = "assigned";
 
     if (!task.estimate) {
@@ -132,7 +136,7 @@ const FOR_SPECIALIST = {
       </Box>
     );
   },
-  Working: ({ t, task }) => {
+  Working: function WorkingSpecialistDescription({ t, task }) {
     return (
       <Box paddingBottom="m">
         <StageDescription>
@@ -142,7 +146,7 @@ const FOR_SPECIALIST = {
       </Box>
     );
   },
-  Submitted: ({ t, task }) => {
+  Submitted: function SubmittedSpecialistDescription({ t, task }) {
     return (
       <StageDescription>
         <Info />
@@ -150,7 +154,7 @@ const FOR_SPECIALIST = {
       </StageDescription>
     );
   },
-  Approved: ({ t, task }) => {
+  Approved: function ApprovedSpecialistDescription({ t, task }) {
     return (
       <StageDescription>
         <Info />
@@ -162,7 +166,7 @@ const FOR_SPECIALIST = {
 
 // Renders the description of a task's stage. The descriptions themselves are
 // stored inside the translation.json file.
-export default ({ isClient, task }) => {
+export default function TaskStageDescription({ isClient, task }) {
   const { t } = useTranslation();
   const prompts = isClient ? FOR_CLIENT : FOR_SPECIALIST;
   const Prompt = prompts[task.stage];
@@ -172,4 +176,4 @@ export default ({ isClient, task }) => {
   }
 
   return <Prompt t={t} task={task} />;
-};
+}

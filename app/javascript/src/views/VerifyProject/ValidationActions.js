@@ -11,7 +11,7 @@ function ValidationActions() {
   const [validate, validateMutation] = useValidatePreviousProject();
 
   const handleValidate = async () => {
-    const response = await validate({
+    await validate({
       variables: {
         input: {
           id,

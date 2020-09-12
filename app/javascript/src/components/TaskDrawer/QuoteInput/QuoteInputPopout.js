@@ -59,7 +59,7 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
   };
 
   const handleSubmit = async (values) => {
-    const r = await updateEstimate({
+    await updateEstimate({
       variables: {
         input: {
           id: task.id,

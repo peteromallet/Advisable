@@ -25,7 +25,7 @@ const InvoiceSettings = ({ nextStep }) => {
     },
   };
 
-  const handleSubmit = async (values, formik) => {
+  const handleSubmit = async (values) => {
     await updatePaymentMethod({
       variables: {
         input: values,

@@ -13,7 +13,7 @@ const OpenApplications = (props) => {
     <>
       {props.onHold && (
         <Text color="neutral900" mb="m" size="l" weight="medium">
-          We're currently evaluating the projects you've applied for
+          We&apos;re currently evaluating the projects you&apos;ve applied for
         </Text>
       )}
       {props.applications.map((application) => (

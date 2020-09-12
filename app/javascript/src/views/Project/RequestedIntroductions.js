@@ -10,7 +10,7 @@ import { useToggleSourcing } from "./queries";
 export default function RequestedIntroductions({ accepted }) {
   const { id } = useParams();
 
-  const [toggleSourcing, { loading }] = useToggleSourcing();
+  const [toggleSourcing] = useToggleSourcing();
 
   const handleToggle = async () => {
     await toggleSourcing({

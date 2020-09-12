@@ -14,7 +14,7 @@ const WorkHistory = ({ specialist, history }) => {
   const [completeSetup] = useMutation(COMPLETE_SETUP);
 
   const handleSubmit = async (values) => {
-    const { data, errors } = await updateProfile({
+    await updateProfile({
       variables: {
         input: values,
       },

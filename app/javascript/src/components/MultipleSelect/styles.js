@@ -12,7 +12,7 @@ export const StyledMultipleSelectTag = styled.div`
   display: inline-block;
 `;
 
-export const StyledMultipleSelect = styled(StyledInput).attrs((p) => ({
+export const StyledMultipleSelect = styled(StyledInput).attrs(() => ({
   as: "div",
 }))`
   input {

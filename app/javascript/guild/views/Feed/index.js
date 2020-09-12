@@ -4,7 +4,7 @@ import { GUILD_POSTS_QUERY } from "./queries";
 import { useQuery } from "@apollo/client";
 
 const Feed = () => {
-  const { error, data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY);
+  const { error, data, fetchMore } = useQuery(GUILD_POSTS_QUERY);
 
   /* 
     https://www.apollographql.com/docs/react/data/pagination/#cursor-based

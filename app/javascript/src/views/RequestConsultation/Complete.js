@@ -47,15 +47,16 @@ const Complete = () => {
           </Text>
         </Text>
         <Text color="neutral700" lineHeight="s" mb="s" fontSize="s">
-          If you can't find it in your inbox in the next 5 minutes, please check
-          your spam folder as emails can occasionally get incorrectly flagged.
+          If you can&apos;t find it in your inbox in the next 5 minutes, please
+          check your spam folder as emails can occasionally get incorrectly
+          flagged.
         </Text>
         <Text color="neutral700" lineHeight="s" fontSize="s">
-          If you can't find it, email{" "}
+          If you can&apos;t find it, email{" "}
           <Link.External href="mailto:hello@advisable.com">
             hello@advisable.com
           </Link.External>{" "}
-          and we'll help ASAP.
+          and we&apos;ll help ASAP.
         </Text>
       </Box>
     </Card>

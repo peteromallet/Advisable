@@ -1,7 +1,6 @@
 import React from "react";
-import { rgba } from "polished";
 import styled from "styled-components";
-import { theme, Text } from "@advisable/donut";
+import { Text } from "@advisable/donut";
 import { motion, transform } from "framer-motion";
 
 const StyledApplicantScore = styled.div`

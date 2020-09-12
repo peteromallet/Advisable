@@ -128,8 +128,8 @@ const Profile = () => {
             <ErrorMessage mt="xs" name="skills" component={InputError} />
             {formik.values.skills.length >= 10 && (
               <Text mt="m" size="s" lineHeight="s">
-                You can't add more than 10 primary skills. If you want to add
-                more skills to your profile, you can do so by{" "}
+                You can&apos;t add more than 10 primary skills. If you want to
+                add more skills to your profile, you can do so by{" "}
                 <Link to="/profile/references">adding a previous project.</Link>
               </Text>
             )}

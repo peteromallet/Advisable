@@ -2,7 +2,7 @@ import { object, string } from "yup";
 import { ArrowRight } from "@styled-icons/feather";
 import React from "react";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { Card, Box, Text, Button, Textarea } from "@advisable/donut";
 import FormField from "../../components/FormField";
 import { useUpdateConsultation } from "./queries";
@@ -65,7 +65,7 @@ const Topic = ({ data }) => {
         this consultation?
       </Text>
       <Text color="neutral800" lineHeight="s" mb="l">
-        Please describe briefly what you'd like to cover in a 30-minute
+        Please describe briefly what you&apos;d like to cover in a 30-minute
         consultation with {data.specialist.firstName}. This is for us to share
         with {data.specialist.firstName} when requesting their time.
       </Text>

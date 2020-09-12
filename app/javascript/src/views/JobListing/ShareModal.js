@@ -8,7 +8,6 @@ const ShareModal = ({ url, modal }) => {
       <Text
         as="h4"
         mb="xs"
-        mb="m"
         pr="40px"
         color="blue900"
         fontSize="24px"

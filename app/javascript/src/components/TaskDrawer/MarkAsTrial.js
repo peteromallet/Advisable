@@ -62,10 +62,10 @@ const MarkAsTrial = ({ task }) => {
       </Text>
       <Text fontSize="xs" lineHeight="xs" mb="xs" color="neutral700">
         Proposing a trial task increases your chance of closing a client. It
-        gives the client a chance to work with you risk-free: they don't pay
-        unless they want to continue working with you after. However, you will
-        be paid for work completed during this trial as long as you adhere to
-        Advisable's Professional Standards.
+        gives the client a chance to work with you risk-free: they don&apos;t
+        pay unless they want to continue working with you after. However, you
+        will be paid for work completed during this trial as long as you adhere
+        to Advisable&apos;s Professional Standards.
       </Text>
       <Box mb="s">
         <Text size="xs">

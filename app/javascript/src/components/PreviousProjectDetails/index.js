@@ -8,7 +8,7 @@ import Review from "components/Review";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
 
 function PreviousProjectDetails({ id }) {
-  const { loading, data, error } = useQuery(GET_PROJECT, {
+  const { loading, data } = useQuery(GET_PROJECT, {
     variables: {
       id: id,
     },
@@ -112,7 +112,11 @@ function PreviousProjectDetails({ id }) {
   );
 }
 
-PreviousProjectDetails.Modal = ({ modal, id, ...props }) => {
+PreviousProjectDetails.Modal = function PreviousProjectDetailsModal({
+  modal,
+  id,
+  ...props
+}) {
   return (
     <Modal modal={modal} width={800} padding="xl" {...props}>
       <PreviousProjectDetails id={id} />

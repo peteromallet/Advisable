@@ -59,7 +59,7 @@ const SpecialistTopBar = (props) => {
     actionURL = `/clients/${application.airtableId}`;
   }
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     history.push(actionURL);
   };
 

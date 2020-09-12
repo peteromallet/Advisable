@@ -81,22 +81,6 @@ const Questions = ({
     );
   }
 
-  const goBack = (formik) => {
-    let url;
-    if (number > 1) {
-      formik.resetForm();
-      formik.setFieldValue("answer", previousQuestion.answer || "");
-      url = `/invites/${applicationId}/apply/questions/${number - 1}`;
-    } else {
-      url = `/invites/${applicationId}/apply`;
-    }
-
-    history.replace({
-      ...location,
-      pathname: url,
-    });
-  };
-
   const handleSubmit = async (values, formikBag) => {
     await updateApplication({
       variables: {
@@ -130,7 +114,7 @@ const Questions = ({
     answer: applicationQuestion.answer || "",
   };
 
-  const handleChange = (setFieldValue) => (e, formikBag) => {
+  const handleChange = (setFieldValue) => (e) => {
     const value = e.target.value;
     setFieldValue("answer", value);
     value && setNumOfWords(value.match(/\S+/g)?.length || 0);

@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Icon } from "../Icon/styles";
 import { Status } from "../Status/styles";
 import { theme } from "@advisable/donut";

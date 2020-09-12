@@ -75,7 +75,7 @@ const Tasks = ({ application, match, location, history }) => {
   const canContinue = hasCompleteTasksStep(application);
 
   const showPromptForTask = (task) => {
-    return !Boolean(task.name) || !Boolean(task.description);
+    return !task.name || !task.description;
   };
 
   const noticeForTask = (task) => {
@@ -118,13 +118,13 @@ const Tasks = ({ application, match, location, history }) => {
       <Modal isOpen={confirmModal} onClose={() => setConfirmModal(false)}>
         <Box padding="l">
           <Box paddingBottom="s">
-            <Heading level={3}>You haven't proposed a trial task</Heading>
+            <Heading level={3}>You haven&apos;t proposed a trial task</Heading>
           </Box>
           <Box paddingBottom="m">
             <Text size="s">
               Proposing a guaranteed trial task increases your chance of closing
               a client. To set one of your tasks as a trial task, click into the
-              task and click "Set as trial task"
+              task and click &quot;Set as trial task&quot;
             </Text>
           </Box>
           <Button onClick={nextStep} mr="xs">

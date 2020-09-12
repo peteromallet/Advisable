@@ -8,7 +8,7 @@ function SubmitApplication() {
   const history = useHistory();
   const [submit, { loading }] = useMutation(SUBMIT_FULL_APPLICATION);
 
-  const handleClick = async (e) => {
+  const handleClick = async () => {
     await submit({
       variables: {
         input: {},

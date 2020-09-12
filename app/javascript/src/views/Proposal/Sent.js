@@ -18,8 +18,8 @@ const Send = ({ application }) => {
         <Box paddingBottom="l">
           <Text size="s" style={{ maxWidth: 380, margin: "0 auto" }}>
             Your proposal has been sent to{" "}
-            {application.project.user.companyName}. We'll try to get a response
-            from them ASAP.
+            {application.project.user.companyName}. We&apos;ll try to get a
+            response from them ASAP.
           </Text>
         </Box>
         <Box paddingBottom="m">

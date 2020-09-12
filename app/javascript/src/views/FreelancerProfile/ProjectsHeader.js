@@ -1,7 +1,7 @@
 import React from "react";
 import queryString from "query-string";
 import { useLocation, useHistory } from "react-router-dom";
-import { Box, Link, Text } from "@advisable/donut";
+import { Link, Text } from "@advisable/donut";
 
 function arrayToSentence(array) {
   return (
@@ -38,7 +38,7 @@ function ProjectsHeader() {
     }
   }
 
-  const handleClear = e => {
+  const handleClear = (e) => {
     e.preventDefault();
 
     history.replace({
@@ -51,7 +51,7 @@ function ProjectsHeader() {
         },
         {
           arrayFormat: "bracket",
-        }
+        },
       ),
     });
   };

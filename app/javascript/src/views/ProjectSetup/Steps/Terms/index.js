@@ -6,7 +6,7 @@ import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 import Terms from "./Terms";
 
-export default ({ project, match, history }) => {
+export default function ProjectSetupTerms({ project, match, history }) {
   const [mutate] = useMutation(UPDATE_PROJECT);
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/questions`);
@@ -53,4 +53,4 @@ export default ({ project, match, history }) => {
       </Formik>
     </Fragment>
   );
-};
+}

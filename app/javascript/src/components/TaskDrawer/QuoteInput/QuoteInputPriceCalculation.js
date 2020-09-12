@@ -29,7 +29,7 @@ const QuoteInputPriceCalculation = ({
 };
 
 const calculateEarnings = (hours, rate) => {
-  const hoursParsed = Boolean(hours) ? hours : 0;
+  const hoursParsed = hours ? hours : 0;
   const total = hoursParsed * rate;
   return total - total * 0.2;
 };

@@ -4,7 +4,7 @@ import { padding } from "styled-system";
 import styled from "styled-components";
 import { theme } from "@advisable/donut";
 
-let Divider = styled.div`
+const StyledDivider = styled.div`
   ${padding};
 
   width: 100%;
@@ -28,7 +28,7 @@ const DividerText = styled.div`
   padding: 0 15px;
 `;
 
-export default ({
+export default function Divider({
   children,
   padding,
   paddingTop,
@@ -36,7 +36,7 @@ export default ({
   paddingRight,
   paddingBottom,
   ...props
-}) => {
+}) {
   const paddingProps = {
     padding,
     paddingTop,
@@ -46,8 +46,8 @@ export default ({
   };
 
   return (
-    <Divider {...paddingProps} {...props}>
+    <StyledDivider {...paddingProps} {...props}>
       {children && <DividerText>{children}</DividerText>}
-    </Divider>
+    </StyledDivider>
   );
-};
+}

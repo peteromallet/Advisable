@@ -14,7 +14,7 @@ const Inner = styled(motion.div)`
   background: #17cda1;
 `;
 
-export default ({ amount }) => {
+export default function ProjectSetupProgres({ amount }) {
   return (
     <Bar>
       <Inner
@@ -23,4 +23,4 @@ export default ({ amount }) => {
       />
     </Bar>
   );
-};
+}

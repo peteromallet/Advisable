@@ -14,7 +14,7 @@ const Slider = ({
 }) => {
   const range = max - min;
   const progress = ((value - min) / range) * 100.0;
-  const [id, _] = React.useState(rest.id || uniqueId("Slider"));
+  const [id] = React.useState(rest.id || uniqueId("Slider"));
 
   const cssVars = {
     ["--Slider-progress"]: `${progress}%`,

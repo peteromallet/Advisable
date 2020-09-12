@@ -13,7 +13,7 @@ import {
 const NewProject = ({ onCreate }) => {
   const history = useHistory();
   const notifications = useNotifications();
-  const [createJob, { loading, data }] = useMutation(CREATE_JOB, {
+  const [createJob, { loading }] = useMutation(CREATE_JOB, {
     update: onCreate,
   });
 

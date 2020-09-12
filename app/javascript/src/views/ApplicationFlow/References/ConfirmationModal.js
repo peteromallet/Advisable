@@ -24,7 +24,7 @@ const ConfirmationModal = ({
           {noOfSelectedProjects === 0 ? (
             <>Are you sure?</>
           ) : (
-            <>You've only attached 1 reference</>
+            <>You&apos;ve only attached 1 reference</>
           )}
         </Text>
         <Text color="neutral800" fontSize="s" lineHeight="m" mb="l">

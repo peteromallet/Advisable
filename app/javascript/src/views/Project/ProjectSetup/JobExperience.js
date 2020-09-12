@@ -18,7 +18,7 @@ export default function JobExperience({ data }) {
     industryExperienceImportance: data.project.industryExperienceImportance,
   };
 
-  const handleSubmit = (values, formik) => {
+  const handleSubmit = (values) => {
     updateProject({
       variables: {
         input: {
@@ -54,8 +54,8 @@ export default function JobExperience({ data }) {
             {t("jobSetup.experience.title", { industry, companyType })}
           </JobSetupStepHeader>
           <JobSetupStepSubHeader mb="xl">
-            If this is important, we'll only match you with specialists who've
-            worked with similar companies before.
+            If this is important, we&apos;ll only match you with specialists
+            who&apos;ve worked with similar companies before.
           </JobSetupStepSubHeader>
           <Field
             name="industryExperienceImportance"

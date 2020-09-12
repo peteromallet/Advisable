@@ -5,7 +5,7 @@ import { FileTray, People, Options } from "@styled-icons/ionicons-solid";
 import BackButton from "components/BackButton";
 import NavigationMenu from "components/NavigationMenu";
 
-function ProjectNavigation({ data }) {
+function ProjectNavigation() {
   const { id } = useParams();
 
   return (

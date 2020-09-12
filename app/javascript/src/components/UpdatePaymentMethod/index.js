@@ -42,7 +42,7 @@ const UpdatePaymentMethod = ({ onSuccess }) => {
   }
 
   const pollStatus = async () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       timer.current = setInterval(async () => {
         const r = await client.query({
           fetchPolicy: "network-only",
@@ -58,15 +58,11 @@ const UpdatePaymentMethod = ({ onSuccess }) => {
   };
 
   const handleCardDetails = async (stripe, details, formik) => {
-    const { setupIntent, error } = await stripe.handleCardSetup(
-      secret,
-      details.card,
-      {
-        payment_method_data: {
-          billing_details: { name: details.cardholder },
-        },
+    const { error } = await stripe.handleCardSetup(secret, details.card, {
+      payment_method_data: {
+        billing_details: { name: details.cardholder },
       },
-    );
+    });
 
     if (error) {
       formik.setStatus(error.message);

@@ -13,8 +13,9 @@ export default function NoActiveProjects() {
         No active projects
       </Text>
       <Paragraph fontSize="sm" textAlign="center">
-        It looks like you haven't got any active projects. Once a client accepts
-        an application, you will be able to manage the project from here.
+        It looks like you haven&apos;t got any active projects. Once a client
+        accepts an application, you will be able to manage the project from
+        here.
       </Paragraph>
     </Box>
   );

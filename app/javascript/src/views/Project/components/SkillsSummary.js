@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Box, Text, Tags, Button } from "@advisable/donut";
+import { Box, Text, Tags } from "@advisable/donut";
 
 export default function GoalsSummary({ project, children }) {
   const { t } = useTranslation();
