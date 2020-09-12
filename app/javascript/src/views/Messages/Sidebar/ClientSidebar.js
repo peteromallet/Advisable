@@ -1,8 +1,7 @@
 import React from "react";
 import { get } from "lodash-es";
 import { useQuery } from "@apollo/client";
-import { Box, Text } from "@advisable/donut";
-import Avatar from "../../../components/Avatar";
+import { Box, Text, Avatar } from "@advisable/donut";
 import Status from "../../../components/Status";
 import Skeleton from "../../../components/Skeleton";
 import AttributeList from "../../../components/AttributeList";

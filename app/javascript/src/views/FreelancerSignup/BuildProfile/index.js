@@ -11,10 +11,10 @@ import {
   Input,
   Select,
   Label,
+  Avatar,
 } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/client";
 import FormField from "components/FormField";
-import Avatar from "../../../components/Avatar";
 import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";

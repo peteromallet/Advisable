@@ -1,7 +1,6 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, Avatar } from "@advisable/donut";
 import { useParams, useLocation } from "react-router-dom";
-import Avatar from "../../components/Avatar";
 import StarRating from "../../components/StarRating";
 import MultistepMenu from "../../components/MultistepMenu";
 import useViewer from "../../hooks/useViewer";
