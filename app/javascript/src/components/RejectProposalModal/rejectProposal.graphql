@@ -1,8 +1,0 @@
-mutation rejectProposal($input: RejectProposalInput!) {
-  rejectProposal(input: $input) {
-    application {
-      id
-      status
-    }
-  }
-}

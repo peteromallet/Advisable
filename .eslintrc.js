@@ -9,6 +9,11 @@ module.exports = {
     "plugin:react/recommended",
     "eslint-config-prettier",
   ],
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
   globals: {
     process: "readonly",
     global: "readonly",
