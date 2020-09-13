@@ -10,11 +10,11 @@ export const StyledTagSelect = styled.div`
 
 const selectedStyles = css`
   color: white;
-  background: ${theme.colors.blue[8]};
+  background: ${theme.colors.blue800};
 
   &:hover {
     color: white;
-    background: ${theme.colors.blue[8]};
+    background: ${theme.colors.blue800};
   }
 `;
 
@@ -31,8 +31,8 @@ export const StyledTagSelectTag = styled.div`
   border-radius: 20px;
   display: inline-flex;
   vertical-align: baseline;
-  color: ${theme.colors.blue[7]};
-  background: ${theme.colors.blue[0]};
+  color: ${theme.colors.blue700};
+  background: ${theme.colors.blue100};
   transition: background 100ms;
 
   @media (min-width: ${theme.breakpoints.s}) {
@@ -41,15 +41,15 @@ export const StyledTagSelectTag = styled.div`
   }
 
   &:hover {
-    color: ${theme.colors.blue[8]};
-    background: ${theme.colors.blue[1]};
+    color: ${theme.colors.blue800};
+    background: ${theme.colors.blue100};
   }
 
   svg {
     margin-right: 8px;
   }
 
-  ${props => props.selected && selectedStyles};
+  ${(props) => props.selected && selectedStyles};
 `;
 
 export default StyledTagSelect;

@@ -1,6 +1,6 @@
 import { darken } from "polished";
 import styled from "styled-components";
-import colors from "../../colors";
+import { theme } from "@advisable/donut";
 
 export const NewTaskIcon = styled.span`
   width: 26px;
@@ -25,10 +25,10 @@ export const NewTaskIcon = styled.span`
     height: 100%;
     border-radius: 50%;
     position: absolute;
-    background: ${colors.blue.base};
+    background: ${theme.colors.blue500};
     transition: transform 200ms cubic-bezier(0, 0.4, 0.3, 1.2);
   }
-`
+`;
 
 export const NewTask = styled.button`
   margin: 0;
@@ -43,13 +43,13 @@ export const NewTask = styled.button`
   align-items: center;
   display: inline-flex;
   background: transparent;
-  color: ${colors.blue.base};
+  color: ${theme.colors.blue500};
 
   &:hover {
-    color: ${darken(0.2, colors.blue.base)};
+    color: ${darken(0.2, theme.colors.blue500)};
 
     ${NewTaskIcon}::after {
       transform: scale(1.12);
     }
   }
-`
+`;

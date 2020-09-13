@@ -22,7 +22,7 @@ export const GET_PAYMENT_METHOD = gql`
   }
 `;
 
-const CardDetails = ({ data, nextStep }) => {
+const CardDetails = ({ nextStep }) => {
   const [newCard, setNewCard] = React.useState(false);
   const paymentMethodQuery = useQuery(GET_PAYMENT_METHOD);
 
@@ -34,13 +34,13 @@ const CardDetails = ({ data, nextStep }) => {
         <Text
           mb="xs"
           fontSize="xxl"
-          color="neutral.8"
+          color="neutral800"
           fontWeight="bold"
           letterSpacing="-0.02em"
         >
           Payment Method
         </Text>
-        <Text color="neutral.7" lineHeight="s" mb="l">
+        <Text color="neutral700" lineHeight="s" mb="l">
           Would you like to use your existing card details or add a new card?
         </Text>
         <Box mb="l">

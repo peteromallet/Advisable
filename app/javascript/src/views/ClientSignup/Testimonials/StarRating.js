@@ -27,10 +27,10 @@ const StarRating = () => (
         <Star />
       </Link.External>
       <br />
-      <Text fontSize="xxs" mt="xs" fontWeight="semibold" color="white.9">
+      <Text fontSize="xxs" mt="xs" fontWeight="semibold" color="white">
         9.6 out of 10
       </Text>
-      <Text fontSize="xxs" mt="xxs" color="white.9">
+      <Text fontSize="xxs" mt="xxs" color="white">
         49 Ratings
       </Text>
     </StyledStarRating>

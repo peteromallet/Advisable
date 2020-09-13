@@ -12,7 +12,7 @@ function RibbonComponent() {
         left="6px"
         position="absolute"
         bg="rgba(255, 255, 255, 0.25)"
-        color="white.9"
+        color="white"
       >
         <Award size={14} strokeWidth={2.5} />
       </Circle>

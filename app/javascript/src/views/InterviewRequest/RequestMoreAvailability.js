@@ -44,38 +44,36 @@ export default function RequestMoreAvailability({
         when they respond.
       </Text>
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-        {(formik) => (
-          <Form>
-            <Box mb="l">
-              <FormField
-                as={Textarea}
-                name="availabilityNote"
-                label="When suits for you?"
-                placeholder="Please add a note on your availability"
-              />
-            </Box>
-            <Columns spacing="xs">
-              <Button
-                width="100%"
-                size="l"
-                type="submit"
-                variant="dark"
-                loading={loading}
-              >
-                Request
-              </Button>
-              <Button
-                width="100%"
-                type="button"
-                variant="subtle"
-                size="l"
-                onClick={onCancel}
-              >
-                Cancel
-              </Button>
-            </Columns>
-          </Form>
-        )}
+        <Form>
+          <Box mb="l">
+            <FormField
+              as={Textarea}
+              name="availabilityNote"
+              label="When suits for you?"
+              placeholder="Please add a note on your availability"
+            />
+          </Box>
+          <Columns spacing="xs">
+            <Button
+              width="100%"
+              size="l"
+              type="submit"
+              variant="dark"
+              loading={loading}
+            >
+              Request
+            </Button>
+            <Button
+              width="100%"
+              type="button"
+              variant="subtle"
+              size="l"
+              onClick={onCancel}
+            >
+              Cancel
+            </Button>
+          </Columns>
+        </Form>
       </Formik>
     </Box>
   );

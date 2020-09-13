@@ -15,7 +15,7 @@ export default function JobLikelyToHire({ data }) {
     likelyToHire: data.project.likelyToHire,
   };
 
-  const handleSubmit = (values, formik) => {
+  const handleSubmit = (values) => {
     updateProject({
       variables: {
         input: {
@@ -42,8 +42,8 @@ export default function JobLikelyToHire({ data }) {
             are you to hire them?
           </JobSetupStepHeader>
           <JobSetupStepSubHeader mb="l">
-            We'll share this with potential matches so they know how serious you
-            are about this project before applying.
+            We&apos;ll share this with potential matches so they know how
+            serious you are about this project before applying.
           </JobSetupStepSubHeader>
           <Field
             name="likelyToHire"

@@ -16,7 +16,7 @@ export default function JobLocation({ data }) {
     locationImportance: data.project.locationImportance,
   };
 
-  const handleSubmit = (values, formik) => {
+  const handleSubmit = (values) => {
     updateProject({
       variables: {
         input: {
@@ -48,8 +48,8 @@ export default function JobLocation({ data }) {
             How important is it that they are in {user.location}?
           </JobSetupStepHeader>
           <JobSetupStepSubHeader mb="l">
-            The broader the location, the more likely we'll have the perfect
-            match for your project.
+            The broader the location, the more likely we&apos;ll have the
+            perfect match for your project.
           </JobSetupStepSubHeader>
           <Field
             name="locationImportance"

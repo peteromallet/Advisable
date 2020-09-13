@@ -6,7 +6,7 @@ const validationSchema = object().shape({
   resume: string()
     .nullable()
     .when(["linkedin", "website"], {
-      is: (linkedin, website) => !Boolean(linkedin) && !Boolean(website),
+      is: (linkedin, website) => !linkedin && !website,
       then: string().required(
         "Please provide at least one of the above so that we can see your work history.",
       ),

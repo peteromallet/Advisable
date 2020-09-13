@@ -9,7 +9,7 @@ const Sent = () => {
     <Box maxWidth={500} mx="auto" textAlign="center">
       <Circle
         mb="m"
-        bg="blue.1"
+        bg="blue100"
         as={motion.div}
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -19,7 +19,7 @@ const Sent = () => {
       </Circle>
       <Text
         mb="xs"
-        color="blue.9"
+        color="blue900"
         fontSize="xxl"
         fontWeight="bold"
         letterSpacing="-0.02em"

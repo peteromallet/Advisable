@@ -19,7 +19,11 @@ const CandidateAttributeList = ({ application }) => {
         <AttributeList.Item
           label="Linkedin"
           value={
-            <a href={application.specialist.linkedin} target="_blank">
+            <a
+              href={application.specialist.linkedin}
+              rel="noreferrer"
+              target="_blank"
+            >
               View on Linkedin
             </a>
           }

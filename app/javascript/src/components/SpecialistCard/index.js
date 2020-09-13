@@ -27,15 +27,15 @@ const SpecialistCard = ({ specialist, action, ...props }) => {
             zIndex={2}
             height={24}
             fontSize="13px"
-            bg="yellow.5"
+            bg="yellow500"
             fontWeight="semibold"
-            color="white.9"
+            color="white"
             borderRadius={12}
             alignItems="center"
             position="absolute"
             display="inline-flex"
             border="2px solid"
-            borderColor="white.9"
+            borderColor="white"
             left="50px"
             top="50px"
           >
@@ -49,11 +49,11 @@ const SpecialistCard = ({ specialist, action, ...props }) => {
       <StyledSpecialistName onClick={specialistModal.show}>
         {specialist.name}
       </StyledSpecialistName>
-      <Text color="neutral.7" fontSize="xs" letterSpacing="-0.01em">
+      <Text color="neutral700" fontSize="xs" letterSpacing="-0.01em">
         {truncate(specialist.location, { length: 40 })}
       </Text>
       <Attributes specialist={specialist} />
-      <Text fontSize="xxs" lineHeight="xs" color="neutral.8" mb="m">
+      <Text fontSize="xxs" lineHeight="xs" color="neutral800" mb="m">
         <LineClamp maxHeight={80}>{specialist.bio}</LineClamp>
       </Text>
       <TagCloud

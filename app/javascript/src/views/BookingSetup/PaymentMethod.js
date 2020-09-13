@@ -20,7 +20,7 @@ const validationSchema = object({
   paymentMethod: string().required("Please select a payment method"),
 });
 
-const PaymentMethod = ({ data, nextStep }) => {
+const PaymentMethod = ({ data }) => {
   const history = useHistory();
   const [updatePaymentMethod] = useMutation(UPDATE_PAYMENT_METHOD);
   const specialist = data.application.specialist;
@@ -29,7 +29,7 @@ const PaymentMethod = ({ data, nextStep }) => {
     paymentMethod: data.viewer.projectPaymentMethod || "",
   };
 
-  const handleSubmit = async (values, formik) => {
+  const handleSubmit = async (values) => {
     await updatePaymentMethod({
       variables: {
         input: {
@@ -102,7 +102,7 @@ const PaymentMethod = ({ data, nextStep }) => {
                 </Text>
               )}
               {formik.errors.paymentMethod ? (
-                <Text color="red.6" mb="l">
+                <Text color="red600" mb="l">
                   {formik.errors.paymentMethod}
                 </Text>
               ) : undefined}

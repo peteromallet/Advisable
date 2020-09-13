@@ -1,10 +1,16 @@
 import * as React from "react";
-import { Box, Card, Text, Paragraph, Link } from "@advisable/donut";
+import { Box, Text, Paragraph, Link } from "@advisable/donut";
 import illustration from "./illustration.png";
 
-const Empty = (props) => {
+const Empty = () => {
   return (
-    <Box maxWidth="900px" height="calc(100vh - 200px)" marginX="auto" display="flex" alignItems="center" justifyContent="space-between">
+    <Box
+      height="calc(100vh - 200px)"
+      marginX="auto"
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+    >
       <Box maxWidth={{ _: "100%", m: 460 }}>
         <Box display={{ _: "block", m: "none" }} css="text-align: center;">
           <img src={illustration} alt="" width={300} />

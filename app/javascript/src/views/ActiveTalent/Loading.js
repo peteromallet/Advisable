@@ -5,7 +5,7 @@ import Skeleton from "../../components/Skeleton";
 import SkeletonHeading from "../../components/SkeletonHeading";
 import { Cards } from "./styles";
 
-export default () => {
+export default function LoadingActiveTalent() {
   return (
     <>
       <SkeletonHeading />
@@ -19,4 +19,4 @@ export default () => {
       </Cards>
     </>
   );
-};
+}

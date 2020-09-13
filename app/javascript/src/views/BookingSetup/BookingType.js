@@ -11,7 +11,7 @@ const BookingType = ({ data }) => {
   const [startWorking] = useMutation(START_WORKING);
   const firstName = data.application.specialist.firstName;
 
-  const handleSubmit = async (values, formik) => {
+  const handleSubmit = async (values) => {
     const id = data.application.airtableId;
     await startWorking({
       variables: {
@@ -36,7 +36,7 @@ const BookingType = ({ data }) => {
       <Text
         mb="l"
         fontSize="xxl"
-        color="neutral.8"
+        color="neutral800"
         fontWeight="bold"
         letterSpacing="-0.02em"
       >

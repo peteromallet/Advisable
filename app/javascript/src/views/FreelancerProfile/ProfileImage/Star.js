@@ -5,7 +5,7 @@ function Star({ filled }) {
   return (
     <Box
       mr="2px"
-      color="orange.4"
+      color="orange400"
       display="inline-block"
       opacity={filled ? 1 : 0.4}
     >

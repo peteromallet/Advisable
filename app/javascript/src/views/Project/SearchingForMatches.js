@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { theme, Box, Text, Paragraph } from "@advisable/donut";
 
 const StyledContainer = styled.div`

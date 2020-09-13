@@ -9,10 +9,10 @@ export const PreviousProject = styled.div`
 `;
 
 export const ProjectTitle = styled.a`
-  color: ${theme.colors.neutral[7]};
+  color: ${theme.colors.neutral700};
   text-decoration: none;
 
   &:hover {
-    color: ${theme.colors.blue[5]};
+    color: ${theme.colors.blue500};
   }
 `;

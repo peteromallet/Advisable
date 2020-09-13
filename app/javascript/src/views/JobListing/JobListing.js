@@ -15,7 +15,7 @@ let JobListing = ({ application, history }) => {
   );
 
   const gotoApply = () => {
-    let url = `/invites/${application.airtableId}/apply`;
+    let url = `/invites/${application.id}/apply`;
     // Set an allowApply key on the location state. We then use this inside of
     // the ApplicationFlow to determine wether or not to allow an application
     // with a status of "Application Rejceted" to view the application flow.

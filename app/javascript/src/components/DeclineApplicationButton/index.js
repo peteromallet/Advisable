@@ -9,7 +9,6 @@ import { Trash } from "@styled-icons/feather";
 const DeclineApplicationButton = ({ application }) => {
   const modal = useModal();
   const [isOpen, setOpen] = React.useState(false);
-  const [requestIntro, setRequestIntro] = React.useState(false);
 
   return (
     <>

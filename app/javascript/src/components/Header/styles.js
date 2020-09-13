@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
-import colors from "../../colors";
 import { theme } from "@advisable/donut";
 
 export const Spacer = styled.div`
@@ -73,8 +72,8 @@ export const CloseNav = styled.button`
     position: relative;
     border-radius: 50%;
     margin-bottom: 20px;
-    color: ${colors.neutral.s4};
-    border: 1px solid ${colors.neutral.s3};
+    color: ${theme.colors.neutral400};
+    border: 1px solid ${theme.colors.neutral300};
 
     svg {
       top: 50%;
@@ -152,16 +151,16 @@ export const NavItem = styled(NavLink)`
     font-size: 17px;
     font-weight: 500;
     margin-left: 0px;
-    color: ${colors.neutral.s7};
-    border-bottom: 1px solid ${colors.neutral.s2};
+    color: ${theme.colors.neutral700};
+    border-bottom: 1px solid ${theme.colors.neutral200};
 
     &:hover {
-      color: ${colors.neutral.s9};
+      color: ${theme.colors.neutral900};
     }
 
     &.active {
-      color: ${colors.blue.base};
-      border-bottom: 1px solid ${colors.neutral.s2};
+      color: ${theme.colors.blue500};
+      border-bottom: 1px solid ${theme.colors.neutral200};
     }
   }
 `;

@@ -173,10 +173,10 @@ export default function TaskDrawerActions({
       notice = (
         <Box paddingBottom="m">
           <Notice icon={<Info />}>
-            <Text size="xs" mb="xxs" weight="medium" color="neutral.9">
+            <Text size="xs" mb="xxs" weight="medium" color="neutral900">
               Not Assigned
             </Text>
-            <Text size="xs" color="neutral.6" lineHeight="xs">
+            <Text size="xs" color="neutral600" lineHeight="xs">
               You must provide a name or description for this task before you
               can request to start working on it.
             </Text>

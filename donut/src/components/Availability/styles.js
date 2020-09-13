@@ -29,7 +29,7 @@ export const StyledAvailabilityDay = styled.div`
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
   height: ${(props) => (props.hasAvailability ? "90px" : "70px")};
   background: ${(props) =>
-    props.hasAvailability ? theme.colors.blue[1] : theme.colors.neutral[1]};
+    props.hasAvailability ? theme.colors.blue100 : theme.colors.neutral100};
 `;
 
 export const StyledTimeCheckbox = styled.div`
@@ -41,7 +41,7 @@ export const StyledTimeCheckbox = styled.div`
   display: inline-flex;
   justify-content: center;
   color: white;
-  border: 2px solid ${theme.colors.neutral[3]};
+  border: 2px solid ${theme.colors.neutral300};
   transition: background-color 200ms, border-color 200ms;
 
   svg {
@@ -58,7 +58,7 @@ export const StyledTime = styled.label`
   padding: 16px 20px;
   position: relative;
   align-items: center;
-  color: ${theme.colors.neutral[9]};
+  color: ${theme.colors.neutral900};
   text-transform: lowercase;
 
   input {
@@ -69,8 +69,8 @@ export const StyledTime = styled.label`
   }
 
   input:checked + ${StyledTimeCheckbox} {
-    border-color: ${theme.colors.blue[7]};
-    background-color: ${theme.colors.blue[7]};
+    border-color: ${theme.colors.blue700};
+    background-color: ${theme.colors.blue700};
 
     svg {
       opacity: 1;

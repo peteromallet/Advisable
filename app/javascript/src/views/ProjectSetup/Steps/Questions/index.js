@@ -1,4 +1,4 @@
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 import { useMutation } from "@apollo/client";
 import React, { Fragment, useEffect } from "react";
 import Text from "src/components/Text";
@@ -15,7 +15,7 @@ export default function Questions({ project, match, history }) {
     if (project.requiredCharacteristics.length === 0) {
       history.replace("must_have");
     }
-  }, []);
+  }, [history, project.requiredCharacteristics]);
 
   return (
     <Fragment>

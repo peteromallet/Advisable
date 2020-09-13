@@ -6,15 +6,15 @@ export const StyledProfileImageWrapper = styled.div`
   height: 360px;
   overflow: hidden;
   position: relative;
-  background: ${theme.colors.neutral[1]};
+  background: ${theme.colors.neutral100};
 
   @media screen and (min-width: 52em) {
     border-radius: 12px;
-    box-shadow: 0 8px 20px ${rgba(theme.colors.neutral[8], 0.2)};
+    box-shadow: 0 8px 20px ${rgba(theme.colors.neutral800, 0.2)};
   }
 `;
 
-export const StyledProfileImage = styled(Box).attrs(props => ({
+export const StyledProfileImage = styled(Box).attrs((props) => ({
   style: {
     backgroundImage: `url(${props.url})`,
   },
@@ -30,13 +30,13 @@ export const StyledProfileImage = styled(Box).attrs(props => ({
   background-size: cover;
   background-position: center top;
   transition: opacity 0.7s, transform 6s;
-  background-color: ${theme.colors.neutral[2]};
+  background-color: ${theme.colors.neutral200};
 
   @media screen and (min-width: 52em) {
     background-position: center;
   }
 
-  ${props =>
+  ${(props) =>
     props.loaded &&
     css`
       opacity: 1;
@@ -53,8 +53,8 @@ export const StyledImageGradient = styled.div`
   content: "";
   position: absolute;
   background: linear-gradient(
-    ${rgba(theme.colors.neutral[9], 0)},
-    ${rgba(theme.colors.blue[9], 0.5)}
+    ${rgba(theme.colors.neutral900, 0)},
+    ${rgba(theme.colors.blue900, 0.5)}
   );
 `;
 

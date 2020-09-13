@@ -11,10 +11,10 @@ import {
   Input,
   Select,
   Label,
+  Avatar,
 } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/client";
 import FormField from "components/FormField";
-import Avatar from "../../../components/Avatar";
 import FileUpload from "../../../components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
@@ -38,7 +38,7 @@ const BuildProfile = ({ history, specialist }) => {
   );
 
   const handleSubmit = async (values) => {
-    const { data, errors } = await updateProfile({
+    await updateProfile({
       variables: {
         input: values,
       },
@@ -67,16 +67,16 @@ const BuildProfile = ({ history, specialist }) => {
     >
       {(formik) => (
         <Form>
-          <Text as="h2" size="xxxl" weight="semibold" color="neutral.9" mb="s">
+          <Text as="h2" size="xxxl" weight="semibold" color="neutral900" mb="s">
             Build your profile
           </Text>
-          <Text size="s" color="neutral.7" lineHeight="m">
+          <Text size="s" color="neutral700" lineHeight="m">
             This information will be shared with clients when you apply to
             projects. You can update your profile in your user settings.
           </Text>
-          <Box bg="neutral.1" width="100%" height="1px" my="l" />
+          <Box bg="neutral100" width="100%" height="1px" my="l" />
           <Box mb="m">
-            <Text size="s" color="neutral.8" mb="xs" weight="medium">
+            <Text size="s" color="neutral800" mb="xs" weight="medium">
               Proile photo
             </Text>
             <FileUpload

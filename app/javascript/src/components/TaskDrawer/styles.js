@@ -1,6 +1,5 @@
 import { rgba } from "polished";
 import styled, { css, keyframes } from "styled-components";
-import colors from "../../colors";
 import { Status } from "../Status/styles";
 import { theme } from "@advisable/donut";
 
@@ -45,22 +44,22 @@ export const Title = styled.textarea`
   margin-bottom: 8px;
   letter-spacing: -0.035rem;
   font-family: poppins, sans-serif;
-  color: ${theme.colors.neutral[9]};
+  color: ${theme.colors.neutral900};
   border: 2px solid transparent;
   transition: border-color 200ms;
 
   &:not([readonly]) {
     &:hover {
-      background: ${theme.colors.neutral[0]};
+      background: ${theme.colors.neutral100};
     }
 
     &:focus {
-      background: ${theme.colors.neutral[0]};
-      border: 2px solid ${colors.blue.base};
+      background: ${theme.colors.neutral100};
+      border: 2px solid ${theme.colors.blue500};
     }
   }
 
-  ${placeholderColor(theme.colors.neutral[3])}
+  ${placeholderColor(theme.colors.neutral400)}
 `;
 
 export const TaskDetails = styled.div`
@@ -68,8 +67,8 @@ export const TaskDetails = styled.div`
   display: flex;
   align-items: center;
   margin: 0 8px 0 8px;
-  border-top: 1px solid ${theme.colors.neutral[1]};
-  border-bottom: 1px solid ${theme.colors.neutral[1]};
+  border-top: 1px solid ${theme.colors.neutral100};
+  border-bottom: 1px solid ${theme.colors.neutral100};
 `;
 
 export const Detail = styled.button`
@@ -99,7 +98,7 @@ export const Detail = styled.button`
     css`
       &:hover {
         cursor: pointer;
-        background: ${theme.colors.neutral[0]};
+        background: ${theme.colors.neutral100};
       }
     `}
 `;
@@ -110,8 +109,8 @@ export const Popout = styled.div`
   padding: 20px;
   background: white;
   border-radius: 6px;
-  box-shadow: 0 4px 60px ${rgba(colors.neutral.s9, 0.25)},
-    0 2px 8px ${rgba(colors.neutral.s9, 0.1)};
+  box-shadow: 0 4px 60px ${rgba(theme.colors.neutral900, 0.25)},
+    0 2px 8px ${rgba(theme.colors.neutral900, 0.1)};
 `;
 
 const promptAnimation = keyframes`
@@ -137,8 +136,8 @@ export const DetailIcon = styled.div`
   border-radius: 50%;
   align-items: center;
   justify-content: center;
-  color: ${theme.colors.blue[5]};
-  background: ${theme.colors.blue[1]};
+  color: ${theme.colors.blue600};
+  background: ${theme.colors.blue200};
   transform: translateY(-50%);
 
   svg {
@@ -156,7 +155,7 @@ export const DetailIcon = styled.div`
         height: 100%;
         border-radius: 50%;
         position: absolute;
-        border: 1px solid ${colors.blue.base};
+        border: 1px solid ${theme.colors.blue500};
         animation: ${promptAnimation} 2s infinite;
       }
     `}
@@ -166,13 +165,13 @@ export const DetailLabel = styled.h5`
   line-height: 1;
   font-size: 12px;
   font-weight: 400;
-  color: ${theme.colors.neutral[4]};
+  color: ${theme.colors.neutral500};
 `;
 
 export const DetailValue = styled.span`
   font-size: 14px;
   font-weight: 500;
-  color: ${theme.colors.neutral[8]};
+  color: ${theme.colors.neutral800};
 
   @media (max-width: 900px) {
     font-size: 13px;
@@ -181,7 +180,7 @@ export const DetailValue = styled.span`
 
 export const DetailPlaceholder = styled(DetailValue)`
   font-weight: 400;
-  color: ${theme.colors.neutral[3]};
+  color: ${theme.colors.neutral400};
 `;
 
 export const Label = styled.label`
@@ -208,16 +207,16 @@ export const Description = styled.textarea`
   border: 2px solid transparent;
   font-family: poppins, sans-serif;
   transition: border-color 200ms;
-  ${placeholderColor(theme.colors.neutral[4])}
+  ${placeholderColor(theme.colors.neutral500)}
 
   &:not([readonly]) {
     &:hover {
-      background: ${theme.colors.neutral[0]};
+      background: ${theme.colors.neutral100};
     }
 
     &:focus {
-      background: ${theme.colors.neutral[0]};
-      border: 2px solid ${colors.blue.base};
+      background: ${theme.colors.neutral100};
+      border: 2px solid ${theme.colors.blue500};
     }
   }
 `;
@@ -242,15 +241,15 @@ export const ConfirmationContainer = styled.div`
   border-radius: 8px;
   position: absolute;
   text-align: center;
-  box-shadow: 0 8px 60px ${rgba(colors.neutral.s8, 0.2)},
-    0 2px 6px ${rgba(colors.neutral.s8, 0.15)};
+  box-shadow: 0 8px 60px ${rgba(theme.colors.neutral800, 0.2)},
+    0 2px 6px ${rgba(theme.colors.neutral800, 0.15)};
 `;
 
 export const ArrowPrompt = styled.div`
   left: 14px;
   bottom: -30px;
   position: absolute;
-  color: ${colors.blue.base};
+  color: ${theme.colors.blue500};
 `;
 
 export const StageDescription = styled.div`
@@ -260,8 +259,8 @@ export const StageDescription = styled.div`
   border-radius: 6px;
   position: relative;
   padding: 12px 8px 12px 48px;
-  color: ${colors.neutral.s8};
-  background: ${colors.neutral.s1};
+  color: ${theme.colors.neutral800};
+  background: ${theme.colors.neutral100};
 
   svg {
     top: 50%;
@@ -271,7 +270,7 @@ export const StageDescription = styled.div`
     stroke-width: 2;
     position: absolute;
     transform: translateY(-50%);
-    color: ${colors.blue.base};
+    color: ${theme.colors.blue500};
   }
 `;
 
@@ -297,8 +296,8 @@ export const SavingIndicator = styled.div`
   align-items: center;
   border-radius: 6px;
   justify-content: center;
-  color: ${theme.colors.blue[7]};
-  background-color: ${theme.colors.blue[1]};
+  color: ${theme.colors.blue800};
+  background-color: ${theme.colors.blue100};
 
   svg {
     margin-right: 4px;

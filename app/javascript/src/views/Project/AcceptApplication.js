@@ -4,7 +4,7 @@ import ActionBar from "./ActionBar";
 import UpdateAvailability from "./UpdateAvailability";
 import { PersonAdd } from "@styled-icons/ionicons-solid";
 
-export default function AcceptApplication({ application, project }) {
+export default function AcceptApplication({ application }) {
   const dialog = useDialogState();
 
   return (

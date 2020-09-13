@@ -48,7 +48,7 @@ const PaymentPending = ({ id, onSuccess }) => {
   return (
     <Fragment>
       <Loading />
-      <Text textAlign="center" size="s" color="neutral.7" lineHeight="s">
+      <Text textAlign="center" size="s" color="neutral700" lineHeight="s">
         Please wait while we process your payment...
       </Text>
     </Fragment>

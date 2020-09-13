@@ -1,8 +1,0 @@
-mutation RequestReferences($input: RequestReferencesInput!) {
-  requestReferences(input: $input) {
-    application {
-      id
-      referencesRequested
-    }
-  }
-}

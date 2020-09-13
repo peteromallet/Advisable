@@ -37,7 +37,7 @@ const useIntercom = (location, viewer) => {
     if (window.Intercom) {
       // If the user has just logged out. i.e there was a viewer and now there
       // isn't then do a reboot to clear conversations.
-      if (Boolean(previousViewer) && !Boolean(viewer)) {
+      if (Boolean(previousViewer) && !viewer) {
         window.Intercom("shutdown");
         bootIntercom(viewer);
         return;

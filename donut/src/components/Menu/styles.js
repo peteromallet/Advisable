@@ -13,9 +13,9 @@ export const StyledMenu = styled(ReakitMenu)`
   white-space: normal;
   border-radius: 12px;
   font-family: poppins, sans-serif;
-  background: ${theme.colors.neutral[8]};
-  width: ${props => props.width || "250px"};
-  box-shadow: 0px 4px 40px ${rgba(theme.colors.neutral[8], 0.2)};
+  background: ${theme.colors.neutral800};
+  width: ${(props) => props.width || "250px"};
+  box-shadow: 0px 4px 40px ${rgba(theme.colors.neutral800, 0.2)};
 `;
 
 export const StyledMenuItem = styled(ReakitMenuItem)`
@@ -35,10 +35,10 @@ export const StyledMenuItem = styled(ReakitMenuItem)`
   font-family: poppins, sans-serif;
 
   &:focus {
-    background: ${theme.colors.neutral[6]};
+    background: ${theme.colors.neutral600};
   }
 
   &[disabled] {
-    color: ${theme.colors.neutral[3]};
+    color: ${theme.colors.neutral300};
   }
 `;

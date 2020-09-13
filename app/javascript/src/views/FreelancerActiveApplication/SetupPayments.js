@@ -24,8 +24,8 @@ const SetupPayments = ({ data }) => {
           Payment Settings
         </Text>
         <Text size="s" color="neutral600" lineHeight="s" mb="m">
-          It looks like you haven't setup payments yet. Before you start working
-          with {company} we need to know how we can pay you.
+          It looks like you haven&apos;t setup payments yet. Before you start
+          working with {company} we need to know how we can pay you.
         </Text>
         <Text size="s" color="neutral600" lineHeight="s" mb="l">
           Advisable aims to process your payment the Friday following client

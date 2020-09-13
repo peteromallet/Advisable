@@ -104,7 +104,7 @@ const BookingTypeForm = ({
           </RadioGroup>
           {formik.values.projectType === "Fixed" && (
             <>
-              <Box height={1} bg="neutral.1" mb="l" />
+              <Box height={1} bg="neutral100" mb="l" />
               <Box mb="l">
                 <Field as={Checkbox} type="checkbox" name="acceptCharges">
                   I accept to be charged for each project I assign and that

@@ -38,7 +38,7 @@ const ProjectTypeModal = ({ isOpen, onClose, application }) => {
       <Box padding="l">
         <Text
           as="h4"
-          color="neutral.9"
+          color="neutral900"
           fontWeight="semibold"
           fontSize="xl"
           mb="m"

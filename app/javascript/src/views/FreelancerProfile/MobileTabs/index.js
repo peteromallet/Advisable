@@ -30,7 +30,7 @@ const StyledMobileTab = styled(NavLink)`
 
 function MobileTabs({ data }) {
   return (
-    <Box bg="white.9" height={50} boxShadow="xs" display="flex">
+    <Box bg="white" height={50} boxShadow="xs" display="flex">
       <StyledMobileTab
         activeClassName="active"
         to={`/freelancers/${data.specialist.id}/profile`}

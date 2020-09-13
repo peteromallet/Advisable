@@ -4,7 +4,7 @@ import { find } from "lodash-es";
 import { rgba } from "polished";
 import { X, Plus } from "@styled-icons/feather";
 import styled, { css } from "styled-components";
-import { theme, Icon } from "@advisable/donut";
+import { theme } from "@advisable/donut";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { DirectUpload } from "@rails/activestorage";
 import {
@@ -241,7 +241,11 @@ function Upload({ previousProjectId, image, dispatch, onClick }) {
   );
 }
 
-const PortfolioImage = React.memo(({ image, onClick, dispatch }) => {
+const PortfolioImage = React.memo(function PortfolioImage({
+  image,
+  onClick,
+  dispatch,
+}) {
   const [setAsCover] = useUpdatePreviousProjectImage();
   const [deleteImage] = useDeletePreviousProjectImage();
 

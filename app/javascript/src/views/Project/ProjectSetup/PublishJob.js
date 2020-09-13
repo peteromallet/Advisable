@@ -33,8 +33,8 @@ export default function PublishJob({ data }) {
       <JobSetupStepHeader mb="xs">Review Project</JobSetupStepHeader>
       <JobSetupStepSubHeader mb="xl">
         Please review the details below. These details will be shown to
-        potential specialists so please ensure it's accurate and compelling in
-        order to attract the perfect person.
+        potential specialists so please ensure it&apos;s accurate and compelling
+        in order to attract the perfect person.
       </JobSetupStepSubHeader>
       <Stack spacing="xxxl" divider="neutral100">
         <Box>
@@ -184,8 +184,8 @@ export default function PublishJob({ data }) {
           : "Submit Project"}
       </Button>
       <Text fontSize="xs" color="neutral600" lineHeight="s">
-        Once you've submitted this project, it'll be sent to the Advisable team
-        for review.
+        Once you&apos;ve submitted this project, it&apos;ll be sent to the
+        Advisable team for review.
       </Text>
     </>
   );

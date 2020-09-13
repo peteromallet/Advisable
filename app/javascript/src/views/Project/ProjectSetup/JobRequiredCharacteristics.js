@@ -20,7 +20,7 @@ export default function JobRequiredCharacteristics({ data }) {
     requiredCharacteristics: requiredCharacteristics,
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, formik) => {
     const response = await updateProject({
       variables: {
         input: {
@@ -47,8 +47,8 @@ export default function JobRequiredCharacteristics({ data }) {
         Which of these characteristics are essential?
       </JobSetupStepHeader>
       <JobSetupStepSubHeader mb="xl">
-        We'll make sure that whichever specialists we match you with have these
-        characteristics.
+        We&apos;ll make sure that whichever specialists we match you with have
+        these characteristics.
       </JobSetupStepSubHeader>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <Form>

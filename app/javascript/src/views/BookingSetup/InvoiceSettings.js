@@ -25,7 +25,7 @@ const InvoiceSettings = ({ nextStep }) => {
     },
   };
 
-  const handleSubmit = async (values, formik) => {
+  const handleSubmit = async (values) => {
     await updatePaymentMethod({
       variables: {
         input: values,
@@ -40,13 +40,13 @@ const InvoiceSettings = ({ nextStep }) => {
       <Text
         mb="xs"
         fontSize="xxl"
-        color="neutral.8"
+        color="neutral800"
         fontWeight="bold"
         letterSpacing="-0.02em"
       >
         Invoice Settings
       </Text>
-      <Text fontSize="m" color="neutral.7" lineHeight="s" mb="l">
+      <Text fontSize="m" color="neutral700" lineHeight="s" mb="l">
         Please provide the following information which will appear on your
         invoices.
       </Text>

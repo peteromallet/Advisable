@@ -9,45 +9,46 @@ import { Text, Button, Box } from "@advisable/donut";
 import { DrawerModal } from "../Drawer";
 import UPDATE_TASK from "./setTaskTrial";
 
-const ToggleWithConfirmation = React.forwardRef(
-  ({ trialTask, title, handleUpdate, ...props }, ref) => {
-    const dialog = useDialogState();
+const ToggleWithConfirmation = React.forwardRef(function ToggleTaskTrial(
+  { trialTask, title, handleUpdate, ...props },
+  ref,
+) {
+  const dialog = useDialogState();
 
-    return (
-      <>
-        <DialogDisclosure
-          ref={ref}
-          title={title}
-          {...dialog}
-          {...props}
-          as={Menu.Item}
-        />
-        <DrawerModal
-          dialog={dialog}
-          aria-label="You can only have one trial task. Marking this as a trial task will remove your existing trial offer."
-        >
-          <Box padding="l">
-            <Text textAlign="center">
-              <Text mb="xs" fontWeight="medium">
-                You can only have one trial task
-              </Text>
-              <Text mb="l" size="xs" lineHeight="xs" color="neutral.7">
-                Marking this as a trial task will remove the existing trial
-                offer from the task "{trialTask.name}"
-              </Text>
-              <Button onClick={handleUpdate} size="s" mr="xxs">
-                Okay
-              </Button>
-              <Button onClick={dialog.hide} size="s" ml="xxs" variant="subtle">
-                Cancel
-              </Button>
+  return (
+    <>
+      <DialogDisclosure
+        ref={ref}
+        title={title}
+        {...dialog}
+        {...props}
+        as={Menu.Item}
+      />
+      <DrawerModal
+        dialog={dialog}
+        aria-label="You can only have one trial task. Marking this as a trial task will remove your existing trial offer."
+      >
+        <Box padding="l">
+          <Text textAlign="center">
+            <Text mb="xs" fontWeight="medium">
+              You can only have one trial task
             </Text>
-          </Box>
-        </DrawerModal>
-      </>
-    );
-  },
-);
+            <Text mb="l" size="xs" lineHeight="xs" color="neutral700">
+              Marking this as a trial task will remove the existing trial offer
+              from the task &quot;{trialTask.name}&quot;
+            </Text>
+            <Button onClick={handleUpdate} size="s" mr="xxs">
+              Okay
+            </Button>
+            <Button onClick={dialog.hide} size="s" ml="xxs" variant="subtle">
+              Cancel
+            </Button>
+          </Text>
+        </Box>
+      </DrawerModal>
+    </>
+  );
+});
 
 const ToggleTrial = ({ onToggle, task, menu }) => {
   const { t } = useTranslation();

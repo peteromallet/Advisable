@@ -1,19 +1,19 @@
 import React, { useRef, useState, useLayoutEffect } from "react";
 import { ScrollableContainer, ScrollInner } from "./styles";
 
-function Scrollable({ children, height, ...props }) {
+function Scrollable({ children, height }) {
   const [topShadow, setTopShadow] = useState(false);
   const [bottomShadow, setBottomShadow] = useState(false);
   const scrollRef = useRef(null);
 
-  const setShadows = el => {
+  const setShadows = (el) => {
     if (!el) return;
     const { scrollTop, clientHeight, scrollHeight } = el;
     setBottomShadow(scrollTop + clientHeight < scrollHeight);
     setTopShadow(scrollTop > 0);
   };
 
-  const handleScroll = e => {
+  const handleScroll = (e) => {
     window.requestAnimationFrame(() => {
       setShadows(e.target);
     });

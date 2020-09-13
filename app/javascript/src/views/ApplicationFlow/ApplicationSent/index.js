@@ -33,15 +33,15 @@ const ApplicationSent = ({ match }) => {
             style={{ width: "90%", maxWidth: "300px" }}
           />
         </Box>
-        <Text fontSize="xxl" fontWeight="semibold" color="blue.9" mb="xs">
+        <Text fontSize="xxl" fontWeight="semibold" color="blue900" mb="xs">
           Application sent!
         </Text>
-        <Text lineHeight="m" color="neutral.8" mb="l">
+        <Text lineHeight="m" color="neutral800" mb="l">
           Your application has been sent. We will let you know when you get a
           response.
         </Text>
 
-        <Text fontSize="xs" lineHeight="s" color="nuetral.6" mb="m">
+        <Text fontSize="xs" lineHeight="s" color="nuetral600" mb="m">
           In the meantime you can review and update your application.
         </Text>
 

@@ -4,9 +4,9 @@ import { useHistory, Redirect } from "react-router-dom";
 import { Box, Notice } from "@advisable/donut";
 import { useQuery } from "@apollo/client";
 import { RefreshCcw } from "@styled-icons/feather";
-import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import { GET_APPLICATIONS } from "./queries";
+import Empty from "./Empty";
 import AccountOnHold from "./AccountOnHold";
 import OpenApplications from "./OpenApplications";
 import ApplicationInvitations from "./ApplicationInvitations";
@@ -27,6 +27,8 @@ const Applications = () => {
   const applications = viewer.applications.filter(
     (a) => a.status !== "Invited To Apply",
   );
+
+  const hasApplications = applications.length;
   const hasInvitations = invitations.length > 0;
 
   if (hasInvitations && (onHold || fullApplicationPending)) {
@@ -46,33 +48,32 @@ const Applications = () => {
   };
 
   return (
-    <Layout>
-      <Layout.Main>
-        {onHold && (
-          <Box mb="l">
-            <Notice
-              mb="m"
-              icon={<RefreshCcw />}
-              title="Your account is currently on hold"
-            >
-              We evaluate and accept freelancers as they apply for projects.
-            </Notice>
-          </Box>
-        )}
-        <ApplicationInvitations
-          onHold={onHold}
-          loading={loading}
-          onViewInvitation={handleViewInvitation}
-          applications={loading ? [] : invitations}
-        />
-        <OpenApplications
-          onHold={onHold}
-          loading={loading}
-          specialist={viewer}
-          applications={loading ? [] : applications}
-        />
-      </Layout.Main>
-    </Layout>
+    <Box maxWidth="1000px" width="96%" marginX="auto" paddingY="3xl">
+      {onHold && (
+        <Box mb="l">
+          <Notice
+            mb="m"
+            icon={<RefreshCcw />}
+            title="Your account is currently on hold"
+          >
+            We evaluate and accept freelancers as they apply for projects.
+          </Notice>
+        </Box>
+      )}
+      <ApplicationInvitations
+        onHold={onHold}
+        loading={loading}
+        onViewInvitation={handleViewInvitation}
+        applications={loading ? [] : invitations}
+      />
+      {!loading && !hasApplications && !hasInvitations && <Empty />}
+      <OpenApplications
+        onHold={onHold}
+        loading={loading}
+        specialist={viewer}
+        applications={loading ? [] : applications}
+      />
+    </Box>
   );
 };
 

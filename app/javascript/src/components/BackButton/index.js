@@ -3,15 +3,6 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { StyledBackButton } from "./styles";
 
-const backVariants = {
-  initial: {
-    scale: 1,
-  },
-  hover: {
-    scale: 1.1,
-  },
-};
-
 const arrowVariants = {
   initial: { x: 0, stroke: "#878AB4" },
   hover: {

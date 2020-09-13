@@ -14,6 +14,11 @@ class Types::ProjectType < Types::BaseType
 
   field :airtable_id, String, null: true
   field :name, String, null: false
+
+  def name
+    object.name || object.primary_skill&.name
+  end
+
   field :primary_skill, Types::Skill, null: true
   # Wether or not we are actively searching for candidates
   field :sourcing, Boolean, null: true

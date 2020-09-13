@@ -2,7 +2,6 @@ import * as React from "react";
 import { DateTime } from "luxon";
 import { Card, Button, Box } from "@advisable/donut";
 import { Calendar } from "@styled-icons/feather";
-import { AnimatePresence, motion } from "framer-motion";
 import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
 import DatePicker from "../DatePicker";
 import {

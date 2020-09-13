@@ -1,5 +1,5 @@
+import { theme } from "../../../../../../donut/src";
 import styled, { keyframes } from "styled-components";
-import colors from "../../../colors";
 import { rgba, darken, lighten } from "polished";
 
 export const InvitationsWrapper = styled.div`
@@ -160,7 +160,7 @@ export const Invitation = styled.div`
     @media (min-width: 800px) {
       ${Background} {
         transform: scale(1.02);
-        box-shadow: 0px 10px 16px -10px ${rgba(colors.teal.dark, 0.6)};
+        box-shadow: 0px 10px 16px -10px ${rgba(theme.colors.cyan900, 0.6)};
       }
 
       ${Content} {
@@ -177,43 +177,43 @@ export const Invitation = styled.div`
   color: #c4f8ff;
 
   ${Background} {
-    background: ${colors.teal.base};
-    box-shadow: 0px 3px 5px -3px ${rgba(colors.teal.dark, 0.3)};
+    background: ${theme.colors.cyan500};
+    box-shadow: 0px 3px 5px -3px ${rgba(theme.colors.cyan900, 0.3)};
 
     &::before {
       right: -70px;
       bottom: -90px;
-      border-color: ${darken(0.02, colors.teal.base)};
+      border-color: ${darken(0.02, theme.colors.cyan500)};
     }
   }
 
   ${Button} {
-    fill: ${colors.teal.dark};
-    color: ${colors.teal.dark};
+    fill: ${theme.colors.cyan800};
+    color: ${theme.colors.cyan800};
   }
 
   /* Purple Cards */
   &:nth-child(3n + 2) {
-    color: ${lighten(0.3, colors.purple.base)};
+    color: ${lighten(0.3, theme.colors.purple500)};
 
     ${Background} {
-      background: ${colors.purple.base};
-      box-shadow: 0px 3px 5px -3px ${rgba(colors.purple.dark, 0.3)};
+      background: ${theme.colors.purple500};
+      box-shadow: 0px 3px 5px -3px ${rgba(theme.colors.purple900, 0.3)};
 
       &::before {
         top: -120px;
         right: -50px;
-        border-color: ${darken(0.02, colors.purple.base)};
+        border-color: ${darken(0.02, theme.colors.purple500)};
       }
     }
 
     &:hover ${Background} {
-      box-shadow: 0px 10px 16px -10px ${rgba(colors.purple.dark, 0.5)};
+      box-shadow: 0px 10px 16px -10px ${rgba(theme.colors.purple900, 0.5)};
     }
 
     ${Button} {
-      fill: ${colors.purple.dark};
-      color: ${colors.purple.dark};
+      fill: ${theme.colors.purple900};
+      color: ${theme.colors.purple900};
     }
   }
 

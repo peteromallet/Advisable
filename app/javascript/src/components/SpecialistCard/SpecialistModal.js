@@ -2,8 +2,7 @@ import React from "react";
 import { get } from "lodash-es";
 import { gql } from "@apollo/client";
 import { useLazyQuery } from "@apollo/client";
-import { Box, Text, Modal } from "@advisable/donut";
-import Avatar from "../Avatar";
+import { Box, Text, Modal, Avatar } from "@advisable/donut";
 import Loading from "../Loading";
 import Scrollable from "../Scrollable";
 import PreviousProjects from "../PreviousProjects";
@@ -94,13 +93,13 @@ const SpecialistModal = ({ modal, specialistId }) => {
                 <Text
                   mb="xxs"
                   fontSize="xxl"
-                  color="neutral.9"
+                  color="neutral900"
                   fontWeight="semibold"
                   letterSpacing="-0.02rem"
                 >
                   {specialist.name}
                 </Text>
-                <Text color="neutral.6" fontSize="s" letterSpacing="-0.015rem">
+                <Text color="neutral600" fontSize="s" letterSpacing="-0.015rem">
                   {specialist.location}
                 </Text>
                 <Attributes specialist={specialist} />
@@ -108,7 +107,7 @@ const SpecialistModal = ({ modal, specialistId }) => {
                   mb="m"
                   fontSize={15}
                   fontWeight={400}
-                  color="neutral.7"
+                  color="neutral700"
                   lineHeight={1.35}
                   letterSpacing="-0.01rem"
                 >

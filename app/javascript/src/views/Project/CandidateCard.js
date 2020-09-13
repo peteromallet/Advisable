@@ -3,7 +3,6 @@ import { rgba } from "polished";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
 import { StyledCard, Text, Box, Avatar, theme } from "@advisable/donut";
-import ApplicantScore from "./ApplicantScore";
 import currency from "../../utilities/currency";
 import ApplicationStatus from "./ApplicationStatus";
 

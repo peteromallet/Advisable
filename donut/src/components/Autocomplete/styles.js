@@ -3,7 +3,6 @@ import { space } from "styled-system";
 import styled, { css } from "styled-components";
 import Text from "../Text/styles";
 import FieldError from "../FieldError/styles";
-import colors from "../../colors";
 import theme from "../../theme";
 
 export const Label = styled(Text)`
@@ -29,10 +28,10 @@ export const Input = styled.input`
   padding: 0 12px;
   font-weight: 500;
   border-radius: 8px;
-  background: ${theme.colors.neutral[1]};
+  background: ${theme.colors.neutral100};
 
   &::placeholder {
-    color: ${theme.colors.neutral[4]};
+    color: ${theme.colors.neutral400};
   }
 `;
 
@@ -49,13 +48,13 @@ export const Menu = styled.div`
   max-height: 224px;
   overflow: hidden;
   top: calc(100% + 8px);
-  box-shadow: 0 2px 8px ${rgba(theme.colors.neutral[9], 0.1)},
-    0 16px 60px ${rgba(theme.colors.neutral[9], 0.15)};
+  box-shadow: 0 2px 8px ${rgba(theme.colors.neutral900, 0.1)},
+    0 16px 60px ${rgba(theme.colors.neutral900, 0.15)};
 `;
 
 const highlightedItemStyles = css`
-  color: ${theme.colors.neutral[9]};
-  background: ${theme.colors.neutral[0]};
+  color: ${theme.colors.neutral900};
+  background: ${theme.colors.neutral100};
 `;
 
 export const MenuItem = styled.div`
@@ -67,7 +66,7 @@ export const MenuItem = styled.div`
   font-weight: 400;
   align-items: center;
   letter-spacing: -0.015em;
-  color: ${theme.colors.neutral[8]};
+  color: ${theme.colors.neutral800};
 
   ${(props) => props.highlighted && highlightedItemStyles};
 
@@ -104,7 +103,7 @@ export const MobileContainerTop = styled.div`
   display: flex;
   padding: 0 4px;
   align-items: center;
-  box-shadow: 0 2px 4px ${rgba(colors.neutral.N9, 0.1)};
+  box-shadow: 0 2px 4px ${rgba(theme.colors.neutral900, 0.1)};
 `;
 
 export const MobileContainerBack = styled.button`
@@ -153,16 +152,16 @@ export const Primary = styled.button`
   align-items: center;
   display: inline-flex;
   justify-content: center;
-  color: ${theme.colors.neutral[3]};
+  color: ${theme.colors.neutral400};
 
   &:hover {
-    color: ${theme.colors.neutral[4]};
+    color: ${theme.colors.neutral500};
   }
 
   ${(props) =>
     props.isPrimary &&
     css`
-      color: ${theme.colors.blue[5]} !important;
+      color: ${theme.colors.blue600} !important;
     `}
 `;
 
@@ -207,7 +206,7 @@ const StyledClickableTag = css`
   cursor: pointer;
 
   &:hover ${Primary} {
-    color: ${theme.colors.neutral[4]};
+    color: ${theme.colors.neutral500};
   }
 `;
 

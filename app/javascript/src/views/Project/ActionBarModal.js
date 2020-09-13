@@ -4,7 +4,7 @@ import { CloseCircle } from "@styled-icons/ionicons-solid";
 import styled from "styled-components";
 import { padding } from "styled-system";
 import { rgba } from "polished";
-import { theme, Box, Button } from "@advisable/donut";
+import { theme, Box } from "@advisable/donut";
 import { Dialog, DialogBackdrop } from "reakit/Dialog";
 
 const StyledDialogBackdrop = styled(motion.div)`

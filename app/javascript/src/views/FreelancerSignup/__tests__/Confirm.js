@@ -1,5 +1,4 @@
 import renderApp from "../../../testHelpers/renderApp";
-import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_SPECIALIST from "../getProfile";

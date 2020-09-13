@@ -17,7 +17,7 @@ const elevation = variant({
       boxShadow: "none",
     },
     s: {
-      boxShadow: `0 1px 2px ${rgba(theme.colors.neutral[8], 0.1)}`,
+      boxShadow: `0 1px 2px ${rgba(theme.colors.neutral800, 0.1)}`,
     },
     m: {
       boxShadow: `0 8px 16px ${rgba(theme.colors.neutral900, 0.08)}`,
@@ -27,9 +27,9 @@ const elevation = variant({
     },
     xl: {
       boxShadow: `0 8px 60px ${rgba(
-        theme.colors.neutral[9],
+        theme.colors.neutral900,
         0.2,
-      )}, 0 2px 8px ${rgba(theme.colors.neutral[9], 0.1)}`,
+      )}, 0 2px 8px ${rgba(theme.colors.neutral900, 0.1)}`,
     },
   },
 });

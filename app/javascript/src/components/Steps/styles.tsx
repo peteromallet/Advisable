@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
-import { rgba } from "polished";
+import { theme } from "../../../../../donut/src";
 import tick from "./tick.svg";
-import colors from "../../colors";
 
 export const Steps = styled.div``;
 
@@ -16,7 +15,7 @@ export const Number = styled.div`
   text-align: center;
   border-radius: 20px;
   display: inline-block;
-  background: ${colors.neutral.s3};
+  background: ${theme.colors.neutral300};
   transition: background-color 300ms;
 `;
 
@@ -28,9 +27,10 @@ export const Step = styled.div`
   align-items: center;
   text-decoration: none;
   border-bottom: 1px solid #d8dded;
-  cursor: ${props => (props.isDisabled ? "default" : "pointer")};
+  cursor: ${(props) => (props.isDisabled ? "default" : "pointer")};
 
-  > div, > a {
+  > div,
+  > a {
     width: 100%;
     display: flex;
     padding: 15px 0;
@@ -44,53 +44,58 @@ export const Step = styled.div`
 
   span {
     transition: color 300ms;
-    color: ${colors.neutral.s6};
+    color: ${theme.colors.neutral600};
   }
 
   &:hover {
     span {
-      color: ${colors.neutral.s8};
+      color: ${theme.colors.neutral800};
     }
 
     ${Number} {
-      background: ${colors.neutral.s5};
+      background: ${theme.colors.neutral500};
     }
   }
 
-  ${props => props.isDisabled && css`
-    opacity: 0.7;
+  ${(props) =>
+    props.isDisabled &&
+    css`
+      opacity: 0.7;
 
-    ${Number}, &:hover ${Number} {
-      color: white;
-      background: ${colors.neutral.s3};
-    }
+      ${Number}, &:hover ${Number} {
+        color: white;
+        background: ${theme.colors.neutral300};
+      }
 
-    &:hover span {
-      color: ${colors.neutral.s6};
-    }
-  `}
-  
+      &:hover span {
+        color: ${theme.colors.neutral600};
+      }
+    `}
+
   > div, > a {
     &.active {
       span {
         font-weight: 500;
-        color: ${colors.neutral.s10};
+        color: ${theme.colors.neutral900};
       }
 
       ${Number} {
         color: white;
-        background: ${colors.teal.base};
+        background: ${theme.colors.green500};
       }
     }
   }
 
-  ${props => props.isComplete && css`
-    > div, > a {
-      ${Number}, &:hover ${Number} {
-        color: transparent;
-        background: url(${tick}) no-repeat center;
-        background-color: ${colors.teal.base};
+  ${(props) =>
+    props.isComplete &&
+    css`
+      > div,
+      > a {
+        ${Number}, &:hover ${Number} {
+          color: transparent;
+          background: url(${tick}) no-repeat center;
+          background-color: ${theme.colors.green500};
+        }
       }
-    }
-  `};
+    `};
 `;

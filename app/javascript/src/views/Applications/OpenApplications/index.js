@@ -3,22 +3,17 @@
 // concluded status.
 import * as React from "react";
 import { Text, Box } from "@advisable/donut";
-import Empty from "./Empty";
 import Loading from "./Loading";
 import Application from "./Application";
 
 const OpenApplications = (props) => {
   if (props.loading) return <Loading />;
 
-  if (props.applications.length === 0) {
-    return <Empty />;
-  }
-
   return (
     <>
       {props.onHold && (
-        <Text color="neutral.9" mb="m" size="l" weight="medium">
-          We're currently evaluating the projects you've applied for
+        <Text color="neutral900" mb="m" size="l" weight="medium">
+          We&apos;re currently evaluating the projects you&apos;ve applied for
         </Text>
       )}
       {props.applications.map((application) => (

@@ -33,7 +33,7 @@ const Login = ({ location }) => {
   };
 
   const handleSubmit = async (input, formikBag) => {
-    const { data, errors } = await login({
+    const { errors } = await login({
       variables: { input },
     });
 
@@ -108,10 +108,10 @@ const Login = ({ location }) => {
               {formik.status && (
                 <Box
                   mt="s"
-                  bg="red.0"
+                  bg="red100"
                   padding="s"
                   fontSize="s"
-                  color="red.6"
+                  color="red600"
                   borderRadius="12px"
                 >
                   {t(`errors.${formik.status}`)}
@@ -126,12 +126,12 @@ const Login = ({ location }) => {
         mt="l"
         mb="s"
         fontSize="s"
-        color="neutral.7"
+        color="neutral700"
         textAlign="center"
         fontWeight="medium"
         letterSpacing="-0.01em"
       >
-        Don't have an account?
+        Don&apos;t have an account?
       </Text>
       <SignupLinks>
         <SignupLink to="/clients/signup">Apply to be a client</SignupLink>

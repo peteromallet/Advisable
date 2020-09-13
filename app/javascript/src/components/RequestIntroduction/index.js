@@ -20,11 +20,11 @@ import { GET_AVAILABILITY, REQUEST_INTRODUCTION } from "./queries";
 function RequestIntroductionModal({ modal, ...props }) {
   return (
     <Modal
+      width={700}
+      tabIndex={0}
       modal={modal}
       height="100%"
-      width={700}
       padding={["m", "l"]}
-      tabIndex={0}
       label="Request introduction"
     >
       <RequestIntroduction modal={modal} {...props} />

@@ -11,39 +11,39 @@ export const StyledProgressSteps = styled.div`
 
 const activeStyles = css`
   a {
-    color: ${theme.colors.neutral[9]};
+    color: ${theme.colors.neutral900};
   }
 
   &:before {
     transform: scale(1.3);
     background: transparent;
-    border: 2px solid ${theme.colors.blue[5]};
+    border: 2px solid ${theme.colors.blue500};
   }
 `;
 
 const completeStyles = css`
   &:before {
     border-color: transparent;
-    background: ${theme.colors.blue[5]};
+    background: ${theme.colors.blue500};
   }
 
   &:after {
-    background: ${theme.colors.blue[2]};
+    background: ${theme.colors.blue200};
   }
 
   a {
-    color: ${theme.colors.neutral[6]};
+    color: ${theme.colors.neutral600};
   }
 
   a:hover {
-    color: ${theme.colors.neutral[7]};
+    color: ${theme.colors.neutral700};
   }
 `;
 
 const disabledStyles = css`
   a {
     cursor: default;
-    color: ${theme.colors.neutral[4]};
+    color: ${theme.colors.neutral400};
   }
 `;
 
@@ -60,7 +60,7 @@ export const StyledProgressStepsStep = styled.div`
     content: "";
     position: absolute;
     height: calc(100% - 4px);
-    background: ${theme.colors.neutral[2]};
+    background: ${theme.colors.neutral200};
     transition: background 150ms;
   }
 
@@ -73,7 +73,7 @@ export const StyledProgressStepsStep = styled.div`
     border-radius: 50%;
     position: absolute;
     transition: transform 250ms;
-    background: ${theme.colors.neutral[2]};
+    background: ${theme.colors.neutral200};
   }
 
   &:last-child:after {
@@ -84,12 +84,12 @@ export const StyledProgressStepsStep = styled.div`
     font-size: 16px;
     text-decoration: none;
     letter-spacing: -0.02em;
-    color: ${theme.colors.neutral[6]};
+    color: ${theme.colors.neutral600};
   }
 
-  ${props => props.isDisabled && disabledStyles};
-  ${props => props.isComplete && completeStyles};
-  ${props => props.isActive && activeStyles};
+  ${(props) => props.isDisabled && disabledStyles};
+  ${(props) => props.isComplete && completeStyles};
+  ${(props) => props.isActive && activeStyles};
 `;
 
 export default StyledProgressSteps;

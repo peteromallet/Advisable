@@ -26,11 +26,11 @@ function PendingConfirmation() {
         >
           Please confirm your account
         </Text>
-        <Text mb="l" color="neutral.8" lineHeight="s">
+        <Text mb="l" color="neutral800" lineHeight="s">
           Please check your inbox for a confirmation email to verify your
           account.
         </Text>
-        <Text mb="l" fontSize="s" color="neutral.8" lineHeight="s">
+        <Text mb="l" fontSize="s" color="neutral800" lineHeight="s">
           If you do not receive the confirmation message within a few minutes of
           signing up, please check your Spam folder.
         </Text>
@@ -38,7 +38,7 @@ function PendingConfirmation() {
         {!data && (
           <>
             <Text fontSize="s" mb="xxs" fontWeight="medium">
-              Didn't receive an email?
+              Didn&apos;t receive an email?
             </Text>
             <Link.External fontSize="s" href="#" onClick={handleResend}>
               Resend confirmation email

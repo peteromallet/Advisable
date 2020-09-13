@@ -107,11 +107,11 @@ const Terms = ({ project, formik }) => {
       </Text>
       <Text size="s" marginBottom="xl">
         Advisable offers clients a risk-free trial period of up to 8 hours when
-        working with a new freelancer. If you're not entirely satisfied during
-        this period, you will not be charged for any work completed and we will
-        find you a replacement freelancer free of charge. The only requirement
-        is that you provide us with feedback as per Advisable's Professional
-        Standards
+        working with a new freelancer. If you&apos;re not entirely satisfied
+        during this period, you will not be charged for any work completed and
+        we will find you a replacement freelancer free of charge. The only
+        requirement is that you provide us with feedback as per Advisable&apos;s
+        Professional Standards
       </Text>
       <Box mb="xl">
         <Field

@@ -65,11 +65,17 @@ const Profile = () => {
       {(formik) => (
         <Form>
           <Card padding="l" borderRadius={8}>
-            <Text size="xxl" color="neutral.9" as="h2" weight="semibold" mb="l">
+            <Text
+              size="xxl"
+              color="neutral900"
+              as="h2"
+              weight="semibold"
+              mb="l"
+            >
               Your Profile
             </Text>
             <Box maxWidth={400}>
-              <Text size="s" color="neutral.8" mb="xs" weight="medium">
+              <Text size="s" color="neutral800" mb="xs" weight="medium">
                 Proile photo
               </Text>
               <FileUpload
@@ -94,7 +100,7 @@ const Profile = () => {
                 label="Upload a profile photo"
               />
             </Box>
-            <Box height={1} bg="neutral.1" my="l" />
+            <Box height={1} bg="neutral100" my="l" />
             <FormField
               as={Textarea}
               name="bio"
@@ -104,7 +110,7 @@ const Profile = () => {
               placeholder="Add a short 2 - 3 sectence bio to describe who you are."
               caption="A well structured bio demonstrates your experience and expertise by referencing past projects and achievements, including notable clients or numeric results. You will have a chance to customize this each time you apply for a project."
             />
-            <Box height={1} bg="neutral.1" my="l" />
+            <Box height={1} bg="neutral100" my="l" />
             <FormField
               multiple
               max={10}
@@ -122,12 +128,12 @@ const Profile = () => {
             <ErrorMessage mt="xs" name="skills" component={InputError} />
             {formik.values.skills.length >= 10 && (
               <Text mt="m" size="s" lineHeight="s">
-                You can't add more than 10 primary skills. If you want to add
-                more skills to your profile, you can do so by{" "}
+                You can&apos;t add more than 10 primary skills. If you want to
+                add more skills to your profile, you can do so by{" "}
                 <Link to="/profile/references">adding a previous project.</Link>
               </Text>
             )}
-            <Box height={1} bg="neutral.1" my="l" />
+            <Box height={1} bg="neutral100" my="l" />
             <FormField
               as={CurrencyInput}
               prefix="$"
@@ -136,7 +142,7 @@ const Profile = () => {
               label="What is your typical hourly rate in USD?"
               description="This is just to get an idea of your rate. You will be able to set your rate on a per project basis when working with clients on Advisable."
             />
-            <Box height={1} bg="neutral.1" my="l" />
+            <Box height={1} bg="neutral100" my="l" />
             <Box mb="l">
               <Field as={Checkbox} type="checkbox" name="publicUse">
                 I’m okay with Advisable using my profile to promote me publicly

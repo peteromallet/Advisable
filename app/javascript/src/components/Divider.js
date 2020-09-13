@@ -2,9 +2,9 @@ import React from "react";
 import { rgba } from "polished";
 import { padding } from "styled-system";
 import styled from "styled-components";
-import colors from "../colors";
+import { theme } from "@advisable/donut";
 
-let Divider = styled.div`
+const StyledDivider = styled.div`
   ${padding};
 
   width: 100%;
@@ -17,7 +17,7 @@ let Divider = styled.div`
     height: 1px;
     width: 100%;
     content: "";
-    background: ${rgba(colors.neutral.s8, 0.1)};
+    background: ${rgba(theme.colors.neutral800, 0.1)};
   }
 `;
 
@@ -28,7 +28,7 @@ const DividerText = styled.div`
   padding: 0 15px;
 `;
 
-export default ({
+export default function Divider({
   children,
   padding,
   paddingTop,
@@ -36,7 +36,7 @@ export default ({
   paddingRight,
   paddingBottom,
   ...props
-}) => {
+}) {
   const paddingProps = {
     padding,
     paddingTop,
@@ -46,8 +46,8 @@ export default ({
   };
 
   return (
-    <Divider {...paddingProps} {...props}>
+    <StyledDivider {...paddingProps} {...props}>
       {children && <DividerText>{children}</DividerText>}
-    </Divider>
+    </StyledDivider>
   );
-};
+}

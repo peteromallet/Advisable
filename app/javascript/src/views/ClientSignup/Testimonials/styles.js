@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { theme } from "@advisable/donut";
 import TESTIMONIALS from "./data";
-import background from "./bg.png";
 
 export const Quotes = styled.div`
   display: flex;
@@ -78,7 +77,7 @@ export const Sidebar = styled.div`
   overflow: hidden;
   align-items: center;
   background-size: cover;
-  background-color: ${theme.colors.blue[4]};
+  background-color: ${theme.colors.blue400};
 `;
 
 export const BackgroundImage = styled.img`
