@@ -8,7 +8,6 @@ export { default as Text } from "./components/Text";
 export { default as Paragraph } from "./components/Paragraph";
 export { default as StyledText } from "./components/Text/styles";
 
-export { default as Flex } from "./components/Flex";
 export { default as Tabs } from "./components/Tabs";
 export { default as Radio } from "./components/Radio";
 export { default as Availability } from "./components/Availability";
