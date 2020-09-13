@@ -3,7 +3,7 @@ import { X } from "@styled-icons/feather";
 import { useCombobox, useMultipleSelection } from "downshift";
 import { StyledMultipleSelect, StyledMultipleSelectTag } from "./styles";
 
-export default function MultipleSelect({ options }) {
+export default function MultipleSelect() {
   const items = [
     "Facebook Advertising",
     "Content Marketing",

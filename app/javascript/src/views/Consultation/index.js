@@ -17,7 +17,9 @@ const Consultation = () => {
   if (loading) return <Loading />;
 
   if (error?.graphQLErrors[0].extensions.code === "notFound") {
-    return <NotFound>Could not find the consultation "{id}"</NotFound>;
+    return (
+      <NotFound>Could not find the consultation &quot;{id}&quot;</NotFound>
+    );
   }
 
   const status = data.consultation.status;

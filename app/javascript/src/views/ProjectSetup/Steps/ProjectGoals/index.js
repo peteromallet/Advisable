@@ -7,7 +7,7 @@ import BulletPointInput from "components/BulletPointInput";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
-export default ({ project, match, history }) => {
+export default function ProjectSetupGoals({ project, match, history }) {
   const [mutate] = useMutation(UPDATE_PROJECT);
   const id = match.params.projectID;
   const goBack = () => history.push(`/project_setup/${id}/project_overview`);
@@ -16,7 +16,7 @@ export default ({ project, match, history }) => {
     if (!project.description) {
       history.replace("project_overview");
     }
-  }, []);
+  }, [history, project.description]);
 
   return (
     <Fragment>
@@ -69,4 +69,4 @@ export default ({ project, match, history }) => {
       </Formik>
     </Fragment>
   );
-};
+}

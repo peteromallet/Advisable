@@ -24,8 +24,8 @@ export const StyledRadioToggle = styled.div`
   position: relative;
   border-radius: 50%;
   box-sizing: border-box;
-  background: ${theme.colors.neutral[0]};
-  border: 2px solid ${theme.colors.neutral[3]};
+  background: ${theme.colors.neutral100};
+  border: 2px solid ${theme.colors.neutral300};
   transition: background 200ms;
 
   &::before {
@@ -37,7 +37,7 @@ export const StyledRadioToggle = styled.div`
     position: absolute;
     border-radius: 50%;
     box-sizing: border-box;
-    background: ${theme.colors.blue[4]};
+    background: ${theme.colors.blue400};
     transform: scale(0);
     transition: transform 200ms;
   }
@@ -51,13 +51,13 @@ export const StyledRadioLabel = styled.div`
   font-size: 15px;
   font-weight: 500;
   line-height: 18px;
-  color: ${theme.colors.neutral[7]};
+  color: ${theme.colors.neutral700};
 `;
 
 export const StyledRadioDescription = styled.div`
   font-size: 15px;
   line-height: 18px;
-  color: ${theme.colors.neutral[6]};
+  color: ${theme.colors.neutral600};
 `;
 
 const disabledStyles = css`
@@ -72,12 +72,12 @@ const notDisabledStyles = css`
   cursor: pointer;
 
   &:hover ${StyledRadioInput}:not(:checked) + ${StyledRadioToggle} {
-    background: ${darken(0.015, theme.colors.neutral[0])};
-    border: 2px solid ${darken(0.025, theme.colors.neutral[3])};
+    background: ${darken(0.015, theme.colors.neutral100)};
+    border: 2px solid ${darken(0.025, theme.colors.neutral300)};
   }
 
   ${StyledRadioInput}:checked + ${StyledRadioToggle} {
-    border-color: ${theme.colors.blue[5]};
+    border-color: ${theme.colors.blue500};
 
     &:before {
       transform: scale(1);
@@ -85,7 +85,7 @@ const notDisabledStyles = css`
   }
 
   &:hover ${StyledRadioInput}:checked + ${StyledRadioToggle} {
-    border-color: ${theme.colors.blue[6]};
+    border-color: ${theme.colors.blue600};
   }
 `;
 
@@ -94,7 +94,7 @@ export const StyledRadio = styled.label`
   user-select: none;
   align-items: center;
 
-  ${props => (props.disabled ? disabledStyles : notDisabledStyles)};
+  ${(props) => (props.disabled ? disabledStyles : notDisabledStyles)};
 `;
 
 export default StyledRadio;

@@ -1,8 +1,7 @@
 import React from "react";
 import { get } from "lodash-es";
 import { useQuery } from "@apollo/client";
-import { Box, Text } from "@advisable/donut";
-import Avatar from "../../../components/Avatar";
+import { Box, Text, Avatar } from "@advisable/donut";
 import Status from "../../../components/Status";
 import Skeleton from "../../../components/Skeleton";
 import AttributeList from "../../../components/AttributeList";
@@ -69,12 +68,12 @@ const ClientSidebar = (props) => {
         />
       </Box>
       <Box paddingBottom="xxs">
-        <Text size="l" weight="semibold" color="neutral.N9">
+        <Text size="l" weight="semibold" color="neutral900">
           {specialist.name}
         </Text>
       </Box>
       <Box paddingBottom="s">
-        <Text size="xs" color="neutral.N7">
+        <Text size="xs" color="neutral700">
           {specialist.city}, {get(specialist, "country.name")}
         </Text>
       </Box>

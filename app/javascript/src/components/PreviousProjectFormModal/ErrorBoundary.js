@@ -7,7 +7,7 @@ class PreviousProjectFormErrorBoundary extends React.Component {
     hasError: false,
   };
 
-  componentDidCatch(error, info) {
+  componentDidCatch() {
     this.setState({ hasError: true });
   }
 

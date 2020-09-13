@@ -64,7 +64,7 @@ const FreelancerSearchCriteria = () => {
         <Text
           as="h2"
           mb="xxs"
-          color="blue.8"
+          color="blue800"
           fontSize="30px"
           lineHeight="28px"
           fontWeight="semibold"
@@ -72,7 +72,7 @@ const FreelancerSearchCriteria = () => {
         >
           Find the Perfect Freelancer
         </Text>
-        <Text fontSize="m" color="neutral.8" lineHeight="s" mb="l">
+        <Text fontSize="m" color="neutral800" lineHeight="s" mb="l">
           Let us know what you are looking for so that we can find the perfect
           freelancer for you.
         </Text>

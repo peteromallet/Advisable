@@ -20,7 +20,7 @@ const Complete = () => {
             mb="m"
             width={60}
             height={60}
-            bg="blue.0"
+            bg="blue100"
             borderRadius="50%"
             display="inline-flex"
             alignItems="center"
@@ -35,27 +35,28 @@ const Complete = () => {
           as="h2"
           fontSize="xxl"
           fontWeight="semibold"
-          color="blue.8"
+          color="blue800"
           letterSpacing="-0.025em"
         >
           Check your email to confirm your request
         </Text>
-        <Text color="neutral.8" lineHeight="s" mb="s">
+        <Text color="neutral700" lineHeight="s" mb="s">
           To confirm your request, please click on the link we sent to{" "}
           <Text as="span" fontWeight="medium">
             {email}
           </Text>
         </Text>
-        <Text color="neutral.7" lineHeight="s" mb="s" fontSize="s">
-          If you can't find it in your inbox in the next 5 minutes, please check
-          your spam folder as emails can occasionally get incorrectly flagged.
+        <Text color="neutral700" lineHeight="s" mb="s" fontSize="s">
+          If you can&apos;t find it in your inbox in the next 5 minutes, please
+          check your spam folder as emails can occasionally get incorrectly
+          flagged.
         </Text>
-        <Text color="neutral.7" lineHeight="s" fontSize="s">
-          If you can't find it, email{" "}
+        <Text color="neutral700" lineHeight="s" fontSize="s">
+          If you can&apos;t find it, email{" "}
           <Link.External href="mailto:hello@advisable.com">
             hello@advisable.com
           </Link.External>{" "}
-          and we'll help ASAP.
+          and we&apos;ll help ASAP.
         </Text>
       </Box>
     </Card>

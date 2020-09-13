@@ -15,7 +15,7 @@ export default function ProjectOverview({ project, match, history }) {
     if (!project.companyDescription) {
       history.replace("company_overview");
     }
-  }, []);
+  }, [history, project.companyDescription]);
 
   return (
     <Fragment>

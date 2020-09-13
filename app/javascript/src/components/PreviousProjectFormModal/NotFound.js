@@ -26,7 +26,7 @@ function NotFound({ id }) {
           Project not found
         </Text>
         <Text fontSize="s" lineHeight="s" color="neutral700" textAlign="center">
-          Could not find a project with the id "{id}"
+          Could not find a project with the id &quot;{id}&quot;
         </Text>
       </Box>
     </Box>

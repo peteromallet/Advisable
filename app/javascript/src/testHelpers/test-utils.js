@@ -65,19 +65,19 @@ jest.mock("talkjs", () => {
   class Session {
     getOrCreateConversation() {
       return {
-        setParticipant: (user) => {},
+        setParticipant: () => {},
       };
     }
 
-    createChatbox(conversation) {
+    createChatbox() {
       return {
-        mount: (node) => {},
+        mount: () => {},
       };
     }
 
     get unreads() {
       return {
-        on: (event, handler) => {},
+        on: () => {},
       };
     }
   }

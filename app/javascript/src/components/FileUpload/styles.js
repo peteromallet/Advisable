@@ -1,4 +1,4 @@
-import { darken, rgba } from "polished";
+import { rgba } from "polished";
 import styled, { css } from "styled-components";
 import { theme } from "@advisable/donut";
 
@@ -17,10 +17,10 @@ export const FileUploader = styled.div`
   padding-left: 12px;
   border-radius: 12px;
   align-items: center;
-  background: ${rgba(theme.colors.neutral[1], 0.7)};
+  background: ${rgba(theme.colors.neutral100, 0.7)};
 
   &:hover {
-    background: ${rgba(theme.colors.neutral[1], 0.8)};
+    background: ${rgba(theme.colors.neutral100, 0.8)};
   }
 
   input {
@@ -42,7 +42,7 @@ export const MainText = styled.span`
   font-size: 15px;
   font-weight: 500;
   margin-bottom: 4px;
-  color: ${theme.colors.neutral[8]};
+  color: ${theme.colors.neutral800};
   transition: color 300ms, transform 300ms;
 `;
 
@@ -50,7 +50,7 @@ export const SubText = styled.span`
   display: block;
   font-size: 13px;
   font-weight: 400;
-  color: ${theme.colors.neutral[5]};
+  color: ${theme.colors.neutral500};
   transition: color 300ms, transform 300ms;
 `;
 
@@ -62,13 +62,13 @@ export const Preview = styled.div`
 export const Info = styled.div`
   z-index: 1;
   transform: translateY(-1px);
-  ${props => props.uploading && InfoUploadingStyles}
+  ${(props) => props.uploading && InfoUploadingStyles}
 `;
 
 const InfoUploadingStyles = css`
   ${MainText} {
     transform: translateY(10px);
-    color: ${theme.colors.neutral[7]};
+    color: ${theme.colors.neutral700};
   }
 
   ${SubText} {
@@ -77,7 +77,7 @@ const InfoUploadingStyles = css`
   }
 `;
 
-export const ProgressBar = styled.div.attrs(props => ({
+export const ProgressBar = styled.div.attrs((props) => ({
   style: {
     width: `${props.percentage}%`,
   },
@@ -89,5 +89,5 @@ export const ProgressBar = styled.div.attrs(props => ({
   height: 100%;
   position: absolute;
   transition: width 100ms;
-  background: ${theme.colors.neutral[2]};
+  background: ${theme.colors.neutral200};
 `;

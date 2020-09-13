@@ -2,10 +2,10 @@ import styled, { css } from "styled-components";
 import { rgba } from "polished";
 import { theme } from "@advisable/donut";
 
-const shadowColor = rgba(theme.colors.neutral[8], 0.1);
+const shadowColor = rgba(theme.colors.neutral800, 0.1);
 const size = "30px";
 
-const topShadow = active => {
+const topShadow = (active) => {
   if (!active) return null;
 
   return css`
@@ -18,12 +18,12 @@ const topShadow = active => {
       position: absolute;
       pointer-events: none;
       box-shadow: inset 0 ${size} ${size} -${size} ${shadowColor},
-        inset 0 2px 2px ${rgba(theme.colors.neutral[8], 0.05)};
+        inset 0 2px 2px ${rgba(theme.colors.neutral800, 0.05)};
     }
   `;
 };
 
-const bottomShadow = active => {
+const bottomShadow = (active) => {
   if (!active) return null;
 
   return css`
@@ -37,8 +37,8 @@ const bottomShadow = active => {
       pointer-events: none;
       position: absolute;
       box-shadow: inset 0 -${size} ${size} -${size}
-          ${rgba(theme.colors.neutral[8], 0.15)},
-        inset 0 -2px 2px ${rgba(theme.colors.neutral[8], 0.05)};
+          ${rgba(theme.colors.neutral800, 0.15)},
+        inset 0 -2px 2px ${rgba(theme.colors.neutral800, 0.05)};
     }
   `;
 };
@@ -51,11 +51,11 @@ export const ScrollableContainer = styled.div`
   position: relative;
   align-items: stretch;
   flex-direction: column;
-  ${props => topShadow(props.topShadow)};
-  ${props => bottomShadow(props.bottomShadow)};
+  ${(props) => topShadow(props.topShadow)};
+  ${(props) => bottomShadow(props.bottomShadow)};
 `;
 
-export const ScrollInner = styled.div.attrs(props => ({
+export const ScrollInner = styled.div.attrs((props) => ({
   style: {
     height: props.height ? `${props.height}px` : "auto",
   },

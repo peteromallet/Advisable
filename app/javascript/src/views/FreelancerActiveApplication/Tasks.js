@@ -7,7 +7,7 @@ import CompletedTasks from "./CompletedTasks";
 const Tasks = (props) => {
   return (
     <Card>
-      <Text as="h4" size="xl" padding="m" weight="medium" color="neutral.9">
+      <Text as="h4" size="xl" padding="m" weight="medium" color="neutral900">
         My Tasks
       </Text>
       <Tabs label="Tasks" tabListProps={{ pl: "m" }}>

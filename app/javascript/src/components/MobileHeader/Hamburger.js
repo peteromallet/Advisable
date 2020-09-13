@@ -1,7 +1,7 @@
 import React from "react";
 import { Hamburger, HamburgerLine } from "./styles";
 
-export default ({ onClick }) => {
+export default function MobileHeaderHamburger({ onClick }) {
   return (
     <Hamburger onClick={onClick}>
       <HamburgerLine />
@@ -9,4 +9,4 @@ export default ({ onClick }) => {
       <HamburgerLine />
     </Hamburger>
   );
-};
+}

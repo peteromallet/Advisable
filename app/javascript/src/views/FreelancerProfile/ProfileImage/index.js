@@ -28,13 +28,13 @@ function ProfileImage({ data, showReviews = true }) {
         <Text
           mb="xxs"
           fontSize="xxl"
-          color="white.9"
+          color="white"
           fontWeight="semibold"
           letterSpacing="-0.03em"
         >
           {specialist.name}
         </Text>
-        <Text color="white.9" fontWeight="regular" letterSpacing="-0.01em">
+        <Text color="white" fontWeight="regular" letterSpacing="-0.01em">
           {specialist.location}
         </Text>
         {showReviews && (
@@ -48,7 +48,7 @@ function ProfileImage({ data, showReviews = true }) {
             </Box>
             <Text
               fontSize="xs"
-              color="white.9"
+              color="white"
               fontWeight="regular"
               letterSpacing="-0.01em"
             >

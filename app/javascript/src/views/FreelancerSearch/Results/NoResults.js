@@ -7,16 +7,16 @@ import { Circle, Box, Text, Button } from "@advisable/donut";
 const NoResults = ({ data }) => {
   return (
     <Box textAlign="center" maxWidth={500} mx="auto">
-      <Circle mb="m" bg="blue.1" size={60} color="blue700">
+      <Circle mb="m" bg="blue100" size={60} color="blue700">
         <Search size={24} strokeWidth={2} />
       </Circle>
       <Text fontSize="l" fontWeight="semibold" mb="xs">
         No results
       </Text>
-      <Text mb="m" lineHeight="m" fontSize="s" color="neutral.8">
-        We couldn't find any "{data.search.skill.name}" freelancers. Make
-        another search or request a call with an Advisable project manager and
-        we’ll identify the perfect person for you.
+      <Text mb="m" lineHeight="m" fontSize="s" color="neutral800">
+        We couldn&apos;t find any &quot;{data.search.skill.name}&quot;
+        freelancers. Make another search or request a call with an Advisable
+        project manager and we’ll identify the perfect person for you.
       </Text>
       <Button
         mr="s"

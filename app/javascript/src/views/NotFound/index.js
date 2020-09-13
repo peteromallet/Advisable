@@ -7,7 +7,7 @@ const NotFound = ({ heading, children }) => (
       mb="m"
       as="h1"
       fontSize={60}
-      color="blue.9"
+      color="blue900"
       fontWeight="bold"
       letterSpacing="-0.05em"
     >
@@ -16,13 +16,13 @@ const NotFound = ({ heading, children }) => (
     <Text fontWeight="medium" mb="xxs">
       {heading || "Not Found"}
     </Text>
-    <Text fontSize="s" lineHeight="s" color="neutral.7">
+    <Text fontSize="s" lineHeight="s" color="neutral700">
       {children || "The page you were looking for could not be found"}
     </Text>
   </Box>
 );
 
-export const isNotFound = graphqlError => {
+export const isNotFound = (graphqlError) => {
   const code = graphqlError?.graphQLErrors?.[0]?.extensions?.code;
   return code === "notFound";
 };

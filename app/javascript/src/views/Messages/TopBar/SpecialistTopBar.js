@@ -3,8 +3,7 @@ import { get } from "lodash-es";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { ChevronRight } from "@styled-icons/feather";
-import { Text, Box, Flex } from "@advisable/donut";
-import Avatar from "../../../components/Avatar";
+import { Text, Box, Avatar } from "@advisable/donut";
 import Status from "../../../components/Status";
 import GET_APPLICATION from "../getApplicationForSpecialist";
 import { Topbar } from "../styles";
@@ -59,7 +58,7 @@ const SpecialistTopBar = (props) => {
     actionURL = `/clients/${application.airtableId}`;
   }
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     history.push(actionURL);
   };
 
@@ -67,37 +66,37 @@ const SpecialistTopBar = (props) => {
     <>
       <Box paddingBottom="xs">
         <Topbar>
-          <Flex align="center">
+          <Box display="flex" alignItems="center">
             <Box padding="s">
               <Avatar
                 size="s"
                 name={get(application, "project.user.companyName")}
               />
             </Box>
-            <Flex.Item>
+            <Box>
               <Box paddingBottom="xxs">
                 <Text weight="semibold">
                   {get(application, "project.user.companyName")}
                 </Text>
               </Box>
               <Status>{application.status}</Status>
-            </Flex.Item>
-          </Flex>
+            </Box>
+          </Box>
         </Topbar>
       </Box>
 
       <Box paddingBottom="xxs">
         <Topbar style={{ height: 50 }}>
-          <Flex align="center" onClick={handleClick}>
-            <Flex.Item fill>
+          <Box display="flex" alignItems="center" onClick={handleClick}>
+            <Box flex="1">
               <Box paddingLeft="s">
                 <Text weight="medium">{actionText}</Text>
               </Box>
-            </Flex.Item>
+            </Box>
             <Box paddingRight="s">
               <ChevronRight size={24} strokeWidth={2} />
             </Box>
-          </Flex>
+          </Box>
         </Topbar>
       </Box>
     </>

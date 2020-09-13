@@ -20,7 +20,7 @@ export const GET_SKILLS = gql`
 
 // Renders the freelancer signup flow.
 const Skills = ({ history, location, specialist }) => {
-  const { loading, data, error } = useQuery(GET_SKILLS);
+  const { loading, data } = useQuery(GET_SKILLS);
 
   if (specialist) {
     return <Redirect to="/freelancers/signup/preferences" />;

@@ -15,7 +15,7 @@ export default function SpecialistOverview({ project, match, history }) {
     if (project.goals.length === 0) {
       history.replace("goals");
     }
-  }, []);
+  }, [history, project.goals]);
 
   return (
     <Fragment>

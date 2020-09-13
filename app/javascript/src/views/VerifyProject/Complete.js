@@ -82,7 +82,7 @@ function ValidationComplete({ data }) {
           transition={{ delay: 0.5 }}
         >
           <Box textAlign="center">
-            <Circle bg="blue900" color="white.9" mb="20px">
+            <Circle bg="blue900" color="white" mb="20px">
               <Lock size={24} strokeWidth={2} />
             </Circle>
             <Text

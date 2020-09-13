@@ -24,7 +24,7 @@ i18n
     load: "languageOnly",
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
-      format: function (value, format, lng) {
+      format: function (value, format) {
         if (format === "lowercase") return value?.toLowerCase();
         if (format === "uppercase") return value?.toUpperCase();
         if (format === "capitalize") {

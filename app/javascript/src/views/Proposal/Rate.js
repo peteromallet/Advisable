@@ -23,7 +23,7 @@ const Rate = ({ history, application }) => {
       },
     });
 
-    const { errors, booking } = response.data.updateApplication;
+    const { errors } = response.data.updateApplication;
 
     if (!errors) {
       const urlPrefix = `/applications/${application.id}/proposal`;

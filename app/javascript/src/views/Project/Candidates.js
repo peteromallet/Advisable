@@ -47,7 +47,7 @@ function CandidatesGrid({ candidates }) {
 
 export default function Candidates() {
   const { id } = useParams();
-  const { loading, data, error } = useCandidates({ variables: { id } });
+  const { loading, data } = useCandidates({ variables: { id } });
 
   React.useEffect(() => {
     document.getElementById("view").scrollTo(0, 0);

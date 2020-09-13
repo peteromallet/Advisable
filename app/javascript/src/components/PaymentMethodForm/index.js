@@ -75,7 +75,7 @@ const PaymentMethodForm = ({
             {buttonLabel || "Continue"}
           </Button>
           {formik.status && (
-            <Text size="s" color="red.8" mt="m">
+            <Text size="s" color="red800" mt="m">
               {formik.status}
             </Text>
           )}

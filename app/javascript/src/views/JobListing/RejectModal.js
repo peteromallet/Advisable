@@ -19,8 +19,7 @@ const RejectModal = ({ modal, onReject, application }) => {
     <Modal modal={modal} label="Reject application invitation" padding="l">
       <Text
         as="h4"
-        mb="xs"
-        mb="l"
+        mb="lg"
         color="blue900"
         fontSize="24px"
         fontWeight="medium"

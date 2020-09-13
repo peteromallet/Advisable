@@ -21,7 +21,7 @@ function ExpandableText({
       {expandable && (
         <Box
           fontSize="s"
-          color="blue.7"
+          color="blue700"
           display="inline-block"
           css="cursor: pointer;"
           onClick={() => setExpanded(!expanded)}

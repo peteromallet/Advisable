@@ -79,7 +79,7 @@ test("can remove times", () => {
 test("selected times are marked as selected", () => {
   let value = ["2020-06-02T10:00:00.000+02:00"];
 
-  const { rerender } = render(
+  render(
     <AvailabilityInput
       value={value}
       onChange={() => {}}

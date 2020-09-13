@@ -8,7 +8,7 @@ const CompletedTasks = ({ onSelectTask, application }) => {
 
   if (tasks.length === 0) {
     return (
-      <Text padding="l" textAlign="center" size="xs" color="neutral.6">
+      <Text padding="l" textAlign="center" size="xs" color="neutral600">
         You have not completed any projects.
       </Text>
     );

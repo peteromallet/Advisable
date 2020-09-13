@@ -13,9 +13,9 @@ const PageWithSidebar = styled.div`
   display: flex;
 `;
 
-export default function JobSetup({}) {
+export default function JobSetup() {
   const { id } = useParams();
-  const { data, loading, error } = useQuery(GET_JOB, {
+  const { data, loading } = useQuery(GET_JOB, {
     variables: { id },
   });
 

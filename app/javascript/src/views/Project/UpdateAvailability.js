@@ -74,7 +74,7 @@ export default function UpdateAvailability({ application, dialog, onUpdate }) {
           </Text>
           <Paragraph marginBottom="24px">
             Let us know what times suit you for a 30 minute call with{" "}
-            {firstName}. We'll send these times to {firstName} for them to
+            {firstName}. We&apos;ll send these times to {firstName} for them to
             schedule a call.
           </Paragraph>
           {isLargerScreen ? (

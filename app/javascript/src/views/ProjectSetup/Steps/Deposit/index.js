@@ -108,7 +108,7 @@ const Deposit = ({ project, history }) => {
 
   return (
     <>
-      <Text size="s" lineHeight="s" color="neutral.6">
+      <Text size="s" lineHeight="s" color="neutral600">
         In order to begin recruitment on a project, we ask for a security
         deposit. This deposit is fully-refundable if you choose not to go ahead
         with the project and deductible from your first payment to the

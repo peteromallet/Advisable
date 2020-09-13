@@ -85,7 +85,7 @@ function FreelancerProfileMobile({ data }) {
         height={70}
         boxShadow="s"
         width="100%"
-        bg="white.9"
+        bg="white"
         display="flex"
         position="fixed"
         alignItems="center"

@@ -18,7 +18,7 @@ export const StyledTilesInputOption = styled.button`
   border-radius: 12px;
   color: ${theme.colors.neutral500};
   background: #eff0f3;
-  box-shadow: inset 0px 0px 0px 0px ${theme.colors.blue[5]};
+  box-shadow: inset 0px 0px 0px 0px ${theme.colors.blue500};
 
   & span {
     color: ${theme.colors.neutral500};

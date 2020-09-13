@@ -13,7 +13,6 @@ import PreviousProjectFormModal, {
 import NoReferences from "./NoReferences";
 import PreviousProjects from "./PreviousProjects";
 import ConfirmationModal from "./ConfirmationModal";
-import StepCard from "../StepCard.js";
 
 const References = ({
   application,

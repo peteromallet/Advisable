@@ -59,7 +59,7 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
   };
 
   const handleSubmit = async (values) => {
-    const r = await updateEstimate({
+    await updateEstimate({
       variables: {
         input: {
           id: task.id,
@@ -116,7 +116,7 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
             </Box>
             {formik.values.isFlexible && (
               <>
-                <Text px="xs" color="neutral.6">
+                <Text px="xs" color="neutral600">
                   to
                 </Text>
                 <Box width="100%">
@@ -141,7 +141,7 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
             )}
           </Box>
           {formik.errors.flexibleEstimate ? (
-            <Text color="red.6" mt="xs" fontSize="xs" lineHeight="xs">
+            <Text color="red600" mt="xs" fontSize="xs" lineHeight="xs">
               {formik.errors.flexibleEstimate}
             </Text>
           ) : (

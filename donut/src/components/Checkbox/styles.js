@@ -26,8 +26,8 @@ export const StyledCheckboxToggle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${theme.colors.neutral[0]};
-  border: 2px solid ${theme.colors.neutral[3]};
+  background: ${theme.colors.neutral100};
+  border: 2px solid ${theme.colors.neutral300};
   transition: background 200ms;
 
   ${variant({
@@ -63,7 +63,7 @@ export const StyledCheckboxContent = styled.div``;
 export const StyledCheckboxText = styled.div`
   font-size: 15px;
   line-height: 18px;
-  color: ${theme.colors.neutral[8]};
+  color: ${theme.colors.neutral800};
 `;
 
 export const StyledCheckboxInner = styled.div`
@@ -82,22 +82,22 @@ export const StyledCheckbox = styled.label`
   user-select: none;
 
   &:hover ${StyledCheckboxInner} {
-    background: ${theme.colors.neutral[0]};
+    background: ${theme.colors.neutral100};
   }
 
   &:hover ${StyledCheckboxInput}:not(:checked) + ${StyledCheckboxToggle} {
-    background: ${darken(0.015, theme.colors.neutral[0])};
-    border: 2px solid ${darken(0.025, theme.colors.neutral[3])};
+    background: ${darken(0.015, theme.colors.neutral100)};
+    border: 2px solid ${darken(0.025, theme.colors.neutral300)};
   }
 
   ${StyledCheckboxInput}:checked + ${StyledCheckboxToggle} {
-    background: ${theme.colors.blue[4]};
-    border-color: ${theme.colors.blue[5]};
+    background: ${theme.colors.blue400};
+    border-color: ${theme.colors.blue500};
   }
 
   &:hover ${StyledCheckboxInput}:checked + ${StyledCheckboxToggle} {
-    background: ${theme.colors.blue[4]};
-    border-color: ${theme.colors.blue[8]};
+    background: ${theme.colors.blue400};
+    border-color: ${theme.colors.blue800};
   }
 `;
 

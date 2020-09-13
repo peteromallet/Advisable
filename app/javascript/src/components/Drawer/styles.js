@@ -1,6 +1,6 @@
 import { rgba } from "polished";
 import styled from "styled-components";
-import colors from "../../colors";
+import { theme } from "@advisable/donut";
 
 export const Container = styled.div`
   top: 0;
@@ -18,7 +18,7 @@ export const Backdrop = styled.div`
   right: 0;
   bottom: 0;
   position: fixed;
-  background: ${rgba(colors.neutral.s9, 0.7)};
+  background: ${rgba(theme.colors.neutral900, 0.7)};
 `;
 
 export const Drawer = styled.div`

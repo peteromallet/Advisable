@@ -2,7 +2,7 @@ import * as React from "react";
 import { HelpCircle, ArrowRight } from "@styled-icons/feather";
 import { useMutation } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
-import { Box, Link, Text, Tooltip, Checkbox, Card } from "@advisable/donut";
+import { Box, Link, Text, Tooltip, Checkbox } from "@advisable/donut";
 import FormField from "components/FormField";
 import CurrencyInput from "components/CurrencyInput";
 import SubmitButton from "../../../components/SubmitButton";
@@ -13,7 +13,7 @@ import {
 import validationSchema from "./validationSchema";
 import StepCard from "../StepCard";
 
-function Terms({ match, history, application, steps, currentStep, location }) {
+function Terms({ match, history, application, location }) {
   const [updateApplication] = useMutation(UPDATE_APPLICATION);
   const [submitApplication] = useMutation(SUBMIT_APPLICATION);
 
@@ -68,7 +68,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
                 as="h1"
                 mb="l"
                 fontSize="30px"
-                color="blue.9"
+                color="blue900"
                 fontWeight="semibold"
                 letterSpacing="-0.04em"
               >
@@ -106,8 +106,8 @@ function Terms({ match, history, application, steps, currentStep, location }) {
                       <>
                         <Text color="white" size="xs" lineHeight="xs" mb="m">
                           In order to facilitate fair long-term outcomes,
-                          Advisable's fee to freelancers is reduced for larger
-                          relationships between Freelancer and Client
+                          Advisable&apos;s fee to freelancers is reduced for
+                          larger relationships between Freelancer and Client
                         </Text>
                         <Text color="white" size="xs" lineHeight="xs">
                           For the first $10,000, our fee is 20%
@@ -150,7 +150,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
                     href=" https://www.advisable.com/freelancer-agreement/"
                     target="_blank"
                   >
-                    Advisable's freelancer agreement.
+                    Advisable&apos;s freelancer agreement.
                   </Link>
                 </Field>
               </Box>
@@ -178,7 +178,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
                           href="https://advisable.com/professional-standards"
                           target="_blank"
                         >
-                          Advisable's Professional Standards
+                          Advisable&apos;s Professional Standards
                         </Link>
                       </>
                     }
@@ -188,7 +188,7 @@ function Terms({ match, history, application, steps, currentStep, location }) {
                       target="_blank"
                       href="https://advisable.com/freelancer-trial"
                     >
-                      Advisable's Guaranteed Trial Programme.
+                      Advisable&apos;s Guaranteed Trial Programme.
                     </Link>
                   </Tooltip>
                 </Field>

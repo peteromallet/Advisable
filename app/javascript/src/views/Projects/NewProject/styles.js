@@ -19,10 +19,10 @@ export const StyledNewProjectIcon = styled.div`
     height: 100%;
     border-radius: 50%;
     position: absolute;
-    background: ${theme.colors.blue[5]};
+    background: ${theme.colors.blue500};
     transition: background 700ms, transform 700ms;
     transition-timing-function: cubic-bezier(0.2, 0, 0, 1.6);
-    box-shadow: 0 2px 8px ${rgba(theme.colors.neutral[9], 0.1)};
+    box-shadow: 0 2px 8px ${rgba(theme.colors.neutral900, 0.1)};
   }
 
   svg {
@@ -87,20 +87,20 @@ export const StyledNewProject = styled(StyledCard)`
   flex-direction: column;
   justify-content: center;
   letter-spacing: -0.01em;
-  color: ${theme.colors.neutral[8]};
+  color: ${theme.colors.neutral800};
   box-shadow: ${theme.shadows.m};
   transition: box-shadow 200ms;
 
   &:hover {
-    color: ${theme.colors.blue[8]};
-    border-color: ${theme.colors.neutral[4]};
+    color: ${theme.colors.blue800};
+    border-color: ${theme.colors.neutral400};
     box-shadow: ${theme.shadows.l};
 
     ${StyledNewProjectIcon} {
       &::before {
         transform: scale(1.1);
-        background: ${theme.colors.blue[8]};
-        box-shadow: 0 4px 12px ${rgba(theme.colors.neutral[9], 0.1)};
+        background: ${theme.colors.blue800};
+        box-shadow: 0 4px 12px ${rgba(theme.colors.neutral900, 0.1)};
       }
     }
   }

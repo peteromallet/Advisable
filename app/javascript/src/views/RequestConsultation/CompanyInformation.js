@@ -77,13 +77,13 @@ const CompanyInformation = ({ data }) => {
         mb="xs"
         as="h2"
         fontSize="xxl"
-        color="blue.8"
+        color="blue800"
         fontWeight="semibold"
         letterSpacing="-0.025em"
       >
         Company Information
       </Text>
-      <Text color="neutral.8" lineHeight="s" mb="l">
+      <Text color="neutral800" lineHeight="s" mb="l">
         Please provide some basic information so we can get back to you when{" "}
         {data.specialist.firstName} responds.
       </Text>

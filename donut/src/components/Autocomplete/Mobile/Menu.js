@@ -58,7 +58,7 @@ const AutocompleteMobileMenu = (props) => {
             </MobileContainerTop>
             {props.isMax && (
               <Box padding="s">
-                <Text multiline color="neutral.N8">
+                <Text multiline color="neutral800">
                   You can not add more than {props.max} items. Please remove one
                   of the following selections to add another.
                 </Text>

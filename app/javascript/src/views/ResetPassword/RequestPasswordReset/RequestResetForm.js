@@ -1,7 +1,7 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
-import { Box, Text, Label, Input, Button } from "@advisable/donut";
+import { Text, Button } from "@advisable/donut";
 import FormField from "components/FormField";
 import validationSchema from "./validationSchema";
 import REQUEST_PASSWORD_RESET from "./requestPasswordReset.graphql";

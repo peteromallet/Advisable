@@ -1,15 +1,13 @@
 import React from "react";
 import Scrollable from "src/components/Scrollable";
-import { ModalBody } from "./styles";
+import { ModalBody as StyledModalBody } from "./styles";
 
 // The modal body provides as component that will scroll when filled with
 // that is greater than the screen height.
-export default ({ children }) => {
+export default function ModalBody({ children }) {
   return (
-    <ModalBody>
-      <Scrollable padding="xl">
-        {children}
-      </Scrollable>
-    </ModalBody>
+    <StyledModalBody>
+      <Scrollable padding="xl">{children}</Scrollable>
+    </StyledModalBody>
   );
-};
+}

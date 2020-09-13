@@ -1,16 +1,16 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, Paragraph } from "@advisable/donut";
 
 const NoStoppedProjects = () => {
   return (
     <Box maxWidth={400} style={{ margin: "40px auto" }}>
-      <Text weight="medium" textAlign="center" mb="xs">
+      <Text fontSize="lg" fontWeight="medium" textAlign="center" mb="xs">
         No stopped projects
       </Text>
-      <Text size="xs" textAlign="center" color="neutral.5" lineHeight="s">
+      <Paragraph fontSize="sm" textAlign="center">
         You have not stopped working with any clients. When you do they will
         show up here.
-      </Text>
+      </Paragraph>
     </Box>
   );
 };

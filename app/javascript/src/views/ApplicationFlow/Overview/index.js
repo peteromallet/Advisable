@@ -2,7 +2,7 @@ import * as React from "react";
 import { ArrowRight } from "@styled-icons/feather";
 import { useMutation } from "@apollo/client";
 import { Formik, Form } from "formik";
-import { Box, Text, Card, Textarea } from "@advisable/donut";
+import { Box, Text, Textarea } from "@advisable/donut";
 import { ChoiceList } from "../../../components";
 import FormField from "../../../components/FormField";
 import SubmitButton from "../../../components/SubmitButton";
@@ -10,7 +10,7 @@ import { updateApplication as UPDATE_APPLICATION } from "../queries";
 import validationSchema from "./validationSchema";
 import StepCard from "../StepCard";
 
-function Overview({ application, history, location, steps, currentStep }) {
+function Overview({ application, history, location }) {
   const { airtableId } = application;
   const [mutate] = useMutation(UPDATE_APPLICATION);
 

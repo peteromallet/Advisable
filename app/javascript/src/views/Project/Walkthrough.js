@@ -1,7 +1,7 @@
 import React from "react";
 import { rgba } from "polished";
-import { AnimatePresence, motion } from "framer-motion";
-import styled, { css } from "styled-components";
+import { motion } from "framer-motion";
+import styled from "styled-components";
 import { Portal } from "reakit/Portal";
 import { theme } from "@advisable/donut";
 import { createPopper } from "@popperjs/core";

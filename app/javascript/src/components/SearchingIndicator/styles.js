@@ -35,7 +35,7 @@ const StyledSearchingIndicator = styled.div`
   align-items: center;
   justify-content: center;
   animation: ${pulse} 3s infinite linear;
-  background: ${theme.colors.blue[5]};
+  background: ${theme.colors.blue500};
 
   &::before,
   &::after {
@@ -49,7 +49,7 @@ const StyledSearchingIndicator = styled.div`
     position: absolute;
     border-radius: 50%;
     transform: scale(0.5);
-    border: 1px solid ${theme.colors.blue[5]};
+    border: 1px solid ${theme.colors.blue500};
   }
 
   &::before {

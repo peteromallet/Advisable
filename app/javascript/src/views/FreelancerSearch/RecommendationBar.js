@@ -13,7 +13,7 @@ function RecommendationBar({ data }) {
       bottom={0}
       zIndex={5}
       height="70px"
-      bg="white.9"
+      bg="white"
       boxShadow="l"
       position="fixed"
       display={{ _: "none", l: "block" }}

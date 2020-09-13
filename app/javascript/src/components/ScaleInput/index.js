@@ -43,7 +43,7 @@ function ScaleInput({
       <Box pt="xs" display="flex" justifyContent="space-between">
         <Text
           fontSize="s"
-          color="neutral.7"
+          color="neutral700"
           fontWeight="medium"
           letterSpacing="-0.02em"
         >
@@ -51,7 +51,7 @@ function ScaleInput({
         </Text>
         <Text
           fontSize="s"
-          color="neutral.7"
+          color="neutral700"
           fontWeight="medium"
           letterSpacing="-0.02em"
         >

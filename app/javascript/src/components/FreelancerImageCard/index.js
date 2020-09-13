@@ -27,13 +27,13 @@ function ProfileImage({ name, imageURL, location, rating, reviewsCount }) {
         <Text
           mb="xxs"
           fontSize="xxl"
-          color="white.9"
+          color="white"
           fontWeight="semibold"
           letterSpacing="-0.03em"
         >
           {name}
         </Text>
-        <Text color="white.9" fontWeight="regular" letterSpacing="-0.01em">
+        <Text color="white" fontWeight="regular" letterSpacing="-0.01em">
           {location}
         </Text>
         {reviewsCount > 0 && (
@@ -47,7 +47,7 @@ function ProfileImage({ name, imageURL, location, rating, reviewsCount }) {
             </Box>
             <Text
               fontSize="xs"
-              color="white.9"
+              color="white"
               fontWeight="regular"
               letterSpacing="-0.01em"
             >

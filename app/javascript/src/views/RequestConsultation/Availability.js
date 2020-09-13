@@ -97,15 +97,15 @@ const Availability = () => {
                   as="h2"
                   fontSize="xxl"
                   fontWeight="semibold"
-                  color="blue.8"
+                  color="blue900"
                   letterSpacing="-0.025em"
                 >
                   Availability
                 </Text>
-                <Text color="neutral.8" lineHeight="s" mb="m">
+                <Text color="neutral800" lineHeight="s" mb="m">
                   Select the times you will be available for a consultation with{" "}
-                  {specialist.name}. The more times you select, the easier it'll
-                  be for us to find a time that suits them.
+                  {specialist.name}. The more times you select, the easier
+                  it&apos;ll be for us to find a time that suits them.
                 </Text>
                 <Field
                   as={Autocomplete}
@@ -140,10 +140,10 @@ const Availability = () => {
                     p="xs"
                     mb="s"
                     fontSize="s"
-                    bg="neutral.0"
+                    bg="neutral50"
                     display="flex"
                     borderRadius={8}
-                    color="neutral.7"
+                    color="neutral700"
                     alignItems="center"
                   >
                     <Box display="inline-block" mr="xs" color="neutral500">

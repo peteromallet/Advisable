@@ -1,7 +1,6 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Icon } from "../Icon/styles";
 import { Status } from "../Status/styles";
-import colors from "../../colors";
 import { theme } from "@advisable/donut";
 
 export const Title = styled.h5`
@@ -60,7 +59,7 @@ export const Task = styled(Row)`
     background: #fafbfe;
 
     ${Title} {
-      color: ${colors.blue.base};
+      color: ${theme.colors.blue500};
     }
   }
 

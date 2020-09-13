@@ -100,7 +100,7 @@ const ProjectType = ({ history, application }) => {
               </Box>
               {formik.values.projectType === "Flexible" && (
                 <>
-                  <Box mb="l" height={1} bg="neutral.1" />
+                  <Box mb="l" height={1} bg="neutral100" />
                   <FormField
                     autoFocus
                     prefix="Hours"
@@ -113,7 +113,7 @@ const ProjectType = ({ history, application }) => {
               )}
               {formik.values.projectType === "Fixed" && (
                 <>
-                  <Box mb="l" height={1} bg="neutral.1" />
+                  <Box mb="l" height={1} bg="neutral100" />
                   <Text mb="m" fontSize="s">
                     In order to guarantee payment, the following terms must be
                     followed:
@@ -135,13 +135,13 @@ const ProjectType = ({ history, application }) => {
                   <Field as={Checkbox} type="checkbox" name="accept">
                     I agree to follow these payment terms
                   </Field>
-                  <Box my="l" height={1} bg="neutral.1" />
+                  <Box my="l" height={1} bg="neutral100" />
                 </>
               )}
 
               {formik.values.projectType === "Flexible" && (
                 <>
-                  <Box my="l" height={1} bg="neutral.1" />
+                  <Box my="l" height={1} bg="neutral100" />
                   <Text mb="m" fontSize="s">
                     In order to guarantee payment, the following terms must be
                     followed:
@@ -154,7 +154,7 @@ const ProjectType = ({ history, application }) => {
                   <Field as={Checkbox} type="checkbox" name="accept">
                     I agree to follow these payment terms
                   </Field>
-                  <Box my="l" height={1} bg="neutral.1" />
+                  <Box my="l" height={1} bg="neutral100" />
                 </>
               )}
               <Button

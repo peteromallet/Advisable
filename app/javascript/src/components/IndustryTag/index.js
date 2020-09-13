@@ -1,7 +1,6 @@
 import React from "react";
-import { space } from "styled-system";
 import styled from "styled-components";
-import { Box, theme } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 
 const StyledIndustryTag = styled(Box)`
   height: 24px;

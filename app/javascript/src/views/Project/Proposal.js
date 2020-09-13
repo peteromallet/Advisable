@@ -42,7 +42,7 @@ export default function Proposal() {
       </Text>
       <Paragraph marginBottom="32px">
         {specialist.firstName} has suggested some tasks to get started.
-        Accepting this proposal won't assign any tasks. You’ll have the
+        Accepting this proposal won&apos;t assign any tasks. You’ll have the
         opportunity to assign and add more tasks once you start working
         together.
       </Paragraph>

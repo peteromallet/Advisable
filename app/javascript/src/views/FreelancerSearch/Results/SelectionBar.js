@@ -14,7 +14,7 @@ const SelectionBar = ({ search, specialists }) => {
       bottom="-20px"
       height={100}
       width="100%"
-      bg="white.9"
+      bg="white"
       position="fixed"
       boxShadow="0 10px 50px rgba(0, 0, 0, 0.2)"
       as={motion.div}
@@ -48,7 +48,7 @@ const SelectionBar = ({ search, specialists }) => {
               ))}
             </Box>
             <Box mt="xxs" display={{ _: "none", s: "block" }}>
-              <Text fontSize="xs" color="neutral.7" letterSpacing="-0.01em">
+              <Text fontSize="xs" color="neutral700" letterSpacing="-0.01em">
                 You have selected{" "}
                 {pluralize(specialists.length, "freelancer", "freelancer's")}
               </Text>

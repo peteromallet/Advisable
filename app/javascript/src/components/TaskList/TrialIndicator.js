@@ -1,7 +1,7 @@
 import React from "react";
 import { Star, ArrowRight } from "@styled-icons/feather";
 import { useTranslation } from "react-i18next";
-import { Tooltip, Box, Icon, Text, Link } from "@advisable/donut";
+import { Tooltip, Box, Text, Link } from "@advisable/donut";
 
 const TrialIndicator = ({ isClient }) => {
   const { t } = useTranslation();
@@ -11,14 +11,14 @@ const TrialIndicator = ({ isClient }) => {
       interactable
       content={
         <>
-          <Text fontSize="xs" mb="xs" color="white.9" lineHeight="xs">
+          <Text fontSize="xs" mb="xs" color="white" lineHeight="xs">
             {t(
               `trialProgram.tooltip.title.${
                 isClient ? "client" : "freelancer"
               }`,
             )}
           </Text>
-          <Text fontSize="xxs" lineHeight="xs" color="white.8" mb="s">
+          <Text fontSize="xxs" lineHeight="xs" color="white" mb="s">
             {t(
               `trialProgram.tooltip.description.${
                 isClient ? "client" : "freelancer"
@@ -34,7 +34,7 @@ const TrialIndicator = ({ isClient }) => {
                 : "https://advisable.com/freelancer-trial"
             }
           >
-            <Text color="white.9">
+            <Text color="white">
               Read more information
               <ArrowRight size={16} strokeWidth={2} />
             </Text>
@@ -46,7 +46,7 @@ const TrialIndicator = ({ isClient }) => {
         mr="s"
         width={28}
         height={28}
-        bg="blue.0"
+        bg="blue100"
         display="flex"
         borderRadius="50%"
         alignItems="center"

@@ -1,5 +1,5 @@
 import Talk from "talkjs";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import useViewer from "./useViewer";
 import createTalkSession from "../utilities/createTalkSession";
 

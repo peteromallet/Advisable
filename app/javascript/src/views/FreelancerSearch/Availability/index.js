@@ -92,7 +92,7 @@ const Availability = ({ data }) => {
       </Text>
       <Text fontSize="m" lineHeight="20px" color="neutral800" mb="m">
         Select the times you will be available for a consultation. The more
-        times you select, the easier it'll be for us to find a time that suits
+        times you select, the easier it will be for us to find a time that suits
         them.
       </Text>
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>

@@ -30,7 +30,7 @@ const PendingConsultation = ({ data }) => {
         mb="xs"
         as="h2"
         fontSize="xxl"
-        color="blue.8"
+        color="blue800"
         fontWeight="semibold"
         letterSpacing="-0.025em"
       >
@@ -43,9 +43,9 @@ const PendingConsultation = ({ data }) => {
       </Text>
 
       <Text fontWeight="medium" mb="xxs">
-        What they'd like to cover in a consultation:
+        What they&apos;d like to cover in a consultation:
       </Text>
-      <Text lineHeight="s" color="neutral.7" mb="xl">
+      <Text lineHeight="s" color="neutral700" mb="xl">
         {topic}
       </Text>
       <Button mr="xs" onClick={handleAccept} loading={acceptMutation.loading}>

@@ -82,8 +82,9 @@ export default function ClientDetails({
                     This client is confidential
                   </Text>
                   <Text fontSize="xs" color="neutral600">
-                    If checked the client's name will be hidden and the industry
-                    will be named instead. e.g 'Financial Services Company'
+                    If checked the client&apos;s name will be hidden and the
+                    industry will be named instead. e.g &quot;Financial Services
+                    Company&quot;
                   </Text>
                 </FormField>
               </Stack>
@@ -113,8 +114,8 @@ export default function ClientDetails({
 }
 
 function IndustriesSelection({ industries }) {
-  const [field, _, helpers] = useField("industries");
-  const [primaryField, __, primaryHelpers] = useField("primaryIndustry");
+  const [field, , helpers] = useField("industries");
+  const [primaryField, , primaryHelpers] = useField("primaryIndustry");
 
   return (
     <>

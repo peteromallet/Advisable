@@ -26,9 +26,9 @@ const TooltipContent = styled.div`
     0 15px 50px 0 rgba(49, 49, 93, 0.1), 0 5px 20px 0 rgba(0, 0, 0, 0.08);
 
   ${LinkStyles} {
-    color: ${theme.colors.blue[2]};
+    color: ${theme.colors.blue200};
     &:hover {
-      color: ${theme.colors.blue[1]};
+      color: ${theme.colors.blue100};
     }
   }
 `;

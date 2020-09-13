@@ -70,7 +70,7 @@ const Topic = ({ data }) => {
         What would you like to cover during this consultation?
       </Text>
       <Text fontSize="l" lineHeight="m" color="neutral800" mb="l">
-        Please describe briefly what you'd like to cover in a 30-minute
+        Please describe briefly what you&apos;d like to cover in a 30-minute
         consultation. This is for us to share with freelancers when requesting
         their time.
       </Text>

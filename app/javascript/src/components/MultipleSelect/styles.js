@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { margin } from "styled-system";
 import { theme, StyledInput } from "@advisable/donut";
 
 export const StyledMultipleSelectTag = styled.div`
@@ -13,7 +12,7 @@ export const StyledMultipleSelectTag = styled.div`
   display: inline-block;
 `;
 
-export const StyledMultipleSelect = styled(StyledInput).attrs((p) => ({
+export const StyledMultipleSelect = styled(StyledInput).attrs(() => ({
   as: "div",
 }))`
   input {
@@ -28,7 +27,7 @@ export const StyledMultipleSelect = styled(StyledInput).attrs((p) => ({
     font-family: poppins, sans-serif;
 
     &::placeholder {
-      color: ${theme.colors.neutral[6]};
+      color: ${theme.colors.neutral600};
     }
   }
 `;

@@ -7,7 +7,7 @@ import PreviousProject from "../PreviousProject";
 import FETCH_PREVIOUS_PROJECTS from "./fetchPreviousProjects";
 
 const PreviousProjectsModal = (props) => {
-  const { data, loading, error } = useQuery(FETCH_PREVIOUS_PROJECTS, {
+  const { data, loading } = useQuery(FETCH_PREVIOUS_PROJECTS, {
     variables: {
       id: props.specialistId,
     },
@@ -31,7 +31,7 @@ const PreviousProjectsModal = (props) => {
             mb="m"
             letterSpacing="-0.01em"
           >
-            All Previous Project's
+            All Previous Project&quot;s
           </Text>
           {data.specialist.previousProjects.nodes.map((previousProject) => (
             <PreviousProject

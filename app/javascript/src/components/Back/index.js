@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { padding } from "styled-system";
 import { Link } from "react-router-dom";
 
-let Back = styled.a.attrs((props) => ({
+const StyledBack = styled.a.attrs((props) => ({
   as: props.to ? Link : "a",
 }))`
   ${padding};
@@ -32,13 +32,13 @@ let Back = styled.a.attrs((props) => ({
   }
 `;
 
-export default ({ children, ...props }) => {
+export default function Back({ children, ...props }) {
   return (
-    <Back {...props}>
+    <StyledBack {...props}>
       <svg width={17} height={15}>
         <path d="M4.828 9l4.086 4.086A1 1 0 0 1 7.5 14.5L.793 7.793 7.5 1.086A1 1 0 1 1 8.914 2.5L4.414 7H16a1 1 0 0 1 0 2H4.828z" />
       </svg>
       <span>{children || "Back"}</span>
-    </Back>
+    </StyledBack>
   );
-};
+}

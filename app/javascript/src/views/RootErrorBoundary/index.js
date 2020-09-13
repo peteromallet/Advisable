@@ -14,7 +14,7 @@ class RootErrorBoundary extends React.Component {
     };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return {
       error: true,
     };
@@ -37,20 +37,20 @@ class RootErrorBoundary extends React.Component {
     if (this.state.update) {
       return (
         <Box maxWidth={340} mx="auto" my="xxl" textAlign="center">
-          <Circle bg="blue.8" mb="m" color="white.9">
+          <Circle bg="blue800" mb="m" color="white">
             <RefreshCw size={24} strokeWidth={2} />
           </Circle>
           <Text
             mb="xs"
             as="h1"
             fontSize="xxl"
-            color="blue.9"
+            color="blue900"
             fontWeight="semibold"
             letterSpacing="-0.05em"
           >
             Update Available
           </Text>
-          <Text fontSize="s" lineHeight="s" color="neutral.9" mb="l">
+          <Text fontSize="s" lineHeight="s" color="neutral900" mb="l">
             A new version of Advisable has been released since you last reloaded
             the page. You will need to reload the page to upgrade to the new
             version.
@@ -65,20 +65,20 @@ class RootErrorBoundary extends React.Component {
     if (this.state.error)
       return (
         <Box maxWidth={320} mx="auto" my="xxl" textAlign="center">
-          <Circle bg="blue.1" mb="m" color="blue800">
+          <Circle bg="blue100" mb="m" color="blue800">
             <AlertTriangle size={30} strokeWidth={2} />
           </Circle>
           <Text
             mb="s"
             as="h1"
             fontSize={32}
-            color="blue.9"
+            color="blue900"
             fontWeight="bold"
             letterSpacing="-0.05em"
           >
             Oops..
           </Text>
-          <Text fontSize="s" lineHeight="s" color="neutral.8" mb="l">
+          <Text fontSize="s" lineHeight="s" color="neutral800" mb="l">
             An unexpected error has occured. We have been notified and are
             working to fix the problem.
           </Text>

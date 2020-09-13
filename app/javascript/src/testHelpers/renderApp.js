@@ -22,19 +22,19 @@ jest.mock("talkjs", () => {
   class Session {
     getOrCreateConversation() {
       return {
-        setParticipant: (user) => {},
+        setParticipant: () => {},
       };
     }
 
-    createChatbox(conversation) {
+    createChatbox() {
       return {
-        mount: (node) => {},
+        mount: () => {},
       };
     }
 
     get unreads() {
       return {
-        on: (event, handler) => {},
+        on: () => {},
       };
     }
   }
@@ -75,8 +75,7 @@ export const mockStripe = () => ({
   confirmCardSetup: jest.fn(),
   paymentRequest: jest.fn(),
   handleCardPayment: () => Promise.resolve({ error: null }),
-  handleCardSetup: (secret, card, details) =>
-    Promise.resolve({ setupIntent: {} }),
+  handleCardSetup: () => Promise.resolve({ setupIntent: {} }),
 });
 
 const renderApp = (config = defaultConfig) => {

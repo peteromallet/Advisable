@@ -1,5 +1,5 @@
 // DEPRECATED: Please use the Modal component from Donut instead.
-import React, { useCallback } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { use100vh } from "react-div-100vh";
 import { X } from "@styled-icons/feather";
@@ -27,7 +27,6 @@ const Modal = ({
   paddingRight,
   paddingBottom,
   paddingLeft,
-  ...componentProps
 }) => {
   const height = use100vh();
   const containerRef = React.useRef(null);

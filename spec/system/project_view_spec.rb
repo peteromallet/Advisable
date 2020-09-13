@@ -12,10 +12,10 @@ describe 'Project view', type: :system do
     create(:full_application, status: 'Applied', score: 90, project: project)
   end
   let!(:application2) do
-    create(:full_application, status: 'Applied', score: 90, project: project)
+    create(:full_application, status: 'Applied', score: 85, project: project)
   end
   let!(:application3) do
-    create(:full_application, status: 'Applied', score: 90, project: project)
+    create(:full_application, status: 'Applied', score: 80, project: project)
   end
 
   it 'allows user to accept and reject matches' do
@@ -37,13 +37,13 @@ describe 'Project view', type: :system do
     find("[aria-label='#{next_monday.strftime('%-d %b %Y, 12:00')}']").click
     find("[aria-label='#{next_monday.strftime('%-d %b %Y, 12:30')}']").click
     click_on 'Request Call'
-    expect(page).to have_text(application2.specialist.name)
+    expect(page).to have_content(application2.specialist.name)
 
     # Accept second match, no need to select availability because its stored
     # from the first time.
     click_on 'Accept'
     click_on 'Request Call'
-    expect(page).to have_text(application3.specialist.name)
+    expect(page).to have_content(application3.specialist.name)
 
     # Reject third match
     click_on 'Reject'
@@ -51,7 +51,7 @@ describe 'Project view', type: :system do
       click_on 'Reject'
     end
 
-    expect(page).to have_text(/you have been matched with 2/i)
+    expect(page).to have_content(/you have been matched with 2/i)
   end
 
   it 'allows the viewer to reject an accepted candidate' do
@@ -63,7 +63,7 @@ describe 'Project view', type: :system do
     within '*[role=dialog]' do
       click_on 'Reject'
     end
-    expect(page).to have_text('No Candidates')
+    expect(page).to have_content('No Candidates')
   end
 
   context 'when the user hasnt added a password' do

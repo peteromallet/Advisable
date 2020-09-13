@@ -1,10 +1,10 @@
 import React from "react";
-import { ModalHeader } from "./styles";
+import { ModalHeader as StyledModalHeader } from "./styles";
 
-export default ({ children }) => {
+export default function ModalHeader({ children }) {
   return (
-    <ModalHeader>
+    <StyledModalHeader>
       <div>{children}</div>
-    </ModalHeader>
+    </StyledModalHeader>
   );
-};
+}

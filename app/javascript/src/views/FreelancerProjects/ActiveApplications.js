@@ -12,7 +12,14 @@ export default ({ onClick, applications }) => {
 
   return (
     <>
-      <Text as="h1" weight="semibold" size="xxl" mb="m" color="neutral.9">
+      <Text
+        mb="l"
+        as="h2"
+        fontSize="28px"
+        color="neutral900"
+        fontWeight="medium"
+        letterSpacing="-0.04rem"
+      >
         Active Projects
       </Text>
       <Tabs label="Clients">

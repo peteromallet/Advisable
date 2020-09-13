@@ -15,10 +15,10 @@ const Row = ({ icon, children, tooltip }) => (
     display="flex"
     alignItems="center"
     borderBottom="1px solid"
-    borderColor="neutral.1"
+    borderColor="neutral100"
   >
     <Box
-      bg="neutral.1"
+      bg="neutral100"
       borderRadius="50%"
       width={20}
       height={20}
@@ -31,7 +31,7 @@ const Row = ({ icon, children, tooltip }) => (
       {icon}
     </Box>
     <Box flex={1}>
-      <Text fontSize="xs" color="neutral.6" py="xs">
+      <Text fontSize="xs" color="neutral600" py="xs">
         {children}
       </Text>
     </Box>
@@ -42,7 +42,7 @@ const Row = ({ icon, children, tooltip }) => (
             <Box mr="xxs" color="neutral500">
               <HelpCircle size={18} strokeWidth={1.5} />
             </Box>
-            <Text fontSize="xs" color="neutral.4">
+            <Text fontSize="xs" color="neutral400">
               More info
             </Text>
           </Box>
@@ -73,7 +73,7 @@ const TaskDetailRows = ({ isClient, task }) => {
         tooltip={
           isClient && (
             <>
-              <Text fontSize="xxs" lineHeight="xs" color="white.8" mb="xs">
+              <Text fontSize="xxs" lineHeight="xs" color="white" mb="xs">
                 {t(`trialProgram.tooltip.description.client`)}
               </Text>
               <Link

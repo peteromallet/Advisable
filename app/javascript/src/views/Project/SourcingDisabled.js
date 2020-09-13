@@ -5,7 +5,7 @@ import { Pause } from "@styled-icons/ionicons-solid";
 import { Box, Circle, Text, Paragraph, Button } from "@advisable/donut";
 import { useToggleSourcing } from "./queries";
 
-export default function RequestedIntroductions({ accepted }) {
+export default function RequestedIntroductions() {
   const { id } = useParams();
   const [toggleSourcing, { loading }] = useToggleSourcing();
 
@@ -34,7 +34,7 @@ export default function RequestedIntroductions({ accepted }) {
         maxWidth="460px"
         textAlign="center"
       >
-        <Circle size="64px" marginBottom="xl" bg="neutral900" color="white.9">
+        <Circle size="64px" marginBottom="xl" bg="neutral900" color="white">
           <Pause size="24px" />
         </Circle>
         <Text
