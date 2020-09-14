@@ -28,7 +28,7 @@ class Types::QueryType < Types::BaseType
     if context[:current_user]
       raise GraphQL::ExecutionError.new(
               'Invalid Permissions',
-              options: { code: 'invalidPermissions' }
+              options: {code: 'invalidPermissions'}
             )
     end
 
@@ -38,7 +38,7 @@ class Types::QueryType < Types::BaseType
     has_account = user.try(:has_account?)
     code = has_account ? 'authenticationRequired' : 'signupRequired'
     url = has_account ? '/login' : "/signup/#{user.try(:airtable_id)}"
-    extensions = { redirect: url, email: email, code: code }
+    extensions = {redirect: url, email: email, code: code}
     raise GraphQL::ExecutionError.new(code, extensions: extensions)
   end
 
@@ -279,7 +279,7 @@ class Types::QueryType < Types::BaseType
     return post if policy.show
 
     if context[:current_user]
-      raise GraphQL::ExecutionError.new('Invalid Permissions', options: { code: 'invalidPermissions' })
+      raise GraphQL::ExecutionError.new('Invalid Permissions', options: {code: 'invalidPermissions'})
     end
   end
 
@@ -311,7 +311,7 @@ class Types::QueryType < Types::BaseType
 
   def guild_activity
     unless context[:current_user].try(:guild)
-      raise GraphQL::ExecutionError.new('Invalid Permissions', options: { code: 'invalidPermissions' })
+      raise GraphQL::ExecutionError.new('Invalid Permissions', options: {code: 'invalidPermissions'})
     end
 
     context[:current_user].guild_activity
