@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   def frontend
     respond_to(&:html)
   rescue ActionController::UnknownFormat
-    render status: 404, json: { error: 'Not Found' }
+    render status: 404, json: {error: 'Not Found'}
   end
 
   def guild

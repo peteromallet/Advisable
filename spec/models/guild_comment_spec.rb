@@ -33,7 +33,7 @@ RSpec.describe Guild::Comment, type: :model do
       parent_comment = create(:guild_comment, :with_guild_post)
       child_comment = build(:guild_comment, parent_comment: parent_comment)
 
-      expect{ child_comment.save }.to change {
+      expect { child_comment.save }.to change {
         child_comment.post
       }.from(nil).to(parent_comment.post)
     end

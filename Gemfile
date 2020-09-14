@@ -84,6 +84,7 @@ group :development do
   gem 'pry-rails'
   gem 'niceql'
   gem 'graphql-rails_logger'
+  gem 'rubocop', require: false
 end
 
 group :test do

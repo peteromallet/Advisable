@@ -51,7 +51,7 @@ describe Mutations::Guild::CreateComment do
 
     it "deletes a guild comment" do
       expect(guild_post.comments_count).to eq(1)
-      expect{ subject }.to change{ guild_post.reload.comments_count }.from(1).to(0)
+      expect { subject }.to change { guild_post.reload.comments_count }.from(1).to(0)
       expect(subject["guildCommentId"]).to eq(guild_comment.id)
     end
 
@@ -61,7 +61,7 @@ describe Mutations::Guild::CreateComment do
 
       expect {
         subject
-      }.to change{ parent_comment.child_comments.count }.from(1).to(0)
+      }.to change { parent_comment.child_comments.count }.from(1).to(0)
     end
   end
 end

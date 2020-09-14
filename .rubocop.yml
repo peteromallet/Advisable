@@ -1,0 +1,10 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  NewCops: enable
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Style/RaiseArgs:
+  Enabled: false
