@@ -267,7 +267,7 @@ class Types::QueryType < Types::BaseType
     raise ApiError::InvalidRequest.new('notFound', 'Invoice not found')
   end
 
-  field :questions, [Types::Question], 'Returns a list of questions', null: true
+  field :questions, [Types::QuestionType], 'Returns a list of questions', null: true
 
   def questions
     Question.all

@@ -1,4 +1,4 @@
-class Types::Question < Types::BaseType
+class Types::QuestionType < Types::BaseType
   field :id, ID, null: false
   field :content, String, null: false
 

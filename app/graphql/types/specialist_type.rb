@@ -188,7 +188,7 @@ class Types::SpecialistType < Types::BaseType
     description 'Wether or not the specialist will work remotely'
   end
 
-  field :answers, [Types::Answer], null: true do
+  field :answers, [Types::AnswerType], null: true do
     description 'Answers provided by specialist'
   end
 
