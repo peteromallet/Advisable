@@ -117,6 +117,21 @@ class Types::SpecialistType < Types::BaseType
     object.image.try(:[], 'url')
   end
 
+
+  field :cover_photo, String, null: true
+
+  def cover_photo
+    if object.cover_photo.attached?
+      return(
+        Rails.application.routes.url_helpers.rails_blob_url(
+          object.cover_photo,
+          host:
+            ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+        )
+      )
+    end
+  end
+
   field :skills, [Types::SpecialistSkillType, null: true], null: true do
     description 'A list of skills that the specialist possesses'
     argument :project_skills, Boolean, required: false

@@ -53,6 +53,8 @@ class Specialist < ApplicationRecord
 
   has_one_attached :resume
 
+  has_one_attached :cover_photo
+
   # DEPRECATED IN FAVOUR OF phone column
   attr_encrypted :phone_number, key: [ENV['ENCRYPTION_KEY']].pack('H*')
 
