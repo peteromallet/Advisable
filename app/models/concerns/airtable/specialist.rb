@@ -79,7 +79,7 @@ class Airtable::Specialist < Airtable::Base
   after_sync do |specialist|
     specialist.saved_change_to_application_stage
     # Deteremine wether or not the specialist record was just created for the
-    # first time.
+    #  first time.
     new_record = specialist.created_at == specialist.updated_at
 
     # if the record is not a new record and there was an update to the

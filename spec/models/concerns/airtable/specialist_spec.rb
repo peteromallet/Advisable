@@ -224,7 +224,7 @@ describe Airtable::Specialist do
 
   describe "Whe Airtable responds with an error" do
     let(:airtable) { Airtable::Specialist.new({}, id: specialist.airtable_id) }
-    let(:error) { 
+    let(:error) {
       Airrecord::Error.new("HTTP 422: ROW_DOES_NOT_EXIST: Record ID rec1234 does not exist")
     }
 

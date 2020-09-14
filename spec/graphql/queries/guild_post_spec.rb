@@ -31,12 +31,12 @@ describe Types::Guild::PostInterface do
     }
   }
 
-  context "with a non guild specialist" do 
+  context "with a non guild specialist" do
     let(:non_guild_specialist) { build(:specialist) }
 
     it "returns a null guildPost" do
       resp = AdvisableSchema.execute(
-        query[guild_post.id], 
+        query[guild_post.id],
         context: {
           current_user: non_guild_specialist
         }
@@ -47,7 +47,7 @@ describe Types::Guild::PostInterface do
 
   it 'includes additional fields for other guild_post types' do
     resp = AdvisableSchema.execute(
-      query[advice_required.id], 
+      query[advice_required.id],
       context: context
     )
     node = resp.dig('data', 'guildPost')
@@ -63,7 +63,7 @@ describe Types::Guild::PostInterface do
   context "with a guild_post query" do
     let(:response) {
       AdvisableSchema.execute(
-        query[guild_post.id], 
+        query[guild_post.id],
         context: context
       )
     }

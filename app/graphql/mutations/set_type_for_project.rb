@@ -10,7 +10,7 @@ class Mutations::SetTypeForProject < Mutations::BaseMutation
   field :application, Types::ApplicationType, null: true
   field :errors, [Types::Error], null: true
 
-  def authorized?(application:, project_type:,monthly_limit:)
+  def authorized?(application:, project_type:, monthly_limit:)
     ap = Application.find_by_airtable_id!(application)
     policy = ApplicationPolicy.new(context[:current_user], ap)
     return true if policy.is_client

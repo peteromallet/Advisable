@@ -1,7 +1,7 @@
 class Users::AttachPaymentMethod < ApplicationService
   attr_reader :user, :payment_method_id
 
-  def initialize(user:, payment_method_id: )
+  def initialize(user:, payment_method_id:)
     @user = user
     @payment_method_id = payment_method_id
   end

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe AccountMailer do
   describe '#confirm' do
     let(:token) { Token.new }
-    let(:user) { create(:user, confirmation_digest: Token.digest(token) ) }
+    let(:user) { create(:user, confirmation_digest: Token.digest(token)) }
     let(:mail) {
       AccountMailer.confirm(uid: user.uid, token: token)
     }
@@ -21,7 +21,7 @@ describe AccountMailer do
 
   describe "#reset_password" do
     let(:token) { Token.new }
-    let(:user) { create(:user, reset_digest: Token.digest(token), reset_sent_at: Time.now ) }
+    let(:user) { create(:user, reset_digest: Token.digest(token), reset_sent_at: Time.now) }
     let(:mail) {
       AccountMailer.reset_password(uid: user.uid, token: token)
     }

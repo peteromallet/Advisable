@@ -40,7 +40,7 @@ Shoulda::Matchers.configure do |config|
 end
 
 # Silence the capybara puma logs
-Capybara.server = :puma, { Silent: true } 
+Capybara.server = :puma, { Silent: true }
 Capybara.enable_aria_label = true
 
 RSpec.configure do |config|

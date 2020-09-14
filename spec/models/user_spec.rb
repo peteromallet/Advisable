@@ -67,7 +67,7 @@ describe User, type: :model do
         user = create(:user)
         user.update stripe_customer_id: nil
         customer = double(Stripe::Customer, id: "cus_123")
-        
+
         expect(Stripe::Customer).to receive(:create).with({
           email: user.email,
           name: user.company_name,

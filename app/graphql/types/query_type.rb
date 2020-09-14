@@ -271,7 +271,7 @@ class Types::QueryType < Types::BaseType
   field :guild_post, Types::Guild::PostInterface, null: true do
     argument :id, ID, required: true
   end
-  
+
   def guild_post(id:)
     post = Guild::Post.find(id)
     policy = Guild::PostPolicy.new(context[:current_user], post)
@@ -302,7 +302,7 @@ class Types::QueryType < Types::BaseType
       # TODO: parse connection_type cursors for pagination
   end
 
-  field :guild_activity, 
+  field :guild_activity,
         Types::Guild::ActivityUnion.connection_type, # interface?
         null: true,
         max_page_size: 20 do

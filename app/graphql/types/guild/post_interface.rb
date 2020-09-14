@@ -1,15 +1,15 @@
 module Types::Guild::PostInterface
-  include Types::BaseInterface 
+  include Types::BaseInterface
   include ActionView::Helpers::DateHelper
 
   field_class BaseField
 
   include Types::Guild::AuthorInterface
   include Types::Guild::ReactionInterface
-  
+
   orphan_types Types::Guild::Post::PostType,
-               Types::Guild::Post::AdviceRequiredType, 
-               Types::Guild::Post::CaseStudyType, 
+               Types::Guild::Post::AdviceRequiredType,
+               Types::Guild::Post::CaseStudyType,
                Types::Guild::Post::OpportunityType
 
   field :id, ID, null: false do

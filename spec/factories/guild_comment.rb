@@ -3,7 +3,7 @@ FactoryBot.define do
     body    { Faker::TvShows::MichaelScott.quote }
     specialist
 
-    trait :with_guild_post do 
+    trait :with_guild_post do
       post { association(:guild_post) }
     end
   end

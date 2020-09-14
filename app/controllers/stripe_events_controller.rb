@@ -7,9 +7,9 @@ class StripeEventsController < ApplicationController
       StripeEvents.process(stripe_event)
       head :no_content, status: 200
     rescue Stripe::SignatureVerificationError => e
-      render json: { error: "Invalid signature" }, status: 400
+      render json: {error: "Invalid signature"}, status: 400
     rescue JSON::ParserError => e
-      render json: { error: "Invalid JSON" }, status: 400
+      render json: {error: "Invalid JSON"}, status: 400
     end
   end
 

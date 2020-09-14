@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe StripeEvents::SetupIntentSucceeded do
-  let(:project) { create(:project, deposit_paid: 0 ) }
+  let(:project) { create(:project, deposit_paid: 0) }
   let(:event) {
     OpenStruct.new({
       type: "payment_intent.succeeded",

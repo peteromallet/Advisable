@@ -20,7 +20,7 @@ end
     specialist: random_specialist,
     title: Faker::Quote.yoda[0..149],
     body: body,
-    body_raw: %x{ node #{Rails.root.join('lib/scripts/node', 'convertForDraftJS.js').to_s} #{body} },
+    body_raw: %x{node #{Rails.root.join('lib/scripts/node', 'convertForDraftJS.js').to_s} #{body}},
     type: random_post_type
   )
   post.save!

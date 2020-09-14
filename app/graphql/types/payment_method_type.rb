@@ -5,7 +5,7 @@ class Types::PaymentMethodType < Types::BaseType
   field :brand, String, null: false
   field :exp_month, String, null: false
   field :exp_year, String, null: false
-  
+
   def name
     object.billing_details.name
   end
