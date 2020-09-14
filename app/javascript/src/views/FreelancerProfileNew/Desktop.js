@@ -170,7 +170,7 @@ function FreelancerProfileDesktop({ data }) {
 
   const reviews = state.reviews.map((review) => {
     return (
-      <Card key={review.id} my="m" p="m">
+      <Card key={review.id} my="m" p="m" borderRadius={8}>
         <Box display="flex">
           <Box
             as="img"
@@ -194,7 +194,7 @@ function FreelancerProfileDesktop({ data }) {
 
   return (
     <Box maxWidth="1024px" mx="auto">
-      <Box minHeight="514px" bg="#fff" mt="m" p="12px">
+      <Card minHeight="514px" bg="#fff" mt="m" p="12px" borderRadius={8}>
         <Box
           as="img"
           src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/92b19080680791.5ce7e63751fcd.jpg"
@@ -203,6 +203,7 @@ function FreelancerProfileDesktop({ data }) {
           bg="red500"
           height="300px"
           mx="auto"
+          borderRadius={8}
         />
         <Box display="flex">
           <Box
@@ -224,7 +225,7 @@ function FreelancerProfileDesktop({ data }) {
             <Text>{data.specialist.bio}</Text>
           </Box>
         </Box>
-      </Box>
+      </Card>
       <Box display="flex">
         <Box display="flex" flexWrap="wrap">
           {skillChips}
