@@ -19,7 +19,7 @@ class Mutations::SetCoverPhoto < Mutations::BaseMutation
 
   def resolve(blob:)
     current_user.cover_photo.attach(blob)
-    { specialist: current_user }
+    {specialist: current_user}
   rescue ActiveSupport::MessageVerifier::InvalidSignature
     ApiError.invalid_request(code: 'INVALID_BLOB', message: 'Invalid blob')
   end

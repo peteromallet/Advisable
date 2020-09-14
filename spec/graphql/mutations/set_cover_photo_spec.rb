@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Mutations::SetCoverPhoto do
   let(:specialist) { create(:specialist) }
-  let(:context) { { current_user: specialist } }
+  let(:context) { {current_user: specialist} }
 
   let(:query) do
     <<-GRAPHQL
@@ -41,7 +41,7 @@ describe Mutations::SetCoverPhoto do
   end
 
   context 'when no specialist is signed in' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it 'returns an error' do
       error = execute['errors'].first['extensions']['code']
@@ -50,7 +50,7 @@ describe Mutations::SetCoverPhoto do
   end
 
   context 'when a user is signed in' do
-    let(:context) { { current_user: create(:user) } }
+    let(:context) { {current_user: create(:user)} }
 
     it 'returns an error' do
       error = execute['errors'].first['extensions']['code']
