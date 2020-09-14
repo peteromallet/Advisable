@@ -188,6 +188,14 @@ class Types::SpecialistType < Types::BaseType
     description 'Wether or not the specialist will work remotely'
   end
 
+  field :answers, [Types::Answer], null: true do
+    description 'Answers provided by specialist'
+  end
+
+  def answers
+    object.answers
+  end
+
   field :guild, Boolean, null: true do
     authorize :is_specialist, :is_admin
     description 'Whether or not the specialist is a Guild user'

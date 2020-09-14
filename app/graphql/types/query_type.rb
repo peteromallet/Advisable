@@ -267,6 +267,12 @@ class Types::QueryType < Types::BaseType
     raise ApiError::InvalidRequest.new('notFound', 'Invoice not found')
   end
 
+  field :questions, [Types::Question], 'Returns a list of questions', null: true
+
+  def questions
+    Question.all
+  end
+
     # Guild
   field :guild_post, Types::Guild::PostInterface, null: true do
     argument :id, ID, required: true
