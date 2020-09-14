@@ -7,13 +7,13 @@ describe Accounts::RequestPasswordReset do
     allow(AccountMailer).to receive(:reset_password).and_return(email)
   end
 
-  it 'sets the reset_sent_at attribute' do 
+  it 'sets the reset_sent_at attribute' do
     specialist = create(:specialist, reset_sent_at: nil)
     Accounts::RequestPasswordReset.call(specialist.email)
     expect(specialist.reload.reset_sent_at).to_not be_nil
   end
 
-  it 'sets the reset_digest attribute' do 
+  it 'sets the reset_digest attribute' do
     specialist = create(:specialist, reset_digest: nil)
     Accounts::RequestPasswordReset.call(specialist.email)
     expect(specialist.reload.reset_digest).to_not be_nil

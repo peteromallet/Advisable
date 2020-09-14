@@ -18,7 +18,7 @@ describe Airtable::ClientContact do
         airtable = Airtable::ClientContact.new({
           "Client" => [client.airtable_id]
         }, id: user.airtable_id)
-        expect {airtable.sync}.to change {
+        expect { airtable.sync }.to change {
           user.reload.client
         }.from(nil).to(client)
       end

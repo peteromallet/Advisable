@@ -177,16 +177,6 @@ Layout/IndentationWidth:
     - 'spec/models/address_spec.rb'
     - 'spec/services/accounts/reset_password_spec.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: AllowDoxygenCommentStyle, AllowGemfileRubyComment.
-Layout/LeadingCommentSpace:
-  Exclude:
-    - 'app/models/concerns/airtable/specialist.rb'
-    - 'app/models/previous_project.rb'
-    - 'app/models/webhook_event.rb'
-    - 'db/migrate/20200826024210_create_guild_reactions.rb'
-
 # Offense count: 7
 # Cop supports --auto-correct.
 Layout/MultilineBlockLayout:
@@ -230,71 +220,11 @@ Layout/RescueEnsureAlignment:
     - 'app/graphql/mutations/start_task.rb'
     - 'app/services/accounts/request_password_reset.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-Layout/SpaceAfterComma:
-  Exclude:
-    - 'app/graphql/mutations/set_type_for_project.rb'
-    - 'app/mailers/user_mailer.rb'
-    - 'spec/graphql/mutations/create_guild_comment_spec.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleForEmptyBraces.
-# SupportedStyles: space, no_space
-# SupportedStylesForEmptyBraces: space, no_space
-Layout/SpaceBeforeBlockBraces:
-  EnforcedStyle: space
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/SpaceBeforeComma:
-  Exclude:
-    - 'app/services/projects/update.rb'
-
-# Offense count: 7
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBrackets.
-# SupportedStyles: space, no_space, compact
-# SupportedStylesForEmptyBrackets: space, no_space
-Layout/SpaceInsideArrayLiteralBrackets:
-  Exclude:
-    - 'config/environments/production.rb'
-    - 'db/migrate/20190821141634_create_active_storage_tables.active_storage.rb'
-    - 'spec/controllers/stripe_events_controller_spec.rb'
-
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: space, no_space
-Layout/SpaceInsideParens:
-  Exclude:
-    - 'app/mailers/user_mailer.rb'
-    - 'app/services/applications/request_references.rb'
-    - 'app/services/projects/update.rb'
-    - 'app/services/users/attach_payment_method.rb'
-    - 'spec/mailers/account_mailer_spec.rb'
-    - 'spec/mailers/user_mailer_spec.rb'
-    - 'spec/models/concerns/stripe_events/payment_intent_succeeded_spec.rb'
-    - 'spec/models/concerns/stripe_events/setup_intent_succeeded_spec.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Layout/SpaceInsidePercentLiteralDelimiters:
-  Exclude:
-    - 'db/seeds/02_guild_seeds.rb'
-
 # Offense count: 91
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: final_newline, final_blank_line
 Layout/TrailingEmptyLines:
-  Enabled: false
-
-# Offense count: 62
-# Cop supports --auto-correct.
-# Configuration parameters: AllowInHeredoc.
-Layout/TrailingWhitespace:
   Enabled: false
 
 # Offense count: 14

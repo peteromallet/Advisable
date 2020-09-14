@@ -7,7 +7,7 @@ RSpec.describe Booking, type: :model do
     booking = build(:booking)
     expect(booking).to be_valid
   end
-  
+
   context "when state is Proposed" do
     it 'is invalid if there is already a proposal for that applicant' do
       application = create(:application)

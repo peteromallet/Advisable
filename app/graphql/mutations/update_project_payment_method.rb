@@ -40,7 +40,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
 
     user.update_payments_setup
     user.sync_to_airtable
-    
+
     if user.save
       {
         user: user

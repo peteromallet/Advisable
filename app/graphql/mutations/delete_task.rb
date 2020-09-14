@@ -15,7 +15,7 @@ class Mutations::DeleteTask < Mutations::BaseMutation
     task = Task.find_by_uid!(args[:task])
     policy = TaskPolicy.new(context[:current_user], task)
     raise Service::Error.new("tasks.cantDeleteAssigned") unless policy.delete
-    
+
     task.destroy
     task.remove_from_airtable
 

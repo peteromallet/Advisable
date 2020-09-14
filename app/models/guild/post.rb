@@ -30,7 +30,7 @@ module Guild
       self.status = Post.statuses["published"]
     end
 
-    # General, Opportunity, Advice Required, Case Study 
+    # General, Opportunity, Advice Required, Case Study
     def normalized_type
       case type
       when "Post"

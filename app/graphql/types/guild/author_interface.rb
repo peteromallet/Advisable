@@ -1,5 +1,5 @@
 module Types::Guild::AuthorInterface
-  include Types::BaseInterface 
+  include Types::BaseInterface
   field_class BaseField
 
   orphan_types Types::Guild::CommentType, Types::Guild::ReactionType

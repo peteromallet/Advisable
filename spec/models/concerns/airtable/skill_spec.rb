@@ -3,14 +3,14 @@ require 'rails_helper'
 describe Airtable::Skill do
   # We can declare a fields let variable which the shared examples below will
   # use as the airtable fields.
-  let(:fields) {{
+  let(:fields) { {
     "Name" => "Testing",
     "Category" => ["Testing"]
   }}
 
   include_examples "airtable syncing"
   include_examples "sync airtable column", "Name", to: :name
-  
+
   it "syncs the category" do
     record = create(:skill, category: nil)
     airtable = Airtable::Skill.new(fields, id: record.airtable_id)

@@ -24,7 +24,7 @@ RSpec.describe Guild::Comment, type: :model do
     it "is set to published" do
       comment = build(:guild_comment)
       expect(comment.published?).to_not be
-      expect { comment.save }.to change { 
+      expect { comment.save }.to change {
         comment.status
       }.from("draft").to("published")
     end

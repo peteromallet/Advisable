@@ -16,23 +16,23 @@ describe Mutations::Guild::CreateComment do
     GRAPHQL
   }
 
-  context "with an unauthorized user" do 
+  context "with an unauthorized user" do
     let(:non_guild_specialist) { build(:specialist) }
     let(:guild_specialist) { build(:specialist, :guild) }
-    
+
     describe "non guild user" do
       it "returns a null guild comment" do
         resp = AdvisableSchema.execute(
-          query, 
-          context: { current_user: non_guild_specialist }
+          query,
+          context: {current_user: non_guild_specialist}
         )
         expect(resp.dig("data", "deleteGuildComment", "guildCommentId")).to be_nil
       end
 
       it "errors when the specialist didn't create the comment" do
         resp = AdvisableSchema.execute(
-          query, 
-          context: { current_user: guild_specialist }
+          query,
+          context: {current_user: guild_specialist}
         )
         expect(guild_comment.specialist_id).to_not eq(guild_specialist.id)
         error = resp["errors"][0]
@@ -45,7 +45,7 @@ describe Mutations::Guild::CreateComment do
     let(:guild_post) { guild_comment.post }
 
     subject(:delete_guild_post) do
-      resp = AdvisableSchema.execute(query, context: { current_user: specialist })
+      resp = AdvisableSchema.execute(query, context: {current_user: specialist})
       resp.dig("data", "deleteGuildComment")
     end
 

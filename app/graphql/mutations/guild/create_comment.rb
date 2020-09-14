@@ -28,7 +28,7 @@ class Mutations::Guild::CreateComment < Mutations::BaseMutation
       specialist: context[:current_user],
       body: body
     }
-    
+
     if guild_comment_id
       parent_comment = post.parent_comments.find_by(id: guild_comment_id)
       comment_policy = Guild::CommentPolicy.new(context[:current_user], parent_comment)

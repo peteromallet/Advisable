@@ -1,6 +1,6 @@
 # Handler for the stripe setup_intent.succeeded webhook event. This fires when
 # a user has completed the setup flow for adding a card. We do two things
-# inside this class. We attach the payment method to the customer object by 
+# inside this class. We attach the payment method to the customer object by
 # calling the AttachPaymentMethod service. Then we update the users
 # 'setup_intent_status' is set to 'succeeded' to indicate that the setup process
 # has been complete. During the flow for adding a card we poll the API until the
