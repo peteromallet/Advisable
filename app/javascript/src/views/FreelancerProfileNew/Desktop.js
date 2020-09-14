@@ -34,11 +34,11 @@ const setFilterParams = (list, filter) =>
 
 const init = (data) => {
   const projects = data.specialist.profileProjects;
+  const reviews = data.specialist.reviews;
   const {
     clientNames,
     industries: industriesList,
     skills: skillsList,
-    reviews,
   } = getProjectValues(projects);
   const skillsFilter = [];
   const skillsParams = setFilterParams(skillsList, skillsFilter);
