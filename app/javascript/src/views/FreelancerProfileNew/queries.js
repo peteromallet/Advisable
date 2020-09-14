@@ -62,14 +62,7 @@ export const GET_PROFILE = gql`
         role
         comment
         companyName
-        ratings {
-          overall
-          skills
-          communication
-          qualityOfWork
-          availability
-          adherenceToSchedule
-        }
+        avatar
       }
     }
   }
