@@ -24,7 +24,7 @@ function FreelancerProfileNew() {
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
-  return isDesktop ? <Desktop data={data} /> : <Mobile data={data} />;
+  return <Desktop data={data} />;
 }
 
 export default FreelancerProfileNew;
