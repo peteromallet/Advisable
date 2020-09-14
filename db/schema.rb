@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_14_130208) do
+ActiveRecord::Schema.define(version: 2020_09_14_133840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2020_09_14_130208) do
     t.bigint "specialist_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "uid"
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["specialist_id"], name: "index_answers_on_specialist_id"
   end
@@ -556,6 +557,7 @@ ActiveRecord::Schema.define(version: 2020_09_14_130208) do
     t.string "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "uid"
   end
 
   create_table "reviews", force: :cascade do |t|
