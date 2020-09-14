@@ -24,7 +24,7 @@ FactoryBot.define do
   factory :opportunity_guild_post, parent: :guild_post, class: 'Guild::Post::Opportunity' do
     type { "Opportunity" }
   end
-  
+
   factory :case_study_guild_post, parent: :guild_post, class: 'Guild::Post::CaseStudy' do
     type { "CaseStudy" }
   end

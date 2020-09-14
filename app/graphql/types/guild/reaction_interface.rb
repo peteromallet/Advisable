@@ -1,5 +1,5 @@
 module Types::Guild::ReactionInterface
-  include Types::BaseInterface 
+  include Types::BaseInterface
   field_class BaseField
 
   orphan_types Types::Guild::CommentType
@@ -13,7 +13,7 @@ module Types::Guild::ReactionInterface
 
   field :reacted, Boolean, null: false do
     description 'Whether the current_user has reacted to the guild resource'
-  end  
+  end
   def reacted
     object.reactions.exists?(specialist: context[:current_user])
   end

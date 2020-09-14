@@ -16,7 +16,7 @@ class Mutations::CompleteSetup < Mutations::BaseMutation
 
     if specialist.application_stage != "Started"
       raise ApiError::InvalidRequest.new(
-        "invalidApplicationStage", 
+        "invalidApplicationStage",
         "The account status must be 'Started' but it is #{specialist.application_stage}"
       )
     end

@@ -35,7 +35,7 @@ describe StripeEvents::SetupIntentSucceeded do
   end
 
   context 'when the user cant be found' do
-    let!(:user) { create(:user, stripe_setup_intent_id: nil )}
+    let!(:user) { create(:user, stripe_setup_intent_id: nil) }
 
     it 'returns true' do
       expect(StripeEvents.process(event)).to be_truthy

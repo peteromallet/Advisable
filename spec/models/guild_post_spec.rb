@@ -80,7 +80,7 @@ RSpec.describe Guild::Post, type: :model do
 
     it "cannot have multiple reactions from a single specialist" do
       expect(guild_post.reactions).to be_empty
-      reactions = build_list(:guild_reaction, 2, specialist: specialist) 
+      reactions = build_list(:guild_reaction, 2, specialist: specialist)
       guild_post.reactions << reactions.first
       guild_post.reactions << reactions.last
 

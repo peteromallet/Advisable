@@ -8,7 +8,7 @@
 # A previous project can either be a draft or published. A project is marked as
 # a draft by setting 'draft' to true.
 #
-# Previous projects that are added by the specialist in their profile need to
+#  Previous projects that are added by the specialist in their profile need to
 # be verified by a contact who worked on the project. This is done via linkedin
 # by comparing the client contact name with their linkedin name.
 #

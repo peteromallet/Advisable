@@ -3,7 +3,7 @@ class Mutations::Guild::DeleteComment < Mutations::BaseMutation
   graphql_name "DeleteGuildComment"
 
   argument :guild_comment_id, ID, required: true
-  
+
   field :guild_comment_id, ID, null: true
   field :errors, [Types::Error], null: true
 

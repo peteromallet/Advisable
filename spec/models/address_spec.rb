@@ -38,7 +38,7 @@ describe Address do
           "country" => "IE",
           "postcode" => "postcode"
         })
-        expect(address.to_h).to eq({ 
+        expect(address.to_h).to eq({
           "line1" => "line1",
           "line2" => "line2",
           "city" => "city",

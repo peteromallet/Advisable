@@ -5,8 +5,8 @@
 #
 class Projects::Update < ApplicationService
   attr_reader :project, :attributes
-  
-  def initialize(project: , attributes: )
+
+  def initialize(project:, attributes:)
     @project = project
     @attributes = attributes
   end

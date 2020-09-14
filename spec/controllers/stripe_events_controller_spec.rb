@@ -46,8 +46,7 @@ PAYMENT_INTENT_EVENT = {
       "capture_method": "automatic",
       "charges": {
         "object": "list",
-        "data": [
-        ],
+        "data": [],
         "has_more": false,
         "total_count": 0,
         "url": "/v1/charges?payment_intent=pi_1EsW3oAs6WKG5Dhf4zdQkIoi"

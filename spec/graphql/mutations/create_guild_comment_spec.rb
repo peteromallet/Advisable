@@ -28,12 +28,12 @@ describe Mutations::Guild::CreateComment do
     }
   }
 
-  context "with a non guild specialist" do 
+  context "with a non guild specialist" do
     let(:non_guild_specialist) { build(:specialist) }
 
     it "returns a null guild comment" do
       resp = AdvisableSchema.execute(
-        query[guild_post.id], 
+        query[guild_post.id],
         context: { current_user: non_guild_specialist }
       )
       expect(resp.dig("data", "createGuildComment", "guildComment")).to be_nil
@@ -43,12 +43,12 @@ describe Mutations::Guild::CreateComment do
   context "with a guild specialist" do
     subject(:create_guild_comment) do
       resp = AdvisableSchema.execute(
-        query[guild_post.id], 
+        query[guild_post.id],
         context: { current_user: specialist }
       )
       resp.dig("data", "createGuildComment", "guildComment")
     end
-    
+
     it "creates a new guild comment" do
       expect { subject }.to change {
         guild_post.reload.comments_count
@@ -57,11 +57,11 @@ describe Mutations::Guild::CreateComment do
     end
 
     it "creates a comment thats associated with the post" do
-      expect(subject.dig("post","id")).to eq(guild_post.id)
+      expect(subject.dig("post", "id")).to eq(guild_post.id)
     end
 
     it "creates a comment belonging to the curret_user specialist" do
-      expect(subject.dig("author","id")).to eq(specialist.uid)
+      expect(subject.dig("author", "id")).to eq(specialist.uid)
     end
 
     describe "child comments" do
@@ -90,14 +90,14 @@ describe Mutations::Guild::CreateComment do
       }
 
       it "creates a child comment" do
-        expect { 
-          resp 
-        }.to change { guild_comment.reload.child_comments.size}.by(1)
+        expect {
+          resp
+        }.to change { guild_comment.reload.child_comments.size }.by(1)
       end
 
       it "has an id thats different than the parent_comment id" do
         data = resp.dig("data", "createGuildComment", "guildComment")
-        
+
         expect(data.dig("parentComment", "id")).to eq(guild_comment.id)
         expect(data["id"]).to_not eq(guild_comment.id)
       end

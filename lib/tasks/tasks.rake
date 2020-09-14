@@ -7,7 +7,7 @@ namespace :tasks do
     end
   end
 
-  # This task willl trigger a webhook for any tasks where their due date is 3 
+  # This task willl trigger a webhook for any tasks where their due date is 3
   # days away. This should be setup to run on a daily basis.
   task trigger_webhooks_for_upcoming_due_date: :environment do
     Task.due_date(3.days.from_now).find_each do |task|

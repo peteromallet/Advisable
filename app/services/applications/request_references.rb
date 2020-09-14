@@ -1,7 +1,7 @@
 class Applications::RequestReferences < ApplicationService
   attr_reader :application
 
-  def initialize(application: )
+  def initialize(application:)
     @application = application
   end
 

@@ -24,7 +24,7 @@ RSpec.describe Guild::Comment, type: :model do
     it "is set to published" do
       comment = build(:guild_comment)
       expect(comment.published?).to_not be
-      expect { comment.save }.to change { 
+      expect { comment.save }.to change {
         comment.status
       }.from("draft").to("published")
     end
@@ -33,7 +33,7 @@ RSpec.describe Guild::Comment, type: :model do
       parent_comment = create(:guild_comment, :with_guild_post)
       child_comment = build(:guild_comment, parent_comment: parent_comment)
 
-      expect{ child_comment.save }.to change {
+      expect { child_comment.save }.to change {
         child_comment.post
       }.from(nil).to(parent_comment.post)
     end

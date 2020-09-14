@@ -94,7 +94,7 @@ class Types::MutationType < GraphQL::Schema::Object
         mutation: Mutations::RequestApplicationReminder
   field :request_application_callback,
         mutation: Mutations::RequestApplicationCallback
-  
+
   # Guild
   field :create_guild_comment,
         mutation: Mutations::Guild::CreateComment
