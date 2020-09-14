@@ -79,7 +79,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'spring-commands-rspec'
-  gem 'prettier'
   gem 'graphql_playground-rails'
   gem 'pry-rails'
   gem 'niceql'

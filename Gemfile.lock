@@ -239,7 +239,6 @@ GEM
     parser (2.7.1.4)
       ast (~> 2.4.1)
     pg (1.2.3)
-    prettier (0.20.1)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -437,7 +436,6 @@ DEPENDENCIES
   omniauth-rails_csrf_protection (~> 0.1)
   parser
   pg (>= 0.18, < 2.0)
-  prettier
   pry
   pry-rails
   puma (~> 4.1)
