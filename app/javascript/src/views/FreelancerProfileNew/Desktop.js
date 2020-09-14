@@ -34,11 +34,11 @@ const setFilterParams = (list, filter) =>
 
 const init = (data) => {
   const projects = data.specialist.profileProjects;
+  const reviews = data.specialist.reviews;
   const {
     clientNames,
     industries: industriesList,
     skills: skillsList,
-    reviews,
   } = getProjectValues(projects);
   const skillsFilter = [];
   const skillsParams = setFilterParams(skillsList, skillsFilter);
@@ -172,6 +172,14 @@ function FreelancerProfileDesktop({ data }) {
     return (
       <Card key={review.id} my="m" p="m">
         <Box display="flex">
+          <Box
+            as="img"
+            width="66px"
+            height="66px"
+            src={review.avatar}
+            css="object-fit: cover;"
+            borderRadius="33px"
+          />
           <Box width="320px">
             <Text>{review.name}</Text>
             <Text>{review.role}</Text>
