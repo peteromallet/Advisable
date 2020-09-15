@@ -96,6 +96,7 @@ class Types::MutationType < GraphQL::Schema::Object
         mutation: Mutations::RequestApplicationCallback
 
   field :answer_question, mutation: Mutations::AnswerQuestion
+  field :delete_answer, mutation: Mutations::DeleteAnswer
 
   # Guild
   field :create_guild_comment,

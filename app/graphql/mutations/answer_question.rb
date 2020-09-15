@@ -9,8 +9,8 @@ class Mutations::AnswerQuestion < Mutations::BaseMutation
 
     unless current_user.respond_to?(:answers)
       ApiError.invalid_request(
-        code: 'MUST_HAVE_ANSWERS',
-        message: 'Current user must be able to provide answers.'
+        code: "MUST_HAVE_ANSWERS",
+        message: "Current user must be able to provide answers."
       )
     end
 

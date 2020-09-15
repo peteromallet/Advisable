@@ -42,7 +42,7 @@ RSpec.describe Mutations::AnswerQuestion do
     end
   end
 
-  describe 'errors' do
+  describe "errors" do
     context "specialist not logged in" do
       let(:context) { {current_user: nil} }
 
