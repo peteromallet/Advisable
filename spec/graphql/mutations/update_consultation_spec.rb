@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::SendConsultationRequest do
+RSpec.describe Mutations::SendConsultationRequest do
   let!(:consultation) do
     create(:consultation, status: 'Request Started', topic: nil)
   end

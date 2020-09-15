@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::SetTaskRepeat do
+RSpec.describe Mutations::SetTaskRepeat do
   let(:task) { create(:task, repeat: nil) }
 
   let(:query) do

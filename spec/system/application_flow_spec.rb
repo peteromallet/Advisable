@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Application flow' do
+RSpec.describe 'Application flow' do
   before :each do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     # mock the skills endpoint for the add a previous project modal

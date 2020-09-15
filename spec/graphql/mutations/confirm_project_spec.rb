@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::ConfirmProject do
+RSpec.describe Mutations::ConfirmProject do
   let(:project) { create(:project, status: 'Brief Pending Confirmation') }
 
   let(:query) do

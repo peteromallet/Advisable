@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::UpdateAvailability do
+RSpec.describe Mutations::UpdateAvailability do
   let(:user) { create(:user, availability: []) }
   let(:time) { 2.days.from_now.utc.iso8601 }
 

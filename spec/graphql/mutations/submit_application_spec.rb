@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::SubmitApplication do
+RSpec.describe Mutations::SubmitApplication do
   let(:application) do
     create(:application, applied_at: nil, status: 'Invited To Apply')
   end

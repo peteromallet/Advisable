@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::CompleteTutorial do
+RSpec.describe Mutations::CompleteTutorial do
   let(:user) { create(:user, completed_tutorials: []) }
   let(:context) { { current_user: user } }
 

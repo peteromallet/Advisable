@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::ApproveTask do
+RSpec.describe Mutations::ApproveTask do
   let(:task) { create(:task, stage: 'Submitted') }
 
   let(:query) do

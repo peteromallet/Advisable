@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::UpdateProfile do
+RSpec.describe Mutations::UpdateProfile do
   let(:skill) { create(:skill) }
   let!(:country) { create(:country, alpha2: 'IE', name: 'Ireland') }
   let(:specialist) do

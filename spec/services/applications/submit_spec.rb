@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Applications::Submit do
+RSpec.describe Applications::Submit do
   let(:application) { create(:application, status: 'Invited To Apply') }
 
   before :each do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe TaskPolicy do
+RSpec.describe TaskPolicy do
   let(:task) { create(:task) }
 
   describe '#update_due_date' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::Signup do
+RSpec.describe Mutations::Signup do
   let(:user) { create(:user, password: nil) }
   let(:id) { user.airtable_id }
   let(:email) { user.email }

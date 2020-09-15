@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe WebhookConfiguration::Application do
+RSpec.describe WebhookConfiguration::Application do
   describe "#data" do
     let(:application) { create(:application) }
 

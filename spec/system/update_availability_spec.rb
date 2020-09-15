@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Update availability' do
+RSpec.describe 'Update availability' do
   let(:user) { create(:user) }
 
   it 'sets the clients availability' do

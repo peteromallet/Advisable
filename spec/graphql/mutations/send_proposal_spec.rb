@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::SendProposal do
+RSpec.describe Mutations::SendProposal do
   let(:project) { create(:project, status: 'Brief Confirmed') }
   let(:application) do
     create(:application, status: 'Interview Completed', project: project)

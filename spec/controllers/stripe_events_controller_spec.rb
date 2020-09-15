@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe StripeEventsController do
+RSpec.describe StripeEventsController do
   it 'calls StripeEvents.process' do
     event = double(Stripe::Event)
     allow(Stripe::Webhook).to receive(:construct_event).and_return(event)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Specialist settings' do
+RSpec.describe 'Specialist settings' do
   it 'allows them to add a previous project' do
     specialist = create(:specialist)
     create(:skill, name: 'React')

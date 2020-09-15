@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::ResetPassword do
+RSpec.describe Mutations::ResetPassword do
   let(:token) { Token.new }
   let(:input_token) { token }
   let(:digest) { Token.digest(token) }

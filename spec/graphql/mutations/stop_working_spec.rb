@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::StopWorking do
+RSpec.describe Mutations::StopWorking do
   let(:application) { create(:application, status: 'Working') }
   let(:context) { { current_user: application.project.user } }
   let(:query) do

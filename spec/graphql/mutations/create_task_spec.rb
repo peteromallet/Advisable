@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::CreateTask do
+RSpec.describe Mutations::CreateTask do
   let(:user) { create(:user) }
   let(:specialist) { create(:specialist) }
   let(:project) { create(:project, user: user) }

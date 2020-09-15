@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Accounts::RequestPasswordReset do
+RSpec.describe Accounts::RequestPasswordReset do
   before :each do
     email = double("Email")
     allow(email).to receive(:deliver_later)

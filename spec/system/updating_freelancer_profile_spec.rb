@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Freelancer profile" do
+RSpec.describe "Freelancer profile" do
   describe "introduction" do
     it "updates their introduction" do
       specialist = create(:specialist)

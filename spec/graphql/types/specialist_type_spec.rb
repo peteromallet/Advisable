@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Types::SpecialistType do
+RSpec.describe Types::SpecialistType do
   let(:specialist) { create(:specialist) }
   let(:context) { { current_user: specialist } }
   let(:response) { AdvisableSchema.execute(query, context: context) }

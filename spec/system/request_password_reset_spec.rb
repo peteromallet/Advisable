@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Request password reset" do
+RSpec.describe "Request password reset" do
   it "tells the user to check their inbox" do
     user = create(:user)
     visit "/reset_password"

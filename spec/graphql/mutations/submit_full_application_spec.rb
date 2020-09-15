@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::SubmitFullApplication do
+RSpec.describe Mutations::SubmitFullApplication do
   let(:specialist) { create(:specialist, application_stage: 'On Hold') }
 
   let(:query) do

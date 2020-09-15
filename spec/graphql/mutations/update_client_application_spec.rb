@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::UpdateClientApplication do
+RSpec.describe Mutations::UpdateClientApplication do
   before :each do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end

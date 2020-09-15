@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Airtable do
+RSpec.describe Airtable do
   describe "self.sync" do
     it "calls #sync on each descendant of Airtable::Base" do
       Zeitwerk::Loader.eager_load_all

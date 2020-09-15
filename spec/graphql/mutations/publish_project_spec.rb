@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::PublishProject do
+RSpec.describe Mutations::PublishProject do
   let(:project) { create(:project, status: :draft) }
   let(:context) { { current_user: project.user } }
 

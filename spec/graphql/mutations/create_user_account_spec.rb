@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::CreateUserAccount do
+RSpec.describe Mutations::CreateUserAccount do
   let(:skill) { create(:skill) }
   let(:skill_name) { skill.name }
   let(:industry) { create(:industry) }

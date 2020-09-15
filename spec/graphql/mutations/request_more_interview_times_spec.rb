@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::RequestMoreInterviewTimes do
+RSpec.describe Mutations::RequestMoreInterviewTimes do
   let(:interview) { create(:interview, status: 'Call Requested') }
 
   let(:query) do

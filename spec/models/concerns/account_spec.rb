@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Account do
+RSpec.describe Account do
   describe "#find_by_uid" do
     context "when passed a user uid" do
       it "returns the user" do

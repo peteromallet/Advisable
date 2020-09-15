@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::UpdatePaymentSettings do
+RSpec.describe Mutations::UpdatePaymentSettings do
   let(:specialist) { create(:specialist) }
   let(:query) do
     <<-GRAPHQL

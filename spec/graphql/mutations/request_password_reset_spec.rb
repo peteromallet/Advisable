@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::RequestPasswordReset do
+RSpec.describe Mutations::RequestPasswordReset do
   let(:user) { create(:user, reset_sent_at: nil, reset_digest: nil) }
   let(:email) { user.email }
   let(:query) do

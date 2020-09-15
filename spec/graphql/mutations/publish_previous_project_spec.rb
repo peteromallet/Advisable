@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::PublishPreviousProject do
+RSpec.describe Mutations::PublishPreviousProject do
   let(:project) do
     create(
       :previous_project,

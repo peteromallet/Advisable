@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Accept interview request' do
+RSpec.describe 'Accept interview request' do
   let(:user) {
     create(:user, {
       availability: [

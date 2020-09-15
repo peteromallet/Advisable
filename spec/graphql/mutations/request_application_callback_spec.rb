@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::RequestApplicationCallback do
+RSpec.describe Mutations::RequestApplicationCallback do
   let(:application_status) { :accepted }
   let(:user) { create(:user, application_status: application_status) }
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Tasks::Create do
+RSpec.describe Tasks::Create do
   let(:application) { create(:application) }
   let(:attributes) {{  }}
 

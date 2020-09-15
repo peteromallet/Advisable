@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::Signup do
+RSpec.describe Mutations::Signup do
   let(:first_name) { 'John' }
   let(:last_name) { 'Doe' }
   let(:email) { 'test@test.com' }

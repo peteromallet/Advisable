@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::UpdateProject do
+RSpec.describe Mutations::UpdateProject do
   let(:project) { create(:project) }
   let(:query) do
     <<-GRAPHQL

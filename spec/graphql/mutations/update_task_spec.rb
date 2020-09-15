@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::UpdateTask do
+RSpec.describe Mutations::UpdateTask do
   let(:task) do
     create(
       :task,

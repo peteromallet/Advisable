@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Project setup flow' do
+RSpec.describe 'Project setup flow' do
   let(:project) do
     create(
       :project,

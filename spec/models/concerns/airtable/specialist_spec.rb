@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Airtable::Specialist do
+RSpec.describe Airtable::Specialist do
   include_examples "airtable syncing"
   include_examples "sync airtable association", "Country", to: :country
   let(:specialist) { create(:specialist) }

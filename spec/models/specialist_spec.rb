@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Specialist do
+RSpec.describe Specialist do
   include_examples "uid"
 
   it { should have_many(:applications) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::SubmitClientApplication do
+RSpec.describe Mutations::SubmitClientApplication do
   let(:user) { create(:user, application_status: :started) }
   let(:query) do
     <<-GRAPHQL

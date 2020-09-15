@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Updating a proposal' do
+RSpec.describe 'Updating a proposal' do
   let(:application) { create(:application, status: 'Proposed') }
 
   before :each do

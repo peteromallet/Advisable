@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Applications::Update do
+RSpec.describe Applications::Update do
   let(:specialist) { create(:specialist) }
   let(:project) { create(:project, questions: ['Is this a test?']) }
   let(:previous_project) do

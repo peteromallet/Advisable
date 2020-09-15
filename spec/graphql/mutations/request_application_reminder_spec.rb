@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::RejectApplication do
+RSpec.describe Mutations::RejectApplication do
   let(:user) { create(:user, application_status: :rejected) }
 
   let(:query) do

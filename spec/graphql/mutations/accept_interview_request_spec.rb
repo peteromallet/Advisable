@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::AcceptInterviewRequest do
+RSpec.describe Mutations::AcceptInterviewRequest do
   let(:specialist) { create(:specialist) }
   let(:application) { create(:application, specialist: specialist) }
   let(:interview) { create(:interview, application: application) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Manaing talent' do
+RSpec.describe 'Manaing talent' do
   let(:application) { create(:application, status: 'Working') }
 
   before :each do
