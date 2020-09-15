@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Project view', type: :system do
+RSpec.describe 'Project view', type: :system do
   before :each do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Interview).to receive(:sync_to_airtable)

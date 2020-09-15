@@ -1,5 +1,5 @@
 require "rails_helper"
 
-describe Airtable::Country do
+RSpec.describe Airtable::Country do
   include_examples "airtable syncing"
 end

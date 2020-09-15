@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Types::ClientApplicationType do
+RSpec.describe Types::ClientApplicationType do
   let(:user) { create(:user, application_status: :started) }
   let(:query) do
     <<-GRAPHQL

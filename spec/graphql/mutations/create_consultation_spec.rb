@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::CreateConsultation do
+RSpec.describe Mutations::CreateConsultation do
   let!(:specialist) { create(:specialist) }
   let(:skill) { create(:skill) }
   let(:first_name) { 'John' }

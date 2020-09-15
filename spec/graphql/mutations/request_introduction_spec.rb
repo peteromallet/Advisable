@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::RequestIntroduction do
+RSpec.describe Mutations::RequestIntroduction do
   let(:application) { create(:application, status: 'Applied') }
   let(:time) { 2.days.from_now.strftime('%Y-%m-%dT%H:%M:00Z') }
 

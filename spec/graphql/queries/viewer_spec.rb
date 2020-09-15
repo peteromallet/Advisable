@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Types::PreviousProject do
+RSpec.describe Types::PreviousProject do
   let(:query) do
     <<-GRAPHQL
       {

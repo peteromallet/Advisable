@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Projects::Confirm do
+RSpec.describe Projects::Confirm do
   context "when the project is pending approval" do
     let(:project) { create(:project, status: "Brief Pending Confirmation") }
 

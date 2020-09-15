@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe UserMailer do
+RSpec.describe UserMailer do
   describe '#confirm' do
     let(:token) { Token.new }
     let(:user) { create(:user, confirmation_digest: Token.digest(token)) }

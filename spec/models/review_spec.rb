@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Review do
+RSpec.describe Review do
   it 'has a valid factory' do
     review = build(:review)
     expect(review).to be_valid

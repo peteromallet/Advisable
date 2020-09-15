@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::ResendConfirmationEmail do
+RSpec.describe Mutations::ResendConfirmationEmail do
   let(:user) { create(:user, confirmation_digest: nil) }
   let(:query) do
     <<-GRAPHQL

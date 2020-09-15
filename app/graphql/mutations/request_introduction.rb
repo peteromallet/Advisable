@@ -7,8 +7,8 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
   field :application, Types::ApplicationType, null: true
 
   def authorized?(**args)
+    requires_current_user!
     application = Application.find_by_uid_or_airtable_id!(args[:application])
-    ApiError.not_authenticated unless current_user.present?
     policy = ApplicationPolicy.new(current_user, application)
     return true if policy.write
     ApiError.not_authorized('You do not have access to this')

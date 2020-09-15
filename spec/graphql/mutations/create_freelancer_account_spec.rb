@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::CreateFreelancerAccount do
+RSpec.describe Mutations::CreateFreelancerAccount do
   let(:project) { create(:project) }
   let(:skill) { create(:skill, name: 'Marketing') }
   let(:skill_name) { skill.name }

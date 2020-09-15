@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Interviews::ResendInterviewRequest do
+RSpec.describe Interviews::ResendInterviewRequest do
   let(:interview) do
     create(
       :interview,

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::StartTask do
+RSpec.describe Mutations::StartTask do
   let(:task) { create(:task, stage: 'Assigned') }
 
   let(:query) do

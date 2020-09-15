@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::UpdateProjectPaymentMethod do
+RSpec.describe Mutations::UpdateProjectPaymentMethod do
   let(:user) { create(:user, project_payment_method: nil) }
   let(:query) do
     <<-GRAPHQL

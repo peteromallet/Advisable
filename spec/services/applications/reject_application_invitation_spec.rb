@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Applications::RejectApplicationInvitation do
+RSpec.describe Applications::RejectApplicationInvitation do
   let(:application) { create(:application, status: "Invited To Apply") }
   let(:reason) { "Rejection reason" }
 

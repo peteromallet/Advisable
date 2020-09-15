@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'specialists root query' do
+RSpec.describe 'specialists root query' do
   let(:skill) { create(:skill) }
   let(:specialist) { create(:specialist) }
   let(:query_args) { "skill: \"#{skill.name}\"" }

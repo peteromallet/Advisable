@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Project do
+RSpec.describe Project do
   include_examples 'Airtable::Syncable'
   it { should have_many(:applications) }
 

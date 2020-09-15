@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::CreateJob do
+RSpec.describe Mutations::CreateJob do
   let(:oauth_viewer) do
     OauthViewer.new(
       {

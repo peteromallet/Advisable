@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::DeleteTask do
+RSpec.describe Mutations::DeleteTask do
   let!(:user) { create(:user) }
   let!(:specialist) { create(:specialist) }
   let!(:project) { create(:project, user: user) }

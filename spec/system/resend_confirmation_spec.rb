@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Resending confirmation request" do
+RSpec.describe "Resending confirmation request" do
   it "resends the confirmation email" do
     user = create(:user, confirmed_at: nil)
     authenticate_as user

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::ToggleSourcing do
+RSpec.describe Mutations::ToggleSourcing do
   let(:sourcing) { false }
   let(:project) { create(:project, sourcing: sourcing) }
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe User, type: :model do
+RSpec.describe User, type: :model do
   include_examples "uid"
   include_examples "account"
 

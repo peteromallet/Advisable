@@ -46,6 +46,7 @@ class Specialist < ApplicationRecord
 
   has_many :specialist_skills, dependent: :destroy
   has_many :skills, through: :specialist_skills
+  has_many :answers
 
   # We also have an 'image' column in the specalists table. This is a deprecated
   # column that we used to use to store the avatar from airtable in.
@@ -59,7 +60,7 @@ class Specialist < ApplicationRecord
   attr_encrypted :phone_number, key: [ENV['ENCRYPTION_KEY']].pack('H*')
 
   validates :number_of_projects,
-            inclusion: { in: %w[1-5 5-20 20+ None], message: 'is invalid' },
+            inclusion: {in: %w[1-5 5-20 20+ None], message: 'is invalid'},
             allow_nil: true
 
   register_tutorial 'fixedProjects'

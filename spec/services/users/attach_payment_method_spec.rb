@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Users::AttachPaymentMethod do
+RSpec.describe Users::AttachPaymentMethod do
   let(:user) { double(User, stripe_customer_id: "cu_12345") }
   let(:payment_method_id) { "pi_12345" }
 

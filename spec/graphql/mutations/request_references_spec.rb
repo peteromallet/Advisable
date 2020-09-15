@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::RequestReferences do
+RSpec.describe Mutations::RequestReferences do
   let(:application) { create(:application, references_requested: false) }
 
   let(:query) do

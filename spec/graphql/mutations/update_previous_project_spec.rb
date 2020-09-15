@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::UpdatePreviousProject do
+RSpec.describe Mutations::UpdatePreviousProject do
   let(:draft) { true }
   let(:validation_status) { 'Pending' }
   let(:project) do

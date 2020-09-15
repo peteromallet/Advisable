@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Tasks::CreateInvoiceItem do
+RSpec.describe Tasks::CreateInvoiceItem do
   let(:task) { create(:task, stage: 'Assigned') }
 
   it 'Calls the Users::AddInvoiceItem service' do

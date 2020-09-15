@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Specialists::UpdateProfile do
+RSpec.describe Specialists::UpdateProfile do
   let(:specialist) { create(:specialist, remote: false) }
 
   before :each do

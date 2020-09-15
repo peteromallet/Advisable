@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ProjectPolicy do
+RSpec.describe ProjectPolicy do
   let(:project) { create(:project) }
 
   describe '#is_client' do

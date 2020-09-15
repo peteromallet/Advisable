@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Types::PreviousProject do
+RSpec.describe Types::PreviousProject do
   let(:previous_project) { create(:previous_project) }
   let(:query) do
     <<-GRAPHQL

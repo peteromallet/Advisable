@@ -4,8 +4,8 @@ class Mutations::ToggleSourcing < Mutations::BaseMutation
   field :project, Types::ProjectType, null: true
 
   def authorized?(**args)
+    requires_current_user!
     project = Project.find_by_uid!(args[:project])
-    ApiError.not_authenticated if context[:current_user].nil?
     policy = ProjectPolicy.new(context[:current_user], project)
     return true if policy.can_access_project?
     ApiError.not_authorized('You do not have access to this project')

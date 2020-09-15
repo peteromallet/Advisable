@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::ConfirmAccount do
+RSpec.describe Mutations::ConfirmAccount do
   let(:token) { Token.new }
   let(:input_token) { token }
   let(:digest) { Token.digest(token) }

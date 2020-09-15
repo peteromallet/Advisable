@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Projects::Update do
+RSpec.describe Projects::Update do
   let(:project) { create(:project, description: 'description') }
 
   before :each do

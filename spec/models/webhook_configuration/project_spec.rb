@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe WebhookConfiguration::Project do
+RSpec.describe WebhookConfiguration::Project do
   describe "#data" do
     let(:project) { create(:project) }
 

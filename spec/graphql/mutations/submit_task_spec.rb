@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::SubmitTask do
+RSpec.describe Mutations::SubmitTask do
   let(:application) { create(:application, status: 'Working') }
   let(:task) { create(:task, stage: 'Working', application: application) }
 

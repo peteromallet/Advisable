@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe PreviousProject do
+RSpec.describe PreviousProject do
   it 'has a valid factory' do
     project = build(:previous_project)
     expect(project).to be_valid

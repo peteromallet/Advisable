@@ -9,7 +9,7 @@ class StripeEvents::TestEvent
   end
 end
 
-describe StripeEvents do
+RSpec.describe StripeEvents do
   describe "#process" do
     context "when there is event processesor for the event type" do
       it "returns the result of the processors #process method" do

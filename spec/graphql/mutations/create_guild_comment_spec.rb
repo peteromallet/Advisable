@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::Guild::CreateComment do
+RSpec.describe Mutations::Guild::CreateComment do
   let(:guild_post) { create(:guild_post) }
   let(:specialist) { build(:specialist, :guild) }
 

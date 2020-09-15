@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Freelancer active project view' do
+RSpec.describe 'Freelancer active project view' do
   let(:application) { create(:application, status: 'Working') }
 
   before :each do

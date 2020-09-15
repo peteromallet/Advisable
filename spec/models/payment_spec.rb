@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Payment do
+RSpec.describe Payment do
   include_examples "uid"
 
   it 'has a valid factory' do

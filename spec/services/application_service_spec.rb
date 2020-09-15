@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ApplicationService do
+RSpec.describe ApplicationService do
   describe 'self.call' do
     it 'create a new instance of the service and calls the #call method' do
       inst = double(ApplicationService)

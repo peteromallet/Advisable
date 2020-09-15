@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Task do
+RSpec.describe Task do
   include_examples 'uid'
   include_examples 'Airtable::Syncable'
 

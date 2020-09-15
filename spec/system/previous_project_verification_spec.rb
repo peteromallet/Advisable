@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Previous project verification', type: :system do
+RSpec.describe 'Previous project verification', type: :system do
   before :each do
     allow_any_instance_of(Review).to receive(:sync_to_airtable)
 

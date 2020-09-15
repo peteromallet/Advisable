@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe WebhookJob do
+RSpec.describe WebhookJob do
   let(:webhook) { create(:webhook, status: "pending") }
 
   describe "#perform_later" do

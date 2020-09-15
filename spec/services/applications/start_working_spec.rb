@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Applications::RejectApplicationInvitation do
+RSpec.describe Applications::RejectApplicationInvitation do
   let(:application) do
     create(:application, status: 'Applied', project_type: nil)
   end

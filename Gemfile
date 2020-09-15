@@ -62,6 +62,8 @@ gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 # Guild
 gem 'jsonb_accessor', '~> 1.0.0'
 
+gem 'graphql_playground-rails'
+
 group :development, :test do
   gem 'pry'
   gem 'dotenv-rails'
@@ -79,7 +81,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'spring-commands-rspec'
-  gem 'graphql_playground-rails'
   gem 'pry-rails'
   gem 'niceql'
   gem 'graphql-rails_logger'

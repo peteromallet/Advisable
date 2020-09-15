@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Search do
+RSpec.describe Search do
   it 'has a valid factory' do
     search = build(:search)
     expect(search).to be_valid

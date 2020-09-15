@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::StartWorking do
+RSpec.describe Mutations::StartWorking do
   let!(:application) { create(:application) }
   let(:query) do
     <<-GRAPHQL

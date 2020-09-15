@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Airtable::Application do
+RSpec.describe Airtable::Application do
   include_examples 'airtable syncing'
   include_examples 'sync airtable association', 'Client Project', to: :project
 

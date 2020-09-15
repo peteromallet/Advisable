@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Address do
+RSpec.describe Address do
   describe "#to_s" do
     it "outputs the address" do
       address = Address.new({

@@ -22,6 +22,9 @@
 /public/assets
 .byebug_history
 
+# RSpec stats
+/spec/examples.txt
+
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 /public/packs

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::RejectApplicationInvitation do
+RSpec.describe Mutations::RejectApplicationInvitation do
   let(:application) { create(:application, invitation_rejection_reason: nil) }
 
   let(:query) do
