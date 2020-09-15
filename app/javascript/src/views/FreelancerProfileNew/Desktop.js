@@ -4,171 +4,13 @@ import Masonry from "./Masonry";
 import { Box, useBreakpoint, Text, Card } from "@advisable/donut";
 import useFilteredProjects from "./useFilteredProjects";
 import RequestConsultationButton from "./RequestConsultationButton";
-
-const getProjectValues = (projects) =>
-  projects.reduce(
-    (acc, project) => {
-      const skills = project.skills.map((skill) => skill.name);
-      const industries = project.industries.map((industry) => industry.name);
-      return {
-        clientNames: { [project.clientName]: "https://test.com/" },
-        industries: [...acc.industries, ...industries],
-        skills: [...acc.skills, ...skills],
-        reviews: [...acc.reviews, ...project.reviews],
-      };
-    },
-    { clientNames: [], industries: [], skills: [], reviews: [] },
-  );
-
-const setFilterParams = (list, filter) =>
-  list.reduce(
-    (acc, item) => ({
-      ...acc,
-      [item]: {
-        number: acc[item]?.number + 1 || 1,
-        selected: filter.includes(item),
-      },
-    }),
-    {},
-  );
-
-const init = (data) => {
-  const projects = data.specialist.profileProjects;
-  const reviews = data.specialist.reviews;
-  const {
-    clientNames,
-    industries: industriesList,
-    skills: skillsList,
-  } = getProjectValues(projects);
-  const skillsFilter = [];
-  const skillsParams = setFilterParams(skillsList, skillsFilter);
-  const industriesFilter = [];
-  const industriesParams = setFilterParams(industriesList, industriesFilter);
-  const hasReviews = reviews.length > 0;
-  return {
-    id: data.specialist.id,
-    projects,
-    skillsList,
-    skillsFilter,
-    skillsParams,
-    industriesList,
-    industriesFilter,
-    industriesParams,
-    clientNames,
-    testimonials: {},
-    hasReviews,
-    reviews,
-  };
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "UPDATE_SKILLS_STATE":
-      return;
-    case "UPDATE_INDUSTRIES_STATE":
-      return;
-    case "SWITCH_SKILL_FILTER":
-      return;
-    case "SWITCH_INDUSTRY_FILTER":
-      return;
-    default:
-      return state;
-  }
-};
-
-const createDispatcher = (dispatch) => (type) => (payload) =>
-  dispatch({ type, payload });
+import PreviousProjects from "./PreviousProjects";
 
 function FreelancerProfileDesktop({ data }) {
-  const [state, dispatch] = useReducer(reducer, data, init);
-  console.log("state", state);
-  const createAction = createDispatcher(dispatch);
-  const updateIndustriesAction = createAction("UPDATE_INDUSTRIES_STATE");
-  const updateSkillsAction = createAction("UPDATE_SKILLS_STATE");
-  const switchIndustryFilter = createAction("SWITCH_INDUSTRY_FILTER");
-  const switchSkillFilter = createAction("SWITCH_SKILL_FILTER");
   console.log("data", data);
   const projects = useFilteredProjects(data);
 
-  const skillChips = Object.keys(state.skillsParams)
-    .sort((a, b) => state.skillsParams[b].number - state.skillsParams[a].number)
-    .map((param, index) => {
-      return (
-        <Box
-          key={`${param}-${index}`}
-          display="flex"
-          p="s"
-          borderRadius="8px"
-          borderWidth="1px"
-          borderStyle="solid"
-          borderColor="blue500"
-          css={`
-            user-select: none;
-            cursor: pointer;
-          `}
-          m="6px"
-        >
-          <Text color="blue500" fontSize="xs">
-            {param}
-          </Text>
-          <Text ml="s" color="blue500" fontSize="xs">
-            {state.skillsParams[param].number}
-          </Text>
-        </Box>
-      );
-    });
-
-  const industryChips = Object.keys(state.industriesParams)
-    .sort(
-      (a, b) =>
-        state.industriesParams[b].number - state.industriesParams[a].number,
-    )
-    .map((param, index) => {
-      return (
-        <Box
-          key={`${param}-${index}`}
-          display="flex"
-          p="s"
-          borderRadius="8px"
-          borderWidth="1px"
-          borderStyle="solid"
-          borderColor="cyan700"
-          m="6px"
-          css={`
-            user-select: none;
-            cursor: pointer;
-          `}
-        >
-          <Text color="cyan700" fontSize="xs">
-            {param}
-          </Text>
-          <Text ml="s" color="cyan700" fontSize="xs">
-            {state.industriesParams[param].number}
-          </Text>
-        </Box>
-      );
-    });
-
-  const projectCards = state.projects.map((project) => (
-    <Card key={project.id} width="100%" p="m" borderRadius="12px">
-      {project.coverPhoto && (
-        <Box
-          as="img"
-          borderRadius="12px"
-          src={project.coverPhoto.url}
-          width="100%"
-          height="178px"
-          css="object-fit: cover;"
-        />
-      )}
-      <Text fontSize="xl" fontWeight="medium">
-        {project.title}
-      </Text>
-      <Text>{project.excerpt}</Text>
-    </Card>
-  ));
-
-  const reviews = state.reviews.map((review) => {
+  const reviews = data.specialist.reviews.map((review) => {
     return (
       <Card key={review.id} my="m" p="m" borderRadius={8}>
         <Box display="flex">
@@ -226,15 +68,7 @@ function FreelancerProfileDesktop({ data }) {
           </Box>
         </Box>
       </Card>
-      <Box display="flex">
-        <Box display="flex" flexWrap="wrap">
-          {skillChips}
-        </Box>
-        <Box display="flex" flexWrap="wrap">
-          {industryChips}
-        </Box>
-      </Box>
-      <Masonry columns="3">{projectCards}</Masonry>
+      <PreviousProjects data={data} />
       <Box>
         <Text>Testimonials</Text>
         <Box>{reviews}</Box>
