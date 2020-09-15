@@ -23,7 +23,5 @@ class Mutations::AnswerQuestion < Mutations::BaseMutation
     answer.content = args[:content]
     answer.save!
     return {answer: answer}
-  rescue Service::Error => e
-    return {errors: [e]}
   end
 end

@@ -6,8 +6,4 @@ class Types::AnswerType < Types::BaseType
   def id
     object.uid
   end
-
-  def question
-    object.question
-  end
 end

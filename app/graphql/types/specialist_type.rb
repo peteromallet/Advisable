@@ -192,10 +192,6 @@ class Types::SpecialistType < Types::BaseType
     description 'Answers provided by specialist'
   end
 
-  def answers
-    object.answers
-  end
-
   field :guild, Boolean, null: true do
     authorize :is_specialist, :is_admin
     description 'Whether or not the specialist is a Guild user'
