@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router";
+import { useNotifications } from "src/components/Notifications";
 import STEPS from ".";
 import useSteps from "../useSteps";
 import { useLocationState } from "../queries";
@@ -17,6 +18,7 @@ const Navigation = ({
   const { nextStep, lastStep, initialStep } = useSteps(STEPS);
   const locationState = useLocationState();
   const [params, setParams] = useState();
+  const notifications = useNotifications();
 
   useEffect(() => {
     const reduce = (action) => {
@@ -56,7 +58,12 @@ const Navigation = ({
 
     const timer = setTimeout(() => {
       if (error) setParams(reduce("INITIAL_STEP"));
-      if (existingAccount) setParams(reduce("LOGIN_PAGE"));
+      if (existingAccount) {
+        notifications.notify(
+          "You already have an account with the provided email",
+        );
+        setParams(reduce("LOGIN_PAGE"));
+      }
       if (emailNotAllowed) setParams(reduce("EMAIL_NOT_ALLOWED"));
       if (status && status !== "STARTED") setParams(reduce("LAST_STEP"));
       if (
@@ -80,6 +87,7 @@ const Navigation = ({
     applicationId,
     emailNotAllowed,
     existingAccount,
+    notifications,
   ]);
 
   if (params) return <Redirect {...params} />;
