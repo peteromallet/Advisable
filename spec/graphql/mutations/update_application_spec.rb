@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::UpdateApplication do
+RSpec.describe Mutations::UpdateApplication do
   let(:specialist) { create(:specialist) }
   let(:project) { create(:project, questions: ['This is a question?']) }
   let(:application) do

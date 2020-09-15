@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::CreatePreviousProject do
+RSpec.describe Mutations::CreatePreviousProject do
   let(:specialist) { create(:specialist) }
 
   let!(:advertising) { create(:industry, name: 'Advertising') }

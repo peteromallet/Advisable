@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Resending interview request' do
+RSpec.describe 'Resending interview request' do
   before :each do
     allow_any_instance_of(Interview).to receive(:sync_to_airtable)
   end

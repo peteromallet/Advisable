@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::CreateSearch do
+RSpec.describe Mutations::CreateSearch do
   let(:user) { create(:user, industry: nil, company_type: nil) }
   let(:skill) { create(:skill, name: 'Testing') }
   let(:industry) { create(:industry, name: 'Design') }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe SessionManager do
+RSpec.describe SessionManager do
   def mock_cookies(token = nil)
     cookies = double
     signed_cookies = double

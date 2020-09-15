@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Airtable::Task do
+RSpec.describe Airtable::Task do
   describe 'syncing' do
     let(:task) do
       create(

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::RejectApplication do
+RSpec.describe Mutations::RejectApplication do
   let(:application) { create(:application) }
   let(:query) do
     <<-GRAPHQL

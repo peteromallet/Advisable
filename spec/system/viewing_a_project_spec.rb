@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Viewing a project' do
+RSpec.describe 'Viewing a project' do
   context 'when the project user has not created an account yet' do
     it 'redirects the user to create an account' do
       user = create(:user, password: nil)

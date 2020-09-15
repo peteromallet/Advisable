@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Tasks::Start do
+RSpec.describe Tasks::Start do
   let(:task) { create(:task, stage: "Assigned") }
 
   before :each do

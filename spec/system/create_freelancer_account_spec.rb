@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Creating a freelancer account" do
+RSpec.describe "Creating a freelancer account" do
   it "shows the user the account confirmation flow" do
     airtable = double(Airtable::Specialist)
     allow(Airtable::Specialist).to receive(:find).and_return(airtable)

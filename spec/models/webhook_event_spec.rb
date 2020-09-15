@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe WebhookEvent do
+RSpec.describe WebhookEvent do
   it "has a valid factory" do
     event = build(:webhook_event)
     expect(event).to be_valid

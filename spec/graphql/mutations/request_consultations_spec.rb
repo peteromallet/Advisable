@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::SendConsultationRequest do
+RSpec.describe Mutations::SendConsultationRequest do
   let(:skill) { create(:skill) }
   let(:topic) { 'This is the topic' }
   let(:specialist1) { create(:specialist) }

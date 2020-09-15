@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Airtable::Skill do
+RSpec.describe Airtable::Skill do
   # We can declare a fields let variable which the shared examples below will
   # use as the airtable fields.
   let(:fields) { {

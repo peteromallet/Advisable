@@ -6,7 +6,7 @@ class TestService < Service
   end
 end
 
-describe Service do
+RSpec.describe Service do
   describe "self.call" do
     context "when the service succeeds" do
       it "#ok? returns true" do

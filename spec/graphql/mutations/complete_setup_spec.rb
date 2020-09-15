@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::CompleteSetup do
+RSpec.describe Mutations::CompleteSetup do
   let(:specialist) { create(:specialist, application_stage: 'Started') }
 
   let(:query) do

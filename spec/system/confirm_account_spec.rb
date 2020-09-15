@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Confirming an account as a user" do
+RSpec.describe "Confirming an account as a user" do
   it "displays the account confirmed notification" do
     user = create(:user, confirmed_at: nil)
     mail = double("mail")
@@ -14,7 +14,7 @@ describe "Confirming an account as a user" do
 end
 
 
-describe "Invalid confirmation token" do
+RSpec.describe "Invalid confirmation token" do
   it "displays the failed confirmation notification" do
     specialist = create(:user, confirmed_at: nil)
     mail = double("mail")

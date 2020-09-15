@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::CreateSetupIntent do
+RSpec.describe Mutations::CreateSetupIntent do
   let(:user) do
     create(:user, setup_intent_status: nil, stripe_setup_intent_id: nil)
   end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::AcceptConsultation do
+RSpec.describe Mutations::AcceptConsultation do
   let!(:consultation) { create(:consultation, status: 'Request Started') }
 
   let(:query) do

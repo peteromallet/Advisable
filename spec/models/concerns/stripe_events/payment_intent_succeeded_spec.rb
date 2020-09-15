@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe StripeEvents::SetupIntentSucceeded do
+RSpec.describe StripeEvents::SetupIntentSucceeded do
   let(:project) { create(:project, deposit_paid: 0) }
   let(:event) {
     OpenStruct.new({

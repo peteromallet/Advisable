@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::Login do
+RSpec.describe Mutations::Login do
   let(:user) { create(:user, password: 'testing123') }
   let(:email) { user.email }
   let(:password) { 'testing123' }

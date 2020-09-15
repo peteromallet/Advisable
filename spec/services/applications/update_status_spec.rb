@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Applications::UpdateStatus do
+RSpec.describe Applications::UpdateStatus do
   let(:application) { create(:application, status: "Applied") }
   let(:airtable_record) {
     Airtable::Application.new({

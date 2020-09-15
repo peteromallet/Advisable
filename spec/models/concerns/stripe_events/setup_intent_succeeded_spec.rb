@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe StripeEvents::SetupIntentSucceeded do
+RSpec.describe StripeEvents::SetupIntentSucceeded do
   let!(:user) { create(:user, stripe_setup_intent_id: "si_12345", setup_intent_status: "pending") }
   let(:event) {
     OpenStruct.new({

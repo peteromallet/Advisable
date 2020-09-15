@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::RequestToStart do
+RSpec.describe Mutations::RequestToStart do
   let(:application) { create(:application, status: 'Working') }
   let(:task) { create(:task, stage: 'Not Assigned', application: application) }
 

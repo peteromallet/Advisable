@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'project root query' do
+RSpec.describe 'project root query' do
   let(:user) { create(:user) }
   let(:project) { create(:project, user: user) }
   let(:query) do

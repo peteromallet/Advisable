@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Signing up as a new user' do
+RSpec.describe 'Signing up as a new user' do
   before :each do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end

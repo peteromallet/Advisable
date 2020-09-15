@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Submitting a proposal' do
+RSpec.describe 'Submitting a proposal' do
   let!(:project) { create(:project) }
   let!(:application) { create(:application, project: project) }
 

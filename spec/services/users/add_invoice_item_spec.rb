@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Users::AddInvoiceItem do
+RSpec.describe Users::AddInvoiceItem do
   let(:user) { create(:user, stripe_customer_id: "cus_123") }
 
   before :each do

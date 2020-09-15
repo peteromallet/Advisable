@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Search::Recommendations do
+RSpec.describe Search::Recommendations do
   let(:search) { create(:search, recommended_project: nil) }
   let(:skill) { create(:skill, name: search.skill) }
   let(:industry) { create(:industry, name: search.industry) }

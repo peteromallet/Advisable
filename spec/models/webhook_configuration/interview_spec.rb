@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe WebhookConfiguration::Interview do
+RSpec.describe WebhookConfiguration::Interview do
   describe "#data" do
     let(:interview) { create(:interview) }
 

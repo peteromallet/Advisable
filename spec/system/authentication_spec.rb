@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Logging in' do
+RSpec.describe 'Logging in' do
   it 'redirects the user back to where they tried to go' do
     user = create(:user, password: 'testing123')
     project = create(:project, user: user)

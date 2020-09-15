@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::RequestQuote do
+RSpec.describe Mutations::RequestQuote do
   let(:task) { create(:task, stage: 'Not Assigned') }
 
   let(:query) do

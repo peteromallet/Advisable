@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Mutations::AnswerQuestion do
+RSpec.describe Mutations::AnswerQuestion do
   let(:specialist) { create(:specialist) }
   let(:question) { create(:question) }
   let(:context) { {current_user: specialist} }

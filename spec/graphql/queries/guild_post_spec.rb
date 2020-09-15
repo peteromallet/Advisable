@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Types::Guild::PostInterface do
+RSpec.describe Types::Guild::PostInterface do
   include ActionView::Helpers::DateHelper
 
   let(:specialist) { build(:specialist, :guild) }

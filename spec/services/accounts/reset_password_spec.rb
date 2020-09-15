@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Accounts::ResetPassword do
+RSpec.describe Accounts::ResetPassword do
   it 'resets the users password' do
     digest = Token.digest("testing123")
     user = create(:user, reset_digest: digest, reset_sent_at: 30.seconds.ago)

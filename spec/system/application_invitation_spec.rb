@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Application invitation view' do
+RSpec.describe 'Application invitation view' do
   let(:project) { create(:project) }
 
   before :each do

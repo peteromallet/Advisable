@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::RejectProposal do
+RSpec.describe Mutations::RejectProposal do
   let(:application) do
     create(:application, { status: 'Proposed', rejection_reason: nil })
   end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::SetTypeForProject do
+RSpec.describe Mutations::SetTypeForProject do
   let(:application) do
     create(:application, project_type: 'Flexible', monthly_limit: nil)
   end

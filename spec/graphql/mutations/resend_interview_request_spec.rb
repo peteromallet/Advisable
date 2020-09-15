@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::ResendInterviewRequest do
+RSpec.describe Mutations::ResendInterviewRequest do
   let(:user) { create(:user, availability: []) }
   let(:interview) { create(:interview, time_zone: 'Perth', user: user) }
   let(:time) { 2.days.from_now.utc.iso8601 }
