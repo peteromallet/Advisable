@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import { Box, Card, Text } from "@advisable/donut";
 import Masonry from "../Masonry";
 import { curry } from "lodash-es";
+import Tags from "./Tags";
 
 const getProjectValues = (projects) =>
   projects.reduce(
@@ -31,53 +32,61 @@ const initFilterSection = (list) =>
   );
 
 const init = (data) => {
-  console.log("data", data);
   const projects = data.specialist.profileProjects;
   const {
     clientNames,
     industries: industriesList,
     skills: skillsList,
   } = getProjectValues(projects);
-  const filterBySkills = false;
-  const filterByIndusties = false;
   const skillsSection = initFilterSection(skillsList);
   const industriesSection = initFilterSection(industriesList);
+  const skillFilters = [];
+  const industryFilters = [];
   return {
     id: data.specialist.id,
     projects,
     skillsList,
-    filterBySkills,
     skillsSection,
+    skillFilters,
     industriesList,
-    filterByIndusties,
     industriesSection,
+    industryFilters,
     clientNames,
   };
 };
 
-const switchFilterTag = (state, section, tag) => {
+const switchTagSelection = (state, section, tag) => {
   const sectionState = state[section];
   const tagState = sectionState[tag];
-  const newValue = !tagState.selected;
+  const selected = !tagState.selected;
+
+  const skillFilters =
+    selected && section === "skillsSection"
+      ? [...state.skillFilters, tag]
+      : state.skillFilters.filter((filter) => filter !== tag);
+
+  const industryFilters =
+    selected && section === "industriesSection"
+      ? [...state.industryFilters, tag]
+      : state.industryFilters.filter((filter) => filter !== tag);
+
   return {
     ...state,
+    skillFilters,
+    industryFilters,
     [section]: {
       ...sectionState,
-      [tag]: { ...tagState, selected: newValue },
+      [tag]: { ...tagState, selected },
     },
   };
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "UPDATE_SKILLS_STATE":
-      return;
-    case "UPDATE_INDUSTRIES_STATE":
-      return;
-    case "SWITCH_SKILL_FILTER":
-      return switchFilterTag(state, "skillsSection", action.payload.skill);
-    case "SWITCH_INDUSTRY_FILTER":
-      return switchFilterTag(state, "skillsSection", action.payload.skill);
+    case "SWITCH_SKILL_SELECTION":
+      return switchTagSelection(state, "skillsSection", action.payload.tag);
+    case "SWITCH_INDUSTRY_SELECTION":
+      return switchTagSelection(state, "industriesSection", action.payload.tag);
     default:
       return state;
   }
@@ -87,103 +96,68 @@ const createDispatcher = curry((dispatch, type, payload) =>
   dispatch({ type, payload }),
 );
 
+const filterProjects = (state) => (project) => {
+  const filterSkills = !!state.skillFilters.length;
+  const filterIndustries = !!state.industryFilters.length;
+  const allowedBySkills = filterSkills
+    ? project.skills.some(({ name: skill }) =>
+        state.skillFilters.includes(skill),
+      )
+    : true;
+  const allowedByIndustries = filterIndustries
+    ? project.industries.some(({ name: industry }) =>
+        state.industryFilters.includes(industry),
+      )
+    : true;
+  return allowedBySkills && allowedByIndustries;
+};
+
 function PreviousProjects({ data }) {
   const [state, dispatch] = useReducer(reducer, data, init);
   console.log("previous project state", state);
   const createAction = createDispatcher(dispatch);
-  const switchSkillFilter = createAction("SWITCH_SKILL_FILTER");
+  const switchSkillSelection = createAction("SWITCH_SKILL_SELECTION");
+  const switchIndustrySelection = createAction("SWITCH_INDUSTRY_SELECTION");
 
-  const skillChips = Object.keys(state.skillsSection)
-    .sort(
-      (a, b) => state.skillsSection[b].number - state.skillsSection[a].number,
-    )
-    .map((skillKey, index) => {
-      const { selected } = state.skillsSection[skillKey];
+  const projectCards = state.projects
+    .filter(filterProjects(state))
+    .map((project) => {
       return (
-        <Box
-          key={`${skillKey}-${index}`}
-          display="flex"
-          p="s"
-          borderRadius="8px"
-          borderWidth={1}
-          bg={selected ? "blue100" : "none"}
-          borderStyle="solid"
-          borderColor="blue500"
-          css={`
-            user-select: none;
-            cursor: pointer;
-          `}
-          m="6px"
-          onClick={() => switchSkillFilter({ skill: skillKey })}
-        >
-          <Text color="blue500" fontSize="xs">
-            {skillKey}
+        <Card key={project.id} width="100%" p="m" borderRadius="12px">
+          {project.coverPhoto && (
+            <Box
+              as="img"
+              borderRadius="12px"
+              src={project.coverPhoto.url}
+              width="100%"
+              height="178px"
+              css="object-fit: cover;"
+            />
+          )}
+          <Text fontSize="xl" fontWeight="medium">
+            {project.title}
           </Text>
-          <Text ml="s" color="blue500" fontSize="xs">
-            {state.skillsSection[skillKey].number}
-          </Text>
-        </Box>
+          <Text>{project.excerpt}</Text>
+        </Card>
       );
     });
-
-  const industryChips = Object.keys(state.industriesSection)
-    .sort(
-      (a, b) =>
-        state.industriesSection[b].number - state.industriesSection[a].number,
-    )
-    .map((param, index) => {
-      return (
-        <Box
-          key={`${param}-${index}`}
-          display="flex"
-          p="s"
-          borderRadius="8px"
-          borderWidth="1px"
-          borderStyle="solid"
-          borderColor="cyan700"
-          m="6px"
-          css={`
-            user-select: none;
-            cursor: pointer;
-          `}
-        >
-          <Text color="cyan700" fontSize="xs">
-            {param}
-          </Text>
-          <Text ml="s" color="cyan700" fontSize="xs">
-            {state.industriesSection[param].number}
-          </Text>
-        </Box>
-      );
-    });
-
-  const projectCards = state.projects.map((project) => (
-    <Card key={project.id} width="100%" p="m" borderRadius="12px">
-      {project.coverPhoto && (
-        <Box
-          as="img"
-          borderRadius="12px"
-          src={project.coverPhoto.url}
-          width="100%"
-          height="178px"
-          css="object-fit: cover;"
-        />
-      )}
-      <Text fontSize="xl" fontWeight="medium">
-        {project.title}
-      </Text>
-      <Text>{project.excerpt}</Text>
-    </Card>
-  ));
 
   return (
     <Box>
       <Box display="flex">
         <Box display="flex" flexWrap="wrap">
-          {skillChips}
+          <Tags
+            variant="skills"
+            section={state.skillsSection}
+            switchTagSelection={switchSkillSelection}
+          />
         </Box>
         <Box display="flex" flexWrap="wrap">
-          {industryChips}
+          <Tags
+            variant="industries"
+            section={state.industriesSection}
+            switchTagSelection={switchIndustrySelection}
+          />
         </Box>
       </Box>
       <Masonry columns="3">{projectCards}</Masonry>
