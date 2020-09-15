@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::SetCoverPhoto do
+RSpec.describe Mutations::SetCoverPhoto do
   let(:specialist) { create(:specialist) }
   let(:context) { {current_user: specialist} }
 
