@@ -5,12 +5,12 @@ class Mutations::SetCoverPhoto < Mutations::BaseMutation
   field :specialist, Types::SpecialistType, null: true
 
   def authorized?(*)
-    ApiError.not_authenticated if current_user.nil?
+    requires_current_user!
 
-    unless current_user.is_a?(Specialist)
+    unless current_user.respond_to?(:cover_photo)
       ApiError.invalid_request(
-        code: 'MUST_BE_SPECIALIST',
-        message: 'Must be logged in as a speicalist'
+        code: 'MUST_HAVE_COVER_PHOTO',
+        message: 'Current user must have a cover photo'
       )
     end
 
