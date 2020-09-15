@@ -101,6 +101,7 @@ const RequestConsultation = () => {
             <Redirect
               to={{
                 pathname: `/request_consultation/${params.specialistId}/skills`,
+                search: location.search,
                 state: {
                   skill: queryParams.skill,
                   firstName: queryParams.firstName,
