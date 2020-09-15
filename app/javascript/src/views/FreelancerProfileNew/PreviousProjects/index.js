@@ -1,8 +1,9 @@
 import React, { useReducer } from "react";
 import { Box, Card, Text } from "@advisable/donut";
-import Masonry from "../Masonry";
+import Masonry from "./Masonry";
 import { curry } from "lodash-es";
 import Tags from "./Tags";
+import NoFilteredProjects from "./NoFilteredProjects";
 
 const getProjectValues = (projects) =>
   projects.reduce(
@@ -160,7 +161,11 @@ function PreviousProjects({ data }) {
           />
         </Box>
       </Box>
-      <Masonry columns="3">{projectCards}</Masonry>
+      {projectCards.length ? (
+        <Masonry columns="3">{projectCards}</Masonry>
+      ) : (
+        <NoFilteredProjects firstName={data.specialist.firstName} />
+      )}
     </Box>
   );
 }

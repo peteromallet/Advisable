@@ -2,9 +2,7 @@ import React from "react";
 import { Folder } from "@styled-icons/feather";
 import { Circle, Box, Text } from "@advisable/donut";
 
-function NoFilteredProjects({ data }) {
-  const firstName = data.specialist.firstName;
-
+function NoFilteredProjects({ firstName }) {
   return (
     <Box textAlign="center" py="xxl">
       <Circle mb="m" bg="blue800" color="blue100">

@@ -1,6 +1,5 @@
 // Renders the desktop version of the freelancer profile
 import React, { useState, useEffect, useReducer } from "react";
-import Masonry from "./Masonry";
 import { Box, useBreakpoint, Text, Card } from "@advisable/donut";
 import useFilteredProjects from "./useFilteredProjects";
 import RequestConsultationButton from "./RequestConsultationButton";
