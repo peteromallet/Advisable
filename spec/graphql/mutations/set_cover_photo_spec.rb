@@ -54,7 +54,7 @@ describe Mutations::SetCoverPhoto do
 
     it 'returns an error' do
       error = execute['errors'].first['extensions']['code']
-      expect(error).to eq('MUST_BE_SPECIALIST')
+      expect(error).to eq('MUST_HAVE_COVER_PHOTO')
     end
   end
 
