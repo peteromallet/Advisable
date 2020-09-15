@@ -52,6 +52,7 @@ class Types::MutationType < GraphQL::Schema::Object
         mutation: Mutations::CreateUserFromProjectVerification
 
   field :update_profile, mutation: Mutations::UpdateProfile
+  field :set_cover_photo, mutation: Mutations::SetCoverPhoto
 
   field :create_task, mutation: Mutations::CreateTask
   field :update_task, mutation: Mutations::UpdateTask

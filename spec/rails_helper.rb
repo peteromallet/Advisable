@@ -71,4 +71,9 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Delete any files uploaded during tests
+  config.after(:suite) do
+    FileUtils.rm_rf("#{Rails.root}/tmp/storage")
+  end
 end
