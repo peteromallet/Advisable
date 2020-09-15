@@ -3,10 +3,9 @@ class Mutations::DeleteJob < Mutations::BaseMutation
   field :id, ID, null: true
 
   def authorized?(id:)
-    user = context[:current_user]
-    ApiError.not_authenticated if user.nil?
+    requires_current_user!
     project = Project.find_by_uid_or_airtable_id!(id)
-    policy = ProjectPolicy.new(user, project)
+    policy = ProjectPolicy.new(current_user, project)
 
     unless policy.is_client
       ApiError.not_authorized('You do not have access to this project')
@@ -23,6 +22,6 @@ class Mutations::DeleteJob < Mutations::BaseMutation
     project = Project.find_by_uid_or_airtable_id!(id)
     project.destroy
 
-    { id: id }
+    {id: id}
   end
 end

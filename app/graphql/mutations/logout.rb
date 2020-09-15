@@ -4,14 +4,8 @@ class Mutations::Logout < Mutations::BaseMutation
   field :success, Boolean, null: true
 
   def resolve(*args)
-    not_logged_in unless context[:current_user]
+    requires_current_user!
     logout
-    { success: true }
-  end
-
-  private
-
-  def not_logged_in
-    ApiError.not_authenticated
+    {success: true}
   end
 end
