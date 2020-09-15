@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web, at: '/sidekiq'
 
-  if Rails.env.development?
+  if Rails.env.development? || ENV["staging"]
     mount GraphqlPlayground::Rails::Engine,
           at: '/playground', graphql_path: '/graphql'
   end
