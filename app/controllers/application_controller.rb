@@ -11,6 +11,12 @@ class ApplicationController < ActionController::Base
   def guild
   end
 
+  def internal
+    unless current_user&.has_permission?("admin")
+      redirect_to "/"
+    end
+  end
+
   protected
 
   def user_logged_in?
