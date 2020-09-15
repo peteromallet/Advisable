@@ -8,6 +8,7 @@ import { Box, useTheme, useBreakpoint } from "@advisable/donut";
 import { Step } from "./styles";
 import Progress from "./Progress";
 import { AnimatePresence } from "framer-motion";
+import { useNotifications } from "src/components/Notifications";
 
 function ClientSignup() {
   const { routes, currentActiveStepIndex, numberOfActiveSteps } = useSteps(
@@ -17,6 +18,7 @@ function ClientSignup() {
   const theme = useTheme();
   const location = useLocation();
   const isDesktop = useBreakpoint("lUp");
+  const notifications = useNotifications();
 
   React.useLayoutEffect(() => {
     theme.updateTheme({ background: "white" });
@@ -24,7 +26,10 @@ function ClientSignup() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (viewer) return <Redirect to="/" />;
+  if (viewer) {
+    notifications.notify("You have an account and already signed in");
+    return <Redirect to="/" />;
+  }
 
   const currentStepNumber = currentActiveStepIndex;
   const numberOfSteps = numberOfActiveSteps - 1;
