@@ -13,6 +13,7 @@ const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const VerifyProject = lazy(() => import("./views/VerifyProject"));
 const Availability = lazy(() => import("./views/Availability"));
 const FreelancerSignup = lazy(() => import("./views/FreelancerSignup"));
+const VideoCall = lazy(() => import("./views/VideoCall"));
 
 const Routes = () => {
   return (
@@ -34,6 +35,7 @@ const Routes = () => {
           path="/clients/:userID/availability"
           component={Availability}
         />
+        <AuthenticatedRoute path="/calls/:id" component={VideoCall} />
         <Route path="/freelancers/signup" component={FreelancerSignup} />
         <Route path="/verify_project/:id" component={VerifyProject} />
         <Route component={ApplicationRoutes} />

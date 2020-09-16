@@ -238,6 +238,14 @@ class Types::QueryType < Types::BaseType
     Question.all
   end
 
+  field :video_call, Types::VideoCallType, null: true do
+    argument :id, ID, required: true
+  end
+
+  def video_call(id:)
+    VideoCall.find_by_uid!(id)
+  end
+
     # Guild
   field :guild_post, Types::Guild::PostInterface, null: true do
     argument :id, ID, required: true
@@ -324,4 +332,5 @@ class Types::QueryType < Types::BaseType
       raise GraphQL::ExecutionError.new('Invalid Permissions', options: {code: 'invalidPermissions'})
     end
   end
+
 end
