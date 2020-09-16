@@ -25,7 +25,6 @@ class ProjectDashboard < Administrate::BaseDashboard
     deposit: Field::Number,
     client: Field::BelongsTo,
     airtable_id: Field::String,
-    sync_changes_to_airtable: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze
@@ -66,7 +65,6 @@ class ProjectDashboard < Administrate::BaseDashboard
     required_characteristics
     characteristics
     deposit
-    sync_changes_to_airtable
   ].freeze
 
   # Overwrite this method to customize how projects are displayed

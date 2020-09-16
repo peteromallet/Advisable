@@ -1,18 +1,4 @@
 RSpec.shared_examples "Airtable::Syncable" do
-  describe "#sync_changes_to_airtable" do
-    it "is false by default" do
-      inst = described_class.new
-      expect(inst.sync_changes_to_airtable).to be_falsey
-    end
-
-    it "can be set to true" do
-      inst = described_class.new
-      expect {
-        inst.sync_changes_to_airtable = true
-      }.to change { inst.sync_changes_to_airtable }.from(false).to(true)
-    end
-  end
-
   context "#remove_from_airtable" do
     it "deletes the airtable record" do
       inst = create(described_class.to_s.underscore.to_sym)
