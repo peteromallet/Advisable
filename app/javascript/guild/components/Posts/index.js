@@ -1,21 +1,27 @@
 import React from "react";
 import { GUILD_POSTS_QUERY } from "./queries";
 import { useQuery } from "@apollo/client";
-import Loading from "@advisable-main/components/Loading";
+// import Loading from "@advisable-main/components/Loading";
 import Post from "../Post";
 import { GuildBox } from "@guild/styles";
 import { useScrolledToBottom } from "@guild/hooks/useScrolledToBottom";
-import shallow from "zustand/shallow";
 import { feedStore } from "@guild/stores/Feed";
+import { Text } from "@advisable/donut";
+import GuildTag from "@guild/components/GuildTag";
 
 const Posts = () => {
-  const { selectedFilter } = feedStore(
-    ({ selectedFilter }) => ({ selectedFilter }),
-    shallow,
-  );
+  const [
+    selectedFilter,
+    selectedTopicsIds,
+    resetFilters,
+  ] = feedStore(({ selectedFilter, selectedTopicsIds, resetFilters }) => [
+    selectedFilter,
+    selectedTopicsIds,
+    resetFilters,
+  ]);
 
   const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
-    variables: { selectedFilter },
+    variables: { selectedFilter, selectedTopicsIds: selectedTopicsIds() },
   });
   const { bottomReached } = useScrolledToBottom();
 
@@ -50,8 +56,8 @@ const Posts = () => {
     });
   };
 
-  if (loading) return <Loading />;
-  if (bottomReached) handleLoadMore();
+  // if (loading) return <Loading />;
+  if (bottomReached && data?.guildPosts) handleLoadMore();
 
   return (
     <GuildBox
@@ -66,6 +72,26 @@ const Posts = () => {
         data.guildPosts.nodes.map((post, idx) => (
           <Post key={idx} post={post} />
         ))}
+      {!loading && !data?.guildPosts?.nodes?.length && (
+        <GuildBox
+          background="white"
+          spaceChildrenVertical={16}
+          flexCenterBoth
+          p="xl"
+        >
+          <Text
+            fontSize="xxl"
+            fontWeight="medium"
+            letterSpacing="-0.01em"
+            color="catalinaBlue100"
+          >
+            No Results
+          </Text>
+          <GuildTag button size="l" onClick={resetFilters}>
+            Clear All Filters
+          </GuildTag>
+        </GuildBox>
+      )}
     </GuildBox>
   );
 };

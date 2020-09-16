@@ -260,8 +260,8 @@ class Types::QueryType < Types::BaseType
       description 'Filters guild posts by type or a curated view'
     end
 
-    argument :topics, [String], required: false do
-      description 'Filters guild posts by guild topic tags'
+    argument :topic_ids, [ID], required: false do
+      description 'Filters guild posts by guild topic tag ids'
     end
   end
 
@@ -275,6 +275,12 @@ class Types::QueryType < Types::BaseType
     if (type = args[:type].presence) && type != 'For You'
       @query = @query.where(type: type)
     end
+
+    if args[:topic_ids]&.any?
+      guild_topics = Guild::Topic.find(args[:topic_ids])
+      @query = @query.tagged_with(guild_topics, on: :guild_topics, any: true)
+    end
+
     @query.order(created_at: :desc)
   end
 

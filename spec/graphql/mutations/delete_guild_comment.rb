@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Mutations::Guild::CreateComment do
   let(:specialist) { create(:specialist, :guild) }
   let(:guild_comment) { create(:guild_comment, :with_guild_post, specialist: specialist) }
+  let(:response_keys) { %w[deleteGuildComment guildCommentId] }
 
   let(:query) {
     <<-GRAPHQL
@@ -16,6 +17,8 @@ RSpec.describe Mutations::Guild::CreateComment do
     GRAPHQL
   }
 
+  it_behaves_like "guild specialist"
+
   context "with an unauthorized user" do
     let(:non_guild_specialist) { build(:specialist) }
     let(:guild_specialist) { build(:specialist, :guild) }
@@ -26,7 +29,7 @@ RSpec.describe Mutations::Guild::CreateComment do
           query,
           context: {current_user: non_guild_specialist}
         )
-        expect(resp.dig("data", "deleteGuildComment", "guildCommentId")).to be_nil
+        expect(resp.dig("data", *response_keys)).to be_nil
       end
 
       it "errors when the specialist didn't create the comment" do
