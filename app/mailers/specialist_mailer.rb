@@ -31,7 +31,8 @@ class SpecialistMailer < ApplicationMailer
     )
   end
 
-  def interview_reschedule_request
-    # mail
+  def interview_reschedule_request(interview)
+    @interview = interview
+    mail(from: interview.user.sales_person.email_with_name, to: interview.specialist.email, subject: 'Interview Reschedule Request')
   end
 end
