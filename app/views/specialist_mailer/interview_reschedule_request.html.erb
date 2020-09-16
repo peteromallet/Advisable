@@ -8,7 +8,7 @@
   Please select a new time that works best for you. Once you select a time, we’ll send new invitations.
 </p>
 <p>
-  { link to "/interview_request/[interview.uid]" }
+  <a href="<%= ApplicationMailer.default_url_options[:host] %>/interview_request/<%= @interview.uid %>">Reschedule here</a>.
 </p>
 <p>
   Apologies for any inconvenience and we appreciate your flexibility!
