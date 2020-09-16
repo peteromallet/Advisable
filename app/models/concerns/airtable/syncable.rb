@@ -50,5 +50,10 @@ module Airtable::Syncable
       airtable_record = airtable_class.find(airtable_id)
       airtable_record.sync
     end
+
+    def save_and_sync!
+      save!
+      sync_to_airtable
+    end
   end
 end
