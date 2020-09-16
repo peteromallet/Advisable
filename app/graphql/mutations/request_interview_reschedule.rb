@@ -15,18 +15,19 @@ class Mutations::RequestInterviewReschedule < Mutations::BaseMutation
     case current_user
     when Specialist
       interview.status = "Specialist Requested Reschedule"
-      # send email here
+      interview.save_and_sync!
+      SpecialistMailer.interview_rescheduled(interview).deliver_later
     when User
       current_user.update!(availability: args[:availability])
       interview.status = "Client Requested Reschedule"
-      # send email here
+      interview.save_and_sync!
+      UserMailer.interview_rescheduled(interview).deliver_later
     else
       ApiError.invalid_request(
-        code: "MUST_BE_CLIENT_OR_FREELANCER",
-        message: "Current user must be a client or a freelancer."
+        code: "MUST_BE_CLIENT_OR_SPECIALIST",
+        message: "Current user must be a client or a specialist."
       )
     end
-    interview.save_and_sync!
 
     {interview: interview}
   end

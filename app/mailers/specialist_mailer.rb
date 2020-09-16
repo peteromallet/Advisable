@@ -30,4 +30,8 @@ class SpecialistMailer < ApplicationMailer
       subject: "New Freelance Opportunity: #{@project.primary_skill.name} with #{@project.industry} #{@project.company_type}"
     )
   end
+
+  def interview_reschedule_request
+    # mail
+  end
 end
