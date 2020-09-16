@@ -7,6 +7,10 @@ class SalesPerson < ApplicationRecord
   def name
     "#{first_name} #{last_name}"
   end
+
+  def email_with_name
+    %("#{name}" <#{email}>)
+  end
 end
 
 # == Schema Information

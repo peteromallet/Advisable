@@ -9,4 +9,14 @@ class SpecialistMailerPreview < ActionMailer::Preview
     specialist = Specialist.order(Arel.sql('RANDOM()')).first
     SpecialistMailer.inform_about_project(project.id, specialist.id)
   end
+
+  def interview_reschedule_request
+    SpecialistMailer.interview_reschedule_request(random_interview)
+  end
+
+  private
+
+  def random_interview
+    Interview.order(Arel.sql('RANDOM()')).first
+  end
 end
