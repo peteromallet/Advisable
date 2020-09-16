@@ -133,3 +133,79 @@ class User < ApplicationRecord
     self.availability = availability.select { |time| time > DateTime.now.utc }
   end
 end
+
+# == Schema Information
+#
+# Table name: users
+#
+#  id                                :bigint           not null, primary key
+#  accepted_guarantee_terms_at       :datetime
+#  accepted_project_payment_terms_at :datetime
+#  address                           :jsonb
+#  application_accepted_at           :datetime
+#  application_rejected_at           :datetime
+#  application_reminder_at           :datetime
+#  availability                      :text
+#  bank_transfers_enabled            :boolean          default(FALSE)
+#  billing_email                     :string
+#  budget                            :bigint
+#  campaign_medium                   :string
+#  campaign_name                     :string
+#  campaign_source                   :string
+#  company_name                      :string
+#  company_type                      :string
+#  completed_tutorials               :text             default([]), is an Array
+#  confirmation_digest               :string
+#  confirmation_token                :string
+#  confirmed_at                      :datetime
+#  contact_status                    :string
+#  email                             :string
+#  exceptional_project_payment_terms :string
+#  fid                               :string
+#  first_name                        :string
+#  gclid                             :string
+#  invoice_company_name              :string
+#  invoice_name                      :string
+#  last_name                         :string
+#  locality_importance               :integer
+#  number_of_freelancers             :string
+#  password_digest                   :string
+#  payments_setup                    :boolean          default(FALSE)
+#  permissions                       :text             default([]), is an Array
+#  pid                               :string
+#  project_payment_method            :string
+#  rejection_reason                  :string
+#  remember_token                    :string
+#  reset_digest                      :string
+#  reset_sent_at                     :datetime
+#  rid                               :string
+#  setup_intent_status               :string
+#  talent_quality                    :string
+#  test_account                      :boolean
+#  time_zone                         :string
+#  title                             :string
+#  uid                               :string
+#  username                          :string
+#  vat_number                        :string
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
+#  airtable_id                       :string
+#  country_id                        :bigint
+#  industry_id                       :bigint
+#  sales_person_id                   :bigint
+#  stripe_customer_id                :string
+#  stripe_setup_intent_id            :string
+#
+# Indexes
+#
+#  index_users_on_airtable_id      (airtable_id)
+#  index_users_on_country_id       (country_id)
+#  index_users_on_industry_id      (industry_id)
+#  index_users_on_sales_person_id  (sales_person_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (country_id => countries.id)
+#  fk_rails_...  (industry_id => industries.id)
+#  fk_rails_...  (sales_person_id => sales_people.id)
+#

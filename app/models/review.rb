@@ -43,3 +43,33 @@ class Review < ApplicationRecord
     Specialists::CalculateRatings.call(specialist: specialist)
   end
 end
+
+# == Schema Information
+#
+# Table name: reviews
+#
+#  id              :bigint           not null, primary key
+#  comment         :text
+#  project_type    :string
+#  ratings         :jsonb
+#  reviewable_type :string
+#  type            :string
+#  uid             :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  airtable_id     :string
+#  project_id      :bigint
+#  reviewable_id   :bigint
+#  specialist_id   :bigint
+#
+# Indexes
+#
+#  index_reviews_on_airtable_id                        (airtable_id)
+#  index_reviews_on_project_type_and_project_id        (project_type,project_id)
+#  index_reviews_on_reviewable_type_and_reviewable_id  (reviewable_type,reviewable_id)
+#  index_reviews_on_specialist_id                      (specialist_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (specialist_id => specialists.id)
+#

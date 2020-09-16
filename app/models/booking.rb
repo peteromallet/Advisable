@@ -48,3 +48,37 @@ class Booking < ApplicationRecord
     errors.add(:application, 'This application already has a proposal')
   end
 end
+
+# == Schema Information
+#
+# Table name: bookings
+#
+#  id                     :bigint           not null, primary key
+#  client_decline_comment :string
+#  decline_comment        :string
+#  deliverables           :jsonb
+#  duration               :string
+#  end_date               :date
+#  proposal_comment       :string
+#  rate                   :decimal(, )
+#  rate_limit             :decimal(, )
+#  rate_type              :string
+#  start_date             :date
+#  status                 :string
+#  type                   :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  airtable_id            :string
+#  application_id         :bigint
+#  rejection_reason_id    :bigint
+#
+# Indexes
+#
+#  index_bookings_on_airtable_id          (airtable_id)
+#  index_bookings_on_application_id       (application_id)
+#  index_bookings_on_rejection_reason_id  (rejection_reason_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (application_id => applications.id)
+#

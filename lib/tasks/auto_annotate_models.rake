@@ -25,13 +25,13 @@ if Rails.env.development?
       'root_dir' => '',
       'include_version' => 'false',
       'require' => '',
-      'exclude_tests' => 'false',
-      'exclude_fixtures' => 'false',
-      'exclude_factories' => 'false',
-      'exclude_serializers' => 'false',
-      'exclude_scaffolds' => 'false',
-      'exclude_controllers' => 'false',
-      'exclude_helpers' => 'false',
+      'exclude_tests' => 'true',
+      'exclude_fixtures' => 'true',
+      'exclude_factories' => 'true',
+      'exclude_serializers' => 'true',
+      'exclude_scaffolds' => 'true',
+      'exclude_controllers' => 'true',
+      'exclude_helpers' => 'true',
       'exclude_sti_subclasses' => 'false',
       'ignore_model_sub_dir' => 'false',
       'ignore_columns' => nil,
@@ -54,6 +54,8 @@ if Rails.env.development?
       'with_comment' => 'true'
     )
   end
+
+  binding.pry
 
   Annotate.load_tasks
 end
