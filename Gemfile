@@ -13,7 +13,6 @@ gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
-# gem "administrate"
 gem 'administrate'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -71,6 +70,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails', '~> 4.0.0'
   gem 'factory_bot_rails'
+  gem 'annotate'
 end
 
 group :development do

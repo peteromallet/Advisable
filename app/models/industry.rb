@@ -19,3 +19,21 @@ class Industry < ApplicationRecord
     self.color = COLORS.sample
   end
 end
+
+# == Schema Information
+#
+# Table name: industries
+#
+#  id          :bigint           not null, primary key
+#  active      :boolean
+#  color       :string
+#  name        :string
+#  uid         :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  airtable_id :string
+#
+# Indexes
+#
+#  index_industries_on_uid  (uid)
+#

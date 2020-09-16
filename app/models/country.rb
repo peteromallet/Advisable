@@ -12,3 +12,19 @@ class Country < ApplicationRecord
     name.gsub(/\s\(.*\)$/, '')
   end
 end
+
+# == Schema Information
+#
+# Table name: countries
+#
+#  id             :bigint           not null, primary key
+#  alpha2         :string
+#  currency       :string
+#  dial_in_number :string
+#  eu             :boolean
+#  name           :string
+#  uid            :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  airtable_id    :string
+#

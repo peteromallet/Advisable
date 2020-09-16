@@ -17,3 +17,31 @@ class Skill < ApplicationRecord
 
   scope :popular, -> { order(projects_count: :desc, specialists_count: :desc) }
 end
+
+# == Schema Information
+#
+# Table name: skills
+#
+#  id                         :bigint           not null, primary key
+#  active                     :boolean
+#  category                   :string
+#  characteristic_placeholder :string
+#  goal_placeholder           :string
+#  name                       :string
+#  profile                    :boolean
+#  projects_count             :integer          default(0)
+#  specialists_count          :integer          default(0)
+#  uid                        :string
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  airtable_id                :string
+#  original_id                :bigint
+#
+# Indexes
+#
+#  index_skills_on_original_id  (original_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (original_id => skills.id)
+#

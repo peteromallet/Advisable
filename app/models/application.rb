@@ -144,3 +144,62 @@ class Application < ApplicationRecord
     specialist.update(average_score: specialist.applications.average(:score))
   end
 end
+
+# == Schema Information
+#
+# Table name: applications
+#
+#  id                          :bigint           not null, primary key
+#  accepts_fee                 :boolean
+#  accepts_terms               :boolean
+#  application_accepted_at     :datetime
+#  application_rejected_at     :datetime
+#  applied_at                  :datetime
+#  auto_apply                  :boolean
+#  availability                :string
+#  comment                     :string
+#  featured                    :boolean          default(FALSE)
+#  hidden                      :boolean
+#  hide_from_profile           :boolean
+#  interview_completed_at      :datetime
+#  interview_scheduled_at      :datetime
+#  introduction                :text
+#  invitation_rejected_at      :datetime
+#  invitation_rejection_reason :string
+#  invited_to_apply_at         :datetime
+#  monthly_limit               :integer
+#  project_type                :string
+#  proposal_comment            :string
+#  proposal_sent_at            :datetime
+#  questions                   :jsonb
+#  rate                        :decimal(, )
+#  references_requested        :boolean
+#  referral_url                :string
+#  rejection_reason            :text
+#  rejection_reason_comment    :text
+#  score                       :decimal(, )
+#  started_working_at          :datetime
+#  status                      :string
+#  stopped_working_at          :datetime
+#  stopped_working_reason      :string
+#  trial_program               :boolean
+#  uid                         :string
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  airtable_id                 :string
+#  project_id                  :bigint
+#  rejection_reason_id         :bigint
+#  specialist_id               :bigint
+#
+# Indexes
+#
+#  index_applications_on_project_id           (project_id)
+#  index_applications_on_rejection_reason_id  (rejection_reason_id)
+#  index_applications_on_specialist_id        (specialist_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (project_id => projects.id)
+#  fk_rails_...  (rejection_reason_id => application_rejection_reasons.id)
+#  fk_rails_...  (specialist_id => specialists.id)
+#

@@ -61,3 +61,34 @@ class Search < ApplicationRecord
     joined.where(off_platform_projects: { company_type: company_type })
   end
 end
+
+# == Schema Information
+#
+# Table name: searches
+#
+#  id                              :bigint           not null, primary key
+#  company_experience_required     :boolean
+#  company_type                    :string
+#  description                     :string
+#  industry                        :string
+#  industry_experience_required    :boolean
+#  skill                           :string
+#  uid                             :string
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  manually_recommended_project_id :bigint
+#  recommended_project_id          :bigint
+#  user_id                         :bigint           not null
+#
+# Indexes
+#
+#  index_searches_on_manually_recommended_project_id  (manually_recommended_project_id)
+#  index_searches_on_recommended_project_id           (recommended_project_id)
+#  index_searches_on_uid                              (uid)
+#  index_searches_on_user_id                          (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (manually_recommended_project_id => off_platform_projects.id)
+#  fk_rails_...  (user_id => users.id)
+#

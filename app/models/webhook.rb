@@ -27,3 +27,16 @@ class Webhook < ApplicationRecord
     self.status = "pending"
   end
 end
+
+# == Schema Information
+#
+# Table name: webhooks
+#
+#  id         :bigint           not null, primary key
+#  data       :jsonb
+#  response   :text
+#  status     :string
+#  url        :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#

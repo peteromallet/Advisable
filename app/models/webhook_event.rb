@@ -48,3 +48,15 @@ class WebhookEvent < ApplicationRecord
   class Error < StandardError
   end
 end
+
+# == Schema Information
+#
+# Table name: webhook_events
+#
+#  id         :bigint           not null, primary key
+#  event      :string
+#  name       :string
+#  url        :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
