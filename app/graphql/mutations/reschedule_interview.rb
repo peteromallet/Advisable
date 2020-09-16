@@ -22,7 +22,8 @@ class Mutations::RescheduleInterview < Mutations::BaseMutation
     end
     interview.save_and_sync!
 
-    # send emails
+    SpecialistMailer.interview_rescheduled(interview).deliver_later
+    UserMailer.interview_rescheduled(interview).deliver_later
 
     {interview: interview}
   end
