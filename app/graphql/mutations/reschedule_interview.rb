@@ -2,6 +2,8 @@ class Mutations::RescheduleInterview < Mutations::BaseMutation
   argument :interview, ID, required: true
   argument :starts_at, GraphQL::Types::ISO8601DateTime, required: true
 
+  field :interview, Types::Interview, null: true
+
   def resolve(**args)
     interview = Interview.find_by_uid_or_airtable_id!(args[:interview])
 
@@ -16,7 +18,7 @@ class Mutations::RescheduleInterview < Mutations::BaseMutation
       interview.starts_at = args[:starts_at]
     else
       ApiError.invalid_request(
-        code: "STARTS_AT_OUT_OF_BOUNDS",
+        code: "STARTS_AT_NOT_AVAILABLE_ON_CLIENT",
         message: "Argument `starts_at` is not inside of the client's availability."
       )
     end
