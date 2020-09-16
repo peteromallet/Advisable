@@ -20,7 +20,7 @@ class Mutations::RescheduleInterview < Mutations::BaseMutation
         message: "Argument `starts_at` is not inside of the client's availability."
       )
     end
-    interview.save!
+    interview.save_and_sync!
 
     # send emails
 

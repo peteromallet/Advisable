@@ -26,7 +26,7 @@ class Mutations::RequestInterviewReschedule < Mutations::BaseMutation
         message: "Current user must be a client or a freelancer."
       )
     end
-    interview.save!
+    interview.save_and_sync!
 
     {interview: interview}
   end
