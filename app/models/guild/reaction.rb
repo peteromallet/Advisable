@@ -17,3 +17,27 @@ module Guild
     }
   end
 end
+
+# == Schema Information
+#
+# Table name: guild_reactions
+#
+#  id                :uuid             not null, primary key
+#  data              :jsonb
+#  kind              :integer          default("like"), not null
+#  reactionable_type :string
+#  status            :integer          default(0), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  reactionable_id   :uuid
+#  specialist_id     :bigint
+#
+# Indexes
+#
+#  index_guild_reactions_on_reactionable_type_and_reactionable_id  (reactionable_type,reactionable_id)
+#  index_guild_reactions_on_specialist_id                          (specialist_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (specialist_id => specialists.id) ON DELETE => cascade
+#

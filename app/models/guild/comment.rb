@@ -24,3 +24,30 @@ module Guild
     }
   end
 end
+
+# == Schema Information
+#
+# Table name: guild_comments
+#
+#  id                 :uuid             not null, primary key
+#  body               :text             not null
+#  data               :jsonb
+#  reactionable_count :integer          default(0), not null
+#  status             :integer          default("draft"), not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  guild_post_id      :uuid
+#  parent_comment_id  :uuid
+#  specialist_id      :bigint
+#
+# Indexes
+#
+#  index_guild_comments_on_guild_post_id      (guild_post_id)
+#  index_guild_comments_on_parent_comment_id  (parent_comment_id)
+#  index_guild_comments_on_specialist_id      (specialist_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (guild_post_id => guild_posts.id) ON DELETE => cascade
+#  fk_rails_...  (specialist_id => specialists.id) ON DELETE => cascade
+#

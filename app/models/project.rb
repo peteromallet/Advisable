@@ -108,3 +108,75 @@ class Project < ApplicationRecord
     update(sourcing: false) if accepted
   end
 end
+
+# == Schema Information
+#
+# Table name: projects
+#
+#  id                               :bigint           not null, primary key
+#  accepted_terms_at                :datetime
+#  booking_confirmed_at             :datetime
+#  booking_request_sent_at          :datetime
+#  brief_confirmed_at               :datetime
+#  brief_pending_confirmation_at    :datetime
+#  call_scheduled_at                :datetime
+#  campaign_name                    :string
+#  campaign_source                  :string
+#  candidate_accepted_at            :datetime
+#  candidate_count                  :integer          default(0)
+#  candidate_proposed_at            :datetime
+#  characteristics                  :text             default([]), is an Array
+#  client_referral_url              :string
+#  company_description              :text
+#  company_type                     :string
+#  company_type_experience_required :boolean
+#  currency                         :string
+#  deposit                          :integer
+#  deposit_paid                     :integer
+#  description                      :text
+#  estimated_budget                 :string
+#  goals                            :text             default([]), is an Array
+#  hired_count                      :integer          default(0)
+#  industry                         :string
+#  industry_experience_importance   :integer
+#  industry_experience_required     :boolean
+#  interview_completed_at           :datetime
+#  interview_scheduled_at           :datetime
+#  likely_to_hire                   :integer
+#  location_importance              :integer
+#  lost_at                          :datetime
+#  name                             :string
+#  owner                            :string
+#  primary_skill                    :string
+#  proposal_received_at             :datetime
+#  proposed_count                   :integer          default(0)
+#  questions                        :text             default([]), is an Array
+#  remote                           :boolean
+#  required_characteristics         :text             default([]), is an Array
+#  sales_status                     :string
+#  service_type                     :string
+#  sourcing                         :boolean
+#  specialist_description           :text
+#  status                           :string
+#  uid                              :string
+#  won_at                           :datetime
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  airtable_id                      :string
+#  client_id                        :bigint
+#  deposit_payment_intent_id        :string
+#  sales_person_id                  :bigint
+#  user_id                          :bigint
+#
+# Indexes
+#
+#  index_projects_on_client_id        (client_id)
+#  index_projects_on_sales_person_id  (sales_person_id)
+#  index_projects_on_user_id          (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (client_id => clients.id)
+#  fk_rails_...  (sales_person_id => sales_people.id)
+#  fk_rails_...  (user_id => users.id)
+#

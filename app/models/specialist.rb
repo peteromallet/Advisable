@@ -91,3 +91,64 @@ class Specialist < ApplicationRecord
     save(validate: false)
   end
 end
+
+# == Schema Information
+#
+# Table name: specialists
+#
+#  id                        :bigint           not null, primary key
+#  application_stage         :string
+#  average_score             :decimal(, )
+#  bank_currency             :string
+#  bank_holder_address       :jsonb
+#  bank_holder_name          :string
+#  bio                       :text
+#  campaign_name             :string
+#  campaign_source           :string
+#  city                      :string
+#  completed_tutorials       :text             default([]), is an Array
+#  confirmation_digest       :string
+#  confirmation_token        :string
+#  confirmed_at              :datetime
+#  email                     :string
+#  encrypted_phone_number    :string
+#  encrypted_phone_number_iv :string
+#  first_name                :string
+#  guild                     :boolean          default(FALSE)
+#  hourly_rate               :integer
+#  image                     :jsonb
+#  last_name                 :string
+#  linkedin                  :string
+#  number_of_projects        :string
+#  password_digest           :string
+#  permissions               :text             default([]), is an Array
+#  phone                     :string
+#  pid                       :string
+#  primarily_freelance       :boolean
+#  project_count             :integer
+#  public_use                :boolean
+#  ratings                   :jsonb
+#  referrer                  :string
+#  remember_token            :string
+#  remote                    :boolean
+#  reset_digest              :string
+#  reset_sent_at             :datetime
+#  reviews_count             :integer
+#  test_account              :boolean
+#  travel_availability       :string
+#  uid                       :string
+#  vat_number                :string
+#  website                   :string
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  airtable_id               :string
+#  country_id                :bigint
+#
+# Indexes
+#
+#  index_specialists_on_country_id  (country_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (country_id => countries.id)
+#

@@ -80,6 +80,9 @@ GEM
     airrecord (1.0.5)
       faraday (>= 0.10, < 2.0)
       net-http-persistent (>= 2.9)
+    annotate (3.1.1)
+      activerecord (>= 3.2, < 7.0)
+      rake (>= 10.4, < 14.0)
     ast (2.4.1)
     attr_encrypted (3.1.0)
       encryptor (~> 3.0.0)
@@ -410,6 +413,7 @@ PLATFORMS
 DEPENDENCIES
   administrate
   airrecord (~> 1.0.5)
+  annotate
   attr_encrypted (~> 3.1.0)
   aws-sdk-s3 (~> 1)
   bcrypt (~> 3.1.7)

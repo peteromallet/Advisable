@@ -53,3 +53,41 @@ class Task < ApplicationRecord
     estimate_type == 'Fixed'
   end
 end
+
+# == Schema Information
+#
+# Table name: tasks
+#
+#  id                             :bigint           not null, primary key
+#  approved_at                    :datetime
+#  assigned_at                    :datetime
+#  description                    :string
+#  due_date                       :datetime
+#  estimate                       :integer
+#  estimate_type                  :string
+#  final_cost                     :integer
+#  flexible_estimate              :integer
+#  hours_worked                   :integer
+#  name                           :string
+#  quote_provided_at              :datetime
+#  quote_requested_at             :datetime
+#  repeat                         :string
+#  stage                          :string
+#  started_working_at             :datetime
+#  submitted_at                   :datetime
+#  submitted_for_approval_comment :string
+#  to_be_invited_at               :datetime
+#  trial                          :boolean
+#  uid                            :string
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  airtable_id                    :string
+#  application_id                 :bigint
+#  stripe_invoice_id              :string
+#
+# Indexes
+#
+#  index_tasks_on_airtable_id     (airtable_id)
+#  index_tasks_on_application_id  (application_id)
+#  index_tasks_on_uid             (uid)
+#
