@@ -55,7 +55,5 @@ if Rails.env.development?
     )
   end
 
-  binding.pry
-
   Annotate.load_tasks
 end
