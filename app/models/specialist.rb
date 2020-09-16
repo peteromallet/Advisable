@@ -106,6 +106,7 @@ end
 #  campaign_name             :string
 #  campaign_source           :string
 #  city                      :string
+#  community_status          :string
 #  completed_tutorials       :text             default([]), is an Array
 #  confirmation_digest       :string
 #  confirmation_token        :string
