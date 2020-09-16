@@ -21,6 +21,7 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'PID', to: :pid
   sync_column 'Campaign Name', to: :campaign_name
   sync_column 'Campaign Source', to: :campaign_source
+  sync_column 'Community Status', to: :community_status
 
   sync_data do |specialist|
     if self['Bank Holder Address']
