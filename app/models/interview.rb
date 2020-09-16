@@ -3,6 +3,7 @@ class Interview < ApplicationRecord
   include Airtable::Syncable
   belongs_to :application
   has_one :specialist, through: :application
+  has_one :video_call
   belongs_to :user # An interview is schduled with a specific user (client contact)
 
   scope :scheduled, -> { where(status: 'Call Scheduled') }
