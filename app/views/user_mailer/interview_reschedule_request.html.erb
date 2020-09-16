@@ -5,7 +5,7 @@
   Unfortunately, <%= @interview.specialist.first_name %> needs to reschedule your interview for <%= @interview.starts_at.to_formatted_s(:short) %>  and none of your existing availability works for them.
 </p>
 <p>
-  [link to "/interviews/[interview.uid]/reschedule]
+  <a href="<%= ApplicationMailer.default_url_options[:host] %>/interviews/<%= @interview.uid %>/reschedule">Add availabilities</a>.
 </p>
 <% if @interview.availability_note.present? %>
   <p>

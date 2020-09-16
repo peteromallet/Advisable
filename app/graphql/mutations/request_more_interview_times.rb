@@ -27,6 +27,6 @@ class Mutations::RequestMoreInterviewTimes < Mutations::BaseMutation
 
     interview.sync_to_airtable
 
-    { interview: interview }
+    {interview: interview}
   end
 end
