@@ -10,15 +10,15 @@ const Post = ({ post }) => {
   const { author } = post;
 
   return (
-    <Card elevation="m" width="100%">
-      <Box display="flex" flexDirection="column" p="l">
+    <Card elevation={{ _: "s", m: "m" }} width="100%">
+      <Box display="flex" flexDirection="column" p={{ _: "s", m: "l" }}>
         {/* Author Details, Post Type */}
         <Box display="flex" justifyContent="space-between" alignItems="start">
           <Box display="flex">
             <Avatar
               as={Link}
               to={`/profiles/${author.id}`}
-              size="m"
+              size={{ _: "s", m: "m" }}
               name={author.name}
               url={author.avatar}
             />

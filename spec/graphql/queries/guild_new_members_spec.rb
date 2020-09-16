@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe "new guild members query" do
   let(:guild_specialists) { create_list(:specialist, 5, :guild) }
   let(:non_guild_specialists) { create_list(:specialist, 5) }
-
   let(:context) { {current_user: guild_specialists.first} }
   let(:query) {
     <<-GRAPHQL

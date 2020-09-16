@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Types::Guild::TopicType do
   let(:specialist) { create(:specialist, :guild) }
+  let(:response_keys) { %w[guildTopTopics nodes] }
   let(:context) {
     {
       current_user: specialist
@@ -25,24 +26,12 @@ RSpec.describe Types::Guild::TopicType do
     create_list(:guild_topic, 5)
   end
 
-  describe "with a non guild specialist" do
-    let(:non_guild_specialist) { build(:specialist) }
+  it_behaves_like "guild specialist"
 
-    it "returns null top topics" do
-      resp = AdvisableSchema.execute(
-        query,
-        context: {
-          current_user: non_guild_specialist
-        }
-      )
-      expect(resp.dig('data', 'guildTopTopics', 'nodes')).to be_nil
-    end
-  end
-
-  describe "with a guild specialist" do
+  describe "guild top topics response" do
     subject(:guild_top_topics) {
       response = AdvisableSchema.execute(query, context: context)
-      response.dig('data', 'guildTopTopics', 'nodes')
+      response.dig('data', *response_keys)
     }
 
     it "includes the top guild topic tags" do
