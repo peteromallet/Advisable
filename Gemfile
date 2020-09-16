@@ -70,7 +70,6 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails', '~> 4.0.0'
   gem 'factory_bot_rails'
-  gem 'annotate'
 end
 
 group :development do
@@ -85,6 +84,7 @@ group :development do
   gem 'niceql'
   gem 'graphql-rails_logger'
   gem 'rubocop', require: false
+  gem 'annotate'
 end
 
 group :test do
