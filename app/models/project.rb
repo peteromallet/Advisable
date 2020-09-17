@@ -26,16 +26,16 @@ class Project < ApplicationRecord
   has_many :project_industries, as: :project
   has_many :industries, through: :project_industries
   validates :service_type,
-            inclusion: { in: %w[Assisted Self-Service Consultation] },
+            inclusion: {in: %w[Assisted Self-Service Consultation]},
             allow_nil: true
 
   validates :industry_experience_importance,
-            inclusion: { in: [0, 1, 2, 3] }, allow_nil: true
+            inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
 
   validates :location_importance,
-            inclusion: { in: [0, 1, 2, 3] }, allow_nil: true
+            inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
 
-  validates :likely_to_hire, inclusion: { in: [0, 1, 2, 3] }, allow_nil: true
+  validates :likely_to_hire, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
 
   belongs_to :user, required: false
   belongs_to :sales_person, required: false
@@ -43,6 +43,8 @@ class Project < ApplicationRecord
   map_status status: {
                draft: 'Draft', pending_review: 'Pending Advisable Confirmation'
              }
+
+  after_save :send_application_invites, if: :saved_change_to_status?
 
   def accepted_terms=(accepted)
     self.accepted_terms_at = DateTime.now.utc if !accepted_terms && accepted
@@ -106,6 +108,14 @@ class Project < ApplicationRecord
     return if applications.matched.any?
     accepted = applications.accepted.any?
     update(sourcing: false) if accepted
+  end
+
+  private
+
+  def send_application_invites
+    return unless status == "Brief Confirmed"
+
+    SendApplicationInvitesJob.perform_later(self)
   end
 end
 
