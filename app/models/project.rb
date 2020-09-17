@@ -44,6 +44,8 @@ class Project < ApplicationRecord
                draft: 'Draft', pending_review: 'Pending Advisable Confirmation'
              }
 
+  after_save :send_application_invites, if: :saved_change_to_status?
+
   def accepted_terms=(accepted)
     self.accepted_terms_at = DateTime.now.utc if !accepted_terms && accepted
     self.accepted_terms_at = nil if accepted_terms && !accepted
@@ -106,6 +108,14 @@ class Project < ApplicationRecord
     return if applications.matched.any?
     accepted = applications.accepted.any?
     update(sourcing: false) if accepted
+  end
+
+  private
+
+  def send_application_invites
+    return unless status == "Brief Confirmed"
+
+    SendApplicationInvitesJob.perform_later(self)
   end
 end
 
