@@ -1,62 +1,32 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
+import styled from "styled-components";
+import { rgba } from "polished";
+import { theme } from "@advisable/donut";
+import ParticipantTracks from "./ParticipantTracks";
+
+const StyledParticipant = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+`;
+
+const StyledIdentity = styled.div`
+  top: 8px;
+  left: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  position: absolute;
+  border-radius: 6px;
+  padding: 4px 8px 3px 8px;
+  background: ${rgba(theme.colors.neutral900, 0.8)};
+`;
 
 export default function Participant({ participant }) {
-  const [videoTracks, setVideoTracks] = useState([]);
-  const [audioTracks, setAudioTracks] = useState([]);
-
-  const videoRef = useRef();
-  const audioRef = useRef();
-
-  const trackpubsToTracks = (trackMap) =>
-    Array.from(trackMap.values())
-      .map((publication) => publication.track)
-      .filter((track) => track !== null);
-
-  useEffect(() => {
-    const trackSubscribed = (track) => {
-      if (track.kind === "video") {
-        setVideoTracks((videoTracks) => [...videoTracks, track]);
-      } else {
-        setAudioTracks((audioTracks) => [...audioTracks, track]);
-      }
-    };
-
-    const trackUnsubscribed = (track) => {
-      if (track.kind === "video") {
-        setVideoTracks((videoTracks) => videoTracks.filter((v) => v !== track));
-      } else {
-        setAudioTracks((audioTracks) => audioTracks.filter((a) => a !== track));
-      }
-    };
-
-    setVideoTracks(trackpubsToTracks(participant.videoTracks));
-    setAudioTracks(trackpubsToTracks(participant.audioTracks));
-
-    participant.on("trackSubscribed", trackSubscribed);
-    participant.on("trackUnsubscribed", trackUnsubscribed);
-
-    return () => {
-      setVideoTracks([]);
-      setAudioTracks([]);
-      participant.removeAllListeners();
-    };
-  }, [participant]);
-
-  useEffect(() => {
-    const videoTrack = videoTracks[0];
-    if (videoTrack) {
-      videoTrack.attach(videoRef.current);
-      return () => {
-        videoTrack.detach();
-      };
-    }
-  }, [videoTracks]);
-
   return (
-    <div>
-      <h3>{participant.identity}</h3>
-      <video ref={videoRef} autoPlay={true} />
-      <audio ref={audioRef} autoPlay={true} muted={true} />
-    </div>
+    <StyledParticipant>
+      <StyledIdentity>{participant.identity}</StyledIdentity>
+      <ParticipantTracks participant={participant} />
+    </StyledParticipant>
   );
 }
