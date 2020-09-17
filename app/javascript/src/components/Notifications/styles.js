@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "@advisable/donut";
 
 export const Container = styled.div`
   right: 0;
@@ -20,8 +21,8 @@ export const NotificationCard = styled.div`
   font-weight: 500;
   line-height: 20px;
   margin-right: 20px;
-  border-radius: 4px;
-  background: #00104b;
+  border-radius: 8px;
+  background: ${theme.colors.neutral900};
   box-shadow: 0 5px 10px -5px rgba(6, 24, 51, 0.15),
     0 0 50px 0 rgba(6, 24, 51, 0.15);
 
