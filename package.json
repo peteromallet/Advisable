@@ -35,7 +35,7 @@
     "bootstrap": "^4.5.2",
     "body-scroll-lock": "^3.1.5",
     "clipboard-polyfill": "^2.8.1",
-    "css-loader": "^3.6.0",
+    "css-loader": "^4.3.0",
     "dinero.js": "^1.8.1",
     "dotenv": "^8.2.0",
     "downshift": "^5.4.5",
