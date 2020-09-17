@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import { Box, Card, Text } from "@advisable/donut";
 import Masonry from "./Masonry";
-import { curry } from "lodash-es";
+import createDispatcher from "src/utilities/createDispatcher";
 import Tags from "./Tags";
 import NoFilteredProjects from "./NoFilteredProjects";
 
@@ -92,10 +92,6 @@ const reducer = (state, action) => {
       return state;
   }
 };
-
-const createDispatcher = curry((dispatch, type, payload) =>
-  dispatch({ type, payload }),
-);
 
 const filterProjects = (state) => (project) => {
   const filterSkills = !!state.skillFilters.length;
