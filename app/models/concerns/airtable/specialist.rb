@@ -74,6 +74,8 @@ class Airtable::Specialist < Airtable::Base
       specialist.test_account = true
     end
     specialist.referrer = self['Referrer'].try(:first)
+
+    specialist.automated_invitations_subscription = (fields['Unsubscribe - Automated Invitations'] != "Yes")
   end
 
   # After the syncing process has been complete

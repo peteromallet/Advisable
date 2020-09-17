@@ -552,8 +552,8 @@ ActiveRecord::Schema.define(version: 2020_09_22_080621) do
     t.integer "candidate_count", default: 0
     t.integer "proposed_count", default: 0
     t.integer "hired_count", default: 0
-    t.bigint "sales_person_id"
     t.boolean "sourcing"
+    t.bigint "sales_person_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["sales_person_id"], name: "index_projects_on_sales_person_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
@@ -691,10 +691,11 @@ ActiveRecord::Schema.define(version: 2020_09_22_080621) do
     t.integer "project_count"
     t.string "phone"
     t.boolean "test_account"
-    t.boolean "guild", default: false
-    t.string "community_status"
     t.string "remember_token"
+    t.boolean "guild", default: false
     t.datetime "guild_joined_date"
+    t.string "community_status"
+    t.boolean "automated_invitations_subscription"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
