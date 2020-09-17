@@ -120,7 +120,7 @@
   "scripts": {
     "test": "jest --coverage --runInBand",
     "test:watch": "jest --watch",
-    "test:parallel": "jest --maxWorkers=5",
+    "test:parallel": "jest",
     "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand --watch",
     "lint": "eslint app/javascript",
     "storybook": "start-storybook -p 6006 -c donut/.storybook",
