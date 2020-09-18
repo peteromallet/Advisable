@@ -1,5 +1,6 @@
 import React from "react";
 import Lobby from "./Lobby";
+import Actions from "./Actions";
 import LocalVideo from "./LocalVideo";
 import Participants from "./Participants";
 import useCallContext from "./useCallContext";
@@ -17,6 +18,7 @@ export default function VideoCallRoom() {
       <Participants />
       <LocalVideo />
       <ReconnectingNotification />
+      <Actions />
     </>
   );
 }

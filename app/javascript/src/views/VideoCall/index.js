@@ -1,4 +1,5 @@
 import React from "react";
+import { Switch, Route } from "react-router-dom";
 import VideoCallRoom from "./VideoCallRoom";
 import VideoCallProvider from "./VideoCallProvider";
 import NotFound, { isNotFound } from "../NotFound";
@@ -17,10 +18,15 @@ export default function VideoCall() {
   }
 
   return (
-    <UnsupportedBrowser>
-      <VideoCallProvider data={data.videoCall}>
-        <VideoCallRoom />
-      </VideoCallProvider>
-    </UnsupportedBrowser>
+    <Switch>
+      <Route path="/calls/:id/over">You have left the call</Route>
+      <Route>
+        <UnsupportedBrowser>
+          <VideoCallProvider data={data.videoCall}>
+            <VideoCallRoom />
+          </VideoCallProvider>
+        </UnsupportedBrowser>
+      </Route>
+    </Switch>
   );
 }

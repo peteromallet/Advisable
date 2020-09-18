@@ -27,7 +27,19 @@ export default function useRoom(name, accessToken) {
   const connect = useCallback(() => {
     setIsConnecting(true);
 
-    Video.connect(accessToken, { name }).then((newRoom) => {
+    Video.connect(accessToken, {
+      name,
+      bandwidthProfile: {
+        video: {
+          mode: "grid",
+          renderDimensions: {
+            high: { width: 1080, height: 720 },
+            standard: { width: 640, height: 480 },
+            low: { width: 320, height: 240 },
+          },
+        },
+      },
+    }).then((newRoom) => {
       setRoom(newRoom);
       setIsConnecting(false);
       const disconnect = () => newRoom.disconnect();
