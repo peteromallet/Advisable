@@ -1,55 +1,25 @@
 import React from "react";
-import styled from "styled-components";
-import { GUILD_POSTS_QUERY } from "./queries";
-import { useQuery } from "@apollo/client";
+import { useBreakpoint } from "@advisable/donut";
+import HeaderLayout from "@guild/components/Layouts/HeaderLayout";
+import { GuildBox } from "@guild/styles";
+import Posts from "@guild/components/Posts";
+import Topics from "@guild/components/Topics";
+import NewMembers from "@guild/components/NewMembers";
+import Filters from "@guild/components/Filters";
 
 const Feed = () => {
-  const { error, data, fetchMore } = useQuery(GUILD_POSTS_QUERY);
-
-  /* 
-    https://www.apollographql.com/docs/react/data/pagination/#cursor-based
-  */
-  const handleLoadMore = () => {
-    const { guildPosts } = data;
-    fetchMore({
-      variables: {
-        cursor: guildPosts?.pageInfo.endCursor,
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        const newNodes = fetchMoreResult.guildPosts.nodes;
-        const pageInfo = fetchMoreResult.guildPosts.pageInfo;
-
-        return newNodes.length
-          ? {
-              // Put the new guild posts at the end of the list and update `pageInfo`
-              // so we have the new `endCursor` and `hasNextPage` values
-              guildPosts: {
-                __typename: previousResult.guildPosts.__typename,
-                nodes: [...previousResult.guildPosts.nodes, ...newNodes],
-                pageInfo,
-              },
-            }
-          : previousResult;
-      },
-    });
-  };
-
-  if (error) {
-    return <span>Error: {error.message}</span>;
-  }
-
-  // console.log(data?.guildPosts);
+  const lUp = useBreakpoint("lUp");
 
   return (
-    <Render.Container>
-      This is the guild feed poc
-      <div onClick={handleLoadMore}>Load More ..</div>
-    </Render.Container>
+    <HeaderLayout>
+      <Filters />
+      <GuildBox m="l" display="flex" spaceChildrenHorizontal="24">
+        {lUp && <Topics />}
+        <Posts />
+        {lUp && <NewMembers />}
+      </GuildBox>
+    </HeaderLayout>
   );
-};
-
-const Render = {
-  Container: styled.div``,
 };
 
 export default Feed;

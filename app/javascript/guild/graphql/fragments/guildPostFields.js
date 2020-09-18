@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 export default gql`
   fragment GuildPostFields on PostInterface {
     id
+    type
     title
     body
     bodyRaw
@@ -13,6 +14,11 @@ export default gql`
     authored
     createdAtTimeAgo
     author {
+      id
+      name
+      avatar
+    }
+    guildTopics {
       id
       name
     }

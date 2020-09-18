@@ -25,6 +25,10 @@ RSpec.describe Types::Guild::PostInterface do
           ... on GuildPostAdviceRequired {
             needHelp
           }
+          guildTopics {
+            id
+            name
+          }
         }
       }
       GRAPHQL
@@ -84,8 +88,12 @@ RSpec.describe Types::Guild::PostInterface do
       )
     end
 
-    # TODO: comments ...
-    # it "includes the parent_comments"
-    # it "includes whether the current_user has commented on the guild_post"
+    it "includes the tagged guild topics" do
+      topic = create(:guild_topic)
+      guild_post.guild_topic_list << topic.name
+      guild_post.save
+
+      expect(node['guildTopics'][0]['name']).to eq(topic.name)
+    end
   end
 end

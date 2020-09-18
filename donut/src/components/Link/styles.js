@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
-import { space, typography, variant } from "styled-system";
+import { space, typography, variant, color } from "styled-system";
 import theme from "../../theme";
 
 const variants = variant({
@@ -33,6 +33,7 @@ const styles = css`
   ${space}
   ${variants}
   ${typography}
+  ${color}
 
   outline: none;
   position: relative;

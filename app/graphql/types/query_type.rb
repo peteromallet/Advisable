@@ -279,48 +279,75 @@ class Types::QueryType < Types::BaseType
   end
 
   def guild_post(id:)
+    requires_guild_user!
     post = Guild::Post.find(id)
     policy = Guild::PostPolicy.new(context[:current_user], post)
 
     return post if policy.show
-
-    if context[:current_user]
-      raise GraphQL::ExecutionError.new('Invalid Permissions', options: {code: 'invalidPermissions'})
-    end
   end
 
   field :guild_posts,
         Types::Guild::PostInterface.connection_type,
-        null: true,
-        max_page_size: 10 do
-    description "Returns a list of guild posts that match a given search criteria"
+        null: true, max_page_size: 5 do
+    description 'Returns a list of guild posts that match a given search criteria'
 
     argument :type, String, required: false do
-      description 'Filters guild posts by type.'
+      description 'Filters guild posts by type or a curated view'
+    end
+
+    argument :topics, [String], required: false do
+      description 'Filters guild posts by guild topic tags'
     end
   end
 
-  def guild_posts
-    Guild::Post
-      .includes(:specialist, parent_comments: [child_comments: [:post]])
-      .published
-      .order(created_at: :desc)
-      # TODO: parse connection_type cursors for pagination
+  def guild_posts(**args)
+    requires_guild_user!
+    @query = Guild::Post.includes(
+      :specialist,
+      parent_comments: [child_comments: %i[post]]
+    ).published
+
+    if (type = args[:type].presence) && type != 'For You'
+      @query = @query.where(type: type)
+    end
+    @query.order(created_at: :desc)
   end
 
   field :guild_activity,
-        Types::Guild::ActivityUnion.connection_type, # interface?
-        null: true,
-        max_page_size: 20 do
-    description "Returns a list of guild activity notifications"
+        Types::Guild::ActivityUnion.connection_type,
+        null: true, max_page_size: 20 do
+    description 'Returns a list of guild activity notifications'
   end
 
   def guild_activity
+    requires_guild_user!
+    context[:current_user].guild_activity
+  end
+
+  field :guild_top_topics,
+        Types::Guild::TopicType.connection_type,
+        null: true,
+        max_page_size: 20 do
+    description 'Returns a list of the top guild topic tags'
+  end
+
+  def guild_top_topics
+    requires_guild_user!
+
+    Guild::Topic.most_used
+  end
+
+  field :guild_new_members, [Types::SpecialistType], null: true
+
+  def guild_new_members
+    Specialist.guild.order(guild_joined_date: :desc).limit(10)
+  end
+
+  protected
+
+  def requires_guild_user!
     unless context[:current_user].try(:guild)
       raise GraphQL::ExecutionError.new('Invalid Permissions', options: {code: 'invalidPermissions'})
     end
-
-    context[:current_user].guild_activity
-    # TODO: parse connection_type cursors for pagination
   end
 end

@@ -1,4 +1,6 @@
 class Types::SpecialistType < Types::BaseType
+  include ActionView::Helpers::DateHelper
+
   class Types::SpecialistType::EdgeType < GraphQL::Types::Relay::BaseEdge
     node_type(Types::SpecialistType)
   end
@@ -210,6 +212,13 @@ class Types::SpecialistType < Types::BaseType
   field :guild, Boolean, null: true do
     authorize :is_specialist, :is_admin
     description 'Whether or not the specialist is a Guild user'
+  end
+
+  field :guild_joined_time_ago, String, null: true do
+    description 'The timestamp in words for when the specialist first joined the guild'
+  end
+  def guild_joined_time_ago
+    time_ago_in_words(object.guild_joined_date || Time.now.utc)
   end
 
   field :previous_projects,
