@@ -1,18 +1,18 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::RequestInterviewReschedule do
   let(:user) { create(:user) }
   let(:specialist) { create(:specialist) }
-  let(:availability) { 2.days.from_now.utc.iso8601 }
+  let(:availability) { [2.days.from_now.utc.iso8601] }
   let(:application) { create(:application, specialist: specialist) }
-  let(:interview) { create(:interview, application: application, user: user) }
+  let(:interview) { create(:interview, application: application, user: user, status: "Call Scheduled") }
 
   let(:query) do
     <<-GRAPHQL
     mutation {
       requestInterviewReschedule(input: {
         interview: "#{interview.uid}",
-        availability: ["#{availability}"],
+        availability: #{availability.to_json},
         note: "This is a note."
       }) {
         interview {
@@ -23,7 +23,7 @@ RSpec.describe Mutations::RequestInterviewReschedule do
     GRAPHQL
   end
 
-  context 'user' do
+  context "user" do
     let(:context) { {current_user: user} }
 
     it "updates interview accordingly" do
@@ -37,9 +37,19 @@ RSpec.describe Mutations::RequestInterviewReschedule do
       expect(interview.status).to eq("Client Requested Reschedule")
       expect(response["data"]["requestInterviewReschedule"]["interview"]["id"]).to eq(interview.uid)
     end
+
+    context 'blank availability' do
+      let(:availability) { [] }
+
+      it "raises an error" do
+        response = AdvisableSchema.execute(query, context: context)
+        error = response["errors"].first["extensions"]["code"]
+        expect(error).to eq("AVAILABILITY_BLANK")
+      end
+    end
   end
 
-  context 'specialist' do
+  context "specialist" do
     let(:context) { {current_user: specialist} }
 
     it "updates interview accordingly" do
@@ -53,9 +63,19 @@ RSpec.describe Mutations::RequestInterviewReschedule do
       expect(interview.status).to eq("Specialist Requested Reschedule")
       expect(response["data"]["requestInterviewReschedule"]["interview"]["id"]).to eq(interview.uid)
     end
+
+    context "interview not scheduled" do
+      let(:interview) { create(:interview, application: application, user: user, status: "Call Requested") }
+
+      it "raises an error" do
+        response = AdvisableSchema.execute(query, context: context)
+        error = response["errors"].first["extensions"]["code"]
+        expect(error).to eq("INTERVIEW_NOT_SCHEDULED")
+      end
+    end
   end
 
-  context 'not logged in' do
+  context "not logged in" do
     let(:context) { {current_user: nil} }
 
     it "raises an error" do
