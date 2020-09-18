@@ -7,7 +7,13 @@ import ParticipantTracks from "./ParticipantTracks";
 const StyledParticipant = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
   position: relative;
+  background: ${theme.colors.neutral700};
+
+  video {
+    width: 100%;
+  }
 `;
 
 const StyledIdentity = styled.div`

@@ -9,6 +9,7 @@ export default function useLocalTracks() {
   useEffect(() => {
     setIsAcquiringLocalTracks(true);
     Video.createLocalTracks({
+      audio: true,
       video: {
         // In the DeviceSelector and FlipCameraButton components, a new video track is created,
         // then the old track is unpublished and the new track is published. Unpublishing the old
@@ -16,6 +17,9 @@ export default function useLocalTracks() {
         // track name is 'camera', so here we append a timestamp to the track name to avoid the
         // conflict.
         name: `camera-${Date.now()}`,
+        video: {
+          width: 1200,
+        },
       },
     })
       .then((tracks) => {
