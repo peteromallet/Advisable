@@ -1,24 +1,20 @@
-import React from "react";
-import { Manager, Reference, Popper } from "react-popper";
+import React, { useState } from "react";
+import { createPopper } from "@popperjs/core";
 import useComponentSize from "@rehooks/component-size";
-import Text from "../../Text";
 import Input from "../../Input";
-import FieldError from "../../FieldError";
 import Menu from "./Menu";
-import { Autocomplete as AutocompleteStyles, Label, Tags } from "../styles";
+import { Autocomplete as AutocompleteStyles, Tags } from "../styles";
 import Downshift, { stateChangeTypes } from "../Downshift";
 import Tag from "../Tag";
 
 const AutocompleteDesktop = (props) => {
   const {
     size,
-    error,
     onBlur,
     options,
     onChange,
     multiple,
     placeholder,
-    description,
     value,
     primary,
     onPrimaryChange,
@@ -26,13 +22,25 @@ const AutocompleteDesktop = (props) => {
     ...rest
   } = props;
 
+  const popper = React.useRef(null);
+  const [referenceElement, setReferenceElement] = React.useState(null);
+  const [popperElement, setPopperElement] = React.useState(null);
+
+  React.useEffect(() => {
+    if (referenceElement && popperElement) {
+      popper.current = createPopper(referenceElement, popperElement, {
+        placement: "bottom",
+      });
+
+      return () => popper.current.destroy();
+    }
+  }, [referenceElement, popperElement]);
+
   const inputRef = React.useRef(null);
   const inputSize = useComponentSize(inputRef);
   const listRef = React.useRef(null);
 
-  const handleStateChange = (popper) => (changes, downshift) => {
-    popper.update();
-
+  const handleStateChange = (changes, downshift) => {
     if (
       [stateChangeTypes.clickItem, stateChangeTypes.keyDownEnter].indexOf(
         changes.type,
@@ -61,73 +69,60 @@ const AutocompleteDesktop = (props) => {
   }
 
   return (
-    <Manager>
-      <Popper placement="bottom" positionFixed>
-        {(popper) => (
-          <Downshift
-            value={value}
-            options={options}
-            multiple={multiple}
-            onChange={onChange}
-            primary={primary}
-            selectedItem={value}
-            onPrimaryChange={onPrimaryChange}
-            initialInputValue={props.multiple ? undefined : value?.label}
-            onStateChange={handleStateChange(popper)}
-          >
-            {(downshift) => (
-              <AutocompleteStyles {...rest} {...downshift.getRootProps()}>
-                <Reference>
-                  {(popperRef) => (
-                    <>
-                      <div ref={popperRef.ref}>
-                        <Input
-                          size={size}
-                          {...downshift.getInputProps({
-                            ref: inputRef,
-                            placeholder,
-                            onBlur,
-                            onFocus: downshift.openMenu,
-                            onClick: downshift.openMenu,
-                          })}
-                        />
-                      </div>
-                      {multiple && (
-                        <Tags>
-                          {downshift.selected.map((item) => (
-                            <Tag
-                              key={item.value}
-                              isPrimary={primary === item.value}
-                              onSelectPrimary={
-                                onPrimaryChange &&
-                                (() => onPrimaryChange(item.value))
-                              }
-                              onRemove={() => downshift.remove(item)}
-                            >
-                              {formatLabel(item)}
-                            </Tag>
-                          ))}
-                        </Tags>
-                      )}
-                    </>
-                  )}
-                </Reference>
-                <Menu
-                  max={props.max}
-                  popper={popper}
-                  listRef={listRef}
-                  isMax={props.isMax}
-                  width={inputSize.width}
-                  downshift={downshift}
-                  options={filteredOptions}
-                  formatLabel={formatLabel}
-                />
-              </AutocompleteStyles>
-            )}
-          </Downshift>
-        )}
-      </Popper>
-    </Manager>
+    <Downshift
+      value={value}
+      options={options}
+      multiple={multiple}
+      onChange={onChange}
+      primary={primary}
+      selectedItem={value}
+      onPrimaryChange={onPrimaryChange}
+      initialInputValue={props.multiple ? undefined : value?.label}
+      onStateChange={handleStateChange}
+    >
+      {(downshift) => (
+        <AutocompleteStyles {...rest} {...downshift.getRootProps()}>
+          <div ref={setReferenceElement}>
+            <Input
+              size={size}
+              {...downshift.getInputProps({
+                ref: inputRef,
+                placeholder,
+                onBlur,
+                onFocus: downshift.openMenu,
+                onClick: downshift.openMenu,
+              })}
+            />
+          </div>
+          {multiple && (
+            <Tags>
+              {downshift.selected.map((item) => (
+                <Tag
+                  key={item.value}
+                  isPrimary={primary === item.value}
+                  onSelectPrimary={
+                    onPrimaryChange && (() => onPrimaryChange(item.value))
+                  }
+                  onRemove={() => downshift.remove(item)}
+                >
+                  {formatLabel(item)}
+                </Tag>
+              ))}
+            </Tags>
+          )}
+          <Menu
+            max={props.max}
+            ref={setPopperElement}
+            listRef={listRef}
+            isMax={props.isMax}
+            width={inputSize.width}
+            downshift={downshift}
+            options={filteredOptions}
+            formatLabel={formatLabel}
+          />
+        </AutocompleteStyles>
+      )}
+    </Downshift>
   );
 };
 

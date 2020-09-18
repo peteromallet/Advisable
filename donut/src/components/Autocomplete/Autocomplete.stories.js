@@ -6,7 +6,7 @@ import Card from "../Card";
 import Autocomplete from "./";
 
 export default {
-  title: 'Forms/Autocomplete',
+  title: "Forms/Autocomplete",
   decorators: [withKnobs],
 };
 
@@ -73,6 +73,7 @@ export const multipleSelect = () => {
     <Card maxWidth={600} margin="50px auto" padding="l">
       <Autocomplete
         multiple
+        max={5}
         value={value}
         label="Countries"
         placeholder="Select a country"
