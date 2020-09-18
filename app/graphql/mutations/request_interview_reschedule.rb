@@ -7,6 +7,16 @@ class Mutations::RequestInterviewReschedule < Mutations::BaseMutation
 
   def authorized?(**args)
     requires_current_user!
+
+    interview = Interview.find_by_uid_or_airtable_id!(args[:interview])
+    if interview.status != "Call Scheduled"
+      ApiError.invalid_request(
+        code: "INTERVIEW_NOT_SCHEDULED",
+        message: "Interview is not in scheduled state."
+      )
+    end
+
+    true
   end
 
   def resolve(**args)
@@ -19,6 +29,13 @@ class Mutations::RequestInterviewReschedule < Mutations::BaseMutation
       interview.save_and_sync!
       SpecialistMailer.interview_reschedule_request(interview).deliver_later
     when User
+      if arguments[:availability].blank?
+        ApiError.invalid_request(
+          code: "AVAILABILITY_BLANK",
+          message: "Availability can not be blank."
+        )
+      end
+
       current_user.update!(availability: args[:availability])
       interview.status = "Client Requested Reschedule"
       interview.save_and_sync!
