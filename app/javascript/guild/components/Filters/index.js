@@ -1,9 +1,7 @@
 import React from "react";
-// import { useLocation, useHistory } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useToggle } from "@guild/hooks/useToggle";
 import { Text, useBreakpoint } from "@advisable/donut";
-// import { getUrlParams } from "@guild/utils";
 import { GuildBox } from "@guild/styles";
 import GuildTag from "@guild/components/GuildTag";
 import FilterIcon from "@guild/icons/Filter";
@@ -12,10 +10,6 @@ import { feedStore } from "@guild/stores/Feed";
 
 const Filters = () => {
   const sUp = useBreakpoint("sUp");
-  // const { search } = useLocation();
-  // const history = useHistory();
-  // const params = getUrlParams(search);
-
   const [expanded, toggleExpanded] = useToggle();
   const feedFilters = [
     "For You",
@@ -26,12 +20,9 @@ const Filters = () => {
 
   const selectedFilter = feedStore(({ selectedFilter }) => selectedFilter);
 
+  // TODO: update the search params w/ filters
   const handleApplyFilter = (selectedFilter) => {
     feedStore.setState({ selectedFilter });
-    // TODO: update the search params w/ the active primary filter
-    // const params = { selectedFilter };
-    // const filterParams = new URLSearchParams(params).toString();
-    // history.replace({ search: `?${filterParams}` });
     !sUp && toggleExpanded();
   };
 
