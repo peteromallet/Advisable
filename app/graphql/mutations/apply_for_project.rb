@@ -22,7 +22,6 @@ class Mutations::ApplyForProject < Mutations::BaseMutation
       app.accepts_terms = false
       app.featured = false
       app.references_requested = false
-      app.referral_url = '' # Don't know what to do here exactly
     end
 
     if application.status != "Invited To Apply"
