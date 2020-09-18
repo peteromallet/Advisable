@@ -102,7 +102,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
         company_name: args[:company],
         campaign_source: args[:utm_source],
         campaign_name: args[:utm_campaign],
-        campaign_medium: args[:campaign_medium],
+        campaign_medium: args[:utm_medium],
         gclid: args[:gclid]
       )
 
