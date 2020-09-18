@@ -1,5 +1,5 @@
 import * as React from "react";
-import clipboard from "clipboard-polyfill";
+import * as clipboard from "clipboard-polyfill/text";
 import { CopyURL as Wrapper } from "./styles";
 
 const CopyURL = ({ bg, children }) => {
@@ -10,7 +10,7 @@ const CopyURL = ({ bg, children }) => {
     inputRef.current.select();
   };
 
-  const handleCopy = e => {
+  const handleCopy = (e) => {
     setCopied(true);
     clipboard.writeText(children);
     setTimeout(() => setCopied(false), 2000);

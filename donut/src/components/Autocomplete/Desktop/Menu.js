@@ -1,7 +1,6 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import { FixedSizeList as List } from "react-window";
-import { motion } from "framer-motion";
 import { Box } from "@advisable/donut";
 import Text from "../../Text";
 import { Menu as MenuStyles, StyledMenuContainer } from "../styles";
@@ -9,16 +8,10 @@ import MenuItem from "../MenuItem";
 import filterItems from "../filterItems";
 import getPortalTarget from "../portralTarget";
 
-const Menu = ({
-  popper,
-  width,
-  listRef,
-  options,
-  downshift,
-  max,
-  isMax,
-  formatLabel,
-}) => {
+const Menu = React.forwardRef(function Menu(
+  { width, listRef, options, downshift, max, isMax, formatLabel },
+  ref,
+) {
   if (!downshift.isOpen) return null;
 
   let portalRoot = getPortalTarget();
@@ -28,11 +21,7 @@ const Menu = ({
   let listHeight = items.length < 7 ? items.length * 36 : 224;
 
   return createPortal(
-    <StyledMenuContainer
-      ref={popper.ref}
-      style={{ ...popper.style, width }}
-      data-placement={popper.placement}
-    >
+    <StyledMenuContainer ref={ref} style={{ width }}>
       <MenuStyles {...downshift.getMenuProps()}>
         {isMax ? (
           <Box padding="m">
@@ -62,6 +51,6 @@ const Menu = ({
     </StyledMenuContainer>,
     portalRoot,
   );
-};
+});
 
 export default Menu;

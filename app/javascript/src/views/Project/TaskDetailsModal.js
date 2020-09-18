@@ -15,7 +15,7 @@ export default function TaskDetailsModal({ dialog, id }) {
   const task = data?.task;
 
   return (
-    <ActionBarModal width={700} dialog={dialog}>
+    <ActionBarModal width={700} dialog={dialog} label="Task details">
       {loading && <Skeleton height={24} width="100%" />}
       {!loading && task && (
         <>
