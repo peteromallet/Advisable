@@ -90,7 +90,6 @@ ActiveRecord::Schema.define(version: 2020_09_22_080621) do
     t.text "rejection_reason_comment"
     t.boolean "references_requested"
     t.string "invitation_rejection_reason"
-    t.string "referral_url"
     t.datetime "applied_at"
     t.boolean "hidden"
     t.string "proposal_comment"
