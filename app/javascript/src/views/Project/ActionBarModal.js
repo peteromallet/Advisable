@@ -11,7 +11,7 @@ const StyledDialogBackdrop = styled(motion.div)`
   top: 58px;
   right: 0;
   bottom: 0;
-  left: 280px;
+  left: ${(props) => `${props.leftIndent}px`};
   z-index: 10;
   position: fixed;
   display: flex;
@@ -69,6 +69,7 @@ const StyledCloseButton = styled.button`
 
 export default function ActionBarModal({
   width = 500,
+  leftIndent = 280,
   dialog,
   label,
   children,
@@ -83,6 +84,7 @@ export default function ActionBarModal({
             style={{
               pointerEvents: dialog.visible ? "all" : "none",
             }}
+            leftIndent={leftIndent}
             initial={{ opacity: 0 }}
             animate={{
               opacity: dialog.visible ? 1 : 0,
