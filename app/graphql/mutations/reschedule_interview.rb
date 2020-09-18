@@ -4,6 +4,10 @@ class Mutations::RescheduleInterview < Mutations::BaseMutation
 
   field :interview, Types::Interview, null: true
 
+  def authorized?(**args)
+    requires_specialist!
+  end
+
   def resolve(**args)
     interview = Interview.find_by_uid_or_airtable_id!(args[:interview])
 
