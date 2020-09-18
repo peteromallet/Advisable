@@ -1,4 +1,5 @@
 import { rgba } from "polished";
+import { guildColors } from "./guild/theme";
 
 // Breakpoints
 const breakpoints = ["640px", "768px", "1024px", "1280px"];
@@ -165,6 +166,7 @@ const colors = {
   purple700: "#3B159F",
   purple800: "#2B0F76",
   purple900: "#1B0751",
+  ...guildColors,
 };
 
 const shadows = {
