@@ -2,15 +2,20 @@ import React from "react";
 import { Box } from "@advisable/donut";
 
 function Masonry({ children, columns = 2, gutter = 20 }) {
-  const cols = [];
+  // Filter null children
+  const validChildren = [];
+  React.Children.forEach(children, (child) => {
+    child && validChildren.push(React.cloneElement(child));
+  });
 
+  const cols = [];
   for (let n = 0; n < columns; n++) {
     cols.push([]);
   }
 
-  React.Children.forEach(children, (child, i) => {
+  validChildren.forEach((child, i) => {
     const col = i % columns;
-    cols[col].push(React.cloneElement(child));
+    cols[col].push(child);
   });
 
   const spacing = gutter / 2;
