@@ -1,9 +1,11 @@
 import React, { useReducer } from "react";
-import { Box, Card, Text } from "@advisable/donut";
-import Masonry from "./Masonry";
+import { Box } from "@advisable/donut";
+import Masonry from "components/Masonry";
 import createDispatcher from "src/utilities/createDispatcher";
-import Tags from "./Tags";
+import Tags from "./Filter/Tags";
 import NoFilteredProjects from "./NoFilteredProjects";
+import Filter from "./Filter";
+import ProjectCard from "./ProjectCard";
 
 const getProjectValues = (projects) =>
   projects.reduce(
@@ -119,43 +121,24 @@ function PreviousProjects({ data }) {
   const projectCards = state.projects
     .filter(filterProjects(state))
     .map((project) => {
-      return (
-        <Card key={project.id} width="100%" p="m" borderRadius="12px">
-          {project.coverPhoto && (
-            <Box
-              as="img"
-              borderRadius="12px"
-              src={project.coverPhoto.url}
-              width="100%"
-              height="178px"
-              css="object-fit: cover;"
-            />
-          )}
-          <Text fontSize="xl" fontWeight="medium">
-            {project.title}
-          </Text>
-          <Text>{project.excerpt}</Text>
-        </Card>
-      );
+      return <ProjectCard key={project.id} project={project} />;
     });
 
   return (
     <Box>
-      <Box display="flex">
-        <Box display="flex" flexWrap="wrap">
+      <Box borderRadius="8px" mb="l">
+        <Filter>
           <Tags
-            variant="skills"
-            section={state.skillsSection}
+            sectionName="skills"
+            sectionTags={state.skillsSection}
             switchTagSelection={switchSkillSelection}
           />
-        </Box>
-        <Box display="flex" flexWrap="wrap">
           <Tags
-            variant="industries"
-            section={state.industriesSection}
+            sectionName="industries"
+            sectionTags={state.industriesSection}
             switchTagSelection={switchIndustrySelection}
           />
-        </Box>
+        </Filter>
       </Box>
       {projectCards.length ? (
         <Masonry columns="3">{projectCards}</Masonry>
