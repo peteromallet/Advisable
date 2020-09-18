@@ -7,7 +7,6 @@ class Mutations::RequestInterviewReschedule < Mutations::BaseMutation
 
   def authorized?(**args)
     requires_current_user!
-    true
   end
 
   def resolve(**args)
