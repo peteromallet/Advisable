@@ -6,6 +6,7 @@ const fields = gql`
     name
     firstName
     avatar
+    coverPhoto
     location
     bio
     linkedin
