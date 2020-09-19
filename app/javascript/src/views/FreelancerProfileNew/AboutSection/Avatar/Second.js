@@ -4,6 +4,7 @@ import { rgba } from "polished";
 import styled from "styled-components";
 
 const StyledAvatarCard = styled(StyledCard)`
+  z-index: 4;
   transition: box-shadow 300ms;
   cursor: pointer;
   box-shadow: 0px 8px 12px -4px ${rgba(theme.colors.neutral900, 0.04)},
