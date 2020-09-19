@@ -1,10 +1,11 @@
 import React from "react";
-import { Circle, Box, Text, Card, Button, Link } from "@advisable/donut";
+import { Box, Text, Card, Button } from "@advisable/donut";
 import Avatar from "./Avatar";
 import useViewer from "src/hooks/useViewer";
 import { LinkedinIn } from "@styled-icons/fa-brands";
 import { Link as LinkIcon } from "@styled-icons/feather";
 import IconLink from "./IconLink";
+import CoverImage from "./CoverImage";
 
 function AboutSection({ specialist }) {
   console.log("specialist", specialist);
@@ -13,16 +14,7 @@ function AboutSection({ specialist }) {
   console.log("viewer about section", viewer);
   return (
     <Card minHeight="514px" bg="#fff" mt="m" p="12px" borderRadius={12} mb="l">
-      <Box
-        as="img"
-        src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/92b19080680791.5ce7e63751fcd.jpg"
-        css="object-fit: cover;"
-        width="100%"
-        bg="neutral50"
-        height="300px"
-        mx="auto"
-        borderRadius={12}
-      />
+      <CoverImage />
       <Box display="flex">
         <Avatar avatar={specialist.avatar} />
         <Box mt="m">
