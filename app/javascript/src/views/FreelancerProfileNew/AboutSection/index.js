@@ -7,11 +7,7 @@ import { Link as LinkIcon } from "@styled-icons/feather";
 import IconLink from "./IconLink";
 import CoverImage from "./CoverImage";
 
-function AboutSection({ specialist }) {
-  console.log("specialist", specialist);
-  const viewer = useViewer();
-  const isOwner = viewer.id === specialist.id;
-  console.log("viewer about section", viewer);
+function AboutSection({ specialist, isOwner, viewer }) {
   return (
     <Card minHeight="514px" bg="#fff" mt="m" p="12px" borderRadius={12} mb="l">
       <CoverImage />
@@ -43,13 +39,12 @@ function AboutSection({ specialist }) {
                   strokeWidth={2}
                 />
               )}
-              {isOwner ? (
+              {isOwner && (
                 <Button variant="subtle" mx="xxs">
                   Edit Info
                 </Button>
-              ) : (
-                <Button>Get in touch</Button>
               )}
+              {!isOwner && viewer && <Button>Get in touch</Button>}
             </Box>
           </Box>
           <Text color="neutral800" lineHeight="22px" pr="58px">
