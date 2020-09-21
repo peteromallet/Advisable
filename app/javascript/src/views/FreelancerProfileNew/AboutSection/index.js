@@ -1,11 +1,12 @@
 import React from "react";
-import { Box, Text, Card, Button } from "@advisable/donut";
+import { Box, Text, Card } from "@advisable/donut";
 import Avatar from "./Avatar";
 import { LinkedinIn } from "@styled-icons/fa-brands";
 import { Link as LinkIcon } from "@styled-icons/feather";
 import IconLink from "./IconLink";
 import CoverImage from "./CoverImage";
 import GetInTouchButton from "./GetInTouchButton";
+import EditInfo from "./EditInfo";
 
 function AboutSection({ specialist, isOwner, viewer }) {
   return (
@@ -40,9 +41,7 @@ function AboutSection({ specialist, isOwner, viewer }) {
                 />
               )}
               {isOwner && (
-                <Button variant="subtle" mx="xxs">
-                  Edit Info
-                </Button>
+                <EditInfo specialist={specialist}>Edit Info</EditInfo>
               )}
               {!isOwner && viewer && (
                 <GetInTouchButton id={specialist.id}>
