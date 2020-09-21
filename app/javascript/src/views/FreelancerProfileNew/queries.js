@@ -11,6 +11,10 @@ const fields = gql`
     bio
     linkedin
     website
+    city
+    country {
+      name
+    }
 
     projectSkills {
       nodes {
