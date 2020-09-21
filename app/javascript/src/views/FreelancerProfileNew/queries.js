@@ -13,7 +13,7 @@ const fields = gql`
     website
     city
     country {
-      name
+      id
     }
 
     projectSkills {
