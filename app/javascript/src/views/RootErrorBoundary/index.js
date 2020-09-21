@@ -79,7 +79,7 @@ class RootErrorBoundary extends React.Component {
             Oops..
           </Text>
           <Text fontSize="s" lineHeight="s" color="neutral800" mb="l">
-            An unexpected error has occured. We have been notified and are
+            An unexpected error has occurred. We have been notified and are
             working to fix the problem.
           </Text>
           <CollectFeedback eventId={this.state.eventId} />
