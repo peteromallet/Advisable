@@ -4,7 +4,7 @@ import { Text, theme } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
 import DownArrow from "@guild/icons/DownArrow";
 
-const ShowMore = ({ showingMore, onToggle }) => (
+const ShowMore = ({ showingMore, onToggle, text }) => (
   <StyledButton
     showingMore={showingMore}
     spaceChildrenHorizontal={4}
@@ -12,7 +12,7 @@ const ShowMore = ({ showingMore, onToggle }) => (
   >
     <DownArrow width={22} height={22} />
     <Text size="xs" color="catalinaBlue100">
-      {showingMore ? "Less" : "More"}
+      {showingMore ? text.less : text.more}
     </Text>
   </StyledButton>
 );
@@ -32,6 +32,7 @@ const StyledButton = styled(GuildBox)`
   letter-spacing: -0.01em;
   padding: 6px 14px;
   width: 100px;
+  max-height: 32px;
   background: ${theme.colors.aliceBlue};
   filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.08));
 
@@ -49,5 +50,9 @@ const StyledButton = styled(GuildBox)`
       }
     `}
 `;
+
+ShowMore.defaultProps = {
+  text: { less: "Less", more: "More" },
+};
 
 export default ShowMore;

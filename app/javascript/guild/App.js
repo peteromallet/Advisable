@@ -6,6 +6,7 @@ import Loading from "@advisable-main/components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 
 const Feed = lazy(() => import("./views/Feed"));
+const Post = lazy(() => import("./views/Post"));
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
               component={() => <Redirect to="/feed" />}
             />
             <AuthenticatedRoute exact path="/feed" component={Feed} />
+            <AuthenticatedRoute exact path="/posts/:postId" component={Post} />
           </Switch>
         </Suspense>
       </RootErrorBoundary>
