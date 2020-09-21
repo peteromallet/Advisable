@@ -6,6 +6,12 @@ AllCops:
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
 Style/RaiseArgs:
   Enabled: false
 
