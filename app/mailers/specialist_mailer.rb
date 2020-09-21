@@ -1,4 +1,6 @@
 class SpecialistMailer < ApplicationMailer
+  layout 'styled_mailer'
+
   def confirm(uid:, token:)
     @account = Specialist.find_by_uid(uid)
     @token = token
