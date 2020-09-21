@@ -81,12 +81,18 @@ const createDispatcher = (dispatch) => (type) => (payload) =>
 
 function FreelancerProfileDesktop({ data }) {
   console.log("data", data);
-  const { id: viewerId } = useViewer();
-  const isOwner = viewerId === data.specialist.id;
+  const viewer = useViewer();
+  const isOwner = viewer?.id === data.specialist.id;
+  console.log("viewer", viewer);
+  console.log("is owner", isOwner);
 
   return (
     <Box maxWidth="960px" mx="auto">
-      <AboutSection specialist={data.specialist} isOwner={isOwner} />
+      <AboutSection
+        specialist={data.specialist}
+        isOwner={isOwner}
+        viewer={viewer}
+      />
       <PreviousProjects data={data} isOwner={isOwner} />
       <Testimonials reviews={data.specialist.reviews} />
     </Box>
