@@ -87,6 +87,8 @@ group :development do
   gem 'graphql-rails_logger'
   gem 'rubocop', require: false
   gem 'annotate'
+  gem 'guard'
+  gem 'guard-rspec', require: false
 end
 
 group :test do
