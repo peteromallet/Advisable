@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/client";
 import { Text, Box, Button, Radio } from "@advisable/donut";
@@ -8,9 +9,15 @@ import CurrencyInput from "../../../components/CurrencyInput";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
 import { ArrowRight } from "@styled-icons/feather";
+import useViewer from "../../../hooks/useViewer";
 
 const FreelancingPreferences = ({ history }) => {
+  const viewer = useViewer();
   const [updateProfile] = useMutation(UPDATE_PROFILE);
+
+  if (!viewer.confirmed) {
+    return <Redirect to="/freelancers/signup/confirm" />;
+  }
 
   const handleSubmit = async (values) => {
     await updateProfile({
