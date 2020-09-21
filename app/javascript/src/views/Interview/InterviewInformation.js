@@ -14,14 +14,5 @@ export default function InterviewInformation({ interview }) {
     ? interview.user.firstName
     : interview.specialist.firstName;
 
-  return (
-    <Box textAlign="center">
-      <Circle size={64} bg="neutral100" marginBottom="lg">
-        <Calendar size={24} />
-      </Circle>
-      <Text fontSize="xl" lineHeight="xl">
-        Your interview with {recipient} is scheduled to take place on {datetime}
-      </Text>
-    </Box>
-  );
+  return <Box textAlign="center"></Box>;
 }

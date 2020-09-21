@@ -33,7 +33,7 @@ const RequestConsultation = lazy(() => import("./views/RequestConsultation"));
 const Consultation = lazy(() => import("./views/Consultation"));
 const ProjectSetup = lazy(() => import("./views/ProjectSetup"));
 const FullApplication = lazy(() => import("./views/FullApplication"));
-const RescheduleInterview = lazy(() => import("./views/RescheduleInterview"));
+const Interview = lazy(() => import("./views/Interview"));
 
 const ApplicationRoutes = () => {
   return (
@@ -99,10 +99,7 @@ const ApplicationRoutes = () => {
             path="/clients/:applicationId"
             component={FreelancerActiveApplication}
           />
-          <AuthenticatedRoute
-            path="/interviews/:id/reschedule"
-            component={RescheduleInterview}
-          />
+          <AuthenticatedRoute path="/interviews/:id" component={Interview} />
           <AuthenticatedRoute
             specialistOnly
             path="/profile"
