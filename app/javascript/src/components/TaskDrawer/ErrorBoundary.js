@@ -47,7 +47,7 @@ class TaskDrawerErrorBoundary extends React.Component {
               color="neutral600"
               textAlign="center"
             >
-              An unexpected error has occured. We have been notified and are
+              An unexpected error has occurred. We have been notified and are
               working to fix the problem.
             </Text>
           </Box>
