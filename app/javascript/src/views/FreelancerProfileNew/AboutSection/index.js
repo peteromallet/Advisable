@@ -49,6 +49,7 @@ function AboutSection({ specialist, isOwner, viewer }) {
                 </GetInTouchButton>
               )}
               {!isOwner && viewer && <Button>Get in touch</Button>}
+              {!isOwner && !viewer && <Button>Get in touch</Button>}
             </Box>
           </Box>
           <Text color="neutral800" lineHeight="22px" pr="58px">
