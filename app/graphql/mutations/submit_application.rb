@@ -7,11 +7,11 @@ class Mutations::SubmitApplication < Mutations::BaseMutation
 
   def resolve(**args)
     begin
-      application = Application.find_by_airtable_id!(args[:id])
+      application = Application.find_by_uid_or_airtable_id!(args[:id])
       {
         application: Applications::Submit.call(application)
       }
-    rescue Service::Error, ActiveRecord::RecordNotFound => e
+    rescue Service::Error => e
       {
         errors: [e]
       }
