@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client";
 import Loading from "../../../components/Loading";
@@ -22,26 +22,23 @@ const ConfirmAccount = ({ token, email, history }) => {
   const notifications = useNotifications();
 
   const [confirm] = useMutation(CONFIRM, {
-    errorPolicy: "all",
     update(cache, response) {
-      const existing = cache.readQuery({ query: VIEWER });
-      cache.writeQuery({
-        query: VIEWER,
-        data: {
-          viewer: {
-            ...existing.viewer,
-            ...response.data.confirmAccount.viewer,
+      if (!response.errors) {
+        const existing = cache.readQuery({ query: VIEWER });
+        cache.writeQuery({
+          query: VIEWER,
+          data: {
+            viewer: {
+              ...existing?.viewer,
+              ...response.data.confirmAccount.viewer,
+            },
           },
-        },
-      });
+        });
+      }
     },
   });
 
-  React.useEffect(() => {
-    confirmAccount();
-  }, []);
-
-  const confirmAccount = async () => {
+  const confirmAccount = useCallback(async () => {
     const { errors, data } = await confirm({
       variables: {
         input: {
@@ -58,7 +55,11 @@ const ConfirmAccount = ({ token, email, history }) => {
       window.localStorage.setItem("authToken", data.confirmAccount.token);
       window.location = "/freelancers/signup/preferences";
     }
-  };
+  }, [confirm, email, token, history, notifications]);
+
+  React.useEffect(() => {
+    confirmAccount();
+  }, [confirmAccount]);
 
   return <Loading />;
 };
