@@ -1,0 +1,29 @@
+require 'open-uri'
+
+class SendApplicationInformationJob < ApplicationJob
+  queue_as :default
+
+  attr_reader :project
+
+  def perform(project)
+    @project = project
+
+    specialists = Specialist.
+      where(automated_invitations_subscription: true).
+      where(id: specialist_ids_by_skill)
+
+    if project.location_importance.to_i > 1
+      specialists = specialists.where(country_id: project.user.country_id)
+    end
+
+    SpecialistMailer.inform_about_project(project.id, specialists.pluck(:id)).deliver_later
+  end
+
+  private
+
+  def specialist_ids_by_skill
+    primary_skill = project.primary_skill.specialists.pluck(:id)
+    previous_projects = project.primary_skill.previous_projects.pluck(:specialist_id)
+    primary_skill | previous_projects
+  end
+end

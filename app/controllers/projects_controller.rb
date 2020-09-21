@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
       project.sync_from_airtable
 
       if project.status == "Brief Confirmed"
-        SendApplicationInvitesJob.perform_later(project)
+        SendApplicationInformationJob.perform_later(project)
 
         render json: {status: "Invites scheduled to be sent out."}
       else

@@ -14,7 +14,7 @@ RSpec.describe "Projects", type: :request do
 
         expect(response.content_type).to eq("application/json; charset=utf-8")
         expect(response).to have_http_status(:ok)
-        expect(SendApplicationInvitesJob).to have_been_enqueued.with(project)
+        expect(SendApplicationInformationJob).to have_been_enqueued.with(project)
       end
     end
 
@@ -25,7 +25,7 @@ RSpec.describe "Projects", type: :request do
         post "/projects/send_invites", params: params, headers: headers
 
         expect(response).to have_http_status(:unauthorized)
-        expect(SendApplicationInvitesJob).not_to have_been_enqueued
+        expect(SendApplicationInformationJob).not_to have_been_enqueued
       end
     end
 
@@ -36,7 +36,7 @@ RSpec.describe "Projects", type: :request do
         post "/projects/send_invites", params: params, headers: headers
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(SendApplicationInvitesJob).not_to have_been_enqueued
+        expect(SendApplicationInformationJob).not_to have_been_enqueued
       end
     end
   end
