@@ -1,8 +1,6 @@
 class TestData
   def self.dummy_avatar
-    faraday = Faraday.new('https://tinyfac.es/api/users')
-    json = JSON.parse(faraday.get.body)
-    json.first['avatars'][2]['url']
+    "https://source.unsplash.com/800x600/?face"
   end
 
   def self.create_specialist(attrs = {})
@@ -198,7 +196,7 @@ class TestData
         u.company_type = 'Startup'
         u.industry = industry
         u.sales_person = sales_person
-        u.address = { city: 'Dublin', country: 'IE' }
+        u.address = {city: 'Dublin', country: 'IE' }
       end
 
     user.update(availability: [], completed_tutorials: [])
