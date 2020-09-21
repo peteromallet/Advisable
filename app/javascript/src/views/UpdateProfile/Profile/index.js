@@ -30,29 +30,27 @@ const Profile = () => {
 
   const initialValues = {
     bio: get(data, "viewer.bio"),
-    avatar: null,
     hourlyRate: get(data, "viewer.hourlyRate") / 100.0,
     publicUse: get(data, "viewer.publicUse"),
     skills: (get(data, "viewer.skills") || []).map((s) => s.name),
   };
 
-  const handleSubmit = async (values, formik) => {
-    let input = {
-      bio: values.bio,
-      hourlyRate: values.hourlyRate * 100,
-      publicUse: values.publicUse,
-      skills: values.skills,
-    };
-
-    if (values.avatar) {
-      input.avatar = values.avatar;
-    }
-
+  const submitUpdate = async (input) => {
     await updateProfile({
       variables: { input },
     });
 
     notifications.notify("Your profile has been updated");
+  };
+
+  const handleSubmit = async (values, formik) => {
+    submitUpdate({
+      bio: values.bio,
+      hourlyRate: values.hourlyRate * 100,
+      publicUse: values.publicUse,
+      skills: values.skills,
+    });
+
     formik.setSubmitting(false);
   };
 
@@ -80,7 +78,7 @@ const Profile = () => {
               </Text>
               <FileUpload
                 onChange={(blob) => {
-                  formik.setFieldValue("avatar", blob.signed_id);
+                  submitUpdate({ avatar: blob.signed_id });
                 }}
                 preview={(file) => {
                   if (file) {
