@@ -1,35 +1,11 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { DialogDisclosure, useDialogState } from "reakit/Dialog";
-import {
-  Box,
-  Button,
-  Modal,
-  Text,
-  Paragraph,
-  Textarea,
-} from "@advisable/donut";
+import { Box, Modal, Text, Paragraph, Textarea } from "@advisable/donut";
 import FormField from "components/FormField";
 import SubmitButton from "components/SubmitButton";
-import InterviewInformation from "./InterviewInformation";
 import { useRequestInterviewReschedule } from "./queries";
 
-export default function RescheduleAsSpecialist({ interview }) {
-  const modal = useDialogState();
-  return (
-    <Box textAlign="center">
-      <Box marginBottom="xl">
-        <InterviewInformation interview={interview} />
-      </Box>
-      <RequestRescheduleAsSpecialist interview={interview} modal={modal} />
-      <DialogDisclosure {...modal} as={Button} variant="dark">
-        Request To Reschedule
-      </DialogDisclosure>
-    </Box>
-  );
-}
-
-function RequestRescheduleAsSpecialist({ interview, modal }) {
+export default function RequestRescheduleAsSpecialist({ interview, modal }) {
   const initialValues = { note: "" };
   const [requestRequest] = useRequestInterviewReschedule();
 

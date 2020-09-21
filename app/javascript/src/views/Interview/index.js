@@ -4,11 +4,13 @@ import { Box, Card } from "@advisable/donut";
 import Loading from "components/Loading";
 import { useInterview } from "./queries";
 import InvalidInterviewState from "./InvalidInterviewState";
+import RescheduleInterview from "./RescheduleInterview";
+import RescheduleAsClient from "./RescheduleAsClient";
 import RescheduleAsSpecialist from "./RescheduleAsSpecialist";
 import useViewer from "../../hooks/useViewer";
 import NotFound, { isNotFound } from "../NotFound";
 
-function RescheduleInterviewState({ interview }) {
+function InterviewState({ interview }) {
   const viewer = useViewer();
 
   switch (interview.status) {
@@ -33,16 +35,12 @@ function RescheduleInterviewState({ interview }) {
     }
 
     default: {
-      if (viewer.isSpecialist) {
-        return <RescheduleAsSpecialist interview={interview} />;
-      }
-
-      return null;
+      return <RescheduleInterview interview={interview} />;
     }
   }
 }
 
-export default function RescheduleInterview() {
+export default function Interview() {
   const { id } = useParams();
   const { data, loading, error } = useInterview({ variables: { id } });
 
@@ -54,7 +52,7 @@ export default function RescheduleInterview() {
   return (
     <Box maxWidth="500px" paddingY="3xl" marginX="auto">
       <Card borderRadius="12px" padding={["lg", "2xl"]}>
-        <RescheduleInterviewState interview={interview} />
+        <InterviewState interview={interview} />
       </Card>
     </Box>
   );
