@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Text, Card, Button } from "@advisable/donut";
 import Avatar from "./Avatar";
-import useViewer from "src/hooks/useViewer";
 import { LinkedinIn } from "@styled-icons/fa-brands";
 import { Link as LinkIcon } from "@styled-icons/feather";
 import IconLink from "./IconLink";
 import CoverImage from "./CoverImage";
+import GetInTouchButton from "./GetInTouchButton";
 
 function AboutSection({ specialist, isOwner, viewer }) {
   return (
@@ -44,8 +44,11 @@ function AboutSection({ specialist, isOwner, viewer }) {
                   Edit Info
                 </Button>
               )}
-              {!isOwner && viewer && <Button>Get in touch</Button>}
-              {!isOwner && !viewer && <Button>Get in touch</Button>}
+              {!isOwner && viewer && (
+                <GetInTouchButton id={specialist.id}>
+                  Get in touch
+                </GetInTouchButton>
+              )}
             </Box>
           </Box>
           <Text color="neutral800" lineHeight="22px" pr="58px">
