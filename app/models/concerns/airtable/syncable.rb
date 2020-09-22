@@ -2,6 +2,7 @@ module Airtable::Syncable
   extend ActiveSupport::Concern
 
   class_methods do
+    AIRTABLE_ID_REGEX = /rec(?!_)/.freeze
     attr_reader :airtable
 
     def airtable_class(klass)
@@ -9,15 +10,13 @@ module Airtable::Syncable
     end
 
     def find_by_uid_or_airtable_id(id)
-      record = find_by_uid(id)
-      record = find_by_airtable_id(id) if record.nil?
-      record
+      is_airtable_id = id.to_s.match(AIRTABLE_ID_REGEX)
+      is_airtable_id ? find_by_airtable_id(id) : find_by_uid(id)
     end
 
     def find_by_uid_or_airtable_id!(id)
-      record = find_by_uid(id)
-      record = find_by_airtable_id!(id) if record.nil?
-      record
+      is_airtable_id = id.to_s.match(AIRTABLE_ID_REGEX)
+      is_airtable_id ? find_by_airtable_id!(id) : find_by_uid!(id)
     end
   end
 
