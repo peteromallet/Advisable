@@ -51,3 +51,18 @@ export const REQUEST_INTERVEW_RESCHEDULE = gql`
 export function useRequestInterviewReschedule() {
   return useMutation(REQUEST_INTERVEW_RESCHEDULE);
 }
+
+export const UPDATE_AVAILABILITY = gql`
+  mutation updateAvailability($input: UpdateAvailabilityInput!) {
+    updateAvailability(input: $input) {
+      user {
+        id
+        availability
+      }
+    }
+  }
+`;
+
+export function useUpdateAvailability(opts) {
+  return useMutation(UPDATE_AVAILABILITY, opts);
+}
