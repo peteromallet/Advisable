@@ -5,8 +5,17 @@ import FormField from "src/components/FormField";
 import { Form, Formik } from "formik";
 import { useMutation, useQuery } from "@apollo/client";
 import FETCH_COUNTRIES from "./fetchCountries.graphql";
-import { UPDATE_PROFILE } from "../../queries";
+import { updateProfileOptimisticResponse, UPDATE_PROFILE } from "../../queries";
 import { get } from "lodash-es";
+import { object, string } from "yup";
+
+const validationSchema = object().shape({
+  city: string(),
+  country: string(),
+  bio: string(),
+  linkedin: string().url(),
+  website: string().url(),
+});
 
 function EditInfoModal({ modal, specialist }) {
   const [mutate] = useMutation(UPDATE_PROFILE);
@@ -17,15 +26,27 @@ function EditInfoModal({ modal, specialist }) {
     linkedin: specialist.linkedin || "",
     website: specialist.website || "",
   };
-  const handleSubmit = async (values) => {
-    await mutate({ variables: { input: { ...values } } });
+  const handleSubmit = (values) => {
+    const mutateValues = { ...values, linkedin: values.linkedin || null };
+    const optimisticResponse = updateProfileOptimisticResponse(
+      specialist,
+      mutateValues,
+    );
+    mutate({
+      variables: { input: { ...mutateValues } },
+      optimisticResponse,
+    });
     modal.hide();
   };
   const countriesQuery = useQuery(FETCH_COUNTRIES);
   console.log("countries query", countriesQuery);
   return (
     <Modal modal={modal} p="xxl" label="Edit profile info" width={640}>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+      >
         {() => (
           <Form>
             <Text
