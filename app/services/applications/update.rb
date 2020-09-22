@@ -4,8 +4,6 @@ class Applications::Update < ApplicationService
   def initialize(id:, attributes:)
     @application = Application.find_by_uid_or_airtable_id!(id)
     @attributes = attributes
-  rescue ActiveRecord::RecordNotFound => e
-    raise Service::Error.new(:record_not_found)
   end
 
   def call

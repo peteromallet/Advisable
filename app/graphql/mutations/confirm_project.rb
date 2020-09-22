@@ -7,7 +7,7 @@ class Mutations::ConfirmProject < Mutations::BaseMutation
   def resolve(**args)
     {
       project: Projects::Confirm.call(
-        project: Project.find_by_uid_or_airtable_id(args[:id]),
+        project: Project.find_by_uid_or_airtable_id!(args[:id]),
       )
     }
 

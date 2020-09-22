@@ -77,7 +77,7 @@ class Types::QueryType < Types::BaseType
   end
 
   def interview(id:)
-    Interview.find_by_uid_or_airtable_id(id)
+    Interview.find_by_uid_or_airtable_id!(id)
   end
 
   field :user,
@@ -87,7 +87,7 @@ class Types::QueryType < Types::BaseType
   end
 
   def user(id:)
-    ::User.find_by_uid_or_airtable_id(id)
+    ::User.find_by_uid_or_airtable_id!(id)
   rescue Airrecord::Error => er
     GraphQL::ExecutionError.new("Could not find user #{id}")
   end

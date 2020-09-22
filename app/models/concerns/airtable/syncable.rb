@@ -10,13 +10,17 @@ module Airtable::Syncable
     end
 
     def find_by_uid_or_airtable_id(id)
-      is_airtable_id = id.to_s.match(AIRTABLE_ID_REGEX)
-      is_airtable_id ? find_by_airtable_id(id) : find_by_uid(id)
+      is_airtable_id(id) ? find_by_airtable_id(id) : find_by_uid(id)
     end
 
     def find_by_uid_or_airtable_id!(id)
-      is_airtable_id = id.to_s.match(AIRTABLE_ID_REGEX)
-      is_airtable_id ? find_by_airtable_id!(id) : find_by_uid!(id)
+      is_airtable_id(id) ? find_by_airtable_id!(id) : find_by_uid!(id)
+    end
+
+    private
+
+    def is_airtable_id(id)
+      id.to_s.starts_with?(AIRTABLE_ID_REGEX)
     end
   end
 
