@@ -2,7 +2,6 @@ module Airtable::Syncable
   extend ActiveSupport::Concern
 
   class_methods do
-    AIRTABLE_ID_REGEX = /rec(?!_)/.freeze
     attr_reader :airtable
 
     def airtable_class(klass)
@@ -20,7 +19,7 @@ module Airtable::Syncable
     private
 
     def is_airtable_id(id)
-      id.to_s.starts_with?(AIRTABLE_ID_REGEX)
+      id.to_s.starts_with?(/rec(?!_)/)
     end
   end
 
