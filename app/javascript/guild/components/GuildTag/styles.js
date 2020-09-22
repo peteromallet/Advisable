@@ -65,6 +65,7 @@ export const StyledTag = styled.div`
 
   ${flex.spaceChildrenHorizontal(theme.space.xxs)}
   ${flex.flexCenterBoth}
+  flex-shrink: 0;
 
   ${({ button }) =>
     button &&
