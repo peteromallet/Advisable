@@ -92,3 +92,21 @@ export const UPDATE_PROFILE = gql`
     }
   }
 `;
+
+export const updateProfileOptimisticResponse = (specialist, values) => {
+  return {
+    __typename: "Mutation",
+    updateProfile: {
+      __typename: "UpdateProfilePayload",
+      specialist: {
+        __typename: "Specialist",
+        ...specialist,
+        ...values,
+        country: {
+          __typename: "Country",
+          id: values.country,
+        },
+      },
+    },
+  };
+};
