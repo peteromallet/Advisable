@@ -23,10 +23,9 @@ class SpecialistMailer < ApplicationMailer
   def inform_about_project(project_id, specialist_id)
     @project = Project.find(project_id)
     @specialist = Specialist.find(specialist_id)
-
     mail(
       to: @specialist.email,
-      subject: "We have a new opportunity that might be a good fit for you"
+      subject: "New Freelance Opportunity: #{@project.primary_skill.name} with #{@project.industry} #{@project.company_type}"
     )
   end
 end
