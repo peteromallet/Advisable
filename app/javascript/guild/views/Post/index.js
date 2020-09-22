@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useCallback } from "react";
 import {
   Card,
   Text,
@@ -11,9 +11,8 @@ import {
 } from "@advisable/donut";
 import styled from "styled-components";
 import { Formik, Form } from "formik";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import FormField from "@advisable-main/components/FormField";
-import AnchorLink from "react-anchor-link-smooth-scroll";
 import { useMutation, useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
 import pluralize from "@advisable-main/utilities/pluralize";
@@ -31,6 +30,9 @@ import Comments from "@guild/icons/Comments";
 
 const Post = () => {
   const { postId } = useParams();
+  const { state } = useLocation();
+  const [showComments, toggleShowComments] = useToggle(true);
+
   const { data, loading } = useQuery(GUILD_POST_QUERY, {
     variables: { id: postId },
   });
@@ -38,7 +40,21 @@ const Post = () => {
 
   const [createGuildComment] = useMutation(CREATE_GUILD_COMMENT);
 
-  const [showComments, toggleShowComments] = useToggle(true);
+  const commentsRef = useRef();
+  const commentsEffectRef = useCallback(
+    (node) => {
+      if (!node) return;
+      commentsRef.current = node;
+      if (state?.commentsAnchor) scrollToComments();
+    },
+    [state?.commentsAnchor],
+  );
+
+  const scrollToComments = () => {
+    commentsRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
 
   if (loading) return <Loading />;
 
@@ -103,7 +119,7 @@ const Post = () => {
               {/* Topics */}
               <Topics activeStyle topics={post.guildTopics} />
 
-              <StyledCommentsButton flexSpaceBetween>
+              <StyledCommentsButton flexSpaceBetween onClick={scrollToComments}>
                 <Text fontWeight="medium" size="xs" color="catalinaBlue100">
                   {post.commentsCount
                     ? pluralize(post.commentsCount, "Comment", "Comments")
@@ -121,41 +137,40 @@ const Post = () => {
             </GuildBox>
 
             {/* Comments */}
-            <section id="comments">
+            <GuildBox
+              ref={commentsEffectRef}
+              px="xxl"
+              display="flex"
+              flexDirection="column"
+              minHeight="165px"
+            >
               <GuildBox
-                px="xxl"
-                display="flex"
-                flexDirection="column"
-                minHeight="165px"
+                mb="m"
+                alignItems="baseline"
+                spaceChildrenHorizontal={24}
               >
-                <GuildBox
-                  mb="m"
-                  alignItems="baseline"
-                  spaceChildrenHorizontal={24}
-                >
-                  <Text size="4xl" fontWeight="medium" color="catalinaBlue100">
-                    {post.commentsCount
-                      ? pluralize(post.commentsCount, "Comment", "Comments")
-                      : "Comments"}
-                  </Text>
-                  <ShowMore
-                    showingMore={showComments}
-                    onToggle={toggleShowComments}
-                    text={{ more: "Show", less: "Hide" }}
-                  />
-                </GuildBox>
-
-                <StyledTextarea
-                  marginBottom="s"
-                  minRows={3}
-                  maxRows={8}
-                  placeholder="Join the Discussion ..."
-                ></StyledTextarea>
-                <StyledSubmitButton loading={false} type="submit">
-                  Submit
-                </StyledSubmitButton>
+                <Text size="4xl" fontWeight="medium" color="catalinaBlue100">
+                  {post.commentsCount
+                    ? pluralize(post.commentsCount, "Comment", "Comments")
+                    : "Comments"}
+                </Text>
+                <ShowMore
+                  showingMore={showComments}
+                  onToggle={toggleShowComments}
+                  text={{ more: "Show", less: "Hide" }}
+                />
               </GuildBox>
-            </section>
+
+              <StyledTextarea
+                marginBottom="s"
+                minRows={3}
+                maxRows={8}
+                placeholder="Join the Discussion ..."
+              ></StyledTextarea>
+              <StyledSubmitButton loading={false} type="submit">
+                Submit
+              </StyledSubmitButton>
+            </GuildBox>
 
             {/* Post Comments */}
           </Card>

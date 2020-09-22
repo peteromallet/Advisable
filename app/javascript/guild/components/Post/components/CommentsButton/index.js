@@ -12,7 +12,11 @@ const CommentsButton = ({ postId, commentsCount }) => (
     alignSelf="flex-start"
     background="white"
     borderRadius={8}
-    to={`/posts/${postId}#comments`}
+    to={{
+      pathname: `/posts/${postId}`,
+      hash: "#comments",
+      state: { commentsAnchor: true },
+    }}
   >
     <Text fontSize="xs" mr="xs" color="catalinaBlue100">
       {commentsCount || "0"}
