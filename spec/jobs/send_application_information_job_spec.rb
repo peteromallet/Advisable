@@ -8,7 +8,7 @@ RSpec.describe SendApplicationInformationJob do
 
   it "invites specialists who have appropriate skills" do
     SendApplicationInformationJob.perform_now(project)
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, [specialist2.id]]})
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist2.id]})
   end
 
   context "location is important" do
@@ -18,7 +18,7 @@ RSpec.describe SendApplicationInformationJob do
 
     it "invites specialists who have appropriate skill in same country" do
       SendApplicationInformationJob.perform_now(project)
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, [specialist4.id]]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist4.id]})
     end
   end
 end
