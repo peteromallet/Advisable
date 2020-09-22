@@ -1,41 +1,38 @@
 import React from "react";
-import { useParams } from "react-router";
-import { Box, Card } from "@advisable/donut";
+import { Switch, Route, useParams } from "react-router-dom";
 import Loading from "components/Loading";
 import { useInterview } from "./queries";
-import InvalidInterviewState from "./InvalidInterviewState";
+import CallScheduled from "./CallScheduled";
+import CallRequested from "./CallRequested";
+import ClientRequestedReschedule from "./ClientRequestedReschedule";
+import SpecialistRequestedReschedule from "./SpecialistRequestedReschedule";
 import RescheduleInterview from "./RescheduleInterview";
-import RescheduleAsClient from "./RescheduleAsClient";
-import RescheduleAsSpecialist from "./RescheduleAsSpecialist";
-import useViewer from "../../hooks/useViewer";
 import NotFound, { isNotFound } from "../NotFound";
 
 function InterviewState({ interview }) {
-  const viewer = useViewer();
-
   switch (interview.status) {
     case "Call Requested": {
-      return (
-        <InvalidInterviewState>
-          Interview has not been scheduled yet.
-        </InvalidInterviewState>
-      );
+      return <CallRequested interview={interview} />;
     }
 
     case "Call Complete": {
-      return (
-        <InvalidInterviewState>
-          This interview has been complete.
-        </InvalidInterviewState>
-      );
+      return <>This interview has been complete.</>;
+    }
+
+    case "Client Requested Reschedule": {
+      return <ClientRequestedReschedule interview={interview} />;
     }
 
     case "Specialist Requested Reschedule": {
-      return <>specialist requested reschedule</>;
+      return <SpecialistRequestedReschedule interview={interview} />;
+    }
+
+    case "Call Scheduled": {
+      return <CallScheduled interview={interview} />;
     }
 
     default: {
-      return <RescheduleInterview interview={interview} />;
+      return null;
     }
   }
 }
@@ -50,10 +47,13 @@ export default function Interview() {
   const interview = data.interview;
 
   return (
-    <Box maxWidth="500px" paddingY="3xl" marginX="auto">
-      <Card borderRadius="12px" padding={["lg", "2xl"]}>
+    <Switch>
+      <Route path="/interviews/:id/reschedule">
+        <RescheduleInterview interview={interview} />
+      </Route>
+      <Route>
         <InterviewState interview={interview} />
-      </Card>
-    </Box>
+      </Route>
+    </Switch>
   );
 }

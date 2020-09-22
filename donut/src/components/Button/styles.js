@@ -51,14 +51,14 @@ const primaryStyles = css`
 `;
 
 const secondaryStyles = css`
-  background: #020e55;
+  background: ${theme.colors.neutral900};
 
   &:not(:disabled):hover {
-    background: #27306a;
+    background: ${theme.colors.neutral800};
   }
 
   &:not(:disabled):active {
-    background: #000833;
+    background: ${theme.colors.neutral700};
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
