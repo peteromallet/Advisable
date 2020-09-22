@@ -19,7 +19,7 @@ module Airtable::Syncable
     private
 
     def is_airtable_id(id)
-      id.to_s.starts_with?(/rec(?!_)/)
+      id =~ /^rec[^_]/
     end
   end
 

@@ -1,4 +1,6 @@
 class SalesPerson < ApplicationRecord
+  include Uid
+  include Airtable::Syncable
   has_many :users
   has_one_attached :image
 
@@ -19,6 +21,7 @@ end
 #  last_name     :string
 #  out_of_office :boolean
 #  slack         :string
+#  uid           :string
 #  username      :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

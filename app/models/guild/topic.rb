@@ -22,3 +22,19 @@ module Guild
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: tags
+#
+#  id             :uuid             not null, primary key
+#  name           :string
+#  taggings_count :integer          default(0)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  alias_tag_id   :integer
+#
+# Indexes
+#
+#  index_tags_on_name  (name) UNIQUE
+#
