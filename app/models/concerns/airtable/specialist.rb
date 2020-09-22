@@ -61,7 +61,7 @@ class Airtable::Specialist < Airtable::Base
     specialist_skills.each do |skill_id|
       # check if we already have a synced record of that skill.
       skill =
-        ::Skill.find_by_airtable_id(skill_id)
+        ::Skill.find_by_uid_or_airtable_id(skill_id)
       # if not then sync it
       skill = Airtable::Skill.find(skill_id).sync if skill.nil?
       # find or initialize an association.
@@ -196,7 +196,7 @@ class Airtable::Specialist < Airtable::Base
     if e.message.include?('ROW_DOES_NOT_EXIST')
       id = e.message[/(rec\w*)/, 1]
 
-      skill = Skill.find_by_airtable_id(id)
+      skill = Skill.find_by_uid_or_airtable_id(id)
 
       return handle_duplicate_skill(skill, record) if skill.present?
       # otherwise reraise the error, its a different kind of missing record.

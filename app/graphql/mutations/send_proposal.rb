@@ -13,7 +13,7 @@ class Mutations::SendProposal < Mutations::BaseMutation
   end
 
   def resolve(**args)
-    application = Application.find_by_airtable_id(args[:application])
+    application = Application.find_by_uid_or_airtable_id(args[:application])
 
     {
       application:

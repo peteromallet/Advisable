@@ -22,7 +22,7 @@ class Airtable::ClientCall < Airtable::Base
     user_id = fields['Client Contact'].try(:first)
 
     if user_id
-      user = ::User.find_by_airtable_id(user_id)
+      user = ::User.find_by_uid_or_airtable_id(user_id)
       user = Airtable::ClientContact.find(user_id).sync if user.nil?
       client_call.user = user
     end
