@@ -16,7 +16,9 @@ class SendApplicationInformationJob < ApplicationJob
       specialists = specialists.where(country_id: project.user.country_id)
     end
 
-    SpecialistMailer.inform_about_project(project.id, specialists.pluck(:id)).deliver_later
+    specialists.each do |specialist|
+      SpecialistMailer.inform_about_project(project.id, specialist.id).deliver_later
+    end
   end
 
   private

@@ -6,7 +6,7 @@ class SpecialistMailerPreview < ActionMailer::Preview
 
   def inform_about_project
     project = Project.order(Arel.sql('RANDOM()')).first
-    specialists = Specialist.order(Arel.sql('RANDOM()')).first(5)
-    SpecialistMailer.inform_about_project(project.id, specialists.pluck(:id))
+    specialist = Specialist.order(Arel.sql('RANDOM()')).first
+    SpecialistMailer.inform_about_project(project.id, specialist.id)
   end
 end

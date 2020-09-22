@@ -42,14 +42,12 @@
                           <tr>
                             <td align="left" valign="top" class="title-2"
                               style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #142b4e;font-size: 18px;font-weight: 600;padding: 0 0px 5px 0px;">
-                              {{55229703__fields__Primary Skill Required}} with
-                              {{55229703__fields__Plain Text Industry}} {{55229703__fields__Type of Company}}
+                              <%= @project.primary_skill.name %> with <%= @project.industry %> <%= @project.company_type %>
                             </td>
                           </tr>
                           <tr>
                             <td align="left" valign="top" class="copy"
-                              style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #445c81;font-size: 14px;font-weight: 400;padding: 0 0 0px 0;">
-                              {{55229703__fields__Company Description}} </td>
+                              style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #445c81;font-size: 14px;font-weight: 400;padding: 0 0 0px 0;"><%= @project.company_description %></td>
                           </tr>
                           <!-- Spacer -->
                           <tr>
@@ -61,8 +59,7 @@
                     </tr>
                     <tr>
                       <td align="left" valign="top" class="copy"
-                        style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #445c81;font-size: 14px;font-weight: 400;padding: 0 0 0px 0;">
-                        {{55229703__fields__Specialist Requirement Description}} </td>
+                        style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #445c81;font-size: 14px;font-weight: 400;padding: 0 0 0px 0;"><%= @project.specialist_description %></td>
                     </tr>
                     <!-- Spacer -->
                     <tr>
@@ -117,7 +114,7 @@
                                   <td align="center" valign="top" class="button-1"
                                     style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #ffffff;font-size: 12px;font-weight: 700;background-color: #00B49E;border-radius: 5px;padding: 10px;">
                                     <a clicktracking=off
-                                      href="{{55229703__fields__Request Invite URL}}&sid={{55325418__fields__Specialist ID}}&email={{55325418__fields__Email Address}}"
+                                      href="{{55229703__fields__Request Invite URL}}&sid=<%= @specialist.uid %>&email=<%= @specialist.email %>"
                                       target="_blank"
                                       style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #ffffff;text-decoration: none;display: block;">Request
                                       an Invitation</a> </td>
@@ -156,7 +153,7 @@
                                   <td align="center" valign="top" class="button-2"
                                     style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #142b4e;font-size: 12px;font-weight: 700;border: 1px solid #142b4e;border-radius: 5px;display: block;padding: 10px;">
                                     <a clicktracking=off
-                                      href="{{55229703__fields__Project Referral URL}}&rid={{55325418__fields__Specialist ID}}&referrer_firstname={{55325418__fields__First Name}}&referrer_lastname={{55325418__fields__Last Name}}"
+                                      href="<%= @project.client_referral_url %>&rid=<%= @specialist.uid %>&referrer_firstname=<%= specialist.first_name %>&referrer_lastname=<%= specialist.last_name %>"
                                       target="_blank"
                                       style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #142b4e;text-decoration: none;display: block;">Get
                                       a Shareable Link</a> </td>

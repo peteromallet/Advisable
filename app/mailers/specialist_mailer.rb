@@ -20,15 +20,13 @@ class SpecialistMailer < ApplicationMailer
     )
   end
 
-  def inform_about_project(project_id, specialist_ids)
-    project = Project.find(project_id)
-    specialists = Specialist.find(specialist_ids)
+  def inform_about_project(project_id, specialist_id)
+    @project = Project.find(project_id)
+    @specialist = Specialist.find(specialist_id)
 
-    specialists.each do |specialist|
-      mail(
-        to: specialist.email,
-        subject: "There's a new project that might be a good fit for you"
-      )
-    end
+    mail(
+      to: @specialist.email,
+      subject: "We have a new opportunity that might be a good fit for you"
+    )
   end
 end
