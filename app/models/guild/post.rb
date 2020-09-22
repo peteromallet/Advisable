@@ -23,6 +23,8 @@ module Guild
     validates :title, length: {maximum: 250, minimum: 4}
     validates :body, length: {maximum: 10_000, minimum: 4}
 
+    has_one_attached :cover_image
+
     before_validation(on: :create) {
       self.status = Post.statuses['published']
     }
