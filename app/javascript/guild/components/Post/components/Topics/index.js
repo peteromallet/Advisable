@@ -18,6 +18,7 @@ const Topics = ({ activeStyle, topics = [] }) => (
         activeStyle={activeStyle}
         key={key}
         fontSize="xs"
+        fontWeight="medium"
         color="catalinaBlue100"
         to={`/topics/${topic.id}`}
       >

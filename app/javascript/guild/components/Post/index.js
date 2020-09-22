@@ -89,13 +89,7 @@ const Post = ({ post }) => {
             maxHeight={bodyMaxHeight}
             ref={bodyRef}
           >
-            <Text
-              fontSize="xs"
-              fontWeight="light"
-              letterSpacing="-0.01em"
-              color="quartz"
-              lineHeight="s"
-            >
+            <Text fontSize="s" color="quartz" lineHeight="m">
               {post.body}
             </Text>
             {wrapBody && <ReadMore onReadMore={handleReadMore} />}
@@ -113,7 +107,7 @@ const Post = ({ post }) => {
         backgroundColor="aliceBlue"
       >
         <Topics topics={post.guildTopics} />
-        <CommentsButton postId={post.id} commentsCount={post.comments_count} />
+        <CommentsButton postId={post.id} commentsCount={post.commentsCount} />
       </Box>
     </Card>
   );

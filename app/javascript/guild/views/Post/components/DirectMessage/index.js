@@ -14,8 +14,8 @@ const StyledBox = styled(GuildBox)`
   /* padding: 8px; */
   background: ${theme.colors.aliceBlue};
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.12));
 
   svg {
@@ -40,7 +40,7 @@ const StyledBox = styled(GuildBox)`
         width: 20px;
         height: 20px;
         top: 0;
-        right: -6px;
+        right: -10px;
         display: flex;
         align-items: center;
         justify-content: center;
