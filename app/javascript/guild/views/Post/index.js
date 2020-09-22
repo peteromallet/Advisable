@@ -10,11 +10,10 @@ import {
   Box,
 } from "@advisable/donut";
 import styled from "styled-components";
-import { Formik, Form } from "formik";
+// import { Formik, Form } from "formik";
 import { useParams, useLocation } from "react-router-dom";
-import FormField from "@advisable-main/components/FormField";
-import { useMutation, useQuery } from "@apollo/client";
-import Div100vh from "react-div-100vh";
+// import FormField from "@advisable-main/components/FormField";
+import { useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
 import pluralize from "@advisable-main/utilities/pluralize";
 import HeaderLayout from "@guild/components/Layouts/HeaderLayout";
@@ -23,11 +22,12 @@ import { GuildBox } from "@guild/styles";
 import ShowMore from "@guild/components/ShowMore";
 import GuildTag from "@guild/components/GuildTag";
 import NeedHelp from "@guild/icons/NeedHelp";
-import { CREATE_GUILD_COMMENT } from "./mutations";
+// import { CREATE_GUILD_COMMENT } from "./mutations";
 import { GUILD_POST_QUERY } from "./queries";
 import DirectMessage from "./components/DirectMessage";
 import Topics from "@guild/components/Post/components/Topics";
 import Comments from "@guild/icons/Comments";
+import { CoverImage } from "@guild/components/CoverImage";
 import { truncate } from "lodash-es";
 
 const Post = () => {
@@ -40,7 +40,7 @@ const Post = () => {
   });
   const post = data?.guildPost;
 
-  const [createGuildComment] = useMutation(CREATE_GUILD_COMMENT);
+  // const [createGuildComment] = useMutation(CREATE_GUILD_COMMENT);
 
   const commentsRef = useRef();
   const commentsEffectRef = useCallback(
@@ -69,6 +69,8 @@ const Post = () => {
             maxWidth={theme.breakpoints.l}
             width="100%"
           >
+            {post.coverImage && <CoverImage src={post.coverImage} />}
+
             {/* Header */}
             <GuildBox px="xxl" py="l" backgroundColor="ghostWhite100">
               <GuildBox mb="l" flexSpaceBetween>

@@ -6,6 +6,7 @@ import Topics from "./components/Topics";
 import NeedHelp from "@guild/icons/NeedHelp";
 import CommentsButton from "./components/CommentsButton";
 import ReadMore from "./components/ReadMore";
+import { CoverImage } from "@guild/components/CoverImage";
 
 const Post = ({ post }) => {
   const history = useHistory();
@@ -26,6 +27,7 @@ const Post = ({ post }) => {
 
   return (
     <Card elevation={{ _: "s", m: "m" }} width="100%">
+      {post.coverImage && <CoverImage src={post.coverImage} />}
       <Box display="flex" flexDirection="column" p={{ _: "s", m: "l" }}>
         <Box display="flex" justifyContent="space-between" alignItems="start">
           <Box display="flex">

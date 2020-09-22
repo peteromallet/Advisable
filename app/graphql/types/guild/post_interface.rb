@@ -74,6 +74,21 @@ module Types::Guild::PostInterface
 
   field :guild_topics, [Types::Guild::TopicType], null: true
 
+  field :cover_image, String, null: true do
+    description 'The cover image for the guild post'
+  end
+  def cover_image
+    if object.cover_image.attached?
+      return(
+        Rails.application.routes.url_helpers.rails_blob_url(
+          object.cover_image,
+          host:
+            ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+        )
+      )
+    end
+  end
+
   definition_methods do
     def resolve_type(object, context)
       if Guild::Post::POST_TYPES.include?(object.type)
