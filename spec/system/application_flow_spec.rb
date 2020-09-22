@@ -21,7 +21,7 @@ RSpec.describe 'Application flow' do
 
   describe 'Overview step' do
     it 'Continues to the questions step' do
-      visit "/invites/#{application.airtable_id}/apply"
+      visit "/invites/#{application.uid}/apply"
       fill_in :introduction, with: 'This is my intro'
       find('label', text: 'Immediately').click
       click_on 'Next'
@@ -34,7 +34,7 @@ RSpec.describe 'Application flow' do
       end
 
       it 'goes to the references step' do
-        visit "/invites/#{application.airtable_id}/apply"
+        visit "/invites/#{application.uid}/apply"
         fill_in :introduction, with: 'This is my intro'
         find('label', text: 'Immediately').click
         click_on 'Next'
@@ -45,7 +45,7 @@ RSpec.describe 'Application flow' do
 
   describe 'Questions step' do
     it 'proceeeds to the next question' do
-      visit "/invites/#{application.airtable_id}/apply/questions"
+      visit "/invites/#{application.uid}/apply/questions"
       fill_in :answer, with: 'This is my answer'
       click_on 'Next'
       expect(page).to have_content('Are you sure?')
@@ -70,7 +70,7 @@ RSpec.describe 'Application flow' do
       end
 
       it 'proceeds to the references step after submission' do
-        visit "/invites/#{application.airtable_id}/apply/questions/2"
+        visit "/invites/#{application.uid}/apply/questions/2"
         fill_in :answer, with: 'This is my answer'
         click_on 'Next'
         expect(page).to have_content('Are you sure?')
@@ -86,7 +86,7 @@ RSpec.describe 'Application flow' do
       end
 
       it 'proceeds to the references step' do
-        visit "/invites/#{application.airtable_id}/apply/questions"
+        visit "/invites/#{application.uid}/apply/questions"
         expect(page).to have_content('We require references from all')
       end
     end
@@ -101,7 +101,7 @@ RSpec.describe 'Application flow' do
       end
 
       it 'proceeds to the payment terms' do
-        visit "/invites/#{application.airtable_id}/apply/references"
+        visit "/invites/#{application.uid}/apply/references"
         find(
           'label',
           text:
@@ -127,7 +127,7 @@ RSpec.describe 'Application flow' do
     end
 
     it 'completes the application process' do
-      visit "/invites/#{application.airtable_id}/apply/terms"
+      visit "/invites/#{application.uid}/apply/terms"
       fill_in 'rate', with: '100'
       find(
         'label',
@@ -149,7 +149,7 @@ RSpec.describe 'Application flow' do
     let(:application) { create(:application, status: 'Invitation Rejected') }
 
     it 'redirects to the job listing page' do
-      visit "/invites/#{application.airtable_id}/apply"
+      visit "/invites/#{application.uid}/apply"
       expect(page).to have_content('You have already rejected this invitation')
     end
   end
