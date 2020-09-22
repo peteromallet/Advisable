@@ -2,7 +2,7 @@ class Applications::RejectApplicationInvitation < ApplicationService
   attr_reader :application, :reason
 
   def initialize(application_id:, reason:)
-    @application = ::Application.find_by_airtable_id!(application_id)
+    @application = ::Application.find_by_uid_or_airtable_id(application_id)
     @reason = reason
   end
 
