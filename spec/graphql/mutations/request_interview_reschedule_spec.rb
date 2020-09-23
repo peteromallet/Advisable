@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe Mutations::RequestInterviewReschedule do
   let(:user) { create(:user) }
   let(:specialist) { create(:specialist) }
-  let(:availability) { [2.days.from_now.utc.iso8601] }
   let(:application) { create(:application, specialist: specialist) }
   let(:interview) { create(:interview, application: application, user: user, status: "Call Scheduled") }
 
@@ -12,7 +11,6 @@ RSpec.describe Mutations::RequestInterviewReschedule do
     mutation {
       requestInterviewReschedule(input: {
         interview: "#{interview.uid}",
-        availability: #{availability.to_json},
         note: "This is a note."
       }) {
         interview {
@@ -36,16 +34,6 @@ RSpec.describe Mutations::RequestInterviewReschedule do
       expect(interview.availability_note).to eq("This is a note.")
       expect(interview.status).to eq("Client Requested Reschedule")
       expect(response["data"]["requestInterviewReschedule"]["interview"]["id"]).to eq(interview.uid)
-    end
-
-    context 'blank availability' do
-      let(:availability) { [] }
-
-      it "raises an error" do
-        response = AdvisableSchema.execute(query, context: context)
-        error = response["errors"].first["extensions"]["code"]
-        expect(error).to eq("AVAILABILITY_BLANK")
-      end
     end
   end
 
