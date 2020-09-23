@@ -7,4 +7,5 @@ class Types::MutationType < GraphQL::Schema::Object
   # Guild
   field :create_guild_comment, mutation: Mutations::Guild::CreateComment
   field :delete_guild_comment, mutation: Mutations::Guild::DeleteComment
+  field :guild_update_last_read, mutation: Mutations::Guild::UpdateLastRead
 end

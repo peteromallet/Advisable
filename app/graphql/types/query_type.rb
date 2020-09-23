@@ -311,7 +311,7 @@ class Types::QueryType < Types::BaseType
   field :guild_new_members, [Types::SpecialistType], null: true
 
   def guild_new_members
-    Specialist.guild.order(guild_joined_date: :desc).limit(10)
+    Specialist.guild.jsonb_order(:guild_data, :guild_joined_date, :desc).limit(10)
   end
 
   protected
