@@ -3,8 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Guild::Post, type: :model do
-  include ActiveJob::TestHelper
-
   let(:guild_post) { create(:guild_post) }
   let(:specialist) { build(:specialist) }
   let(:guild_comments) { build_list(:guild_comment, 2) }
