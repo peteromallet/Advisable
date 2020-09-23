@@ -166,12 +166,12 @@ const Post = () => {
                 />
               </GuildBox>
 
-              <StyledTextarea
+              <Textarea
                 marginBottom="s"
                 minRows={3}
                 maxRows={8}
                 placeholder="Join the Discussion ..."
-              ></StyledTextarea>
+              />
               <StyledSubmitButton loading={false} type="submit">
                 Submit
               </StyledSubmitButton>
@@ -231,8 +231,6 @@ const Post = () => {
     )
   );
 };
-
-const StyledTextarea = styled(Textarea)``;
 
 const StyledSubmitButton = styled(Button)`
   color: white;

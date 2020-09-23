@@ -32,7 +32,7 @@ module Guild
       # Utilities to touch last_read for guild events
       %i[guild_messages_last_read guild_notifications_last_read].each do |meth|
         define_method("touch_#{meth}".to_sym) do
-          update!(meth => Time.now)
+          update!(meth => Time.current)
         end
       end
 
@@ -83,7 +83,7 @@ module Guild
 
       def set_guild_joined_date
         return unless guild
-        self.guild_joined_date ||= Time.now
+        self.guild_joined_date ||= Time.current
       end
     end
   end

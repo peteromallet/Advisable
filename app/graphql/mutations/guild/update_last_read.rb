@@ -29,6 +29,6 @@ class Mutations::Guild::UpdateLastRead < Mutations::BaseMutation
     viewer.touch_guild_messages_last_read if args[:read_messages]
     viewer.touch_guild_notifications_last_read if args[:read_notifications]
 
-    { viewer: viewer }
+    {viewer: viewer}
   end
 end
