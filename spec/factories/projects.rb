@@ -8,7 +8,7 @@ FactoryBot.define do
     name do
       'Firespring – Public Relations and Communications Marketing, Publicity'
     end
-    sequence(:airtable_id) { |id| "airtable_#{id}" }
+    sequence(:airtable_id) { |id| "recproject#{id}" }
 
     after :build do |project|
       project.primary_skill = create(:skill) if project.primary_skill.nil?

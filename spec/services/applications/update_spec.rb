@@ -6,7 +6,7 @@ RSpec.describe Applications::Update do
   let(:previous_project) do
     create(
       :previous_project,
-      airtable_id: 'rec_987654321', specialist: specialist
+      airtable_id: 'rec987654321', specialist: specialist
     )
   end
 
@@ -53,7 +53,7 @@ RSpec.describe Applications::Update do
   it "raises an error if the application doesn't exist" do
     expect {
       Applications::Update.call(id: 'nope', attributes: attributes)
-    }.to raise_error(Service::Error, 'record_not_found')
+    }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   it 'updates the availability' do

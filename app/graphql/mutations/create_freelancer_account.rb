@@ -105,7 +105,7 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
   # mutation to create an application record for that project.
   def create_application_record(specialist, pid)
     return unless pid
-    project = Project.find_by_airtable_id(pid)
+    project = Project.find_by_uid_or_airtable_id(pid)
     project = Airtable::Project.find(pid).sync if project.nil?
     return unless project.present?
     application =

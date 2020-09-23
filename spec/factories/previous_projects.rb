@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :previous_project do
     specialist
-    sequence(:airtable_id) { |id| "airtable_#{id}" }
+    sequence(:airtable_id) { |id| "recpreviousproject#{id}" }
     company_type { 'Startup' }
     contact_first_name { 'Thomas' }
     contact_last_name { 'Cullen' }

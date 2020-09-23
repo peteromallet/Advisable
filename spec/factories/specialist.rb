@@ -11,7 +11,7 @@ FactoryBot.define do
     hourly_rate { 200 }
     average_score { 75 }
     sequence(:uid) { "spe_#{SecureRandom.hex[0..14]}" }
-    sequence(:airtable_id) { |id| "specialist_#{id}" }
+    sequence(:airtable_id) { |id| "recspecialist#{id}" }
     sequence(:email) { |n| "specialist_#{n}@test.com" }
     bank_holder_address do
       {

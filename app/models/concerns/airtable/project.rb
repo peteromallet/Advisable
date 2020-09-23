@@ -48,7 +48,7 @@ class Airtable::Project < Airtable::Base
     user_id = fields['Client Contacts'].try(:first)
 
     if user_id
-      user = ::User.find_by_airtable_id(user_id)
+      user = ::User.find_by_uid_or_airtable_id(user_id)
       user = Airtable::ClientContact.find(user_id).sync if user.nil?
       project.user = user
     end
@@ -58,7 +58,7 @@ class Airtable::Project < Airtable::Base
 
     required_skills = fields['Skills Required'] || []
     required_skills.each do |skill_id|
-      skill = ::Skill.find_by_airtable_id(skill_id)
+      skill = ::Skill.find_by_uid_or_airtable_id(skill_id)
       skill = Airtable::Skill.find(skill_id).sync unless skill.present?
       next if skill.nil?
       project_skill = project.project_skills.find_by_skill_id(skill.id)

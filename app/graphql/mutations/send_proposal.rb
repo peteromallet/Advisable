@@ -6,14 +6,14 @@ class Mutations::SendProposal < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def authorized?(**args)
-    application = Application.find_by_airtable_id!(args[:application])
+    application = Application.find_by_uid_or_airtable_id!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
     return true if policy.is_specialist
     return false, { errors: [{ code: 'not_authorized' }] }
   end
 
   def resolve(**args)
-    application = Application.find_by_airtable_id(args[:application])
+    application = Application.find_by_uid_or_airtable_id!(args[:application])
 
     {
       application:
