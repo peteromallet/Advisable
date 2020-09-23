@@ -17,7 +17,7 @@ environment.config.set("devServer", {
 
 environment.plugins.append("webpackbar", new WebpackBar());
 
-if (process.env.REACT_REFRESH === "true") {
+if (process.env.REACT_REFRESH === "true" && process.env.RAILS_ENV !== "test") {
   environment.plugins.append(
     "Refresh",
     new ReactRefreshWebpackPlugin({

@@ -33,7 +33,7 @@ export default function RequestRescheduleAsClient({ interview }) {
       <UpdateAvailablityForm
         interview={interview}
         onUpdate={handleRequest}
-        buttonLabel="Request To Reschedule"
+        buttonLabel="Reschedule"
       />
     </Box>
   );
