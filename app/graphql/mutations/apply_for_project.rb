@@ -24,7 +24,7 @@ class Mutations::ApplyForProject < Mutations::BaseMutation
       app.references_requested = false
     end
 
-    if application.status != "Invited To Apply"
+    unless ["Invited To Apply", "Applied"].include?(application.status)
       ApiError.invalid_request(
         code: "APPLICATION_IN_A_WRONG_STATE",
         message: "Application exists already but is not in 'Invited To Apply' state"
