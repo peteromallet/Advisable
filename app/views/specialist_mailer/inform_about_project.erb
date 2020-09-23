@@ -68,7 +68,7 @@
                         &nbsp; </td>
                     </tr>
                     <!-- Spacer -->
-                    <!-- Goals -->{{55230741__goalsWithHtml}}
+                    <%= render "goals", goals: Array(@project.goals), title: "GOALS" %>
                     <!-- Spacer -->
                     <tr>
                       <td align="center" valign="top"
@@ -76,17 +76,15 @@
                         &nbsp; </td>
                     </tr>
                     <!-- Spacer -->
-                    <!-- EC -->{{55230741__essentialWithHtml}}
-                    <!-- EC -->
-                    <!-- Spacer -->
+                    <%= render "goals", goals: Array(@project.required_characteristics), title: "ESSENTIAL CHARACTERISTICS" %>
                     <!-- Spacer -->
                     <tr>
                       <td align="center" valign="top"
                         style="font-size: 0;line-height: 0;padding: 25px 0 0 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
                         &nbsp; </td>
                     </tr>
-                    <!-- Spacer -->{{55230741__niceToHaveWithHtml}}
-                    <!-- NTH -->
+                    <!-- Spacer -->
+                    <%= render "goals", goals: Array(@project.optional_characteristics), title: "NICE - TO - HAVE CHARACTERISTICS" %>
                     <!-- Spacer -->
                     <tr>
                       <td align="center" valign="top"
