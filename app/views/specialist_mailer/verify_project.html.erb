@@ -1,261 +1,106 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<!--[if gte mso 15]>
-		<xml>
-			<o:OfficeDocumentSettings>
-			<o:AllowPNG/>
-			<o:PixelsPerInch>96</o:PixelsPerInch>
-			</o:OfficeDocumentSettings>
-		</xml>
-		<![endif]-->
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-			<meta name="format-detection" content="telephone=no">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<meta http-equiv="X-UA-Compatible" content="IE=edge">
-			<link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600" rel="stylesheet">
+<!-- Email Body -->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" class="mobile" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
 
-			
+  <tr>
+    <td align="center" valign="top" style="background-color: #ffffff;border-radius: 5px;box-shadow: 0px 4px 16px rgba(23, 43, 73, 0.05);-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
 
-
-		<title></title>
-		<style type="text/css">
-			/* /\/\/\/\/\/\/\/\/ CLIENT-SPECIFIC STYLES /\/\/\/\/\/\/\/\/ */
-			#outlook a{padding:0;} /* Force Outlook to provide a "view in browser" message */
-			.ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail to display emails at full width */
-			.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing */
-			body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;} /* Prevent WebKit and Windows mobile changing default text sizes */
-			table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} /* Remove spacing between tables in Outlook 2007 and up */
-			img{-ms-interpolation-mode:bicubic;} /* Allow smoother rendering of resized image in Internet Explorer */
-			/* /\/\/\/\/\/\/\/\/ RESET STYLES /\/\/\/\/\/\/\/\/ */
-			body{margin:0; padding:0;}
-			img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;}
-			table{border-collapse:collapse !important;}
-			body, #wrapTable, #wrapCell{height:100% !important; margin:0; padding:0; width:100% !important;}
-			div[style*="margin: 16px 0;"] { margin:0 !important; } /* Android Center Fix */
-	      	a[x-apple-data-detectors] {color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; } /*iOS Link fix*/
-
-			/* /\/\/\/\/\/\/\/\/ TEMPLATE STYLES /\/\/\/\/\/\/\/\/ */
-			/* ========== Page Styles ========== */
-
-			#wrapCell {padding: 40px 0 30px 0;}
-			td {font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;}
+      <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
 
 
 
 
-			.logo {
-				padding: 50px 0 40px 0;
-			}
+        <!-- Logo -->
+        <tr>
+          <td align="center" valign="top" class="logo" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;padding: 50px 0 40px 0;">
+            <a clicktracking="off" href="https://advisable.com" target="_blank" clicktracking="off" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;"><img src="<%= asset_url("advisable.png") %>" style="-ms-interpolation-mode: bicubic;border: 0;height: auto;line-height: 100%;outline: none;text-decoration: none;width: 131px;" width="131"></a>
+          </td>
+        </tr>
+        <!-- Logo -->
+
+
+        <!-- Copy -->
+        <tr>
+          <td valign="top" class="copy" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-style: normal;font-weight: normal;line-height: 21px;font-size: 16px;letter-spacing: -.2;color: #414251;padding: 0 40px;">
+            Hi <%= @specialist.first_name %>,<br />
+            Thanks for adding the <b><%= @project.primary_skill.try(:name) %></b> project with <b><%= @project.client_name %></b> to Advisable. Please complete step 1 below to begin the validation process for this project.
+          </td>
+        </tr>
+        <!-- Copy -->
+
+        <tr>
+          <td style="padding-top: 30px; padding-bottom: 10px; padding-left: 40px; padding-right: 40px;">
+            <table style="background: #EFF1FA; border-radius: 8px;">
+              <tr>
+              <td style="padding: 15px;">
+                <div style="font-size: 15px; background: #5168EE; width: 40px; height: 40px; border-radius: 50%; text-align: center; line-height: 40px;">
+                  <span style="color: whte; font-weight: bold; color: white;">1</span>
+                </div>
+              </td>
+              <td style="color: #292A37; font-size: 16px; line-height: 20px; padding-right: 10px;">
+                Forward this email to <b><%= @project.contact_name %></b> from <b><%= @project.client_name %></b> in order for them to validate this project.
+              </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding-bottom: 30px; padding-left: 40px; padding-right: 40px;">
+            <table style="background: #EFF1FA; border-radius: 8px;">
+              <tr>
+              <td style="padding: 15px;">
+                <div style="font-size: 15px; background: #5168EE; width: 40px; height: 40px; border-radius: 50%; text-align: center; line-height: 40px;">
+                  <span style="color: whte; font-weight: bold; color: white;">2</span>
+                </div>
+              </td>
+              <td style="color: #292A37; font-size: 16px; line-height: 20px; padding-right: 10px;">
+                <b><%= @project.contact_name %></b> will need to validate this project by visiting the unique validation URL below.
+              </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding-left: 40px; padding-right: 40px; padding-bottom: 30px;">
+            <p style="margin: 0; padding-bottom: 4px; font-size: 12px; text-transform: uppercase; font-weight: bold; color: #636577;">Validation URL</p>
+            <p style="padding: 0; margin: 0; background: #EFF1FA; padding: 10px 20px; border-radius: 8px;">
+              <a href="<%=root_url%>verify_project/<%= @project.uid %>" style="font-size: 15px; text-decoration: none; color: #0425E8; "><%=root_url%>verify_project/<%= @project.uid %></a>
+            </p>
+            <p style="margin: 0; padding-top: 10px; color: #414251; font-size: 16px; line-height: 18px;">
+              You can also copy and paste this link to share with <%= @project.contact_name %> anywhere.
+            </p>
+          </td>
+        </tr>
+
+          <!-- Copy -->
+        <tr>
+          <td valign="top" class="copy" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-style: normal;font-weight: normal;line-height: 21px;font-size: 16px;letter-spacing: -.2;color: #414251;padding: 0 40px;">
+            If you're having any issues validating this project, please email hello@advisable.com.<br />
+            <br />
+            Thanks,<br />
+            Advisable Team
+          </td>
+        </tr>
+        <!-- Copy -->
 
 
 
 
-			.title {
-				padding: 0 90px 40px 90px;
-				color: #142B4E;
-				font-size: 24px;
-				line-height: 27px;
-				font-weight: 500;
-				letter-spacing: -.5px;
-			}
-
-
-			.copy {
-				font-style: normal;
-				font-weight: normal;
-				line-height: 21px;
-				font-size: 16px;
-				letter-spacing: -.2;
-				color: #445C81;
-				padding: 0 90px;
-			}
-
-
-			.button {
-				color: #ffffff;
-				background-color:#0064ff;
-				font-size: 14px;
-				font-weight: 500;
-				padding: 15px;
-				border-radius: 4px;
-			}
-
-			.button a {
-				color: #ffffff;
-				text-decoration: none;
-				display: block;
-			}
-
-			.settings {
-				color: #999999;
-				font-size: 12px;
-				font-weight: 500;
-				padding: 10px;
-			}
-
-			.settings a {
-				color: #999999;
-				text-decoration: none;
-			}
-
-			/* /\/\/\/\/\/\/\/\/ MOBILE STYLES /\/\/\/\/\/\/\/\/ */
-			@media only screen and (max-width: 600px){
-			/* /\/\/\/\/\/\/ CLIENT-SPECIFIC MOBILE STYLES /\/\/\/\/\/\/ */
-			body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:none !important;} /* Prevent Webkit platforms from changing default text sizes */
-			body{width:100% !important; min-width:100% !important;} /* Prevent iOS Mail from adding padding to the body */
-			/* /\/\/\/\/\/\/ MOBILE RESET STYLES /\/\/\/\/\/\/ */
-
-			.mobile {width: 90% !important;}
-			.full {width: 100% !important;}
-			.inner {width: 90% !important;}
-
-			.title {
-				padding: 0 20px 30px 20px !important;
-			}
-
-
-			.copy {
-				padding: 0 20px !important;
-			}
-
-
-
-			}
-
-			/*Font Fix*/
-			@media only screen {
-				td {font-family: 'Poppins', sans-serif !important;}
-			}
-
-		</style>
-
-	
-	</head>
-	
-	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="#DFE4EF" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;margin: 0;padding: 0;height: 100% !important;width: 100% !important;">
-		<center>
-			<table align="center" bgcolor="#DFE4EF" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="wrapTable" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;margin: 0;padding: 0;border-collapse: collapse !important;height: 100% !important;width: 100% !important;">
-				<tr>
-					<td align="center" valign="top" id="wrapCell" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;margin: 0;padding: 40px 0 30px 0;height: 100% !important;width: 100% !important;">
-
-						<!-- Email Body -->
-						<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" class="mobile" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
-
-							<tr>
-								<td align="center" valign="top" style="background-color: #ffffff;border-radius: 5px;box-shadow: 0px 4px 16px rgba(23, 43, 73, 0.05);-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-
-									<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+        <!-- Spacer -->
+        <tr>
+          <td align="center" valign="top" style="font-size: 0;line-height: 0;padding: 25px 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+            &nbsp;
+          </td>
+        </tr>
+        <!-- Spacer -->
 
 
 
 
-										<!-- Logo -->
-										<tr>
-											<td align="center" valign="top" class="logo" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;padding: 50px 0 40px 0;">
-												<a clicktracking="off" href="https://advisable.com" target="_blank" clicktracking="off" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;"><img src="<%= asset_url("advisable.png") %>" style="-ms-interpolation-mode: bicubic;border: 0;height: auto;line-height: 100%;outline: none;text-decoration: none;width: 131px;" width="131"></a>
-											</td>
-										</tr>
-										<!-- Logo -->
+      </table>
 
-
-										<!-- Copy -->
-										<tr>
-											<td valign="top" class="copy" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-style: normal;font-weight: normal;line-height: 21px;font-size: 16px;letter-spacing: -.2;color: #414251;padding: 0 40px;">
-                        Hi <%= @specialist.first_name %>,<br />
-                        Thanks for adding the <b><%= @project.primary_skill.try(:name) %></b> project with <b><%= @project.client_name %></b> to Advisable. Please complete step 1 below to begin the validation process for this project.
-											</td>
-										</tr>
-										<!-- Copy -->
-
-                    <tr>
-                      <td style="padding-top: 30px; padding-bottom: 10px; padding-left: 40px; padding-right: 40px;">
-                        <table style="background: #EFF1FA; border-radius: 8px;">
-                          <tr>
-                          <td style="padding: 15px;">
-                            <div style="font-size: 15px; background: #5168EE; width: 40px; height: 40px; border-radius: 50%; text-align: center; line-height: 40px;">
-                              <span style="color: whte; font-weight: bold; color: white;">1</span>
-                            </div>
-                          </td>
-                          <td style="color: #292A37; font-size: 16px; line-height: 20px; padding-right: 10px;">
-                            Forward this email to <b><%= @project.contact_name %></b> from <b><%= @project.client_name %></b> in order for them to validate this project.
-                          </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td style="padding-bottom: 30px; padding-left: 40px; padding-right: 40px;">
-                        <table style="background: #EFF1FA; border-radius: 8px;">
-                          <tr>
-                          <td style="padding: 15px;">
-                            <div style="font-size: 15px; background: #5168EE; width: 40px; height: 40px; border-radius: 50%; text-align: center; line-height: 40px;">
-                              <span style="color: whte; font-weight: bold; color: white;">2</span>
-                            </div>
-                          </td>
-                          <td style="color: #292A37; font-size: 16px; line-height: 20px; padding-right: 10px;">
-                            <b><%= @project.contact_name %></b> will need to validate this project by visiting the unique validation URL below.
-                          </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td style="padding-left: 40px; padding-right: 40px; padding-bottom: 30px;">
-                        <p style="margin: 0; padding-bottom: 4px; font-size: 12px; text-transform: uppercase; font-weight: bold; color: #636577;">Validation URL</p>
-                        <p style="padding: 0; margin: 0; background: #EFF1FA; padding: 10px 20px; border-radius: 8px;">
-                          <a href="<%=root_url%>verify_project/<%= @project.uid %>" style="font-size: 15px; text-decoration: none; color: #0425E8; "><%=root_url%>verify_project/<%= @project.uid %></a>
-                        </p>
-                        <p style="margin: 0; padding-top: 10px; color: #414251; font-size: 16px; line-height: 18px;">
-                          You can also copy and paste this link to share with <%= @project.contact_name %> anywhere.
-                        </p>
-                      </td>
-                    </tr>
-
-                    	<!-- Copy -->
-										<tr>
-											<td valign="top" class="copy" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-style: normal;font-weight: normal;line-height: 21px;font-size: 16px;letter-spacing: -.2;color: #414251;padding: 0 40px;">
-                        If you're having any issues validating this project, please email hello@advisable.com.<br />
-                        <br />
-                        Thanks,<br />
-                        Advisable Team
-											</td>
-										</tr>
-										<!-- Copy -->
-
-
-
-
-										<!-- Spacer -->
-										<tr>
-											<td align="center" valign="top" style="font-size: 0;line-height: 0;padding: 25px 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-												&nbsp;
-											</td>
-										</tr>
-										<!-- Spacer -->
-
-
-
-
-									</table>
-
-								</td>
-							</tr>
-						</table>
-						<!-- // Email Body -->
-						
-					</td> <!-- // wrapCell -->
-				</tr>
-			</table> <!-- // wrapTable -->
-		</center>
-	</body>
-</html>
-
-
-
-
-
-
-
+    </td>
+  </tr>
+</table>
+<!-- // Email Body -->

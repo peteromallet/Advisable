@@ -3,16 +3,7 @@ class Mutations::DeleteAnswer < Mutations::BaseMutation
   field :id, ID, null: true
 
   def authorized?(**args)
-    requires_current_user!
-
-    unless current_user.respond_to?(:answers)
-      ApiError.invalid_request(
-        code: "MUST_HAVE_ANSWERS",
-        message: "Current user must be able to provide answers."
-      )
-    end
-
-    true
+    requires_specialist!
   end
 
   def resolve(id:)
