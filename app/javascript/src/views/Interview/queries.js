@@ -52,6 +52,22 @@ export function useRequestInterviewReschedule() {
   return useMutation(REQUEST_INTERVEW_RESCHEDULE);
 }
 
+export const RESEND_INTERVIEW_REQUEST = gql`
+  ${interviewFields}
+
+  mutation resendInterviewRequest($input: ResendInterviewRequestInput!) {
+    resendInterviewRequest(input: $input) {
+      interview {
+        ...InterviewFields
+      }
+    }
+  }
+`;
+
+export function useResendInterviewRequest() {
+  return useMutation(RESEND_INTERVIEW_REQUEST);
+}
+
 export const UPDATE_AVAILABILITY = gql`
   mutation updateAvailability($input: UpdateAvailabilityInput!) {
     updateAvailability(input: $input) {

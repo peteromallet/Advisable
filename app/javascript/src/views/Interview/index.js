@@ -4,6 +4,7 @@ import Loading from "components/Loading";
 import { useInterview } from "./queries";
 import CallScheduled from "./CallScheduled";
 import CallRequested from "./CallRequested";
+import MoreTimeOptionsAdded from "./MoreTimeOptionsAdded";
 import ClientRequestedReschedule from "./ClientRequestedReschedule";
 import SpecialistRequestedReschedule from "./SpecialistRequestedReschedule";
 import RescheduleInterview from "./RescheduleInterview";
@@ -29,6 +30,10 @@ function InterviewState({ interview }) {
 
     case "Call Scheduled": {
       return <CallScheduled interview={interview} />;
+    }
+
+    case "More Time Options Added": {
+      return <MoreTimeOptionsAdded interview={interview} />;
     }
 
     default: {
