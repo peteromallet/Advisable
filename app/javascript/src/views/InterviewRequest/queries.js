@@ -23,9 +23,9 @@ export const FETCH_INTERVIEW = gql`
   }
 `;
 
-export const ACCEPT_INTERVIEW_REQUEST = gql`
-  mutation AcceptInterviewRequest($input: AcceptInterviewRequestInput!) {
-    acceptInterviewRequest(input: $input) {
+export const SCHEDULE_INTERVIEW = gql`
+  mutation scheduleInterview($input: ScheduleInterviewInput!) {
+    scheduleInterview(input: $input) {
       interview {
         id
         status

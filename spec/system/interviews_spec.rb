@@ -56,7 +56,7 @@ RSpec.describe 'Interview flow' do
     expect(page).to have_content("You have requested to reschedule your call")
   end
 
-  context 'when specialiast has requested to reschedule' do
+  context 'when specialist has requested to reschedule' do
     it 'the client can update their availability' do
       interview = create(:interview, status: "Specialist Requested Reschedule", starts_at: 2.days.from_now, user: user)
       authenticate_as interview.user
@@ -74,7 +74,7 @@ RSpec.describe 'Interview flow' do
   end
 
   context 'when more time options have been added' do
-    it 'the specialist can schedule the call' do
+    it 'allows the specialist can schedule the call' do
       interview = create(:interview, status: "More Time Options Added", starts_at: 2.days.from_now, user: user)
       authenticate_as interview.specialist
       visit "/interviews/#{interview.uid}"

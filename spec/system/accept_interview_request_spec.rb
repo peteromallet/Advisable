@@ -19,6 +19,7 @@ RSpec.describe 'Accept interview request' do
     allow_any_instance_of(Interview).to receive(:sync_to_airtable)
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
 
+    authenticate_as(interview.specialist)
     visit "/interview_request/#{interview.airtable_id}"
     click_on user.availability[0].strftime("%A")
     find_all("a[class^=styles__Time]").first.click
