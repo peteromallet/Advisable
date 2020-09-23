@@ -4,6 +4,7 @@ import PreviousProjects from "./PreviousProjects";
 import Testimonials from "./Testimonials";
 import AboutSection from "./AboutSection";
 import useViewer from "src/hooks/useViewer";
+import QA from "./QA";
 
 const getProjectValues = (projects) =>
   projects.reduce(
@@ -228,7 +229,6 @@ const createDispatcher = (dispatch) => (type) => (payload) =>
   dispatch({ type, payload });
 
 function FreelancerProfileDesktop({ data }) {
-  console.log("data", data);
   const viewer = useViewer();
   const isOwner = viewer?.id === data.specialist.id;
   console.log("viewer", viewer);
@@ -243,6 +243,7 @@ function FreelancerProfileDesktop({ data }) {
       />
       <PreviousProjects data={data} isOwner={isOwner} />
       <Testimonials reviews={data.specialist.reviews} />
+      <QA questions={data.questions} answers={data.specialist.answers} />
     </Box>
   );
 }
