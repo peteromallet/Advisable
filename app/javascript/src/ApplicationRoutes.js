@@ -34,6 +34,7 @@ const Consultation = lazy(() => import("./views/Consultation"));
 const ProjectSetup = lazy(() => import("./views/ProjectSetup"));
 const FullApplication = lazy(() => import("./views/FullApplication"));
 const Interview = lazy(() => import("./views/Interview"));
+const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
 
 const ApplicationRoutes = () => {
   return (
@@ -46,7 +47,7 @@ const ApplicationRoutes = () => {
           <Route path="/freelancers/:id" component={FreelancerProfile} />
           {/* Client routes */}
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
-          <Route
+          <AuthenticatedRoute
             path="/projects/:projectID/interviews/:interviewID/availability"
             component={InterviewAvailability}
           />
@@ -98,6 +99,11 @@ const ApplicationRoutes = () => {
           <AuthenticatedRoute
             path="/clients/:applicationId"
             component={FreelancerActiveApplication}
+          />
+          <AuthenticatedRoute
+            specialistOnly
+            path="/interview_request/:interviewID"
+            component={InterviewRequest}
           />
           <AuthenticatedRoute path="/interviews/:id" component={Interview} />
           <AuthenticatedRoute
