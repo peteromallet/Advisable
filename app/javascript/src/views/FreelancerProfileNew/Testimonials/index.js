@@ -7,7 +7,7 @@ function Testimonials({ reviews }) {
     return <Review key={review.id} review={review} />;
   });
   return (
-    <Box>
+    <Box mb="l">
       <Text mb="m" color="neutral900" fontSize="xl" fontWeight="medium">
         Testimonials
       </Text>

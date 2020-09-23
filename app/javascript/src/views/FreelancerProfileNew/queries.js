@@ -28,6 +28,15 @@ const fields = gql`
       name
     }
 
+    answers {
+      id
+      content
+      question {
+        content
+        id
+      }
+    }
+
     ratings {
       overall
     }
@@ -76,6 +85,10 @@ const fields = gql`
 export const GET_PROFILE = gql`
   ${fields}
   query getProfileData($id: ID!) {
+    questions {
+      id
+      content
+    }
     specialist(id: $id) {
       ...SpecialistFields
     }
@@ -109,4 +122,87 @@ export const updateProfileOptimisticResponse = (specialist, values) => {
       },
     },
   };
+};
+
+export const ANSWER_QUESTION = gql`
+  mutation AnswerQuestion($input: AnswerQuestionInput!) {
+    answerQuestion(input: $input) {
+      answer {
+        id
+        content
+        question {
+          id
+          content
+        }
+      }
+    }
+  }
+`;
+
+export const editAnswerOptimisticResponse = (answer, values) => ({
+  __typename: "Mutation",
+  answerQuestion: {
+    __typename: "AnswerQuestionPayload",
+    answer: {
+      __typename: "Answer",
+      ...answer,
+      content: values.content,
+    },
+  },
+});
+
+export const editAnswerUpdateCache = (profileId) => (
+  proxy,
+  { data: { answerQuestion } },
+) => {
+  const profile = proxy.readQuery({
+    query: GET_PROFILE,
+    variables: { id: profileId },
+  });
+  const data = {
+    ...profile,
+    specialist: {
+      ...profile.specialist,
+      answers: profile.specialist.answers.map((answer) =>
+        answer.id === answerQuestion.answer.id ? answerQuestion.answer : answer,
+      ),
+    },
+  };
+  proxy.writeQuery({ query: GET_PROFILE, data, variables: { id: profileId } });
+};
+
+export const DELETE_ANSWER = gql`
+  mutation DeleteAnswer($input: DeleteAnswerInput!) {
+    deleteAnswer(input: $input) {
+      id
+    }
+  }
+`;
+
+export const deleteAnswerOptimisticResponse = (id) => ({
+  __typename: "Mutation",
+  deleteAnswer: {
+    __typename: "DeleteAnswerPayload",
+    id,
+  },
+});
+
+export const deleteAnswerUpdateCache = (profileId) => (
+  proxy,
+  { data: { deleteAnswer } },
+) => {
+  const profile = proxy.readQuery({
+    query: GET_PROFILE,
+    variables: { id: profileId },
+  });
+  const data = {
+    ...profile,
+    specialist: {
+      ...profile.specialist,
+      answers: profile.specialist.answers.filter(
+        (answer) => answer.id !== deleteAnswer.id,
+      ),
+    },
+  };
+  proxy.writeQuery({ query: GET_PROFILE, data, variables: { id: profileId } });
 };
