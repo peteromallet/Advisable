@@ -117,7 +117,7 @@ end
 #  encrypted_phone_number_iv          :string
 #  first_name                         :string
 #  guild                              :boolean          default(FALSE)
-#  guild_joined_date                  :datetime
+#  guild_data                         :jsonb
 #  hourly_rate                        :integer
 #  image                              :jsonb
 #  last_name                          :string

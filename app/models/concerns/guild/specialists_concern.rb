@@ -12,9 +12,10 @@ module Guild
       has_many :guild_posts, class_name: 'Guild::Post'
       has_many :guild_comments, class_name: 'Guild::Comment'
       has_many :guild_post_comments,
-               -> { published },
+               -> { published.order(created_at: :desc) },
                through: :guild_posts, source: :comments
       has_many :guild_post_reactions,
+               -> { order(created_at: :desc) },
                through: :guild_posts,
                source: :reactions,
                class_name: 'Guild::Reaction'
@@ -23,10 +24,33 @@ module Guild
 
       scope :guild, -> { where(guild: true) }
 
-      # TODO: This is a wip
+      jsonb_accessor :guild_data,
+                     guild_joined_date: :datetime,
+                     guild_messages_last_read: [:datetime, {default: Time.at(0)}],
+                     guild_notifications_last_read: [:datetime, {default: Time.at(0)}]
+
+      # Utilities to touch last_read for guild events
+      %i[guild_messages_last_read guild_notifications_last_read].each do |meth|
+        define_method("touch_#{meth}".to_sym) do
+          update!(meth => Time.now)
+        end
+      end
+
+      # NotImplemented
+      def guild_unread_messages
+        guild_messages_last_read > Time.at(0)
+      end
+
+      def guild_unread_notifications
+        return false unless guild_activity.any?
+        guild_activity.first.created_at > guild_notifications_last_read
+      end
+
       def guild_activity
-        [guild_post_comments.limit(10), guild_post_reactions.limit(10)].flatten
-                                                                       .sort_by(&:created_at)
+        @guild_activity ||= [
+          guild_post_comments.limit(10),
+          guild_post_reactions.limit(10)
+        ].flatten.sort { |a, b| b.created_at <=> a.created_at }
 
         #  Something more scalable post launch but limited in the graph
         #    returns [{context:, post_id:, created_at, specialist_id:}, ...]

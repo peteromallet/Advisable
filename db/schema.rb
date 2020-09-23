@@ -698,9 +698,9 @@ ActiveRecord::Schema.define(version: 2020_09_25_102717) do
     t.boolean "test_account"
     t.string "remember_token"
     t.boolean "guild", default: false
-    t.datetime "guild_joined_date"
     t.string "community_status"
     t.boolean "automated_invitations_subscription"
+    t.jsonb "guild_data"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
