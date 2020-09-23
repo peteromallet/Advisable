@@ -10,7 +10,8 @@ class SendApplicationInformationJob < ApplicationJob
 
     specialists = Specialist.
       where(automated_invitations_subscription: true).
-      where(id: specialist_ids_by_skill)
+      where(id: specialist_ids_by_skill).
+      where.not(id: specialists_with_existing_applications)
 
     if project.location_importance.to_i > 1
       specialists = specialists.where(country_id: project.user.country_id)
@@ -27,5 +28,9 @@ class SendApplicationInformationJob < ApplicationJob
     primary_skill = project.primary_skill.specialists.pluck(:id)
     previous_projects = project.primary_skill.previous_projects.pluck(:specialist_id)
     primary_skill | previous_projects
+  end
+
+  def specialists_with_existing_applications
+    project.applications.pluck(:specialist_id)
   end
 end
