@@ -1,6 +1,5 @@
 class Mutations::RequestInterviewReschedule < Mutations::BaseMutation
   argument :interview, ID, required: true
-  argument :availability, [GraphQL::Types::ISO8601DateTime], required: false
   argument :note, String, required: false
 
   field :interview, Types::Interview, null: true
@@ -29,14 +28,6 @@ class Mutations::RequestInterviewReschedule < Mutations::BaseMutation
       interview.save_and_sync!
       SpecialistMailer.interview_reschedule_request(interview).deliver_later
     when User
-      if arguments[:availability].blank?
-        ApiError.invalid_request(
-          code: "AVAILABILITY_BLANK",
-          message: "Availability can not be blank."
-        )
-      end
-
-      current_user.update!(availability: args[:availability])
       interview.status = "Client Requested Reschedule"
       interview.save_and_sync!
       UserMailer.interview_reschedule_request(interview).deliver_later

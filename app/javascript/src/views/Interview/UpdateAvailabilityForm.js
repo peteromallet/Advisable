@@ -2,34 +2,42 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { Paragraph } from "@advisable/donut";
 import SubmitButton from "components/SubmitButton";
+import { useNotifications } from "components/Notifications";
 import AvailabilityDesktop from "components/AvailabilityInput";
 import { useUpdateAvailability } from "./queries";
 
 export default function UpdateAvailabilityForm({
+  interview,
   buttonLabel = "Update Availability",
   onUpdate,
 }) {
+  const notifications = useNotifications();
   const [updateAvailability] = useUpdateAvailability();
 
   const initialValues = {
-    availability: [],
+    availability: interview.user.availability,
   };
 
   const handleSubmit = React.useCallback(
-    async (values, formik) => {
+    async (values) => {
       const { errors } = await updateAvailability({
         variables: {
-          availability: values.availability,
+          input: {
+            id: interview.user.id,
+            availability: values.availability,
+          },
         },
       });
 
       if (errors) {
-        formik.setStatus("Something went wrong");
+        notifications.notify("Failed to update availability, please try again");
+      } else {
+        if (onUpdate) {
+          await onUpdate();
+        }
       }
-
-      if (onUpdate) onUpdate();
     },
-    [onUpdate, updateAvailability],
+    [notifications, interview, onUpdate, updateAvailability],
   );
 
   return (
