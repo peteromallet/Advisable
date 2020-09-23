@@ -5,8 +5,7 @@ class Mutations::Guild::UpdateLastRead < Mutations::BaseMutation
   argument :read_notifications, Boolean, required: false
   argument :read_messages, Boolean, required: false
 
-  field :guild_unread_messages, Boolean, null: true
-  field :guild_unread_notifications, Boolean, null: true
+  field :viewer, Types::ViewerUnion, null: true
   field :errors, [Types::Error], null: true
 
   def authorized?(**args)
@@ -26,13 +25,10 @@ class Mutations::Guild::UpdateLastRead < Mutations::BaseMutation
   end
 
   def resolve(**args)
-    current_user = context[:current_user]
-    current_user.touch_guild_messages_last_read if args[:read_messages]
-    current_user.touch_guild_notifications_last_read if args[:read_notifications]
+    viewer = context[:current_user]
+    viewer.touch_guild_messages_last_read if args[:read_messages]
+    viewer.touch_guild_notifications_last_read if args[:read_notifications]
 
-    return current_user.slice(
-      :guild_unread_messages,
-      :guild_unread_notifications
-    )
+    { viewer: viewer }
   end
 end

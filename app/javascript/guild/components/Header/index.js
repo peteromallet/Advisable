@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { Box, Link, useBreakpoint } from "@advisable/donut";
 import logo from "@advisable-main/components/Header/logo";
@@ -11,7 +11,6 @@ import { NavIcon, Mask } from "./styles";
 import { GuildBox } from "@guild/styles";
 import { GUILD_LAST_READ_QUERY } from "./queries";
 import { GUILD_UPDATE_LAST_READ } from "./mutations";
-import { pick } from "lodash-es";
 
 const Header = () => {
   const sUp = useBreakpoint("sUp");
@@ -25,21 +24,16 @@ const Header = () => {
   const [guildUpdateLastRead] = useMutation(GUILD_UPDATE_LAST_READ, {
     update(cache, { data }) {
       const { guildUpdateLastRead } = data;
-      const newLastReadData = pick(
-        guildUpdateLastRead,
-        "guildUnreadMessages",
-        "guildUnreadNotifications",
-      );
       cache.writeQuery({
         query: GUILD_LAST_READ_QUERY,
-        data: { viewer: { __typename: "Specialist", ...newLastReadData } },
+        data: { ...guildUpdateLastRead },
       });
     },
   });
 
   const handleMessages = () => {
     if (maskOpen) safeToggleMask();
-    // handleUpdateLastRead({ readMessages: true });
+    handleUpdateLastRead({ readMessages: true });
     // TODO: navigate to /messages ...
   };
 
