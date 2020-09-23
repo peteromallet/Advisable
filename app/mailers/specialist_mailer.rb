@@ -1,4 +1,6 @@
 class SpecialistMailer < ApplicationMailer
+  add_template_helper(SpecialistHelper)
+
   layout 'styled_mailer'
 
   def confirm(uid:, token:)
