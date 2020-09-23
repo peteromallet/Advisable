@@ -22,9 +22,9 @@ function SpecialistRequestedRescheduleAsSpecialist({ interview }) {
         Requested to reschedule
       </Text>
       <Paragraph>
-        You have requested to reschedule this interview. We have asked{" "}
-        {interview.user.firstName} to update their availability and will let you
-        know when they do.
+        You have requested to reschedule your call with{" "}
+        {interview.user.firstName}. We have asked {interview.user.firstName} to
+        update their availability and will let you know when they do.
       </Paragraph>
     </>
   );

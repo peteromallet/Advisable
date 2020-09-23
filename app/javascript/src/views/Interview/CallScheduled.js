@@ -29,7 +29,9 @@ export default function CallScheduled({ interview }) {
             </Text>
           </Box>
           <Link to={`/interviews/${interview.id}/reschedule`}>
-            <Button variant="dark">Request To Reschedule</Button>
+            <Button as="span" variant="dark">
+              Request To Reschedule
+            </Button>
           </Link>
         </Box>
       </Card>
