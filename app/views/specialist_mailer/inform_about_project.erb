@@ -112,7 +112,7 @@
                                   <td align="center" valign="top" class="button-1"
                                     style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #ffffff;font-size: 12px;font-weight: 700;background-color: #00B49E;border-radius: 5px;padding: 10px;">
                                     <a clicktracking=off
-                                      href="<%= @specialist.request_invite_url(@project) %>&sid=<%= @specialist.uid %>&email=<%= @specialist.email %>"
+                                      href="<%= specialist_request_invite_url(@specialist, @project) %>&sid=<%= @specialist.uid %>&email=<%= @specialist.email %>"
                                       target="_blank"
                                       style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #ffffff;text-decoration: none;display: block;">Request
                                       an Invitation</a> </td>
@@ -187,11 +187,11 @@
       You're receiving this email because '<%= @project.primary_skill.name %>' is one of the skills
       on your Advisable profile. You can add or remove skills <a href="" target="_blank"
         style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #999999;text-decoration: none;"><u><a
-            clicktracking=off href="<%= @specialist.update_skills_url %>">here</a></u>. If you’d no longer
+            clicktracking=off href="<%= specialist_update_skills_url(@specialist) %>">here</a></u>. If you’d no longer
         like to receive this kind of email from Advisable, please <a href="" target="_blank"
           style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #999999;text-decoration: none;">unsubscribe
           <u><a clicktracking=off
-              href="<%= @specialist.unsubscribe_url %>&field75977585=Automated%20Project%20Invitations">here</a></u>.</a>
+              href="<%= specialist_unsubscribe_url(@specialist) %>&field75977585=Automated%20Project%20Invitations">here</a></u>.</a>
     </td>
   </tr>
   <!-- Footer Settings -->

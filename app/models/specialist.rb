@@ -90,18 +90,6 @@ class Specialist < ApplicationRecord
     self.project_count = previous_projects.count
     save(validate: false)
   end
-
-  def unsubscribe_url
-    "#{ActionMailer::Base.default_url_options[:host]}/unsubscribe?Specialist%20ID=#{uid}&field66878840=#{email}"
-  end
-
-  def update_skills_url
-    "#{ActionMailer::Base.default_url_options[:host]}/update-skills?sid=#{uid}&skill=#{ERB::Util.url_encode(skills.pluck(:name).join(', '))}"
-  end
-
-  def request_invite_url(project)
-    "#{ActionMailer::Base.default_url_options[:host]}/request-project-invitation?pid=#{project.uid}&utm_campaign=#{project.uid}&skill=#{project.primary_skill.name}"
-  end
 end
 
 # == Schema Information
