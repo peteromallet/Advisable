@@ -40,10 +40,12 @@ Shoulda::Matchers.configure do |config|
 end
 
 # Silence the capybara puma logs
-Capybara.server = :puma, { Silent: true }
+Capybara.server = :puma, {Silent: true}
 Capybara.enable_aria_label = true
 
 RSpec.configure do |config|
+  config.include ActiveJob::TestHelper
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
