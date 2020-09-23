@@ -6,7 +6,7 @@ class Mutations::StartWorking < Mutations::BaseMutation
   field :application, Types::ApplicationType, null: true
 
   def authorized?(**args)
-    application = Application.find_by_airtable_id!(args[:application])
+    application = Application.find_by_uid_or_airtable_id!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
     return true if policy.is_client
     raise ApiError::NotAuthorized.new(
@@ -15,7 +15,7 @@ class Mutations::StartWorking < Mutations::BaseMutation
   end
 
   def resolve(**args)
-    application = Application.find_by_airtable_id!(args[:application])
+    application = Application.find_by_uid_or_airtable_id!(args[:application])
     application = Applications::StartWorking.call(application: application, project_type: args[:project_type], monthly_limit: args[:monthly_limit])
     { application: application }
   end

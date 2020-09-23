@@ -11,7 +11,7 @@ class Mutations::RequestMoreInterviewTimes < Mutations::BaseMutation
   ]
 
   def resolve(**args)
-    interview = Interview.find_by_airtable_id!(args[:id])
+    interview = Interview.find_by_uid_or_airtable_id!(args[:id])
 
     unless ALLOWED_STATUSES.include?(interview.status)
       raise ApiError::InvalidRequest.new(

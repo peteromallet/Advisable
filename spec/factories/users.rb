@@ -11,7 +11,7 @@ FactoryBot.define do
     stripe_customer_id { 'cus_1234' }
     payments_setup { true }
     sequence(:uid) { "use_#{SecureRandom.hex[0..14]}" }
-    sequence(:airtable_id) { |n| "rec_#{n}" }
+    sequence(:airtable_id) { |n| "recuser#{n}" }
     sequence(:email) { |n| "users#{n}@test.com" }
 
     availability do

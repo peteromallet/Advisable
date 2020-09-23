@@ -9,15 +9,17 @@ module Airtable::Syncable
     end
 
     def find_by_uid_or_airtable_id(id)
-      record = find_by_uid(id)
-      record = find_by_airtable_id(id) if record.nil?
-      record
+      is_airtable_id(id) ? find_by_airtable_id(id) : find_by_uid(id)
     end
 
     def find_by_uid_or_airtable_id!(id)
-      record = find_by_uid(id)
-      record = find_by_airtable_id!(id) if record.nil?
-      record
+      is_airtable_id(id) ? find_by_airtable_id!(id) : find_by_uid!(id)
+    end
+
+    private
+
+    def is_airtable_id(id)
+      id =~ /^rec[^_]/
     end
   end
 

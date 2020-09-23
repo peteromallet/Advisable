@@ -185,7 +185,6 @@ end
 #  time_zone                         :string
 #  title                             :string
 #  uid                               :string
-#  username                          :string
 #  vat_number                        :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null

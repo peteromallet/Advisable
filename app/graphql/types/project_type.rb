@@ -151,7 +151,7 @@ class Types::ProjectType < Types::BaseType
   end
 
   def application(**args)
-    by_airtable = object.applications.find_by_airtable_id(args[:id])
+    by_airtable = object.applications.find_by_uid_or_airtable_id(args[:id])
     return by_airtable if by_airtable
     object.applications.find(args[:id])
   end

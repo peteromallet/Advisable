@@ -31,7 +31,7 @@ class Airtable::SpecialistReview < Airtable::Base
   def pull_specialist(review)
     airtable_id = fields['Specialist'].try(:first)
     return unless airtable_id
-    specialist = ::Specialist.find_by_airtable_id(airtable_id)
+    specialist = ::Specialist.find_by_uid_or_airtable_id(airtable_id)
     specialist = Airtable::Specialist.find(airtable_id).sync if specialist.nil?
     review.specialist = specialist
   end
@@ -43,7 +43,7 @@ class Airtable::SpecialistReview < Airtable::Base
     if fields['Project']
       airtable_id = fields['Project'].try(:first)
       return unless airtable_id
-      project = ::Project.find_by_airtable_id(airtable_id)
+      project = ::Project.find_by_uid_or_airtable_id(airtable_id)
       project = Airtable::Project.find(airtable_id).sync if project.nil?
       review.project = project
     end

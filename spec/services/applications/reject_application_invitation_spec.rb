@@ -25,7 +25,7 @@ RSpec.describe Applications::RejectApplicationInvitation do
   end
 
   it "syncs the record to airtable" do
-    allow(Application).to receive(:find_by_airtable_id!).and_return(application)
+    allow(Application).to receive(:find_by_uid_or_airtable_id!).and_return(application)
     expect(application).to receive(:sync_to_airtable)
     Applications::RejectApplicationInvitation.call(application_id: application.airtable_id, reason: reason)
   end
@@ -35,7 +35,7 @@ RSpec.describe Applications::RejectApplicationInvitation do
       allow_any_instance_of(Application).to receive(:save).and_return(false)
       expect {
         Applications::RejectApplicationInvitation.call(application_id: application.airtable_id, reason: reason)
-      }.to raise_error(Service::Error, "applications.failedToReject")
+      }.to raise_error(Service::Error, 'applications.failedToReject')
     end
   end
 end

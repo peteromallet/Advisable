@@ -3,6 +3,6 @@ FactoryBot.define do
     name { 'Skill Name' }
     active { true }
     sequence(:uid) { "ski_#{SecureRandom.hex[0..14]}" }
-    sequence(:airtable_id) { |n| "rec_#{n} " }
+    sequence(:airtable_id) { |n| "recskill#{n} " }
   end
 end
