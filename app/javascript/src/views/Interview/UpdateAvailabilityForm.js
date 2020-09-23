@@ -1,9 +1,12 @@
 import React from "react";
+import { DateTime } from "luxon";
 import { Formik, Form, Field } from "formik";
-import { Paragraph } from "@advisable/donut";
+import { World } from "@styled-icons/ionicons-outline";
+import { Box, Paragraph, Text } from "@advisable/donut";
 import SubmitButton from "components/SubmitButton";
 import { useNotifications } from "components/Notifications";
 import AvailabilityDesktop from "components/AvailabilityInput";
+import TimeZoneSelect from "components/TimeZoneSelect";
 import { useUpdateAvailability } from "./queries";
 
 export default function UpdateAvailabilityForm({
@@ -13,6 +16,9 @@ export default function UpdateAvailabilityForm({
 }) {
   const notifications = useNotifications();
   const [updateAvailability] = useUpdateAvailability();
+  const [timezone, setTimezone] = React.useState(
+    DateTime.local().zoneName || interview.timeZone || "UTC",
+  );
 
   const initialValues = {
     availability: interview.user.availability,
@@ -44,8 +50,14 @@ export default function UpdateAvailabilityForm({
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {(formik) => (
         <Form>
+          <TimeZoneSelect
+            value={timezone}
+            marginBottom="xl"
+            onChange={setTimezone}
+          />
           <Field
             name="availability"
+            timezone={timezone}
             as={AvailabilityDesktop}
             onChange={(a) => formik.setFieldValue("availability", a)}
           />

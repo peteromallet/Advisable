@@ -5,6 +5,7 @@ const interviewFields = gql`
     id
     status
     startsAt
+    timeZone
     specialist {
       id
       firstName
