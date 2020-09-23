@@ -48,8 +48,8 @@ const Header = () => {
     toggleMask();
   };
 
-  const handleUpdateLastRead = (input) =>
-    guildUpdateLastRead({ variables: { input } });
+  const handleUpdateLastRead = async (input) =>
+    await guildUpdateLastRead({ variables: { input } });
 
   return (
     <>
