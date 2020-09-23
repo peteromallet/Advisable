@@ -2,6 +2,7 @@ import React from "react";
 import { Text, Paragraph } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import UpdateAvailabilityForm from "./UpdateAvailabilityForm";
+import { useResendInterviewRequest } from "./queries";
 
 export default function SpecialistRequestedReschedule({ interview }) {
   const viewer = useViewer();
@@ -30,6 +31,18 @@ function SpecialistRequestedRescheduleAsSpecialist({ interview }) {
 }
 
 function SpecialistRequestedRescheduleAsClient({ interview }) {
+  const [resendInterviewRequest] = useResendInterviewRequest();
+
+  const handleResendInterviewRequest = React.useCallback(async () => {
+    await resendInterviewRequest({
+      variables: {
+        input: {
+          id: interview.id,
+        },
+      },
+    });
+  }, [resendInterviewRequest, interview]);
+
   return (
     <>
       <Text fontSize="2xl" fontWeight="medium" marginBottom="xs">
@@ -40,7 +53,10 @@ function SpecialistRequestedRescheduleAsClient({ interview }) {
         Please update your availability below with some more options for them to
         choose from.
       </Paragraph>
-      <UpdateAvailabilityForm />
+      <UpdateAvailabilityForm
+        interview={interview}
+        onUpdate={handleResendInterviewRequest}
+      />
     </>
   );
 }

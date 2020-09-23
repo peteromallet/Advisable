@@ -8,9 +8,10 @@ class Interviews::ResendInterviewRequest < ApplicationService
   end
 
   def call
-    interview.user.update(availability: availability)
+    interview.user.update(availability: availability) if availability
     interview.assign_attributes(
-      time_zone: time_zone, status: 'More Time Options Added'
+      time_zone: time_zone,
+      status: 'More Time Options Added'
     )
 
     # Don't both validating anything as we want to force these updates

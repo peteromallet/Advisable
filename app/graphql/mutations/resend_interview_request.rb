@@ -1,7 +1,7 @@
 class Mutations::ResendInterviewRequest < Mutations::BaseMutation
   argument :id, ID, required: true
-  argument :availability, [String], required: true
-  argument :time_zone, String, required: true
+  argument :availability, [String], required: false
+  argument :time_zone, String, required: false
 
   field :interview, Types::Interview, null: true
   field :errors, [Types::Error], null: true
