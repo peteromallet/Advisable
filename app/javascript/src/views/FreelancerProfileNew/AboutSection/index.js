@@ -11,7 +11,7 @@ import EditInfo from "./EditInfo";
 function AboutSection({ specialist, isOwner, viewer }) {
   return (
     <Card minHeight="514px" bg="#fff" mt="m" p="12px" borderRadius={12} mb="l">
-      <CoverImage />
+      <CoverImage coverPhoto={specialist.coverPhoto} isOwner={isOwner} />
       <Box display="flex">
         <Avatar avatar={specialist.avatar} />
         <Box mt="m">

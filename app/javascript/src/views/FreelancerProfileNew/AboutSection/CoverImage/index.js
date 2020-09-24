@@ -1,40 +1,33 @@
 import React from "react";
-import { rgba } from "polished";
-import { Box, Circle, theme } from "@advisable/donut";
-import { Plus } from "@styled-icons/feather";
-import styled from "styled-components";
+import { Box } from "@advisable/donut";
+import FileUpload from "./FileUpload";
+import { CoverImageWrapper } from "./styles";
+import { useMutation } from "@apollo/client";
+import { useNotifications } from "src/components/Notifications";
+import { SET_COVER_PHOTO } from "../../queries";
 
-const Wrapper = styled.div`
-  position: relative;
-`;
+function CoverImage({ coverPhoto, isOwner }) {
+  const [updatePicture] = useMutation(SET_COVER_PHOTO);
+  const notifications = useNotifications();
 
-const IconWrapper = styled.div`
-  position: absolute;
-  right: 12px;
-  top: 12px;
-  opacity: 0;
-  transition: opacity 0.2s;
+  const submit = async (blob) => {
+    console.log("blob", blob);
+    await updatePicture({
+      variables: { input: { blob: blob.signed_id } },
+    });
 
-  ${Wrapper}:hover & {
-    opacity: 1;
-  }
-`;
+    notifications.notify("Cover picture has been updated");
+  };
 
-function CoverImage() {
+  const defaultPicture =
+    "https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/92b19080680791.5ce7e63751fcd.jpg";
+
   return (
-    <Wrapper>
-      <IconWrapper>
-        <Circle
-          size={42}
-          bg={rgba(theme.colors.neutral100, 0.8)}
-          color="neutral900"
-        >
-          <Plus size={20} strokeWidth={2} />
-        </Circle>
-      </IconWrapper>
+    <CoverImageWrapper>
+      {isOwner && <FileUpload onChange={submit} />}
       <Box
         as="img"
-        src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/92b19080680791.5ce7e63751fcd.jpg"
+        src={coverPhoto || defaultPicture}
         css="object-fit: cover;"
         width="100%"
         bg="neutral50"
@@ -42,7 +35,7 @@ function CoverImage() {
         mx="auto"
         borderRadius={12}
       />
-    </Wrapper>
+    </CoverImageWrapper>
   );
 }
 

@@ -124,6 +124,17 @@ export const updateProfileOptimisticResponse = (specialist, values) => {
   };
 };
 
+export const SET_COVER_PHOTO = gql`
+  ${fields}
+  mutation SetCoverPhoto($input: SetCoverPhotoInput!) {
+    setCoverPhoto(input: $input) {
+      specialist {
+        ...SpecialistFields
+      }
+    }
+  }
+`;
+
 export const ANSWER_QUESTION = gql`
   mutation AnswerQuestion($input: AnswerQuestionInput!) {
     answerQuestion(input: $input) {
