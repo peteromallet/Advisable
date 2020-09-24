@@ -559,6 +559,7 @@ ActiveRecord::Schema.define(version: 2020_09_25_102717) do
     t.integer "hired_count", default: 0
     t.boolean "sourcing"
     t.bigint "sales_person_id"
+    t.bigint "linkedin_campaign_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["sales_person_id"], name: "index_projects_on_sales_person_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
