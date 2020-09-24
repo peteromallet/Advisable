@@ -1,14 +1,12 @@
 class Interviews::ResendInterviewRequest < ApplicationService
-  attr_reader :interview, :availability, :time_zone
+  attr_reader :interview, :time_zone
 
-  def initialize(interview:, availability:, time_zone:)
+  def initialize(interview:, time_zone:)
     @interview = interview
-    @availability = availability
     @time_zone = time_zone
   end
 
   def call
-    interview.user.update(availability: availability) if availability
     interview.assign_attributes(
       time_zone: time_zone,
       status: 'More Time Options Added'

@@ -23,9 +23,6 @@ const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
 const Messages = lazy(() => import("./views/Messages"));
 const FreelancerSearch = lazy(() => import("./views/FreelancerSearch"));
 const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
-const InterviewAvailability = lazy(() =>
-  import("./views/InterviewAvailability"),
-);
 const FreelancerActiveApplication = lazy(() =>
   import("./views/FreelancerActiveApplication"),
 );
@@ -52,6 +49,7 @@ const ApplicationRoutes = () => {
             path="/interview_request/:interviewID"
             component={InterviewRequest}
           />
+          {/* maintain old interview availability routes */}
           <Redirect
             from="/projects/:projectID/interviews/:interviewID/availability"
             to="/interviews/:interviewID"
