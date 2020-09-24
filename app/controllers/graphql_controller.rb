@@ -4,6 +4,8 @@ class GraphqlController < ApplicationController
                      if: -> { Rails.env == 'development' }
 
   def execute
+    pp session[:omniauth_token_data]
+    # session.delete(:omniauth)
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
