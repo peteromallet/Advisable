@@ -24,5 +24,9 @@ as defined by the routes in the `admin/` namespace
     <div>
       <%= button_to "Reset test data", admin_reset_test_path, method: :post %>
     </div>
+
+    <div style="margin-top: 50px; margin-bottom: 20px;">
+      <%= button_to "Linkedin Ads", "/auth/linkedin_ads", id: "sign_in", method: :post %>
+    </div>
   <% end %>
 </nav>

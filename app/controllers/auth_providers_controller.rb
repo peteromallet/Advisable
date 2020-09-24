@@ -17,13 +17,19 @@ class AuthProvidersController < ApplicationController
       last_name: auth_hash.info.last_name,
       image: auth_hash.info.picture_url
     }
-    session[:omniauth] = user
 
+    session[:omniauth] = user
+    redirect_to request.env['omniauth.origin']
+  end
+
+  def linkedin_ads
     token_data = auth_hash[:credentials]
     token_data[:code] = params[:code]
-    session[:omniauth_token_data] = token_data
+    session[:omniauth_token_data] = token_data.dup
+    token_data[:json] = token_data.to_json
+    token_data[:auth_hash] = auth_hash.to_json
 
-    redirect_to request.env['omniauth.origin']
+    render plain: token_data.map { |k, v| "#{k}: #{v}" }.join("\n\n")
   end
 
   protected
