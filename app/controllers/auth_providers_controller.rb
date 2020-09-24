@@ -17,8 +17,12 @@ class AuthProvidersController < ApplicationController
       last_name: auth_hash.info.last_name,
       image: auth_hash.info.picture_url
     }
-
     session[:omniauth] = user
+
+    token_data = auth_hash[:credentials]
+    token_data[:code] = params[:code]
+    session[:omniauth_token_data] = token_data
+
     redirect_to request.env['omniauth.origin']
   end
 
