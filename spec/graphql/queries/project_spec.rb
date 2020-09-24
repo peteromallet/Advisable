@@ -31,7 +31,7 @@ RSpec.describe 'project root query' do
             context: { current_user: another_user }
           )
         error = response['errors'].first
-        expect(error['message']).to eq('Invalid Permissions')
+        expect(error['extensions']['code']).to eq('INVALID_PERMISSIONS')
       end
     end
   end
