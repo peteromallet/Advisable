@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Box, Card, Text, Avatar, Link, useBreakpoint } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
 import Topics from "./components/Topics";
-import NeedHelp from "@guild/icons/NeedHelp";
+import { NeedHelp } from "@guild/icons";
 import CommentsButton from "./components/CommentsButton";
 import ReadMore from "./components/ReadMore";
 import { CoverImage } from "@guild/components/CoverImage";
@@ -65,7 +65,7 @@ const Post = ({ post }) => {
           </Box>
           {post.needHelp ? (
             <GuildTag variant="needHelp">
-              {mediumAndUp && <NeedHelp width="20" height="20" />}
+              {mediumAndUp && <NeedHelp size={20} />}
               <span>Need Help</span>
             </GuildTag>
           ) : (

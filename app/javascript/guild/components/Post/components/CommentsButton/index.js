@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Box, Text, Link, theme } from "@advisable/donut";
-import Comments from "@guild/icons/Comments";
+import { Comments } from "@guild/icons";
 
 const CommentsButton = ({ postId, commentsCount }) => (
   <StyledButton
@@ -21,7 +21,7 @@ const CommentsButton = ({ postId, commentsCount }) => (
     <Text fontSize="xs" mr="xs" color="catalinaBlue100">
       {commentsCount || "0"}
     </Text>
-    <Comments width={16} height={16} />
+    <Comments size={16} />
   </StyledButton>
 );
 

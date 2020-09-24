@@ -4,8 +4,7 @@ import { useToggle } from "@guild/hooks/useToggle";
 import { Text, useBreakpoint } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
 import GuildTag from "@guild/components/GuildTag";
-import FilterIcon from "@guild/icons/Filter";
-import AddIcon from "@guild/icons/Add";
+import { Filter as FilterIcon, Add as AddIcon } from "@guild/icons";
 import { feedStore } from "@guild/stores/Feed";
 
 const Filters = () => {
@@ -107,13 +106,13 @@ const Filters = () => {
             flexSpaceBetween
           >
             <GuildTag button size="s" onClick={toggleExpanded}>
-              <FilterIcon width={24} height={24} />
+              <FilterIcon size={24} />
             </GuildTag>
 
             {/* !sUp && !expanded && <GuildTag> Topics dropdown ...  */}
 
             <GuildTag button variant="cta" size="s" onClick={null}>
-              <AddIcon width={20} height={20} />
+              <AddIcon size={20} />
               {!expanded && sUp && "Create Post"}
             </GuildTag>
           </GuildBox>

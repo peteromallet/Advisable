@@ -21,13 +21,13 @@ import { useToggle } from "@guild/hooks/useToggle";
 import { GuildBox } from "@guild/styles";
 import ShowMore from "@guild/components/ShowMore";
 import GuildTag from "@guild/components/GuildTag";
-import NeedHelp from "@guild/icons/NeedHelp";
+import { NeedHelp, Comments } from "@guild/icons";
 // import { CREATE_GUILD_COMMENT } from "./mutations";
 import { GUILD_POST_QUERY } from "./queries";
 import DirectMessage from "./components/DirectMessage";
 import Topics from "@guild/components/Post/components/Topics";
-import Comments from "@guild/icons/Comments";
 import { CoverImage } from "@guild/components/CoverImage";
+import { SubmitButton } from "@guild/components/Buttons/styles";
 import { truncate } from "lodash-es";
 
 const Post = () => {
@@ -79,7 +79,7 @@ const Post = () => {
                 </Text>
                 {post.needHelp ? (
                   <GuildTag variant="needHelp">
-                    <NeedHelp width="20" height="20" />
+                    <NeedHelp size={20} />
                     <span>Need Help</span>
                   </GuildTag>
                 ) : (
@@ -95,7 +95,7 @@ const Post = () => {
                   name={post.author.name}
                   url={post.author.avatar}
                 />
-                <DirectMessage count={3} onClick={null} />
+                <DirectMessage count={3} recipient={post.author} />
                 <Box
                   display="flex"
                   justifyContent="center"
@@ -129,7 +129,7 @@ const Post = () => {
                     ? pluralize(post.commentsCount, "Comment", "Comments")
                     : "Comments"}
                 </Text>
-                <Comments ml={12} width={16} height={16} />
+                <Comments ml={12} size={16} />
               </StyledCommentsButton>
             </GuildBox>
 
@@ -172,9 +172,9 @@ const Post = () => {
                 maxRows={8}
                 placeholder="Join the Discussion ..."
               />
-              <StyledSubmitButton loading={false} type="submit">
+              <SubmitButton loading={false} type="submit">
                 Submit
-              </StyledSubmitButton>
+              </SubmitButton>
             </GuildBox>
 
             {/* Post Comments */}
@@ -231,21 +231,6 @@ const Post = () => {
     )
   );
 };
-
-const StyledSubmitButton = styled(Button)`
-  color: white;
-  background-color: ${theme.colors.froly50};
-  border-radius: 4px;
-  align-self: flex-end;
-  height: 32px;
-  &:focus {
-    outline: none;
-    border: none;
-  }
-  &:hover {
-    background-color: ${theme.colors.slateBlue};
-  }
-`;
 
 const StyledCommentsButton = styled(Button)`
   padding: 6px 14px;

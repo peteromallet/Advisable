@@ -9,6 +9,11 @@ export const GUILD_POST_QUERY = gql`
       ... on GuildPostAdviceRequired {
         needHelp
       }
+      author {
+        location
+        id
+        bio
+      }
       comments {
         id
         body

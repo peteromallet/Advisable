@@ -7,7 +7,7 @@ const { space, colors } = theme;
 
 export const NotificationDropdown = styled(Box)`
   right: 24px;
-  z-index: 2;
+  z-index: 3;
   top: 74px;
   width: 442px;
   height: 75vh;

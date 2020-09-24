@@ -37,19 +37,3 @@ export const NavIcon = styled.div`
     }
   }
 `;
-
-export const Mask = styled.div`
-  background: rgba(0, 0, 0, 0.7);
-  cursor: pointer;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 58px;
-  transition: visibility 0s, opacity 0.3s linear;
-  z-index: 1;
-  ${({ open }) => css`
-    opacity: ${open ? 1 : 0};
-    visibility: ${open ? "visible" : "hidden"};
-  `}
-`;
