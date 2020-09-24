@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/decioferreira/omniauth-linkedin-oauth2.git
+  revision: fe10f041ab98b5032f79883c89ad32143fa7404d
+  branch: master
+  specs:
+    omniauth-linkedin-oauth2 (1.0.0)
+      omniauth-oauth2
+
+GIT
   remote: https://github.com/faker-ruby/faker.git
   revision: b194dd23bb4cf9f151e6f680e1ea243737d747e1
   branch: master
@@ -201,7 +209,7 @@ GEM
       activerecord (>= 5.0)
       activesupport (>= 5.0)
       pg (>= 0.18.1)
-    jwt (2.2.1)
+    jwt (2.2.2)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.1)
@@ -237,7 +245,7 @@ GEM
     money (6.13.8)
       i18n (>= 0.6.4, <= 2)
     msgpack (1.3.3)
-    multi_json (1.14.1)
+    multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     nanoid (2.0.0)
@@ -260,10 +268,8 @@ GEM
     omniauth (1.9.1)
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
-    omniauth-linkedin-oauth2 (1.0.0)
-      omniauth-oauth2
-    omniauth-oauth2 (1.6.0)
-      oauth2 (~> 1.1)
+    omniauth-oauth2 (1.7.0)
+      oauth2 (~> 1.4)
       omniauth (~> 1.9)
     omniauth-rails_csrf_protection (0.1.2)
       actionpack (>= 4.2)
@@ -475,7 +481,7 @@ DEPENDENCIES
   nanoid
   niceql
   omniauth
-  omniauth-linkedin-oauth2
+  omniauth-linkedin-oauth2!
   omniauth-rails_csrf_protection (~> 0.1)
   parser
   pg (>= 0.18, < 2.0)
