@@ -177,6 +177,7 @@ end
 #  airtable_id                      :string
 #  client_id                        :bigint
 #  deposit_payment_intent_id        :string
+#  linkedin_campaign_id             :bigint
 #  sales_person_id                  :bigint
 #  user_id                          :bigint
 #
