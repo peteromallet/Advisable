@@ -238,7 +238,17 @@ class Types::QueryType < Types::BaseType
     Question.all
   end
 
-    # Guild
+  # Guild
+  field :chat_grant, Types::ChatGrantType, null: true do
+    description 'Access token grant for twilio chat client'
+  end
+
+  def chat_grant
+    requires_current_user!
+    identity = context[:current_user].uid
+    Grants::ChatService.call(identity: identity)
+  end
+
   field :guild_post, Types::Guild::PostInterface, null: true do
     argument :id, ID, required: true
   end
@@ -322,6 +332,12 @@ class Types::QueryType < Types::BaseType
   def requires_guild_user!
     unless context[:current_user].try(:guild)
       raise GraphQL::ExecutionError.new('Invalid Permissions', options: {code: 'invalidPermissions'})
+    end
+  end
+
+  def requires_current_user!
+    unless context[:current_user]
+      raise ApiError::NotAuthenticated.new('You are not logged in')
     end
   end
 end
