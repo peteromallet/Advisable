@@ -15,6 +15,9 @@ Layout/DotPosition:
 Style/RaiseArgs:
   Enabled: false
 
+Style/NumericLiterals:
+  Enabled: false
+
 # Let's discuss this one
 # I'd like to go double quotes everywhere, but am open to discussion
 # Style/StringLiterals:
