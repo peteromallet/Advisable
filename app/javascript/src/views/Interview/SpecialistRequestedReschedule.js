@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Card, Text, Paragraph } from "@advisable/donut";
+import { Container, Box, Card, Text, Paragraph } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
+import { useNotifications } from "components/Notifications";
 import UpdateAvailabilityForm from "./UpdateAvailabilityForm";
 import { useResendInterviewRequest } from "./queries";
 
@@ -33,6 +34,7 @@ function SpecialistRequestedRescheduleAsSpecialist({ interview }) {
 }
 
 function SpecialistRequestedRescheduleAsClient({ interview }) {
+  const notifications = useNotifications();
   const [resendInterviewRequest] = useResendInterviewRequest();
 
   const handleResendInterviewRequest = React.useCallback(async () => {
@@ -43,22 +45,28 @@ function SpecialistRequestedRescheduleAsClient({ interview }) {
         },
       },
     });
-  }, [resendInterviewRequest, interview]);
+
+    notifications.notify(
+      `We have sent your updated availability to ${interview.specialist.firstName}`,
+    );
+  }, [notifications, resendInterviewRequest, interview]);
 
   return (
-    <>
-      <Text fontSize="2xl" fontWeight="medium" marginBottom="xs">
-        {interview.specialist.firstName} has requested to reschedule your
-        interview.
-      </Text>
-      <Paragraph marginBottom="lg">
-        Please update your availability below with some more options for them to
-        choose from.
-      </Paragraph>
-      <UpdateAvailabilityForm
-        interview={interview}
-        onUpdate={handleResendInterviewRequest}
-      />
-    </>
+    <Container paddingY="xl">
+      <Card padding={["xl", "2xl"]}>
+        <Text fontSize="4xl" fontWeight="medium" marginBottom="xs">
+          {interview.specialist.firstName} has requested to reschedule your
+          interview.
+        </Text>
+        <Paragraph marginBottom="lg">
+          Please update your availability below with some more options for them
+          to choose from.
+        </Paragraph>
+        <UpdateAvailabilityForm
+          interview={interview}
+          onUpdate={handleResendInterviewRequest}
+        />
+      </Card>
+    </Container>
   );
 }
