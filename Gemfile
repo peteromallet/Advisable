@@ -29,7 +29,7 @@ gem 'geocoder'
 gem 'money'
 gem 'sentry-raven'
 gem 'omniauth'
-gem 'omniauth-linkedin-oauth2'
+gem 'omniauth-linkedin-oauth2', github: 'decioferreira/omniauth-linkedin-oauth2', branch: 'master'
 gem 'omniauth-rails_csrf_protection', '~> 0.1'
 
 # Use ActiveStorage variant
@@ -58,7 +58,7 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'image_processing', '~> 1.0'
 gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 
-# Guild 
+# Guild
 gem "jsonb_accessor", "~> 1.0.0"
 gem 'acts-as-taggable-on', '~> 6.0'
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
