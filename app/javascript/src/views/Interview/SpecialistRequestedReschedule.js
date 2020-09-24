@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Paragraph } from "@advisable/donut";
+import { Box, Card, Text, Paragraph } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import UpdateAvailabilityForm from "./UpdateAvailabilityForm";
 import { useResendInterviewRequest } from "./queries";
@@ -17,16 +17,18 @@ export default function SpecialistRequestedReschedule({ interview }) {
 
 function SpecialistRequestedRescheduleAsSpecialist({ interview }) {
   return (
-    <>
-      <Text fontSize="2xl" fontWeight="medium" marginBottom="xs">
-        Requested to reschedule
-      </Text>
-      <Paragraph>
-        You have requested to reschedule your call with{" "}
-        {interview.user.firstName}. We have asked {interview.user.firstName} to
-        update their availability and will let you know when they do.
-      </Paragraph>
-    </>
+    <Box maxWidth="500px" marginX="auto" paddingY="xl">
+      <Card padding={["xl", "2xl"]}>
+        <Text fontSize="2xl" fontWeight="medium" marginBottom="xs">
+          Requested to reschedule
+        </Text>
+        <Paragraph>
+          You have requested to reschedule your call with{" "}
+          {interview.user.firstName}. We have asked {interview.user.firstName}{" "}
+          to update their availability and will let you know when they do.
+        </Paragraph>
+      </Card>
+    </Box>
   );
 }
 
