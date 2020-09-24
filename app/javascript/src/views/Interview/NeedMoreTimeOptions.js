@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Box, Card, Text, Paragraph } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import UpdateAvailabilityForm from "./UpdateAvailabilityForm";
+import { useNotifications } from "components/Notifications";
 import { useResendInterviewRequest } from "./queries";
 
 export default function NeedMoreTimeOptions({ interview }) {
@@ -32,6 +33,7 @@ function NeedMoreTimeOptionsAsSpecialist({ interview }) {
 }
 
 function NeedMoreTimeOptionsAsClient({ interview }) {
+  const notifications = useNotifications();
   const [resendInterviewRequest] = useResendInterviewRequest();
 
   const handleResendInterviewRequest = React.useCallback(async () => {
@@ -42,6 +44,10 @@ function NeedMoreTimeOptionsAsClient({ interview }) {
         },
       },
     });
+
+    notifications.notify(
+      `We have sent your updated availability to ${interview.specialist.firstName}`,
+    );
   }, [resendInterviewRequest, interview]);
 
   return (

@@ -69,7 +69,7 @@ RSpec.describe 'Interview flow' do
       find("[aria-label='#{date.strftime('%-d %b %Y, 12:00')}']").click
       find("[aria-label='#{date.strftime('%-d %b %Y, 12:30')}']").click
       click_on "Update Availability"
-      expect(page).to have_content("We have sent your updated availability")
+      expect(page).to have_content("We have sent your availability")
     end
   end
 
