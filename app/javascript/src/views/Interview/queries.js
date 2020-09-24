@@ -69,6 +69,29 @@ export function useResendInterviewRequest() {
   return useMutation(RESEND_INTERVIEW_REQUEST);
 }
 
+export const GET_AVAILABILITY = gql`
+  query getAvailability {
+    viewer {
+      ... on User {
+        id
+        availability
+        interviews(status: "Call Scheduled") {
+          id
+          startsAt
+          specialist {
+            id
+            firstName
+          }
+        }
+      }
+    }
+  }
+`;
+
+export function useAvailability(opts) {
+  return useQuery(GET_AVAILABILITY, opts);
+}
+
 export const UPDATE_AVAILABILITY = gql`
   mutation updateAvailability($input: UpdateAvailabilityInput!) {
     updateAvailability(input: $input) {

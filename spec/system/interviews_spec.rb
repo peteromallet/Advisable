@@ -29,7 +29,7 @@ RSpec.describe 'Interview flow' do
     find("[aria-label='#{date.strftime('%-d %b %Y, 11:30')}']").click
     find("[aria-label='#{date.strftime('%-d %b %Y, 12:00')}']").click
     find("[aria-label='#{date.strftime('%-d %b %Y, 12:30')}']").click
-    click_on "Reschedule"
+    click_on "Request To Reschedule"
     expect(page).to have_content("You have requested to reschedule your call")
   end
 

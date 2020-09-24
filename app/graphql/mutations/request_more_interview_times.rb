@@ -6,6 +6,7 @@ class Mutations::RequestMoreInterviewTimes < Mutations::BaseMutation
 
   ALLOWED_STATUSES = [
     'Call Requested',
+    'Client Requested Reschedule',
     'Need More Time Options',
     'More Time Options Added'
   ]
