@@ -1,55 +1,39 @@
 import { gql } from "@apollo/client";
 
-export const GET_APPLICATION = gql`
-  query GetApplicationInvitation($id: ID!) {
-    application(id: $id) {
+const fields = gql`
+  fragment ProjectFields on Project {
+    id
+    airtableId
+    name
+    applicationsOpen
+    description
+    companyDescription
+    goals
+    industry
+    companyType
+    requiredCharacteristics
+    optionalCharacteristics
+    estimatedBudget
+    remote
+    primarySkill {
       id
-      status
-      referralUrl
-      airtableId
-      specialist {
+      name
+    }
+    user {
+      id
+      country {
         id
-        applicationStage
-      }
-      project {
-        id
-        airtableId
         name
-        applicationsOpen
-        description
-        companyDescription
-        goals
-        industry
-        companyType
-        requiredCharacteristics
-        optionalCharacteristics
-        estimatedBudget
-        remote
-        primarySkill {
-          id
-          name
-        }
-        user {
-          id
-          country {
-            id
-            name
-          }
-        }
       }
     }
   }
 `;
 
-export const REJECT_INVITATION = gql`
-  mutation rejectApplicationInvitation(
-    $input: RejectApplicationInvitationInput!
-  ) {
-    rejectApplicationInvitation(input: $input) {
-      application {
-        id
-        status
-      }
+export const GET_PROJECT = gql`
+  ${fields}
+  query GetProject($id: ID!) {
+    project(id: $id) {
+      ...ProjectFields
     }
   }
 `;
