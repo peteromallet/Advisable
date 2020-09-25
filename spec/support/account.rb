@@ -22,7 +22,7 @@ RSpec.shared_examples "account" do
 
   describe "#confirmed" do
     it 'returns true if confirmed_at is present' do
-      user = build(factory, confirmed_at: DateTime.now)
+      user = build(factory, confirmed_at: Time.zone.now)
       expect(user.confirmed).to be_truthy
     end
 

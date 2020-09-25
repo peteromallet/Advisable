@@ -35,7 +35,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
     end
 
     if user.accepted_project_payment_terms_at.nil? && args[:accept_terms]
-      user.accepted_project_payment_terms_at = DateTime.now.utc
+      user.accepted_project_payment_terms_at = Time.zone.now
     end
 
     user.update_payments_setup

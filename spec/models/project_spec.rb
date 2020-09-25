@@ -24,7 +24,7 @@ RSpec.describe Project do
     it 'sets accepted_terms_at to the current time' do
       project = create(:project, accepted_terms_at: nil)
       project.accepted_terms = true
-      expect(project.accepted_terms_at).to be_within(1.second).of(DateTime.now)
+      expect(project.accepted_terms_at).to be_within(1.second).of(Time.zone.now)
     end
 
     context 'when accepted_terms_at is already set' do

@@ -603,7 +603,6 @@ ActiveRecord::Schema.define(version: 2020_09_25_102717) do
     t.string "airtable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "uid"
   end
 
   create_table "searches", force: :cascade do |t|

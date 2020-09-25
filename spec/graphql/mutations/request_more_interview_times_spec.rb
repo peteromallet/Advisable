@@ -32,7 +32,7 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
 
   it 'sets requested_more_time_options_at' do
     response
-    expect(interview.reload.requested_more_time_options_at).to be_within(1.second).of(DateTime.now)
+    expect(interview.reload.requested_more_time_options_at).to be_within(1.second).of(Time.zone.now)
   end
 
   context "when the status is not 'Call Requested'" do
