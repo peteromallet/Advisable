@@ -17,6 +17,7 @@ const Projects = lazy(() => import("./views/Projects"));
 const Project = lazy(() => import("./views/Project"));
 const Booking = lazy(() => import("./views/Booking"));
 const JobListing = lazy(() => import("./views/JobListing"));
+const JobOpportunity = lazy(() => import("./views/JobOpportunity"));
 const ApplicationFlow = lazy(() => import("./views/ApplicationFlow"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
 const Messages = lazy(() => import("./views/Messages"));
@@ -103,6 +104,11 @@ const ApplicationRoutes = () => {
             component={UpdateProfile}
           />
           <Route exact path="/invites/:applicationId" component={JobListing} />
+          <Route
+            exact
+            path="/opportunities/:projectId"
+            component={JobOpportunity}
+          />
           <Route
             path="/invites/:applicationId/apply"
             component={ApplicationFlow}
