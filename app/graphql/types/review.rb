@@ -17,7 +17,7 @@ class Types::Review < Types::BaseType
     return nil unless object.project.try(:is_a?, PreviousProject)
 
     if object.project.contact_image.attached?
-      return(
+      (
         Rails.application.routes.url_helpers.rails_blob_url(
           object.project.contact_image,
           host:

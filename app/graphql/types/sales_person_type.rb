@@ -6,7 +6,7 @@ class Types::SalesPersonType < Types::BaseType
 
   def image
     if object.image.attached?
-      return(
+      (
         Rails.application.routes.url_helpers.rails_blob_url(
           object.image,
           host:

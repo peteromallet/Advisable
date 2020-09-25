@@ -9,6 +9,6 @@ class Guild::PostPolicy < Guild::BasePolicy
 
   private
   def public_and_guild?
-    return record&.published? && is_guild_user?
+    record&.published? && is_guild_user?
   end
 end

@@ -11,7 +11,7 @@ class Mutations::Guild::DeleteComment < Mutations::BaseMutation
     guild_comment = Guild::Comment.find(guild_comment_id)
     policy = Guild::CommentPolicy.new(context[:current_user], guild_comment)
 
-    return policy.delete_comment || raise(ApiError.not_authorized('You do not have access to this comment'))
+    policy.delete_comment || raise(ApiError.not_authorized('You do not have access to this comment'))
   end
 
   def resolve(guild_comment_id: nil)

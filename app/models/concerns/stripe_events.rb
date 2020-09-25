@@ -12,7 +12,7 @@ module StripeEvents
       klass.constantize
     rescue NameError
       Rails.logger.info "Could not process event '#{type}', #{klass} was not found"
-      return false
+      false
     end
   end
 end

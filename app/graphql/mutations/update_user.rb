@@ -25,6 +25,6 @@ class Mutations::UpdateUser < Mutations::BaseMutation
     user.save
     user.sync_to_airtable
 
-    return { user: user }
+    { user: user }
   end
 end

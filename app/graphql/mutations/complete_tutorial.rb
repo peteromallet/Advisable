@@ -7,7 +7,7 @@ class Mutations::CompleteTutorial < Mutations::BaseMutation
 
   def authorized?(tutorial:)
     return true if context[:current_user].present?
-    return false, { errors: [{ code: "notAuthenticated" }] }
+    [false, { errors: [{ code: "notAuthenticated" }] }]
   end
 
   def resolve(tutorial:)
