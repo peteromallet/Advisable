@@ -8,7 +8,7 @@ class Mutations::ApplyForProject < Mutations::BaseMutation
   end
 
   def resolve(**args)
-    project = Project.find_by_uid!(args[:project])
+    project = Project.find_by_uid_or_airtable_id!(args[:project])
     if project.status != "Brief Confirmed"
       ApiError.invalid_request(
         code: "PROJECT_IN_A_WRONG_STATE",
@@ -31,8 +31,8 @@ class Mutations::ApplyForProject < Mutations::BaseMutation
       )
     end
 
-    # This is not in master yet
     application.save_and_sync!
-    { application: application }
+
+    {application: application}
   end
 end
