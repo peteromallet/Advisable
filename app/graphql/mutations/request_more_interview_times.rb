@@ -23,6 +23,7 @@ class Mutations::RequestMoreInterviewTimes < Mutations::BaseMutation
 
     interview.update(
       status: 'Need More Time Options',
+      requested_more_time_options_at: DateTime.now,
       availability_note: args[:availability_note]
     )
 

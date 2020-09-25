@@ -30,4 +30,11 @@ RSpec.describe Interviews::ResendInterviewRequest do
       interview: interview,
     )
   end
+  
+  it 'sets more_time_options_added_at' do
+    Interviews::ResendInterviewRequest.call(
+      interview: interview,
+    )
+    expect(interview.reload.more_time_options_added_at).to be_within(1.second).of(DateTime.now)
+  end
 end

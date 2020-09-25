@@ -62,6 +62,11 @@ RSpec.describe Mutations::ScheduleInterview do
     }.from(nil).to('0123456789')
   end
 
+  it 'sets call_scheduled_at' do
+    request
+    expect(interview.reload.call_scheduled_at).to be_within(1.second).of(DateTime.now)
+  end
+
   it 'doesn\'t send any reschedule notifications' do
     request
     expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("UserMailer", "interview_rescheduled", any_args)
