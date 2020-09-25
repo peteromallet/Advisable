@@ -5,12 +5,12 @@ import Loading from "./Loading";
 import JobOpportunity from "./JobOpportunity";
 import NotFound from "../NotFound";
 import ApplicationsClosed from "../ApplicationsClosed";
-import { GET_APPLICATION } from "./queries";
+import { GET_PROJECT } from "./queries";
 import useViewer from "../../hooks/useViewer";
 import { useNotifications } from "../../components/Notifications";
 
 let JobOpportunityContainer = ({ history, match }) => {
-  const { loading, data, error } = useQuery(GET_APPLICATION, {
+  const { loading, data, error } = useQuery(GET_PROJECT, {
     variables: {
       id: match.params.projectId,
     },
@@ -31,10 +31,10 @@ let JobOpportunityContainer = ({ history, match }) => {
     }
   }
 
-  const open = get(data, "application.project.applicationsOpen");
+  const open = get(data, "project.applicationsOpen");
   if (!open) return <ApplicationsClosed />;
 
-  return <JobOpportunity history={history} application={data.application} />;
+  return <JobOpportunity history={history} project={data.project} />;
 };
 
 export default JobOpportunityContainer;

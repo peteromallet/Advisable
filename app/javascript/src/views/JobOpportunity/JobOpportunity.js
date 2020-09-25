@@ -1,29 +1,20 @@
 import React from "react";
 import Sticky from "../../components/Sticky";
-import { InformationCircle } from "@styled-icons/heroicons-solid";
-import { Box, Text, Card, Notice } from "@advisable/donut";
+import { Box, Text, Card, Button } from "@advisable/donut";
 import { List, Layout, BottomBar } from "src/components";
 import { useScreenSize } from "src/utilities/screenSizes";
 import ProjectAttributes from "./ProjectAttributes";
-import Actions from "./Actions";
 import { useMutation } from "@apollo/client";
 import { APPLY_FOR_PROJECT } from "./queries";
-import { useParams } from "react-router";
 
-let JobListing = ({ application, history }) => {
+let JobListing = ({ project, history }) => {
   const isMobile = useScreenSize("small");
-  const { project, specialist } = application;
-  const onHold = ["On Hold", "Full Application"].includes(
-    specialist.applicationStage,
-  );
-  const params = useParams();
   const [apply] = useMutation(APPLY_FOR_PROJECT, {
-    variables: { input: { project: params.projectId } },
+    variables: { input: { project: project.id } },
   });
 
   const gotoApply = async () => {
     const response = await apply();
-    console.log("response", response);
     const applicationId = response.data.applyForProject.application.id;
     let url = `/invites/${applicationId}/apply`;
     // Set an allowApply key on the location state. We then use this inside of
@@ -52,11 +43,9 @@ let JobListing = ({ application, history }) => {
             <Box marginBottom="xl">
               <ProjectAttributes project={project} />
             </Box>
-            <Actions
-              stack={true}
-              onApply={gotoApply}
-              application={application}
-            />
+            <Button onClick={gotoApply} size="l" width="100%" mb="12px">
+              Apply
+            </Button>
           </Sticky>
         </Layout.Sidebar>
       )}
@@ -76,18 +65,6 @@ let JobListing = ({ application, history }) => {
             <Text mb="32px" mt="8px" fontSize="s" color="neutral600">
               {project.industry} {project.companyType}
             </Text>
-          )}
-          {onHold && (
-            <Notice
-              mb="32px"
-              icon={<InformationCircle />}
-              title="Advisable application"
-              variant="cyan"
-            >
-              This project application will be used as part of your Advisable
-              application to figure out if we should accept you into our network
-              of freelancers
-            </Notice>
           )}
           <Text
             as="h6"
@@ -160,11 +137,9 @@ let JobListing = ({ application, history }) => {
 
         {isMobile && (
           <BottomBar>
-            <Actions
-              fullWidth={true}
-              application={application}
-              onApply={gotoApply}
-            />
+            <Button onClick={gotoApply} size="l" width="100%" mb="12px">
+              Apply
+            </Button>
           </BottomBar>
         )}
       </Layout.Main>
