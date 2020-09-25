@@ -104,8 +104,9 @@ const ApplicationRoutes = () => {
             component={UpdateProfile}
           />
           <Route exact path="/invites/:applicationId" component={JobListing} />
-          <Route
+          <AuthenticatedRoute
             exact
+            specialistOnly
             path="/opportunities/:projectId"
             component={JobOpportunity}
           />
