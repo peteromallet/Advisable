@@ -18,7 +18,7 @@ class Tasks::Start < ApplicationService
       WebhookEvent.trigger('tasks.started', WebhookEvent::Task.data(task))
     end
 
-    return task
+    task
   end
 
   private

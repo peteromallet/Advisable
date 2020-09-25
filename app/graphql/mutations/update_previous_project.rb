@@ -37,7 +37,7 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
     update_skills(project, args)
     update_industries(project, args)
     project.save
-    return { previous_project: project }
+    { previous_project: project }
   end
 
   private

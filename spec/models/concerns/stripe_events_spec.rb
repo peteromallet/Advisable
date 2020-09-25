@@ -5,7 +5,7 @@ class StripeEvents::TestEvent
   end
 
   def process
-    return "test"
+    "test"
   end
 end
 

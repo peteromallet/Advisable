@@ -9,6 +9,6 @@ class Mutations::DeleteAnswer < Mutations::BaseMutation
   def resolve(id:)
     answer = current_user.answers.find_by_uid!(id)
     answer.destroy!
-    return {id: id}
+    {id: id}
   end
 end

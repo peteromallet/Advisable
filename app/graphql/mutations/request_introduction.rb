@@ -25,7 +25,7 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
     update_application_status(application)
     application.project.update_sourcing
 
-    return { interview: interview, application: application }
+    { interview: interview, application: application }
   end
 
   private

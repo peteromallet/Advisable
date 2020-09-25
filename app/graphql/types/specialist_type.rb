@@ -124,7 +124,7 @@ class Types::SpecialistType < Types::BaseType
 
   def cover_photo
     if object.cover_photo.attached?
-      return(
+      (
         Rails.application.routes.url_helpers.rails_blob_url(
           object.cover_photo,
           host:

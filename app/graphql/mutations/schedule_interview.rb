@@ -52,7 +52,7 @@ class Mutations::ScheduleInterview < Mutations::BaseMutation
     end
 
     Webhook.process(interview)
-    return {interview: interview}
+    {interview: interview}
   end
 
   private

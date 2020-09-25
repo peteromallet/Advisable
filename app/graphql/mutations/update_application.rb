@@ -27,7 +27,7 @@ class Mutations::UpdateApplication < Mutations::BaseMutation
         Applications::Update.call(id: args[:id], attributes: attributes(args))
     }
   rescue Service::Error => e
-    return { errors: [e] }
+    { errors: [e] }
   end
 
   private

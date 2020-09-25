@@ -689,12 +689,6 @@ Style/RedundantRegexpEscape:
   Exclude:
     - 'spec/services/tasks/create_invoice_item_spec.rb'
 
-# Offense count: 56
-# Cop supports --auto-correct.
-# Configuration parameters: AllowMultipleReturnValues.
-Style/RedundantReturn:
-  Enabled: false
-
 # Offense count: 4
 # Cop supports --auto-correct.
 Style/RedundantSelf:

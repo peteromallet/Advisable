@@ -10,6 +10,6 @@ class Mutations::DeclineConsultation < Mutations::BaseMutation
                         rejected_at: DateTime.now.utc,
                         rejection_reason: args[:reason]
     consultation.sync_to_airtable
-    return { consultation: consultation }
+    { consultation: consultation }
   end
 end

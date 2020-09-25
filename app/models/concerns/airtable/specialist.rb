@@ -206,7 +206,7 @@ class Airtable::Specialist < Airtable::Base
       return false
     end
 
-    return false
+    false
   end
 
   # When the airtable API responds with RECORD_DOES_NOT_EXIST it is likely
@@ -229,7 +229,7 @@ class Airtable::Specialist < Airtable::Base
     end
 
     record.reload
-    return true
+    true
   end
 
   private

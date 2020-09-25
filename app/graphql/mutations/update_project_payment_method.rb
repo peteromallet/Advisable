@@ -11,7 +11,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
   # There must be a User logged in ( not a specialist )
   def authorized?(**args)
     return true if context[:current_user].is_a?(User)
-    return false, { errors: [{ code: "notAuthorized" }] }
+    [false, { errors: [{ code: "notAuthorized" }] }]
   end
 
   def resolve(**args)

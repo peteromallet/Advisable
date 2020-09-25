@@ -15,7 +15,7 @@ class Mutations::UpdateTask < Mutations::BaseMutation
     task = Task.find_by_uid!(args[:id])
     policy = TaskPolicy.new(context[:current_user], task)
     return true if policy.is_specialist_or_client
-    return false, { errors: [{ code: 'not_authorized' }] }
+    [false, { errors: [{ code: 'not_authorized' }] }]
   end
 
   def resolve(**args)
@@ -37,6 +37,6 @@ class Mutations::UpdateTask < Mutations::BaseMutation
 
     { task: task }
   rescue Service::Error => e
-    return { errors: [e] }
+    { errors: [e] }
   end
 end
