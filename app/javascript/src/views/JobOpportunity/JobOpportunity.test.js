@@ -1,27 +1,43 @@
-import user from "@testing-library/user-event";
-import { screen, within } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import {
   renderRoute,
+  fireEvent,
   mockViewer,
   mockQuery,
   mockData,
   mockMutation,
 } from "../../testHelpers/test-utils";
-import { GET_APPLICATION, REJECT_INVITATION } from "./queries";
+import { GET_PROJECT, APPLY_FOR_PROJECT } from "./queries";
+import { fetchApplication as GET_APPLICATION } from "../ApplicationFlow/queries";
 
-test("Renders the view for an application invitation", async () => {
+const specialist = mockData.specialist();
+
+test("Renders the view for a project", async () => {
   renderRoute({
-    route: "/invites/rec1234",
+    route: "/opportunities/rec1234",
     graphQLMocks: [
-      mockViewer(null),
+      mockViewer(specialist),
       mockQuery(
-        GET_APPLICATION,
+        GET_PROJECT,
         { id: "rec1234" },
         {
+          project: mockData.project({
+            id: "rec1234",
+            user: mockData.user({
+              country: mockData.country(),
+            }),
+          }),
+        },
+      ),
+      mockQuery(
+        GET_APPLICATION,
+        { id: "app1234" },
+        {
           application: mockData.application({
-            status: "Invited To Apply",
-            specialist: mockData.specialist(),
+            status: "Applied",
+            specialist: specialist,
             project: mockData.project({
+              applicationsOpen: true,
               user: mockData.user({
                 country: mockData.country(),
               }),
@@ -29,46 +45,15 @@ test("Renders the view for an application invitation", async () => {
           }),
         },
       ),
-    ],
-  });
-
-  await screen.findByText(/you have been invited/i);
-});
-
-test("specialist can reject the invitation", async () => {
-  const application = mockData.application({
-    status: "Invited To Apply",
-    specialist: mockData.specialist(),
-    project: mockData.project({
-      user: mockData.user({
-        country: mockData.country(),
-      }),
-    }),
-  });
-
-  renderRoute({
-    route: "/invites/rec1234",
-    graphQLMocks: [
-      mockViewer(null),
-      mockQuery(
-        GET_APPLICATION,
-        { id: "rec1234" },
-        {
-          application,
-        },
-      ),
       mockMutation(
-        REJECT_INVITATION,
+        APPLY_FOR_PROJECT,
+        { project: "rec1234" },
         {
-          id: application.airtableId,
-          reason: "No availability currently",
-        },
-        {
-          rejectApplicationInvitation: {
-            __typename: "RejectApplicationInvitationPayload",
+          applyForProject: {
+            __typename: "ApplyForProjectPayload",
             application: {
-              ...application,
-              status: "Invitation Rejected",
+              __typename: "Application",
+              id: "app1234",
             },
           },
         },
@@ -76,66 +61,7 @@ test("specialist can reject the invitation", async () => {
     ],
   });
 
-  const reject = await screen.findByRole("button", { name: /reject/i });
-  user.click(reject);
-  const reason = screen.getByRole("combobox", { name: /why are you/i });
-  user.selectOptions(reason, "No availability currently");
-  const modal = within(screen.getByRole("dialog", /reject application/i));
-  user.click(modal.getByRole("button", { name: /reject/i }));
-  await screen.findByText(/do you know anyone/i);
-});
-
-test("when the project is closed it renders the applications closed view", async () => {
-  renderRoute({
-    route: "/invites/rec1234",
-    graphQLMocks: [
-      mockViewer(null),
-      mockQuery(
-        GET_APPLICATION,
-        { id: "rec1234" },
-        {
-          application: mockData.application({
-            status: "Invited To Apply",
-            specialist: mockData.specialist(),
-            project: mockData.project({
-              applicationsOpen: false,
-              user: mockData.user({
-                country: mockData.country(),
-              }),
-            }),
-          }),
-        },
-      ),
-    ],
-  });
-
-  await screen.findByText("projects.applicationsClosed.title");
-});
-
-test("Shows notice that the application will be used in advisable application", async () => {
-  renderRoute({
-    route: "/invites/rec1234",
-    graphQLMocks: [
-      mockViewer(null),
-      mockQuery(
-        GET_APPLICATION,
-        { id: "rec1234" },
-        {
-          application: mockData.application({
-            status: "Invited To Apply",
-            specialist: mockData.specialist({
-              applicationStage: "On Hold",
-            }),
-            project: mockData.project({
-              user: mockData.user({
-                country: mockData.country(),
-              }),
-            }),
-          }),
-        },
-      ),
-    ],
-  });
-
-  await screen.findByText(/used as part of your advisable application/i);
+  await screen.findByText(/you have been invited/i);
+  fireEvent.click(screen.getByLabelText("Apply"));
+  await screen.findByText(/description of your background/i);
 });
