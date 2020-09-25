@@ -20,7 +20,6 @@ const Input = React.forwardRef(function Input(
     marginLeft,
     marginX,
     marginY,
-    validate,
     ...props
   },
   ref,
