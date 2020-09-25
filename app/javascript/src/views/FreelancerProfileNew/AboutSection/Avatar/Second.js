@@ -1,22 +1,22 @@
 import React from "react";
-import { theme, Box, StyledCard } from "@advisable/donut";
-import { rgba } from "polished";
-import styled from "styled-components";
-
-const StyledAvatarCard = styled(StyledCard)`
-  z-index: 4;
-  transition: box-shadow 300ms;
-  cursor: pointer;
-  box-shadow: 0px 8px 12px -4px ${rgba(theme.colors.neutral900, 0.04)},
-    0px 4px 20px -4px ${rgba(theme.colors.neutral900, 0.22)};
-
-  &:hover {
-    box-shadow: 0px 12px 24px -12px ${rgba(theme.colors.neutral900, 0.08)},
-      0px 24px 40px -24px ${rgba(theme.colors.neutral900, 0.3)};
-  }
-`;
+import { Box } from "@advisable/donut";
+import FileUpload from "./FileUpload";
+import { StyledAvatarCard } from "./styles";
+import { useMutation } from "@apollo/client";
+import { useNotifications } from "src/components/Notifications";
+import { UPDATE_PROFILE } from "../../queries";
 
 function Avatar({ avatar }) {
+  const [updateAvatar] = useMutation(UPDATE_PROFILE);
+  const notifications = useNotifications();
+
+  const submit = async (blob) => {
+    await updateAvatar({
+      variables: { input: { avatar: blob.signed_id } },
+    });
+    notifications.notify("Profile picture has been updated");
+  };
+
   return (
     <StyledAvatarCard
       width={190}
@@ -27,6 +27,7 @@ function Avatar({ avatar }) {
       mr="30px"
       borderRadius={16}
     >
+      <FileUpload onChange={submit} />
       <Box
         as="img"
         src={avatar}
