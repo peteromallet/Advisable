@@ -163,4 +163,32 @@ class Types::ProjectType < Types::BaseType
   def questions
     object.questions || []
   end
+
+  # When a user trys to view a project, this field will be used to determine if
+  # they have access to view the project. If there is no user logged in we do
+  # one of two things:
+  # 1. If the project user has set a password, we raise a not authenticated
+  # error and redirect to login.
+  # 2. If the project user has no password, we raise a SIGNUP_REQUIRED error
+  # to redirect the user to set their password. We include the email so the
+  # frontend can prefill the email field.
+  # TODO: Including the email is a security concern and we should update this
+  # shortly to use an token based confirmation flow instead.
+  field :viewer_can_access, Boolean, null: true
+
+  def viewer_can_access
+    unless current_user.present?
+      if object.user.has_account?
+        ApiError.not_authenticated
+      else
+        ApiError.invalid_request(code: "SIGNUP_REQUIRED", message: "Signup is required", extensions: {
+          url: "/signup/#{object.user.uid}",
+          email: object.user.email
+        })
+      end
+    end
+
+    policy = ProjectPolicy.new(current_user, object)
+    policy.can_access_project?
+  end
 end

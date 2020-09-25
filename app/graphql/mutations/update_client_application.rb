@@ -22,7 +22,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
       user.sync_to_airtable
     end
 
-    { clientApplication: user }
+    {clientApplication: user}
   end
 
   private
@@ -61,15 +61,18 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
 
   def email_blacklisted?(email)
     return if BlacklistedDomain.email_allowed?(email)
-    ApiError.invalidRequest('emailNotAllowed', 'This email is not allowed')
+    ApiError.invalid_request(
+      code: 'emailNotAllowed',
+      message: 'This email is not allowed'
+    )
   end
 
   def check_existing_account(email)
     account = Account.find_by_email(email)
     return if account.nil?
-    ApiError.invalidRequest(
-      'existingAccount',
-      'This email belongs to an existing account'
+    ApiError.invalid_request(
+      code: 'existingAccount',
+      message: 'This email belongs to an existing account'
     )
   end
 end
