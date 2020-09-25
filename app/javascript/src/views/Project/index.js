@@ -10,9 +10,9 @@ import {
 } from "react-router-dom";
 import View from "components/View";
 import Loading from "components/Loading";
-import handleAuthError from "../../utilities/handleAuthError";
+import { handleAuthError } from "./utilities";
 import NotFound, { isNotFound } from "../NotFound";
-import AccessDenied, { isAccessDenied } from "components/AccessDenied";
+import AccessDenied from "components/AccessDenied";
 import { GET_PROJECT } from "./queries";
 import ProjectRoutes from "./ProjectRoutes";
 import Navigation from "./Navigation";
@@ -24,20 +24,21 @@ export default function Project() {
   const { id } = useParams();
   const location = useLocation();
   const isLargerScreen = useBreakpoint("lUp");
-  const { loading, data, error } = useQuery(GET_PROJECT, { variables: { id } });
+  const { loading, data, error } = useQuery(GET_PROJECT, {
+    variables: { id },
+  });
 
   if (loading) return <Loading />;
 
   // Handle API errors.
-  if (error?.graphQLErrors.length > 0) {
-    const theError = error.graphQLErrors[0];
-    const redirect = handleAuthError(theError, location);
+  if (error) {
+    const redirect = handleAuthError(error, location);
     if (redirect) return <Redirect to={redirect} />;
-    if (isAccessDenied(error)) return <AccessDenied />;
     if (isNotFound(error)) return <NotFound />;
   }
 
   const { project } = data;
+  if (!project.viewerCanAccess) return <AccessDenied />;
 
   if (project?.status === "Brief Pending Confirmation") {
     return <Redirect to={`/project_setup/${project.id}`} />;

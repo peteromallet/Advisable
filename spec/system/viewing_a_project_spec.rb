@@ -25,6 +25,7 @@ RSpec.describe 'Viewing a project' do
       user = create(:user, password: 'testing123')
       project = create(:project, user: user, status: 'Brief Confirmed')
       visit "/projects/#{project.uid}"
+      fill_in 'email', with: user.email
       fill_in 'password', with: 'testing123'
       click_on 'Login'
       expect(page).to have_current_path("/projects/#{project.uid}")

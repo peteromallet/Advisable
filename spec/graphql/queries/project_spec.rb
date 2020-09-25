@@ -9,6 +9,7 @@ RSpec.describe 'project root query' do
       project(id: "#{project.airtable_id}") {
         id
         airtableId
+        viewerCanAccess
       }
     }
     GRAPHQL
@@ -22,16 +23,15 @@ RSpec.describe 'project root query' do
       )
     end
 
-    context 'and the user does not own the project' do
-      it 'returns an error' do
+    context 'and does not own the project' do
+      it 'returns viewerCanAccess false' do
         another_user = create(:user)
         response =
           AdvisableSchema.execute(
             query,
             context: { current_user: another_user }
           )
-        error = response['errors'].first
-        expect(error['extensions']['code']).to eq('INVALID_PERMISSIONS')
+        expect(response['data']['project']['viewerCanAccess']).to be_falsey
       end
     end
   end
@@ -42,7 +42,7 @@ RSpec.describe 'project root query' do
         response =
           AdvisableSchema.execute(query, context: { current_user: nil })
         error = response['errors'].first
-        expect(error['message']).to eq('authenticationRequired')
+        expect(error['extensions']['code']).to eq('notAuthenticated')
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe 'project root query' do
         response =
           AdvisableSchema.execute(query, context: { current_user: nil })
         error = response['errors'].first
-        expect(error['message']).to eq('signupRequired')
+        expect(error['extensions']['code']).to eq('SIGNUP_REQUIRED')
       end
     end
   end
