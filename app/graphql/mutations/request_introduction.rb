@@ -36,7 +36,7 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
         user: application.project.user,
         time_zone: time_zone || current_user.time_zone,
         status: 'Call Requested',
-        call_requested_at: DateTime.now,
+        call_requested_at: Time.zone.now,
       )
 
     interview.sync_to_airtable

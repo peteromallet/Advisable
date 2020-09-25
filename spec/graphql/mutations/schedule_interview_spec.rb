@@ -4,7 +4,7 @@ RSpec.describe Mutations::ScheduleInterview do
   let(:status) { "Call Requested" }
   let(:specialist) { create(:specialist) }
   let(:application) { create(:application, specialist: specialist) }
-  let(:user) { create(:user, availability: [DateTime.now.next_weekday.beginning_of_day]) }
+  let(:user) { create(:user, availability: [Time.zone.now.next_weekday.beginning_of_day]) }
   let(:starts_at) { user.availability.first }
   let(:initial_starts_at) { nil }
   let(:current_user) { specialist }
@@ -64,7 +64,7 @@ RSpec.describe Mutations::ScheduleInterview do
 
   it 'sets call_scheduled_at' do
     request
-    expect(interview.reload.call_scheduled_at).to be_within(1.second).of(DateTime.now)
+    expect(interview.reload.call_scheduled_at).to be_within(1.second).of(Time.zone.now)
   end
 
   it 'doesn\'t send any reschedule notifications' do

@@ -41,11 +41,11 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
     user.rejection_reason = rejection_reason
 
     if application_status == :accepted
-      user.application_accepted_at = DateTime.now
+      user.application_accepted_at = Time.zone.now
     end
 
     if application_status == :rejected
-      user.application_rejected_at = DateTime.now
+      user.application_rejected_at = Time.zone.now
     end
 
     user.save
@@ -65,7 +65,7 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
   def update_guarantee_terms(user, accept)
     return if accept.nil?
     if accept
-      user.accepted_guarantee_terms_at = DateTime.now
+      user.accepted_guarantee_terms_at = Time.zone.now
     else
       user.accepted_guarantee_terms_at = nil
     end

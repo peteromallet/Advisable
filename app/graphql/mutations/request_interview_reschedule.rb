@@ -25,12 +25,12 @@ class Mutations::RequestInterviewReschedule < Mutations::BaseMutation
     case current_user
     when Specialist
       interview.status = "Specialist Requested Reschedule"
-      interview.specialist_requested_reschedule_at = DateTime.now
+      interview.specialist_requested_reschedule_at = Time.zone.now
       interview.save_and_sync!
       SpecialistMailer.interview_reschedule_request(interview).deliver_later
     when User
       interview.status = "Client Requested Reschedule"
-      interview.client_requested_reschedule_at = DateTime.now
+      interview.client_requested_reschedule_at = Time.zone.now
       interview.save_and_sync!
       UserMailer.interview_reschedule_request(interview).deliver_later
     else

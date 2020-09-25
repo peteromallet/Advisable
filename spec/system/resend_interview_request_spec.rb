@@ -6,7 +6,7 @@ RSpec.describe 'Resending interview request' do
   end
 
   it 'resends the interview request' do
-    next_workday = DateTime.now.next_weekday
+    next_workday = Time.zone.now.next_weekday
     interview = create(:interview, status: "Need More Time Options")
     authenticate_as interview.application.project.user
     visit "/projects/#{interview.application.project.airtable_id}/interviews/#{

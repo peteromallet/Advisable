@@ -14,7 +14,7 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
       consultation.update(
         interview: interview,
         status: 'Accepted By Specialist',
-        accepted_at: DateTime.now.utc
+        accepted_at: Time.zone.now
       )
       consultation.sync_to_airtable
       { interview: interview }

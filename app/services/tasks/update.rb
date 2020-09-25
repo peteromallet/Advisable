@@ -16,7 +16,7 @@ class Tasks::Update < ApplicationService
     # the status to "Quote Provided".
     if task.estimate_changed? && ['Quote Requested'].include?(task.stage)
       task.stage = 'Quote Provided'
-      task.quote_provided_at = DateTime.now.utc
+      task.quote_provided_at = Time.zone.now
     end
 
     # If the the name, dueDate or description was changed

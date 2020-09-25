@@ -21,7 +21,7 @@ RSpec.describe Booking, type: :model do
   end
 
   describe "#calculate_end_date" do
-    let(:booking) { build(:booking, type: "Recurring", start_date: DateTime.now, end_date: nil) }
+    let(:booking) { build(:booking, type: "Recurring", start_date: Time.zone.now, end_date: nil) }
 
     context "when the duration is a number of months" do
       it "sets the end_date to the start_date + number of months" do

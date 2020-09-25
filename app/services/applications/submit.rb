@@ -10,7 +10,7 @@ class Applications::Submit < ApplicationService
     applications_open?
     is_submittable?
     application.status = 'Applied'
-    application.applied_at = DateTime.now unless application.applied_at.present?
+    application.applied_at = Time.zone.now unless application.applied_at.present?
     application.sync_to_airtable if application.save
     application
   end

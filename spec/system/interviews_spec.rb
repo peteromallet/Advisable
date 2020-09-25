@@ -22,7 +22,7 @@ RSpec.describe 'Interview flow' do
     authenticate_as interview.user
     visit "/interviews/#{interview.airtable_id}"
     click_on "Request To Reschedule"
-    date = DateTime.now.next_weekday.beginning_of_day
+    date = Time.zone.now.next_weekday.beginning_of_day
     find("[aria-label='#{date.strftime('%-d %b %Y, 10:00')}']").click
     find("[aria-label='#{date.strftime('%-d %b %Y, 10:30')}']").click
     find("[aria-label='#{date.strftime('%-d %b %Y, 11:00')}']").click
@@ -61,7 +61,7 @@ RSpec.describe 'Interview flow' do
       interview = create(:interview, status: "Specialist Requested Reschedule", starts_at: 2.days.from_now, user: user)
       authenticate_as interview.user
       visit "/interviews/#{interview.airtable_id}"
-      date = DateTime.now.next_weekday.beginning_of_day
+      date = Time.zone.now.next_weekday.beginning_of_day
       find("[aria-label='#{date.strftime('%-d %b %Y, 10:00')}']").click
       find("[aria-label='#{date.strftime('%-d %b %Y, 10:30')}']").click
       find("[aria-label='#{date.strftime('%-d %b %Y, 11:00')}']").click

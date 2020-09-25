@@ -23,7 +23,7 @@ class Mutations::RequestApplicationCallback < Mutations::BaseMutation
 
     call =
       user.client_calls.create(
-        call_time: DateTime.now,
+        call_time: Time.zone.now,
         phone_number: args[:phone_number],
         event_type: 'ASAP Call',
         type_of_call: 'Request Access Call',

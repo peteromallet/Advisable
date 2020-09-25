@@ -36,7 +36,7 @@ class Mutations::ScheduleInterview < Mutations::BaseMutation
 
     is_reschedule = interview.starts_at.present?
     interview.starts_at = args[:starts_at]
-    interview.call_scheduled_at = DateTime.now
+    interview.call_scheduled_at = Time.zone.now
     interview.status = "Call Scheduled"
     interview.save_and_sync!
 
