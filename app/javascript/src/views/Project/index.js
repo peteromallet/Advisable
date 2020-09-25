@@ -10,9 +10,9 @@ import {
 } from "react-router-dom";
 import View from "components/View";
 import Loading from "components/Loading";
-import AccessDenied from "components/AccessDenied";
 import handleAuthError from "../../utilities/handleAuthError";
 import NotFound, { isNotFound } from "../NotFound";
+import AccessDenied, { isAccessDenied } from "components/AccessDenied";
 import { GET_PROJECT } from "./queries";
 import ProjectRoutes from "./ProjectRoutes";
 import Navigation from "./Navigation";
@@ -33,8 +33,7 @@ export default function Project() {
     const theError = error.graphQLErrors[0];
     const redirect = handleAuthError(theError, location);
     if (redirect) return <Redirect to={redirect} />;
-    if (theError.extensions.code.match(/invalidPermissions/))
-      return <AccessDenied />;
+    if (isAccessDenied(error)) return <AccessDenied />;
     if (isNotFound(error)) return <NotFound />;
   }
 
