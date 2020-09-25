@@ -34,6 +34,7 @@ RSpec.describe Mutations::RequestInterviewReschedule do
       expect(interview.availability_note).to eq("This is a note.")
       expect(interview.status).to eq("Client Requested Reschedule")
       expect(response["data"]["requestInterviewReschedule"]["interview"]["id"]).to eq(interview.uid)
+      expect(interview.client_requested_reschedule_at).to be_within(1.second).of(DateTime.now)
     end
   end
 
@@ -50,6 +51,7 @@ RSpec.describe Mutations::RequestInterviewReschedule do
       expect(interview.availability_note).to eq("This is a note.")
       expect(interview.status).to eq("Specialist Requested Reschedule")
       expect(response["data"]["requestInterviewReschedule"]["interview"]["id"]).to eq(interview.uid)
+      expect(interview.specialist_requested_reschedule_at).to be_within(1.second).of(DateTime.now)
     end
 
     context "interview not scheduled" do

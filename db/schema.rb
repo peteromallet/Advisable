@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_22_080621) do
+ActiveRecord::Schema.define(version: 2020_09_25_102717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -352,6 +352,12 @@ ActiveRecord::Schema.define(version: 2020_09_22_080621) do
     t.string "availability_note"
     t.string "zoom_meeting_id"
     t.string "uid"
+    t.datetime "call_requested_at"
+    t.datetime "call_scheduled_at"
+    t.datetime "requested_more_time_options_at"
+    t.datetime "more_time_options_added_at"
+    t.datetime "client_requested_reschedule_at"
+    t.datetime "specialist_requested_reschedule_at"
     t.index ["airtable_id"], name: "index_interviews_on_airtable_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
     t.index ["user_id"], name: "index_interviews_on_user_id"
@@ -828,6 +834,15 @@ ActiveRecord::Schema.define(version: 2020_09_22_080621) do
     t.index ["sales_person_id"], name: "index_users_on_sales_person_id"
   end
 
+  create_table "video_calls", force: :cascade do |t|
+    t.string "uid"
+    t.bigint "interview_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["interview_id"], name: "index_video_calls_on_interview_id"
+    t.index ["uid"], name: "index_video_calls_on_uid"
+  end
+
   create_table "webhook_configurations", force: :cascade do |t|
     t.string "name"
     t.string "url"
@@ -900,4 +915,5 @@ ActiveRecord::Schema.define(version: 2020_09_22_080621) do
   add_foreign_key "users", "countries"
   add_foreign_key "users", "industries"
   add_foreign_key "users", "sales_people"
+  add_foreign_key "video_calls", "interviews"
 end

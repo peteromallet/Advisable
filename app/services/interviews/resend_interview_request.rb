@@ -7,7 +7,8 @@ class Interviews::ResendInterviewRequest < ApplicationService
 
   def call
     interview.assign_attributes(
-      status: 'More Time Options Added'
+      status: 'More Time Options Added',
+      more_time_options_added_at: DateTime.now
     )
 
     # Don't both validating anything as we want to force these updates
