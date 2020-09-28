@@ -4,6 +4,7 @@ import {
   renderComponent,
   screen,
   mockQuery,
+  mockViewer,
   mockMutation,
   mockData,
   waitForElementToBeRemoved,
@@ -60,6 +61,7 @@ test("Adding a new project", async () => {
     <TestUI onCreate={handleCreate} onPublish={handlePublish} />,
     {
       graphQLMocks: [
+        mockViewer(mockData.specialist()),
         mockQuery(
           SELECT_DATA,
           {},
@@ -151,7 +153,7 @@ test("Adding a new project", async () => {
     },
   );
 
-  fireEvent.click(screen.getByText("Open"));
+  fireEvent.click(await screen.findByText("Open"));
   const clientName = await screen.findByLabelText("Company Name");
   fireEvent.change(clientName, { target: { value: "Test inc" } });
   const industryField = await screen.findByPlaceholderText(/industry/i);
@@ -233,6 +235,7 @@ test("can edit the description", async () => {
   });
 
   const graphQLMocks = [
+    mockViewer(mockData.specialist()),
     mockQuery(
       SELECT_DATA,
       {},
