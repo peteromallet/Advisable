@@ -1,8 +1,8 @@
 import Video from "twilio-video";
-import { useCallback, useState, useEffect, useRef } from "react";
+import { useCallback, useState, useEffect } from "react";
 
 export default function useRoom(name, accessToken) {
-  const [room, setRoom] = useState(null);
+  const [room, setRoom] = useState();
   const [roomState, setRoomState] = useState("disconnected");
   const [isConnecting, setIsConnecting] = useState(false);
 

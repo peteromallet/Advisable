@@ -18,9 +18,9 @@ class Types::VideoCallType < Types::BaseType
 
   def access_token
     token = Twilio::JWT::AccessToken.new(
-      ENV["TWILLIO_SID"],
-      ENV["TWILLIO_API_KEY_SID"],
-      ENV["TWILLIO_API_KEY_SECRET"],
+      ENV["TWILIO_SID"],
+      ENV["TWILIO_API_KEY_SID"],
+      ENV["TWILIO_API_KEY_SECRET"],
       [],
       identity: current_user.first_name
     )
