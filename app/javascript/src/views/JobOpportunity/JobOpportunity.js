@@ -9,7 +9,7 @@ import { APPLY_FOR_PROJECT } from "./queries";
 
 let JobListing = ({ project, history }) => {
   const isMobile = useScreenSize("small");
-  const [apply] = useMutation(APPLY_FOR_PROJECT, {
+  const [apply, { loading }] = useMutation(APPLY_FOR_PROJECT, {
     variables: { input: { project: project.id } },
   });
 
@@ -43,7 +43,13 @@ let JobListing = ({ project, history }) => {
             <Box marginBottom="xl">
               <ProjectAttributes project={project} />
             </Box>
-            <Button onClick={gotoApply} size="l" width="100%" mb="12px">
+            <Button
+              onClick={gotoApply}
+              loading={loading}
+              size="l"
+              width="100%"
+              mb="12px"
+            >
               Apply
             </Button>
           </Sticky>
@@ -137,7 +143,13 @@ let JobListing = ({ project, history }) => {
 
         {isMobile && (
           <BottomBar>
-            <Button onClick={gotoApply} size="l" width="100%" mb="12px">
+            <Button
+              onClick={gotoApply}
+              loading={loading}
+              size="l"
+              width="100%"
+              mb="12px"
+            >
               Apply
             </Button>
           </BottomBar>
