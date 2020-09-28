@@ -1,5 +1,6 @@
 class CreateLinkedinAdJob < ApplicationJob
   ACCOUNT_ID = 503157292
+  CAMPAIGN_GROUP_ID = 611804793
   API_ROOT = "https://api.linkedin.com".freeze
   attr_reader :project, :conversation_id, :inmail_id, :creative_id
 
@@ -20,11 +21,9 @@ class CreateLinkedinAdJob < ApplicationJob
   private
 
   def create_campaign!
-    # Still need to figure out if we need one or multiple campaign groups
-    campaign_group_id = 611804793
     params = {
       account: "urn:li:sponsoredAccount:#{ACCOUNT_ID}",
-      campaignGroup: "urn:li:sponsoredCampaignGroup:#{campaign_group_id}",
+      campaignGroup: "urn:li:sponsoredCampaignGroup:#{CAMPAIGN_GROUP_ID}",
       creativeSelection: "ROUND_ROBIN",
       locale: {country: "US", language: "en"},
       name: "#{project.name} | #{project.airtable_id}",
@@ -49,14 +48,70 @@ class CreateLinkedinAdJob < ApplicationJob
 
   def build_conversation_tree!
     flowchart = {
-      body: "Hey buddy",
+      body: "Hi %FIRSTNAME%, lalala",
       actions: [
-        # {
-        #   body: "Yes",
-        #   message:{body: "You answered yes!"}
-        # },
-        {text: "No", action: "EXTERNAL_WEBSITE", url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"},
-        {text: "I might know someone", url: "https://advisable.formstack.com/forms/performance_marketing_referral"}
+        {
+          text: "Yes",
+          body: "Great, let us walk blablabla",
+          actions: [
+            {
+              text: "Yes",
+              body: "Let's start then",
+              actions: [
+                {
+                  text: "Yes",
+                  body: "Good to hear",
+                  actions: [
+                    {
+                      text: "Yes",
+                      body: "our client",
+                      actions: [
+                        {
+                          text: "Yes",
+                          body: "it seems like you could be a great fit",
+                          actions: [
+                            {
+                              text: "Yes",
+                              url: "https://advisable.com/projects/request-more-information/?pid=#{project.id}&utm_campaign=#{project.id}"
+                            },
+                            {
+                              text: "No",
+                              url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
+                            }
+                          ]
+                        },
+                        {
+                          text: "No",
+                          url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
+                        }
+                      ]
+                    },
+                    {
+                      text: "No",
+                      url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
+                    }
+                  ]
+                },
+                {
+                  text: "No",
+                  url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
+                }
+              ]
+            },
+            {
+              text: "No",
+              url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
+            }
+          ]
+        },
+        {
+          text: "No",
+          url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
+        },
+        {
+          text: "I might know someone",
+          url: "https://advisable.formstack.com/forms/performance_marketing_referral"
+        }
       ]
     }
     first_message_urn = create_message!(flowchart)
@@ -103,11 +158,15 @@ class CreateLinkedinAdJob < ApplicationJob
   end
 
   def create_message!(message)
+    params = {bodySource: {text: message[:body]}}
     if message.key?(:actions)
       actions = message[:actions].map do |action|
-        if action.key?(:message)
-          # TODO: figure this out
-          create_message!(message)
+        if action.key?(:actions)
+          {
+            optionText: action[:text],
+            type: "SIMPLE_REPLY",
+            nextContent: create_message!(action)
+          }
         else
           {
             optionText: action[:text],
@@ -116,16 +175,12 @@ class CreateLinkedinAdJob < ApplicationJob
           }
         end
       end
+      params.merge!(nextAction: {"array": actions})
     end
-
-    params = {
-      bodySource: {text: message[:body]},
-      nextAction: {"array": actions}
-    }
     response = linkedin_request("sponsoredConversations/#{conversation_id}/sponsoredMessageContents", params)
     urn = response.headers["x-resourceidentity-urn"]
     puts "New message created: #{urn}"
-    return urn
+    urn
   end
 
   def linkedin_request(url, params, expected_status = 201)
