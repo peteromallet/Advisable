@@ -1,7 +1,7 @@
 class CreateLinkedinAdJob < ApplicationJob
   ACCOUNT_ID = 503157292
   API_ROOT = "https://api.linkedin.com".freeze
-  attr_reader :project, :conversation_id, :inmail_id
+  attr_reader :project, :conversation_id, :inmail_id, :creative_id
 
   queue_as :default
 
@@ -14,6 +14,7 @@ class CreateLinkedinAdJob < ApplicationJob
     build_conversation_tree!
     create_ad_inmail_content!
     create_conversation_ad!
+    activate_conversation_ad!
   end
 
   private
@@ -33,27 +34,17 @@ class CreateLinkedinAdJob < ApplicationJob
       totalBudget: {amount: "100", currencyCode: "EUR"},
       status: "DRAFT"
     }
-
     response = linkedin_request("adCampaignsV2", params)
-    if response.status == 201
-      campaign_id = response.headers["x-resourceidentity-urn"].split(":").last.to_i
-      project.update!(linkedin_campaign_id: campaign_id)
-      puts "New campaign created: #{campaign_id}"
-    else
-      puts "Something went wrong. Status: #{response.status}"
-    end
+    campaign_id = response.headers["x-resourceidentity-urn"].split(":").last.to_i
+    project.update!(linkedin_campaign_id: campaign_id)
+    puts "New campaign created: #{campaign_id}"
   end
 
   def create_conversation!
     params = {"parentAccount": "urn:li:sponsoredAccount:#{ACCOUNT_ID}"}
     response = linkedin_request("sponsoredConversations", params)
-
-    if response.status == 201
-      @conversation_id = response.headers["x-linkedin-id"].to_i
-      puts "New sponsored conversation created: #{conversation_id}"
-    else
-      puts "Something went wrong. Status: #{response.status}"
-    end
+    @conversation_id = response.headers["x-linkedin-id"].to_i
+    puts "New sponsored conversation created: #{conversation_id}"
   end
 
   def build_conversation_tree!
@@ -68,16 +59,11 @@ class CreateLinkedinAdJob < ApplicationJob
         {text: "I might know someone", url: "https://advisable.formstack.com/forms/performance_marketing_referral"}
       ]
     }
-
-    first_message_urn = create_message(flowchart)
+    first_message_urn = create_message!(flowchart)
     params = {patch: {"$set": {firstMessageContent: first_message_urn}}}
-    response = linkedin_request("sponsoredConversations/#{conversation_id}", params)
-    if response.status == 204
-      urn = response.headers["x-resourceidentity-urn"]
-      puts "First message set: #{first_message_urn}"
-    else
-      raise "Something went wrong. Status: #{response.status}"
-    end
+    response = linkedin_request("sponsoredConversations/#{conversation_id}", params, 204)
+    urn = response.headers["x-resourceidentity-urn"]
+    puts "First message set: #{first_message_urn}"
   end
 
   def create_ad_inmail_content!
@@ -94,13 +80,8 @@ class CreateLinkedinAdJob < ApplicationJob
       }
     }
     response = linkedin_request("adInMailContentsV2", params)
-
-    if response.status == 201
-      @inmail_id = response.headers["x-linkedin-id"].to_i
-      puts "New InMail content created: #{inmail_id}"
-    else
-      raise "Something went wrong. Status: #{response.status}"
-    end
+    @inmail_id = response.headers["x-linkedin-id"].to_i
+    puts "New InMail content created: #{inmail_id}"
   end
 
   def create_conversation_ad!
@@ -110,25 +91,23 @@ class CreateLinkedinAdJob < ApplicationJob
       status: "DRAFT",
       type: "SPONSORED_MESSAGE"
     }
-
     response = linkedin_request("adCreativesV2", params)
-
-    # I GET 403 here
-
-    if response.status == 201
-      @inmail_id = response.headers["x-linkedin-id"].to_i
-      puts "New InMail content created: #{inmail_id}"
-    else
-      raise "Something went wrong. Status: #{response.status}"
-    end
+    @creative_id = response.headers["x-linkedin-id"].to_i
+    puts "New Sponsored Creative Ad created: #{creative_id}"
   end
 
-  def create_message(message)
+  def activate_conversation_ad!
+    params = {patch: {"$set": {status: "ACTIVE"}}}
+    response = linkedin_request("adCreativesV2/#{creative_id}", params, 204)
+    puts "Creative Ad ACTIVATED: #{creative_id}"
+  end
+
+  def create_message!(message)
     if message.key?(:actions)
       actions = message[:actions].map do |action|
         if action.key?(:message)
           # TODO: figure this out
-          create_message(message)
+          create_message!(message)
         else
           {
             optionText: action[:text],
@@ -144,20 +123,17 @@ class CreateLinkedinAdJob < ApplicationJob
       nextAction: {"array": actions}
     }
     response = linkedin_request("sponsoredConversations/#{conversation_id}/sponsoredMessageContents", params)
-
-    if response.status == 201
-      urn = response.headers["x-resourceidentity-urn"]
-      puts "New message created: #{urn}"
-      return urn
-    else
-      raise "Something went wrong. Status: #{response.status}"
-    end
+    urn = response.headers["x-resourceidentity-urn"]
+    puts "New message created: #{urn}"
+    return urn
   end
 
-  def linkedin_request(url, params)
+  def linkedin_request(url, params, expected_status = 201)
     response = Faraday.post("#{API_ROOT}/v2/#{url}", params.to_json, request_headers)
-    pp JSON[response.body] unless response.success?
-    response
+    return response if response.success? && response.status == expected_status
+
+    puts "Something went wrong. Status: #{response.status}"
+    raise response.body
   end
 
   # Store tokens on User and add refresh_token logic
