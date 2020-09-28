@@ -8,7 +8,7 @@ import VIEWER from "../../graphql/queries/viewer";
 import useIntercom from "../../utilities/useIntercom";
 import ApplicationContext from "../../applicationContext";
 
-let ApplicationProvider = ({ children }) => {
+const ApplicationProvider = ({ children }) => {
   const location = useLocation();
   const { data, loading } = useQuery(VIEWER);
   useIntercom(location, data?.viewer);

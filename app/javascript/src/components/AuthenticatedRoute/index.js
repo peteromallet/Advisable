@@ -2,7 +2,6 @@
 // authenticated user to view the route. If the viewer is not authenticated it
 // will redirect to the Login view.
 import React from "react";
-import { get } from "lodash-es";
 import { Route, Redirect } from "react-router-dom";
 import PendingConfirmation from "./PendingConfirmation";
 import useViewer from "../../hooks/useViewer";
@@ -15,14 +14,14 @@ const AuthenticatedRoute = ({
   ...rest
 }) => {
   const viewer = useViewer();
-  const __typename = get(viewer, "__typename");
-  const applicationStage = get(viewer, "applicationStage");
+  const __typename = viewer?.__typename;
+  const applicationStage = viewer?.applicationStage;
 
-  if (specialistOnly && __typename !== "Specialist") {
+  if (specialistOnly && viewer && __typename !== "Specialist") {
     return <Redirect to="/" />;
   }
 
-  if (clientOnly && __typename !== "User") {
+  if (clientOnly && viewer && __typename !== "User") {
     return <Redirect to="/" />;
   }
 
@@ -30,11 +29,7 @@ const AuthenticatedRoute = ({
     <Route
       {...rest}
       render={(props) => {
-        // If there is no user then clear out any token and redirect immediately
         if (!viewer) {
-          window.sessionStorage.removeItem("authToken");
-          window.localStorage.removeItem("authToken");
-
           return (
             <Redirect
               to={{

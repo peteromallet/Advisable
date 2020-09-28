@@ -3,6 +3,7 @@ import { I18nextProvider } from "react-i18next";
 import { MemoryRouter } from "react-router-dom";
 import { render } from "@testing-library/react";
 import useBreakpoints from "../../../../donut/src/hooks/useBreakpoints";
+import ApplicationProvider from "components/ApplicationProvider";
 import { MockedProvider } from "@apollo/client/testing";
 import i18n from "./i18next";
 import App from "../App";
@@ -123,7 +124,7 @@ export function renderComponent(component, config = {}) {
       route={config.route || "/"}
       graphQLMocks={config.graphQLMocks || []}
     >
-      {React.cloneElement(component)}
+      <ApplicationProvider>{React.cloneElement(component)}</ApplicationProvider>
     </Providers>,
   );
 }
