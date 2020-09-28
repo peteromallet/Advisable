@@ -6,6 +6,13 @@ import { useScreenSize } from "src/utilities/screenSizes";
 import ProjectAttributes from "./ProjectAttributes";
 import { useMutation } from "@apollo/client";
 import { APPLY_FOR_PROJECT } from "./queries";
+function ApplyButton({ onClick, loading }) {
+  return (
+    <Button onClick={onClick} loading={loading} size="l" width="100%" mb="12px">
+      Apply
+    </Button>
+  );
+}
 
 let JobListing = ({ project, history }) => {
   const isMobile = useScreenSize("small");
@@ -43,15 +50,7 @@ let JobListing = ({ project, history }) => {
             <Box marginBottom="xl">
               <ProjectAttributes project={project} />
             </Box>
-            <Button
-              onClick={gotoApply}
-              loading={loading}
-              size="l"
-              width="100%"
-              mb="12px"
-            >
-              Apply
-            </Button>
+            <ApplyButton onClick={gotoApply} loading={loading} />
           </Sticky>
         </Layout.Sidebar>
       )}
@@ -143,15 +142,7 @@ let JobListing = ({ project, history }) => {
 
         {isMobile && (
           <BottomBar>
-            <Button
-              onClick={gotoApply}
-              loading={loading}
-              size="l"
-              width="100%"
-              mb="12px"
-            >
-              Apply
-            </Button>
+            <ApplyButton onClick={gotoApply} loading={loading} />
           </BottomBar>
         )}
       </Layout.Main>
