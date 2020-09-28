@@ -6,15 +6,15 @@ let Loading = () => {
   return (
     <Layout>
       <Layout.Sidebar>
-        <SkeletonHeading />
+        <SkeletonHeading mb="xl" />
         <SkeletonText />
       </Layout.Sidebar>
       <Layout.Main>
         <Card padding="xl">
-          <SkeletonHeading />
-          <SkeletonText marginBottom="xl" />
-          <SkeletonText marginBottom="xl" />
-          <SkeletonText />
+          <SkeletonHeading mb="xl" />
+          <SkeletonText mb="xl" />
+          <SkeletonText mb="xl" />
+          <SkeletonText mb="xl" />
         </Card>
       </Layout.Main>
     </Layout>
