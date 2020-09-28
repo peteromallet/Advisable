@@ -2,14 +2,20 @@ import React from "react";
 import { Box, Text, Button, theme } from "@advisable/donut";
 import VideoTrack from "./VideoTrack";
 import useCallContext from "./useCallContext";
+import ToggleAudioButton from "./ToggleAudioButton";
+import ToggleVideoButton from "./ToggleVideoButton";
 import styled from "styled-components";
 
 const StyledVideoPreview = styled.div`
   width: 467px;
   height: 350px;
+  display: flex;
   overflow: hidden;
   border-radius: 16px;
-  background: ${theme.colors.neutral100};
+  align-items: center;
+  justify-content: center;
+  color: ${theme.colors.neutral200};
+  background: ${theme.colors.neutral900};
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 `;
 
@@ -27,7 +33,11 @@ export default function Lobby() {
     >
       <Box marginBottom="xl">
         <StyledVideoPreview>
-          {videoTrack ? <VideoTrack track={videoTrack} /> : null}
+          {videoTrack ? (
+            <VideoTrack track={videoTrack} />
+          ) : (
+            <span>Camera is off</span>
+          )}
         </StyledVideoPreview>
       </Box>
       <Text
@@ -39,6 +49,10 @@ export default function Lobby() {
       >
         {data.name}
       </Text>
+      <Box marginBottom="lg">
+        <ToggleAudioButton />
+        <ToggleVideoButton />
+      </Box>
       <Button size="l" onClick={connect} loading={isConnecting}>
         Join Call
       </Button>
