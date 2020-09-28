@@ -6,6 +6,9 @@ import { useScreenSize } from "src/utilities/screenSizes";
 import ProjectAttributes from "./ProjectAttributes";
 import { useMutation } from "@apollo/client";
 import { APPLY_FOR_PROJECT } from "./queries";
+import { get } from "lodash-es";
+import { useNotifications } from "components/Notifications";
+
 function ApplyButton({ onClick, loading }) {
   return (
     <Button onClick={onClick} loading={loading} size="l" width="100%" mb="12px">
@@ -16,19 +19,26 @@ function ApplyButton({ onClick, loading }) {
 
 let JobListing = ({ project, history }) => {
   const isMobile = useScreenSize("small");
-  const [apply, { loading }] = useMutation(APPLY_FOR_PROJECT, {
+  const notifications = useNotifications();
+  const [apply, { loading, error }] = useMutation(APPLY_FOR_PROJECT, {
     variables: { input: { project: project.id } },
   });
 
-  const gotoApply = async () => {
-    const response = await apply();
-    const applicationId = response.data.applyForProject.application.id;
-    const url = `/invites/${applicationId}/apply`;
-    // Set an allowApply key on the location state. We then use this inside of
-    // the ApplicationFlow to determine wether or not to allow an application
-    // with a status of "Application Rejceted" to view the application flow.
-    history.push(url, { allowApply: true });
-  };
+  if (error) {
+    const code = get(error, "graphQLErrors[0].extensions.code");
+    if (code === "APPLICATION_IN_WRONG_STATE") {
+      notifications.notify("You can not re-apply for this project");
+    } else {
+      notifications.notify("Something went wrong, please try again");
+    }
+  }
+
+  const gotoApply = () =>
+    apply().then((response) => {
+      const applicationId = response.data.applyForProject.application.id;
+      const url = `/invites/${applicationId}/apply`;
+      history.push(url, { allowApply: true });
+    });
 
   return (
     <Layout>
