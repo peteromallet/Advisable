@@ -16,7 +16,7 @@ let JobListing = ({ project, history }) => {
   const gotoApply = async () => {
     const response = await apply();
     const applicationId = response.data.applyForProject.application.id;
-    let url = `/invites/${applicationId}/apply`;
+    const url = `/invites/${applicationId}/apply`;
     // Set an allowApply key on the location state. We then use this inside of
     // the ApplicationFlow to determine wether or not to allow an application
     // with a status of "Application Rejceted" to view the application flow.
