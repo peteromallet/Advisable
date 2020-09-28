@@ -68,6 +68,7 @@ export const project = (fields = {}) => {
     airtableId: uniqueId("rec"),
     name: "Project",
     currency: "USD",
+    viewerCanAccess: true,
     primarySkill: skill({ name: "Testing" }),
     questions: ["Question?"],
     applicationsOpen: true,
