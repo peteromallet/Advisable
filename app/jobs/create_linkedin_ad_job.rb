@@ -1,18 +1,20 @@
 class CreateLinkedinAdJob < ApplicationJob
   ACCOUNT_ID = 503157292
   CAMPAIGN_GROUP_ID = 611804793
-  API_ROOT = "https://api.linkedin.com".freeze
-  attr_reader :project, :conversation_id, :inmail_id, :creative_id
+
+  attr_reader :project, :linkedin, :conversation_id, :first_message_urn, :inmail_id, :creative_id
 
   queue_as :default
 
   # Workflow: https://docs.microsoft.com/en-us/linkedin/marketing/usecases/ad-tech/conversation-ads#setting-up-a-conversation-ad
   def perform(project_id)
     @project = Project.find(project_id)
+    @linkedin = Linkedin.new(ENV['LINKEDIN_TOKEN']) # Store tokens on User and add refresh_token logic
 
-    create_campaign! if project.linkedin_campaign_id.nil?
+    create_campaign!
     create_conversation!
     build_conversation_tree!
+    set_first_message!
     create_ad_inmail_content!
     create_conversation_ad!
     activate_conversation_ad!
@@ -21,6 +23,7 @@ class CreateLinkedinAdJob < ApplicationJob
   private
 
   def create_campaign!
+    return if project.linkedin_campaign_id.present?
     params = {
       account: "urn:li:sponsoredAccount:#{ACCOUNT_ID}",
       campaignGroup: "urn:li:sponsoredCampaignGroup:#{CAMPAIGN_GROUP_ID}",
@@ -33,17 +36,17 @@ class CreateLinkedinAdJob < ApplicationJob
       totalBudget: {amount: "100", currencyCode: "EUR"},
       status: "DRAFT"
     }
-    response = linkedin_request("adCampaignsV2", params)
+    response = linkedin.post_request("adCampaignsV2", params)
     campaign_id = response.headers["x-resourceidentity-urn"].split(":").last.to_i
     project.update!(linkedin_campaign_id: campaign_id)
-    puts "New campaign created: #{campaign_id}"
+    Rails.logger.info("New campaign created: #{campaign_id}")
   end
 
   def create_conversation!
     params = {"parentAccount": "urn:li:sponsoredAccount:#{ACCOUNT_ID}"}
-    response = linkedin_request("sponsoredConversations", params)
+    response = linkedin.post_request("sponsoredConversations", params)
     @conversation_id = response.headers["x-linkedin-id"].to_i
-    puts "New sponsored conversation created: #{conversation_id}"
+    Rails.logger.info("New sponsored conversation created: #{conversation_id}")
   end
 
   def build_conversation_tree!
@@ -114,11 +117,14 @@ class CreateLinkedinAdJob < ApplicationJob
         }
       ]
     }
-    first_message_urn = create_message!(flowchart)
+    @first_message_urn = create_message!(flowchart)
+  end
+
+  def set_first_message!
     params = {patch: {"$set": {firstMessageContent: first_message_urn}}}
-    response = linkedin_request("sponsoredConversations/#{conversation_id}", params, 204)
+    response = linkedin.post_request("sponsoredConversations/#{conversation_id}", params, 204)
     urn = response.headers["x-resourceidentity-urn"]
-    puts "First message set: #{first_message_urn}"
+    Rails.logger.info("First message set: #{first_message_urn}")
   end
 
   def create_ad_inmail_content!
@@ -134,9 +140,9 @@ class CreateLinkedinAdJob < ApplicationJob
           from: "urn:li:person:BbGVRJBPf7"
       }
     }
-    response = linkedin_request("adInMailContentsV2", params)
+    response = linkedin.post_request("adInMailContentsV2", params)
     @inmail_id = response.headers["x-linkedin-id"].to_i
-    puts "New InMail content created: #{inmail_id}"
+    Rails.logger.info("New InMail content created: #{inmail_id}")
   end
 
   def create_conversation_ad!
@@ -146,15 +152,15 @@ class CreateLinkedinAdJob < ApplicationJob
       status: "DRAFT",
       type: "SPONSORED_MESSAGE"
     }
-    response = linkedin_request("adCreativesV2", params)
+    response = linkedin.post_request("adCreativesV2", params)
     @creative_id = response.headers["x-linkedin-id"].to_i
-    puts "New Sponsored Creative Ad created: #{creative_id}"
+    Rails.logger.info("New Sponsored Creative Ad created: #{creative_id}")
   end
 
   def activate_conversation_ad!
     params = {patch: {"$set": {status: "ACTIVE"}}}
-    response = linkedin_request("adCreativesV2/#{creative_id}", params, 204)
-    puts "Creative Ad ACTIVATED: #{creative_id}"
+    response = linkedin.post_request("adCreativesV2/#{creative_id}", params, 204)
+    Rails.logger.info("Creative Ad ACTIVATED: #{creative_id}")
   end
 
   def create_message!(message)
@@ -177,28 +183,9 @@ class CreateLinkedinAdJob < ApplicationJob
       end
       params.merge!(nextAction: {"array": actions})
     end
-    response = linkedin_request("sponsoredConversations/#{conversation_id}/sponsoredMessageContents", params)
+    response = linkedin.post_request("sponsoredConversations/#{conversation_id}/sponsoredMessageContents", params)
     urn = response.headers["x-resourceidentity-urn"]
-    puts "New message created: #{urn}"
+    Rails.logger.info("New message created: #{urn}")
     urn
-  end
-
-  def linkedin_request(url, params, expected_status = 201)
-    response = Faraday.post("#{API_ROOT}/v2/#{url}", params.to_json, request_headers)
-    return response if response.success? && response.status == expected_status
-
-    puts "Something went wrong. Status: #{response.status}"
-    raise response.body
-  end
-
-  # Store tokens on User and add refresh_token logic
-  # https://docs.microsoft.com/en-us/linkedin/shared/authentication/programmatic-refresh-tokens
-  def request_headers
-    {
-      "Connection" => "Keep-Alive",
-      "Authorization" => "Bearer #{ENV['LINKEDIN_TOKEN']}",
-      "Content-Type" => "application/json",
-      "Accept" => "application/json"
-    }
   end
 end
