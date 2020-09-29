@@ -249,6 +249,7 @@ class TestData
         p.estimated_budget = "$20,000+"
         p.company_description = "The client is an independent consultancy with deep expertise in data and data governance."
         p.industry = "Marketing"
+        p.name = "Dunder Miflin - Marketing"
       end
 
     project.update_attributes(sourcing: true)

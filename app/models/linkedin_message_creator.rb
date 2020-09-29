@@ -1,9 +1,13 @@
 class LinkedinMessageCreator
+  MIN_REQUIREMENT_LENGTH = 70
+
   attr_reader :project, :sender_name
 
   def initialize(project, sender_name)
     @project = project
     @sender_name = sender_name
+    @project_goals = project.goals.select { |g| g.length > MIN_REQUIREMENT_LENGTH }.take(2)
+    @project_characteristics = project.required_characteristics.select { |c| c.length > MIN_REQUIREMENT_LENGTH } + project.optional_characteristics.select { |c| c.length > MIN_REQUIREMENT_LENGTH }
   end
 
   def flowchart
@@ -35,7 +39,7 @@ class LinkedinMessageCreator
       {
         text: "Yes",
         body: sentences.join("\n\n"),
-        actions: message_2_actions
+        actions: requirement_actions(3)
       },
       action_no,
       {
@@ -45,55 +49,71 @@ class LinkedinMessageCreator
     ]
   end
 
-  def message_2_actions
+  def requirement_actions(number)
+    requirement = next_requirement
+    return final_actions if number.zero? || requirement.empty?
+
+    kind, requirement = requirement
+    case kind
+    when :goal
+      sentences = if number.odd?
+                    [
+                      "One of their main goals from this project is this:",
+                      requirement,
+                      "Is this something you think you'd be able to handle?"
+                    ]
+                  else
+                    [
+                      "They're looking for someone who can help them with this:",
+                      requirement,
+                      "Is this something you think you could help them with?"
+                    ]
+                  end
+    when :characteristic
+      sentences = if number.odd?
+                    [
+                      "They want someone who matches the following description:",
+                      requirement,
+                      "Does this sound like you?"
+                    ]
+                  else
+                    [
+                      "This is one of the characteristics they're looking for:",
+                      requirement,
+                      "Sound like a match?"
+                    ]
+                  end
+    else
+      return requirement_actions(number - 1)
+    end
+
     [
       {
         text: "Yes",
-        body: "Let's start then",
-        actions: message_3_actions
+        body: sentences.join("\n\n"),
+        actions: requirement_actions(number - 1)
       },
       action_no
     ]
   end
 
-  def message_3_actions
-    [
-      {
-        text: "Yes",
-        body: "Good to hear",
-        actions: message_4_actions
-      },
-      action_no
+  def final_actions
+    sentences = [
+      "It seems like you could be a great fit!",
+      "If you want to get the full details and immediately apply for the project, just click below and we'll send you the application form.",
+      "All in, it should take you c. 5-10 minutes to apply and we'll give you feedback on your application within 24 hours."
     ]
-  end
-
-  def message_4_actions
     [
       {
         text: "Yes",
-        body: "our client",
-        actions: message_5_actions
-      },
-      action_no
-    ]
-  end
-
-  def message_5_actions
-    [
-      {
-        text: "Yes",
-        body: "it seems like you could be a great fit",
-        actions: message_6_actions
-      },
-      action_no
-    ]
-  end
-
-  def message_6_actions
-    [
-      {
-        text: "Yes",
-        url: "https://advisable.com/projects/request-more-information/?pid=#{project.id}&utm_campaign=#{project.id}"
+        body: sentences.join("\n\n"),
+        actions: [
+          {
+            text: "Yes",
+            url: "https://advisable.com/projects/request-more-information/?pid=#{project.airtable_id}&utm_campaign=#{project.airtable_id}"
+          },
+          action_no
+        ]
       },
       action_no
     ]
@@ -104,5 +124,15 @@ class LinkedinMessageCreator
       text: "No",
       url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
     }
+  end
+
+  def next_requirement
+    if @project_goals.any?
+      [:goal, @project_goals.shift]
+    elsif @project_characteristics.any?
+      [:characteristic, @project_characteristics.shift]
+    else
+      []
+    end
   end
 end
