@@ -37,6 +37,7 @@ export default function useRoom(name, accessToken, localTracks) {
 
     Video.connect(accessToken, {
       name,
+      tracks: [],
       bandwidthProfile: {
         video: {
           mode: "grid",
@@ -49,20 +50,15 @@ export default function useRoom(name, accessToken, localTracks) {
       },
     }).then((newRoom) => {
       setRoom(newRoom);
-      setIsConnecting(false);
       const disconnect = () => newRoom.disconnect();
-
-      localTracksRef.current.forEach((track) =>
-        newRoom.localParticipant.publishTrack(track),
-      );
 
       newRoom.once("disconnected", () => {
         window.removeEventListener("beforeunload", disconnect);
-        window.removeEventListener("pagehide", disconnect);
       });
 
       window.addEventListener("beforeunload", disconnect);
-      window.addEventListener("pagehide", disconnect);
+
+      setIsConnecting(false);
     });
 
     return () => {
