@@ -32,12 +32,12 @@ export default function useRoom(name, accessToken, localTracks) {
     }
   }, [room]);
 
-  const connect = useCallback(() => {
+  const connect = useCallback(async () => {
     setIsConnecting(true);
 
-    Video.connect(accessToken, {
+    const newRoom = await Video.connect(accessToken, {
       name,
-      tracks: [],
+      tracks: localTracksRef.current,
       bandwidthProfile: {
         video: {
           mode: "grid",
@@ -48,32 +48,18 @@ export default function useRoom(name, accessToken, localTracks) {
           },
         },
       },
-    }).then((newRoom) => {
-      setRoom(newRoom);
-      const disconnect = () => newRoom.disconnect();
-
-      newRoom.once("disconnected", () => {
-        window.removeEventListener("beforeunload", disconnect);
-      });
-
-      window.addEventListener("beforeunload", disconnect);
-
-      setIsConnecting(false);
     });
 
-    return () => {
-      setRoom((currentRoom) => {
-        if (currentRoom && currentRoom.localParticipant.state === "connected") {
-          currentRoom.localParticipant.tracks.forEach((trackPublication) => {
-            trackPublication.track.stop();
-          });
-          currentRoom.disconnect();
-          return null;
-        } else {
-          return currentRoom;
-        }
-      });
-    };
+    setRoom(newRoom);
+    const disconnect = () => newRoom.disconnect();
+
+    newRoom.once("disconnected", () => {
+      window.removeEventListener("beforeunload", disconnect);
+    });
+
+    window.addEventListener("beforeunload", disconnect);
+
+    setIsConnecting(false);
   }, [name, accessToken]);
 
   return { room, isConnecting, connect, roomState };
