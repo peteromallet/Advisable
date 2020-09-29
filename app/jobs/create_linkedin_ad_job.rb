@@ -65,7 +65,7 @@ class CreateLinkedinAdJob < ApplicationJob
     params = {
         account: "urn:li:sponsoredAccount:#{ACCOUNT_ID}",
         name: "#{project.name} | #{project.airtable_id}",
-        htmlBody: "<p>123<br><br>456</p>",
+        htmlBody: "In Mail",
         subContent: {"com.linkedin.ads.AdInMailGuidedRepliesSubContent": {sponsoredConversation: "urn:li:sponsoredConversation:#{conversation_id}"}},
         subject: "#{project.primary_skill} Project With #{project.industry} #{project.company_type}",
         sender: {
