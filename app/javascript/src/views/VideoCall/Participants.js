@@ -23,6 +23,7 @@ export default function Participants() {
 
   return (
     <Box
+      width="100%"
       display="grid"
       height="100vh"
       gridTemplate={gridTemplate(participants.length)}

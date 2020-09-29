@@ -1,10 +1,18 @@
 import Video from "twilio-video";
-import { useCallback, useState, useEffect } from "react";
+import { useRef, useCallback, useState, useEffect } from "react";
 
-export default function useRoom(name, accessToken) {
+export default function useRoom(name, accessToken, localTracks) {
+  const localTracksRef = useRef([]);
   const [room, setRoom] = useState();
   const [roomState, setRoomState] = useState("disconnected");
   const [isConnecting, setIsConnecting] = useState(false);
+
+  useEffect(() => {
+    // It can take a moment for Video.connect to connect to a room. During this time, the user may have enabled or disabled their
+    // local audio or video tracks. If this happens, we store the localTracks in this ref, so that they are correctly published
+    // once the user is connected to the room.
+    localTracksRef.current = localTracks;
+  }, [localTracks]);
 
   useEffect(() => {
     if (room) {
@@ -43,6 +51,10 @@ export default function useRoom(name, accessToken) {
       setRoom(newRoom);
       setIsConnecting(false);
       const disconnect = () => newRoom.disconnect();
+
+      localTracksRef.current.forEach((track) =>
+        newRoom.localParticipant.publishTrack(track),
+      );
 
       newRoom.once("disconnected", () => {
         window.removeEventListener("beforeunload", disconnect);
