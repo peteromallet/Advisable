@@ -6,7 +6,6 @@ import { useScreenSize } from "src/utilities/screenSizes";
 import ProjectAttributes from "./ProjectAttributes";
 import { useMutation } from "@apollo/client";
 import { APPLY_FOR_PROJECT } from "./queries";
-import { get } from "lodash-es";
 import { useNotifications } from "components/Notifications";
 
 function ApplyButton({ onClick, loading }) {
@@ -20,25 +19,25 @@ function ApplyButton({ onClick, loading }) {
 let JobListing = ({ project, history }) => {
   const isMobile = useScreenSize("small");
   const notifications = useNotifications();
-  const [apply, { loading, error }] = useMutation(APPLY_FOR_PROJECT, {
+  const [apply, { loading }] = useMutation(APPLY_FOR_PROJECT, {
     variables: { input: { project: project.id } },
   });
 
-  if (error) {
-    const code = get(error, "graphQLErrors[0].extensions.code");
-    if (code === "APPLICATION_IN_WRONG_STATE") {
-      notifications.notify("You can not re-apply for this project");
+  const gotoApply = async () => {
+    const response = await apply();
+    if (response.errors) {
+      const code = response.errors[0]?.extensions?.code;
+      const message =
+        code === "APPLICATION_IN_A_WRONG_STATE"
+          ? "You can not re-apply for this project"
+          : "Something went wrong, please try again";
+      notifications.notify(message);
     } else {
-      notifications.notify("Something went wrong, please try again");
-    }
-  }
-
-  const gotoApply = () =>
-    apply().then((response) => {
       const applicationId = response.data.applyForProject.application.id;
       const url = `/invites/${applicationId}/apply`;
       history.push(url, { allowApply: true });
-    });
+    }
+  };
 
   return (
     <Layout>
