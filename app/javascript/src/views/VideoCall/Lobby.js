@@ -7,8 +7,8 @@ import ToggleVideoButton from "./ToggleVideoButton";
 import styled from "styled-components";
 
 const StyledVideoPreview = styled.div`
-  width: 467px;
-  height: 350px;
+  width: 480px;
+  height: 270px;
   display: flex;
   overflow: hidden;
   border-radius: 16px;

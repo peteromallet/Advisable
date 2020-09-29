@@ -13,6 +13,7 @@ export default function VideoCallProvider({ data, children }) {
   const { room, isConnecting, connect, roomState } = useRoom(
     data.id,
     data.accessToken,
+    localTracks,
   );
 
   const value = {

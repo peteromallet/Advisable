@@ -1,6 +1,12 @@
 import Video from "twilio-video";
 import { useState, useEffect, useCallback } from "react";
 
+export const DEFAULT_VIDEO_CONSTRAINTS = {
+  width: 1280,
+  height: 720,
+  frameRate: 24,
+};
+
 export default function useLocalTracks() {
   const [audioTrack, setAudioTrack] = useState();
   const [videoTrack, setVideoTrack] = useState();
@@ -14,6 +20,7 @@ export default function useLocalTracks() {
     // conflict.
     const options = {
       name: `camera-${Date.now()}`,
+      ...DEFAULT_VIDEO_CONSTRAINTS,
       ...newOptions,
     };
 
@@ -41,9 +48,7 @@ export default function useLocalTracks() {
         // track name is 'camera', so here we append a timestamp to the track name to avoid the
         // conflict.
         name: `camera-${Date.now()}`,
-        video: {
-          width: 1200,
-        },
+        ...DEFAULT_VIDEO_CONSTRAINTS,
       },
     })
       .then((tracks) => {
