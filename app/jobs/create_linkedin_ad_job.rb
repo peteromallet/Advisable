@@ -13,7 +13,7 @@ class CreateLinkedinAdJob < ApplicationJob
 
     create_campaign!
     create_conversation!
-    build_conversation_tree!
+    build_message_flowchart!
     set_first_message!
     create_ad_inmail_content!
     create_conversation_ad!
@@ -30,7 +30,7 @@ class CreateLinkedinAdJob < ApplicationJob
       creativeSelection: "ROUND_ROBIN",
       locale: {country: "US", language: "en"},
       name: "#{project.name} | #{project.airtable_id}",
-      runSchedule: {start: Date.tomorrow.midnight.to_i * 1000},
+      runSchedule: {start: Date.today.midnight.to_i * 1000},
       type: "SPONSORED_INMAILS",
       objectiveType: "WEBSITE_VISIT",
       totalBudget: {amount: "100", currencyCode: "EUR"},
@@ -49,74 +49,8 @@ class CreateLinkedinAdJob < ApplicationJob
     Rails.logger.info("New sponsored conversation created: #{conversation_id}")
   end
 
-  def build_conversation_tree!
-    flowchart = {
-      body: "Hi %FIRSTNAME%, lalala",
-      actions: [
-        {
-          text: "Yes",
-          body: "Great, let us walk blablabla",
-          actions: [
-            {
-              text: "Yes",
-              body: "Let's start then",
-              actions: [
-                {
-                  text: "Yes",
-                  body: "Good to hear",
-                  actions: [
-                    {
-                      text: "Yes",
-                      body: "our client",
-                      actions: [
-                        {
-                          text: "Yes",
-                          body: "it seems like you could be a great fit",
-                          actions: [
-                            {
-                              text: "Yes",
-                              url: "https://advisable.com/projects/request-more-information/?pid=#{project.id}&utm_campaign=#{project.id}"
-                            },
-                            {
-                              text: "No",
-                              url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
-                            }
-                          ]
-                        },
-                        {
-                          text: "No",
-                          url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
-                        }
-                      ]
-                    },
-                    {
-                      text: "No",
-                      url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
-                    }
-                  ]
-                },
-                {
-                  text: "No",
-                  url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
-                }
-              ]
-            },
-            {
-              text: "No",
-              url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
-            }
-          ]
-        },
-        {
-          text: "No",
-          url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
-        },
-        {
-          text: "I might know someone",
-          url: "https://advisable.formstack.com/forms/performance_marketing_referral"
-        }
-      ]
-    }
+  def build_message_flowchart!
+    flowchart = LinkedinMessageCreator.new(project, "Alexandra").flowchart
     @first_message_urn = create_message!(flowchart)
   end
 
@@ -133,11 +67,11 @@ class CreateLinkedinAdJob < ApplicationJob
         name: "#{project.name} | #{project.airtable_id}",
         htmlBody: "<p>123<br><br>456</p>",
         subContent: {"com.linkedin.ads.AdInMailGuidedRepliesSubContent": {sponsoredConversation: "urn:li:sponsoredConversation:#{conversation_id}"}},
-        subject: "Hey, y'all",
+        subject: "#{project.primary_skill} Project With #{project.industry} #{project.company_type}",
         sender: {
-          displayName: "Miha Rekar",
-          displayPictureV2: "urn:li:digitalmediaAsset:C4D03AQFKjyztLrj3AA",
-          from: "urn:li:person:BbGVRJBPf7"
+          displayName: "Alexandra Ponomareva",
+          displayPictureV2: "urn:li:digitalmediaAsset:C5603AQEOBKwTNiLKgg",
+          from: "urn:li:person:2TsTW-IKX3"
       }
     }
     response = linkedin.post_request("adInMailContentsV2", params)
