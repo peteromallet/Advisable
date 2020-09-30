@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :auth_providers
   has_one :client_user
   has_one :client, through: :client_user
+  belongs_to :account
   belongs_to :sales_person, required: false
   belongs_to :industry, required: false
   belongs_to :country, required: false
@@ -189,6 +190,7 @@ end
 #  vat_number                        :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
+#  account_id                        :bigint           not null
 #  airtable_id                       :string
 #  country_id                        :bigint
 #  industry_id                       :bigint
@@ -198,6 +200,7 @@ end
 #
 # Indexes
 #
+#  index_users_on_account_id       (account_id)
 #  index_users_on_airtable_id      (airtable_id)
 #  index_users_on_country_id       (country_id)
 #  index_users_on_industry_id      (industry_id)
@@ -205,6 +208,7 @@ end
 #
 # Foreign Keys
 #
+#  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (country_id => countries.id)
 #  fk_rails_...  (industry_id => industries.id)
 #  fk_rails_...  (sales_person_id => sales_people.id)
