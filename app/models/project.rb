@@ -107,6 +107,18 @@ class Project < ApplicationRecord
     accepted = applications.accepted.any?
     update(sourcing: false) if accepted
   end
+
+  # we are moving the company type data from the project to the user
+  # record so first check for it there before falling back to the project.
+  def company_type
+    user&.try(:company_type) || self[:company_type]
+  end
+
+  # we are moving the industry data from the project to the user
+  # record so first check for it there before falling back to the project.
+  def industry
+    user&.industry&.name || self[:industry]
+  end
 end
 
 # == Schema Information
