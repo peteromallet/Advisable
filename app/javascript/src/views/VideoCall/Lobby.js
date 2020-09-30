@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Text, Button, theme } from "@advisable/donut";
 import VideoTrack from "./VideoTrack";
 import useCallContext from "./useCallContext";
+import SettingsButton from "./SettingsButton";
 import ToggleAudioButton from "./ToggleAudioButton";
 import ToggleVideoButton from "./ToggleVideoButton";
 import styled from "styled-components";
@@ -58,6 +59,7 @@ export default function Lobby() {
       <Box marginBottom="lg">
         <ToggleAudioButton />
         <ToggleVideoButton />
+        <SettingsButton />
       </Box>
       <Button
         size="l"
