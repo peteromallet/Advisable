@@ -30,7 +30,7 @@ module Admin
     end
 
     def login_as
-      account = Account.find_by_uid(params[:uid])
+      account = ExtractedAccount.find_by_uid(params[:uid])
       session[:account_uid] = account.uid
       redirect_to '/'
     end

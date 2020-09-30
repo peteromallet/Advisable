@@ -20,7 +20,7 @@
 #
 class Specialist < ApplicationRecord
   include Uid
-  include Account
+  include ExtractedAccount
   include Airtable::Syncable
   include Guild::SpecialistsConcern
 
@@ -70,7 +70,7 @@ class Specialist < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  # Override the send_confirmation_email method from the Account module to use
+  # Override the send_confirmation_email method from the ExtractedAccount module to use
   # a specific email template for specialists.
   def send_confirmation_email
     token = create_confirmation_token
