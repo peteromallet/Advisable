@@ -745,7 +745,7 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
     t.string "community_status"
     t.boolean "automated_invitations_subscription"
     t.jsonb "guild_data"
-    t.bigint "account_id", null: false
+    t.bigint "account_id"
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
     t.datetime "community_invited_to_call_at"
@@ -878,7 +878,7 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
     t.datetime "application_rejected_at"
     t.datetime "application_reminder_at"
     t.string "remember_token"
-    t.bigint "account_id", null: false
+    t.bigint "account_id"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
