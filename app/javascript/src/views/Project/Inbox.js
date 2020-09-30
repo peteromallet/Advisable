@@ -23,17 +23,17 @@ export default function Inbox({ project }) {
 
   const { accepted, matches, sourcing } = data.project;
 
+  if (matches.length > 0) {
+    return <Matches data={data} project={project} />;
+  }
+
   if (!sourcing && accepted.length > 0) {
     return <RequestedIntroductions accepted={accepted} />;
   }
 
-  if (sourcing && matches.length === 0) {
+  if (sourcing) {
     return <SearchingForMatches />;
   }
 
-  if (!sourcing && matches.length === 0) {
-    return <SourcingDisabled />;
-  }
-
-  return <Matches data={data} project={project} />;
+  return <SourcingDisabled />;
 }
