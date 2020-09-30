@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   def send_invites
     if params[:key].present? && params[:key] == ENV['PROJECTS_INVITE_KEY']
       project = Project.find_by_uid_or_airtable_id!(params[:project_id])
-      project.sync_from_airtable
+      project.sync_from_airtable if project.airtable_id
 
       if project.status == "Brief Confirmed"
         SendApplicationInformationJob.perform_later(project)
