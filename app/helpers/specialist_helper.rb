@@ -7,16 +7,19 @@ module SpecialistHelper
     "#{root_host}/update-skills?sid=#{specialist.uid}&skill=#{ERB::Util.url_encode(specialist.skills.pluck(:name).join(', '))}"
   end
 
-  # TODO: link to the new flow that uses the applyForProject mutation
-  def specialist_request_invite_url(specialist, project)
-    "#{root_host}/request-project-invitation?pid=#{project.uid}&utm_campaign=#{project.uid}&skill=#{project.primary_skill.name}"
+  def specialist_project_application_url(specialist, project)
+    "#{app_host}/opportunities/#{project.uid}?utm_campaign=#{project.uid}"
   end
 
   private
 
   def root_host
+    'https://advisable.com'
+  end
+
+  def app_host
     if Rails.env.production?
-      'https://advisable.com'
+      'https://app.advisable.com'
     else
       ActionMailer::Base.default_url_options[:host]
     end
