@@ -1,9 +1,8 @@
 import React from "react";
-import { Box, Text, Select } from "@advisable/donut";
+import { Text, Select } from "@advisable/donut";
 import useCallContext from "./useCallContext";
 import { useAudioInputDevices } from "./useDevices";
 import useMeidaStreamTrack from "./useMediaStreamTrack";
-import LocalAudioLevelIndicator from "./LocalAudioLevelIndicator";
 
 export default function AudioInputSelection() {
   const { localTracks } = useCallContext();
@@ -22,17 +21,12 @@ export default function AudioInputSelection() {
   }
 
   return (
-    <Box display="flex" alignItems="center">
-      <Select onChange={handleChange} value={localAudioInputDeviceId || ""}>
-        {audioInputDevices.map((device) => (
-          <option key={device.deviceId} value={device.deviceId}>
-            {device.label}
-          </option>
-        ))}
-      </Select>
-      <Box paddingLeft="md">
-        <LocalAudioLevelIndicator />
-      </Box>
-    </Box>
+    <Select onChange={handleChange} value={localAudioInputDeviceId || ""}>
+      {audioInputDevices.map((device) => (
+        <option key={device.deviceId} value={device.deviceId}>
+          {device.label}
+        </option>
+      ))}
+    </Select>
   );
 }
