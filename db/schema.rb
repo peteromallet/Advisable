@@ -17,6 +17,35 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
+  create_table "accounts", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "airtable_id"
+    t.string "password_digest"
+    t.string "email"
+    t.string "uid"
+    t.string "pid"
+    t.datetime "confirmed_at"
+    t.string "confirmation_digest"
+    t.bigint "country_id"
+    t.string "reset_digest"
+    t.datetime "reset_sent_at"
+    t.jsonb "permissions", default: []
+    t.jsonb "completed_tutorials", default: []
+    t.string "vat_number"
+    t.string "confirmation_token"
+    t.string "campaign_name"
+    t.string "campaign_source"
+    t.boolean "test_account"
+    t.string "remember_token"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["airtable_id"], name: "index_accounts_on_airtable_id"
+    t.index ["country_id"], name: "index_accounts_on_country_id"
+    t.index ["email"], name: "index_accounts_on_email"
+    t.index ["uid"], name: "index_accounts_on_uid"
+  end
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -879,6 +908,7 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "accounts", "countries"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "specialists"
