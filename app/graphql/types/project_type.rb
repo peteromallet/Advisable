@@ -111,20 +111,6 @@ class Types::ProjectType < Types::BaseType
   field :required_characteristics, [String], null: true
   field :optional_characteristics, [String], null: true
 
-  # we are moving the industry data from the project to the client contact
-  # record so first check for it there before falling back to the project.
-  def industry
-    return object.user.industry.name if object.user.try(:industry)
-
-    object.industry
-  end
-
-  # we are moving the company type data from the project to the client contact
-  # record so first check for it there before falling back to the project.
-  def company_type
-    object.user.try(:company_type) || object.company_type
-  end
-
   def deposit_payment_intent
     if object.deposit_payment_intent_id
       return Stripe::PaymentIntent.retrieve(object.deposit_payment_intent_id)
