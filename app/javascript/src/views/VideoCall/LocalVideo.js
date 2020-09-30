@@ -26,11 +26,7 @@ export default function LocalVideo() {
 
   return (
     <StyledLocalVideo>
-      {videoTrack ? (
-        <VideoTrack track={videoTrack} />
-      ) : (
-        <span>Camera is off</span>
-      )}
+      <VideoTrack track={videoTrack} />
     </StyledLocalVideo>
   );
 }

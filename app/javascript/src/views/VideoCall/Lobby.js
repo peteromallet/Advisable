@@ -1,4 +1,5 @@
 import React from "react";
+import ActionBar from "components/ActionBar";
 import { Box, Text, Button, theme } from "@advisable/donut";
 import VideoTrack from "./VideoTrack";
 import useCallContext from "./useCallContext";
@@ -40,11 +41,7 @@ export default function Lobby() {
     >
       <Box marginBottom="xl">
         <StyledVideoPreview>
-          {videoTrack ? (
-            <VideoTrack track={videoTrack} />
-          ) : (
-            <span>Camera is off</span>
-          )}
+          <VideoTrack track={videoTrack} />
         </StyledVideoPreview>
       </Box>
       <Text
@@ -56,19 +53,19 @@ export default function Lobby() {
       >
         {data.name}
       </Text>
-      <Box marginBottom="lg">
-        <ToggleAudioButton />
-        <ToggleVideoButton />
-        <SettingsButton />
-      </Box>
       <Button
         size="l"
         onClick={connect}
         loading={isConnecting}
         disabled={isAcquiringLocalTracks}
       >
-        Join Call
+        Join Video Call
       </Button>
+      <ActionBar>
+        <ToggleAudioButton />
+        <ToggleVideoButton />
+        <SettingsButton />
+      </ActionBar>
     </Box>
   );
 }
