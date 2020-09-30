@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
 import ExpandableText from "@advisable-main/components/ExpandableText";
 import { useToggle } from "@guild/hooks/useToggle";
 import { Messages } from "@guild/icons";
@@ -7,12 +8,23 @@ import { GuildBox } from "@guild/styles";
 import { StyledModal } from "./styles";
 import { MessageButton, SubmitButton } from "@guild/components/Buttons/styles";
 import Mask from "@guild/components/Mask";
+import { CREATE_CHAT_DIRECT_MESSAGE } from "./mutations";
 
 const DirectMessage = ({ count, recipient }) => {
+  const [body, setBody] = useState(null);
+  const [createChatDirectMessage, { data, loading }] = useMutation(
+    CREATE_CHAT_DIRECT_MESSAGE,
+  );
+
   const [messageModal, toggleMessageModal] = useToggle(false);
   const mUp = useBreakpoint("mUp");
 
-  const handleSubmit = () => null;
+  const handleSubmit = async () => {
+    if (!body.length) return;
+    await createChatDirectMessage({
+      variables: { input: { participantId: recipient.id, body } },
+    });
+  };
 
   return (
     <>
@@ -57,14 +69,17 @@ const DirectMessage = ({ count, recipient }) => {
           </GuildBox>
           {!mUp && <Bio bio={recipient.bio} />}
 
+          {/* TODO: Formik  */}
           <Textarea
-            marginBottom="s"
+            value={body}
             minRows={3}
             maxRows={8}
+            marginBottom="s"
             placeholder="Add your message here ..."
+            onChange={({ target }) => setBody(target.value)}
             marginTop={{ _: "l", m: "0" }}
           />
-          <SubmitButton loading={false} onClick={handleSubmit} type="submit">
+          <SubmitButton loading={loading} onClick={handleSubmit} type="submit">
             Submit
           </SubmitButton>
         </StyledModal>

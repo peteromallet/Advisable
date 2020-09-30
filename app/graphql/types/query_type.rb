@@ -238,17 +238,17 @@ class Types::QueryType < Types::BaseType
     Question.all
   end
 
+  # Guild
   field :chat_grant, Types::ChatGrantType, null: true do
     description 'Access token grant for twilio chat client'
   end
 
   def chat_grant
     requires_current_user!
-    identity = context[:current_user].uid 
+    identity = context[:current_user].uid
     Grants::ChatService.call(identity: identity)
   end
 
-    # Guild
   field :guild_post, Types::Guild::PostInterface, null: true do
     argument :id, ID, required: true
   end

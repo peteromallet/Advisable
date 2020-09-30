@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-// import { useQuery } from "@apollo/client";
+import React, { useState } from "react";
 // import { useParams, useLocation } from "react-router-dom";
 import { Card, Text, Textarea, theme } from "@advisable/donut";
 import { useToggle } from "@guild/hooks/useToggle";
@@ -13,22 +12,16 @@ import ActiveConversation from "./ActiveConversation";
 import Conversations from "./Conversations";
 import { data } from "./stub";
 
-/* 
-  TODO:
-  - get private conversations w/ last message index
-  - get active conversation based on params id
-  - get active conversation messages list
-  - update active conversation channel
-  - event handlers for connect, disconnect, etc.
-*/
-
 const Messages = () => {
-  const { client } = useTwilioChat();
-  const [sortConversations, toggleSortConversations] = useToggle();
+  const { subscribedChannels } = useTwilioChat();
+
   const initialConversation = data?.conversations?.[0];
   const [activeConversation, setActiveConversation] = useState(
     initialConversation,
   );
+  const [sortConversations, toggleSortConversations] = useToggle();
+
+  console.log("subscribedChannels", subscribedChannels);
 
   return (
     <HeaderLayout>
@@ -64,6 +57,7 @@ const Messages = () => {
               </InboxHeader>
               <Conversations
                 conversations={data?.conversations}
+                // conversations={subscribedChannels}
                 active={activeConversation}
                 setActive={setActiveConversation}
               />
