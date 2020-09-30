@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { motion } from "framer-motion";
+import { Box } from "@advisable/donut";
 import Fuse from "fuse.js";
-import styled from "styled-components";
+import { createPopper } from "@popperjs/core";
 import Input from "../Input";
+import {
+  StyledAutocomplete,
+  StyledAutocompleteMenu,
+  StyledAutocompleteMenuItem,
+} from "./styles";
 
 const fuseOptions = {
   shouldSort: true,
@@ -18,16 +25,61 @@ const ESCAPE = 27;
 const ARROW_UP = 38;
 const ARROW_DOWN = 40;
 
-const StyledAutocompleteOptions = styled.div`
-  background: ${(p) => (p.$isSeleted ? "#DDD" : "transparent")};
-`;
+function scrollToItem(listbox, item) {
+  if (listbox.scrollHeight > listbox.clientHeight) {
+    const scrollBottom = listbox.clientHeight + listbox.scrollTop;
+    const elementBottom = item.offsetTop + item.offsetHeight;
+    if (elementBottom > scrollBottom) {
+      listbox.scrollTop = elementBottom - listbox.clientHeight + 4;
+    } else if (item.offsetTop < listbox.scrollTop) {
+      listbox.scrollTop = item.offsetTop - 4;
+    }
+  }
+}
 
 export default function Autocomplete({ options, value, onChange, ...props }) {
   const inputRef = React.useRef(null);
   const listboxRef = React.useRef(null);
+  const shouldScroll = React.useRef(true);
+  const selectedItemRef = React.useRef(null);
+  const listboxContainerRef = React.useRef(null);
   const [isOpen, setOpen] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
   const [selectionIndex, setSelectionIndex] = React.useState(-1);
+
+  useEffect(() => {
+    if (inputRef.current && listboxContainerRef.current) {
+      const popper = createPopper(
+        inputRef.current,
+        listboxContainerRef.current,
+        {
+          placement: "bottom",
+          modifiers: [
+            {
+              name: "offset",
+              options: {
+                offset: [0, 8],
+              },
+            },
+          ],
+        },
+      );
+
+      return () => popper.destroy();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      listboxRef.current.scrollTop = 0;
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (shouldScroll.current && selectedItemRef.current) {
+      scrollToItem(listboxRef.current, selectedItemRef.current);
+    }
+  }, [selectionIndex]);
 
   function handleOpen() {
     if (!props.disabled && !isOpen) {
@@ -42,7 +94,6 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
 
   function handleBlur(e) {
     const listboxEl = listboxRef.current;
-    console.log(e.relatedTarget);
     if (listboxEl && e.relatedTarget && listboxEl.contains(e.relatedTarget)) {
       return;
     }
@@ -64,6 +115,8 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
   }
 
   function handleKeyDown(e) {
+    shouldScroll.current = true;
+
     if (e.keyCode === ARROW_DOWN) {
       e.preventDefault();
       handleOpen();
@@ -115,9 +168,11 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
     }
   }
 
-  function handleOptionHover(index) {
-    const option = filteredOptions[index];
-    if (option) {
+  function handleOptionMouseMove(index) {
+    shouldScroll.current = false;
+    if (index === selectionIndex) return;
+
+    if (filteredOptions[index]) {
       setSelectionIndex(index);
     }
   }
@@ -139,44 +194,67 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
   }, [options, value]);
 
   return (
-    <div>
-      <Input
-        {...props}
-        ref={inputRef}
-        value={isOpen ? searchValue : selectedLabel}
-        onBlur={handleBlur}
-        onClick={handleClick}
-        onFocus={handleFocus}
-        onKeyDown={handleKeyDown}
-        onChange={handleInputChange}
-      />
-      {isOpen && (
-        <div role="listbox" ref={listboxRef} tabIndex="-1">
+    <StyledAutocomplete>
+      <div ref={inputRef}>
+        <Input
+          {...props}
+          value={isOpen ? searchValue : selectedLabel}
+          onBlur={handleBlur}
+          onClick={handleClick}
+          onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
+          onChange={handleInputChange}
+        />
+      </div>
+      <Box width="100%" ref={listboxContainerRef}>
+        <StyledAutocompleteMenu
+          as={motion.ul}
+          role="listbox"
+          tabIndex="-1"
+          ref={listboxRef}
+          $isOpen={isOpen}
+          initial={{
+            opacity: 0,
+            y: 12,
+          }}
+          animate={{
+            opacity: isOpen ? 1 : 0,
+            y: isOpen ? 0 : 12,
+          }}
+          transition={{
+            duration: 0.3,
+          }}
+        >
           {filteredOptions.map((option, index) => (
             <AutocompleteOption
               key={option.value}
               selected={selectionIndex === index}
               onClick={() => handleOptionClick(index)}
-              onMouseOver={() => handleOptionHover(index)}
+              ref={selectionIndex === index ? selectedItemRef : null}
+              onMouseMove={() => handleOptionMouseMove(index)}
             >
               {option.label}
             </AutocompleteOption>
           ))}
-        </div>
-      )}
-    </div>
+        </StyledAutocompleteMenu>
+      </Box>
+    </StyledAutocomplete>
   );
 }
 
-function AutocompleteOption({ children, selected, ...props }) {
+const AutocompleteOption = React.forwardRef(function AutocompleteOption(
+  { children, selected, ...props },
+  ref,
+) {
   return (
-    <StyledAutocompleteOptions
+    <StyledAutocompleteMenuItem
+      ref={ref}
       role="option"
       aria-selected={selected}
-      $isSeleted={selected}
+      $isSelected={selected}
       {...props}
     >
-      {children}
-    </StyledAutocompleteOptions>
+      <span>{children}</span>
+    </StyledAutocompleteMenuItem>
   );
-}
+});
