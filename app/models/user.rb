@@ -3,7 +3,7 @@
 # two models will eventually be merged to be different types of users.
 class User < ApplicationRecord
   include Uid
-  include Account
+  include ExtractedAccount
   include StatusMap
   include Tutorials
   include Airtable::Syncable

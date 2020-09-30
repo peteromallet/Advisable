@@ -68,7 +68,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
   end
 
   def check_existing_account(email)
-    account = Account.find_by_email(email)
+    account = ExtractedAccount.find_by_email(email)
     return if account.nil?
     ApiError.invalid_request(
       code: 'existingAccount',

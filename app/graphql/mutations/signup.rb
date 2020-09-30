@@ -9,7 +9,7 @@ class Mutations::Signup < Mutations::BaseMutation
   field :viewer, Types::ViewerUnion, null: true
 
   def resolve(**args)
-    account = Account.find_by_uid_or_airtable_id!(args[:id])
+    account = ExtractedAccount.find_by_uid_or_airtable_id!(args[:id])
     account_already_exists?(account)
     email_taken?(args[:email])
 
@@ -27,7 +27,7 @@ class Mutations::Signup < Mutations::BaseMutation
     end
 
     login_as(account)
-    { viewer: account }
+    {viewer: account}
   end
 
   private
@@ -38,7 +38,7 @@ class Mutations::Signup < Mutations::BaseMutation
   end
 
   def email_taken?(email)
-    account = Account.find_by_email(email)
+    account = ExtractedAccount.find_by_email(email)
     if account&.has_account?
       ApiError.invalid_request(
         code: 'ACCOUNT_EXISTS', message: 'Account already exists'
