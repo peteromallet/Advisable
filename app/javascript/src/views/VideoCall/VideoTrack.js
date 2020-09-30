@@ -11,6 +11,7 @@ export const StyledVideo = styled.div`
   align-items: center;
   border-radius: 12px;
   justify-content: center;
+  color: ${theme.colors.neutral200};
   background: ${theme.colors.neutral800};
 
   video {
@@ -37,7 +38,7 @@ export default function Video({ track }) {
 
   return (
     <StyledVideo>
-      <video ref={ref} />
+      {track ? <video ref={ref} /> : <span>Camera is off</span>}
     </StyledVideo>
   );
 }
