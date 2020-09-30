@@ -20,7 +20,13 @@ const StyledVideoPreview = styled.div`
 `;
 
 export default function Lobby() {
-  const { localTracks, connect, data, isConnecting } = useCallContext();
+  const {
+    localTracks,
+    connect,
+    data,
+    isConnecting,
+    isAcquiringLocalTracks,
+  } = useCallContext();
   const videoTrack = localTracks.find((t) => t.name.includes("camera"));
 
   return (
@@ -53,7 +59,12 @@ export default function Lobby() {
         <ToggleAudioButton />
         <ToggleVideoButton />
       </Box>
-      <Button size="l" onClick={connect} loading={isConnecting}>
+      <Button
+        size="l"
+        onClick={connect}
+        loading={isConnecting}
+        disabled={isAcquiringLocalTracks}
+      >
         Join Call
       </Button>
     </Box>
