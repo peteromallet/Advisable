@@ -19,7 +19,7 @@ class User < ApplicationRecord
   has_many :auth_providers
   has_one :client_user
   has_one :client, through: :client_user
-  belongs_to :account
+  belongs_to :account, required: false # Temporary
   belongs_to :sales_person, required: false
   belongs_to :industry, required: false
   belongs_to :country, required: false
@@ -190,7 +190,7 @@ end
 #  vat_number                        :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
-#  account_id                        :bigint           not null
+#  account_id                        :bigint
 #  airtable_id                       :string
 #  country_id                        :bigint
 #  industry_id                       :bigint

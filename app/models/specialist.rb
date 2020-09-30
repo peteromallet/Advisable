@@ -24,7 +24,7 @@ class Specialist < ApplicationRecord
   include Airtable::Syncable
   include Guild::SpecialistsConcern
 
-  belongs_to :account
+  belongs_to :account, required: false # Temporary
   belongs_to :country, required: false
   has_many :reviews
 
@@ -149,7 +149,7 @@ end
 #  website                            :string
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
-#  account_id                         :bigint           not null
+#  account_id                         :bigint
 #  airtable_id                        :string
 #  country_id                         :bigint
 #
