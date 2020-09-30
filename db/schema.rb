@@ -745,10 +745,12 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
     t.string "community_status"
     t.boolean "automated_invitations_subscription"
     t.jsonb "guild_data"
+    t.bigint "account_id", null: false
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
     t.datetime "community_invited_to_call_at"
     t.integer "community_score"
+    t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
@@ -876,6 +878,8 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
     t.datetime "application_rejected_at"
     t.datetime "application_reminder_at"
     t.string "remember_token"
+    t.bigint "account_id", null: false
+    t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"
@@ -949,10 +953,12 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
   add_foreign_key "skills", "skills", column: "original_id"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
+  add_foreign_key "specialists", "accounts"
   add_foreign_key "specialists", "countries"
   add_foreign_key "taggings", "tags"
   add_foreign_key "user_skills", "skills"
   add_foreign_key "user_skills", "users"
+  add_foreign_key "users", "accounts"
   add_foreign_key "users", "countries"
   add_foreign_key "users", "industries"
   add_foreign_key "users", "sales_people"

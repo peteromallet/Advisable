@@ -24,6 +24,7 @@ class Specialist < ApplicationRecord
   include Airtable::Syncable
   include Guild::SpecialistsConcern
 
+  belongs_to :account
   belongs_to :country, required: false
   has_many :reviews
 
@@ -148,14 +149,17 @@ end
 #  website                            :string
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
+#  account_id                         :bigint           not null
 #  airtable_id                        :string
 #  country_id                         :bigint
 #
 # Indexes
 #
+#  index_specialists_on_account_id  (account_id)
 #  index_specialists_on_country_id  (country_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (country_id => countries.id)
 #

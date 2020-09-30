@@ -2,6 +2,8 @@ class Account < ApplicationRecord
   include ExtractedAccount
 
   belongs_to :country, required: false
+  has_many :users
+  has_many :specialists
 end
 
 # == Schema Information
