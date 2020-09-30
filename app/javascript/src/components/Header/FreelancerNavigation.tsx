@@ -37,6 +37,9 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
                 Guild
               </NavItem>
             )}
+            <NavItem as="a" href="/settings">
+              Settings
+            </NavItem>
             <NavItem as="a" href="#" onClick={onLogout}>
               Logout
             </NavItem>
