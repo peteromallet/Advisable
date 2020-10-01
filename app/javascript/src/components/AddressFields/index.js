@@ -5,6 +5,7 @@ import { VisuallyHidden } from "reakit/VisuallyHidden";
 import { useQuery } from "@apollo/client";
 import { connect, Field } from "formik";
 import { Box, Input, Select, Label, FieldError } from "@advisable/donut";
+import { useBreakpoint } from "@advisable/donut";
 
 export const addressFieldsFragment = gql`
   fragment AddressFieldsFragment on Country {
@@ -27,6 +28,7 @@ const GET_DATA = gql`
 const AddressFields = ({ label, name, formik }) => {
   const { data, loading } = useQuery(GET_DATA);
   const countries = data?.countries || [];
+  const isWidescreen = useBreakpoint("sUp");
 
   if (loading) return <>loading...</>;
 
@@ -64,24 +66,29 @@ const AddressFields = ({ label, name, formik }) => {
         placeholder="Line 2"
         error={line2Error}
       />
-      <Box mb="xxs" display="flex">
+      <Box display={isWidescreen && "flex"}>
         <Field
           as={Input}
-          marginRight="2px"
+          marginRight="xxs"
           name={`${name}.city`}
           placeholder="City"
           error={cityError}
+          marginBottom="xxs"
         />
         <Field
           as={Input}
-          marginLeft="2px"
           name={`${name}.state`}
           placeholder="State"
           error={stateError}
+          marginBottom="xxs"
         />
       </Box>
-      <Box mb="xs" display="flex">
-        <Box width="100%" mr="xxs">
+      <Box mb="xs" display={isWidescreen && "flex"}>
+        <Box
+          width="100%"
+          mb={!isWidescreen && "xxs"}
+          mr={isWidescreen && "xxs"}
+        >
           <VisuallyHidden>
             <label htmlFor={`${name}.country`}>Country</label>
           </VisuallyHidden>
