@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useQuery } from "@apollo/client";
 import useViewer from "@advisable-main/hooks/useViewer";
 import { gql } from "@apollo/client";
+import { relativeDate } from "@guild/utils";
 import * as Chat from "twilio-chat";
 
 const CHAT_GRANT_QUERY = gql`
@@ -13,13 +14,15 @@ const CHAT_GRANT_QUERY = gql`
   }
 `;
 
-export const useTwilioChat = () => {
+export const useTwilioChat = (initialChannelSid) => {
   const viewer = useViewer();
-  const { data, refetch } = useQuery(CHAT_GRANT_QUERY);
   const client = useRef(null);
 
+  const [loading, setLoading] = useState(true);
   const [subscribedChannels, setSubscribedChannels] = useState([]);
-  // const [activeChannel, setActiveChannel] = useState(null);
+  const [activeChannel, setActiveChannel] = useState(null);
+
+  const { data, refetch } = useQuery(CHAT_GRANT_QUERY);
 
   useEffect(() => {
     if (!data?.chatGrant?.accessToken) return;
@@ -32,72 +35,99 @@ export const useTwilioChat = () => {
         chatClient.on("tokenExpired", onTokenExpiration);
         chatClient.on("channelJoined", onChannelJoined);
         chatClient.on("channelUpdated", onChannelUpdated);
-        chatClient.on("typingStarted", onTypingStarted);
-        return chatClient;
+        client.current = chatClient;
+        await refreshSubscribedChannels();
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
-
-    initializeChat().then((chatClient) => {
-      console.log("initializing chat");
-      client.current = chatClient;
-      refreshSubscribedChannels();
-    });
-
+    initializeChat();
     return () => client.current && client.current.removeAllListeners();
   }, [data, onTokenExpiration, onChannelUpdated, refreshSubscribedChannels]);
 
-  /* When a member has been added to a 1:1 chat */
-  const onChannelJoined = (channel) => {
-    console.debug("onChannelJoined", channel);
-    // refreshSubscribedChannels();
-  };
+  useEffect(() => {
+    if (activeChannel || !subscribedChannels.length) return;
+    selectActiveChannel(initialChannelSid);
+  }, [subscribedChannels]);
 
-  /* when a channel updates */
+  const onChannelJoined = (channel) =>
+    console.debug("onChannelJoined", channel);
+
+  /* Event to handle any channel update on the client */
   const onChannelUpdated = useCallback(
     (channel) => {
       console.debug("onChannelUpdated", channel);
       const lastMessageUpdate = channel.updateReasons.some(
         (r) => r === "lastMessage",
       );
-      if (lastMessageUpdate) updateFriendlyName();
+      if (lastMessageUpdate) console.log("update friendly name ...");
       refreshSubscribedChannels();
     },
     [refreshSubscribedChannels],
   );
 
-  const onTypingStarted = (channel) =>
-    console.debug("onTypingStarted", channel);
-
-  /* when the token expires after 24 hours */
+  /* Event to handle token expiration */
   const onTokenExpiration = useCallback(async () => {
     const { data: refresh } = await refetch();
     const updatedToken = refresh?.chatGrant?.accessToken;
     updatedToken && client?.current.updateToken(updatedToken);
   }, [refetch, client]);
 
-  const getChannel = async (channelSid) =>
-    await client?.current?.getChannelBySid(channelSid);
+  const selectActiveChannel = async (channelSid) => {
+    let channel;
 
-  /* fetch all private channels and all respective members  */
+    if (channelSid) {
+      const newChannel = await client?.current?.getChannelBySid(channelSid);
+      channel = await normalizeChannel(newChannel);
+    } else {
+      channel = subscribedChannels[0];
+    }
+    setActiveChannel(channel);
+  };
+
+  /* Fetch private channels, members, and normalize */
   const refreshSubscribedChannels = useCallback(async () => {
     if (!client.current) return;
 
     const resp = await client.current.getSubscribedChannels();
-    const subscribed =
-      resp?.items?.length &&
-      resp.items.map(async (channel) => {
-        const channelMembers = await channel.getMembers();
-        const other = channelMembers.filter((m) => m.identity !== viewer.id);
-        return { channelMembers, other, ...channel };
+
+    if (resp?.items?.length) {
+      const subscribed = resp.items.map((channel) => normalizeChannel(channel));
+      Promise.all(subscribed).then((channels) => {
+        const sortedChannels = channels.sort(
+          (a, b) => b.lastMessageDateTime - a.lastMessageDateTime,
+        );
+        setSubscribedChannels(sortedChannels);
       });
-    Promise.all(subscribed).then((channels) => setSubscribedChannels(channels));
+    }
   }, [client, viewer]);
 
-  const updateFriendlyName = () => console.log("update friendly name");
+  const normalizeChannel = async (channel) => {
+    const channelMembers = await channel.getMembers();
+    const other = channelMembers.filter((m) => m.identity !== viewer.id)[0];
 
-  return { client, subscribedChannels };
+    const { friendlyName, lastMessage } = channel.channelState;
+    const lastMessageDateTime = lastMessage?.dateCreated || new Date();
+    const lastMessageWords = relativeDate(lastMessageDateTime);
+    return {
+      channelMembers,
+      other,
+      friendlyName,
+      lastMessageWords,
+      lastMessageDateTime,
+      ...channel,
+    };
+  };
+
+  return {
+    client,
+    loading,
+    subscribedChannels,
+    activeChannel,
+    selectActiveChannel,
+  };
 };
 
 /* 

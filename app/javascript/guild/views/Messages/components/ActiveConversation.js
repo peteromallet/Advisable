@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { truncate } from "lodash-es";
 import { Text, Avatar, Link, theme } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
-import { StyledMessage } from "./styles";
-import { sender } from "./stub";
+import { StyledMessage } from "../styles";
+import { sender } from "../stub";
 
 const ActiveConversation = ({ activeConversation }) => (
   <GuildBox

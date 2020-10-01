@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 // import { useParams, useLocation } from "react-router-dom";
 import { Card, Text, Textarea, theme } from "@advisable/donut";
+import Loading from "@advisable-main/components/Loading";
 import { useToggle } from "@guild/hooks/useToggle";
 import { useTwilioChat } from "@guild/hooks/useTwilioChat";
 import HeaderLayout from "@guild/components/Layouts/HeaderLayout";
 import SortConversations from "@guild/components/ShowMore";
 import { GuildBox, flex } from "@guild/styles";
 import { SubmitButton } from "@guild/components/Buttons/styles";
-import InboxHeader from "./InboxHeader";
-import ActiveConversation from "./ActiveConversation";
-import Conversations from "./Conversations";
+import InboxHeader from "./components/InboxHeader";
+import ActiveConversation from "./components/ActiveConversation";
+import ConversationItem from "./components/ConversationItem";
+
 import { data } from "./stub";
 
 const Messages = () => {
-  const { subscribedChannels } = useTwilioChat();
+  const {
+    subscribedChannels,
+    activeChannel,
+    selectActiveChannel,
+    loading,
+  } = useTwilioChat();
 
   const initialConversation = data?.conversations?.[0];
   const [activeConversation, setActiveConversation] = useState(
@@ -21,8 +28,7 @@ const Messages = () => {
   );
   const [sortConversations, toggleSortConversations] = useToggle();
 
-  console.log("subscribedChannels", subscribedChannels);
-
+  console.log("activeChannel", activeChannel);
   return (
     <HeaderLayout>
       <GuildBox
@@ -34,75 +40,94 @@ const Messages = () => {
           elevation="m"
           maxWidth={theme.breakpoints.l}
           width="100%"
-          height="85vh" // 736px
+          height="85vh"
         >
-          <GuildBox height="100%" display="flex" flexDirection="row">
-            {/* Conversations List */}
-            <GuildBox
-              width="38%"
-              display="flex"
-              flexDirection="column"
-              background="ghostWhite"
-            >
-              {/* Inbox Header */}
-              <InboxHeader>
-                <Text fontWeight="medium" size="3xl" color="catalinaBlue100">
-                  Inbox
-                </Text>
-                <SortConversations
-                  showingMore={sortConversations}
-                  onToggle={toggleSortConversations}
-                  text={{ more: "Sort", less: "Sort" }}
-                />
-              </InboxHeader>
-              <Conversations
-                conversations={data?.conversations}
-                // conversations={subscribedChannels}
-                active={activeConversation}
-                setActive={setActiveConversation}
-              />
-            </GuildBox>
-
-            {/* Active Conversation and New Message */}
-            <GuildBox
-              width="62%"
-              display="flex"
-              flexDirection="column"
-              background="white"
-            >
-              <InboxHeader>
-                <Text
-                  fontWeight="medium"
-                  size="2xl"
-                  color="catalinaBlue100"
-                  css={flex.flexTruncate}
-                >
-                  {activeConversation.subject}
-                </Text>
-              </InboxHeader>
-
-              <ActiveConversation activeConversation={activeConversation} />
-
-              {/* New Message */}
+          {loading ? (
+            <Loading />
+          ) : (
+            <GuildBox height="100%" display="flex" flexDirection="row">
               <GuildBox
-                width={"95%"}
-                spaceChildrenVertical={8}
-                height={"143px"}
-                alignSelf="center"
-                marginX="l"
-                marginY="m"
+                width="38%"
+                display="flex"
+                flexDirection="column"
+                background="ghostWhite"
               >
-                <Textarea
-                  minRows="3"
-                  maxRows="8"
-                  placeholder="New Message ..."
-                ></Textarea>
-                <SubmitButton size="l" loading={false} type="submit">
-                  Send
-                </SubmitButton>
+                {/* Conversations Inbox Header */}
+                <InboxHeader>
+                  <Text fontWeight="medium" size="3xl" color="catalinaBlue100">
+                    Inbox
+                  </Text>
+                  <SortConversations
+                    showingMore={sortConversations}
+                    onToggle={toggleSortConversations}
+                    text={{ more: "Sort", less: "Sort" }}
+                  />
+                </InboxHeader>
+
+                {/* Conversation Inbox List */}
+                <GuildBox
+                  width="100%"
+                  height="100%"
+                  display="flex"
+                  flexDirection="column"
+                  background="ghostWhite"
+                  overflow="scroll"
+                  css={`
+                    border-right: 1px solid ${theme.colors.ghostWhite};
+                  `}
+                >
+                  {subscribedChannels.map((conversation, key) => (
+                    <ConversationItem
+                      key={key}
+                      conversation={conversation}
+                      setActive={selectActiveChannel}
+                      isActive={activeConversation.id === conversation.sid}
+                    />
+                  ))}
+                </GuildBox>
+              </GuildBox>
+
+              {/* Active Conversation and New Message */}
+              <GuildBox
+                width="62%"
+                display="flex"
+                flexDirection="column"
+                background="white"
+              >
+                <InboxHeader>
+                  <Text
+                    fontWeight="medium"
+                    size="2xl"
+                    color="catalinaBlue100"
+                    css={flex.flexTruncate}
+                  >
+                    {activeConversation.subject}
+                  </Text>
+                </InboxHeader>
+
+                <ActiveConversation activeConversation={activeConversation} />
+
+                {/* New Message */}
+                <GuildBox
+                  width={"95%"}
+                  spaceChildrenVertical={8}
+                  height={"143px"}
+                  alignSelf="center"
+                  marginX="l"
+                  marginY="m"
+                >
+                  <Textarea
+                    minRows="3"
+                    maxRows="8"
+                    placeholder="New Message ..."
+                  ></Textarea>
+                  <SubmitButton size="l" loading={false} type="submit">
+                    Send
+                  </SubmitButton>
+                </GuildBox>
               </GuildBox>
             </GuildBox>
-          </GuildBox>
+          )}
         </Card>
       </GuildBox>
     </HeaderLayout>
