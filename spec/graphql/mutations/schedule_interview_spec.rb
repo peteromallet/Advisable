@@ -67,11 +67,6 @@ RSpec.describe Mutations::ScheduleInterview do
     expect(interview.reload.call_scheduled_at).to be_within(1.second).of(Time.zone.now)
   end
 
-  it 'doesn\'t send any reschedule notifications' do
-    request
-    expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("UserMailer", "interview_rescheduled", any_args)
-    expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "interview_rescheduled", any_args)
-  end
 
   context 'when the interview is already scheduled' do
     let(:status) { "Call Scheduled"}
@@ -92,16 +87,6 @@ RSpec.describe Mutations::ScheduleInterview do
       error = response["errors"].first
       expect(error["extensions"]["type"]).to eq("INVALID_REQUEST")
       expect(error["extensions"]["code"]).to eq("STARTS_AT_NOT_AVAILABLE_ON_CLIENT")
-    end
-  end
-
-  context 'when the interview has a starts_at time' do
-    let(:initial_starts_at) { 2.days.from_now }
-
-    it 'sends reschedule notifications to both participants' do
-      request
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "interview_rescheduled", any_args)
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_rescheduled", any_args)
     end
   end
 

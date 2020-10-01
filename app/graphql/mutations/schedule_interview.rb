@@ -34,16 +34,10 @@ class Mutations::ScheduleInterview < Mutations::BaseMutation
       )
     end
 
-    is_reschedule = interview.starts_at.present?
     interview.starts_at = args[:starts_at]
     interview.call_scheduled_at = Time.zone.now
     interview.status = "Call Scheduled"
     interview.save_and_sync!
-
-    if is_reschedule
-      SpecialistMailer.interview_rescheduled(interview).deliver_later
-      UserMailer.interview_rescheduled(interview).deliver_later
-    end
 
     if args[:phone_number]
       update_specialist_number(
