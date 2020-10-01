@@ -28,7 +28,7 @@ RSpec.describe Mutations::RequestInterviewReschedule do
       expect_any_instance_of(Interview).to receive(:sync_to_airtable)
 
       response = AdvisableSchema.execute(query, context: context)
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "interview_reschedule_request", any_args)
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_reschedule_request", any_args)
 
       interview.reload
       expect(interview.availability_note).to eq("This is a note.")
@@ -45,7 +45,7 @@ RSpec.describe Mutations::RequestInterviewReschedule do
       expect_any_instance_of(Interview).to receive(:sync_to_airtable)
 
       response = AdvisableSchema.execute(query, context: context)
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_reschedule_request", any_args)
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "interview_reschedule_request", any_args)
 
       interview.reload
       expect(interview.availability_note).to eq("This is a note.")
