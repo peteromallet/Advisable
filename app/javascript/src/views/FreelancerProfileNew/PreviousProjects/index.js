@@ -6,8 +6,6 @@ import Tags from "./Filter/Tags";
 import NoFilteredProjects from "./NoFilteredProjects";
 import Filter from "./Filter";
 import ProjectCard from "./ProjectCard";
-import AddPreviousProjectButton from "components/AddPreviousProjectButton";
-import { usePreviousProjectModal } from "../../../components/PreviousProjectFormModal";
 
 const getProjectValues = (projects) =>
   projects.reduce(
@@ -118,7 +116,6 @@ function PreviousProjects({ data, isOwner }) {
   const createAction = createDispatcher(dispatch);
   const switchSkillSelection = createAction("SWITCH_SKILL_SELECTION");
   const switchIndustrySelection = createAction("SWITCH_INDUSTRY_SELECTION");
-  const newProjectModal = usePreviousProjectModal("/previous_projects/new");
 
   const projectCards = state.projects
     .filter(filterProjects(state))
@@ -143,10 +140,7 @@ function PreviousProjects({ data, isOwner }) {
         </Filter>
       </Box>
       {projectCards.length ? (
-        <Masonry columns="3">
-          {isOwner && <AddPreviousProjectButton modal={newProjectModal} />}
-          {projectCards}
-        </Masonry>
+        <Masonry columns="3">{projectCards}</Masonry>
       ) : (
         <NoFilteredProjects firstName={data.specialist.firstName} />
       )}
