@@ -27,6 +27,7 @@ jobs:
       TALKJS_SECRET: ${{ secrets.TALKJS_SECRET }}
       STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      PROJECTS_INVITE_KEY: ${{ secrets.PROJECTS_INVITE_KEY }}
 
     services:
       postgres:

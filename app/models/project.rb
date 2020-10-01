@@ -26,16 +26,16 @@ class Project < ApplicationRecord
   has_many :project_industries, as: :project
   has_many :industries, through: :project_industries
   validates :service_type,
-            inclusion: { in: %w[Assisted Self-Service Consultation] },
+            inclusion: {in: %w[Assisted Self-Service Consultation]},
             allow_nil: true
 
   validates :industry_experience_importance,
-            inclusion: { in: [0, 1, 2, 3] }, allow_nil: true
+            inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
 
   validates :location_importance,
-            inclusion: { in: [0, 1, 2, 3] }, allow_nil: true
+            inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
 
-  validates :likely_to_hire, inclusion: { in: [0, 1, 2, 3] }, allow_nil: true
+  validates :likely_to_hire, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
 
   belongs_to :user, required: false
   belongs_to :sales_person, required: false
@@ -106,6 +106,18 @@ class Project < ApplicationRecord
     return if applications.matched.any?
     accepted = applications.accepted.any?
     update(sourcing: false) if accepted
+  end
+
+  # we are moving the company type data from the project to the user
+  # record so first check for it there before falling back to the project.
+  def company_type
+    user&.try(:company_type) || self[:company_type]
+  end
+
+  # we are moving the industry data from the project to the user
+  # record so first check for it there before falling back to the project.
+  def industry
+    user&.industry&.name || self[:industry]
   end
 end
 

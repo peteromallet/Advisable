@@ -53,6 +53,7 @@ export const GET_PROJECT = gql`
     project(id: $id) {
       id
       status
+      viewerCanAccess
       user {
         id
         availability

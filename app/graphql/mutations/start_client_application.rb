@@ -14,9 +14,9 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
       end
 
     if user.has_account?
-      ApiError.invalidRequest(
-        'existingAccount',
-        'An account already exists with this email'
+      ApiError.invalid_request(
+        code: 'existingAccount',
+        message: 'An account already exists with this email'
       )
     end
 
@@ -33,7 +33,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
       end
     end
 
-    { clientApplication: user }
+    {clientApplication: user}
   end
 
   private
@@ -47,14 +47,17 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
 
   def email_blacklisted?(email)
     return if BlacklistedDomain.email_allowed?(email)
-    ApiError.invalidRequest('emailNotAllowed', 'This email is not allowed')
+    ApiError.invalid_request(
+      code: 'emailNotAllowed',
+      message: 'This email is not allowed'
+    )
   end
 
   def check_existing_specialist_account(email)
     return unless Specialist.exists?(email: email)
-    ApiError.invalidRequest(
-      'existingAccount',
-      'This email belongs to a specialist account'
+    ApiError.invalid_request(
+      code: 'existingAccount',
+      message: 'This email belongs to a specialist account'
     )
   end
 end

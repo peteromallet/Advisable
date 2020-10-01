@@ -13,7 +13,6 @@ class Airtable::Application < Airtable::Base
   sync_column 'Rejected Reason Comment', to: :rejection_reason_comment
   sync_column 'Proposal Comment', to: :proposal_comment
   sync_column 'Invitation Rejected Reason', to: :invitation_rejection_reason
-  sync_column 'Referral URL', to: :referral_url
   sync_column 'Applied At', to: :applied_at
   sync_column 'Project Type', to: :project_type
   sync_column 'Monthly Limit', to: :monthly_limit

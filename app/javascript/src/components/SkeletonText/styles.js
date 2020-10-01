@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { Box } from "@advisable/donut";
 
 const animation = keyframes`
   from {
@@ -25,6 +26,6 @@ export const SkeletonTextLine = styled.div`
   }
 `;
 
-export const SkeletonTextContainer = styled.div`
+export const SkeletonTextContainer = styled(Box)`
   animation: ${animation} 0.6s linear infinite alternate;
 `;

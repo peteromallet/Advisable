@@ -1,0 +1,14 @@
+<% goals = Array(@project.goals) %>
+<% if goals.any? %>
+  <tr><td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif;"><table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;"><tr><td align="left" valign="top" class="topic" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif;color: #728bb2;font-size: 12px;font-weight: 500;padding: 0 0 5px 0;"><%= title %></td></tr>
+
+  <% goals.each do |goal| %>
+    <tr><td align="center" valign="top" style="background-color: #f5f6fa;border-radius: 4px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif;"><table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;"><!-- Spacer --><tr><td align="center" valign="top" style="font-size: 0;line-height: 0;padding: 5px 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif;">&nbsp;</td></tr><!-- Spacer --><tr><td align="left" valign="top" class="info" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif;color: #445c81;font-size: 14px;font-weight: 400;padding: 0 15px;line-height: 21px;">
+
+    <%= goal %>
+
+    </td></tr><!-- Spacer --><tr><td align="center" valign="top" style="font-size: 0;line-height: 0;padding: 5px 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif;">&nbsp;</td></tr><!-- Spacer --></table></td></tr><!-- Spacer --><tr><td align="center" valign="top" style="font-size: 0;line-height: 0;padding: 5px 0 0 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif;">&nbsp;</td></tr><!-- Spacer -->
+  <% end %>
+
+  </table></td></tr>
+<% end %>

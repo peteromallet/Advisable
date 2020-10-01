@@ -10,9 +10,9 @@ class Mutations::UpdateConsultation < Mutations::BaseMutation
     consultation = Consultation.find_by_uid_or_airtable_id!(args[:id])
 
     unless ALLOWED_STATUSES.include?(consultation.status)
-      ApiError.invalidRequest(
-        'consultations.failedToUpdate',
-        "Can't update the consultation becaue its status is #{
+      ApiError.invalid_request(
+        code: 'consultations.failedToUpdate',
+        message: "Can't update the consultation becaue its status is #{
           consultation.status
         }"
       )
@@ -22,6 +22,6 @@ class Mutations::UpdateConsultation < Mutations::BaseMutation
 
     consultation.save
     consultation.sync_to_airtable
-    return { consultation: consultation }
+    return {consultation: consultation}
   end
 end
