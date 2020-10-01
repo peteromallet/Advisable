@@ -7,7 +7,7 @@ class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
 
   def requires_current_user!
     return true if current_user.present?
-    
+
     ApiError.not_authenticated
   end
 

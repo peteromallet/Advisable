@@ -19,36 +19,32 @@ class ApiError < GraphQL::ExecutionError
   def initialize(type, code, message, extensions: {})
     super(
       message,
-      extensions: extensions.merge({ type: type, code: code }).as_json
+      extensions: extensions.merge({type: type, code: code}).as_json
     )
   end
 
-  def self.invalidRequest(code, message)
-    raise ApiError::InvalidRequest.new(code, message)
+  def self.invalid_request(code: nil, message: '', extensions: {})
+    raise ApiError::InvalidRequest.new(code, message, extensions: extensions)
   end
 
-  def self.invalid_request(code: nil, message: '')
-    raise ApiError::InvalidRequest.new(code, message)
+  def self.not_authorized(message, extensions: {})
+    raise ApiError::NotAuthorized.new(message, extensions: extensions)
   end
 
-  def self.not_authorized(message)
-    raise ApiError::NotAuthorized.new(message)
-  end
-
-  def self.not_authenticated
-    raise ApiError::NotAuthenticated.new
+  def self.not_authenticated(extensions: {})
+    raise ApiError::NotAuthenticated.new(extensions: extensions)
   end
 end
 
 class ApiError::NotAuthenticated < ApiError
-  def initialize(message = 'You are not logged in')
-    super('NOT_AUTHENTICATED', 'notAuthenticated', message)
+  def initialize(message = 'You are not logged in', extensions: {})
+    super('NOT_AUTHENTICATED', 'notAuthenticated', message, extensions: extensions)
   end
 end
 
 class ApiError::NotAuthorized < ApiError
-  def initialize(message)
-    super('NOT_AUTHORIZED', 'notAuthorized', message)
+  def initialize(message, extensions: {})
+    super('NOT_AUTHORIZED', 'notAuthorized', message, extensions: extensions)
   end
 end
 
@@ -60,7 +56,7 @@ end
 #   raise ApiError::InvalidRequest.new("applicationStatusNotWorking", "Application status must be 'Working'")
 #
 class ApiError::InvalidRequest < ApiError
-  def initialize(code, message)
-    super('INVALID_REQUEST', code, message)
+  def initialize(code, message, extensions: {})
+    super('INVALID_REQUEST', code, message, extensions: extensions)
   end
 end

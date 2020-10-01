@@ -3,12 +3,14 @@
 import React from "react";
 import { SkeletonTextLine, SkeletonTextContainer } from "./styles";
 
-export default function SkeletonText({ lines = 3 }) {
+export default function SkeletonText({ lines = 3, ...props }) {
   const lineElements = [];
 
   for (let i = 0; i < lines; i++) {
     lineElements.push(<SkeletonTextLine key={i} />);
   }
 
-  return <SkeletonTextContainer>{lineElements}</SkeletonTextContainer>;
+  return (
+    <SkeletonTextContainer {...props}>{lineElements}</SkeletonTextContainer>
+  );
 }

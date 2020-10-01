@@ -99,7 +99,7 @@ class Application < ApplicationRecord
   # Filters a collection of application based on its associated projects
   # sales status column.
   scope :by_sales_status,
-        ->(status) { joins(:project).where(projects: { sales_status: status }) }
+        ->(status) { joins(:project).where(projects: {sales_status: status}) }
 
   # Filters out any applications that are in a final state.
   scope :not_final,
@@ -130,6 +130,10 @@ class Application < ApplicationRecord
 
   def create_previous_project
     PreviousProject::ConvertApplication.run(self)
+  end
+
+  def referral_url
+    "#{project.client_referral_url}&rid=#{specialist.uid}&referrer_firstname=#{specialist.first_name}&referrer_lastname=#{specialist.last_name}"
   end
 
   private
@@ -174,7 +178,6 @@ end
 #  questions                   :jsonb
 #  rate                        :decimal(, )
 #  references_requested        :boolean
-#  referral_url                :string
 #  rejection_reason            :text
 #  rejection_reason_comment    :text
 #  score                       :decimal(, )

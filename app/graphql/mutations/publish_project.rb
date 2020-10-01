@@ -12,10 +12,10 @@ class Mutations::PublishProject < Mutations::BaseMutation
     end
 
     if project.status != :draft
-      raise ApiError.invalidRequest(
-              'ALREADY_PUBLISHED',
-              'This project is not a draft'
-            )
+      raise ApiError.invalid_request(
+        code: 'ALREADY_PUBLISHED',
+        message: 'This project is not a draft'
+      )
     end
 
     true
@@ -27,6 +27,6 @@ class Mutations::PublishProject < Mutations::BaseMutation
     project.sales_status = 'Open'
     project.sourcing = true
     project.sync_to_airtable if project.save
-    { project: project }
+    {project: project}
   end
 end

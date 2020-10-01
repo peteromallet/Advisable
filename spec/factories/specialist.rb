@@ -10,6 +10,7 @@ FactoryBot.define do
     bank_currency { 'EUR' }
     hourly_rate { 200 }
     average_score { 75 }
+    automated_invitations_subscription { true }
     sequence(:uid) { "spe_#{SecureRandom.hex[0..14]}" }
     sequence(:airtable_id) { |id| "recspecialist#{id}" }
     sequence(:email) { |n| "specialist_#{n}@test.com" }
