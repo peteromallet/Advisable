@@ -4,10 +4,14 @@ import { Text, Box } from "@advisable/donut";
 function Tags({
   sectionName,
   sectionTags,
-  switchTagSelection,
+  onClick,
+  color,
+  bgActive,
   addSectionParams,
+  ratio,
   ...props
 }) {
+  // Set section parameters
   useEffect(() => {
     const sectionParams = tagsList.map((tag) => {
       const element = document.getElementById(tag.key);
@@ -27,37 +31,66 @@ function Tags({
         <Box
           key={`${sectionName}-${tagKey}`}
           id={`${sectionName}-${tagKey}`}
-          sectionName={sectionName}
           tagName={tagKey}
-          display="flex"
-          position="absolute"
-          textAlign="center"
-          alignItems="center"
-          justifyContent="center"
-          p="s"
-          borderRadius="8px"
-          borderWidth={1}
-          bg={selected ? "blue100" : "none"}
-          borderStyle="solid"
-          borderColor="blue500"
+          sectionName={sectionName}
+          flex={ratio ? "1" : "0"}
           css={`
-            user-select: none;
-            cursor: pointer;
+            white-space: nowrap;
           `}
-          m="6px"
-          onClick={() => switchTagSelection({ tag: tagKey })}
-          {...props}
         >
-          <Text color="blue500" fontSize="xs">
-            {tagKey}
-          </Text>
-          <Text ml="s" color="blue500" fontSize="xs">
-            {sectionTags[tagKey].number}
-          </Text>
+          <Box
+            display="flex"
+            textAlign="center"
+            justifyContent="center"
+            p="s"
+            borderRadius="8px"
+            borderWidth={1}
+            bg={selected ? bgActive : "none"}
+            borderStyle="solid"
+            borderColor={color}
+            css={`
+              user-select: none;
+              cursor: pointer;
+            `}
+            m="6px"
+            onClick={() => onClick({ tag: tagKey })}
+            {...props}
+          >
+            <Text color={color} fontSize="xs">
+              {tagKey}
+            </Text>
+          </Box>
         </Box>
       );
     });
-  return <>{tagsList}</>;
+  return (
+    <Box width={`${ratio}%`} position="relative">
+      <Box
+        bg="neutral50"
+        px="4px"
+        ml="6px"
+        display="inline-box"
+        position="absolute"
+        left="0"
+        top="-15px"
+      >
+        <Text color={color} fontSize="xs">
+          {sectionName}
+        </Text>
+      </Box>
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        alignItems="flex-start"
+        alignContent="flex-start"
+        justifyContent="flex-start"
+        maxHeight={props.maxHeight}
+        overflow="hidden"
+      >
+        {tagsList}
+      </Box>
+    </Box>
+  );
 }
 
 export default Tags;

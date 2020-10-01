@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useReducer, useRef } from "react";
 import { Box } from "@advisable/donut";
 import createDispatcher from "src/utilities/createDispatcher";
 import { isEmpty, maxBy, minBy, sumBy } from "lodash-es";
+import useResponsiveRef from "./useResponsiveRef";
 
 const handleSectionParams = (state, sectionName, params) => {
   const maxWidth = maxBy(params, "width");
@@ -37,6 +38,7 @@ const setSectionsRatio = (state) => {
   const sectionsArea = sumBy(sectionKeys, (key) => state.sections[key].area);
   const percent = sectionsArea / 100;
   const sectionsWithRatio = sectionKeys.reduce((acc, key) => {
+    // Calc and set ratio to each section
     const ratio = acc[key].area / percent;
     return { ...acc, [key]: { ...acc[key], ratio } };
   }, state.sections);
@@ -47,7 +49,8 @@ const setSectionsRatio = (state) => {
 const reducer = (state, action) => {
   switch (action.type) {
     case "SET_WRAPPER_WIDTH":
-      return { ...state, wrapperWidth: action.payload.width };
+      console.log("set wrapper width", action);
+      return { ...state, wrapperWidth: action.payload };
     case "SET_SECTIONS_RATIO":
       return setSectionsRatio(state);
     case "ADD_SECTION_PARAMS":
@@ -65,7 +68,7 @@ function Filter(props) {
   const [state, dispatch] = useReducer(reducer, {
     sections: {},
   });
-  const filterWrapperRef = useRef(null);
+  // const filterWrapperRef = useRef(null);
 
   // Actions
   const createAction = useMemo(() => createDispatcher(dispatch), []);
@@ -78,14 +81,10 @@ function Filter(props) {
   const setSectionsRatio = useMemo(() => createAction("SET_SECTIONS_RATIO"), [
     createAction,
   ]);
+  const [layoutRef, layoutWrapperWidth] = useResponsiveRef(setWrapperWidth);
 
-  // Set wrapper width on mount
-  useEffect(() => {
-    const element = filterWrapperRef.current;
-    setWrapperWidth({ width: element.clientWidth });
-  }, [setWrapperWidth]);
-
-  // Set ration of sections
+  console.log("layout wrapper width", layoutWrapperWidth);
+  // Set ratio of sections
   useEffect(() => {
     !isEmpty(state.sections) && setSectionsRatio({});
   }, [setSectionsRatio, state.sections]);
@@ -100,18 +99,14 @@ function Filter(props) {
           ...child.props,
           addSectionParams,
           wrapperWidth: state.wrapperWidth,
+          ratio: state.sections[child.props.sectionName]?.ratio,
         }),
       ),
-    [addSectionParams, props.children, state.wrapperWidth],
+    [addSectionParams, props.children, state.sections, state.wrapperWidth],
   );
 
   return (
-    <Box
-      border="1px solid grey"
-      borderRadius={8}
-      height={54}
-      ref={filterWrapperRef}
-    >
+    <Box ref={layoutRef} display="flex">
       {tags}
     </Box>
   );

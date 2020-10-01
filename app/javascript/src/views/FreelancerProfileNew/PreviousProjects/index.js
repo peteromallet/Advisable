@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { Box } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import Masonry from "components/Masonry";
 import createDispatcher from "src/utilities/createDispatcher";
 import Tags from "./Filter/Tags";
@@ -47,6 +47,7 @@ const init = (data) => {
   const industryFilters = [];
   return {
     id: data.specialist.id,
+    isExpand: false,
     projects,
     skillsList,
     skillsSection,
@@ -90,6 +91,8 @@ const reducer = (state, action) => {
       return switchTagSelection(state, "skillsSection", action.payload.tag);
     case "SWITCH_INDUSTRY_SELECTION":
       return switchTagSelection(state, "industriesSection", action.payload.tag);
+    case "EXPAND_COLLAPSE":
+      return { ...state, isExpand: !state.isExpand };
     default:
       return state;
   }
@@ -116,6 +119,7 @@ function PreviousProjects({ data, isOwner }) {
   const createAction = createDispatcher(dispatch);
   const switchSkillSelection = createAction("SWITCH_SKILL_SELECTION");
   const switchIndustrySelection = createAction("SWITCH_INDUSTRY_SELECTION");
+  const expandCollapse = createAction("EXPAND_COLLAPSE");
 
   const projectCards = state.projects
     .filter(filterProjects(state))
@@ -125,19 +129,51 @@ function PreviousProjects({ data, isOwner }) {
 
   return (
     <Box>
-      <Box borderRadius="8px" mb="l">
+      <Box
+        position="relative"
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="center"
+        borderRadius="8px"
+        mb="xl"
+        p="8px 6px 12px 6px"
+        borderWidth="1px"
+        borderStyle="solid"
+        borderColor="neutral300"
+      >
         <Filter>
           <Tags
-            sectionName="skills"
+            sectionName="Skills"
             sectionTags={state.skillsSection}
-            switchTagSelection={switchSkillSelection}
+            onClick={switchSkillSelection}
+            color="blue500"
+            bgActive="blue100"
+            maxHeight={state.isExpand ? null : "104px"}
           />
           <Tags
-            sectionName="industries"
+            sectionName="Industries"
             sectionTags={state.industriesSection}
-            switchTagSelection={switchIndustrySelection}
+            onClick={switchIndustrySelection}
+            color="cyan800"
+            bgActive="cyan100"
+            maxHeight={state.isExpand ? null : "104px"}
           />
         </Filter>
+        <Box
+          position="absolute"
+          bottom="-12px"
+          bg="neutral50"
+          display="inline-block"
+          p="xxs"
+          onClick={expandCollapse}
+          css={`
+            cursor: pointer;
+          `}
+        >
+          <Text fontSize="xs" color="neutral600">
+            {state.isExpand ? "Collapse" : "Expand"}
+          </Text>
+        </Box>
       </Box>
       {projectCards.length ? (
         <Masonry columns="3">{projectCards}</Masonry>
