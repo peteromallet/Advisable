@@ -18,6 +18,8 @@ class CreateLinkedinAdJob < ApplicationJob
     create_ad_inmail_content!
     create_conversation_ad!
     activate_conversation_ad!
+    activate_campaign!
+    pause_campaign!
   end
 
   private
@@ -30,7 +32,7 @@ class CreateLinkedinAdJob < ApplicationJob
       creativeSelection: "ROUND_ROBIN",
       locale: {country: "US", language: "en"},
       name: "#{project.name} | #{project.airtable_id}",
-      runSchedule: {start: Date.today.midnight.to_i * 1000},
+      runSchedule: {start: Date.tomorrow.midnight.to_i * 1000},
       type: "SPONSORED_INMAILS",
       unitCost: {amount: "0.15", currencyCode: "EUR"},
       objectiveType: "WEBSITE_VISIT",
@@ -96,6 +98,18 @@ class CreateLinkedinAdJob < ApplicationJob
     params = {patch: {"$set": {status: "ACTIVE"}}}
     response = linkedin.post_request("adCreativesV2/#{creative_id}", params, 204)
     Rails.logger.info("Creative Ad ACTIVATED: #{creative_id}")
+  end
+
+  def activate_campaign!
+    params = {patch: {"$set": {status: "ACTIVE"}}}
+    response = linkedin.post_request("adCampaignsV2/#{project.linkedin_campaign_id}", params, 204)
+    Rails.logger.info("Campaign ACTIVATED: #{project.linkedin_campaign_id}")
+  end
+
+  def pause_campaign!
+    params = {patch: {"$set": {status: "PAUSED"}}}
+    response = linkedin.post_request("adCampaignsV2/#{project.linkedin_campaign_id}", params, 204)
+    Rails.logger.info("Campaign PAUSED: #{project.linkedin_campaign_id}")
   end
 
   def create_message!(message)
