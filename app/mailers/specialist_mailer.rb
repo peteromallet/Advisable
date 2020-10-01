@@ -1,5 +1,5 @@
 class SpecialistMailer < ApplicationMailer
-  add_template_helper(SpecialistHelper)
+  add_template_helper(MailHelper)
 
   layout 'styled_mailer'
 
@@ -33,6 +33,8 @@ class SpecialistMailer < ApplicationMailer
 
   def interview_reschedule_request(interview)
     @interview = interview
-    mail(from: interview.user.sales_person.email_with_name, to: interview.specialist.email, subject: 'Interview Reschedule Request')
+    mail(from: interview.user.sales_person.email_with_name, to: interview.specialist.email, subject: 'Interview Reschedule Request') do |format|
+      format.html { render layout: false}
+    end
   end
 end

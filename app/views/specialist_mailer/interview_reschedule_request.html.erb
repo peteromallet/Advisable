@@ -2,7 +2,7 @@
   Hi <%= @interview.specialist.first_name %>,
 </p>
 <p>
-  Unfortunately, <%= @interview.user.first_name %> needs to reschedule your interview for <%= @interview.starts_at.to_formatted_s(:short) %>. 
+  Unfortunately, <%= @interview.user.first_name %> needs to reschedule your interview for <%= time_in_zone(@interview.starts_at, @interview.user.time_zone) %>. 
 </p>
 <p>
   Please select a new time that works best for you. Once you select a time, we’ll send new invitations.
