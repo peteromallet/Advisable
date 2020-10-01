@@ -30,6 +30,31 @@ class Linkedin
     end
   end
 
+  def put_request(path, expected_status = 200)
+    headers = request_headers.merge({"Authorization" => "Bearer #{token}", "X-Restli-Protocol-Version" => "2.0.0"})
+    response = Faraday.put(API_ROOT + path, nil, headers)
+
+    binding.pry
+
+    if response.status == expected_status
+      response
+    else
+      raise RequestError.new(response)
+    end
+  end
+
+  def get_request(path, expected_status = 200)
+    headers = request_headers.merge({"X-Restli-Protocol-Version" => "2.0.0"})
+    response = Faraday.get(API_ROOT + path, nil, headers)
+    binding.pry
+
+    if response.status == expected_status
+      response
+    else
+      raise RequestError.new(response)
+    end
+  end
+
   private
 
   def request_headers

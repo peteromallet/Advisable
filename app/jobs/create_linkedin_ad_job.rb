@@ -1,6 +1,7 @@
 class CreateLinkedinAdJob < ApplicationJob
   ACCOUNT_ID = 503157292
   CAMPAIGN_GROUP_ID = 611804793
+  CONVERSION_ID = 2659460 # Generic Thank You
 
   attr_reader :project, :linkedin, :conversation_id, :first_message_urn, :inmail_id, :creative_id
 
@@ -18,6 +19,7 @@ class CreateLinkedinAdJob < ApplicationJob
     create_ad_inmail_content!
     create_conversation_ad!
     activate_conversation_ad!
+    # create_campaign_conversion!
     activate_campaign!
     pause_campaign!
   end
@@ -98,6 +100,13 @@ class CreateLinkedinAdJob < ApplicationJob
     params = {patch: {"$set": {status: "ACTIVE"}}}
     response = linkedin.post_request("adCreativesV2/#{creative_id}", params, 204)
     Rails.logger.info("Creative Ad ACTIVATED: #{creative_id}")
+  end
+
+  def create_campaign_conversion!
+    path = "campaignConversions/(campaign:urn:li:sponsoredCampaign:#{project.linkedin_campaign_id},conversion:urn:lla:llaPartnerConversion:#{CONVERSION_ID})"
+    response = linkedin.put_request(path)
+
+    Rails.logger.info("New Sponsored Creative Ad created: #{creative_id}")
   end
 
   def activate_campaign!
