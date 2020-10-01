@@ -5,9 +5,11 @@ import { StyledAvatarCard } from "./styles";
 import { useMutation } from "@apollo/client";
 import { useNotifications } from "src/components/Notifications";
 import { UPDATE_PROFILE } from "../../queries";
+import useImageOnLoad from "src/hooks/useImageOnLoad";
 
 function Avatar({ avatar, isOwner }) {
   const [updateAvatar] = useMutation(UPDATE_PROFILE);
+  const loaded = useImageOnLoad(avatar);
   const notifications = useNotifications();
 
   const submit = async (blob) => {
@@ -31,10 +33,14 @@ function Avatar({ avatar, isOwner }) {
       <Box
         as="img"
         src={avatar}
+        visibility="hidden"
         width="190px"
         height="234px"
         borderRadius={16}
-        css="object-fit: cover;"
+        css={`
+          object-fit: cover;
+          visibility: ${loaded ? "visible" : "hidden"};
+        `}
       />
     </StyledAvatarCard>
   );
