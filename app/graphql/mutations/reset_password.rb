@@ -19,6 +19,6 @@ class Mutations::ResetPassword < Mutations::BaseMutation
 
     { reset: true }
   rescue Service::Error => e
-    return { errors: [e] }
+    { errors: [e] }
   end
 end

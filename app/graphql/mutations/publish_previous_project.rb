@@ -17,6 +17,6 @@ class Mutations::PublishPreviousProject < Mutations::BaseMutation
 
     SpecialistMailer.verify_project(project.uid).deliver_later
 
-    return { previous_project: project }
+    { previous_project: project }
   end
 end

@@ -3,7 +3,7 @@ module Airtable
     Zeitwerk::Loader.eager_load_all
     report = Airtable::SyncReport.new
 
-    started_at = DateTime.now
+    started_at = Time.zone.now
     Rails.logger.info("Syncing data from airtable...")
 
     ActiveRecord::Base.logger.silence do

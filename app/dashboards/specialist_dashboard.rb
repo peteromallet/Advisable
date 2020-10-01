@@ -54,6 +54,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     skills
+    email
     first_name
     last_name
     linkedin

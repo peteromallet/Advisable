@@ -21,7 +21,7 @@ class Tasks::Submit < ApplicationService
     if task.update(
          stage: 'Submitted',
          final_cost: final_cost,
-         submitted_at: DateTime.now.utc
+         submitted_at: Time.zone.now
        )
       task.sync_to_airtable
       WebhookEvent.trigger('tasks.submitted', WebhookEvent::Task.data(task))

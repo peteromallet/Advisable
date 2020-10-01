@@ -6,6 +6,7 @@ class Mutations::RequestMoreInterviewTimes < Mutations::BaseMutation
 
   ALLOWED_STATUSES = [
     'Call Requested',
+    'Client Requested Reschedule',
     'Need More Time Options',
     'More Time Options Added'
   ]
@@ -22,11 +23,12 @@ class Mutations::RequestMoreInterviewTimes < Mutations::BaseMutation
 
     interview.update(
       status: 'Need More Time Options',
+      requested_more_time_options_at: Time.zone.now,
       availability_note: args[:availability_note]
     )
 
     interview.sync_to_airtable
 
-    { interview: interview }
+    {interview: interview}
   end
 end

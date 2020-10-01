@@ -45,7 +45,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
         status: 'Request Started',
         skill: skill,
         source: args[:utm_source],
-        request_started_at: DateTime.now.utc
+        request_started_at: Time.zone.now
       )
 
     consultation.sync_to_airtable

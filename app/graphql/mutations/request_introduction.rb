@@ -25,7 +25,7 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
     update_application_status(application)
     application.project.update_sourcing
 
-    return { interview: interview, application: application }
+    { interview: interview, application: application }
   end
 
   private
@@ -35,7 +35,8 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
       application.interviews.create(
         user: application.project.user,
         time_zone: time_zone || current_user.time_zone,
-        status: 'Call Requested'
+        status: 'Call Requested',
+        call_requested_at: Time.zone.now,
       )
 
     interview.sync_to_airtable

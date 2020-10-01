@@ -22,7 +22,7 @@ class Proposals::Reject < ApplicationService
         "applications.proposal_rejected",
         WebhookEvent::Application.data(application)
       )
-      return application
+      application
     else
       raise Service::Error.new(application.errors.full_messages.first)
     end

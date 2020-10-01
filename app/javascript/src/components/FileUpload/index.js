@@ -19,14 +19,14 @@ const FileUpload = ({ label, onChange, preview }) => {
 
   const progressHandler = {
     directUploadWillStoreFileWithXHR(request) {
-      request.upload.addEventListener("progress", e => {
+      request.upload.addEventListener("progress", (e) => {
         const p = Math.round((100 * e.loaded) / e.total);
         setPercentage(p);
       });
     },
   };
 
-  const upload = file => {
+  const upload = (file) => {
     setFile(file);
     const u = new DirectUpload(file, DIRECT_UPLOAD_URL, progressHandler);
 
@@ -41,9 +41,9 @@ const FileUpload = ({ label, onChange, preview }) => {
     });
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setUploading(true);
-    Array.from(e.target.files).forEach(file => upload(file));
+    Array.from(e.target.files).forEach((file) => upload(file));
   };
 
   let mainText = label;

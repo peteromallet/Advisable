@@ -9,6 +9,6 @@ class Mutations::RequestPasswordReset < Mutations::BaseMutation
     { sent: true }
 
     rescue Service::Error => e
-      return { sent: false, errors: [e] }
+      { sent: false, errors: [e] }
   end
 end

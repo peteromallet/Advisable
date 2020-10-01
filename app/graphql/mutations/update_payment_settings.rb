@@ -25,7 +25,7 @@ class Mutations::UpdatePaymentSettings < Mutations::BaseMutation
   # There must be a User logged in specialist ( not a User type )
   def authorized?(**args)
     return true if context[:current_user].is_a?(Specialist)
-    return false, { errors: [{ code: 'notAuthorized' }] }
+    [false, { errors: [{ code: 'notAuthorized' }] }]
   end
 
   def resolve(**args)

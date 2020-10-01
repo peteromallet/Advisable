@@ -12,6 +12,6 @@ class Mutations::UpdateAvailability < Mutations::BaseMutation
       time_zone: args[:time_zone]
     )
 
-    return { user: user }
+    { user: user }
   end
 end

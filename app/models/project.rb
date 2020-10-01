@@ -45,7 +45,7 @@ class Project < ApplicationRecord
              }
 
   def accepted_terms=(accepted)
-    self.accepted_terms_at = DateTime.now.utc if !accepted_terms && accepted
+    self.accepted_terms_at = Time.zone.now if !accepted_terms && accepted
     self.accepted_terms_at = nil if accepted_terms && !accepted
   end
 

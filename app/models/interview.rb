@@ -12,18 +12,24 @@ end
 #
 # Table name: interviews
 #
-#  id                :bigint           not null, primary key
-#  availability_note :string
-#  starts_at         :datetime
-#  status            :string
-#  time_zone         :string
-#  uid               :string
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  airtable_id       :string
-#  application_id    :bigint
-#  user_id           :bigint
-#  zoom_meeting_id   :string
+#  id                                 :bigint           not null, primary key
+#  availability_note                  :string
+#  call_requested_at                  :datetime
+#  call_scheduled_at                  :datetime
+#  client_requested_reschedule_at     :datetime
+#  more_time_options_added_at         :datetime
+#  requested_more_time_options_at     :datetime
+#  specialist_requested_reschedule_at :datetime
+#  starts_at                          :datetime
+#  status                             :string
+#  time_zone                          :string
+#  uid                                :string
+#  created_at                         :datetime         not null
+#  updated_at                         :datetime         not null
+#  airtable_id                        :string
+#  application_id                     :bigint
+#  user_id                            :bigint
+#  zoom_meeting_id                    :string
 #
 # Indexes
 #

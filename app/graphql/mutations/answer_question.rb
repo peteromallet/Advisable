@@ -13,6 +13,6 @@ class Mutations::AnswerQuestion < Mutations::BaseMutation
     answer = current_user.answers.find_or_initialize_by(question: question)
     answer.content = args[:content]
     answer.save!
-    return {answer: answer}
+    {answer: answer}
   end
 end

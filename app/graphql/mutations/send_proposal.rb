@@ -9,7 +9,7 @@ class Mutations::SendProposal < Mutations::BaseMutation
     application = Application.find_by_uid_or_airtable_id!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
     return true if policy.is_specialist
-    return false, { errors: [{ code: 'not_authorized' }] }
+    [false, { errors: [{ code: 'not_authorized' }] }]
   end
 
   def resolve(**args)
@@ -22,6 +22,6 @@ class Mutations::SendProposal < Mutations::BaseMutation
         )
     }
   rescue Service::Error => e
-    return { errors: [e] }
+    { errors: [e] }
   end
 end

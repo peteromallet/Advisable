@@ -7,17 +7,17 @@ import { useMutation } from "@apollo/client";
 import { Text, Box, Link } from "@advisable/donut";
 import FormField from "../../components/FormField";
 import SubmitButton from "../../components/SubmitButton";
-import { ACCEPT_INTERVIEW_REQUEST } from "./queries";
+import { SCHEDULE_INTERVIEW } from "./queries";
 import Event from "./Event";
 
 export default function ConfirmInterviewRequest({ interview }) {
   const location = useLocation();
   const { datetime, interviewID } = useParams();
   const parsed = DateTime.fromISO(datetime);
-  const [acceptInterviewRequest] = useMutation(ACCEPT_INTERVIEW_REQUEST);
+  const [scheduleInterview] = useMutation(SCHEDULE_INTERVIEW);
 
   const handleSubmit = async (values) => {
-    await acceptInterviewRequest({
+    await scheduleInterview({
       variables: {
         input: { ...values, id: interviewID },
       },

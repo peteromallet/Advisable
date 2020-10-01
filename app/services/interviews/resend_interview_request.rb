@@ -1,16 +1,14 @@
 class Interviews::ResendInterviewRequest < ApplicationService
-  attr_reader :interview, :availability, :time_zone
+  attr_reader :interview
 
-  def initialize(interview:, availability:, time_zone:)
+  def initialize(interview:)
     @interview = interview
-    @availability = availability
-    @time_zone = time_zone
   end
 
   def call
-    interview.user.update(availability: availability)
     interview.assign_attributes(
-      time_zone: time_zone, status: 'More Time Options Added'
+      status: 'More Time Options Added',
+      more_time_options_added_at: Time.zone.now
     )
 
     # Don't both validating anything as we want to force these updates

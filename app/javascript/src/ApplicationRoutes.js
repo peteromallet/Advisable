@@ -1,6 +1,6 @@
 // ApplicationRoutes renders the routes that should be rendered with a header
 import React, { Suspense, lazy } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import NotFound from "./views/NotFound";
 import Header from "./components/Header";
 import Loading from "./components/Loading";
@@ -23,9 +23,6 @@ const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
 const Messages = lazy(() => import("./views/Messages"));
 const FreelancerSearch = lazy(() => import("./views/FreelancerSearch"));
 const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
-const InterviewAvailability = lazy(() =>
-  import("./views/InterviewAvailability"),
-);
 const FreelancerActiveApplication = lazy(() =>
   import("./views/FreelancerActiveApplication"),
 );
@@ -33,6 +30,8 @@ const RequestConsultation = lazy(() => import("./views/RequestConsultation"));
 const Consultation = lazy(() => import("./views/Consultation"));
 const ProjectSetup = lazy(() => import("./views/ProjectSetup"));
 const FullApplication = lazy(() => import("./views/FullApplication"));
+const Interview = lazy(() => import("./views/Interview"));
+const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
 
 const ApplicationRoutes = () => {
   return (
@@ -45,10 +44,17 @@ const ApplicationRoutes = () => {
           <Route path="/freelancers/:id" component={FreelancerProfile} />
           {/* Client routes */}
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
-          <Route
-            path="/projects/:projectID/interviews/:interviewID/availability"
-            component={InterviewAvailability}
+          <AuthenticatedRoute
+            specialistOnly
+            path="/interview_request/:interviewID"
+            component={InterviewRequest}
           />
+          {/* maintain old interview availability routes */}
+          <Redirect
+            from="/projects/:projectID/interviews/:interviewID/availability"
+            to="/interviews/:interviewID"
+          />
+          <AuthenticatedRoute path="/interviews/:id" component={Interview} />
           <Route path="/projects/:id" component={Project} />
           <AuthenticatedRoute
             clientOnly

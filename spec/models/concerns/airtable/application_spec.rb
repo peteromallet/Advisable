@@ -360,7 +360,7 @@ RSpec.describe Airtable::Application do
     end
 
     it "syncs the 'Applied At' column" do
-      application.applied_at = DateTime.now
+      application.applied_at = Time.zone.now
       application.save
       expect { airtable.push(application) }.to change {
         airtable.fields['Applied At']

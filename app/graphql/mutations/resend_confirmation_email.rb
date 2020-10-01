@@ -9,8 +9,8 @@ class Mutations::ResendConfirmationEmail < GraphQL::Schema::Mutation
 
     context[:current_user].send_confirmation_email
 
-    return { user: context[:current_user] }
+    { user: context[:current_user] }
   rescue Service::Error => e
-    return { errors: [e] }
+    { errors: [e] }
   end
 end
