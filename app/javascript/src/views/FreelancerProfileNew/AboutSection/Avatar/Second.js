@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import { useNotifications } from "src/components/Notifications";
 import { UPDATE_PROFILE } from "../../queries";
 
-function Avatar({ avatar }) {
+function Avatar({ avatar, isOwner }) {
   const [updateAvatar] = useMutation(UPDATE_PROFILE);
   const notifications = useNotifications();
 
@@ -27,7 +27,7 @@ function Avatar({ avatar }) {
       mr="30px"
       borderRadius={16}
     >
-      <FileUpload onChange={submit} />
+      {isOwner && <FileUpload onChange={submit} />}
       <Box
         as="img"
         src={avatar}
