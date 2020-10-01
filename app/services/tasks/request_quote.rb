@@ -17,7 +17,7 @@ class Tasks::RequestQuote < ApplicationService
     end
 
     if task.update(
-         stage: 'Quote Requested', quote_requested_at: DateTime.now.utc
+         stage: 'Quote Requested', quote_requested_at: Time.zone.now
        )
       task.sync_to_airtable
       WebhookEvent.trigger(

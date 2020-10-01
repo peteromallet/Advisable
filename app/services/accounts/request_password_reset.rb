@@ -32,7 +32,7 @@ class Accounts::RequestPasswordReset < ApplicationService
       )
 
       raise Service::Error.new("request_password_reset.application_required")
-      return
+      nil
     end
   end
 

@@ -11,7 +11,6 @@ import ApplicationRoutes from "./ApplicationRoutes";
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const VerifyProject = lazy(() => import("./views/VerifyProject"));
-const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
 const Availability = lazy(() => import("./views/Availability"));
 const FreelancerSignup = lazy(() => import("./views/FreelancerSignup"));
 
@@ -34,10 +33,6 @@ const Routes = () => {
           exact
           path="/clients/:userID/availability"
           component={Availability}
-        />
-        <Route
-          path="/interview_request/:interviewID"
-          component={InterviewRequest}
         />
         <Route path="/freelancers/signup" component={FreelancerSignup} />
         <Route path="/verify_project/:id" component={VerifyProject} />

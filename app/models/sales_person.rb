@@ -7,6 +7,10 @@ class SalesPerson < ApplicationRecord
   def name
     "#{first_name} #{last_name}"
   end
+
+  def email_with_name
+    %("#{name}" <#{email}>)
+  end
 end
 
 # == Schema Information
@@ -21,7 +25,6 @@ end
 #  last_name     :string
 #  out_of_office :boolean
 #  slack         :string
-#  uid           :string
 #  username      :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

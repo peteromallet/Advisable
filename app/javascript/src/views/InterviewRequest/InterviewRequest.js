@@ -32,8 +32,11 @@ export default function InterviewRequestView({ match }) {
       maxWidth={600}
       padding={{ _: "l", md: "xl" }}
     >
-      {["Call Requested", "More Time Options Added"].indexOf(interview.status) >
-        -1 && (
+      {[
+        "Call Requested",
+        "More Time Options Added",
+        "Client Requested Reschedule",
+      ].indexOf(interview.status) > -1 && (
         <Switch>
           <Route
             path={`${match.path}/${SELECT_TIME_PATH}`}

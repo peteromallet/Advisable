@@ -18,7 +18,7 @@ class Proposals::Send < ApplicationService
         'applications.proposal_sent',
         WebhookEvent::Application.data(application)
       )
-      return application
+      application
     else
       raise Service::Error.new(application.errors.full_messages.first)
     end

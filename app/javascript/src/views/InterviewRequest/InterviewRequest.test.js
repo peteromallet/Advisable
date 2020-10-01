@@ -10,7 +10,7 @@ import {
 } from "../../testHelpers/test-utils";
 import {
   FETCH_INTERVIEW,
-  ACCEPT_INTERVIEW_REQUEST,
+  SCHEDULE_INTERVIEW,
   REQUEST_MORE_TIMES,
 } from "./queries";
 
@@ -57,15 +57,15 @@ test("specialist in Berlin can accept interview request based in new york", asyn
       },
     ),
     mockMutation(
-      ACCEPT_INTERVIEW_REQUEST,
+      SCHEDULE_INTERVIEW,
       {
         id: interview.id,
         startsAt: times[2].toUTC().toISO(),
         phoneNumber: "0861234567",
       },
       {
-        acceptInterviewRequest: {
-          __typename: "AcceptInterviewRequestPayload",
+        scheduleInterview: {
+          __typename: "ScheduleInterviewPayload",
           interview: {
             ...interview,
             status: "Call Scheduled",
@@ -118,15 +118,15 @@ test("Maintains selected time zone", async () => {
       },
     ),
     mockMutation(
-      ACCEPT_INTERVIEW_REQUEST,
+      SCHEDULE_INTERVIEW,
       {
         id: interview.id,
         startsAt: "2020-05-22T10:00:00.000Z",
         phoneNumber: "0861234567",
       },
       {
-        acceptInterviewRequest: {
-          __typename: "AcceptInterviewRequestPayload",
+        scheduleInterview: {
+          __typename: "ScheduleInterviewPayload",
           interview: {
             ...interview,
             status: "Call Scheduled",

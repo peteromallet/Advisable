@@ -22,6 +22,6 @@ class Mutations::UpdateConsultation < Mutations::BaseMutation
 
     consultation.save
     consultation.sync_to_airtable
-    return {consultation: consultation}
+    { consultation: consultation }
   end
 end

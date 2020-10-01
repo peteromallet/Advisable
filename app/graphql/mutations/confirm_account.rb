@@ -9,7 +9,7 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
     account = Account.find_by_email!(email)
     ApiError.invalid_request(code: 'ALREADY_CONFIRMED') if account.confirmed
     validate_token(account, token)
-    account.confirmed_at = DateTime.now
+    account.confirmed_at = Time.zone.now
     account.confirmation_digest = nil
     account.confirmation_token = nil
     account.save(validate: false)

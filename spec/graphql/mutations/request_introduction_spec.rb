@@ -63,4 +63,10 @@ RSpec.describe Mutations::RequestIntroduction do
     error = response['errors'][0]['extensions']['code']
     expect(error).to eq('notAuthorized')
   end
+
+  it 'creates a new interview record and sets call_requested_at' do
+    AdvisableSchema.execute(query, context: context)
+    interview = Interview.last
+    expect(interview.call_requested_at).to be_within(1.second).of(Time.zone.now)
+  end
 end

@@ -12,6 +12,6 @@ class Mutations::ConfirmProject < Mutations::BaseMutation
     }
 
     rescue Service::Error => e
-      return { errors: [e] }
+      { errors: [e] }
   end
 end

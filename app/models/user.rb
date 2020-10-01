@@ -130,7 +130,7 @@ class User < ApplicationRecord
   # in the past.
   def remove_past_availabililty
     return if availability.nil?
-    self.availability = availability.select { |time| time > DateTime.now.utc }
+    self.availability = availability.select { |time| time > Time.zone.now }
   end
 end
 

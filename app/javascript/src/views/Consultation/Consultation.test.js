@@ -30,7 +30,7 @@ test("Accepting a consultation request", async () => {
       },
       result: {
         data: {
-          viewer: null,
+          viewer: specialist,
         },
       },
     },
@@ -186,7 +186,7 @@ test("redirects to the interview when already accepted", async () => {
       },
       result: {
         data: {
-          viewer: null,
+          viewer: specialist,
         },
       },
     },

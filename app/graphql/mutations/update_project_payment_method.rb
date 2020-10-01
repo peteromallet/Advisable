@@ -11,7 +11,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
   # There must be a User logged in ( not a specialist )
   def authorized?(**args)
     return true if context[:current_user].is_a?(User)
-    return false, { errors: [{ code: "notAuthorized" }] }
+    [false, { errors: [{ code: "notAuthorized" }] }]
   end
 
   def resolve(**args)
@@ -35,7 +35,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
     end
 
     if user.accepted_project_payment_terms_at.nil? && args[:accept_terms]
-      user.accepted_project_payment_terms_at = DateTime.now.utc
+      user.accepted_project_payment_terms_at = Time.zone.now
     end
 
     user.update_payments_setup

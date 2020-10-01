@@ -43,7 +43,7 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
     if user.save
       user.sync_to_airtable
       SetUserImageJob.perform_later(user.id, viewer.image)
-      return { user: user }
+      { user: user }
     else
       if user.errors.added?(:email, :taken)
         raise ApiError::InvalidRequest.new(

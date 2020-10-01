@@ -9,7 +9,7 @@ class Mutations::SetTaskRepeat < Mutations::BaseMutation
     task = Task.find_by_uid!(args[:id])
     policy = TaskPolicy.new(context[:current_user], task)
     return true if policy.set_repeating
-    return false, { errors: [{ code: 'not_authorized' }] }
+    [false, { errors: [{ code: 'not_authorized' }] }]
   end
 
   def resolve(**args)

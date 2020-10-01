@@ -25,7 +25,7 @@ class Levenshtein
       end
     end
 
-    return matrix.last.last
+    matrix.last.last
   end
 
   def self.compare(first, second)

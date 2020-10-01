@@ -1,0 +1,24 @@
+<p>
+  Hi <%= @interview.user.first_name %>,
+</p>
+<p>
+  Unfortunately, <%= @interview.specialist.first_name %> needs to reschedule your interview for <%= time_in_zone(@interview.starts_at, @interview.user.time_zone) %>  and none of your existing availability works for them.
+</p>
+<p>
+  <a href="<%= ApplicationMailer.default_url_options[:host] %>/interviews/<%= @interview.uid %>/reschedule">Add availabilities</a>.
+</p>
+<% if @interview.availability_note.present? %>
+  <p>
+    <%= @interview.specialist.first_name %> left the following note: <%= @interview.availability_note %>
+  </p>
+<% end %>
+<p>
+  Once they select a time, we’ll send new invitations.
+</p>
+<p>
+  Apologies for any inconvenience and we appreciate your flexibility!
+</p>
+<p>
+  Best,<br>
+  <%= @interview.user.sales_person.name %>
+</p>
