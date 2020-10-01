@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Layout from "components/Layout";
 import General from "./General";
-import PreviousProjects from "./PreviousProjects";
+import References from "./References";
 import PaymentSettings from "./PaymentSettings";
 import { useBreakpoint } from "@advisable/donut";
 
@@ -19,11 +19,7 @@ function SpecialistSettings({ match }) {
       <Layout.Main>
         <Switch>
           <Route path="/settings/general" component={General} />
-          <Route
-            path="/settings/previous-projects"
-            exact
-            component={PreviousProjects}
-          />
+          <Route path="/settings/references" component={References} />
           <Route
             path="/settings/payment-settings"
             component={PaymentSettings}

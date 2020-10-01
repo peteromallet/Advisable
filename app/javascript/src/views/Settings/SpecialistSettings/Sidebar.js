@@ -73,7 +73,7 @@ const SettingsSidebar = () => {
             General
           </NavigationMenu.Item>
           <NavigationMenu.Item
-            to="/settings/previous-projects"
+            to="/settings/references"
             icon={<Award size={20} strokeWidth={2} />}
           >
             Previous Projects
