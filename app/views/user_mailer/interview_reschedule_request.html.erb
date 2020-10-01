@@ -2,7 +2,7 @@
   Hi <%= @interview.user.first_name %>,
 </p>
 <p>
-  Unfortunately, <%= @interview.specialist.first_name %> needs to reschedule your interview for <%= @interview.starts_at.to_formatted_s(:short) %>  and none of your existing availability works for them.
+  Unfortunately, <%= @interview.specialist.first_name %> needs to reschedule your interview for <%= time_in_zone(@interview.starts_at, @interview.user.time_zone) %>  and none of your existing availability works for them.
 </p>
 <p>
   <a href="<%= ApplicationMailer.default_url_options[:host] %>/interviews/<%= @interview.uid %>/reschedule">Add availabilities</a>.

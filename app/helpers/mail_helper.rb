@@ -1,4 +1,4 @@
-module SpecialistHelper
+module MailHelper
   def specialist_unsubscribe_url(specialist)
     "#{root_host}/unsubscribe?Specialist%20ID=#{specialist.uid}&field66878840=#{specialist.email}"
   end
@@ -9,6 +9,10 @@ module SpecialistHelper
 
   def specialist_project_application_url(specialist, project)
     "#{app_host}/opportunities/#{project.uid}?utm_campaign=#{project.uid}"
+  end
+
+  def time_in_zone(timestamp, zone, format = "%d %B, %I:%M%P %Z")
+    timestamp.in_time_zone(zone).strftime(format)
   end
 
   private
