@@ -32,6 +32,7 @@ class CreateLinkedinAdJob < ApplicationJob
       name: "#{project.name} | #{project.airtable_id}",
       runSchedule: {start: Date.today.midnight.to_i * 1000},
       type: "SPONSORED_INMAILS",
+      unitCost: {amount: "0.15", currencyCode: "EUR"},
       objectiveType: "WEBSITE_VISIT",
       totalBudget: {amount: "100", currencyCode: "EUR"},
       status: "DRAFT"
