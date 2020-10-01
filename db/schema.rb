@@ -894,6 +894,15 @@ ActiveRecord::Schema.define(version: 2020_10_15_063933) do
     t.index ["sales_person_id"], name: "index_users_on_sales_person_id"
   end
 
+  create_table "video_calls", force: :cascade do |t|
+    t.string "uid"
+    t.bigint "interview_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["interview_id"], name: "index_video_calls_on_interview_id"
+    t.index ["uid"], name: "index_video_calls_on_uid"
+  end
+
   create_table "webhook_configurations", force: :cascade do |t|
     t.string "name"
     t.string "url"
@@ -970,4 +979,5 @@ ActiveRecord::Schema.define(version: 2020_10_15_063933) do
   add_foreign_key "users", "countries"
   add_foreign_key "users", "industries"
   add_foreign_key "users", "sales_people"
+  add_foreign_key "video_calls", "interviews"
 end

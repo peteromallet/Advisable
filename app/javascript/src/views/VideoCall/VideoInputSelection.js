@@ -29,7 +29,7 @@ export default function VideoInputSelection() {
 
   if (videoInputDevices.length <= 1) {
     selectionInput = (
-      <Text>{localVideoTrack?.mediaStreamTrack.label || "No local video"}</Text>
+      <Text>{localVideoTrack?.mediaStreamTrack.label || "No video found"}</Text>
     );
   }
 
