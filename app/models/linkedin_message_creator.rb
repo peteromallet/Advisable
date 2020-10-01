@@ -19,6 +19,7 @@ class LinkedinMessageCreator
       "Are you potentially interested in this project?",
       "Best,\n#{sender_name}"
     ]
+
     flowchart = {
       body: sentences.join("\n\n"),
       actions: message_1_actions
@@ -28,7 +29,7 @@ class LinkedinMessageCreator
   private
 
   def message_1_actions
-    location = project.location_importance.to_i > 1 ? 'location' : 'remote'
+    location = project.location_importance.to_i > 1 ? "location" : "remote"
     sentences = [
       "Great, let us walk you through all the details.",
       project.company_description,
@@ -53,44 +54,10 @@ class LinkedinMessageCreator
     requirement = next_requirement
     return final_actions if number.zero? || requirement.empty?
 
-    kind, requirement = requirement
-    case kind
-    when :goal
-      sentences = if number.odd?
-                    [
-                      "One of their main goals from this project is this:",
-                      requirement,
-                      "Is this something you think you'd be able to handle?"
-                    ]
-                  else
-                    [
-                      "They're looking for someone who can help them with this:",
-                      requirement,
-                      "Is this something you think you could help them with?"
-                    ]
-                  end
-    when :characteristic
-      sentences = if number.odd?
-                    [
-                      "They want someone who matches the following description:",
-                      requirement,
-                      "Does this sound like you?"
-                    ]
-                  else
-                    [
-                      "This is one of the characteristics they're looking for:",
-                      requirement,
-                      "Sound like a match?"
-                    ]
-                  end
-    else
-      return requirement_actions(number - 1)
-    end
-
     [
       {
         text: "Yes",
-        body: sentences.join("\n\n"),
+        body: sentences_for(*requirement, number).join("\n\n"),
         actions: requirement_actions(number - 1)
       },
       action_no
@@ -133,6 +100,23 @@ class LinkedinMessageCreator
       [:characteristic, @project_characteristics.shift]
     else
       []
+    end
+  end
+
+  def sentences_for(kind, requirement, number)
+    case kind
+    when :goal
+      if number.odd?
+        ["One of their main goals from this project is this:", requirement, "Is this something you think you'd be able to handle?"]
+      else
+        ["They're looking for someone who can help them with this:", requirement, "Is this something you think you could help them with?"]
+      end
+    when :characteristic
+      if number.odd?
+        ["They want someone who matches the following description:", requirement, "Does this sound like you?"]
+      else
+        ["This is one of the characteristics they're looking for:", requirement, "Sound like a match?"]
+      end
     end
   end
 end
