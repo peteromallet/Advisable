@@ -9,7 +9,6 @@ import {
   Link,
   InputError,
   Autocomplete,
-  Button,
   Checkbox,
 } from "@advisable/donut";
 import Loading from "components/Loading";
@@ -17,6 +16,7 @@ import FormField from "components/FormField";
 import CurrencyInput from "components/CurrencyInput";
 import { useNotifications } from "components/Notifications";
 import { GET_DATA, UPDATE_PROFILE } from "./queries";
+import SubmitButton from "components/SubmitButton";
 
 const Profile = () => {
   const { loading, data } = useQuery(GET_DATA);
@@ -30,23 +30,15 @@ const Profile = () => {
     skills: (get(data, "viewer.skills") || []).map((s) => s.name),
   };
 
-  const submitUpdate = async (input) => {
-    await updateProfile({
-      variables: { input },
-    });
-
-    notifications.notify("Your profile has been updated");
-  };
-
-  const handleSubmit = async (values, formik) => {
-    submitUpdate({
+  const handleSubmit = async (values) => {
+    const input = {
       hourlyRate: values.hourlyRate * 100,
       remote: values.remote,
       publicUse: values.publicUse,
       skills: values.skills,
-    });
-
-    formik.setSubmitting(false);
+    };
+    await updateProfile({ variables: { input } });
+    notifications.notify("Your profile has been updated");
   };
 
   if (loading) {
@@ -133,9 +125,7 @@ const Profile = () => {
                 on advisable.com
               </Field>
             </Box>
-            <Button type="submit" loading={formik.isSubmitting}>
-              Save Changes
-            </Button>
+            <SubmitButton>Save Changes</SubmitButton>
           </Card>
         </Form>
       )}
