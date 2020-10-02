@@ -25,14 +25,25 @@ environment.loaders.append("graphql", {
   loader: "graphql-tag/loader",
 });
 
+environment.loaders.append("mp3", {
+  test: /\.(mp3)$/,
+  exclude: /node_modules/,
+  loader: "file-loader",
+});
+
 environment.config.merge({
   resolve: {
     alias: {
       "@advisable/donut": path.join(__dirname, "../../donut/src"),
       components: path.join(__dirname, "../../app/javascript/src/components"),
       /* Guild */
-      '@advisable-main': path.resolve(__dirname, '..', '..', 'app/javascript/src'),
-      '@guild': path.resolve(__dirname, '..', '..', 'app/javascript/guild'),
+      "@advisable-main": path.resolve(
+        __dirname,
+        "..",
+        "..",
+        "app/javascript/src",
+      ),
+      "@guild": path.resolve(__dirname, "..", "..", "app/javascript/guild"),
     },
   },
 });
