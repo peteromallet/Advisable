@@ -1,7 +1,6 @@
 import React from "react";
-import { Box } from "@advisable/donut";
 import FileUpload from "./FileUpload";
-import { StyledAvatarCard } from "./styles";
+import { StyledAvatarCard, StyledAvatarImage } from "./styles";
 import { useMutation } from "@apollo/client";
 import { useNotifications } from "src/components/Notifications";
 import { UPDATE_PROFILE } from "../../queries";
@@ -21,8 +20,8 @@ function Avatar({ avatar, isOwner }) {
 
   return (
     <StyledAvatarCard
-      width={190}
-      height={234}
+      width="190px"
+      height="234px"
       elevation="m"
       mt="-66px"
       ml="32px"
@@ -30,18 +29,7 @@ function Avatar({ avatar, isOwner }) {
       borderRadius={16}
     >
       {isOwner && <FileUpload onChange={submit} />}
-      <Box
-        as="img"
-        src={avatar}
-        visibility="hidden"
-        width="190px"
-        height="234px"
-        borderRadius={16}
-        css={`
-          object-fit: cover;
-          visibility: ${loaded ? "visible" : "hidden"};
-        `}
-      />
+      <StyledAvatarImage loaded={loaded} src={avatar} />
     </StyledAvatarCard>
   );
 }
