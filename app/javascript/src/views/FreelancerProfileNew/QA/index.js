@@ -1,7 +1,7 @@
 import React from "react";
-import { Stack, Text, Box, Card } from "@advisable/donut";
+import { Text, Box, Card } from "@advisable/donut";
 import Answer from "./Answer";
-import Question from "./Question";
+import AnswerQuestions from "./AnswerQuestions";
 
 function QA({ questions, answers }) {
   const questionsHash = questions.reduce((acc, question) => {
@@ -26,18 +26,16 @@ function QA({ questions, answers }) {
       />
     ));
 
-  const questionsList = Object.keys(qaHash)
-    .filter((key) => !qaHash[key].answer)
-    .map((key) => <Question key={key} question={qaHash[key].question} />);
-
   return (
-    <Box>
-      <Text as="h2" fontSize="xl" fontWeight="medium" color="neutral900" mb="m">
-        Questions & Answers
-      </Text>
+    <Box mb="xxxl">
+      <Box display="flex" alignItems="center" mb="xxs" px="xs">
+        <Text as="h2" fontSize="xl" fontWeight="medium" color="neutral600">
+          Questions & Answers
+        </Text>
+        <AnswerQuestions qaHash={qaHash} />
+      </Box>
       <Card borderRadius={8} p="xl">
-        <Box mb="l">{answersList}</Box>
-        <Stack spacing="m">{questionsList}</Stack>
+        <Box>{answersList}</Box>
       </Card>
     </Box>
   );

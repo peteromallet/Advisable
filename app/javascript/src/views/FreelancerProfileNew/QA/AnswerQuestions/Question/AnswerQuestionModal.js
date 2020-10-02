@@ -2,9 +2,9 @@ import React from "react";
 import { Box, Modal, Textarea } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import { useMutation } from "@apollo/client";
-import { ANSWER_QUESTION, GET_PROFILE } from "../../queries";
+import { ANSWER_QUESTION, GET_PROFILE } from "../../../queries";
 import { Form, Formik } from "formik";
-import FormField from "../../../../components/FormField";
+import FormField from "components/FormField";
 import { useParams } from "react-router";
 import { object, string } from "yup";
 
