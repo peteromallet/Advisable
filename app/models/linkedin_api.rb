@@ -1,4 +1,4 @@
-class Linkedin
+class LinkedinApi
   class RequestError < StandardError
     def initialize(response)
       response_log = [
@@ -16,8 +16,10 @@ class Linkedin
 
   attr_reader :token
 
-  def initialize(token)
-    @token = token
+  def initialize
+    linkedin_ad_auth_provider = AuthProvider.linkedin_ads.first!
+    linkedin_ad_auth_provider.refresh_linkedin_token!
+    @token = linkedin_ad_auth_provider.token
   end
 
   def post_request(path, params, expected_status = 201)
@@ -34,8 +36,6 @@ class Linkedin
     headers = request_headers.merge({"Authorization" => "Bearer #{token}", "X-Restli-Protocol-Version" => "2.0.0"})
     response = Faraday.put(API_ROOT + path, nil, headers)
 
-    binding.pry
-
     if response.status == expected_status
       response
     else
@@ -46,7 +46,6 @@ class Linkedin
   def get_request(path, expected_status = 200)
     headers = request_headers.merge({"X-Restli-Protocol-Version" => "2.0.0"})
     response = Faraday.get(API_ROOT + path, nil, headers)
-    binding.pry
 
     if response.status == expected_status
       response
