@@ -23,16 +23,17 @@ class AuthProvidersController < ApplicationController
   end
 
   def linkedin_ads
-    token_data = auth_hash[:credentials]
-    token_data[:code] = params[:code]
-    session[:omniauth_token_data] = token_data.dup
-    token_data[:json] = token_data.to_json
-    token_data[:auth_hash] = auth_hash.to_json
+    auth_provider = current_user.auth_providers.find_or_initialize_by(provider: 'linkedin_ads')
+    auth_provider.update!(oauth.identifiers_with_blob_and_token)
 
-    render plain: token_data.map { |k, v| "#{k}: #{v}" }.join("\n\n")
+    redirect_to admin_applications_path
   end
 
-  protected
+  private
+
+  def oauth
+    @oauth ||= Oauth.new(request.env["omniauth.auth"])
+  end
 
   def auth_hash
     request.env['omniauth.auth']
