@@ -28,7 +28,7 @@ function Question({ question }) {
         borderRadius={12}
         {...modal}
       >
-        <Text fontSize="xl" color="neutral900">
+        <Text fontSize="l" color="neutral900">
           {question.content}
         </Text>
         <AnswerLabel ml="auto" color="blue600">
