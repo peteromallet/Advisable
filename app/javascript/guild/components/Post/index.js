@@ -1,26 +1,42 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Box, Card, Text, Avatar, Link, useBreakpoint } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
 import Topics from "./components/Topics";
 import NeedHelp from "@guild/icons/NeedHelp";
 import CommentsButton from "./components/CommentsButton";
+import ReadMore from "./components/ReadMore";
+import { CoverImage } from "@guild/components/CoverImage";
 
 const Post = ({ post }) => {
+  const history = useHistory();
   const mediumAndUp = useBreakpoint("mUp");
-  const { author } = post;
+  const [wrapBody, setWrapBody] = useState(false);
+
+  const bodyMaxHeight = 220;
+  const bodyRef = useCallback(
+    (node) => {
+      if (!node || wrapBody) return;
+      if (node.getBoundingClientRect().height === bodyMaxHeight)
+        setWrapBody(true);
+    },
+    [wrapBody],
+  );
+
+  const handleReadMore = () => history.push(`/posts/${post.id}`);
 
   return (
-    <Card elevation="m" width="100%">
-      <Box display="flex" flexDirection="column" p="l">
-        {/* Author Details, Post Type */}
+    <Card elevation={{ _: "s", m: "m" }} width="100%">
+      {post.coverImage && <CoverImage src={post.coverImage} />}
+      <Box display="flex" flexDirection="column" p={{ _: "s", m: "l" }}>
         <Box display="flex" justifyContent="space-between" alignItems="start">
           <Box display="flex">
             <Avatar
               as={Link}
-              to={`/profiles/${author.id}`}
-              size="m"
-              name={author.name}
-              url={author.avatar}
+              to={`/profiles/${post.author.id}`}
+              size={{ _: "s", m: "m" }}
+              name={post.author.name}
+              url={post.author.avatar}
             />
             <Box
               display="flex"
@@ -35,7 +51,7 @@ const Post = ({ post }) => {
                 color="quartz"
                 mb="xxs"
               >
-                {author.name}
+                {post.author.name}
               </Text>
               <Text
                 fontSize="xxs"
@@ -57,8 +73,7 @@ const Post = ({ post }) => {
           )}
         </Box>
 
-        {/* Post Title, Body */}
-        <Box display="flex" flexDirection="column" my="l">
+        <Box display="flex" flexDirection="column" mt="m">
           <Text
             as={Link}
             mb="sm"
@@ -70,21 +85,20 @@ const Post = ({ post }) => {
           >
             {post.title}
           </Text>
-
-          {/* TODO draftjs reader */}
-          <Text
-            fontSize="xs"
-            fontWeight="light"
-            letterSpacing="-0.01em"
-            color="quartz"
-            lineHeight="s"
+          <Box
+            overflow="hidden"
+            position="relative"
+            maxHeight={bodyMaxHeight}
+            ref={bodyRef}
           >
-            {post.body}
-          </Text>
+            <Text fontSize="s" color="quartz" lineHeight="m">
+              {post.body}
+            </Text>
+            {wrapBody && <ReadMore onReadMore={handleReadMore} />}
+          </Box>
         </Box>
       </Box>
 
-      {/* Topics and Interactions */}
       <Box
         display="flex"
         flexDirection="row"
@@ -95,7 +109,7 @@ const Post = ({ post }) => {
         backgroundColor="aliceBlue"
       >
         <Topics topics={post.guildTopics} />
-        <CommentsButton postId={post.id} commentsCount={post.comments_count} />
+        <CommentsButton postId={post.id} commentsCount={post.commentsCount} />
       </Box>
     </Card>
   );

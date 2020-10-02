@@ -1,29 +1,38 @@
-import React from "react";
-import { Text, Link, theme } from "@advisable/donut";
-import { GuildBox } from "@guild/styles";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import { Text } from "@advisable/donut";
 import { lowerDashed } from "@guild/utils";
+import { feedStore } from "@guild/stores/Feed";
+import shallow from "zustand/shallow";
+import { StyledTopic } from "./styles";
 
 const Topic = ({ topic }) => {
+  const [selectedTopics, updateSelectedTopics] = feedStore(
+    ({ selectedTopics, updateSelectedTopics }) => [
+      selectedTopics,
+      updateSelectedTopics,
+    ],
+    shallow,
+  );
+
+  const isStoreSelected = selectedTopics.includes(topic);
+  const [selected, setSelected] = useState(isStoreSelected);
+
+  const handleSelectedTopic = () => {
+    updateSelectedTopics(topic);
+    setSelected(!selected);
+  };
+
+  useEffect(() => {
+    if (selected && !isStoreSelected) setSelected(false);
+  }, [isStoreSelected, selected, topic]);
+
   return (
-    <StyledTopic as={Link} to={`/topics/${topic.id}`}>
+    <StyledTopic selected={selected} onClick={handleSelectedTopic}>
       <Text fontWeight="medium" size="xs" color="catalinaBlue100">
         #{lowerDashed(topic.name)}
       </Text>
     </StyledTopic>
   );
 };
-
-const StyledTopic = styled(GuildBox)`
-  padding: 6px 14px;
-
-  &:hover {
-    background-color: ${theme.colors.lavender};
-    border-radius: 15px;
-    color: ${theme.colors.calatlinaBlue50};
-    transition: background-color 220ms;
-    text-decoration: none;
-  }
-`;
 
 export default Topic;

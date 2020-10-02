@@ -47,4 +47,4 @@ const NewMembers = () => {
   );
 };
 
-export default NewMembers;
+export default React.memo(NewMembers);

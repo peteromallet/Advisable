@@ -14,7 +14,7 @@ def random_specialist
   Specialist.order(Arel.sql("RANDOM()")).first
 end
 
-5.times do
+5.times do |num|
   body = Faker::Lorem.paragraph_by_chars(number: 256, supplemental: false)
   post = Guild::Post.new(
     specialist: random_specialist,
@@ -23,6 +23,11 @@ end
     body_raw: %x{node #{Rails.root.join('lib/scripts/node', 'convertForDraftJS.js').to_s} #{body}},
     type: random_post_type
   )
+
+  if Guild::Topic.any?
+    post.guild_topic_list << Guild::Topic.offset(rand(Guild::Topic.count)).first.name
+  end
+
   post.save!
 
   rand(3).times do
@@ -35,10 +40,15 @@ end
   )
   parent_comment.save!
 
-  rand(2).times do
-    parent_comment.reload.child_comments.create!(
-      body: Faker::Lorem.paragraph_by_chars(number: 100, supplemental: false),
-      specialist: random_specialist, post: parent_comment.post
-    )
-  end
+  # rand(2).times do
+  #   parent_comment.reload.child_comments.create!(
+  #     body: Faker::Lorem.paragraph_by_chars(number: 100, supplemental: false),
+  #     specialist: random_specialist, post: parent_comment.post
+  #   )
+  # end
+
+  next unless num == 1
+  puts "Attaching a cover image"
+  cover_image = File.join(Rails.root, 'db/seeds/assets/guild/cover.jpg')
+  post.cover_image.attach(io: File.open(cover_image), filename: 'cover.jpg', content_type: 'image/jpeg')
 end

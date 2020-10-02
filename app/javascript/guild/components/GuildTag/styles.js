@@ -46,6 +46,10 @@ const size = variant({
       padding: "8px 14px",
       letterSpacing: "-0.01rem",
     },
+    l: {
+      padding: "5px 12px",
+      width: "160px",
+    },
   },
 });
 
@@ -61,11 +65,12 @@ export const StyledTag = styled.div`
 
   ${flex.spaceChildrenHorizontal(theme.space.xxs)}
   ${flex.flexCenterBoth}
+  flex-shrink: 0;
 
   ${({ button }) =>
     button &&
     css`
-      filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.12));
+      filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.08));
       cursor: pointer;
     `};
 `;

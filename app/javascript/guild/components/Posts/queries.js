@@ -3,8 +3,17 @@ import GuildPostFields from "@guild/graphql/fragments/guildPostFields";
 
 export const GUILD_POSTS_QUERY = gql`
   ${GuildPostFields}
-  query guildPosts($cursor: String, $selectedFilter: String) {
-    guildPosts(first: 10, after: $cursor, type: $selectedFilter) {
+  query guildPosts(
+    $cursor: String
+    $selectedFilter: String
+    $selectedTopicsIds: [ID!]
+  ) {
+    guildPosts(
+      first: 10
+      after: $cursor
+      type: $selectedFilter
+      topicIds: $selectedTopicsIds
+    ) {
       pageInfo {
         endCursor
         hasNextPage

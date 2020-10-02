@@ -3,50 +3,39 @@ require 'rails_helper'
 RSpec.describe Mutations::Guild::CreateComment do
   let(:guild_post) { create(:guild_post) }
   let(:specialist) { build(:specialist, :guild) }
+  let(:response_keys) { %w[createGuildComment guildComment] }
 
   let(:query) {
-    ->(id) {
-      <<-GRAPHQL
-      mutation {
-        createGuildComment(input: {
-          guildPostId: "#{id}",
-          body: "This is a comment body"
-        }) {
-          guildComment {
+    <<-GRAPHQL
+    mutation {
+      createGuildComment(input: {
+        guildPostId: "#{guild_post.id}",
+        body: "This is a comment body"
+      }) {
+        guildComment {
+          id
+          body
+          post {
             id
-            body
-            post {
-              id
-            }
-            author {
-              id
-            }
+          }
+          author {
+            id
           }
         }
       }
-      GRAPHQL
     }
+    GRAPHQL
   }
 
-  context "with a non guild specialist" do
-    let(:non_guild_specialist) { build(:specialist) }
-
-    it "returns a null guild comment" do
-      resp = AdvisableSchema.execute(
-        query[guild_post.id],
-        context: { current_user: non_guild_specialist }
-      )
-      expect(resp.dig("data", "createGuildComment", "guildComment")).to be_nil
-    end
-  end
+  it_behaves_like "guild specialist"
 
   context "with a guild specialist" do
     subject(:create_guild_comment) do
       resp = AdvisableSchema.execute(
-        query[guild_post.id],
-        context: { current_user: specialist }
+        query,
+        context: {current_user: specialist}
       )
-      resp.dig("data", "createGuildComment", "guildComment")
+      resp.dig("data", *response_keys)
     end
 
     it "creates a new guild comment" do
@@ -86,7 +75,7 @@ RSpec.describe Mutations::Guild::CreateComment do
         GRAPHQL
       }
       let(:resp) {
-        AdvisableSchema.execute(create_child_comment_query, context: { current_user: specialist })
+        AdvisableSchema.execute(create_child_comment_query, context: {current_user: specialist})
       }
 
       it "creates a child comment" do
@@ -96,7 +85,7 @@ RSpec.describe Mutations::Guild::CreateComment do
       end
 
       it "has an id thats different than the parent_comment id" do
-        data = resp.dig("data", "createGuildComment", "guildComment")
+        data = resp.dig("data", *response_keys)
 
         expect(data.dig("parentComment", "id")).to eq(guild_comment.id)
         expect(data["id"]).to_not eq(guild_comment.id)

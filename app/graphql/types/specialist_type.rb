@@ -119,7 +119,6 @@ class Types::SpecialistType < Types::BaseType
     object.image.try(:[], 'url')
   end
 
-
   field :cover_photo, String, null: true
 
   def cover_photo
@@ -219,6 +218,14 @@ class Types::SpecialistType < Types::BaseType
   end
   def guild_joined_time_ago
     time_ago_in_words(object.guild_joined_date || Time.now.utc)
+  end
+
+  field :guild_unread_messages, Boolean, null: true do
+    description 'Whether the guild specialist has unread messages'
+  end
+
+  field :guild_unread_notifications, Boolean, null: true do
+    description 'Whether the guild specialist has unread notifications'
   end
 
   field :previous_projects,

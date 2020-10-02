@@ -18,11 +18,11 @@ const Topics = () => {
     <GuildBox
       padding="l"
       backgroundColor="aliceBlue100"
-      spaceChildrenVertical="24"
+      spaceChildrenVertical={24}
       flexShrink={1}
       alignSelf="flex-start"
       overflow="hidden"
-      width={"275px"}
+      width="275px"
     >
       <Text fontSize="xxl" fontWeight="medium" color="catalinaBlue100">
         Topics
@@ -41,4 +41,4 @@ const Topics = () => {
   );
 };
 
-export default Topics;
+export default React.memo(Topics);
