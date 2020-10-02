@@ -1,5 +1,5 @@
 import React from "react";
-import { matchPath, useLocation } from "react-router-dom";
+import { matchPath, useLocation, NavLink } from "react-router-dom";
 import { motion, transform } from "framer-motion";
 import {
   StyledNavigationMenuItem,
@@ -119,7 +119,12 @@ export default function MultistepMenuItem({
       {steps.length > 0 && isActive && (
         <StyledNavigationMenuItemSteps>
           {steps.map((step) => (
-            <StyledNavigationMenuItemStep to={step.to} key={step.label}>
+            <StyledNavigationMenuItemStep
+              as={!step.isDisabled ? NavLink : null}
+              $isDisabled={step.isDisabled}
+              to={step.to}
+              key={step.label}
+            >
               {step.label}
             </StyledNavigationMenuItemStep>
           ))}

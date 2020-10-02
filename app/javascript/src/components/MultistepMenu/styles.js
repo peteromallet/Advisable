@@ -85,6 +85,7 @@ export const StyledNavigationMenuItem = styled.div`
   font-weight: 500;
   margin-bottom: 4px;
   position: relative;
+  user-select: none;
   color: ${theme.colors.neutral500};
   margin-left: -8px;
 
@@ -99,15 +100,22 @@ export const StyledNavigationMenuItemSteps = styled.div`
   border-left: 1px solid ${theme.colors.neutral100};
 `;
 
-export const StyledNavigationMenuItemStep = styled(NavLink)`
+const StyledNavigationMenuItemStep_Disabled = css`
+  opacity: 0.6;
+  cursor: default;
+`;
+
+export const StyledNavigationMenuItemStep = styled.span`
   padding: 4px;
   display: block;
   margin: 12px 8px;
   font-size: 15px;
   letter-spacing: -0.01rem;
-  color: ${theme.colors.neutral400};
+  color: ${theme.colors.neutral600};
 
   &.active {
     color: ${theme.colors.blue900};
   }
+
+  ${(p) => p.$isDisabled && StyledNavigationMenuItemStep_Disabled};
 `;
