@@ -8,4 +8,4 @@ nav.navigation role="navigation"
       = button_to "Reset test data", admin_reset_test_path, method: :post
     - if current_user && current_user.respond_to?(:auth_providers) && !current_user.auth_providers.linkedin_ads.exists?
       div
-        = button_to "Set Up Linkedin Ads", "/auth/linkedin_ads", id: "sign_in", method: :post
+        = button_to "Set Up LinkedIn Ads", "/auth/linkedin_ads", id: "sign_in", method: :post
