@@ -6,6 +6,7 @@
 # you're free to overwrite the RESTful controller actions.
 module Admin
   class ApplicationController < Administrate::ApplicationController
+    helper_method :current_user
     http_basic_authenticate_with name: ENV.fetch('ADMIN_USERNAME'),
                                  password: ENV.fetch('ADMIN_PASSWORD')
 
@@ -38,6 +39,14 @@ module Admin
       TestData.reset
 
       redirect_to '/admin', notice: 'Test data has been reset'
+    end
+
+    def current_user
+      @current_user ||= session_manager.current_user
+    end
+
+    def session_manager
+      @session_manager ||= SessionManager.new(session: session, cookies: cookies)
     end
   end
 end
