@@ -1,7 +1,7 @@
 import { get } from "lodash-es";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import * as Sentry from "@sentry/browser";
+import * as Sentry from "@sentry/react";
 import {
   CurrentUserWrapper,
   CurrentUserToggle,
