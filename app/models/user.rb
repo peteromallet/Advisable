@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_many :user_skills
   has_many :skills, through: :user_skills
   has_many :client_calls
+  has_many :auth_providers
   has_one :client_user
   has_one :client, through: :client_user
   belongs_to :sales_person, required: false
