@@ -1,6 +1,6 @@
 import React from "react";
 import { rgba } from "polished";
-import { Box, Text, theme, StyledCard } from "@advisable/donut";
+import { Box, Text, theme, StyledCard, Tags } from "@advisable/donut";
 import styled from "styled-components";
 import ActionBarModal from "../../../Project/ActionBarModal";
 import ProjectDetails from "components/PreviousProjectDetails";
@@ -77,11 +77,11 @@ function Project({ project }) {
           fontSize="sm"
           color="neutral800"
           lineHeight="20px"
-          // marginBottom="24px"
+          marginBottom="24px"
         >
           {project.excerpt}
         </Text>
-        {/* <Tags tags={project.skills.map((s) => s.name)} /> */}
+        <Tags tags={project.skills.map((s) => s.name)} />
       </DialogDisclosure>
     </>
   );
