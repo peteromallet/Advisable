@@ -50,21 +50,29 @@ export default function JobSetupSidebar({ data }) {
         <MultistepMenu>
           <MultistepMenu.Item
             to={`/projects/${id}/setup/skills`}
-            isComplete={completeSteps.skills}
+            isComplete={completeSteps.skillImportance}
             steps={[
-              { label: "Skill Set", to: `/projects/${id}/setup/skills` },
+              {
+                label: "Skill Set",
+                to: `/projects/${id}/setup/skills`,
+              },
               {
                 label: "Primary Skill",
                 to: `/projects/${id}/setup/primary_skill`,
+                isDisabled: !completeSteps.skills,
               },
-              { label: "Experience", to: `/projects/${id}/setup/experience` },
+              {
+                label: "Experience",
+                to: `/projects/${id}/setup/experience`,
+                isDisabled: !completeSteps.primarySkill,
+              },
             ]}
             exact
           >
             Skills
           </MultistepMenu.Item>
           <MultistepMenu.Item
-            isDisabled={!completeSteps.skills}
+            isDisabled={!completeSteps.skillImportance}
             isComplete={completeSteps.location}
             to={`/projects/${id}/setup/location`}
           >
@@ -73,7 +81,7 @@ export default function JobSetupSidebar({ data }) {
           <MultistepMenu.Item
             to={`/projects/${id}/setup/characteristics`}
             isDisabled={!completeSteps.location}
-            isComplete={completeSteps.characteristics}
+            isComplete={completeSteps.requiredCharacteristics}
             steps={[
               {
                 label: "Character Traits",
@@ -82,6 +90,7 @@ export default function JobSetupSidebar({ data }) {
               {
                 label: "Required",
                 to: `/projects/${id}/setup/required_characteristics`,
+                isDisabled: !completeSteps.characteristics,
               },
             ]}
           >
@@ -89,7 +98,7 @@ export default function JobSetupSidebar({ data }) {
           </MultistepMenu.Item>
           <MultistepMenu.Item
             isComplete={completeSteps.description}
-            isDisabled={!completeSteps.characteristics}
+            isDisabled={!completeSteps.requiredCharacteristics}
             to={`/projects/${id}/setup/description`}
           >
             Goals
