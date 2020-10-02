@@ -102,7 +102,7 @@ const Login = ({ location }) => {
                   <Link to="/reset_password">Forgot your password?</Link>
                 }
               />
-              <SubmitButton size="l" width="100%" onClick={asdofiasodfg}>
+              <SubmitButton size="l" width="100%">
                 Login
               </SubmitButton>
               {formik.status && (
