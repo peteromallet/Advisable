@@ -61,7 +61,6 @@ const StyledActionBarItem = styled.button`
   border: none;
   outline: none;
   color: #4c5061;
-  cursor: pointer;
   align-items: center;
   display: inline-flex;
   flex-direction: column;
@@ -86,7 +85,7 @@ const StyledActionBarItem = styled.button`
     display: none;
   }
 
-  &:hover {
+  &:not(:disabled):hover {
     color: ${theme.colors.blue700};
 
     ${StyledActionBarItemIcon} {
@@ -96,6 +95,10 @@ const StyledActionBarItem = styled.button`
     ${StyledActionBarItemIcon}::before {
       transform: scale(1.12);
     }
+  }
+
+  &[disabled] {
+    opacity: 0.5;
   }
 
   ${variant({

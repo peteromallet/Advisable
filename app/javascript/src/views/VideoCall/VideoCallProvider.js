@@ -7,6 +7,8 @@ export const VideoCallContext = createContext();
 export default function VideoCallProvider({ data, children }) {
   const {
     localTracks,
+    audioTrackError,
+    videoTrackError,
     getLocalVideoTrack,
     removeLocalVideoTrack,
     isAcquiringLocalTracks,
@@ -24,6 +26,8 @@ export default function VideoCallProvider({ data, children }) {
     roomState,
     localTracks,
     isConnecting,
+    audioTrackError,
+    videoTrackError,
     getLocalVideoTrack,
     removeLocalVideoTrack,
     isAcquiringLocalTracks,

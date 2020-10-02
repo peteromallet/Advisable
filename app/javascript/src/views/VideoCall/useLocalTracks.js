@@ -1,5 +1,6 @@
 import Video from "twilio-video";
 import { useState, useEffect, useCallback } from "react";
+import { getAvailableDevices } from "./utilities";
 
 export const DEFAULT_VIDEO_CONSTRAINTS = {
   width: 1280,
@@ -11,12 +12,8 @@ export default function useLocalTracks() {
   const [audioTrack, setAudioTrack] = useState();
   const [videoTrack, setVideoTrack] = useState();
   const [isAcquiringLocalTracks, setIsAcquiringLocalTracks] = useState();
-  const [localTracksError, setLocalTracksError] = useState();
-
-  function handleMediaError(error) {
-    setLocalTracksError(error.name);
-    console.log(error);
-  }
+  const [audioTrackError, setAudioTrackError] = useState();
+  const [videoTrackError, setVideoTrackError] = useState();
 
   const getLocalVideoTrack = useCallback((newOptions) => {
     // In the DeviceSelector and FlipCameraButton components, a new video track is created,
@@ -35,7 +32,9 @@ export default function useLocalTracks() {
         setVideoTrack(newTrack);
         return newTrack;
       })
-      .catch(handleMediaError);
+      .catch((err) => {
+        setVideoTrackError(err.name);
+      });
   }, []);
 
   const removeLocalVideoTrack = useCallback(() => {
@@ -47,22 +46,13 @@ export default function useLocalTracks() {
 
   async function acquireTracks() {
     setIsAcquiringLocalTracks(true);
-    let audioAvailable, videoAvailable, audioTrack, videoTrack;
+    let audioTrack, videoTrack;
 
     // First iteratre through the users devices to see if they have an audio
     // or video device. This will be used to determine which permissions we want
     // to ask for. It prevents us having to ask for video and audio permissions
     // separately.
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    devices.forEach((device) => {
-      if (!audioAvailable && device.kind === "audioinput") {
-        audioAvailable = true;
-      }
-
-      if (!videoAvailable && device.kind === "videoinput") {
-        videoAvailable = true;
-      }
-    });
+    const { isAudioAvailable, isVideoAvailable } = await getAvailableDevices();
 
     const videoOptions = {
       // In the VideoSelection component, a new video track is created, then
@@ -75,20 +65,35 @@ export default function useLocalTracks() {
     };
 
     // If audio is available but video is not, then only ask for audio
-    if (audioAvailable && !videoAvailable) {
-      audioTrack = await Video.createLocalAudioTrack();
+    if (isAudioAvailable && !isVideoAvailable) {
+      setVideoTrackError("NotFound");
+      try {
+        audioTrack = await Video.createLocalAudioTrack();
+      } catch (err) {
+        setAudioTrackError(err.name);
+      }
       // If video is available but audio is not, then only ask for video
-    } else if (videoAvailable && !audioAvailable) {
-      videoTrack = await Video.createLocalVideoTrack(videoOptions);
+    } else if (isVideoAvailable && !isAudioAvailable) {
+      setAudioTrackError("NotFound");
+      try {
+        videoTrack = await Video.createLocalVideoTrack(videoOptions);
+      } catch (err) {
+        setVideoTrackError(err.name);
+      }
       // if both are available then ask for both.
     } else {
-      const tracks = await Video.createLocalTracks({
-        audio: true,
-        video: videoOptions,
-      });
+      try {
+        const tracks = await Video.createLocalTracks({
+          audio: true,
+          video: videoOptions,
+        });
 
-      videoTrack = tracks.find((t) => t.kind === "video");
-      audioTrack = tracks.find((t) => t.kind === "audio");
+        videoTrack = tracks.find((t) => t.kind === "video");
+        audioTrack = tracks.find((t) => t.kind === "audio");
+      } catch (err) {
+        setAudioTrackError(err.name);
+        setVideoTrackError(err.name);
+      }
     }
 
     if (videoTrack) setVideoTrack(videoTrack);
@@ -104,6 +109,8 @@ export default function useLocalTracks() {
   const localTracks = [audioTrack, videoTrack].filter((t) => t !== undefined);
   return {
     localTracks,
+    audioTrackError,
+    videoTrackError,
     isAcquiringLocalTracks,
     getLocalVideoTrack,
     removeLocalVideoTrack,

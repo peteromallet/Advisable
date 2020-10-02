@@ -17,3 +17,21 @@ export function ensureMediaPermissions() {
       }
     });
 }
+
+export async function getAvailableDevices() {
+  let isAudioAvailable = false;
+  let isVideoAvailable = false;
+
+  const devices = await navigator.mediaDevices.enumerateDevices();
+  devices.forEach((device) => {
+    if (device.kind === "audioinput") {
+      isAudioAvailable = true;
+    }
+
+    if (device.kind === "videoinput") {
+      isVideoAvailable = true;
+    }
+  });
+
+  return { isAudioAvailable, isVideoAvailable };
+}
