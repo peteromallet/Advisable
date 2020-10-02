@@ -2,7 +2,7 @@ import "intersection-observer"; // Intersection observer polyfill
 import React from "react";
 import ReactDOM from "react-dom";
 import Root from "./Root";
-import * as Sentry from "@sentry/browser";
+import * as Sentry from "@sentry/react";
 
 if (process.env.SENTRY_FRONTEND_DSN) {
   Sentry.init({
