@@ -16,6 +16,15 @@ export const StyledAvatarCard = styled(StyledCard)`
   }
 `;
 
+export const StyledAvatarImage = styled.img`
+  border-radius: 16px;
+  object-fit: cover;
+  width: 190px;
+  height: 234px;
+  opacity: ${(props) => (props.loaded ? 1 : 0)};
+  transition: opacity 400ms;
+`;
+
 export const FileUploader = styled.div`
   width: 42px;
   height: 42px;
