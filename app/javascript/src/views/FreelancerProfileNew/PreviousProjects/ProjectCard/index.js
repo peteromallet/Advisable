@@ -21,6 +21,9 @@ const StyledSpecialistProject = styled(StyledCard)`
     .projectTitle {
       color: ${theme.colors.blue600};
     }
+    .clientName {
+      color: ${theme.colors.blue400};
+    }
   }
 `;
 
@@ -54,12 +57,21 @@ function Project({ project }) {
           fontSize="xl"
           lineHeight="22px"
           color="neutral900"
-          marginBottom="8px"
           fontWeight="medium"
           letterSpacing="-0.02em"
           className="projectTitle"
         >
-          {project.title}
+          {project.primarySkill.name} project
+        </Text>
+        <Text
+          fontSize="m"
+          lineHeight="22px"
+          color="neutral600"
+          marginBottom="8px"
+          letterSpacing="-0.02em"
+          className="clientName"
+        >
+          with {project.clientName}
         </Text>
         <Text
           fontSize="sm"
