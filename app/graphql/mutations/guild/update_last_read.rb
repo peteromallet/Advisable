@@ -9,17 +9,7 @@ class Mutations::Guild::UpdateLastRead < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def authorized?(**args)
-    unless context[:current_user]
-      raise ApiError::NotAuthenticated.new('You are not logged in')
-    end
-
-    unless context[:current_user].try(:guild)
-      raise GraphQL::ExecutionError.new('Invalid Permissions', options: {code: 'invalidPermissions'})
-    end
-
-    if context[:current_user].is_a?(User)
-      raise ApiError::NotAuthenticated.new('You are logged in as a user')
-    end
+    requires_guild_user!
 
     true
   end
