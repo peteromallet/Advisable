@@ -3,15 +3,21 @@ import { Formik, Form, Field } from "formik";
 import { motion } from "framer-motion";
 import { UPDATE_PROJECT } from "./queries";
 import { useMutation } from "@apollo/client";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import PrimarySkillOption from "./PrimarySkillOption";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
+import { setupProgress } from "./SetupSteps";
 
 export default function JobPrimarySkill({ data }) {
   const { id } = useParams();
   const history = useHistory();
   const location = useLocation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
+
+  if (!setupProgress(data.project).skills) {
+    return <Redirect to={`/projects/${id}/setup/skills`} />;
+  }
+
   const skills = data.project.skills;
 
   const handleSubmit = async (values) => {
