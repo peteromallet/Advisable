@@ -24,7 +24,7 @@ class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
 
   def requires_guild_user!
     requires_current_user!
-    return true if current_user&.guild
+    return true if current_user.guild
 
     ApiError.invalid_request(code: "invalidPermissions", message: "Not a guild user")
   end
