@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include CurrentUser
+
   before_action :set_sentry_context
   helper_method :user_logged_in?, :current_user
 
@@ -17,31 +19,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  protected
-
-  def user_logged_in?
-    current_user.present?
-  end
-
-  def current_user
-    session_manager.current_user
-  end
-
-  def session_manager
-    @session_manager ||= SessionManager.new(session: session, cookies: cookies)
-  end
-
   def client_ip
     request.env['HTTP_X_FORWARDED_FOR'].try(:split, ',').try(:first) ||
       request.env['REMOTE_ADDR']
   end
 
-  private
-
   def set_sentry_context
-    user = current_user
-
-    if user.present?
+    if current_user.present?
       Raven.user_context(
         id: current_user.id,
         email: current_user.email,
