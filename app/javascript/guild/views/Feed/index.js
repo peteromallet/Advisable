@@ -13,7 +13,11 @@ const Feed = () => {
   return (
     <HeaderLayout>
       <Filters />
-      <GuildBox m="l" display="flex" spaceChildrenHorizontal="24">
+      <GuildBox
+        m={{ _: "s", m: "l" }}
+        display="flex"
+        spaceChildrenHorizontal="24"
+      >
         {lUp && <Topics />}
         <Posts />
         {lUp && <NewMembers />}

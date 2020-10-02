@@ -13,6 +13,7 @@ export default gql`
     commentsCount
     authored
     createdAtTimeAgo
+    coverImage
     author {
       id
       name

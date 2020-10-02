@@ -1,5 +1,6 @@
 export const guildColors = {
   ghostWhite: "#F9FAFF",
+  ghostWhite100: "#FBFCFF",
   aliceBlue: "#F6F6FE",
   aliceBlue100: "#F6F8FF",
   purpleBlue: "#A4ADFC",

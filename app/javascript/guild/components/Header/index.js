@@ -1,4 +1,5 @@
 import React from "react";
+import { useQuery, useMutation } from "@apollo/client";
 import { Box, Link, useBreakpoint } from "@advisable/donut";
 import logo from "@advisable-main/components/Header/logo";
 import { useToggle } from "@guild/hooks/useToggle";
@@ -8,26 +9,47 @@ import SearchBar from "@guild/components/SearchBar";
 import Notifications from "@guild/components/Notifications";
 import { NavIcon, Mask } from "./styles";
 import { GuildBox } from "@guild/styles";
+import { GUILD_LAST_READ_QUERY } from "./queries";
+import { GUILD_UPDATE_LAST_READ } from "./mutations";
 
 const Header = () => {
   const sUp = useBreakpoint("sUp");
   const [notificationsOpen, toggleNotifications] = useToggle();
   const [maskOpen, toggleMask] = useToggle();
 
+  const { data: lastReadData } = useQuery(GUILD_LAST_READ_QUERY, {
+    pollInterval: 5000,
+  });
+
+  const [guildUpdateLastRead] = useMutation(GUILD_UPDATE_LAST_READ, {
+    update(cache, { data }) {
+      const { guildUpdateLastRead } = data;
+      cache.writeQuery({
+        query: GUILD_LAST_READ_QUERY,
+        data: { ...guildUpdateLastRead },
+      });
+    },
+  });
+
   const handleMessages = () => {
     if (maskOpen) safeToggleMask();
+    handleUpdateLastRead({ readMessages: true });
     // TODO: navigate to /messages ...
   };
 
   const handleNotifications = () => {
     safeToggleMask();
     toggleNotifications();
+    handleUpdateLastRead({ readNotifications: true });
   };
 
   const safeToggleMask = () => {
     if (notificationsOpen) toggleNotifications();
     toggleMask();
   };
+
+  const handleUpdateLastRead = async (input) =>
+    await guildUpdateLastRead({ variables: { input } });
 
   return (
     <>
@@ -57,11 +79,14 @@ const Header = () => {
               TODO: preload query 
                 https://www.apollographql.com/docs/react/performance/performance/
             */}
-            <NavIcon unread onClick={handleMessages}>
+            <NavIcon
+              unread={lastReadData?.viewer?.guildUnreadMessages}
+              onClick={handleMessages}
+            >
               <Messages />
             </NavIcon>
             <NavIcon
-              unread
+              unread={lastReadData?.viewer?.guildUnreadNotifications}
               open={notificationsOpen}
               onClick={handleNotifications}
             >

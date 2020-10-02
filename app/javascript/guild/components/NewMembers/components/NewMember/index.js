@@ -6,13 +6,15 @@ import { truncate } from "lodash-es";
 const NewMember = ({ newMember }) => {
   return (
     <GuildBox px="xs" alignItems="center" spaceChildrenHorizontal={16}>
-      <Avatar
-        as={Link}
-        to={`/profiles/${newMember.id}`}
-        name={newMember.name}
-        url={newMember.avatar}
-        size={"s"}
-      />
+      <GuildBox flexShrink={0}>
+        <Avatar
+          as={Link}
+          to={`/profiles/${newMember.id}`}
+          name={newMember.name}
+          url={newMember.avatar}
+          size={"s"}
+        />
+      </GuildBox>
       <GuildBox spaceChildrenVertical={2}>
         <Text fontSize="xs" fontWeight="medium" color="calalinaBlue100">
           {truncate(newMember.name, { length: 30 })}

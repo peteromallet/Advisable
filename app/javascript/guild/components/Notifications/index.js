@@ -12,7 +12,10 @@ import {
 import { GuildBox } from "@guild/styles";
 
 const Notifications = ({ open }) => {
-  const { data, loading } = useQuery(GUILD_NOTIFICATIONS_QUERY);
+  const { data, loading } = useQuery(GUILD_NOTIFICATIONS_QUERY, {
+    fetchPolicy: "cache-and-network",
+    skip: !open,
+  });
   const notificationItems = data?.guildActivity?.nodes;
 
   return (
