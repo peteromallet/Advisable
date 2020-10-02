@@ -2,6 +2,7 @@ class ChatDirectMessageJob < ApplicationJob
   def perform(initiator_id:, participant_id:, message:)
     unique_name = Digest::MD5.hexdigest([initiator_id, participant_id].sort.join)
     chat_service = client.chat.services(ENV.fetch('TWILIO_CHAT_SERVICE_SID'))
+    friendly_name = message.truncate(Chat::FriendlyNameService::MAX_FRIENDLY_NAME)
 
     # find or initialize the private channel
     channel = begin
@@ -10,9 +11,14 @@ class ChatDirectMessageJob < ApplicationJob
                 chat_service.channels.create(
                   type: 'private',
                   unique_name: unique_name,
-                  friendly_name: message.truncate(
-                    Chat::FriendlyNameService::MAX_FRIENDLY_NAME
-                  )
+                  friendly_name: friendly_name,
+                  attributes: {
+                    subject: friendly_name,
+                    members: {
+                      initiator_id: initiator_id,
+                      participant_id: participant_id
+                    }
+                  }.to_json
                 )
     end
 

@@ -1,34 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { useParams, useLocation } from "react-router-dom";
 import { Card, Text, Textarea, theme } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import { useToggle } from "@guild/hooks/useToggle";
-import { useTwilioChat } from "@guild/hooks/useTwilioChat";
+import { useTwilioChannels } from "@guild/hooks/twilioChat/useTwilioChannels";
 import HeaderLayout from "@guild/components/Layouts/HeaderLayout";
 import SortConversations from "@guild/components/ShowMore";
-import { GuildBox, flex } from "@guild/styles";
-import { SubmitButton } from "@guild/components/Buttons/styles";
+import { GuildBox } from "@guild/styles";
 import InboxHeader from "./components/InboxHeader";
 import ActiveConversation from "./components/ActiveConversation";
 import ConversationItem from "./components/ConversationItem";
 
-import { data } from "./stub";
-
 const Messages = () => {
-  const {
-    subscribedChannels,
-    activeChannel,
-    selectActiveChannel,
-    loading,
-  } = useTwilioChat();
-
-  const initialConversation = data?.conversations?.[0];
-  const [activeConversation, setActiveConversation] = useState(
-    initialConversation,
-  );
+  const { loading, subscribedChannels } = useTwilioChannels();
   const [sortConversations, toggleSortConversations] = useToggle();
+  const [activeChannelSid, setActiveChannelSid] = useState(null);
 
-  console.log("activeChannel", activeChannel);
+  /* Set the initial activeConversation. */
+  useEffect(() => {
+    if (!subscribedChannels.length || activeChannelSid) return;
+    setActiveChannelSid(subscribedChannels[0].sid);
+  }, [subscribedChannels, activeChannelSid]);
+
   return (
     <HeaderLayout>
       <GuildBox
@@ -80,8 +73,8 @@ const Messages = () => {
                     <ConversationItem
                       key={key}
                       conversation={conversation}
-                      setActive={selectActiveChannel}
-                      isActive={activeConversation.id === conversation.sid}
+                      setActive={setActiveChannelSid}
+                      isActive={activeChannelSid === conversation.sid}
                     />
                   ))}
                 </GuildBox>
@@ -94,37 +87,7 @@ const Messages = () => {
                 flexDirection="column"
                 background="white"
               >
-                <InboxHeader>
-                  <Text
-                    fontWeight="medium"
-                    size="2xl"
-                    color="catalinaBlue100"
-                    css={flex.flexTruncate}
-                  >
-                    {activeConversation.subject}
-                  </Text>
-                </InboxHeader>
-
-                <ActiveConversation activeConversation={activeConversation} />
-
-                {/* New Message */}
-                <GuildBox
-                  width={"95%"}
-                  spaceChildrenVertical={8}
-                  height={"143px"}
-                  alignSelf="center"
-                  marginX="l"
-                  marginY="m"
-                >
-                  <Textarea
-                    minRows="3"
-                    maxRows="8"
-                    placeholder="New Message ..."
-                  ></Textarea>
-                  <SubmitButton size="l" loading={false} type="submit">
-                    Send
-                  </SubmitButton>
-                </GuildBox>
+                <ActiveConversation channelSid={activeChannelSid} />
               </GuildBox>
             </GuildBox>
           )}

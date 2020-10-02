@@ -8,7 +8,7 @@ import { CHAT_PARTICIPANT_QUERY } from "../queries";
 
 const ConversationItem = ({ conversation, setActive, isActive }) => {
   const { data, loading } = useQuery(CHAT_PARTICIPANT_QUERY, {
-    variables: { id: conversation?.other?.identity },
+    variables: { id: conversation?.other },
   });
   const other = data?.specialist;
 
