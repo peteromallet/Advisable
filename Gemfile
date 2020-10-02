@@ -35,9 +35,8 @@ gem 'omniauth-rails_csrf_protection', '~> 0.1'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 gem 'webpacker', '~> 5.1'
+gem 'slim'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -67,6 +66,7 @@ gem 'graphql_playground-rails'
 
 group :development, :test do
   gem 'pry'
+  gem 'pry-doc'
   gem 'dotenv-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
