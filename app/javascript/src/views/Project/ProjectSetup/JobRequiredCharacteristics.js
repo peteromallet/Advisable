@@ -3,11 +3,12 @@ import { Box } from "@advisable/donut";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import SubmitButton from "components/SubmitButton";
 import { UPDATE_PROJECT } from "./queries";
 import RequiredCharacteristic from "./RequiredCharacteristic";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
+import { setupProgress } from "./SetupSteps";
 
 export default function JobRequiredCharacteristics({ data }) {
   const { id } = useParams();
@@ -15,6 +16,10 @@ export default function JobRequiredCharacteristics({ data }) {
   const location = useLocation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
   const { requiredCharacteristics, characteristics } = data.project;
+
+  if (!setupProgress(data.project).characteristics) {
+    return <Redirect to={`/projects/${id}/setup/characteristics`} />;
+  }
 
   const initialValues = {
     requiredCharacteristics: requiredCharacteristics,

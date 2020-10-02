@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form, Field } from "formik";
@@ -8,12 +8,17 @@ import SubmitButton from "components/SubmitButton";
 import BulletPointInput from "components/BulletPointInput";
 import { UPDATE_PROJECT } from "./queries";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
+import { setupProgress } from "./SetupSteps";
 
 export default function JobCharacteristics({ data }) {
   const { id } = useParams();
   const history = useHistory();
   const location = useLocation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
+
+  if (!setupProgress(data.project).location) {
+    return <Redirect to={`/projects/${id}/setup/location`} />;
+  }
 
   const { primarySkill } = data.project;
 
