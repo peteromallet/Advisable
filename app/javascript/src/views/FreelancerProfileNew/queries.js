@@ -54,6 +54,10 @@ const fields = gql`
         name
         color
       }
+      primarySkill {
+        id
+        name
+      }
       skills {
         id
         name
