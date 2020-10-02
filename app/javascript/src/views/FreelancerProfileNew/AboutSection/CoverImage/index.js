@@ -1,7 +1,6 @@
 import React from "react";
-import { Box } from "@advisable/donut";
 import FileUpload from "./FileUpload";
-import { CoverImageWrapper } from "./styles";
+import { CoverImageWrapper, StyledCoverImage } from "./styles";
 import { useMutation } from "@apollo/client";
 import { useNotifications } from "src/components/Notifications";
 import useImageOnLoad from "src/hooks/useImageOnLoad";
@@ -27,19 +26,7 @@ function CoverImage({ coverPhoto, isOwner }) {
   return (
     <CoverImageWrapper>
       {isOwner && <FileUpload onChange={submit} />}
-      <Box
-        as="img"
-        src={coverPhoto || defaultPicture}
-        css={`
-          object-fit: cover;
-        `}
-        styles={{ visibility: loaded ? "visible" : "hidden" }}
-        width="100%"
-        bg="neutral50"
-        height="300px"
-        mx="auto"
-        borderRadius={12}
-      />
+      <StyledCoverImage src={coverPhoto || defaultPicture} loaded={loaded} />
     </CoverImageWrapper>
   );
 }

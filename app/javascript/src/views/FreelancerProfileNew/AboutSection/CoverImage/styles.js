@@ -1,9 +1,21 @@
 import { rgba } from "polished";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { theme } from "@advisable/donut";
 
 export const CoverImageWrapper = styled.div`
   position: relative;
+  border-radius: 12px;
+  height: 300px;
+  background-color: ${theme.colors.neutral100};
+`;
+
+export const StyledCoverImage = styled.img`
+  border-radius: 12px;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  opacity: ${(props) => (props.loaded ? 1 : 0)};
+  transition: opacity 400ms;
 `;
 
 export const FileUploader = styled.div`
