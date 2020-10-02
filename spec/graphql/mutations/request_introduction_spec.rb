@@ -69,4 +69,14 @@ RSpec.describe Mutations::RequestIntroduction do
     interview = Interview.last
     expect(interview.call_requested_at).to be_within(1.second).of(Time.zone.now)
   end
+
+  it 'creates a video call' do
+    expect {
+      AdvisableSchema.execute(query, context: context)
+    }.to change {
+      VideoCall.count
+    }.by(1)
+    interview = Interview.last
+    expect(interview.video_call).to_not be_nil
+  end
 end
