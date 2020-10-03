@@ -19,7 +19,7 @@ class CreateLinkedinAdJob < ApplicationJob
     create_ad_inmail_content!
     create_conversation_ad!
     activate_conversation_ad!
-    # create_campaign_conversion!
+    create_campaign_conversion!
     activate_campaign!
     pause_campaign!
   rescue ActiveRecord::RecordNotFound
@@ -105,9 +105,12 @@ class CreateLinkedinAdJob < ApplicationJob
   end
 
   def create_campaign_conversion!
-    path = "campaignConversions/(campaign:urn:li:sponsoredCampaign:#{project.linkedin_campaign_id},conversion:urn:lla:llaPartnerConversion:#{CONVERSION_ID})"
-    response = linkedin_api.put_request(path)
-
+    params = {
+      campaign: "urn:li:sponsoredCampaign:#{project.linkedin_campaign_id}",
+      conversion: "urn:lla:llaPartnerConversion:#{CONVERSION_ID}"
+    }
+    path = "campaignConversions/(campaign:#{CGI.escape(params[:campaign])},conversion:#{CGI.escape(params[:conversion])})"
+    response = linkedin_api.put_request(path, params)
     Rails.logger.info("New Sponsored Creative Ad created: #{creative_id}")
   end
 
