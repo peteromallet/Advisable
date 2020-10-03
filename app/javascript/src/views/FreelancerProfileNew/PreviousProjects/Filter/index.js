@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useReducer, useRef } from "react";
+import React, { useEffect, useMemo, useReducer } from "react";
 import { Box } from "@advisable/donut";
 import createDispatcher from "src/utilities/createDispatcher";
 import { isEmpty, maxBy, minBy, sumBy } from "lodash-es";
 import useResponsiveRef from "./useResponsiveRef";
+import useChildInjection from "./useChildInjection";
 
 const handleSectionParams = (state, sectionName, params) => {
   const maxWidth = maxBy(params, "width");
@@ -82,6 +83,13 @@ function Filter(props) {
     createAction,
   ]);
   const [layoutRef, layoutWrapperWidth] = useResponsiveRef(setWrapperWidth);
+  const sections = useChildInjection(props.children, (child) => ({
+    addSectionParams,
+    wrapperWidth: state.wrapperWidth,
+    ratio: state.sections[child.props.sectionName]?.ratio,
+  }));
+
+  useEffect(() => {}, []);
 
   console.log("layout wrapper width", layoutWrapperWidth);
   // Set ratio of sections
@@ -92,22 +100,9 @@ function Filter(props) {
   const numOfSections = Object.keys(state.sections).length;
   console.log("num of sections", numOfSections);
 
-  const tags = useMemo(
-    () =>
-      React.Children.map(props.children, (child) =>
-        React.cloneElement(child, {
-          ...child.props,
-          addSectionParams,
-          wrapperWidth: state.wrapperWidth,
-          ratio: state.sections[child.props.sectionName]?.ratio,
-        }),
-      ),
-    [addSectionParams, props.children, state.sections, state.wrapperWidth],
-  );
-
   return (
     <Box ref={layoutRef} display="flex">
-      {tags}
+      {sections}
     </Box>
   );
 }
