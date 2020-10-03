@@ -4,6 +4,8 @@ class LinkedinApi
       response_log = [
         "Something went wrong with the LinkedIn API request.",
         "Status: #{response.status}.",
+        "URL: #{response.env.url}",
+        "Request body: #{JSON[response.env.request_body]}",
         "Headers: #{response.headers}.",
         "Body: #{response.body}"
       ]
@@ -24,7 +26,6 @@ class LinkedinApi
 
   def post_request(path, params, expected_status = 201)
     response = Faraday.post(API_ROOT + path, params.to_json, request_headers)
-
     if response.status == expected_status
       response
     else
@@ -32,10 +33,8 @@ class LinkedinApi
     end
   end
 
-  def put_request(path, expected_status = 200)
-    headers = request_headers.merge({"Authorization" => "Bearer #{token}", "X-Restli-Protocol-Version" => "2.0.0"})
-    response = Faraday.put(API_ROOT + path, nil, headers)
-
+  def put_request(path, params, expected_status = 204)
+    response = Faraday.put(API_ROOT + path, params.to_json, request_headers_v2)
     if response.status == expected_status
       response
     else
@@ -44,9 +43,7 @@ class LinkedinApi
   end
 
   def get_request(path, expected_status = 200)
-    headers = request_headers.merge({"X-Restli-Protocol-Version" => "2.0.0"})
-    response = Faraday.get(API_ROOT + path, nil, headers)
-
+    response = Faraday.get(API_ROOT + path, nil, request_headers_v2)
     if response.status == expected_status
       response
     else
@@ -63,5 +60,9 @@ class LinkedinApi
       "Content-Type" => "application/json",
       "Accept" => "application/json"
     }
+  end
+
+  def request_headers_v2
+    request_headers.merge({"X-Restli-Protocol-Version" => "2.0.0"})
   end
 end
