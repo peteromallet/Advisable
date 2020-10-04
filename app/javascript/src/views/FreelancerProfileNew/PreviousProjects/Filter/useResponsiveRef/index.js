@@ -8,18 +8,26 @@ import { useEffect, useCallback, useRef, useState } from "react";
 function useResponsiveRef(action) {
   const [width, setWidth] = useState(null);
   const ref = useRef(null);
-  const onWidthResize = useCallback(action, [action]);
+
+  const updateWidth = useCallback(
+    (newWidth) => {
+      setWidth(newWidth);
+      newWidth !== width && action && action(newWidth);
+    },
+    [action, width],
+  );
+
   const handleResize = useCallback(() => {
     const newWidth = ref.current.offsetWidth;
-    setWidth(newWidth);
-    width !== newWidth && onWidthResize(newWidth);
-  }, [onWidthResize, width]);
+    updateWidth(newWidth);
+  }, [updateWidth]);
 
   useEffect(() => {
-    setWidth(ref.current.offsetWidth);
+    const width = ref.current.offsetWidth;
+    updateWidth(width);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [handleResize]);
+  }, [action, handleResize, updateWidth]);
 
   return [ref, width];
 }
