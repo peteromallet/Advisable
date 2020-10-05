@@ -1,4 +1,6 @@
 class Account < ApplicationRecord
+  include Uid
+
   belongs_to :country, required: false
   has_one :user, dependent: :nullify # Change to :destroy
   has_one :specialist, dependent: :nullify # Change to :destroy
@@ -20,7 +22,6 @@ end
 #  last_name           :string
 #  password_digest     :string
 #  permissions         :jsonb
-#  pid                 :string
 #  remember_token      :string
 #  reset_digest        :string
 #  reset_sent_at       :datetime
@@ -29,15 +30,13 @@ end
 #  vat_number          :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  airtable_id         :string
 #  country_id          :bigint
 #
 # Indexes
 #
-#  index_accounts_on_airtable_id  (airtable_id)
-#  index_accounts_on_country_id   (country_id)
-#  index_accounts_on_email        (email)
-#  index_accounts_on_uid          (uid)
+#  index_accounts_on_country_id  (country_id)
+#  index_accounts_on_email       (email)
+#  index_accounts_on_uid         (uid) UNIQUE
 #
 # Foreign Keys
 #
