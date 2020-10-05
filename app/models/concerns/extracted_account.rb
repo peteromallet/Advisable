@@ -88,25 +88,20 @@ module ExtractedAccount
     end
   end
 
-  # Returns a user or specialist with a given uid.
-  def self.find_by_uid(uid)
-    User.find_by_uid(uid) || Specialist.find_by_uid(uid)
-  end
-
-  def self.find_by_uid!(uid)
-    record = find_by_uid(uid)
-    return record if record.present?
-    raise ActiveRecord::RecordNotFound
-  end
-
   def self.find_by_uid_or_airtable_id(id)
     find_by_uid(id) || find_by_airtable_id(id)
   end
 
   def self.find_by_uid_or_airtable_id!(id)
-    record = find_by_uid_or_airtable_id(id)
-    return record if record.present?
-    raise ActiveRecord::RecordNotFound
+    find_by_uid_or_airtable_id(id).presence || raise(ActiveRecord::RecordNotFound)
+  end
+
+  def self.find_by_uid(uid)
+    User.find_by_uid(uid) || Specialist.find_by_uid(uid)
+  end
+
+  def self.find_by_uid!(uid)
+    find_by_uid(uid).presence || raise(ActiveRecord::RecordNotFound)
   end
 
   def self.find_by_airtable_id(id)
@@ -114,24 +109,18 @@ module ExtractedAccount
   end
 
   def self.find_by_airtable_id!(id)
-    record = find_by_airtable_id(id)
-    return record if record.present?
-    raise ActiveRecord::RecordNotFound
+    find_by_airtable_id(id).presence || raise(ActiveRecord::RecordNotFound)
   end
 
-  # Returns a user or specialist with a given email
   def self.find_by_email(email)
     User.find_by_email(email) || Specialist.find_by_email(email)
   end
 
   def self.find_by_email!(email)
-    record = find_by_email(email)
-    return record if record.present?
-    raise ActiveRecord::RecordNotFound
+    find_by_email(email).presence || raise(ActiveRecord::RecordNotFound)
   end
 
   def self.find_by_remember_token(token)
-    User.find_by_remember_token(token) ||
-      Specialist.find_by_remember_token(token)
+    User.find_by_remember_token(token) || Specialist.find_by_remember_token(token)
   end
 end
