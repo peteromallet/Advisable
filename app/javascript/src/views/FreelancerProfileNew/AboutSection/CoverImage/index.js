@@ -12,7 +12,6 @@ function CoverImage({ coverPhoto, isOwner }) {
   const notifications = useNotifications();
 
   const submit = async (blob) => {
-    console.log("blob", blob);
     await updatePicture({
       variables: { input: { blob: blob.signed_id } },
     });
