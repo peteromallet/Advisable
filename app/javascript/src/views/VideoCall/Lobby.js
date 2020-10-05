@@ -6,6 +6,7 @@ import useCallContext from "./useCallContext";
 import SettingsButton from "./SettingsButton";
 import ToggleAudioButton from "./ToggleAudioButton";
 import ToggleVideoButton from "./ToggleVideoButton";
+import TrackPermissionModal from "./TrackPermissionModal";
 import styled from "styled-components";
 
 const StyledVideoPreview = styled.div`
@@ -27,9 +28,13 @@ export default function Lobby() {
     connect,
     data,
     isConnecting,
+    audioTrackError,
+    videoTrackError,
     isAcquiringLocalTracks,
   } = useCallContext();
   const videoTrack = localTracks.find((t) => t.name.includes("camera"));
+
+  const hasError = Boolean(audioTrackError || videoTrackError);
 
   return (
     <Box
@@ -57,7 +62,7 @@ export default function Lobby() {
         size="l"
         onClick={connect}
         loading={isConnecting}
-        disabled={isAcquiringLocalTracks}
+        disabled={hasError || isAcquiringLocalTracks}
       >
         Join Video Call
       </Button>
@@ -66,6 +71,7 @@ export default function Lobby() {
         <ToggleVideoButton />
         <SettingsButton />
       </ActionBar>
+      <TrackPermissionModal />
     </Box>
   );
 }
