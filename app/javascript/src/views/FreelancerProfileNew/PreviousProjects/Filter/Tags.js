@@ -8,6 +8,7 @@ function Tags({
   color,
   bgActive,
   addSectionParams,
+  layout = {},
   ratio,
   ...props
 }) {
@@ -29,6 +30,9 @@ function Tags({
       const { selected } = sectionTags[tagKey];
       return (
         <Box
+          // position="absolute"
+          // left={layout[sectionName]?.items[index].x}
+          // top={layout[sectionName]?.items[index].y}
           key={`${sectionName}-${tagKey}`}
           id={`${sectionName}-${tagKey}`}
           tagName={tagKey}
@@ -64,7 +68,7 @@ function Tags({
       );
     });
   return (
-    <Box width={`${ratio}%`} position="relative">
+    <Box width={layout[sectionName]?.width} position="relative">
       <Box
         bg="neutral50"
         px="4px"
@@ -84,6 +88,7 @@ function Tags({
         alignItems="flex-start"
         alignContent="flex-start"
         justifyContent="flex-start"
+        height="260px"
         maxHeight={props.maxHeight}
         overflow="hidden"
       >

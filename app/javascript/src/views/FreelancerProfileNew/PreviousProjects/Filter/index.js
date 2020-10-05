@@ -1,65 +1,29 @@
 import React, { useEffect, useMemo, useReducer } from "react";
 import { Box } from "@advisable/donut";
 import createDispatcher from "src/utilities/createDispatcher";
-import { isEmpty, maxBy, minBy, sumBy } from "lodash-es";
+import { isEmpty } from "lodash-es";
 import useResponsiveRef from "./useResponsiveRef";
 import useChildInjection from "./useChildInjection";
-
-const handleSectionParams = (state, sectionName, params) => {
-  const maxWidth = maxBy(params, "width");
-  const minWidth = minBy(params, "width");
-  const maxHeight = maxBy(params, "height");
-  const minHeight = minBy(params, "height");
-  const sumWidth = sumBy(params, "width");
-  const sumHeight = sumBy(params, "height");
-  const area = sumHeight * sumWidth;
-  console.log("area", area);
-  return {
-    ...state,
-    sections: {
-      ...state.sections,
-      [sectionName]: {
-        maxWidth,
-        minWidth,
-        maxHeight,
-        minHeight,
-        sumWidth,
-        sumHeight,
-        area,
-        list: params,
-      },
-    },
-  };
-};
-
-const setSectionsRatio = (state) => {
-  const sectionKeys = Object.keys(state.sections);
-  const ratioExist = sectionKeys.every((key) => state.sections[key].ratio);
-  if (ratioExist) return state;
-  const sectionsArea = sumBy(sectionKeys, (key) => state.sections[key].area);
-  const percent = sectionsArea / 100;
-  const sectionsWithRatio = sectionKeys.reduce((acc, key) => {
-    // Calc and set ratio to each section
-    const ratio = acc[key].area / percent;
-    return { ...acc, [key]: { ...acc[key], ratio } };
-  }, state.sections);
-  console.log("sections with ratio", sectionsWithRatio);
-  return { ...state, sections: sectionsWithRatio };
-};
+import {
+  setSectionsRatio,
+  handleSectionParams,
+  setLayout,
+} from "./reducerHandlers";
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "SET_WRAPPER_WIDTH":
-      console.log("set wrapper width", action);
       return { ...state, wrapperWidth: action.payload };
-    case "SET_SECTIONS_RATIO":
-      return setSectionsRatio(state);
     case "ADD_SECTION_PARAMS":
       return handleSectionParams(
         state,
         action.payload.sectionName,
         action.payload.sectionParams,
       );
+    case "SET_SECTIONS_RATIO":
+      return setSectionsRatio(state);
+    case "SET_LAYOUT":
+      return setLayout(state);
     default:
       return state;
   }
@@ -69,7 +33,6 @@ function Filter(props) {
   const [state, dispatch] = useReducer(reducer, {
     sections: {},
   });
-  // const filterWrapperRef = useRef(null);
 
   // Actions
   const createAction = useMemo(() => createDispatcher(dispatch), []);
@@ -82,26 +45,23 @@ function Filter(props) {
   const setSectionsRatio = useMemo(() => createAction("SET_SECTIONS_RATIO"), [
     createAction,
   ]);
-  const [layoutRef, layoutWrapperWidth] = useResponsiveRef(setWrapperWidth);
+  const setLayout = useMemo(() => createAction("SET_LAYOUT"), [createAction]);
+  const [layoutRef] = useResponsiveRef(setWrapperWidth);
   const sections = useChildInjection(props.children, (child) => ({
     addSectionParams,
     wrapperWidth: state.wrapperWidth,
+    layout: state.layout,
     ratio: state.sections[child.props.sectionName]?.ratio,
   }));
 
-  useEffect(() => {}, []);
-
-  console.log("layout wrapper width", layoutWrapperWidth);
   // Set ratio of sections
   useEffect(() => {
     !isEmpty(state.sections) && setSectionsRatio({});
-  }, [setSectionsRatio, state.sections]);
-
-  const numOfSections = Object.keys(state.sections).length;
-  console.log("num of sections", numOfSections);
+    !isEmpty(state.sections) && setLayout({});
+  }, [setLayout, setSectionsRatio, state.sections]);
 
   return (
-    <Box ref={layoutRef} display="flex">
+    <Box ref={layoutRef} width="100%" display="flex">
       {sections}
     </Box>
   );
