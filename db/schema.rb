@@ -20,11 +20,9 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
   create_table "accounts", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.string "airtable_id"
     t.string "password_digest"
     t.string "email"
     t.string "uid"
-    t.string "pid"
     t.datetime "confirmed_at"
     t.string "confirmation_digest"
     t.bigint "country_id"
@@ -40,10 +38,9 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
     t.string "remember_token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["airtable_id"], name: "index_accounts_on_airtable_id"
     t.index ["country_id"], name: "index_accounts_on_country_id"
     t.index ["email"], name: "index_accounts_on_email"
-    t.index ["uid"], name: "index_accounts_on_uid"
+    t.index ["uid"], name: "index_accounts_on_uid", unique: true
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|

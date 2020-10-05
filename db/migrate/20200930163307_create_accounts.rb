@@ -3,11 +3,9 @@ class CreateAccounts < ActiveRecord::Migration[6.0]
     create_table :accounts do |t|
       t.string :first_name
       t.string :last_name
-      t.string :airtable_id
       t.string :password_digest
       t.string :email
       t.string :uid
-      t.string :pid
       t.datetime :confirmed_at
       t.string :confirmation_digest
       t.references :country, foreign_key: true
@@ -24,8 +22,7 @@ class CreateAccounts < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-    add_index :accounts, :airtable_id
     add_index :accounts, :email
-    add_index :accounts, :uid
+    add_index :accounts, :uid, unique: true
   end
 end
