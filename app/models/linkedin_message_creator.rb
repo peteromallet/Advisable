@@ -20,10 +20,7 @@ class LinkedinMessageCreator
       "Best,\n#{sender_name}"
     ]
 
-    flowchart = {
-      body: sentences.join("\n\n"),
-      actions: message_1_actions
-    }
+    {body: sentences.join("\n\n"), actions: message_1_actions}
   end
 
   private
@@ -37,16 +34,9 @@ class LinkedinMessageCreator
       "Does this sound like something you might be interested in?"
     ]
     [
-      {
-        text: "Yes",
-        body: sentences.join("\n\n"),
-        actions: requirement_actions(3)
-      },
+      {text: "Yes", body: sentences.join("\n\n"), actions: requirement_actions(3)},
       action_no,
-      {
-        text: "I might know someone",
-        url: "https://advisable.formstack.com/forms/performance_marketing_referral"
-      }
+      {text: "I might know someone", url: "https://advisable.formstack.com/forms/performance_marketing_referral"}
     ]
   end
 
@@ -55,11 +45,7 @@ class LinkedinMessageCreator
     return final_actions if number.zero? || requirement.empty?
 
     [
-      {
-        text: "Yes",
-        body: sentences_for(*requirement, number).join("\n\n"),
-        actions: requirement_actions(number - 1)
-      },
+      {text: "Yes", body: sentences_for(*requirement, number).join("\n\n"), actions: requirement_actions(number - 1)},
       action_no
     ]
   end
@@ -75,10 +61,7 @@ class LinkedinMessageCreator
         text: "Yes",
         body: sentences.join("\n\n"),
         actions: [
-          {
-            text: "Yes",
-            url: "https://advisable.com/projects/request-more-information/?pid=#{project.airtable_id}&utm_campaign=#{project.airtable_id}"
-          },
+          {text: "Yes", url: "https://advisable.com/projects/request-more-information/?pid=#{project.airtable_id}&utm_campaign=#{project.airtable_id}"},
           action_no
         ]
       },

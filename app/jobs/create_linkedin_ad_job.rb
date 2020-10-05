@@ -131,17 +131,9 @@ class CreateLinkedinAdJob < ApplicationJob
     if message.key?(:actions)
       actions = message[:actions].map do |action|
         if action.key?(:actions)
-          {
-            optionText: action[:text],
-            type: "SIMPLE_REPLY",
-            nextContent: create_message!(action)
-          }
+          {optionText: action[:text], type: "SIMPLE_REPLY", nextContent: create_message!(action)}
         else
-          {
-            optionText: action[:text],
-            type: "EXTERNAL_WEBSITE",
-            actionTarget: {landingPage: action[:url]}
-          }
+          {optionText: action[:text], type: "EXTERNAL_WEBSITE", actionTarget: {landingPage: action[:url]}}
         end
       end
       params.merge!(nextAction: {"array": actions})
