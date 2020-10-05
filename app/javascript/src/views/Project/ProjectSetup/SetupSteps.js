@@ -23,9 +23,12 @@ import JobLikelyToHire from "./JobLikelyToHire";
 
 export const setupProgress = (project) => {
   return {
-    skills: project.industryExperienceImportance !== null,
+    skills: project.skills.length > 0,
+    primarySkill: Boolean(project.primarySkill),
+    skillImportance: project.industryExperienceImportance !== null,
     location: project.locationImportance !== null,
-    characteristics: project.requiredCharacteristics.length > 0,
+    characteristics: project.characteristics.length > 0,
+    requiredCharacteristics: project.requiredCharacteristics.length > 0,
     description: project.goals.length > 0,
     specialists: project.likelyToHire !== null,
   };
