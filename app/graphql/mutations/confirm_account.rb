@@ -6,7 +6,7 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
   field :viewer, Types::ViewerUnion, null: true
 
   def resolve(email:, token:)
-    account = ExtractedAccount.find_by_email!(email)
+    account = SpecialistOrUser.find_by_email!(email)
     ApiError.invalid_request(code: 'ALREADY_CONFIRMED') if account.confirmed
     validate_token(account, token)
     account.confirmed_at = Time.zone.now

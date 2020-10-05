@@ -1,6 +1,6 @@
-# The ExtractedAccount module contains of all the login for user accounts. Both Users and
+# The SpecialistOrUser module contains of all the login for user accounts. Both Users and
 # Specialists are able to login to the system and act as user accounts.
-module ExtractedAccount
+module SpecialistOrUser
   extend ActiveSupport::Concern
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
 
@@ -82,7 +82,7 @@ module ExtractedAccount
     # Validate that the email does not already exist as a user or specialist
     def email_not_taken
       return unless email.present?
-      existing = ExtractedAccount.find_by_email(email.downcase)
+      existing = SpecialistOrUser.find_by_email(email.downcase)
       return if persisted? && existing == self
       errors.add(:email, :taken) if existing.present?
     end
