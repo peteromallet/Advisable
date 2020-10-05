@@ -1,9 +1,7 @@
 class Account < ApplicationRecord
-  include ExtractedAccount
-
   belongs_to :country, required: false
-  has_many :users
-  has_many :specialists
+  has_one :user, dependent: :nullify # Change to :destroy
+  has_one :specialist, dependent: :nullify # Change to :destroy
 end
 
 # == Schema Information
