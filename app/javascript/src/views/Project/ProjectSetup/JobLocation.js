@@ -1,16 +1,21 @@
 import React from "react";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import RangeSelection from "components/RangeSelection";
 import { UPDATE_PROJECT } from "./queries";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
+import { setupProgress } from "./SetupSteps";
 
 export default function JobLocation({ data }) {
   const { id } = useParams();
   const history = useHistory();
   const location = useLocation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
+
+  if (!setupProgress(data.project).skillImportance) {
+    return <Redirect to={`/projects/${id}/setup/skills`} />;
+  }
 
   const initialValues = {
     locationImportance: data.project.locationImportance,

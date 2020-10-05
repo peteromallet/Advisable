@@ -2,17 +2,27 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client";
 import { Pencil } from "@styled-icons/heroicons-solid";
-import { useHistory, useParams, Link as RouterLink } from "react-router-dom";
+import {
+  useHistory,
+  useParams,
+  Link as RouterLink,
+  Redirect,
+} from "react-router-dom";
 import { Stack, Box, Text, BulletList, Button, Tags } from "@advisable/donut";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 import { PUBLISH_PROJECT } from "./queries";
 import dataLayer from "../../../utilities/dataLayer";
+import { setupProgress } from "./SetupSteps";
 
 export default function PublishJob({ data }) {
   const { id } = useParams();
   const history = useHistory();
   const { t } = useTranslation();
   const [publishProject, publishProjectResponse] = useMutation(PUBLISH_PROJECT);
+
+  if (!setupProgress(data.project).specialists) {
+    return <Redirect to={`/projects/${id}/setup/likely_to_hire`} />;
+  }
 
   const { project } = data;
   const { primarySkill, user } = project;

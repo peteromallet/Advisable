@@ -3,13 +3,18 @@ import { Formik, Form, Field } from "formik";
 import RangeSelection from "components/RangeSelection";
 import { UPDATE_PROJECT } from "./queries";
 import { useMutation } from "@apollo/client";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Redirect } from "react-router-dom";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
+import { setupProgress } from "./SetupSteps";
 
 export default function JobLikelyToHire({ data }) {
   const { id } = useParams();
   const history = useHistory();
   const [updateProject] = useMutation(UPDATE_PROJECT);
+
+  if (!setupProgress(data.project).description) {
+    return <Redirect to={`/projects/${id}/setup/description`} />;
+  }
 
   const initialValues = {
     likelyToHire: data.project.likelyToHire,
