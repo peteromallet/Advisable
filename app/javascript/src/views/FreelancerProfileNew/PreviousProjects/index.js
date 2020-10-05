@@ -143,7 +143,7 @@ function PreviousProjects({ data, isOwner }) {
       >
         <Filter>
           <Tags
-            sectionName="Skills"
+            sectionName="skills"
             sectionTags={state.skillsSection}
             onClick={switchSkillSelection}
             color="blue500"
@@ -151,7 +151,7 @@ function PreviousProjects({ data, isOwner }) {
             maxHeight={state.isExpand ? null : "104px"}
           />
           <Tags
-            sectionName="Industries"
+            sectionName="industries"
             sectionTags={state.industriesSection}
             onClick={switchIndustrySelection}
             color="cyan800"
