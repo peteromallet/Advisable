@@ -104,9 +104,24 @@ export const useTwilioChannels = () => {
     [viewer.id],
   );
 
+  const sortChannels = ({ order = "desc" }) => {
+    setSubscribedChannels((prev) => {
+      if (order === "desc") {
+        return prev.sort(
+          (a, b) => b.lastMessageDateTime - a.lastMessageDateTime,
+        );
+      } else {
+        return prev.sort(
+          (a, b) => a.lastMessageDateTime - b.lastMessageDateTime,
+        );
+      }
+    });
+  };
+
   return {
     loading,
     subscribedChannels,
+    sortChannels,
   };
 };
 

@@ -178,7 +178,7 @@ const Post = () => {
             </GuildBox>
 
             {/* Post Comments */}
-            {showComments && post.comments.length && (
+            {showComments && post.comments.length > 0 && (
               <GuildBox px="xxl" py="l" spaceChildrenVertical={24}>
                 {post.comments.map((comment, key) => (
                   <GuildBox key={key} spaceChildrenHorizontal={16}>

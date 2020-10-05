@@ -13,7 +13,7 @@ import ConversationItem from "./components/ConversationItem";
 import MessageWithAction from "@guild/components/MessageWithAction";
 
 const Messages = () => {
-  const { loading, subscribedChannels } = useTwilioChannels();
+  const { loading, subscribedChannels, sortChannels } = useTwilioChannels();
   const [sortConversations, toggleSortConversations] = useToggle();
   const [activeChannelSid, setActiveChannelSid] = useState(null);
 
@@ -22,6 +22,12 @@ const Messages = () => {
     if (!subscribedChannels.length || activeChannelSid) return;
     setActiveChannelSid(subscribedChannels[0].sid);
   }, [subscribedChannels, activeChannelSid]);
+
+  const handleSortConversations = () => {
+    const order = sortConversations ? "desc" : "asc";
+    toggleSortConversations();
+    sortChannels({ order });
+  };
 
   return (
     <HeaderLayout>
@@ -59,7 +65,7 @@ const Messages = () => {
                       </Text>
                       <SortConversations
                         showingMore={sortConversations}
-                        onToggle={toggleSortConversations}
+                        onToggle={handleSortConversations}
                         text={{ more: "Sort", less: "Sort" }}
                       />
                     </InboxHeader>
