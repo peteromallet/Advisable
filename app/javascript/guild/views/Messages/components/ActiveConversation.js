@@ -1,9 +1,10 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import { css } from "styled-components";
 import { motion } from "framer-motion";
 import { truncate } from "lodash-es";
 import { Text, Avatar, Link, Textarea, theme } from "@advisable/donut";
+import Loading from "@advisable-main/components/Loading";
 import useViewer from "@advisable-main/hooks/useViewer";
 import { useTwilioChat } from "@guild/hooks/twilioChat/useTwilioChat";
 import { StyledMessage } from "../styles";
@@ -11,13 +12,19 @@ import InboxHeader from "../components/InboxHeader";
 import { GuildBox, flex } from "@guild/styles";
 import { SubmitButton } from "@guild/components/Buttons/styles";
 import { relativeDate } from "@guild/utils";
+import { ScrollToBottom } from "@guild/components/ScrollToBottom";
 import { CHAT_PARTICIPANT_QUERY } from "../queries";
 
 const ActiveConversation = ({ channelSid }) => {
   const viewer = useViewer();
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const { activeChannel: activeConversation, messages } = useTwilioChat({
+  const {
+    activeChannel: activeConversation,
+    messages,
+    initializing,
+  } = useTwilioChat({
     channelSid,
   });
 
@@ -36,13 +43,22 @@ const ActiveConversation = ({ channelSid }) => {
 
   const onSubmitNewMessage = async () => {
     if (!message?.length) return;
-    await activeConversation.sendMessage(message);
+    setLoading(true);
+    try {
+      await activeConversation.sendMessage(message);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setMessage("");
+      setLoading(false);
+    }
   };
 
   console.log("activeConversation", activeConversation);
-  console.log("messages", messages?.items);
+  console.log("messages", messages);
   console.log("data", data);
 
+  if (initializing) return <Loading />;
   return (
     activeConversation && (
       <>
@@ -77,10 +93,10 @@ const ActiveConversation = ({ channelSid }) => {
                 key={key}
                 as={motion.div}
                 sender={message.author !== other}
-                width={{ _: "90%", m: "65%" }}
+                width={{ _: "90%", s: "50%" }}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: key * 0.12 }}
+                transition={{ delay: 0 }}
               >
                 {message.author === other && (
                   <GuildBox
@@ -98,11 +114,18 @@ const ActiveConversation = ({ channelSid }) => {
                       url={otherParticipant.avatar}
                     />
                     <Text size="xs" color="quartz">
-                      {truncate(otherParticipant.name, { length: 13 })}
+                      {truncate(otherParticipant.firstName, { length: 13 })}
                     </Text>
                   </GuildBox>
                 )}
-                <Text>{message.body}</Text>
+                <Text
+                  css={css`
+                    white-space: pre-wrap;
+                    white-space: pre-line;
+                  `}
+                >
+                  {message.body}
+                </Text>
               </StyledMessage>
               <Text
                 as={GuildBox}
@@ -110,10 +133,11 @@ const ActiveConversation = ({ channelSid }) => {
                 color="darkGray"
                 size="xxs"
               >
-                5 mins ago
+                {relativeDate(message.dateCreated)} ago
               </Text>
             </GuildBox>
           ))}
+          <ScrollToBottom />
         </GuildBox>
 
         {/* New Message */}
@@ -127,7 +151,7 @@ const ActiveConversation = ({ channelSid }) => {
         >
           <Textarea
             minRows="3"
-            maxRows="8"
+            maxRows="3"
             value={message}
             onChange={({ currentTarget }) => setMessage(currentTarget.value)}
             placeholder="New Message ..."
@@ -135,8 +159,9 @@ const ActiveConversation = ({ channelSid }) => {
           <SubmitButton
             size="l"
             type="submit"
-            loading={false}
+            loading={loading}
             onClick={onSubmitNewMessage}
+            disabled={loading}
           >
             Send
           </SubmitButton>

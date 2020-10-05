@@ -5,9 +5,9 @@ import { GuildBox } from "@guild/styles";
 export const SubmitButton = styled(Button)`
   color: white;
   background-color: ${theme.colors.froly50};
-  border-radius: 4px;
+  border-radius: 8px;
   align-self: flex-end;
-  padding: 2px 14px;
+  /* padding: 2px 14px; */
   &:focus {
     outline: none;
     border: none;

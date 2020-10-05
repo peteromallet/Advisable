@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import { useParams, useLocation } from "react-router-dom";
-import { Card, Text, Textarea, theme } from "@advisable/donut";
+import { Card, Text, theme, Link, Button } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import { useToggle } from "@guild/hooks/useToggle";
 import { useTwilioChannels } from "@guild/hooks/twilioChat/useTwilioChannels";
@@ -10,6 +10,7 @@ import { GuildBox } from "@guild/styles";
 import InboxHeader from "./components/InboxHeader";
 import ActiveConversation from "./components/ActiveConversation";
 import ConversationItem from "./components/ConversationItem";
+import MessageWithAction from "@guild/components/MessageWithAction";
 
 const Messages = () => {
   const { loading, subscribedChannels } = useTwilioChannels();
@@ -39,56 +40,71 @@ const Messages = () => {
             <Loading />
           ) : (
             <GuildBox height="100%" display="flex" flexDirection="row">
-              <GuildBox
-                width="38%"
-                display="flex"
-                flexDirection="column"
-                background="ghostWhite"
-              >
-                {/* Conversations Inbox Header */}
-                <InboxHeader>
-                  <Text fontWeight="medium" size="3xl" color="catalinaBlue100">
-                    Inbox
-                  </Text>
-                  <SortConversations
-                    showingMore={sortConversations}
-                    onToggle={toggleSortConversations}
-                    text={{ more: "Sort", less: "Sort" }}
-                  />
-                </InboxHeader>
+              {subscribedChannels.length ? (
+                <>
+                  <GuildBox
+                    width="38%"
+                    display="flex"
+                    flexDirection="column"
+                    background="ghostWhite"
+                  >
+                    {/* Conversations Inbox Header */}
+                    <InboxHeader>
+                      <Text
+                        fontWeight="medium"
+                        size="3xl"
+                        color="catalinaBlue100"
+                      >
+                        Inbox
+                      </Text>
+                      <SortConversations
+                        showingMore={sortConversations}
+                        onToggle={toggleSortConversations}
+                        text={{ more: "Sort", less: "Sort" }}
+                      />
+                    </InboxHeader>
 
-                {/* Conversation Inbox List */}
-                <GuildBox
-                  width="100%"
-                  height="100%"
-                  display="flex"
-                  flexDirection="column"
-                  background="ghostWhite"
-                  overflow="scroll"
-                  css={`
-                    border-right: 1px solid ${theme.colors.ghostWhite};
-                  `}
-                >
-                  {subscribedChannels.map((conversation, key) => (
-                    <ConversationItem
-                      key={key}
-                      conversation={conversation}
-                      setActive={setActiveChannelSid}
-                      isActive={activeChannelSid === conversation.sid}
-                    />
-                  ))}
-                </GuildBox>
-              </GuildBox>
+                    {/* Conversation Inbox List */}
+                    <GuildBox
+                      width="100%"
+                      height="100%"
+                      display="flex"
+                      flexDirection="column"
+                      background="ghostWhite"
+                      overflow="scroll"
+                      css={`
+                        border-right: 1px solid ${theme.colors.ghostWhite};
+                      `}
+                    >
+                      {subscribedChannels.map((conversation, key) => (
+                        <ConversationItem
+                          key={key}
+                          conversation={conversation}
+                          setActive={setActiveChannelSid}
+                          isActive={activeChannelSid === conversation.sid}
+                        />
+                      ))}
+                    </GuildBox>
+                  </GuildBox>
 
-              {/* Active Conversation and New Message */}
-              <GuildBox
-                width="62%"
-                display="flex"
-                flexDirection="column"
-                background="white"
-              >
-                <ActiveConversation channelSid={activeChannelSid} />
-              </GuildBox>
+                  {/* Active Conversation and New Message */}
+                  <GuildBox
+                    width="62%"
+                    display="flex"
+                    flexDirection="column"
+                    background="white"
+                  >
+                    <ActiveConversation channelSid={activeChannelSid} />
+                  </GuildBox>
+                </>
+              ) : (
+                <MessageWithAction
+                  message="No Guild Messages"
+                  actionText="Posts Feed"
+                  actionLink="/feed"
+                  prefix
+                />
+              )}
             </GuildBox>
           )}
         </Card>

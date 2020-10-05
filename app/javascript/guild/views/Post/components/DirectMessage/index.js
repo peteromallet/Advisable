@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useMutation } from "@apollo/client";
 import ExpandableText from "@advisable-main/components/ExpandableText";
 import { useToggle } from "@guild/hooks/useToggle";
 import { Messages } from "@guild/icons";
 import { Text, Avatar, Link, Textarea, useBreakpoint } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
-import { StyledModal } from "./styles";
+import { StyledModal, ModalClose } from "./styles";
 import { MessageButton, SubmitButton } from "@guild/components/Buttons/styles";
 import Mask from "@guild/components/Mask";
+import MessageWithAction from "@guild/components/MessageWithAction";
 import { CREATE_CHAT_DIRECT_MESSAGE } from "./mutations";
 
 const DirectMessage = ({ count, recipient }) => {
-  const [body, setBody] = useState(null);
+  const [sent, setSent] = useState(false);
+  const [body, setBody] = useState("");
+
   const [createChatDirectMessage, { data, loading }] = useMutation(
     CREATE_CHAT_DIRECT_MESSAGE,
   );
@@ -24,6 +27,7 @@ const DirectMessage = ({ count, recipient }) => {
     await createChatDirectMessage({
       variables: { input: { participantId: recipient.id, body } },
     });
+    setSent(true);
   };
 
   return (
@@ -39,6 +43,7 @@ const DirectMessage = ({ count, recipient }) => {
           px={{ _: "m", m: "2xl" }}
           py="58px"
         >
+          <ModalClose onClose={toggleMessageModal} />
           <GuildBox spaceChildrenHorizontal={34} mb="l">
             <GuildBox display="flex" flexShrink={0}>
               <Avatar
@@ -69,19 +74,35 @@ const DirectMessage = ({ count, recipient }) => {
           </GuildBox>
           {!mUp && <Bio bio={recipient.bio} />}
 
-          {/* TODO: Formik  */}
-          <Textarea
-            value={body}
-            minRows={3}
-            maxRows={8}
-            marginBottom="s"
-            placeholder="Add your message here ..."
-            onChange={({ target }) => setBody(target.value)}
-            marginTop={{ _: "l", m: "0" }}
-          />
-          <SubmitButton loading={loading} onClick={handleSubmit} type="submit">
-            Submit
-          </SubmitButton>
+          {sent ? (
+            <MessageWithAction
+              message="Sent Message!"
+              actionText="Check Inbox"
+              actionLink="/messages"
+              suffix
+            />
+          ) : (
+            <>
+              <Textarea
+                value={body}
+                minRows={3}
+                maxRows={8}
+                marginBottom="s"
+                placeholder="Add your message here ..."
+                onChange={({ target }) => setBody(target.value)}
+                marginTop={{ _: "l", m: "0" }}
+              />
+              <SubmitButton
+                size="l"
+                loading={loading}
+                onClick={handleSubmit}
+                disabled={!body.length}
+                type="submit"
+              >
+                Send
+              </SubmitButton>
+            </>
+          )}
         </StyledModal>
       )}
 
