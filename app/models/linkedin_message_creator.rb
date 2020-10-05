@@ -7,7 +7,7 @@ class LinkedinMessageCreator
     @project = project
     @sender_name = sender_name
     @project_goals = project.goals.select { |g| g.length > MIN_REQUIREMENT_LENGTH }.take(2)
-    @project_characteristics = project.required_characteristics.select { |c| c.length > MIN_REQUIREMENT_LENGTH } + project.optional_characteristics.select { |c| c.length > MIN_REQUIREMENT_LENGTH }
+    @project_characteristics = (project.required_characteristics.select { |c| c.length > MIN_REQUIREMENT_LENGTH } + project.optional_characteristics.select { |c| c.length > MIN_REQUIREMENT_LENGTH }).take(2)
   end
 
   def flowchart
