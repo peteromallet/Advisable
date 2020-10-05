@@ -5,7 +5,7 @@ class Accounts::RequestPasswordReset < ApplicationService
   attr_reader :account
 
   def initialize(email)
-    @account = ExtractedAccount.find_by_email!(email.downcase)
+    @account = SpecialistOrUser.find_by_email!(email.downcase)
     rescue ActiveRecord::RecordNotFound => e
       raise Service::Error.new("request_password_reset.account_not_found")
   end
