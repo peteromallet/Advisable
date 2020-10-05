@@ -70,6 +70,13 @@ module ExtractedAccount
       AccountMailer.confirm(uid: uid, token: token).deliver_later
     end
 
+    def copy_data_to_account
+      self.account = Account.create! if account.blank?
+      columns = Account.column_names - ["id", "uid", "updated_at", "created_at"]
+      data = columns.map { |column| [column, attributes[column]] }.to_h
+      account.update_columns(data)
+    end
+
     private
 
     # Validate that the email does not already exist as a user or specialist
@@ -78,13 +85,6 @@ module ExtractedAccount
       existing = ExtractedAccount.find_by_email(email.downcase)
       return if persisted? && existing == self
       errors.add(:email, :taken) if existing.present?
-    end
-
-    def copy_data_to_account
-      self.account = Account.create! if account.blank?
-      columns = Account.column_names - ["id"]
-      data = columns.map { |column| [column, attributes[column]] }.to_h
-      account.update_columns(data)
     end
   end
 

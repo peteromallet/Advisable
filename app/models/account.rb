@@ -4,6 +4,11 @@ class Account < ApplicationRecord
   belongs_to :country, required: false
   has_one :user, dependent: :nullify # Change to :destroy
   has_one :specialist, dependent: :nullify # Change to :destroy
+
+  has_secure_password validations: false
+  validates_confirmation_of :password
+  validates :password, length: {minimum: 8}, allow_blank: true
+  validates :email, uniqueness: true, allow_blank: true, format: {with: /@/}
 end
 
 # == Schema Information
