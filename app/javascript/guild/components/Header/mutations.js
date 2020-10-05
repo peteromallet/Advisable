@@ -6,7 +6,6 @@ export const GUILD_UPDATE_LAST_READ = gql`
       viewer {
         ... on Specialist {
           guildUnreadNotifications
-          guildUnreadMessages
         }
       }
     }

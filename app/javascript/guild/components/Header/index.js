@@ -36,7 +36,6 @@ const Header = () => {
 
   const handleMessages = () => {
     if (maskOpen) safeToggleMask();
-    handleUpdateLastRead({ readMessages: true });
     history.push("/messages");
   };
 
@@ -79,7 +78,10 @@ const Header = () => {
         {sUp && (
           <GuildBox spaceChildrenHorizontal={24} display="flex">
             <NavIcon
-              unread={lastReadData?.viewer?.guildUnreadMessages}
+              unread={
+                lastReadData?.viewer?.guildUnreadMessages &&
+                location.pathname !== "/messages"
+              }
               onClick={handleMessages}
               open={location.pathname === "/messages"}
             >

@@ -28,6 +28,14 @@ const ActiveConversation = ({ channelSid }) => {
     channelSid,
   });
 
+  useEffect(() => {
+    if (!activeConversation) return;
+    console.log("activeConversation", activeConversation);
+    const setAllMessagesConsumed = async () =>
+      await activeConversation.setAllMessagesConsumed();
+    setAllMessagesConsumed();
+  }, [activeConversation]);
+
   /* Get the other participant uid  */
   const other = useMemo(() => {
     if (!activeConversation) return;
@@ -54,11 +62,8 @@ const ActiveConversation = ({ channelSid }) => {
     }
   };
 
-  console.log("activeConversation", activeConversation);
-  console.log("messages", messages);
-  console.log("data", data);
-
   if (initializing) return <Loading />;
+
   return (
     activeConversation && (
       <>

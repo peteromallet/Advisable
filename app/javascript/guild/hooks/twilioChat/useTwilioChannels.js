@@ -41,7 +41,6 @@ export const useTwilioChannels = () => {
   /* Event handler focused on lastMessage and joined updates */
   const onChannelUpdated = useCallback(
     async (event) => {
-      console.debug("onChannelUpdated", event);
       const lastMessageUpdate = event.updateReasons.some(
         (r) => r === "lastMessage",
       );
@@ -105,17 +104,11 @@ export const useTwilioChannels = () => {
   );
 
   const sortChannels = ({ order = "desc" }) => {
-    setSubscribedChannels((prev) => {
-      if (order === "desc") {
-        return prev.sort(
-          (a, b) => b.lastMessageDateTime - a.lastMessageDateTime,
-        );
-      } else {
-        return prev.sort(
-          (a, b) => a.lastMessageDateTime - b.lastMessageDateTime,
-        );
-      }
-    });
+    setSubscribedChannels((prev) =>
+      order === "desc"
+        ? prev.sort((a, b) => b.lastMessageDateTime - a.lastMessageDateTime)
+        : prev.sort((a, b) => a.lastMessageDateTime - b.lastMessageDateTime),
+    );
   };
 
   return {
