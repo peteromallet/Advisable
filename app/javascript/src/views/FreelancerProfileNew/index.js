@@ -6,19 +6,15 @@ import useLogoURL from "../../components/ApplicationProvider/useLogoURL";
 import Loading from "../../components/Loading";
 import { GET_PROFILE } from "./queries";
 import Desktop from "./Desktop";
-import useViewer from "../../hooks/useViewer";
 
 function FreelancerProfileNew() {
   useLogoURL("https://advisable.com");
   const params = useParams();
-  const viewer = useViewer();
-  console.log("viewer", viewer);
   const { loading, data, error } = useQuery(GET_PROFILE, {
     variables: {
       id: params.id,
     },
   });
-  console.log("data", data);
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;

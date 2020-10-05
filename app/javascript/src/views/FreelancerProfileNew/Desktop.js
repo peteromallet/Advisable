@@ -9,8 +9,6 @@ import QA from "./QA";
 function FreelancerProfileDesktop({ data }) {
   const viewer = useViewer();
   const isOwner = viewer?.id === data.specialist.id;
-  console.log("viewer", viewer);
-  console.log("is owner", isOwner);
 
   return (
     <Box maxWidth="960px" mx="auto">
