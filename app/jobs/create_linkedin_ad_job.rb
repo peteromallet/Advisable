@@ -1,6 +1,6 @@
 class CreateLinkedinAdJob < ApplicationJob
   ACCOUNT_ID = 503157292
-  CAMPAIGN_GROUP_ID = 611804793
+  CAMPAIGN_GROUP_ID = 612029303
   CONVERSION_ID = 2659460 # Generic Thank You
 
   attr_reader :project, :linkedin_api, :conversation_id, :first_message_urn, :inmail_id, :creative_id
