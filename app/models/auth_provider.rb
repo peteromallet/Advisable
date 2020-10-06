@@ -2,7 +2,7 @@ class AuthProvider < ApplicationRecord
   LINKEDIN_ACCESS_TOKEN_URL = "https://www.linkedin.com/oauth/v2/accessToken".freeze
   belongs_to :user
 
-  scope :linkedin_ads, -> { where(provider: 'linkedin_ads') }
+  scope :linkedin_ads, -> { where(provider: "linkedin_ads") }
 
   validates :uid, :provider, presence: true
   validates :uid, uniqueness: {scope: :provider}
@@ -10,10 +10,10 @@ class AuthProvider < ApplicationRecord
   def refresh_linkedin_token!
     return if expires_at.nil? || expires_at.future?
     params = {
-      grant_type: 'refresh_token',
+      grant_type: "refresh_token",
       refresh_token: refresh_token,
-      client_id: ENV['LINKEDIN_KEY'],
-      client_secret: ENV['LINKEDIN_SECRET']
+      client_id: ENV["LINKEDIN_KEY"],
+      client_secret: ENV["LINKEDIN_SECRET"]
     }
     headers = {
       "Content-Type" => "application/x-www-form-urlencoded",

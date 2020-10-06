@@ -8,8 +8,8 @@ class CreateLinkedinAdJob < ApplicationJob
   queue_as :default
 
   # Workflow: https://docs.microsoft.com/en-us/linkedin/marketing/usecases/ad-tech/conversation-ads#setting-up-a-conversation-ad
-  def perform(project_id)
-    @project = Project.find(project_id)
+  def perform(project)
+    @project = project
     @linkedin_api = LinkedinApi.new
 
     create_campaign!
