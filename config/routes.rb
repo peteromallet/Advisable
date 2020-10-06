@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   get '/internal', to: 'application#internal', as: :internal_root
   get '/internal/*guild_path', to: 'application#internal'
   post '/projects/send_invites'
+  post '/projects/create_linkedin_ad'
 
   # match every other route to the frontend codebase
   root 'application#frontend'

@@ -29,15 +29,14 @@ gem 'geocoder'
 gem 'money'
 gem 'sentry-raven'
 gem 'omniauth'
-gem 'omniauth-linkedin-oauth2'
+gem 'omniauth-linkedin-oauth2', github: 'decioferreira/omniauth-linkedin-oauth2', branch: 'master'
 gem 'omniauth-rails_csrf_protection', '~> 0.1'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 gem 'webpacker', '~> 5.1'
+gem 'slim'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -58,7 +57,7 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'image_processing', '~> 1.0'
 gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 
-# Guild 
+# Guild
 gem "jsonb_accessor", "~> 1.0.0"
 gem 'acts-as-taggable-on', '~> 6.0'
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
@@ -67,6 +66,7 @@ gem 'graphql_playground-rails'
 
 group :development, :test do
   gem 'pry'
+  gem 'pry-doc'
   gem 'dotenv-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

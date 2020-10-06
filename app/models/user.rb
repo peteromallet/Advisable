@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_many :user_skills
   has_many :skills, through: :user_skills
   has_many :client_calls
+  has_many :auth_providers
   has_one :client_user
   has_one :client, through: :client_user
   belongs_to :sales_person, required: false
@@ -32,20 +33,20 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   validates :rejection_reason,
-            inclusion: { in: %w[cheap_talent not_hiring] }, allow_nil: true
+            inclusion: {in: %w[cheap_talent not_hiring]}, allow_nil: true
 
   # talent_quality indicates what qualit of talent the client is looking for.
   # This value is provided when they are applying.
   TALENT_QUALITY_OPTIONS = %w[cheap budget good top world_class]
   validates :talent_quality,
-            inclusion: { in: TALENT_QUALITY_OPTIONS }, allow_nil: true
+            inclusion: {in: TALENT_QUALITY_OPTIONS}, allow_nil: true
 
   # number_of_freelancers represents the number of freelancers the client is
   # looking to hire over the next 6 months. This value is provided when they are
   # applying to Advisable.
   NUMBER_OF_FREELANCERS_OPTIONS = %w[0 1-3 4-10 10+]
   validates :number_of_freelancers,
-            inclusion: { in: NUMBER_OF_FREELANCERS_OPTIONS }, allow_nil: true
+            inclusion: {in: NUMBER_OF_FREELANCERS_OPTIONS}, allow_nil: true
 
   register_tutorial 'fixedProjects'
   register_tutorial 'flexibleProjects'
@@ -79,7 +80,7 @@ class User < ApplicationRecord
     return self[:stripe_customer_id] if self[:stripe_customer_id]
     customer =
       Stripe::Customer.create(
-        { email: email, name: company_name, metadata: { user_id: uid } }
+        {email: email, name: company_name, metadata: {user_id: uid}}
       )
     update_columns(stripe_customer_id: customer.id)
     customer.id

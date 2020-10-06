@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_25_102717) do
+ActiveRecord::Schema.define(version: 2020_10_02_085010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -112,6 +112,20 @@ ActiveRecord::Schema.define(version: 2020_09_25_102717) do
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
+  end
+
+  create_table "auth_providers", force: :cascade do |t|
+    t.string "uid"
+    t.string "provider"
+    t.string "token"
+    t.string "refresh_token"
+    t.datetime "expires_at"
+    t.bigint "user_id", null: false
+    t.jsonb "blob"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["provider", "uid"], name: "index_auth_providers_on_provider_and_uid", unique: true
+    t.index ["user_id"], name: "index_auth_providers_on_user_id"
   end
 
   create_table "blacklisted_domains", force: :cascade do |t|
@@ -559,6 +573,7 @@ ActiveRecord::Schema.define(version: 2020_09_25_102717) do
     t.integer "hired_count", default: 0
     t.boolean "sourcing"
     t.bigint "sales_person_id"
+    t.bigint "linkedin_campaign_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["sales_person_id"], name: "index_projects_on_sales_person_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
@@ -867,6 +882,7 @@ ActiveRecord::Schema.define(version: 2020_09_25_102717) do
   add_foreign_key "applications", "application_rejection_reasons", column: "rejection_reason_id"
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
+  add_foreign_key "auth_providers", "users"
   add_foreign_key "bookings", "applications"
   add_foreign_key "client_calls", "projects"
   add_foreign_key "client_calls", "sales_people"

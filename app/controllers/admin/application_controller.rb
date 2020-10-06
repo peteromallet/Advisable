@@ -6,6 +6,8 @@
 # you're free to overwrite the RESTful controller actions.
 module Admin
   class ApplicationController < Administrate::ApplicationController
+    include CurrentUser
+
     http_basic_authenticate_with name: ENV.fetch('ADMIN_USERNAME'),
                                  password: ENV.fetch('ADMIN_PASSWORD')
 
