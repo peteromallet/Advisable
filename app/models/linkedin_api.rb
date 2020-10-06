@@ -10,6 +10,7 @@ class LinkedinApi
         "Body: #{response.body}"
       ]
       Rails.logger.error(response_log.join("\n"))
+      Raven.extra_context(response: response_log)
       super(response_log.take(2).join(' '))
     end
   end
