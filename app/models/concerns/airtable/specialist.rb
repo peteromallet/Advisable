@@ -22,6 +22,10 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'Campaign Name', to: :campaign_name
   sync_column 'Campaign Source', to: :campaign_source
   sync_column 'Community Status', to: :community_status
+  sync_column 'Community Status - Applied To Join - Timestamp', to: :community_applied_at
+  sync_column 'Community Status - Accepted - Timestamp', to: :community_accepted_at
+  sync_column 'Community Status - Invited To Call - Timestamp', to: :community_invited_to_call_at
+  sync_column 'Community Score', to: :community_score
 
   sync_data do |specialist|
     if self['Bank Holder Address']
