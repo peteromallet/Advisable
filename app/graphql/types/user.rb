@@ -122,7 +122,9 @@ class Types::User < Types::BaseType
   end
 
   def invoices
-    Stripe::Invoice.list(customer: object.stripe_customer_id)
+    Stripe::Invoice.list(customer: object.stripe_customer_id).reject do |invoice|
+      invoice.status == "draft"
+    end
   end
 
   def id
