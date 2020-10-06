@@ -72,8 +72,7 @@ module SpecialistOrUser
 
     def copy_data_to_account
       self.account = Account.create! if account.blank?
-      columns = Account.column_names - ["id", "uid", "updated_at", "created_at"]
-      data = columns.map { |column| [column, attributes[column]] }.to_h
+      data = Account::COPYABLE_COLUMNS.map { |column| [column, attributes[column]] }.to_h
       account.update_columns(data)
     end
 
@@ -81,7 +80,7 @@ module SpecialistOrUser
 
     # Validate that the email does not already exist as a user or specialist
     def email_not_taken
-      return unless email.present?
+      return if email.blank?
       existing = SpecialistOrUser.find_by_email(email.downcase)
       return if persisted? && existing == self
       errors.add(:email, :taken) if existing.present?
@@ -89,7 +88,7 @@ module SpecialistOrUser
   end
 
   def self.find_by_uid_or_airtable_id(id)
-    find_by_uid(id) || find_by_airtable_id(id)
+    User.find_by_uid_or_airtable_id(id) || Specialist.find_by_uid_or_airtable_id(id)
   end
 
   def self.find_by_uid_or_airtable_id!(id)

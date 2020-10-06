@@ -1,6 +1,9 @@
 class Account < ApplicationRecord
   include Uid
 
+  IGNORED_COLUMNS_FOR_COPYING = ["id", "uid", "updated_at", "created_at"].freeze
+  COPYABLE_COLUMNS = column_names - IGNORED_COLUMNS_FOR_COPYING
+
   belongs_to :country, required: false
   has_one :user, dependent: :nullify # Change to :destroy
   has_one :specialist, dependent: :nullify # Change to :destroy
