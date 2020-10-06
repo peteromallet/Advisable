@@ -8,10 +8,8 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
   field :user, Types::User, null: true
   field :errors, [Types::Error], null: true
 
-  # There must be a User logged in ( not a specialist )
   def authorized?(**args)
-    return true if context[:current_user].is_a?(User)
-    [false, { errors: [{ code: "notAuthorized" }] }]
+    requires_client!
   end
 
   def resolve(**args)
@@ -38,13 +36,27 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
       user.accepted_project_payment_terms_at = Time.zone.now
     end
 
-    user.update_payments_setup
-    user.sync_to_airtable
+    store_vat_number(user) if user.vat_number_changed?
 
-    if user.save
+    user.update_payments_setup
+    user.save_and_sync!
+    {user: user}
+  end
+
+  private
+
+  def store_vat_number(user)
+    return unless user.vat_number.present?
+    Stripe::Customer.create_tax_id(
+      user.stripe_customer_id,
       {
-        user: user
+        type: "eu_vat",
+        value: user.vat_number
+      }, {
+        idempotency_key: "#{user.uid}-#{user.vat_number}"
       }
-    end
+    )
+  rescue Stripe::InvalidRequestError
+    ApiError.invalid_request(code: "INVALID_VAT", message: "VAT number is invalid")
   end
 end

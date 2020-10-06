@@ -48,6 +48,7 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
   before :each do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     allow(Stripe::Customer).to receive(:update)
+    allow(Stripe::Customer).to receive(:create_tax_id)
   end
 
   let(:context) { { current_user: user } }
@@ -85,8 +86,8 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
 
     it 'returns an error' do
       error =
-        response['data']['updateProjectPaymentMethod']['errors'][0]['code']
-      expect(error).to eq('notAuthorized')
+        response['errors'][0]['extensions']['code']
+      expect(error).to eq('notAuthenticated')
     end
   end
 
@@ -95,8 +96,22 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
 
     it 'returns an error' do
       error =
-        response['data']['updateProjectPaymentMethod']['errors'][0]['code']
-      expect(error).to eq('notAuthorized')
+        response['errors'][0]['extensions']['code']
+      expect(error).to eq('MUST_BE_USER')
     end
+  end
+
+  it "stores the VAT number in stripe" do
+    expect(Stripe::Customer).to receive(:create_tax_id).with(
+      user.stripe_customer_id,
+      {
+        type: "eu_vat",
+        value: "1234",
+      }, {
+        idempotency_key: "#{user.uid}-1234"
+      }
+    )
+
+    response
   end
 end

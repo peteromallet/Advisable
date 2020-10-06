@@ -26,14 +26,24 @@ const PaymentSettings = () => {
   const [updateProjectPaymentMethod] = useMutation(UPDATE_PAYMENT_INFO);
   const [paymentMethodModal, setPaymentMethodModal] = React.useState(false);
 
-  const handleSubmit = async (values) => {
-    await updateProjectPaymentMethod({
+  const handleSubmit = async (values, formik) => {
+    const { errors } = await updateProjectPaymentMethod({
       variables: {
         input: values,
       },
     });
 
-    notificaitons.notify("Your payment preferences have been updated");
+    if (errors) {
+      const code = errors[0].extensions.code;
+      if (code === "INVALID_VAT") {
+        formik.setFieldError(
+          "invoiceSettings.vatNumber",
+          "VAT number is invalid",
+        );
+      }
+    } else {
+      notificaitons.notify("Your payment preferences have been updated");
+    }
   };
 
   let initialValues = {
