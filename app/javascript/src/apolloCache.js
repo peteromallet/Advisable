@@ -10,12 +10,24 @@ const createCache = () => {
   return new InMemoryCache({
     possibleTypes: {
       ViewerUnion: ["User", "Specialist"],
-      PostInterface: ["GuildPostAdviceRequired", "GuildPostCaseStudy", "GuildPostGeneral", "GuildPostOpportunity"],
+      PostInterface: [
+        "GuildPostAdviceRequired",
+        "GuildPostCaseStudy",
+        "GuildPostGeneral",
+        "GuildPostOpportunity",
+      ],
     },
     typePolicies: {
       PreviousProject: {
         fields: {
           skills: {
+            merge: replaceArrayMerge,
+          },
+        },
+      },
+      Application: {
+        fields: {
+          tasks: {
             merge: replaceArrayMerge,
           },
         },
