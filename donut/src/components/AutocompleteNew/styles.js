@@ -10,22 +10,30 @@ const StyledAutocompleteMenu_Closed = css`
   pointer-events: none;
 `;
 
-export const StyledAutocompleteMenu = styled.ul`
-  width: 100%;
-  outline: none;
-  padding: 4px 0;
-  background: white;
-  max-height: 300px;
-  overflow-y: scroll;
+export const StyledAutocompleteMenu = styled.div`
+  margin: 0px;
+  z-index: 1000;
+  min-width: 100%;
   border-radius: 12px;
+  background-color: white;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+
   ${(p) => !p.$isOpen && StyledAutocompleteMenu_Closed};
+`;
+
+export const StyledAutocompleteMenuList = styled.ul`
+  outline: none;
+  list-style: none;
+  padding: 4px 0px;
+  overflow-y: auto;
+  max-height: 300px;
 `;
 
 export const StyledAutocompleteMenuItem = styled.li`
   padding: 0 4px;
   font-size: 15px;
   user-select: none;
+  cursor: default;
 
   span {
     display: block;

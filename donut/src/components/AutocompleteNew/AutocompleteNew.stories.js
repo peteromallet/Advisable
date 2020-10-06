@@ -19,7 +19,6 @@ export const singleSelect = () => {
       <Autocomplete
         size={size}
         value={value}
-        prefix="Country"
         label="Choose a country"
         placeholder="Country"
         onChange={(v) => setValue(v)}

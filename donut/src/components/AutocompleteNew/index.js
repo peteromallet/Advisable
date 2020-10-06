@@ -7,6 +7,7 @@ import Input from "../Input";
 import {
   StyledAutocomplete,
   StyledAutocompleteMenu,
+  StyledAutocompleteMenuList,
   StyledAutocompleteMenuItem,
 } from "./styles";
 
@@ -94,7 +95,8 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
 
   function handleBlur(e) {
     const listboxEl = listboxRef.current;
-    if (listboxEl && e.relatedTarget && listboxEl.contains(e.relatedTarget)) {
+    const clickContained = listboxEl.contains(e.relatedTarget);
+    if (listboxEl && e.relatedTarget && clickContained) {
       return;
     }
 
@@ -169,8 +171,9 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
   }
 
   function handleOptionMouseMove(index) {
-    shouldScroll.current = false;
     if (index === selectionIndex) return;
+
+    shouldScroll.current = false;
 
     if (filteredOptions[index]) {
       setSelectionIndex(index);
@@ -208,34 +211,37 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
       </div>
       <Box width="100%" ref={listboxContainerRef}>
         <StyledAutocompleteMenu
-          as={motion.ul}
-          role="listbox"
-          tabIndex="-1"
-          ref={listboxRef}
+          as={motion.div}
           $isOpen={isOpen}
           initial={{
             opacity: 0,
-            y: 12,
+            y: 8,
           }}
           animate={{
             opacity: isOpen ? 1 : 0,
-            y: isOpen ? 0 : 12,
+            y: isOpen ? 0 : 8,
           }}
           transition={{
             duration: 0.3,
           }}
         >
-          {filteredOptions.map((option, index) => (
-            <AutocompleteOption
-              key={option.value}
-              selected={selectionIndex === index}
-              onClick={() => handleOptionClick(index)}
-              ref={selectionIndex === index ? selectedItemRef : null}
-              onMouseMove={() => handleOptionMouseMove(index)}
-            >
-              {option.label}
-            </AutocompleteOption>
-          ))}
+          <StyledAutocompleteMenuList
+            ref={listboxRef}
+            role="listbox"
+            tabIndex="-1"
+          >
+            {filteredOptions.map((option, index) => (
+              <AutocompleteOption
+                key={option.value}
+                selected={selectionIndex === index}
+                onClick={() => handleOptionClick(index)}
+                ref={selectionIndex === index ? selectedItemRef : null}
+                onMouseMove={() => handleOptionMouseMove(index)}
+              >
+                {option.label}
+              </AutocompleteOption>
+            ))}
+          </StyledAutocompleteMenuList>
         </StyledAutocompleteMenu>
       </Box>
     </StyledAutocomplete>
