@@ -1,6 +1,6 @@
 import theme from "../../theme";
 import { variant, margin } from "styled-system";
-import { rgba, darken, lighten } from "polished";
+import { rgba, lighten } from "polished";
 import styled, { css } from "styled-components";
 
 export const BORDER_RADIUS = 8;
@@ -8,18 +8,17 @@ export const BORDER_RADIUS = 8;
 export const StyledInputDecoration = styled.div`
   display: flex;
   font-size: 16px;
+  user-select: none;
   align-items: center;
-  padding-top: 1px;
-  padding-bottom: 1px;
   justify-content: center;
-  color: ${theme.colors.blue900};
+  background-color: transparent;
+  color: ${theme.colors.neutral900};
   font-family: system-ui, poppins, sans-serif;
-  background-color: ${darken(0.05, "#eff0f3")};
   transition: background-color 200ms, color 200ms;
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     stroke-width: 2px;
   }
 
@@ -36,21 +35,25 @@ export const StyledInputDecoration = styled.div`
 
 export const StyledInputControl = styled.input`
   flex: 1;
+  height: 48px;
+  border: 2px solid transparent;
+  transition: border-color 200ms;
   margin: 0;
   width: 100%;
   border: none;
-  height: 48px;
   outline: none;
   font-size: 16px;
   box-sizing: border-box;
   background: transparent;
-  padding-top: 1px;
-  padding-bottom: 1px;
+  padding-top: 0;
+  padding-bottom: 0;
   border-radius: 0px;
   color: ${theme.colors.neutral900};
   font-family: system-ui, poppins, sans-serif;
-  border: 2px solid transparent;
-  transition: border-color 200ms;
+
+  &::placeholder {
+    color: ${theme.colors.neutral400};
+  }
 
   &:first-child {
     border-top-left-radius: ${BORDER_RADIUS}px;
@@ -61,21 +64,14 @@ export const StyledInputControl = styled.input`
     border-top-right-radius: ${BORDER_RADIUS}px;
     border-bottom-right-radius: ${BORDER_RADIUS}px;
   }
-
-  &::placeholder {
-    color: ${theme.colors.neutral400};
-  }
 `;
 
 const StyledInput_Error = css`
-  ${StyledInputControl} {
-    border-color: ${theme.colors.red300};
-    background-color: ${theme.colors.red50};
-  }
+  border-color: ${theme.colors.red300};
+  background-color: ${theme.colors.red50};
 
   ${StyledInputDecoration} {
     color: ${theme.colors.neutral900};
-    background-color: ${theme.colors.red300};
   }
 
   ${StyledInputControl}::placeholder {
@@ -84,23 +80,16 @@ const StyledInput_Error = css`
 `;
 
 const StyledInput_Focused = css`
-  ${StyledInputControl} {
-    background-color: #eff0f3;
-    border-color: ${theme.colors.blue900};
-  }
-
-  ${StyledInputDecoration} {
-    color: white;
-    background-color: ${theme.colors.blue900};
-  }
+  background-color: #eff0f3;
+  border-color: ${theme.colors.blue900};
 `;
 
 const StyledInput_Disabled = css`
   cursor: not-allowed;
+  border-color: ${lighten(0.024, "#eff0f3")};
 
   ${StyledInputControl} {
     cursor: not-allowed;
-    border-color: transparent;
     color: ${theme.colors.neutral600};
     background-color: ${lighten(0.024, "#eff0f3")};
 
@@ -110,7 +99,6 @@ const StyledInput_Disabled = css`
   }
 
   ${StyledInputDecoration} {
-    background-color: #eff0f3;
     color: ${theme.colors.neutral600};
   }
 `;
@@ -119,38 +107,50 @@ const size = variant({
   prop: "size",
   variants: {
     sm: {
+      height: 40,
       [StyledInputControl]: {
-        height: 40,
         paddingLeft: "12px",
         paddingRight: "12px",
       },
       [StyledInputDecoration]: {
-        paddingLeft: "12px",
-        paddingRight: "12px",
+        "&:first-child": {
+          paddingLeft: "12px",
+        },
+        "&:last-child": {
+          paddingRight: "12px",
+        },
       },
     },
     md: {
+      height: 48,
       [StyledInputControl]: {
-        height: 48,
         paddingLeft: "16px",
         paddingRight: "16px",
       },
       [StyledInputDecoration]: {
-        paddingLeft: "16px",
-        paddingRight: "16px",
+        "&:first-child": {
+          paddingLeft: "16px",
+        },
+        "&:last-child": {
+          paddingRight: "16px",
+        },
       },
     },
     lg: {
+      height: 56,
+      fontSize: 18,
       [StyledInputControl]: {
-        height: 56,
-        fontSize: 18,
         paddingLeft: 20,
         paddingRight: 20,
       },
       [StyledInputDecoration]: {
         fontSize: "17px",
-        paddingLeft: "20px",
-        paddingRight: "20px",
+        "&:first-child": {
+          paddingLeft: "20px",
+        },
+        "&:last-child": {
+          paddingRight: "20px",
+        },
       },
     },
   },
@@ -159,6 +159,8 @@ const size = variant({
 export const StyledInput = styled.div`
   width: 100%;
   display: flex;
+  box-sizing: border-box;
+  border: 2px solid transparent;
   border-radius: ${BORDER_RADIUS}px;
   background: #eff0f3;
   ${(props) => props.$error && StyledInput_Error};

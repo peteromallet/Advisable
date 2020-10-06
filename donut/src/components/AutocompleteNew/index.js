@@ -3,12 +3,14 @@ import { motion } from "framer-motion";
 import { Box } from "@advisable/donut";
 import Fuse from "fuse.js";
 import { createPopper } from "@popperjs/core";
+import { ChevronDown } from "@styled-icons/ionicons-outline";
 import Input from "../Input";
 import {
   StyledAutocomplete,
   StyledAutocompleteMenu,
   StyledAutocompleteMenuList,
   StyledAutocompleteMenuItem,
+  StyledAutocompleteNoResults,
 } from "./styles";
 
 const fuseOptions = {
@@ -55,14 +57,6 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
         listboxContainerRef.current,
         {
           placement: "bottom",
-          modifiers: [
-            {
-              name: "offset",
-              options: {
-                offset: [0, 8],
-              },
-            },
-          ],
         },
       );
 
@@ -207,6 +201,7 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
           onFocus={handleFocus}
           onKeyDown={handleKeyDown}
           onChange={handleInputChange}
+          suffix={<ChevronDown />}
         />
       </div>
       <Box width="100%" ref={listboxContainerRef}>
@@ -230,6 +225,12 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
             role="listbox"
             tabIndex="-1"
           >
+            {filteredOptions.length === 0 ? (
+              <StyledAutocompleteNoResults>
+                No results
+              </StyledAutocompleteNoResults>
+            ) : null}
+
             {filteredOptions.map((option, index) => (
               <AutocompleteOption
                 key={option.value}
@@ -257,7 +258,6 @@ const AutocompleteOption = React.forwardRef(function AutocompleteOption(
       ref={ref}
       role="option"
       aria-selected={selected}
-      $isSelected={selected}
       {...props}
     >
       <span>{children}</span>

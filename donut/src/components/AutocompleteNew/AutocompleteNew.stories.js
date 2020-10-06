@@ -1,7 +1,6 @@
 import React from "react";
-import { find, sortBy } from "lodash-es";
-import { withKnobs, select } from "@storybook/addon-knobs";
-import Text from "../Text";
+import { sortBy } from "lodash-es";
+import { withKnobs, select, text } from "@storybook/addon-knobs";
 import Card from "../Card";
 import Autocomplete from "./";
 
