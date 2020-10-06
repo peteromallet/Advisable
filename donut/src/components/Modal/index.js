@@ -1,144 +1,140 @@
-import React, { useRef } from "react";
-import { X } from "@styled-icons/feather";
+import React from "react";
+import { padding } from "styled-system";
+import { rgba } from "polished";
+import { motion, AnimatePresence } from "framer-motion";
+import { CloseCircle } from "@styled-icons/ionicons-solid";
+import Box from "../Box";
+import theme from "../../theme";
 import {
   useDialogState,
   Dialog,
   DialogDisclosure,
   DialogBackdrop,
 } from "reakit/Dialog";
-
-import { AnimatePresence } from "framer-motion";
-import {
-  StyledWindow,
-  StyledBackdrop,
-  StyledModalLoading,
-  StyledModalCloseButton,
-  StyledModalWindowContainer,
-} from "./styles";
-import useBreakpoint from "../../hooks/useBreakpoint";
+import styled from "styled-components";
 export { default as useRoutedModal } from "./useRoutedModal";
 
 export const useModal = useDialogState;
 
-const Modal = ({
+const StyledDialogBackdrop = styled(motion.div)`
+  top: 58px;
+  right: 0;
+  bottom: 0;
+  left: ${(props) => `${props.leftIndent}px`};
+  z-index: 10;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245, 246, 251, 0.9);
+
+  overflow-y: scroll;
+  padding-top: 32px;
+  padding-bottom: 64px;
+
+  @media (max-width: 1024px) {
+    left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+`;
+
+const StyledDialog = styled(motion.div)`
+  ${padding};
+
+  width: 100%;
+  margin: auto;
+  outline: none;
+  background: white;
+  position: relative;
+  border-radius: 12px;
+  max-width: ${(p) => p.$width}px;
+  box-shadow: 0 24px 64px -24px ${rgba(theme.colors.neutral900, 0.6)};
+
+  @media (max-width: 1024px) {
+    height: 100%;
+    max-width: 100%;
+  }
+`;
+
+const StyledCloseButton = styled.button`
+  border: none;
+  outline: none;
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  padding: 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: ${theme.colors.neutral300};
+
+  &:hover {
+    color: ${theme.colors.neutral700};
+  }
+`;
+
+function Modal({
   modal,
   label,
   children,
   height,
-  backdrop = true,
-  hideOnClickOutside = true,
   loading,
-  width,
-  showCloseButton = true,
-  initialFocusRef,
-  tabIndex,
-  ...props
-}) => {
-  const ref = useRef(null);
-  const mediumAndUp = useBreakpoint("mUp");
-  const isMobile = !mediumAndUp;
-
-  const handleContainerClick = (e) => {
-    if (hideOnClickOutside && e.target === ref.current) {
-      modal.hide();
-    }
-  };
-
-  const backdropVariants = {
-    visible: {
-      opacity: 1,
-    },
-    hidden: {
-      opacity: 0,
-    },
-  };
-
+  width = 500,
+  leftIndent = 0,
+  padding = "32px",
+}) {
   return (
-    <>
-      {backdrop && (
-        <DialogBackdrop
-          {...modal}
-          initial="hidden"
-          as={StyledBackdrop}
-          variants={backdropVariants}
-          animate={modal.visible ? "visible" : "hidden"}
-          transition={{ ease: "easeOut" }}
-        />
-      )}
-      <Dialog
-        ref={ref}
-        {...modal}
-        aria-label={label}
-        isMobile={isMobile}
-        hideOnClickOutside={false}
-        tabIndex={loading ? 0 : tabIndex}
-        onClick={handleContainerClick}
-        as={StyledModalWindowContainer}
-        preventBodyScroll={false}
-        unstable_initialFocusRef={null}
-      >
-        <AnimatePresence>
-          {modal.visible && loading && (
-            <StyledModalLoading>
-              <svg width="32" height="32" fill="none" viewBox="0 0 32 32">
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M31 16c0 8.284-6.716 15-15 15-8.284 0-15-6.716-15-15C1 7.716 7.716 1 16 1"
-                ></path>
-              </svg>
-            </StyledModalLoading>
-          )}
-          {modal.visible && !loading && (
-            <StyledWindow
-              {...props}
-              height={height}
-              width={width}
-              isMobile={isMobile}
-              transition={{ type: "spring", damping: 35, stiffness: 100 }}
-              initial={{
-                y: 80,
-                opacity: 0,
-                rotateX: isMobile ? 0 : -15,
-                scale: isMobile ? 1 : 0.9,
-              }}
-              animate={{
-                y: 0,
-                opacity: 1,
-                rotateX: 0,
-                scale: 1,
-              }}
-              exit={{
-                y: 80,
-                scale: 1,
-                opacity: 0,
-                rotateX: 0,
-              }}
-            >
-              {children}
-              {showCloseButton ? (
-                <StyledModalCloseButton
-                  type="button"
-                  onClick={modal.hide}
-                  aria-label="Close modal"
-                >
-                  <X size={20} strokeWidth={2} />
-                </StyledModalCloseButton>
-              ) : null}
-            </StyledWindow>
-          )}
-        </AnimatePresence>
-      </Dialog>
-    </>
+    <AnimatePresence>
+      <DialogBackdrop {...modal}>
+        {(backdrop) => (
+          <StyledDialogBackdrop
+            {...backdrop}
+            style={{
+              pointerEvents: modal.visible ? "all" : "none",
+            }}
+            leftIndent={leftIndent}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: modal.visible ? 1 : 0,
+            }}
+          >
+            <Dialog {...modal} aria-label={label} preventBodyScroll={false}>
+              {(dialogProps) =>
+                modal.visible &&
+                !loading && (
+                  <StyledDialog
+                    {...dialogProps}
+                    $width={width}
+                    padding={padding}
+                    height={height}
+                    transition={{ duration: 0.32 }}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{
+                      display: "block",
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    exit={{ opacity: 0, y: 40 }}
+                  >
+                    <Box position="absolute" top="12px" right="12px">
+                      <StyledCloseButton onClick={modal.hide}>
+                        <CloseCircle size="32px" />
+                      </StyledCloseButton>
+                    </Box>
+                    {children}
+                  </StyledDialog>
+                )
+              }
+            </Dialog>
+          </StyledDialogBackdrop>
+        )}
+      </DialogBackdrop>
+    </AnimatePresence>
   );
-};
-
-Modal.defaultProps = {
-  backdrop: true,
-  loading: false,
-};
+}
 
 Modal.Disclosure = DialogDisclosure;
 
