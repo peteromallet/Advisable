@@ -87,39 +87,19 @@ module SpecialistOrUser
     end
   end
 
-  def self.find_by_uid_or_airtable_id(id)
-    User.find_by_uid_or_airtable_id(id) || Specialist.find_by_uid_or_airtable_id(id)
-  end
+  [
+    :find_by_uid_or_airtable_id,
+    :find_by_uid,
+    :find_by_airtable_id,
+    :find_by_email,
+    :find_by_remember_token
+  ].each do |method|
+    define_singleton_method(method) do |param|
+      Specialist.public_send(method, param) || User.public_send(method, param)
+    end
 
-  def self.find_by_uid_or_airtable_id!(id)
-    find_by_uid_or_airtable_id(id).presence || raise(ActiveRecord::RecordNotFound)
-  end
-
-  def self.find_by_uid(uid)
-    User.find_by_uid(uid) || Specialist.find_by_uid(uid)
-  end
-
-  def self.find_by_uid!(uid)
-    find_by_uid(uid).presence || raise(ActiveRecord::RecordNotFound)
-  end
-
-  def self.find_by_airtable_id(id)
-    User.find_by_airtable_id(id) || Specialist.find_by_airtable_id(id)
-  end
-
-  def self.find_by_airtable_id!(id)
-    find_by_airtable_id(id).presence || raise(ActiveRecord::RecordNotFound)
-  end
-
-  def self.find_by_email(email)
-    User.find_by_email(email) || Specialist.find_by_email(email)
-  end
-
-  def self.find_by_email!(email)
-    find_by_email(email).presence || raise(ActiveRecord::RecordNotFound)
-  end
-
-  def self.find_by_remember_token(token)
-    User.find_by_remember_token(token) || Specialist.find_by_remember_token(token)
+    define_singleton_method("#{method}!") do |param|
+      public_send(method, param).presence || raise(ActiveRecord::RecordNotFound)
+    end
   end
 end
