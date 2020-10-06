@@ -22,7 +22,18 @@ class AuthProvidersController < ApplicationController
     redirect_to request.env['omniauth.origin']
   end
 
-  protected
+  def linkedin_ads
+    auth_provider = current_user.auth_providers.find_or_initialize_by(provider: 'linkedin_ads')
+    auth_provider.update!(oauth.identifiers_with_blob_and_token)
+
+    redirect_to admin_applications_path
+  end
+
+  private
+
+  def oauth
+    @oauth ||= Oauth.new(request.env["omniauth.auth"])
+  end
 
   def auth_hash
     request.env['omniauth.auth']

@@ -4,18 +4,31 @@ AllCops:
   NewCops: enable
 
 Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
   EnforcedStyle: no_space
 
 Layout/MultilineMethodCallIndentation:
+  Enabled: true
   EnforcedStyle: indented
 
 Layout/DotPosition:
+  Enabled: true
   EnforcedStyle: trailing
 
 Style/RaiseArgs:
   Enabled: false
 
+Style/NumericLiterals:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
 # Let's discuss this one
 # I'd like to go double quotes everywhere, but am open to discussion
 # Style/StringLiterals:
+#   Enabled: true
 #   EnforcedStyle: double_quotes

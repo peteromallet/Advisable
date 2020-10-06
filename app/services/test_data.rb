@@ -1,6 +1,6 @@
 class TestData
   def self.stock_image
-    n = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11"].sample
+    n = %w[01 02 03 04 05 06 07 08 09 10 11].sample
     "https://advisable-test-assets.s3.eu-central-1.amazonaws.com/stock-photos/#{n}.jpg"
   end
 
@@ -197,7 +197,7 @@ class TestData
         u.company_type = 'Startup'
         u.industry = industry
         u.sales_person = sales_person
-        u.address = {city: 'Dublin', country: 'IE' }
+        u.address = {city: 'Dublin', country: 'IE'}
       end
 
     user.update(availability: [], completed_tutorials: [])
@@ -246,6 +246,10 @@ class TestData
           ProjectSkill.new(project: p, skill: sales_automation),
           ProjectSkill.new(project: p, skill: small_business_marketing)
         ]
+        p.estimated_budget = "$20,000+"
+        p.company_description = "The client is an independent consultancy with deep expertise in data and data governance."
+        p.industry = "Marketing"
+        p.name = "Dunder Miflin - Marketing"
       end
 
     project.update_attributes(sourcing: true)
