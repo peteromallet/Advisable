@@ -6,6 +6,7 @@ export const StyledAvatarCard = styled(StyledCard)`
   z-index: 4;
   position: relative;
   transition: box-shadow 300ms;
+  background-color: ${theme.colors.neutral200};
   cursor: pointer;
   box-shadow: 0px 8px 12px -4px ${rgba(theme.colors.neutral900, 0.04)},
     0px 4px 20px -4px ${rgba(theme.colors.neutral900, 0.22)};
