@@ -107,6 +107,10 @@ end
 #  campaign_name                      :string
 #  campaign_source                    :string
 #  city                               :string
+#  community_accepted_at              :datetime
+#  community_applied_at               :datetime
+#  community_invited_to_call_at       :datetime
+#  community_score                    :integer
 #  community_status                   :string
 #  completed_tutorials                :text             default([]), is an Array
 #  confirmation_digest                :string
