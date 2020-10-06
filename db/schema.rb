@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_02_085010) do
+ActiveRecord::Schema.define(version: 2020_10_06_120100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -716,6 +716,10 @@ ActiveRecord::Schema.define(version: 2020_10_02_085010) do
     t.string "community_status"
     t.boolean "automated_invitations_subscription"
     t.jsonb "guild_data"
+    t.datetime "community_applied_at"
+    t.datetime "community_accepted_at"
+    t.datetime "community_invited_to_call_at"
+    t.integer "community_score"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
