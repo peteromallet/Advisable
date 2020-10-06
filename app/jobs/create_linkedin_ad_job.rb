@@ -74,7 +74,7 @@ class CreateLinkedinAdJob < ApplicationJob
         name: "#{project.name} | #{project.airtable_id}",
         htmlBody: "In Mail",
         subContent: {"com.linkedin.ads.AdInMailGuidedRepliesSubContent": {sponsoredConversation: "urn:li:sponsoredConversation:#{conversation_id}"}},
-        subject: "#{project.primary_skill&.name} Project With #{project.industry} #{project.company_type}",
+        subject: "#{project.primary_skill&.name} Project With #{project.industry} #{project.company_type}".truncate(60),
         sender: {
           displayName: "Alexandra Ponomareva",
           displayPictureV2: "urn:li:digitalmediaAsset:C5603AQEOBKwTNiLKgg",
