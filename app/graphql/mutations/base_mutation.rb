@@ -11,6 +11,17 @@ class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
     ApiError.not_authenticated
   end
 
+  def requires_client!
+    requires_current_user!
+
+    return true if current_user.is_a?(User)
+
+    ApiError.invalid_request(
+      code: "MUST_BE_USER",
+      message: "Current user must be a User."
+    )
+  end
+
   def requires_specialist!
     requires_current_user!
 
