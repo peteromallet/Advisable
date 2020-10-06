@@ -19,13 +19,10 @@ function CoverImage({ coverPhoto, isOwner }) {
     notifications.notify("Cover picture has been updated");
   };
 
-  const defaultPicture =
-    "https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/92b19080680791.5ce7e63751fcd.jpg";
-
   return (
     <CoverImageWrapper>
       {isOwner && <FileUpload onChange={submit} />}
-      <StyledCoverImage src={coverPhoto || defaultPicture} loaded={loaded} />
+      {coverPhoto && <StyledCoverImage src={coverPhoto} loaded={loaded} />}
     </CoverImageWrapper>
   );
 }
