@@ -29,6 +29,12 @@ export const StyledAutocompleteMenuList = styled.ul`
   max-height: 300px;
 `;
 
+export const StyledAutocompleteNoResults = styled.div`
+  padding: 20px;
+  text-align: center;
+  color: ${theme.colors.neutral400};
+`;
+
 export const StyledAutocompleteMenuItem = styled.li`
   padding: 0 4px;
   font-size: 15px;
@@ -40,9 +46,10 @@ export const StyledAutocompleteMenuItem = styled.li`
     font-size: 15px;
     border-radius: 10px;
     padding: 10px 12px;
-    color: ${(p) =>
-      p.$isSelected ? theme.colors.blue900 : theme.colors.neutral900};
-    background: ${(p) =>
-      p.$isSelected ? theme.colors.blue100 : "transparent"};
+    color: ${theme.colors.neutral900};
+  }
+
+  &[aria-selected="true"] span {
+    background: ${theme.colors.blue100};
   }
 `;
