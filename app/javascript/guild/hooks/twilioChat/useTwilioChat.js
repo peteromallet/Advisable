@@ -39,7 +39,6 @@ export const useTwilioChat = ({ channelSid }) => {
 
   const onMessageAdded = useCallback(async (message, channel) => {
     await channel.setAllMessagesConsumed();
-    console.debug("all messages consumed");
     setChatState((prev) => ({
       ...prev,
       initializing: false,

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { theme } from "@advisable/donut";
+import { theme, Text } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
 
 const { colors } = theme;

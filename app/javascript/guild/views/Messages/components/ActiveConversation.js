@@ -30,7 +30,6 @@ const ActiveConversation = ({ channelSid }) => {
 
   useEffect(() => {
     if (!activeConversation) return;
-    console.log("activeConversation", activeConversation);
     const setAllMessagesConsumed = async () =>
       await activeConversation.setAllMessagesConsumed();
     setAllMessagesConsumed();
