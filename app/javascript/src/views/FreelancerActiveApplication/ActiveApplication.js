@@ -74,25 +74,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
   };
 
   const handleDeleteTask = (task) => {
-    let newData = client.readQuery({
-      query: FETCH_APPLICATION,
-      variables: {
-        id: application.airtableId,
-      },
-    });
-
-    newData.application.tasks = data.application.tasks.filter((t) => {
-      return t.id !== task.id;
-    });
-
-    client.writeQuery({
-      query: FETCH_APPLICATION,
-      data: newData,
-      variables: {
-        id: application.airtableId,
-      },
-    });
-
+    client.cache.evict(client.cache.identify(task));
     history.push(match.url);
   };
 

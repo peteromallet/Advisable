@@ -74,17 +74,7 @@ export default function Booking({ data, match }) {
   };
 
   const handleDeleteTask = (task) => {
-    client.cache.modify({
-      id: client.cache.identify(application),
-      fields: {
-        tasks(existingTasks, { readField }) {
-          return existingTasks.filter((taskRef) => {
-            return task.id !== readField("id", taskRef);
-          });
-        },
-      },
-    });
-
+    client.cache.evict(client.cache.identify(task));
     history.push(match.url);
   };
 
