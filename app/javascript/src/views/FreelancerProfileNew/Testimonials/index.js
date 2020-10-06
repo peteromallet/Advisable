@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Text, Stack } from "@advisable/donut";
+import { Box, Stack } from "@advisable/donut";
 import Review from "./Review";
+import SectionHeader from "../components/SectionHeader";
 
 function Testimonials({ reviews }) {
   const cards = reviews.map((review) => {
@@ -8,9 +9,7 @@ function Testimonials({ reviews }) {
   });
   return (
     <Box mb="xl">
-      <Text mb="m" color="neutral900" fontSize="xl" fontWeight="medium">
-        Testimonials
-      </Text>
+      <SectionHeader>Testimonials</SectionHeader>
       <Stack spacing="m">{cards}</Stack>
     </Box>
   );
