@@ -31,6 +31,7 @@ export const StyledAutocompleteMenuList = styled.ul`
 
 export const StyledAutocompleteNoResults = styled.div`
   padding: 20px;
+  user-select: none;
   text-align: center;
   color: ${theme.colors.neutral400};
 `;

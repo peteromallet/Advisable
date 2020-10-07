@@ -40,13 +40,22 @@ function scrollToItem(listbox, item) {
   }
 }
 
-export default function Autocomplete({ options, value, onChange, ...props }) {
+export default function Autocomplete({
+  options: defaultOptions,
+  value,
+  onChange,
+  loadOptions,
+  ...props
+}) {
+  const typingTimer = React.useRef();
   const inputRef = React.useRef(null);
   const listboxRef = React.useRef(null);
   const shouldScroll = React.useRef(true);
   const selectedItemRef = React.useRef(null);
   const listboxContainerRef = React.useRef(null);
   const [isOpen, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [options, setOptions] = React.useState(defaultOptions);
   const [searchValue, setSearchValue] = React.useState("");
   const [selectionIndex, setSelectionIndex] = React.useState(-1);
 
@@ -75,6 +84,32 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
       scrollToItem(listboxRef.current, selectedItemRef.current);
     }
   }, [selectionIndex]);
+
+  useEffect(() => {
+    if (!loadOptions) return;
+
+    async function handleLoadOptions() {
+      const newOptions = await loadOptions(searchValue);
+      console.log(newOptions);
+      setOptions(newOptions);
+      setLoading(false);
+    }
+
+    if (searchValue) {
+      setLoading(true);
+
+      if (typingTimer.current) clearTimeout(typingTimer.current);
+
+      if (searchValue) {
+        typingTimer.current = setTimeout(() => {
+          handleLoadOptions();
+        }, 300);
+      }
+    } else {
+      setLoading(false);
+      setOptions(defaultOptions);
+    }
+  }, [searchValue, loadOptions, defaultOptions]);
 
   function handleOpen() {
     if (!props.disabled && !isOpen) {
@@ -215,9 +250,9 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
           animate={{
             opacity: isOpen ? 1 : 0,
             y: isOpen ? 0 : 8,
-          }}
-          transition={{
-            duration: 0.3,
+            transition: {
+              duration: 0.3,
+            },
           }}
         >
           <StyledAutocompleteMenuList
@@ -225,23 +260,27 @@ export default function Autocomplete({ options, value, onChange, ...props }) {
             role="listbox"
             tabIndex="-1"
           >
-            {filteredOptions.length === 0 ? (
+            {loading ? <>loading...</> : null}
+
+            {!loading && filteredOptions.length === 0 ? (
               <StyledAutocompleteNoResults>
                 No results
               </StyledAutocompleteNoResults>
             ) : null}
 
-            {filteredOptions.map((option, index) => (
-              <AutocompleteOption
-                key={option.value}
-                selected={selectionIndex === index}
-                onClick={() => handleOptionClick(index)}
-                ref={selectionIndex === index ? selectedItemRef : null}
-                onMouseMove={() => handleOptionMouseMove(index)}
-              >
-                {option.label}
-              </AutocompleteOption>
-            ))}
+            {!loading
+              ? filteredOptions.map((option, index) => (
+                  <AutocompleteOption
+                    key={option.value}
+                    selected={selectionIndex === index}
+                    onClick={() => handleOptionClick(index)}
+                    ref={selectionIndex === index ? selectedItemRef : null}
+                    onMouseMove={() => handleOptionMouseMove(index)}
+                  >
+                    {option.label}
+                  </AutocompleteOption>
+                ))
+              : null}
           </StyledAutocompleteMenuList>
         </StyledAutocompleteMenu>
       </Box>

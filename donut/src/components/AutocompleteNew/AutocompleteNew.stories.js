@@ -1,5 +1,6 @@
 import React from "react";
 import { sortBy } from "lodash-es";
+import Fuse from "fuse.js";
 import { withKnobs, select, text } from "@storybook/addon-knobs";
 import Card from "../Card";
 import Autocomplete from "./";
@@ -7,27 +8,6 @@ import Autocomplete from "./";
 export default {
   title: "Forms/New Autocomplete",
   decorators: [withKnobs],
-};
-
-export const singleSelect = () => {
-  const [value, setValue] = React.useState("");
-  const size = select("Size", ["sm", "md", "lg"], "md");
-
-  return (
-    <Card maxWidth={600} margin="50px auto" padding="l">
-      <Autocomplete
-        size={size}
-        value={value}
-        label="Choose a country"
-        placeholder="Country"
-        onChange={(v) => setValue(v)}
-        options={sortBy(COUNTRIES, "name").map((country) => ({
-          label: country.name,
-          value: country.code,
-        }))}
-      />
-    </Card>
-  );
 };
 
 const COUNTRIES = [
@@ -1282,3 +1262,75 @@ const COUNTRIES = [
     emoji: "🇿🇼",
   },
 ];
+
+const fuse = new Fuse(COUNTRIES, {
+  shouldSort: true,
+  threshold: 0.6,
+  location: 0,
+  distance: 100,
+  maxPatternLength: 32,
+  minMatchCharLength: 1,
+  keys: ["name"],
+});
+
+const searchCountries = (query) => {
+  return new Promise((resolve, reject) => {
+    const options = fuse.search(query).map((obj) => ({
+      value: obj.item.code,
+      label: obj.item.name,
+    }));
+
+    setTimeout(() => {
+      resolve(options);
+    }, 800);
+  });
+};
+
+export const singleSelect = () => {
+  const [value, setValue] = React.useState("");
+  const size = select("Size", ["sm", "md", "lg"], "md");
+
+  return (
+    <Card maxWidth={600} margin="50px auto" padding="l">
+      <Autocomplete
+        size={size}
+        value={value}
+        label="Choose a country"
+        placeholder="Country"
+        onChange={(v) => setValue(v)}
+        options={sortBy(COUNTRIES, "name").map((country) => ({
+          label: country.name,
+          value: country.code,
+        }))}
+      />
+    </Card>
+  );
+};
+
+export const asyncOptions = () => {
+  const [value, setValue] = React.useState("");
+  const size = select("Size", ["sm", "md", "lg"], "md");
+
+  return (
+    <Card maxWidth={600} margin="50px auto" padding="l">
+      <Autocomplete
+        size={size}
+        value={value}
+        label="Choose a country"
+        placeholder="Country"
+        onChange={(v) => setValue(v)}
+        loadOptions={searchCountries}
+        options={[
+          {
+            label: "Ireland",
+            value: "IE",
+          },
+          {
+            label: "United States",
+            value: "US",
+          },
+        ]}
+      />
+    </Card>
+  );
+};
