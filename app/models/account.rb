@@ -12,6 +12,40 @@ class Account < ApplicationRecord
   validates_confirmation_of :password
   validates :password, length: {minimum: 8}, allow_blank: true
   validates :email, uniqueness: true, allow_blank: true, format: {with: /@/}
+
+  def email=(address)
+    self[:email] = address.try(:downcase)
+  end
+
+  def has_account?
+    password_digest.present?
+  end
+
+  def clear_remember_token
+    update_columns(remember_token: nil)
+  end
+
+  def generate_remember_token
+    update_columns(remember_token: new_remember_token)
+  end
+
+  def new_remember_token
+    loop do
+      token = Nanoid.generate(size: 25)
+      break token unless self.class.where(remember_token: token).exists?
+    end
+  end
+
+  # TODO: Look into this method
+  def create_confirmation_token
+    token = Token.new
+    self.confirmation_digest = Token.digest(token)
+    # eventually this shouldnt be stored in the DB. We have stored it for now
+    # so that we can manually resend confirmation emails.
+    self.confirmation_token = token
+    save(validate: false)
+    token
+  end
 end
 
 # == Schema Information
