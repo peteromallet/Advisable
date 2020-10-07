@@ -30,11 +30,6 @@ module SpecialistOrUser
       self[:email] = address.try(:downcase)
     end
 
-    # Wether or not the account has been confirmed via email.
-    def confirmed
-      confirmed_at.present?
-    end
-
     def self.remember_token
       loop do
         token = Nanoid.generate(size: 25)

@@ -20,18 +20,6 @@ RSpec.shared_examples "account" do
     end
   end
 
-  describe "#confirmed" do
-    it 'returns true if confirmed_at is present' do
-      user = build(factory, confirmed_at: Time.zone.now)
-      expect(user.confirmed).to be_truthy
-    end
-
-    it 'returns false if confirmed_at is nil' do
-      user = build(factory, confirmed_at: nil)
-      expect(user.confirmed).to be_falsey
-    end
-  end
-
   describe "#send_confirmation_email" do
     it "sets the confirmation_digest" do
       user = build(factory, confirmation_digest: nil)
