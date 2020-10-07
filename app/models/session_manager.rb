@@ -14,7 +14,7 @@ class SessionManager
     @current_user ||=
       begin
         uid = session[:account_uid]
-        return Account.find_by_uid(uid) if uid
+        return SpecialistOrUser.find_by_uid(uid) if uid
         restore_session
       end
   end
@@ -22,7 +22,7 @@ class SessionManager
   def restore_session
     token = cookies.signed[:remember]
     return unless token
-    account = Account.find_by_remember_token(token)
+    account = SpecialistOrUser.find_by_remember_token(token)
     account ? start_session(account) : cookies.delete(:remember)
     account
   end

@@ -17,6 +17,32 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
+  create_table "accounts", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "password_digest"
+    t.string "email"
+    t.string "uid"
+    t.datetime "confirmed_at"
+    t.string "confirmation_digest"
+    t.bigint "country_id"
+    t.string "reset_digest"
+    t.datetime "reset_sent_at"
+    t.jsonb "permissions", default: []
+    t.jsonb "completed_tutorials", default: []
+    t.string "vat_number"
+    t.string "confirmation_token"
+    t.string "campaign_name"
+    t.string "campaign_source"
+    t.boolean "test_account"
+    t.string "remember_token"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_accounts_on_country_id"
+    t.index ["email"], name: "index_accounts_on_email"
+    t.index ["uid"], name: "index_accounts_on_uid", unique: true
+  end
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -716,10 +742,12 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
     t.string "community_status"
     t.boolean "automated_invitations_subscription"
     t.jsonb "guild_data"
+    t.bigint "account_id"
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
     t.datetime "community_invited_to_call_at"
     t.integer "community_score"
+    t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
 
@@ -847,6 +875,8 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
     t.datetime "application_rejected_at"
     t.datetime "application_reminder_at"
     t.string "remember_token"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"
@@ -879,6 +909,7 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "accounts", "countries"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "specialists"
@@ -919,10 +950,12 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
   add_foreign_key "skills", "skills", column: "original_id"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
+  add_foreign_key "specialists", "accounts"
   add_foreign_key "specialists", "countries"
   add_foreign_key "taggings", "tags"
   add_foreign_key "user_skills", "skills"
   add_foreign_key "user_skills", "users"
+  add_foreign_key "users", "accounts"
   add_foreign_key "users", "countries"
   add_foreign_key "users", "industries"
   add_foreign_key "users", "sales_people"

@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :user do
+    account
     country
     industry
     first_name { 'MyString' }
@@ -16,8 +17,8 @@ FactoryBot.define do
 
     availability do
       [
-        2.days.from_now.change({ hour: 12, min: 0, sec: 0 }),
-        2.days.from_now.change({ hour: 12, min: 30, sec: 0 })
+        2.days.from_now.change({hour: 12, min: 0, sec: 0}),
+        2.days.from_now.change({hour: 12, min: 30, sec: 0})
       ]
     end
   end
