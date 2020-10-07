@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@advisable/donut";
 import { useLocation, Link } from "react-router-dom";
 
-function GetInTouchButton({ id, children, ...props }) {
+function RequestTalkButton({ id, children, ...props }) {
   const location = useLocation();
 
   return (
@@ -12,4 +12,4 @@ function GetInTouchButton({ id, children, ...props }) {
   );
 }
 
-export default GetInTouchButton;
+export default RequestTalkButton;
