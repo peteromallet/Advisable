@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :specialist do
+    account
     country
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }

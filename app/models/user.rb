@@ -3,7 +3,7 @@
 # two models will eventually be merged to be different types of users.
 class User < ApplicationRecord
   include Uid
-  include Account
+  include SpecialistOrUser
   include StatusMap
   include Tutorials
   include Airtable::Syncable
@@ -189,6 +189,7 @@ end
 #  vat_number                        :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
+#  account_id                        :bigint
 #  airtable_id                       :string
 #  country_id                        :bigint
 #  industry_id                       :bigint
@@ -198,6 +199,7 @@ end
 #
 # Indexes
 #
+#  index_users_on_account_id       (account_id)
 #  index_users_on_airtable_id      (airtable_id)
 #  index_users_on_country_id       (country_id)
 #  index_users_on_industry_id      (industry_id)
@@ -205,6 +207,7 @@ end
 #
 # Foreign Keys
 #
+#  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (country_id => countries.id)
 #  fk_rails_...  (industry_id => industries.id)
 #  fk_rails_...  (sales_person_id => sales_people.id)

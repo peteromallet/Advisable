@@ -6,8 +6,8 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
   field :viewer, Types::ViewerUnion, null: true
 
   def resolve(email:, token:)
-    account = Account.find_by_email!(email)
-    ApiError.invalid_request(code: 'ALREADY_CONFIRMED') if account.confirmed
+    account = SpecialistOrUser.find_by_email!(email)
+    ApiError.invalid_request(code: 'ALREADY_CONFIRMED') if account.confirmed_at.present?
     validate_token(account, token)
     account.confirmed_at = Time.zone.now
     account.confirmation_digest = nil
@@ -15,7 +15,7 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
     account.save(validate: false)
     login_as(account)
 
-    { viewer: account }
+    {viewer: account}
   end
 
   private

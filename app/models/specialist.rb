@@ -20,7 +20,7 @@
 #
 class Specialist < ApplicationRecord
   include Uid
-  include Account
+  include SpecialistOrUser
   include Airtable::Syncable
   include Guild::SpecialistsConcern
 
@@ -70,7 +70,7 @@ class Specialist < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  # Override the send_confirmation_email method from the Account module to use
+  # Override the send_confirmation_email method from the SpecialistOrUser module to use
   # a specific email template for specialists.
   def send_confirmation_email
     token = create_confirmation_token
@@ -148,14 +148,17 @@ end
 #  website                            :string
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
+#  account_id                         :bigint
 #  airtable_id                        :string
 #  country_id                         :bigint
 #
 # Indexes
 #
+#  index_specialists_on_account_id  (account_id)
 #  index_specialists_on_country_id  (country_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (country_id => countries.id)
 #
