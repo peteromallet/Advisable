@@ -1,13 +1,15 @@
 import React from "react";
 import { rgba } from "polished";
-import { Box, Text, theme, StyledCard, Tags } from "@advisable/donut";
+import { Button, Box, Text, theme, StyledCard, Tags } from "@advisable/donut";
 import styled from "styled-components";
 import ActionBarModal from "../../../Project/ActionBarModal";
 import ProjectDetails from "components/PreviousProjectDetails";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
-import { Home } from "@styled-icons/feather";
+import { Home, ArrowRight } from "@styled-icons/feather";
 
 const StyledSpecialistProject = styled(StyledCard)`
+  position: relative;
+  overflow: hidden;
   cursor: pointer;
   user-select: none;
   transition: box-shadow 300ms;
@@ -18,13 +20,31 @@ const StyledSpecialistProject = styled(StyledCard)`
   &:hover {
     box-shadow: 0px 12px 24px -12px ${rgba(theme.colors.neutral900, 0.08)},
       0px 24px 40px -24px ${rgba(theme.colors.neutral900, 0.12)};
+  }
+`;
 
-    .projectTitle {
-      color: ${theme.colors.blue600};
-    }
-    .clientName {
-      color: ${theme.colors.blue400};
-    }
+const StyledHoverDecoration = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 32px;
+  opacity: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50%;
+  min-height: 180px;
+  background: linear-gradient(
+    360deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.93) 40%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transition: opacity 0.4s;
+
+  ${StyledSpecialistProject}:hover & {
+    opacity: 1;
   }
 `;
 
@@ -42,6 +62,11 @@ function Project({ project }) {
         {dialog.visible && <ProjectDetails id={project.id} />}
       </ActionBarModal>
       <DialogDisclosure {...dialog} as={StyledSpecialistProject} padding="24px">
+        <StyledHoverDecoration>
+          <Button variant="subtle" suffix={<ArrowRight />}>
+            View More
+          </Button>
+        </StyledHoverDecoration>
         {project.coverPhoto && (
           <Box
             width="100%"
