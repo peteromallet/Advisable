@@ -18,6 +18,11 @@ module SpecialistOrUser
     belongs_to :account, required: false
     before_save :copy_data_to_account
 
+    # Needed for frontend stuff
+    def confirmed
+      confirmed_at.present?
+    end
+
     # Returns werther or not the record has set a password. Due to the fact that
     # records are synced from airtable, it's likely that an account already
     # exists before a password it created for it.
