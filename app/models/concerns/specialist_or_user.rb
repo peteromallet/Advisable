@@ -9,7 +9,6 @@ module SpecialistOrUser
     include Permissions
 
     has_secure_password validations: false
-    has_many :magic_links, as: :account
     validates_confirmation_of :password
     validates :password, length: {minimum: 8}, allow_blank: true
     validate :email_not_taken
