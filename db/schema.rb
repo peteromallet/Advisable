@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_06_120100) do
+ActiveRecord::Schema.define(version: 2020_10_07_100944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -401,6 +401,17 @@ ActiveRecord::Schema.define(version: 2020_10_06_120100) do
     t.index ["airtable_id"], name: "index_interviews_on_airtable_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
     t.index ["user_id"], name: "index_interviews_on_user_id"
+  end
+
+  create_table "magic_links", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "path"
+    t.integer "uses_remaining"
+    t.string "digest"
+    t.datetime "expires_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_magic_links_on_account_id"
   end
 
   create_table "matches", force: :cascade do |t|
