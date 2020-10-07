@@ -33,8 +33,11 @@ class MagicLink < ApplicationRecord
     decrement!(:uses_remaining)
   end
 
-  def expired?
-    expires_at < Time.current
+  def path=(url)
+    uri = URI.parse(url)
+    self[:path] = uri.path
+  rescue URI::InvalidURIError
+    self[:path] = nil
   end
 
   def valid_token(token)
@@ -44,21 +47,20 @@ class MagicLink < ApplicationRecord
     false
   end
 
-  def path=(url)
-    uri = URI.parse(url)
-    self[:path] = uri.path
-  end
-
   private
 
   def default_values
     self.expires_at ||= 1.day.from_now
-    self.uses_remaining = 1
+    self.uses_remaining ||= 1
   end
 
   def generate_token
     @token = Token.new
     self.digest = Token.digest(token)
+  end
+
+  def expired?
+    expires_at < Time.current
   end
 end
 
