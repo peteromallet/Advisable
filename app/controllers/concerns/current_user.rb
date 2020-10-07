@@ -14,12 +14,6 @@ module CurrentUser
 
     def authenticate_with_magic_link
       return if user_logged_in?
-      token = params.fetch("mlt", nil)
-      uid = params.fetch("mluid", nil)
-      return unless token.present? && uid.present?
-      account = Account.find_by_uid(uid)
-      return unless account.present?
-      magic_link = MagicLink.for_path(account: account, token: token, path: request.path)
       return unless magic_link.present?
       magic_link.use
       # TODO: Eventually start_session should accept the account record
@@ -29,6 +23,17 @@ module CurrentUser
     end
 
     private
+
+    def magic_link
+      @magic_link ||= begin
+        token = params.fetch("mlt", nil)
+        uid = params.fetch("mluid", nil)
+        return unless token.present? && uid.present?
+        account = Account.find_by_uid(uid)
+        return unless account.present?
+        MagicLink.for_path(account: account, token: token, path: request.path)
+      end
+    end
 
     def redirect_without_magic_link_params
       query_hash = Rack::Utils.parse_query(URI.parse(request.url).query)
