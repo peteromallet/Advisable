@@ -5,6 +5,7 @@ import styled from "styled-components";
 import ActionBarModal from "../../../Project/ActionBarModal";
 import ProjectDetails from "components/PreviousProjectDetails";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
+import { Home } from "@styled-icons/feather";
 
 const StyledSpecialistProject = styled(StyledCard)`
   cursor: pointer;
@@ -63,16 +64,26 @@ function Project({ project }) {
         >
           {project.primarySkill.name} project
         </Text>
-        <Text
-          fontSize="m"
-          lineHeight="22px"
+        <Box
           color="neutral600"
-          marginBottom="8px"
-          letterSpacing="-0.02em"
-          className="clientName"
+          display="flex"
+          alignItems="center"
+          mb="xs"
+          mt="2px"
         >
-          with {project.clientName}
-        </Text>
+          <Home size={18} />
+          <Text
+            fontSize="m"
+            lineHeight="22px"
+            color="neutral600"
+            letterSpacing="-0.02em"
+            className="clientName"
+            mt="xxs"
+            ml="xxs"
+          >
+            {project.clientName}
+          </Text>
+        </Box>
         <Text
           fontSize="sm"
           color="neutral800"
