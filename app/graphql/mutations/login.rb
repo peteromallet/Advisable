@@ -8,7 +8,7 @@ class Mutations::Login < Mutations::BaseMutation
 
   def resolve(email:, password:)
     account = SpecialistOrUser.find_by_email(email.downcase)
-    no_account_error unless has_account?(account)
+    no_account_error unless account&.has_account?
     invalid_credentials unless account.authenticate(password)
     login_as(account)
     {viewer: account}
@@ -26,10 +26,5 @@ class Mutations::Login < Mutations::BaseMutation
     ApiError.invalid_request(
       code: 'AUTHENTICATION_FAILED', message: 'Invalid credentials'
     )
-  end
-
-  def has_account?(account)
-    return false if account.nil?
-    account.password_digest?
   end
 end
