@@ -25,9 +25,17 @@ module CurrentUser
       # TODO: Eventually start_session should accept the account record
       user_or_specialist = magic_link.account.user || magic_link.account.specialist
       session_manager.start_session(user_or_specialist)
+      redirect_without_magic_link_params
     end
 
     private
+
+    def redirect_without_magic_link_params
+      query_hash = Rack::Utils.parse_query(URI.parse(request.url).query)
+      query_params = query_hash.except('mlt', 'mluid')
+      url = query_params.empty? ? request.path : "#{request.path}?#{query_params.to_query}"
+      redirect_to url
+    end
 
     def session_manager
       @session_manager ||= SessionManager.new(session: session, cookies: cookies)

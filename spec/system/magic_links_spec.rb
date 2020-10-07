@@ -7,9 +7,10 @@ RSpec.describe "Magic links" do
     magic_link = create(:magic_link, account: account, path: "/projects")
 
     expect(magic_link.uses_remaining).to eq(1)
-    visit "/projects?mlt=#{magic_link.token}&mluid=#{account.uid}"
+    visit "/projects?mlt=#{magic_link.token}&mluid=#{account.uid}&another=param"
     expect(page).to have_content("Find new talent")
     expect(magic_link.reload.uses_remaining).to eq(0)
+    expect(page).to have_current_path("/projects?another=param")
   end
 
   context "when trying to access a diferent path" do
