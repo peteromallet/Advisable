@@ -5,7 +5,7 @@ import { LinkedinIn } from "@styled-icons/fa-brands";
 import { Link as LinkIcon } from "@styled-icons/feather";
 import IconLink from "./IconLink";
 import CoverImage from "./CoverImage";
-import GetInTouchButton from "./GetInTouchButton";
+import RequestTalkButton from "./RequestTalkButton";
 import EditInfo from "./EditInfo";
 
 function AboutSection({ specialist, isOwner, viewer }) {
@@ -51,9 +51,9 @@ function AboutSection({ specialist, isOwner, viewer }) {
                 <EditInfo specialist={specialist}>Edit Info</EditInfo>
               )}
               {!isOwner && viewer && (
-                <GetInTouchButton id={specialist.id}>
-                  Get in touch
-                </GetInTouchButton>
+                <RequestTalkButton id={specialist.id}>
+                  Request a talk
+                </RequestTalkButton>
               )}
             </Box>
           </Box>
