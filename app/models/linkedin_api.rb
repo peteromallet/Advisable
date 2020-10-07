@@ -25,7 +25,7 @@ class LinkedinApi
     @token = linkedin_ad_auth_provider.token
   end
 
-  def post_request(path, params, expected_status = 201)
+  def post_request(path, params, expected_status: 201)
     response = Faraday.post(API_ROOT + path, params.to_json, request_headers)
     if response.status == expected_status
       response
@@ -34,7 +34,7 @@ class LinkedinApi
     end
   end
 
-  def put_request(path, params, expected_status = 204)
+  def put_request(path, params, expected_status: 204)
     response = Faraday.put(API_ROOT + path, params.to_json, request_headers_v2)
     if response.status == expected_status
       response
@@ -43,7 +43,7 @@ class LinkedinApi
     end
   end
 
-  def get_request(path, expected_status = 200)
+  def get_request(path, expected_status: 200)
     response = Faraday.get(API_ROOT + path, nil, request_headers_v2)
     if response.status == expected_status
       response
@@ -52,7 +52,30 @@ class LinkedinApi
     end
   end
 
+  [:post_request, :put_request, :get_request].each do |method|
+    define_method "#{method}_with_retries" do |*args, **options|
+      with_retries(options.slice(:max_retries)) do
+        public_send(method, *args, **options.except(:max_retries))
+      end
+    end
+  end
+
   private
+
+  def with_retries(max_retries: 3)
+    retries = 1
+    begin
+      yield
+    rescue RequestError => e
+      if retries <= max_retries
+        retries += 1
+        sleep 2**retries
+        retry
+      else
+        raise
+      end
+    end
+  end
 
   def request_headers
     {
