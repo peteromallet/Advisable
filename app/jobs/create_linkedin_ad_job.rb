@@ -3,14 +3,14 @@ class CreateLinkedinAdJob < ApplicationJob
   CAMPAIGN_GROUP_ID = 612029303
   CONVERSION_ID = 2659460 # Generic Thank You
 
-  attr_reader :project, :linkedin_api, :conversation_id, :first_message_urn, :inmail_id, :creative_id
+  attr_reader :project, :api, :conversation_id, :first_message_urn, :inmail_id, :creative_id
 
   queue_as :default
 
   # Workflow: https://docs.microsoft.com/en-us/linkedin/marketing/usecases/ad-tech/conversation-ads#setting-up-a-conversation-ad
   def perform(project)
     @project = project
-    @linkedin_api = LinkedinApi.new
+    @api = LinkedinApi.new
 
     create_campaign!
     create_conversation!
@@ -43,7 +43,7 @@ class CreateLinkedinAdJob < ApplicationJob
       totalBudget: {amount: "100", currencyCode: "EUR"},
       status: "DRAFT"
     }
-    response = linkedin_api.post_request("adCampaignsV2", params)
+    response = api.post_request("adCampaignsV2", params)
     campaign_id = response.headers["x-resourceidentity-urn"].split(":").last.to_i
     project.update!(linkedin_campaign_id: campaign_id)
     Rails.logger.info("New campaign created: #{campaign_id}")
@@ -51,7 +51,7 @@ class CreateLinkedinAdJob < ApplicationJob
 
   def create_conversation!
     params = {"parentAccount": "urn:li:sponsoredAccount:#{ACCOUNT_ID}"}
-    response = linkedin_api.post_request("sponsoredConversations", params)
+    response = api.post_request("sponsoredConversations", params)
     @conversation_id = response.headers["x-linkedin-id"].to_i
     Rails.logger.info("New sponsored conversation created: #{conversation_id}")
   end
@@ -63,7 +63,7 @@ class CreateLinkedinAdJob < ApplicationJob
 
   def set_first_message!
     params = {patch: {"$set": {firstMessageContent: first_message_urn}}}
-    response = linkedin_api.post_request("sponsoredConversations/#{conversation_id}", params, 204)
+    response = api.post_request_with_retries("sponsoredConversations/#{conversation_id}", params, expected_status: 204)
     urn = response.headers["x-resourceidentity-urn"]
     Rails.logger.info("First message set: #{first_message_urn}")
   end
@@ -81,7 +81,7 @@ class CreateLinkedinAdJob < ApplicationJob
           from: "urn:li:person:2TsTW-IKX3"
       }
     }
-    response = linkedin_api.post_request("adInMailContentsV2", params)
+    response = api.post_request_with_retries("adInMailContentsV2", params)
     @inmail_id = response.headers["x-linkedin-id"].to_i
     Rails.logger.info("New InMail content created: #{inmail_id}")
   end
@@ -93,14 +93,14 @@ class CreateLinkedinAdJob < ApplicationJob
       status: "DRAFT",
       type: "SPONSORED_MESSAGE"
     }
-    response = linkedin_api.post_request("adCreativesV2", params)
+    response = api.post_request_with_retries("adCreativesV2", params)
     @creative_id = response.headers["x-linkedin-id"].to_i
     Rails.logger.info("New Sponsored Creative Ad created: #{creative_id}")
   end
 
   def activate_conversation_ad!
     params = {patch: {"$set": {status: "ACTIVE"}}}
-    response = linkedin_api.post_request("adCreativesV2/#{creative_id}", params, 204)
+    response = api.post_request("adCreativesV2/#{creative_id}", params, expected_status: 204)
     Rails.logger.info("Creative Ad ACTIVATED: #{creative_id}")
   end
 
@@ -110,19 +110,19 @@ class CreateLinkedinAdJob < ApplicationJob
       conversion: "urn:lla:llaPartnerConversion:#{CONVERSION_ID}"
     }
     path = "campaignConversions/(campaign:#{CGI.escape(params[:campaign])},conversion:#{CGI.escape(params[:conversion])})"
-    response = linkedin_api.put_request(path, params)
+    response = api.put_request(path, params)
     Rails.logger.info("New Sponsored Creative Ad created: #{creative_id}")
   end
 
   def activate_campaign!
     params = {patch: {"$set": {status: "ACTIVE"}}}
-    response = linkedin_api.post_request("adCampaignsV2/#{project.linkedin_campaign_id}", params, 204)
+    response = api.post_request("adCampaignsV2/#{project.linkedin_campaign_id}", params, expected_status: 204)
     Rails.logger.info("Campaign ACTIVATED: #{project.linkedin_campaign_id}")
   end
 
   def pause_campaign!
     params = {patch: {"$set": {status: "PAUSED"}}}
-    response = linkedin_api.post_request("adCampaignsV2/#{project.linkedin_campaign_id}", params, 204)
+    response = api.post_request("adCampaignsV2/#{project.linkedin_campaign_id}", params, expected_status: 204)
     Rails.logger.info("Campaign PAUSED: #{project.linkedin_campaign_id}")
   end
 
@@ -138,7 +138,7 @@ class CreateLinkedinAdJob < ApplicationJob
       end
       params.merge!(nextAction: {"array": actions})
     end
-    response = linkedin_api.post_request("sponsoredConversations/#{conversation_id}/sponsoredMessageContents", params)
+    response = api.post_request_with_retries("sponsoredConversations/#{conversation_id}/sponsoredMessageContents", params)
     urn = response.headers["x-resourceidentity-urn"]
     Rails.logger.info("New message created: #{urn}")
     urn
