@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Box } from "@advisable/donut";
+import { Box, Tag } from "@advisable/donut";
 import Fuse from "fuse.js";
 import { createPopper } from "@popperjs/core";
 import { ChevronDown } from "@styled-icons/ionicons-outline";
@@ -44,6 +44,7 @@ function scrollToItem(listbox, item) {
 export default function Autocomplete({
   options: defaultOptions,
   value,
+  multiple,
   onChange,
   creatable,
   loadOptions,
@@ -115,14 +116,16 @@ export default function Autocomplete({
     );
   }, [searchValue, options]);
 
-  const fuse = React.useMemo(() => {
-    return new Fuse(options, fuseOptions);
-  }, [options]);
-
   const filteredOptions = React.useMemo(() => {
     let optionsArray = options;
 
+    if (multiple) {
+      const values = value.map((v) => v.value);
+      optionsArray = optionsArray.filter((o) => !values.includes(o.value));
+    }
+
     if (!loadOptions && searchValue.length > 0) {
+      const fuse = new Fuse(optionsArray, fuseOptions);
       optionsArray = fuse.search(searchValue).map((obj) => obj.item);
     }
 
@@ -137,7 +140,23 @@ export default function Autocomplete({
     }
 
     return optionsArray;
-  }, [fuse, searchValue, loadOptions, options, creatable, searchDirectMatch]);
+  }, [
+    searchValue,
+    loadOptions,
+    options,
+    creatable,
+    multiple,
+    value,
+    searchDirectMatch,
+  ]);
+
+  function handleChange(option) {
+    if (multiple) {
+      onChange([...value, option]);
+    } else {
+      onChange(option);
+    }
+  }
 
   function selectOption(index) {
     const selectedOption = filteredOptions[index];
@@ -152,12 +171,12 @@ export default function Autocomplete({
       !searchDirectMatch &&
       index === filteredOptions.length - 1
     ) {
-      onChange({
+      handleChange({
         label: searchValue,
         value: searchValue,
       });
     } else {
-      onChange(selectedOption);
+      handleChange(selectedOption);
     }
   }
 
@@ -307,6 +326,16 @@ export default function Autocomplete({
           </StyledAutocompleteMenuList>
         </StyledAutocompleteMenu>
       </Box>
+
+      {multiple && value.length > 0 && (
+        <Box paddingTop="sm">
+          {value.map((v) => (
+            <Tag key={v.value} marginBottom="2xs" marginRight="2xs">
+              {v.label}
+            </Tag>
+          ))}
+        </Box>
+      )}
     </StyledAutocomplete>
   );
 }
