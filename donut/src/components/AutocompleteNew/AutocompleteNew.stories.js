@@ -1355,3 +1355,23 @@ export const creatableSingleSelect = () => {
     </Card>
   );
 };
+
+export const multiple = () => {
+  const [value, setValue] = React.useState([]);
+
+  return (
+    <Card maxWidth={600} margin="50px auto" padding="l">
+      <Autocomplete
+        multiple
+        value={value}
+        label="Choose countries"
+        placeholder="Country"
+        onChange={(v) => setValue(v)}
+        options={sortBy(COUNTRIES, "name").map((country) => ({
+          label: country.name,
+          value: country.code,
+        }))}
+      />
+    </Card>
+  );
+};
