@@ -5,7 +5,7 @@ class WebhookEvent::Specialist
       airtable_id: specialist.airtable_id,
       first_name: specialist.first_name,
       last_name: specialist.last_name,
-      has_account: specialist.has_account?,
+      has_account: specialist.account.has_password?, # TODO: AccountMigration - Rename for consistency
       application_stage: specialist.application_stage,
     }
   end
