@@ -90,6 +90,7 @@ group :development do
   gem 'annotate'
   gem 'guard'
   gem 'guard-rspec', require: false
+  gem "letter_opener"
 end
 
 group :test do

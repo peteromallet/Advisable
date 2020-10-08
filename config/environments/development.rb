@@ -28,6 +28,10 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  if (ngrok_host = ENV.fetch('NGROK_FORWARD_HOST', nil))
+    config.hosts << ngrok_host
+  end
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :amazon
 
@@ -60,7 +64,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = { :host => ENV["ORIGIN"] }
+  config.action_mailer.default_url_options = {:host => ENV["ORIGIN"]}
 end

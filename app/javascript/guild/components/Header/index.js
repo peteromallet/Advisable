@@ -21,7 +21,7 @@ const Header = () => {
   const history = useHistory();
 
   const { data: lastReadData } = useQuery(GUILD_LAST_READ_QUERY, {
-    pollInterval: 5000,
+    pollInterval: 2500,
   });
 
   const [guildUpdateLastRead] = useMutation(GUILD_UPDATE_LAST_READ, {
@@ -53,6 +53,8 @@ const Header = () => {
   const handleUpdateLastRead = async (input) =>
     await guildUpdateLastRead({ variables: { input } });
 
+  const messagesOpen = location.pathname.match(/messages(?:.*)/);
+
   return (
     <>
       <Notifications open={notificationsOpen} />
@@ -79,11 +81,10 @@ const Header = () => {
           <GuildBox spaceChildrenHorizontal={24} display="flex">
             <NavIcon
               unread={
-                lastReadData?.viewer?.guildUnreadMessages &&
-                location.pathname !== "/messages"
+                lastReadData?.viewer?.guildUnreadMessages && !messagesOpen
               }
               onClick={handleMessages}
-              open={location.pathname === "/messages"}
+              open={messagesOpen}
             >
               <Messages />
             </NavIcon>

@@ -1,20 +1,31 @@
+# Creates or finds a channel and adds a message.
+# NOTE: This is only kicked off from the 1:1 direct message modal.
+
 class ChatDirectMessageJob < ApplicationJob
-  def perform(initiator_id:, participant_id:, message:)
+  def perform(recipient_uid:, sender_uid:, message:)
     client = TwilioChat::Client.new
     channel = client.find_or_create_channel(
-      initiator_id: initiator_id,
-      participant_id: participant_id,
+      recipient_uid: recipient_uid,
+      sender_uid: sender_uid,
       message: message
     )
 
     # Add both members of the 1:1 direct message chat channel
     if channel.members_count.zero?
-      [initiator_id, participant_id].each do |identity|
+      [recipient_uid, sender_uid].each do |identity|
         channel.members.create(identity: identity)
       end
     end
 
     # Add the first or additional message
-    channel.messages.create(body: message, from: initiator_id)
+    channel.messages.create(body: message, from: sender_uid)
+
+    # Email notify other member of the conversation
+    Guild::ChatMailer.new_message(
+      recipient_uid: recipient_uid,
+      sender_uid: sender_uid,
+      channel_sid: channel.sid,
+      message_body: message
+    ).deliver_later
   end
 end

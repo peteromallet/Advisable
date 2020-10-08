@@ -15,7 +15,7 @@ const DirectMessage = ({ count, recipient }) => {
   const [sent, setSent] = useState(false);
   const [body, setBody] = useState("");
 
-  const [createChatDirectMessage, { data, loading }] = useMutation(
+  const [createChatDirectMessage, { loading }] = useMutation(
     CREATE_CHAT_DIRECT_MESSAGE,
   );
 
@@ -25,7 +25,7 @@ const DirectMessage = ({ count, recipient }) => {
   const handleSubmit = async () => {
     if (!body.length) return;
     await createChatDirectMessage({
-      variables: { input: { participantId: recipient.id, body } },
+      variables: { input: { recipientId: recipient.id, body } },
     });
     setSent(true);
   };

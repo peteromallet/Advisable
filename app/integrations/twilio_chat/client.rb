@@ -31,9 +31,9 @@ module Integrations
 
     # Service utilities
 
-    def find_or_create_channel(initiator_id:, participant_id:, message:)
+    def find_or_create_channel(sender_uid:, recipient_uid:, message:)
       friendly_name = message.truncate(MAX_FRIENDLY_NAME)
-      @channel_sid = Digest::MD5.hexdigest([initiator_id, participant_id].sort.join)
+      @channel_sid = Digest::MD5.hexdigest([sender_uid, recipient_uid].sort.join)
       channel
     rescue Twilio::REST::RestError
       chat_service.channels.create(
@@ -43,8 +43,8 @@ module Integrations
         attributes: {
           subject: friendly_name,
           members: {
-            initiator_id: initiator_id,
-            participant_id: participant_id
+            sender_uid: sender_uid,
+            recipient_uid: recipient_uid
           }
         }.to_json
       )
@@ -55,8 +55,5 @@ module Integrations
       truncated_name = last_message.truncate(MAX_FRIENDLY_NAME)
       channel.update(friendly_name: truncated_name)
     end
-
-    # TODO: Webhooks for email notification dispatch and inline reply
-    # https://www.twilio.com/docs/chat/webhook-events
   end
 end
