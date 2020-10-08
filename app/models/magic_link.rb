@@ -1,6 +1,5 @@
 class MagicLink < ApplicationRecord
   class Expired < StandardError; end
-  class NoUsesRemaining < StandardError; end
 
   attr_reader :token
 
@@ -9,28 +8,19 @@ class MagicLink < ApplicationRecord
   validates :path, presence: true
   validates :digest, presence: true
   validates :expires_at, presence: true
-  validates :uses_remaining, presence: true
 
   before_validation :generate_token, on: :create
   before_validation :default_values, on: :create
 
   scope :expired, -> { where("expires_at < ?", Time.zone.now) }
   scope :not_expired, -> { where("expires_at >= ?", Time.zone.now) }
-  scope :used, -> { where("uses_remaining <= ?", 0) }
-  scope :uses_remaining, -> { where("uses_remaining > ?", 0) }
 
   # In order to use a magic link we need three things; the token, the account
   # that we are trying to authenticate and the path to access.
   def self.for_path(account:, token:, path:)
-    account.magic_links.not_expired.uses_remaining.where(path: path).find do |ml|
+    account.magic_links.not_expired.where(path: path).find do |ml|
       ml.valid_token(token)
     end
-  end
-
-  def use
-    raise Expired if expired?
-    raise NoUsesRemaining unless uses_remaining?
-    decrement!(:uses_remaining)
   end
 
   def path=(url)
@@ -51,7 +41,6 @@ class MagicLink < ApplicationRecord
 
   def default_values
     self.expires_at ||= 1.day.from_now
-    self.uses_remaining ||= 1
   end
 
   def generate_token
@@ -68,14 +57,13 @@ end
 #
 # Table name: magic_links
 #
-#  id             :bigint           not null, primary key
-#  digest         :string
-#  expires_at     :datetime
-#  path           :string
-#  uses_remaining :integer
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  account_id     :bigint           not null
+#  id         :bigint           not null, primary key
+#  digest     :string
+#  expires_at :datetime
+#  path       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  account_id :bigint           not null
 #
 # Indexes
 #
