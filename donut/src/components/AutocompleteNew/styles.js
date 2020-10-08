@@ -36,6 +36,13 @@ export const StyledAutocompleteNoResults = styled.div`
   color: ${theme.colors.neutral400};
 `;
 
+export const StyledAutocompleteLoading = styled.div`
+  padding: 20px;
+  user-select: none;
+  text-align: center;
+  color: ${theme.colors.neutral400};
+`;
+
 export const StyledAutocompleteMenuItem = styled.li`
   padding: 0 4px;
   font-size: 15px;

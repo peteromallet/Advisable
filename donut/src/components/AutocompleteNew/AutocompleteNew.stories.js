@@ -1275,6 +1275,7 @@ const fuse = new Fuse(COUNTRIES, {
 
 const searchCountries = (query) => {
   return new Promise((resolve, reject) => {
+    console.log("SEARCHING");
     const options = fuse.search(query).map((obj) => ({
       value: obj.item.code,
       label: obj.item.name,

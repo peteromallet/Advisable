@@ -8,6 +8,7 @@ import Input from "../Input";
 import {
   StyledAutocomplete,
   StyledAutocompleteMenu,
+  StyledAutocompleteLoading,
   StyledAutocompleteMenuList,
   StyledAutocompleteMenuItem,
   StyledAutocompleteNoResults,
@@ -64,9 +65,7 @@ export default function Autocomplete({
       const popper = createPopper(
         inputRef.current,
         listboxContainerRef.current,
-        {
-          placement: "bottom",
-        },
+        { placement: "bottom" },
       );
 
       return () => popper.destroy();
@@ -85,26 +84,24 @@ export default function Autocomplete({
     }
   }, [selectionIndex]);
 
+  // When searchValue changes trigger the loadOptions function if its defined
   useEffect(() => {
     if (!loadOptions) return;
 
     async function handleLoadOptions() {
       const newOptions = await loadOptions(searchValue);
-      console.log(newOptions);
       setOptions(newOptions);
       setLoading(false);
     }
 
+    clearTimeout(typingTimer.current);
+
     if (searchValue) {
       setLoading(true);
 
-      if (typingTimer.current) clearTimeout(typingTimer.current);
-
-      if (searchValue) {
-        typingTimer.current = setTimeout(() => {
-          handleLoadOptions();
-        }, 300);
-      }
+      typingTimer.current = setTimeout(() => {
+        handleLoadOptions();
+      }, 300);
     } else {
       setLoading(false);
       setOptions(defaultOptions);
@@ -124,14 +121,13 @@ export default function Autocomplete({
 
   function handleBlur(e) {
     const listboxEl = listboxRef.current;
-    const clickContained = listboxEl.contains(e.relatedTarget);
-    if (listboxEl && e.relatedTarget && clickContained) {
-      return;
-    }
+    const clickContained = listboxEl?.contains(e.relatedTarget);
+    if (clickContained) return;
 
     setOpen(false);
     setSearchValue("");
     setSelectionIndex(-1);
+    setOptions(defaultOptions);
     if (props.onBlur) props.onBlur(e);
   }
 
@@ -214,12 +210,12 @@ export default function Autocomplete({
   }, [options]);
 
   const filteredOptions = React.useMemo(() => {
-    if (searchValue.length > 0) {
+    if (!loadOptions && searchValue.length > 0) {
       return fuse.search(searchValue).map((obj) => obj.item);
     }
 
     return options;
-  }, [fuse, searchValue, options]);
+  }, [fuse, searchValue, loadOptions, options]);
 
   const selectedLabel = React.useMemo(() => {
     return options.find((o) => o.value === value)?.label || "";
@@ -260,7 +256,9 @@ export default function Autocomplete({
             role="listbox"
             tabIndex="-1"
           >
-            {loading ? <>loading...</> : null}
+            {loading ? (
+              <StyledAutocompleteLoading>loading...</StyledAutocompleteLoading>
+            ) : null}
 
             {!loading && filteredOptions.length === 0 ? (
               <StyledAutocompleteNoResults>
