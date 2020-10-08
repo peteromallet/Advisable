@@ -1375,3 +1375,48 @@ export const multiple = () => {
     </Card>
   );
 };
+
+export const multipleAndCreatable = () => {
+  const [value, setValue] = React.useState([]);
+
+  return (
+    <Card maxWidth={600} margin="50px auto" padding="l">
+      <Autocomplete
+        multiple
+        creatable
+        value={value}
+        label="Choose countries"
+        placeholder="Country"
+        onChange={(v) => setValue(v)}
+        options={sortBy(COUNTRIES, "name").map((country) => ({
+          label: country.name,
+          value: country.code,
+        }))}
+      />
+    </Card>
+  );
+};
+
+export const multipleCreatableAndAsync = () => {
+  const [value, setValue] = React.useState([]);
+
+  return (
+    <Card maxWidth={600} margin="50px auto" padding="l">
+      <Autocomplete
+        multiple
+        creatable
+        value={value}
+        label="Choose countries"
+        placeholder="Country"
+        onChange={(v) => setValue(v)}
+        loadOptions={searchCountries}
+        options={sortBy(COUNTRIES, "name")
+          .slice(0, 4)
+          .map((country) => ({
+            label: country.name,
+            value: country.code,
+          }))}
+      />
+    </Card>
+  );
+};

@@ -111,10 +111,16 @@ export default function Autocomplete({
   }, [searchValue, loadOptions, defaultOptions]);
 
   const searchDirectMatch = React.useMemo(() => {
-    return options.find(
+    const directOption = options.find(
       (o) => o.label.toLowerCase() === searchValue.toLowerCase(),
     );
-  }, [searchValue, options]);
+
+    if (directOption) return true;
+    if (!multiple) return false;
+    return value.find(
+      (v) => v.label.toLowerCase() === searchValue.toLowerCase(),
+    );
+  }, [searchValue, options, multiple, value]);
 
   const filteredOptions = React.useMemo(() => {
     let optionsArray = options;
@@ -129,7 +135,7 @@ export default function Autocomplete({
       optionsArray = fuse.search(searchValue).map((obj) => obj.item);
     }
 
-    if (creatable && !searchDirectMatch) {
+    if (searchValue && creatable && !searchDirectMatch) {
       optionsArray = [
         ...optionsArray,
         {
