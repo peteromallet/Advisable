@@ -4,6 +4,8 @@ import CoverImage from "./CoverImage";
 import Info from "./Info";
 
 function AboutSection({ specialist, isOwner, viewer }) {
+  const expandable = specialist.bio.length > TRUNCATE_LIMIT;
+  const [expanded, setExpanded] = useState(!expandable);
   return (
     <Card
       minHeight="514px"
