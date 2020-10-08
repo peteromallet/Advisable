@@ -2,6 +2,5 @@
 namespace :magic_links do
   task clear: :environment do
     MagicLink.expired.delete_all
-    MagicLink.used.delete_all
   end
 end
