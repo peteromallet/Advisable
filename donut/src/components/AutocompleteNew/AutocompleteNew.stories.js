@@ -1335,3 +1335,23 @@ export const asyncOptions = () => {
     </Card>
   );
 };
+
+export const creatableSingleSelect = () => {
+  const [value, setValue] = React.useState(null);
+
+  return (
+    <Card maxWidth={600} margin="50px auto" padding="l">
+      <Autocomplete
+        creatable
+        value={value}
+        label="Choose a country"
+        placeholder="Country"
+        onChange={(v) => setValue(v)}
+        options={sortBy(COUNTRIES, "name").map((country) => ({
+          label: country.name,
+          value: country.code,
+        }))}
+      />
+    </Card>
+  );
+};

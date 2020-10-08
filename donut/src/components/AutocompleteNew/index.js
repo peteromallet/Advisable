@@ -16,7 +16,7 @@ import {
 
 const fuseOptions = {
   shouldSort: true,
-  threshold: 0.6,
+  threshold: 0.2,
   location: 0,
   distance: 100,
   maxPatternLength: 32,
@@ -45,6 +45,7 @@ export default function Autocomplete({
   options: defaultOptions,
   value,
   onChange,
+  creatable,
   loadOptions,
   ...props
 }) {
@@ -108,6 +109,58 @@ export default function Autocomplete({
     }
   }, [searchValue, loadOptions, defaultOptions]);
 
+  const searchDirectMatch = React.useMemo(() => {
+    return options.find(
+      (o) => o.label.toLowerCase() === searchValue.toLowerCase(),
+    );
+  }, [searchValue, options]);
+
+  const fuse = React.useMemo(() => {
+    return new Fuse(options, fuseOptions);
+  }, [options]);
+
+  const filteredOptions = React.useMemo(() => {
+    let optionsArray = options;
+
+    if (!loadOptions && searchValue.length > 0) {
+      optionsArray = fuse.search(searchValue).map((obj) => obj.item);
+    }
+
+    if (creatable && !searchDirectMatch) {
+      optionsArray = [
+        ...optionsArray,
+        {
+          label: `Create "${searchValue}"`,
+          value: searchValue,
+        },
+      ];
+    }
+
+    return optionsArray;
+  }, [fuse, searchValue, loadOptions, options, creatable, searchDirectMatch]);
+
+  function selectOption(index) {
+    const selectedOption = filteredOptions[index];
+    if (!selectedOption) return;
+
+    setOpen(false);
+    setSearchValue("");
+    setSelectionIndex(-1);
+
+    if (
+      creatable &&
+      !searchDirectMatch &&
+      index === filteredOptions.length - 1
+    ) {
+      onChange({
+        label: searchValue,
+        value: searchValue,
+      });
+    } else {
+      onChange(selectedOption);
+    }
+  }
+
   function handleOpen() {
     if (!props.disabled && !isOpen) {
       setOpen(true);
@@ -168,14 +221,8 @@ export default function Autocomplete({
     }
 
     if (e.keyCode === ENTER) {
-      const clickedOption = filteredOptions[selectionIndex];
-      if (clickedOption) {
-        e.preventDefault();
-        setOpen(false);
-        setSearchValue("");
-        setSelectionIndex(-1);
-        onChange(clickedOption.value);
-      }
+      e.preventDefault();
+      selectOption(selectionIndex);
     }
 
     if (e.keyCode === ESCAPE) {
@@ -186,13 +233,7 @@ export default function Autocomplete({
   }
 
   function handleOptionClick(index) {
-    const clickedOption = filteredOptions[index];
-    if (clickedOption) {
-      setOpen(false);
-      setSearchValue("");
-      setSelectionIndex(-1);
-      onChange(clickedOption.value);
-    }
+    selectOption(index);
   }
 
   function handleOptionMouseMove(index) {
@@ -205,28 +246,12 @@ export default function Autocomplete({
     }
   }
 
-  const fuse = React.useMemo(() => {
-    return new Fuse(options, fuseOptions);
-  }, [options]);
-
-  const filteredOptions = React.useMemo(() => {
-    if (!loadOptions && searchValue.length > 0) {
-      return fuse.search(searchValue).map((obj) => obj.item);
-    }
-
-    return options;
-  }, [fuse, searchValue, loadOptions, options]);
-
-  const selectedLabel = React.useMemo(() => {
-    return options.find((o) => o.value === value)?.label || "";
-  }, [options, value]);
-
   return (
     <StyledAutocomplete>
       <div ref={inputRef}>
         <Input
           {...props}
-          value={isOpen ? searchValue : selectedLabel}
+          value={isOpen ? searchValue : value?.label || ""}
           onBlur={handleBlur}
           onClick={handleClick}
           onFocus={handleFocus}
@@ -260,7 +285,7 @@ export default function Autocomplete({
               <StyledAutocompleteLoading>loading...</StyledAutocompleteLoading>
             ) : null}
 
-            {!loading && filteredOptions.length === 0 ? (
+            {!loading && !creatable && filteredOptions.length === 0 ? (
               <StyledAutocompleteNoResults>
                 No results
               </StyledAutocompleteNoResults>
