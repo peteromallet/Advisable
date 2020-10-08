@@ -7,36 +7,41 @@ export const useTwilioClient = () => {
   const [client, setClient] = useState(null);
   const { data, refetch } = useQuery(CHAT_GRANT_QUERY);
 
-  const clientRef = useCallback((newClient) => {
-    if (!newClient) return;
-    setClient(newClient);
-  }, []);
-
   useEffect(() => {
     if (!data?.chatGrant?.accessToken) return;
     const { accessToken } = data.chatGrant;
+    let chatClient;
 
     const initializeClient = async () => {
       try {
-        const chatClient = await Chat.Client.create(accessToken);
-        chatClient.on("tokenAboutToExpire", onTokenExpiration);
-        chatClient.on("tokenExpired", onTokenExpiration);
+        chatClient = await Chat.Client.create(accessToken);
+        chatClient.on("tokenAboutToExpire", () =>
+          onTokenExpiration(chatClient),
+        );
+        chatClient.on("tokenExpired", () => onTokenExpiration(chatClient));
         return chatClient;
       } catch (error) {
         console.log(error);
       }
     };
-    initializeClient().then((chatClient) => clientRef(chatClient));
-
-    return () => clientRef() && clientRef().removeAllListeners();
-  }, [data, clientRef, onTokenExpiration]);
+    initializeClient().then((chatClient) => setClient(chatClient));
+    return () => {
+      chatClient && chatClient.removeAllListeners();
+      // console.debug("removed twilio chat listeners");
+    };
+  }, [data, onTokenExpiration]);
 
   /* Event to handle token expiration */
-  const onTokenExpiration = useCallback(async () => {
-    const { data: refresh } = await refetch();
-    const updatedToken = refresh?.chatGrant?.accessToken;
-    updatedToken && clientRef().updateToken(updatedToken);
-  }, [refetch, clientRef]);
+  const onTokenExpiration = useCallback(
+    async (chatClient) => {
+      if (!refetch) return;
+      const { data: refresh } = await refetch();
+      const updatedToken = refresh?.chatGrant?.accessToken;
+      updatedToken && chatClient.updateToken(updatedToken);
+      // console.debug("refreshed twilio chat client");
+    },
+    [refetch],
+  );
 
   return { client };
 };

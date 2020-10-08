@@ -5,11 +5,10 @@ class Grants::ChatService < ApplicationService
     @identity = identity
   end
 
+  # Twilio Chat Tokens expire after 24 hours and are refreshed on the client.
   def call
-    # https://www.rubydoc.info/gems/twilio-ruby/Twilio/JWT/AccessToken
     grant = Twilio::JWT::AccessToken::ChatGrant.new
 
-    # https://www.twilio.com/console/chat/services
     grant.service_sid = ENV.fetch('TWILIO_CHAT_SERVICE_SID')
 
     token = Twilio::JWT::AccessToken.new(
