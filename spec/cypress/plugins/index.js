@@ -32,7 +32,7 @@ module.exports = (on, config) => {
 
       if (color) {
         args.push(
-          `--use-file-for-fake-video-capture=spec/cypress/fixtures/${color}.y4m`,
+          `--use-file-for-fake-video-capture=cypress/fixtures/${color}.y4m`,
         );
       }
 
@@ -41,7 +41,7 @@ module.exports = (on, config) => {
         args,
       });
 
-      const page = (participants[email] = await browser.newPage()); // keep track of this participant for future use
+      const page = await browser.newPage();
       await page.goto(config.baseUrl + url);
       const $document = await getDocument(page);
       await (await getByLabelText($document, "Email Address")).type(
@@ -51,6 +51,28 @@ module.exports = (on, config) => {
       await (await getByRole($document, "button", { name: /login/i })).click();
       await waitFor(() => getByRole($document, "button", { name: /join/i }));
       await (await getByRole($document, "button", { name: /join/i })).click();
+      participants[email] = page;
+      return Promise.resolve(null);
+    },
+    removeParticipant: async (email) => {
+      const page = participants[email];
+      await page.click("body");
+      await page.click('[aria-label="Leave"]');
+      await page.close();
+      delete participants[email];
+      return Promise.resolve(null);
+    },
+    removeAllParticipants: () => {
+      return Promise.all(
+        Object.keys(participants).map((email) =>
+          participantFunctions.removeParticipant(email),
+        ),
+      ).then(() => null);
+    },
+    participantCloseBrowser: async (email) => {
+      const page = participants[email];
+      await page.close({ runBeforeUnload: true });
+      delete participants[email];
       return Promise.resolve(null);
     },
   };

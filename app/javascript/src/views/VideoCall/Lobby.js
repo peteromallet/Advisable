@@ -34,7 +34,7 @@ export default function Lobby() {
   } = useCallContext();
   const videoTrack = localTracks.find((t) => t.name.includes("camera"));
 
-  const hasError = Boolean(audioTrackError || videoTrackError);
+  const hasError = Boolean(audioTrackError && videoTrackError);
 
   return (
     <Box

@@ -50,6 +50,8 @@ export default function useRoom(name, accessToken, localTracks) {
       },
     });
 
+    window.twilioRoom = newRoom;
+
     setRoom(newRoom);
     const disconnect = () => newRoom.disconnect();
 
