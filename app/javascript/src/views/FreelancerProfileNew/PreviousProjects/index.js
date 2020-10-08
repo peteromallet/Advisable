@@ -1,11 +1,12 @@
 import React, { useReducer } from "react";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, Button } from "@advisable/donut";
 import Masonry from "components/Masonry";
 import createDispatcher from "src/utilities/createDispatcher";
 import Tags from "./Filter/Tags";
 import NoFilteredProjects from "./NoFilteredProjects";
 import Filter from "./Filter";
 import ProjectCard from "./ProjectCard";
+import SectionHeader from "../components/SectionHeader";
 
 const getProjectValues = (projects) =>
   projects.reduce(
@@ -175,11 +176,22 @@ function PreviousProjects({ data, isOwner }) {
           </Text>
         </Box>
       </Box>
-      {projectCards.length ? (
-        <Masonry columns="3">{projectCards}</Masonry>
-      ) : (
-        <NoFilteredProjects firstName={data.specialist.firstName} />
-      )}
+      <Box>
+        <SectionHeader
+          actionButton={
+            <Button variant="minimal" ml="auto">
+              Edit
+            </Button>
+          }
+        >
+          Previous Projects
+        </SectionHeader>
+        {projectCards.length ? (
+          <Masonry columns="3">{projectCards}</Masonry>
+        ) : (
+          <NoFilteredProjects firstName={data.specialist.firstName} />
+        )}
+      </Box>
     </Box>
   );
 }
