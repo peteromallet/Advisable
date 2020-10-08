@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Text, Card } from "@advisable/donut";
+import React, { useState } from "react";
+import { Box, Text, Card, theme } from "@advisable/donut";
 import Avatar from "./Avatar";
 import { LinkedinIn } from "@styled-icons/fa-brands";
 import { Link as LinkIcon } from "@styled-icons/feather";
@@ -7,8 +7,24 @@ import IconLink from "./IconLink";
 import CoverImage from "./CoverImage";
 import RequestTalkButton from "./RequestTalkButton";
 import EditInfo from "./EditInfo";
+import { truncate } from "lodash-es";
+import styled from "styled-components";
+
+const TRUNCATE_LIMIT = 250;
+
+const StyledBioExpander = styled.span`
+  cursor: pointer;
+  padding-right: 4px;
+  border-radius: 4px;
+  &:hover {
+    color: ${theme.colors.blue700};
+    background: ${theme.colors.blue50};
+  }
+`;
 
 function AboutSection({ specialist, isOwner, viewer }) {
+  const expandable = specialist.bio.length > TRUNCATE_LIMIT;
+  const [expanded, setExpanded] = useState(!expandable);
   return (
     <Card
       minHeight="514px"
@@ -21,7 +37,7 @@ function AboutSection({ specialist, isOwner, viewer }) {
       <CoverImage coverPhoto={specialist.coverPhoto} isOwner={isOwner} />
       <Box display="flex">
         <Avatar avatar={specialist.avatar} isOwner={isOwner} />
-        <Box mt="20px">
+        <Box mt="20px" width="100%">
           <Box display="flex">
             <Box>
               <Text
@@ -58,7 +74,18 @@ function AboutSection({ specialist, isOwner, viewer }) {
             </Box>
           </Box>
           <Text color="neutral800" lineHeight="22px" pr="58px">
-            {specialist.bio}
+            {expanded
+              ? specialist.bio
+              : truncate(specialist.bio, { length: TRUNCATE_LIMIT })}
+            {expandable && (
+              <Text
+                as={StyledBioExpander}
+                color="blue600"
+                onClick={() => setExpanded((e) => !e)}
+              >
+                {expanded ? " see\u00A0less" : " see\u00A0more"}
+              </Text>
+            )}
           </Text>
         </Box>
       </Box>
