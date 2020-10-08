@@ -1,16 +1,15 @@
-#
-# This webhook sends an email notification for any new messages
-# for an **existing conversation**.  Notifications are only
-# sent out if the user isnt actively logged into the Guild or they
-# havent checked their new messages within the app.
-#
-# NOTE: There are no webhooks sent from Twilio for the beginning of a direct message.
-
 class WebhooksController < ApplicationController
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
 
   # https://www.twilio.com/docs/chat/webhook-events#webhook-bodies
+  # This webhook sends an email notification for any new messages
+  # for an **existing conversation**.  Notifications are only
+  # sent out if the user isnt actively logged into the Guild or they
+  # havent checked their new messages within the app.
+  #
+  # NOTE: There are no webhooks sent from Twilio for the beginning of a direct message.
+
   def twilio_chat
     ary = URI.decode_www_form(request.body.read)
     webhook = Hash[ary]
@@ -43,21 +42,28 @@ class WebhooksController < ApplicationController
   rescue StandardError => e
     Rails.logger.error("Error with TwilioChat webhook #{e.message}")
   end
-end
 
-# Example webhook for "onMessageSent"
-# {
-# 	"EventType"=>"onMessageSent",
-# 	"InstanceSid"=>"ISd6fab8af48ae4b02af29cc011b0af400",
-# 	"Attributes"=>"{}",
-# 	"DateCreated"=>"2020-10-07T22:16:34.757Z",
-# 	"Index"=>"2",
-# 	"From"=>"spe_YICC8Qd9IOFfaYn",
-# 	"MessageSid"=>"IM88589c1b329e4967b8343e4cc2d75038",
-# 	"AccountSid"=>"ACa5185636e0ed54c2b82f93b95aab64fe",
-# 	"Source"=>"SDK",
-# 	"ChannelSid"=>"CHce4469f963284efba01b2dc168319d73",
-# 	"ClientIdentity"=>"spe_YICC8Qd9IOFfaYn",
-# 	"RetryCount"=>"0",
-# 	"Body"=>"this is a test"
-# }
+  # https://sendgrid.com/docs/for-developers/parsing-email/
+  def sendgrid_inbound_parse
+    if params["key"] != ENV.fetch('SENDGRID_INBOUND_PARSE_KEY')
+      render json: {}, status: :unauthorized and return false
+    end
+
+    # Parse the "Reference" header and normalize the original encoded "Message-ID"
+    references = params["headers"].match(/References:\s(?<message_id>.*)/)
+    if (message_id = references.try(:[], :message_id))
+
+      body = params["text"] # .. TODO
+      match = message_id.match(/^<(?<encoded>.*)@guild.advisable/)
+
+      if (encoded = match.try(:[], :encoded))
+        recipient_uid, sender_uid, channel = encoded.unpack1('m0').split(':')
+        ChatDirectMessageJob.perform_later(
+          message: body,
+          sender_uid: sender_uid,
+          recipient_uid: recipient_uid
+        )
+      end
+    end
+  end
+end
