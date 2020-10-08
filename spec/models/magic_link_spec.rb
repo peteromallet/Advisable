@@ -11,28 +11,6 @@ RSpec.describe MagicLink, type: :model do
     expect(magic_link.expires_at).to be_within(1.second).of(1.day.from_now)
   end
 
-  it 'sets uses_remaining to 1 by default' do
-    magic_link = create(:magic_link, uses_remaining: nil)
-    expect(magic_link.uses_remaining).to be(1)
-  end
-
-  describe "#use" do
-    it 'decrements uses_remaining' do
-      magic_link = create(:magic_link, uses_remaining: 1)
-      expect { magic_link.use }.to change { magic_link.uses_remaining }.by(-1)
-    end
-
-    it 'raises NoUsesRemaining error if used' do
-      magic_link = create(:magic_link, uses_remaining: 0)
-      expect { magic_link.use }.to raise_error(MagicLink::NoUsesRemaining)
-    end
-
-    it 'raises Expired error if expired' do
-      magic_link = create(:magic_link, expires_at: 1.days.ago)
-      expect { magic_link.use }.to raise_error(MagicLink::Expired)
-    end
-  end
-
   describe '#path=' do
     let(:magic_link) { build_stubbed(:magic_link, path: nil) }
 
@@ -61,12 +39,6 @@ RSpec.describe MagicLink, type: :model do
 
     it 'excludes expired magic links' do
       magic_link = create(:magic_link, expires_at: 1.hour.ago)
-      link = MagicLink.for_path(account: magic_link.account, token: magic_link.token, path: magic_link.path)
-      expect(link).to be_nil
-    end
-
-    it 'excludes used magic links' do
-      magic_link = create(:magic_link, uses_remaining: 0)
       link = MagicLink.for_path(account: magic_link.account, token: magic_link.token, path: magic_link.path)
       expect(link).to be_nil
     end

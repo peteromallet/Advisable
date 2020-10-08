@@ -35,12 +35,5 @@ RSpec.describe MagicLinkHelper do
       magic_link = MagicLink.last
       expect(magic_link.expires_at).to be_within(1.second).of(5.days.from_now)
     end
-
-    it "can set a custom amount of uses" do
-      account = create(:account)
-      helper.magic_link(account, "/testing", uses: 3)
-      magic_link = MagicLink.last
-      expect(magic_link.uses_remaining).to eq(3)
-    end
   end
 end

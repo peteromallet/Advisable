@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_07_100944) do
+ActiveRecord::Schema.define(version: 2020_10_08_075447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -406,7 +406,6 @@ ActiveRecord::Schema.define(version: 2020_10_07_100944) do
   create_table "magic_links", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.string "path"
-    t.integer "uses_remaining"
     t.string "digest"
     t.datetime "expires_at"
     t.datetime "created_at", precision: 6, null: false
