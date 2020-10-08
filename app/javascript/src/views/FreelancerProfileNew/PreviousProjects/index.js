@@ -6,7 +6,11 @@ import Tags from "./Filter/Tags";
 import NoFilteredProjects from "./NoFilteredProjects";
 import Filter from "./Filter";
 import ProjectCard from "./ProjectCard";
-import SectionHeader from "../components/SectionHeader";
+import {
+  SectionHeaderText,
+  SectionHeaderWrapper,
+} from "../components/SectionHeader";
+import { mockedIndustries, mockedSkills } from "./mockedFilterData";
 
 const getProjectValues = (projects) =>
   projects.reduce(
@@ -177,15 +181,12 @@ function PreviousProjects({ data, isOwner }) {
         </Box>
       </Box>
       <Box>
-        <SectionHeader
-          actionButton={
-            <Button variant="minimal" ml="auto">
-              Edit
-            </Button>
-          }
-        >
-          Previous Projects
-        </SectionHeader>
+        <SectionHeaderWrapper>
+          <SectionHeaderText>Previous Projects</SectionHeaderText>
+          <Button variant="minimal" ml="auto">
+            Edit
+          </Button>
+        </SectionHeaderWrapper>
         {projectCards.length ? (
           <Masonry columns="3">{projectCards}</Masonry>
         ) : (

@@ -1,8 +1,11 @@
 import React from "react";
-import { Text, Box, Card } from "@advisable/donut";
+import { Box, Card } from "@advisable/donut";
 import Answer from "./Answer";
 import AnswerQuestions from "./AnswerQuestions";
-import SectionHeader from "../components/SectionHeader";
+import {
+  SectionHeaderText,
+  SectionHeaderWrapper,
+} from "../components/SectionHeader";
 
 function QA({ questions, answers }) {
   const questionsHash = questions.reduce((acc, question) => {
@@ -29,9 +32,10 @@ function QA({ questions, answers }) {
 
   return (
     <Box mb="xxxl">
-      <SectionHeader actionButton={<AnswerQuestions qaHash={qaHash} />}>
-        Questions & Answers
-      </SectionHeader>
+      <SectionHeaderWrapper>
+        <SectionHeaderText>Questions & Answers</SectionHeaderText>
+        <AnswerQuestions qaHash={qaHash} />
+      </SectionHeaderWrapper>
       <Card borderRadius={8} p="xl">
         <Box>{answersList}</Box>
       </Card>
