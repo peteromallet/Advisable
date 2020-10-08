@@ -35,10 +35,7 @@ module CurrentUser
     end
 
     def redirect_without_magic_link_params
-      query_hash = Rack::Utils.parse_query(URI.parse(request.url).query)
-      query_params = query_hash.except('mlt', 'mluid')
-      url = query_params.empty? ? request.path : "#{request.path}?#{query_params.to_query}"
-      redirect_to url
+      redirect_to params.permit!.except(:mlt, :mluid)
     end
 
     def session_manager
