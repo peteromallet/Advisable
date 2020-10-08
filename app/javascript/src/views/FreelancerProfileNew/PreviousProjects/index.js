@@ -90,6 +90,13 @@ function PreviousProjects({ data, isOwner }) {
     isMobile && setNumOfColumns(1);
   }, [isMobile, isTablet, isWidescreen, setNumOfColumns]);
 
+  // Responsivness
+  const isWidescreen = useBreakpoint("mUp");
+  const isTablet = useBreakpoint("m");
+  const isMobile = useBreakpoint("s");
+  const numOfColumns =
+    (isMobile && 1) || (isTablet && 2) || (isWidescreen && 3);
+
   const projectCards = state.projects
     .filter(filterProjects(state))
     .map((project) => {
