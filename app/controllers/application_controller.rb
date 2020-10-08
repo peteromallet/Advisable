@@ -2,10 +2,10 @@ class ApplicationController < ActionController::Base
   include CurrentUser
 
   before_action :set_sentry_context
+  before_action :authenticate_with_magic_link, only: :frontend
   helper_method :user_logged_in?, :current_user
 
   def frontend
-    authenticate_with_magic_link
     respond_to(&:html)
   rescue ActionController::UnknownFormat
     render status: 404, json: {error: 'Not Found'}
