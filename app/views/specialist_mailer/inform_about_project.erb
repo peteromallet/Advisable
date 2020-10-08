@@ -112,7 +112,7 @@
                                   <td align="center" valign="top" class="button-1"
                                     style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #ffffff;font-size: 12px;font-weight: 700;background-color: #00B49E;border-radius: 5px;padding: 10px;">
                                     <a clicktracking=off
-                                      href="<%= specialist_project_application_url(@specialist, @project) %>"
+                                      href="<%= magic_link(@specialist.account, specialist_project_application_url(@specialist, @project)) %>"
                                       target="_blank"
                                       style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #ffffff;text-decoration: none;display: block;">Apply Now</a> </td>
                                 </tr>
