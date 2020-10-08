@@ -34,20 +34,19 @@ RSpec.describe MagicLink, type: :model do
   end
 
   describe '#path=' do
+    let(:magic_link) { build_stubbed(:magic_link, path: nil) }
+
     it 'extracts the path from the provided URL' do
-      magic_link = build(:magic_link, path: nil)
       magic_link.path = "https://advisable.com/testing?a=123"
       expect(magic_link.path).to eq("/testing")
     end
 
     it 'can be given a direct path' do
-      magic_link = build(:magic_link, path: nil)
       magic_link.path = "/testing/path"
       expect(magic_link.path).to eq("/testing/path")
     end
 
     it 'sets path to nil when given an invalid uri' do
-      magic_link = build(:magic_link, path: nil)
       magic_link.path = "invalid URI"
       expect(magic_link.path).to be_nil
     end
