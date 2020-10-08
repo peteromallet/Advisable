@@ -8,14 +8,15 @@ module SpecialistOrUser
     include Tutorials
     include Permissions
 
+    belongs_to :account
+    before_validation :ensure_account_exists
+
     has_secure_password validations: false
     validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
     validate :email_not_taken
     validates :email, format: {with: VALID_EMAIL_REGEX}
 
     # Temporary while we're moving things over
-    belongs_to :account
-    before_validation :ensure_account_exists
     before_save :copy_data_to_account
 
     # Needed for frontend stuff
@@ -23,12 +24,10 @@ module SpecialistOrUser
       confirmed_at.present?
     end
 
-    # Returns werther or not the record has set a password. Due to the fact that
-    # records are synced from airtable, it's likely that an account already
-    # exists before a password it created for it.
-    def has_account?
-      password_digest.present?
+    def has_password?
+      account.has_password?
     end
+    alias_method :has_account?, :has_password?
 
     # Always lowercase the email
     def email=(address)

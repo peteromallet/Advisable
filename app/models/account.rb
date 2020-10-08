@@ -13,7 +13,11 @@ class Account < ApplicationRecord
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
   validates :email, uniqueness: true, presence: true, format: {with: /@/}
 
-  def has_account?
+  def specialist_or_user
+    specialist || user
+  end
+
+  def has_password?
     password_digest.present?
   end
 
@@ -32,7 +36,7 @@ class Account < ApplicationRecord
     end
   end
 
-  # TODO: Look into this method
+  # TODO: AccountMigration - Look into this method
   def create_confirmation_token
     token = Token.new
     self.confirmation_digest = Token.digest(token)

@@ -256,8 +256,9 @@ class Types::SpecialistType < Types::BaseType
     description 'Wether or not the specialist has created their account yet'
   end
 
+  # TODO: AccountMigration - Rename for consistency
   def has_account
-    object.has_account?
+    object.account.has_password?
   end
 
   field :completed_tutorials, [String], null: false do

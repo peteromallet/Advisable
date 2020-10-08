@@ -5,25 +5,25 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
 
   field :clientApplication, Types::ClientApplicationType, null: true
 
+  # TODO: AccountMigration - This'll need some extra work
   def resolve(**args)
     email_blacklisted?(args[:email])
     check_existing_specialist_account(args[:email])
-    user =
-      User.find_or_initialize_by(email: args[:email]) do |u|
-        u.application_status = :started
-      end
 
-    if user.has_account?
+    account = Account.find_or_initialize_by(email: args[:email])
+    if account.has_password?
       ApiError.invalid_request(
         code: 'existingAccount',
         message: 'An account already exists with this email'
       )
     end
 
+    account = Account.find_or_initialize_by(email: args[:email])
+    user = User.find_or_initialize_by(email: args[:email], account: account) { |u| u.application_status = :started }
+
     if user.application_status == :started
       user.first_name = args[:first_name]
       user.last_name = args[:last_name]
-
       if user.save
         user.sync_to_airtable
         create_client_record(user)

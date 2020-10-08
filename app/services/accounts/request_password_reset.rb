@@ -1,38 +1,38 @@
 # Sends a password reset email to a given account. An account can either be
 # a user or specialist.
-# @param account The account that the password request is being sent for.
+# @param email The email that the password request is being sent for.
 class Accounts::RequestPasswordReset < ApplicationService
-  attr_reader :account
+  attr_reader :specialist_or_user
 
+  # TODO: AccountMigration - Make this better
   def initialize(email)
-    @account = SpecialistOrUser.find_by_email!(email.downcase)
-    rescue ActiveRecord::RecordNotFound => e
-      raise Service::Error.new("request_password_reset.account_not_found")
+    @specialist_or_user = Account.find_by!(email: email).specialist_or_user
+  rescue ActiveRecord::RecordNotFound
+    raise Service::Error.new("request_password_reset.account_not_found")
   end
 
   def call
-    has_account?
-    account.update({
+    has_password?
+    specialist_or_user.update({
       reset_digest: Token.digest(token),
       reset_sent_at: Time.zone.now
     })
 
-    AccountMailer.reset_password(uid: account.uid, token: token).deliver_later
+    AccountMailer.reset_password(uid: specialist_or_user.uid, token: token).deliver_later
   end
 
   private
 
-  def has_account?
-    return if account.has_account?
+  def has_password?
+    return if specialist_or_user.has_password?
 
-    if account.is_a?(Specialist)
+    if specialist_or_user.is_a?(Specialist)
       WebhookEvent.trigger(
         "specialists.forgotten_password_for_non_account",
-        WebhookEvent::Specialist.data(account)
+        WebhookEvent::Specialist.data(specialist_or_user)
       )
 
       raise Service::Error.new("request_password_reset.application_required")
-      nil
     end
   end
 
