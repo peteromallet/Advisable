@@ -27,7 +27,7 @@ const StyledIdentity = styled.div`
 
 export default function Participant({ participant }) {
   return (
-    <StyledParticipant>
+    <StyledParticipant data-cy-participant={participant.identity}>
       <StyledIdentity>{participant.identity}</StyledIdentity>
       <ParticipantTracks participant={participant} />
     </StyledParticipant>

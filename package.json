@@ -115,6 +115,7 @@
     "jest-transform-graphql": "^2.1.0",
     "jest-watch-typeahead": "^0.6.1",
     "jest-when": "^2.7.2",
+    "pixelmatch": "^5.2.1",
     "pptr-testing-library": "^0.6.4",
     "prettier": "^2.1.2",
     "react-is": "^16.13.1",

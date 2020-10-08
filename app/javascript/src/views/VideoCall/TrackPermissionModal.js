@@ -5,18 +5,19 @@ import useCallContext from "./useCallContext";
 
 export default function TrackPermissionModal() {
   const { audioTrackError, videoTrackError } = useCallContext();
-  const hasError = Boolean(audioTrackError || videoTrackError);
+  const error = Boolean(audioTrackError || videoTrackError);
+  const noPermission = error === "NotAllowedError";
   const modal = useDialogState({
-    visible: hasError,
+    visible: noPermission,
   });
 
   React.useEffect(() => {
-    if (hasError) {
+    if (noPermission) {
       modal.show();
     } else {
       modal.hide();
     }
-  }, [modal, hasError]);
+  }, [modal, noPermission]);
 
   return (
     <Modal
