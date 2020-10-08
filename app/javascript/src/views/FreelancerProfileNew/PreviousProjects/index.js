@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { Box, Text, Button } from "@advisable/donut";
+import { Box, Text, Button, useBreakpoint } from "@advisable/donut";
 import Masonry from "components/Masonry";
 import createDispatcher from "src/utilities/createDispatcher";
 import Tags from "./Filter/Tags";
@@ -126,6 +126,13 @@ function PreviousProjects({ data, isOwner }) {
   const switchIndustrySelection = createAction("SWITCH_INDUSTRY_SELECTION");
   const expandCollapse = createAction("EXPAND_COLLAPSE");
 
+  // Responsivness
+  const isWidescreen = useBreakpoint("mUp");
+  const isTablet = useBreakpoint("m");
+  const isMobile = useBreakpoint("s");
+  const numOfColumns =
+    (isMobile && 1) || (isTablet && 2) || (isWidescreen && 3);
+
   const projectCards = state.projects
     .filter(filterProjects(state))
     .map((project) => {
@@ -188,7 +195,7 @@ function PreviousProjects({ data, isOwner }) {
           </Button>
         </SectionHeaderWrapper>
         {projectCards.length ? (
-          <Masonry columns="3">{projectCards}</Masonry>
+          <Masonry columns={numOfColumns}>{projectCards}</Masonry>
         ) : (
           <NoFilteredProjects firstName={data.specialist.firstName} />
         )}
