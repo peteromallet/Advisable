@@ -21,7 +21,7 @@ function AboutSection({ specialist, isOwner, viewer }) {
       <CoverImage coverPhoto={specialist.coverPhoto} isOwner={isOwner} />
       <Box display="flex">
         <Avatar avatar={specialist.avatar} isOwner={isOwner} />
-        <Box mt="m">
+        <Box mt="20px">
           <Box display="flex">
             <Box>
               <Text
