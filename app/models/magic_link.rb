@@ -14,8 +14,8 @@ class MagicLink < ApplicationRecord
   before_validation :generate_token, on: :create
   before_validation :default_values, on: :create
 
-  scope :expired, -> { where("expires_at < ?", Time.current) }
-  scope :not_expired, -> { where("expires_at >= ?", Time.current) }
+  scope :expired, -> { where("expires_at < ?", Time.zone.now) }
+  scope :not_expired, -> { where("expires_at >= ?", Time.zone.now) }
   scope :used, -> { where("uses_remaining <= ?", 0) }
   scope :uses_remaining, -> { where("uses_remaining > ?", 0) }
 
