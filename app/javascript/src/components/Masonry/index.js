@@ -22,6 +22,8 @@ const initState = flow([
 
 const arrangeBasedOnHeight = flow([setItemsHeight, updateColumns]);
 
+const resize = flow([updateParams, arrangeBasedOnHeight]);
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "ARRANGE_BASED_ON_HEIGHT":
