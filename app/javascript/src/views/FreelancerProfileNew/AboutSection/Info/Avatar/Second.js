@@ -5,7 +5,7 @@ import { User } from "@styled-icons/feather";
 import { Box } from "@advisable/donut";
 import { useMutation } from "@apollo/client";
 import { useNotifications } from "src/components/Notifications";
-import { UPDATE_PROFILE } from "../../queries";
+import { UPDATE_PROFILE } from "../../../queries";
 import useImageOnLoad from "src/hooks/useImageOnLoad";
 
 function DefaultAvatar() {
@@ -39,16 +39,27 @@ function Avatar({ avatar, isOwner }) {
 
   return (
     <StyledAvatarCard
-      width="190px"
-      height="234px"
+      maxWidth={["128px", "none"]}
+      maxHeight={["156px", "none"]}
+      width={["30vw", "130px", "190px", "190px"]}
+      height={["36.52vw", "160px", "234px", "234px"]}
       elevation="m"
-      mt="-66px"
-      ml="24px"
-      mr="30px"
+      mt={{ _: "-48px", m: "-66px" }}
+      ml={{ _: "10px", s: "24px", l: "24px" }}
       borderRadius={16}
     >
       {isOwner && <FileUpload onChange={submit} />}
-      {avatar && <StyledAvatarImage loaded={loaded} src={avatar} />}
+      {avatar && (
+        <StyledAvatarImage
+          as="img"
+          loaded={loaded}
+          src={avatar}
+          maxWidth={["128px", "none"]}
+          maxHeight={["156px", "none"]}
+          width={["30vw", "130px", "190px", "190px"]}
+          height={["36.52vw", "160px", "234px", "234px"]}
+        />
+      )}
       {!avatar && <DefaultAvatar />}
     </StyledAvatarCard>
   );

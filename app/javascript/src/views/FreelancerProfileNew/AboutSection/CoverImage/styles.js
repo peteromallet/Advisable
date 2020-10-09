@@ -7,6 +7,17 @@ export const CoverImageWrapper = styled.div`
   border-radius: 12px;
   height: 300px;
   background-color: ${theme.colors.neutral100};
+
+  @media screen and (max-width: 1024px) {
+    & {
+      height: 33vw;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    & {
+      height: 43vw;
+    }
+  }
 `;
 
 export const StyledCoverImage = styled.img`

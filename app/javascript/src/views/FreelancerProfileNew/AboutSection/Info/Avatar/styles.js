@@ -1,6 +1,6 @@
 import { rgba } from "polished";
 import styled from "styled-components";
-import { theme, StyledCard } from "@advisable/donut";
+import { Box, theme, StyledCard } from "@advisable/donut";
 
 export const StyledAvatarCard = styled(StyledCard)`
   z-index: 4;
@@ -17,11 +17,9 @@ export const StyledAvatarCard = styled(StyledCard)`
   }
 `;
 
-export const StyledAvatarImage = styled.img`
+export const StyledAvatarImage = styled(Box)`
   border-radius: 16px;
   object-fit: cover;
-  width: 190px;
-  height: 234px;
   opacity: ${(props) => (props.loaded ? 1 : 0)};
   transition: opacity 400ms;
 `;

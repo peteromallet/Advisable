@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Circle, theme } from "@advisable/donut";
+import { Link, Circle, theme, useBreakpoint } from "@advisable/donut";
 import { rgba } from "polished";
 import styled from "styled-components";
 
@@ -14,10 +14,11 @@ const StyledCircle = styled(Circle)`
 `;
 
 function IconLink({ Icon, url, strokeWidth }) {
+  const isTablet = useBreakpoint("l");
   return (
-    <Link.External href={url} mx="xxs" target="_blank">
-      <StyledCircle size={42}>
-        <Icon size={24} strokeWidth={strokeWidth} />
+    <Link.External href={url} mx={{ _: "2px", l: "xxs" }} target="_blank">
+      <StyledCircle size={[42, 42, 35, 42]}>
+        <Icon size={isTablet ? 20 : 24} strokeWidth={strokeWidth} />
       </StyledCircle>
     </Link.External>
   );
