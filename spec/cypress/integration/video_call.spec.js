@@ -7,10 +7,10 @@ context("A video call", () => {
   describe("when entering a call before the other participant joins", () => {
     before(() => {
       cy.visit(`/calls/vid_abcdefghijklmno`);
-      cy.findByLabelText("Email Address").type("videocall@test.com");
-      cy.findByLabelText("Password").type("testing123");
-      cy.findByRole("button", { name: /login/i }).click();
-      cy.findByRole("button", { name: /join/i }).click();
+      cy.get("input[name=email]").type("videocall@test.com");
+      cy.get("input[type=password]").type("testing123");
+      cy.get("[data-testid=loginButton]").click();
+      cy.get("[data-testid=joinCall]").click();
 
       cy.task("addParticipant", {
         url: "/calls/vid_abcdefghijklmno",
@@ -46,10 +46,10 @@ context("A video call", () => {
       });
 
       cy.visit(`/calls/vid_abcdefghijklmno`);
-      cy.findByLabelText("Email Address").type("videocall@test.com");
-      cy.findByLabelText("Password").type("testing123");
-      cy.findByRole("button", { name: /login/i }).click();
-      cy.findByRole("button", { name: /join/i }).click();
+      cy.get("input[name=email]").type("videocall@test.com");
+      cy.get("input[type=password]").type("testing123");
+      cy.get("[data-testid=loginButton]").click();
+      cy.get("[data-testid=joinCall]").click();
     });
 
     after(() => {
@@ -74,10 +74,10 @@ context("A video call", () => {
       });
 
       cy.visit(`/calls/vid_abcdefghijklmno`);
-      cy.findByLabelText("Email Address").type("videocall@test.com");
-      cy.findByLabelText("Password").type("testing123");
-      cy.findByRole("button", { name: /login/i }).click();
-      cy.findByRole("button", { name: /join/i }).click();
+      cy.get("input[name=email]").type("videocall@test.com");
+      cy.get("input[type=password]").type("testing123");
+      cy.get("[data-testid=loginButton]").click();
+      cy.get("[data-testid=joinCall]").click();
 
       cy.task("addParticipant", {
         url: "/calls/vid_abcdefghijklmno",

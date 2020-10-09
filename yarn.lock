@@ -3128,9 +3128,9 @@
     "@testing-library/dom" "^7.22.2"
 
 "@testing-library/dom@^7.22.2":
-  version "7.24.3"
-  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.24.3.tgz#dae3071463cf28dc7755b43d9cf2202e34cbb85d"
-  integrity sha512-6eW9fUhEbR423FZvoHRwbWm9RUUByLWGayYFNVvqTnQLYvsNpBS4uEuKH9aqr3trhxFwGVneJUonehL3B1sHJw==
+  version "7.25.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.25.0.tgz#f1cc5478ae1eb4cf93f7eed977776493dc78d940"
+  integrity sha512-wUp3k/LOQTRJjcebJreWp4CYUUoVo8r86M760Qxe6MY913LKBLEBH4kTGZozqX8zjZH5Tw2GogX/fQGlXYWOWQ==
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@babel/runtime" "^7.10.3"
@@ -13029,14 +13029,6 @@ postcss@^7.0.32:
     source-map "^0.6.1"
     supports-color "^6.1.0"
 
-pptr-testing-library@^0.6.4:
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/pptr-testing-library/-/pptr-testing-library-0.6.4.tgz#0b38d85431b5b5bb91aed5bdd110fb5647ad6e1f"
-  integrity sha512-gO9BBG1KPy694G48xAujLCyVknNYzu9V8x5uRJgu/XfcO46NH3M6bhoOydiAkF6oJfm7N2Z+JDo5+eEqLft5gA==
-  dependencies:
-    "@testing-library/dom" "^7.22.2"
-    wait-for-expect "^3.0.2"
-
 precond@0.2:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/precond/-/precond-0.2.3.tgz#aa9591bcaa24923f1e0f4849d240f47efc1075ac"
@@ -16473,11 +16465,6 @@ waait@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/waait/-/waait-1.0.5.tgz#6a3c7aaa88bd0a1a545e9d47890b9595bebf9aa7"
   integrity sha512-wp+unA4CpqxvBUKHHv8D86fK4jWByHAWyhEXXVHfVUZfK+16ylpj7hjQ58Z8j9ntu8XNukRQT8Fi5qbyJ8rkyw==
-
-wait-for-expect@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/wait-for-expect/-/wait-for-expect-3.0.2.tgz#d2f14b2f7b778c9b82144109c8fa89ceaadaa463"
-  integrity sha512-cfS1+DZxuav1aBYbaO/kE06EOS8yRw7qOFoD3XtjTkYvCvh3zUvNST8DXK/nPaeqIzIv3P3kL3lRJn8iwOiSag==
 
 walker@^1.0.7, walker@~1.0.5:
   version "1.0.7"
