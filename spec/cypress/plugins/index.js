@@ -1,7 +1,5 @@
 const puppeteer = require("puppeteer");
-const { getDocument, queries, waitFor } = require("pptr-testing-library");
 const participants = {};
-const { getByRole, getByLabelText } = queries;
 
 /// <reference types="cypress" />
 // ***********************************************************
@@ -43,18 +41,16 @@ module.exports = (on, config) => {
 
       const page = await browser.newPage();
       await page.goto(config.baseUrl + url);
-      const $document = await getDocument(page);
-      await (await getByLabelText($document, "Email Address")).type(email);
-      await (await getByLabelText($document, "Password")).type("testing123");
-      await (await getByRole($document, "button", { name: /login/i })).click();
-      await waitFor(() => getByRole($document, "button", { name: /join/i }));
-      await (await getByRole($document, "button", { name: /join/i })).click();
+      await page.type("input[name=email]", email);
+      await page.type("input[type=password]", "testing123");
+      await page.click("[data-testid=loginButton]");
+      await page.waitForSelector("[data-testid=joinCall]");
+      await page.click("[data-testid=joinCall]");
       participants[email] = page;
       return Promise.resolve(null);
     },
     removeParticipant: async (email) => {
       const page = participants[email];
-      await page.click("body");
       await page.click('[aria-label="Leave"]');
       await page.close();
       delete participants[email];

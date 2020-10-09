@@ -1,4 +1,3 @@
-import "@testing-library/cypress/add-commands";
 import detectSound from "./detectSound";
 
 // ***********************************************
@@ -48,7 +47,6 @@ Cypress.Commands.add(
 
 Cypress.Commands.add("leaveRoom", () => {
   cy.wait(500);
-  cy.get("body").click(); // Makes controls reappear
   cy.get('[aria-label="Leave"]').click();
   cy.task("removeAllParticipants");
 });

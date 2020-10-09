@@ -60,6 +60,7 @@ export default function Lobby() {
       </Text>
       <Button
         size="l"
+        data-testid="joinCall"
         onClick={connect}
         loading={isConnecting}
         disabled={hasError || isAcquiringLocalTracks}
