@@ -190,9 +190,11 @@ function PreviousProjects({ data, isOwner }) {
       <Box>
         <SectionHeaderWrapper>
           <SectionHeaderText>Previous Projects</SectionHeaderText>
-          <Button variant="minimal" ml="auto">
-            Edit
-          </Button>
+          {isOwner && (
+            <Button variant="minimal" ml="auto">
+              Edit
+            </Button>
+          )}
         </SectionHeaderWrapper>
         {projectCards.length ? (
           <Masonry columns={numOfColumns}>{projectCards}</Masonry>
