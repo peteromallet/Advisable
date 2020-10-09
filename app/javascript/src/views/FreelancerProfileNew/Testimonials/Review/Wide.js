@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Text, Card, Avatar } from "@advisable/donut";
 
-function Review({ review }) {
+function ReviewWide({ review }) {
   return (
     <Card p="xl" borderRadius={8}>
       <Box display="flex">
-        <Box width="32%" display="flex" pr="s">
+        <Box width="32%" minWidth="286px" display="flex" pr="s">
           <Box width={60} height={60}>
             <Avatar size="m" name={review.name} url={review.avatar} />
           </Box>
@@ -41,4 +41,4 @@ function Review({ review }) {
   );
 }
 
-export default Review;
+export default ReviewWide;
