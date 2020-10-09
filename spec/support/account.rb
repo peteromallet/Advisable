@@ -1,22 +1,5 @@
 RSpec.shared_examples "account" do
-  it { is_expected.to have_secure_password }
-  it { is_expected.to allow_value("test+2@test.com").for(:email) }
-  it { is_expected.to validate_confirmation_of(:password) }
-  it { is_expected.to validate_length_of(:password).is_at_least(8) }
-
   let(:factory) { described_class.to_s.underscore.to_sym }
-
-  describe "#has_account?" do
-    it "returns true when there is a passworrd_digest" do
-      inst = create(factory, password: "testing123")
-      expect(inst.has_account?).to be_truthy
-    end
-
-    it "returns false when there is no passworrd_digest" do
-      inst = create(factory, password: nil)
-      expect(inst.has_account?).to be_falsey
-    end
-  end
 
   describe "#send_confirmation_email" do
     it "sets the confirmation_digest" do
