@@ -11,7 +11,10 @@ function FreelancerProfileDesktop({ data }) {
   const isOwner = viewer?.id === data.specialist.id;
 
   return (
-    <Box maxWidth="960px" mx="auto">
+    <Box
+      maxWidth={["100%", "100%", "100%", "960px"]}
+      mx={["12px", "32px", "32px", "auto"]}
+    >
       <AboutSection
         specialist={data.specialist}
         isOwner={isOwner}

@@ -7,7 +7,13 @@ function EditInfoDialog({ children, specialist }) {
 
   return (
     <>
-      <DialogDisclosure as={Button} {...modal} variant="subtle" mx="xxs">
+      <DialogDisclosure
+        as={Button}
+        {...modal}
+        variant="subtle"
+        size={["m", "m", "s", "m"]}
+        mx="xxs"
+      >
         {children}
       </DialogDisclosure>
       <EditInfoModal modal={modal} specialist={specialist} />

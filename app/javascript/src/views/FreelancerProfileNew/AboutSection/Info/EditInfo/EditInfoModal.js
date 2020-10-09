@@ -5,7 +5,10 @@ import FormField from "src/components/FormField";
 import { Form, Formik } from "formik";
 import { useMutation, useQuery } from "@apollo/client";
 import FETCH_COUNTRIES from "./fetchCountries.graphql";
-import { updateProfileOptimisticResponse, UPDATE_PROFILE } from "../../queries";
+import {
+  updateProfileOptimisticResponse,
+  UPDATE_PROFILE,
+} from "../../../queries";
 import { get } from "lodash-es";
 import { object, string } from "yup";
 
