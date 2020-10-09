@@ -753,11 +753,11 @@ ActiveRecord::Schema.define(version: 2020_10_15_063933) do
     t.string "community_status"
     t.boolean "automated_invitations_subscription"
     t.jsonb "guild_data"
-    t.bigint "account_id"
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
     t.datetime "community_invited_to_call_at"
     t.integer "community_score"
+    t.bigint "account_id"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end

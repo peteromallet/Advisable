@@ -34,7 +34,6 @@ export default function useRoom(name, accessToken, localTracks) {
 
   const connect = useCallback(async () => {
     setIsConnecting(true);
-
     const newRoom = await Video.connect(accessToken, {
       name,
       tracks: localTracksRef.current,

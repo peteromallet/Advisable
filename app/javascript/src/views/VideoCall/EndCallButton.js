@@ -10,6 +10,7 @@ export default function EndCallButton({ disabled }) {
     <ActionBar.Item
       onClick={leave}
       disabled={disabled}
+      data-testid="leaveCall"
       icon={<LogOut />}
       label="Leave"
     />
