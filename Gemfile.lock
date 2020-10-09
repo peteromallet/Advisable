@@ -154,6 +154,7 @@ GEM
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
       railties (>= 3.2)
+    email_reply_parser (0.5.10)
     encryptor (3.0.0)
     erubi (1.9.0)
     execjs (2.7.0)
@@ -477,6 +478,7 @@ DEPENDENCIES
   capybara
   countries
   dotenv-rails
+  email_reply_parser
   factory_bot_rails
   faker!
   faraday

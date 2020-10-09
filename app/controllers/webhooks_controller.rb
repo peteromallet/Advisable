@@ -42,28 +42,4 @@ class WebhooksController < ApplicationController
   rescue StandardError => e
     Rails.logger.error("Error with TwilioChat webhook #{e.message}")
   end
-
-  # https://sendgrid.com/docs/for-developers/parsing-email/
-  def sendgrid_inbound_parse
-    if params["key"] != ENV.fetch('SENDGRID_INBOUND_PARSE_KEY')
-      render json: {}, status: :unauthorized and return false
-    end
-
-    # Parse the "Reference" header and normalize the original encoded "Message-ID"
-    references = params["headers"].match(/References:\s(?<message_id>.*)/)
-    if (message_id = references.try(:[], :message_id))
-
-      body = params["text"] # .. TODO
-      match = message_id.match(/^<(?<encoded>.*)@guild.advisable/)
-
-      if (encoded = match.try(:[], :encoded))
-        recipient_uid, sender_uid, channel = encoded.unpack1('m0').split(':')
-        ChatDirectMessageJob.perform_later(
-          message: body,
-          sender_uid: sender_uid,
-          recipient_uid: recipient_uid
-        )
-      end
-    end
-  end
 end

@@ -6,3 +6,4 @@ production:
   - mailers
   - active_storage_purge
   - active_storage_analysis
+  - action_mailbox_routing

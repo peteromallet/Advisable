@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   if Rails.env.development? || ENV["STAGING"]
     mount GraphqlPlayground::Rails::Engine,
           at: '/playground', graphql_path: '/graphql'
+
+    get "/inbound_emails", to: "rails/conductor/action_mailbox/inbound_emails#index"
   end
 
   namespace :admin do
@@ -52,7 +54,6 @@ Rails.application.routes.draw do
   get '/guild/*guild_path', to: 'application#guild'
 
   post '/webhooks/twilio_chat', to: 'webhooks#twilio_chat'
-  post '/webhooks/sendgrid_inbound_parse', to: 'webhooks#sendgrid_inbound_parse'
 
   # Routes for internal tooling
   get '/internal', to: 'application#internal', as: :internal_root
