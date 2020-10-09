@@ -28,6 +28,9 @@ jobs:
       STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
       PROJECTS_INVITE_KEY: ${{ secrets.PROJECTS_INVITE_KEY }}
+      TWILIO_SID: ${{ secrets.TWILIO_SID }}
+      TWILIO_API_SID: ${{ secrets.TWILIO_API_SID }}
+      TWILIO_SECRET: ${{ secrets.TWILIO_SECRET }}
 
     services:
       postgres:
@@ -102,6 +105,17 @@ jobs:
 
       - name: Test
         run: bundle exec rspec --format RSpec::Github::Formatter
+
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v2
+        with:
+          project: ./spec
+          start: bundle exec rails s -e test -p 3000
+          wait-on: http://localhost:3000
+        env:
+          FONT_AWESOME_AUTH_TOKEN: ${{ secrets.FONT_AWESOME_AUTH_TOKEN }}
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
 
       - name: Test screenshots
         uses: actions/upload-artifact@v2

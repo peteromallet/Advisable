@@ -44,9 +44,7 @@ module.exports = (on, config) => {
       const page = await browser.newPage();
       await page.goto(config.baseUrl + url);
       const $document = await getDocument(page);
-      await (await getByLabelText($document, "Email Address")).type(
-        "dwight@test.com",
-      );
+      await (await getByLabelText($document, "Email Address")).type(email);
       await (await getByLabelText($document, "Password")).type("testing123");
       await (await getByRole($document, "button", { name: /login/i })).click();
       await waitFor(() => getByRole($document, "button", { name: /join/i }));
