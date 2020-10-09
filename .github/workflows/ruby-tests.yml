@@ -112,10 +112,6 @@ jobs:
           project: ./spec
           start: bundle exec rails s -e test -p 3000
           wait-on: http://localhost:3000
-        env:
-          FONT_AWESOME_AUTH_TOKEN: ${{ secrets.FONT_AWESOME_AUTH_TOKEN }}
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
 
       - name: Test screenshots
         uses: actions/upload-artifact@v2
