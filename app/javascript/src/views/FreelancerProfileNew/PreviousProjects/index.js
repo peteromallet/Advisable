@@ -11,6 +11,7 @@ import {
   SectionHeaderWrapper,
 } from "../components/SectionHeader";
 import { mockedIndustries, mockedSkills } from "./mockedFilterData";
+import { useHistory } from "react-router";
 
 const getProjectValues = (projects) =>
   projects.reduce(
@@ -121,6 +122,7 @@ const filterProjects = (state) => (project) => {
 
 function PreviousProjects({ data, isOwner }) {
   const [state, dispatch] = useReducer(reducer, data, init);
+  const history = useHistory();
   const createAction = createDispatcher(dispatch);
   const switchSkillSelection = createAction("SWITCH_SKILL_SELECTION");
   const switchIndustrySelection = createAction("SWITCH_INDUSTRY_SELECTION");
@@ -191,7 +193,11 @@ function PreviousProjects({ data, isOwner }) {
         <SectionHeaderWrapper>
           <SectionHeaderText>Previous Projects</SectionHeaderText>
           {isOwner && (
-            <Button variant="minimal" ml="auto">
+            <Button
+              variant="minimal"
+              ml="auto"
+              onClick={() => history.push("/settings/references")}
+            >
               Edit
             </Button>
           )}
