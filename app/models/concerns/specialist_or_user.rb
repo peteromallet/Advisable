@@ -79,8 +79,8 @@ module SpecialistOrUser
     end
 
     def copy_data_to_account
-      self.account = Account.create! if account.blank?
-      data = Account::COPYABLE_COLUMNS.index_with { |column| attributes[column] }
+      ensure_account_exists
+      data = Account::COPYABLE_COLUMNS.map { |column| [column, attributes[column]] }.to_h
       account.update_columns(data)
     end
 
