@@ -5,7 +5,7 @@ context("A video call", () => {
   });
 
   describe("when entering a call before the other participant joins", () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(`/calls/vid_abcdefghijklmno`);
       cy.get("input[name=email]").type("videocall@test.com");
       cy.get("input[type=password]").type("testing123");
@@ -19,15 +19,12 @@ context("A video call", () => {
       });
     });
 
-    after(() => {
+    afterEach(() => {
       cy.leaveRoom();
     });
 
-    it("they can see the oter participant", function () {
+    it("they can see and hear the oter participant", function () {
       cy.getParticipant("Dwight").shouldBeColor("blue");
-    });
-
-    it("should be able to hear the other participant", () => {
       cy.getParticipant("Dwight").shouldBeMakingSound();
     });
 
@@ -38,7 +35,7 @@ context("A video call", () => {
   });
 
   describe("when entering a call after the other participant joins", () => {
-    before(() => {
+    beforeEach(() => {
       cy.task("addParticipant", {
         url: "/calls/vid_abcdefghijklmno",
         email: "dwight@test.com",
@@ -52,21 +49,18 @@ context("A video call", () => {
       cy.get("[data-testid=joinCall]").click();
     });
 
-    after(() => {
+    afterEach(() => {
       cy.leaveRoom();
     });
 
-    it("they can see the oter participant", function () {
+    it("they can see and hear the oter participant", function () {
       cy.getParticipant("Dwight").shouldBeColor("blue");
-    });
-
-    it("they can hear the other participant", function () {
       cy.getParticipant("Dwight").shouldBeMakingSound();
     });
   });
 
   describe("With more than 2 participants", () => {
-    before(() => {
+    beforeEach(() => {
       cy.task("addParticipant", {
         url: "/calls/vid_abcdefghijklmno",
         email: "dwight@test.com",
@@ -86,16 +80,13 @@ context("A video call", () => {
       });
     });
 
-    after(() => {
+    afterEach(() => {
       cy.leaveRoom();
     });
 
-    it("they can see the oter participants", function () {
+    it("they can see and hear the oter participants", function () {
       cy.getParticipant("Dwight").shouldBeColor("blue");
       cy.getParticipant("Jim").shouldBeColor("red");
-    });
-
-    it("they can hear the other participants", function () {
       cy.getParticipant("Dwight").shouldBeMakingSound();
       cy.getParticipant("Jim").shouldBeMakingSound();
     });

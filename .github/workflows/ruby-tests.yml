@@ -29,8 +29,8 @@ jobs:
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
       PROJECTS_INVITE_KEY: ${{ secrets.PROJECTS_INVITE_KEY }}
       TWILIO_SID: ${{ secrets.TWILIO_SID }}
-      TWILIO_API_SID: ${{ secrets.TWILIO_API_SID }}
-      TWILIO_SECRET: ${{ secrets.TWILIO_SECRET }}
+      TWILIO_API_KEY_SID: ${{ secrets.TWILIO_API_KEY_SID }}
+      TWILIO_API_KEY_SECRET: ${{ secrets.TWILIO_API_KEY_SECRET }}
 
     services:
       postgres:
@@ -110,8 +110,13 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           project: ./spec
+          browser: chrome
+          headless: true
           start: bundle exec rails s -e test -p 3000
           wait-on: http://localhost:3000
+
+      - name: Test
+        run: bundle exec rspec
 
       - name: Test screenshots
         uses: actions/upload-artifact@v2
