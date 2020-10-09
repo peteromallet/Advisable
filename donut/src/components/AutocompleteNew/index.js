@@ -173,6 +173,7 @@ export default function Autocomplete({
     setSelectionIndex(-1);
 
     if (
+      searchValue &&
       creatable &&
       !searchDirectMatch &&
       index === filteredOptions.length - 1
