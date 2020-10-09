@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Text, theme } from "@advisable/donut";
 import { truncate } from "lodash-es";
 
-const TRUNCATE_LIMIT = 250;
+export const TRUNCATE_LIMIT = 250;
 
 const StyledBioExpander = styled.span`
   cursor: pointer;
