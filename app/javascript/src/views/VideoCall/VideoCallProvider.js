@@ -13,7 +13,7 @@ export default function VideoCallProvider({ data, children }) {
     removeLocalVideoTrack,
     isAcquiringLocalTracks,
   } = useLocalTracks();
-  const { room, isConnecting, connect, roomState } = useRoom(
+  const { room, isConnecting, connect, roomState, leave } = useRoom(
     data.id,
     data.accessToken,
     localTracks,
@@ -22,6 +22,7 @@ export default function VideoCallProvider({ data, children }) {
   const value = {
     room,
     data,
+    leave,
     connect,
     roomState,
     localTracks,

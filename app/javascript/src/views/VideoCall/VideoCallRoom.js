@@ -3,6 +3,7 @@ import Lobby from "./Lobby";
 import Actions from "./Actions";
 import LocalVideo from "./LocalVideo";
 import Participants from "./Participants";
+import VideoCallLeft from "./VideoCallLeft";
 import useCallContext from "./useCallContext";
 import ReconnectingNotification from "./ReconnectingNotification";
 
@@ -11,6 +12,10 @@ export default function VideoCallRoom() {
 
   if (roomState === "disconnected") {
     return <Lobby />;
+  }
+
+  if (roomState === "left") {
+    return <VideoCallLeft />;
   }
 
   return (

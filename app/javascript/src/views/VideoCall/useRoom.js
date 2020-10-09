@@ -64,5 +64,10 @@ export default function useRoom(name, accessToken, localTracks) {
     setIsConnecting(false);
   }, [name, accessToken]);
 
-  return { room, isConnecting, connect, roomState };
+  const leave = useCallback(() => {
+    room.disconnect();
+    setRoomState("left");
+  }, [room]);
+
+  return { room, isConnecting, connect, roomState, leave };
 }
