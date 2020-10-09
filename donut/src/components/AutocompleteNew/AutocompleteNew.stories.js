@@ -1308,7 +1308,7 @@ export const singleSelect = () => {
   );
 };
 
-export const asyncOptions = () => {
+export const async = () => {
   const [value, setValue] = React.useState("");
   const size = select("Size", ["sm", "md", "lg"], "md");
 
@@ -1321,22 +1321,18 @@ export const asyncOptions = () => {
         placeholder="Country"
         onChange={(v) => setValue(v)}
         loadOptions={searchCountries}
-        options={[
-          {
-            label: "Ireland",
-            value: "IE",
-          },
-          {
-            label: "United States",
-            value: "US",
-          },
-        ]}
+        options={sortBy(COUNTRIES, "name")
+          .slice(0, 5)
+          .map((country) => ({
+            label: country.name,
+            value: country.code,
+          }))}
       />
     </Card>
   );
 };
 
-export const creatableSingleSelect = () => {
+export const createable = () => {
   const [value, setValue] = React.useState(null);
 
   return (
@@ -1351,6 +1347,29 @@ export const creatableSingleSelect = () => {
           label: country.name,
           value: country.code,
         }))}
+      />
+    </Card>
+  );
+};
+
+export const asyncAndCreatable = () => {
+  const [value, setValue] = React.useState(null);
+
+  return (
+    <Card maxWidth={600} margin="50px auto" padding="l">
+      <Autocomplete
+        creatable
+        value={value}
+        label="Choose a country"
+        placeholder="Country"
+        loadOptions={searchCountries}
+        onChange={(v) => setValue(v)}
+        options={sortBy(COUNTRIES, "name")
+          .slice(0, 5)
+          .map((country) => ({
+            label: country.name,
+            value: country.code,
+          }))}
       />
     </Card>
   );

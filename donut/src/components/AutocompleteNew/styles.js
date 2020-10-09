@@ -58,6 +58,6 @@ export const StyledAutocompleteMenuItem = styled.li`
   }
 
   &[aria-selected="true"] span {
-    background: ${theme.colors.blue100};
+    background: ${theme.colors.neutral100};
   }
 `;
