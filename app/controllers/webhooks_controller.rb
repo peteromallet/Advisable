@@ -14,7 +14,7 @@ class WebhooksController < ApplicationController
     ary = URI.decode_www_form(request.body.read)
     webhook = Hash[ary]
 
-    if webhook["InstanceSid"] != ENV.fetch('TWILIO_CHAT_ACCOUNT_SID')
+    if webhook["InstanceSid"] != ENV.fetch('TWILIO_SID')
       render json: {}, status: :unauthorized and return false
     end
 

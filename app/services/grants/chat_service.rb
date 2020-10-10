@@ -12,9 +12,9 @@ class Grants::ChatService < ApplicationService
     grant.service_sid = ENV.fetch('TWILIO_CHAT_SERVICE_SID')
 
     token = Twilio::JWT::AccessToken.new(
-      ENV.fetch('TWILIO_CHAT_ACCOUNT_SID'),
-      ENV.fetch('TWILIO_CHAT_SID'),
-      ENV.fetch('TWILIO_CHAT_SECRET'),
+      ENV.fetch('TWILIO_SID'),
+      ENV.fetch('TWILIO_API_KEY_SID'),
+      ENV.fetch('TWILIO_API_KEY_SECRET'),
       [grant],
       identity: identity,
       ttl: 86_400

@@ -5,8 +5,8 @@ module Integrations
 
     def initialize(channel_sid: nil, identity: nil)
       @client = Twilio::REST::Client.new(
-        ENV.fetch('TWILIO_CHAT_ACCOUNT_SID'),
-        ENV.fetch('TWILIO_ACCESS_TOKEN')
+        ENV.fetch('TWILIO_SID'),
+        ENV.fetch('TWILIO_AUTH_TOKEN')
       )
       @channel_sid = channel_sid
       @identity = identity
