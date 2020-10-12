@@ -1,26 +1,80 @@
-import { max } from "lodash-es";
+import { flow, max } from "lodash-es";
 
-const getPaddingY = (rowIndex) => {
+const getPY = (rowIndex) => {
   switch (rowIndex) {
     case 0:
-      return "10px";
+      return 14;
     case 1:
-      return "6px";
+      return 14;
     default:
-      return "4px";
+      return 6;
   }
 };
 
+const getPX = (rowIndex) => {
+  switch (rowIndex) {
+    case 0:
+      return 14;
+    case 1:
+      return 14;
+    default:
+      return 6;
+  }
+};
+
+const getMY = (rowIndex) => {
+  switch (rowIndex) {
+    case 0:
+      return 3;
+    case 1:
+      return 3;
+    default:
+      return 3;
+  }
+};
+
+const getMX = (rowIndex) => {
+  switch (rowIndex) {
+    case 0:
+      return 3;
+    case 1:
+      return 3;
+    default:
+      return 3;
+  }
+};
+
+const setInitialParams = (rowIndex, item) => ({
+  py: getPY(rowIndex),
+  px: getPX(rowIndex),
+  mx: getMX(rowIndex),
+  my: getMY(rowIndex),
+  initialWidth: item.width,
+  initialHeight: item.height,
+});
+
+const setWidthAndHeight = (params) => ({
+  ...params,
+  width: params.px * 2 + params.mx * 2 + params.initialWidth,
+  height: params.py * 2 + params.my * 2 + params.initialHeight,
+});
+
+const setSizeParams = flow([setInitialParams, setWidthAndHeight]);
+
 const layoutReducer = (acc, item, index) => {
-  const { width, height } = item;
   const prevLayoutElement = acc.items && acc.items[index - 1];
   if (!prevLayoutElement) {
     const x = 0;
     const y = 0;
+    const rowIndex = 0;
+    const sizeParams = setSizeParams(rowIndex, item);
+    const height = sizeParams.height;
     return {
       ...acc,
+      height,
       numOfRows: 1,
-      items: [{ x, y, width, height }],
+      numOfItemsInRow: [1],
+      items: [{ ...sizeParams, x, y, rowIndex }],
       breakpoints: { [x + width]: true },
     };
   }
@@ -29,24 +83,35 @@ const layoutReducer = (acc, item, index) => {
   const prevY = prevLayoutElement.y;
   const prevWidth = prevLayoutElement.width;
   const prevHeigth = prevLayoutElement.height;
-  const isNewRow = prevX + prevWidth + item.width > acc.width;
-  const numOfRows = isNewRow ? acc.numOfRows + 1 : acc.numOfRows;
-  const rowIndex = numOfRows - 1;
+
+  // Calc row
+  let rowIndex = acc.numOfRows - 1;
+  let isNewRow = false;
+  let numOfRows;
+  let { width } = setSizeParams(rowIndex, item);
+  isNewRow = prevX + prevWidth + width > acc.width;
+  numOfRows = isNewRow ? acc.numOfRows + 1 : acc.numOfRows;
+  rowIndex = numOfRows - 1;
+  acc.numOfItemsInRow[rowIndex] = acc.numOfItemsInRow[rowIndex] + 1 || 0;
+
   const x = isNewRow ? 0 : prevX + prevWidth;
   const y = isNewRow ? prevY + prevHeigth : prevY;
-  const py = getPaddingY(rowIndex);
+  const sizeParams = setSizeParams(rowIndex, item);
 
-  const itemLayout = { x, y, py, width, height, rowIndex };
+  // Layout height
+  const height = isNewRow ? acc.height + sizeParams.height : acc.height;
+
+  const itemLayout = { ...sizeParams, x, y, rowIndex };
   return {
     ...acc,
     numOfRows,
+    height,
     items: [...acc.items, itemLayout],
     breakpoints: { ...acc.breakpoints, [x + width]: true },
   };
 };
 
 const setLayout = (state) => {
-  console.log("set layout", state);
   const { wrapperWidth } = state;
   let firstLayout, lastLayout;
   const firstSection =
@@ -76,16 +141,10 @@ const setLayout = (state) => {
       .map((key) => Number(key))
       .filter((num) => num !== lastSectionWidth);
 
-    console.log("first layout", firstLayout);
-    console.log("last layout", lastLayout);
-    console.log("num of rows", firstLayout.numOfRows, lastLayout.numOfRows);
-    console.log("section width", firstSectionWidth, lastSectionWidth);
-
     firstSectionWidth = max(firstLayout.breakpoints);
     lastSectionWidth = wrapperWidth - firstSectionWidth;
     success = firstLayout.numOfRows >= lastLayout.numOfRows;
     cycle += 1;
-    console.log("success", success);
   }
   return {
     ...state,
