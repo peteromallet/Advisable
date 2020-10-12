@@ -21,7 +21,7 @@ module SpecialistOrUser
 
     # Needed for frontend stuff
     def confirmed
-      confirmed_at.present?
+      account.confirmed_at.present?
     end
 
     def has_password?

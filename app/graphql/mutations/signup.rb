@@ -27,8 +27,7 @@ class Mutations::Signup < Mutations::BaseMutation
       signup_failed(account)
     end
 
-    # TODO: AccountMigration - Fix session to support Account natively
-    login_as(specialist_or_user)
+    login_as(account)
     {viewer: specialist_or_user}
   end
 

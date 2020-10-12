@@ -17,6 +17,10 @@ class Account < ApplicationRecord
     specialist || user
   end
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   def has_password?
     password_digest.present?
   end
@@ -45,6 +49,20 @@ class Account < ApplicationRecord
     self.confirmation_token = token
     save(validate: false)
     token
+  end
+
+  # TODO: AccountMigration - log usage and remove all usages until this can be deleted
+  def method_missing(method, *args, **options, &block)
+    Rails.logger.info("Missing method called on Account: #{method}(#{args}, #{options})")
+    if options.present?
+      specialist_or_user.public_send(method, *args, **options, &block)
+    else
+      specialist_or_user.public_send(method, *args, &block)
+    end
+  end
+
+  def respond_to_missing?(method, *args, **options)
+    specialist_or_user.respond_to?(method)
   end
 end
 

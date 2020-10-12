@@ -10,9 +10,9 @@ class Mutations::Login < Mutations::BaseMutation
     account = Account.find_by(email: email)
     no_account_error unless account&.has_password?
     invalid_credentials unless account.authenticate(password)
-    login_as(specialist_or_user)
-    context[:current_user] = specialist_or_user
-    {viewer: specialist_or_user}
+    login_as(account)
+    context[:current_user] = account.specialist_or_user
+    {viewer: account.specialist_or_user}
   end
 
   private
