@@ -26,27 +26,31 @@ function Tags({
 
   const tagsList = Object.keys(sectionTags)
     .sort((a, b) => sectionTags[b].number - sectionTags[a].number)
-    .map((tagKey) => {
+    .map((tagKey, index) => {
       const { selected } = sectionTags[tagKey];
+      const item = layout[sectionName]?.items[index];
       return (
         <Box
-          // position="absolute"
-          // left={layout[sectionName]?.items[index].x}
-          // top={layout[sectionName]?.items[index].y}
+          position="absolute"
+          left={item?.x}
+          top={item?.y}
           key={`${sectionName}-${tagKey}`}
           id={`${sectionName}-${tagKey}`}
           tagName={tagKey}
           sectionName={sectionName}
-          flex={ratio ? "1" : "0"}
+          // flex={ratio ? "1" : "0"}
           css={`
             white-space: nowrap;
           `}
         >
           <Box
-            display="flex"
-            textAlign="center"
-            justifyContent="center"
-            p="s"
+            // display="flex"
+            // textAlign="center"
+            // justifyContent="center"
+            px={`${item?.px}px`}
+            py={`${item?.py}px`}
+            mx={`${item?.mx}px`}
+            my={`${item?.my}px`}
             borderRadius="8px"
             borderWidth={1}
             bg={selected ? bgActive : "none"}
@@ -56,7 +60,6 @@ function Tags({
               user-select: none;
               cursor: pointer;
             `}
-            m="6px"
             onClick={() => onClick({ tag: tagKey })}
             {...props}
           >
@@ -68,7 +71,7 @@ function Tags({
       );
     });
   return (
-    <Box width={layout[sectionName]?.width} position="relative">
+    <Box position="relative">
       <Box
         bg="neutral50"
         px="4px"
@@ -83,16 +86,23 @@ function Tags({
         </Text>
       </Box>
       <Box
-        display="flex"
-        flexWrap="wrap"
-        alignItems="flex-start"
-        alignContent="flex-start"
-        justifyContent="flex-start"
-        height="260px"
-        maxHeight={props.maxHeight}
+        width={layout[sectionName]?.width}
+        position="relative"
         overflow="hidden"
       >
-        {tagsList}
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          alignItems="flex-start"
+          alignContent="flex-start"
+          justifyContent="flex-start"
+          height={props.maxHeight || layout[sectionName]?.height}
+          css={`
+            transition: height 0.2s;
+          `}
+        >
+          {tagsList}
+        </Box>
       </Box>
     </Box>
   );
