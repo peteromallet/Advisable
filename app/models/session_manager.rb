@@ -39,7 +39,6 @@ class SessionManager
 
   def start_session(account)
     @current_account = account
-    cookies.permanent[:uid] = account.uid
     session[:account_uid] = account.uid
   end
 
@@ -59,7 +58,6 @@ class SessionManager
   private
 
   def clear_browser_data
-    cookies.delete(:uid)
     cookies.delete(:remember)
     session.delete(:account_uid)
   end

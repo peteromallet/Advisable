@@ -51,7 +51,6 @@ RSpec.describe SessionManager do
       cookies = mock_cookies
       manager = SessionManager.new(session: session, cookies: cookies)
       expect(user).to receive(:generate_remember_token)
-      expect(cookies.permanent).to receive(:[]=).with(:uid, user.uid)
       expect(cookies.signed).to receive(:[]=).with(
         :remember,
         hash_including(value: user.remember_token, httponly: true)
@@ -68,7 +67,6 @@ RSpec.describe SessionManager do
       session = mock_session(account.uid)
       cookies = mock_cookies(account.remember_token)
       manager = SessionManager.new(session: session, cookies: cookies)
-      expect(cookies).to receive(:delete).with(:uid)
       expect(cookies).to receive(:delete).with(:remember)
       expect(session).to receive(:delete).with(:account_uid)
       manager.logout
@@ -77,7 +75,7 @@ RSpec.describe SessionManager do
   end
 
   describe '#restore_session' do
-    let(:user) { create(:user, remember_token: '12345')}
+    let(:user) { create(:user, remember_token: '12345') }
     let(:account) {user.account}
     it 'does nothing without a remember token' do
       session = mock_session
@@ -90,7 +88,6 @@ RSpec.describe SessionManager do
       session = mock_session
       cookies = mock_cookies(account.remember_token)
       manager = SessionManager.new(session: session, cookies: cookies)
-      expect(cookies.permanent).to receive(:[]=).with(:uid, account.uid)
       expect(session).to receive(:[]=).with(:account_uid, account.uid)
       manager.restore_session
     end
