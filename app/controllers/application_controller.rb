@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_sentry_context
   before_action :authenticate_with_magic_link, only: :frontend
-  helper_method :user_logged_in?, :current_user
 
   def frontend
     respond_to(&:html)

@@ -46,7 +46,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
   def response
     AdvisableSchema.execute(
       query,
-      context: { session_manager: session_manager }
+      context: {session_manager: session_manager}
     )
   end
 

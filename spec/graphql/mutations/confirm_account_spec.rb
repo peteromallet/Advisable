@@ -5,6 +5,7 @@ RSpec.describe Mutations::ConfirmAccount do
   let(:input_token) { token }
   let(:digest) { Token.digest(token) }
   let(:user) { create(:user, confirmation_digest: digest, confirmed_at: nil) }
+  let(:account) { user.account }
   let(:email) { user.email }
   let(:session_manager) do
     SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new)
@@ -39,23 +40,24 @@ RSpec.describe Mutations::ConfirmAccount do
   def response
     AdvisableSchema.execute(
       query,
-      context: { session_manager: session_manager }
+      context: {session_manager: session_manager}
     )
   end
 
   it 'returns the viewer' do
     viewer = response['data']['confirmAccount']['viewer']
+    pp viewer
     expect(viewer['confirmed']).to be_truthy
   end
 
   it 'confirms the account' do
-    expect(user.reload.confirmed_at).to be_nil
+    expect(account.reload.confirmed_at).to be_nil
     response
-    expect(user.reload.confirmed_at).to_not be_nil
+    expect(account.reload.confirmed_at).to_not be_nil
   end
 
   it 'logs in the user' do
-    expect(session_manager).to receive(:login).with(user)
+    expect(session_manager).to receive(:login).with(account)
     response
   end
 

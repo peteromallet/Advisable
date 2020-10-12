@@ -61,41 +61,45 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
         skill
       end
 
-    account =
-      Specialist.new(
-        application_stage: 'Started',
-        first_name: args[:first_name],
-        last_name: args[:last_name],
-        email: args[:email],
-        phone: args[:phone],
-        password: args[:password],
-        pid: args[:pid],
-        referrer: args[:referrer],
-        campaign_name: args[:campaign_name],
-        campaign_source: args[:campaign_source]
-      )
+    account = Account.new(
+      first_name: args[:first_name],
+      last_name: args[:last_name],
+      email: args[:email],
+      password: args[:password]
+    )
 
-    unless account.valid?
-      if account.errors.added?(:email, :taken)
-        raise ApiError::InvalidRequest.new(
-                'emailTaken',
-                'This email is already being used by another account'
-              )
+    # TODO: AccountMigration - remove duplicate fields
+    specialist = Specialist.new(
+      first_name: args[:first_name],
+      last_name: args[:last_name],
+      email: args[:email],
+      campaign_name: args[:campaign_name],
+      campaign_source: args[:campaign_source],
+      account: account,
+      application_stage: 'Started',
+      phone: args[:phone],
+      pid: args[:pid],
+      referrer: args[:referrer]
+    )
+
+    unless account.valid? && specialist.valid?
+      if account.errors.added?(:email, "has already been taken")
+        raise ApiError::InvalidRequest.new('emailTaken', 'This email is already being used by another account')
       end
     end
 
-    account.skills = skills
+    specialist.skills = skills
 
-    if account.save
-      account.sync_to_airtable
-      create_application_record(account, args[:pid])
-      account.send_confirmation_email
+    if specialist.save
+      specialist.sync_to_airtable
+      create_application_record(specialist, args[:pid])
+      specialist.send_confirmation_email
     end
 
-    context[:current_user] = account
+    context[:current_user] = specialist
     login_as(account)
 
-    {viewer: account.reload}
+    {viewer: specialist.reload}
   end
 
   private
@@ -108,10 +112,7 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     project = Project.find_by_uid_or_airtable_id(pid)
     project = Airtable::Project.find(pid).sync if project.nil?
     return if project.blank?
-    application =
-      specialist.applications.create(
-        project: project, status: 'Invited To Apply'
-      )
+    application = specialist.applications.create(project: project, status: 'Invited To Apply')
     application.sync_to_airtable({'Source' => 'new-signup'})
   end
 end
