@@ -58,7 +58,7 @@ gem 'image_processing', '~> 1.0'
 gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 
 # Guild
-gem "jsonb_accessor", "~> 1.0.0"
+gem "jsonb_accessor", "~> 1.1.0"
 gem 'acts-as-taggable-on', '~> 6.0'
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 
