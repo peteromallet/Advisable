@@ -1,6 +1,7 @@
 import { flow, max } from "lodash-es";
 
 const getPY = (rowIndex) => {
+  // Return padding Y axis value
   switch (rowIndex) {
     case 0:
       return 14;
@@ -12,6 +13,7 @@ const getPY = (rowIndex) => {
 };
 
 const getPX = (rowIndex) => {
+  // Return padding X axis value
   switch (rowIndex) {
     case 0:
       return 14;
@@ -23,6 +25,7 @@ const getPX = (rowIndex) => {
 };
 
 const getMY = (rowIndex) => {
+  // Return margin Y axis value
   switch (rowIndex) {
     case 0:
       return 3;
@@ -34,6 +37,7 @@ const getMY = (rowIndex) => {
 };
 
 const getMX = (rowIndex) => {
+  // Return margin X axis value
   switch (rowIndex) {
     case 0:
       return 3;
@@ -74,6 +78,8 @@ const layoutReducer = (acc, item, index) => {
       height,
       numOfRows: 1,
       numOfItemsInRow: [1],
+      rowsWidth: [sizeParams.width],
+      rowsHeight: [sizeParams.height],
       items: [{ ...sizeParams, x, y, rowIndex }],
       breakpoints: { [x + width]: true },
     };
@@ -92,11 +98,16 @@ const layoutReducer = (acc, item, index) => {
   isNewRow = prevX + prevWidth + width > acc.width;
   numOfRows = isNewRow ? acc.numOfRows + 1 : acc.numOfRows;
   rowIndex = numOfRows - 1;
-  acc.numOfItemsInRow[rowIndex] = acc.numOfItemsInRow[rowIndex] + 1 || 0;
+  const sizeParams = setSizeParams(rowIndex, item);
+  acc.numOfItemsInRow[rowIndex] = acc.numOfItemsInRow[rowIndex] + 1 || 1;
+  acc.rowsWidth[rowIndex] =
+    acc.rowsWidth[rowIndex] + sizeParams.width || sizeParams.width;
+  acc.rowsHeight[rowIndex] = isNewRow
+    ? sizeParams.height
+    : acc.rowsHeight[rowIndex];
 
   const x = isNewRow ? 0 : prevX + prevWidth;
   const y = isNewRow ? prevY + prevHeigth : prevY;
-  const sizeParams = setSizeParams(rowIndex, item);
 
   // Layout height
   const height = isNewRow ? acc.height + sizeParams.height : acc.height;
@@ -109,6 +120,27 @@ const layoutReducer = (acc, item, index) => {
     items: [...acc.items, itemLayout],
     breakpoints: { ...acc.breakpoints, [x + width]: true },
   };
+};
+
+const expandItems = (acc, item, index) => {
+  if (item.rowIndex + 1 === acc.numOfRows) {
+    // Not expand for last row
+    return acc;
+  }
+  const rowWidth = acc.rowsWidth[item.rowIndex];
+  const rowNumOfItems = acc.numOfItemsInRow[item.rowIndex];
+  const diff = acc.width - rowWidth;
+  const extraSpace = diff / rowNumOfItems;
+  const px = item.px + extraSpace / 2;
+  const width = item.width + extraSpace;
+
+  // set Coordinations
+  const prevX = acc.items[index - 1]?.x;
+  const prevWidth = acc.items[index - 1]?.width;
+  const rowStart = prevX !== undefined ? prevX + prevWidth >= acc.width : true;
+  const x = rowStart ? 0 : prevX + prevWidth;
+  acc.items[index] = { ...acc.items[index], width, x, px, extraSpace };
+  return { ...acc };
 };
 
 const setLayout = (state) => {
@@ -124,15 +156,18 @@ const setLayout = (state) => {
   let success = false;
   let cycle = 0;
   while (!success && cycle < 8) {
+    // Calc first layout
     firstLayout = state.sections.skills.list.reduce(layoutReducer, {
       width: firstSectionWidth,
       indent: 0,
     });
+    firstLayout = firstLayout.items.reduce(expandItems, firstLayout);
+    // Calc last layout
     lastLayout = state.sections.industries.list.reduce(layoutReducer, {
       width: lastSectionWidth,
       indent: firstLayout.width,
     });
-
+    lastLayout = lastLayout.items.reduce(expandItems, lastLayout);
     // Map breakpoints from hash to list
     firstLayout.breakpoints = Object.keys(firstLayout.breakpoints)
       .map((key) => Number(key))
