@@ -4,6 +4,7 @@ import context from "../applicationContext";
 
 const useViewer = () => {
   const app = useContext(context);
+
   if (app.viewer) {
     return {
       ...app.viewer,

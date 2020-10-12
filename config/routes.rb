@@ -69,6 +69,9 @@ Rails.application.routes.draw do
   post 'zappier_interactor/create_magic_link'
   post 'zappier_interactor/enable_guild'
 
+  get "/projects", to: "application#projects"
+  get "/freelancers/:id", to: "application#freelancer_profile"
+
   # match every other route to the frontend codebase
   root 'application#frontend'
   get '*path',

@@ -1,0 +1,73 @@
+query getProfileData($id: ID!) {
+  specialist(id: $id) {
+    id
+    name
+    firstName
+    avatar
+    coverPhoto
+    location
+    bio
+    linkedin
+    website
+    city
+    guild
+    country {
+      id
+    }
+
+    projectSkills {
+      nodes {
+        id
+        name
+      }
+    }
+
+    industries {
+      id
+      name
+    }
+
+    profileProjects {
+      id
+      title
+      clientName
+      coverPhoto {
+        url
+      }
+      excerpt
+      primaryIndustry {
+        id
+        name
+        color
+      }
+      primarySkill {
+        id
+        name
+      }
+      skills {
+        id
+        name
+      }
+      industries {
+        id
+        name
+      }
+      reviews {
+        id
+        name
+        role
+        comment
+        companyName
+      }
+    }
+
+    reviews {
+      id
+      name
+      role
+      comment
+      companyName
+      avatar
+    }
+  }
+}
