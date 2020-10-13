@@ -5,10 +5,7 @@ RSpec.describe Airtable::ClientContact do
   include_examples "sync airtable column", "Last Name", to: :last_name, with_email: true
   include_examples "sync airtable column", "Title", to: :title, with_email: true
 
-  include_examples "sync airtable column", "Email Address", {
-    to: :email,
-    with: "test@test.com"
-  }
+  include_examples "sync airtable column to association", "Email Address", {association: :account, to: :email, with: "test@test.com"}
 
   describe "sync_data" do
     context "when the associated client has been synced" do

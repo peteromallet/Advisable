@@ -3,7 +3,7 @@ class Airtable::ClientContact < Airtable::Base
   self.table_name = 'Client Contacts'
 
   sync_with ::User
-  sync_column 'Email Address', to: :email
+  sync_column_to_association 'Email Address', association: :account, to: :email
   sync_column 'First Name', to: :first_name
   sync_column 'Last Name', to: :last_name
   sync_column 'Title', to: :title
