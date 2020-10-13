@@ -51,7 +51,7 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
   def resolve(**args)
     skills =
       args[:skills].map do |name|
-        skill = Skill.find_by_name(name)
+        skill = Skill.find_by(name: name)
         if skill.nil?
           raise ApiError::InvalidRequest.new(
                   'skillNotFound',
@@ -95,7 +95,7 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     context[:current_user] = account
     login_as(account)
 
-    { viewer: account.reload }
+    {viewer: account.reload}
   end
 
   private
@@ -107,11 +107,11 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     return unless pid
     project = Project.find_by_uid_or_airtable_id(pid)
     project = Airtable::Project.find(pid).sync if project.nil?
-    return unless project.present?
+    return if project.blank?
     application =
       specialist.applications.create(
         project: project, status: 'Invited To Apply'
       )
-    application.sync_to_airtable({ 'Source' => 'new-signup' })
+    application.sync_to_airtable({'Source' => 'new-signup'})
   end
 end

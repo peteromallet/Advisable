@@ -50,8 +50,6 @@ end
 # Table name: accounts
 #
 #  id                  :bigint           not null, primary key
-#  campaign_name       :string
-#  campaign_source     :string
 #  completed_tutorials :jsonb
 #  confirmation_digest :string
 #  confirmation_token  :string

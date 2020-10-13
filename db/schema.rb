@@ -33,8 +33,6 @@ ActiveRecord::Schema.define(version: 2020_10_15_063933) do
     t.jsonb "completed_tutorials", default: []
     t.string "vat_number"
     t.string "confirmation_token"
-    t.string "campaign_name"
-    t.string "campaign_source"
     t.boolean "test_account"
     t.string "remember_token"
     t.datetime "created_at", precision: 6, null: false
