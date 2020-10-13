@@ -2,7 +2,8 @@ class Account < ApplicationRecord
   include Uid
 
   IGNORED_COLUMNS_FOR_COPYING = ["id", "uid", "updated_at", "created_at"].freeze
-  COPYABLE_COLUMNS = column_names - IGNORED_COLUMNS_FOR_COPYING
+  MIGRATED_COLUMNS = ["email"].freeze
+  COPYABLE_COLUMNS = column_names - IGNORED_COLUMNS_FOR_COPYING - MIGRATED_COLUMNS
 
   has_one :user, dependent: :nullify # Change to :destroy
   has_one :specialist, dependent: :nullify # Change to :destroy
@@ -53,7 +54,7 @@ class Account < ApplicationRecord
 
   # TODO: AccountMigration - log usage and remove all usages until this can be deleted
   def method_missing(method, *args, **options, &block)
-    Rails.logger.info("Missing method called on Account: #{method}(#{args}, #{options})")
+    raise "Method called from #{caller.select { |path| path =~ %r{app/} }.to_json}"
     if options.present?
       specialist_or_user.public_send(method, *args, **options, &block)
     else

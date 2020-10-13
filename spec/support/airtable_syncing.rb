@@ -155,3 +155,13 @@ RSpec.shared_examples "sync airtable association" do |column, config|
     airtable.sync
   end
 end
+
+RSpec.shared_examples "sync airtable column to association" do |column, config|
+  let!(:record) { create(described_class.sync_model.to_s.underscore) }
+  let(:airtable) { described_class.new({column => config[:with]}, id: record.airtable_id) }
+
+  it "sync the #{config[:association]} #{column} column to #{config[:to]}" do
+    airtable.sync
+    expect(record.public_send(config[:association]).reload.public_send(config[:to])).to eq(config[:with])
+  end
+end

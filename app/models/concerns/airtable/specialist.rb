@@ -5,7 +5,7 @@ class Airtable::Specialist < Airtable::Base
 
   # Tells which active record model to sync data with.
   sync_with ::Specialist
-  sync_column 'Email Address', to: :email
+  sync_column_to_association 'Email Address', association: :account, to: :email
   sync_column 'First Name', to: :first_name
   sync_column 'Last Name', to: :last_name
   sync_column 'Phone Number', to: :phone
