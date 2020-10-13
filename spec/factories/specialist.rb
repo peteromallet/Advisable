@@ -14,7 +14,6 @@ FactoryBot.define do
     automated_invitations_subscription { true }
     sequence(:uid) { "spe_#{SecureRandom.hex[0..14]}" }
     sequence(:airtable_id) { |id| "recspecialist#{id}" }
-    sequence(:email) { |n| "specialist_#{n}@test.com" }
     bank_holder_address do
       {
         'line1' => 'line1',

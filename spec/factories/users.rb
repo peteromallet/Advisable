@@ -13,7 +13,6 @@ FactoryBot.define do
     payments_setup { true }
     sequence(:uid) { "use_#{SecureRandom.hex[0..14]}" }
     sequence(:airtable_id) { |n| "recuser#{n}" }
-    sequence(:email) { |n| "users#{n}@test.com" }
 
     availability do
       [
