@@ -16,8 +16,6 @@ Rails.application.routes.draw do
   if Rails.env.development? || ENV["STAGING"]
     mount GraphqlPlayground::Rails::Engine,
           at: '/playground', graphql_path: '/graphql'
-
-    get "/inbound_emails", to: "rails/conductor/action_mailbox/inbound_emails#index"
   end
 
   namespace :admin do

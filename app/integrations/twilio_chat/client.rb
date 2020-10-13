@@ -1,7 +1,8 @@
 module Integrations
   class TwilioChat::Client
     MAX_FRIENDLY_NAME = 120
-    attr_reader :client, :channel_sid, :identity
+    attr_reader :client
+    attr_accessor :channel_sid, :identity
 
     def initialize(channel_sid: nil, identity: nil)
       @client = Twilio::REST::Client.new(
@@ -48,6 +49,16 @@ module Integrations
           }
         }.to_json
       )
+    end
+
+    def fetch_other_participant
+      channel_member_uids = JSON.parse(channel.attributes)["members"]&.values
+      other_uid = channel_member_uids.find { |uid| uid != identity }
+      fetch_user(other_uid)
+    end
+
+    def fetch_user(user_identity)
+      chat_service.users(user_identity).fetch
     end
 
     def update_friendly_name!

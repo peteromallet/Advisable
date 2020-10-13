@@ -14,7 +14,7 @@ class WebhooksController < ApplicationController
     ary = URI.decode_www_form(request.body.read)
     webhook = Hash[ary]
 
-    if webhook["InstanceSid"] != ENV.fetch('TWILIO_SID')
+    if webhook["AccountSid"] != ENV.fetch('TWILIO_SID')
       render json: {}, status: :unauthorized and return false
     end
 
@@ -22,17 +22,15 @@ class WebhooksController < ApplicationController
       client = TwilioChat::Client.new(identity: webhook["ClientIdentity"], channel_sid: webhook["ChannelSid"])
       client.check_membership
 
-      # Find the intended recipient of the message
-      channel_member_uids = JSON.parse(client.channel.attributes)["members"]&.values
-      other_uid = channel_member_uids.find { |uid| uid != client.identity }
-      other = client.chat_service.users(other_uid).fetch
+      # Get the twilio resource for the intended recipient of the message
+      other = client.fetch_other_participant
 
       # Send an email notification if:
       #  a. the user isn't logged into the guild
       #  b. the user hasnt checked their new messages within the app
       unless other.is_online
         Guild::ChatMailer.new_message(
-          recipient_uid: other_uid,
+          recipient_uid: other.identity,
           sender_uid: client.identity,
           channel_sid: webhook["ChannelSid"],
           message_body: webhook["Body"]

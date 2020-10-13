@@ -20,12 +20,16 @@ class ChatDirectMessageJob < ApplicationJob
     # Add the first or additional message
     channel.messages.create(body: message, from: sender_uid)
 
-    # Email notify other member of the conversation
-    Guild::ChatMailer.new_message(
-      recipient_uid: recipient_uid,
-      sender_uid: sender_uid,
-      channel_sid: channel.sid,
-      message_body: message
-    ).deliver_later
+    # Email notify other member of the conversation if they arent online
+    other = client.fetch_user(recipient_uid)
+
+    unless other.is_online
+      Guild::ChatMailer.new_message(
+        recipient_uid: recipient_uid,
+        sender_uid: sender_uid,
+        channel_sid: channel.sid,
+        message_body: message
+      ).deliver_later
+    end
   end
 end

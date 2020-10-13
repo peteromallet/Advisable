@@ -1,4 +1,4 @@
 class ApplicationMailbox < ActionMailbox::Base
-  routing /^chat-replies@guild\./ => :guild_chat_replies
-  # routing /@parse\./ => :guild_chat_replies
+  routing /@#{ENV.fetch('GUILD_REPLIES_DOMAIN')}/ => :guild_chat_replies
+  # routing /@guild-replies\./ => :guild_chat_replies
 end
