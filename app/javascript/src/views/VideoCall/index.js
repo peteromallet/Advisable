@@ -1,4 +1,5 @@
 import React from "react";
+import Loading from "components/Loading";
 import VideoCallRoom from "./VideoCallRoom";
 import VideoCallProvider from "./VideoCallProvider";
 import NotFound, { isNotFound } from "../NotFound";
@@ -9,7 +10,7 @@ export default function VideoCall() {
   const { data, loading, error } = useVideoCall();
 
   if (loading) {
-    return <>loading...</>;
+    return <Loading />;
   }
 
   if (isNotFound(error)) {
