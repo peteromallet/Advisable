@@ -96,7 +96,11 @@ function Tags({
           alignItems="flex-start"
           alignContent="flex-start"
           justifyContent="flex-start"
-          height={props.maxHeight || layout[sectionName]?.height}
+          height={
+            props.isExpand
+              ? layout[sectionName]?.height
+              : layout[sectionName]?.collapsedHeight
+          }
           css={`
             transition: height 0.2s;
           `}
