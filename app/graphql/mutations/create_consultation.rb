@@ -16,7 +16,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   def resolve(**args)
     ActiveRecord::Base.transaction do
       consultation = create_consultation(**args)
-      { consultation: consultation }
+      {consultation: consultation}
     end
   end
 
@@ -94,11 +94,18 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
             )
     end
 
+    # TODO: AccountMigration - remove duplicated fields
+    account = Account.new(
+      first_name: args[:first_name],
+      last_name: args[:last_name],
+      email: args[:email]
+    )
+
     user =
       User.create(
+        account: account,
         first_name: args[:first_name],
         last_name: args[:last_name],
-        email: args[:email],
         company_name: args[:company],
         campaign_source: args[:utm_source],
         campaign_name: args[:utm_campaign],
@@ -112,7 +119,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
     user.sync_to_airtable
     # Currently we dont have a relationship between clients and client
     # contacts so we set the 'Client Contacts' column while calling sync.
-    client.sync_to_airtable({ 'Client Contacts' => [user.airtable_id].compact })
+    client.sync_to_airtable({'Client Contacts' => [user.airtable_id].compact})
 
     user
   end

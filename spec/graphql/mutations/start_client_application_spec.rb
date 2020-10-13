@@ -41,7 +41,7 @@ RSpec.describe Mutations::Signup do
     it 'returns an error' do
       create(
         :user,
-        email: email,
+        account: create(:account, email: email),
         first_name: 'Michael',
         last_name: 'Scott',
         password: 'testing123'
@@ -78,7 +78,7 @@ RSpec.describe Mutations::Signup do
         user =
           create(
             :user,
-            email: email,
+            account: create(:account, email: email),
             password: nil,
             first_name: 'Michael',
             last_name: 'Scott',
@@ -95,7 +95,7 @@ RSpec.describe Mutations::Signup do
         user =
           create(
             :user,
-            email: email,
+            account: create(:account, email: email),
             password: nil,
             first_name: 'Michael',
             last_name: 'Scott',

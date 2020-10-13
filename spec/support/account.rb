@@ -17,14 +17,6 @@ RSpec.shared_examples "account" do
     end
   end
 
-  describe "#email=" do
-    it 'lowercases the value that is passed' do
-      inst = create(factory)
-      inst.email = "TESTING@TESTING.COM"
-      expect(inst.email).to eq("testing@testing.com")
-    end
-  end
-
   describe "permissions" do
     it "has a permissions attribute" do
       inst = create(factory)
