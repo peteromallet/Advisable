@@ -143,6 +143,19 @@ const expandItems = (acc, item, index) => {
   return { ...acc };
 };
 
+const setCollapsedHeight = (collapsedLevel, state) => {
+  let collapsedHeight = 0;
+  let isExpandable = true;
+  for (let i = 0; i < collapsedLevel; i++) {
+    if (i >= state.numOfRows) {
+      isExpandable = false;
+      break;
+    }
+    collapsedHeight += state.rowsHeight[i];
+  }
+  return { ...state, collapsedLevel, isExpandable, collapsedHeight };
+};
+
 const setLayout = (state) => {
   const { wrapperWidth } = state;
   let firstLayout, lastLayout;
@@ -162,12 +175,14 @@ const setLayout = (state) => {
       indent: 0,
     });
     firstLayout = firstLayout.items.reduce(expandItems, firstLayout);
+    firstLayout = setCollapsedHeight(1, firstLayout);
     // Calc last layout
     lastLayout = state.sections.industries.list.reduce(layoutReducer, {
       width: lastSectionWidth,
       indent: firstLayout.width,
     });
     lastLayout = lastLayout.items.reduce(expandItems, lastLayout);
+    lastLayout = setCollapsedHeight(1, lastLayout);
     // Map breakpoints from hash to list
     firstLayout.breakpoints = Object.keys(firstLayout.breakpoints)
       .map((key) => Number(key))
