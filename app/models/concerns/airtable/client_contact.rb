@@ -55,7 +55,7 @@ class Airtable::ClientContact < Airtable::Base
 
   push_data do |user|
     self['UID'] = user.uid
-    self['Email Address'] = user.email
+    self['Email Address'] = user.account.email
     self['First Name'] = user.first_name
     self['Last Name'] = user.last_name
     self['Country'] = [user.country.airtable_id] if user.country.present?
