@@ -92,7 +92,7 @@ RSpec.describe Mutations::CreateUserAccount do
 
   context 'when the email has already been taken' do
     it 'raises an error' do
-      create(:user, email: email)
+      create(:user, account: create(:account, email: email))
       response = AdvisableSchema.execute(query)
       error = response['errors'].first['extensions']['code']
       expect(error).to eq('emailTaken')

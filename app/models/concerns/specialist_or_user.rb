@@ -13,8 +13,6 @@ module SpecialistOrUser
 
     has_secure_password validations: false
     validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
-    validate :email_not_taken
-    validates :email, format: {with: VALID_EMAIL_REGEX}
 
     # Temporary while we're moving things over
     before_save :copy_data_to_account
@@ -83,15 +81,22 @@ module SpecialistOrUser
       data = Account::COPYABLE_COLUMNS.map { |column| [column, attributes[column]] }.to_h
       account.update_columns(data)
     end
+  end
 
-    private
+  # TODO: AccountMigration - Methods in process of migration
+  Account::MIGRATED_COLUMNS.each do |column|
+    define_method(column) do
+      account&.public_send(column)
+    end
+  end
 
-    # Validate that the email does not already exist as a user or specialist
-    def email_not_taken
-      return if email.blank?
-      existing = SpecialistOrUser.find_by_email(email.downcase)
-      return if persisted? && existing == self
-      errors.add(:email, :taken) if existing.present?
+  [:find_by_email].each do |method|
+    define_singleton_method(method) do |param|
+      Account.public_send(method, param)&.specialist_or_user
+    end
+
+    define_singleton_method("#{method}!") do |param|
+      public_send(method, param).presence || raise(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -99,7 +104,6 @@ module SpecialistOrUser
     :find_by_uid_or_airtable_id,
     :find_by_uid,
     :find_by_airtable_id,
-    :find_by_email,
     :find_by_remember_token
   ].each do |method|
     define_singleton_method(method) do |param|

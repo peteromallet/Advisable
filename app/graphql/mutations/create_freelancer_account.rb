@@ -61,14 +61,14 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
         skill
       end
 
+    # TODO: AccountMigration - remove duplicated fields
     account = Account.new(
-      first_name: args[:first_name],
-      last_name: args[:last_name],
-      email: args[:email],
-      password: args[:password]
-    )
+          first_name: args[:first_name],
+          last_name: args[:last_name],
+          email: args[:email],
+          password: args[:password]
+        )
 
-    # TODO: AccountMigration - remove duplicate fields
     specialist = Specialist.new(
       first_name: args[:first_name],
       last_name: args[:last_name],

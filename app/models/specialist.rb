@@ -66,12 +66,6 @@ class Specialist < ApplicationRecord
   register_tutorial 'fixedProjects'
   register_tutorial 'flexibleProjects'
 
-  Account::MIGRATED_COLUMNS.each do |column|
-    define_method(column) do
-      account.public_send(column)
-    end
-  end
-
   def name
     "#{first_name} #{last_name}"
   end
