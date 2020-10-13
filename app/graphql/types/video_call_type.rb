@@ -17,17 +17,17 @@ class Types::VideoCallType < Types::BaseType
   end
 
   def access_token
+    grant = Twilio::JWT::AccessToken::VideoGrant.new
+    grant.room = object.id
+
     token = Twilio::JWT::AccessToken.new(
       ENV["TWILIO_SID"],
       ENV["TWILIO_API_KEY_SID"],
       ENV["TWILIO_API_KEY_SECRET"],
-      [],
-      identity: current_user.first_name
+      [grant],
+      identity: current_user.uid
     )
 
-    grant = Twilio::JWT::AccessToken::VideoGrant.new
-    grant.room = object.id
-    token.add_grant(grant)
     token.to_jwt
   end
 end

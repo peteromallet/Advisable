@@ -1,11 +1,20 @@
 import React from "react";
 import Publication from "./Publication";
 import usePublications from "./usePublications";
+import NoVideo from "./NoVideo";
 
 export default function ParticipantTracks({ participant }) {
   const publications = usePublications(participant);
+  const hasVideo = publications.some((pub) => pub.kind === "video");
 
-  return publications.map((publication) => (
+  const publicationElements = publications.map((publication) => (
     <Publication key={publication.kind} publication={publication} />
   ));
+
+  return (
+    <>
+      {!hasVideo && <NoVideo />}
+      {publicationElements}
+    </>
+  );
 }
