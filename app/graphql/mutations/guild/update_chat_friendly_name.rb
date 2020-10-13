@@ -6,6 +6,11 @@ class Mutations::Guild::UpdateChatFriendlyName < Mutations::BaseMutation
   field :chat_channel, Types::ChatChannelType, null: true
   field :errors, [Types::Error], null: true
 
+  def authorized?(**args)
+    requires_guild_user!
+    true
+  end
+
   def resolve(channel_sid:)
     identity = context[:current_user].uid
 
