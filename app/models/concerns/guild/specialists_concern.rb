@@ -62,7 +62,7 @@ module Guild
         #     ).to_sql})
         #       UNION ALL
         #     (#{guild_post_reactions.joins(:specialist).select(
-        #       "'reacted' as context,
+        #       "'gave thanks' as context,
         #       'Guild::Reaction' as type,
         #       guild_reactions.reactionable_id as post_id,
         #       guild_reactions.created_at,

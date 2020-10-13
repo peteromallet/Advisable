@@ -5,7 +5,7 @@ import { Box, Link, useBreakpoint } from "@advisable/donut";
 import logo from "@advisable-main/components/Header/logo";
 import { useToggle } from "@guild/hooks/useToggle";
 import { Notification, Messages } from "@guild/icons";
-import SearchBar from "@guild/components/SearchBar";
+// import SearchBar from "@guild/components/SearchBar";
 import Notifications from "@guild/components/Notifications";
 import { NavIcon } from "./styles";
 import Mask from "@guild/components/Mask";
@@ -69,25 +69,21 @@ const Header = () => {
         justifyContent="space-between"
       >
         <Box display="flex">
-          {sUp && (
-            <Link to={"/"}>
-              <img src={logo} alt="" />
-            </Link>
-          )}
-          <SearchBar handleSubmitSearch={null} />
+          <Link to={"/"}>
+            <img src={logo} alt="" />
+          </Link>
+          {/* <SearchBar handleSubmitSearch={null} /> */}
         </Box>
 
-        {sUp && (
-          <GuildBox spaceChildrenHorizontal={24} display="flex">
-            <NavIcon
-              unread={
-                lastReadData?.viewer?.guildUnreadMessages && !messagesOpen
-              }
-              onClick={handleMessages}
-              open={messagesOpen}
-            >
-              <Messages />
-            </NavIcon>
+        <GuildBox spaceChildrenHorizontal={24} display="flex">
+          <NavIcon
+            unread={lastReadData?.viewer?.guildUnreadMessages && !messagesOpen}
+            onClick={handleMessages}
+            open={messagesOpen}
+          >
+            <Messages />
+          </NavIcon>
+          {sUp && (
             <NavIcon
               unread={lastReadData?.viewer?.guildUnreadNotifications}
               open={notificationsOpen}
@@ -95,8 +91,8 @@ const Header = () => {
             >
               <Notification />
             </NavIcon>
-          </GuildBox>
-        )}
+          )}
+        </GuildBox>
       </Box>
       <Mask isOpen={maskOpen} toggler={safeToggleMask} />
     </>

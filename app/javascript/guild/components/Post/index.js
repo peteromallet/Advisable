@@ -1,12 +1,14 @@
 import React, { useCallback, useState } from "react";
+import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { Box, Card, Text, Avatar, Link, useBreakpoint } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
 import Topics from "./components/Topics";
 import { NeedHelp } from "@guild/icons";
-import CommentsButton from "./components/CommentsButton";
+import ReactionsButton from "./components/ReactionsButton";
 import ReadMore from "./components/ReadMore";
 import { CoverImage } from "@guild/components/CoverImage";
+import { GUILD_UPDATE_POST_REACTIONS } from "./mutations";
 
 const Post = ({ post }) => {
   const history = useHistory();
@@ -24,6 +26,13 @@ const Post = ({ post }) => {
   );
 
   const handleReadMore = () => history.push(`/posts/${post.id}`);
+
+  const [guildUpdatePostReactions] = useMutation(GUILD_UPDATE_POST_REACTIONS);
+  const handleUpdatePostReactions = async () => {
+    await guildUpdatePostReactions({
+      variables: { input: { guildPostId: post.id } },
+    });
+  };
 
   return (
     <Card elevation={{ _: "s", m: "m" }} width="100%">
@@ -109,7 +118,11 @@ const Post = ({ post }) => {
         backgroundColor="aliceBlue"
       >
         <Topics topics={post.guildTopics} />
-        <CommentsButton postId={post.id} commentsCount={post.commentsCount} />
+        <ReactionsButton
+          reacted={post.reacted}
+          reactionsCount={post.reactionsCount}
+          onUpdatePostReactions={handleUpdatePostReactions}
+        />
       </Box>
     </Card>
   );

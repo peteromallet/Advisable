@@ -10,9 +10,8 @@ import {
   Box,
 } from "@advisable/donut";
 import styled from "styled-components";
-// import { Formik, Form } from "formik";
 import { useParams, useLocation } from "react-router-dom";
-// import FormField from "@advisable-main/components/FormField";
+import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
 import pluralize from "@advisable-main/utilities/pluralize";
@@ -21,13 +20,15 @@ import { useToggle } from "@guild/hooks/useToggle";
 import { GuildBox } from "@guild/styles";
 import ShowMore from "@guild/components/ShowMore";
 import GuildTag from "@guild/components/GuildTag";
-import { NeedHelp, Comments } from "@guild/icons";
+import { NeedHelp } from "@guild/icons";
+import { GUILD_UPDATE_POST_REACTIONS } from "@guild/components/Post/mutations";
 // import { CREATE_GUILD_COMMENT } from "./mutations";
 import { GUILD_POST_QUERY } from "./queries";
 import DirectMessage from "./components/DirectMessage";
 import Topics from "@guild/components/Post/components/Topics";
 import { CoverImage } from "@guild/components/CoverImage";
 import { SubmitButton } from "@guild/components/Buttons/styles";
+import ReactionsButton from "@guild/components/Post/components/ReactionsButton";
 import { truncate } from "lodash-es";
 
 const Post = () => {
@@ -55,6 +56,13 @@ const Post = () => {
   const scrollToComments = () => {
     commentsRef.current?.scrollIntoView({
       behavior: "smooth",
+    });
+  };
+
+  const [guildUpdatePostReactions] = useMutation(GUILD_UPDATE_POST_REACTIONS);
+  const handleUpdatePostReactions = async () => {
+    await guildUpdatePostReactions({
+      variables: { input: { guildPostId: post.id } },
     });
   };
 
@@ -114,23 +122,31 @@ const Post = () => {
 
             {/* Topics and Interactions */}
             <GuildBox
-              px="xxl"
+              px={{ _: "xs", s: "xxl" }}
               height="58px"
               flexSpaceBetween
               backgroundColor="#6770f10d"
+              display="flex"
               alignItems="center"
             >
-              {/* Topics */}
               <Topics activeStyle topics={post.guildTopics} />
 
-              <StyledCommentsButton flexSpaceBetween onClick={scrollToComments}>
+              <GuildBox alignSelf={"center"}>
+                <ReactionsButton
+                  reacted={post.reacted}
+                  reactionsCount={post.reactionsCount}
+                  onUpdatePostReactions={handleUpdatePostReactions}
+                />
+              </GuildBox>
+
+              {/* <StyledCommentsButton flexSpaceBetween onClick={scrollToComments}>
                 <Text fontWeight="medium" size="xs" color="catalinaBlue100">
                   {post.commentsCount
                     ? pluralize(post.commentsCount, "Comment", "Comments")
                     : "Comments"}
                 </Text>
                 <Comments ml={12} size={16} />
-              </StyledCommentsButton>
+              </StyledCommentsButton> */}
             </GuildBox>
 
             {/* Post body */}

@@ -106,7 +106,12 @@ const CommentNotification = ({ author, post, body, id, createdAtTimeAgo }) => (
   </>
 );
 
-const ReactionNotification = ({ author, post, createdAtTimeAgo }) => (
+const ReactionNotification = ({
+  author,
+  kind,
+  reactionable,
+  createdAtTimeAgo,
+}) => (
   <Box height="54px" display="flex">
     <GuildBox
       width="87px"
@@ -123,10 +128,10 @@ const ReactionNotification = ({ author, post, createdAtTimeAgo }) => (
       backgroundColor="aliceBlue"
       display="flex"
       alignItems="center"
-      to={`/posts/${post?.id}`}
+      to={`/posts/${reactionable?.id}`}
     >
       <Text size="xs" color="catalinaBlue100">
-        {"Reacted to your Post"}
+        {`Reacted to your Post with: ${kind}`}
       </Text>
     </Box>
   </Box>

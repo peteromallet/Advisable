@@ -24,6 +24,7 @@ export const GUILD_NOTIFICATIONS_QUERY = gql`
             name
             avatar
           }
+          kind
           createdAtTimeAgo
           reactionable {
             __typename

@@ -4,10 +4,10 @@ module Guild
     belongs_to :reactionable, polymorphic: true, counter_cache: :reactionable_count
     belongs_to :specialist
 
-    # @guild_post.reactions.create!(specialist: current_user, kind: Guild::Reaction.kinds["like"])
-    # @guild_post.reactions.find_by(specialist: current_user, kind: Guild::Reaction.kinds["like"]).destroy
+    # @guild_post.reactions.create!(specialist: current_user, kind: Guild::Reaction.kinds["thanks"])
+    # @guild_post.reactions.find_by(specialist: current_user, kind: Guild::Reaction.kinds["thanks"]).destroy
     enum kind: {
-      like: 0
+      thanks: 0
       # ...
     }
 
@@ -24,7 +24,7 @@ end
 #
 #  id                :uuid             not null, primary key
 #  data              :jsonb
-#  kind              :integer          default("like"), not null
+#  kind              :integer          default("thanks"), not null
 #  reactionable_type :string
 #  status            :integer          default(0), not null
 #  created_at        :datetime         not null

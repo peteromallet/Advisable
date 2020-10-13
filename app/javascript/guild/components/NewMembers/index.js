@@ -35,7 +35,7 @@ const NewMembers = () => {
 
       <ShowMore showingMore={moreNewMembers} onToggle={toggleMoreNewMembers} />
 
-      <GuildBox spaceChildrenVertical={20}>
+      <GuildBox spaceChildrenVertical={24}>
         {data?.guildNewMembers?.map(
           (newMember, key) =>
             (moreNewMembers || key < data?.guildNewMembers?.length / 2) && (
