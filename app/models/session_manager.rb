@@ -11,7 +11,7 @@ class SessionManager
   end
 
   def current_user
-    @current_user ||= current_account&.specialist_or_user
+    @current_user ||= admin_override || current_account&.specialist_or_user
   end
 
   def current_account
@@ -20,7 +20,7 @@ class SessionManager
         uid = session[:account_uid]
         if uid
           if uid&.starts_with?('acc_')
-            return Account.find_by!(uid: uid)
+            return Account.find_by(uid: uid)
           else
             clear_browser_data
           end
@@ -50,12 +50,26 @@ class SessionManager
   end
 
   def logout
-    current_account&.clear_remember_token
-    clear_browser_data
-    @current_account = nil
+    if admin_override
+      session.delete(:admin_override)
+    else
+      current_account&.clear_remember_token
+      clear_browser_data
+      @current_account = nil
+    end
   end
 
   private
+
+  def admin_override
+    return unless current_account&.has_permission?("admin")
+
+    user = GlobalID::Locator.locate(session[:admin_override])
+    return user if user.respond_to?(:account)
+
+    session.delete(:admin_override)
+    nil
+  end
 
   def clear_browser_data
     cookies.delete(:remember)

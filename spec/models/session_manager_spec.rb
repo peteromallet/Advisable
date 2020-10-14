@@ -36,10 +36,10 @@ RSpec.describe SessionManager do
       it 'restores the session' do
         user = create(:user, remember_token: '1234')
         session = mock_session
+        allow(session).to receive(:[]=)
         cookies = mock_cookies(user.remember_token)
         manager = SessionManager.new(session: session, cookies: cookies)
-        expect(manager).to receive(:restore_session)
-        manager.current_user
+        expect(manager.current_user).to eq(user)
       end
     end
   end
@@ -76,7 +76,7 @@ RSpec.describe SessionManager do
 
   describe '#restore_session' do
     let(:user) { create(:user, remember_token: '12345') }
-    let(:account) {user.account}
+    let(:account) { user.account }
     it 'does nothing without a remember token' do
       session = mock_session
       cookies = mock_cookies
@@ -98,6 +98,48 @@ RSpec.describe SessionManager do
       manager = SessionManager.new(session: session, cookies: cookies)
       expect(cookies).to receive(:delete).with(:remember)
       manager.restore_session
+    end
+  end
+
+  context "admin override" do
+    let(:user) { create(:user, remember_token: '12345', permissions: permissions) }
+    let(:specialist) { create(:specialist) }
+    let(:account) { user.account }
+    let(:permissions) { ["admin"] }
+
+    it "overwrites current_user" do
+      session = double
+      allow(session).to receive(:[]).with(:account_uid).and_return(account.uid)
+      allow(session).to receive(:[]).with(:admin_override).and_return(specialist.to_global_id)
+
+      manager = SessionManager.new(session: session, cookies: mock_cookies)
+      expect(manager.current_user).to eq(specialist)
+    end
+
+    context "not an admin" do
+      let(:permissions) { [] }
+
+      it "does not overwrite current_user" do
+        session = double
+        allow(session).to receive(:[]).with(:account_uid).and_return(account.uid)
+
+        manager = SessionManager.new(session: session, cookies: mock_cookies)
+        expect(manager.current_user).to eq(user)
+      end
+    end
+
+    context "not a valid model" do
+      let(:project) { create(:project) }
+
+      it "does not overwrite current_user" do
+        session = double
+        allow(session).to receive(:[]).with(:account_uid).and_return(account.uid)
+        allow(session).to receive(:[]).with(:admin_override).and_return(project.to_global_id)
+
+        manager = SessionManager.new(session: session, cookies: mock_cookies)
+        expect(session).to receive(:delete).with(:admin_override)
+        expect(manager.current_user).to eq(user)
+      end
     end
   end
 end

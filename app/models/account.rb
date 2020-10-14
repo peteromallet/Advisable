@@ -1,5 +1,6 @@
 class Account < ApplicationRecord
   include Uid
+  include Permissions
 
   IGNORED_COLUMNS_FOR_COPYING = ["id", "uid", "updated_at", "created_at"].freeze
   MIGRATED_COLUMNS = ["email"].freeze

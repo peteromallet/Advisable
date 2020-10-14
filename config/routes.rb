@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :countries
     resources :projects
     resources :skills
+    resources :accounts
     resources :specialists
     resources :users
     resources :interviews
@@ -32,7 +33,7 @@ Rails.application.routes.draw do
     resources :webhooks, only: %i[index show]
 
     post 'resync', to: 'application#resync', as: :resync if ENV['STAGING']
-    get 'login/:uid', to: 'application#login_as', as: :login_as
+    get 'login/:gid', to: 'application#login_as', as: :login_as
 
     if ENV['STAGING'] || Rails.env.development?
       post 'reset_test', to: 'application#reset_test', as: :reset_test
