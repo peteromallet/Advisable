@@ -28,6 +28,8 @@ jobs:
       STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
       PROJECTS_INVITE_KEY: ${{ secrets.PROJECTS_INVITE_KEY }}
+      RAILS_INBOUND_EMAIL_PASSWORD: testing123
+      GUILD_REPLIES_DOMAIN: guild-replies
 
     services:
       postgres:
