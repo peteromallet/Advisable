@@ -5,8 +5,9 @@ class TestData
   end
 
   def self.create_specialist(attrs = {})
+    account = Account.find_or_create_by(email: attrs.fetch(:email))
     specialist =
-      Specialist.find_or_create_by(email: attrs.fetch(:email)) do |s|
+      Specialist.find_or_create_by(account: account) do |s|
         s.first_name = attrs.fetch(:first_name)
         s.last_name = attrs.fetch(:last_name)
         s.password = 'testing123'
@@ -186,19 +187,18 @@ class TestData
       )
 
     industry = Industry.find_by_name('Office Supplies')
-
-    user =
-      User.find_or_create_by(email: 'staging+michael@advisable.com') do |u|
-        u.first_name = 'Michael'
-        u.last_name = 'Scott'
-        u.company_name = 'Dunder Mifflin'
-        u.password = 'testing123'
-        u.confirmed_at = 1.day.ago
-        u.company_type = 'Startup'
-        u.industry = industry
-        u.sales_person = sales_person
-        u.address = {city: 'Dublin', country: 'IE'}
-      end
+    account = Account.find_or_create_by(email: 'staging+michael@advisable.com')
+    user = User.find_or_create_by(account: account) do |u|
+      u.first_name = 'Michael'
+      u.last_name = 'Scott'
+      u.company_name = 'Dunder Mifflin'
+      u.password = 'testing123'
+      u.confirmed_at = 1.day.ago
+      u.company_type = 'Startup'
+      u.industry = industry
+      u.sales_person = sales_person
+      u.address = {city: 'Dublin', country: 'IE'}
+    end
 
     user.update(availability: [], completed_tutorials: [])
 
