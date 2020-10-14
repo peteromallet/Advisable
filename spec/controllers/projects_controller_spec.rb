@@ -63,8 +63,8 @@ RSpec.describe ProjectsController, type: :request do
     end
 
     context "happy path" do
-      let(:user) { create(:user) }
-      before { AuthProvider.create!(provider: "linkedin_ads", uid: "1234", user: user) }
+      let(:account) { create(:account) }
+      before { AuthProvider.create!(provider: "linkedin_ads", uid: "1234", account: account) }
 
       it "schedules create linkedin ad job" do
         post "/projects/create_linkedin_ad", params: params, headers: headers

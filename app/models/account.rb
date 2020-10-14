@@ -7,6 +7,7 @@ class Account < ApplicationRecord
   has_one :user, dependent: :nullify # Change to :destroy
   has_one :specialist, dependent: :nullify # Change to :destroy
   has_many :magic_links, dependent: :destroy
+  has_many :auth_providers, dependent: :destroy
 
   has_secure_password validations: false
   validates_confirmation_of :password

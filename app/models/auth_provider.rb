@@ -1,6 +1,6 @@
 class AuthProvider < ApplicationRecord
   LINKEDIN_ACCESS_TOKEN_URL = "https://www.linkedin.com/oauth/v2/accessToken".freeze
-  belongs_to :user
+  belongs_to :account
 
   scope :linkedin_ads, -> { where(provider: "linkedin_ads") }
 
@@ -45,14 +45,14 @@ end
 #  uid           :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  user_id       :bigint           not null
+#  account_id    :bigint           not null
 #
 # Indexes
 #
+#  index_auth_providers_on_account_id        (account_id)
 #  index_auth_providers_on_provider_and_uid  (provider,uid) UNIQUE
-#  index_auth_providers_on_user_id           (user_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (user_id => users.id)
+#  fk_rails_...  (account_id => accounts.id)
 #
