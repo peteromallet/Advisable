@@ -154,9 +154,9 @@ const MobileBackConversations = ({ onBack }) => (
     `}
   >
     <GuildBox spaceChildrenHorizontal={16} display="flex" mx="l">
-      <ArrowBack size="24px" color="catalinaBlue100" />
+      <ArrowBack size="18px" color="catalinaBlue100" />
       <Text fontWeight="medium" size="l" color="catalinaBlue100">
-        Select Conversation
+        Conversations
       </Text>
     </GuildBox>
   </GuildBox>

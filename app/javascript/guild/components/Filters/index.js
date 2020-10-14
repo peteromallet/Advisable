@@ -68,6 +68,7 @@ const Filters = () => {
           {expanded && (
             <GuildBox
               display="flex"
+              alignItems="center"
               flexDirection={sUp ? "row" : "column"}
               spaceChildrenHorizontal={sUp && 16}
               spaceChildrenVertical={!sUp && 16}

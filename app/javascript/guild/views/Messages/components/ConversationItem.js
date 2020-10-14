@@ -38,6 +38,7 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
           display="flex"
           flexDirection="column"
           css={flex.flexTruncate}
+          spaceChildrenVertical={6}
         >
           <Text
             fontWeight="medium"

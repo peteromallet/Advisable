@@ -27,6 +27,8 @@ const rotate = keyframes`
 `;
 
 const StyledButton = styled(GuildBox)`
+  display: flex;
+  align-items: center;
   border-radius: 30px;
   text-align: center;
   letter-spacing: -0.01em;
