@@ -1,5 +1,6 @@
 import React from "react";
 import useCallContext from "./useCallContext";
+import HelpAction from "./HelpAction";
 import ToggleAudioButton from "./ToggleAudioButton";
 import ToggleVideoButton from "./ToggleVideoButton";
 import EndCallButton from "./EndCallButton";
@@ -15,6 +16,7 @@ export default function Actions() {
       <ToggleAudioButton disabled={isReconnecting} />
       <ToggleVideoButton disabled={isReconnecting} />
       <SettingsButton />
+      <HelpAction />
       <EndCallButton disabled={isReconnecting} />
     </ActionBar>
   );
