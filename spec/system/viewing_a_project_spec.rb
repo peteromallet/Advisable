@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Viewing a project' do
   context 'when the project user has not created an account yet' do
     it 'redirects the user to create an account' do
-      user = create(:user, password: nil)
+      user = create(:user, account: create(:account, password: nil))
       project = create(:project, user: user)
       visit "/projects/#{project.uid}"
 
@@ -22,7 +22,7 @@ RSpec.describe 'Viewing a project' do
 
   context 'when the project user has created an account' do
     it 'redirects to the login page' do
-      user = create(:user, password: 'testing123')
+      user = create(:user, account: create(:account, password: 'testing123'))
       project = create(:project, user: user, status: 'Brief Confirmed')
       visit "/projects/#{project.uid}"
       fill_in 'email', with: user.email

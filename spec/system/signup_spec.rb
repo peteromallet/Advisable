@@ -6,7 +6,7 @@ RSpec.describe 'Signing up as a new user' do
   end
 
   it 'shows the user the account confirmation flow' do
-    u = create(:user, password: nil, confirmed_at: nil)
+    u = create(:user, account: create(:account, password: nil, confirmed_at: nil))
     visit "/signup/#{u.airtable_id}"
     fill_in 'email', with: "#{Time.now.to_i}@test.com"
     fill_in 'password', with: 'testing123'

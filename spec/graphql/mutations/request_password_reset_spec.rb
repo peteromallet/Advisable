@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::RequestPasswordReset do
-  let(:user) { create(:user, reset_sent_at: nil, reset_digest: nil) }
-  let(:email) { user.email }
+  let(:account) { create(:account, reset_sent_at: nil, reset_digest: nil) }
+  let!(:user) { create(:user, account: account) }
+  let(:email) { account.email }
   let(:query) do
     <<-GRAPHQL
     mutation {
@@ -64,9 +65,8 @@ RSpec.describe Mutations::RequestPasswordReset do
   end
 
   context 'when the account is a specialist' do
-    let(:user) do
-      create(:specialist, reset_sent_at: nil, reset_digest: nil, password: nil)
-    end
+    let(:account) { create(:account, reset_sent_at: nil, reset_digest: nil, password: nil) }
+    let(:user) { create(:specialist, account: account) }
 
     context 'and they specialist doesnt have an account yet' do
       it 'triggers a webhook event' do

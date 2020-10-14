@@ -9,14 +9,14 @@ RSpec.describe Accounts::RequestPasswordReset do
 
   it 'sets the reset_sent_at attribute' do
     specialist = create(:specialist, reset_sent_at: nil)
-    Accounts::RequestPasswordReset.call(specialist.email)
-    expect(specialist.reload.reset_sent_at).to_not be_nil
+    Accounts::RequestPasswordReset.call(specialist.account.email)
+    expect(specialist.reload.account.reset_sent_at).to_not be_nil
   end
 
   it 'sets the reset_digest attribute' do
     specialist = create(:specialist, reset_digest: nil)
-    Accounts::RequestPasswordReset.call(specialist.email)
-    expect(specialist.reload.reset_digest).to_not be_nil
+    Accounts::RequestPasswordReset.call(specialist.account.email)
+    expect(specialist.reload.account.reset_digest).to_not be_nil
   end
 
   it 'sends an email' do
@@ -29,7 +29,8 @@ RSpec.describe Accounts::RequestPasswordReset do
 
   context "when the account has not set a password" do
     context "and the account is a specialist" do
-      let(:specialist) { create(:specialist, password: nil) }
+      let(:account) { create(:account, password: nil) }
+      let(:specialist) { create(:specialist, account: account) }
 
       it 'triggers the specialists.forgotten_password_for_non_account webhook' do
         expect(WebhookEvent).to receive(:trigger).with(
@@ -38,7 +39,7 @@ RSpec.describe Accounts::RequestPasswordReset do
         )
 
         expect {
-          Accounts::RequestPasswordReset.call(specialist.email)
+          Accounts::RequestPasswordReset.call(specialist.account.email)
         }.to raise_error(Service::Error, "request_password_reset.application_required")
       end
     end

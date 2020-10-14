@@ -63,7 +63,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
           return context[:current_user]
         end
 
-        user = User.find_by_email(args[:email])
+        user = Account.find_by(email: args[:email])&.user
 
         if user.present?
           update_existing_user(user, **args)
@@ -86,12 +86,8 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   end
 
   def create_new_user(**args)
-    specialist = Specialist.find_by_email(args[:email])
-    if specialist.present?
-      raise ApiError::InvalidRequest.new(
-              'emailBelongsToFreelancer',
-              'This email belongs to a freelancer account'
-            )
+    if Specialist.find_by(account: Account.find_by(email: args[:email]))
+      raise ApiError::InvalidRequest.new('emailBelongsToFreelancer', 'This email belongs to a freelancer account')
     end
 
     # TODO: AccountMigration - remove duplicated fields

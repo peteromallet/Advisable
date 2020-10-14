@@ -5,8 +5,6 @@ FactoryBot.define do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     city { 'City' }
-    password { 'testing123' }
-    confirmed_at { 1.day.ago }
     bank_holder_name { 'Jane Doe' }
     bank_currency { 'EUR' }
     hourly_rate { 200 }
