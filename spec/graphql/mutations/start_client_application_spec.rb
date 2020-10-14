@@ -78,8 +78,7 @@ RSpec.describe Mutations::Signup do
         user =
           create(
             :user,
-            account: create(:account, email: email),
-            password: nil,
+            account: create(:account, email: email, password: nil),
             first_name: 'Michael',
             last_name: 'Scott',
             application_status: :started

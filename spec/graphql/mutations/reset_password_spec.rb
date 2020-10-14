@@ -4,12 +4,13 @@ RSpec.describe Mutations::ResetPassword do
   let(:token) { Token.new }
   let(:input_token) { token }
   let(:digest) { Token.digest(token) }
-  let(:user) { create(:user, reset_sent_at: 1.hour.ago, reset_digest: digest) }
+  let(:account) { create(:account, reset_sent_at: 1.hour.ago, reset_digest: digest) }
+  let!(:user) { create(:user, account: account) }
   let(:query) do
     <<-GRAPHQL
     mutation {
       resetPassword(input: {
-        email: "#{user.email}",
+        email: "#{account.email}",
         token: "#{input_token}",
         password: "newpassword123",
         passwordConfirmation: "newpassword123",
@@ -46,9 +47,7 @@ RSpec.describe Mutations::ResetPassword do
   end
 
   context 'when the password reset has expired' do
-    let(:user) do
-      create(:user, reset_sent_at: 3.hours.ago, reset_digest: digest)
-    end
+    let(:account) { create(:account, reset_sent_at: 3.hours.ago, reset_digest: digest) }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query)

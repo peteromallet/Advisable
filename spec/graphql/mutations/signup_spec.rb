@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::Signup do
-  let(:user) { create(:user, password: nil) }
+  let(:account) { create(:account, password: nil) }
+  let(:user) { create(:user, account: account) }
   let(:id) { user.airtable_id }
-  let(:email) { user.email }
+  let(:email) { account.email }
   let(:password) { 'testing123' }
   let(:session_manager) do
     SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new)
@@ -40,7 +41,7 @@ RSpec.describe Mutations::Signup do
   def response
     AdvisableSchema.execute(
       query,
-      context: { session_manager: session_manager }
+      context: {session_manager: session_manager}
     )
   end
 
@@ -50,7 +51,7 @@ RSpec.describe Mutations::Signup do
   end
 
   context 'when the user is a specialist' do
-    let(:user) { create(:specialist, password: nil) }
+    let(:user) { create(:specialist, account: account) }
 
     it 'returns a viewer' do
       id = response['data']['signup']['viewer']['id']

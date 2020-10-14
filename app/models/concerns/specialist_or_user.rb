@@ -22,11 +22,6 @@ module SpecialistOrUser
       account.confirmed_at.present?
     end
 
-    def has_password?
-      account.has_password?
-    end
-    alias_method :has_account?, :has_password?
-
     # Always lowercase the email
     def email=(address)
       self[:email] = address.try(:downcase)
@@ -50,20 +45,10 @@ module SpecialistOrUser
       save(validate: false)
     end
 
-    def create_confirmation_token
-      token = Token.new
-      self.confirmation_digest = Token.digest(token)
-      # eventually this shouldnt be stored in the DB. We have stored it for now
-      # so that we can manually resend confirmation emails.
-      self.confirmation_token = token
-      save(validate: false)
-      token
-    end
-
     # Sets the confirmation digest and sends the user a confirmation email with
     # instructions to confirm their account.
     def send_confirmation_email
-      token = create_confirmation_token
+      token = account.create_confirmation_token
       AccountMailer.confirm(uid: uid, token: token).deliver_later
     end
 
