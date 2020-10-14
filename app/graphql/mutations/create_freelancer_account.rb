@@ -70,12 +70,11 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
         )
 
     specialist = Specialist.new(
+      account: account,
       first_name: args[:first_name],
       last_name: args[:last_name],
-      email: args[:email],
       campaign_name: args[:campaign_name],
       campaign_source: args[:campaign_source],
-      account: account,
       application_stage: 'Started',
       phone: args[:phone],
       pid: args[:pid],
