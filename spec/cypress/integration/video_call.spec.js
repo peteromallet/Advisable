@@ -24,13 +24,13 @@ context("A video call", () => {
     });
 
     it("they can see and hear the oter participant", function () {
-      cy.getParticipant("Dwight").shouldBeColor("blue");
-      cy.getParticipant("Dwight").shouldBeMakingSound();
+      cy.getParticipant("spe_g7JQpZLA0heEGo3").shouldBeColor("blue");
+      cy.getParticipant("spe_g7JQpZLA0heEGo3").shouldBeMakingSound();
     });
 
     it("should remove the participant when they leave", () => {
       cy.task("participantCloseBrowser", "dwight@test.com");
-      cy.getParticipant("Dwight").should("not.exist");
+      cy.getParticipant("spe_g7JQpZLA0heEGo3").should("not.exist");
     });
   });
 
@@ -54,8 +54,8 @@ context("A video call", () => {
     });
 
     it("they can see and hear the oter participant", function () {
-      cy.getParticipant("Dwight").shouldBeColor("blue");
-      cy.getParticipant("Dwight").shouldBeMakingSound();
+      cy.getParticipant("spe_g7JQpZLA0heEGo3").shouldBeColor("blue");
+      cy.getParticipant("spe_g7JQpZLA0heEGo3").shouldBeMakingSound();
     });
   });
 
@@ -85,10 +85,10 @@ context("A video call", () => {
     });
 
     it("they can see and hear the oter participants", function () {
-      cy.getParticipant("Dwight").shouldBeColor("blue");
-      cy.getParticipant("Jim").shouldBeColor("red");
-      cy.getParticipant("Dwight").shouldBeMakingSound();
-      cy.getParticipant("Jim").shouldBeMakingSound();
+      cy.getParticipant("spe_g7JQpZLA0heEGo3").shouldBeColor("blue");
+      cy.getParticipant("spe_4Fq89TaGiQ39Ehn").shouldBeColor("red");
+      cy.getParticipant("spe_g7JQpZLA0heEGo3").shouldBeMakingSound();
+      cy.getParticipant("spe_4Fq89TaGiQ39Ehn").shouldBeMakingSound();
     });
   });
 });
