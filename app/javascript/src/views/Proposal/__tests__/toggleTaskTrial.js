@@ -98,11 +98,7 @@ test("Freelancer can toggle the task trial via the task menu", async () => {
     graphQLMocks: API_MOCKS,
   });
 
-  const openMenu = await findByLabelText(
-    "Open task actions menu",
-    {},
-    { timeout: 5000 },
-  );
+  const openMenu = await findByLabelText("Open task actions menu");
   fireEvent.click(openMenu);
   const menu = await findByLabelText("Task actions");
   const toggle = within(menu).getByText("actions.markTaskAsTrial");

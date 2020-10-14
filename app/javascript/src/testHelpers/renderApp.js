@@ -3,12 +3,16 @@ import React from "react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { I18nextProvider } from "react-i18next";
-import { render } from "@testing-library/react";
+import { render, configure } from "@testing-library/react";
 import { Elements } from "@stripe/react-stripe-js";
 import { InMemoryCache } from "@apollo/client";
 import { MockedProvider } from "@apollo/client/testing";
 import App from "../App";
 import i18n from "./i18next.js";
+
+const TIMEOUT = 30000;
+configure({ asyncUtilTimeout: TIMEOUT });
+jest.setTimeout(TIMEOUT);
 
 const defaultConfig = {
   route: "/",

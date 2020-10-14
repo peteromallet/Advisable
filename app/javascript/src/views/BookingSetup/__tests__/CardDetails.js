@@ -5,8 +5,6 @@ import GET_SETUP_DATA from "../getSetupData";
 import { GET_PAYMENT_METHOD } from "../CardDetails";
 import { CREATE_SETUP_INTENT } from "../../../components/UpdatePaymentMethod";
 
-jest.setTimeout(10000);
-
 test("Shows form to add card when user has no card", async () => {
   let user = generateTypes.user({
     paymentsSetup: false,

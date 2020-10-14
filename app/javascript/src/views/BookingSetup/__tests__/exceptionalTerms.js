@@ -5,8 +5,6 @@ import VIEWER from "../../../graphql/queries/viewer";
 import GET_SETUP_DATA from "../getSetupData";
 import UPDATE_PROJECT_PAYMENT_METHOD from "../updateProjectPaymentMethod";
 
-jest.setTimeout(10000);
-
 test("User can request custom terms", async () => {
   let user = generateTypes.user({
     paymentsSetup: false,
@@ -89,7 +87,7 @@ test("User can request custom terms", async () => {
   });
   fireEvent.click(accept);
   let exceptionalTerms = app.getByLabelText(
-    "What payment terms do you suggest?"
+    "What payment terms do you suggest?",
   );
   fireEvent.change(exceptionalTerms, {
     target: { value: "Exceptional terms" },

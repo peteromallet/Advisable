@@ -4,8 +4,6 @@ import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../../Booking/getActiveApplication";
 import GET_SETUP_DATA from "../getSetupData";
 
-jest.setTimeout(10000);
-
 test("User is redirected to booking step when application is already Working", async () => {
   let user = generateTypes.user({
     paymentsSetup: false,
@@ -78,6 +76,6 @@ test("User is redirected to booking step when application is already Working", a
     ],
   });
 
-  const header = await app.findByText("tasks.title", {}, { timeout: 5000 });
+  const header = await app.findByText("tasks.title");
   expect(header).toBeInTheDocument();
 });

@@ -137,11 +137,7 @@ test("User can search for freelancers and request consultations with them", asyn
     graphQLMocks,
   });
 
-  const skillInput = await app.findByPlaceholderText(
-    "Search for a skill",
-    {},
-    { timeout: 5000 },
-  );
+  const skillInput = await app.findByPlaceholderText("Search for a skill");
   fireEvent.click(skillInput);
   fireEvent.keyDown(skillInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillInput, { key: "Enter" });

@@ -40,7 +40,7 @@ test("Shows users profile", async () => {
     graphQLMocks,
   });
 
-  const name = await app.findByText("John Doe", {}, { timeout: 5000 });
+  const name = await app.findByText("John Doe");
   expect(name).toBeInTheDocument();
 });
 
@@ -79,11 +79,7 @@ test("Can see reviews", async () => {
     graphQLMocks,
   });
 
-  const name = await app.findByText(
-    `"${review.comment}"`,
-    {},
-    { timeout: 5000 },
-  );
+  const name = await app.findByText(`"${review.comment}"`);
   expect(name).toBeInTheDocument();
 });
 
@@ -123,7 +119,7 @@ test("Renders 404 if the specialist isn't found", async () => {
     graphQLMocks,
   });
 
-  const status = await app.findByText("404", {}, { timeout: 5000 });
+  const status = await app.findByText("404");
   expect(status).toBeInTheDocument();
 });
 
@@ -169,7 +165,7 @@ test("Can view freelancer project", async () => {
     graphQLMocks,
   });
 
-  await app.findByText("John Doe", {}, { timeout: 5000 });
+  await app.findByText("John Doe");
   const viewProject = app.getByLabelText("View Project");
   fireEvent.click(viewProject);
   const modal = app.getByRole("dialog");
@@ -211,7 +207,7 @@ test("Can view a project by giong to url", async () => {
     graphQLMocks,
   });
 
-  const modal = await app.findByRole("dialog", {}, { timeout: 5000 });
+  const modal = await app.findByRole("dialog");
   const title = await within(modal).findByText(previousProject.title);
   expect(title).toBeInTheDocument();
 });
@@ -241,13 +237,9 @@ test("Shows message when specialist has no projects", async () => {
     graphQLMocks,
   });
 
-  const text = await app.findByText(
-    "has not added any previous projects",
-    {
-      exact: false,
-    },
-    { timeout: 5000 },
-  );
+  const text = await app.findByText("has not added any previous projects", {
+    exact: false,
+  });
   expect(text).toBeInTheDocument();
 });
 
@@ -294,11 +286,7 @@ test("Can filter projects by skill", async () => {
     graphQLMocks,
   });
 
-  const skillFilter = await app.findByLabelText(
-    "Filter projects by Skill",
-    {},
-    { timeout: 5000 },
-  );
+  const skillFilter = await app.findByLabelText("Filter projects by Skill", {});
   fireEvent.click(skillFilter);
   const skill = app.getByLabelText(twitterMarketing.name);
   fireEvent.click(skill);
@@ -350,11 +338,7 @@ test("Can filter projects by industry", async () => {
     graphQLMocks,
   });
 
-  const filter = await app.findByLabelText(
-    "Filter projects by Industry",
-    {},
-    { timeout: 5000 },
-  );
+  const filter = await app.findByLabelText("Filter projects by Industry", {});
   expect(app.queryByText("Recruiting Project")).toBeInTheDocument();
   fireEvent.click(filter);
   const industry = app.getByLabelText(financeIndustry.name);
