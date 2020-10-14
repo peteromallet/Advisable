@@ -1,4 +1,4 @@
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
@@ -27,7 +27,7 @@ test("User can request custom terms", async () => {
     specialist,
   });
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/book/rec1234/payment_terms",
     graphQLMocks: [
       {

@@ -1,4 +1,5 @@
 import React from "react";
+import { Elements } from "@stripe/react-stripe-js";
 import { I18nextProvider } from "react-i18next";
 import { MemoryRouter } from "react-router-dom";
 import { render, configure } from "@testing-library/react";
@@ -94,6 +95,38 @@ jest.mock("talkjs", () => {
   };
 });
 
+export const mockElement = () => ({
+  mount: jest.fn(),
+  destroy: jest.fn(),
+  on: jest.fn(),
+  update: jest.fn(),
+});
+
+export const mockElements = () => {
+  const elements = {};
+  return {
+    create: jest.fn((type) => {
+      elements[type] = mockElement();
+      return elements[type];
+    }),
+    getElement: jest.fn((type) => {
+      return elements[type] || null;
+    }),
+  };
+};
+
+export const mockStripe = () => ({
+  elements: jest.fn(() => mockElements()),
+  createToken: jest.fn(),
+  createSource: jest.fn(),
+  createPaymentMethod: jest.fn(),
+  confirmCardPayment: jest.fn(),
+  confirmCardSetup: jest.fn(),
+  paymentRequest: jest.fn(),
+  handleCardPayment: () => Promise.resolve({ error: null }),
+  handleCardSetup: () => Promise.resolve({ setupIntent: {} }),
+});
+
 function Providers({ children, route, graphQLMocks }) {
   const cache = createCache();
 
@@ -108,7 +141,9 @@ function Providers({ children, route, graphQLMocks }) {
           },
         }}
       >
-        <MemoryRouter initialEntries={[route]}>{children}</MemoryRouter>
+        <MemoryRouter initialEntries={[route]}>
+          <Elements stripe={mockStripe()}>{children}</Elements>
+        </MemoryRouter>
       </MockedProvider>
     </I18nextProvider>
   );

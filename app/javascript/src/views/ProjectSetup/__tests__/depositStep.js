@@ -1,5 +1,5 @@
 import { fireEvent } from "@testing-library/react";
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_PROJECT from "../fetchProject";
@@ -17,7 +17,7 @@ test("User can complete deposit step", async () => {
     skills: [],
   });
 
-  const { findByText, findByLabelText } = renderApp({
+  const { findByText, findByLabelText } = renderRoute({
     route: "/project_setup/rec1234/deposit",
     graphQLMocks: [
       {

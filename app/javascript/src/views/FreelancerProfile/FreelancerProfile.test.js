@@ -1,5 +1,5 @@
 import { fireEvent, waitFor, within } from "@testing-library/react";
-import renderApp from "../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import mockData from "../../__mocks__/graphqlFields";
 import { mockViewer, mockQuery } from "../../testHelpers/apolloMocks";
 import GET_PROFILE from "./getProfile";
@@ -35,7 +35,7 @@ test("Shows users profile", async () => {
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
     graphQLMocks,
   });
@@ -74,7 +74,7 @@ test("Can see reviews", async () => {
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}/reviews`,
     graphQLMocks,
   });
@@ -114,7 +114,7 @@ test("Renders 404 if the specialist isn't found", async () => {
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/randomID`,
     graphQLMocks,
   });
@@ -160,7 +160,7 @@ test("Can view freelancer project", async () => {
     ),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}/projects`,
     graphQLMocks,
   });
@@ -202,7 +202,7 @@ test("Can view a project by giong to url", async () => {
     mockQuery(PROJECT_DETAILS, { id: previousProject.id }, { previousProject }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}/projects/${previousProject.id}`,
     graphQLMocks,
   });
@@ -232,7 +232,7 @@ test("Shows message when specialist has no projects", async () => {
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}/projects`,
     graphQLMocks,
   });
@@ -281,7 +281,7 @@ test("Can filter projects by skill", async () => {
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}/projects`,
     graphQLMocks,
   });
@@ -333,7 +333,7 @@ test("Can filter projects by industry", async () => {
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}/projects`,
     graphQLMocks,
   });

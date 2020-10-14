@@ -1,5 +1,5 @@
 import { fireEvent } from "@testing-library/react";
-import renderApp from "../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import mock from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
 import FETCH_DATA from "./fetchData";
@@ -45,7 +45,7 @@ test("User can see their active freelancers", async () => {
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/manage",
     graphQLMocks,
   });
@@ -83,7 +83,7 @@ test("User sees an empty state when they have no active talent", async () => {
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/manage",
     graphQLMocks,
   });
@@ -136,7 +136,7 @@ test("User can view Finished talent", async () => {
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/manage",
     graphQLMocks,
   });

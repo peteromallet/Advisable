@@ -1,8 +1,12 @@
 import React from "react";
 import { fireEvent, waitFor } from "@testing-library/react";
-import mockData from "../../../__mocks__/graphqlFields";
-import { mockQuery, mockMutation } from "../../../testHelpers/apolloMocks";
-import { renderComponent } from "../../../testHelpers/renderApp";
+import {
+  renderComponent,
+  mockData,
+  mockViewer,
+  mockQuery,
+  mockMutation,
+} from "test-utils";
 import FETCH_TASK from "../../../graphql/queries/taskDetails";
 import UPDATE_ESTIMATE from "../QuoteInput/updateEstimate";
 import TaskDrawer from "../";
@@ -20,6 +24,7 @@ const task = mockData.task({
 
 test("Setting the estimate for a task", async () => {
   const graphQLMocks = [
+    mockViewer(user),
     mockQuery(FETCH_TASK, { id: task.id }, { task }),
     mockMutation(
       UPDATE_ESTIMATE,
@@ -69,6 +74,7 @@ test("Setting the estimate for a task", async () => {
 
 test("Setting a fixed price estimate", async () => {
   const graphQLMocks = [
+    mockViewer(user),
     {
       request: {
         query: FETCH_TASK,
@@ -140,6 +146,7 @@ test("Setting a fixed price estimate", async () => {
 
 test("Can switch from flexible estimate to strit", async () => {
   const graphQLMocks = [
+    mockViewer(user),
     {
       request: {
         query: FETCH_TASK,

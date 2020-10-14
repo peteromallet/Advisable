@@ -1,4 +1,4 @@
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../../Booking/getActiveApplication";
@@ -26,7 +26,7 @@ test("User is redirected to booking step when application is already Working", a
     specialist,
   });
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/book/rec1234",
     graphQLMocks: [
       {
