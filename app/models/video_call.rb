@@ -8,11 +8,15 @@ end
 #
 # Table name: video_calls
 #
-#  id           :bigint           not null, primary key
-#  uid          :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  interview_id :bigint
+#  id              :bigint           not null, primary key
+#  fallback        :boolean
+#  uid             :string
+#  zoom_passcode   :string
+#  zoom_url        :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  interview_id    :bigint
+#  zoom_meeting_id :string
 #
 # Indexes
 #
