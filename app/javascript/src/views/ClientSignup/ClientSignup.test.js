@@ -222,11 +222,7 @@ test("Successful client application flow and ASAP call", async () => {
 
   // 2 Step. About Your Requirements
   await screen.findByText("About Your Requirements");
-  const skillsInput = await screen.findByPlaceholderText(
-    /select the skills/i,
-    {},
-    { timeout: 5000 },
-  );
+  const skillsInput = await screen.findByPlaceholderText(/select the skills/i);
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
@@ -320,11 +316,7 @@ test("Successful client application flow via query string params", async () => {
 
   // 2 Step. About Your Requirements
   await screen.findByText("About Your Requirements");
-  const skillsInput = await screen.findByPlaceholderText(
-    /select the skills/i,
-    {},
-    { timeout: 5000 },
-  );
+  const skillsInput = await screen.findByPlaceholderText(/select the skills/i);
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
@@ -524,11 +516,7 @@ test("Cheap talents client application rejection flow", async () => {
 
   // 2 Step. About Your Requirements
   await screen.findByText("About Your Requirements");
-  const skillsInput = await screen.findByPlaceholderText(
-    /select the skills/i,
-    {},
-    { timeout: 5000 },
-  );
+  const skillsInput = await screen.findByPlaceholderText(/select the skills/i);
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
@@ -643,11 +631,7 @@ test("Not hiring client application rejection flow", async () => {
 
   // 2 Step. About Your Requirements
   await screen.findByText("About Your Requirements");
-  const skillsInput = await screen.findByPlaceholderText(
-    /select the skills/i,
-    {},
-    { timeout: 5000 },
-  );
+  const skillsInput = await screen.findByPlaceholderText(/select the skills/i);
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });

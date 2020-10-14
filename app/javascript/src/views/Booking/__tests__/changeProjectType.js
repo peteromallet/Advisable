@@ -57,11 +57,7 @@ test("User can change the project type", async () => {
     graphQLMocks,
   });
 
-  const btn = await app.findByLabelText(
-    "Edit project type",
-    {},
-    { timeout: 5000 },
-  );
+  const btn = await app.findByLabelText("Edit project type");
   fireEvent.click(btn);
   const fixed = app.getByLabelText("Projects - Predefined Projects", {
     exact: false,

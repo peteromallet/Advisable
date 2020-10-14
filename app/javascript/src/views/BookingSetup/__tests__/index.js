@@ -3,8 +3,6 @@ import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_SETUP_DATA from "../getSetupData";
 
-jest.setTimeout(10000);
-
 test("Renders the project type step if payments are setup", async () => {
   let user = generateTypes.user({
     paymentsSetup: true,

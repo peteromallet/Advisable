@@ -1,13 +1,17 @@
 import React from "react";
 import { I18nextProvider } from "react-i18next";
 import { MemoryRouter } from "react-router-dom";
-import { render } from "@testing-library/react";
+import { render, configure } from "@testing-library/react";
 import useBreakpoints from "../../../../donut/src/hooks/useBreakpoints";
 import ApplicationProvider from "components/ApplicationProvider";
 import { MockedProvider } from "@apollo/client/testing";
 import i18n from "./i18next";
 import App from "../App";
 import createCache from "../apolloCache";
+
+const TIMEOUT = 30000;
+configure({ asyncUtilTimeout: TIMEOUT });
+jest.setTimeout(TIMEOUT);
 
 window.focus = jest.fn();
 
