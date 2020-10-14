@@ -99,6 +99,7 @@ group :test do
   gem 'webdrivers'
   gem 'shoulda-matchers'
   gem 'webmock'
+  gem 'rspec-github', require: false
   gem 'rspec-retry'
   gem 'rspec_junit_formatter'
   gem 'simplecov', require: false
