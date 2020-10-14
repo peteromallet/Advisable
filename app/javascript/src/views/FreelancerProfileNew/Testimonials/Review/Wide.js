@@ -1,35 +1,37 @@
 import React from "react";
 import { Box, Text, Card, Avatar } from "@advisable/donut";
+import { QuoteAltLeft } from "@styled-icons/boxicons-solid";
 
 function ReviewWide({ review }) {
+  const role = review.role;
+  const atCompany = review.companyName && `at ${review.companyName}`;
   return (
-    <Card p="xl" borderRadius={8}>
-      <Box display="flex">
-        <Box width="32%" minWidth="286px" display="flex" pr="s">
-          <Box width={60} height={60}>
-            <Avatar size="m" name={review.name} url={review.avatar} />
+    <Card p="36px" borderRadius={8}>
+      <Box display="flex" alignItems="flex-start">
+        <Box display="flex" mr="32px" position="relative">
+          <Box width={100} height={100}>
+            <Avatar size="xl" name={review.name} url={review.avatar} />
           </Box>
-          <Box ml="m" mt="xxs">
-            <Text
-              fontWeight="medium"
-              fontSize="l"
-              color="neutral900"
-              lineHeight="120%"
-            >
-              {review.name}
-            </Text>
-            <Text color="neutral600" lineHeight="120%" fontSize="xs">
-              {review.role}
-            </Text>
-            <Text color="neutral600" lineHeight="120%" fontSize="xs">
-              {review.companyName}
-            </Text>
+          <Box
+            color="red300"
+            zIndex="2"
+            position="absolute"
+            bottom="0px"
+            right="-18px"
+          >
+            <QuoteAltLeft size={48} />
           </Box>
         </Box>
-        <Box width="68%" mt="xxs">
+        <Box mt="8px">
+          <Text fontWeight="medium" fontSize="xl" color="neutral900" mb="xs">
+            {review.name}
+          </Text>
+          <Text color="neutral600" fontSize="l" mb="s">
+            {role} {atCompany}
+          </Text>
           <Text
             fontStyle="italic"
-            fontSize="l"
+            fontSize="xl"
             lineHeight="120%"
             color="neutral800"
           >

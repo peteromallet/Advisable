@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text, Card, Avatar } from "@advisable/donut";
 
-function ReviewWide({ review }) {
+function ReviewMobile({ review }) {
   return (
     <Card p="xl" borderRadius={8}>
       <Box>
@@ -41,4 +41,4 @@ function ReviewWide({ review }) {
   );
 }
 
-export default ReviewWide;
+export default ReviewMobile;
