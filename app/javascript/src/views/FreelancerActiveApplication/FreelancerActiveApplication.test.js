@@ -1,4 +1,4 @@
-import renderApp from "../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import generateID from "../../utilities/generateID";
 import {
   screen,
@@ -38,7 +38,7 @@ test("Freelancer can create a task", async () => {
     getByLabelText,
     getByPlaceholderText,
     findByTestId,
-  } = renderApp({
+  } = renderRoute({
     route: "/clients/rec1234",
     graphQLMocks: [
       {
@@ -218,7 +218,7 @@ test("Freelancer can mark a task as complete", async () => {
   });
   task.application = application;
 
-  const { findByText, findByLabelText, getByLabelText } = renderApp({
+  const { findByText, findByLabelText, getByLabelText } = renderRoute({
     route: "/clients/rec1234/tasks/tas_1234",
     graphQLMocks: [
       {

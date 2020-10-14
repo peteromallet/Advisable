@@ -1,15 +1,15 @@
 import { fireEvent } from "@testing-library/react";
-import renderApp from "../../testHelpers/renderApp";
-import mockData from "../../__mocks__/graphqlFields";
-import {
-  fetchApplication as GET_APPLICATION,
-  updateApplication as UPDATE,
-} from "./queries";
 import {
   mockViewer,
   mockQuery,
   mockMutation,
-} from "../../testHelpers/apolloMocks";
+  renderRoute,
+  mockData,
+} from "test-utils";
+import {
+  fetchApplication as GET_APPLICATION,
+  updateApplication as UPDATE,
+} from "./queries";
 
 function setupData(overrides = {}) {
   const project = mockData.project({
@@ -60,7 +60,7 @@ test("Overview step continues to the questions step", async () => {
     ),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/invites/${application.airtableId}/apply`,
     graphQLMocks,
   });
@@ -142,7 +142,7 @@ test("Questions step continues to the references step", async () => {
     ),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/invites/${application.airtableId}/apply/questions`,
     graphQLMocks,
   });
@@ -212,7 +212,7 @@ test("References continue to payment terms step", async () => {
     ),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/invites/${application.airtableId}/apply/references`,
     graphQLMocks,
   });

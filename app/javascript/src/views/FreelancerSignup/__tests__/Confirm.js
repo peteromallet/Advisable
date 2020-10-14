@@ -1,4 +1,4 @@
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_SPECIALIST from "../getProfile";
@@ -10,7 +10,7 @@ test("Continues to the freelancer preferences step", async () => {
     invitations: [],
   });
 
-  const { findByText } = renderApp({
+  const { findByText } = renderRoute({
     route: `/freelancers/signup/confirm?email=${viewer.email}&t=1234`,
     graphQLMocks: [
       {

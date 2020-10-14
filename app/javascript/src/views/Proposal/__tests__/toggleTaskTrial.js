@@ -1,5 +1,5 @@
 import { fireEvent, within } from "@testing-library/react";
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_APPLICATION from "../fetchApplication";
@@ -93,7 +93,7 @@ test("Freelancer can toggle the task trial via the task menu", async () => {
     },
   ];
 
-  const { findByText, findByLabelText } = renderApp({
+  const { findByText, findByLabelText } = renderRoute({
     route: "/applications/rec1234/proposal/tasks/task_1234",
     graphQLMocks: API_MOCKS,
   });

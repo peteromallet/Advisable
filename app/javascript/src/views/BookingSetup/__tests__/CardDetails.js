@@ -1,4 +1,4 @@
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_SETUP_DATA from "../getSetupData";
@@ -21,7 +21,7 @@ test("Shows form to add card when user has no card", async () => {
     specialist,
   });
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/book/rec1234/card_details",
     graphQLMocks: [
       {
