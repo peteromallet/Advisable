@@ -30,8 +30,7 @@ module Admin
     end
 
     def login_as
-      account = SpecialistOrUser.find_by_uid(params[:uid])
-      session[:account_uid] = account.uid
+      session[:admin_override] = params[:gid]
       redirect_to '/'
     end
 
