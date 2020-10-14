@@ -11,7 +11,7 @@ class AuthProvidersController < ApplicationController
   end
 
   def linkedin
-    user = {
+    omniauth = {
       uid: auth_hash.uid,
       provider: 'linkedin',
       name: auth_hash.info.name,
@@ -20,12 +20,12 @@ class AuthProvidersController < ApplicationController
       image: auth_hash.info.picture_url
     }
 
-    session[:omniauth] = user
+    session[:omniauth] = omniauth
     redirect_to request.env['omniauth.origin']
   end
 
   def linkedin_ads
-    auth_provider = current_user.auth_providers.find_or_initialize_by(provider: 'linkedin_ads')
+    auth_provider = current_user.account.auth_providers.find_or_initialize_by(provider: 'linkedin_ads')
     auth_provider.update!(oauth.identifiers_with_blob_and_token)
 
     redirect_to admin_applications_path

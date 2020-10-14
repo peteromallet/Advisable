@@ -152,12 +152,12 @@ ActiveRecord::Schema.define(version: 2020_10_16_075632) do
     t.string "token"
     t.string "refresh_token"
     t.datetime "expires_at"
-    t.bigint "user_id", null: false
     t.jsonb "blob"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id", null: false
+    t.index ["account_id"], name: "index_auth_providers_on_account_id"
     t.index ["provider", "uid"], name: "index_auth_providers_on_provider_and_uid", unique: true
-    t.index ["user_id"], name: "index_auth_providers_on_user_id"
   end
 
   create_table "blacklisted_domains", force: :cascade do |t|
@@ -945,7 +945,7 @@ ActiveRecord::Schema.define(version: 2020_10_16_075632) do
   add_foreign_key "applications", "application_rejection_reasons", column: "rejection_reason_id"
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
-  add_foreign_key "auth_providers", "users"
+  add_foreign_key "auth_providers", "accounts"
   add_foreign_key "bookings", "applications"
   add_foreign_key "client_calls", "projects"
   add_foreign_key "client_calls", "sales_people"
