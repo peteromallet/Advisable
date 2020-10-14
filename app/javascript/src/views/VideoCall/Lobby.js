@@ -2,6 +2,7 @@ import React from "react";
 import ActionBar from "components/ActionBar";
 import { Box, Text, Button, theme } from "@advisable/donut";
 import VideoTrack from "./VideoTrack";
+import HelpAction from "./HelpAction";
 import useCallContext from "./useCallContext";
 import SettingsButton from "./SettingsButton";
 import ToggleAudioButton from "./ToggleAudioButton";
@@ -71,6 +72,7 @@ export default function Lobby() {
         <ToggleAudioButton />
         <ToggleVideoButton />
         <SettingsButton />
+        <HelpAction />
       </ActionBar>
       <TrackPermissionModal />
     </Box>

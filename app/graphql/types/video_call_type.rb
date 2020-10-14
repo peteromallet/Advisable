@@ -1,6 +1,20 @@
 class Types::VideoCallType < Types::BaseType
   field :id, ID, null: false
   field :name, String, null: true
+  field :fallback, Boolean, null: true
+
+  field :zoom_meeting_id, String, null: true do
+    authorize :is_participant
+  end
+
+  field :zoom_passcode, String, null: true do
+    authorize :is_participant
+  end
+
+  field :zoom_url, String, null: true do
+    authorize :is_participant
+  end
+
   field :access_token, String, null: true do
     authorize :is_participant
   end

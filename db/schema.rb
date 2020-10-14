@@ -753,11 +753,11 @@ ActiveRecord::Schema.define(version: 2020_10_15_063933) do
     t.string "community_status"
     t.boolean "automated_invitations_subscription"
     t.jsonb "guild_data"
+    t.bigint "account_id"
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
     t.datetime "community_invited_to_call_at"
     t.integer "community_score"
-    t.bigint "account_id"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end
@@ -899,6 +899,10 @@ ActiveRecord::Schema.define(version: 2020_10_15_063933) do
     t.bigint "interview_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "fallback"
+    t.string "zoom_meeting_id"
+    t.string "zoom_passcode"
+    t.string "zoom_url"
     t.index ["interview_id"], name: "index_video_calls_on_interview_id"
     t.index ["uid"], name: "index_video_calls_on_uid"
   end
