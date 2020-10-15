@@ -27,9 +27,10 @@ class Airtable::ClientContact < Airtable::Base
   sync_association 'Owner', to: :sales_person
 
   sync_data do |user|
+    user.ensure_account_exists
+
     if self['Address']
       # sync the address
-
       user.address = Address.parse(self['Address']).to_h
     end
 
@@ -42,6 +43,10 @@ class Airtable::ClientContact < Airtable::Base
       client = ::Client.find_by_airtable_id(client_id)
       client = Airtable::Client.find(client_id).sync if client.nil?
       user.client = client
+    end
+
+    if fields['Test Account'].try(:include?, 'Yes')
+      user.account.test_account = true
     end
 
     sync_budget(user)
