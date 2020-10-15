@@ -9,6 +9,11 @@ class Types::User < Types::BaseType
   field :time_zone, String, null: true
   field :projects, [Types::ProjectType], null: true
   field :confirmed, Boolean, null: false
+
+  def confirmed
+    object.account.confirmed_at.present?
+  end
+
   field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
     argument :exclude_conflicts,
              Boolean,
@@ -45,6 +50,10 @@ class Types::User < Types::BaseType
 
   field :email, String, null: false do
     authorize :is_admin, :is_user, :is_candidate_for_user_project
+  end
+
+  def email
+    object.account.email
   end
 
   field :applications, [Types::ApplicationType], null: true do
@@ -154,7 +163,6 @@ class Types::User < Types::BaseType
     times
   end
 
-  #
   def applications(status:)
     records = object.applications
     records = records.where(status: status) if status

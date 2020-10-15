@@ -69,7 +69,7 @@ RSpec.describe 'Project view', type: :system do
   context 'when the user hasnt added a password' do
     it 'allows the user to signup' do
       allow_any_instance_of(User).to receive(:sync_to_airtable)
-      project.user.account.update(password: nil)
+      project.user.account.update_columns(password_digest: nil)
       visit "/projects/#{project.uid}"
       fill_in 'password', with: 'testing123'
       fill_in 'passwordConfirmation', with: 'testing123'

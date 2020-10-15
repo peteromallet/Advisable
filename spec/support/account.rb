@@ -16,29 +16,4 @@ RSpec.shared_examples "account" do
       user.send_confirmation_email
     end
   end
-
-  describe "permissions" do
-    it "has a permissions attribute" do
-      inst = create(factory)
-      expect(inst.permissions).to be_an(Array)
-    end
-
-    it "is invalid if it has an unkown permission" do
-      inst = build(factory, permissions: ["doesnt:exist"])
-      expect(inst).to_not be_valid
-      expect(inst.errors.full_messages.first).to match(/not a valid permission/)
-    end
-  end
-
-  describe "#has_permission?" do
-    it "returns true if the user has a given permission" do
-      inst = build(factory, permissions: ["admin"])
-      expect(inst.has_permission?("admin")).to be_truthy
-    end
-
-    it "returns false if the user doesn't have a given permission" do
-      inst = build(factory, permissions: [])
-      expect(inst.has_permission?("admin")).to be_falsey
-    end
-  end
 end

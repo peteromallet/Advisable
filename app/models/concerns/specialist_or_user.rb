@@ -5,7 +5,6 @@ module SpecialistOrUser
 
   included do
     include Tutorials
-    include Permissions
 
     belongs_to :account
     before_validation :ensure_account_exists
@@ -15,11 +14,6 @@ module SpecialistOrUser
 
     # Temporary while we're moving things over
     before_save :copy_data_to_account
-
-    # Needed for frontend stuff
-    def confirmed
-      account.confirmed_at.present?
-    end
 
     # Sets the confirmation digest and sends the user a confirmation email with
     # instructions to confirm their account.

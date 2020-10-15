@@ -14,8 +14,6 @@ class UserDashboard < Administrate::BaseDashboard
     country: Field::BelongsTo,
     projects: Field::HasMany,
     bank_transfers_enabled: Field::Boolean,
-    permissions: PermissionsField,
-    completed_tutorials: UserTutorialsField,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze
@@ -35,8 +33,6 @@ class UserDashboard < Administrate::BaseDashboard
     airtable_id
     country
     bank_transfers_enabled
-    permissions
-    completed_tutorials
     projects
     created_at
     updated_at
@@ -49,8 +45,6 @@ class UserDashboard < Administrate::BaseDashboard
     account
     airtable_id
     country
-    permissions
-    completed_tutorials
     bank_transfers_enabled
   ].freeze
 

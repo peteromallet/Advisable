@@ -100,9 +100,9 @@ RSpec.describe SessionManager do
   end
 
   context "admin override" do
-    let(:user) { create(:user, remember_token: '12345', permissions: permissions) }
+    let(:account) { create(:account, permissions: permissions, remember_token: '12345') }
+    let!(:user) { create(:user, account: account) }
     let(:specialist) { create(:specialist) }
-    let(:account) { user.account }
     let(:permissions) { ["admin"] }
 
     it "overwrites current_user" do

@@ -14,9 +14,8 @@ class ApplicationController < ActionController::Base
   end
 
   def internal
-    unless current_user&.has_permission?("admin")
-      redirect_to "/"
-    end
+    return if current_account&.has_permission?("admin")
+    redirect_to "/"
   end
 
   def client_ip

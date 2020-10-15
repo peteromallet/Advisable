@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::CompleteTutorial do
-  let(:user) { create(:user, completed_tutorials: []) }
-  let(:context) { { current_user: user } }
+  let(:account) { create(:account, completed_tutorials: []) }
+  let!(:user) { create(:user, account: account) }
+  let(:context) { {current_user: user} }
 
   let(:query) do
     <<-GRAPHQL
@@ -32,11 +33,11 @@ RSpec.describe Mutations::CompleteTutorial do
   end
 
   context 'when there is no user logged in' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it 'raises an error' do
       response = AdvisableSchema.execute(query, context: context)
-      data = response['data']['completeTutorial']['errors'][0]['code']
+      data = response['errors'][0]['extensions']['code']
       expect(data).to eq('notAuthenticated')
     end
   end
