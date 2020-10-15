@@ -29,11 +29,12 @@ RSpec.describe User, type: :model do
 
   describe '#invoice_settings' do
     it 'returns a hash of the users invoice settings' do
+      account = Account.new(email: "test@test.com", vat_number: "VAT")
       user = User.new({
+        account: account,
         invoice_name: "Test Account",
         invoice_company_name: "Test Inc",
         billing_email: "test@test.com",
-        vat_number: "VAT",
         address: {
           line1: "Test",
           line2: "Address",
@@ -48,7 +49,7 @@ RSpec.describe User, type: :model do
         name: user.invoice_name,
         company_name: user.invoice_company_name,
         billing_email: user.billing_email,
-        vat_number: user.vat_number,
+        vat_number: user.account.vat_number,
         address: user.address
       })
     end

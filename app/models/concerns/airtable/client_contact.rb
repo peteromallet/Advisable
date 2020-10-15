@@ -3,7 +3,10 @@ class Airtable::ClientContact < Airtable::Base
   self.table_name = 'Client Contacts'
 
   sync_with ::User
+
   sync_column_to_association 'Email Address', association: :account, to: :email
+  sync_column_to_association 'VAT Number', association: :account, to: :vat_number
+
   sync_column 'First Name', to: :first_name
   sync_column 'Last Name', to: :last_name
   sync_column 'Title', to: :title
@@ -12,7 +15,6 @@ class Airtable::ClientContact < Airtable::Base
               to: :exceptional_project_payment_terms
   sync_column 'Invoice Name', to: :invoice_name
   sync_column 'Invoice Company Name', to: :invoice_company_name
-  sync_column 'VAT Number', to: :vat_number
   sync_column 'Type of Company', to: :company_type
   sync_column 'Campaign Name', to: :campaign_name
   sync_column 'Campaign Source', to: :campaign_source
@@ -69,7 +71,7 @@ class Airtable::ClientContact < Airtable::Base
       user.exceptional_project_payment_terms
     self['Invoice Name'] = user.invoice_name
     self['Invoice Company Name'] = user.invoice_company_name
-    self['VAT Number'] = user.vat_number
+    self['VAT Number'] = user.account.vat_number
     self['Industry'] = [user.industry.try(:airtable_id)].compact
     self['Type of Company'] = user.company_type
 
