@@ -2,7 +2,6 @@
 # Specialists are able to login to the system and act as user accounts.
 module SpecialistOrUser
   extend ActiveSupport::Concern
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
 
   included do
     include Tutorials
@@ -20,29 +19,6 @@ module SpecialistOrUser
     # Needed for frontend stuff
     def confirmed
       account.confirmed_at.present?
-    end
-
-    # Always lowercase the email
-    def email=(address)
-      self[:email] = address.try(:downcase)
-    end
-
-    def self.remember_token
-      loop do
-        token = Nanoid.generate(size: 25)
-        existing = find_by_remember_token(token)
-        break token unless existing
-      end
-    end
-
-    def generate_remember_token
-      self.remember_token = self.class.remember_token
-      save(validate: false)
-    end
-
-    def clear_remember_token
-      self.remember_token = nil
-      save(validate: false)
     end
 
     # Sets the confirmation digest and sends the user a confirmation email with
@@ -75,7 +51,7 @@ module SpecialistOrUser
     end
   end
 
-  [:find_by_email].each do |method|
+  [:find_by_email, :find_by_remember_token].each do |method|
     define_singleton_method(method) do |param|
       Account.public_send(method, param)&.specialist_or_user
     end
@@ -88,8 +64,7 @@ module SpecialistOrUser
   [
     :find_by_uid_or_airtable_id,
     :find_by_uid,
-    :find_by_airtable_id,
-    :find_by_remember_token
+    :find_by_airtable_id
   ].each do |method|
     define_singleton_method(method) do |param|
       Specialist.public_send(method, param) || User.public_send(method, param)

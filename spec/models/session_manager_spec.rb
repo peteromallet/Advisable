@@ -34,7 +34,7 @@ RSpec.describe SessionManager do
       end
 
       it 'restores the session' do
-        user = create(:user, remember_token: '1234')
+        user = create(:user, account: create(:account, remember_token: '1234'))
         session = mock_session
         allow(session).to receive(:[]=)
         cookies = mock_cookies(user.remember_token)
@@ -45,24 +45,21 @@ RSpec.describe SessionManager do
   end
 
   describe '#login' do
+    let(:account) { create(:account) }
+
     it 'signs in the user' do
-      user = create(:user)
       session = mock_session
       cookies = mock_cookies
       manager = SessionManager.new(session: session, cookies: cookies)
-      expect(user).to receive(:generate_remember_token)
-      expect(cookies.signed).to receive(:[]=).with(
-        :remember,
-        hash_including(value: user.remember_token, httponly: true)
-      )
-      expect(session).to receive(:[]=).with(:account_uid, user.uid)
-      manager.login(user)
+      expect(account).to receive(:generate_remember_token)
+      expect(cookies.signed).to receive(:[]=).with(:remember, hash_including(value: account.remember_token, httponly: true))
+      expect(session).to receive(:[]=).with(:account_uid, account.uid)
+      manager.login(account)
     end
   end
 
   describe '#logout' do
-    let(:user) { create(:user, remember_token: '1234') }
-    let(:account) { user.account }
+    let(:account) { create(:account) }
     it 'clears the user session' do
       session = mock_session(account.uid)
       cookies = mock_cookies(account.remember_token)
@@ -75,8 +72,8 @@ RSpec.describe SessionManager do
   end
 
   describe '#restore_session' do
-    let(:user) { create(:user, remember_token: '12345') }
-    let(:account) { user.account }
+    let(:account) { create(:account) }
+
     it 'does nothing without a remember token' do
       session = mock_session
       cookies = mock_cookies
@@ -85,6 +82,7 @@ RSpec.describe SessionManager do
     end
 
     it 'sets the session' do
+      account = create(:account, remember_token: '12345')
       session = mock_session
       cookies = mock_cookies(account.remember_token)
       manager = SessionManager.new(session: session, cookies: cookies)
