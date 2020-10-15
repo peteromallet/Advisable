@@ -16,10 +16,11 @@ function Tags({
   useEffect(() => {
     const sectionParams = tagsList.map((tag) => {
       const element = document.getElementById(tag.key);
+      const textId = tag.key + "-text";
       const name = tag.props.tagName;
       const width = element.clientWidth;
       const height = element.clientHeight;
-      return { name, width, height };
+      return { name, textId, width, height };
     });
     addSectionParams({ sectionParams, sectionName });
   }, [addSectionParams, sectionName, tagsList]);
@@ -63,7 +64,11 @@ function Tags({
             onClick={() => onClick({ tag: tagKey })}
             {...props}
           >
-            <Text color={color} fontSize="xs">
+            <Text
+              color={color}
+              fontSize="xs"
+              id={`${sectionName}-${tagKey}-text`}
+            >
               {tagKey}
             </Text>
           </Box>
