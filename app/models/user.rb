@@ -69,7 +69,7 @@ class User < ApplicationRecord
       name: invoice_name,
       company_name: invoice_company_name,
       billing_email: billing_email,
-      vat_number: vat_number,
+      vat_number: account.vat_number,
       address: address
     }
   end

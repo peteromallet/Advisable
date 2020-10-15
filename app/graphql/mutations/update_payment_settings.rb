@@ -25,7 +25,7 @@ class Mutations::UpdatePaymentSettings < Mutations::BaseMutation
   # There must be a User logged in specialist ( not a User type )
   def authorized?(**args)
     return true if context[:current_user].is_a?(Specialist)
-    [false, { errors: [{ code: 'notAuthorized' }] }]
+    [false, {errors: [{code: 'notAuthorized'}]}]
   end
 
   def resolve(**args)
@@ -33,12 +33,10 @@ class Mutations::UpdatePaymentSettings < Mutations::BaseMutation
     specialist.update(
       bank_holder_name: args[:bank_holder_name],
       bank_holder_address: args[:bank_holder_address].try(:to_h),
-      bank_currency: args[:bank_currency],
-      vat_number: args[:vat_number]
+      bank_currency: args[:bank_currency]
     )
-
+    specialist.account.update(vat_number: args[:vat_number])
     specialist.sync_to_airtable
-
-    { specialist: specialist }
+    {specialist: specialist}
   end
 end

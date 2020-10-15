@@ -5,7 +5,10 @@ class Airtable::Specialist < Airtable::Base
 
   # Tells which active record model to sync data with.
   sync_with ::Specialist
+
   sync_column_to_association 'Email Address', association: :account, to: :email
+  sync_column_to_association 'VAT Number', association: :account, to: :vat_number
+
   sync_column 'First Name', to: :first_name
   sync_column 'Last Name', to: :last_name
   sync_column 'Phone Number', to: :phone
@@ -16,7 +19,6 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'Application Stage', to: :application_stage
   sync_column 'Bank Holder Name', to: :bank_holder_name
   sync_column 'Bank Currency', to: :bank_currency
-  sync_column 'VAT Number', to: :vat_number
   sync_column 'Estimated Number of Freelance Projects', to: :number_of_projects
   sync_column 'PID', to: :pid
   sync_column 'Campaign Name', to: :campaign_name
@@ -113,7 +115,7 @@ class Airtable::Specialist < Airtable::Base
     self['Phone Number'] = specialist.phone
     self['Bank Holder Name'] = specialist.bank_holder_name
     self['Bank Currency'] = specialist.bank_currency
-    self['VAT Number'] = specialist.vat_number
+    self['VAT Number'] = specialist.account.vat_number
     self['Estimated Number of Freelance Projects'] =
       specialist.number_of_projects
     self['Application Stage'] = specialist.application_stage
