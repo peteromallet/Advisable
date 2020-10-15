@@ -14,10 +14,6 @@ class Account < ApplicationRecord
   validates :password, length: {minimum: 8}, allow_blank: true
   validates :email, uniqueness: true, allow_blank: true, format: {with: /@/}
 
-  def email=(address)
-    self[:email] = address.try(:downcase)
-  end
-
   def has_account?
     password_digest.present?
   end
@@ -60,7 +56,7 @@ end
 #  confirmation_digest :string
 #  confirmation_token  :string
 #  confirmed_at        :datetime
-#  email               :string
+#  email               :citext
 #  first_name          :string
 #  last_name           :string
 #  password_digest     :string
@@ -78,7 +74,7 @@ end
 # Indexes
 #
 #  index_accounts_on_country_id  (country_id)
-#  index_accounts_on_email       (email)
+#  index_accounts_on_email       (email) UNIQUE
 #  index_accounts_on_uid         (uid) UNIQUE
 #
 # Foreign Keys

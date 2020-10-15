@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Mutations::CreateJob do
+RSpec.describe Mutations::CreateUserFromProjectVerification do
   let(:oauth_viewer) do
     OauthViewer.new(
       {
@@ -39,13 +39,13 @@ RSpec.describe Mutations::CreateJob do
 
   it 'creates a new user' do
     expect {
-      AdvisableSchema.execute(query, context: { oauth_viewer: oauth_viewer })
+      AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
     }.to change { User.count }.by(1)
   end
 
   context 'when not logged in with oauth' do
     it 'returns an error' do
-      response = AdvisableSchema.execute(query, context: { oauth_viewer: nil })
+      response = AdvisableSchema.execute(query, context: {oauth_viewer: nil})
       error = response['errors'].first['extensions']['code']
       expect(error).to eq('notAuthenticated')
     end
@@ -57,7 +57,7 @@ RSpec.describe Mutations::CreateJob do
     it 'returns an error' do
       create(:blacklisted_domain, domain: 'gmail.com')
       response =
-        AdvisableSchema.execute(query, context: { oauth_viewer: oauth_viewer })
+        AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
       error = response['errors'].first['extensions']['code']
       expect(error).to eq('nonCorporateEmail')
     end
@@ -67,7 +67,7 @@ RSpec.describe Mutations::CreateJob do
     it 'returns an error' do
       create(:user, email: email)
       response =
-        AdvisableSchema.execute(query, context: { oauth_viewer: oauth_viewer })
+        AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
       error = response['errors'].first['extensions']['code']
       expect(error).to eq('emailTaken')
     end
