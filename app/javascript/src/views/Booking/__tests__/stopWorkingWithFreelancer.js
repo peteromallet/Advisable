@@ -1,4 +1,4 @@
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
@@ -16,7 +16,7 @@ test("Client can stop working with specialist", async () => {
     status: "Working",
   });
 
-  const { getAllByLabelText, findByText, findByLabelText } = renderApp({
+  const { getAllByLabelText, findByText, findByLabelText } = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
       {
@@ -69,11 +69,7 @@ test("Client can stop working with specialist", async () => {
     ],
   });
 
-  const stopWorkingButton = await findByLabelText(
-    "Stop Working",
-    {},
-    { timeout: 5000 },
-  );
+  const stopWorkingButton = await findByLabelText("Stop Working");
   fireEvent.click(stopWorkingButton);
   const reason = await findByLabelText(
     "Let us know why you are stopping this work",

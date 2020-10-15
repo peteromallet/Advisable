@@ -1,15 +1,15 @@
 import { fireEvent } from "@testing-library/react";
-import renderApp from "../../testHelpers/renderApp";
-import mockData from "../../__mocks__/graphqlFields";
-import {
-  fetchApplication as GET_APPLICATION,
-  updateApplication as UPDATE,
-} from "./queries";
 import {
   mockViewer,
   mockQuery,
   mockMutation,
-} from "../../testHelpers/apolloMocks";
+  renderRoute,
+  mockData,
+} from "test-utils";
+import {
+  fetchApplication as GET_APPLICATION,
+  updateApplication as UPDATE,
+} from "./queries";
 
 function setupData(overrides = {}) {
   const project = mockData.project({
@@ -60,20 +60,14 @@ test("Overview step continues to the questions step", async () => {
     ),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/invites/${application.airtableId}/apply`,
     graphQLMocks,
   });
 
-  const overview = await app.findByLabelText(
-    "Give a 2-3 line description",
-    {
-      exact: false,
-    },
-    {
-      timeout: 5000,
-    },
-  );
+  const overview = await app.findByLabelText("Give a 2-3 line description", {
+    exact: false,
+  });
   fireEvent.change(overview, { target: { value: "This is an overview" } });
   const availability = app.getByText("2 - 4 weeks");
   fireEvent.click(availability);
@@ -148,16 +142,12 @@ test("Questions step continues to the references step", async () => {
     ),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/invites/${application.airtableId}/apply/questions`,
     graphQLMocks,
   });
 
-  const question1 = await app.findByLabelText(
-    project.questions[0],
-    {},
-    { timeout: 5000 },
-  );
+  const question1 = await app.findByLabelText(project.questions[0]);
   fireEvent.change(question1, { target: { value: "The first answer" } });
   let submit = app.getByLabelText("Next");
   fireEvent.click(submit);
@@ -222,12 +212,12 @@ test("References continue to payment terms step", async () => {
     ),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/invites/${application.airtableId}/apply/references`,
     graphQLMocks,
   });
 
-  const selection1 = await app.findByTestId(project1.id, {}, { timeout: 5000 });
+  const selection1 = await app.findByTestId(project1.id);
   fireEvent.click(selection1);
   const selection2 = app.getByTestId(project2.id);
   fireEvent.click(selection2);

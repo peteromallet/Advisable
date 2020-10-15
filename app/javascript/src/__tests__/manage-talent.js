@@ -49,7 +49,7 @@ test("Renders the manage view for a specialist", async () => {
     ],
   });
 
-  await app.findByText(/test task/i, {}, { timeout: 5000 });
+  await app.findByText(/test task/i);
 });
 
 test("Renders a tutorial video if it's the first time viewing", async () => {
@@ -84,7 +84,7 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
     ],
   });
 
-  await findByText(/flexibleProjects.heading/i, {}, { timeout: 10000 });
+  await findByText(/flexibleProjects.heading/i);
 });
 
 test("Does not render a tutorial video if the user has completed it", async () => {

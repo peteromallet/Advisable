@@ -62,7 +62,7 @@ test("Submitting the overview step continues to the questions step", async () =>
     ],
   });
 
-  await app.findByText("Overview", {}, { timeout: 10000 });
+  await app.findByText("Overview");
   const intro = app.getByLabelText(
     "Give a 2-3 line description of your background as it related to this project.",
   );

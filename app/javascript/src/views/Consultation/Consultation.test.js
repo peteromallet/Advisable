@@ -1,5 +1,5 @@
 import { fireEvent } from "@testing-library/react";
-import renderApp from "../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import mockData from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
 import GET_CONSULTATION from "./getConsultation";
@@ -77,7 +77,7 @@ test("Accepting a consultation request", async () => {
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/consultations/${consultation.id}`,
     graphQLMocks,
   });
@@ -144,7 +144,7 @@ test("Declining a consultation request", async () => {
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/consultations/${consultation.id}`,
     graphQLMocks,
   });
@@ -214,7 +214,7 @@ test("redirects to the interview when already accepted", async () => {
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/consultations/${consultation.id}`,
     graphQLMocks,
   });

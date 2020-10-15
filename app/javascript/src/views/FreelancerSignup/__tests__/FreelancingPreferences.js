@@ -1,4 +1,4 @@
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
@@ -12,7 +12,7 @@ test("Continues to the build profile step", async () => {
     invitations: [],
   });
 
-  const { findByText, getByLabelText } = renderApp({
+  const { findByText, getByLabelText } = renderRoute({
     route: `/freelancers/signup/preferences`,
     graphQLMocks: [
       {
