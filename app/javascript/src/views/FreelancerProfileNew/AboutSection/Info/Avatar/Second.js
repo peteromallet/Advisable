@@ -1,5 +1,5 @@
 import React from "react";
-import FileUpload from "./FileUpload";
+import FileUpload from "../../FileUpload";
 import { StyledAvatarCard, StyledAvatarImage } from "./styles";
 import { User } from "@styled-icons/feather";
 import { Box } from "@advisable/donut";
@@ -27,7 +27,7 @@ function DefaultAvatar() {
 
 function Avatar({ avatar, isOwner }) {
   const [updateAvatar] = useMutation(UPDATE_PROFILE);
-  const loaded = useImageOnLoad(avatar);
+  const { loaded, updated } = useImageOnLoad(avatar);
   const notifications = useNotifications();
 
   const submit = async (blob) => {
@@ -38,30 +38,30 @@ function Avatar({ avatar, isOwner }) {
   };
 
   return (
-    <StyledAvatarCard
-      maxWidth={["128px", "none"]}
-      maxHeight={["156px", "none"]}
-      width={["30vw", "130px", "190px", "190px"]}
-      height={["36.52vw", "160px", "234px", "234px"]}
-      elevation="m"
-      mt={{ _: "-48px", m: "-66px" }}
-      ml={{ _: "10px", s: "24px", l: "24px" }}
-      borderRadius={16}
-    >
-      {isOwner && <FileUpload onChange={submit} />}
-      {avatar && (
-        <StyledAvatarImage
-          as="img"
-          loaded={loaded}
-          src={avatar}
-          maxWidth={["128px", "none"]}
-          maxHeight={["156px", "none"]}
-          width={["30vw", "130px", "190px", "190px"]}
-          height={["36.52vw", "160px", "234px", "234px"]}
-        />
-      )}
-      {!avatar && <DefaultAvatar />}
-    </StyledAvatarCard>
+    <Box>
+      <StyledAvatarCard
+        maxWidth={["128px", "none"]}
+        maxHeight={["156px", "none"]}
+        width={["30vw", "130px", "190px", "190px"]}
+        height={["36.52vw", "160px", "234px", "234px"]}
+        elevation="m"
+        mt={{ _: "-48px", m: "-66px" }}
+        ml={{ _: "10px", s: "24px", l: "24px" }}
+        borderRadius={16}
+      >
+        {isOwner && <FileUpload onChange={submit} updated={updated} />}
+        {avatar && (
+          <StyledAvatarImage
+            as="img"
+            loaded={loaded}
+            src={avatar}
+            width="100%"
+            height="100%"
+          />
+        )}
+        {!avatar && <DefaultAvatar />}
+      </StyledAvatarCard>
+    </Box>
   );
 }
 
