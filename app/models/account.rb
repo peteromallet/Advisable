@@ -3,7 +3,9 @@ class Account < ApplicationRecord
   include Permissions
 
   IGNORED_COLUMNS_FOR_COPYING = ["id", "uid", "updated_at", "created_at"].freeze
-  MIGRATED_COLUMNS = %w[email password_digest confirmed_at confirmation_digest confirmation_token reset_digest reset_sent_at].freeze
+  MIGRATED_COLUMNS = %w[
+    email password_digest remember_token confirmed_at confirmation_digest confirmation_token reset_digest reset_sent_at
+  ].freeze
   COPYABLE_COLUMNS = column_names - IGNORED_COLUMNS_FOR_COPYING - MIGRATED_COLUMNS
 
   has_one :user, dependent: :nullify # Change to :destroy
