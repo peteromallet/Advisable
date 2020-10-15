@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Text, Box } from "@advisable/donut";
+import { motion } from "framer-motion";
 
 function Tags({
   sectionName,
@@ -53,10 +54,7 @@ function Tags({
             mx={`${item?.mx}px`}
             my={`${item?.my}px`}
             borderRadius="8px"
-            borderWidth={1}
-            bg={selected ? bgActive : "none"}
-            borderStyle="solid"
-            borderColor={color}
+            bg={bgActive}
             css={`
               user-select: none;
               cursor: pointer;
@@ -78,15 +76,23 @@ function Tags({
   return (
     <Box position="relative">
       <Box
-        bg="neutral50"
+        // bg="neutral50"
         px="4px"
-        ml="6px"
-        display="inline-box"
-        position="absolute"
-        left="0"
-        top="-15px"
+        ml="3px"
+        mt="3px"
+        mb="xxs"
+        // display="inline-box"
+        // position="absolute"
+        // left="0"
+        // top="-15px"
       >
-        <Text color={color} fontSize="xs">
+        <Text
+          color="neutral500"
+          fontSize="xxs"
+          fontWeight="medium"
+          letterSpacing="1px"
+          textTransform="uppercase"
+        >
           {sectionName}
         </Text>
       </Box>
@@ -96,19 +102,20 @@ function Tags({
         overflow="hidden"
       >
         <Box
+          as={motion.div}
+          initial={{
+            height: layout[sectionName]?.collapsedHeight,
+          }}
+          animate={{
+            height: props.isExpand
+              ? layout[sectionName]?.height
+              : layout[sectionName]?.collapsedHeight,
+          }}
           display="flex"
           flexWrap="wrap"
           alignItems="flex-start"
           alignContent="flex-start"
           justifyContent="flex-start"
-          height={
-            props.isExpand
-              ? layout[sectionName]?.height
-              : layout[sectionName]?.collapsedHeight
-          }
-          css={`
-            transition: height 0.2s;
-          `}
         >
           {tagsList}
         </Box>
