@@ -101,7 +101,7 @@ jobs:
         run: bundle exec rails webpacker:compile
 
       - name: Test
-        run: bundle exec rspec
+        run: bundle exec rspec --format RSpec::Github::Formatter
 
       - name: Test screenshots
         uses: actions/upload-artifact@v2
