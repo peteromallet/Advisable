@@ -1,5 +1,5 @@
 import { fireEvent } from "@testing-library/react";
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_APPLICATION from "../fetchApplication";
@@ -93,7 +93,7 @@ test("Freelancer can mark a task as a trial task", async () => {
     },
   ];
 
-  const { findByText, findByLabelText } = renderApp({
+  const { findByText, findByLabelText } = renderRoute({
     route: "/applications/rec1234/proposal/tasks/task_1234",
     graphQLMocks: API_MOCKS,
   });
@@ -101,7 +101,7 @@ test("Freelancer can mark a task as a trial task", async () => {
   const markAsTrial = await findByLabelText("Set as trial task");
   fireEvent.click(markAsTrial);
   const notice = await findByText(
-    "This task has been offered as a guaranteed trial"
+    "This task has been offered as a guaranteed trial",
   );
   expect(notice).toBeInTheDocument();
 });

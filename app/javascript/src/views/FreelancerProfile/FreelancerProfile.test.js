@@ -1,5 +1,5 @@
 import { fireEvent, waitFor, within } from "@testing-library/react";
-import renderApp from "../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import mockData from "../../__mocks__/graphqlFields";
 import { mockViewer, mockQuery } from "../../testHelpers/apolloMocks";
 import GET_PROFILE from "./getProfile";
@@ -35,12 +35,12 @@ test("Shows users profile", async () => {
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
     graphQLMocks,
   });
 
-  const name = await app.findByText("John Doe", {}, { timeout: 5000 });
+  const name = await app.findByText("John Doe");
   expect(name).toBeInTheDocument();
 });
 
@@ -74,16 +74,12 @@ test("Can see reviews", async () => {
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}/reviews`,
     graphQLMocks,
   });
 
-  const name = await app.findByText(
-    `"${review.comment}"`,
-    {},
-    { timeout: 5000 },
-  );
+  const name = await app.findByText(`"${review.comment}"`);
   expect(name).toBeInTheDocument();
 });
 
@@ -118,12 +114,12 @@ test("Renders 404 if the specialist isn't found", async () => {
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/randomID`,
     graphQLMocks,
   });
 
-  const status = await app.findByText("404", {}, { timeout: 5000 });
+  const status = await app.findByText("404");
   expect(status).toBeInTheDocument();
 });
 
@@ -164,12 +160,12 @@ test("Can view freelancer project", async () => {
     ),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}/projects`,
     graphQLMocks,
   });
 
-  await app.findByText("John Doe", {}, { timeout: 5000 });
+  await app.findByText("John Doe");
   const viewProject = app.getByLabelText("View Project");
   fireEvent.click(viewProject);
   const modal = app.getByRole("dialog");
@@ -206,12 +202,12 @@ test("Can view a project by giong to url", async () => {
     mockQuery(PROJECT_DETAILS, { id: previousProject.id }, { previousProject }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}/projects/${previousProject.id}`,
     graphQLMocks,
   });
 
-  const modal = await app.findByRole("dialog", {}, { timeout: 5000 });
+  const modal = await app.findByRole("dialog");
   const title = await within(modal).findByText(previousProject.title);
   expect(title).toBeInTheDocument();
 });
@@ -236,18 +232,14 @@ test("Shows message when specialist has no projects", async () => {
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}/projects`,
     graphQLMocks,
   });
 
-  const text = await app.findByText(
-    "has not added any previous projects",
-    {
-      exact: false,
-    },
-    { timeout: 5000 },
-  );
+  const text = await app.findByText("has not added any previous projects", {
+    exact: false,
+  });
   expect(text).toBeInTheDocument();
 });
 
@@ -289,16 +281,12 @@ test("Can filter projects by skill", async () => {
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}/projects`,
     graphQLMocks,
   });
 
-  const skillFilter = await app.findByLabelText(
-    "Filter projects by Skill",
-    {},
-    { timeout: 5000 },
-  );
+  const skillFilter = await app.findByLabelText("Filter projects by Skill", {});
   fireEvent.click(skillFilter);
   const skill = app.getByLabelText(twitterMarketing.name);
   fireEvent.click(skill);
@@ -345,16 +333,12 @@ test("Can filter projects by industry", async () => {
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}/projects`,
     graphQLMocks,
   });
 
-  const filter = await app.findByLabelText(
-    "Filter projects by Industry",
-    {},
-    { timeout: 5000 },
-  );
+  const filter = await app.findByLabelText("Filter projects by Industry", {});
   expect(app.queryByText("Recruiting Project")).toBeInTheDocument();
   fireEvent.click(filter);
   const industry = app.getByLabelText(financeIndustry.name);

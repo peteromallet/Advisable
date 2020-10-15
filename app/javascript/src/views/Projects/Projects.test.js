@@ -1,5 +1,5 @@
 import fields from "../../__mocks__/graphqlFields";
-import renderApp from "../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import VIEWER from "../../graphql/queries/viewer";
 import { GET_PROJECTS } from "./queries";
 import { GET_APPLICATIONS } from "../Applications/queries";
@@ -9,7 +9,7 @@ test("Loads the clients projects", async () => {
   const project = fields.project({ primarySkill: skill, matches: [] });
   const user = fields.user({ projects: [project] });
 
-  let { findByText } = renderApp({
+  let { findByText } = renderRoute({
     route: "/projects",
     graphQLMocks: [
       {
@@ -42,7 +42,7 @@ test("Loads the clients projects", async () => {
 test("Redirects to specialist dashboard if not logged in as a user", async () => {
   const specialist = fields.specialist();
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/projects",
     graphQLMocks: [
       {
@@ -79,7 +79,7 @@ test("Redirects to specialist dashboard if not logged in as a user", async () =>
 });
 
 test("Redirects to login page if not logged in", async () => {
-  const app = renderApp({
+  const app = renderRoute({
     route: "/projects",
     graphQLMocks: [
       {

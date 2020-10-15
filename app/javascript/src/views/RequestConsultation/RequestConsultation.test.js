@@ -28,7 +28,7 @@ test("Skills step continues to the company details", async () => {
     graphQLMocks,
   });
 
-  const skillTag = await app.findByText("Testing", {}, { timeout: 5000 });
+  const skillTag = await app.findByText("Testing");
   fireEvent.click(skillTag);
   const btn = app.getByLabelText("Continue");
   fireEvent.click(btn);
@@ -73,7 +73,7 @@ test("When logged in the skills step continues to availability", async () => {
     graphQLMocks,
   });
 
-  const skillTag = await app.findByText("Testing", {}, { timeout: 5000 });
+  const skillTag = await app.findByText("Testing");
   fireEvent.click(skillTag);
   const btn = app.getByLabelText("Continue");
   fireEvent.click(btn);
@@ -128,11 +128,7 @@ test("company details step continues to availability", async () => {
     graphQLMocks,
   });
 
-  const firstName = await app.findByLabelText(
-    "First Name",
-    {},
-    { timeout: 5000 },
-  );
+  const firstName = await app.findByLabelText("First Name");
   const lastName = app.getByLabelText("Last Name");
   const email = app.getByLabelText("Email Address");
   const company = app.getByLabelText("Company Name");
@@ -164,9 +160,7 @@ test("Company details step redirects back if no skill is in state", async () => 
     graphQLMocks,
   });
 
-  const header = await app.findByText(/Please select which/i, {
-    timeout: 5000,
-  });
+  const header = await app.findByText(/Please select which/i);
   expect(header).toBeInTheDocument();
 });
 
@@ -210,8 +204,6 @@ test("Topic step continues to the send step", async () => {
 
   const textarea = await app.findByPlaceholderText(
     "What would you like to talk about...",
-    {},
-    { timeout: 5000 },
   );
   fireEvent.change(textarea, { target: { value: "Testing" } });
   const btn = app.getByLabelText("Continue");

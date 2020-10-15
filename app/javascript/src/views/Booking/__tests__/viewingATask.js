@@ -76,7 +76,7 @@ test("User can view an active task", async () => {
     graphQLMocks,
   });
 
-  const taskName = await app.findByText(task.name, {}, { timeout: 5000 });
+  const taskName = await app.findByText(task.name);
   fireEvent.click(taskName);
   const nameInput = await app.findByPlaceholderText("Add a task name...");
   expect(nameInput).toBeInTheDocument();

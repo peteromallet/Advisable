@@ -48,11 +48,7 @@ test("Rate step continues to the project type step", async () => {
     ],
   });
 
-  await findByText(
-    'Proposal for "Testing" with Test Inc',
-    {},
-    { timeout: 5000 },
-  );
+  await findByText('Proposal for "Testing" with Test Inc');
   const rate = getByLabelText("Hourly Rate");
   fireEvent.change(rate, { target: { value: "75" } });
   const button = getByLabelText("Continue");

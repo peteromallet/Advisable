@@ -1,4 +1,4 @@
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
@@ -17,7 +17,7 @@ test("Continues to the work history step", async () => {
     getByPlaceholderText,
     getByLabelText,
     getByTestId,
-  } = renderApp({
+  } = renderRoute({
     route: `/freelancers/signup/profile`,
     graphQLMocks: [
       {

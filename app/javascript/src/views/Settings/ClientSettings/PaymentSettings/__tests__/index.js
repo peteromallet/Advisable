@@ -1,5 +1,5 @@
 import { fireEvent } from "@testing-library/react";
-import renderApp from "../../../../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import mockData from "../../../../../__mocks__/graphqlFields";
 import VIEWER from "../../../../../graphql/queries/viewer";
 import { GET_DATA } from "../../../../../components/InvoiceSettingsFields";
@@ -42,7 +42,7 @@ test("Bank transer option is disabled if bankTransfersEnabled is false", async (
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/settings/payments",
     graphQLMocks,
   });
@@ -90,7 +90,7 @@ test("Bank transer option is enabled if bankTransfersEnabled is true", async () 
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/settings/payments",
     graphQLMocks,
   });
@@ -174,7 +174,7 @@ test("user can update invoice settings", async () => {
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: "/settings/payments",
     graphQLMocks,
   });

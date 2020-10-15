@@ -1,4 +1,4 @@
-import renderApp from "../../../testHelpers/renderApp";
+import { renderRoute } from "test-utils";
 import { fireEvent } from "@testing-library/react";
 import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
@@ -11,7 +11,7 @@ test("Continues to the confirmation step", async () => {
     generateTypes.skill({ value: "Marketing", label: "Marketing" }),
   ];
 
-  const { findByPlaceholderText, findByText, getByLabelText } = renderApp({
+  const { findByPlaceholderText, findByText, getByLabelText } = renderRoute({
     route: "/freelancers/signup",
     graphQLMocks: [
       {
