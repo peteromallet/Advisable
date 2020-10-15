@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { Box, Text, Button, useBreakpoint } from "@advisable/donut";
+import { Box, Text, Button, useBreakpoint, theme } from "@advisable/donut";
 import Masonry from "components/Masonry";
 import createDispatcher from "src/utilities/createDispatcher";
 import Tags from "./Filter/Tags";
@@ -12,6 +12,7 @@ import {
 } from "../components/SectionHeader";
 import { mockedIndustries, mockedSkills } from "./mockedFilterData";
 import { useHistory } from "react-router";
+import { rgba } from "polished";
 
 const getProjectValues = (projects) =>
   projects.reduce(
@@ -139,21 +140,35 @@ function PreviousProjects({ data, isOwner }) {
     });
 
   return (
-    <Box>
+    <Box mb="xxl">
       <Filter>
         <Tags
           sectionName="skills"
           sectionTags={state.skillsSection}
           onClick={switchSkillSelection}
-          color="blue500"
-          bgActive="blue50"
+          color={theme.colors.blue500}
+          colorHover={theme.colors.blue500}
+          colorActive={theme.colors.white}
+          colorActiveHover={theme.colors.white}
+          bg={rgba(theme.colors.blue100, 0.6)}
+          // bg={theme.colors.blue50}
+          bgHover={rgba(theme.colors.blue100, 0.9)}
+          bgActive={theme.colors.neutral800}
+          bgActiveHover={rgba(theme.colors.neutral800, 0.9)}
         />
         <Tags
           sectionName="industries"
           sectionTags={state.industriesSection}
           onClick={switchIndustrySelection}
-          color="cyan800"
-          bgActive="cyan50"
+          color={theme.colors.cyan800}
+          colorHover={theme.colors.cyan800}
+          colorActive={theme.colors.white}
+          colorActiveHover={theme.colors.white}
+          // bg={theme.colors.cyan50}
+          bg={rgba(theme.colors.cyan100, 0.6)}
+          bgHover={rgba(theme.colors.cyan100, 0.9)}
+          bgActive={theme.colors.neutral800}
+          bgActiveHover={rgba(theme.colors.neutral800, 0.9)}
         />
       </Filter>
       <Box>

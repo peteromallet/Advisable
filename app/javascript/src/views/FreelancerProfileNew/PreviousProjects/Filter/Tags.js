@@ -1,13 +1,46 @@
 import React, { useEffect } from "react";
 import { Text, Box } from "@advisable/donut";
 import { motion } from "framer-motion";
+import styled from "styled-components";
+
+const StyledTag = styled(Box)`
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: ${(props) => props.bgHover};
+  }
+  &[data-selected="true"] {
+    background-color: ${(props) => props.bgActive};
+  }
+  &[data-selected="true"]:hover {
+    background-color: ${(props) => props.bgActiveHover};
+  }
+`;
+
+const StyledTagText = styled(Text)`
+  transition: color 0.2s;
+  &:hover {
+    color: ${(props) => props.colorHover};
+  }
+  &[data-selected="true"] {
+    color: ${(props) => props.colorActive};
+  }
+  &[data-selected="true"]:hover {
+    color: ${(props) => props.colorActiveHover};
+  }
+`;
 
 function Tags({
   sectionName,
   sectionTags,
   onClick,
-  color,
+  bg,
+  bgHover,
   bgActive,
+  bgActiveHover,
+  color,
+  colorHover,
+  colorActive,
+  colorActiveHover,
   addSectionParams,
   layout = {},
   ratio,
@@ -45,7 +78,7 @@ function Tags({
             white-space: nowrap;
           `}
         >
-          <Box
+          <StyledTag
             // display="flex"
             // textAlign="center"
             // justifyContent="center"
@@ -54,7 +87,11 @@ function Tags({
             mx={`${item?.mx}px`}
             my={`${item?.my}px`}
             borderRadius="8px"
-            bg={bgActive}
+            bg={bg}
+            bgHover={bgHover}
+            bgActive={bgActive}
+            bgActiveHover={bgActiveHover}
+            data-selected={selected}
             css={`
               user-select: none;
               cursor: pointer;
@@ -62,14 +99,18 @@ function Tags({
             onClick={() => onClick({ tag: tagKey })}
             {...props}
           >
-            <Text
+            <StyledTagText
               color={color}
+              colorHover={colorHover}
+              colorActive={colorActive}
+              colorActiveHover={colorActiveHover}
+              data-selected={selected}
               fontSize="xs"
               id={`${sectionName}-${tagKey}-text`}
             >
               {tagKey}
-            </Text>
-          </Box>
+            </StyledTagText>
+          </StyledTag>
         </Box>
       );
     });
