@@ -28,9 +28,10 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'Community Score', to: :community_score
 
   sync_data do |specialist|
+    specialist.ensure_account_exists
+
     if self['Bank Holder Address']
       # sync the bank holder address
-
       specialist.bank_holder_address =
         Address.parse(self['Bank Holder Address']).to_h
     end
@@ -75,7 +76,7 @@ class Airtable::Specialist < Airtable::Base
     specialist.remote = true if fields['Remote OK'].try(:include?, 'Yes')
     specialist.remote = false if fields['Remote OK'].try(:include?, 'No')
     if fields['Test Account'].try(:include?, 'Yes')
-      specialist.test_account = true
+      specialist.account.test_account = true
     end
     specialist.referrer = self['Referrer'].try(:first)
 
