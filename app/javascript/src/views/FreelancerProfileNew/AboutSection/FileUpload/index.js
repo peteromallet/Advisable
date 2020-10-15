@@ -16,19 +16,17 @@ const Wrapper = styled(Box)`
 
 const animation = keyframes`
   from {
-  background-color: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(3px);
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(3px);
   }
 
   to {
-  backdrop-filter: blur(4px);
-  background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+    background-color: rgba(255, 255, 255, 0.3);
   }
 `;
 
 const BluredBackground = styled(Box)`
-  /* background-color: rgba(255, 255, 255, 0.3); */
-  /* backdrop-filter: blur(10px); */
   animation: ${animation} 0.8s ease infinite alternate;
 `;
 
@@ -145,26 +143,6 @@ const FileUpload = ({ onChange, updated }) => {
             >
               <Box width={`${progress}%`} height="100%" bg="blue500" />
             </Box>
-            {/* <Box as={motion.svg} width="48px" height="48px" viewBox="0 0 50 50">
-              <motion.path
-                d="M 0, 20 a 20, 20 0 1,0 40,0 a 20, 20 0 1,0 -40,0"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                style={{ rotate: 90, scaleX: -1, translateX: 5, translateY: 5 }}
-                stroke={theme.colors.blue100}
-                fill="transparent"
-                strokeWidth="3px"
-              />
-              <motion.path
-                d="M 0, 20 a 20, 20 0 1,0 40,0 a 20, 20 0 1,0 -40,0"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: progress / 100, opacity: 1 }}
-                style={{ rotate: 90, scaleX: -1, translateX: 5, translateY: 5 }}
-                stroke={theme.colors.blue500}
-                fill="transparent"
-                strokeWidth="3px"
-              />
-            </Box> */}
             <Text fontSize="xxs" color="neutral800">
               {uploading && "Uploading"}
               {processing && "Processing"}
