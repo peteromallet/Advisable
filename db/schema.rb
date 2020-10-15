@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_08_075447) do
+ActiveRecord::Schema.define(version: 2020_10_15_063933) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -21,7 +22,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_075447) do
     t.string "first_name"
     t.string "last_name"
     t.string "password_digest"
-    t.string "email"
+    t.citext "email"
     t.string "uid"
     t.datetime "confirmed_at"
     t.string "confirmation_digest"
@@ -39,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_075447) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["country_id"], name: "index_accounts_on_country_id"
-    t.index ["email"], name: "index_accounts_on_email"
+    t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["uid"], name: "index_accounts_on_uid", unique: true
   end
 
