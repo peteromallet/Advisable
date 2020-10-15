@@ -54,8 +54,9 @@ export default function JobSkills({ data }) {
   }, [data.skills]);
 
   const user = data.project.user;
-  const industrySkils = user.industry?.popularSkills.nodes;
-  const popularSkills = industrySkils || data.popularSkills.nodes;
+  const industrySkills = user.industry?.popularSkills.nodes;
+  const popularSkills =
+    industrySkills.length > 0 ? industrySkills : data.popularSkills.nodes;
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>

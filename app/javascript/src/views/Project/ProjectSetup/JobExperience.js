@@ -33,6 +33,16 @@ export default function JobExperience({ data }) {
           ),
         },
       },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateProject: {
+          __typename: "UpdateProjectPayload",
+          project: {
+            ...data.project,
+            industryExperienceImportance: values.industryExperienceImportance,
+          },
+        },
+      },
     });
 
     if (location.state?.readyToPublish) {
