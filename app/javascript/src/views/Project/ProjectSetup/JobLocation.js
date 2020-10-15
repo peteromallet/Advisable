@@ -29,6 +29,16 @@ export default function JobLocation({ data }) {
           ...values,
         },
       },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateProject: {
+          __typename: "UpdateProjectPayload",
+          project: {
+            ...data.project,
+            locationImportance: values.locationImportance,
+          },
+        },
+      },
     });
 
     if (location.state?.readyToPublish) {

@@ -28,6 +28,16 @@ export default function JobLikelyToHire({ data }) {
           ...values,
         },
       },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateProject: {
+          __typename: "UpdateProjectPayload",
+          project: {
+            ...data.project,
+            likelyToHire: values.likelyToHire,
+          },
+        },
+      },
     });
 
     history.push(`/projects/${id}/setup/publish`);

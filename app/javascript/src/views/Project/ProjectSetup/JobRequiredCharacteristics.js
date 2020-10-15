@@ -49,32 +49,38 @@ export default function JobRequiredCharacteristics({ data }) {
   return (
     <>
       <JobSetupStepHeader mb="xs">
-        Which of these characteristics are essential?
+        Which of these characteristics are essential?*
       </JobSetupStepHeader>
       <JobSetupStepSubHeader mb="xl">
         We&apos;ll make sure that whichever specialists we match you with have
         these characteristics.
       </JobSetupStepSubHeader>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        <Form>
-          <Box mb="xl">
-            {characteristics.map((characteristic, i) => (
-              <Field
-                key={i}
-                type="checkbox"
-                value={characteristic}
-                as={RequiredCharacteristic}
-                name="requiredCharacteristics"
-              >
-                {characteristic}
-              </Field>
-            ))}
-          </Box>
+        {(formik) => (
+          <Form>
+            <Box mb="xl">
+              {characteristics.map((characteristic, i) => (
+                <Field
+                  key={i}
+                  type="checkbox"
+                  value={characteristic}
+                  as={RequiredCharacteristic}
+                  name="requiredCharacteristics"
+                >
+                  {characteristic}
+                </Field>
+              ))}
+            </Box>
 
-          <SubmitButton size="l" suffix={<ArrowRight />}>
-            Continue
-          </SubmitButton>
-        </Form>
+            <SubmitButton
+              size="l"
+              disabled={formik.values.requiredCharacteristics.length === 0}
+              suffix={<ArrowRight />}
+            >
+              Continue
+            </SubmitButton>
+          </Form>
+        )}
       </Formik>
     </>
   );
