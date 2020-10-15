@@ -146,14 +146,14 @@ function PreviousProjects({ data, isOwner }) {
           sectionTags={state.skillsSection}
           onClick={switchSkillSelection}
           color="blue500"
-          bgActive="blue100"
+          bgActive="blue50"
         />
         <Tags
           sectionName="industries"
           sectionTags={state.industriesSection}
           onClick={switchIndustrySelection}
           color="cyan800"
-          bgActive="cyan100"
+          bgActive="cyan50"
         />
       </Filter>
       <Box>

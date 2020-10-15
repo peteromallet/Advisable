@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useReducer } from "react";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, StyledCard, theme } from "@advisable/donut";
+import { rgba } from "polished";
 import createDispatcher from "src/utilities/createDispatcher";
 import { isEmpty } from "lodash-es";
 import useResponsiveRef from "./useResponsiveRef";
@@ -9,6 +10,7 @@ import {
   handleSectionParams,
   setLayout,
 } from "./reducerHandlers";
+import styled from "styled-components";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -30,6 +32,30 @@ const reducer = (state, action) => {
       return state;
   }
 };
+
+const StyledFilterCard = styled(StyledCard)`
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
+const StyledExpandButton = styled(StyledCard)`
+  position: absolute;
+  cursor: pointer;
+  bottom: -16px;
+  background: white;
+  display: inline-block;
+  padding: 9px 18px;
+  border-radius: 32px;
+  /* box-shadow: 0 1px 2px rgba(49, 49, 58, 0.1); */
+  box-shadow: 0 1px 6px rgba(49, 49, 58, 0.12);
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 1px 10px rgba(49, 49, 58, 0.12);
+  }
+`;
 
 function Filter(props) {
   const [state, dispatch] = useReducer(reducer, {
@@ -64,43 +90,34 @@ function Filter(props) {
     !isEmpty(state.sections) && setLayout({});
   }, [setLayout, setSectionsRatio, state.sections]);
 
+  useEffect(() => {
+    !isEmpty(state.sections) && state.wrapperWidth && setLayout({});
+  }, [setLayout, state.sections, state.wrapperWidth]);
+
   const isExapndable =
     state.layout?.industries.isExpandable || state.layout?.skills.isExpandable;
 
   return (
-    <Box
-      position="relative"
-      display="flex"
-      flexWrap="wrap"
-      justifyContent="center"
+    <StyledFilterCard
       borderRadius="8px"
       mb="xl"
       p="8px 6px 12px 6px"
-      borderWidth="1px"
-      borderStyle="solid"
-      borderColor="neutral300"
+      elevation="m"
+      // borderWidth="1px"
+      // borderStyle="solid"
+      // borderColor="neutral300"
     >
-      <Box ref={layoutRef} width="100%" display="flex">
+      <Box ref={layoutRef} width="100%" display="flex" mb="xs">
         {sections}
       </Box>
       {isExapndable && (
-        <Box
-          position="absolute"
-          bottom="-12px"
-          bg="neutral50"
-          display="inline-block"
-          p="xxs"
-          onClick={expandCollapse}
-          css={`
-            cursor: pointer;
-          `}
-        >
-          <Text fontSize="xs" color="neutral600">
-            {state.isExpand ? "Collapse" : "Expand"}
+        <StyledExpandButton onClick={expandCollapse}>
+          <Text fontSize="xs" color="neutral700">
+            {state.isExpand ? "see less" : "see more"}
           </Text>
-        </Box>
+        </StyledExpandButton>
       )}
-    </Box>
+    </StyledFilterCard>
   );
 }
 
