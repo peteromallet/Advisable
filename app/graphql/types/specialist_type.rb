@@ -62,6 +62,10 @@ class Types::SpecialistType < Types::BaseType
     description 'Wether or not the specialists account has been confirmed'
   end
 
+  def confirmed
+    object.account.confirmed_at.present?
+  end
+
   field :travel_availability, String, null: true do
     description 'Wether or not the specailist is willing to travel for work'
   end
@@ -302,6 +306,10 @@ class Types::SpecialistType < Types::BaseType
     description 'The specialists email address'
   end
 
+  def email
+    object.account.email
+  end
+
   field :talk_signature, String, null: false do
     authorize :is_specialist
     description 'A unique signature used to for identification with talkjs'
@@ -356,6 +364,10 @@ class Types::SpecialistType < Types::BaseType
     description <<~HEREDOC
       The specialists VAT number
     HEREDOC
+  end
+
+  def vat_number
+    object.account.vat_number
   end
 
   field :primarily_freelance, Boolean, null: true do

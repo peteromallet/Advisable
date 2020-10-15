@@ -6,13 +6,12 @@ class Mutations::CompleteTutorial < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def authorized?(tutorial:)
-    return true if context[:current_user].present?
-    [false, { errors: [{ code: "notAuthenticated" }] }]
+    requires_current_user!
   end
 
   def resolve(tutorial:)
     viewer = context[:current_user]
     viewer.complete_tutorial(tutorial)
-    { viewer: viewer }
+    {viewer: viewer}
   end
 end

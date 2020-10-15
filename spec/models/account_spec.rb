@@ -27,4 +27,29 @@ RSpec.describe Account, type: :model do
     account = build(:account)
     expect(account).to be_valid
   end
+
+  describe "permissions" do
+    it "has a permissions attribute" do
+      inst = create(:account)
+      expect(inst.permissions).to be_an(Array)
+    end
+
+    it "is invalid if it has an unknown permission" do
+      inst = build(:account, permissions: ["doesnt:exist"])
+      expect(inst).to_not be_valid
+      expect(inst.errors.full_messages.first).to match(/not a valid permission/)
+    end
+  end
+
+  describe "#has_permission?" do
+    it "returns true if the user has a given permission" do
+      inst = build(:account, permissions: ["admin"])
+      expect(inst.has_permission?("admin")).to be_truthy
+    end
+
+    it "returns false if the user doesn't have a given permission" do
+      inst = build(:account, permissions: [])
+      expect(inst.has_permission?("admin")).to be_falsey
+    end
+  end
 end

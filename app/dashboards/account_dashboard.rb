@@ -13,6 +13,8 @@ class AccountDashboard < Administrate::BaseDashboard
     first_name: Field::String,
     last_name: Field::String,
     email: Field::String.with_options(searchable: false),
+    permissions: PermissionsField,
+    completed_tutorials: UserTutorialsField,
     vat_number: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -37,6 +39,8 @@ class AccountDashboard < Administrate::BaseDashboard
     first_name
     last_name
     email
+    permissions
+    completed_tutorials
     vat_number
     created_at
     updated_at
@@ -50,6 +54,8 @@ class AccountDashboard < Administrate::BaseDashboard
     first_name
     last_name
     email
+    permissions
+    completed_tutorials
     vat_number
   ].freeze
 

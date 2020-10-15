@@ -106,7 +106,7 @@ jobs:
         run: bundle exec rails webpacker:compile
 
       - name: Test
-        run: bundle exec rspec --format RSpec::Github::Formatter
+        run: bundle exec rspec --format RSpec::Github::Formatter --format documentation
 
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v2

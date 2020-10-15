@@ -5,7 +5,7 @@
 class SpecialistPolicy < BasePolicy
   # Wether or not the current user is an admin
   def is_admin
-    user.try(:has_permission?, "admin")
+    user&.account&.has_permission?("admin")
   end
 
   # Checks if the specialist is the current user

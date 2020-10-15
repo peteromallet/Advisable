@@ -4,7 +4,7 @@ class Account < ApplicationRecord
 
   IGNORED_COLUMNS_FOR_COPYING = ["id", "uid", "updated_at", "created_at"].freeze
   MIGRATED_COLUMNS = %w[
-    email password_digest remember_token confirmed_at confirmation_digest confirmation_token reset_digest reset_sent_at test_account vat_number
+    email password_digest remember_token confirmed_at confirmation_digest confirmation_token reset_digest reset_sent_at test_account vat_number permissions completed_tutorials
   ].freeze
   COPYABLE_COLUMNS = column_names - IGNORED_COLUMNS_FOR_COPYING - MIGRATED_COLUMNS
 
