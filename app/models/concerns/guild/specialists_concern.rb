@@ -26,7 +26,8 @@ module Guild
 
       jsonb_accessor :guild_data,
                      guild_joined_date: :datetime,
-                     guild_notifications_last_read: [:datetime, {default: Time.at(0)}]
+                     guild_notifications_last_read: [:datetime, {default: Time.at(0)}],
+                     guild_calendly_link: [:string]
 
       def touch_guild_notifications_last_read
         update!(guild_notifications_last_read: Time.current)

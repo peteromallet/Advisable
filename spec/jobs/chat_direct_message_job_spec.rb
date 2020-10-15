@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ChatDirectMessageJob do
+  let(:guild_post) { create(:guild_post) }
   let(:recipient) { build(:specialist, :guild) }
   let(:sender) { build(:specialist, :guild) }
   let(:twilio_double) { instance_double(TwilioChat::Client, identity: "sender-123") }
@@ -27,15 +28,47 @@ RSpec.describe ChatDirectMessageJob do
       ChatDirectMessageJob.perform_now(
         recipient_uid: recipient.uid,
         sender_uid: sender.uid,
-        message: message
+        message: message,
+        guild_post_id: guild_post.id
       )
     }
 
-    it "creates a new channel and adds a message" do
-      expect(channel).to receive(:members_count) { 0 }
-      allow(channel).to receive_message_chain("members.create")
-      expect(other).to receive(:is_online) { true }
-      subject
+    context "when its a new channel" do
+      before do
+        allow(channel).to receive_message_chain("members.create")
+        allow(channel).to receive(:members_count) { 0 }
+        allow(other).to receive(:is_online) { true }
+      end
+
+      it "records a new engagment" do
+        expect { subject }.to change { guild_post.reload.engagements_count }.by(1)
+      end
+
+      describe "with calendly link" do
+        let(:guild_calendly_link) { "https://www.calendly.com/yoda/15min" }
+        let(:message_job) {
+          ChatDirectMessageJob.perform_now(
+            recipient_uid: recipient.uid,
+            sender_uid: sender.uid,
+            message: message,
+            guild_post_id: guild_post.id,
+            guild_calendly_link: guild_calendly_link
+          )
+        }
+
+        it "modifies the message with a calendly link and a context prefix" do
+          offer_help_prefix = "Offering help for '#{guild_post.title}':\n\n "
+
+          expect(channel).to receive_message_chain("messages.create").with(
+            {
+              attributes: {calendly_link: guild_calendly_link}.to_json,
+              body: offer_help_prefix + message,
+              from: sender.uid
+            }
+          )
+          message_job
+        end
+      end
     end
 
     it "sends an email after creating the message if the recipient if offline" do

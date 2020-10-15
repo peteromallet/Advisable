@@ -103,7 +103,11 @@ const Post = () => {
                   name={post.author.name}
                   url={post.author.avatar}
                 />
-                <DirectMessage count={3} recipient={post.author} />
+                <DirectMessage
+                  count={3}
+                  recipient={post.author}
+                  guildPostId={post.id}
+                />
                 <Box
                   display="flex"
                   justifyContent="center"

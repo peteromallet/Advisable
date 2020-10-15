@@ -6,8 +6,10 @@ import GuildTag from "@guild/components/GuildTag";
 import Topics from "./components/Topics";
 import { NeedHelp } from "@guild/icons";
 import ReactionsButton from "./components/ReactionsButton";
+import { GuildBox } from "@guild/styles";
 import ReadMore from "./components/ReadMore";
 import { CoverImage } from "@guild/components/CoverImage";
+import OfferHelp from "./components/OfferHelp";
 import { GUILD_UPDATE_POST_REACTIONS } from "./mutations";
 
 const Post = ({ post }) => {
@@ -118,11 +120,18 @@ const Post = ({ post }) => {
         backgroundColor="aliceBlue"
       >
         <Topics topics={post.guildTopics} />
-        <ReactionsButton
-          reacted={post.reacted}
-          reactionsCount={post.reactionsCount}
-          onUpdatePostReactions={handleUpdatePostReactions}
-        />
+        <GuildBox display="flex" spaceChildrenHorizontal={8}>
+          <OfferHelp
+            guildPostId={post.id}
+            recipient={post.author}
+            engagementsCount={post.engagementsCount}
+          />
+          <ReactionsButton
+            reacted={post.reacted}
+            reactionsCount={post.reactionsCount}
+            onUpdatePostReactions={handleUpdatePostReactions}
+          />
+        </GuildBox>
       </Box>
     </Card>
   );

@@ -11,7 +11,7 @@ import Mask from "@guild/components/Mask";
 import MessageWithAction from "@guild/components/MessageWithAction";
 import { CREATE_CHAT_DIRECT_MESSAGE } from "./mutations";
 
-const DirectMessage = ({ count, recipient }) => {
+const DirectMessage = ({ count, recipient, guildPostId }) => {
   const [sent, setSent] = useState(false);
   const [body, setBody] = useState("");
 
@@ -25,7 +25,7 @@ const DirectMessage = ({ count, recipient }) => {
   const handleSubmit = async () => {
     if (!body.length) return;
     await createChatDirectMessage({
-      variables: { input: { recipientId: recipient.id, body } },
+      variables: { input: { recipientId: recipient.id, guildPostId, body } },
     });
     setSent(true);
   };

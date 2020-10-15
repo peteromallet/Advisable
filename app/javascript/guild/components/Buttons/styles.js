@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button, theme } from "@advisable/donut";
-import { GuildBox } from "@guild/styles";
+import { GuildBox, flex } from "@guild/styles";
 
 export const SubmitButton = styled(Button)`
   color: white;
@@ -15,6 +15,7 @@ export const SubmitButton = styled(Button)`
   &:hover {
     background-color: ${theme.colors.slateBlue};
   }
+  ${flex.spaceChildrenHorizontal("12")}
 `;
 
 export const MessageButton = styled(GuildBox)`

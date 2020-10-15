@@ -122,23 +122,42 @@ const ActiveConversation = ({ channelSid }) => {
                     </Text>
                   </GuildBox>
                 )}
-                <Text
-                  css={css`
-                    white-space: pre-wrap;
-                    white-space: pre-line;
-                  `}
-                >
-                  {message.body}
-                </Text>
+
+                <GuildBox spaceChildrenVertical={16}>
+                  <Text
+                    css={css`
+                      white-space: pre-wrap;
+                      white-space: pre-line;
+                    `}
+                  >
+                    {message.body}
+                  </Text>
+                  {message.attributes?.calendly_link && (
+                    <Link.External
+                      href={message.attributes.calendly_link}
+                      rel="noreferrer noopener"
+                      target="_blank"
+                      color="catalinaBlue100"
+                      fontWeight="medium"
+                    >
+                      Book a call with me
+                    </Link.External>
+                  )}
+                </GuildBox>
               </StyledMessage>
-              <Text
-                as={GuildBox}
+
+              <GuildBox
                 alignSelf={message.author === other ? "flex-start" : "flex-end"}
-                color="darkGray"
-                size="xxs"
               >
-                {relativeDate(message.dateCreated)} ago
-              </Text>
+                <Text
+                  as={GuildBox}
+                  alignSelf="flex-end"
+                  color="darkGray"
+                  size="xxs"
+                >
+                  {relativeDate(message.dateCreated)} ago
+                </Text>
+              </GuildBox>
             </GuildBox>
           ))}
           <ScrollToBottom />

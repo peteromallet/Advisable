@@ -11,6 +11,7 @@ export default gql`
     reactionsCount
     commented
     commentsCount
+    engagementsCount
     authored
     createdAtTimeAgo
     coverImage

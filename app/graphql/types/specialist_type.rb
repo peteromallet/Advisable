@@ -123,13 +123,13 @@ class Types::SpecialistType < Types::BaseType
 
   def cover_photo
     if object.cover_photo.attached?
-      (
-        Rails.application.routes.url_helpers.rails_blob_url(
-          object.cover_photo,
-          host:
-            ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-        )
+
+      Rails.application.routes.url_helpers.rails_blob_url(
+        object.cover_photo,
+        host:
+          ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
       )
+
     end
   end
 
@@ -226,6 +226,10 @@ class Types::SpecialistType < Types::BaseType
 
   field :guild_unread_notifications, Boolean, null: true do
     description 'Whether the guild specialist has unread notifications'
+  end
+
+  field :guild_calendly_link, String, null: true do
+    description 'The calendly url for the guild specialist'
   end
 
   field :previous_projects,
@@ -377,8 +381,8 @@ class Types::SpecialistType < Types::BaseType
   field :profile_projects, [Types::PreviousProject], null: false
 
   def profile_projects
-    object.previous_projects.published.validated.not_hidden
-      .sort_by do |previous_project|
+    object.previous_projects.published.validated.not_hidden.
+      sort_by do |previous_project|
       previous_project.try(:priority) || Float::INFINITY
     end
   end

@@ -2,6 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { Box, Text, theme } from "@advisable/donut";
 import { Thanks } from "@guild/icons";
+import ReactTooltip from "react-tooltip";
 
 const ReactionsButton = ({
   onUpdatePostReactions,
@@ -19,7 +20,9 @@ const ReactionsButton = ({
       borderRadius={8}
       reacted={reacted}
       onClick={onUpdatePostReactions}
+      data-tip="Give Thanks"
     >
+      <ReactTooltip backgroundColor={theme.colors.catalinaBlue100} />
       <Text fontSize="xs" mr="xs" color={reacted ? "white" : "catalinaBlue100"}>
         {reactionsCount || "0"}
       </Text>

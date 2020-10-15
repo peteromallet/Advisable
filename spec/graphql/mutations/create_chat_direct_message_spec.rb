@@ -3,13 +3,15 @@ require 'rails_helper'
 RSpec.describe Mutations::Guild::CreateChatDirectMessage do
   let(:chat_participants) { build_list(:specialist, 2, :guild) }
   let(:response_keys) { %w[createChatDirectMessage enqueued] }
+  let(:guild_post) { create(:guild_post) }
 
   let(:query) {
     <<-GRAPHQL
     mutation {
       createChatDirectMessage(input: {
         recipientId: "#{chat_participants.last.uid}",
-        body: "this is a message"
+        body: "this is a message",
+        guildPostId: "#{guild_post.id}",
       }) {
         enqueued
       }
@@ -33,7 +35,9 @@ RSpec.describe Mutations::Guild::CreateChatDirectMessage do
         with({
           message: "this is a message",
           recipient_uid: recipient.uid,
-          sender_uid: sender.uid
+          sender_uid: sender.uid,
+          guild_post_id: guild_post.id,
+          guild_calendly_link: nil,
         })
       expect(subject).to eq(true)
     end
