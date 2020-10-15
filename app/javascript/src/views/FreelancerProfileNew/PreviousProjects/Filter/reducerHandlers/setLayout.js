@@ -1,66 +1,50 @@
 import { flow, max } from "lodash-es";
+import { theme } from "@advisable/donut";
 
-const getPY = (rowIndex) => {
-  // Return padding Y axis value
+const getParams = (rowIndex) => {
+  const query = `(max-width: ${theme.breakpoints[0]})`;
+  const isMobile = window.matchMedia(query)?.matches;
   switch (rowIndex) {
     case 0:
-      return 14;
+      return {
+        fontSize: isMobile ? 12 : 15,
+        py: isMobile ? 10 : 16,
+        px: isMobile ? 5 : 16,
+        my: 3,
+        mx: 3,
+      };
     case 1:
-      return 14;
+      return {
+        fontSize: isMobile ? 12 : 15,
+        py: isMobile ? 10 : 16,
+        px: isMobile ? 5 : 16,
+        my: 3,
+        mx: 3,
+      };
     default:
-      return 6;
+      return {
+        fontSize: isMobile ? 12 : 14,
+        py: 10,
+        px: 5,
+        my: 3,
+        mx: 3,
+      };
   }
 };
 
-const getPX = (rowIndex) => {
-  // Return padding X axis value
-  switch (rowIndex) {
-    case 0:
-      return 14;
-    case 1:
-      return 14;
-    default:
-      return 6;
-  }
+const setInitialParams = (rowIndex, item) => {
+  const params = getParams(rowIndex);
+  const textElement = document.getElementById(item.textId);
+  textElement.style.fontSize = params.fontSize + "px";
+  const textWidth = textElement.clientWidth;
+  const textHeight = textElement.clientHeight;
+  return { ...params, textWidth, textHeight };
 };
-
-const getMY = (rowIndex) => {
-  // Return margin Y axis value
-  switch (rowIndex) {
-    case 0:
-      return 3;
-    case 1:
-      return 3;
-    default:
-      return 3;
-  }
-};
-
-const getMX = (rowIndex) => {
-  // Return margin X axis value
-  switch (rowIndex) {
-    case 0:
-      return 3;
-    case 1:
-      return 3;
-    default:
-      return 3;
-  }
-};
-
-const setInitialParams = (rowIndex, item) => ({
-  py: getPY(rowIndex),
-  px: getPX(rowIndex),
-  mx: getMX(rowIndex),
-  my: getMY(rowIndex),
-  initialWidth: item.width,
-  initialHeight: item.height,
-});
 
 const setWidthAndHeight = (params) => ({
   ...params,
-  width: params.px * 2 + params.mx * 2 + params.initialWidth,
-  height: params.py * 2 + params.my * 2 + params.initialHeight,
+  width: params.px * 2 + params.mx * 2 + params.textWidth,
+  height: params.py * 2 + params.my * 2 + params.textHeight,
 });
 
 const setSizeParams = flow([setInitialParams, setWidthAndHeight]);
@@ -175,14 +159,16 @@ const setLayout = (state) => {
       indent: 0,
     });
     firstLayout = firstLayout.items.reduce(expandItems, firstLayout);
-    firstLayout = setCollapsedHeight(1, firstLayout);
+    firstLayout = setCollapsedHeight(2, firstLayout);
+
     // Calc last layout
     lastLayout = state.sections.industries.list.reduce(layoutReducer, {
       width: lastSectionWidth,
       indent: firstLayout.width,
     });
     lastLayout = lastLayout.items.reduce(expandItems, lastLayout);
-    lastLayout = setCollapsedHeight(1, lastLayout);
+    lastLayout = setCollapsedHeight(2, lastLayout);
+
     // Map breakpoints from hash to list
     firstLayout.breakpoints = Object.keys(firstLayout.breakpoints)
       .map((key) => Number(key))
