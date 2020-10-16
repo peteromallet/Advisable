@@ -73,15 +73,11 @@ function Tags({
           id={`${sectionName}-${tagKey}`}
           tagName={tagKey}
           sectionName={sectionName}
-          // flex={ratio ? "1" : "0"}
           css={`
             white-space: nowrap;
           `}
         >
           <StyledTag
-            // display="flex"
-            // textAlign="center"
-            // justifyContent="center"
             px={`${item?.px}px`}
             py={`${item?.py}px`}
             mx={`${item?.mx}px`}
@@ -116,17 +112,7 @@ function Tags({
     });
   return (
     <Box position="relative">
-      <Box
-        // bg="neutral50"
-        px="4px"
-        ml="3px"
-        mt="3px"
-        mb="xxs"
-        // display="inline-box"
-        // position="absolute"
-        // left="0"
-        // top="-15px"
-      >
+      <Box px="4px" ml="3px" mt="3px" mb="xxs">
         <Text
           color="neutral500"
           fontSize="xxs"
