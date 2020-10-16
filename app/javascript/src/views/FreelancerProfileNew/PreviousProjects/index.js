@@ -115,6 +115,31 @@ function PreviousProjects({ data, isOwner }) {
   const numOfColumns =
     (isMobile && 1) || (isTablet && 2) || (isWidescreen && 3);
 
+  useEffect(() => {
+    const filters = {
+      industries: state.industryFilters,
+      skills: state.skillFilters,
+    };
+    let search = queryString.stringify(
+      {
+        ...queryParams,
+        ...filters,
+      },
+      {
+        arrayFormat: "bracket",
+      },
+    );
+    search = search ? "?" + search : search;
+    const updateUrl = location.search !== search;
+    updateUrl && history.replace({ ...location, search });
+  }, [
+    history,
+    location,
+    queryParams,
+    state.industryFilters,
+    state.skillFilters,
+  ]);
+
   const projectCards = state.projects
     .filter(filterProjects(state))
     .map((project) => {
