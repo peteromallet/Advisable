@@ -1,4 +1,3 @@
-import React from "react";
 import { ArrowRight } from "@styled-icons/feather";
 import { useParams, useHistory, useLocation } from "react-router-dom";
 import { Card, Text, Button } from "@advisable/donut";

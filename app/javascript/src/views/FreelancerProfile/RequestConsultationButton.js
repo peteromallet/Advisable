@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@advisable/donut";
 import { useLocation, Link } from "react-router-dom";
 import { MessageCircle } from "@styled-icons/feather";

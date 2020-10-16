@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { ArrowLeft } from "@styled-icons/feather";
 import { Box, Text, Link, useTheme, useBreakpoint } from "@advisable/donut";
 import { Formik, Form } from "formik";

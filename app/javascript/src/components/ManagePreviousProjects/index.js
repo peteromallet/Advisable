@@ -1,4 +1,3 @@
-import React from "react";
 export { useManagePreviousProjects } from "./queries";
 import PreviousProjectsList from "./PreviousProjectsList";
 

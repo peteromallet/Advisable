@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { get } from "lodash-es";
 import { useQuery, useMutation } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
@@ -24,7 +24,7 @@ const PaymentSettings = () => {
   let notificaitons = useNotifications();
   const { data, loading, refetch } = useQuery(GET_PAYMENT_SETTINGS);
   const [updateProjectPaymentMethod] = useMutation(UPDATE_PAYMENT_INFO);
-  const [paymentMethodModal, setPaymentMethodModal] = React.useState(false);
+  const [paymentMethodModal, setPaymentMethodModal] = useState(false);
 
   const handleSubmit = async (values, formik) => {
     const { errors } = await updateProjectPaymentMethod({

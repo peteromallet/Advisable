@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { Box, Skeleton } from "@advisable/donut";
 import { useLocation, Redirect, useHistory } from "react-router-dom";
@@ -33,7 +33,7 @@ export default function ExecuteSearch() {
     return <Redirect to="/freelancer_search" />;
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const executeSearch = async () => {
       const response = await createSearch({
         variables: {

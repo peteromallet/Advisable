@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useQuery } from "@apollo/client";
 import { Text } from "@advisable/donut";
 import Loading from "../../../components/Loading";

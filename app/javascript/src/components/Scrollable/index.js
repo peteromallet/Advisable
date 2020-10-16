@@ -1,4 +1,4 @@
-import React, { useRef, useState, useLayoutEffect } from "react";
+import { useRef, useState, useLayoutEffect } from "react";
 import { ScrollableContainer, ScrollInner } from "./styles";
 
 function Scrollable({ children, height }) {

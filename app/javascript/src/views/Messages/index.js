@@ -1,4 +1,4 @@
-import React from "react";
+import { useRef, useState, useEffect } from "react";
 import Talk from "talkjs";
 import { use100vh } from "react-div-100vh";
 import queryString from "query-string";
@@ -12,12 +12,12 @@ import createTalkSession from "../../utilities/createTalkSession";
 const Messages = ({ location }) => {
   const height = use100vh();
   const isMobile = useBreakpoint("m");
-  const container = React.useRef(null);
-  const [applicationId, setAppliationId] = React.useState(null);
+  const container = useRef(null);
+  const [applicationId, setAppliationId] = useState(null);
   const queryParams = queryString.parse(location.search);
   const viewer = useViewer();
 
-  React.useEffect(() => {
+  useEffect(() => {
     Talk.ready.then(() => {
       const session = createTalkSession(viewer);
 

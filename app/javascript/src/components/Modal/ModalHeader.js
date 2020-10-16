@@ -1,4 +1,3 @@
-import React from "react";
 import { ModalHeader as StyledModalHeader } from "./styles";
 
 export default function ModalHeader({ children }) {

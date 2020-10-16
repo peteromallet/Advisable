@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { padding } from "styled-system";
 import { motion } from "framer-motion";
 import styled from "styled-components";
@@ -30,7 +30,7 @@ export default function JobSetupSidebar({ data }) {
   const { id } = useParams();
   const location = useLocation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 

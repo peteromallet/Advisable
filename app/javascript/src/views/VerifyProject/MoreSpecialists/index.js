@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import { rgba } from "polished";
 import { motion } from "framer-motion";
 import { Container, Box, Text, Avatar } from "@advisable/donut";
@@ -128,7 +128,7 @@ const PLACEHOLDERS = [
   },
 ];
 
-const MoreSpecialists = React.memo(function MoreSpecialists({
+const MoreSpecialists = memo(function MoreSpecialists({
   children,
   specialists,
 }) {

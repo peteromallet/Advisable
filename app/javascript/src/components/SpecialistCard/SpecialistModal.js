@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { get } from "lodash-es";
 import { gql } from "@apollo/client";
 import { useLazyQuery } from "@apollo/client";
@@ -56,7 +56,7 @@ const GET_DATA = gql`
 const SpecialistModal = ({ modal, specialistId }) => {
   const [getSpecialist, { loading, data, error }] = useLazyQuery(GET_DATA);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (modal.visible) {
       getSpecialist({
         variables: {

@@ -1,4 +1,4 @@
-import React from "react";
+import { useRef } from "react";
 import {
   fireEvent,
   renderComponent,
@@ -20,7 +20,7 @@ import {
 } from "./queries";
 
 function TestUI(props) {
-  const btnRef = React.useRef(null);
+  const btnRef = useRef(null);
   const modal = usePreviousProjectModal();
 
   return (

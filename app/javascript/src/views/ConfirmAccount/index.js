@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import queryString from "query-string";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { Redirect } from "react-router-dom";

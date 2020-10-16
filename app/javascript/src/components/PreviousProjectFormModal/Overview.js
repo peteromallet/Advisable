@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
@@ -35,7 +35,7 @@ const GOALS = [
 export default function Overview({ modal, data, skills }) {
   const { navigate, pathWithState } = useLocationStages();
   const [updatePreviousProject] = useUpdatePreviousProject();
-  const [customGoal, setCustomGoal] = React.useState(
+  const [customGoal, setCustomGoal] = useState(
     GOALS.indexOf(data.previousProject.goal || GOALS[0]) === -1,
   );
 

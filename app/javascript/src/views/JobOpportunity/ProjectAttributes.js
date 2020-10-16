@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, Box } from "@advisable/donut";
 
 const ProjectAttributes = ({ project }) => {

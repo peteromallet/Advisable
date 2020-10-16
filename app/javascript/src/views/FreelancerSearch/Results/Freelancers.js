@@ -1,4 +1,3 @@
-import React from "react";
 import { Search, ArrowLeft, Check, Plus } from "@styled-icons/feather";
 import { motion } from "framer-motion";
 import { useHistory, useLocation, Link as RouterLink } from "react-router-dom";

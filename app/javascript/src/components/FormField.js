@@ -1,4 +1,4 @@
-import React from "react";
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { useField } from "formik";
 import { margin } from "styled-system";
@@ -30,7 +30,7 @@ const FormField = ({
   ...props
 }) => {
   const [field, meta] = useField(props);
-  const id = React.useMemo(() => props.id || uniqueId("formField"), [props.id]);
+  const id = useMemo(() => props.id || uniqueId("formField"), [props.id]);
 
   const hasError = meta.touched && meta.error;
 

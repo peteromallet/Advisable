@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client";
 import Loading from "../../../components/Loading";
@@ -57,7 +57,7 @@ const ConfirmAccount = ({ token, email, history }) => {
     }
   }, [confirm, email, token, history, notifications]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     confirmAccount();
   }, [confirmAccount]);
 

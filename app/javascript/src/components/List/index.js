@@ -1,4 +1,3 @@
-import React from "react";
 import { StyledList, StyledListItem } from "./styles";
 
 const List = ({ children, ...props }) => {

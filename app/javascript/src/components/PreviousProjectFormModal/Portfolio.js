@@ -1,4 +1,3 @@
-import React from "react";
 import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
 import { Box, Text, Button, Link } from "@advisable/donut";
 import useLocationStages from "../../hooks/useLocationStages";

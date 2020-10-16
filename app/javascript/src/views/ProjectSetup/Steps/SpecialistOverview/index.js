@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { Formik, Field } from "formik";
 import Text from "src/components/Text";

@@ -1,5 +1,5 @@
 import { Route, Switch } from "react-router-dom";
-import React, { Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 
 import Loading from "src/components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";

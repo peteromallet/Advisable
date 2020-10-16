@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Skeleton } from "@advisable/donut";
 
 function SkeletonTag({ width }) {

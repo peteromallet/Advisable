@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Card, Skeleton, useBreakpoint } from "@advisable/donut";
 import { StyledTable, StyledTitle } from "./styles";
 

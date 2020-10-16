@@ -1,4 +1,4 @@
-import React from "react";
+import { useCallback } from "react";
 import { Container, Box, Card, Text, Paragraph } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import { useNotifications } from "components/Notifications";
@@ -37,7 +37,7 @@ function SpecialistRequestedRescheduleAsClient({ interview }) {
   const notifications = useNotifications();
   const [resendInterviewRequest] = useResendInterviewRequest();
 
-  const handleResendInterviewRequest = React.useCallback(async () => {
+  const handleResendInterviewRequest = useCallback(async () => {
     await resendInterviewRequest({
       variables: {
         input: {

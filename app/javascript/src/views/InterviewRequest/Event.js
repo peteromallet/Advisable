@@ -1,4 +1,3 @@
-import React from "react";
 import { Calendar } from "@styled-icons/feather";
 import { Box, Circle, Text } from "@advisable/donut";
 

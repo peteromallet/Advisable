@@ -1,5 +1,4 @@
 // Loads the empty state for the manage talent view
-import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Text, Button } from "@advisable/donut";
 import illustration from "./illustration.png";

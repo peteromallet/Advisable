@@ -1,4 +1,3 @@
-import React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { Columns, Button, Modal, Text, Select } from "@advisable/donut";

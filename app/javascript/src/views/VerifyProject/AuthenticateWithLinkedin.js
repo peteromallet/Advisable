@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text, Link } from "@advisable/donut";
 import LoginWithLinkedin from "./LoginWithLinkedin";
 

@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 import { isObject } from "lodash-es";
 import InputLabel from "../InputLabel";
 import InputError from "../InputError";
@@ -17,7 +17,7 @@ const ChoiceList = ({
   error,
 }) => {
   return (
-    <React.Fragment>
+    <Fragment>
       {label && <InputLabel>{label}</InputLabel>}
       <Choices fullWidth={fullWidth} optionsPerRow={optionsPerRow}>
         {options.map((option) => (
@@ -43,7 +43,7 @@ const ChoiceList = ({
       </Choices>
       {description && <InputDescription>{description}</InputDescription>}
       {error && <InputError>{error}</InputError>}
-    </React.Fragment>
+    </Fragment>
   );
 };
 

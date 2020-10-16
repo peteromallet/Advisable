@@ -1,4 +1,3 @@
-import React from "react";
 import { Search } from "@styled-icons/feather";
 import RequestCallButton from "../RequestCallButton";
 import { Link as RouterLink } from "react-router-dom";

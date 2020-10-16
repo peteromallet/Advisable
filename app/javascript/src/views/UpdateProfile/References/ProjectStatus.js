@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import { Refresh } from "@styled-icons/heroicons-outline";
 import { CheckCircle, Pencil } from "@styled-icons/heroicons-solid";
 import { Tooltip, Badge } from "@advisable/donut";
@@ -29,7 +29,7 @@ const STATUSES = {
   },
 };
 
-const ProjectStatus = React.memo(function ProjectStatus({ previousProject }) {
+const ProjectStatus = memo(function ProjectStatus({ previousProject }) {
   let status = previousProject.draft
     ? "Draft"
     : previousProject.validationStatus;

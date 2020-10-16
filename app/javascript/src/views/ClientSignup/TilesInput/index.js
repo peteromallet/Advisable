@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text } from "@advisable/donut";
 import PropTypes from "prop-types";
 import { StyledTilesInputOption } from "./styles";

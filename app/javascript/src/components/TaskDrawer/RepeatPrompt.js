@@ -1,5 +1,5 @@
 // Renders the prompt to repeat a task.
-import React from "react";
+import { useState } from "react";
 import { DateTime } from "luxon";
 import { Box, Button } from "@advisable/donut";
 import { useMutation } from "@apollo/client";
@@ -8,7 +8,7 @@ import CREATE_TASK from "../../graphql/mutations/createTask";
 import { Confirmation, ConfirmationContainer } from "./styles";
 
 const RepeatPrompt = ({ task, onRepeat, onClose }) => {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
   const [createTask] = useMutation(CREATE_TASK);
 
   const handleRepeat = async () => {

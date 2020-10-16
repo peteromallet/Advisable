@@ -1,5 +1,5 @@
 // Renders the freelancer signup flow.
-import React from "react";
+import { useLayoutEffect } from "react";
 import { get } from "lodash-es";
 import { useQuery } from "@apollo/client";
 import { useTheme, Box } from "@advisable/donut";
@@ -62,7 +62,7 @@ const FreelancerSignup = ({ location }) => {
 
   // Throughout this flow we want the background to be completely white. We
   // can achieve this by updating the theme using a React effect.
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     updateTheme({ background: "white" });
     return () => updateTheme({ background: "default" });
   }, []);

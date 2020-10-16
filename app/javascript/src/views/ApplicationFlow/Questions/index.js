@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { find } from "lodash-es";
 import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form } from "formik";

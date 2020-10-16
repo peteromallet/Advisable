@@ -1,4 +1,3 @@
-import React from "react";
 import { Edit } from "@styled-icons/feather";
 import {
   Box,

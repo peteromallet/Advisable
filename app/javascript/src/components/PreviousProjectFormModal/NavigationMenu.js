@@ -1,4 +1,3 @@
-import React from "react";
 import { useLocation } from "react-router-dom";
 import EditMenu from "./EditMenu";
 import SetupMenu from "./SetupMenu";

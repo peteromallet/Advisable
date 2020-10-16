@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Skeleton, useBreakpoint } from "@advisable/donut";
 import Masonry from "components/Masonry";
 

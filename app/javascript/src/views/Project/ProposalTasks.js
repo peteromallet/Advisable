@@ -1,4 +1,4 @@
-import React from "react";
+import { cloneElement, useState, Fragment } from "react";
 import { DateTime } from "luxon";
 import styled from "styled-components";
 import { Box, Text, theme } from "@advisable/donut";
@@ -57,7 +57,7 @@ function TaskAttribute({ icon, label, value }) {
       display="inline-flex"
     >
       <Box color="neutral500" marginRight="6px">
-        {React.cloneElement(icon, { size: 16 })}
+        {cloneElement(icon, { size: 16 })}
       </Box>
       <Text fontSize="14px" color="neutral600" marginRight="4px">
         {label}:
@@ -71,7 +71,7 @@ function TaskAttribute({ icon, label, value }) {
 
 export default function ProposalTasks({ tasks }) {
   const dialog = useDialogState();
-  const [selectedTaskId, setSelectedTaskId] = React.useState(null);
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
 
   return (
     <Box marginBottom="48px">
@@ -87,7 +87,7 @@ export default function ProposalTasks({ tasks }) {
       </Text>
       <StyledTaskList>
         {tasks.map((task) => (
-          <React.Fragment key={task.id}>
+          <Fragment key={task.id}>
             <StyledTask {...dialog} onClick={() => setSelectedTaskId(task.id)}>
               <Box flexShrink="1" minWidth="0">
                 <StyledTaskName
@@ -114,7 +114,7 @@ export default function ProposalTasks({ tasks }) {
               </Box>
             </StyledTask>
             <StyledTaskDivider />
-          </React.Fragment>
+          </Fragment>
         ))}
       </StyledTaskList>
     </Box>

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client";
 import { Box, Text, Button } from "@advisable/donut";
@@ -16,8 +16,8 @@ export const RESUME_WORKING = gql`
 `;
 
 export default function StoppedWorkingNotice({ firstName, application }) {
-  const [modal, setModal] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [resumeWorking] = useMutation(RESUME_WORKING);
 
   const handleResume = async () => {

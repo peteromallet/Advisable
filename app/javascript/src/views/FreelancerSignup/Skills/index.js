@@ -1,4 +1,3 @@
-import React from "react";
 import { gql } from "@apollo/client";
 import { get, sortBy } from "lodash-es";
 import { Formik, Form } from "formik";

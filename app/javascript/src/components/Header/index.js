@@ -1,5 +1,7 @@
 // Renders the primary header for the app
-import React, { Fragment } from "react";
+import { Fragment } from "react";
+
+import * as React from "react";
 import { gql, useMutation } from "@apollo/client";
 import { Header as Wrapper, Spacer, Logo, Hamburger } from "./styles";
 import logo from "./logo.svg";

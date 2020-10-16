@@ -1,7 +1,7 @@
-import React from "react";
+import { forwardRef } from "react";
 import { VideoButton as VideoButtonStyles, PlayIcon } from "./styles";
 
-const VideoButton = React.forwardRef(function VideoButton(
+const VideoButton = forwardRef(function VideoButton(
   { children, ...rest },
   ref,
 ) {

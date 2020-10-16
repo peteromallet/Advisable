@@ -1,5 +1,4 @@
 // Renders the freelancers applications view.
-import React from "react";
 import { useHistory, Redirect } from "react-router-dom";
 import { Box, Notice } from "@advisable/donut";
 import { useQuery } from "@apollo/client";

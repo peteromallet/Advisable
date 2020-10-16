@@ -1,4 +1,3 @@
-import React from "react";
 import { Award } from "@styled-icons/feather";
 import { Box, Circle } from "@advisable/donut";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 // Components
 import { Box, Text, Stack, Badge, theme, StyledCard } from "@advisable/donut";

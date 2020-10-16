@@ -1,8 +1,8 @@
-import React from "react";
+import { memo } from "react";
 import { Collection, MenuAlt2 } from "@styled-icons/heroicons-solid";
 import NavigationMenu from "../../components/NavigationMenu";
 
-const EditMenu = React.memo(function EditMenu({ urlPrefix }) {
+const EditMenu = memo(function EditMenu({ urlPrefix }) {
   return (
     <NavigationMenu>
       <NavigationMenu.Item to={`${urlPrefix}/description`} icon={<MenuAlt2 />}>

@@ -1,4 +1,3 @@
-import React from "react";
 import { rgba } from "polished";
 import styled from "styled-components";
 import Masonry from "components/Masonry";

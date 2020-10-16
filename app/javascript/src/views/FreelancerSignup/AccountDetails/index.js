@@ -1,4 +1,3 @@
-import React from "react";
 import { get } from "lodash-es";
 import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form } from "formik";

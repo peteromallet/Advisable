@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text } from "@advisable/donut";
 import { useTranslation } from "react-i18next";
 import Review from "./Review";

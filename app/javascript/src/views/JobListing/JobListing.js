@@ -1,4 +1,3 @@
-import React from "react";
 import Sticky from "../../components/Sticky";
 import { InformationCircle } from "@styled-icons/heroicons-solid";
 import { Box, Text, Card, Notice } from "@advisable/donut";

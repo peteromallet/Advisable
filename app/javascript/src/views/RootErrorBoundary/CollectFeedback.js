@@ -1,4 +1,3 @@
-import React from "react";
 import * as Sentry from "@sentry/react";
 import { Button } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";

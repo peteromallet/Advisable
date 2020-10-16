@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text, Button } from "@advisable/donut";
 import PaymentMethod from "../../../../components/PaymentMethod";
 

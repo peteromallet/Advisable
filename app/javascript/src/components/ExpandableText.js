@@ -1,5 +1,5 @@
 import { truncate } from "lodash-es";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, Text } from "@advisable/donut";
 
 function ExpandableText({

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { get } from "lodash-es";
 import useViewer from "../../hooks/useViewer";
 import { DialogDisclosure } from "reakit/Dialog";

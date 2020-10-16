@@ -1,4 +1,3 @@
-import React from "react";
 import { Star, ExternalLink } from "@styled-icons/feather";
 import { truncate } from "lodash-es";
 import {

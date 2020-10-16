@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Stack, Skeleton } from "@advisable/donut";
 
 export default function PreviousProjectsLoading() {

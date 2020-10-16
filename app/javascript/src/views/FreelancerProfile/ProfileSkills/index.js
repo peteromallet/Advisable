@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text, Tag } from "@advisable/donut";
 
 function ProfileSkills({ data }) {

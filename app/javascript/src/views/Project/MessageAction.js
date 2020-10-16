@@ -1,4 +1,3 @@
-import React from "react";
 import { use100vh } from "react-div-100vh";
 import { Chatbubbles } from "@styled-icons/ionicons-solid";
 import ActionBarModal from "./ActionBarModal";

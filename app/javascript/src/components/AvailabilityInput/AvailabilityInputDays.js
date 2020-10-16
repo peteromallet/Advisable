@@ -1,12 +1,12 @@
-import React from "react";
+import { useRef, useLayoutEffect } from "react";
 import AvailabilityInputTimes from "./AvailabilityInputTimes";
 import EmptyColumn from "./EmptyColumn";
 import { StyledAvailabilityInputColumns } from "./styles";
 
 function AvailabilityInputDays({ children, maxHeight }) {
-  const scrollView = React.useRef(null);
+  const scrollView = useRef(null);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     scrollView.current.scrollTop = 700;
   }, []);
 

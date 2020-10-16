@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Text } from "@advisable/donut";
 import { motion, transform } from "framer-motion";

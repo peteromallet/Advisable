@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useCallback, useMemo } from "react";
 import { DateTime } from "luxon";
 import { Formik, Form, Field } from "formik";
 import { Paragraph, Availability, useBreakpoint } from "@advisable/donut";
@@ -31,7 +31,7 @@ function UpdateAvailabilityForm({
   const isDesktop = useBreakpoint("mUp");
   const notifications = useNotifications();
   const [updateAvailability] = useUpdateAvailability();
-  const [timezone, setTimezone] = React.useState(
+  const [timezone, setTimezone] = useState(
     DateTime.local().zoneName || "UTC",
   );
 
@@ -39,7 +39,7 @@ function UpdateAvailabilityForm({
     availability: data.viewer.availability,
   };
 
-  const handleSubmit = React.useCallback(
+  const handleSubmit = useCallback(
     async (values) => {
       const { errors } = await updateAvailability({
         variables: {
@@ -61,7 +61,7 @@ function UpdateAvailabilityForm({
     [notifications, data, onUpdate, updateAvailability],
   );
 
-  const events = React.useMemo(() => {
+  const events = useMemo(() => {
     return data.viewer.interviews.map((interview) => ({
       time: interview.startsAt,
       label: `Interview with ${interview.specialist.firstName}`,

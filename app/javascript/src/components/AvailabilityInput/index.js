@@ -1,5 +1,5 @@
 import { find } from "lodash-es";
-import React, { useState, useMemo, useCallback, useEffect } from "react";
+import { memo, useState, useMemo, useCallback, useEffect } from "react";
 import { DateTime } from "luxon";
 import { StyledAvailabilityInput } from "./styles";
 import AvailabilityInputDay from "./AvailabilityInputDay";
@@ -15,7 +15,7 @@ import {
   cellsFromSelection,
 } from "./utilities";
 
-const AvailabilityInput = React.memo(function AvailabilityInput({
+const AvailabilityInput = memo(function AvailabilityInput({
   timezone,
   value,
   events,

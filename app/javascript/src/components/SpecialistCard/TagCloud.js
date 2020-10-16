@@ -1,4 +1,4 @@
-import React from "react";
+import { useRef, useState, useLayoutEffect } from "react";
 import { Check } from "@styled-icons/feather";
 import styled from "styled-components";
 import { Box, Text, theme, Tooltip } from "@advisable/donut";
@@ -37,12 +37,12 @@ const Circle = styled.span`
 `;
 
 const TagCloud = ({ tags, maxRows, name }) => {
-  const ref = React.useRef(null);
-  const [min, setMin] = React.useState(0);
-  const [max, setMax] = React.useState(tags.length);
+  const ref = useRef(null);
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(tags.length);
   const midPoint = Math.floor((min + max) / 2);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (!maxRows) return;
     if (min >= max) return;
 

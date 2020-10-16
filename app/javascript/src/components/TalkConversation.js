@@ -1,4 +1,4 @@
-import React from "react";
+import { useRef, useEffect } from "react";
 import Talk from "talkjs";
 import { Box } from "@advisable/donut";
 import useViewer from "../hooks/useViewer";
@@ -6,9 +6,9 @@ import createTalkSession from "../utilities/createTalkSession";
 
 export default function TalkConversation({ conversationId, participants }) {
   const viewer = useViewer();
-  const messengerRef = React.useRef(null);
+  const messengerRef = useRef(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Talk.ready.then(() => {
       const session = createTalkSession(viewer);
       const conversation = session.getOrCreateConversation(conversationId);

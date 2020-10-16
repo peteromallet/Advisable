@@ -1,4 +1,3 @@
-import React from "react";
 import { Formik, Form } from "formik";
 import { Box, Card, Text, Paragraph, Textarea } from "@advisable/donut";
 import FormField from "components/FormField";

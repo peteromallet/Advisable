@@ -1,4 +1,3 @@
-import React from "react";
 import { extractSpacingProps } from "@advisable/donut";
 import SegmentedControlRadio from "./SegmentedControlRadio";
 import { SegmentedControl as SegmentedControlStyles } from "./styles";

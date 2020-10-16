@@ -1,4 +1,3 @@
-import React from "react";
 import { useMutation } from "@apollo/client";
 import { Box, Card, Text, Link } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";

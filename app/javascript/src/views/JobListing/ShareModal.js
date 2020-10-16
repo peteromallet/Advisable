@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Modal, Text, Box } from "@advisable/donut";
 import CopyURL from "../../components/CopyURL";
 

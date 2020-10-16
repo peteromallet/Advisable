@@ -1,4 +1,3 @@
-import React from "react";
 import { Hamburger, HamburgerLine } from "./styles";
 
 export default function MobileHeaderHamburger({ onClick }) {

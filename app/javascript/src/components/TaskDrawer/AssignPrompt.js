@@ -1,5 +1,5 @@
 // Renders the prompt to assign a task
-import React from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Button, Box } from "@advisable/donut";
 import Text from "../Text";
@@ -8,7 +8,7 @@ import { Confirmation, ConfirmationContainer } from "./styles";
 
 const AssignPrompt = ({ task, onClose, onAssign }) => {
   const [assignTask] = useMutation(ASSIGN_TASK);
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleAssign = async () => {
     setLoading(true);

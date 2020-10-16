@@ -1,8 +1,8 @@
-import React from "react";
+import { Component } from "react";
 import { AlertCircle } from "@styled-icons/feather";
 import { Box, Text } from "@advisable/donut";
 
-class PreviousProjectFormErrorBoundary extends React.Component {
+class PreviousProjectFormErrorBoundary extends Component {
   state = {
     hasError: false,
   };

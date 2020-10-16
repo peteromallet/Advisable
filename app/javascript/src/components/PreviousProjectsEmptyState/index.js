@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Text, Button } from "@advisable/donut";
 import RequestReferences from "src/components/RequestReferences";
 import { Container } from "./styles";

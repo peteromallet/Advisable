@@ -1,9 +1,9 @@
-import React from "react";
+import { useState } from "react";
 import { uniqueId } from "lodash-es";
 import { SegmentedControlRadio as SegmentedControlRadioStyles } from "./styles";
 
 const SegmentedControlRadio = ({ label, ...rest }) => {
-  const [id] = React.useState(uniqueId("SegmentedControl"));
+  const [id] = useState(uniqueId("SegmentedControl"));
   return (
     <SegmentedControlRadioStyles data-active={rest.checked}>
       <input {...rest} type="radio" id={id} />

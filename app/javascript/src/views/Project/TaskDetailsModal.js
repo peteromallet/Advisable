@@ -1,4 +1,3 @@
-import React from "react";
 import { displayTaskQuote, displayTaskDueDate } from "../../utilities/tasks";
 import ActionBarModal from "./ActionBarModal";
 import { Calendar, Time } from "@styled-icons/ionicons-outline";

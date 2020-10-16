@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Card, Text } from "@advisable/donut";
 import { useNotifications } from "../../components/Notifications";
 import UpdatePaymentSettingsForm from "../../components/UpdatePaymentSettingsForm";

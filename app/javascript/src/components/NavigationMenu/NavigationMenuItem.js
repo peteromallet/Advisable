@@ -1,4 +1,3 @@
-import * as React from "react";
 import { StyledNavigationMenuItem, ArrowIcon, PrefixIcon } from "./styles";
 
 const NavigationMenuItem = ({ children, icon, ...props }) => {

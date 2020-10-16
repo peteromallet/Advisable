@@ -1,4 +1,3 @@
-import React from "react";
 import { gql } from "@apollo/client";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";

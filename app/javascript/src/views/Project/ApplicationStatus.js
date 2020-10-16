@@ -1,4 +1,4 @@
-import React from "react";
+import { useMemo } from "react";
 import { DateTime } from "luxon";
 import { useTranslation } from "react-i18next";
 import {
@@ -22,7 +22,7 @@ export default function ApplicationStatus({ application }) {
   const { t } = useTranslation();
   const Icon = ICONS[application.status];
   const specialistName = application.specialist.firstName;
-  const interviewDate = React.useMemo(() => {
+  const interviewDate = useMemo(() => {
     const startsAt = application.interview?.startsAt;
     if (!startsAt) return null;
     return DateTime.fromISO(startsAt).toFormat("dd MMMM yyyy");

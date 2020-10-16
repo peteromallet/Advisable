@@ -1,4 +1,3 @@
-import React from "react";
 import { Mail } from "@styled-icons/feather";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";

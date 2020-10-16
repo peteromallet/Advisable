@@ -1,4 +1,3 @@
-import React from "react";
 import { findIndex } from "lodash-es";
 import { NavLink, matchPath, useLocation } from "react-router-dom";
 import { StyledProgressSteps, StyledProgressStepsStep } from "./styles";

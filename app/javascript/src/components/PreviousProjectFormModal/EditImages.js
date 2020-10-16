@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text } from "@advisable/donut";
 import Helper from "./Helper";
 import CoverPhoto from "./CoverPhoto";

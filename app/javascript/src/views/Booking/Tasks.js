@@ -1,4 +1,3 @@
-import * as React from "react";
 import { List, CheckSquare } from "@styled-icons/feather";
 import { useTranslation } from "react-i18next";
 import { Text, Tabs, Card } from "@advisable/donut";

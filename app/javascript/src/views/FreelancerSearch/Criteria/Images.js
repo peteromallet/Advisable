@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useBreakpoint } from "@advisable/donut";
 import { useSpring, useTransform } from "framer-motion";
 import { StyledImages, StyledImage } from "./styles";
@@ -16,7 +16,7 @@ const Images = () => {
     mouseY.set(e.clientY - halfHeight);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isDesktop) {
       window.addEventListener("mousemove", handleMouseMove);
       return () => window.removeEventListener("mousemove", handleMouseMove);

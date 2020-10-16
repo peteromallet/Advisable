@@ -1,4 +1,3 @@
-import React from "react";
 import { get } from "lodash-es";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";

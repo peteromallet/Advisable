@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { DateTime } from "luxon";
 import {
   Box,
@@ -33,7 +33,7 @@ export default function UpdateAvailability({ application, dialog, onUpdate }) {
       update: onUpdate,
     },
   );
-  const [availability, setAvailability] = React.useState([]);
+  const [availability, setAvailability] = useState([]);
 
   useEffect(() => {
     if (!loading) {

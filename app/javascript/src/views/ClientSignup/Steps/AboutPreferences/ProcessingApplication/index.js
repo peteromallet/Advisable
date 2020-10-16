@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text } from "@advisable/donut";
 import ProcessingApplicationWrapper from "./styles";
 import Loading from "../../../../../components/Loading";

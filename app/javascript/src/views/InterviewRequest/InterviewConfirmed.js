@@ -1,4 +1,3 @@
-import React from "react";
 import { DateTime } from "luxon";
 import { useLocation } from "react-router-dom";
 import { Box, Text } from "@advisable/donut";

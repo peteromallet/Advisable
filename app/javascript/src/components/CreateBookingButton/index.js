@@ -1,4 +1,3 @@
-import React from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "@advisable/donut";
 import { UserCheck } from "@styled-icons/feather";

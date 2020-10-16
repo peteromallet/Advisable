@@ -1,4 +1,3 @@
-import React from "react";
 import { Box } from "@advisable/donut";
 import { useLocation, Switch, Route, Redirect } from "react-router-dom";
 import About from "./About";

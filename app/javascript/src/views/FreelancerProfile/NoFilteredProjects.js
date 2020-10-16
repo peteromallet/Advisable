@@ -1,4 +1,3 @@
-import React from "react";
 import { Folder } from "@styled-icons/feather";
 import { Circle, Box, Text } from "@advisable/donut";
 

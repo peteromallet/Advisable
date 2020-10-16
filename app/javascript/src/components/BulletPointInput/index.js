@@ -1,4 +1,3 @@
-import React from "react";
 import { Textarea } from "@advisable/donut";
 import { StyledBulletPointInput, StyledBulletPointInputItem } from "./styles";
 

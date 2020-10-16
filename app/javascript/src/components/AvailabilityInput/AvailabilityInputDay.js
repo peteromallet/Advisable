@@ -1,7 +1,7 @@
-import React from "react";
+import { memo } from "react";
 import { StyledAvailabilityInputColumn } from "./styles";
 
-const AvailabilityInputDay = React.memo(function AvailabilityInputDay({
+const AvailabilityInputDay = memo(function AvailabilityInputDay({
   children,
 }) {
   return (

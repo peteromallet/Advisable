@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text, Tag } from "@advisable/donut";
 import Rating from "../../components/Rating";
 import renderLinkBreaks from "../../utilities/renderLineBreaks";

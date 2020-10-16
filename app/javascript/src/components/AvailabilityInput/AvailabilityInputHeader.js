@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import { ChevronLeft, ChevronRight } from "@styled-icons/feather";
 import { Text } from "@advisable/donut";
 import { DateTime } from "luxon";
@@ -8,7 +8,7 @@ import {
   StyledAvailabilityInputHeaderButton,
 } from "./styles";
 
-const AvailabilityInputHeader = React.memo(function AvailabilityInputHeader({
+const AvailabilityInputHeader = memo(function AvailabilityInputHeader({
   times,
   timezone,
   onPreviousWeek,

@@ -1,4 +1,4 @@
-import React from "react";
+import { cloneElement } from "react";
 import { Route, useLocation } from "react-router-dom";
 import { screen } from "@testing-library/react";
 import { renderComponent, mockData, mockViewer } from "test-utils";
@@ -20,7 +20,7 @@ function renderTestCase(viewer, initialPath, component) {
   return renderComponent(
     <>
       <Route path="*" component={LocationDisplay} />
-      {React.cloneElement(component)}
+      {cloneElement(component)}
     </>,
     {
       route: initialPath,

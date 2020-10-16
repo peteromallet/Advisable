@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Status as Wrapper } from "./styles";
 
 const Status = ({ children, icon, styling }) => {

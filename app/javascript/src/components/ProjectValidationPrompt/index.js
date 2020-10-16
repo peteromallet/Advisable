@@ -1,4 +1,3 @@
-import React from "react";
 import { AlertCircle } from "@styled-icons/feather";
 import { Box, Text } from "@advisable/donut";
 import CopyURL from "../CopyURL";

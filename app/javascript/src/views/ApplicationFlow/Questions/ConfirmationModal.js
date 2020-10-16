@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Box, Text, Button, Modal } from "@advisable/donut";
 import pluralize from "../../../utilities/pluralize";

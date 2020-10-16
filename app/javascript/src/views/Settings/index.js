@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import { lazy } from "react";
 import useViewer from "../../hooks/useViewer";
 const ClientSettings = lazy(() => import("./ClientSettings"));
 

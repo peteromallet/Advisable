@@ -1,4 +1,4 @@
-import React from "react";
+import { cloneElement } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { I18nextProvider } from "react-i18next";
 import { MemoryRouter } from "react-router-dom";
@@ -163,7 +163,7 @@ export function renderComponent(component, config = {}) {
       route={config.route || "/"}
       graphQLMocks={config.graphQLMocks || []}
     >
-      <ApplicationProvider>{React.cloneElement(component)}</ApplicationProvider>
+      <ApplicationProvider>{cloneElement(component)}</ApplicationProvider>
     </Providers>,
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import MultistepMenu from "../../components/MultistepMenu";
 import useLocationStages from "../../hooks/useLocationStages";
 import {
@@ -6,7 +6,7 @@ import {
   projectOverviewValidationSchema,
 } from "./validationSchemas";
 
-const SetupMenu = React.memo(function SetupMenu({
+const SetupMenu = memo(function SetupMenu({
   previousProject,
   urlPrefix,
 }) {

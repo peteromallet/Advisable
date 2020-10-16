@@ -1,4 +1,3 @@
-import * as React from "react";
 import Text from "../../components/Text";
 import { Box, Card } from "@advisable/donut";
 import Link from "../../components/Link";

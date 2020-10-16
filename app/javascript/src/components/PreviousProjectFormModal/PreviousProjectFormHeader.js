@@ -1,4 +1,3 @@
-import React from "react";
 import { X } from "@styled-icons/feather";
 import { Box } from "@advisable/donut";
 import {

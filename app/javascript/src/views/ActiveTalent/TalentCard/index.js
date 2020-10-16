@@ -1,5 +1,4 @@
 // Renders the card for an active booking in the manage talent view
-import React from "react";
 import { Card, Avatar, Text } from "@advisable/donut";
 import { TalentCard as StyledTalentCard } from "./styles";
 import Status from "../../../components/Status";

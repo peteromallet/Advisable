@@ -1,4 +1,3 @@
-import React from "react";
 import RecommendationOffer from "./RecommendationOffer";
 import RecommendationActions from "./RecommendationActions";
 import { Box, Container } from "@advisable/donut";

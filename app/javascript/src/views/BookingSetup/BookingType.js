@@ -1,4 +1,3 @@
-import React from "react";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { Card, Text } from "@advisable/donut";

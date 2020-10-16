@@ -1,4 +1,3 @@
-import React from "react";
 import { get } from "lodash-es";
 import { Link } from "react-router-dom";
 import { Button } from "@advisable/donut";

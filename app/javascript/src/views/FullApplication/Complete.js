@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Text, Button } from "@advisable/donut";
 import { Redirect } from "react-router-dom";

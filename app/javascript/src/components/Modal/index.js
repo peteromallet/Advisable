@@ -1,5 +1,5 @@
 // DEPRECATED: Please use the Modal component from Donut instead.
-import React from "react";
+import { useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { use100vh } from "react-div-100vh";
 import { X } from "@styled-icons/feather";
@@ -29,7 +29,7 @@ const Modal = ({
   paddingLeft,
 }) => {
   const height = use100vh();
-  const containerRef = React.useRef(null);
+  const containerRef = useRef(null);
   const paddingProps = {
     padding,
     paddingTop,
@@ -45,7 +45,7 @@ const Modal = ({
     document.body.appendChild(modalRoot);
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const container = containerRef.current;
     if (isOpen) {
       disableBodyScroll(container);

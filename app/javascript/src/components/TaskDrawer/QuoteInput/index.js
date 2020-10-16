@@ -1,4 +1,3 @@
-import React from "react";
 import { Clock, ArrowUp } from "@styled-icons/feather";
 import { motion } from "framer-motion";
 import { Card } from "@advisable/donut";

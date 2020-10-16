@@ -1,4 +1,3 @@
-import React from "react";
 import { ArrowRight } from "@styled-icons/feather";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";

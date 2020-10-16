@@ -1,6 +1,5 @@
 // The booking setup will be rendered if there is additional information
 // required for the booking to be in a working state.
-import React from "react";
 import { Box } from "@advisable/donut";
 import { useQuery } from "@apollo/client";
 import {

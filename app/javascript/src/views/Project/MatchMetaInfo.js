@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text } from "@advisable/donut";
 
 export default function MatchMetaInfo({ match }) {

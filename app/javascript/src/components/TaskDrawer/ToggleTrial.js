@@ -1,4 +1,4 @@
-import React from "react";
+import { forwardRef } from "react";
 import { gql } from "@apollo/client";
 import { Menu } from "@advisable/donut";
 import { useMutation } from "@apollo/client";
@@ -9,7 +9,7 @@ import { Text, Button, Box } from "@advisable/donut";
 import { DrawerModal } from "../Drawer";
 import UPDATE_TASK from "./setTaskTrial";
 
-const ToggleWithConfirmation = React.forwardRef(function ToggleTaskTrial(
+const ToggleWithConfirmation = forwardRef(function ToggleTaskTrial(
   { trialTask, title, handleUpdate, ...props },
   ref,
 ) {

@@ -1,4 +1,4 @@
-import React from "react";
+import { useCallback } from "react";
 import { Container, Card, Box, Text, Paragraph } from "@advisable/donut";
 import UpdateAvailablityForm from "./UpdateAvailabilityForm";
 import { useRequestInterviewReschedule } from "./queries";
@@ -6,7 +6,7 @@ import { useRequestInterviewReschedule } from "./queries";
 export default function RequestRescheduleAsClient({ interview }) {
   const [requestReschedule] = useRequestInterviewReschedule();
 
-  const handleRequest = React.useCallback(async () => {
+  const handleRequest = useCallback(async () => {
     await requestReschedule({
       variables: {
         input: {

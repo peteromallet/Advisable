@@ -1,4 +1,3 @@
-import * as React from "react";
 import { User, Award, MapPin, DollarSign } from "@styled-icons/feather";
 import Sticky from "../../components/Sticky";
 import { useBreakpoint } from "@advisable/donut";

@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text, Avatar } from "@advisable/donut";
 import { useParams, useLocation } from "react-router-dom";
 import StarRating from "../../components/StarRating";

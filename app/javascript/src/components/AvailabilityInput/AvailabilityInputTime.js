@@ -1,4 +1,4 @@
-import React from "react";
+import { memo, useCallback } from "react";
 import { Check, Phone } from "@styled-icons/feather";
 import { Circle, Tooltip } from "@advisable/donut";
 import {
@@ -6,7 +6,7 @@ import {
   StyledAvailabilityInputCellMarker,
 } from "./styles";
 
-const AvailabilityInputTime = React.memo(function AvailabilityInputTime({
+const AvailabilityInputTime = memo(function AvailabilityInputTime({
   onMouseDown,
   onMouseOver,
   column,
@@ -17,12 +17,12 @@ const AvailabilityInputTime = React.memo(function AvailabilityInputTime({
   time,
   event,
 }) {
-  const handleMouseDown = React.useCallback(() => {
+  const handleMouseDown = useCallback(() => {
     if (isDisabled) return;
     onMouseDown(column, row);
   }, [onMouseDown, column, row]);
 
-  const handleMouseOver = React.useCallback(() => {
+  const handleMouseOver = useCallback(() => {
     onMouseOver(column, row);
   }, [onMouseOver, column, row]);
 

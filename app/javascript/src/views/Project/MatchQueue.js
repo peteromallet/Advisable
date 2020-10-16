@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Box } from "@advisable/donut";
 import { AnimatePresence, motion } from "framer-motion";

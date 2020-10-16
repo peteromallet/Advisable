@@ -1,4 +1,3 @@
-import * as React from "react";
 import { get } from "lodash-es";
 import { Box, Card } from "@advisable/donut";
 import Text from "../../components/Text";

@@ -1,5 +1,4 @@
 // Renders the description of a task in its various stages.
-import React from "react";
 import { Info, AlertCircle } from "@styled-icons/feather";
 import Notice from "../Notice";
 import { Box, Text } from "@advisable/donut";

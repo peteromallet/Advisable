@@ -1,4 +1,3 @@
-import React from "react";
 import { DateTime } from "luxon";
 import { Box, Circle, Text } from "@advisable/donut";
 import { Calendar } from "@styled-icons/ionicons-outline";

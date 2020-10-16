@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { use100vh } from "react-div-100vh";
 import { StyledView, StyledViewContent, StyledSidebar } from "./styles";

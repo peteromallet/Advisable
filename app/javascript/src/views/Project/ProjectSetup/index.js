@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useQuery } from "@apollo/client";
 import { Box, useBreakpoint, useTheme } from "@advisable/donut";
@@ -24,12 +24,12 @@ export default function JobSetup() {
   const mediumAndUp = useBreakpoint("mUp");
   const largeScreen = useBreakpoint("lUp");
 
-  React.useEffect(() => {
+  useEffect(() => {
     theme.updateTheme({ background: mediumAndUp ? "default" : "white" });
     return () => theme.updateTheme({ background: "default" });
   }, [mediumAndUp]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 

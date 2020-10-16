@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import { useMutation } from "@apollo/client";
-import React, { Fragment, useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import Text from "src/components/Text";
 import FormField from "src/components/FormField";
 import { Button, Textarea } from "@advisable/donut";

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { gql } from "@apollo/client";
 import { Text, Card, Button, Box } from "@advisable/donut";
 import { useQuery } from "@apollo/client";
@@ -23,7 +23,7 @@ export const GET_PAYMENT_METHOD = gql`
 `;
 
 const CardDetails = ({ nextStep }) => {
-  const [newCard, setNewCard] = React.useState(false);
+  const [newCard, setNewCard] = useState(false);
   const paymentMethodQuery = useQuery(GET_PAYMENT_METHOD);
 
   if (paymentMethodQuery.loading) return <Loading />;

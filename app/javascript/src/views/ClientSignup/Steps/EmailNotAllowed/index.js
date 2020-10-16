@@ -1,4 +1,3 @@
-import React from "react";
 import { Link as DonutLink, Button } from "@advisable/donut";
 import MotionStack from "../MotionStack";
 import { Title, Description } from "../styles";

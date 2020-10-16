@@ -1,4 +1,3 @@
-import React from "react";
 import { Autocomplete } from "@advisable/donut";
 import ZONES from "./zones";
 

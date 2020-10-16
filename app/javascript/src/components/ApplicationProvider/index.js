@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router-dom";
@@ -12,7 +12,7 @@ const ApplicationProvider = ({ children }) => {
   const location = useLocation();
   const { data, loading } = useQuery(VIEWER);
   useIntercom(location, data?.viewer);
-  const [logoURL, setLogoURL] = React.useState("/");
+  const [logoURL, setLogoURL] = useState("/");
 
   const context = {
     viewer: data?.viewer,

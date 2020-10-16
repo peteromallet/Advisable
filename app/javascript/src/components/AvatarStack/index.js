@@ -1,4 +1,4 @@
-import React from "react";
+import { Children, cloneElement } from "react";
 import styled from "styled-components";
 import { margin } from "styled-system";
 import { StyledAvatar } from "@advisable/donut";
@@ -46,8 +46,8 @@ export default function AvatarStack({
       marginRight={marginRight}
       marginBottom={marginBottom}
     >
-      {React.Children.map(children, (child) => {
-        return React.cloneElement(child, { size });
+      {Children.map(children, (child) => {
+        return cloneElement(child, { size });
       })}
     </StyledAvatarStack>
   );

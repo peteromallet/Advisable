@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Plus } from "@styled-icons/feather";
 import {
   DialogDisclosure,

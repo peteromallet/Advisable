@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Button } from "@advisable/donut";
 import CreateBookingButton from "../../../components/CreateBookingButton";

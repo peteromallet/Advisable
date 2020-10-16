@@ -1,4 +1,4 @@
-import React from "react";
+import { Children } from "react";
 import styled, { css } from "styled-components";
 
 const StyledButtonGroup = styled.div`
@@ -36,7 +36,7 @@ const ButtonGroupItem = styled.div`
 export default function ButtonGroup({ children, ...props }) {
   return (
     <StyledButtonGroup stack={props.stack}>
-      {React.Children.map(children, (child, i) => {
+      {Children.map(children, (child, i) => {
         // If the child is null then return null
         if (child === null) return null;
 

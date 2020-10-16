@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@advisable/donut";
 import { Phone } from "@styled-icons/feather";
 import useViewer from "../../hooks/useViewer";

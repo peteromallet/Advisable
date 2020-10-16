@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { get } from "lodash-es";
 import { motion } from "framer-motion";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
@@ -29,7 +29,7 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
   const { t } = useTranslation();
   const application = data.application;
   const specialist = application.specialist;
-  const [projectTypeModal, setProjectTypeModal] = React.useState(false);
+  const [projectTypeModal, setProjectTypeModal] = useState(false);
 
   const handleEditPayment = () => {
     history.push("/settings/payments");

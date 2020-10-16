@@ -1,6 +1,6 @@
 // Renders the confirmation steps for a project.
 import { useQuery } from "@apollo/client";
-import React from "react";
+import { Fragment } from "react";
 import { Route, Switch, Redirect, useLocation } from "react-router";
 import NotFound from "src/views/NotFound";
 import Loading from "src/components/Loading";
@@ -47,13 +47,13 @@ const ProjectSetup = ({ data }) => {
       {/* If the current step has a title then we need to render the header
         section */}
       {step.title && (
-        <React.Fragment>
+        <Fragment>
           <Step>
             Step {currentStepNumber} of {steps.length - 1}
           </Step>
           <StepHeading>{step.title}</StepHeading>
           <Progress amount={(currentStepNumber / steps.length) * 100} />
-        </React.Fragment>
+        </Fragment>
       )}
 
       <Switch>

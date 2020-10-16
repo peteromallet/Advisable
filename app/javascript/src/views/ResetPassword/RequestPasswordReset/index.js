@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Text, Box, Card, Button, theme } from "@advisable/donut";
 import RequestResetForm from "./RequestResetForm";

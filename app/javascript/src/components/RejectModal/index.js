@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 import { useMutation } from "@apollo/client";
 import { Formik, Field } from "formik";
 import Modal from "src/components/Modal";
@@ -50,7 +50,7 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
 
     case "I just want to see more candidates": {
       return (
-        <React.Fragment>
+        <Fragment>
           <Text size="s" marginBottom="l" marginTop="m">
             We encourage you to talk to relevant candidates as they come in.
             This ensures that they’re still available and lets us calibrate the
@@ -59,13 +59,13 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
           <Button onClick={onRequestCall} size="l" type="button">
             Request Call
           </Button>
-        </React.Fragment>
+        </Fragment>
       );
     }
 
     default: {
       return (
-        <React.Fragment>
+        <Fragment>
           <Field
             autoFocus
             as={Textarea}
@@ -99,7 +99,7 @@ const SelectedOption = ({ formik, onClose, onRequestCall }) => {
               Cancel
             </Button>
           </Columns>
-        </React.Fragment>
+        </Fragment>
       );
     }
   }

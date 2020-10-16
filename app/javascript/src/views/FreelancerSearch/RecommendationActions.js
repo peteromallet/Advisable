@@ -1,4 +1,3 @@
-import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Box, Button } from "@advisable/donut";
 import { MessageCircle } from "@styled-icons/feather";

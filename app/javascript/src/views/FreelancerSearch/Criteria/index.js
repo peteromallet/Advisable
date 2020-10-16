@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { Search } from "@styled-icons/feather";
 import {
   Box,
@@ -26,7 +26,7 @@ const FreelancerSearchCriteria = () => {
   const theme = useTheme();
   const { data, loading } = useQuery(DATA);
 
-  React.useEffect(() => {
+  useEffect(() => {
     theme.updateTheme({ background: "white" });
     return () => theme.updateTheme({ background: "default" });
   }, []);

@@ -1,4 +1,3 @@
-import React from "react";
 import queryString from "query-string";
 import { Box, Text } from "@advisable/donut";
 import { useLocation, useHistory } from "react-router-dom";

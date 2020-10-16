@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Text, Box, Link } from "@advisable/donut";
 import { Sidebar, BackgroundImage } from "./styles";
 import StarRating from "./StarRating";
@@ -11,7 +11,7 @@ import useInterval from "../../../hooks/useInterval";
 const DELAY = 4000;
 
 const Testimonials = () => {
-  const [current, setCurrent] = React.useState(0);
+  const [current, setCurrent] = useState(0);
 
   const { resetInterval } = useInterval(() => {
     if (current === TESTIMONIALS.length - 1) {

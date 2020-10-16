@@ -1,4 +1,3 @@
-import React from "react";
 import { ArrowRight } from "@styled-icons/feather";
 import { object, string } from "yup";
 import { useMutation } from "@apollo/client";

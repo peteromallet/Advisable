@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { Box, Text, theme } from "@advisable/donut";
 import { useApolloClient, gql, useQuery } from "@apollo/client";

@@ -1,4 +1,3 @@
-import React from "react";
 import { Text } from "@advisable/donut";
 import { Info } from "@styled-icons/feather";
 import Notice from "../../components/Notice";

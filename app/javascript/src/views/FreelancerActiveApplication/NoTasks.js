@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Card } from "@advisable/donut";
 import Text from "../../components/Text";
 import NewTask from "../../components/NewTask";

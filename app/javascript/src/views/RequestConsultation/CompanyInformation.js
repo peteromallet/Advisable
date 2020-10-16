@@ -1,4 +1,3 @@
-import React from "react";
 import { object, string } from "yup";
 import { ArrowRight } from "@styled-icons/feather";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";

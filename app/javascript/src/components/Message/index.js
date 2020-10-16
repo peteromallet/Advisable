@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Box, Text } from "@advisable/donut";
 import { MessageCircle } from "@styled-icons/feather";
 

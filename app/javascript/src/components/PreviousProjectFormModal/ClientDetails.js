@@ -1,4 +1,3 @@
-import React from "react";
 import { ArrowRight } from "@styled-icons/feather";
 import { Formik, Form, useField } from "formik";
 import {

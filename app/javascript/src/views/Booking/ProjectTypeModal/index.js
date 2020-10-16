@@ -1,6 +1,5 @@
 // Renders the modal for when the client clicks "start working with X" to create
 // a new booking.
-import * as React from "react";
 import { useMutation } from "@apollo/client";
 import { Box, Text } from "@advisable/donut";
 import Modal from "../../../components/Modal";

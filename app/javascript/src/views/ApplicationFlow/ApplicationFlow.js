@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { isEmpty, filter } from "lodash-es";
 import {
@@ -54,7 +54,7 @@ const ApplicationFlow = ({ application, match }) => {
   // Some steps are able to be skipped. e.g the references step. The skipped
   // variable is an array of step names to keep track of the steps that have
   // been skipped.
-  const [skipped, setSkipped] = React.useState([]);
+  const [skipped, setSkipped] = useState([]);
   const skipStep = (step) => setSkipped([...skipped, step.name]);
 
   // Various parts of this flow need to act differently based on wether the user
@@ -122,7 +122,7 @@ const ApplicationFlow = ({ application, match }) => {
   const currentStepIndex = getStepIndexFromPath(currentPathname);
   const previousStepIndex = getStepIndexFromPath(previousPathname);
 
-  React.useEffect(() => {
+  useEffect(() => {
     theme.updateTheme({
       background: mediumAndUp || currentStepIndex === 2 ? "default" : "white",
     });

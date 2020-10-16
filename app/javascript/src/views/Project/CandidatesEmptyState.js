@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, Skeleton, Box, Text, Paragraph } from "@advisable/donut";
 
 export default function CandidatesEmptyState() {

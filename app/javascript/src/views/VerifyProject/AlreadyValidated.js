@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Text } from "@advisable/donut";
 
 function AlreadyValidated() {

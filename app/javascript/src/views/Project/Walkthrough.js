@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useLayoutEffect, useCallback, useMemo, useRef } from "react";
 import { rgba } from "polished";
 import { motion } from "framer-motion";
 import styled from "styled-components";
@@ -71,12 +71,12 @@ const StyledBackdrop = styled.div`
 `;
 
 export function useWalkthrough(steps, opts = {}) {
-  const [visible, setVisible] = React.useState(opts.visible || false);
-  const [currentStepIndex, setCurrentStepIndex] = React.useState(0);
+  const [visible, setVisible] = useState(opts.visible || false);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   const currentStep = steps[currentStepIndex];
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (visible) {
       document.body.style.overflow = "hidden";
     } else {
@@ -84,15 +84,15 @@ export function useWalkthrough(steps, opts = {}) {
     }
   }, [visible]);
 
-  const show = React.useCallback(() => {
+  const show = useCallback(() => {
     setVisible(true);
   }, [setVisible]);
 
-  const hide = React.useCallback(() => {
+  const hide = useCallback(() => {
     setVisible(false);
   }, [setVisible]);
 
-  const end = React.useCallback(() => {
+  const end = useCallback(() => {
     setVisible(false);
     setCurrentStepIndex(0);
 
@@ -101,7 +101,7 @@ export function useWalkthrough(steps, opts = {}) {
     }
   }, [opts, setVisible]);
 
-  const nextStep = React.useCallback(() => {
+  const nextStep = useCallback(() => {
     if (currentStepIndex < steps.length - 1) {
       setCurrentStepIndex(currentStepIndex + 1);
     } else {
@@ -125,13 +125,13 @@ function getWindowSize() {
 }
 
 function Backdrop({ highlight }) {
-  const [size, setSize] = React.useState(getWindowSize());
+  const [size, setSize] = useState(getWindowSize());
 
-  const handleResize = React.useCallback(() => {
+  const handleResize = useCallback(() => {
     setSize(getWindowSize());
   }, [setSize]);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     window.addEventListener("resize", handleResize);
 
     return function () {
@@ -141,7 +141,7 @@ function Backdrop({ highlight }) {
 
   const { width, height } = size;
 
-  const maskDimensions = React.useMemo(() => {
+  const maskDimensions = useMemo(() => {
     if (highlight) {
       const dimensions = highlight.getBoundingClientRect();
       return {
@@ -251,17 +251,17 @@ function getByDataWalkthough(name) {
 }
 
 export function Walkthrough({ currentStep, visible, steps, ...props }) {
-  const stepRef = React.useRef(null);
+  const stepRef = useRef(null);
 
-  const anchor = React.useMemo(() => {
+  const anchor = useMemo(() => {
     return getByDataWalkthough(currentStep.anchor);
   }, [currentStep]);
 
-  const highlight = React.useMemo(() => {
+  const highlight = useMemo(() => {
     return getByDataWalkthough(currentStep.highlight);
   }, [currentStep]);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (anchor || highlight) {
       const popper = createPopper(anchor || highlight, stepRef.current, {
         placement: currentStep.placement || "right",

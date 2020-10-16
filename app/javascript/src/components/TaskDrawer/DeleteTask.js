@@ -1,4 +1,3 @@
-import React from "react";
 import { Menu } from "@advisable/donut";
 import { useTranslation } from "react-i18next";
 

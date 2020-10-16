@@ -1,4 +1,3 @@
-import React from "react";
 import { Check, Search } from "@styled-icons/feather";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";

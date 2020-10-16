@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Box, Card } from "../../../../../donut/src";
 import StarRatingInput from "./";
 
@@ -7,7 +7,7 @@ export default {
 };
 
 export const basic = () => {
-  const [value, setValue] = React.useState(undefined);
+  const [value, setValue] = useState(undefined);
   const handleChange = (e) => {
     setValue(e.currentTarget.value);
   };

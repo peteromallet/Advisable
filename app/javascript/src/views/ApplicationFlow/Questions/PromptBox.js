@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Info } from "@styled-icons/feather";
 import { Box, Text, theme, useBreakpoint } from "@advisable/donut";

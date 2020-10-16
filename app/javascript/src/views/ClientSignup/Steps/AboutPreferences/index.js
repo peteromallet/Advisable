@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { string, object, number } from "yup";
 import { Formik, Form } from "formik";

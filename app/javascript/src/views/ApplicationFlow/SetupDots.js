@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { matchPath, useLocation } from "react-router-dom";
 import { Box, Circle } from "@advisable/donut";

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { get, sortBy } from "lodash-es";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useQuery, useMutation } from "@apollo/client";
@@ -26,7 +26,7 @@ const Profile = () => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);
   const notifications = useNotifications();
 
-  const [profilePhoto, setProfilePhoto] = React.useState(null);
+  const [profilePhoto, setProfilePhoto] = useState(null);
 
   const initialValues = {
     bio: get(data, "viewer.bio"),

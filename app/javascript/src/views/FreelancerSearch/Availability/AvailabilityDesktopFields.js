@@ -1,4 +1,3 @@
-import React from "react";
 import { Field } from "formik";
 import { Box, Card, Autocomplete, Button } from "@advisable/donut";
 import AvailabilityInput from "../../../components/AvailabilityInput";

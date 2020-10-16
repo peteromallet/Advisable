@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";
 import { Text } from "@advisable/donut";
-import React, { Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import Loading from "src/components/Loading";
 
 export const GET_DEPOSIT = gql`
@@ -15,8 +15,8 @@ export const GET_DEPOSIT = gql`
 
 const PaymentPending = ({ id, onSuccess }) => {
   const client = useApolloClient();
-  const [seconds, setSeconds] = React.useState(0);
-  const [timer, setTimer] = React.useState(null);
+  const [seconds, setSeconds] = useState(0);
+  const [timer, setTimer] = useState(null);
 
   const poll = () => {
     setTimer(
@@ -40,7 +40,7 @@ const PaymentPending = ({ id, onSuccess }) => {
     );
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     poll();
     return clearInterval(timer);
   }, []);

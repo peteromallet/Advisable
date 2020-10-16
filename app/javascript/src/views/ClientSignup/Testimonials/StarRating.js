@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, Link } from "@advisable/donut";
 import { StyledStarRating, StyledStar } from "./styles";
 

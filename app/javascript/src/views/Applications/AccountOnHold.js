@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Box, Text } from "@advisable/donut";
 import couch from "../../illustrations/couch.png";
 import CurrentlyOnHold from "./CurrentlyOnHold";

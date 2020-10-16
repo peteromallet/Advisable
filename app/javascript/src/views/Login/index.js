@@ -1,5 +1,4 @@
 // Renders the login page
-import React from "react";
 import queryString from "query-string";
 import { Redirect, useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";

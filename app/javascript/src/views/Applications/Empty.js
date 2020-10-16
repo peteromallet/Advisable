@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Box, Text, Paragraph, Link } from "@advisable/donut";
 import illustration from "./illustration.png";
 

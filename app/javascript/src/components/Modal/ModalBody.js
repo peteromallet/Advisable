@@ -1,4 +1,3 @@
-import React from "react";
 import Scrollable from "src/components/Scrollable";
 import { ModalBody as StyledModalBody } from "./styles";
 

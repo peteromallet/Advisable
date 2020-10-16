@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, Text } from "@advisable/donut";
 
 const DeclinedConsultation = () => {

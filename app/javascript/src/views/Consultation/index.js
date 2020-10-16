@@ -1,4 +1,3 @@
-import React from "react";
 import { Box } from "@advisable/donut";
 import { useQuery } from "@apollo/client";
 import { useParams, Redirect } from "react-router-dom";

@@ -1,6 +1,5 @@
 import { object, string } from "yup";
 import { ArrowRight } from "@styled-icons/feather";
-import React from "react";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { Card, Box, Text, Button, Textarea } from "@advisable/donut";

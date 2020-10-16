@@ -1,4 +1,3 @@
-import React from "react";
 import { darken } from "polished";
 import { theme } from "@advisable/donut";
 import { motion } from "framer-motion";

@@ -1,4 +1,4 @@
-import React from "react";
+import { Children, cloneElement } from "react";
 import { Box } from "@advisable/donut";
 
 function Masonry({ children, columns = 2, gutter = 20 }) {
@@ -8,9 +8,9 @@ function Masonry({ children, columns = 2, gutter = 20 }) {
     cols.push([]);
   }
 
-  React.Children.forEach(children, (child, i) => {
+  Children.forEach(children, (child, i) => {
     const col = i % columns;
-    cols[col].push(React.cloneElement(child));
+    cols[col].push(cloneElement(child));
   });
 
   const spacing = gutter / 2;

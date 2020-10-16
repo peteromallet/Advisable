@@ -1,4 +1,3 @@
-import * as React from "react";
 import { DateTime } from "luxon";
 import { Text } from "@advisable/donut";
 import { Calendar, Clock } from "@styled-icons/feather";

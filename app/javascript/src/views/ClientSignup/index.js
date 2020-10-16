@@ -1,4 +1,4 @@
-import React from "react";
+import { useLayoutEffect } from "react";
 import { Switch, Redirect, useLocation } from "react-router-dom";
 import useViewer from "../../hooks/useViewer";
 import useSteps from "./useSteps";
@@ -20,7 +20,7 @@ function ClientSignup() {
   const isDesktop = useBreakpoint("lUp");
   const notifications = useNotifications();
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     theme.updateTheme({ background: "white" });
     return () => theme.updateTheme({ background: "default" });
     // eslint-disable-next-line react-hooks/exhaustive-deps

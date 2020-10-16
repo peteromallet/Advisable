@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text, BulletList } from "@advisable/donut";
 
 export default function GoalsSummary({ project, children }) {

@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { useParams } from "react-router-dom";
 import { Pause } from "@styled-icons/ionicons-solid";

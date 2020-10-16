@@ -1,4 +1,3 @@
-import React from "react";
 import { Card } from "@advisable/donut";
 import { Layout, SkeletonText, SkeletonHeading } from "src/components";
 

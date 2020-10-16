@@ -1,4 +1,4 @@
-import React from "react";
+import { useMemo } from "react";
 import { rgba } from "polished";
 import { useField } from "formik";
 import { Text, theme } from "@advisable/donut";
@@ -66,7 +66,7 @@ export default function PopularSkills({
   const { t } = useTranslation();
   const [field, , helpers] = useField("skills");
 
-  const filtered = React.useMemo(() => {
+  const filtered = useMemo(() => {
     return skills.filter((s) => field.value.indexOf(s.name) === -1);
   }, [skills, field.value]);
 

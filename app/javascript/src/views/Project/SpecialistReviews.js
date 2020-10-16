@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Stack, Text, Avatar } from "@advisable/donut";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
 

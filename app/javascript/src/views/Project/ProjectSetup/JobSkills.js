@@ -1,4 +1,4 @@
-import React from "react";
+import { useMemo } from "react";
 import { useParams, useHistory, useLocation } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather";
@@ -46,7 +46,7 @@ export default function JobSkills({ data }) {
     }
   };
 
-  const skillOptions = React.useMemo(() => {
+  const skillOptions = useMemo(() => {
     return data.skills.map((skill) => ({
       label: skill.name,
       value: skill.name,

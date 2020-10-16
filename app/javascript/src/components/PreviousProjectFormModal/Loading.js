@@ -1,4 +1,3 @@
-import React from "react";
 import Loading from "../../components/Loading";
 import { Box, Skeleton, Container } from "@advisable/donut";
 import { StyledSidebar } from "./styles";

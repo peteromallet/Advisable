@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Tabs, Stack, useModal } from "@advisable/donut";
 import { useApolloClient } from "@apollo/client";
 import useViewer from "../../hooks/useViewer";
@@ -14,7 +14,7 @@ export default function PreviousProjectsList({ previousProjects }) {
   const viewer = useViewer();
   const client = useApolloClient();
   const validationModal = useModal();
-  const [addedProject, setAddedProject] = React.useState(null);
+  const [addedProject, setAddedProject] = useState(null);
   const modal = usePreviousProjectModal("/previous_projects/new");
 
   const drafts = filterByDraft(previousProjects, true);

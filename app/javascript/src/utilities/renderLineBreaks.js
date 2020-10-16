@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 
 // Takes a given string and splits it up into multiple react fragments
 // when ever there is a line break.
@@ -10,10 +10,10 @@ const renderLineBreaks = content => {
     .split("\n")
     .map((item, key) => {
       return (
-        <React.Fragment key={key}>
+        <Fragment key={key}>
           {item}
           <br />
-        </React.Fragment>
+        </Fragment>
       );
     });
 };

@@ -1,4 +1,3 @@
-import React from "react";
 import { use100vh } from "react-div-100vh";
 import { rgba, darken } from "polished";
 import { Box, Checkbox, theme, useBreakpoint } from "@advisable/donut";

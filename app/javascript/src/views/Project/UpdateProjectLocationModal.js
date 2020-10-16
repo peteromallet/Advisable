@@ -1,4 +1,3 @@
-import React from "react";
 import { Formik, Form } from "formik";
 import ActionBarModal from "./ActionBarModal";
 import FormField from "components/FormField";

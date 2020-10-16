@@ -1,5 +1,4 @@
 // Renders the desktop version of the freelancer profile
-import React from "react";
 import Sticky from "react-stickynode";
 import { Box, useBreakpoint } from "@advisable/donut";
 import About from "./About";

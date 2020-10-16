@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { DateTime } from "luxon";
 import { sortBy, filter } from "lodash-es";
 import { Text, Link, Box } from "@advisable/donut";
@@ -8,7 +8,7 @@ import { Times, Time } from "./styles";
 
 export default function SelectTime(props) {
   const { availability, timeZone, match, clientName } = props;
-  const [selectedTimeZone, setTimeZone] = React.useState(
+  const [selectedTimeZone, setTimeZone] = useState(
     DateTime.local().zoneName || timeZone,
   );
 

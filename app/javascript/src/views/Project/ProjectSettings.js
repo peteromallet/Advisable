@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import Loading from "components/Loading";
 import { Pencil } from "@styled-icons/ionicons-solid";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
@@ -18,7 +18,7 @@ export default function ProjectSettings() {
   const goalsDialog = useDialogState();
   const { loading, data } = useProjectSettings();
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.getElementById("view").scrollTo(0, 0);
   }, []);
 

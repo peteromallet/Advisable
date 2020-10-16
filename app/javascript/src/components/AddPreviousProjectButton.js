@@ -1,4 +1,3 @@
-import React from "react";
 import { Plus } from "@styled-icons/heroicons-outline";
 import { margin } from "styled-system";
 import styled from "styled-components";

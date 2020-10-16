@@ -1,4 +1,4 @@
-import React from "react";
+import { useRef, useState, useEffect, memo } from "react";
 import { gql } from "@apollo/client";
 import { find } from "lodash-es";
 import { rgba } from "polished";
@@ -124,11 +124,11 @@ const StyledNewImageTile = styled.div`
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
 function useUpload(file, config = {}) {
-  const preview = React.useRef(null);
-  const configuration = React.useRef(config);
-  const [percentage, setPercentage] = React.useState(0);
+  const preview = useRef(null);
+  const configuration = useRef(config);
+  const [percentage, setPercentage] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     configuration.current = config;
   }, [config]);
 
@@ -145,7 +145,7 @@ function useUpload(file, config = {}) {
     configuration.current.onSuccess(blob);
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const upload = new DirectUpload(file, DIRECT_UPLOAD_URL, progressHandler);
 
     upload.create((error, blob) => {
@@ -241,7 +241,7 @@ function Upload({ previousProjectId, image, dispatch, onClick }) {
   );
 }
 
-const PortfolioImage = React.memo(function PortfolioImage({
+const PortfolioImage = memo(function PortfolioImage({
   image,
   onClick,
   dispatch,

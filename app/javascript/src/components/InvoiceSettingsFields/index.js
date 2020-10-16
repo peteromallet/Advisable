@@ -1,4 +1,3 @@
-import React from "react";
 import { string } from "yup";
 import { find, get } from "lodash-es";
 import { gql } from "@apollo/client";

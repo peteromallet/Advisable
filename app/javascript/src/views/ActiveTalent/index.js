@@ -1,4 +1,3 @@
-import React from "react";
 import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { Container } from "@advisable/donut";

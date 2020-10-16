@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useRef, useEffect, Fragment } from "react";
 import styled from "styled-components";
 
 const Bar = styled.div`
@@ -14,18 +14,18 @@ const Bar = styled.div`
 const Spacer = styled.div``;
 
 const BottomBar = ({ children }) => {
-  const [height, setHeight] = React.useState(0);
-  const barRef = React.useRef(null);
+  const [height, setHeight] = useState(0);
+  const barRef = useRef(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setHeight(barRef.current.clientHeight);
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Bar ref={barRef}>{children}</Bar>
       <Spacer style={{ height: `${height}px` }} />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

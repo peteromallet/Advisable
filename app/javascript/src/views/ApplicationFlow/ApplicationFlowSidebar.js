@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { Text, Box, useBreakpoint } from "@advisable/donut";

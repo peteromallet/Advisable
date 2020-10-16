@@ -1,4 +1,3 @@
-import React from "react";
 import { Notice as Wrapper, NoticeIcon } from "./styles";
 
 const Notice = ({ icon, children, ...props }) => {

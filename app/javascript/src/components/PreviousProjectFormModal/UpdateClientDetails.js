@@ -1,4 +1,3 @@
-import React from "react";
 import ClientDetails from "./ClientDetails";
 import { useUpdatePreviousProject } from "./queries";
 import useLocationStages from "../../hooks/useLocationStages";

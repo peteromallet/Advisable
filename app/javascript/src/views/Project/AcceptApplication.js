@@ -1,4 +1,3 @@
-import React from "react";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import ActionBar from "./ActionBar";
 import UpdateAvailability from "./UpdateAvailability";

@@ -1,4 +1,3 @@
-import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { CREATE_PREVIOUS_PROJECT, GET_PREVIOUS_PROJECT } from "./queries";

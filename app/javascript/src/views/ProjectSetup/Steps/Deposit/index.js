@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { get } from "lodash-es";
 import { Button } from "@advisable/donut";
 import { useQuery } from "@apollo/client";
@@ -19,9 +19,9 @@ const Deposit = ({ project, history }) => {
       id: project.airtableId,
     },
   });
-  const [useNewCard, setUseNewCard] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-  const [pending, setPending] = React.useState(false);
+  const [useNewCard, setUseNewCard] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [pending, setPending] = useState(false);
 
   if (project.acceptedTerms === false) {
     return <Redirect to="terms" />;

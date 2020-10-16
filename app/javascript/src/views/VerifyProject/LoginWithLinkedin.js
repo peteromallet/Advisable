@@ -1,4 +1,3 @@
-import React from "react";
 import { Linkedin } from "@styled-icons/fa-brands";
 import styled from "styled-components";
 

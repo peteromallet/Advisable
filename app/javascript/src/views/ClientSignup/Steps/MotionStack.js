@@ -1,4 +1,4 @@
-import React from "react";
+import { Children } from "react";
 import PropTypes from "prop-types";
 import { Box } from "@advisable/donut";
 import { motion } from "framer-motion";
@@ -21,7 +21,7 @@ const item = {
 };
 
 function MotionStack({ children, ...props }) {
-  const newChildren = React.Children.map(children, (child, index) => {
+  const newChildren = Children.map(children, (child, index) => {
     if (!child) return child;
     if (child.props.ignore) return child;
     return (

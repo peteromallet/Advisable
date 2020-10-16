@@ -1,4 +1,3 @@
-import React from "react";
 import { Container } from "@advisable/donut";
 import { Switch, Route, Redirect } from "react-router-dom";
 import useViewer from "../../hooks/useViewer";

@@ -1,4 +1,3 @@
-import React from "react";
 import { Help } from "@styled-icons/ionicons-solid";
 import { Box, Button } from "@advisable/donut";
 

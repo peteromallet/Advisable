@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router";
 import { useNotifications } from "src/components/Notifications";

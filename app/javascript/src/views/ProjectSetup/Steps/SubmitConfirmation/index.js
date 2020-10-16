@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import React, { Fragment, useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { motion } from "framer-motion";
 import CONFIRM_PROJECT from "./confirmProject.graphql";
 import { Wrapper, Progress } from "./styles";

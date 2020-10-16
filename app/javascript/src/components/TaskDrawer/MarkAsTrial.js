@@ -1,4 +1,3 @@
-import React from "react";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client";
 import { Box, Button, Text, Link } from "@advisable/donut";

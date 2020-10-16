@@ -1,4 +1,3 @@
-import React from "react";
 import { gql } from "@apollo/client";
 import { get } from "lodash-es";
 import { VisuallyHidden } from "reakit/VisuallyHidden";

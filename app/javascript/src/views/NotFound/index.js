@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text } from "@advisable/donut";
 
 const NotFound = ({ heading, children }) => (

@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, theme } from "@advisable/donut";
 import styled from "styled-components";
 

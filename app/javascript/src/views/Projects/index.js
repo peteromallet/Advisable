@@ -1,5 +1,5 @@
 // Renders the projects view for a user.
-import React from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { Container, Text } from "@advisable/donut";
@@ -13,7 +13,7 @@ const Projects = () => {
   const location = useLocation();
   const { loading, data } = useQuery(GET_PROJECTS);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 

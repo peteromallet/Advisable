@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { DateTime } from "luxon";
 import { Card, Text, Select } from "../../../../../donut/src";
 import AvailabilityInput from "./";
@@ -8,8 +8,8 @@ export default {
 };
 
 export const Basic = () => {
-  const [value, setValue] = React.useState([]);
-  const [timezone, setTimezone] = React.useState("Europe/Dublin");
+  const [value, setValue] = useState([]);
+  const [timezone, setTimezone] = useState("Europe/Dublin");
 
   return (
     <Card maxWidth={800} margin="50px auto" padding="l">
@@ -35,8 +35,8 @@ export const Basic = () => {
 };
 
 export const WithEvents = () => {
-  const [value, setValue] = React.useState([]);
-  const [timezone, setTimezone] = React.useState("Europe/Dublin");
+  const [value, setValue] = useState([]);
+  const [timezone, setTimezone] = useState("Europe/Dublin");
 
   let nonWeekday;
 

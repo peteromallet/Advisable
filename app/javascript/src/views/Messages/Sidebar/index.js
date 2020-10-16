@@ -1,4 +1,3 @@
-import React from "react";
 import ClientSidebar from "./ClientSidebar";
 import useViewer from "../../../hooks/useViewer";
 import { useBreakpoint } from "@advisable/donut";

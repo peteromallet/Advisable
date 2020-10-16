@@ -1,4 +1,3 @@
-import * as React from "react";
 import * as Sentry from "@sentry/react";
 import { RefreshCw, AlertTriangle } from "@styled-icons/feather";
 import { Circle, Box, Text, Button } from "@advisable/donut";

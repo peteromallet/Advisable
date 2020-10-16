@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Redirect, Switch, Route } from "react-router-dom";
 // Hooks

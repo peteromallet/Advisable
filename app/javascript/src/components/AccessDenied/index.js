@@ -1,4 +1,3 @@
-import React from "react";
 import { Key } from "@styled-icons/feather";
 import { Box, Text, Circle } from "@advisable/donut";
 

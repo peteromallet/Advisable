@@ -1,4 +1,3 @@
-import React from "react";
 import { Field } from "formik";
 import Text from "src/components/Text";
 import Link from "src/components/Link";

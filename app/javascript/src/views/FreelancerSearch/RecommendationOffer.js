@@ -1,4 +1,3 @@
-import React from "react";
 import { Zap } from "@styled-icons/feather";
 import { Box, Circle, Text, theme } from "@advisable/donut";
 

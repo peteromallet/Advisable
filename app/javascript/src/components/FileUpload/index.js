@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { DirectUpload } from "@rails/activestorage";
 import {
   FileUploadStyles,
@@ -13,9 +13,9 @@ import {
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
 const FileUpload = ({ label, onChange, preview }) => {
-  const [file, setFile] = React.useState(null);
-  const [uploading, setUploading] = React.useState(false);
-  const [percentage, setPercentage] = React.useState(0);
+  const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [percentage, setPercentage] = useState(0);
 
   const progressHandler = {
     directUploadWillStoreFileWithXHR(request) {

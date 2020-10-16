@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { get } from "lodash-es";
 import { gql } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
@@ -33,7 +33,7 @@ const BuildProfile = ({ history, specialist }) => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);
 
   const countriesQuery = useQuery(GET_COUNTRIES);
-  const [profilePhoto, setProfilePhoto] = React.useState(
+  const [profilePhoto, setProfilePhoto] = useState(
     get(specialist, "avatar"),
   );
 

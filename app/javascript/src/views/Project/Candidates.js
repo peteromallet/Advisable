@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useParams } from "react-router-dom";
 import { useCandidates } from "./queries";
@@ -49,7 +49,7 @@ export default function Candidates() {
   const { id } = useParams();
   const { loading, data } = useCandidates({ variables: { id } });
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.getElementById("view").scrollTo(0, 0);
   }, []);
 

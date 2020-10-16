@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useCallback, Fragment } from "react";
 import { uniqueId } from "lodash-es";
 import { AnimatePresence, motion } from "framer-motion";
 import { Container } from "./styles";
@@ -8,9 +8,9 @@ export { default as useNotifications } from "./useNotifications";
 export { default as withNotifications } from "./withNotifications";
 
 export const NotificationsProvider = ({ children }) => {
-  const [queue, setQueue] = React.useState([]);
+  const [queue, setQueue] = useState([]);
 
-  const remove = React.useCallback(
+  const remove = useCallback(
     (id) => {
       setQueue((items) => items.filter((i) => i.id !== id));
     },
@@ -55,7 +55,7 @@ export const NotificationsProvider = ({ children }) => {
           })}
         </AnimatePresence>
       </Container>
-      <React.Fragment>{children}</React.Fragment>
+      <Fragment>{children}</Fragment>
     </Context.Provider>
   );
 };

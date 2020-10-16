@@ -1,4 +1,3 @@
-import React from "react";
 import ProposalCard from "./ProposalCard";
 import SpecialistReviews from "./SpecialistReviews";
 import SpecialistProjects from "./SpecialistProjects";

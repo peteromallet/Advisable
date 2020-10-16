@@ -1,4 +1,3 @@
-import React from "react";
 import { Formik } from "formik";
 import queryString from "query-string";
 import { useMutation } from "@apollo/client";

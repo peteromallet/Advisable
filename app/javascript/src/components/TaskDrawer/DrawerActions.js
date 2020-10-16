@@ -1,4 +1,3 @@
-import React from "react";
 import { useMenuState } from "reakit";
 import { Box, Menu, Button } from "@advisable/donut";
 import DeleteTask from "./DeleteTask";

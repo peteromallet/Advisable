@@ -1,4 +1,3 @@
-import React from "react";
 import ReactPhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import styled from "styled-components";

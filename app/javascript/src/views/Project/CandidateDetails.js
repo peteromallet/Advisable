@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import Sticky from "components/Sticky";
 import { Helmet } from "react-helmet";
 import { Box, Avatar, useBreakpoint } from "@advisable/donut";
@@ -17,7 +17,7 @@ export default function CandidateDetails({ project }) {
   const isLargeScreen = useBreakpoint("mUp");
   const { loading, data } = useCandidate({ variables: { id: applicationId } });
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 

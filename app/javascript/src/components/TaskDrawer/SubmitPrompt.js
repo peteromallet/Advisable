@@ -1,5 +1,5 @@
 // Renders the prompt to submit a task
-import React from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Box, Columns, Button } from "@advisable/donut";
 import Text from "../Text";
@@ -16,10 +16,10 @@ const CONFIRM_APPROVED = "CONFIRM_APPROVED";
 const HOURS_WORKED = "HOURS_WORKED";
 
 const SubmitPrompt = ({ task, onClose, onSubmit }) => {
-  const [loading, setLoading] = React.useState(false);
-  const [step, setStep] = React.useState(CONFIRM_APPROVED);
+  const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState(CONFIRM_APPROVED);
   const [submitTask] = useMutation(SUBMIT_TASK);
-  const [estimate, setCost] = React.useState(
+  const [estimate, setCost] = useState(
     (Number(task.estimate) + Number(task.flexibleEstimate || task.estimate)) /
       2,
   );

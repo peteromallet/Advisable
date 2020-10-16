@@ -1,4 +1,3 @@
-import React from "react";
 import { useBreakpoint } from "@advisable/donut";
 import MobileLoading from "./MobileLoading";
 import DesktopLoading from "./DesktopLoading";

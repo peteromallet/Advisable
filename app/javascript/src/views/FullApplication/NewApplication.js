@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Columns, Text } from "@advisable/donut";
 import ManagePreviousProjects, {
   useManagePreviousProjects,

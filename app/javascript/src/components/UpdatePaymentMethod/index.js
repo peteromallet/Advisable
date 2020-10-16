@@ -1,4 +1,4 @@
-import React from "react";
+import { useRef, useState, useEffect } from "react";
 import { gql } from "@apollo/client";
 import { useMutation, useApolloClient } from "@apollo/client";
 import Loading from "../Loading";
@@ -27,11 +27,11 @@ export const GET_SETUP_INTENT_STATUS = gql`
 const UpdatePaymentMethod = ({ onSuccess }) => {
   const client = useApolloClient();
   const [createSetupIntent] = useMutation(CREATE_SETUP_INTENT);
-  let timer = React.useRef(null);
+  let timer = useRef(null);
   let viewer = useViewer();
-  let [secret, setSecret] = React.useState(null);
+  let [secret, setSecret] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     createSetupIntent().then((r) => {
       setSecret(r.data.createSetupIntent.secret);
     });

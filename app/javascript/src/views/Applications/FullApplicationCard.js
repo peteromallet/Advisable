@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather";
 import { Card, Box, Text, Button } from "@advisable/donut";

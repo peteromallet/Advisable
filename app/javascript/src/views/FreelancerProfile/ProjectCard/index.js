@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { isObject } from "lodash-es";
 import { Link } from "react-router-dom";
 import { DialogDisclosure } from "reakit/Dialog";
@@ -23,7 +23,7 @@ function useRoutedModal(path, back) {
   const pathname = isObject(path) ? path.pathname : path;
   const match = useRouteMatch(pathname);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (match && !modal.visible) {
       modal.show();
     }

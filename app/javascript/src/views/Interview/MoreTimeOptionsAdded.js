@@ -1,4 +1,3 @@
-import React from "react";
 import { Redirect } from "react-router-dom";
 import useViewer from "../../hooks/useViewer";
 import CallRequested from "./CallRequested";

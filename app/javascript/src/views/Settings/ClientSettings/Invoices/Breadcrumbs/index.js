@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Box, Text, Link, theme } from "@advisable/donut";
 import styled from "styled-components";

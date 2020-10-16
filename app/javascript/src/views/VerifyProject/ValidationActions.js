@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { Button, useModal, DialogDisclosure } from "@advisable/donut";
 import { useValidatePreviousProject } from "./queries";

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { uniqueId } from "lodash-es";
 import InputLabel from "../InputLabel";
 import { Slider as SliderStyles, Input } from "./styles";
@@ -14,7 +14,7 @@ const Slider = ({
 }) => {
   const range = max - min;
   const progress = ((value - min) / range) * 100.0;
-  const [id] = React.useState(rest.id || uniqueId("Slider"));
+  const [id] = useState(rest.id || uniqueId("Slider"));
 
   const cssVars = {
     ["--Slider-progress"]: `${progress}%`,

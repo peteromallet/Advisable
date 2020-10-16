@@ -1,5 +1,4 @@
 // Renders the loading state for the FreelancerActiveApplication view.
-import React from "react";
 import { Box, Card } from "@advisable/donut";
 import Layout from "../../components/Layout";
 import Divider from "../../components/Divider";

@@ -1,5 +1,4 @@
 // Renders the card for an active booking in the manage talent view
-import React from "react";
 import { rgba } from "polished";
 import styled from "styled-components";
 import { ActiveProject } from "./styles";

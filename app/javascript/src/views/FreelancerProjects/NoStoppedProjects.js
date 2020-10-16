@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text, Paragraph } from "@advisable/donut";
 
 const NoStoppedProjects = () => {

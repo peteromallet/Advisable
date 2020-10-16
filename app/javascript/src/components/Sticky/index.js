@@ -1,9 +1,9 @@
-import React from "react";
+import { useRef, useLayoutEffect } from "react";
 import stickybits from "stickybits";
 import usePrevious from "../../utilities/usePrevious";
 
 const Sticky = ({ children, offset = 0, enabled = true }) => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const previouslyEnabled = usePrevious(enabled);
 
   const stick = () => {
@@ -12,13 +12,13 @@ const Sticky = ({ children, offset = 0, enabled = true }) => {
     });
   };
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (enabled) {
       stick();
     }
   }, []);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (enabled && !previouslyEnabled) {
       stick();
     }

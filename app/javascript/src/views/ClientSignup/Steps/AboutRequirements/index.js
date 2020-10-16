@@ -1,4 +1,3 @@
-import React from "react";
 import { Formik, Form } from "formik";
 import { Autocomplete, Box } from "@advisable/donut";
 import FormField from "src/components/FormField";

@@ -1,4 +1,3 @@
-import React from "react";
 import queryString from "query-string";
 import { useLocation, useHistory } from "react-router-dom";
 import { Link, Text } from "@advisable/donut";

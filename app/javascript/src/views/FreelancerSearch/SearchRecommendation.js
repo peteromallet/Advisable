@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text, Link } from "@advisable/donut";
 import SearchRecommendationDetails from "./SearchRecommendationDetails";
 import ExpandableText from "../../components/ExpandableText";

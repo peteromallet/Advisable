@@ -1,4 +1,3 @@
-import React from "react";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import Overview from "./Overview";
 import Portfolio from "./Portfolio";

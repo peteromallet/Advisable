@@ -1,4 +1,3 @@
-import React from "react";
 import { Switch, Route, Redirect } from "react-router";
 import { Box } from "@advisable/donut";
 import Logo from "../../components/Logo";

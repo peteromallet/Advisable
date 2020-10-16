@@ -1,4 +1,3 @@
-import React from "react";
 import useViewer from "../../../hooks/useViewer";
 import ClientTopbar from "./ClientTopBar";
 import SpecialistTopBar from "./SpecialistTopBar";

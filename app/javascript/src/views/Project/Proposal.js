@@ -1,4 +1,3 @@
-import React from "react";
 import { DateTime } from "luxon";
 import { Link, useParams } from "react-router-dom";
 import { Box, Button, Text, Avatar, Paragraph } from "@advisable/donut";

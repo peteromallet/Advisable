@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import { lazy } from "react";
 import { useQuery } from "@apollo/client";
 import { Container, useBreakpoint } from "@advisable/donut";
 import {

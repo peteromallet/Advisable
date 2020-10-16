@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Text } from "@advisable/donut";
 import LineClamp from "../../../components/LineClamp";
 import { Invitation, Background, Content, Description, Button } from "./styles";

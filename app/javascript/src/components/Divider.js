@@ -1,4 +1,3 @@
-import React from "react";
 import { rgba } from "polished";
 import { padding } from "styled-system";
 import styled from "styled-components";

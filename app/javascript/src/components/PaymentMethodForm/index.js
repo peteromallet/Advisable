@@ -1,4 +1,3 @@
-import React from "react";
 import { Formik, Form } from "formik";
 import { Box, Text, Button, theme } from "@advisable/donut";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";

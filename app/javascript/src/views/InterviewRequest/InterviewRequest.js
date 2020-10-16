@@ -1,4 +1,3 @@
-import React from "react";
 import { useQuery } from "@apollo/client";
 import { Card } from "@advisable/donut";
 import { useParams, Route, Switch, Redirect } from "react-router-dom";

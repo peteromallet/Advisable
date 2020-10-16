@@ -1,4 +1,3 @@
-import React from "react";
 import { Formik, Form } from "formik";
 import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
 import { Box, Text, Select, Stack, Link, Button } from "@advisable/donut";

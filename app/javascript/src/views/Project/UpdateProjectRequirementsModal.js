@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import ActionBarModal from "./ActionBarModal";
 import SubmitButton from "components/SubmitButton";
@@ -11,7 +11,7 @@ const CHARACTERISTICS = "CHARACTERISTICS";
 const REQUIRED_CHARACTERISTICS = "REQUIRED_CHARACTERISTICS";
 
 export default function UpdateProjectRequirementsModal({ dialog, project }) {
-  const [step, setStep] = React.useState(CHARACTERISTICS);
+  const [step, setStep] = useState(CHARACTERISTICS);
   const [updateProject] = useUpdateProject();
 
   const initialValues = {

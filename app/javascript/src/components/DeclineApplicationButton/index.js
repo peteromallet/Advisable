@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Button, useModal } from "@advisable/donut";
 import RejectModal from "../RejectModal";
 import RequestIntroduction from "../RequestIntroduction";
@@ -8,7 +8,7 @@ import { Trash } from "@styled-icons/feather";
 // application.
 const DeclineApplicationButton = ({ application }) => {
   const modal = useModal();
-  const [isOpen, setOpen] = React.useState(false);
+  const [isOpen, setOpen] = useState(false);
 
   return (
     <>

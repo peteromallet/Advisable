@@ -1,4 +1,3 @@
-import React from "react";
 import { Formik, Form, Field } from "formik";
 import ActionBarModal from "./ActionBarModal";
 import SubmitButton from "components/SubmitButton";

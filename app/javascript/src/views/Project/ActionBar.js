@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useRef, useCallback, useEffect, forwardRef, useContext } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { rgba } from "polished";
@@ -117,17 +117,17 @@ const StyledActionBarItem = styled.button`
 `;
 
 function ActionBar({ application, project }) {
-  const bar = React.useRef(null);
+  const bar = useRef(null);
   const barContext = useContext(ActionBarContext);
 
-  const reposition = React.useCallback(() => {
+  const reposition = useCallback(() => {
     if (!bar.current) return;
     const width = bar.current.clientWidth || 0;
     const left = barContext.left + barContext.width / 2 - width / 2;
     bar.current.style.left = `${left}px`;
   }, [barContext, bar]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     reposition();
     window.addEventListener("resize", reposition);
     return () => {
@@ -164,7 +164,7 @@ function ActionBar({ application, project }) {
   );
 }
 
-ActionBar.Item = React.forwardRef(function ActionBarItem(
+ActionBar.Item = forwardRef(function ActionBarItem(
   { icon, label, variant, ...props },
   ref,
 ) {

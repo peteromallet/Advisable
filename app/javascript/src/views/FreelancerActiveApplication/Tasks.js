@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, Tabs, Card } from "@advisable/donut";
 import ActiveTasks from "./ActiveTasks";
 import CompletedTasks from "./CompletedTasks";

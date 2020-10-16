@@ -1,4 +1,4 @@
-import React from "react";
+import { memo, useState, useMemo } from "react";
 import { nanoid } from "nanoid";
 import { useBreakpoint } from "@advisable/donut";
 import { Star } from "@styled-icons/feather";
@@ -6,15 +6,15 @@ import { VisuallyHidden } from "reakit/VisuallyHidden";
 import pluralize from "../../utilities/pluralize";
 import { StyledStarRatingInput, StyledStarRating } from "./styles";
 
-const StarRatingInput = React.memo(function StarRatingInput({
+const StarRatingInput = memo(function StarRatingInput({
   name,
   value,
   onChange,
   label,
 }) {
   const mUp = useBreakpoint("mUp");
-  const [hover, setHover] = React.useState(false);
-  const [current, setCurrent] = React.useState(value);
+  const [hover, setHover] = useState(false);
+  const [current, setCurrent] = useState(value);
 
   let displayValue = hover ? current : value;
   displayValue = displayValue ? Number(displayValue) : 0;
@@ -92,7 +92,7 @@ function StarRadio({
   label,
   onMouseEnter,
 }) {
-  const inputID = React.useMemo(() => id || nanoid(8), [id]);
+  const inputID = useMemo(() => id || nanoid(8), [id]);
 
   return (
     <StyledStarRating filled={filled} onMouseEnter={onMouseEnter}>

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { get } from "lodash-es";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client";
@@ -23,7 +23,7 @@ const RESEND = gql`
 const ConfirmationPending = () => {
   const viewer = useViewer();
   const notifications = useNotifications();
-  const [resent, setResent] = React.useState(false);
+  const [resent, setResent] = useState(false);
   const [resendConfirmationEmail] = useMutation(RESEND);
 
   const resend = (e) => {

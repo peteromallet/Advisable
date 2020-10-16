@@ -1,4 +1,3 @@
-import React from "react";
 import { filter } from "lodash-es";
 import NewTask from "../../components/NewTask";
 import TaskList from "../../components/TaskList";

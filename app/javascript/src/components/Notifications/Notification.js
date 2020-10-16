@@ -1,15 +1,15 @@
-import React from "react";
+import { useRef, useEffect } from "react";
 import { NotificationCard } from "./styles";
 
 function useTimeout(callback, delay) {
-  const timeout = React.useRef();
-  const callbackRef = React.useRef(callback);
+  const timeout = useRef();
+  const callbackRef = useRef(callback);
 
-  React.useEffect(() => {
+  useEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     timeout.current = setTimeout(() => callbackRef.current(), delay);
     return () => clearTimeout(timeout.current);
   }, [delay]);

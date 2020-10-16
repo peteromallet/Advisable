@@ -1,4 +1,3 @@
-import * as React from "react";
 import { ArrowRight } from "@styled-icons/feather";
 import { useMutation } from "@apollo/client";
 import { Formik, Form } from "formik";

@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import queryString from "query-string";
 import {
   useParams,
@@ -28,7 +28,7 @@ const RequestConsultation = () => {
   });
 
   const mediumAndUp = useBreakpoint("mUp");
-  React.useEffect(() => {
+  useEffect(() => {
     if (!mediumAndUp) {
       theme.updateTheme({ background: "white" });
     }
@@ -37,7 +37,7 @@ const RequestConsultation = () => {
 
   const queryParams = queryString.parse(location.search);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 

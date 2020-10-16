@@ -1,4 +1,3 @@
-import React from "react";
 import { StyledTagSelect, StyledTagSelectTag } from "./styles";
 
 const TagSelect = ({ tags, multiple, onChange, selected, ...props }) => {

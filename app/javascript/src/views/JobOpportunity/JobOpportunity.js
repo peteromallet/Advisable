@@ -1,4 +1,3 @@
-import React from "react";
 import Sticky from "components/Sticky";
 import { Box, Text, Card, Button } from "@advisable/donut";
 import { List, Layout, BottomBar } from "src/components";

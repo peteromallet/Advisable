@@ -1,4 +1,3 @@
-import React from "react";
 import { Settings } from "luxon";
 import { render, screen, fireEvent } from "@testing-library/react";
 import AvailabilityInput from "./";

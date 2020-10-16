@@ -1,4 +1,3 @@
-import React from "react";
 import { Box } from "@advisable/donut";
 import { useParams } from "react-router-dom";
 import { FileTray, People, Options } from "@styled-icons/ionicons-solid";

@@ -1,6 +1,5 @@
 // Renders the loaded state for when a freelancer is viewing an active
 // application
-import React from "react";
 import { get } from "lodash-es";
 import { Box, Modal, useModal } from "@advisable/donut";
 import { matchPath } from "react-router-dom";

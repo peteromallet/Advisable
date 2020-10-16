@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Container, Card, Box, Text, Avatar } from "@advisable/donut";
 import ValidationActions from "./ValidationActions";

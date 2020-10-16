@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { CheckCircle } from "@styled-icons/feather";
 import { Box, Card, Text } from "@advisable/donut";

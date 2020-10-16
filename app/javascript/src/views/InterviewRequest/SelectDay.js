@@ -1,4 +1,3 @@
-import React from "react";
 import { DateTime } from "luxon";
 import { sortBy, reduce } from "lodash-es";
 import { Text, Modal, useModal } from "@advisable/donut";

@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Avatar, Text } from "@advisable/donut";
 
 const Review = ({ review }) => {

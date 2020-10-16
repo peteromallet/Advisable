@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text, Button, Modal, DialogDisclosure } from "@advisable/donut";
 
 const ConfirmationModal = ({

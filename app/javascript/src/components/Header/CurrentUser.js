@@ -1,5 +1,5 @@
 import { get } from "lodash-es";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as Sentry from "@sentry/react";
 import {
@@ -16,7 +16,7 @@ const CurrentUser = ({ user, onLogout }) => {
   const handleFocus = () => setOpen(true);
   let isClient = get(viewer, "__typename") === "User";
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!Sentry) return;
     if (user) {
       Sentry.configureScope((scope) => {

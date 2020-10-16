@@ -1,4 +1,3 @@
-import React from "react";
 import { Loading as Wrapper } from "./styles";
 import loading from "./loading.svg";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { Switch, Route, useParams } from "react-router-dom";
 import Loading from "components/Loading";
 import { useInterview } from "./queries";

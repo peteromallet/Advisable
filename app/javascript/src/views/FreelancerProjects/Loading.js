@@ -1,4 +1,3 @@
-import React from "react";
 import { Box } from "@advisable/donut";
 import Divider from "../../components/Divider";
 import Skeleton from "../../components/Skeleton";

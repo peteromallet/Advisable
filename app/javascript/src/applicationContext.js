@@ -1,6 +1,6 @@
-import React from "react";
+import { createContext } from "react";
 
-const ApplicationContext = React.createContext({
+const ApplicationContext = createContext({
   viewer: undefined,
   logoURL: "/",
   setLogoURL: () => {},

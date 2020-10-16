@@ -11,7 +11,7 @@
 // addd the conversation. Usually this is just a single object representing the
 // receipient of the message. This object is expected to have an id, name and
 // __typename attribute.
-import React from "react";
+import { useRef, useEffect } from "react";
 import Talk from "talkjs";
 import { use100vh } from "react-div-100vh";
 import { Modal, useBreakpoint } from "@advisable/donut";
@@ -22,9 +22,9 @@ const TalkModal = ({ dialog, conversationId, participants }) => {
   const viewer = useViewer();
   const height = use100vh();
   const isMobile = useBreakpoint("s");
-  const messengerRef = React.useRef(null);
+  const messengerRef = useRef(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!dialog.visible) return;
 
     Talk.ready.then(() => {

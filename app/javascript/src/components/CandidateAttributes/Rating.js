@@ -1,4 +1,3 @@
-import React from "react";
 import pluralize from "src/utilities/pluralize";
 import StarRating from "src/components/StarRating";
 import { ReviewsCount } from "./styles";

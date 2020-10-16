@@ -1,4 +1,3 @@
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CloseCircle } from "@styled-icons/ionicons-solid";
 import styled from "styled-components";

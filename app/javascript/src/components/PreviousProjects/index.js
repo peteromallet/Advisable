@@ -1,4 +1,3 @@
-import React from "react";
 import Loading from "./Loading";
 import PreviousProject from "./PreviousProject";
 import { Box, Text, useModal, Button } from "@advisable/donut";
