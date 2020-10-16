@@ -24,6 +24,24 @@ import ProjectCard from "./ProjectCard";
 import Tags from "./Filter/Tags";
 import Filter from "./Filter";
 
+const clearFilters = (state) => {
+  const skillsSection = Object.keys(state.skillsSection).reduce(
+    (acc, key) => ({ ...acc, [key]: { ...acc[key], selected: false } }),
+    state.skillsSection,
+  );
+  const industriesSection = Object.keys(state.industriesSection).reduce(
+    (acc, key) => ({ ...acc, [key]: { ...acc[key], selected: false } }),
+    state.industriesSection,
+  );
+  return {
+    ...state,
+    skillFilters: [],
+    industryFilters: [],
+    skillsSection,
+    industriesSection,
+  };
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "INIT_FILTERS":
