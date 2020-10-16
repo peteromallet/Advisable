@@ -92,12 +92,32 @@ const switchTagSelection = (state, section, tag) => {
   };
 };
 
+const clearFilters = (state) => {
+  const skillsSection = Object.keys(state.skillsSection).reduce(
+    (acc, key) => ({ ...acc, [key]: { ...acc[key], selected: false } }),
+    state.skillsSection,
+  );
+  const industriesSection = Object.keys(state.industriesSection).reduce(
+    (acc, key) => ({ ...acc, [key]: { ...acc[key], selected: false } }),
+    state.industriesSection,
+  );
+  return {
+    ...state,
+    skillFilters: [],
+    industryFilters: [],
+    skillsSection,
+    industriesSection,
+  };
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "SWITCH_SKILL_SELECTION":
       return switchTagSelection(state, "skillsSection", action.payload.tag);
     case "SWITCH_INDUSTRY_SELECTION":
       return switchTagSelection(state, "industriesSection", action.payload.tag);
+    case "CLEAR_FILTERS":
+      return clearFilters(state);
     default:
       return state;
   }
@@ -125,7 +145,7 @@ function PreviousProjects({ data, isOwner }) {
   const createAction = createDispatcher(dispatch);
   const switchSkillSelection = createAction("SWITCH_SKILL_SELECTION");
   const switchIndustrySelection = createAction("SWITCH_INDUSTRY_SELECTION");
-
+  const clearFilters = createAction("CLEAR_FILTERS");
   // Responsivness
   const isWidescreen = useBreakpoint("mUp");
   const isTablet = useBreakpoint("m");
