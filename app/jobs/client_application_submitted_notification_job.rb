@@ -14,14 +14,14 @@ class ClientApplicationSubmittedNotificationJob < ApplicationJob
           "text": {
             "type": 'mrkdwn',
             "text":
-              "#{user.first_name} from #{
+              "#{user.account.first_name} from #{
                 user.company_name
               } has submitted their application and has been *#{
                 signup_result(user)
               }*."
           }
         },
-        { "type": 'divider' },
+        {"type": 'divider'},
         {
           "type": 'section',
           "fields": [

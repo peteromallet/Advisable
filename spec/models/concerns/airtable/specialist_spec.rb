@@ -2,7 +2,18 @@ require "rails_helper"
 
 RSpec.describe Airtable::Specialist do
   include_examples "airtable syncing"
-  include_examples "sync airtable association", "Country", to: :country, with_email: true
+  include_examples "sync airtable association", "Country", to: :country
+
+  include_examples("sync airtable columns to association", {
+    association: :account,
+    columns: [
+      {from: "Email Address", to: :email, with: "test@test.com"},
+      {from: "First Name", to: :first_name, with: "John"},
+      {from: "Last Name", to: :last_name, with: "Snow"},
+      {from: "VAT Number", to: :vat_number, with: "BeyondTheWall123"}
+    ]
+  })
+
   let(:specialist) { create(:specialist) }
 
   describe "syncing the application stage" do

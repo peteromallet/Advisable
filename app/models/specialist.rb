@@ -66,10 +66,6 @@ class Specialist < ApplicationRecord
   register_tutorial 'fixedProjects'
   register_tutorial 'flexibleProjects'
 
-  def name
-    "#{first_name} #{last_name}"
-  end
-
   # Override the send_confirmation_email method from the SpecialistOrUser module to use
   # a specific email template for specialists.
   def send_confirmation_email

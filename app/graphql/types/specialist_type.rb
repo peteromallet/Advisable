@@ -35,8 +35,16 @@ class Types::SpecialistType < Types::BaseType
     description 'The specialists first name'
   end
 
+  def first_name
+    object.account.first_name
+  end
+
   field :last_name, String, null: true do
     description 'The specialists last name'
+  end
+
+  def last_name
+    object.account.last_name
   end
 
   field :name, String, null: true do
@@ -44,7 +52,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   def name
-    "#{object.first_name} #{object.last_name}"
+    object.account.name
   end
 
   field :city, String, null: true do

@@ -36,8 +36,6 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
 
     user = User.new(
       account: account,
-      first_name: viewer.first_name,
-      last_name: viewer.last_name,
       company_name: project.client_name,
       company_type: project.company_type,
       fid: fid,

@@ -23,8 +23,8 @@ class PreviousProject::ConvertApplication
       validation_status: 'Validated',
       company_type: project.user.company_type,
       contact_job_title: project.user.title,
-      contact_first_name: project.user.first_name,
-      contact_last_name: project.user.last_name,
+      contact_first_name: project.user.account.first_name,
+      contact_last_name: project.user.account.last_name,
       project_skills: project_skills,
       project_industries: project_industries,
       created_at: application.started_working_at || Time.zone.now

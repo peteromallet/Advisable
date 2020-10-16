@@ -20,13 +20,6 @@ RSpec.describe User, type: :model do
     expect(user.availability).to include(b)
   end
 
-  describe '#name' do
-    it 'returns the users full name' do
-      u = User.new(first_name: "Test", last_name: "Account")
-      expect(u.name).to eq("Test Account")
-    end
-  end
-
   describe '#invoice_settings' do
     it 'returns a hash of the users invoice settings' do
       account = Account.new(email: "test@test.com", vat_number: "VAT")

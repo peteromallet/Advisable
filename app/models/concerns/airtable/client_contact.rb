@@ -5,10 +5,10 @@ class Airtable::ClientContact < Airtable::Base
   sync_with ::User
 
   sync_column_to_association 'Email Address', association: :account, to: :email
+  sync_column_to_association 'First Name', association: :account, to: :first_name
+  sync_column_to_association 'Last Name', association: :account, to: :last_name
   sync_column_to_association 'VAT Number', association: :account, to: :vat_number
 
-  sync_column 'First Name', to: :first_name
-  sync_column 'Last Name', to: :last_name
   sync_column 'Title', to: :title
   sync_column 'Project Payment Method', to: :project_payment_method
   sync_column 'Exceptional Project Payment Terms',
@@ -63,8 +63,8 @@ class Airtable::ClientContact < Airtable::Base
   push_data do |user|
     self['UID'] = user.uid
     self['Email Address'] = user.account.email
-    self['First Name'] = user.first_name
-    self['Last Name'] = user.last_name
+    self['First Name'] = user.account.first_name
+    self['Last Name'] = user.account.last_name
     self['Country'] = [user.country.airtable_id] if user.country.present?
     self['Project Payment Method'] = user.project_payment_method
     self['Exceptional Project Payment Terms'] =

@@ -94,13 +94,7 @@ RSpec.shared_examples "sync airtable column" do |column, config|
     data_type = described_class.sync_model.column_for_attribute(config[:to]).type
     value = config[:with] || (airtable_fields ? airtable_fields[column] : change_value(data_type))
 
-    new_values = airtable_fields || {column => value}
-
-    if config[:with_email]
-      new_values = {"Email Address" => record.email}.merge(new_values)
-    end
-
-    airtable = described_class.new(new_values, id: record.airtable_id)
+    airtable = described_class.new(airtable_fields || {column => value}, id: record.airtable_id)
     expect { airtable.sync }.to change {
       record.reload.send(config[:to])
     }.from(nil).to(value)
@@ -127,12 +121,9 @@ RSpec.shared_examples "sync airtable association" do |column, config|
     association_factory = reflection.class_name.to_s.underscore
     association = create(association_factory)
 
-    new_values = {column => [association.airtable_id]}
-    if config[:with_email]
-      new_values = {"Email Address" => record.email}.merge(new_values)
-    end
-
-    airtable = described_class.new(new_values, id: record.airtable_id)
+    airtable = described_class.new({
+      column => [association.airtable_id]
+    }, id: record.airtable_id)
 
     expect(record.send(config[:to])).to be_nil
     airtable.sync
@@ -156,12 +147,15 @@ RSpec.shared_examples "sync airtable association" do |column, config|
   end
 end
 
-RSpec.shared_examples "sync airtable column to association" do |column, config|
+RSpec.shared_examples "sync airtable columns to association" do |config|
+  let(:data) { config[:columns].map { |c| [c[:from], c[:with]] }.to_h }
   let!(:record) { create(described_class.sync_model.to_s.underscore) }
-  let(:airtable) { described_class.new({column => config[:with]}, id: record.airtable_id) }
+  let(:airtable) { described_class.new(data, id: record.airtable_id) }
 
-  it "sync the #{config[:association]} #{column} column to #{config[:to]}" do
-    airtable.sync
-    expect(record.public_send(config[:association]).reload.public_send(config[:to])).to eq(config[:with])
+  config[:columns].each do |column|
+    it "sync the #{config[:association]} #{column[:from]} column to #{column[:to]}" do
+      airtable.sync
+      expect(record.public_send(config[:association]).reload.public_send(column[:to])).to eq(column[:with])
+    end
   end
 end

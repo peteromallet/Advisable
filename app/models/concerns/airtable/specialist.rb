@@ -7,10 +7,10 @@ class Airtable::Specialist < Airtable::Base
   sync_with ::Specialist
 
   sync_column_to_association 'Email Address', association: :account, to: :email
+  sync_column_to_association 'First Name', association: :account, to: :first_name
+  sync_column_to_association 'Last Name', association: :account, to: :last_name
   sync_column_to_association 'VAT Number', association: :account, to: :vat_number
 
-  sync_column 'First Name', to: :first_name
-  sync_column 'Last Name', to: :last_name
   sync_column 'Phone Number', to: :phone
   sync_column 'Can Travel', to: :travel_availability
   sync_column 'City', to: :city
@@ -106,8 +106,8 @@ class Airtable::Specialist < Airtable::Base
   push_data do |specialist|
     self['Biography'] = specialist.bio
     self['Email Address'] = specialist.account.email
-    self['First Name'] = specialist.first_name
-    self['Last Name'] = specialist.last_name
+    self['First Name'] = specialist.account.first_name
+    self['Last Name'] = specialist.account.last_name
     self['Specialist Skills'] = specialist.skills.map(&:airtable_id).uniq
     self['City'] = specialist.city
     self['Account Created'] = specialist.account.has_password? ? 'Yes' : nil
