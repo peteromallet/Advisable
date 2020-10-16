@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useReducer } from "react";
+import queryString from "query-string";
 import { Box, Text, StyledCard, Button, theme } from "@advisable/donut";
 import { rgba } from "polished";
 import { Info } from "@styled-icons/feather";
@@ -13,6 +14,15 @@ import {
 } from "./reducerHandlers";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
+import { useLocation } from "react-router";
+
+function arrayToSentence(array) {
+  return (
+    array.slice(0, -2).join(", ") +
+    (array.slice(0, -2).length ? ", " : "") +
+    array.slice(-2).join(" and ")
+  );
+}
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -69,7 +79,6 @@ function Filter({
   const [state, dispatch] = useReducer(reducer, {
     sections: {},
   });
-
   // Actions
   const createAction = useMemo(() => createDispatcher(dispatch), []);
   const addSectionParams = useMemo(() => createAction("ADD_SECTION_PARAMS"), [
@@ -106,6 +115,20 @@ function Filter({
     state.layout?.industries.isExpandable || state.layout?.skills.isExpandable;
 
   const filtering = skillFilters.length > 0 || industryFilters.length > 0;
+
+  let output = "";
+
+  if (skillFilters.length > 0) {
+    output = `Showing ${arrayToSentence(skillFilters)} projects`;
+  }
+
+  if (industryFilters.length > 0) {
+    if (industryFilters.length === 1) {
+      output += ` with ${industryFilters[0]} companies`;
+    } else {
+      output += " in multiple industries";
+    }
+  }
 
   return (
     <StyledFilterCard borderRadius="8px" mb="xl" pb="xs" elevation="m">
@@ -146,8 +169,7 @@ function Filter({
                 <Info size={18} strokeWidth={2} />
               </Box>
               <Text mr="auto" color="neutral600">
-                Filtering {firstName}'s profile based on work in{" "}
-                {skillFilters.length} in the {industryFilters} industry.
+                {output}
               </Text>
               <Button size="s" variant="ghost" onClick={clearFilters}>
                 Clear Filters
