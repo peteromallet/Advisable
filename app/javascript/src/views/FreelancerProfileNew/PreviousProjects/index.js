@@ -146,7 +146,6 @@ function PreviousProjects({ data, isOwner }) {
   const switchSkillSelection = createAction("SWITCH_SKILL_SELECTION");
   const switchIndustrySelection = createAction("SWITCH_INDUSTRY_SELECTION");
   const clearFilters = createAction("CLEAR_FILTERS");
-  console.log("prev projects data", data);
   // Responsivness
   const isWidescreen = useBreakpoint("mUp");
   const isTablet = useBreakpoint("m");
@@ -177,7 +176,6 @@ function PreviousProjects({ data, isOwner }) {
           colorActive={theme.colors.white}
           colorActiveHover={theme.colors.white}
           bg={rgba(theme.colors.blue100, 0.6)}
-          // bg={theme.colors.blue50}
           bgHover={rgba(theme.colors.blue100, 0.9)}
           bgActive={theme.colors.neutral800}
           bgActiveHover={rgba(theme.colors.neutral800, 0.9)}
@@ -190,7 +188,6 @@ function PreviousProjects({ data, isOwner }) {
           colorHover={theme.colors.cyan800}
           colorActive={theme.colors.white}
           colorActiveHover={theme.colors.white}
-          // bg={theme.colors.cyan50}
           bg={rgba(theme.colors.cyan100, 0.6)}
           bgHover={rgba(theme.colors.cyan100, 0.9)}
           bgActive={theme.colors.neutral800}

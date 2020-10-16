@@ -69,8 +69,6 @@ function Filter({
   const [state, dispatch] = useReducer(reducer, {
     sections: {},
   });
-  console.log("skill filters", skillFilters);
-  console.log("industry filters", industryFilters);
 
   // Actions
   const createAction = useMemo(() => createDispatcher(dispatch), []);
@@ -134,22 +132,12 @@ function Filter({
             overflow="hidden"
             width="100%"
           >
-            {/* <Box
-              display="flex"
-              borderTop={`1px solid ${theme.colors.neutral100}`}
-              py="xxs"
-              px="s"
-              bg="neutral50"
-              borderRadius="0 0 8px 8px"
-            > */}
             <Box
               display="flex"
               alignItems="center"
               borderRadius="8px"
-              // mb="xs"
               mx="xs"
               bg={rgba(theme.colors.neutral100, 0.9)}
-              // p="xxs"
               pl="s"
               py="xxs"
               pr="xxs"
