@@ -13,7 +13,6 @@ import {
 } from "./reducerHandlers";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
-import FilterDescription from "./FilterDescription";
 
 function arrayToSentence(array) {
   return (
