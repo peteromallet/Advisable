@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Text, Card, Avatar, theme } from "@advisable/donut";
 import { QuoteAltLeft } from "@styled-icons/boxicons-solid";
+import { lighten } from "polished";
 
 function ReviewWide({ review }) {
   const role = review.role;
