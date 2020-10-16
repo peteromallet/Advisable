@@ -3,7 +3,7 @@ import Publication from "./Publication";
 import usePublications from "./usePublications";
 import NoVideo from "./NoVideo";
 
-export default function ParticipantTracks({ participant }) {
+export default function ParticipantTracks({ participant, avatar }) {
   const publications = usePublications(participant);
   const hasVideo = publications.some((pub) => pub.kind === "video");
 
@@ -13,7 +13,7 @@ export default function ParticipantTracks({ participant }) {
 
   return (
     <>
-      {!hasVideo && <NoVideo />}
+      {!hasVideo && <NoVideo avatar={avatar} />}
       {publicationElements}
     </>
   );

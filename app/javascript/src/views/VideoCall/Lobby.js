@@ -44,21 +44,13 @@ export default function Lobby() {
       alignItems="center"
       flexDirection="column"
       justifyContent="center"
+      paddingBottom="100px"
     >
       <Box marginBottom="xl">
         <StyledVideoPreview>
           <VideoTrack track={videoTrack} />
         </StyledVideoPreview>
       </Box>
-      <Text
-        fontSize="4xl"
-        fontWeight="medium"
-        color="neutral900"
-        marginBottom="md"
-        letterSpacing="-0.02rem"
-      >
-        {data.name}
-      </Text>
       <Button
         size="l"
         data-testid="joinCall"
