@@ -63,16 +63,14 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
 
     # TODO: AccountMigration - remove duplicated fields
     account = Account.new(
-          first_name: args[:first_name],
-          last_name: args[:last_name],
-          email: args[:email],
-          password: args[:password]
-        )
+      first_name: args[:first_name],
+      last_name: args[:last_name],
+      email: args[:email],
+      password: args[:password]
+    )
 
     specialist = Specialist.new(
       account: account,
-      first_name: args[:first_name],
-      last_name: args[:last_name],
       campaign_name: args[:campaign_name],
       campaign_source: args[:campaign_source],
       application_stage: 'Started',

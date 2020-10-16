@@ -133,7 +133,7 @@ class Application < ApplicationRecord
   end
 
   def referral_url
-    "#{project.client_referral_url}&rid=#{specialist.uid}&referrer_firstname=#{specialist.first_name}&referrer_lastname=#{specialist.last_name}"
+    "#{project.client_referral_url}&rid=#{specialist.uid}&referrer_firstname=#{specialist.account.first_name}&referrer_lastname=#{specialist.account.last_name}"
   end
 
   private

@@ -13,7 +13,6 @@ module SpecialistOrUser
     validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
 
     # Temporary while we're moving things over
-    before_save :copy_data_to_account
 
     # Sets the confirmation digest and sends the user a confirmation email with
     # instructions to confirm their account.
@@ -30,19 +29,18 @@ module SpecialistOrUser
         account.save!
       end
     end
-
-    def copy_data_to_account
-      ensure_account_exists
-      data = Account::COPYABLE_COLUMNS.map { |column| [column, attributes[column]] }.to_h
-      account.update_columns(data)
-    end
   end
 
   # TODO: AccountMigration - Methods in process of migration
   Account::MIGRATED_COLUMNS.each do |column|
     define_method(column) do
+      Rails.logger.info("Method called on #{self.class.name} from #{caller.select { |path| path =~ %r{app/} }.to_json}")
       account&.public_send(column)
     end
+  end
+
+  def name
+    account.name
   end
 
   [:find_by_email, :find_by_remember_token].each do |method|

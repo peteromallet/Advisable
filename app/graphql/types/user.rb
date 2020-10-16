@@ -3,7 +3,17 @@ class Types::User < Types::BaseType
   field :airtable_id, String, null: true
   field :name, String, null: true
   field :first_name, String, null: true
+
+  def first_name
+    object.account.first_name
+  end
+
   field :last_name, String, null: true
+
+  def last_name
+    object.account.last_name
+  end
+
   field :title, String, null: true
   field :company_name, String, null: true
   field :time_zone, String, null: true

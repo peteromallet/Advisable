@@ -19,9 +19,9 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
       user = User.find_or_create_by(account: account) { |u| u.application_status = :started }
 
       if user.application_status == :started
-        user.first_name = args[:first_name]
-        user.last_name = args[:last_name]
-        if user.save
+        account.first_name = args[:first_name]
+        account.last_name = args[:last_name]
+        if user.save && account.save
           user.sync_to_airtable
           create_client_record(user)
           if context[:request]

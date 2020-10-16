@@ -3,8 +3,8 @@ class WebhookEvent::Specialist
     {
       uid: specialist.uid,
       airtable_id: specialist.airtable_id,
-      first_name: specialist.first_name,
-      last_name: specialist.last_name,
+      first_name: specialist.account.first_name,
+      last_name: specialist.account.last_name,
       has_account: specialist.account.has_password?, # TODO: AccountMigration - Rename for consistency
       application_stage: specialist.application_stage,
     }

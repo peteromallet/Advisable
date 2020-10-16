@@ -90,24 +90,20 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
       raise ApiError::InvalidRequest.new('emailBelongsToFreelancer', 'This email belongs to a freelancer account')
     end
 
-    # TODO: AccountMigration - remove duplicated fields
     account = Account.new(
       first_name: args[:first_name],
       last_name: args[:last_name],
       email: args[:email]
     )
 
-    user =
-      User.create(
-        account: account,
-        first_name: args[:first_name],
-        last_name: args[:last_name],
-        company_name: args[:company],
-        campaign_source: args[:utm_source],
-        campaign_name: args[:utm_campaign],
-        campaign_medium: args[:utm_medium],
-        gclid: args[:gclid]
-      )
+    user = User.create(
+      account: account,
+      company_name: args[:company],
+      campaign_source: args[:utm_source],
+      campaign_name: args[:utm_campaign],
+      campaign_medium: args[:utm_medium],
+      gclid: args[:gclid]
+    )
 
     domain = user.email.split('@').last
     client = Client.create(name: args[:company], domain: domain)

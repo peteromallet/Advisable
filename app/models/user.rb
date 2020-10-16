@@ -60,10 +60,6 @@ class User < ApplicationRecord
                remind: 'Requested Reminder'
              }
 
-  def name
-    "#{first_name} #{last_name}"
-  end
-
   def invoice_settings
     {
       name: invoice_name,

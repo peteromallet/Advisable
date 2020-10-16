@@ -11,6 +11,11 @@ RSpec.describe Account, type: :model do
 
   let(:factory) { described_class.to_s.underscore.to_sym }
 
+  it "has a valid factory" do
+    account = build(:account)
+    expect(account).to be_valid
+  end
+
   describe "#has_password?" do
     it "returns true when there is a password_digest" do
       inst = create(factory, password: "testing123")
@@ -23,9 +28,11 @@ RSpec.describe Account, type: :model do
     end
   end
 
-  it "has a valid factory" do
-    account = build(:account)
-    expect(account).to be_valid
+  describe "#name" do
+    it "outputs the full name" do
+      account = Account.new(first_name: "Tom", last_name: "Cullen")
+      expect(account.name).to eq("Tom Cullen")
+    end
   end
 
   describe "permissions" do
