@@ -4,7 +4,6 @@ class Account < ApplicationRecord
   IGNORED_COLUMNS_FOR_COPYING = ["id", "uid", "updated_at", "created_at"].freeze
   COPYABLE_COLUMNS = column_names - IGNORED_COLUMNS_FOR_COPYING
 
-  belongs_to :country, required: false
   has_one :user, dependent: :nullify # Change to :destroy
   has_one :specialist, dependent: :nullify # Change to :destroy
   has_many :magic_links, dependent: :destroy
@@ -67,15 +66,9 @@ end
 #  vat_number          :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  country_id          :bigint
 #
 # Indexes
 #
-#  index_accounts_on_country_id  (country_id)
-#  index_accounts_on_email       (email) UNIQUE
-#  index_accounts_on_uid         (uid) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (country_id => countries.id)
+#  index_accounts_on_email  (email) UNIQUE
+#  index_accounts_on_uid    (uid) UNIQUE
 #

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_15_063933) do
+ActiveRecord::Schema.define(version: 2020_10_16_075632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 2020_10_15_063933) do
     t.string "uid"
     t.datetime "confirmed_at"
     t.string "confirmation_digest"
-    t.bigint "country_id"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
     t.jsonb "permissions", default: []
@@ -37,7 +36,6 @@ ActiveRecord::Schema.define(version: 2020_10_15_063933) do
     t.string "remember_token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["country_id"], name: "index_accounts_on_country_id"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["uid"], name: "index_accounts_on_uid", unique: true
   end
@@ -940,7 +938,6 @@ ActiveRecord::Schema.define(version: 2020_10_15_063933) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "accounts", "countries"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "specialists"

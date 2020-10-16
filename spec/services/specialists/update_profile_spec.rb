@@ -11,7 +11,7 @@ RSpec.describe Specialists::UpdateProfile do
     expect {
       Specialists::UpdateProfile.call(
         specialist: specialist,
-        attributes: { bio: "changed" }
+        attributes: {bio: "changed"}
       )
     }.to change { specialist.reload.bio }.from(specialist.bio).to("changed")
   end
@@ -20,7 +20,7 @@ RSpec.describe Specialists::UpdateProfile do
     expect {
       Specialists::UpdateProfile.call(
         specialist: specialist,
-        attributes: { city: "Berlin" }
+        attributes: {city: "Berlin"}
       )
     }.to change { specialist.reload.city }.from(specialist.city).to("Berlin")
   end
@@ -29,7 +29,7 @@ RSpec.describe Specialists::UpdateProfile do
     expect {
       Specialists::UpdateProfile.call(
         specialist: specialist,
-        attributes: { remote: true }
+        attributes: {remote: true}
       )
     }.to change { specialist.reload.remote }.from(false).to(true)
   end
@@ -39,7 +39,7 @@ RSpec.describe Specialists::UpdateProfile do
     b = create(:skill, name: "Testing")
     Specialists::UpdateProfile.call(
       specialist: specialist,
-      attributes: { skills: ['Marketing', 'Testing'] }
+      attributes: {skills: ['Marketing', 'Testing']}
     )
     expect(specialist.reload.skills).to include(a)
     expect(specialist.reload.skills).to include(b)
@@ -49,7 +49,7 @@ RSpec.describe Specialists::UpdateProfile do
     country = create(:country, name: "Germany")
     Specialists::UpdateProfile.call(
       specialist: specialist,
-      attributes: { country: country.uid }
+      attributes: {country: country.uid}
     )
     expect(specialist.reload.country).to eq(country)
   end
@@ -58,14 +58,14 @@ RSpec.describe Specialists::UpdateProfile do
     expect(specialist).to receive(:sync_to_airtable)
     Specialists::UpdateProfile.call(
       specialist: specialist,
-      attributes: { bio: "Testing" }
+      attributes: {bio: "Testing"}
     )
   end
 
   it 'returns the specialist' do
     result = Specialists::UpdateProfile.call(
       specialist: specialist,
-      attributes: { bio: "Testing" }
+      attributes: {bio: "Testing"}
     )
     expect(result).to be_a(Specialist)
   end
