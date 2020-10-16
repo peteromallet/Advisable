@@ -44,3 +44,29 @@ export function useSetupZoomForVideoCall() {
     },
   });
 }
+
+const GET_PARTICIPANT = gql`
+  query getParticipant($videoCallId: ID!, $participantId: ID!) {
+    videoCall(id: $videoCallId) {
+      id
+      participant(id: $participantId) {
+        ... on User {
+          id
+          firstName
+        }
+        ... on Specialist {
+          id
+          avatar
+          firstName
+        }
+      }
+    }
+  }
+`;
+
+export function useParticipantDetails(participantId) {
+  const { id } = useParams();
+  return useQuery(GET_PARTICIPANT, {
+    variables: { videoCallId: id, participantId },
+  });
+}

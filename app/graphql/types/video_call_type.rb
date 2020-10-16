@@ -19,6 +19,15 @@ class Types::VideoCallType < Types::BaseType
     authorize :is_participant
   end
 
+  field :participant, Types::ViewerUnion, null: false do
+    argument :id, ID, required: true
+    authorize :is_participant
+  end
+
+  def participant(id:)
+    SpecialistOrUser.find_by_uid!(id)
+  end
+
   def id
     object.uid
   end

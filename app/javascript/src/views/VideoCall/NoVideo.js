@@ -1,11 +1,23 @@
 import React from "react";
+import styled from "styled-components";
 import { Circle } from "@advisable/donut";
 import { PersonCircle } from "@styled-icons/ionicons-outline";
 
-export default function NoVideo() {
+const StyledNoVideoCircle = styled(Circle)`
+  background-size: cover;
+  background-position: center;
+  background-image: ${(p) => (p.$avatar ? `url(${p.$avatar})` : null)};
+`;
+
+export default function NoVideo({ avatar }) {
   return (
-    <Circle size={160} bg="neutral300" color="neutral500">
-      <PersonCircle size={80} />
-    </Circle>
+    <StyledNoVideoCircle
+      size={160}
+      bg="neutral300"
+      color="neutral500"
+      $avatar={avatar}
+    >
+      {avatar ? null : <PersonCircle size={80} />}
+    </StyledNoVideoCircle>
   );
 }
