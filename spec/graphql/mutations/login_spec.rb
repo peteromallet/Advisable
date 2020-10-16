@@ -18,9 +18,11 @@ RSpec.describe Mutations::Login do
         viewer {
           ... on User {
             id
+            email
           }
           ... on Specialist {
             id
+            email
           }
         }
       }
@@ -35,21 +37,26 @@ RSpec.describe Mutations::Login do
   def response
     AdvisableSchema.execute(
       query,
-      context: { session_manager: session_manager }
+      context: {
+        current_user: nil,
+        session_manager: session_manager,
+      }
     )
   end
 
   it 'returns a viewer' do
-    id = response['data']['login']['viewer']['id']
-    expect(id).to eq(user.uid)
+    viewer = response['data']['login']['viewer']
+    expect(viewer['id']).to eq(user.uid)
+    expect(viewer['email']).to eq(user.email)
   end
 
   context 'when the user is a specialist' do
     let(:user) { create(:specialist, password: 'testing123') }
 
     it 'returns a specialist' do
-      id = response['data']['login']['viewer']['id']
-      expect(id).to eq(user.uid)
+      viewer = response['data']['login']['viewer']
+      expect(viewer['id']).to eq(user.uid)
+      expect(viewer['email']).to eq(user.email)
     end
   end
 
