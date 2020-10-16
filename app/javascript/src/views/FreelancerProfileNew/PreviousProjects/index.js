@@ -13,6 +13,7 @@ import {
 import { mockedIndustries, mockedSkills } from "./mockedFilterData";
 import { useHistory } from "react-router";
 import { rgba } from "polished";
+import { every } from "lodash-es";
 
 const getProjectValues = (projects) =>
   projects.reduce(
@@ -127,16 +128,17 @@ const filterProjects = (state) => (project) => {
   const filterSkills = !!state.skillFilters.length;
   const filterIndustries = !!state.industryFilters.length;
   const allowedBySkills = filterSkills
-    ? project.skills.some(({ name: skill }) =>
-        state.skillFilters.includes(skill),
+    ? project.skills.some(
+        ({ name: skill }) => state.skillFilters.indexOf(skill) > -1,
       )
     : true;
   const allowedByIndustries = filterIndustries
-    ? project.industries.some(({ name: industry }) =>
-        state.industryFilters.includes(industry),
+    ? project.industries.some(
+        ({ name: industry }) => state.industryFilters.indexOf(industry) > -1,
       )
-    : true;
-  return allowedBySkills && allowedByIndustries;
+    : allowedBySkills;
+
+  return every([allowedBySkills, allowedByIndustries]);
 };
 
 function PreviousProjects({ data, isOwner }) {
