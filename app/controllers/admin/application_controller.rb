@@ -7,9 +7,7 @@
 module Admin
   class ApplicationController < Administrate::ApplicationController
     include CurrentUser
-
-    http_basic_authenticate_with name: ENV.fetch('ADMIN_USERNAME'),
-                                 password: ENV.fetch('ADMIN_PASSWORD')
+    before_action :authenticate_admin
 
     # Override this value to specify the number of elements to display at a time
     # on index pages. Defaults to 20.
@@ -22,6 +20,11 @@ module Admin
     #   params[:order] ||= "created_at"
     #   params[:direction] ||= "desc"
     # end
+
+    def authenticate_admin
+      return if current_account&.has_permission?("admin")
+      redirect_to '/'
+    end
 
     def resync
       return unless ENV['STAGING']
