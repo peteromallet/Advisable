@@ -13,6 +13,7 @@ import {
 } from "./reducerHandlers";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
+import FilterDescription from "./FilterDescription";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -118,44 +119,11 @@ function Filter({
       >
         {sections}
       </Box>
-      <AnimatePresence initial={false}>
-        {filtering && (
-          <Box
-            as={motion.div}
-            initial="collapsed"
-            animate="open"
-            exit="collapsed"
-            variants={{
-              open: { opacity: 1, height: "auto" },
-              collapsed: { opacity: 0, height: 0 },
-            }}
-            overflow="hidden"
-            width="100%"
-          >
-            <Box
-              display="flex"
-              alignItems="center"
-              borderRadius="8px"
-              mx="xs"
-              bg={rgba(theme.colors.neutral100, 0.9)}
-              pl="s"
-              py="xxs"
-              pr="xxs"
-            >
-              <Box color="neutral600" mr="s" mb="2px">
-                <Info size={18} strokeWidth={2} />
-              </Box>
-              <Text mr="auto" color="neutral600">
-                Filtering {firstName}'s profile based on work in{" "}
-                {skillFilters.length} in the {industryFilters} industry.
-              </Text>
-              <Button size="s" variant="ghost" onClick={clearFilters}>
-                Clear Filters
-              </Button>
-            </Box>
-          </Box>
-        )}
-      </AnimatePresence>
+      <FilterDescription
+        filtering={filtering}
+        firstName={firstName}
+        clearFilters={clearFilters}
+      />
       {isExapndable && (
         <StyledExpandButton onClick={expandCollapse}>
           <Text fontSize="xs" color="neutral700">
