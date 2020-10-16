@@ -18,6 +18,7 @@ module.exports = {
     process: "readonly",
     global: "readonly",
     Atomics: "readonly",
+    React: "readonly",
     SharedArrayBuffer: "readonly",
     Calendly: "readonly",
     module: "readonly",
@@ -35,5 +36,7 @@ module.exports = {
     "react-hooks/rules-of-hooks": "warn",
     "react-hooks/exhaustive-deps": "warn",
     "react/prop-types": 0,
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
   },
 };

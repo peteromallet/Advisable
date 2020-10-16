@@ -1,4 +1,3 @@
-import React from "react";
 import Routes from "./Routes";
 import ApplicationProvider from "./components/ApplicationProvider";
 import RootErrorBoundary from "./views/RootErrorBoundary";
