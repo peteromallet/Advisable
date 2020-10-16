@@ -9,12 +9,6 @@ export const setInitialValues = ({ children, columns, gutter }) => ({
   visibility: "hidden",
 });
 
-export const updateParams = (state, { columns, gutter }) => ({
-  ...state,
-  numOfColumns: columns,
-  spacing: gutter / 2,
-});
-
 export const setLayoutId = (state) => ({
   ...state,
   layoutId: generateID("layout"),
@@ -82,5 +76,5 @@ export const updateColumns = (state) => ({
     reduceItemsToColumnsByHeight,
     initColumns(state.numOfColumns),
   ),
-  visibility: true,
+  visibility: "visible",
 });
