@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@advisable/donut";
 import PreviousProjects from "./PreviousProjects";
+import NoProjects from "./NoProjects";
 import Testimonials from "./Testimonials";
 import AboutSection from "./AboutSection";
 import useViewer from "src/hooks/useViewer";
@@ -21,8 +22,13 @@ function FreelancerProfileDesktop({ data }) {
         isOwner={isOwner}
         viewer={viewer}
       />
-      <PreviousProjects data={data} isOwner={isOwner} />
       <Testimonials reviews={data.specialist.reviews} />
+      {data.specialist.profileProjects.length > 0 && (
+        <PreviousProjects data={data} isOwner={isOwner} />
+      )}
+      {data.specialist.profileProjects.length === 0 && (
+        <NoProjects data={data} isOwner={isOwner} />
+      )}
       {/* <QA questions={data.questions} answers={data.specialist.answers} /> */}
     </Box>
   );
