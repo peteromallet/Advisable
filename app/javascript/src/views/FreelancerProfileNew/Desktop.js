@@ -10,6 +10,7 @@ import useViewer from "src/hooks/useViewer";
 function FreelancerProfileDesktop({ data }) {
   const viewer = useViewer();
   const isOwner = viewer?.id === data.specialist.id;
+  const hasReviews = data.specialist.reviews.length > 0;
 
   return (
     <Box
@@ -22,13 +23,13 @@ function FreelancerProfileDesktop({ data }) {
         isOwner={isOwner}
         viewer={viewer}
       />
-      <Testimonials reviews={data.specialist.reviews} />
       {data.specialist.profileProjects.length > 0 && (
         <PreviousProjects data={data} isOwner={isOwner} />
       )}
       {data.specialist.profileProjects.length === 0 && (
         <NoProjects data={data} isOwner={isOwner} />
       )}
+      {hasReviews && <Testimonials reviews={data.specialist.reviews} />}
       {/* <QA questions={data.questions} answers={data.specialist.answers} /> */}
     </Box>
   );
