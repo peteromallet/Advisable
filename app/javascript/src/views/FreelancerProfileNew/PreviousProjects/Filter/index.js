@@ -124,6 +124,8 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
     }
   }
 
+  const filtering = skillFilters.length > 0 || industryFilters.length > 0;
+
   return (
     <StyledFilterCard borderRadius="8px" mb="xl" pb="xs" elevation="m">
       <Box
