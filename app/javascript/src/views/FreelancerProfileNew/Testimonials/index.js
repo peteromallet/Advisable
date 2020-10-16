@@ -13,7 +13,7 @@ function Testimonials({ reviews }) {
   return (
     <Box mb="xl">
       <SectionHeaderWrapper>
-        <SectionHeaderText> Testimonials</SectionHeaderText>
+        <SectionHeaderText>Testimonials</SectionHeaderText>
       </SectionHeaderWrapper>
       <Stack spacing="m">{cards}</Stack>
     </Box>

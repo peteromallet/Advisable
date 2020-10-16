@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Text, Card, Avatar } from "@advisable/donut";
+import { Box, Text, Card, Avatar, theme } from "@advisable/donut";
 import { QuoteAltLeft } from "@styled-icons/boxicons-solid";
+import { lighten } from "polished";
 
 function ReviewWide({ review }) {
   const role = review.role;
@@ -13,7 +14,7 @@ function ReviewWide({ review }) {
             <Avatar size="xl" name={review.name} url={review.avatar} />
           </Box>
           <Box
-            color="red300"
+            color={lighten(0.08, theme.colors.orange500)}
             zIndex="2"
             position="absolute"
             bottom="0px"
