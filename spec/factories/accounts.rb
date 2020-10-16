@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :account do
-    country
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     sequence(:uid) { "acc_#{SecureRandom.hex[0..14]}" }
