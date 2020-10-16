@@ -1,6 +1,7 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import { Box, Text, Button, useBreakpoint, theme } from "@advisable/donut";
 import Masonry from "components/Masonry";
+import queryString from "query-string";
 import createDispatcher from "src/utilities/createDispatcher";
 import Tags from "./Filter/Tags";
 import NoFilteredProjects from "./NoFilteredProjects";
@@ -11,7 +12,7 @@ import {
   SectionHeaderWrapper,
 } from "../components/SectionHeader";
 import { mockedIndustries, mockedSkills } from "./mockedFilterData";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { rgba } from "polished";
 import { every } from "lodash-es";
 
@@ -144,6 +145,10 @@ const filterProjects = (state) => (project) => {
 function PreviousProjects({ data, isOwner }) {
   const [state, dispatch] = useReducer(reducer, data, init);
   const history = useHistory();
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search, {
+    arrayFormat: "bracket",
+  });
   const createAction = createDispatcher(dispatch);
   const switchSkillSelection = createAction("SWITCH_SKILL_SELECTION");
   const switchIndustrySelection = createAction("SWITCH_INDUSTRY_SELECTION");
@@ -154,6 +159,31 @@ function PreviousProjects({ data, isOwner }) {
   const isMobile = useBreakpoint("s");
   const numOfColumns =
     (isMobile && 1) || (isTablet && 2) || (isWidescreen && 3);
+
+  useEffect(() => {
+    const filters = {
+      industries: state.industryFilters,
+      skills: state.skillFilters,
+    };
+    let search = queryString.stringify(
+      {
+        ...queryParams,
+        ...filters,
+      },
+      {
+        arrayFormat: "bracket",
+      },
+    );
+    search = search ? "?" + search : search;
+    const updateUrl = location.search !== search;
+    updateUrl && history.replace({ ...location, search });
+  }, [
+    history,
+    location,
+    queryParams,
+    state.industryFilters,
+    state.skillFilters,
+  ]);
 
   const projectCards = state.projects
     .filter(filterProjects(state))
