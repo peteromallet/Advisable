@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Logging in' do
   it 'redirects the user back to where they tried to go' do
-    user = create(:user, password: 'testing123')
+    user = create(:user, account: create(:account, password: 'testing123'))
     project = create(:project, user: user)
     visit "/projects/#{project.airtable_id}/matches"
     fill_in 'email', with: user.email
