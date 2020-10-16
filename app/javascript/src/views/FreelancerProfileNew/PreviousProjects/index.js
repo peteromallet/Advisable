@@ -146,6 +146,7 @@ function PreviousProjects({ data, isOwner }) {
   const switchSkillSelection = createAction("SWITCH_SKILL_SELECTION");
   const switchIndustrySelection = createAction("SWITCH_INDUSTRY_SELECTION");
   const clearFilters = createAction("CLEAR_FILTERS");
+  console.log("prev projects data", data);
   // Responsivness
   const isWidescreen = useBreakpoint("mUp");
   const isTablet = useBreakpoint("m");
@@ -161,7 +162,12 @@ function PreviousProjects({ data, isOwner }) {
 
   return (
     <Box mb="xxl">
-      <Filter>
+      <Filter
+        skillFilters={state.skillFilters}
+        industryFilters={state.industryFilters}
+        clearFilters={clearFilters}
+        firstName={data.specialist.firstName}
+      >
         <Tags
           sectionName="skills"
           sectionTags={state.skillsSection}
