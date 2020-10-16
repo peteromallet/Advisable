@@ -7,7 +7,6 @@ import {
   setColumns,
   setItemsHeight,
   updateColumns,
-  updateParams,
 } from "./lib";
 import { Box } from "@advisable/donut";
 import { flow } from "lodash-es";
@@ -22,14 +21,12 @@ const initState = flow([
 
 const arrangeBasedOnHeight = flow([setItemsHeight, updateColumns]);
 
-const resize = flow([updateParams, arrangeBasedOnHeight]);
-
 const reducer = (state, action) => {
   switch (action.type) {
     case "ARRANGE_BASED_ON_HEIGHT":
       return arrangeBasedOnHeight(state);
-    case "RESIZE":
-      return resize(state, action.payload);
+    case "UPDATE":
+      return initState({ ...action.payload });
     default:
       return state;
   }
@@ -43,12 +40,13 @@ function Masonry({ children, columns = 2, gutter = 20 }) {
   );
 
   useEffect(() => {
-    columns && dispatch({ type: "RESIZE", payload: { columns, gutter } });
-  }, [columns, gutter]);
+    s.visibility === "hidden" && dispatch({ type: "ARRANGE_BASED_ON_HEIGHT" });
+  }, [s.visibility]);
 
   useEffect(() => {
-    dispatch({ type: "ARRANGE_BASED_ON_HEIGHT" });
-  }, []);
+    s.items.length !== children.length &&
+      dispatch({ type: "UPDATE", payload: { columns, gutter, children } });
+  }, [columns, gutter, children, s.items.length]);
 
   return (
     <Box
