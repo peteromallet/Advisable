@@ -69,7 +69,7 @@ RSpec.describe Mutations::Signup do
   end
 
   context 'when the account already exists' do
-    let(:user) { create(:user, password: 'testing123') }
+    let(:user) { create(:user, account: create(:account, password: 'testing123')) }
 
     it 'returns an error' do
       error = response['errors'][0]['extensions']['code']

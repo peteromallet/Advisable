@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::Login do
-  let(:user) { create(:user, password: 'testing123') }
+  let(:account) { create(:account, password: 'testing123') }
+  let(:user) { create(:user, account: account) }
   let(:email) { user.email }
   let(:password) { 'testing123' }
   let(:session_manager) do
@@ -51,7 +52,7 @@ RSpec.describe Mutations::Login do
   end
 
   context 'when the user is a specialist' do
-    let(:user) { create(:specialist, password: 'testing123') }
+    let(:user) { create(:specialist, account: create(:account, password: 'testing123')) }
 
     it 'returns a specialist' do
       viewer = response['data']['login']['viewer']

@@ -17,7 +17,7 @@ RSpec.describe 'Signing up as a new user' do
 
   it 'shows an error when signup fails' do
     existing = create(:user)
-    u = create(:user, password: nil, confirmed_at: nil)
+    u = create(:user, account: create(:account, password: nil, confirmed_at: nil))
     visit "/signup/#{u.airtable_id}"
     fill_in 'email', with: existing.email
     fill_in 'password', with: 'testing123'

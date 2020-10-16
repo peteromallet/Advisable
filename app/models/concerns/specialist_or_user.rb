@@ -7,12 +7,9 @@ module SpecialistOrUser
     include Tutorials
 
     belongs_to :account
-    before_validation :ensure_account_exists
-
-    has_secure_password validations: false
-    validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
 
     # Temporary while we're moving things over
+    before_validation :ensure_account_exists
 
     # Sets the confirmation digest and sends the user a confirmation email with
     # instructions to confirm their account.

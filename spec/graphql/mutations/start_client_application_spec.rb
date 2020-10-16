@@ -41,10 +41,9 @@ RSpec.describe Mutations::Signup do
     it 'returns an error' do
       create(
         :user,
-        account: create(:account, email: email),
+        account: create(:account, email: email, password: 'testing123'),
         first_name: 'Michael',
-        last_name: 'Scott',
-        password: 'testing123'
+        last_name: 'Scott'
       )
       response = AdvisableSchema.execute(query)
       error = response['errors'][0]['extensions']['code']
@@ -94,8 +93,7 @@ RSpec.describe Mutations::Signup do
         user =
           create(
             :user,
-            account: create(:account, email: email),
-            password: nil,
+            account: create(:account, email: email, password: nil),
             first_name: 'Michael',
             last_name: 'Scott',
             application_status: :accepted
