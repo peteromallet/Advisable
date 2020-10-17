@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Card, Avatar } from "@advisable/donut";
+import { Box, Text, Card, Avatar, theme } from "@advisable/donut";
 import { QuoteAltLeft } from "@styled-icons/boxicons-solid";
 
 function ReviewTablet({ review }) {
@@ -12,14 +12,13 @@ function ReviewTablet({ review }) {
           <Box width={60} height={60}>
             <Avatar size="m" name={review.name} url={review.avatar} />
           </Box>
-          <Box
-            color="red300"
-            zIndex="2"
-            position="absolute"
-            bottom="-2px"
-            right="-10px"
-          >
-            <QuoteAltLeft size={32} />
+          <Box zIndex="2" position="absolute" bottom="-2px" right="-10px">
+            <QuoteAltLeft
+              size={28}
+              fill="rgba(255,255,255,0.6)"
+              stroke={theme.colors.blue500}
+              strokeWidth={1}
+            />
           </Box>
         </Box>
         <Box mt="xxs">

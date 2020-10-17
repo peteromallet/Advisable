@@ -1,13 +1,24 @@
 import React from "react";
-import { Box, Text, Card, Avatar } from "@advisable/donut";
+import { Box, Text, Card, Avatar, theme } from "@advisable/donut";
+import { QuoteAltLeft } from "@styled-icons/boxicons-solid";
 
 function ReviewMobile({ review }) {
   return (
     <Card p="xl" borderRadius={8}>
       <Box>
         <Box width="100%" display="flex" mb="m">
-          <Box width={60} height={60}>
-            <Avatar size="m" name={review.name} url={review.avatar} />
+          <Box position="relative">
+            <Box width={60} height={60}>
+              <Avatar size="m" name={review.name} url={review.avatar} />
+            </Box>
+            <Box zIndex="2" position="absolute" bottom="-4px" right="-8px">
+              <QuoteAltLeft
+                size={28}
+                fill="rgba(255,255,255,0.6)"
+                stroke={theme.colors.blue500}
+                strokeWidth={1}
+              />
+            </Box>
           </Box>
           <Box ml="m" mt="xxs">
             <Text

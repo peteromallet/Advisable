@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Text, Card, Avatar, theme } from "@advisable/donut";
 import { QuoteAltLeft } from "@styled-icons/boxicons-solid";
-import { lighten } from "polished";
 
 function ReviewWide({ review }) {
   const role = review.role;
@@ -13,14 +12,13 @@ function ReviewWide({ review }) {
           <Box width={100} height={100}>
             <Avatar size="xl" name={review.name} url={review.avatar} />
           </Box>
-          <Box
-            color={lighten(0.08, theme.colors.orange500)}
-            zIndex="2"
-            position="absolute"
-            bottom="0px"
-            right="-18px"
-          >
-            <QuoteAltLeft size={48} />
+          <Box zIndex="2" position="absolute" bottom="2px" right="-12px">
+            <QuoteAltLeft
+              size={38}
+              fill="rgba(255,255,255,0.6)"
+              stroke={theme.colors.blue500}
+              strokeWidth={1}
+            />
           </Box>
         </Box>
         <Box mt="8px">
