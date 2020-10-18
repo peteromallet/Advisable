@@ -1,5 +1,5 @@
-import React, { useEffect, useReducer } from "react";
-import { Box, Text, Button, useBreakpoint, theme } from "@advisable/donut";
+import React, { useEffect, useMemo, useReducer } from "react";
+import { Box, Button, useBreakpoint, theme } from "@advisable/donut";
 import Masonry from "components/Masonry";
 import queryString from "query-string";
 import createDispatcher from "src/utilities/createDispatcher";
@@ -120,6 +120,8 @@ const reducer = (state, action) => {
       return switchTagSelection(state, "industriesSection", action.payload.tag);
     case "CLEAR_FILTERS":
       return clearFilters(state);
+    case "SET_NUM_OF_COLUMNS":
+      return { ...state, numOfColumns: action.payload };
     default:
       return state;
   }
@@ -149,16 +151,27 @@ function PreviousProjects({ data, isOwner }) {
   const queryParams = queryString.parse(location.search, {
     arrayFormat: "bracket",
   });
-  const createAction = createDispatcher(dispatch);
+
+  // Update state actions
+  const createAction = useMemo(() => createDispatcher(dispatch), []);
   const switchSkillSelection = createAction("SWITCH_SKILL_SELECTION");
   const switchIndustrySelection = createAction("SWITCH_INDUSTRY_SELECTION");
+  const setNumOfColumns = useMemo(() => createAction("SET_NUM_OF_COLUMNS"), [
+    createAction,
+  ]);
   const clearFilters = createAction("CLEAR_FILTERS");
+
   // Responsivness
   const isWidescreen = useBreakpoint("mUp");
   const isTablet = useBreakpoint("m");
   const isMobile = useBreakpoint("s");
-  const numOfColumns =
-    (isMobile && 1) || (isTablet && 2) || (isWidescreen && 3);
+
+  // Update number of columns
+  useEffect(() => {
+    isWidescreen && setNumOfColumns(3);
+    isTablet && setNumOfColumns(2);
+    isMobile && setNumOfColumns(1);
+  }, [isMobile, isTablet, isWidescreen, setNumOfColumns]);
 
   useEffect(() => {
     const filters = {
@@ -240,7 +253,7 @@ function PreviousProjects({ data, isOwner }) {
           )}
         </SectionHeaderWrapper>
         {projectCards.length ? (
-          <Masonry columns={numOfColumns}>{projectCards}</Masonry>
+          <Masonry columns={state.numOfColumns}>{projectCards}</Masonry>
         ) : (
           <NoFilteredProjects firstName={data.specialist.firstName} />
         )}
