@@ -51,6 +51,7 @@ function EditInfoModal({ modal, specialist }) {
     modal.hide();
   };
   const countriesQuery = useQuery(FETCH_COUNTRIES);
+
   return (
     <Modal modal={modal} p="xxl" label="Edit profile info" width={640}>
       <Formik
