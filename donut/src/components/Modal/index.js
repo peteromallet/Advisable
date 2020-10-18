@@ -52,7 +52,7 @@ const StyledDialog = styled(motion.div)`
   box-shadow: 0 24px 64px -24px ${rgba(theme.colors.neutral900, 0.6)};
 
   @media (max-width: 1024px) {
-    height: 100%;
+    min-height: 100%;
     max-width: 100%;
   }
 `;
