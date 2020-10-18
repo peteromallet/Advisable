@@ -1,5 +1,12 @@
 import React from "react";
-import { Modal, Box, Text, Textarea, Select } from "@advisable/donut";
+import {
+  Modal,
+  Box,
+  Text,
+  Textarea,
+  Select,
+  useBreakpoint,
+} from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
 import { Form, Formik } from "formik";
@@ -23,6 +30,7 @@ const validationSchema = object().shape({
 
 function EditInfoModal({ modal, specialist }) {
   const [mutate] = useMutation(UPDATE_PROFILE);
+  const isWidescreen = useBreakpoint("sUp");
   const initialValues = {
     city: specialist.city || "",
     country: get(specialist, "country.id"),
@@ -43,6 +51,7 @@ function EditInfoModal({ modal, specialist }) {
     modal.hide();
   };
   const countriesQuery = useQuery(FETCH_COUNTRIES);
+
   return (
     <Modal modal={modal} p="xxl" label="Edit profile info" width={640}>
       <Formik
@@ -61,8 +70,12 @@ function EditInfoModal({ modal, specialist }) {
             >
               Edit profile info
             </Text>
-            <Box display="flex" mb="l">
-              <Box mr="s" width="100%">
+            <Box display={isWidescreen && "flex"} mb="l">
+              <Box
+                mr={isWidescreen && "s"}
+                mb={!isWidescreen && "l"}
+                width="100%"
+              >
                 <FormField
                   name="city"
                   label="City"
