@@ -7,6 +7,7 @@ import {
   setColumns,
   setItemsHeight,
   updateColumns,
+  filterChildren,
 } from "./lib";
 import { Box } from "@advisable/donut";
 import { flow } from "lodash-es";
@@ -39,14 +40,25 @@ function Masonry({ children, columns = 2, gutter = 20 }) {
     initState,
   );
 
+  // Arrange/Rearrange layout effect
   useEffect(() => {
     s.visibility === "hidden" && dispatch({ type: "ARRANGE_BASED_ON_HEIGHT" });
   }, [s.visibility]);
 
+  // Update parameters effect
   useEffect(() => {
-    s.items.length !== children.length &&
+    const newFilteredChildren = filterChildren(children);
+    const diffNumOfChildren =
+      newFilteredChildren.length !== s.filteredChildren.length;
+    const diffChildrenKey = newFilteredChildren.some(
+      (child, index) => child.key !== s.filteredChildren[index]?.key,
+    );
+    const childrenUpdate = diffNumOfChildren || diffChildrenKey;
+    const numOfColumnsUpdate = s.numOfColumns !== columns;
+    const gutterUpdate = s.gutter !== gutter;
+    (childrenUpdate || numOfColumnsUpdate || gutterUpdate) &&
       dispatch({ type: "UPDATE", payload: { columns, gutter, children } });
-  }, [columns, gutter, children, s.items.length]);
+  }, [children, columns, gutter, s.filteredChildren, s.gutter, s.numOfColumns]);
 
   return (
     <Box

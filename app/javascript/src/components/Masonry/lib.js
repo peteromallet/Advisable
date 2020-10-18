@@ -3,6 +3,7 @@ import generateID from "src/utilities/generateID";
 
 export const setInitialValues = ({ children, columns, gutter }) => ({
   children,
+  gutter,
   numOfColumns: columns,
   height: 0,
   spacing: gutter / 2,
@@ -14,13 +15,18 @@ export const setLayoutId = (state) => ({
   layoutId: generateID("layout"),
 });
 
-export const setFilteredChildren = (state) => {
-  const filteredChildren = [];
-  React.Children.forEach(state.children, (child) => {
+export const filterChildren = (children) => {
+  let filteredChildren = [];
+  React.Children.forEach(children, (child) => {
     child && filteredChildren.push(React.cloneElement(child));
   });
-  return { ...state, filteredChildren };
+  return filteredChildren;
 };
+
+export const setFilteredChildren = (state) => ({
+  ...state,
+  filteredChildren: filterChildren(state.children),
+});
 
 export const setItems = (state) => ({
   ...state,
