@@ -112,8 +112,13 @@ function PreviousProjects({ data, isOwner }) {
   const isWidescreen = useBreakpoint("mUp");
   const isTablet = useBreakpoint("m");
   const isMobile = useBreakpoint("s");
-  const numOfColumns =
-    (isMobile && 1) || (isTablet && 2) || (isWidescreen && 3);
+
+  // Update number of columns
+  useEffect(() => {
+    isWidescreen && setNumOfColumns(3);
+    isTablet && setNumOfColumns(2);
+    isMobile && setNumOfColumns(1);
+  }, [isMobile, isTablet, isWidescreen, setNumOfColumns]);
 
   useEffect(() => {
     const filters = {
