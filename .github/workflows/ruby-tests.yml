@@ -101,7 +101,7 @@ jobs:
           bin/rails db:migrate
 
       - name: Compile assets
-        run: bundle exec rails webpacker:compile
+        run: rm -r public/packs-test && bundle exec rails webpacker:compile
 
       # - name: Test
       #   run: bundle exec rspec --format RSpec::Github::Formatter
@@ -115,7 +115,6 @@ jobs:
           start: bundle exec rails s -e test -p 3000
           wait-on: http://localhost:3000
           install: false
-          cache-key: ${{ runner.os }}-cypress-${{ hashFiles('yarn.lock') }}
 
       - name: Test screenshots
         uses: actions/upload-artifact@v2
