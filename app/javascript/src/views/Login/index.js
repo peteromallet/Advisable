@@ -10,6 +10,7 @@ import { useMutation, useApolloClient } from "@apollo/client";
 import { Box, Card, Text, Link, theme } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import useScrollRestore from "../../utilities/useScrollRestore";
+import VIEWER from "../../graphql/queries/viewer";
 import validationSchema from "./validationSchema";
 import { SignupLinks, SignupLink } from "./styles";
 import LOGIN from "./login";
@@ -33,7 +34,7 @@ const Login = ({ location }) => {
   };
 
   const handleSubmit = async (input, formikBag) => {
-    const { errors } = await login({
+    const { errors, data } = await login({
       variables: { input },
     });
 
@@ -49,7 +50,12 @@ const Login = ({ location }) => {
       from: { pathname: "/" },
     };
 
-    await client.resetStore();
+    client.writeQuery({
+      query: VIEWER,
+      data: {
+        viewer: data.login.viewer,
+      },
+    });
     history.replace(from);
   };
 
