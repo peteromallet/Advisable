@@ -40,6 +40,7 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
       )
 
     interview.sync_to_airtable
+    VideoCall.create(interview: interview)
     interview
   end
 

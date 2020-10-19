@@ -45,8 +45,7 @@ test("Prompts to authenticate via linkedin", async () => {
     graphQLMocks,
   });
 
-  const btn = await screen.findByText("Login with Linkedin");
-  expect(btn).toBeInTheDocument();
+  await screen.findByRole("button", { text: /login with linkedin/i });
 });
 
 test("Shows notice to reauth if viewer cant validate", async () => {
