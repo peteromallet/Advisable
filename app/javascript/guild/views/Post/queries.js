@@ -13,6 +13,8 @@ export const GUILD_POST_QUERY = gql`
         location
         id
         bio
+        firstName
+        name
       }
       comments {
         id

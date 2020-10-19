@@ -5,9 +5,9 @@ import ReactTooltip from "react-tooltip";
 import pluralize from "@advisable-main/utilities/pluralize";
 import { OfferHelp } from "@guild/icons";
 
-const HelpButton = ({ engagementsCount, onToggle }) => {
-  const tooltipContent = engagementsCount
-    ? `${pluralize(engagementsCount, "person has", "people have")} offered help`
+const HelpButton = ({ engagements, onToggle }) => {
+  const tooltipContent = engagements
+    ? `${pluralize(engagements, "person has", "people have")} offered help`
     : "Offer help";
 
   return (
@@ -24,7 +24,7 @@ const HelpButton = ({ engagementsCount, onToggle }) => {
     >
       <ReactTooltip backgroundColor={theme.colors.catalinaBlue100} />
       <Text fontSize="xs" mr="xs" color="catalinaBlue100">
-        {engagementsCount}
+        {engagements}
       </Text>
       <OfferHelp size={18} />
     </StyledButton>

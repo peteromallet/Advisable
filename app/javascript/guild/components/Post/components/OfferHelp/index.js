@@ -28,6 +28,7 @@ const OfferHelp = ({ recipient, guildPostId, engagementsCount }) => {
   const [calendlyLink, setCalendlyLink] = useState(
     viewer?.guildCalendlyLink || "",
   );
+  const [engagements, setEngagments] = useState(engagementsCount || 0);
   const mUp = useBreakpoint("mUp");
 
   const [offerHelpModal, toggleOfferHelpModal] = useToggle(false);
@@ -38,14 +39,11 @@ const OfferHelp = ({ recipient, guildPostId, engagementsCount }) => {
   };
 
   const [current, send, service] = useMachine(offerMachine);
-  useEffect(() => {
-    const subscription = service.subscribe((state) => console.debug(state));
-    return subscription.unsubscribe;
-  }, [service]);
+  // useEffect(() => {
+  //   const subscription = service.subscribe((state) => console.debug(state));
+  //   return subscription.unsubscribe;
+  // }, [service]);
 
-  /* 
-    Offer help with direct messages
-  */
   const handleSubmitMessage = async () => {
     if (!messageBody.length) return;
     await createChatDirectMessage({
@@ -59,6 +57,7 @@ const OfferHelp = ({ recipient, guildPostId, engagementsCount }) => {
       },
     });
     send("SENT");
+    setEngagments((prev) => prev + 1);
   };
   const [createChatDirectMessage, { loading }] = useMutation(
     CREATE_CHAT_DIRECT_MESSAGE,
@@ -74,10 +73,7 @@ const OfferHelp = ({ recipient, guildPostId, engagementsCount }) => {
 
   return (
     <>
-      <HelpButton
-        onToggle={handleToggleOfferModal}
-        engagementsCount={engagementsCount}
-      />
+      <HelpButton onToggle={handleToggleOfferModal} engagements={engagements} />
 
       {offerHelpModal && (
         <StyledModal
@@ -129,7 +125,12 @@ const OfferHelp = ({ recipient, guildPostId, engagementsCount }) => {
               ) : (
                 <>
                   <GuildBox spaceChildrenVertical={16}>
-                    <Text color="catalinaBlue100" fontWeight="medium" size="l">
+                    <Text
+                      color="catalinaBlue100"
+                      mt="m"
+                      fontWeight="medium"
+                      size="l"
+                    >
                       {current.matches("call")
                         ? "What would you like to say alongside this offer?"
                         : `Please include your message to ${recipient.firstName} here`}

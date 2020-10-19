@@ -22,9 +22,9 @@ import ShowMore from "@guild/components/ShowMore";
 import GuildTag from "@guild/components/GuildTag";
 import { NeedHelp } from "@guild/icons";
 import { GUILD_UPDATE_POST_REACTIONS } from "@guild/components/Post/mutations";
+import OfferHelp from "@guild/components/Post/components/OfferHelp";
 // import { CREATE_GUILD_COMMENT } from "./mutations";
 import { GUILD_POST_QUERY } from "./queries";
-import DirectMessage from "./components/DirectMessage";
 import Topics from "@guild/components/Post/components/Topics";
 import { CoverImage } from "@guild/components/CoverImage";
 import { SubmitButton } from "@guild/components/Buttons/styles";
@@ -80,7 +80,11 @@ const Post = () => {
             {post.coverImage && <CoverImage src={post.coverImage} />}
 
             {/* Header */}
-            <GuildBox px="xxl" py="l" backgroundColor="ghostWhite100">
+            <GuildBox
+              px={{ _: "s", s: "xxl" }}
+              py="l"
+              backgroundColor="ghostWhite100"
+            >
               <GuildBox mb="l" flexSpaceBetween>
                 <Text fontWeight="medium" size="4xl" color="catalinaBlue100">
                   {post.title}
@@ -103,14 +107,10 @@ const Post = () => {
                   name={post.author.name}
                   url={post.author.avatar}
                 />
-                <DirectMessage
-                  count={3}
-                  recipient={post.author}
-                  guildPostId={post.id}
-                />
                 <Box
                   display="flex"
                   justifyContent="center"
+                  alignSelf="center"
                   flexDirection="column"
                 >
                   <Text fontSize="m" fontWeight="light" color="quartz">
@@ -130,12 +130,20 @@ const Post = () => {
               height="58px"
               flexSpaceBetween
               backgroundColor="#6770f10d"
-              display="flex"
               alignItems="center"
             >
               <Topics activeStyle topics={post.guildTopics} />
 
-              <GuildBox alignSelf={"center"}>
+              <GuildBox
+                display="flex"
+                spaceChildrenHorizontal={8}
+                alignSelf={"center"}
+              >
+                <OfferHelp
+                  guildPostId={post.id}
+                  recipient={post.author}
+                  engagementsCount={post.engagementsCount}
+                />
                 <ReactionsButton
                   reacted={post.reacted}
                   reactionsCount={post.reactionsCount}
