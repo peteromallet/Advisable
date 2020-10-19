@@ -114,6 +114,7 @@ jobs:
           headless: true
           start: bundle exec rails s -e test -p 3000
           wait-on: http://localhost:3000
+          install: false
 
       - name: Test screenshots
         uses: actions/upload-artifact@v2
