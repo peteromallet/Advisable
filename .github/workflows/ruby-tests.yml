@@ -101,10 +101,10 @@ jobs:
           bin/rails db:migrate
 
       - name: Compile assets
-        run: rm -r public/packs-test && bundle exec rails webpacker:compile
+        run: bundle exec rails webpacker:compile
 
-      # - name: Test
-      #   run: bundle exec rspec --format RSpec::Github::Formatter
+      - name: Test
+        run: bundle exec rspec --format RSpec::Github::Formatter
 
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v2
@@ -122,13 +122,6 @@ jobs:
         with:
           name: screenshots
           path: tmp/screenshots
-
-      - name: Cypress screenshot
-        uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: screenshots
-          path: spec/dwight@test.com.png
 
       - name: Cypress Video
         uses: actions/upload-artifact@v2

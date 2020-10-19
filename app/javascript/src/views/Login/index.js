@@ -18,14 +18,17 @@ import LOGIN from "./login";
 const Login = ({ location }) => {
   useScrollRestore();
   const viewer = useViewer();
-  const history = useHistory();
   const client = useApolloClient();
   const { t } = useTranslation();
   const [login] = useMutation(LOGIN);
   const queryParams = queryString.parse(location.search);
 
+  const { from } = location.state || {
+    from: { pathname: "/" },
+  };
+
   if (viewer) {
-    return <Redirect to="/" />;
+    return <Redirect to={from} />;
   }
 
   const initialValues = {
@@ -46,17 +49,12 @@ const Login = ({ location }) => {
       return;
     }
 
-    const { from } = location.state || {
-      from: { pathname: "/" },
-    };
-
     client.writeQuery({
       query: VIEWER,
       data: {
         viewer: data.login.viewer,
       },
     });
-    history.replace(from);
   };
 
   return (
