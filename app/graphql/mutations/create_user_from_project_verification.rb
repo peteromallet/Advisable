@@ -27,12 +27,12 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
             )
     end
 
-    # TODO: AccountMigration - remove duplicated fields
     account = Account.new(
       email: email,
       first_name: viewer.first_name,
       last_name: viewer.last_name
     )
+    account.save!
 
     user = User.new(
       account: account,
@@ -43,7 +43,6 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
       campaign_source: 'validation',
       industry: project.primary_industry
     )
-
     user.save!
     user.sync_to_airtable
     SetUserImageJob.perform_later(user.id, viewer.image)

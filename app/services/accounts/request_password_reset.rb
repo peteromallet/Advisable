@@ -4,7 +4,6 @@
 class Accounts::RequestPasswordReset < ApplicationService
   attr_reader :account
 
-  # TODO: AccountMigration - Make this better
   def initialize(email)
     @account = Account.find_by!(email: email)
   rescue ActiveRecord::RecordNotFound
