@@ -10,6 +10,7 @@ module Guild
 
     belongs_to :specialist
     has_many :reactions, as: :reactionable
+
     has_many :comments,
              -> { published },
              foreign_key: 'guild_post_id', class_name: 'Guild::Comment'
@@ -25,6 +26,8 @@ module Guild
 
     has_one_attached :cover_image
 
+    jsonb_accessor :data, engagements_count: [:integer, {default: 0}]
+
     before_validation(on: :create) {
       self.status = Post.statuses['published']
     }
@@ -37,6 +40,10 @@ module Guild
       else
         type.demodulize.titleize
       end
+    end
+
+    def record_engagement!
+      update(engagements_count: self.engagements_count += 1)
     end
   end
 end

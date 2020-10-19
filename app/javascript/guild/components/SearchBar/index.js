@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { InputGroupAddon, InputGroup } from "reactstrap";
-import Search from "@guild/icons/Search";
+import { Search } from "@guild/icons";
 import { Box } from "@advisable/donut";
 import { SearchButton, SearchInput } from "./styles";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,7 +18,7 @@ const SearchBar = ({ handleSubmitSearch }) => {
         />
         <InputGroupAddon addonType="append">
           <SearchButton onClick={handleSubmitSearch}>
-            <Search width={20} height={20} />
+            <Search size={20} />
           </SearchButton>
         </InputGroupAddon>
       </InputGroup>

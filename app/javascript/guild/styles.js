@@ -54,9 +54,17 @@ const flexStaticUtils = {
     flex-direction: column;
     flex-grow: 1;
   `,
+  flexTruncate: css`
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  `,
 };
 
 const spaceChildrenHorizontal = (margin) => css`
+  /* column-gap: ${margin}px; */
   display: flex;
   & > * {
     margin-right: ${margin}px;
@@ -67,6 +75,7 @@ const spaceChildrenHorizontal = (margin) => css`
 `;
 
 const spaceChildrenVertical = (margin) => css`
+  /* row-gap: ${margin}px; */
   display: flex;
   flex-direction: column;
   & > * {
@@ -107,16 +116,12 @@ const GuildBox = styled(Box)`
   ${({ spaceChildrenHorizontal: margin }) =>
     margin && spaceChildrenHorizontal(margin)}
   
-  ${({
-    wrapChildrenBoth: margin,
-  }) => margin && wrapChildrenBoth(margin)}
+  ${({ wrapChildrenBoth: margin }) => margin && wrapChildrenBoth(margin)}
 
-  ${({ flexCenterBoth }) =>
-    flexCenterBoth && flexStaticUtils.flexCenterBoth}
+  ${({ flexCenterBoth }) => flexCenterBoth && flexStaticUtils.flexCenterBoth}
 
-  ${({
-    flexSpaceBetween,
-  }) => flexSpaceBetween && flexStaticUtils.flexSpaceBetween}
+  ${({ flexSpaceBetween }) =>
+    flexSpaceBetween && flexStaticUtils.flexSpaceBetween}
 `;
 
 export { flex, breakpoint, GuildBox };
