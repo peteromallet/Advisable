@@ -103,8 +103,8 @@ jobs:
       - name: Compile assets
         run: bundle exec rails webpacker:compile
 
-      - name: Test
-        run: bundle exec rspec --format RSpec::Github::Formatter
+      # - name: Test
+      #   run: bundle exec rspec --format RSpec::Github::Formatter
 
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v2
@@ -115,12 +115,23 @@ jobs:
           start: bundle exec rails s -e test -p 3000
           wait-on: http://localhost:3000
 
-      - name: Test
-        run: bundle exec rspec
-
       - name: Test screenshots
         uses: actions/upload-artifact@v2
         if: always()
         with:
           name: screenshots
           path: tmp/screenshots
+
+      - name: Cypress screenshot
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: screenshots
+          path: spec/dwight@test.com.png
+
+      - name: Cypress Video
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: cypress_videos
+          path: spec/cypress/videos/*
