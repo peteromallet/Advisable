@@ -27,7 +27,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
       Stripe::Customer.update(
         user.stripe_customer_id, {
           name: user.invoice_company_name,
-          email: user.email
+          email: user.account.email
         }
       )
     end
@@ -46,7 +46,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
   private
 
   def store_vat_number(user)
-    return unless user.account.vat_number.present?
+    return if user.account.vat_number.blank?
     Stripe::Customer.create_tax_id(
       user.stripe_customer_id,
       {

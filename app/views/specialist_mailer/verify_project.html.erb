@@ -21,7 +21,7 @@
         <!-- Copy -->
         <tr>
           <td valign="top" class="copy" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-style: normal;font-weight: normal;line-height: 21px;font-size: 16px;letter-spacing: -.2;color: #414251;padding: 0 40px;">
-            Hi <%= @specialist.first_name %>,<br />
+            Hi <%= @specialist.account.first_name %>,<br />
             Thanks for adding the <b><%= @project.primary_skill.try(:name) %></b> project with <b><%= @project.client_name %></b> to Advisable. Please complete step 1 below to begin the validation process for this project.
           </td>
         </tr>
