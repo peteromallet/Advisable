@@ -5,7 +5,6 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
 
   field :clientApplication, Types::ClientApplicationType, null: true
 
-  # TODO: AccountMigration - This'll need some extra work
   def resolve(**args)
     email_blacklisted?(args[:email])
     check_existing_specialist_account(args[:email])
@@ -21,7 +20,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
       if user.application_status == :started
         account.first_name = args[:first_name]
         account.last_name = args[:last_name]
-        if user.save && account.save
+        if account.save && user.save
           user.sync_to_airtable
           create_client_record(user)
           if context[:request]

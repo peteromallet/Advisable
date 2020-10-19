@@ -28,15 +28,16 @@ module SpecialistOrUser
     end
   end
 
-  # TODO: AccountMigration - Methods in process of migration
+  # TODO: AccountMigration - columns that we migrated to Account
   Account::MIGRATED_COLUMNS.each do |column|
     define_method(column) do
-      Rails.logger.info("Method called on #{self.class.name} from #{caller.select { |path| path =~ %r{app/} }.to_json}")
+      Raven.capture_message("Method called on #{self.class.name} that was meant for Account", backtrace: caller, level: 'debug')
       account&.public_send(column)
     end
   end
 
   def name
+    Raven.capture_message("Method called on #{self.class.name} that was meant for Account", backtrace: caller, level: 'debug')
     account.name
   end
 
