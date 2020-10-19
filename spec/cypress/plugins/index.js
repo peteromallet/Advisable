@@ -52,7 +52,6 @@ module.exports = (on, config) => {
         await page.type("input[type=password]", "testing123");
         await page.click("[data-testid=loginButton]");
         await delay(5000);
-        await page.screenshot({ path: `${email}.png` });
         await page.waitForSelector("[data-testid=joinCall]:not([disabled])");
         await page.click("[data-testid=joinCall]:not([disabled])");
         await delay(5000);
