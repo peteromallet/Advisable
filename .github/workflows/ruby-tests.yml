@@ -28,6 +28,9 @@ jobs:
       STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
       PROJECTS_INVITE_KEY: ${{ secrets.PROJECTS_INVITE_KEY }}
+      TWILIO_SID: ${{ secrets.TWILIO_SID }}
+      TWILIO_API_KEY_SID: ${{ secrets.TWILIO_API_KEY_SID }}
+      TWILIO_API_KEY_SECRET: ${{ secrets.TWILIO_API_KEY_SECRET }}
 
     services:
       postgres:
@@ -103,9 +106,26 @@ jobs:
       - name: Test
         run: bundle exec rspec --format RSpec::Github::Formatter
 
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v2
+        with:
+          project: ./spec
+          browser: chrome
+          headless: true
+          start: bundle exec rails s -e test -p 3000
+          wait-on: http://localhost:3000
+          install: false
+
       - name: Test screenshots
         uses: actions/upload-artifact@v2
         if: always()
         with:
           name: screenshots
           path: tmp/screenshots
+
+      - name: Cypress Video
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: cypress_videos
+          path: spec/cypress/videos/*
