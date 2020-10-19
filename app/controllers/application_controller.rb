@@ -27,8 +27,8 @@ class ApplicationController < ActionController::Base
     if current_user.present?
       Raven.user_context(
         id: current_user.id,
-        email: current_user.email,
-        username: current_user.name
+        email: current_user.account.email,
+        username: current_user.account.name
       )
     else
       Raven.user_context(nil)
