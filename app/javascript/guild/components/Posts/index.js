@@ -66,7 +66,7 @@ const Posts = () => {
       display="flex"
       flexBasis="640px"
       spaceChildrenVertical={40}
-      mb="xxl"
+      // mb="xxl"
     >
       {data &&
         data.guildPosts.nodes.map((post, idx) => (

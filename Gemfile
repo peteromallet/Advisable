@@ -63,7 +63,7 @@ gem 'graphql_playground-rails'
 gem "jsonb_accessor", "~> 1.1.0"
 gem 'acts-as-taggable-on', '~> 6.0'
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
-
+gem 'email_reply_parser'
 
 group :development, :test do
   gem 'pry'
@@ -92,6 +92,7 @@ group :development do
   gem 'annotate'
   gem 'guard'
   gem 'guard-rspec', require: false
+  gem "letter_opener"
 end
 
 group :test do

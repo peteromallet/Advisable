@@ -26,19 +26,16 @@ module Guild
 
       jsonb_accessor :guild_data,
                      guild_joined_date: :datetime,
-                     guild_messages_last_read: [:datetime, {default: Time.at(0)}],
-                     guild_notifications_last_read: [:datetime, {default: Time.at(0)}]
+                     guild_notifications_last_read: [:datetime, {default: Time.at(0)}],
+                     guild_calendly_link: [:string]
 
-      # Utilities to touch last_read for guild events
-      %i[guild_messages_last_read guild_notifications_last_read].each do |meth|
-        define_method("touch_#{meth}".to_sym) do
-          update!(meth => Time.current)
-        end
+      def touch_guild_notifications_last_read
+        update!(guild_notifications_last_read: Time.current)
       end
 
-      # NotImplemented
       def guild_unread_messages
-        guild_messages_last_read > Time.at(0)
+        chat_client = TwilioChat::Client.new(identity: uid)
+        chat_client.has_unread_messages?
       end
 
       def guild_unread_notifications
@@ -66,7 +63,7 @@ module Guild
         #     ).to_sql})
         #       UNION ALL
         #     (#{guild_post_reactions.joins(:specialist).select(
-        #       "'reacted' as context,
+        #       "'gave thanks' as context,
         #       'Guild::Reaction' as type,
         #       guild_reactions.reactionable_id as post_id,
         #       guild_reactions.created_at,

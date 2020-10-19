@@ -1,9 +1,8 @@
 class Mutations::Guild::UpdateLastRead < Mutations::BaseMutation
-  description "Updates the guild last read time for a corresponding event"
+  description "Updates the guild last read time for a notifications read event"
   graphql_name "GuildUpdateLastRead"
 
-  argument :read_notifications, Boolean, required: false
-  argument :read_messages, Boolean, required: false
+  argument :read_notifications, Boolean, required: true
 
   field :viewer, Types::ViewerUnion, null: true
   field :errors, [Types::Error], null: true
@@ -16,8 +15,7 @@ class Mutations::Guild::UpdateLastRead < Mutations::BaseMutation
 
   def resolve(**args)
     viewer = context[:current_user]
-    viewer.touch_guild_messages_last_read if args[:read_messages]
-    viewer.touch_guild_notifications_last_read if args[:read_notifications]
+    viewer.touch_guild_notifications_last_read
 
     {viewer: viewer}
   end

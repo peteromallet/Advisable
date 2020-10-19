@@ -15,7 +15,7 @@ const NewMember = ({ newMember }) => {
           size={"s"}
         />
       </GuildBox>
-      <GuildBox spaceChildrenVertical={2}>
+      <GuildBox spaceChildrenVertical={4}>
         <Text fontSize="xs" fontWeight="medium" color="calalinaBlue100">
           {truncate(newMember.name, { length: 30 })}
         </Text>

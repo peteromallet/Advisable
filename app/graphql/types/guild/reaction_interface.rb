@@ -17,4 +17,6 @@ module Types::Guild::ReactionInterface
   def reacted
     object.reactions.exists?(specialist: context[:current_user])
   end
+
+  field :kind, String, null: false
 end

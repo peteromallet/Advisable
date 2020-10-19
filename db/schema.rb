@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(version: 2020_10_15_063933) do
     t.index ["uid"], name: "index_accounts_on_uid", unique: true
   end
 
+  create_table "action_mailbox_inbound_emails", force: :cascade do |t|
+    t.integer "status", default: 0, null: false
+    t.string "message_id", null: false
+    t.string "message_checksum", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
+  end
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -608,8 +617,8 @@ ActiveRecord::Schema.define(version: 2020_10_15_063933) do
     t.integer "candidate_count", default: 0
     t.integer "proposed_count", default: 0
     t.integer "hired_count", default: 0
-    t.boolean "sourcing"
     t.bigint "sales_person_id"
+    t.boolean "sourcing"
     t.bigint "linkedin_campaign_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["sales_person_id"], name: "index_projects_on_sales_person_id"
@@ -748,16 +757,16 @@ ActiveRecord::Schema.define(version: 2020_10_15_063933) do
     t.integer "project_count"
     t.string "phone"
     t.boolean "test_account"
-    t.string "remember_token"
     t.boolean "guild", default: false
+    t.string "remember_token"
     t.string "community_status"
-    t.boolean "automated_invitations_subscription"
     t.jsonb "guild_data"
-    t.bigint "account_id"
+    t.boolean "automated_invitations_subscription"
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
     t.datetime "community_invited_to_call_at"
     t.integer "community_score"
+    t.bigint "account_id"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
   end

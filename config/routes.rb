@@ -51,6 +51,8 @@ Rails.application.routes.draw do
   get '/guild', to: 'application#guild', as: :guild_root
   get '/guild/*guild_path', to: 'application#guild'
 
+  post '/webhooks/twilio_chat', to: 'webhooks#twilio_chat'
+
   # Routes for internal tooling
   get '/internal', to: 'application#internal', as: :internal_root
   get '/internal/*guild_path', to: 'application#internal'

@@ -2,12 +2,12 @@ import React from "react";
 import { GuildBox } from "@guild/styles";
 import GuildTag from "@guild/components/GuildTag";
 import styled from "styled-components";
-import DownArrow from "@guild/icons/DownArrow";
+import { DownArrow } from "@guild/icons";
 
 const ReadMore = ({ onReadMore }) => (
   <StyledReadMore flexCenterBoth>
     <GuildTag alignSelf="flex-end" button size="s" onClick={onReadMore}>
-      <DownArrow width={20} height={20} />
+      <DownArrow size={20} />
     </GuildTag>
   </StyledReadMore>
 );

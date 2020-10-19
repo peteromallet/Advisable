@@ -25,6 +25,8 @@ module Advisable
     # the framework and any gems in your application.
 
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+
+    config.action_mailbox.ingress = :sendgrid
   end
 end
 

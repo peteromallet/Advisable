@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css, keyframes } from "styled-components";
 import { Text, theme } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
-import DownArrow from "@guild/icons/DownArrow";
+import { DownArrow } from "@guild/icons";
 
 const ShowMore = ({ showingMore, onToggle, text }) => (
   <StyledButton
@@ -10,7 +10,7 @@ const ShowMore = ({ showingMore, onToggle, text }) => (
     spaceChildrenHorizontal={4}
     onClick={onToggle}
   >
-    <DownArrow width={22} height={22} />
+    <DownArrow size={22} />
     <Text size="xs" color="catalinaBlue100">
       {showingMore ? text.less : text.more}
     </Text>
@@ -27,6 +27,8 @@ const rotate = keyframes`
 `;
 
 const StyledButton = styled(GuildBox)`
+  display: flex;
+  align-items: center;
   border-radius: 30px;
   text-align: center;
   letter-spacing: -0.01em;
