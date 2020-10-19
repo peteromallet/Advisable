@@ -115,6 +115,7 @@ jobs:
           start: bundle exec rails s -e test -p 3000
           wait-on: http://localhost:3000
           install: false
+          cache-key: ${{ runner.os }}-cypress-${{ hashFiles('yarn.lock') }}
 
       - name: Test screenshots
         uses: actions/upload-artifact@v2
