@@ -1,6 +1,6 @@
 module.exports = {
   verbose: true,
-  testTimeout: 30000,
+  testTimeout: 40000,
   roots: ["app/javascript/src", "donut/src"],
   setupFilesAfterEnv: ["<rootDir>/app/javascript/src/testHelpers/setup.js"],
   moduleDirectories: [
