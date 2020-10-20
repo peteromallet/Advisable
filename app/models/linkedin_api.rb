@@ -1,7 +1,9 @@
 class LinkedinApi
   class RequestError < StandardError
+    attr_reader :response_log, :backtrace
+
     def initialize(response)
-      response_log = [
+      @response_log = [
         "Something went wrong with the LinkedIn API request.",
         "Status: #{response.status}.",
         "URL: #{response.env.url}",
@@ -9,8 +11,9 @@ class LinkedinApi
         "Headers: #{response.headers}.",
         "Body: #{response.body}"
       ]
+      @backtrace = caller
+
       Rails.logger.error(response_log.join("\n"))
-      Raven.extra_context(response: response_log)
       super(response_log.take(2).join(' '))
     end
   end
@@ -62,7 +65,7 @@ class LinkedinApi
 
   private
 
-  def with_retries(max_retries: 3)
+  def with_retries(max_retries: 2)
     retries = 1
     begin
       yield
