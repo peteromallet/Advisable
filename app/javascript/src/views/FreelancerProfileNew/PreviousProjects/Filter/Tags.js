@@ -43,7 +43,6 @@ function Tags({
   colorActiveHover,
   addSectionParams,
   layout = {},
-  ratio,
   ...props
 }) {
   // Set section parameters
@@ -58,7 +57,6 @@ function Tags({
     });
     addSectionParams({ sectionParams, sectionName });
   }, [addSectionParams, sectionName, tagsList]);
-
   const tagsList = Object.keys(sectionTags)
     .sort((a, b) => sectionTags[b].number - sectionTags[a].number)
     .map((tagKey, index) => {
