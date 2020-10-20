@@ -200,4 +200,14 @@ RSpec.describe Project do
       expect(project.candidates).not_to include(application)
     end
   end
+
+  describe "#characteristics=" do
+    let(:project) { build_stubbed(:project, required_characteristics: ["test"]) }
+
+    it "removes any old values from required_characteristics" do
+      expect(project.required_characteristics).to include("test")
+      project.characteristics = ["New", "Values"]
+      expect(project.required_characteristics).to be_empty
+    end
+  end
 end
