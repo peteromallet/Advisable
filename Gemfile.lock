@@ -171,6 +171,7 @@ GEM
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.13.1)
+    foreman (0.87.2)
     formatador (0.2.5)
     geocoder (1.6.4)
     globalid (0.4.2)
@@ -486,6 +487,7 @@ DEPENDENCIES
   factory_bot_rails
   faker!
   faraday
+  foreman
   geocoder
   graphql
   graphql-rails_logger

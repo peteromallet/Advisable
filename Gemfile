@@ -90,6 +90,7 @@ group :development do
   gem 'graphql-rails_logger'
   gem 'rubocop', require: false
   gem 'annotate'
+  gem 'foreman'
   gem 'guard'
   gem 'guard-rspec', require: false
 end
