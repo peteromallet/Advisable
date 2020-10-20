@@ -12,7 +12,6 @@ import createCache from "../apolloCache";
 
 const TIMEOUT = 30000;
 configure({ asyncUtilTimeout: TIMEOUT });
-jest.setTimeout(TIMEOUT);
 
 window.focus = jest.fn();
 
