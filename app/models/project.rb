@@ -75,6 +75,13 @@ class Project < ApplicationRecord
     self[:characteristics] || []
   end
 
+  def characteristics=(values)
+    self[:characteristics] = values
+    required_characteristics.filter! do |c|
+      values.include?(c)
+    end
+  end
+
   def required_characteristics
     self[:required_characteristics] || []
   end
