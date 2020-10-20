@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::ApplyForProject do
   let(:specialist) { create(:specialist) }
-  let(:project) { create(:project, status: "Brief Confirmed") }
+  let(:project) { create(:project, status: "Brief Confirmed", brief_confirmed_at: 2.hours.ago) }
   let(:context) { {current_user: specialist} }
 
   let(:query) do
@@ -60,13 +60,13 @@ RSpec.describe Mutations::ApplyForProject do
       end
     end
 
-    context "wrong project status" do
-      let(:project) { create(:project, status: "Draft") }
+    context "has not been confirmed" do
+      let(:project) { create(:project, brief_confirmed_at: nil) }
 
       it "raises an error" do
         response = AdvisableSchema.execute(query, context: context)
         error = response["errors"].first["extensions"]["code"]
-        expect(error).to eq("PROJECT_IN_A_WRONG_STATE")
+        expect(error).to eq("PROJECT_NOT_CONFIRMED")
       end
     end
 
