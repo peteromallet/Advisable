@@ -77,9 +77,7 @@ class Project < ApplicationRecord
 
   def characteristics=(values)
     self[:characteristics] = values
-    required_characteristics.filter! do |c|
-      values.include?(c)
-    end
+    self[:required_characteristics] = required_characteristics.select { |c| values.include?(c) }
   end
 
   def required_characteristics
