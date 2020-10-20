@@ -9,10 +9,11 @@ class Mutations::ApplyForProject < Mutations::BaseMutation
 
   def resolve(**args)
     project = Project.find_by_uid_or_airtable_id!(args[:project])
-    if project.status != "Brief Confirmed"
+
+    if project.brief_confirmed_at.nil?
       ApiError.invalid_request(
-        code: "PROJECT_IN_A_WRONG_STATE",
-        message: "Project is not in 'Brief Confirmed' state"
+        code: "PROJECT_NOT_CONFIRMED",
+        message: "Project brief has not been confirmed"
       )
     end
 
