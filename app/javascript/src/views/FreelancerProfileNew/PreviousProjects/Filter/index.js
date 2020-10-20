@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useReducer } from "react";
-import queryString from "query-string";
 import { Box, Text, StyledCard, Button, theme } from "@advisable/donut";
 import { rgba } from "polished";
 import { Info } from "@styled-icons/feather";
@@ -14,7 +13,6 @@ import {
 } from "./reducerHandlers";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
-import { useLocation } from "react-router";
 
 function arrayToSentence(array) {
   return (
