@@ -22,7 +22,11 @@ export default function JobRequiredCharacteristics({ data }) {
   }
 
   const initialValues = {
-    requiredCharacteristics: requiredCharacteristics,
+    requiredCharacteristics: requiredCharacteristics.filter(
+      (characteristic) => {
+        return characteristics.includes(characteristic);
+      },
+    ),
   };
 
   const handleSubmit = async (values, formik) => {
