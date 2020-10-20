@@ -1,16 +1,19 @@
 import React, { useMemo } from "react";
 
 function useChildInjection(children, getPropsInjection) {
-  const sections = useMemo(
-    () =>
-      React.Children.map(children, (child) =>
-        React.cloneElement(child, {
-          ...child.props,
-          ...getPropsInjection(child),
-        }),
-      ),
-    [children, getPropsInjection],
-  );
+  const sections = useMemo(() => {
+    let result = [];
+    React.Children.forEach(children, (child) => {
+      child &&
+        result.push(
+          React.cloneElement(child, {
+            ...child.props,
+            ...getPropsInjection(child),
+          }),
+        );
+    });
+    return result;
+  }, [children, getPropsInjection]);
   return sections;
 }
 
