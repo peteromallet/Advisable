@@ -5,6 +5,8 @@ import VIEWER from "../../../graphql/queries/viewer";
 import GET_PROJECT from "../fetchProject";
 import GET_PAYMENT_INTENT from "../Steps/Deposit/getPaymentIntent";
 import { GET_DEPOSIT } from "../Steps/Deposit/PaymentPending";
+import CONFIRM_PROJECT from "../Steps/SubmitConfirmation/confirmProject.graphql";
+import { GET_PROJECT as VIEW_PROJECT } from "../../Project/queries";
 
 test("User can complete deposit step", async () => {
   let user = generateTypes.user();
@@ -73,6 +75,43 @@ test("User can complete deposit step", async () => {
           },
         },
       },
+      {
+        request: {
+          query: CONFIRM_PROJECT,
+          variables: {
+            input: {
+              id: "rec1234",
+            },
+          },
+        },
+        result: {
+          data: {
+            __typename: "Mutation",
+            confirmProject: {
+              __typename: "ConfirmProjectPayload",
+              project: {
+                ...project,
+                status: "Brief Confirmed",
+              },
+              errors: null,
+            },
+          },
+        },
+      },
+      {
+        request: {
+          query: VIEW_PROJECT,
+          variables: {
+            id: project.id,
+          },
+        },
+        result: {
+          project: {
+            ...project,
+            status: "Brief Confirmed",
+          },
+        },
+      },
     ],
   });
 
@@ -80,6 +119,5 @@ test("User can complete deposit step", async () => {
   fireEvent.change(cardholder, { target: { value: "John Doe" } });
   let complete = await findByLabelText("Complete Setup");
   fireEvent.click(complete);
-  let text = await findByText("Please wait while", { exact: false });
-  expect(text).toBeInTheDocument();
+  await findByText("Please wait while", { exact: false });
 });
