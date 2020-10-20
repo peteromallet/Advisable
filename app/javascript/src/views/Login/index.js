@@ -49,6 +49,8 @@ const Login = ({ location }) => {
       return;
     }
 
+    await client.resetStore();
+
     client.writeQuery({
       query: VIEWER,
       data: {

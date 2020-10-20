@@ -27,17 +27,12 @@ const Deposit = ({ project, history }) => {
     return <Redirect to="terms" />;
   }
 
-  const handleSuccess = () => {
-    let projectId = project.airtableId;
-    history.replace(`/project_setup/${projectId}/confirm`);
-  };
-
   let paymentMethod = get(query.data, "viewer.paymentMethod");
 
   if (query.loading) return <>loading...</>;
 
   if (pending) {
-    return <PaymentPending onSuccess={handleSuccess} id={project.airtableId} />;
+    return <PaymentPending id={project.airtableId} />;
   }
 
   const handleExistingPaymentMethod = async () => {
