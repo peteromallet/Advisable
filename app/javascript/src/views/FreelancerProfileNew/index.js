@@ -24,7 +24,6 @@ function FreelancerProfileNew() {
       id: params.id,
     },
   });
-
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
 
