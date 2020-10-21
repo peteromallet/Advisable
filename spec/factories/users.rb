@@ -3,8 +3,6 @@ FactoryBot.define do
     account
     country
     industry
-    first_name { 'MyString' }
-    last_name { 'MyString' }
     company_name { 'Test Company' }
     company_type { 'Startup' }
     stripe_customer_id { 'cus_1234' }

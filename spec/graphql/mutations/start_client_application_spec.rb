@@ -53,7 +53,7 @@ RSpec.describe Mutations::Signup do
 
   context 'when a specialist account exists with that email' do
     it 'returns an error' do
-      create(:specialist, email: email)
+      create(:specialist, account: create(:account, email: email))
       response = AdvisableSchema.execute(query)
       error = response['errors'][0]['extensions']['code']
       expect(error).to eq('existingAccount')
