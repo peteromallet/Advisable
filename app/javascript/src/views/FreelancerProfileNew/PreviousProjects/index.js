@@ -221,6 +221,7 @@ function PreviousProjects({ data, isOwner }) {
         >
           {state.hasSkills && (
             <Tags
+              key="skills-section"
               sectionName="skills"
               sectionTags={state.skillsSection}
               onClick={switchSkillSelection}
@@ -236,6 +237,7 @@ function PreviousProjects({ data, isOwner }) {
           )}
           {state.hasIndustries && (
             <Tags
+              key="industries-section"
               sectionName="industries"
               sectionTags={state.industriesSection}
               onClick={switchIndustrySelection}
