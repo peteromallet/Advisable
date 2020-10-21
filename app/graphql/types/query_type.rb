@@ -253,7 +253,7 @@ class Types::QueryType < Types::BaseType
 
   def chat_grant
     requires_current_user!
-    identity = context[:current_user].uid
+    identity = current_user.uid
     Grants::ChatService.call(identity: identity)
   end
 
@@ -333,19 +333,5 @@ class Types::QueryType < Types::BaseType
     Specialist.guild.order(
       Arel.sql("specialists.guild_data -> 'guild_joined_date' desc")
     ).limit(10)
-  end
-
-  protected
-
-  def requires_guild_user!
-    unless context[:current_user].try(:guild)
-      raise GraphQL::ExecutionError.new('Invalid Permissions', options: {code: 'invalidPermissions'})
-    end
-  end
-
-  def requires_current_user!
-    unless context[:current_user]
-      raise ApiError::NotAuthenticated.new('You are not logged in')
-    end
   end
 end

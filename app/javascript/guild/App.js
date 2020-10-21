@@ -24,7 +24,7 @@ const App = () => {
             <AuthenticatedRoute exact path="/posts/:postId" component={Post} />
             <AuthenticatedRoute
               exact
-              path={["/messages", "/messages/:conversationId"]}
+              path={"/messages/:conversationId?"}
               component={Messages}
             />
           </Switch>

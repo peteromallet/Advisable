@@ -9,8 +9,6 @@ class Mutations::Guild::UpdateLastRead < Mutations::BaseMutation
 
   def authorized?(**args)
     requires_guild_user!
-
-    true
   end
 
   def resolve(**args)

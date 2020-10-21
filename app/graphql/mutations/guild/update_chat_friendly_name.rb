@@ -8,7 +8,6 @@ class Mutations::Guild::UpdateChatFriendlyName < Mutations::BaseMutation
 
   def authorized?(**args)
     requires_guild_user!
-    true
   end
 
   def resolve(channel_sid:)
