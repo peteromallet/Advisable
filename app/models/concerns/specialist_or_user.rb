@@ -31,8 +31,13 @@ module SpecialistOrUser
   # TODO: AccountMigration - columns that we migrated to Account
   Account::MIGRATED_COLUMNS.each do |column|
     define_method(column) do
-      Raven.capture_message("Method called on #{self.class.name} that was meant for Account", backtrace: caller, level: 'debug')
+      Raven.capture_message("Method #{column} called on #{self.class.name} that was meant for Account", backtrace: caller, level: 'debug')
       account&.public_send(column)
+    end
+
+    define_method("#{column}=") do |param|
+      Raven.capture_message("Method #{column}= called on #{self.class.name} that was meant for Account", backtrace: caller, level: 'debug')
+      account&.public_send("#{column}=", param)
     end
   end
 
