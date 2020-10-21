@@ -128,9 +128,7 @@ function Tags({
       >
         <Box
           as={motion.div}
-          initial={{
-            height: layout[sectionName]?.collapsedHeight,
-          }}
+          initial={{ height: 106 }}
           animate={{
             height: props.isExpand
               ? layout[sectionName]?.height
