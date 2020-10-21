@@ -15,7 +15,7 @@ RSpec.describe "guild posts query" do
             }
           }
         }
-      }   
+      }
     GRAPHQL
   end
 
@@ -62,7 +62,7 @@ RSpec.describe "guild posts query" do
                 ...GuildPostFields
               }
             }
-          }   
+          }
         GRAPHQL
       }
 
@@ -97,7 +97,7 @@ RSpec.describe "guild posts query" do
                 }
               }
             }
-          }   
+          }
         GRAPHQL
       }
 

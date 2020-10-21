@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_22_083143) do
+ActiveRecord::Schema.define(version: 2020_10_27_190419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -343,6 +343,19 @@ ActiveRecord::Schema.define(version: 2020_10_22_083143) do
     t.index ["specialist_id"], name: "index_guild_comments_on_specialist_id"
   end
 
+  create_table "guild_post_images", force: :cascade do |t|
+    t.uuid "guild_post_id"
+    t.string "uid"
+    t.string "string"
+    t.integer "position"
+    t.boolean "cover"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["guild_post_id"], name: "index_guild_post_images_on_guild_post_id"
+    t.index ["string"], name: "index_guild_post_images_on_string"
+    t.index ["uid"], name: "index_guild_post_images_on_uid"
+  end
+
   create_table "guild_posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type", default: "Post", null: false
     t.text "body", null: false
@@ -613,8 +626,8 @@ ActiveRecord::Schema.define(version: 2020_10_22_083143) do
     t.integer "candidate_count", default: 0
     t.integer "proposed_count", default: 0
     t.integer "hired_count", default: 0
-    t.boolean "sourcing"
     t.bigint "sales_person_id"
+    t.boolean "sourcing"
     t.bigint "linkedin_campaign_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["sales_person_id"], name: "index_projects_on_sales_person_id"
@@ -753,16 +766,16 @@ ActiveRecord::Schema.define(version: 2020_10_22_083143) do
     t.integer "project_count"
     t.string "phone"
     t.boolean "test_account"
-    t.string "remember_token"
     t.boolean "guild", default: false
+    t.string "remember_token"
     t.string "community_status"
-    t.boolean "automated_invitations_subscription"
     t.jsonb "guild_data"
-    t.bigint "account_id"
+    t.boolean "automated_invitations_subscription"
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
     t.datetime "community_invited_to_call_at"
     t.integer "community_score"
+    t.bigint "account_id"
     t.integer "member_of_week_email"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
@@ -793,7 +806,10 @@ ActiveRecord::Schema.define(version: 2020_10_22_083143) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "taggings_count", default: 0
+    t.string "topicable_type"
+    t.bigint "topicable_id"
     t.index ["name"], name: "index_tags_on_name", unique: true
+    t.index ["topicable_type", "topicable_id"], name: "index_tags_on_topicable_type_and_topicable_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -959,6 +975,7 @@ ActiveRecord::Schema.define(version: 2020_10_22_083143) do
   add_foreign_key "consultations", "users"
   add_foreign_key "guild_comments", "guild_posts", on_delete: :cascade
   add_foreign_key "guild_comments", "specialists", on_delete: :cascade
+  add_foreign_key "guild_post_images", "guild_posts", on_delete: :cascade
   add_foreign_key "guild_posts", "specialists"
   add_foreign_key "guild_reactions", "specialists", on_delete: :cascade
   add_foreign_key "interviews", "applications"

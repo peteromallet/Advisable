@@ -3,7 +3,7 @@ import { Box, Text } from "@advisable/donut";
 import React from "react";
 import { StyledCoverPhoto, StyledCoverPhotoTag } from "./styles";
 
-function CoverPhoto({ images, dispatch }) {
+function CoverPhoto({ images, dispatch, resourceName = "project" }) {
   const cover = find(images, { cover: true });
   const [background, setBackground] = React.useState(cover?.url);
 
@@ -44,10 +44,10 @@ function CoverPhoto({ images, dispatch }) {
             multiple
           />
           <Text color="blue900" mb="xxs" className="title">
-            Add images to this project
+            Add images to this {resourceName}
           </Text>
           <Text fontSize="s" color="neutral500" className="subtext">
-            Upload images to support this project
+            Upload images to support this {resourceName}
           </Text>
         </Box>
       )}

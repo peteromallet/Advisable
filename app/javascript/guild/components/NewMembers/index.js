@@ -25,7 +25,7 @@ const NewMembers = () => {
       width={"275px"}
     >
       <Text
-        fontSize="xxl"
+        fontSize="2xl"
         fontWeight="medium"
         letterSpacing="-0.01em"
         color="catalinaBlue100"

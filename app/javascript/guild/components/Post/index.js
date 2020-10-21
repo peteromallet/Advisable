@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
-import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
+import { css } from "styled-components";
 import { Box, Card, Text, Avatar, Link, useBreakpoint } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
 import Topics from "./components/Topics";
@@ -10,7 +10,6 @@ import { GuildBox } from "@guild/styles";
 import ReadMore from "./components/ReadMore";
 import { CoverImage } from "@guild/components/CoverImage";
 import OfferHelp from "./components/OfferHelp";
-import { GUILD_UPDATE_POST_REACTIONS } from "./mutations";
 
 const Post = ({ post }) => {
   const history = useHistory();
@@ -29,16 +28,9 @@ const Post = ({ post }) => {
 
   const handleReadMore = () => history.push(`/posts/${post.id}`);
 
-  const [guildUpdatePostReactions] = useMutation(GUILD_UPDATE_POST_REACTIONS);
-  const handleUpdatePostReactions = async () => {
-    await guildUpdatePostReactions({
-      variables: { input: { guildPostId: post.id } },
-    });
-  };
-
   return (
     <Card elevation={{ _: "s", m: "m" }} width="100%">
-      {post.coverImage && <CoverImage src={post.coverImage} />}
+      {post.coverImage && <CoverImage cover={post.coverImage.url} />}
       <Box display="flex" flexDirection="column" p={{ _: "s", m: "l" }}>
         <Box display="flex" justifyContent="space-between" alignItems="start">
           <Box display="flex">
@@ -102,7 +94,15 @@ const Post = ({ post }) => {
             maxHeight={bodyMaxHeight}
             ref={bodyRef}
           >
-            <Text fontSize="s" color="quartz" lineHeight="m">
+            <Text
+              fontSize="s"
+              color="quartz"
+              lineHeight="m"
+              css={css`
+                white-space: pre-wrap;
+                white-space: pre-line;
+              `}
+            >
               {post.body}
             </Text>
             {wrapBody && <ReadMore onReadMore={handleReadMore} />}

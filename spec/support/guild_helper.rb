@@ -1,6 +1,6 @@
 RSpec.shared_examples "guild specialist" do
   describe "with a non guild specialist" do
-    let(:non_guild_specialist) { build(:specialist) }
+    let(:non_guild_specialist) { create(:specialist) }
     let(:response) {
       resp = AdvisableSchema.execute(query, context: {current_user: non_guild_specialist})
     }
@@ -11,7 +11,7 @@ RSpec.shared_examples "guild specialist" do
   end
 
   describe "with an authorized guild specialist" do
-    let(:guild_specialist) { build(:specialist, :guild) }
+    let(:guild_specialist) { create(:specialist, :guild) }
     let(:response) {
       resp = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
     }

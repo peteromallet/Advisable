@@ -26,6 +26,7 @@ RSpec.describe Guild::Post, type: :model do
     it { expect(guild_post).to have_many(:reactions) }
     it { expect(guild_post).to have_many(:comments).conditions(status: Guild::Comment.statuses["published"]) }
     it { expect(guild_post).to have_many(:guild_topics) }
+    it { expect(guild_post).to have_many(:images) }
   end
 
   describe "with comments" do
@@ -107,6 +108,26 @@ RSpec.describe Guild::Post, type: :model do
   describe "with engagements" do
     it "is incremented when an engagment is recorded" do
       expect { guild_post.record_engagement! }.to change(guild_post, :engagements_count).from(0).to(1)
+    end
+  end
+
+  describe "with audience type" do
+    before do
+      guild_post.guild_topic_list = %w[foo bar baz]
+      guild_post.update!(audience_type: "skills")
+    end
+
+    it "resets the guild topics when the audience type changes" do
+      expect(guild_post.guild_topics.count).to eq(3)
+      expect {
+        guild_post.update!(audience_type: "industries")
+      }.to change { guild_post.guild_topics }.by([])
+    end
+
+    it "does not reset the guild topics if the audience type does not change" do
+      expect {
+        guild_post.update!(audience_type: guild_post.audience_type, title: "some other title")
+      }.not_to change(guild_post.reload, :guild_topics)
     end
   end
 end

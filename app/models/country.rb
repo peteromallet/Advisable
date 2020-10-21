@@ -1,7 +1,8 @@
 class Country < ApplicationRecord
   include Uid
-  has_many :specialists
-  validates_presence_of :name
+  has_many :specialists, dependent: :nullify
+  has_one :guild_topic, as: :topicable, class_name: 'Guild::Topic', required: false, dependent: :nullify
+  validates :name, presence: true
 
   # We use Countries gem to load additional information about the country
   def data

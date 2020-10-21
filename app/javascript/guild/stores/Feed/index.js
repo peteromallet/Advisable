@@ -6,7 +6,7 @@ const initialState = {
   selectedTopics: [],
 };
 
-/* 
+/*
   Light state management store for posts feed filters.
 */
 export const feedStore = create(

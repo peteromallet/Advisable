@@ -53,7 +53,7 @@ const Notifications = ({ open }) => {
 };
 
 const AuthorDetails = ({ authorName, createdAt }) => (
-  <>
+  <GuildBox alignItems="center" spaceChildrenVertical={4}>
     <Text
       fontSize="xs"
       fontWeight="light"
@@ -67,10 +67,11 @@ const AuthorDetails = ({ authorName, createdAt }) => (
       fontWeight="light"
       letterSpacing="-0.01em"
       color="darkGrey"
+      textAlign="center"
     >
       {createdAt} ago
     </Text>
-  </>
+  </GuildBox>
 );
 
 const CommentNotification = ({ author, post, body, id, createdAtTimeAgo }) => (

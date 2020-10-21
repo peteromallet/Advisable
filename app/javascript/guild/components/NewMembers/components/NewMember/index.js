@@ -5,7 +5,7 @@ import { truncate } from "lodash-es";
 
 const NewMember = ({ newMember }) => {
   return (
-    <GuildBox px="xs" alignItems="center" spaceChildrenHorizontal={16}>
+    <GuildBox px="xs" alignItems="center" spaceChildrenHorizontal={24}>
       <GuildBox flexShrink={0}>
         <Avatar
           as={Link}
@@ -15,16 +15,16 @@ const NewMember = ({ newMember }) => {
           size={"s"}
         />
       </GuildBox>
-      <GuildBox spaceChildrenVertical={4}>
-        <Text fontSize="xs" fontWeight="medium" color="calalinaBlue100">
+      <GuildBox spaceChildrenVertical={6}>
+        <Text fontSize="s" fontWeight="medium" color="calalinaBlue100">
           {truncate(newMember.name, { length: 30 })}
         </Text>
         {newMember.location.length && (
-          <Text fontSize="xxs" fontWeight="light" color="darkGrey">
+          <Text fontSize="xs" fontWeight="light" color="darkGrey">
             {newMember.location}
           </Text>
         )}
-        <Text fontSize="xxs" fontWeight="light" color="quartz">
+        <Text fontSize="xs" fontWeight="light" color="quartz">
           Joined: {newMember.guildJoinedTimeAgo} ago
         </Text>
       </GuildBox>

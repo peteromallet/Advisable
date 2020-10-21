@@ -6,6 +6,18 @@ export const GUILD_TOP_TOPICS_QUERY = gql`
       nodes {
         id
         name
+        topicable {
+          __typename
+          ... on Country {
+            name
+          }
+          ... on Skill {
+            name
+          }
+          ... on Industry {
+            name
+          }
+        }
       }
     }
   }

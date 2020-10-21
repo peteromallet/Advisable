@@ -78,6 +78,7 @@ class Types::QueryType < Types::BaseType
 
   def skills(local: false)
     return Skill.where(active: true, original: nil) if local
+
     Rails.cache.fetch('airtable_active_skills', expires_in: 10.minutes) do
       Airtable::Skill.active.map do |s|
         OpenStruct.new(airtable_id: s.id, name: s.fields['Name'])
@@ -89,6 +90,14 @@ class Types::QueryType < Types::BaseType
 
   def popular_skills
     Skill.where(active: true, original: nil).popular
+  end
+
+  field :popular_guild_countries, [Types::CountryType], null: false
+  def popular_guild_countries
+    ActsAsTaggableOn::Tag.
+      where(topicable_type: "Country").
+      most_used.
+      limit(5)
   end
 
   field :previous_project, Types::PreviousProject, null: false do
@@ -254,7 +263,9 @@ class Types::QueryType < Types::BaseType
     post = Guild::Post.find(id)
     policy = Guild::PostPolicy.new(context[:current_user], post)
 
-    return post if policy.show
+    raise ApiError::NotAuthorized.new('You dont have access to this') unless policy.show
+
+    post
   end
 
   field :guild_posts,
