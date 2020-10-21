@@ -1,21 +1,22 @@
 import React, { useEffect, useMemo, useReducer } from "react";
-import { useHistory, useLocation } from "react-router";
-import queryString from "query-string";
+import { useHistory } from "react-router";
 import { every } from "lodash-es";
 import { rgba } from "polished";
 // Utils
 import createDispatcher from "src/utilities/createDispatcher";
+// Hooks
+import useQueryStringFilter from "./useQueryStringFilter";
 // Components
-import { Box, Button, useBreakpoint, theme } from "@advisable/donut";
-import Masonry from "components/Masonry";
-import NoFilteredProjects from "./NoFilteredProjects";
-import ProjectCard from "./ProjectCard";
-import Tags from "./Filter/Tags";
-import Filter from "./Filter";
 import {
   SectionHeaderText,
   SectionHeaderWrapper,
 } from "../components/SectionHeader";
+import { Box, Button, useBreakpoint, theme } from "@advisable/donut";
+import NoFilteredProjects from "./NoFilteredProjects";
+import Masonry from "components/Masonry";
+import ProjectCard from "./ProjectCard";
+import Tags from "./Filter/Tags";
+import Filter from "./Filter";
 
 const getProjectValues = (projects) =>
   projects.reduce(
@@ -118,8 +119,33 @@ const clearFilters = (state) => {
   };
 };
 
+const initFilters = (state, payload) => {
+  const skillFilters = payload.skills ? [...payload.skills] : [];
+  const industryFilters = payload.industries ? [...payload.industries] : [];
+  const industriesSection =
+    payload.industries?.reduce(
+      (acc, key) => ({ ...acc, [key]: { ...acc[key], selected: true } }),
+      state.industriesSection,
+    ) || state.industriesSection;
+  const skillsSection =
+    payload.skills?.reduce(
+      (acc, key) => ({ ...acc, [key]: { ...acc[key], selected: true } }),
+      state.skillsSection,
+    ) || state.skillsSection;
+
+  return {
+    ...state,
+    skillFilters,
+    industryFilters,
+    industriesSection,
+    skillsSection,
+  };
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
+    case "INIT_FILTERS":
+      return initFilters(state, action.payload);
     case "SWITCH_SKILL_SELECTION":
       return switchTagSelection(state, "skillsSection", action.payload.tag);
     case "SWITCH_INDUSTRY_SELECTION":
@@ -153,19 +179,22 @@ const filterProjects = (state) => (project) => {
 function PreviousProjects({ data, isOwner }) {
   const [state, dispatch] = useReducer(reducer, data, init);
   const history = useHistory();
-  const location = useLocation();
-  const queryParams = queryString.parse(location.search, {
-    arrayFormat: "bracket",
-  });
 
   // Update state actions
   const createAction = useMemo(() => createDispatcher(dispatch), []);
+  const initFilters = createAction("INIT_FILTERS");
   const switchSkillSelection = createAction("SWITCH_SKILL_SELECTION");
   const switchIndustrySelection = createAction("SWITCH_INDUSTRY_SELECTION");
   const setNumOfColumns = useMemo(() => createAction("SET_NUM_OF_COLUMNS"), [
     createAction,
   ]);
   const clearFilters = createAction("CLEAR_FILTERS");
+
+  useQueryStringFilter({
+    industryFilters: state.industryFilters,
+    skillFilters: state.skillFilters,
+    initFilters,
+  });
 
   // Responsivness
   const isWidescreen = useBreakpoint("mUp");
@@ -178,31 +207,6 @@ function PreviousProjects({ data, isOwner }) {
     isTablet && setNumOfColumns(2);
     isMobile && setNumOfColumns(1);
   }, [isMobile, isTablet, isWidescreen, setNumOfColumns]);
-
-  useEffect(() => {
-    const filters = {
-      industries: state.industryFilters,
-      skills: state.skillFilters,
-    };
-    let search = queryString.stringify(
-      {
-        ...queryParams,
-        ...filters,
-      },
-      {
-        arrayFormat: "bracket",
-      },
-    );
-    search = search ? "?" + search : search;
-    const updateUrl = location.search !== search;
-    updateUrl && history.replace({ ...location, search });
-  }, [
-    history,
-    location,
-    queryParams,
-    state.industryFilters,
-    state.skillFilters,
-  ]);
 
   const projectCards = state.projects
     .filter(filterProjects(state))
