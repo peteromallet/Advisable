@@ -9,7 +9,7 @@ RSpec.describe AccountMailer do
     }
 
     it 'renders correct headers' do
-      expect(mail.to).to eq([user.email])
+      expect(mail.to).to eq([user.account.email])
       expect(mail.subject).to eq("Account Confirmation")
       expect(mail.from).to eq(["hello@advisable.com"])
     end
@@ -27,7 +27,7 @@ RSpec.describe AccountMailer do
     }
 
     it 'renders correct headers' do
-      expect(mail.to).to eq([user.email])
+      expect(mail.to).to eq([user.account.email])
       expect(mail.subject).to eq("Reset password")
       expect(mail.from).to eq(["hello@advisable.com"])
     end

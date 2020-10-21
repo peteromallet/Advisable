@@ -39,7 +39,7 @@ RSpec.describe Airtable::ClientContact do
     it "syncs the email" do
       expect { airtable.push(user) }.to change {
         airtable.fields['Email Address']
-      }.from(nil).to(user.email)
+      }.from(nil).to(user.account.email)
     end
 
     it "syncs the first_name" do

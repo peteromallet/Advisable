@@ -36,7 +36,7 @@ class ClientApplicationSubmittedNotificationJob < ApplicationJob
               "type": 'mrkdwn',
               "text":
                 "*Contact Details*\nName: `#{user.name}`\nEmail: `#{
-                  user.email
+                  user.account.email
                 }`"
             }
           ]

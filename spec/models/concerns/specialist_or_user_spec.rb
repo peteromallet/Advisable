@@ -45,14 +45,14 @@ RSpec.describe SpecialistOrUser do
     context "when passed a user email" do
       it 'returns the user' do
         user = create(:user)
-        expect(SpecialistOrUser.find_by_email(user.email)).to eq(user)
+        expect(SpecialistOrUser.find_by_email(user.account.email)).to eq(user)
       end
     end
 
     context "when passed a specialist email" do
       it 'returns the specialist' do
         specialist = create(:specialist)
-        expect(SpecialistOrUser.find_by_email(specialist.email)).to eq(specialist)
+        expect(SpecialistOrUser.find_by_email(specialist.account.email)).to eq(specialist)
       end
     end
 
@@ -67,7 +67,7 @@ RSpec.describe SpecialistOrUser do
     context "when the account exists" do
       it "returns the account" do
         user = create(:user)
-        expect(SpecialistOrUser.find_by_email!(user.email)).to eq(user)
+        expect(SpecialistOrUser.find_by_email!(user.account.email)).to eq(user)
       end
     end
 

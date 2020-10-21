@@ -174,7 +174,7 @@ class Types::ProjectType < Types::BaseType
       else
         ApiError.invalid_request(code: "SIGNUP_REQUIRED", message: "Signup is required", extensions: {
           url: "/signup/#{object.user.uid}",
-          email: object.user.email
+          email: object.user.account.email
         })
       end
     end

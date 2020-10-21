@@ -24,7 +24,7 @@ RSpec.describe Accounts::RequestPasswordReset do
     email = double("Email")
     expect(email).to receive(:deliver_later)
     expect(AccountMailer).to receive(:reset_password).and_return(email)
-    Accounts::RequestPasswordReset.call(user.email)
+    Accounts::RequestPasswordReset.call(user.account.email)
   end
 
   context "when the account has not set a password" do

@@ -12,7 +12,7 @@ class AccountDashboard < Administrate::BaseDashboard
     id: Field::Number,
     first_name: Field::String,
     last_name: Field::String,
-    email: Field::String.with_options(searchable: false),
+    email: Field::String,
     permissions: PermissionsField,
     completed_tutorials: UserTutorialsField,
     vat_number: Field::String,
