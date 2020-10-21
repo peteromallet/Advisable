@@ -39,3 +39,4 @@ credentials.yml.enc
 .DS_Store
 jest-coverage
 spec/cypress/videos/*
+stats.json
