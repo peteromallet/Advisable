@@ -1,8 +1,9 @@
 import React from "react";
 import { Search } from "@styled-icons/feather";
 import { Box, Text, Circle } from "@advisable/donut";
+import capitalize from "../../utilities/capitalize";
 
-function NotFound({ id }) {
+function NotFound({ id, resource = "project" }) {
   return (
     <Box
       py="xl"
@@ -23,10 +24,10 @@ function NotFound({ id }) {
           mt="m"
           fontWeight="medium"
         >
-          Project not found
+          {capitalize(resource)} not found
         </Text>
         <Text fontSize="s" lineHeight="s" color="neutral700" textAlign="center">
-          Could not find a project with the id &quot;{id}&quot;
+          Could not find a {resource} with the id &quot;{id}&quot;
         </Text>
       </Box>
     </Box>

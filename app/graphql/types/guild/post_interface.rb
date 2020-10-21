@@ -43,6 +43,11 @@ module Types::Guild::PostInterface
     object.normalized_type
   end
 
+  field :denormalized_type, String, null: true
+  def denormalized_type
+    object.type
+  end
+
   field :commented, Boolean, null: false do
     description 'Whether the current user has commented on the guild post'
   end
@@ -76,22 +81,18 @@ module Types::Guild::PostInterface
     description 'The recorded number of engagements for this post'
   end
 
+  field :audience_type, String, null: true do
+    description 'The type of audience configured for this post'
+  end
+
   field :guild_topics, [Types::Guild::TopicType], null: true
 
-  field :cover_image, String, null: true do
-    description 'The cover image for the guild post'
+  field :images, [Types::Guild::PostImageType], null: false
+  def images
+    object.images.order(position: :asc)
   end
-  def cover_image
-    if object.cover_image.attached?
 
-      Rails.application.routes.url_helpers.rails_blob_url(
-        object.cover_image,
-        host:
-          ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-      )
-
-    end
-  end
+  field :cover_image, Types::Guild::PostImageType, null: true
 
   definition_methods do
     def resolve_type(object, context)

@@ -9,7 +9,10 @@ module Guild
     acts_as_followable
 
     belongs_to :alias_tag, class_name: "Guild::Topic", optional: true
-    has_many :aliased_tags, class_name: "Guild::Topic", foreign_key: "alias_tag_id"
+    has_many :aliased_tags, class_name: "Guild::Topic", foreign_key: "alias_tag_id", dependent: :nullify, inverse_of: 'alias_tag'
+
+    # Associated skills or industries
+    belongs_to :topicable, polymorphic: true, optional: true
 
     validate :ensure_alias_root
 
@@ -30,11 +33,14 @@ end
 #  id             :uuid             not null, primary key
 #  name           :string
 #  taggings_count :integer          default(0)
+#  topicable_type :string
 #  created_at     :datetime
 #  updated_at     :datetime
 #  alias_tag_id   :integer
+#  topicable_id   :bigint
 #
 # Indexes
 #
-#  index_tags_on_name  (name) UNIQUE
+#  index_tags_on_name                             (name) UNIQUE
+#  index_tags_on_topicable_type_and_topicable_id  (topicable_type,topicable_id)
 #

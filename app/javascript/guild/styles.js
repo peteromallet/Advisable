@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { theme, Box } from "@advisable/donut";
 
-/* 
+/*
   Responsive utilities
 */
 
@@ -23,7 +23,7 @@ const breakpoint = (() => {
   return media;
 })();
 
-/* 
+/*
   Flex utilities
 */
 
@@ -86,7 +86,7 @@ const spaceChildrenVertical = (margin) => css`
   }
 `;
 
-/* 
+/*
     1. Horizontal ${margin} except for last child
     2. When flex wrapped then add top ${margin}
   */
@@ -105,7 +105,7 @@ const flex = {
   wrapChildrenBoth,
 };
 
-/* 
+/*
   Box utility
 */
 
@@ -115,7 +115,7 @@ const GuildBox = styled(Box)`
 
   ${({ spaceChildrenHorizontal: margin }) =>
     margin && spaceChildrenHorizontal(margin)}
-  
+
   ${({ wrapChildrenBoth: margin }) => margin && wrapChildrenBoth(margin)}
 
   ${({ flexCenterBoth }) => flexCenterBoth && flexStaticUtils.flexCenterBoth}
