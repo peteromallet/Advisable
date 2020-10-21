@@ -42,6 +42,29 @@ const clearFilters = (state) => {
   };
 };
 
+const initFilters = (state, payload) => {
+  const skillFilters = payload.skills ? [...payload.skills] : [];
+  const industryFilters = payload.industries ? [...payload.industries] : [];
+  const industriesSection =
+    payload.industries?.reduce(
+      (acc, key) => ({ ...acc, [key]: { ...acc[key], selected: true } }),
+      state.industriesSection,
+    ) || state.industriesSection;
+  const skillsSection =
+    payload.skills?.reduce(
+      (acc, key) => ({ ...acc, [key]: { ...acc[key], selected: true } }),
+      state.skillsSection,
+    ) || state.skillsSection;
+
+  return {
+    ...state,
+    skillFilters,
+    industryFilters,
+    industriesSection,
+    skillsSection,
+  };
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "INIT_FILTERS":
@@ -119,31 +142,6 @@ function PreviousProjects({ data, isOwner }) {
     isTablet && setNumOfColumns(2);
     isMobile && setNumOfColumns(1);
   }, [isMobile, isTablet, isWidescreen, setNumOfColumns]);
-
-  useEffect(() => {
-    const filters = {
-      industries: state.industryFilters,
-      skills: state.skillFilters,
-    };
-    let search = queryString.stringify(
-      {
-        ...queryParams,
-        ...filters,
-      },
-      {
-        arrayFormat: "bracket",
-      },
-    );
-    search = search ? "?" + search : search;
-    const updateUrl = location.search !== search;
-    updateUrl && history.replace({ ...location, search });
-  }, [
-    history,
-    location,
-    queryParams,
-    state.industryFilters,
-    state.skillFilters,
-  ]);
 
   const projectCards = state.projects
     .filter(filterProjects(state))
