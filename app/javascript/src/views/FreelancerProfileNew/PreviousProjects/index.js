@@ -1,20 +1,21 @@
 import React, { useEffect, useMemo, useReducer } from "react";
+import { useHistory, useLocation } from "react-router";
+import queryString from "query-string";
+import { every } from "lodash-es";
+import { rgba } from "polished";
+// Utils
+import createDispatcher from "src/utilities/createDispatcher";
+// Components
 import { Box, Button, useBreakpoint, theme } from "@advisable/donut";
 import Masonry from "components/Masonry";
-import queryString from "query-string";
-import createDispatcher from "src/utilities/createDispatcher";
-import Tags from "./Filter/Tags";
 import NoFilteredProjects from "./NoFilteredProjects";
-import Filter from "./Filter";
 import ProjectCard from "./ProjectCard";
+import Tags from "./Filter/Tags";
+import Filter from "./Filter";
 import {
   SectionHeaderText,
   SectionHeaderWrapper,
 } from "../components/SectionHeader";
-import { mockedIndustries, mockedSkills } from "./mockedFilterData";
-import { useHistory, useLocation } from "react-router";
-import { rgba } from "polished";
-import { every } from "lodash-es";
 
 const getProjectValues = (projects) =>
   projects.reduce(
@@ -50,17 +51,22 @@ const init = (data) => {
     industries: industriesList,
     skills: skillsList,
   } = getProjectValues(projects);
-  const skillsSection = initFilterSection(skillsList);
-  const industriesSection = initFilterSection(industriesList);
+  const hasSkills = skillsList.length > 0;
+  const skillsSection = hasSkills && initFilterSection(skillsList);
+  const hasIndustries = industriesList.length > 0;
+  const industriesSection = hasIndustries && initFilterSection(industriesList);
+
   const skillFilters = [];
   const industryFilters = [];
   return {
     id: data.specialist.id,
     isExpand: false,
     projects,
+    hasSkills,
     skillsList,
     skillsSection,
     skillFilters,
+    hasIndustries,
     industriesList,
     industriesSection,
     industryFilters,
@@ -206,39 +212,45 @@ function PreviousProjects({ data, isOwner }) {
 
   return (
     <Box mb="xxl">
-      <Filter
-        skillFilters={state.skillFilters}
-        industryFilters={state.industryFilters}
-        clearFilters={clearFilters}
-        firstName={data.specialist.firstName}
-      >
-        <Tags
-          sectionName="skills"
-          sectionTags={state.skillsSection}
-          onClick={switchSkillSelection}
-          color={theme.colors.blue500}
-          colorHover={theme.colors.blue500}
-          colorActive={theme.colors.white}
-          colorActiveHover={theme.colors.white}
-          bg={rgba(theme.colors.blue100, 0.6)}
-          bgHover={rgba(theme.colors.blue100, 0.9)}
-          bgActive={theme.colors.neutral800}
-          bgActiveHover={rgba(theme.colors.neutral800, 0.9)}
-        />
-        <Tags
-          sectionName="industries"
-          sectionTags={state.industriesSection}
-          onClick={switchIndustrySelection}
-          color={theme.colors.cyan800}
-          colorHover={theme.colors.cyan800}
-          colorActive={theme.colors.white}
-          colorActiveHover={theme.colors.white}
-          bg={rgba(theme.colors.cyan100, 0.6)}
-          bgHover={rgba(theme.colors.cyan100, 0.9)}
-          bgActive={theme.colors.neutral800}
-          bgActiveHover={rgba(theme.colors.neutral800, 0.9)}
-        />
-      </Filter>
+      {(state.hasSkills || state.hasIndustries) && (
+        <Filter
+          skillFilters={state.skillFilters}
+          industryFilters={state.industryFilters}
+          clearFilters={clearFilters}
+          firstName={data.specialist.firstName}
+        >
+          {state.hasSkills && (
+            <Tags
+              sectionName="skills"
+              sectionTags={state.skillsSection}
+              onClick={switchSkillSelection}
+              color={theme.colors.blue500}
+              colorHover={theme.colors.blue500}
+              colorActive={theme.colors.white}
+              colorActiveHover={theme.colors.white}
+              bg={rgba(theme.colors.blue100, 0.6)}
+              bgHover={rgba(theme.colors.blue100, 0.9)}
+              bgActive={theme.colors.neutral800}
+              bgActiveHover={rgba(theme.colors.neutral800, 0.9)}
+            />
+          )}
+          {state.hasIndustries && (
+            <Tags
+              sectionName="industries"
+              sectionTags={state.industriesSection}
+              onClick={switchIndustrySelection}
+              color={theme.colors.cyan800}
+              colorHover={theme.colors.cyan800}
+              colorActive={theme.colors.white}
+              colorActiveHover={theme.colors.white}
+              bg={rgba(theme.colors.cyan100, 0.6)}
+              bgHover={rgba(theme.colors.cyan100, 0.9)}
+              bgActive={theme.colors.neutral800}
+              bgActiveHover={rgba(theme.colors.neutral800, 0.9)}
+            />
+          )}
+        </Filter>
+      )}
       <Box>
         <SectionHeaderWrapper>
           <SectionHeaderText>Previous Projects</SectionHeaderText>

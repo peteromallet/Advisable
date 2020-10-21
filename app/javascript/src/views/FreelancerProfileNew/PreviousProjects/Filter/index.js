@@ -105,7 +105,8 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
   }, [setLayout, state.sections, state.wrapperWidth]);
 
   const isExapndable =
-    state.layout?.industries.isExpandable || state.layout?.skills.isExpandable;
+    state.layout?.industries?.isExpandable ||
+    state.layout?.skills?.isExpandable;
 
   const filtering = skillFilters.length > 0 || industryFilters.length > 0;
 
