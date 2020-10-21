@@ -3,7 +3,7 @@
 
 require "faker"
 
-puts "Creating guild posts"
+Rails.logger.info "Creating guild posts"
 
 def random_post_type
   Guild::Post::POST_TYPES.sample
@@ -11,6 +11,7 @@ end
 
 def random_specialist
   raise "Requires at least one Specialist" if Specialist.none?
+
   Specialist.order(Arel.sql("RANDOM()")).first
 end
 
@@ -20,8 +21,8 @@ end
     specialist: random_specialist,
     title: Faker::Quote.yoda[0..149],
     body: body,
-    body_raw: %x{node #{Rails.root.join('lib/scripts/node', 'convertForDraftJS.js').to_s} #{body}},
-    type: random_post_type
+    type: random_post_type,
+    status: "published"
   )
 
   if Guild::Topic.any?
@@ -34,21 +35,11 @@ end
     post.reactions.create(specialist: random_specialist)
   end
 
-  parent_comment = post.comments.build(
-    specialist: random_specialist,
-    body: Faker::Lorem.paragraph_by_chars(number: 256, supplemental: false),
-  )
-  parent_comment.save!
-
-  # rand(2).times do
-  #   parent_comment.reload.child_comments.create!(
-  #     body: Faker::Lorem.paragraph_by_chars(number: 100, supplemental: false),
-  #     specialist: random_specialist, post: parent_comment.post
-  #   )
-  # end
-
   next unless num == 1
-  puts "Attaching a cover image"
-  cover_image = File.join(Rails.root, 'db/seeds/assets/guild/cover.jpg')
-  post.cover_image.attach(io: File.open(cover_image), filename: 'cover.jpg', content_type: 'image/jpeg')
+
+  Rails.logger.info "Attaching an image"
+  image = Rails.root.join(Rails.root, 'db/seeds/assets/guild/cover.jpg')
+  gpi = Guild::PostImage.create(post: post, cover: true, position: 0)
+  gpi.image.attach(io: File.open(image), filename: 'cover.jpg', content_type: 'image/jpeg')
+  gpi.save
 end

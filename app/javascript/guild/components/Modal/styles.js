@@ -8,9 +8,9 @@ const { colors } = theme;
 
 export const StyledModal = styled(GuildBox)`
   position: absolute;
-  top: 50%;
+  top: 20%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%);
   z-index: 3;
   background: white;
   width: 90%;

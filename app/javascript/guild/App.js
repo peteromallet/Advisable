@@ -20,7 +20,11 @@ const App = () => {
               path="/"
               component={() => <Redirect to="/feed" />}
             />
-            <AuthenticatedRoute exact path="/feed" component={Feed} />
+            <AuthenticatedRoute
+              exact
+              path={["/feed", "/composer*"]}
+              component={Feed}
+            />
             <AuthenticatedRoute exact path="/posts/:postId" component={Post} />
             <AuthenticatedRoute
               exact

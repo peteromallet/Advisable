@@ -8,4 +8,6 @@ class Types::Guild::TopicType < Types::BaseType
   field :name, String, null: false do
     description 'The name of the Guild Topic'
   end
+
+  field :topicable, Types::Guild::TopicableUnion, null: true
 end
