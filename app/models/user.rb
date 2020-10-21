@@ -74,7 +74,7 @@ class User < ApplicationRecord
     return self[:stripe_customer_id] if self[:stripe_customer_id]
     customer =
       Stripe::Customer.create(
-        {email: email, name: company_name, metadata: {user_id: uid}}
+        {email: account.email, name: company_name, metadata: {user_id: uid}}
       )
     update_columns(stripe_customer_id: customer.id)
     customer.id

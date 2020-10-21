@@ -31,9 +31,9 @@ RSpec.describe Mutations::ResetPassword do
   end
 
   it 'changes the users password' do
-    previous_digest = user.password_digest
+    previous_digest = user.account.password_digest
     AdvisableSchema.execute(query)
-    expect(user.reload.password_digest).to_not eq(previous_digest)
+    expect(user.account.reload.password_digest).to_not eq(previous_digest)
   end
 
   context 'when the token is invalid' do

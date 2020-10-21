@@ -37,7 +37,7 @@ RSpec.describe SessionManager do
         user = create(:user, account: create(:account, remember_token: '1234'))
         session = mock_session
         allow(session).to receive(:[]=)
-        cookies = mock_cookies(user.remember_token)
+        cookies = mock_cookies(user.account.remember_token)
         manager = SessionManager.new(session: session, cookies: cookies)
         expect(manager.current_user).to eq(user)
       end

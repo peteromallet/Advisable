@@ -39,15 +39,15 @@ RSpec.describe Mutations::RequestPasswordReset do
   end
 
   it 'sets the reset_digest' do
-    expect(user.reload.reset_digest).to be_nil
+    expect(user.account.reload.reset_digest).to be_nil
     AdvisableSchema.execute(query, context: {})
-    expect(user.reload.reset_digest).to_not be_nil
+    expect(user.account.reload.reset_digest).to_not be_nil
   end
 
   it 'sets the reset_sent_at' do
-    expect(user.reload.reset_sent_at).to be_nil
+    expect(user.account.reload.reset_sent_at).to be_nil
     AdvisableSchema.execute(query, context: {})
-    expect(user.reload.reset_sent_at).to_not be_nil
+    expect(user.account.reload.reset_sent_at).to_not be_nil
   end
 
   context 'when the email doesnt exist' do
