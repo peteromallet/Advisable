@@ -63,7 +63,7 @@ RSpec.describe User, type: :model do
         customer = double(Stripe::Customer, id: "cus_123")
 
         expect(Stripe::Customer).to receive(:create).with({
-          email: user.email,
+          email: user.account.email,
           name: user.company_name,
           metadata: {
             user_id: user.uid,

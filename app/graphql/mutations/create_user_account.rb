@@ -140,7 +140,7 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
   end
 
   def create_client(user:)
-    domain = user.email.split('@').last
+    domain = user.account.email.split('@').last
     client = Client.new(domain: domain)
 
     unless client.valid?

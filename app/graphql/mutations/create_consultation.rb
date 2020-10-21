@@ -105,7 +105,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
       gclid: args[:gclid]
     )
 
-    domain = user.email.split('@').last
+    domain = user.account.email.split('@').last
     client = Client.create(name: args[:company], domain: domain)
     client.users << user
     user.sync_to_airtable

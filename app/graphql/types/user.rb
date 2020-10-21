@@ -2,6 +2,11 @@ class Types::User < Types::BaseType
   field :id, ID, null: false
   field :airtable_id, String, null: true
   field :name, String, null: true
+
+  def name
+    object.account.name
+  end
+
   field :first_name, String, null: true
 
   def first_name

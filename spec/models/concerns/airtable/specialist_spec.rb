@@ -150,7 +150,7 @@ RSpec.describe Airtable::Specialist do
     it "syncs the email" do
       expect { airtable.push(specialist) }.to change {
         airtable.fields['Email Address']
-      }.from(nil).to(specialist.email)
+      }.from(nil).to(specialist.account.email)
     end
 
     it "syncs the city" do

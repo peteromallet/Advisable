@@ -37,7 +37,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
 
   def create_client_record(user)
     return if user.client.present?
-    client = Client.create(domain: user.email.split('@').last)
+    client = Client.create(domain: user.account.email.split('@').last)
     client.users << user
     client.reload.sync_to_airtable
   end

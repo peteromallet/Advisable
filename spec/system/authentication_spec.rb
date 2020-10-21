@@ -5,7 +5,7 @@ RSpec.describe 'Logging in' do
     user = create(:user, account: create(:account, password: 'testing123'))
     project = create(:project, user: user)
     visit "/projects/#{project.airtable_id}/matches"
-    fill_in 'email', with: user.email
+    fill_in 'email', with: user.account.email
     fill_in 'password', with: 'testing123'
     click_on 'Login'
     expect(page).to have_current_path(

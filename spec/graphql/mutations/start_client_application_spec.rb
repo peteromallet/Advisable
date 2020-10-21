@@ -33,7 +33,7 @@ RSpec.describe Mutations::Signup do
     user = User.last
     expect(user.first_name).to eq(first_name)
     expect(user.last_name).to eq(last_name)
-    expect(user.email).to eq(email)
+    expect(user.account.email).to eq(email)
     expect(user.application_status).to eq(:started)
   end
 

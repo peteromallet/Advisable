@@ -14,7 +14,7 @@ class SpecialistMailer < ApplicationMailer
     @specialist = @project.specialist
 
     mail(
-      to: @specialist.email,
+      to: @specialist.account.email,
       subject:
         "Validation Required: #{@project.primary_skill.try(:name)} with #{
           @project.client_name
@@ -26,14 +26,14 @@ class SpecialistMailer < ApplicationMailer
     @project = Project.find(project_id)
     @specialist = Specialist.find(specialist_id)
     mail(
-      to: @specialist.email,
+      to: @specialist.account.email,
       subject: "New Freelance Opportunity: #{@project.primary_skill.name} with #{@project.industry} #{@project.company_type}"
     )
   end
 
   def interview_reschedule_request(interview)
     @interview = interview
-    mail(from: interview.user.sales_person.email_with_name, to: interview.specialist.email, subject: 'Interview Reschedule Request') do |format|
+    mail(from: interview.user.sales_person.email_with_name, to: interview.specialist.account.email, subject: 'Interview Reschedule Request') do |format|
       format.html { render layout: false }
     end
   end

@@ -92,7 +92,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
 
   context 'When given an email that is already been used' do
     let(:user) { create(:user) }
-    let(:email) { user.email.upcase }
+    let(:email) { user.account.email.upcase }
 
     it 'returns an error' do
       error = response['errors'][0]['extensions']['code']
@@ -115,7 +115,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
   it 'sets the email' do
     response
     specialist = Specialist.last
-    expect(specialist.email).to eq(email)
+    expect(specialist.account.email).to eq(email)
   end
 
   it 'sets the phone_number' do
