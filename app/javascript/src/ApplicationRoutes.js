@@ -21,7 +21,6 @@ const JobOpportunity = lazy(() => import("./views/JobOpportunity"));
 const ApplicationFlow = lazy(() => import("./views/ApplicationFlow"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
 const Messages = lazy(() => import("./views/Messages"));
-const FreelancerSearch = lazy(() => import("./views/FreelancerSearch"));
 const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
 const FreelancerActiveApplication = lazy(() =>
   import("./views/FreelancerActiveApplication"),
@@ -73,10 +72,6 @@ const ApplicationRoutes = () => {
           <Route
             path="/request_consultation/:specialistId"
             component={RequestConsultation}
-          />
-          <AuthenticatedRoute
-            path="/freelancer_search"
-            component={FreelancerSearch}
           />
           {/* Freelancer Routes */}
           <Route path="/consultations/:id" component={Consultation} />
