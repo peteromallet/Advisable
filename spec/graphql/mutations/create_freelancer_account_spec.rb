@@ -103,13 +103,13 @@ RSpec.describe Mutations::CreateFreelancerAccount do
   it 'sets the first_name' do
     response
     specialist = Specialist.last
-    expect(specialist.first_name).to eq('Test')
+    expect(specialist.account.first_name).to eq('Test')
   end
 
   it 'sets the last_name' do
     response
     specialist = Specialist.last
-    expect(specialist.last_name).to eq('Account')
+    expect(specialist.account.last_name).to eq('Account')
   end
 
   it 'sets the email' do

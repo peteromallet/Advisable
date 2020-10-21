@@ -8,13 +8,13 @@ RSpec.describe Accounts::RequestPasswordReset do
   end
 
   it 'sets the reset_sent_at attribute' do
-    specialist = create(:specialist, reset_sent_at: nil)
+    specialist = create(:specialist, account: create(:account, reset_sent_at: nil))
     Accounts::RequestPasswordReset.call(specialist.account.email)
     expect(specialist.reload.account.reset_sent_at).to_not be_nil
   end
 
   it 'sets the reset_digest attribute' do
-    specialist = create(:specialist, reset_digest: nil)
+    specialist = create(:specialist, account: create(:account, reset_digest: nil))
     Accounts::RequestPasswordReset.call(specialist.account.email)
     expect(specialist.reload.account.reset_digest).to_not be_nil
   end

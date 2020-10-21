@@ -45,13 +45,13 @@ RSpec.describe Airtable::ClientContact do
     it "syncs the first_name" do
       expect { airtable.push(user) }.to change {
         airtable.fields['First Name']
-      }.from(nil).to(user.first_name)
+      }.from(nil).to(user.account.first_name)
     end
 
     it "syncs the last_name" do
       expect { airtable.push(user) }.to change {
         airtable.fields['Last Name']
-      }.from(nil).to(user.last_name)
+      }.from(nil).to(user.account.last_name)
     end
 
     it "syncs the country" do
