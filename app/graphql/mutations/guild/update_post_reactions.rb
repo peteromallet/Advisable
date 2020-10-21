@@ -9,7 +9,6 @@ class Mutations::Guild::UpdatePostReactions < Mutations::BaseMutation
 
   def authorized?(**args)
     requires_guild_user!
-    true
   end
 
   def resolve(guild_post_id:)

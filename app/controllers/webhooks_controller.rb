@@ -1,5 +1,4 @@
 class WebhooksController < ApplicationController
-  protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
 
   # https://www.twilio.com/docs/chat/webhook-events#webhook-bodies
@@ -15,7 +14,7 @@ class WebhooksController < ApplicationController
     webhook = Hash[ary]
 
     if webhook["AccountSid"] != ENV.fetch('TWILIO_SID')
-      render json: {}, status: :unauthorized and return false
+      render(json: {}, status: :unauthorized) && return
     end
 
     if webhook["EventType"] == "onMessageSent"

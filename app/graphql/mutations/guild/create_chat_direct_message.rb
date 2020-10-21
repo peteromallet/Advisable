@@ -10,8 +10,6 @@ class Mutations::Guild::CreateChatDirectMessage < Mutations::BaseMutation
 
   def authorized?(**args)
     requires_guild_user!
-
-    true
   end
 
   def resolve(recipient_id:, body:, guild_post_id: nil, guild_calendly_link: nil)

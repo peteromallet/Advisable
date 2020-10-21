@@ -22,7 +22,5 @@ class GuildChatRepliesMailbox < ApplicationMailbox
         recipient_uid: recipient_uid
       )
     end
-  rescue StandardError => e
-    Rails.logger.error("Error with Guild chat reply mailbox #{e.message}")
   end
 end
