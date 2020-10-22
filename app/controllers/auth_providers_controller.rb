@@ -1,8 +1,10 @@
 class AuthProvidersController < ApplicationController
+  PROVIDERS = [:linkedin, :linkedin_ads].freeze
+
   def create
     provider = params[:provider].to_sym
-    if self.respond_to?(provider)
-      self.send(provider)
+    if PROVIDERS.include?(provider)
+      self.public_send(provider)
     else
       raise ActionController::RoutingError.new('Unknown provider')
     end
