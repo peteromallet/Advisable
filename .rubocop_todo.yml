@@ -205,13 +205,6 @@ Layout/RescueEnsureAlignment:
     - 'app/graphql/mutations/start_task.rb'
     - 'app/services/accounts/request_password_reset.rb'
 
-# Offense count: 91
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: final_newline, final_blank_line
-Layout/TrailingEmptyLines:
-  Enabled: false
-
 # Offense count: 14
 Lint/AmbiguousBlockAssociation:
   Exclude:
@@ -294,20 +287,11 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Max: 790
 
-# Offense count: 11
-# Configuration parameters: CountComments, CountAsOne.
-Metrics/ClassLength:
-  Max: 291
 
 # Offense count: 4
 # Configuration parameters: IgnoredMethods.
 Metrics/CyclomaticComplexity:
   Max: 15
-
-# Offense count: 89
-# Configuration parameters: CountComments, CountAsOne, ExcludedMethods.
-Metrics/MethodLength:
-  Max: 133
 
 # Offense count: 2
 # Configuration parameters: CountKeywordArgs.
@@ -388,14 +372,6 @@ Security/Open:
     - 'app/jobs/set_sales_person_image_job.rb'
     - 'app/jobs/set_user_image_job.rb'
     - 'app/services/test_data.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, conditionals
-Style/AndOr:
-  Exclude:
-    - 'app/services/tasks/update.rb'
 
 # Offense count: 3
 # Configuration parameters: AllowedChars.
@@ -607,15 +583,6 @@ Style/NegatedIf:
 Style/NonNilCheck:
   Exclude:
     - 'app/models/concerns/airtable/specialist.rb'
-
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: MinDigits, Strict.
-Style/NumericLiterals:
-  Exclude:
-    - 'db/schema.rb'
-    - 'spec/controllers/stripe_events_controller_spec.rb'
-    - 'spec/services/tasks/create_invoice_item_spec.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
