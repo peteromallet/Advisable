@@ -1,5 +1,9 @@
 inherit_from: .rubocop_todo.yml
 
+require:
+  - rubocop-rails
+  - rubocop-performance
+
 AllCops:
   NewCops: enable
 
@@ -26,6 +30,13 @@ Metrics/ClassLength:
 
 Metrics/MethodLength:
   Enabled: false
+
+Style/AndOr:
+  Enabled: true
+  EnforcedStyle: always
+
+Style/Send:
+  Enabled: true
 
 # Let's discuss this one
 # I'd like to go double quotes everywhere, but am open to discussion
