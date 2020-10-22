@@ -45,18 +45,6 @@ function Tags({
   layout = {},
   ...props
 }) {
-  // Set section parameters
-  useEffect(() => {
-    const sectionParams = tagsList.map((tag) => {
-      const element = document.getElementById(tag.key);
-      const textId = tag.key + "-text";
-      const name = tag.props.tagName;
-      const width = element.clientWidth;
-      const height = element.clientHeight;
-      return { name, textId, width, height };
-    });
-    addSectionParams({ sectionParams, sectionName });
-  }, [addSectionParams, sectionName, tagsList]);
   const tagsList = Object.keys(sectionTags)
     .sort((a, b) => sectionTags[b].number - sectionTags[a].number)
     .map((tagKey, index) => {
@@ -108,6 +96,21 @@ function Tags({
         </Box>
       );
     });
+
+  // Set section parameters
+  useEffect(() => {
+    const sectionParams = tagsList.map((tag) => {
+      const element = document.getElementById(tag.key);
+      const textId = tag.key + "-text";
+      const name = tag.props.tagName;
+      const width = element.clientWidth;
+      const height = element.clientHeight;
+      return { name, textId, width, height };
+    });
+    addSectionParams({ sectionParams, sectionName });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Box position="relative">
       <Box px="4px" ml="3px" mt="3px" mb="xxs">
