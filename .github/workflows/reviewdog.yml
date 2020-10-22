@@ -14,6 +14,11 @@ jobs:
           rubocop_extensions: rubocop-rails:gemfile rubocop-performance:gemfile
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
+      - name: eslint
+        uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
       - name: misspell
         uses: reviewdog/action-misspell@v1
         with:
