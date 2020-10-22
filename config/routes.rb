@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :searches
     resources :applications
     resources :countries
     resources :projects
