@@ -12,7 +12,6 @@ class User < ApplicationRecord
   has_many :interviews
   has_many :applications, through: :projects
   has_many :consultations
-  has_many :searches
   has_many :user_skills
   has_many :skills, through: :user_skills
   has_many :client_calls
