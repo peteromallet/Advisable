@@ -23,6 +23,12 @@ export const GUILD_POSTS_QUERY = gql`
         ... on GuildPostAdviceRequired {
           needHelp
         }
+        author {
+          location
+          id
+          bio
+          firstName
+        }
       }
     }
   }

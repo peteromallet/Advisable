@@ -85,5 +85,6 @@ module.exports = function (api) {
         },
       ],
     ].filter(Boolean),
+    sourceType: "unambiguous",
   };
 };

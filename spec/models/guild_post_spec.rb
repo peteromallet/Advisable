@@ -103,4 +103,10 @@ RSpec.describe Guild::Post, type: :model do
       expect(parent_comment.reload.child_comments).to eq([child_comment])
     end
   end
+
+  describe "with engagements" do
+    it "is incremented when an engagment is recorded" do
+      expect { guild_post.record_engagement! }.to change(guild_post, :engagements_count).from(0).to(1)
+    end
+  end
 end

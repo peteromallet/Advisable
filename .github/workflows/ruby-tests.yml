@@ -31,6 +31,8 @@ jobs:
       TWILIO_SID: ${{ secrets.TWILIO_SID }}
       TWILIO_API_KEY_SID: ${{ secrets.TWILIO_API_KEY_SID }}
       TWILIO_API_KEY_SECRET: ${{ secrets.TWILIO_API_KEY_SECRET }}
+      RAILS_INBOUND_EMAIL_PASSWORD: testing123
+      GUILD_REPLIES_DOMAIN: guild-replies
 
     services:
       postgres:
