@@ -26,7 +26,8 @@ class CreateLinkedinAdJob < ApplicationJob
     Rails.logger.error("You need to Set Up LinkedIn Ads in Admin!")
   rescue LinkedinApi::RequestError => e
     # Do not retry jobs that fail LinkedIn API calls just log to Sentry
-    Raven.capture_message(e.response_log.take(2).join(' '), backtrace: e.backtrace, extra: {response: e.response_log})
+    Raven.capture_message(e.response_log.take(2).join(" "), backtrace: e.backtrace, extra: {response: e.response_log.to_json, project_airtable_id: project.airtable_id})
+    Slack.message(channel: "paid_marketing", text: "LinkedIn API job posting *failed* for #{project.name} (##{project.airtable_id})!")
   end
 
   private
@@ -139,7 +140,7 @@ class CreateLinkedinAdJob < ApplicationJob
           {optionText: action[:text], type: "EXTERNAL_WEBSITE", actionTarget: {landingPage: action[:url]}}
         end
       end
-      params.merge!(nextAction: {"array": actions})
+      params[:nextAction] = {"array": actions}
     end
     response = api.post_request_with_retries("sponsoredConversations/#{conversation_id}/sponsoredMessageContents", params)
     urn = response.headers["x-resourceidentity-urn"]
