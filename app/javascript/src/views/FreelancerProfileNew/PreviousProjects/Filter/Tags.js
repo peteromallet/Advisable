@@ -53,21 +53,20 @@ function Tags({
       return (
         <Box
           position="absolute"
-          left={item?.x}
-          top={item?.y}
           key={`${sectionName}-${tagKey}`}
           id={`${sectionName}-${tagKey}`}
           tagName={tagKey}
           sectionName={sectionName}
+          style={{ left: item?.x, top: item?.y }}
           css={`
             white-space: nowrap;
           `}
         >
           <StyledTag
-            px={`${item?.px}px`}
-            py={`${item?.py}px`}
-            mx={`${item?.mx}px`}
-            my={`${item?.my}px`}
+            style={{
+              padding: `${item?.py}px ${item?.px}px`,
+              margin: `${item?.my}px ${item?.mx}px`,
+            }}
             borderRadius="8px"
             bg={bg}
             bgHover={bgHover}
