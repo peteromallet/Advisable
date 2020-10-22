@@ -1,18 +1,17 @@
 import React, { useEffect, useMemo, useReducer } from "react";
-import { Box, Text, StyledCard, Button, theme } from "@advisable/donut";
-import { rgba } from "polished";
+import { AnimatePresence, motion } from "framer-motion";
 import { Info } from "@styled-icons/feather";
-import createDispatcher from "src/utilities/createDispatcher";
+import styled from "styled-components";
 import { isEmpty } from "lodash-es";
+import { rgba } from "polished";
+// Utilities
+import { handleSectionParams, setLayout } from "./reducerHandlers";
+import createDispatcher from "src/utilities/createDispatcher";
+// Hooks
 import useResponsiveRef from "./useResponsiveRef";
 import useChildInjection from "./useChildInjection";
-import {
-  setSectionsRatio,
-  handleSectionParams,
-  setLayout,
-} from "./reducerHandlers";
-import styled from "styled-components";
-import { AnimatePresence, motion } from "framer-motion";
+// Components
+import { Box, Text, StyledCard, Button, theme } from "@advisable/donut";
 
 function arrayToSentence(array) {
   return (
@@ -40,8 +39,6 @@ const reducer = (state, action) => {
         action.payload.sectionName,
         action.payload.sectionParams,
       );
-    case "SET_SECTIONS_RATIO":
-      return setSectionsRatio(state);
     case "SET_LAYOUT":
       return setLayout(state);
     case "EXPAND_COLLAPSE":
@@ -104,7 +101,6 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
 
   // Set ratio of sections
   useEffect(() => {
-    !isEmpty(state.sections) && setSectionsRatio({});
     !isEmpty(state.sections) && setLayout({});
   }, [setLayout, setSectionsRatio, state.sections]);
 
