@@ -89,6 +89,8 @@ group :development do
   gem 'niceql'
   gem 'graphql-rails_logger'
   gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-performance', require: false
   gem 'annotate'
   gem 'foreman'
   gem 'guard'
