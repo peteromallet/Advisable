@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Box, Card, Button } from "@advisable/donut";
 import { useApolloClient } from "@apollo/client";
-import { matchPath } from "react-router";
+import { matchPath, useParams } from "react-router";
 import Text from "../../components/Text";
 import Modal from "../../components/Modal";
 import Heading from "../../components/Heading";
@@ -13,6 +13,7 @@ import { hasCompleteTasksStep } from "./validationSchema";
 
 const Tasks = ({ application, match, location, history }) => {
   const client = useApolloClient();
+  const params = useParams();
   const [confirmModal, setConfirmModal] = React.useState(false);
   const onSelectTask = (task) => {
     history.push(`${match.url}/${task.id}`);
@@ -21,7 +22,7 @@ const Tasks = ({ application, match, location, history }) => {
   const applicationQuery = {
     query: FETCH_APPLICATION,
     variables: {
-      id: application.id,
+      id: params.applicationId,
     },
   };
 
@@ -42,7 +43,15 @@ const Tasks = ({ application, match, location, history }) => {
   };
 
   const handleDeleteTask = (task) => {
-    client.cache.evict(client.cache.identify(task));
+    client.writeQuery({
+      ...applicationQuery,
+      data: {
+        application: {
+          ...application,
+          tasks: application.tasks.filter((t) => task.id !== t.id),
+        },
+      },
+    });
     history.push(match.url);
   };
 
