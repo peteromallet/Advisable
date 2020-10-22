@@ -33,6 +33,7 @@ export const viewerFields = gql`
       completedTutorials
       avatar
       guild
+      guildCalendlyLink
       image {
         url
       }

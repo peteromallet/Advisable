@@ -19,6 +19,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     travel_availability: Field::String,
     city: Field::String,
     guild: Field::Boolean,
+    guild_calendly_link: Field::String,
     airtable_id: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
@@ -29,7 +30,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = %i[first_name last_name email city country].freeze
+  COLLECTION_ATTRIBUTES = %i[first_name last_name email city country guild].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
@@ -43,6 +44,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     city
     country
     guild
+    guild_calendly_link
     airtable_id
     created_at
     updated_at
@@ -62,6 +64,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     city
     country
     guild
+    guild_calendly_link
     airtable_id
   ].freeze
 

@@ -1,8 +1,8 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 
 export const useToggle = (initialIsOpen = false) => {
   const [isOpen, setIsOpen] = useState(initialIsOpen);
-  const toggle = useCallback(() => setIsOpen(!isOpen), [isOpen]);
+  const toggle = () => setIsOpen(!isOpen);
 
   return [isOpen, toggle];
 };

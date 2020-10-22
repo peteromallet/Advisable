@@ -72,6 +72,10 @@ module Types::Guild::PostInterface
     # TODO: include child comments
   end
 
+  field :engagements_count, Integer, null: true do
+    description 'The recorded number of engagements for this post'
+  end
+
   field :guild_topics, [Types::Guild::TopicType], null: true
 
   field :cover_image, String, null: true do
@@ -79,13 +83,13 @@ module Types::Guild::PostInterface
   end
   def cover_image
     if object.cover_image.attached?
-      return(
-        Rails.application.routes.url_helpers.rails_blob_url(
-          object.cover_image,
-          host:
-            ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-        )
+
+      Rails.application.routes.url_helpers.rails_blob_url(
+        object.cover_image,
+        host:
+          ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
       )
+
     end
   end
 

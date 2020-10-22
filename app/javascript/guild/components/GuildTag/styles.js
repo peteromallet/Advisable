@@ -40,7 +40,7 @@ const size = variant({
   prop: "size",
   variants: {
     s: {
-      padding: "5px 12px",
+      padding: "9.5px 12px",
     },
     m: {
       padding: "8px 14px",
