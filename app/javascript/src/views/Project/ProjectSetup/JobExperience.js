@@ -15,8 +15,6 @@ export default function JobExperience({ data }) {
   const { t } = useTranslation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
-  console.log(data.project);
-
   if (!setupProgress(data.project).primarySkill) {
     return <Redirect to={`/projects/${id}/setup/primary_skill`} />;
   }
