@@ -38,11 +38,7 @@ export const user = (fields = {}) => {
         name: null,
         email: null,
       },
-      country: {
-        __typename: "Country",
-        id: 1,
-        name: "Ireland",
-      },
+      country: country(),
     },
     fields,
   );
@@ -184,12 +180,9 @@ export const specialist = (fields = {}) => {
       website: null,
       applicationStage: "Accepted",
       avatar: null,
+      coverPhoto: null,
       image: null,
-      country: {
-        __typename: "Country",
-        id: 1,
-        name: "Ireland",
-      },
+      country: country(),
       reviews: [],
       linkedin: "https://linkedin.com",
       previousProjects: {
@@ -459,12 +452,12 @@ export default {
   industry,
   invoices,
   interview,
-  application,
   specialist,
-  consultation,
+  application,
   salesPerson,
+  consultation,
   specialistSkill,
   previousProject,
-  applicationQuestion,
   clientApplication,
+  applicationQuestion,
 };
