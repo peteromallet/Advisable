@@ -39,6 +39,11 @@ class Types::ProjectType < Types::BaseType
   end
 
   field :skills, [Types::Skill], null: true
+
+  def skills
+    object.skills.order(created_at: :desc)
+  end
+
   field :currency, String, null: true
 
   field :status, String, null: true
