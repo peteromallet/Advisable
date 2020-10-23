@@ -1,90 +1,240 @@
-import { fireEvent, waitFor, within } from "@testing-library/react";
-import renderApp from "../../testHelpers/renderApp";
-import mockData from "../../__mocks__/graphqlFields";
-import { mockViewer, mockQuery } from "../../testHelpers/apolloMocks";
-import GET_PROFILE from "./getProfile";
-import PROJECT_DETAILS from "../../components/PreviousProjectDetails/getProject";
+import { fireEvent, getByText, waitFor, within } from "@testing-library/react";
+import generateType from "../../__mocks__/graphqlFields";
+import {
+  mockViewer,
+  mockQuery,
+  mockMutation,
+} from "../../testHelpers/apolloMocks";
+import { renderRoute, mockData } from "../../testHelpers/test-utils";
+import { GET_COUNTRIES, GET_PROFILE, UPDATE_PROFILE } from "./queries";
+import GET_PROJECT from "src/components/PreviousProjectDetails/getProject.js";
 
-test("Shows users profile", async () => {
-  const skill = mockData.skill();
-  const industry = mockData.industry();
-  const profileProject = mockData.previousProject({
-    primarySkill: skill,
-    primaryIndustry: industry,
-    skills: [skill],
-    industries: [industry],
-  });
+let user = generateType.user();
+const skills = ["First skill", "Second skill", "Third skill"].map((name) => {
+  return mockData.skill({ name: name });
+});
+const industries = [
+  "First industry",
+  "Second industry",
+  "Third industry",
+].map((name) => mockData.industry({ name }));
+const country = mockData.country();
+const countries = [{ ...country, value: country.id, label: country.name }];
+const profileProject = mockData.previousProject({
+  primarySkill: skills[0],
+  primaryIndustry: industries[0],
+  skills: [skills[0], skills[1]],
+  industries: [industries[0], industries[1]],
+});
+const profileProjectAlt = mockData.previousProject({
+  primarySkill: skills[2],
+  primaryIndustry: industries[2],
+  skills: [skills[2]],
+  industries: [industries[2]],
+  clientName: "Test Tech",
+});
+const review = mockData.review();
+const specialist = mockData.specialist({
+  name: "John Doe",
+  projectSkills: {
+    __typename: "ProjectSkillsConnection",
+    nodes: skills,
+  },
+  industries,
+  reviews: [review],
+  profileProjects: [profileProject, profileProjectAlt],
+});
+profileProject.specialist = specialist;
 
-  const review = mockData.review();
-
-  const specialist = mockData.specialist({
-    name: "John Doe",
-    projectSkills: {
-      __typename: "ProjectSkillsConnection",
-      nodes: [skill],
-    },
-    industries: [industry],
-    reviews: [review],
-    profileProjects: [profileProject],
-  });
-
-  profileProject.specialist = specialist;
-
+test("can see top section", async () => {
   const graphQLMocks = [
     mockViewer(null),
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
     graphQLMocks,
   });
 
-  const name = await app.findByText("John Doe", {}, { timeout: 5000 });
-  expect(name).toBeInTheDocument();
+  await app.findByText(specialist.name);
+  await app.findByText(specialist.bio);
+  await app.findByText(specialist.location);
 });
 
-test("Can see reviews", async () => {
-  const skill = mockData.skill();
-  const industry = mockData.industry();
-  const profileProject = mockData.previousProject({
-    primarySkill: skill,
-    primaryIndustry: industry,
-    skills: [skill],
-    industries: [industry],
-  });
-
-  const review = mockData.review();
-
-  const specialist = mockData.specialist({
-    name: "John Doe",
-    projectSkills: {
-      __typename: "ProjectSkillsConnection",
-      nodes: [skill],
-    },
-    industries: [industry],
-    reviews: [review],
-    profileProjects: [profileProject],
-  });
-
-  profileProject.specialist = specialist;
-
+test("can see skills and industries filter", async () => {
   const graphQLMocks = [
     mockViewer(null),
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
   ];
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  await app.findAllByTestId(/skills-filter-tag/i);
+  await app.findAllByTestId(/industries-filter-tag/i);
+});
 
-  const app = renderApp({
-    route: `/freelancers/${specialist.id}/reviews`,
+test("can filter previous projects by skill and clear filters", async () => {
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+  ];
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  const skill = skills[2].name;
+  await app.findAllByTestId(/skills-filter-tag/i);
+  await app.findAllByTestId(/industries-filter-tag/i);
+  const filterTag = app.getByTestId(`skills-filter-tag-${skill}`);
+  fireEvent.click(filterTag);
+  await app.findByText(`Showing ${skill} projects`);
+  const numOfFilteredCards = app.getAllByTestId("project-card").length;
+  expect(numOfFilteredCards).toBe(1);
+  await app.findByText(`${skill} project`);
+  const clearFiltersBtn = app.getByLabelText(/clear filters/i);
+  fireEvent.click(clearFiltersBtn);
+  const numOfCards = app.getAllByTestId("project-card").length;
+  expect(numOfCards).toBe(2);
+});
+
+test("can filter previous projects by industry and clear filters", async () => {
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+  ];
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  const primarySkill = skills[2].name;
+  const industry = industries[2].name;
+  await app.findAllByTestId(/skills-filter-tag/i);
+  await app.findAllByTestId(/industries-filter-tag/i);
+  const filterTag = app.getByTestId(`industries-filter-tag-${industry}`);
+  fireEvent.click(filterTag);
+  await app.findByText(`with ${industry} companies`);
+  const numOfFilteredCards = app.getAllByTestId("project-card").length;
+  expect(numOfFilteredCards).toBe(1);
+  await app.findByText(`${primarySkill} project`);
+  const clearFiltersBtn = app.getByLabelText(/clear filters/i);
+  fireEvent.click(clearFiltersBtn);
+  const numOfCards = app.getAllByTestId("project-card").length;
+  expect(numOfCards).toBe(2);
+});
+
+test("can see previous project", async () => {
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+  ];
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  await app.findByText(`${profileProject.primarySkill.name} project`);
+  await app.findByText(profileProject.clientName);
+});
+
+test("can open previous project's dialog window", async () => {
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROJECT,
+      { id: profileProject.id },
+      { previousProject: profileProject },
+    ),
+  ];
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  const projectTitle = await app.findByText(
+    `${profileProject.primarySkill.name} project`,
+  );
+  fireEvent.click(projectTitle);
+  await app.findByText(profileProject.title);
+  await app.findByText(/project description/i);
+});
+
+test("can see review", async () => {
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+  ];
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  await app.findByText(review.name);
+  await app.findByText(`${review.role} at ${review.companyName}`);
+  await app.findByText(`"${review.comment}"`);
+});
+
+test("edit profile info", async () => {
+  const graphQLMocks = [
+    mockViewer(specialist),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(GET_COUNTRIES, {}, { countries }),
+    mockMutation(
+      UPDATE_PROFILE,
+      {
+        city: "Kyiv",
+        country: specialist.country.id,
+        bio: "new bio",
+        linkedin: specialist.linkedin || "",
+        website: specialist.website || "",
+      },
+      {
+        updateProfile: {
+          __typename: "UpdateProfilePayload",
+          specialist: {
+            ...specialist,
+            city: "Kyiv",
+            bio: "new bio",
+            location: `Kyiv, ${specialist.country.name}`,
+          },
+        },
+      },
+    ),
+  ];
+
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  const editInfoButton = await app.findByLabelText(/edit info/i);
+  fireEvent.click(editInfoButton);
+  await app.findByText(/edit profile info/i);
+  fireEvent.change(app.getByLabelText(/city/i), { target: { value: "Kyiv" } });
+  fireEvent.change(app.getByLabelText(/about me/i), {
+    target: { value: "new bio" },
+  });
+  fireEvent.click(app.getByLabelText(/update/i));
+  await app.findByText(`Kyiv, ${specialist.country.name}`);
+  await app.findByText("new bio");
+});
+
+test("render profile as a user viewer", async () => {
+  const graphQLMocks = [
+    mockViewer(user),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+  ];
+
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
     graphQLMocks,
   });
 
-  const name = await app.findByText(
-    `"${review.comment}"`,
-    {},
-    { timeout: 5000 },
+  const requestTalkButton = (
+    await app.findByLabelText(/request a talk/i)
+  ).closest("a");
+  expect(requestTalkButton).toHaveAttribute(
+    "href",
+    `/request_consultation/${specialist.id}`,
   );
-  expect(name).toBeInTheDocument();
 });
 
 test("Renders 404 if the specialist isn't found", async () => {
@@ -118,248 +268,10 @@ test("Renders 404 if the specialist isn't found", async () => {
     },
   ];
 
-  const app = renderApp({
+  const app = renderRoute({
     route: `/freelancers/randomID`,
     graphQLMocks,
   });
-
-  const status = await app.findByText("404", {}, { timeout: 5000 });
+  const status = await app.findByText("404");
   expect(status).toBeInTheDocument();
-});
-
-test("Can view freelancer project", async () => {
-  const skill = mockData.skill();
-  const industry = mockData.industry();
-  const profileProject = mockData.previousProject({
-    primarySkill: skill,
-    primaryIndustry: industry,
-    skills: [skill],
-    industries: [industry],
-  });
-
-  const specialist = mockData.specialist({
-    name: "John Doe",
-    projectSkills: {
-      __typename: "ProjectSkillsConnection",
-      nodes: [skill],
-    },
-    industries: [industry],
-    reviews: [],
-    profileProjects: [profileProject],
-  });
-
-  profileProject.specialist = specialist;
-
-  const graphQLMocks = [
-    mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
-    mockQuery(
-      PROJECT_DETAILS,
-      {
-        id: profileProject.id,
-      },
-      {
-        previousProject: profileProject,
-      },
-    ),
-  ];
-
-  const app = renderApp({
-    route: `/freelancers/${specialist.id}/projects`,
-    graphQLMocks,
-  });
-
-  await app.findByText("John Doe", {}, { timeout: 5000 });
-  const viewProject = app.getByLabelText("View Project");
-  fireEvent.click(viewProject);
-  const modal = app.getByRole("dialog");
-  const title = await within(modal).findByText(profileProject.title);
-  expect(title).toBeInTheDocument();
-});
-
-test("Can view a project by giong to url", async () => {
-  const skill = mockData.skill();
-  const industry = mockData.industry();
-  const previousProject = mockData.previousProject({
-    primarySkill: skill,
-    primaryIndustry: industry,
-    skills: [skill],
-    industries: [industry],
-  });
-
-  const specialist = mockData.specialist({
-    name: "John Doe",
-    projectSkills: {
-      __typename: "ProjectSkillsConnection",
-      nodes: [skill],
-    },
-    industries: [industry],
-    reviews: [],
-    profileProjects: [previousProject],
-  });
-
-  previousProject.specialist = specialist;
-
-  const graphQLMocks = [
-    mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
-    mockQuery(PROJECT_DETAILS, { id: previousProject.id }, { previousProject }),
-  ];
-
-  const app = renderApp({
-    route: `/freelancers/${specialist.id}/projects/${previousProject.id}`,
-    graphQLMocks,
-  });
-
-  const modal = await app.findByRole("dialog", {}, { timeout: 5000 });
-  const title = await within(modal).findByText(previousProject.title);
-  expect(title).toBeInTheDocument();
-});
-
-test("Shows message when specialist has no projects", async () => {
-  const skill = mockData.skill();
-  const industry = mockData.industry();
-
-  const specialist = mockData.specialist({
-    name: "John Doe",
-    projectSkills: {
-      __typename: "ProjectSkillsConnection",
-      nodes: [skill],
-    },
-    industries: [industry],
-    reviews: [],
-    profileProjects: [],
-  });
-
-  const graphQLMocks = [
-    mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
-  ];
-
-  const app = renderApp({
-    route: `/freelancers/${specialist.id}/projects`,
-    graphQLMocks,
-  });
-
-  const text = await app.findByText(
-    "has not added any previous projects",
-    {
-      exact: false,
-    },
-    { timeout: 5000 },
-  );
-  expect(text).toBeInTheDocument();
-});
-
-test("Can filter projects by skill", async () => {
-  const twitterMarketing = mockData.skill({ name: "Twitter Marketing" });
-  const facebookMarketing = mockData.skill({ name: "Facebook Marketing" });
-  const financeIndustry = mockData.industry({ name: "Finance" });
-  const recruitingIndustry = mockData.industry({ name: "Recruiting" });
-
-  const financeProject = mockData.previousProject({
-    title: "Finance Project",
-    primarySkill: twitterMarketing,
-    primaryIndustry: financeIndustry,
-    skills: [twitterMarketing],
-    industries: [financeIndustry],
-  });
-
-  const recruitingProject = mockData.previousProject({
-    title: "Recruiting Project",
-    primarySkill: facebookMarketing,
-    primaryIndustry: recruitingIndustry,
-    skills: [facebookMarketing],
-    industries: [recruitingIndustry],
-  });
-
-  const specialist = mockData.specialist({
-    name: "John Doe",
-    projectSkills: {
-      __typename: "ProjectSkillsConnection",
-      nodes: [twitterMarketing, facebookMarketing],
-    },
-    industries: [financeIndustry, recruitingIndustry],
-    reviews: [],
-    profileProjects: [financeProject, recruitingProject],
-  });
-
-  const graphQLMocks = [
-    mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
-  ];
-
-  const app = renderApp({
-    route: `/freelancers/${specialist.id}/projects`,
-    graphQLMocks,
-  });
-
-  const skillFilter = await app.findByLabelText(
-    "Filter projects by Skill",
-    {},
-    { timeout: 5000 },
-  );
-  fireEvent.click(skillFilter);
-  const skill = app.getByLabelText(twitterMarketing.name);
-  fireEvent.click(skill);
-  fireEvent.click(app.getByLabelText("Filter by Skill"));
-  await waitFor(() => {}); // Wait for filter to be applied
-  expect(app.queryByText("Recruiting Project")).toBeNull();
-});
-
-test("Can filter projects by industry", async () => {
-  const twitterMarketing = mockData.skill({ name: "Twitter Marketing" });
-  const facebookMarketing = mockData.skill({ name: "Facebook Marketing" });
-  const financeIndustry = mockData.industry({ name: "Finance" });
-  const recruitingIndustry = mockData.industry({ name: "Recruiting" });
-
-  const financeProject = mockData.previousProject({
-    title: "Finance Project",
-    primarySkill: twitterMarketing,
-    primaryIndustry: financeIndustry,
-    skills: [twitterMarketing],
-    industries: [financeIndustry],
-  });
-
-  const recruitingProject = mockData.previousProject({
-    title: "Recruiting Project",
-    primarySkill: facebookMarketing,
-    primaryIndustry: recruitingIndustry,
-    skills: [facebookMarketing],
-    industries: [recruitingIndustry],
-  });
-
-  const specialist = mockData.specialist({
-    name: "John Doe",
-    projectSkills: {
-      __typename: "ProjectSkillsConnection",
-      nodes: [twitterMarketing, facebookMarketing],
-    },
-    industries: [financeIndustry, recruitingIndustry],
-    reviews: [],
-    profileProjects: [financeProject, recruitingProject],
-  });
-
-  const graphQLMocks = [
-    mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
-  ];
-
-  const app = renderApp({
-    route: `/freelancers/${specialist.id}/projects`,
-    graphQLMocks,
-  });
-
-  const filter = await app.findByLabelText(
-    "Filter projects by Industry",
-    {},
-    { timeout: 5000 },
-  );
-  expect(app.queryByText("Recruiting Project")).toBeInTheDocument();
-  fireEvent.click(filter);
-  const industry = app.getByLabelText(financeIndustry.name);
-  fireEvent.click(industry);
-  fireEvent.click(app.getByLabelText("Filter by Industry"));
-  await waitFor(() => {}); // Wait for filter to be applied
-  expect(app.queryByText("Recruiting Project")).toBeNull();
 });
