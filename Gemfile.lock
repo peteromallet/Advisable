@@ -177,6 +177,9 @@ GEM
     geocoder (1.6.4)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    good_migrations (0.0.2)
+      activerecord (>= 3.1)
+      railties (>= 3.1)
     graphql (1.11.5)
     graphql-rails_logger (1.2.2)
       actionpack (> 5.0)
@@ -438,6 +441,8 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     stripe (5.26.0)
+    strong_migrations (0.7.1)
+      activerecord (>= 5)
     temple (0.8.2)
     thor (1.0.1)
     thread_safe (0.3.6)
@@ -502,6 +507,7 @@ DEPENDENCIES
   faraday
   foreman
   geocoder
+  good_migrations
   graphql
   graphql-rails_logger
   graphql_playground-rails
@@ -544,6 +550,7 @@ DEPENDENCIES
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
   stripe (~> 5.14)
+  strong_migrations
   timecop
   twilio-ruby
   tzinfo-data
