@@ -126,6 +126,7 @@ end
 #  image                              :jsonb
 #  last_name                          :string
 #  linkedin                           :string
+#  member_of_week_email               :integer
 #  number_of_projects                 :string
 #  password_digest                    :string
 #  permissions                        :text             default([]), is an Array
