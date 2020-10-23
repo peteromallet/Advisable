@@ -61,7 +61,12 @@ function Project({ project }) {
       >
         {dialog.visible && <ProjectDetails id={project.id} />}
       </ActionBarModal>
-      <DialogDisclosure {...dialog} as={StyledSpecialistProject} padding="24px">
+      <DialogDisclosure
+        {...dialog}
+        as={StyledSpecialistProject}
+        padding="24px"
+        data-testid="project-card"
+      >
         <StyledHoverDecoration>
           <Button variant="subtle" suffix={<ArrowRight />}>
             View More
