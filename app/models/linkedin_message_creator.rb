@@ -14,9 +14,9 @@ class LinkedinMessageCreator
     sentences = [
       "Hi %FIRSTNAME%,",
       "Are you interested in a #{project.primary_skill&.name} freelance project with a #{project.industry} company?",
-      "I'm from Advisable.com, a network of the top freelance marketing talent that companies like Stack Overflow, Zappos, Product Hunt, and SAP use to hire.",
-      "One of our clients is looking for a #{project.primary_skill&.name} specialist - our existing network is too busy for it so we're looking for new people!",
-      "Are you potentially interested in this project?",
+      "I'm from Advisable.com, a network of top freelance marketing talent that companies like Stack Overflow, Zappos, and SAP rely on.",
+      "One of our clients is hiring a #{project.primary_skill&.name} freelancer - our existing network is too busy so we're looking for new people!",
+      "Do you want to learn more?",
       "Best,\n#{sender_name}"
     ]
 
