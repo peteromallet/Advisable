@@ -15,7 +15,7 @@ import NoProjects from "./NoProjects";
 // Queries
 import { GET_PROFILE } from "./queries";
 
-function FreelancerProfileNew() {
+function FreelancerProfile() {
   useLogoURL("https://advisable.com");
   const params = useParams();
   const viewer = useViewer();
@@ -53,4 +53,4 @@ function FreelancerProfileNew() {
   );
 }
 
-export default FreelancerProfileNew;
+export default FreelancerProfile;
