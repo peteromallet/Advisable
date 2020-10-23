@@ -8,7 +8,7 @@ const setSectionsRatio = (state) => {
   const percent = sectionsArea / 100;
   const sections = sectionKeys.reduce((acc, key) => {
     // Calc and set ratio to each section
-    const ratio = acc[key].area / percent;
+    const ratio = acc[key].area / percent || 0.5;
     return { ...acc, [key]: { ...acc[key], ratio } };
   }, state.sections);
   return { ...state, sections };
