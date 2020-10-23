@@ -33,7 +33,7 @@ function EditInfoModal({ modal, specialist }) {
   const isWidescreen = useBreakpoint("sUp");
   const initialValues = {
     city: specialist.city || "",
-    country: get(specialist, "country.id"),
+    country: specialist.country?.id || "",
     bio: specialist.bio || "",
     linkedin: specialist.linkedin || "",
     website: specialist.website || "",
