@@ -1,4 +1,8 @@
 import React from "react";
+import { object, string } from "yup";
+import { Form, Formik } from "formik";
+import { useMutation, useQuery } from "@apollo/client";
+// Components
 import {
   Modal,
   Box,
@@ -7,18 +11,15 @@ import {
   Select,
   useBreakpoint,
 } from "@advisable/donut";
-import SubmitButton from "src/components/SubmitButton";
+import BioLengthWidget from "./BioLengthWiget";
 import FormField from "src/components/FormField";
-import { Form, Formik } from "formik";
-import { useMutation, useQuery } from "@apollo/client";
+import SubmitButton from "src/components/SubmitButton";
+// Queries
 import {
   GET_COUNTRIES,
   updateProfileOptimisticResponse,
   UPDATE_PROFILE,
 } from "../../../queries";
-import { get } from "lodash-es";
-import { object, string } from "yup";
-import BioLengthWidget from "./BioLengthWiget";
 
 const validationSchema = object().shape({
   city: string(),
@@ -59,70 +60,68 @@ function EditInfoModal({ modal, specialist }) {
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        {() => (
-          <Form>
-            <Text
-              as="h2"
-              fontSize="xxxl"
-              fontWeight="medium"
-              color="neutral900"
-              mb="l"
+        <Form>
+          <Text
+            as="h2"
+            fontSize="xxxl"
+            fontWeight="medium"
+            color="neutral900"
+            mb="l"
+          >
+            Edit profile info
+          </Text>
+          <Box display={isWidescreen ? "flex" : undefined} mb="l">
+            <Box
+              mr={isWidescreen && "s"}
+              mb={!isWidescreen && "l"}
+              width="100%"
             >
-              Edit profile info
-            </Text>
-            <Box display={isWidescreen ? "flex" : undefined} mb="l">
-              <Box
-                mr={isWidescreen && "s"}
-                mb={!isWidescreen && "l"}
+              <FormField
+                name="city"
+                label="City"
                 width="100%"
-              >
-                <FormField
-                  name="city"
-                  label="City"
-                  width="100%"
-                  placeholder="e.g Berlin"
-                />
-              </Box>
-              <Box width="100%">
-                <FormField as={Select} name="country" label="Country">
-                  {countriesQuery.data?.countries.map((c) => (
-                    <option key={c.value} value={c.value}>
-                      {c.label}
-                    </option>
-                  ))}
-                </FormField>
-              </Box>
-            </Box>
-            <Box mb="l">
-              <FormField
-                as={Textarea}
-                name="bio"
-                minRows={5}
-                label="About me"
-                description="Add a short 2 - 3 sectence bio to describe who you are. A well structured bio demonstrates your experience and expertise by referencing past projects and achievements, including notable clients or numeric results. You will have a chance to customize this each time you apply for a project."
-                placeholder="Add a short 2 - 3 sectence bio to describe who you are."
-                Widget={BioLengthWidget}
+                placeholder="e.g Berlin"
               />
             </Box>
-            <Box mb="l">
-              <FormField
-                name="linkedin"
-                label="LinkedIn"
-                placeholder="https://linkedin.com/in/your-name"
-                error={null}
-              />
+            <Box width="100%">
+              <FormField as={Select} name="country" label="Country">
+                {countriesQuery.data?.countries.map((c) => (
+                  <option key={c.value} value={c.value}>
+                    {c.label}
+                  </option>
+                ))}
+              </FormField>
             </Box>
-            <Box mb="xl">
-              <FormField
-                name="website"
-                label="Website"
-                placeholder="https://your-website.com"
-                error={null}
-              />
-            </Box>
-            <SubmitButton>Update</SubmitButton>
-          </Form>
-        )}
+          </Box>
+          <Box mb="l">
+            <FormField
+              as={Textarea}
+              name="bio"
+              minRows={5}
+              label="About me"
+              description="Add a short 2 - 3 sectence bio to describe who you are. A well structured bio demonstrates your experience and expertise by referencing past projects and achievements, including notable clients or numeric results. You will have a chance to customize this each time you apply for a project."
+              placeholder="Add a short 2 - 3 sectence bio to describe who you are."
+              Widget={BioLengthWidget}
+            />
+          </Box>
+          <Box mb="l">
+            <FormField
+              name="linkedin"
+              label="LinkedIn"
+              placeholder="https://linkedin.com/in/your-name"
+              error={null}
+            />
+          </Box>
+          <Box mb="xl">
+            <FormField
+              name="website"
+              label="Website"
+              placeholder="https://your-website.com"
+              error={null}
+            />
+          </Box>
+          <SubmitButton>Update</SubmitButton>
+        </Form>
       </Formik>
     </Modal>
   );
