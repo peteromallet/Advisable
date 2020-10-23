@@ -37,10 +37,6 @@ const fields = gql`
       }
     }
 
-    ratings {
-      overall
-    }
-
     profileProjects {
       id
       title
