@@ -28,14 +28,14 @@ const fields = gql`
       name
     }
 
-    answers {
-      id
-      content
-      question {
-        content
-        id
-      }
-    }
+    # answers {
+    #   id
+    #   content
+    #   question {
+    #     content
+    #     id
+    #   }
+    # }
 
     profileProjects {
       id
@@ -85,10 +85,10 @@ const fields = gql`
 export const GET_PROFILE = gql`
   ${fields}
   query getProfileData($id: ID!) {
-    questions {
-      id
-      content
-    }
+    # questions {
+    #   id
+    #   content
+    # }
     specialist(id: $id) {
       ...SpecialistFields
     }
