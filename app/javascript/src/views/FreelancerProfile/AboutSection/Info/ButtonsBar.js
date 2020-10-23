@@ -4,11 +4,9 @@ import IconLink from "./IconLink";
 import { LinkedinIn } from "@styled-icons/fa-brands";
 import { Link as LinkIcon } from "@styled-icons/feather";
 import EditInfo from "./EditInfo";
-import useViewer from "src/hooks/useViewer";
 import { Box } from "@advisable/donut";
 
 function ButtonsBar({ isOwner, specialist }) {
-  const viewer = useViewer();
   return (
     <Box
       display="flex"
@@ -24,7 +22,7 @@ function ButtonsBar({ isOwner, specialist }) {
         <IconLink url={specialist.website} Icon={LinkIcon} strokeWidth={2} />
       )}
       {isOwner && <EditInfo specialist={specialist}>Edit Info</EditInfo>}
-      {!isOwner && viewer && (
+      {!isOwner && (
         <RequestTalkButton id={specialist.id}>Request a talk</RequestTalkButton>
       )}
     </Box>
