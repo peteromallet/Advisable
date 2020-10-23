@@ -11,8 +11,8 @@ import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
 import { Form, Formik } from "formik";
 import { useMutation, useQuery } from "@apollo/client";
-import FETCH_COUNTRIES from "./fetchCountries.graphql";
 import {
+  GET_COUNTRIES,
   updateProfileOptimisticResponse,
   UPDATE_PROFILE,
 } from "../../../queries";
@@ -50,7 +50,7 @@ function EditInfoModal({ modal, specialist }) {
     });
     modal.hide();
   };
-  const countriesQuery = useQuery(FETCH_COUNTRIES);
+  const countriesQuery = useQuery(GET_COUNTRIES);
 
   return (
     <Modal modal={modal} p="xxl" label="Edit profile info" width={640}>
