@@ -144,11 +144,7 @@ const Post = () => {
                   recipient={post.author}
                   engagementsCount={post.engagementsCount}
                 />
-                <ReactionsButton
-                  reacted={post.reacted}
-                  reactionsCount={post.reactionsCount}
-                  onUpdatePostReactions={handleUpdatePostReactions}
-                />
+                <ReactionsButton post={post} />
               </GuildBox>
 
               {/* <StyledCommentsButton flexSpaceBetween onClick={scrollToComments}>

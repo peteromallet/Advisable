@@ -126,11 +126,7 @@ const Post = ({ post }) => {
             recipient={post.author}
             engagementsCount={post.engagementsCount}
           />
-          <ReactionsButton
-            reacted={post.reacted}
-            reactionsCount={post.reactionsCount}
-            onUpdatePostReactions={handleUpdatePostReactions}
-          />
+          <ReactionsButton post={post} />
         </GuildBox>
       </Box>
     </Card>
