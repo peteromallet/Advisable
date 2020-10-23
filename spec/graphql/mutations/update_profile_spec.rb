@@ -4,7 +4,7 @@ RSpec.describe Mutations::UpdateProfile do
   let(:skill) { create(:skill) }
   let!(:country) { create(:country, alpha2: 'IE', name: 'Ireland') }
   let(:specialist) do
-    create(:specialist, { bio: nil, city: nil, country: nil, remote: false })
+    create(:specialist, {bio: nil, city: nil, country: nil, remote: false})
   end
 
   let(:query) do
@@ -34,7 +34,7 @@ RSpec.describe Mutations::UpdateProfile do
   end
 
   let(:response) do
-    AdvisableSchema.execute(query, context: { current_user: specialist })
+    AdvisableSchema.execute(query, context: {current_user: specialist})
   end
 
   before :each do
@@ -52,7 +52,7 @@ RSpec.describe Mutations::UpdateProfile do
   end
 
   it 'updates the country' do
-    country = response['data']['updateProfile']['specialist']['city']
+    country = response['data']['updateProfile']['specialist']['country']
     expect(country).to_not be_nil
   end
 
@@ -63,7 +63,7 @@ RSpec.describe Mutations::UpdateProfile do
 
   it 'updates the skills' do
     skills = response['data']['updateProfile']['specialist']['skills']
-    expect(skills).to eq([{ 'name' => skill.name }])
+    expect(skills).to eq([{'name' => skill.name}])
   end
 
   context 'when a Service::Error is thrown' do
@@ -80,7 +80,7 @@ RSpec.describe Mutations::UpdateProfile do
 
   context 'when there is no viewer' do
     it 'returns an error' do
-      response = AdvisableSchema.execute(query, context: { current_user: nil })
+      response = AdvisableSchema.execute(query, context: {current_user: nil})
       error_code = response['errors'][0]['extensions']['code']
       expect(error_code).to eq('notAuthenticated')
     end
@@ -89,7 +89,7 @@ RSpec.describe Mutations::UpdateProfile do
   context 'when there is a User logged in' do
     it 'returns an error' do
       response =
-        AdvisableSchema.execute(query, context: { current_user: create(:user) })
+        AdvisableSchema.execute(query, context: {current_user: create(:user)})
       error_code = response['errors'][0]['extensions']['code']
       expect(error_code).to eq('notAuthenticated')
     end

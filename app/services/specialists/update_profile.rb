@@ -60,9 +60,8 @@ class Specialists::UpdateProfile < ApplicationService
 
   # Update the country if it was passed
   def update_country
-    return unless attributes[:country]
-    country = Country.find_by_uid(attributes[:country])
-    country = Country.find_by_name(attributes[:country]) if country.nil?
-    specialist.country = country
+    return if attributes[:country].blank?
+    country = Country.find_by(uid: attributes[:country]) || Country.find_by(alpha2: attributes[:country]) || Country.find_by(name: attributes[:country])
+    specialist.update_columns(country_id: country&.id)
   end
 end
