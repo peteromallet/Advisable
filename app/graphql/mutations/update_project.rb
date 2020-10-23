@@ -29,7 +29,7 @@ class Mutations::UpdateProject < Mutations::BaseMutation
     project.assign_attributes(assign_attributes(args))
     update_skills(project, args)
     update_primary_skill(project, args[:primary_skill])
-    project.save
+    project.save_and_sync!
 
     { project: project }
   end
