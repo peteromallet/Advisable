@@ -3,18 +3,17 @@ class LinkedinApi
     attr_reader :response_log, :backtrace
 
     def initialize(response)
-      @response_log = [
-        "Something went wrong with the LinkedIn API request.",
-        "Status: #{response.status}.",
-        "URL: #{response.env.url}",
-        "Request body: #{JSON[response.env.request_body]}",
-        "Headers: #{response.headers}.",
-        "Body: #{response.body}"
-      ]
+      @response_log = {
+        status: response.status,
+        url: response.env.url,
+        request_body: JSON[response.env.request_body],
+        headers: response.headers,
+        body: response.body
+      }
       @backtrace = caller
 
-      Rails.logger.error(response_log.join("\n"))
-      super(response_log.take(2).join(' '))
+      Rails.logger.error(response_log)
+      super("Something went wrong with the LinkedIn API request. Status #{response.status}")
     end
   end
 
