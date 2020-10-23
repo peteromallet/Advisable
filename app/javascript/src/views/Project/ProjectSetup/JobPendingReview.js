@@ -9,20 +9,25 @@ export default function PublishJob({ data }) {
 
   return (
     <Box textAlign="center">
-      <Avatar
-        size="xl"
-        name={salesPerson.name}
-        mb="l"
-        mx="auto"
-        url={salesPerson.image}
-      />
+      {salesPerson ? (
+        <Avatar
+          size="xl"
+          name={salesPerson.name}
+          mb="l"
+          mx="auto"
+          url={salesPerson.image}
+        />
+      ) : null}
       <JobSetupStepHeader mb="xs">
-        {salesPerson.firstName} is reviewing your job!
+        {salesPerson
+          ? `${salesPerson.firstName} is reviewing your job!`
+          : "We are reviewing your job!"}
       </JobSetupStepHeader>
       <JobSetupStepSubHeader marginBottom="l">
         We&apos;re making sure that this is a project that&apos;s suitable for
-        our specialists before sending it to them. {salesPerson.firstName} will
-        review it and will let you know once it&apos;s live.
+        our specialists before sending it to them.{" "}
+        {salesPerson ? salesPerson.firstName : "We"} will review it and will let
+        you know once it&apos;s live.
       </JobSetupStepSubHeader>
       <Link to={`/projects/${id}/setup/publish`}>
         <Button variant="subtle">Update Details</Button>
