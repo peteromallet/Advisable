@@ -53,10 +53,10 @@ function Tags({
       return (
         <Box
           position="absolute"
-          key={`${sectionName}-${tagKey}`}
-          id={`${sectionName}-${tagKey}`}
-          tagName={tagKey}
           sectionName={sectionName}
+          id={`${sectionName}-${tagKey}`}
+          key={`${sectionName}-${tagKey}`}
+          tagName={tagKey}
           style={{ left: item?.x, top: item?.y }}
           css={`
             white-space: nowrap;
@@ -67,6 +67,7 @@ function Tags({
               padding: `${item?.py}px ${item?.px}px`,
               margin: `${item?.my}px ${item?.mx}px`,
             }}
+            data-testid={`${sectionName}-filter-tag-${tagKey}`}
             borderRadius="8px"
             bg={bg}
             bgHover={bgHover}
