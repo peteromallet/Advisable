@@ -13,15 +13,26 @@ const REQUIRED_CHARACTERISTICS = "REQUIRED_CHARACTERISTICS";
 export default function UpdateProjectRequirementsModal({ dialog, project }) {
   const [step, setStep] = React.useState(CHARACTERISTICS);
   const [updateProject] = useUpdateProject();
-
   const initialValues = {
     characteristics: project.characteristics,
     requiredCharacteristics: project.requiredCharacteristics,
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, formik) => {
     if (step === CHARACTERISTICS) {
       setStep(REQUIRED_CHARACTERISTICS);
+
+      // TODO: For now we must make sure to filter out any items from required
+      // characteristics when the characteristics are updated to prevent any
+      // previously selected required characteristics from sticking around.
+      // Ideally we would do this in the API but we can't for now due to how the
+      // old /project_setup/:id flow works.
+      formik.setFieldValue(
+        "requiredCharacteristics",
+        project.requiredCharacteristics.filter((characteristic) => {
+          return values.characteristics.includes(characteristic);
+        }),
+      );
     } else {
       await updateProject({
         variables: {

@@ -2,6 +2,7 @@ import React from "react";
 import { rgba, darken } from "polished";
 import styled, { css } from "styled-components";
 import { theme } from "@advisable/donut";
+import Loader from "components/Loader";
 
 const StyledPrimarySkillOptionNumber = styled.div`
   width: 32px;
@@ -60,11 +61,20 @@ const StyledPrimarySkillOption = styled.label`
   }
 `;
 
-export default function PrimraySkillOption({ number, children, ...rest }) {
+export default function PrimraySkillOption({
+  isSubmitting,
+  number,
+  children,
+  ...rest
+}) {
+  const isSubmittingValue = isSubmitting && rest.checked;
+
   return (
     <StyledPrimarySkillOption $selected={rest.checked}>
       <input type="radio" {...rest} />
-      <StyledPrimarySkillOptionNumber>{number}</StyledPrimarySkillOptionNumber>
+      <StyledPrimarySkillOptionNumber>
+        {isSubmittingValue ? <Loader size="sm" /> : number}
+      </StyledPrimarySkillOptionNumber>
       {children}
     </StyledPrimarySkillOption>
   );

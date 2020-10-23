@@ -21,7 +21,7 @@ export default function JobPrimarySkill({ data }) {
   const skills = data.project.skills;
 
   const handleSubmit = async (values) => {
-    updateProject({
+    await updateProject({
       variables: {
         input: {
           id,
@@ -61,6 +61,7 @@ export default function JobPrimarySkill({ data }) {
                   name="primarySkill"
                   value={skill.name}
                   as={PrimarySkillOption}
+                  isSubmitting={formik.isSubmitting}
                   number={i + 1}
                   onClick={() => {
                     formik.submitForm();
