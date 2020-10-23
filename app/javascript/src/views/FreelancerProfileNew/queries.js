@@ -95,6 +95,15 @@ export const GET_PROFILE = gql`
   }
 `;
 
+export const GET_COUNTRIES = gql`
+  query getCountries {
+    countries {
+      value: id
+      label: name
+    }
+  }
+`;
+
 export const UPDATE_PROFILE = gql`
   ${fields}
   mutation UpdateProfile($input: UpdateProfileInput!) {
