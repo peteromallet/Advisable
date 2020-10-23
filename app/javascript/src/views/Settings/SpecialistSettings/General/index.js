@@ -83,7 +83,7 @@ const Profile = () => {
             )}
             <Box height={1} bg="neutral100" my="l" />
             <Box paddingBottom="xs">
-              <Text fontWeight="medium" colour="dark">
+              <Text fontWeight="medium" color="neutral800">
                 Are you happy to work remotely?
               </Text>
             </Box>
