@@ -40,7 +40,7 @@ const ApplicationRoutes = () => {
         <Switch>
           <Route path="/clients/signup" component={ClientSignup} />
           <AuthenticatedRoute exact path="/messages" component={Messages} />
-          <Route path="/freelancers/:id" component={FreelancerProfileNew} />
+          <Route path="/freelancers/:id" component={FreelancerProfile} />
           {/* Client routes */}
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />
           <AuthenticatedRoute
