@@ -101,6 +101,15 @@ class Airtable::Project < Airtable::Base
     end
   end
 
+  # After the syncing process has been complete
+  after_sync do |project|
+    if !new_record && project.sales_status_changed? && project.sales_status == "Paused"
+      project.applications.where.not(status: 'Application Rejected').find_each do |application|
+        SpecialistMailer.project_paused(application).deliver_later
+      end
+    end
+  end
+
   push_data do |project|
     self['Client Contacts'] = [project.user.try(:airtable_id)].compact.uniq
     self['Project Stage'] = project[:status]

@@ -14,6 +14,11 @@ class SpecialistMailerPreview < ActionMailer::Preview
     SpecialistMailer.interview_reschedule_request(random_interview)
   end
 
+  def project_paused
+    application = Application.order(Arel.sql('RANDOM()')).first
+    SpecialistMailer.project_paused(application)
+  end
+
   private
 
   def random_interview
