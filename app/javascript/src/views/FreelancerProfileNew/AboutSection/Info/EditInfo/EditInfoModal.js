@@ -85,7 +85,7 @@ function EditInfoModal({ modal, specialist }) {
               </Box>
               <Box width="100%">
                 <FormField as={Select} name="country" label="Country">
-                  {countriesQuery.data.countries.map((c) => (
+                  {countriesQuery.data?.countries.map((c) => (
                     <option key={c.value} value={c.value}>
                       {c.label}
                     </option>
