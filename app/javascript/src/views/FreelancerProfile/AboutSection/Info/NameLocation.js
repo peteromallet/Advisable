@@ -5,7 +5,7 @@ function NameLocation({ specialist }) {
   return (
     <Box>
       <Text
-        fontSize={[28, 28, 28, 36]}
+        fontSize={{ _: "4xl", l: "5xl" }}
         fontWeight="medium"
         color="neutral900"
         mb="xxs"
