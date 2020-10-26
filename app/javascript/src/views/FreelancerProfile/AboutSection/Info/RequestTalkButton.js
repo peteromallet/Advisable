@@ -7,7 +7,9 @@ function RequestTalkButton({ id, children, ...props }) {
 
   return (
     <Link to={{ ...location, pathname: `/request_consultation/${id}` }}>
-      <Button {...props}>{children}</Button>
+      <Button {...props} size={["m", "m", "s", "m"]} mx="xxs">
+        {children}
+      </Button>
     </Link>
   );
 }
