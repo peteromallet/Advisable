@@ -71,6 +71,7 @@ module SpecialistOrUser
     end
 
     def ensure_account_exists
+      return if self[:email].blank?
       if account.blank?
         self.account = Account.find_or_create_by!(email: self[:email])
       elsif account.new_record?
