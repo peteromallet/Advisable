@@ -24,7 +24,7 @@ function Biography({ bio }) {
       color="neutral800"
       fontSize={{ _: "m", s: "l" }}
       lineHeight="140%"
-      pr="58px"
+      pr={{ _: "s", l: "3xl" }}
     >
       {expanded ? bio : truncate(bio, { length: TRUNCATE_LIMIT })}
       {expandable && (
