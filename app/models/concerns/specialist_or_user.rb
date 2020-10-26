@@ -9,13 +9,13 @@ module SpecialistOrUser
     include Permissions
 
     has_secure_password validations: false
-    validates_confirmation_of :password
-    validates :password, length: {minimum: 8}, allow_blank: true
+    validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
     validate :email_not_taken
-    validates :email, allow_blank: true, format: {with: VALID_EMAIL_REGEX}
+    validates :email, format: {with: VALID_EMAIL_REGEX}
 
     # Temporary while we're moving things over
-    belongs_to :account, required: false
+    belongs_to :account
+    before_validation :ensure_account_exists
     before_save :copy_data_to_account
 
     # Needed for frontend stuff
@@ -70,9 +70,18 @@ module SpecialistOrUser
       AccountMailer.confirm(uid: uid, token: token).deliver_later
     end
 
+    def ensure_account_exists
+      return if self[:email].blank?
+      if account.blank?
+        self.account = Account.find_or_create_by!(email: self[:email])
+      elsif account.new_record?
+        account.save!
+      end
+    end
+
     def copy_data_to_account
       self.account = Account.create! if account.blank?
-      data = Account::COPYABLE_COLUMNS.map { |column| [column, attributes[column]] }.to_h
+      data = Account::COPYABLE_COLUMNS.index_with { |column| attributes[column] }
       account.update_columns(data)
     end
 

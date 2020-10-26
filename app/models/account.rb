@@ -10,9 +10,8 @@ class Account < ApplicationRecord
   has_many :auth_providers, dependent: :destroy
 
   has_secure_password validations: false
-  validates_confirmation_of :password
-  validates :password, length: {minimum: 8}, allow_blank: true
-  validates :email, uniqueness: true, allow_blank: true, format: {with: /@/}
+  validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
+  validates :email, uniqueness: true, allow_blank: false, format: {with: /@/}
 
   def has_account?
     password_digest.present?
@@ -29,7 +28,7 @@ class Account < ApplicationRecord
   def new_remember_token
     loop do
       token = Nanoid.generate(size: 25)
-      break token unless self.class.where(remember_token: token).exists?
+      break token unless self.class.exists?(remember_token: token)
     end
   end
 
