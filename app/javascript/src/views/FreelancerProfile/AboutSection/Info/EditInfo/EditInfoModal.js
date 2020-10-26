@@ -101,7 +101,7 @@ function EditInfoModal({ modal, specialist }) {
               label="About me"
               description="Add a short 2 - 3 sectence bio to describe who you are. A well structured bio demonstrates your experience and expertise by referencing past projects and achievements, including notable clients or numeric results. You will have a chance to customize this each time you apply for a project."
               placeholder="Add a short 2 - 3 sectence bio to describe who you are."
-              Widget={BioLengthWidget}
+              widget={BioLengthWidget}
             />
           </Box>
           <Box mb="l">
