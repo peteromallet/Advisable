@@ -4,6 +4,7 @@ class AccountsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   before_action :verify_key!
+  before_action :verify_email!, only: [:user, :specialist]
   before_action :create_account, only: [:user, :specialist]
 
   def me
@@ -35,7 +36,6 @@ class AccountsController < ApplicationController
   private
 
   def create_account
-    verify_email!
     @account = Account.find_or_create_by!(email: account_params[:email])
     account.update!(account_params)
   end
