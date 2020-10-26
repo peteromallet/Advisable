@@ -32,8 +32,9 @@ function Biography({ bio }) {
           as={StyledBioExpander}
           color="blue600"
           onClick={() => setExpanded((e) => !e)}
+          paddingLeft="2xs"
         >
-          {expanded ? " see\u00A0less" : " see\u00A0more"}
+          {expanded ? "see\u00A0less" : "see\u00A0more"}
         </Text>
       )}
     </Text>
