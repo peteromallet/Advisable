@@ -6,7 +6,6 @@ import Info from "./Info";
 function AboutSection({ specialist, isOwner, viewer }) {
   return (
     <Card
-      minHeight="514px"
       bg="#fff"
       mt={[0, "m"]}
       mx={["-12px", 0]}
