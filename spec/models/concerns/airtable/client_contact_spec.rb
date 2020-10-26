@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Airtable::ClientContact do
-  include_examples "sync airtable column", "First Name", to: :first_name
-  include_examples "sync airtable column", "Last Name", to: :last_name
-  include_examples "sync airtable column", "Title", to: :title
+  include_examples "sync airtable column", "First Name", to: :first_name, with_email: true
+  include_examples "sync airtable column", "Last Name", to: :last_name, with_email: true
+  include_examples "sync airtable column", "Title", to: :title, with_email: true
 
   include_examples "sync airtable column", "Email Address", {
     to: :email,
