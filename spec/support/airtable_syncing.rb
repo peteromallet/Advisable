@@ -52,7 +52,7 @@ RSpec.shared_examples "airtable syncing" do
     # Generate a test for each of the column_hash attributes.
     described_class.columns_hash.each do |column, attribute|
       it "syncs the '#{column}' column to the '#{attribute}' attribute" do
-        active_record_model = build(factory, { attribute => nil })
+        active_record_model = build(factory, {attribute => nil})
         active_record_model.save(validate: false)
         record = described_class.new({
           column => "test"
@@ -94,7 +94,13 @@ RSpec.shared_examples "sync airtable column" do |column, config|
     data_type = described_class.sync_model.column_for_attribute(config[:to]).type
     value = config[:with] || (airtable_fields ? airtable_fields[column] : change_value(data_type))
 
-    airtable = described_class.new(airtable_fields || { column => value }, id: record.airtable_id)
+    new_values = airtable_fields || {column => value}
+
+    if config[:with_email]
+      new_values = {"Email Address" => record.email}.merge(new_values)
+    end
+
+    airtable = described_class.new(new_values, id: record.airtable_id)
     expect { airtable.sync }.to change {
       record.reload.send(config[:to])
     }.from(nil).to(value)
@@ -121,9 +127,12 @@ RSpec.shared_examples "sync airtable association" do |column, config|
     association_factory = reflection.class_name.to_s.underscore
     association = create(association_factory)
 
-    airtable = described_class.new({
-      column => [association.airtable_id]
-    }, id: record.airtable_id)
+    new_values = {column => [association.airtable_id]}
+    if config[:with_email]
+      new_values = {"Email Address" => record.email}.merge(new_values)
+    end
+
+    airtable = described_class.new(new_values, id: record.airtable_id)
 
     expect(record.send(config[:to])).to be_nil
     airtable.sync

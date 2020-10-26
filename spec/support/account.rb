@@ -1,8 +1,6 @@
 RSpec.shared_examples "account" do
   it { is_expected.to have_secure_password }
   it { is_expected.to allow_value("test+2@test.com").for(:email) }
-  it { is_expected.to_not allow_value("test+2test.com").for(:email) }
-  it { is_expected.to_not allow_value("test+2@test").for(:email) }
   it { is_expected.to validate_confirmation_of(:password) }
   it { is_expected.to validate_length_of(:password).is_at_least(8) }
 
