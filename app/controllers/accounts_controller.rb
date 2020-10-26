@@ -3,7 +3,7 @@ class AccountsController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
-  before_action :verify_key
+  before_action :verify_key!
   before_action :create_account, only: [:user, :specialist]
 
   def me
@@ -35,6 +35,7 @@ class AccountsController < ApplicationController
   private
 
   def create_account
+    verify_email!
     @account = Account.find_or_create_by!(email: account_params[:email])
     account.update!(account_params)
   end
@@ -43,7 +44,12 @@ class AccountsController < ApplicationController
     params.require(:account).permit(:first_name, :last_name, :email)
   end
 
-  def verify_key
+  def verify_email!
+    return if params[:email].present?
+    render json: {error: "Can not create without email."}, status: :unprocessable_entity
+  end
+
+  def verify_key!
     return if params[:key].present? && params[:key] == ENV["ACCOUNTS_CREATE_KEY"]
     render json: {error: "You are not authorized to perform this action."}, status: :unauthorized
   end
