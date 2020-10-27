@@ -1,10 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, Box } from "@advisable/donut";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { isEmpty } from "lodash";
+
+const Wrapper = styled(Box)`
+  position: relative;
+  transition: opacity 0.1s;
+`;
 
 const StyledTag = styled(Box)`
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, opacity 0.2s;
   &:hover {
     background-color: ${(props) => props.bgHover};
   }
@@ -45,6 +51,7 @@ function Tags({
   layout = {},
   ...props
 }) {
+  const [rendered, setRendered] = useState(false);
   const tagsList = Object.keys(sectionTags)
     .sort((a, b) => sectionTags[b].number - sectionTags[a].number)
     .map((tagKey, index) => {
@@ -111,8 +118,13 @@ function Tags({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Set rendered to true
+  useEffect(() => {
+    !isEmpty(layout) && setRendered(true);
+  }, [layout]);
+
   return (
-    <Box position="relative">
+    <Wrapper style={{ opacity: rendered ? 1 : 0 }}>
       <Box px="4px" ml="3px" mt="3px" mb="xxs">
         <Text
           color="neutral500"
@@ -137,6 +149,7 @@ function Tags({
               ? layout[sectionName]?.height
               : layout[sectionName]?.collapsedHeight,
           }}
+          transition={!rendered && { duration: 0 }}
           display="flex"
           flexWrap="wrap"
           alignItems="flex-start"
@@ -146,7 +159,7 @@ function Tags({
           {tagsList}
         </Box>
       </Box>
-    </Box>
+    </Wrapper>
   );
 }
 
