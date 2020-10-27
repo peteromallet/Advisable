@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Text, Box } from "@advisable/donut";
+import { Text, Box, useBreakpoint } from "@advisable/donut";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { isEmpty } from "lodash";
+import { isEmpty, truncate } from "lodash";
 
 const Wrapper = styled(Box)`
   position: relative;
@@ -51,12 +51,14 @@ function Tags({
   layout = {},
   ...props
 }) {
+  const isMobile = useBreakpoint("s");
   const [rendered, setRendered] = useState(false);
   const tagsList = Object.keys(sectionTags)
     .sort((a, b) => sectionTags[b].number - sectionTags[a].number)
     .map((tagKey, index) => {
       const { selected } = sectionTags[tagKey];
       const item = layout[sectionName]?.items[index];
+      const tagText = truncate(tagKey, { length: isMobile ? 24 : 38 });
       return (
         <Box
           position="absolute"
@@ -97,7 +99,7 @@ function Tags({
               fontSize="xs"
               id={`${sectionName}-${tagKey}-text`}
             >
-              {tagKey}
+              {tagText}
             </StyledTagText>
           </StyledTag>
         </Box>
