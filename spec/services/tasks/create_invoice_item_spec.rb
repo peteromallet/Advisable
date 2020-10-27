@@ -4,28 +4,28 @@ RSpec.describe Tasks::CreateInvoiceItem do
   let(:task) { create(:task, stage: 'Assigned') }
 
   it 'Calls the Users::AddInvoiceItem service' do
-    invoice_item = double('InvoiceItem', { id: '1234' })
+    invoice_item = double('InvoiceItem', {id: '1234'})
 
     expect(Users::AddInvoiceItem).to receive(:call).with(
       {
         user: task.application.project.user,
         unit_amount: task.application.invoice_rate,
         quantity: task.invoice_hours,
-        description: "#{task.name} + #{task.application.specialist.name}"
+        description: "#{task.name} + #{task.application.specialist.account.name}"
       }
-    )
-      .and_return(invoice_item)
+    ).
+      and_return(invoice_item)
 
     Tasks::CreateInvoiceItem.call(task: task)
   end
 
   it 'saves the stripe_invoice_id' do
-    invoice_item = double('InvoiceItem', { id: '1234' })
+    invoice_item = double('InvoiceItem', {id: '1234'})
     allow(Users::AddInvoiceItem).to receive(:call).and_return(invoice_item)
     expect { Tasks::CreateInvoiceItem.call(task: task) }.to change {
       task.reload.stripe_invoice_id
-    }.from(nil)
-      .to(invoice_item.id)
+    }.from(nil).
+      to(invoice_item.id)
   end
 
   context "when the task estimate_type is 'Fixed'" do
@@ -37,17 +37,17 @@ RSpec.describe Tasks::CreateInvoiceItem do
     end
 
     it 'creates an invoice item for that amount' do
-      invoice_item = double('InvoiceItem', { id: '1234' })
+      invoice_item = double('InvoiceItem', {id: '1234'})
 
       expect(Users::AddInvoiceItem).to receive(:call).with(
         {
           user: task.application.project.user,
           unit_amount: 1000_00,
           quantity: 1,
-          description: "#{task.name} + #{task.application.specialist.name}"
+          description: "#{task.name} + #{task.application.specialist.account.name}"
         }
-      )
-        .and_return(invoice_item)
+      ).
+        and_return(invoice_item)
 
       Tasks::CreateInvoiceItem.call(task: task)
     end
