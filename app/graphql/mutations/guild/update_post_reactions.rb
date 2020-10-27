@@ -21,21 +21,11 @@ class Mutations::Guild::UpdatePostReactions < Mutations::BaseMutation
     post = Guild::Post.find(guild_post_id)
     case reaction
     when "NONE"
-      remove_reaction(post)
+      post.reactions.find_by(specialist: current_user)&.destroy
     when "THANK"
-      thank_post(post)
+      post.reactions.find_or_create_by(specialist: current_user)
     end
 
     {guild_post: post.reload}
-  end
-
-  private
-
-  def thank_post(post)
-    post.reactions.create(specialist: current_user)
-  end
-
-  def remove_reaction(post)
-    post.reactions.find_by(specialist: current_user)&.destroy
   end
 end
