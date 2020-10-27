@@ -11,7 +11,7 @@ class Account < ApplicationRecord
 
   has_secure_password validations: false
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
-  validates :email, uniqueness: true, allow_blank: false, format: {with: /@/}
+  validates :email, uniqueness: true, presence: true, format: {with: /@/}
 
   def has_account?
     password_digest.present?
