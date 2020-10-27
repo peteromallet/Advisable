@@ -55,8 +55,9 @@ class Account < ApplicationRecord
 
   # TODO: AccountMigration - log usage and remove all usages until this can be deleted
   def method_missing(method, *args, **options, &block)
-    Raven.capture_message("Method #{method} called on Account that was meant for Specialist or User", backtrace: caller, level: 'debug')
+    raise unless Rails.env.production?
 
+    Raven.capture_message("Method #{method} called on Account that was meant for Specialist or User", backtrace: caller, level: 'debug')
     if options.present?
       specialist_or_user.public_send(method, *args, **options, &block)
     else
