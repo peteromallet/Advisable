@@ -75,8 +75,6 @@ const reducer = (state, action) => {
       return switchTagSelection(state, "industriesSection", action.payload.tag);
     case "CLEAR_FILTERS":
       return clearFilters(state);
-    case "SET_NUM_OF_COLUMNS":
-      return { ...state, numOfColumns: action.payload };
     default:
       return state;
   }
@@ -108,9 +106,6 @@ function PreviousProjects({ data, isOwner }) {
   const initFilters = createAction("INIT_FILTERS");
   const switchSkillSelection = createAction("SWITCH_SKILL_SELECTION");
   const switchIndustrySelection = createAction("SWITCH_INDUSTRY_SELECTION");
-  const setNumOfColumns = useMemo(() => createAction("SET_NUM_OF_COLUMNS"), [
-    createAction,
-  ]);
   const clearFilters = createAction("CLEAR_FILTERS");
 
   useQueryStringFilter({
@@ -135,13 +130,11 @@ function PreviousProjects({ data, isOwner }) {
   const isWidescreen = useBreakpoint("mUp");
   const isTablet = useBreakpoint("m");
   const isMobile = useBreakpoint("s");
-
-  // Update number of columns
-  useEffect(() => {
-    isWidescreen && setNumOfColumns(3);
-    isTablet && setNumOfColumns(2);
-    isMobile && setNumOfColumns(1);
-  }, [isMobile, isTablet, isWidescreen, setNumOfColumns]);
+  const numOfColumns = useMemo(() => {
+    if (isMobile) return 1;
+    if (isTablet) return 2;
+    return 3;
+  }, [isWidescreen, isTablet, isMobile]);
 
   const projectCards = state.projects
     .filter(filterProjects(state))
@@ -206,7 +199,7 @@ function PreviousProjects({ data, isOwner }) {
           )}
         </SectionHeaderWrapper>
         {projectCards.length ? (
-          <Masonry columns={state.numOfColumns}>{projectCards}</Masonry>
+          <Masonry columns={numOfColumns}>{projectCards}</Masonry>
         ) : (
           <NoFilteredProjects firstName={data.specialist.firstName} />
         )}
