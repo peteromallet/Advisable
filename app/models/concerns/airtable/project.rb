@@ -59,7 +59,7 @@ class Airtable::Project < Airtable::Base
     required_skills = fields['Skills Required'] || []
     required_skills.each do |skill_id|
       skill = ::Skill.find_by_uid_or_airtable_id(skill_id)
-      skill = Airtable::Skill.find(skill_id).sync unless skill.present?
+      skill = Airtable::Skill.find(skill_id).sync if skill.blank?
       next if skill.nil?
       project_skill = project.project_skills.find_by_skill_id(skill.id)
       is_primary = skill.name == fields['Primary Skill Required']
@@ -71,7 +71,17 @@ class Airtable::Project < Airtable::Base
       end
     end
 
+    sync_goals(project)
     sync_questions(project)
+
+    # TODO: Sync characteristics from airtable to postgres.
+    # We don't sync characteristic values from airtable back to postgres
+    # because airtable ( and the old project setup flow ) expects the optional
+    # characteristics and required characteristics columns to have different
+    # values, however, the new project flow expects all of the characteristics
+    # to be inside the 'characteristics' column and the required ones duplicated
+    # inside of 'required_characteristics'. Syncing from airtable would
+    # overwrite the 'characteristics' value without the required ones.
 
     project.accepted_terms = fields['Accepted Terms']
     project.deposit = (fields['Deposit Amount Required'].to_f * 100).to_i
@@ -132,15 +142,8 @@ class Airtable::Project < Airtable::Base
 
   private
 
-  def sync_arrays(project)
+  def sync_goals(project)
     project.goals = JSON.parse(fields['Goals']) if fields['Goals']
-    if fields['Required Characteristics']
-      project.required_characteristics =
-        JSON.parse(fields['Required Characteristics'])
-    end
-    if fields['Optional Characteristics']
-      project.characteristics = JSON.parse(fields['Optional Characteristics'])
-    end
   rescue JSON::ParserError
   end
 
