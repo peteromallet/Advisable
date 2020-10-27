@@ -9,7 +9,8 @@ function AboutSection({ specialist, isOwner, viewer }) {
       bg="#fff"
       mt={[0, "m"]}
       mx={["-12px", 0]}
-      p="12px 12px 18px 12px"
+      padding="sm"
+      paddingBottom="l"
       borderRadius={[0, 12]}
       mb="xl"
     >
