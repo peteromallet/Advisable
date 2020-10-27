@@ -10,7 +10,10 @@ class UserDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     airtable_id: Field::String,
-    account: Field::BelongsTo.with_options(searchable: false),
+    account: Field::BelongsTo.with_options(
+      searchable: true,
+      searchable_fields: %w[first_name last_name email]
+    ),
     country: Field::BelongsTo,
     projects: Field::HasMany,
     bank_transfers_enabled: Field::Boolean,

@@ -11,13 +11,16 @@ class SpecialistDashboard < Administrate::BaseDashboard
     country: Field::BelongsTo,
     skills: Field::HasMany,
     id: Field::Number,
-    account: Field::BelongsTo.with_options(searchable: false),
+    account: Field::BelongsTo.with_options(
+      searchable: true,
+      searchable_fields: %w[first_name last_name email]
+    ),
     image: Field::String.with_options(searchable: false),
     linkedin: Field::String,
     travel_availability: Field::String,
     city: Field::String,
     guild: Field::Boolean,
-    guild_calendly_link: Field::String,
+    guild_calendly_link: Field::String.with_options(searchable: false),
     airtable_id: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
