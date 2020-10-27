@@ -32,7 +32,7 @@ class Tasks::CreateInvoiceItem < ApplicationService
         user: task.application.project.user,
         unit_amount: (task.flexible_estimate || task.estimate).ceil,
         quantity: 1,
-        description: "#{task.name} + #{task.application.specialist.name}"
+        description: "#{task.name} + #{task.application.specialist.account.name}"
       }
     )
   end
@@ -43,7 +43,7 @@ class Tasks::CreateInvoiceItem < ApplicationService
         user: task.application.project.user,
         unit_amount: task.application.invoice_rate,
         quantity: task.invoice_hours,
-        description: "#{task.name} + #{task.application.specialist.name}"
+        description: "#{task.name} + #{task.application.specialist.account.name}"
       }
     )
   end
