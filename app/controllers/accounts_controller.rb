@@ -20,6 +20,8 @@ class AccountsController < ApplicationController
     user.save!
 
     render json: {user_uid: user.uid, account_uid: account.uid}
+  rescue ActiveRecord::RecordInvalid => e
+    Raven.capture_exception(e, extra: {params: params})
   end
 
   def specialist
@@ -31,6 +33,8 @@ class AccountsController < ApplicationController
     specialist.save!
 
     render json: {specialist_uid: specialist.uid, account_uid: account.uid}
+  rescue ActiveRecord::RecordInvalid => e
+    Raven.capture_exception(e, extra: {params: params})
   end
 
   private
