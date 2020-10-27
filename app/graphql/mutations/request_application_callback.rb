@@ -34,7 +34,7 @@ class Mutations::RequestApplicationCallback < Mutations::BaseMutation
     user.sync_to_airtable
     send_slack_message(user, call)
 
-    { client_application: user }
+    {client_application: user}
   end
 
   private
@@ -51,12 +51,12 @@ class Mutations::RequestApplicationCallback < Mutations::BaseMutation
             "text": "<!channel> There's a new ASAP call waiting for you."
           }
         },
-        { "type": 'divider' },
+        {"type": 'divider'},
         {
           "type": 'section',
           "fields": [
-            { "type": 'mrkdwn', "text": "*Name*\n#{user.name}" },
-            { "type": 'mrkdwn', "text": "*Company*\n#{user.company_name}" }
+            {"type": 'mrkdwn', "text": "*Name*\n#{user.account.name}"},
+            {"type": 'mrkdwn', "text": "*Company*\n#{user.company_name}"}
           ]
         },
         {
@@ -77,8 +77,8 @@ class Mutations::RequestApplicationCallback < Mutations::BaseMutation
               }|View Details>*"
           }
         },
-        { "type": 'section', "text": { "type": 'mrkdwn', "text": ' ' } },
-        { "type": 'divider' },
+        {"type": 'section', "text": {"type": 'mrkdwn', "text": ' '}},
+        {"type": 'divider'},
         {
           "type": 'section',
           "text": {
