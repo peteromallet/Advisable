@@ -78,7 +78,7 @@ class Airtable::Project < Airtable::Base
     # We don't sync characteristic values from airtable back to postgres
     # because airtable ( and the old project setup flow ) expects the optional
     # characteristics and required characteristics columns to have different
-    # values, however, the new project flow expects all of the charactersitics
+    # values, however, the new project flow expects all of the characteristics
     # to be inside the 'characteristics' column and the required ones duplicated
     # inside of 'required_characteristics'. Syncing from airtable would
     # overwrite the 'characteristics' value without the required ones.
