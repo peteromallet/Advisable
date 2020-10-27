@@ -13,7 +13,7 @@ function ButtonsBar({ isOwner, specialist }) {
       alignItems="flex-start"
       ml="auto"
       mt={{ _: "l", s: "l", m: 0 }}
-      mr={{ l: "m", s: "12px" }}
+      mr={{ l: "m", s: "s" }}
     >
       {specialist.linkedin && (
         <IconLink url={specialist.linkedin} Icon={LinkedinIn} />
