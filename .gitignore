@@ -40,3 +40,4 @@ credentials.yml.enc
 jest-coverage
 spec/cypress/videos/*
 stats.json
+.eslintcache
