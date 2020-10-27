@@ -37,13 +37,13 @@ RSpec.describe 'Project view', type: :system do
     find("[aria-label='#{next_monday.strftime('%-d %b %Y, 12:00')}']").click
     find("[aria-label='#{next_monday.strftime('%-d %b %Y, 12:30')}']").click
     click_on 'Request Call'
-    expect(page).to have_content(application2.specialist.name)
+    expect(page).to have_content(application2.specialist.account.name)
 
     # Accept second match, no need to select availability because its stored
     # from the first time.
     click_on 'Accept'
     click_on 'Request Call'
-    expect(page).to have_content(application3.specialist.name)
+    expect(page).to have_content(application3.specialist.account.name)
 
     # Reject third match
     click_on 'Reject'
@@ -69,7 +69,7 @@ RSpec.describe 'Project view', type: :system do
   context 'when the user hasnt added a password' do
     it 'allows the user to signup' do
       allow_any_instance_of(User).to receive(:sync_to_airtable)
-      project.user.update(password: nil)
+      project.user.account.update_columns(password_digest: nil)
       visit "/projects/#{project.uid}"
       fill_in 'password', with: 'testing123'
       fill_in 'passwordConfirmation', with: 'testing123'

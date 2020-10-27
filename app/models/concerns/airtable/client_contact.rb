@@ -3,16 +3,18 @@ class Airtable::ClientContact < Airtable::Base
   self.table_name = 'Client Contacts'
 
   sync_with ::User
-  sync_column 'Email Address', to: :email
-  sync_column 'First Name', to: :first_name
-  sync_column 'Last Name', to: :last_name
+
+  sync_column_to_association 'Email Address', association: :account, to: :email
+  sync_column_to_association 'First Name', association: :account, to: :first_name
+  sync_column_to_association 'Last Name', association: :account, to: :last_name
+  sync_column_to_association 'VAT Number', association: :account, to: :vat_number
+
   sync_column 'Title', to: :title
   sync_column 'Project Payment Method', to: :project_payment_method
   sync_column 'Exceptional Project Payment Terms',
               to: :exceptional_project_payment_terms
   sync_column 'Invoice Name', to: :invoice_name
   sync_column 'Invoice Company Name', to: :invoice_company_name
-  sync_column 'VAT Number', to: :vat_number
   sync_column 'Type of Company', to: :company_type
   sync_column 'Campaign Name', to: :campaign_name
   sync_column 'Campaign Source', to: :campaign_source
@@ -27,9 +29,10 @@ class Airtable::ClientContact < Airtable::Base
   sync_association 'Owner', to: :sales_person
 
   sync_data do |user|
+    user.ensure_account_exists
+
     if self['Address']
       # sync the address
-
       user.address = Address.parse(self['Address']).to_h
     end
 
@@ -44,6 +47,10 @@ class Airtable::ClientContact < Airtable::Base
       user.client = client
     end
 
+    if fields['Test Account'].try(:include?, 'Yes')
+      user.account.test_account = true
+    end
+
     sync_budget(user)
   end
 
@@ -55,16 +62,16 @@ class Airtable::ClientContact < Airtable::Base
 
   push_data do |user|
     self['UID'] = user.uid
-    self['Email Address'] = user.email
-    self['First Name'] = user.first_name
-    self['Last Name'] = user.last_name
+    self['Email Address'] = user.account.email
+    self['First Name'] = user.account.first_name
+    self['Last Name'] = user.account.last_name
     self['Country'] = [user.country.airtable_id] if user.country.present?
     self['Project Payment Method'] = user.project_payment_method
     self['Exceptional Project Payment Terms'] =
       user.exceptional_project_payment_terms
     self['Invoice Name'] = user.invoice_name
     self['Invoice Company Name'] = user.invoice_company_name
-    self['VAT Number'] = user.vat_number
+    self['VAT Number'] = user.account.vat_number
     self['Industry'] = [user.industry.try(:airtable_id)].compact
     self['Type of Company'] = user.company_type
 

@@ -24,7 +24,7 @@ as well as a link to its edit page.
   </h1>
 
   <div>
-    <%= link_to "Login as #{page.resource.first_name}", admin_login_as_path(uid: page.resource.uid), class:"button", target:"_blank"%>
+    <%= link_to "Login as #{page.resource.first_name}", admin_login_as_path(gid: page.resource.to_global_id.to_param), class:"button", target:"_blank"%>
     <%= link_to(
       t("administrate.actions.edit_resource", name: page.page_title),
       [:edit, namespace, page.resource],

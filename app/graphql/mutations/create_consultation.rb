@@ -16,7 +16,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   def resolve(**args)
     ActiveRecord::Base.transaction do
       consultation = create_consultation(**args)
-      { consultation: consultation }
+      {consultation: consultation}
     end
   end
 
@@ -63,7 +63,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
           return context[:current_user]
         end
 
-        user = User.find_by_email(args[:email])
+        user = Account.find_by(email: args[:email])&.user
 
         if user.present?
           update_existing_user(user, **args)
@@ -86,33 +86,32 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   end
 
   def create_new_user(**args)
-    specialist = Specialist.find_by_email(args[:email])
-    if specialist.present?
-      raise ApiError::InvalidRequest.new(
-              'emailBelongsToFreelancer',
-              'This email belongs to a freelancer account'
-            )
+    if Specialist.find_by(account: Account.find_by(email: args[:email]))
+      raise ApiError::InvalidRequest.new('emailBelongsToFreelancer', 'This email belongs to a freelancer account')
     end
 
-    user =
-      User.create(
-        first_name: args[:first_name],
-        last_name: args[:last_name],
-        email: args[:email],
-        company_name: args[:company],
-        campaign_source: args[:utm_source],
-        campaign_name: args[:utm_campaign],
-        campaign_medium: args[:utm_medium],
-        gclid: args[:gclid]
-      )
+    account = Account.new(
+      first_name: args[:first_name],
+      last_name: args[:last_name],
+      email: args[:email]
+    )
 
-    domain = user.email.split('@').last
+    user = User.create(
+      account: account,
+      company_name: args[:company],
+      campaign_source: args[:utm_source],
+      campaign_name: args[:utm_campaign],
+      campaign_medium: args[:utm_medium],
+      gclid: args[:gclid]
+    )
+
+    domain = user.account.email.split('@').last
     client = Client.create(name: args[:company], domain: domain)
     client.users << user
     user.sync_to_airtable
     # Currently we dont have a relationship between clients and client
     # contacts so we set the 'Client Contacts' column while calling sync.
-    client.sync_to_airtable({ 'Client Contacts' => [user.airtable_id].compact })
+    client.sync_to_airtable({'Client Contacts' => [user.airtable_id].compact})
 
     user
   end

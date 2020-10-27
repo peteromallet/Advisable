@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Types::SpecialistType do
   let(:specialist) { create(:specialist) }
-  let(:context) { { current_user: specialist } }
+  let(:context) { {current_user: specialist} }
   let(:response) { AdvisableSchema.execute(query, context: context) }
 
   describe 'applications field' do
@@ -42,18 +42,18 @@ RSpec.describe Types::SpecialistType do
 
     it 'excludes the applications where project sales_status is Lost' do
       applications = response['data']['specialist']['applications']
-      expect(applications).to_not include({ 'id' => application2.uid })
+      expect(applications).to_not include({'id' => application2.uid})
     end
 
     it 'can filter by status' do
       applications = response['data']['specialist']['applications']
-      expect(applications).to include({ 'id' => application1.uid })
-      expect(applications).to include({ 'id' => application3.uid })
-      expect(applications).to_not include({ 'id' => application4.uid })
+      expect(applications).to include({'id' => application1.uid})
+      expect(applications).to include({'id' => application3.uid})
+      expect(applications).to_not include({'id' => application4.uid})
     end
 
     context 'when logged in as another specialist' do
-      let(:context) { { current_user: create(:specialist) } }
+      let(:context) { {current_user: create(:specialist)} }
 
       it 'prevents access' do
         error = response['errors'][0][:code]
@@ -63,7 +63,7 @@ RSpec.describe Types::SpecialistType do
     end
 
     context 'when logged in as a user' do
-      let(:context) { { current_user: project.user } }
+      let(:context) { {current_user: project.user} }
 
       it 'prevents access' do
         error = response['errors'][0][:code]
@@ -73,7 +73,7 @@ RSpec.describe Types::SpecialistType do
     end
 
     context 'when logged in as an admin' do
-      let(:context) { { current_user: create(:user, permissions: %w[admin]) } }
+      let(:context) { {current_user: create(:user, account: create(:account, permissions: %w[admin]))} }
 
       it 'allows access' do
         applications = response['data']['specialist']['applications']

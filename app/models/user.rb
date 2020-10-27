@@ -60,16 +60,12 @@ class User < ApplicationRecord
                remind: 'Requested Reminder'
              }
 
-  def name
-    "#{first_name} #{last_name}"
-  end
-
   def invoice_settings
     {
       name: invoice_name,
       company_name: invoice_company_name,
       billing_email: billing_email,
-      vat_number: vat_number,
+      vat_number: account.vat_number,
       address: address
     }
   end
@@ -78,7 +74,7 @@ class User < ApplicationRecord
     return self[:stripe_customer_id] if self[:stripe_customer_id]
     customer =
       Stripe::Customer.create(
-        {email: email, name: company_name, metadata: {user_id: uid}}
+        {email: account.email, name: company_name, metadata: {user_id: uid}}
       )
     update_columns(stripe_customer_id: customer.id)
     customer.id

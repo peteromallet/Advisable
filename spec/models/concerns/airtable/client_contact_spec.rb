@@ -1,14 +1,17 @@
 require "rails_helper"
 
 RSpec.describe Airtable::ClientContact do
-  include_examples "sync airtable column", "First Name", to: :first_name, with_email: true
-  include_examples "sync airtable column", "Last Name", to: :last_name, with_email: true
-  include_examples "sync airtable column", "Title", to: :title, with_email: true
+  include_examples "sync airtable column", "Title", to: :title
 
-  include_examples "sync airtable column", "Email Address", {
-    to: :email,
-    with: "test@test.com"
-  }
+  include_examples("sync airtable columns to association", {
+    association: :account,
+    columns: [
+      {from: "Email Address", to: :email, with: "test@test.com"},
+      {from: "First Name", to: :first_name, with: "John"},
+      {from: "Last Name", to: :last_name, with: "Snow"},
+      {from: "VAT Number", to: :vat_number, with: "BeyondTheWall123"}
+    ]
+  })
 
   describe "sync_data" do
     context "when the associated client has been synced" do
@@ -36,19 +39,19 @@ RSpec.describe Airtable::ClientContact do
     it "syncs the email" do
       expect { airtable.push(user) }.to change {
         airtable.fields['Email Address']
-      }.from(nil).to(user.email)
+      }.from(nil).to(user.account.email)
     end
 
     it "syncs the first_name" do
       expect { airtable.push(user) }.to change {
         airtable.fields['First Name']
-      }.from(nil).to(user.first_name)
+      }.from(nil).to(user.account.first_name)
     end
 
     it "syncs the last_name" do
       expect { airtable.push(user) }.to change {
         airtable.fields['Last Name']
-      }.from(nil).to(user.last_name)
+      }.from(nil).to(user.account.last_name)
     end
 
     it "syncs the country" do

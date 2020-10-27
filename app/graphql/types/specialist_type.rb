@@ -35,8 +35,16 @@ class Types::SpecialistType < Types::BaseType
     description 'The specialists first name'
   end
 
+  def first_name
+    object.account.first_name
+  end
+
   field :last_name, String, null: true do
     description 'The specialists last name'
+  end
+
+  def last_name
+    object.account.last_name
   end
 
   field :name, String, null: true do
@@ -44,7 +52,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   def name
-    "#{object.first_name} #{object.last_name}"
+    object.account.name
   end
 
   field :city, String, null: true do
@@ -60,6 +68,10 @@ class Types::SpecialistType < Types::BaseType
 
   field :confirmed, Boolean, null: false do
     description 'Wether or not the specialists account has been confirmed'
+  end
+
+  def confirmed
+    object.account.confirmed_at.present?
   end
 
   field :travel_availability, String, null: true do
@@ -256,8 +268,9 @@ class Types::SpecialistType < Types::BaseType
     description 'Wether or not the specialist has created their account yet'
   end
 
+  # TODO: AccountMigration - Rename for consistency
   def has_account
-    object.has_account?
+    object.account.has_password?
   end
 
   field :completed_tutorials, [String], null: false do
@@ -299,6 +312,10 @@ class Types::SpecialistType < Types::BaseType
   field :email, String, null: true do
     authorize :is_admin, :is_specialist, :is_applicant_of_user_project
     description 'The specialists email address'
+  end
+
+  def email
+    object.account.email
   end
 
   field :talk_signature, String, null: false do
@@ -355,6 +372,10 @@ class Types::SpecialistType < Types::BaseType
     description <<~HEREDOC
       The specialists VAT number
     HEREDOC
+  end
+
+  def vat_number
+    object.account.vat_number
   end
 
   field :primarily_freelance, Boolean, null: true do

@@ -4,7 +4,17 @@ class Types::ClientApplicationType < Types::BaseType
   field :id, ID, null: false
   field :status, String, null: true
   field :first_name, String, null: false
+
+  def first_name
+    object.account.first_name
+  end
+
   field :last_name, String, null: true
+
+  def last_name
+    object.account.last_name
+  end
+
   field :company_name, String, null: true
   field :industry, Types::IndustryType, null: true
   field :budget, Int, null: true

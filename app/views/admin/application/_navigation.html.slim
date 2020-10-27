@@ -6,6 +6,6 @@ nav.navigation role="navigation"
       = button_to "Resync Airtable", admin_resync_path, method: :post
     div style=("margin-bottom: 20px;")
       = button_to "Reset test data", admin_reset_test_path, method: :post
-  - if current_user&.account.respond_to?(:auth_providers) && !current_user.account.auth_providers.linkedin_ads.exists?
+  - if current_account && current_account.respond_to?(:auth_providers) && !current_account.auth_providers.linkedin_ads.exists?
     div style=("margin-top: 50px; margin-bottom: 20px;")
       = button_to "Set Up LinkedIn Ads", "/auth/linkedin_ads", id: "sign_in", method: :post

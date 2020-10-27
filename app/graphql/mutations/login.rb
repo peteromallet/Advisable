@@ -7,12 +7,12 @@ class Mutations::Login < Mutations::BaseMutation
   field :viewer, Types::ViewerUnion, null: true
 
   def resolve(email:, password:)
-    account = SpecialistOrUser.find_by_email(email.downcase)
-    no_account_error unless account&.has_account?
+    account = Account.find_by(email: email)
+    no_account_error unless account&.has_password?
     invalid_credentials unless account.authenticate(password)
     login_as(account)
-    context[:current_user] = account
-    {viewer: account}
+    context[:current_user] = account.specialist_or_user
+    {viewer: account.specialist_or_user}
   end
 
   private

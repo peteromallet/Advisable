@@ -87,11 +87,11 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
       # Currently we dont have a relationship between clients and client
       # contacts so we set the 'Client Contacts' column while calling sync.
       client.sync_to_airtable(
-        { 'Client Contacts' => [user.airtable_id].compact }
+        {'Client Contacts' => [user.airtable_id].compact}
       )
       project.sync_to_airtable
       project.applications.each(&:sync_to_airtable)
-      return { project: project }
+      return {project: project}
     end
   end
 
@@ -114,31 +114,25 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
             )
     end
 
-    user =
-      User.new(
-        email: email,
-        company_type: company_type,
-        campaign_name: campaign_name,
-        campaign_source: campaign_source,
-        pid: pid,
-        rid: rid,
-        gclid: gclid
-      )
+    account = Account.new(email: email)
+    user = User.new(
+      account: account,
+      company_type: company_type,
+      campaign_name: campaign_name,
+      campaign_source: campaign_source,
+      pid: pid,
+      rid: rid,
+      gclid: gclid
+    )
 
     user.industry = Industry.find_by_name!(industry) if industry
 
-    unless user.valid?
-      if user.errors.added?(:email, :taken)
-        raise ApiError::InvalidRequest.new(
-                'emailTaken',
-                "The email #{email} is already used by another account"
-              )
+    if !account.valid? || !user.valid?
+      if account.errors.added?(:email, "has already been taken")
+        raise ApiError::InvalidRequest.new("emailTaken", "The email #{email} is already used by another account")
       end
 
-      raise ApiError::InvalidRequest.new(
-              'resourceInvalid',
-              user.errors.full_messages.first
-            )
+      raise ApiError::InvalidRequest.new('resourceInvalid', user.errors.full_messages.first)
     end
 
     user.save
@@ -146,7 +140,7 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
   end
 
   def create_client(user:)
-    domain = user.email.split('@').last
+    domain = user.account.email.split('@').last
     client = Client.new(domain: domain)
 
     unless client.valid?

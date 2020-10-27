@@ -16,22 +16,21 @@ module Tutorials
   end
 
   included do
-    validate :valid_tutorials
+    validate :valid_tutorials, if: :account
 
     def completed_tutorials=(tutorials)
-      self[:completed_tutorials] = tutorials.reject(&:empty?)
+      account[:completed_tutorials] = tutorials.reject(&:empty?)
     end
 
     # returns the array of completed tutorials
     def completed_tutorials
-      self[:completed_tutorials] || []
+      account[:completed_tutorials] || []
     end
 
     # Adds a given tutorial to the completed_tutorials array
     def complete_tutorial(tutorial)
       return true if completed_tutorials.include?(tutorial)
-      self.completed_tutorials = completed_tutorials + [tutorial]
-      save
+      account.update(completed_tutorials: completed_tutorials + [tutorial])
     end
 
     def has_completed_tutorial?(tutorial)

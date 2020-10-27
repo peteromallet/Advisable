@@ -16,9 +16,7 @@ class BaseField < GraphQL::Schema::Field
     super
     return true unless authorize_methods
     policy = policy(context[:current_user], object)
-    truthy =
-      authorize_methods.filter { |auth_method| policy.send("#{auth_method}") }
-    truthy.any?
+    authorize_methods.any? { |auth_method| policy.public_send("#{auth_method}") }
   end
 
   def policy(user, record)

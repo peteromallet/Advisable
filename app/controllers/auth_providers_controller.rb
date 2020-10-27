@@ -25,7 +25,7 @@ class AuthProvidersController < ApplicationController
   end
 
   def linkedin_ads
-    auth_provider = current_user.account.auth_providers.find_or_initialize_by(provider: 'linkedin_ads')
+    auth_provider = current_account.auth_providers.find_or_initialize_by(provider: 'linkedin_ads')
     auth_provider.update!(oauth.identifiers_with_blob_and_token)
 
     redirect_to admin_applications_path

@@ -169,12 +169,12 @@ class Types::ProjectType < Types::BaseType
 
   def viewer_can_access
     unless current_user.present?
-      if object.user.has_account?
+      if object.user.account.has_password?
         ApiError.not_authenticated
       else
         ApiError.invalid_request(code: "SIGNUP_REQUIRED", message: "Signup is required", extensions: {
           url: "/signup/#{object.user.uid}",
-          email: object.user.email
+          email: object.user.account.email
         })
       end
     end

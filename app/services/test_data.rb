@@ -5,12 +5,15 @@ class TestData
   end
 
   def self.create_specialist(attrs = {})
+    account = Account.find_or_create_by(email: attrs.fetch(:email)) do |a|
+      a.first_name = attrs.fetch(:first_name)
+      a.last_name = attrs.fetch(:last_name)
+      a.password = 'testing123'
+      a.confirmed_at = 1.hour.ago
+    end
+
     specialist =
-      Specialist.find_or_create_by(email: attrs.fetch(:email)) do |s|
-        s.first_name = attrs.fetch(:first_name)
-        s.last_name = attrs.fetch(:last_name)
-        s.password = 'testing123'
-        s.confirmed_at = 1.hour.ago
+      Specialist.find_or_create_by(account: account) do |s|
         s.bio = attrs.fetch(:bio)
         s.country = Country.find_or_create_by(name: 'United States')
         s.city = 'Scranton'
@@ -136,7 +139,7 @@ class TestData
         status: 'Proposed',
         proposal_sent_at: 1.day.ago,
         proposal_comment:
-          "Hey #{project.user.first_name}!\n\n Was nice chatting with you. #{
+          "Hey #{project.user.account.first_name}!\n\n Was nice chatting with you. #{
             Faker::Hipster.sentence(word_count: 24)
           }\n\n#{Faker::Hipster.sentence(word_count: 12)}",
         project_type: 'Fixed'
@@ -186,21 +189,23 @@ class TestData
       )
 
     industry = Industry.find_by_name('Office Supplies')
+    account = Account.find_or_create_by(email: 'staging+michael@advisable.com') do |a|
+      a.first_name = 'Michael'
+      a.last_name = 'Scott'
+      a.password = 'testing123'
+      a.confirmed_at = 1.day.ago
+    end
 
-    user =
-      User.find_or_create_by(email: 'staging+michael@advisable.com') do |u|
-        u.first_name = 'Michael'
-        u.last_name = 'Scott'
-        u.company_name = 'Dunder Mifflin'
-        u.password = 'testing123'
-        u.confirmed_at = 1.day.ago
-        u.company_type = 'Startup'
-        u.industry = industry
-        u.sales_person = sales_person
-        u.address = {city: 'Dublin', country: 'IE'}
-      end
+    user = User.find_or_create_by(account: account) do |u|
+      u.company_name = 'Dunder Mifflin'
+      u.company_type = 'Startup'
+      u.industry = industry
+      u.sales_person = sales_person
+      u.address = {city: 'Dublin', country: 'IE'}
+    end
 
-    user.update(availability: [], completed_tutorials: [])
+    user.update(availability: [])
+    account.update(completed_tutorials: [])
 
     client =
       Client.find_or_create_by(name: 'Dunder Mifflin') do |c|

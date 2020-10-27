@@ -1,5 +1,5 @@
 <p>
-  Hi <%= @interview.user.first_name %>,
+  Hi <%= @interview.user.account.first_name %>,
 </p>
 <p>
   Unfortunately, <%= @interview.specialist.first_name %> needs to reschedule your interview for <%= time_in_zone(@interview.starts_at, @interview.user.time_zone) %>  and none of your existing availability works for them.

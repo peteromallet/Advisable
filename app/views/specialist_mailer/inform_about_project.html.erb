@@ -140,7 +140,7 @@
                                   <td align="center" valign="top" class="button-2"
                                     style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #142b4e;font-size: 12px;font-weight: 700;border: 1px solid #142b4e;border-radius: 5px;display: block;padding: 10px;">
                                     <a clicktracking="off"
-                                      href="<%= @project.client_referral_url %>&rid=<%= @specialist.uid %>&referrer_firstname=<%= @specialist.first_name %>&referrer_lastname=<%= @specialist.last_name %>"
+                                      href="<%= @project.client_referral_url %>&rid=<%= @specialist.uid %>&referrer_firstname=<%= @specialist.account.first_name %>&referrer_lastname=<%= @specialist.account.last_name %>"
                                       target="_blank"
                                       style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #142b4e;text-decoration: none;display: block;">Get
                                       a Shareable Link</a>

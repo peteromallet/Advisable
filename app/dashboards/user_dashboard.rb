@@ -10,14 +10,10 @@ class UserDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     airtable_id: Field::String,
-    first_name: Field::String,
-    last_name: Field::String,
-    email: Field::String,
+    account: Field::BelongsTo.with_options(searchable: false),
     country: Field::BelongsTo,
     projects: Field::HasMany,
     bank_transfers_enabled: Field::Boolean,
-    permissions: PermissionsField,
-    completed_tutorials: UserTutorialsField,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze
@@ -27,20 +23,16 @@ class UserDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = %i[first_name last_name email created_at].freeze
+  COLLECTION_ATTRIBUTES = %i[account airtable_id].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
+    account
     airtable_id
-    first_name
-    last_name
-    email
     country
     bank_transfers_enabled
-    permissions
-    completed_tutorials
     projects
     created_at
     updated_at
@@ -50,19 +42,16 @@ class UserDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    first_name
-    last_name
-    email
+    account
+    airtable_id
     country
-    permissions
-    completed_tutorials
     bank_transfers_enabled
   ].freeze
 
-  # Overwrite this method to customize how clients are displayed
+  # Overwrite this method to customize how users are displayed
   # across all pages of the admin dashboard.
   #
-  def display_resource(client)
-    client.name
+  def display_resource(user)
+    user.account.name
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe "Creating a freelancer account" do
     allow(Airtable::Specialist).to receive(:find).and_return(airtable)
     allow(airtable).to receive(:push)
 
-    specialist = create(:specialist, password: nil, confirmed_at: nil)
+    specialist = create(:specialist, account: create(:account, password: nil, confirmed_at: nil))
     visit "/signup/#{specialist.airtable_id}"
     fill_in "email", with: "#{Time.now.to_i}@test.com"
     fill_in "password", with: "testing123"

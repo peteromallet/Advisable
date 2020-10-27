@@ -15,6 +15,7 @@ class GraphqlController < ApplicationController
       oauth_viewer:
         session[:omniauth] ? OauthViewer.new(session[:omniauth]) : nil
     }
+
     result =
       AdvisableSchema.execute(
         query,

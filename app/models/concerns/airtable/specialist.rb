@@ -5,9 +5,12 @@ class Airtable::Specialist < Airtable::Base
 
   # Tells which active record model to sync data with.
   sync_with ::Specialist
-  sync_column 'Email Address', to: :email
-  sync_column 'First Name', to: :first_name
-  sync_column 'Last Name', to: :last_name
+
+  sync_column_to_association 'Email Address', association: :account, to: :email
+  sync_column_to_association 'First Name', association: :account, to: :first_name
+  sync_column_to_association 'Last Name', association: :account, to: :last_name
+  sync_column_to_association 'VAT Number', association: :account, to: :vat_number
+
   sync_column 'Phone Number', to: :phone
   sync_column 'Can Travel', to: :travel_availability
   sync_column 'City', to: :city
@@ -16,7 +19,6 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'Application Stage', to: :application_stage
   sync_column 'Bank Holder Name', to: :bank_holder_name
   sync_column 'Bank Currency', to: :bank_currency
-  sync_column 'VAT Number', to: :vat_number
   sync_column 'Estimated Number of Freelance Projects', to: :number_of_projects
   sync_column 'PID', to: :pid
   sync_column 'Campaign Name', to: :campaign_name
@@ -28,9 +30,10 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'Community Score', to: :community_score
 
   sync_data do |specialist|
+    specialist.ensure_account_exists
+
     if self['Bank Holder Address']
       # sync the bank holder address
-
       specialist.bank_holder_address =
         Address.parse(self['Bank Holder Address']).to_h
     end
@@ -75,7 +78,7 @@ class Airtable::Specialist < Airtable::Base
     specialist.remote = true if fields['Remote OK'].try(:include?, 'Yes')
     specialist.remote = false if fields['Remote OK'].try(:include?, 'No')
     if fields['Test Account'].try(:include?, 'Yes')
-      specialist.test_account = true
+      specialist.account.test_account = true
     end
     specialist.referrer = self['Referrer'].try(:first)
 
@@ -102,17 +105,17 @@ class Airtable::Specialist < Airtable::Base
   # Describes how data should be synced to airtable.
   push_data do |specialist|
     self['Biography'] = specialist.bio
-    self['Email Address'] = specialist.email
-    self['First Name'] = specialist.first_name
-    self['Last Name'] = specialist.last_name
+    self['Email Address'] = specialist.account.email
+    self['First Name'] = specialist.account.first_name
+    self['Last Name'] = specialist.account.last_name
     self['Specialist Skills'] = specialist.skills.map(&:airtable_id).uniq
     self['City'] = specialist.city
-    self['Account Created'] = specialist.has_account? ? 'Yes' : nil
+    self['Account Created'] = specialist.account.has_password? ? 'Yes' : nil
     self['Country'] = [specialist.country.try(:airtable_id)].compact
     self['Phone Number'] = specialist.phone
     self['Bank Holder Name'] = specialist.bank_holder_name
     self['Bank Currency'] = specialist.bank_currency
-    self['VAT Number'] = specialist.vat_number
+    self['VAT Number'] = specialist.account.vat_number
     self['Estimated Number of Freelance Projects'] =
       specialist.number_of_projects
     self['Application Stage'] = specialist.application_stage

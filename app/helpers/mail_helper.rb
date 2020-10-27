@@ -2,7 +2,7 @@ module MailHelper
   include MagicLinkHelper
 
   def specialist_unsubscribe_url(specialist)
-    "#{root_host}/unsubscribe?Specialist%20ID=#{specialist.uid}&field66878840=#{specialist.email}"
+    "#{root_host}/unsubscribe?Specialist%20ID=#{specialist.uid}&field66878840=#{specialist.account.email}"
   end
 
   def specialist_update_skills_url(specialist)
