@@ -17,7 +17,7 @@ RSpec.describe 'project root query' do
 
   context 'when a user is logged in' do
     it 'returns the project' do
-      response = AdvisableSchema.execute(query, context: { current_user: user })
+      response = AdvisableSchema.execute(query, context: {current_user: user})
       expect(response['data']['project']['airtableId']).to eq(
         project.airtable_id
       )
@@ -29,7 +29,7 @@ RSpec.describe 'project root query' do
         response =
           AdvisableSchema.execute(
             query,
-            context: { current_user: another_user }
+            context: {current_user: another_user}
           )
         expect(response['data']['project']['viewerCanAccess']).to be_falsey
       end
@@ -40,18 +40,17 @@ RSpec.describe 'project root query' do
     context 'and the project user has an account' do
       it "returns 'authenticationRequired' error" do
         response =
-          AdvisableSchema.execute(query, context: { current_user: nil })
+          AdvisableSchema.execute(query, context: {current_user: nil})
         error = response['errors'].first
         expect(error['extensions']['code']).to eq('notAuthenticated')
       end
     end
 
     context 'and the project user does not have an account' do
-      let(:user) { create(:user, password: nil) }
+      let(:user) { create(:user, account: create(:account, password: nil)) }
 
       it "returns 'authenticationRequired' error" do
-        response =
-          AdvisableSchema.execute(query, context: { current_user: nil })
+        response = AdvisableSchema.execute(query, context: {current_user: nil})
         error = response['errors'].first
         expect(error['extensions']['code']).to eq('SIGNUP_REQUIRED')
       end

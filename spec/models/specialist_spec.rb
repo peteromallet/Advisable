@@ -6,13 +6,6 @@ RSpec.describe Specialist do
   it { should have_many(:applications) }
   it { should have_many(:skills).through(:specialist_skills) }
 
-  describe "#name" do
-    it "outputs the full name" do
-      specialist = Specialist.new(first_name: "Tom", last_name: "Cullen")
-      expect(specialist.name).to eq("Tom Cullen")
-    end
-  end
-
   describe "#has_setup_payments" do
     it 'returns false if there is no bank_holder_name' do
       specialist = build(:specialist, bank_holder_name: nil)

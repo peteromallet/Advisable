@@ -1,8 +1,11 @@
 class Account < ApplicationRecord
   include Uid
+  include Permissions
 
   IGNORED_COLUMNS_FOR_COPYING = ["id", "uid", "updated_at", "created_at"].freeze
-  COPYABLE_COLUMNS = column_names - IGNORED_COLUMNS_FOR_COPYING
+  MIGRATED_COLUMNS = %w[
+    email password_digest remember_token confirmed_at confirmation_digest confirmation_token reset_digest reset_sent_at test_account vat_number permissions completed_tutorials first_name last_name
+  ].freeze
 
   has_one :user, dependent: :nullify # Change to :destroy
   has_one :specialist, dependent: :nullify # Change to :destroy
@@ -13,7 +16,15 @@ class Account < ApplicationRecord
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
   validates :email, uniqueness: true, presence: true, format: {with: /@/}
 
-  def has_account?
+  def specialist_or_user
+    specialist || user
+  end
+
+  def name
+    "#{first_name} #{last_name}"
+  end
+
+  def has_password?
     password_digest.present?
   end
 
@@ -32,7 +43,6 @@ class Account < ApplicationRecord
     end
   end
 
-  # TODO: Look into this method
   def create_confirmation_token
     token = Token.new
     self.confirmation_digest = Token.digest(token)
@@ -41,6 +51,21 @@ class Account < ApplicationRecord
     self.confirmation_token = token
     save(validate: false)
     token
+  end
+
+  # TODO: AccountMigration - log usage and remove all usages until this can be deleted
+  def method_missing(method, *args, **options, &block)
+    Raven.capture_message("Method #{method} called on Account that was meant for Specialist or User", backtrace: caller, level: 'debug')
+
+    if options.present?
+      specialist_or_user.public_send(method, *args, **options, &block)
+    else
+      specialist_or_user.public_send(method, *args, &block)
+    end
+  end
+
+  def respond_to_missing?(method, *args, **options)
+    specialist_or_user.respond_to?(method)
   end
 end
 

@@ -31,9 +31,9 @@ RSpec.describe Mutations::Signup do
   it 'creates a new user' do
     expect { AdvisableSchema.execute(query) }.to change { User.count }.by(1)
     user = User.last
-    expect(user.first_name).to eq(first_name)
-    expect(user.last_name).to eq(last_name)
-    expect(user.email).to eq(email)
+    expect(user.account.first_name).to eq(first_name)
+    expect(user.account.last_name).to eq(last_name)
+    expect(user.account.email).to eq(email)
     expect(user.application_status).to eq(:started)
   end
 
@@ -41,10 +41,7 @@ RSpec.describe Mutations::Signup do
     it 'returns an error' do
       create(
         :user,
-        email: email,
-        first_name: 'Michael',
-        last_name: 'Scott',
-        password: 'testing123'
+        account: create(:account, email: email, password: 'testing123', first_name: 'Michael', last_name: 'Scott')
       )
       response = AdvisableSchema.execute(query)
       error = response['errors'][0]['extensions']['code']
@@ -54,7 +51,7 @@ RSpec.describe Mutations::Signup do
 
   context 'when a specialist account exists with that email' do
     it 'returns an error' do
-      create(:specialist, email: email)
+      create(:specialist, account: create(:account, email: email))
       response = AdvisableSchema.execute(query)
       error = response['errors'][0]['extensions']['code']
       expect(error).to eq('existingAccount')
@@ -78,15 +75,12 @@ RSpec.describe Mutations::Signup do
         user =
           create(
             :user,
-            email: email,
-            password: nil,
-            first_name: 'Michael',
-            last_name: 'Scott',
+            account: create(:account, email: email, password: nil, first_name: 'Michael', last_name: 'Scott'),
             application_status: :started
           )
         expect { AdvisableSchema.execute(query) }.not_to change { User.count }
-        expect(user.reload.first_name).to eq(first_name)
-        expect(user.reload.last_name).to eq(last_name)
+        expect(user.account.reload.first_name).to eq(first_name)
+        expect(user.account.reload.last_name).to eq(last_name)
       end
     end
 
@@ -95,15 +89,12 @@ RSpec.describe Mutations::Signup do
         user =
           create(
             :user,
-            email: email,
-            password: nil,
-            first_name: 'Michael',
-            last_name: 'Scott',
+            account: create(:account, email: email, password: nil, first_name: 'Michael', last_name: 'Scott'),
             application_status: :accepted
           )
         expect { AdvisableSchema.execute(query) }.not_to change { User.count }
-        expect(user.reload.first_name).not_to eq(first_name)
-        expect(user.reload.last_name).not_to eq(last_name)
+        expect(user.account.reload.first_name).not_to eq(first_name)
+        expect(user.account.reload.last_name).not_to eq(last_name)
         expect(user.reload.application_status).not_to eq(:started)
       end
     end

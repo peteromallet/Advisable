@@ -21,13 +21,13 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
       user.invoice_name = args[:invoice_settings][:name]
       user.invoice_company_name = args[:invoice_settings][:company_name]
       user.billing_email = args[:invoice_settings][:billing_email]
-      user.vat_number = args[:invoice_settings][:vat_number]
+      user.account.vat_number = args[:invoice_settings][:vat_number]
       user.address = args[:invoice_settings][:address].try(:to_h)
 
       Stripe::Customer.update(
         user.stripe_customer_id, {
           name: user.invoice_company_name,
-          email: user.email
+          email: user.account.email
         }
       )
     end
@@ -36,7 +36,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
       user.accepted_project_payment_terms_at = Time.zone.now
     end
 
-    store_vat_number(user) if user.vat_number_changed?
+    store_vat_number(user) if user.account.vat_number_changed?
 
     user.update_payments_setup
     user.save_and_sync!
@@ -46,14 +46,14 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
   private
 
   def store_vat_number(user)
-    return unless user.vat_number.present?
+    return if user.account.vat_number.blank?
     Stripe::Customer.create_tax_id(
       user.stripe_customer_id,
       {
         type: "eu_vat",
-        value: user.vat_number
+        value: user.account.vat_number
       }, {
-        idempotency_key: "#{user.uid}-#{user.vat_number}"
+        idempotency_key: "#{user.uid}-#{user.account.vat_number}"
       }
     )
   rescue Stripe::InvalidRequestError

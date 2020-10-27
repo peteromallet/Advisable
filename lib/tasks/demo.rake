@@ -6,12 +6,12 @@ namespace :demo do
     1_000.times do |i|
       puts "CREATING SPECIALIST #{i}"
       country = Country.find_or_create_by(name: 'United States')
-
+      account = Account.create(email: Faker::Internet.email)
       specialist =
         Specialist.create(
+          account: account,
           first_name: Faker::Name.first_name,
           last_name: Faker::Name.last_name,
-          email: Faker::Internet.email,
           city: Faker::Address.city,
           country: country,
           hourly_rate: 100,
@@ -48,13 +48,13 @@ namespace :demo do
 
       # Create on platform projects
       5.times do |p|
-        user =
-          User.create(
-            first_name: Faker::Name.first_name,
-            last_name: Faker::Name.last_name,
-            email: Faker::Internet.email,
-            company_name: Faker::Company.name
-          )
+        account = Account.create(email: Faker::Internet.email)
+        user = User.create(
+          account: account,
+          first_name: Faker::Name.first_name,
+          last_name: Faker::Name.last_name,
+          company_name: Faker::Company.name
+        )
 
         industry = industries.sample
         skill = skills.sample

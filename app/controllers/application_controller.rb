@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_sentry_context
   before_action :authenticate_with_magic_link, only: :frontend
-  helper_method :user_logged_in?, :current_user
 
   def frontend
     respond_to(&:html)
@@ -15,9 +14,8 @@ class ApplicationController < ActionController::Base
   end
 
   def internal
-    unless current_user&.has_permission?("admin")
-      redirect_to "/"
-    end
+    return if current_account&.has_permission?("admin")
+    redirect_to "/"
   end
 
   def client_ip
@@ -29,8 +27,8 @@ class ApplicationController < ActionController::Base
     if current_user.present?
       Raven.user_context(
         id: current_user.id,
-        email: current_user.email,
-        username: current_user.name
+        email: current_user.account.email,
+        username: current_user.account.name
       )
     else
       Raven.user_context(nil)

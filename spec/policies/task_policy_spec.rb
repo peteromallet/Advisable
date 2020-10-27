@@ -6,7 +6,7 @@ RSpec.describe TaskPolicy do
   describe '#update_due_date' do
     it 'returns true if the user is an admin' do
       user = task.application.project.user
-      user.update(permissions: ["admin"])
+      user.account.update(permissions: ["admin"])
       policy = TaskPolicy.new(user, task)
       expect(policy.update_due_date).to be_truthy
     end
@@ -57,7 +57,7 @@ RSpec.describe TaskPolicy do
   describe '#update_estimate' do
     it 'returns true if the user is an admin' do
       user = task.application.project.user
-      user.update(permissions: ["admin"])
+      user.account.update(permissions: ["admin"])
       policy = TaskPolicy.new(user, task)
       expect(policy.update_estimate).to be_truthy
     end
@@ -138,7 +138,7 @@ RSpec.describe TaskPolicy do
     end
 
     it 'returns true for admins' do
-      policy = TaskPolicy.new(create(:user, permissions: ["admin"]), task)
+      policy = TaskPolicy.new(create(:user, account: create(:account, permissions: ["admin"])), task)
       expect(policy.set_repeating).to be_truthy
     end
   end

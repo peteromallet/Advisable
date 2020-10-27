@@ -11,10 +11,20 @@ class SessionManager
   end
 
   def current_user
-    @current_user ||=
+    @current_user ||= admin_override || current_account&.specialist_or_user
+  end
+
+  def current_account
+    @current_account ||=
       begin
         uid = session[:account_uid]
-        return SpecialistOrUser.find_by_uid(uid) if uid
+        if uid
+          if uid&.starts_with?('acc_')
+            return Account.find_by(uid: uid)
+          else
+            clear_browser_data
+          end
+        end
         restore_session
       end
   end
@@ -22,31 +32,47 @@ class SessionManager
   def restore_session
     token = cookies.signed[:remember]
     return unless token
-    account = SpecialistOrUser.find_by_remember_token(token)
+    account = Account.find_by(remember_token: token)
     account ? start_session(account) : cookies.delete(:remember)
     account
   end
 
   def start_session(account)
-    @current_user = account
-    cookies.permanent[:uid] = account.uid
+    @current_account = account
     session[:account_uid] = account.uid
   end
 
   def login(account)
     account.generate_remember_token
-    cookies.signed[:remember] = {
-      value: account.remember_token, httponly: true, expires: 2.weeks.from_now
-    }
+    cookies.signed[:remember] = {value: account.remember_token, httponly: true, expires: 2.weeks.from_now}
 
     start_session(account)
   end
 
   def logout
-    current_user.clear_remember_token
-    cookies.delete(:uid)
+    if admin_override
+      session.delete(:admin_override)
+    else
+      current_account&.clear_remember_token
+      clear_browser_data
+      @current_account = nil
+    end
+  end
+
+  private
+
+  def admin_override
+    return unless current_account&.has_permission?("admin")
+
+    user = GlobalID::Locator.locate(session[:admin_override])
+    return user if user.respond_to?(:account)
+
+    session.delete(:admin_override)
+    nil
+  end
+
+  def clear_browser_data
     cookies.delete(:remember)
     session.delete(:account_uid)
-    @current_user = nil
   end
 end

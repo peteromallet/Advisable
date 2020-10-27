@@ -12,7 +12,7 @@ class AccountsController < ApplicationController
 
   def user
     user = User.find_or_create_by(account: account)
-    [:first_name, :last_name, :email, :airtable_id, :company_name].each do |key|
+    [:airtable_id, :company_name].each do |key|
       user.public_send("#{key}=", params[key].strip) if params[key].present?
     end
     user.save!
@@ -25,7 +25,7 @@ class AccountsController < ApplicationController
 
   def specialist
     specialist = Specialist.find_or_create_by(account: account)
-    [:first_name, :last_name, :email, :airtable_id, :application_stage].each do |key|
+    [:airtable_id, :application_stage].each do |key|
       specialist.public_send("#{key}=", params[key].strip) if params[key].present?
     end
     specialist.save!

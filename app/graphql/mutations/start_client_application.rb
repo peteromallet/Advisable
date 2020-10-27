@@ -8,39 +8,36 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
   def resolve(**args)
     email_blacklisted?(args[:email])
     check_existing_specialist_account(args[:email])
-    user =
-      User.find_or_initialize_by(email: args[:email]) do |u|
-        u.application_status = :started
+
+    ActiveRecord::Base.transaction do
+      account = Account.find_or_create_by(email: args[:email])
+      if account.has_password?
+        ApiError.invalid_request(code: 'existingAccount', message: 'An account already exists with this email')
       end
 
-    if user.has_account?
-      ApiError.invalid_request(
-        code: 'existingAccount',
-        message: 'An account already exists with this email'
-      )
-    end
+      user = User.find_or_create_by(account: account) { |u| u.application_status = :started }
 
-    if user.application_status == :started
-      user.first_name = args[:first_name]
-      user.last_name = args[:last_name]
-
-      if user.save
-        user.sync_to_airtable
-        create_client_record(user)
-        if context[:request]
-          GeocodeUserJob.perform_later(user.id, context[:client_ip])
+      if user.application_status == :started
+        account.first_name = args[:first_name]
+        account.last_name = args[:last_name]
+        if account.save && user.save
+          user.sync_to_airtable
+          create_client_record(user)
+          if context[:request]
+            GeocodeUserJob.perform_later(user.id, context[:client_ip])
+          end
         end
       end
-    end
 
-    {clientApplication: user}
+      {clientApplication: user}
+    end
   end
 
   private
 
   def create_client_record(user)
     return if user.client.present?
-    client = Client.create(domain: user.email.split('@').last)
+    client = Client.create(domain: user.account.email.split('@').last)
     client.users << user
     client.reload.sync_to_airtable
   end

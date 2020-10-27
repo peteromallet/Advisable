@@ -25,6 +25,9 @@ Style/RaiseArgs:
 Style/NumericLiterals:
   Enabled: false
 
+Style/Send:
+  Enabled: true
+
 Metrics/ClassLength:
   Enabled: false
 

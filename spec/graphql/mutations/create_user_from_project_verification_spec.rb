@@ -65,9 +65,8 @@ RSpec.describe Mutations::CreateUserFromProjectVerification do
 
   context 'when provided an email that is already taken' do
     it 'returns an error' do
-      create(:user, email: email)
-      response =
-        AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
+      create(:user, account: create(:account, email: email))
+      response = AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
       error = response['errors'].first['extensions']['code']
       expect(error).to eq('emailTaken')
     end

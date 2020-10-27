@@ -11,8 +11,8 @@ RSpec.describe User, type: :model do
 
   it "removes any availability in the past before saving" do
     user = create(:user)
-    a = 1.day.ago.change({ hour: 10, min: 0, sec: 0 })
-    b = 1.day.from_now.change({ hour: 10, min: 0, sec: 0 })
+    a = 1.day.ago.change({hour: 10, min: 0, sec: 0})
+    b = 1.day.from_now.change({hour: 10, min: 0, sec: 0})
     user.availability = [a, b]
     expect(user.availability).to include(a)
     user.save
@@ -20,20 +20,14 @@ RSpec.describe User, type: :model do
     expect(user.availability).to include(b)
   end
 
-  describe '#name' do
-    it 'returns the users full name' do
-      u = User.new(first_name: "Test", last_name: "Account")
-      expect(u.name).to eq("Test Account")
-    end
-  end
-
   describe '#invoice_settings' do
     it 'returns a hash of the users invoice settings' do
+      account = Account.new(email: "test@test.com", vat_number: "VAT")
       user = User.new({
+        account: account,
         invoice_name: "Test Account",
         invoice_company_name: "Test Inc",
         billing_email: "test@test.com",
-        vat_number: "VAT",
         address: {
           line1: "Test",
           line2: "Address",
@@ -48,7 +42,7 @@ RSpec.describe User, type: :model do
         name: user.invoice_name,
         company_name: user.invoice_company_name,
         billing_email: user.billing_email,
-        vat_number: user.vat_number,
+        vat_number: user.account.vat_number,
         address: user.address
       })
     end
@@ -69,7 +63,7 @@ RSpec.describe User, type: :model do
         customer = double(Stripe::Customer, id: "cus_123")
 
         expect(Stripe::Customer).to receive(:create).with({
-          email: user.email,
+          email: user.account.email,
           name: user.company_name,
           metadata: {
             user_id: user.uid,

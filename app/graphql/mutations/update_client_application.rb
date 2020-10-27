@@ -68,11 +68,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
   end
 
   def check_existing_account(email)
-    account = SpecialistOrUser.find_by_email(email)
-    return if account.nil?
-    ApiError.invalid_request(
-      code: 'existingAccount',
-      message: 'This email belongs to an existing account'
-    )
+    return if Account.where(email: email).none?
+    ApiError.invalid_request(code: 'existingAccount', message: 'This email belongs to an existing account')
   end
 end

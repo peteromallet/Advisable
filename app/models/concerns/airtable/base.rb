@@ -21,6 +21,10 @@ class Airtable::Base < Airrecord::Table
       @associations ||= {}
     end
 
+    def column_associations
+      @column_associations ||= {}
+    end
+
     # Sync can be called on any class that inherits from Airtable::Base
     # to sync all records from airtable.
     # We filter the query to only fetch records that have been modified within
@@ -64,6 +68,15 @@ class Airtable::Base < Airrecord::Table
       @associations[column] = options
     end
 
+    # sync_column_to_association allows us to define a mapping from an airtable column
+    # to a column on an associated ActiveRecord model.
+    # e.g. first_name from Specialist to Account
+    def sync_column_to_association(column, association:, to:)
+      @column_associations ||= {}
+      @column_associations[association] ||= {}
+      @column_associations[association][column] = to
+    end
+
     # sync_data allows us to sync data which might not fit into a direct mapping
     # with the airtable record. This can also be useful for setting relationships.
     # See how app/models/concerns/airtable/application.rb syncs the 'questions'
@@ -96,7 +109,16 @@ class Airtable::Base < Airrecord::Table
       record_type = self.class.sync_model.to_s.underscore
 
       self.class.columns_hash.each do |column, attr|
-        model.send("#{attr}=", self[column])
+        model.public_send("#{attr}=", self[column])
+      end
+
+      self.class.column_associations.each do |association, columns_hash|
+        model.public_send("create_#{association}") if model.public_send(association).blank?
+        association = model.public_send(association)
+        columns_hash.each do |column, attr|
+          association.public_send("#{attr}=", self[column])
+        end
+        association.save
       end
 
       self.class.associations.each do |column, options|
@@ -184,6 +206,6 @@ class Airtable::Base < Airrecord::Table
     # if there isn't a synced version of the association then sync it
     associate = airtable_class.find(id).sync if associate.nil?
     # assign the association
-    record.send("#{attribute}=", associate)
+    record.public_send("#{attribute}=", associate)
   end
 end

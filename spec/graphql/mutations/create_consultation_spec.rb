@@ -47,7 +47,7 @@ RSpec.describe Mutations::CreateConsultation do
         user: user, status: 'Request Started', specialist: specialist
       )
     end
-    let!(:user) { create(:user, email: email) }
+    let!(:user) { create(:user, account: create(:account, email: email)) }
 
     it 'does not create a new consultation record' do
       expect { AdvisableSchema.execute(query) }.not_to change {
@@ -57,7 +57,7 @@ RSpec.describe Mutations::CreateConsultation do
   end
 
   context 'when the user account already exists' do
-    let!(:user) { create(:user, email: email, company_name: 'Existing') }
+    let!(:user) { create(:user, company_name: 'Existing', account: create(:account, email: email)) }
 
     it 'doesnt create a new user record' do
       expect { AdvisableSchema.execute(query) }.not_to change { User.count }
@@ -66,8 +66,8 @@ RSpec.describe Mutations::CreateConsultation do
     it 'updates their company name' do
       expect { AdvisableSchema.execute(query) }.to change {
         user.reload.company_name
-      }.from('Existing')
-        .to(company)
+      }.from('Existing').
+        to(company)
     end
 
     it 'updates their associated client name' do
@@ -75,8 +75,8 @@ RSpec.describe Mutations::CreateConsultation do
       client.users << user
       expect { AdvisableSchema.execute(query) }.to change {
         user.reload.client.name
-      }.from('Existing')
-        .to(company)
+      }.from('Existing').
+        to(company)
     end
 
     it 'creates a client for the user if they dont have one' do
@@ -94,7 +94,7 @@ RSpec.describe Mutations::CreateConsultation do
   end
 
   context 'when a freelancers email is provided' do
-    let!(:specialist) { create(:specialist, email: email) }
+    let!(:specialist) { create(:specialist, account: create(:account, email: email)) }
 
     it 'raises an error' do
       response = AdvisableSchema.execute(query)

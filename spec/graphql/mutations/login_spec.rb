@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::Login do
-  let(:user) { create(:user, password: 'testing123') }
-  let(:email) { user.email }
+  let(:account) { create(:account, password: 'testing123') }
+  let(:user) { create(:user, account: account) }
+  let(:email) { user.account.email }
   let(:password) { 'testing123' }
   let(:session_manager) do
     SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new)
@@ -47,16 +48,16 @@ RSpec.describe Mutations::Login do
   it 'returns a viewer' do
     viewer = response['data']['login']['viewer']
     expect(viewer['id']).to eq(user.uid)
-    expect(viewer['email']).to eq(user.email)
+    expect(viewer['email']).to eq(user.account.email)
   end
 
   context 'when the user is a specialist' do
-    let(:user) { create(:specialist, password: 'testing123') }
+    let(:user) { create(:specialist, account: create(:account, password: 'testing123')) }
 
     it 'returns a specialist' do
       viewer = response['data']['login']['viewer']
       expect(viewer['id']).to eq(user.uid)
-      expect(viewer['email']).to eq(user.email)
+      expect(viewer['email']).to eq(user.account.email)
     end
   end
 
