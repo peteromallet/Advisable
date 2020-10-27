@@ -146,7 +146,7 @@ const updateState = flow([
 
 const calcLayout = (state) => {
   state = initLoopParams(state);
-  while (!state.success && state.cycle < 8) {
+  while (!state.success && state.cycle < 100) {
     state = updateState(state);
   }
   return state;
