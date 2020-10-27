@@ -9,7 +9,7 @@ function Wide({ specialist, isOwner }) {
   return (
     <Box display="flex">
       <Avatar avatar={specialist.avatar} isOwner={isOwner} />
-      <Box mt="20px" ml={[null, null, "22px", "30px"]} width="100%">
+      <Box pt="l" pl={[null, null, "l", "xl"]} width="100%">
         <Box display="flex">
           <NameLocation specialist={specialist} />
           <ButtonsBar isOwner={isOwner} specialist={specialist} />

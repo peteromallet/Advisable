@@ -12,7 +12,7 @@ function Compact({ specialist, isOwner }) {
         <Avatar avatar={specialist.avatar} isOwner={isOwner} />
         <ButtonsBar isOwner={isOwner} specialist={specialist} />
       </Box>
-      <Box mt="20px" ml={["10px", "22px", "22px", "30px"]} width="100%">
+      <Box pt="m" pl={["s", "l"]} width="100%">
         <NameLocation specialist={specialist} />
         <Biography bio={specialist.bio} />
       </Box>
