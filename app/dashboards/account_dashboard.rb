@@ -17,6 +17,8 @@ class AccountDashboard < Administrate::BaseDashboard
     vat_number: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    user: Field::BelongsTo,
+    specialist: Field::BelongsTo,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -37,6 +39,8 @@ class AccountDashboard < Administrate::BaseDashboard
     first_name
     last_name
     email
+    user
+    specialist
     permissions
     completed_tutorials
     vat_number
