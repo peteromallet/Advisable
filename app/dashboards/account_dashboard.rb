@@ -8,7 +8,6 @@ class AccountDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    country: Field::BelongsTo,
     id: Field::Number,
     first_name: Field::String,
     last_name: Field::String,
@@ -34,7 +33,6 @@ class AccountDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
-    country
     id
     first_name
     last_name
@@ -50,7 +48,6 @@ class AccountDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    country
     first_name
     last_name
     email
