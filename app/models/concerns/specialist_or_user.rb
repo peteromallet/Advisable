@@ -31,17 +31,23 @@ module SpecialistOrUser
   # TODO: AccountMigration - columns that we migrated to Account
   Account::MIGRATED_COLUMNS.each do |column|
     define_method(column) do
+      raise unless Rails.env.production?
+
       Raven.capture_message("Method #{column} called on #{self.class.name} that was meant for Account", backtrace: caller, level: 'debug')
       account&.public_send(column)
     end
 
     define_method("#{column}=") do |param|
+      raise unless Rails.env.production?
+
       Raven.capture_message("Method #{column}= called on #{self.class.name} that was meant for Account", backtrace: caller, level: 'debug')
       account&.public_send("#{column}=", param)
     end
   end
 
   def name
+    raise unless Rails.env.production?
+
     Raven.capture_message("Method called on #{self.class.name} that was meant for Account", backtrace: caller, level: 'debug')
     account.name
   end
