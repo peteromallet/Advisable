@@ -1,14 +1,16 @@
 import React from "react";
 import FileUpload from "../FileUpload";
-import { CoverImageWrapper, StyledCoverImage } from "./styles";
 import { useMutation } from "@apollo/client";
 import { useNotifications } from "src/components/Notifications";
 import useImageOnLoad from "src/hooks/useImageOnLoad";
 import { SET_COVER_PHOTO } from "../../queries";
+import defaultCoverPhoto from "./defaultCoverPhoto.png";
+import { CoverImageWrapper, StyledCoverImage } from "./styles";
 
 function CoverImage({ coverPhoto, isOwner }) {
   const [updatePicture] = useMutation(SET_COVER_PHOTO);
-  const { loaded, updated } = useImageOnLoad(coverPhoto);
+  const image = coverPhoto || defaultCoverPhoto;
+  const { loaded, updated } = useImageOnLoad(image);
 
   const notifications = useNotifications();
 
@@ -23,7 +25,7 @@ function CoverImage({ coverPhoto, isOwner }) {
   return (
     <CoverImageWrapper>
       {isOwner && <FileUpload onChange={submit} updated={updated} />}
-      {coverPhoto && <StyledCoverImage src={coverPhoto} loaded={loaded} />}
+      <StyledCoverImage src={image} loaded={loaded} />
     </CoverImageWrapper>
   );
 }
