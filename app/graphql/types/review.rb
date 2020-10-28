@@ -14,31 +14,41 @@ class Types::Review < Types::BaseType
   end
 
   def avatar
-    return nil unless object.project.try(:is_a?, PreviousProject)
+    return unless project.is_a?(PreviousProject)
 
-    if object.project.contact_image.attached?
-      (
-        Rails.application.routes.url_helpers.rails_blob_url(
-          object.project.contact_image,
-          host:
-            ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-        )
-      )
+    if project.contact_image.attached?
+      host = ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+      Rails.application.routes.url_helpers.rails_blob_url(project.contact_image, host: host)
     end
   end
 
   def name
-    return object.project.user.name if object.project.is_a?(Project)
-    object.project.try(:contact_name)
+    if project.is_a?(Project)
+      project.user.account.name
+    else
+      project.try(:contact_name)
+    end
   end
 
   def role
-    return object.project.user.title if object.project.is_a?(Project)
-    object.project.try(:contact_job_title)
+    if project.is_a?(Project)
+      project.user.title
+    else
+      project.try(:contact_job_title)
+    end
   end
 
   def company_name
-    return object.project.user.company_name if object.project.is_a?(Project)
-    object.project.try(:client_name)
+    if project.is_a?(Project)
+      project.user.company_name
+    else
+      project.try(:client_name)
+    end
+  end
+
+  private
+
+  def project
+    object.project
   end
 end
