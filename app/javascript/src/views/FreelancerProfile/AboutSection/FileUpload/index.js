@@ -42,13 +42,13 @@ const FileUploader = styled.div`
   align-items: center;
   justify-content: center;
   color: ${theme.colors.neutral700};
-  background: ${rgba(theme.colors.neutral100, 0.5)};
+  background: ${rgba(theme.colors.neutral200, 0.4)};
   transition: background 0.2s, color 0.2s, opacity 0.2s;
   opacity: 0;
 
   &:hover {
     color: ${theme.colors.neutral800};
-    background: ${rgba(theme.colors.neutral100, 0.7)};
+    background: ${rgba(theme.colors.neutral200, 0.7)};
   }
   ${Wrapper}:hover & {
     opacity: 1;
