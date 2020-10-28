@@ -1,21 +1,29 @@
-import React from "react";
-import { Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, useLocation } from "react-router-dom";
 import useViewer from "@advisable-main/hooks/useViewer";
+
+function RedirectToLogin() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = encodeURIComponent(`/guild${location.pathname}`);
+    window.location.href = `/login?redirect=${path}`;
+  }, [location]);
+
+  return null;
+}
 
 const AuthenticatedRoute = ({ render, component: Component, ...rest }) => {
   const viewer = useViewer();
   const guildUser = viewer?.isSpecialist && viewer?.guild;
 
-  const advisableHost = () => {
-    const { host, protocol } = window.location;
-    return `${protocol}//${host}`;
-  };
-
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (!guildUser) return (window.location.href = advisableHost());
+        if (!guildUser) {
+          return <RedirectToLogin />;
+        }
 
         return Component ? <Component {...props} /> : render(props);
       }}

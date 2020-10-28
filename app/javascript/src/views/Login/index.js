@@ -1,7 +1,7 @@
 // Renders the login page
 import React from "react";
 import queryString from "query-string";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { useTranslation } from "react-i18next";
 import FormField from "components/FormField";
@@ -28,7 +28,11 @@ const Login = ({ location }) => {
   };
 
   if (viewer) {
-    return <Redirect to={from} />;
+    if (queryParams.redirect) {
+      window.location.href = queryParams.redirect;
+    } else {
+      return <Redirect to={from} />;
+    }
   }
 
   const initialValues = {
