@@ -30,6 +30,16 @@ const BluredBackground = styled(Box)`
   animation: ${animation} 0.8s ease infinite alternate;
 `;
 
+const ProgressBar = styled(Box)`
+  height: 2px;
+  width: 180px;
+  max-width: 60%;
+  overflow: hidden;
+  border-radius: 1px;
+  background: ${theme.colors.blue100};
+  box-shadow: 0 0 1px 0 ${rgba(theme.colors.neutral900, 0.3)};
+`;
+
 const FileUploader = styled.div`
   width: 42px;
   height: 42px;
@@ -131,18 +141,13 @@ const FileUpload = ({ onChange, updated }) => {
             position="absolute"
             css={``}
           >
-            <Box
-              bg={theme.colors.blue100}
-              width="180px"
-              maxWidth="60%"
-              height="2px"
-              borderRadius="1px"
-              overflow="hidden"
-              mt="s"
-              mb="xs"
-            >
-              <Box width={`${progress}%`} height="100%" bg="blue500" />
-            </Box>
+            <ProgressBar mt="s" mb="xs">
+              <Box
+                style={{ width: `${progress}%` }}
+                height="100%"
+                bg="blue500"
+              />
+            </ProgressBar>
             <Text fontSize="xxs" color="neutral800">
               {uploading && "Uploading"}
               {processing && "Processing"}
