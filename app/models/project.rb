@@ -33,6 +33,8 @@ class Project < ApplicationRecord
 
   map_status status: {draft: 'Draft', pending_review: 'Pending Advisable Confirmation'}
 
+  after_update :send_paused_emails, if: -> { saved_change_to_sales_status? && sales_status == "Paused" }
+
   def accepted_terms=(accepted)
     self.accepted_terms_at = Time.zone.now if !accepted_terms && accepted
     self.accepted_terms_at = nil if accepted_terms && !accepted
@@ -107,6 +109,14 @@ class Project < ApplicationRecord
   # record so first check for it there before falling back to the project.
   def industry
     user&.industry&.name || self[:industry]
+  end
+
+  private
+
+  def send_paused_emails
+    applications.active.find_each do |application|
+      SpecialistMailer.project_paused(self, application).deliver_later
+    end
   end
 end
 

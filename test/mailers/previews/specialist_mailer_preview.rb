@@ -16,7 +16,7 @@ class SpecialistMailerPreview < ActionMailer::Preview
 
   def project_paused
     application = Application.order(Arel.sql('RANDOM()')).first
-    SpecialistMailer.project_paused(application)
+    SpecialistMailer.project_paused(application.project, application)
   end
 
   private
