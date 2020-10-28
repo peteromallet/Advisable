@@ -200,4 +200,24 @@ RSpec.describe Project do
       expect(project.candidates).not_to include(application)
     end
   end
+
+  describe "project paused emails" do
+    let(:project) { create(:project) }
+    let!(:applied_candidate) { create(:application, project: project, status: "Application Accepted") }
+    let!(:rejected_candidate) { create(:application, project: project, status: "Application Rejected") }
+
+    context "status changed to paused" do
+      it "schedules emails to non-rejected applicants" do
+        expect { project.update(sales_status: "Paused") }.to have_enqueued_job.with("SpecialistMailer", "project_paused", "deliver_now", {args: [project, applied_candidate]})
+      end
+    end
+
+    context "status was paused already" do
+      let(:project) { create(:project, sales_status: "Paused") }
+
+      it "does not schedule any emails" do
+        expect { project.update(sales_status: "Paused") }.not_to have_enqueued_job
+      end
+    end
+  end
 end
