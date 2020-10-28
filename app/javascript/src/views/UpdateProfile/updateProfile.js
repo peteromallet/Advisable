@@ -5,6 +5,7 @@ export default gql`
     updateProfile(input: $input) {
       specialist {
         id
+        email
         bio
         city
         remote
