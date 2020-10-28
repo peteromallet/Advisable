@@ -11,38 +11,27 @@ class Project < ApplicationRecord
   include Uid
   include StatusMap
   include Airtable::Syncable
-  has_many :applications
+
+  has_many :applications, dependent: :destroy
   has_many :bookings, through: :applications
-  has_many :reviews, as: :project
-  has_many :project_skills, as: :project
+  has_many :reviews, as: :project, dependent: :destroy
+  has_many :project_skills, as: :project, dependent: :destroy
   has_many :skills, through: :project_skills
+  has_many :project_industries, as: :project, dependent: :destroy
+  has_many :industries, through: :project_industries
 
-  has_one :primary_project_skill,
-          -> { where(primary: true) },
-          class_name: 'ProjectSkill', as: :project
-
+  has_one :primary_project_skill, -> { where(primary: true) }, class_name: 'ProjectSkill', as: :project, inverse_of: :project, dependent: :destroy
   has_one :primary_skill, through: :primary_project_skill, source: :skill
 
-  has_many :project_industries, as: :project
-  has_many :industries, through: :project_industries
-  validates :service_type,
-            inclusion: {in: %w[Assisted Self-Service Consultation]},
-            allow_nil: true
+  belongs_to :user, optional: true
+  belongs_to :sales_person, optional: true
 
-  validates :industry_experience_importance,
-            inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
-
-  validates :location_importance,
-            inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
-
+  validates :service_type, inclusion: {in: %w[Assisted Self-Service Consultation]}, allow_nil: true
+  validates :industry_experience_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
+  validates :location_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
   validates :likely_to_hire, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
 
-  belongs_to :user, required: false
-  belongs_to :sales_person, required: false
-
-  map_status status: {
-               draft: 'Draft', pending_review: 'Pending Advisable Confirmation'
-             }
+  map_status status: {draft: 'Draft', pending_review: 'Pending Advisable Confirmation'}
 
   def accepted_terms=(accepted)
     self.accepted_terms_at = Time.zone.now if !accepted_terms && accepted
@@ -55,7 +44,7 @@ class Project < ApplicationRecord
 
   # Returns wether or not the project is accepting new applications.
   def applications_open
-    !%w[Won Lost].include?(sales_status)
+    %w[Won Lost].exclude?(sales_status)
   end
 
   def deposit
