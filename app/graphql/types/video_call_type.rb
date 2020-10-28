@@ -1,6 +1,5 @@
 class Types::VideoCallType < Types::BaseType
   field :id, ID, null: false
-  field :name, String, null: true
   field :fallback, Boolean, null: true
 
   field :zoom_meeting_id, String, null: true do
@@ -30,13 +29,6 @@ class Types::VideoCallType < Types::BaseType
 
   def id
     object.uid
-  end
-
-  def name
-    return if object.interview.nil?
-    specialist = object.interview.application.specialist.name
-    user = object.interview.user.name
-    "#{specialist} & #{user}"
   end
 
   def access_token
