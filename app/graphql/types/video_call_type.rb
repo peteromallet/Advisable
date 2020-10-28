@@ -1,6 +1,5 @@
 class Types::VideoCallType < Types::BaseType
   field :id, ID, null: false
-  field :name, String, null: true
   field :fallback, Boolean, null: true
 
   field :zoom_meeting_id, String, null: true do
@@ -32,16 +31,9 @@ class Types::VideoCallType < Types::BaseType
     object.uid
   end
 
-  def name
-    return if object.interview.nil?
-    specialist = object.interview.application.specialist.name
-    user = object.interview.user.name
-    "#{specialist} & #{user}"
-  end
-
   def access_token
     grant = Twilio::JWT::AccessToken::VideoGrant.new
-    grant.room = object.id
+    grant.room = object.uid
 
     token = Twilio::JWT::AccessToken.new(
       ENV["TWILIO_SID"],
