@@ -29,6 +29,7 @@ const Profile = () => {
   const [profilePhoto, setProfilePhoto] = React.useState(null);
 
   const initialValues = {
+    email: get(data, "viewer.email"),
     bio: get(data, "viewer.bio"),
     hourlyRate: get(data, "viewer.hourlyRate") / 100.0,
     publicUse: get(data, "viewer.publicUse"),
@@ -36,15 +37,17 @@ const Profile = () => {
   };
 
   const submitUpdate = async (input) => {
-    await updateProfile({
+    const { errors } = await updateProfile({
       variables: { input },
     });
-
-    notifications.notify("Your profile has been updated");
+    if (!errors) {
+      notifications.notify("Your profile has been updated");
+    }
   };
 
   const handleSubmit = async (values, formik) => {
     submitUpdate({
+      email: values.email,
       bio: values.bio,
       hourlyRate: values.hourlyRate * 100,
       publicUse: values.publicUse,
@@ -98,6 +101,11 @@ const Profile = () => {
                 label="Upload a profile photo"
               />
             </Box>
+            <Box height={1} bg="neutral100" my="l" />
+            <FormField
+              name="email"
+              label="Email"
+            />
             <Box height={1} bg="neutral100" my="l" />
             <FormField
               as={Textarea}

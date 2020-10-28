@@ -15,6 +15,7 @@ test("User can update their profile", async () => {
   const development = mockData.skill({ name: "Development" });
 
   const specialist = mockData.specialist({
+    email: "staging+dwight@advisable.com",
     bio: "",
     skills: [],
     hourlyRate: 50,
@@ -22,6 +23,7 @@ test("User can update their profile", async () => {
     country: mockData.country(),
   });
 
+  const newEmail = "staging+dwight_new@advisable.com"
   const newBio = "This is my bio";
 
   renderRoute({
@@ -53,6 +55,7 @@ test("User can update their profile", async () => {
       mockMutation(
         UPDATE_PROFILE,
         {
+          email: newEmail,
           bio: newBio,
           hourlyRate: 10000,
           publicUse: true,
@@ -63,6 +66,7 @@ test("User can update their profile", async () => {
             __typename: "UpdateProfilePayload",
             specialist: {
               ...specialist,
+              email: newEmail,
               bio: newBio,
               skills: [design, development],
               hourlyRate: 100,
@@ -75,6 +79,9 @@ test("User can update their profile", async () => {
 
   const bio = await screen.findByLabelText(/about me/i);
   user.type(bio, newBio);
+  const email = await screen.findByLabelText(/Email/i)
+  user.clear(email)
+  user.type(email, newEmail)
   const rate = screen.getByLabelText(/hourly rate/i);
   fireEvent.change(rate, { target: { value: "100" } });
   const skills = screen.getByPlaceholderText(/online marketing/i);

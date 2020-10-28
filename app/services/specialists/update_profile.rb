@@ -10,6 +10,7 @@ class Specialists::UpdateProfile < ApplicationService
 
   def call
     specialist.assign_attributes(assignable_attributes)
+    update_email
     attach_avatar
     attach_resume
     update_skills
@@ -41,6 +42,11 @@ class Specialists::UpdateProfile < ApplicationService
     )
   end
 
+  def update_email
+    return unless attributes[:email]
+    specialist.account.update(email: attributes[:email])
+  end
+
   def attach_avatar
     return unless attributes[:avatar]
     specialist.avatar.attach(attributes[:avatar])
@@ -62,6 +68,6 @@ class Specialists::UpdateProfile < ApplicationService
   def update_country
     return if attributes[:country].blank?
     country = Country.find_by(uid: attributes[:country]) || Country.find_by(alpha2: attributes[:country]) || Country.find_by(name: attributes[:country])
-    specialist.update_columns(country_id: country&.id)
+    specialist.country_id = country&.id
   end
 end
