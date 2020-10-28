@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 const fields = gql`
   fragment SpecialistFields on Specialist {
     id
+    email
     bio
     name
     avatar

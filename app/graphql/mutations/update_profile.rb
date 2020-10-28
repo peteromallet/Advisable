@@ -3,6 +3,7 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
   argument :primarily_freelance, Boolean, required: false
   argument :hourly_rate, Int, required: false
   argument :number_of_projects, String, required: false
+  argument :email, String, required: true
   argument :bio, String, required: false
   argument :skills, [String], required: false
   argument :city, String, required: false
@@ -34,7 +35,7 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
         specialist: context[:current_user], attributes: args.except(:id)
       )
 
-    { specialist: specialist }
+    {specialist: specialist}
   rescue Service::Error => e
     raise ApiError::InvalidRequest.new('failedToUpdate', e.message)
   end
