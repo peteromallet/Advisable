@@ -1,16 +1,16 @@
 class SpecialistMailer < ApplicationMailer
   add_template_helper(MailHelper)
 
-  layout 'styled_mailer'
+  layout "styled_mailer"
 
   def confirm(uid:, token:)
-    @specialist = Specialist.find_by_uid(uid)
+    @specialist = Specialist.find_by(uid: uid)
     @token = token
-    mail(to: @specialist.account.email, subject: 'Account Confirmation')
+    mail(to: @specialist.account.email, subject: "Account Confirmation")
   end
 
   def verify_project(uid)
-    @project = PreviousProject.find_by_uid(uid)
+    @project = PreviousProject.find_by(uid: uid)
     @specialist = @project.specialist
 
     mail(
@@ -31,9 +31,25 @@ class SpecialistMailer < ApplicationMailer
     )
   end
 
+  def project_paused(project, application)
+    @project = project
+    @application = application
+    mail(
+      from: @project.user.sales_person.email_with_name,
+      to: @application.specialist.account.email,
+      subject: "#{@project.primary_skill.name} Project Has Been Paused"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
+
   def interview_reschedule_request(interview)
     @interview = interview
-    mail(from: interview.user.sales_person.email_with_name, to: interview.specialist.account.email, subject: 'Interview Reschedule Request') do |format|
+    mail(
+      from: interview.user.sales_person.email_with_name,
+      to: interview.specialist.account.email,
+      subject: 'Interview Reschedule Request'
+    ) do |format|
       format.html { render layout: false }
     end
   end
