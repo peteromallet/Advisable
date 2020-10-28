@@ -17,7 +17,13 @@ function useTimeout(callback, delay) {
   return timeout;
 }
 
-export default function Notification({ content, timeout = 3000, onTimeout }) {
+function Notification({ content, variant, timeout = 3000, onTimeout }) {
   useTimeout(onTimeout, timeout);
-  return <NotificationCard>{content}</NotificationCard>;
+  return <NotificationCard $variant={variant}>{content}</NotificationCard>;
 }
+
+Notification.defaultProps = {
+  variant: "default",
+};
+
+export default Notification;

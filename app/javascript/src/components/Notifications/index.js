@@ -20,19 +20,23 @@ export const NotificationsProvider = ({ children }) => {
   const notify = (content, opts = {}) => {
     const id = uniqueId("notification");
     const timeout = opts.timeout || 3000;
+    const variant = opts.variant;
     const onTimeout = () => remove(id);
-    setQueue((items) => [...items, { id, content, timeout, onTimeout }]);
+    setQueue((items) => [
+      ...items,
+      { id, variant, content, timeout, onTimeout },
+    ]);
   };
 
   const variants = {
     initial: {
       opacity: 0,
-      y: 40,
-      scale: 0.4,
+      x: 200,
+      scale: 0.9,
     },
     animate: {
       opacity: 1,
-      y: 0,
+      x: 0,
       scale: 1,
     },
     exit: {
