@@ -33,7 +33,7 @@ class Types::VideoCallType < Types::BaseType
 
   def access_token
     grant = Twilio::JWT::AccessToken::VideoGrant.new
-    grant.room = object.id
+    grant.room = object.uid
 
     token = Twilio::JWT::AccessToken.new(
       ENV["TWILIO_SID"],
