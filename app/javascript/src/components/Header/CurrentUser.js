@@ -42,11 +42,11 @@ const CurrentUser = ({ user, onLogout }) => {
         {user.companyName && <span>{user.companyName}</span>}
       </CurrentUserToggle>
       <CurrentUserDropdown open={open}>
+        {user.guild && <a href="/guild">Guild</a>}
         {isClient && <Link to="/settings">Settings</Link>}
         <a href="#" onClick={onLogout}>
           Logout
         </a>
-        {user.guild && <a href="/guild">Guild</a>}
       </CurrentUserDropdown>
     </CurrentUserWrapper>
   );
