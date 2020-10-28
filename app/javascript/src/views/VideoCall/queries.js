@@ -5,7 +5,6 @@ const GET_VIDEO_CALL = gql`
   query videoCall($id: ID!) {
     videoCall(id: $id) {
       id
-      name
       fallback
       accessToken
       zoomMeetingId

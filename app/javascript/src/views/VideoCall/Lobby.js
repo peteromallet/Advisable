@@ -1,6 +1,6 @@
 import React from "react";
 import ActionBar from "components/ActionBar";
-import { Box, Text, Button, theme } from "@advisable/donut";
+import { Box, Button, theme } from "@advisable/donut";
 import VideoTrack from "./VideoTrack";
 import HelpAction from "./HelpAction";
 import useCallContext from "./useCallContext";
@@ -27,7 +27,6 @@ export default function Lobby() {
   const {
     localTracks,
     connect,
-    data,
     isConnecting,
     audioTrackError,
     videoTrackError,
