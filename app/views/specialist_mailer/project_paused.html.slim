@@ -1,0 +1,14 @@
+p
+  | Hi #{@application.specialist.account.first_name},
+p
+  | I just wanted to inform you that project <a href="#{root_url}invites/#{@application.uid}" target="_blank">#{@project.primary_skill&.name}</a> that you applied on #{@application.applied_at.to_formatted_s(:short)} has been paused per client's request.
+p
+  | As soon I hear from the client and get more information, I will update you on the status.
+p
+  | Thank you once again for applying!
+p
+  | Apologies for any inconvenience and we appreciate your flexibility!
+p
+  | Best,
+  br
+  = @project.user.sales_person.name
