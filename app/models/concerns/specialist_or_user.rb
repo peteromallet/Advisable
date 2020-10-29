@@ -5,26 +5,43 @@ module SpecialistOrUser
 
   included do
     self.ignored_columns = Account::MIGRATED_COLUMNS
-
     include Tutorials
-
     belongs_to :account
-
-    # Temporary while we're moving things over
     before_validation :ensure_account_exists
+  end
 
-    def ensure_account_exists
-      return if self[:email].blank?
-      if account.blank?
-        self.account = Account.find_or_create_by!(email: self[:email])
-      elsif account.new_record?
-        account.email = self[:email]
-        account.save!
-      end
+  def ensure_account_exists
+    return if self[:email].blank?
+    if account.blank?
+      self.account = Account.find_or_create_by!(email: self[:email])
+    elsif account.new_record?
+      account.email = self[:email]
+      account.save!
+    end
+  end
+
+  [:find_by_email, :find_by_remember_token].each do |method|
+    define_singleton_method(method) do |param|
+      Account.public_send(method, param)&.specialist_or_user
+    end
+
+    define_singleton_method("#{method}!") do |param|
+      public_send(method, param).presence || raise(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  [:find_by_uid_or_airtable_id, :find_by_uid, :find_by_airtable_id].each do |method|
+    define_singleton_method(method) do |param|
+      Specialist.public_send(method, param) || User.public_send(method, param)
+    end
+
+    define_singleton_method("#{method}!") do |param|
+      public_send(method, param).presence || raise(ActiveRecord::RecordNotFound)
     end
   end
 
   # TODO: AccountMigration - columns that we migrated to Account
+  # everything below this is deprecation-ware
   Account::MIGRATED_COLUMNS.each do |column|
     define_method(column) do
       raise unless Rails.env.production?
@@ -46,29 +63,5 @@ module SpecialistOrUser
 
     Raven.capture_message("Method called on #{self.class.name} that was meant for Account", backtrace: caller, level: 'debug')
     account.name
-  end
-
-  [:find_by_email, :find_by_remember_token].each do |method|
-    define_singleton_method(method) do |param|
-      Account.public_send(method, param)&.specialist_or_user
-    end
-
-    define_singleton_method("#{method}!") do |param|
-      public_send(method, param).presence || raise(ActiveRecord::RecordNotFound)
-    end
-  end
-
-  [
-    :find_by_uid_or_airtable_id,
-    :find_by_uid,
-    :find_by_airtable_id
-  ].each do |method|
-    define_singleton_method(method) do |param|
-      Specialist.public_send(method, param) || User.public_send(method, param)
-    end
-
-    define_singleton_method("#{method}!") do |param|
-      public_send(method, param).presence || raise(ActiveRecord::RecordNotFound)
-    end
   end
 end
