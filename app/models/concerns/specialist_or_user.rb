@@ -13,13 +13,6 @@ module SpecialistOrUser
     # Temporary while we're moving things over
     before_validation :ensure_account_exists
 
-    # Sets the confirmation digest and sends the user a confirmation email with
-    # instructions to confirm their account.
-    def send_confirmation_email
-      token = account.create_confirmation_token
-      AccountMailer.confirm(uid: uid, token: token).deliver_later
-    end
-
     def ensure_account_exists
       return if self[:email].blank?
       if account.blank?
