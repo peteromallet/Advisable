@@ -1,0 +1,45 @@
+
+div class="field-unit__label"
+  strong Skills
+
+div class="field-unit__field field-unit--has-many" id="ProjectSkills"
+  = f.label field.attribute, for: "#{f.object_name}_#{field.attribute_key}"
+  = f.select(field.attribute_key, nil, {}, multiple: true, class: "ProjectSkillsSelect") do
+    = options_for_select(field.associated_resource_options, field.selected_options)
+
+  = f.label "primary_skill_id", for: "Primary Skill"
+  = select_tag("primary_skill_id", options_for_select(field.selected_skills, field.resource.primary_skill&.id), multiple: false, class: "PrimarySkillSelect")
+
+javascript:
+  document.addEventListener('DOMContentLoaded', function() {
+    const el = document.querySelector("#ProjectSkills")
+    const skillsSelect = el.querySelector(".ProjectSkillsSelect")
+    const primarySelect = el.querySelector(".PrimarySkillSelect")
+
+    $(primarySelect).selectize()
+    const skillsSelectized = $(skillsSelect).selectize({
+      onChange: updatePrimarySkillOptions,
+      onItemRemove: (v) => {
+        primarySelect.selectize.removeOption(v)
+      }
+    })
+    
+
+    function updatePrimarySkillOptions() {
+      const selected = Array.from(skillsSelect.options).filter(o => o.selected)
+
+      primarySelect.selectize.clearOptions()
+
+      selected.forEach(option => {
+        const node = document.createElement("option")
+        node.value = option.value
+        node.text = option.text
+        primarySelect.selectize.addOption(node)
+      })
+
+      primarySelect.selectize.refreshOptions(false)
+    }
+
+
+    skillsSelect.addEventListener("change", updatePrimarySkillOptions)
+  });

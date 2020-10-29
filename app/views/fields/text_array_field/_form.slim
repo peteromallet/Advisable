@@ -1,0 +1,39 @@
+div class="field-unit__label"
+  = f.label field.attribute, for: field.attribute
+
+div class="field-unit__field TextArray" id="TextArray-#{field.attribute}" data={ max: field.max }
+  - field.data.each do |value|
+    = render '/fields/text_array_field/field_value', model: f.object.class.to_s.underscore, attribute: field.attribute, value: value
+
+  a href="#" class="AddTextArrayValue"
+    | + Add
+
+javascript:
+  document.addEventListener('DOMContentLoaded', function() {
+    function remove(e) {
+      e.preventDefault()
+      $(this).closest(".TextArrayValue").remove()
+      toggleAddButton()
+    }
+
+    function toggleAddButton() {
+      const parent = document.querySelector("#TextArray-#{field.attribute}")
+      const max = Number(parent.dataset.max);
+      const isMax = parent.querySelectorAll("input").length === max
+      if (isMax) {
+        parent.querySelector(".AddTextArrayValue").style.display = "none"
+      } else {
+        parent.querySelector(".AddTextArrayValue").style.display = "inline-block"
+      }
+    }
+
+    function add(e) {
+      e.preventDefault()
+      $(this).before("#{j render '/fields/text_array_field/field_value', model: f.object.class.to_s.underscore, attribute: field.attribute, value: ''}")
+      toggleAddButton()
+    }
+
+    toggleAddButton()
+    $("body").on("click", "#TextArray-#{field.attribute} .RemoveTextArrayValue", remove)
+    $("body").on("click", "#TextArray-#{field.attribute} .AddTextArrayValue", add)
+  });

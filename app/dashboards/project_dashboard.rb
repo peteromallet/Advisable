@@ -13,21 +13,36 @@ class ProjectDashboard < Administrate::BaseDashboard
     uid: Field::String,
     name: Field::String,
     sourcing: Field::Boolean,
-    status: Field::Select.with_options(
-      collection: Project::STATUSES
-    ),
-    service_type: Field::Select.with_options(
-      collection: Project::SERVICE_TYPES
-    ),
-    sales_status: Field::Select.with_options(
-      collection: Project::SALES_STATUSES
-    ),
+    status: Field::Select.with_options(collection: Project::STATUSES),
+    service_type: Field::Select.with_options(collection: Project::SERVICE_TYPES),
+    sales_status: Field::Select.with_options(collection: Project::SALES_STATUSES),
     description: Field::Text,
     goals: TextArrayField,
+    questions: TextArrayField.with_options({max: 2}),
     skills: ProjectSkillField,
     user: Field::BelongsTo,
+    industry_experience_importance: LabelledSelectField.with_options({
+      collection: {
+        "Not Important" => 0,
+        "Not Sure" => 1,
+        "Important" => 2,
+      }
+    }),
+    location_importance: LabelledSelectField.with_options({
+      collection: {
+        "Not Important" => 0,
+        "Not Sure" => 1,
+        "Important" => 2,
+      }
+    }),
+    likely_to_hire: LabelledSelectField.with_options({
+      collection: {
+        "Not Likely" => 0,
+        "Maybe" => 1,
+        "Very Likely" => 2,
+      }
+    }),
     primary_skill: Field::HasOne.with_options(class_name: Skill),
-    questions: TextArrayField,
     required_characteristics: TextArrayField,
     characteristics: TextArrayField,
     company_description: Field::Text,
@@ -49,17 +64,20 @@ class ProjectDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
-    id
     uid
     airtable_id
     status
     sales_status
     user
-    skills
     primary_skill
+    skills
+    industry_experience_importance
+    location_importance
+    likely_to_hire
     characteristics
     required_characteristics
     goals
+    questions
     company_description
     description
     specialist_description
@@ -76,12 +94,19 @@ class ProjectDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     status
     sales_status
+    service_type
     user
     skills
-    description
+    industry_experience_importance
+    location_importance
+    likely_to_hire
     goals
-    required_characteristics
     characteristics
+    required_characteristics
+    questions
+    company_description
+    description
+    specialist_description
     deposit
   ].freeze
 
