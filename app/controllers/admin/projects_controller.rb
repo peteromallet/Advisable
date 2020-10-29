@@ -10,6 +10,16 @@ module Admin
     #     per(10)
     # end
 
+    def update
+      super
+
+      if params[:primary_skill_id]
+        skill = Skill.find(params[:primary_skill_id])
+        requested_resource.primary_skill = skill
+        requested_resource.save
+      end
+    end
+
     # Define a custom finder by overriding the `find_resource` method:
     # def find_resource(param)
     #   Project.find_by!(slug: param)
@@ -21,6 +31,7 @@ module Admin
     def resource_params
       params.require(:project).permit(
         *dashboard.permitted_attributes,
+        skill_ids: [],
         goals: [],
         questions: [],
         required_characteristics: [],
