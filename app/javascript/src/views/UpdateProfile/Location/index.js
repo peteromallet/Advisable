@@ -23,14 +23,24 @@ let Location = () => {
   if (profileQuery.loading || countriesQuery.loading) return <Loading />;
 
   const handleSubmit = async (values, formikBag) => {
-    await mutate({
+    const { errors } = await mutate({
       variables: {
         input: values,
       },
     });
 
-    notifications.notify("Your profile has been updated");
     formikBag.setSubmitting(false);
+
+    if (!errors) {
+      notifications.notify("Your profile has been updated");
+    } else {
+      notifications.notify(
+        "It looks like something went wrong, please try again",
+        {
+          variant: "error",
+        },
+      );
+    }
   };
 
   return (
