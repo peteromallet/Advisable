@@ -57,7 +57,7 @@ const CardDetails = ({ nextStep }) => {
         >
           Add a new card
         </Button>
-        <Button size="l" width="100%" onClick={nextStep}>
+        <Button type="button" size="l" width="100%" onClick={nextStep}>
           Continue with this card
         </Button>
       </Card>
