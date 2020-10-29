@@ -13,9 +13,19 @@ class ProjectDashboard < Administrate::BaseDashboard
     uid: Field::String,
     name: Field::String,
     sourcing: Field::Boolean,
-    status: Field::String,
+    status: Field::Select.with_options(
+      collection: Project::STATUSES
+    ),
+    service_type: Field::Select.with_options(
+      collection: Project::SERVICE_TYPES
+    ),
+    sales_status: Field::Select.with_options(
+      collection: Project::SALES_STATUSES
+    ),
     description: Field::Text,
     goals: TextArrayField,
+    skills: ProjectSkillField,
+    user: Field::BelongsTo,
     primary_skill: Field::HasOne.with_options(class_name: Skill),
     questions: TextArrayField,
     required_characteristics: TextArrayField,
@@ -40,14 +50,21 @@ class ProjectDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    name
+    uid
+    airtable_id
     status
-    deposit
-    sourcing
+    sales_status
+    user
+    skills
+    primary_skill
+    characteristics
+    required_characteristics
+    goals
+    company_description
     description
     specialist_description
-    company_description
-    airtable_id
+    service_type
+    deposit
     created_at
     updated_at
     applications
@@ -57,9 +74,10 @@ class ProjectDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    name
     status
-    sourcing
+    sales_status
+    user
+    skills
     description
     goals
     required_characteristics

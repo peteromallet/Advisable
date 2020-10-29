@@ -12,6 +12,39 @@ class Project < ApplicationRecord
   include StatusMap
   include Airtable::Syncable
 
+  STATUSES = [
+    "Project Created",
+    "Call Scheduled",
+    "Candidate Proposed",
+    "Candidate Accepted",
+    "Brief Confirmed",
+    "Brief Pending Confirmation",
+    "Booking Request Sent",
+    "Proposal Received",
+    "Interview Scheduled",
+    "Interview Completed",
+    "Booking Confirmed",
+    "Candidates Accepted",
+    "Candidates Sourcing",
+    "Project Qualified",
+    "Draft",
+    "Pending Advisable Confirmation"
+  ].freeze
+
+  SERVICE_TYPES = [
+    "Assisted",
+    "Self-Service",
+    "Consultation"
+  ].freeze
+
+  SALES_STATUSES = %w[
+    Open
+    Won
+    Lost
+    Pending
+    Paused
+  ].freeze
+
   has_many :applications, dependent: :destroy
   has_many :bookings, through: :applications
   has_many :reviews, as: :project, dependent: :destroy
@@ -26,7 +59,7 @@ class Project < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :sales_person, optional: true
 
-  validates :service_type, inclusion: {in: %w[Assisted Self-Service Consultation]}, allow_nil: true
+  validates :service_type, inclusion: {in: SERVICE_TYPES}, allow_nil: true
   validates :industry_experience_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
   validates :location_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
   validates :likely_to_hire, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
