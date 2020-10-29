@@ -4,6 +4,8 @@ module SpecialistOrUser
   extend ActiveSupport::Concern
 
   included do
+    self.ignored_columns = Account::MIGRATED_COLUMNS
+
     include Tutorials
 
     belongs_to :account
@@ -23,6 +25,7 @@ module SpecialistOrUser
       if account.blank?
         self.account = Account.find_or_create_by!(email: self[:email])
       elsif account.new_record?
+        account.email = self[:email]
         account.save!
       end
     end
