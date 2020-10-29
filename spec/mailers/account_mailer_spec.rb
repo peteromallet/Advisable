@@ -22,13 +22,10 @@ RSpec.describe AccountMailer do
   describe "#reset_password" do
     let(:token) { Token.new }
     let(:account) { create(:account, reset_digest: Token.digest(token), reset_sent_at: Time.zone.now) }
-    let(:user) { create(:user, account: account) }
-    let(:mail) {
-      AccountMailer.reset_password(uid: user.uid, token: token)
-    }
+    let(:mail) { AccountMailer.reset_password(id: account.id, token: token) }
 
     it 'renders correct headers' do
-      expect(mail.to).to eq([user.account.email])
+      expect(mail.to).to eq([account.email])
       expect(mail.subject).to eq("Reset password")
       expect(mail.from).to eq(["hello@advisable.com"])
     end
