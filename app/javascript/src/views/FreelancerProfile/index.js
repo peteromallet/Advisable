@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import useViewer from "src/hooks/useViewer";
 import { useQuery } from "@apollo/client";
 // Components
+import VariantSystem from "components/VariantSystem";
 import NotFound, { isNotFound } from "../NotFound";
 import PreviousProjects from "./PreviousProjects";
 import Loading from "src/components/Loading";
@@ -37,6 +38,7 @@ function FreelancerProfile() {
       mx={["12px", "32px", "32px", "auto"]}
       mb="64px"
     >
+      <VariantSystem variantsRange={[1, 7]} />
       <AboutSection
         specialist={data.specialist}
         isOwner={isOwner}
