@@ -1,3 +1,4 @@
+import { get } from "lodash-es";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import * as Sentry from "@sentry/react";
@@ -6,8 +7,10 @@ import {
   CurrentUserToggle,
   CurrentUserDropdown,
 } from "./styles";
+import useViewer from "../../hooks/useViewer";
 
 const CurrentUser = ({ user, onLogout }) => {
+  const viewer = useViewer();
   const [open, setOpen] = useState(false);
   const handleBlur = () => setOpen(false);
   const handleFocus = () => setOpen(true);

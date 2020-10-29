@@ -21,14 +21,6 @@ function arrayToSentence(array) {
   );
 }
 
-function arrayToSentence(array) {
-  return (
-    array.slice(0, -2).join(", ") +
-    (array.slice(0, -2).length ? ", " : "") +
-    array.slice(-2).join(" and ")
-  );
-}
-
 const reducer = (state, action) => {
   switch (action.type) {
     case "SET_WRAPPER_WIDTH":
@@ -103,22 +95,6 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
   const isExapndable =
     state.layout?.industries?.isExpandable ||
     state.layout?.skills?.isExpandable;
-
-  const filtering = skillFilters.length > 0 || industryFilters.length > 0;
-
-  let output = "";
-
-  if (skillFilters.length > 0) {
-    output = `Showing ${arrayToSentence(skillFilters)} projects`;
-  }
-
-  if (industryFilters.length > 0) {
-    if (industryFilters.length === 1) {
-      output += ` with ${industryFilters[0]} companies`;
-    } else {
-      output += " in multiple industries";
-    }
-  }
 
   const filtering = skillFilters.length > 0 || industryFilters.length > 0;
 

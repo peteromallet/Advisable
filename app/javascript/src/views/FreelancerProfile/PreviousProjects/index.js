@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useReducer } from "react";
+import React, { useMemo, useReducer } from "react";
 import { useHistory } from "react-router";
 import { every } from "lodash-es";
 import { rgba } from "polished";
@@ -23,47 +23,6 @@ import Masonry from "components/Masonry";
 import ProjectCard from "./ProjectCard";
 import Tags from "./Filter/Tags";
 import Filter from "./Filter";
-
-const clearFilters = (state) => {
-  const skillsSection = Object.keys(state.skillsSection).reduce(
-    (acc, key) => ({ ...acc, [key]: { ...acc[key], selected: false } }),
-    state.skillsSection,
-  );
-  const industriesSection = Object.keys(state.industriesSection).reduce(
-    (acc, key) => ({ ...acc, [key]: { ...acc[key], selected: false } }),
-    state.industriesSection,
-  );
-  return {
-    ...state,
-    skillFilters: [],
-    industryFilters: [],
-    skillsSection,
-    industriesSection,
-  };
-};
-
-const initFilters = (state, payload) => {
-  const skillFilters = payload.skills ? [...payload.skills] : [];
-  const industryFilters = payload.industries ? [...payload.industries] : [];
-  const industriesSection =
-    payload.industries?.reduce(
-      (acc, key) => ({ ...acc, [key]: { ...acc[key], selected: true } }),
-      state.industriesSection,
-    ) || state.industriesSection;
-  const skillsSection =
-    payload.skills?.reduce(
-      (acc, key) => ({ ...acc, [key]: { ...acc[key], selected: true } }),
-      state.skillsSection,
-    ) || state.skillsSection;
-
-  return {
-    ...state,
-    skillFilters,
-    industryFilters,
-    industriesSection,
-    skillsSection,
-  };
-};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -113,18 +72,6 @@ function PreviousProjects({ data, isOwner }) {
     skillFilters: state.skillFilters,
     initFilters,
   });
-
-  // Responsivness
-  const isWidescreen = useBreakpoint("mUp");
-  const isTablet = useBreakpoint("m");
-  const isMobile = useBreakpoint("s");
-
-  // Update number of columns
-  useEffect(() => {
-    isWidescreen && setNumOfColumns(3);
-    isTablet && setNumOfColumns(2);
-    isMobile && setNumOfColumns(1);
-  }, [isMobile, isTablet, isWidescreen, setNumOfColumns]);
 
   // Responsivness
   const isWidescreen = useBreakpoint("mUp");
