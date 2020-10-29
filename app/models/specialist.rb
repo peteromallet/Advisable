@@ -24,29 +24,22 @@ class Specialist < ApplicationRecord
   include Airtable::Syncable
   include Guild::SpecialistsConcern
 
-  belongs_to :country, required: false
-  has_many :reviews
+  belongs_to :country, optional: true
 
-  has_many :consultations
-  has_many :applications
+  has_many :reviews, dependent: :destroy
+  has_many :consultations, dependent: :destroy
+  has_many :applications, dependent: :destroy
   has_many :projects, through: :applications
   # Successful applications are applications that are either working or stopped working
-  has_many :successful_applications,
-           -> { where(status: ['Working', 'Stopped Working']) },
-           class_name: 'Application'
-  has_many :successful_projects,
-           through: :successful_applications, source: :project
+  has_many :successful_applications, -> { where(status: ['Working', 'Stopped Working']) }, class_name: 'Application', inverse_of: :specialist
+  has_many :successful_projects, through: :successful_applications, source: :project
   has_many :project_skills, through: :successful_projects, source: :skills
-
-  has_many :previous_projects
-  has_many :previous_project_skills,
-           through: :previous_projects, source: :skills
-  has_many :previous_project_industries,
-           through: :previous_projects, source: :industries
-
+  has_many :previous_projects, dependent: :destroy
+  has_many :previous_project_skills, through: :previous_projects, source: :skills
+  has_many :previous_project_industries, through: :previous_projects, source: :industries
   has_many :specialist_skills, dependent: :destroy
   has_many :skills, through: :specialist_skills
-  has_many :answers
+  has_many :answers, dependent: :destroy
 
   # We also have an 'image' column in the specalists table. This is a deprecated
   # column that we used to use to store the avatar from airtable in.
@@ -66,8 +59,6 @@ class Specialist < ApplicationRecord
   register_tutorial 'fixedProjects'
   register_tutorial 'flexibleProjects'
 
-  # Override the send_confirmation_email method from the SpecialistOrUser module to use
-  # a specific email template for specialists.
   def send_confirmation_email
     token = account.create_confirmation_token
     SpecialistMailer.confirm(uid: uid, token: token).deliver_later

@@ -264,11 +264,11 @@ class Types::SpecialistType < Types::BaseType
     object.project_count || 0
   end
 
+  # TODO: AccountMigration - Rename for consistency
   field :has_account, Boolean, null: false do
     description 'Wether or not the specialist has created their account yet'
   end
 
-  # TODO: AccountMigration - Rename for consistency
   def has_account
     object.account.has_password?
   end

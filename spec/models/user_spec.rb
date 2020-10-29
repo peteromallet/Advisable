@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   include_examples "uid"
-  include_examples "account"
 
   it "has a valid factory" do
     user = build(:user)
@@ -18,6 +17,23 @@ RSpec.describe User, type: :model do
     user.save
     expect(user.availability).to_not include(a)
     expect(user.availability).to include(b)
+  end
+
+  describe "#send_confirmation_email" do
+    let(:user) { build(:user) }
+    let(:mail) { double('email') }
+
+    it "sets the confirmation_digest" do
+      expect(user.account.confirmation_digest).to be_nil
+      user.send_confirmation_email
+      expect(user.account.reload.confirmation_digest).to_not be_nil
+    end
+
+    it 'sends the confirmation email' do
+      expect(mail).to receive(:deliver_later)
+      expect(UserMailer).to receive(:confirm).and_return(mail)
+      user.send_confirmation_email
+    end
   end
 
   describe '#invoice_settings' do

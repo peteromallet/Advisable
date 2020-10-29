@@ -9,7 +9,7 @@ RSpec.describe 'Viewing a project' do
 
       mail = double('Mail')
       allow(mail).to receive(:deliver_later)
-      allow(AccountMailer).to receive(:confirm).and_return(mail)
+      allow(UserMailer).to receive(:confirm).and_return(mail)
       allow_any_instance_of(User).to receive(:sync_to_airtable)
 
       expect(page).to have_content('Create your Account')
