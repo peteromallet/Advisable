@@ -107,6 +107,11 @@ class User < ApplicationRecord
     setup
   end
 
+  def send_confirmation_email
+    token = account.create_confirmation_token
+    UserMailer.confirm(uid: uid, token: token).deliver_later
+  end
+
   private
 
   def are_payments_setup
