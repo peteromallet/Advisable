@@ -145,14 +145,8 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
   }
 
   return (
-    <StyledFilterCard borderRadius="8px" mb="xl" pb="xs" elevation="m">
-      <Box
-        ref={layoutRef}
-        width="100%"
-        m="8px 6px 0px 6px"
-        pb="6px"
-        display="flex"
-      >
+    <StyledFilterCard borderRadius="8px" mb="xl" p="xs" elevation="m">
+      <Box ref={layoutRef} width="100%" pb="6px" display="flex">
         {sections}
       </Box>
       <AnimatePresence initial={false}>
