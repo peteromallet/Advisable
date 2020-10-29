@@ -84,9 +84,6 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
   const setWrapperWidth = useMemo(() => createAction("SET_WRAPPER_WIDTH"), [
     createAction,
   ]);
-  const setSectionsRatio = useMemo(() => createAction("SET_SECTIONS_RATIO"), [
-    createAction,
-  ]);
   const setLayout = useMemo(() => createAction("SET_LAYOUT"), [createAction]);
   const expandCollapse = createAction("EXPAND_COLLAPSE");
   const [layoutRef] = useResponsiveRef(setWrapperWidth);
@@ -98,11 +95,6 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
     order: state.layout && state.layout[child.props.sectionName].order,
     ratio: state.sections[child.props.sectionName]?.ratio,
   })).sort((a, b) => a.props.order - b.props.order);
-
-  // Set ratio of sections
-  useEffect(() => {
-    !isEmpty(state.sections) && setLayout({});
-  }, [setLayout, setSectionsRatio, state.sections]);
 
   useEffect(() => {
     !isEmpty(state.sections) && state.wrapperWidth && setLayout({});
