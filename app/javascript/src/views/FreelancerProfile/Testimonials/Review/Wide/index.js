@@ -9,7 +9,6 @@ import Sixth from "./Sixth";
 
 function Wide(props) {
   const { variant } = useVariants();
-  console.log("variant", variant);
   const variants = {
     1: First,
     2: Second,
