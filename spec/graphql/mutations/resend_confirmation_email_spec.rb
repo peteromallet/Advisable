@@ -21,7 +21,7 @@ RSpec.describe Mutations::ResendConfirmationEmail do
   before :each do
     mail = double('confirmation email')
     allow(mail).to receive(:deliver_later)
-    allow(AccountMailer).to receive(:confirm).and_return(mail)
+    allow(UserMailer).to receive(:confirm).and_return(mail)
   end
 
   context 'when a user is signed in' do

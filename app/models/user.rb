@@ -5,21 +5,20 @@ class User < ApplicationRecord
   include Uid
   include SpecialistOrUser
   include StatusMap
-  include Tutorials
   include Airtable::Syncable
   airtable_class Airtable::ClientContact
-  has_many :projects
-  has_many :interviews
+  has_many :projects, dependent: :destroy
+  has_many :interviews, dependent: :destroy
   has_many :applications, through: :projects
-  has_many :consultations
-  has_many :user_skills
+  has_many :consultations, dependent: :destroy
+  has_many :user_skills, dependent: :destroy
   has_many :skills, through: :user_skills
-  has_many :client_calls
-  has_one :client_user
+  has_many :client_calls, dependent: :destroy
+  has_one :client_user, dependent: :destroy
   has_one :client, through: :client_user
-  belongs_to :sales_person, required: false
-  belongs_to :industry, required: false
-  belongs_to :country, required: false
+  belongs_to :sales_person, optional: true
+  belongs_to :industry, optional: true
+  belongs_to :country, optional: true
 
   serialize :available_payment_methods, Array
 
@@ -72,11 +71,8 @@ class User < ApplicationRecord
 
   def stripe_customer_id
     return self[:stripe_customer_id] if self[:stripe_customer_id]
-    customer =
-      Stripe::Customer.create(
-        {email: account.email, name: company_name, metadata: {user_id: uid}}
-      )
-    update_columns(stripe_customer_id: customer.id)
+    customer = Stripe::Customer.create(email: account.email, name: company_name, metadata: {user_id: uid})
+    update_columns(stripe_customer_id: customer.id) # rubocop:disable Rails/SkipsModelValidations
     customer.id
   end
 
@@ -109,6 +105,11 @@ class User < ApplicationRecord
     setup = are_payments_setup
     update(payments_setup: setup)
     setup
+  end
+
+  def send_confirmation_email
+    token = account.create_confirmation_token
+    UserMailer.confirm(uid: uid, token: token).deliver_later
   end
 
   private

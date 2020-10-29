@@ -12,8 +12,7 @@ class Accounts::RequestPasswordReset < ApplicationService
 
   def call
     has_password?
-    account.update({reset_digest: Token.digest(token), reset_sent_at: Time.zone.now})
-    AccountMailer.reset_password(uid: account.specialist_or_user.uid, token: token).deliver_later
+    account.reset_password!
   end
 
   private
@@ -23,9 +22,5 @@ class Accounts::RequestPasswordReset < ApplicationService
 
     WebhookEvent.trigger("specialists.forgotten_password_for_non_account", WebhookEvent::Specialist.data(account.specialist))
     raise Service::Error.new("request_password_reset.application_required")
-  end
-
-  def token
-    @token ||= Token.new
   end
 end
