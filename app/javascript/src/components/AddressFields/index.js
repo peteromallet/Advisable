@@ -66,7 +66,7 @@ const AddressFields = ({ label, name, formik }) => {
         placeholder="Line 2"
         error={line2Error}
       />
-      <Box display={isWidescreen && "flex"}>
+      <Box display={isWidescreen ? "flex" : undefined}>
         <Field
           as={Input}
           marginRight="xxs"
@@ -83,7 +83,7 @@ const AddressFields = ({ label, name, formik }) => {
           marginBottom="xxs"
         />
       </Box>
-      <Box mb="xs" display={isWidescreen && "flex"}>
+      <Box mb="xs" display={isWidescreen ? "flex" : undefined}>
         <Box
           width="100%"
           mb={!isWidescreen && "xxs"}
