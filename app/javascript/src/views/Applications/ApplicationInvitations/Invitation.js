@@ -23,7 +23,7 @@ const InvitationComponent = ({ application, onViewInvitation }) => {
           </LineClamp>
         </Description>
       </Content>
-      <Button onClick={handleView}>
+      <Button type="button" onClick={handleView}>
         View Details
         <svg width="11" height="10" viewBox="0 0 11 10">
           <path

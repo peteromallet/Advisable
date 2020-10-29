@@ -29,7 +29,9 @@ function FullApplicationCard() {
         thorough application
       </Text>
       <Link to="/apply">
-        <Button suffix={<ArrowRight />}>Apply Now</Button>
+        <Button type="button" suffix={<ArrowRight />}>
+          Apply Now
+        </Button>
       </Link>
       <Text mt="12px" fontSize="13px" color="neutral600">
         15 - 20 Minutes

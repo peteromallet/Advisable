@@ -127,16 +127,20 @@ const Tasks = ({ application, match, location, history }) => {
               task and click &quot;Set as trial task&quot;
             </Text>
           </Box>
-          <Button onClick={nextStep} mr="xs">
+          <Button type="button" onClick={nextStep} mr="xs">
             Continue without trial task
           </Button>
-          <Button variant="subtle" onClick={() => setConfirmModal(false)}>
+          <Button
+            type="button"
+            variant="subtle"
+            onClick={() => setConfirmModal(false)}
+          >
             Cancel
           </Button>
         </Box>
       </Modal>
       <Box padding="l">
-        <Button onClick={handleContinue} disabled={!canContinue}>
+        <Button type="button" onClick={handleContinue} disabled={!canContinue}>
           Continue
         </Button>
       </Box>
