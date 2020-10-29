@@ -29,11 +29,11 @@ class Account < ApplicationRecord
   end
 
   def clear_remember_token
-    update_columns(remember_token: nil)
+    update_columns(remember_token: nil) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def generate_remember_token
-    update_columns(remember_token: new_remember_token)
+    update_columns(remember_token: new_remember_token) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def new_remember_token
@@ -51,6 +51,14 @@ class Account < ApplicationRecord
     self.confirmation_token = token
     save(validate: false)
     token
+  end
+
+  def reset_password!
+    token = Token.new
+    self.reset_digest = Token.digest(token)
+    self.reset_sent_at = Time.zone.now
+    save!
+    AccountMailer.reset_password(id: id, token: token).deliver_later
   end
 
   # TODO: AccountMigration - log usage and remove all usages until this can be deleted
