@@ -1,4 +1,4 @@
-import { fireEvent, getByText, waitFor, within } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import generateType from "../../__mocks__/graphqlFields";
 import {
   mockViewer,
@@ -170,7 +170,7 @@ test("can see review", async () => {
   });
   await app.findByText(review.name);
   await app.findByText(`${review.role} at ${review.companyName}`);
-  await app.findByText(`"${review.comment}"`);
+  await app.findByText(review.comment);
 });
 
 test("edit profile info", async () => {
