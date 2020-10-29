@@ -17,7 +17,7 @@ function Wide(props) {
     5: Fifth,
     6: Sixth,
   };
-  const Component = variants[variant] || Sixth;
+  const Component = variants[variant] || First;
   return <Component {...props} />;
 }
 
