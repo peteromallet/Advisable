@@ -74,14 +74,13 @@ function PreviousProjects({ data, isOwner }) {
   });
 
   // Responsivness
-  const isWidescreen = useBreakpoint("mUp");
   const isTablet = useBreakpoint("m");
   const isMobile = useBreakpoint("s");
   const numOfColumns = useMemo(() => {
     if (isMobile) return 1;
     if (isTablet) return 2;
     return 3;
-  }, [isWidescreen, isTablet, isMobile]);
+  }, [isTablet, isMobile]);
 
   const projectCards = state.projects
     .filter(filterProjects(state))
