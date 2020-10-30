@@ -5,12 +5,11 @@ import Mobile from "./Mobile";
 import Tablet from "./Tablet";
 
 function Review(props) {
-  const isMobile = useBreakpoint("s");
-  const isTablet = useBreakpoint("m");
-  if (isMobile) return <Mobile {...props} />;
+  const isWide = useBreakpoint("mUp");
+  const isTablet = useBreakpoint("sUp");
+  if (isWide) return <Wide {...props} />;
   if (isTablet) return <Tablet {...props} />;
-
-  return <Wide {...props} />;
+  return <Mobile {...props} />;
 }
 
 export default Review;
