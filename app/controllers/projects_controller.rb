@@ -5,11 +5,13 @@ class ProjectsController < ApplicationController
   before_action :verify_key, :load_project
 
   def send_invites
-    if project.status == "Brief Confirmed"
+    if ["Open", "Pending"].exclude?(project.sales_status)
+      render json: {error: "Can't send invites: Project is in #{project.sales_status} state."}, status: :unprocessable_entity
+    elsif project.primary_skill.blank?
+      render json: {error: "Can't send invites: Project does not have primary skill defined."}, status: :unprocessable_entity
+    else
       SendApplicationInformationJob.perform_later(project)
       render json: {status: "Invites scheduled to be sent out."}
-    else
-      render json: {error: "Can't send invites. Project not in 'Brief Confirmed' state."}, status: :unprocessable_entity
     end
   end
 
