@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ProjectsController, type: :request do
-  let(:project) { create(:project, status: "Brief Confirmed") }
+  let(:project) { create(:project, sales_status: "Open") }
   let(:headers) { {"ACCEPT" => "application/json"} }
   let(:params) { {project_id: project.uid, key: ENV["PROJECTS_INVITE_KEY"]} }
 
@@ -29,8 +29,18 @@ RSpec.describe ProjectsController, type: :request do
       end
     end
 
-    context "project not in brief confirmed state" do
-      let(:project) { create(:project, status: "Pending") }
+    context "no primary skill" do
+      it "returns unauthorized" do
+        project.primary_skill = nil
+        post "/projects/send_invites", params: params, headers: headers
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(SendApplicationInformationJob).not_to have_been_enqueued
+      end
+    end
+
+    context "project not Open" do
+      let(:project) { create(:project, sales_status: "Won") }
 
       it "returns unprocessable_entity" do
         post "/projects/send_invites", params: params, headers: headers

@@ -8,6 +8,8 @@ RSpec.describe SendApplicationInformationJob do
   let!(:specialist4) { create(:specialist, skills: [project.primary_skill], country: project.user.country) }
   let!(:specialist5) { create(:specialist, country: project.user.country) }
 
+  before { allow_any_instance_of(Project).to receive(:sync_from_airtable) }
+
   it "invites specialists who have appropriate skills" do
     SendApplicationInformationJob.perform_now(project)
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist2.id]})
