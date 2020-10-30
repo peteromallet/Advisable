@@ -115,10 +115,16 @@ class Airtable::Base < Airrecord::Table
       self.class.column_associations.each do |association, columns_hash|
         model.public_send("build_#{association}") if model.public_send(association).blank?
         association = model.public_send(association)
+
         columns_hash.each do |column, attr|
           association.public_send("#{attr}=", self[column])
         end
-        association.save
+
+        next if association.save
+
+        message = "Failed to sync association columns of #{association} on #{record_type} #{id} \n#{association.errors.full_messages}"
+        Rails.logger.warn(message)
+        report.failed(id, record_type, association.errors.full_messages) if report
       end
 
       self.class.associations.each do |column, options|
@@ -136,8 +142,7 @@ class Airtable::Base < Airrecord::Table
         return model
       end
 
-      message =
-        "Failed to sync #{record_type} #{id} \n#{model.errors.full_messages}"
+      message = "Failed to sync #{record_type} #{id} \n#{model.errors.full_messages}"
       Rails.logger.warn(message)
       report.failed(id, record_type, model.errors.full_messages) if report
       return nil
