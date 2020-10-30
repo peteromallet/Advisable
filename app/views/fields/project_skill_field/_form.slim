@@ -2,7 +2,7 @@
 div class="field-unit__label"
   strong Skills
 
-div class="field-unit__field field-unit--has-many" id="ProjectSkills"
+div class="field-unit__field" id="ProjectSkills"
   = f.label field.attribute, for: "#{f.object_name}_#{field.attribute_key}"
   = f.select(field.attribute_key, nil, {}, multiple: true, class: "ProjectSkillsSelect") do
     = options_for_select(field.associated_resource_options, field.selected_options)
@@ -19,9 +19,6 @@ javascript:
     $(primarySelect).selectize()
     const skillsSelectized = $(skillsSelect).selectize({
       onChange: updatePrimarySkillOptions,
-      onItemRemove: (v) => {
-        primarySelect.selectize.removeOption(v)
-      }
     })
     
 
@@ -39,7 +36,4 @@ javascript:
 
       primarySelect.selectize.refreshOptions(false)
     }
-
-
-    skillsSelect.addEventListener("change", updatePrimarySkillOptions)
   });
