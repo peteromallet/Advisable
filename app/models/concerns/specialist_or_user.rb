@@ -6,7 +6,7 @@ module SpecialistOrUser
   included do
     self.ignored_columns = Account::MIGRATED_COLUMNS
     include Tutorials
-    belongs_to :account
+    belongs_to :account, dependent: :destroy
   end
 
   [:find_by_email, :find_by_remember_token].each do |method|
