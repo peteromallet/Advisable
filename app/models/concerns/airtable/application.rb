@@ -71,12 +71,12 @@ class Airtable::Application < Airtable::Base
 
     if fields['Answer 1']
       questions <<
-        { question: fields['Question 1'], answer: fields['Answer 1'] }
+        {question: fields['Question 1'], answer: fields['Answer 1']}
     end
 
     if fields['Answer 2']
       questions <<
-        { question: fields['Question 2'], answer: fields['Answer 2'] }
+        {question: fields['Question 2'], answer: fields['Answer 2']}
     end
 
     # If the application questions is not equal to the questions array then set
@@ -97,8 +97,6 @@ class Airtable::Application < Airtable::Base
       return 'Application Accepted'
     end
 
-    # Sync any records with a status of To Be Invited as "Invited To Apply"
-    return 'Invited To Apply' if status == 'To Be Invited'
     status
   end
 
