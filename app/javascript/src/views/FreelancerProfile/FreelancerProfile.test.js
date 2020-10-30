@@ -5,7 +5,11 @@ import {
   mockQuery,
   mockMutation,
 } from "../../testHelpers/apolloMocks";
-import { renderRoute, mockData } from "../../testHelpers/test-utils";
+import {
+  renderRoute,
+  mockData,
+  mockBreakpoint,
+} from "../../testHelpers/test-utils";
 import { GET_COUNTRIES, GET_PROFILE, UPDATE_PROFILE } from "./queries";
 import GET_PROJECT from "src/components/PreviousProjectDetails/getProject.js";
 
@@ -202,7 +206,8 @@ test("can open previous project's dialog window", async () => {
   await app.findByText(/project description/i);
 });
 
-test("can see review", async () => {
+test("can see wide review", async () => {
+  mockBreakpoint("mUp");
   const graphQLMocks = [
     mockViewer(null),
     mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
@@ -214,6 +219,36 @@ test("can see review", async () => {
   await app.findByText(review.name);
   await app.findByText(`${review.role} at ${review.companyName}`);
   await app.findByText(review.comment);
+});
+
+test("can see tablet review", async () => {
+  mockBreakpoint("sUp");
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+  ];
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  await app.findByText(review.name);
+  await app.findByText(`${review.role} at ${review.companyName}`);
+  await app.findByText(`"${review.comment}"`);
+});
+
+test("can see mobile review", async () => {
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+  ];
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  await app.findByText(review.name);
+  await app.findByText(review.role);
+  await app.findByText(review.companyName);
+  await app.findByText(`"${review.comment}"`);
 });
 
 test("edit profile info", async () => {
