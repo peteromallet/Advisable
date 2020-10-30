@@ -1,0 +1,5 @@
+div class="field-unit__label"
+  = f.label field.attribute
+
+div class="field-unit__field"
+  = f.select(field.attribute, options_from_collection_for_select( field.selectable_options, :first,:last, field.data.presence))
