@@ -23,6 +23,8 @@ module Admin
           end
         end
       end
+
+      requested_resource.sync_to_airtable
     end
 
     # Define a custom finder by overriding the `find_resource` method:
