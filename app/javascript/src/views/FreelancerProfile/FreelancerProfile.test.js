@@ -158,6 +158,28 @@ test("can see previous project", async () => {
   await app.findByText(profileProject.clientName);
 });
 
+test("no previous projects to display", async () => {
+  const specialist = mockData.specialist({
+    name: "John Doe",
+    projectSkills: {
+      __typename: "ProjectSkillsConnection",
+      nodes: skills,
+    },
+    industries,
+    reviews: [review],
+    profileProjects: [],
+  });
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+  ];
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  await app.findByText("No Projects");
+});
+
 test("can open previous project's dialog window", async () => {
   const graphQLMocks = [
     mockViewer(null),
