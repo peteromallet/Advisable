@@ -7,17 +7,6 @@ module SpecialistOrUser
     self.ignored_columns = Account::MIGRATED_COLUMNS
     include Tutorials
     belongs_to :account
-    before_validation :ensure_account_exists
-  end
-
-  def ensure_account_exists
-    return if self[:email].blank?
-    if account.blank?
-      self.account = Account.find_or_create_by!(email: self[:email])
-    elsif account.new_record?
-      account.email = self[:email]
-      account.save!
-    end
   end
 
   [:find_by_email, :find_by_remember_token].each do |method|

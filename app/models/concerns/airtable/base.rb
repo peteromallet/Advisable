@@ -113,7 +113,7 @@ class Airtable::Base < Airrecord::Table
       end
 
       self.class.column_associations.each do |association, columns_hash|
-        model.public_send("create_#{association}") if model.public_send(association).blank?
+        model.public_send("build_#{association}") if model.public_send(association).blank?
         association = model.public_send(association)
         columns_hash.each do |column, attr|
           association.public_send("#{attr}=", self[column])

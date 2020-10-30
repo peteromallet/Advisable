@@ -29,8 +29,6 @@ class Airtable::ClientContact < Airtable::Base
   sync_association 'Owner', to: :sales_person
 
   sync_data do |user|
-    user.ensure_account_exists
-
     if self['Address']
       # sync the address
       user.address = Address.parse(self['Address']).to_h
