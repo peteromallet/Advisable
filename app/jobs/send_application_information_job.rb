@@ -7,6 +7,7 @@ class SendApplicationInformationJob < ApplicationJob
 
   def perform(project)
     @project = project
+    project.sync_from_airtable if project.airtable_id
 
     specialists = Specialist.
       where(automated_invitations_subscription: true).
