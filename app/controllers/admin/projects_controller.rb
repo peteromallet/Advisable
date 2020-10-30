@@ -15,8 +15,13 @@ module Admin
 
       if params[:primary_skill_id]
         skill = Skill.find(params[:primary_skill_id])
-        requested_resource.primary_skill = skill
-        requested_resource.save
+        requested_resource.project_skills.each do |project_skill|
+          if project_skill.skill_id.to_s == params[:primary_skill_id]
+            project_skill.update(primary: true)
+          else
+            project_skill.update(primary: false)
+          end
+        end
       end
     end
 
