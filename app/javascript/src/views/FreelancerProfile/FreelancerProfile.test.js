@@ -99,6 +99,27 @@ test("can filter previous projects by skill and clear filters", async () => {
   expect(numOfCards).toBe(2);
 });
 
+test("no filtered projects to display", async () => {
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+  ];
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  const skill = skills[2].name;
+  const industry = industries[0].name;
+  const skillFilterTag = await app.findByTestId(`skills-filter-tag-${skill}`);
+  const industryFilterTag = await app.findByTestId(
+    `industries-filter-tag-${industry}`,
+  );
+  fireEvent.click(skillFilterTag);
+  fireEvent.click(industryFilterTag);
+  await app.findByText(`Showing ${skill} projects with ${industry} companies`);
+  await app.findByText("No Projects");
+});
+
 test("can filter previous projects by industry and clear filters", async () => {
   const graphQLMocks = [
     mockViewer(null),
