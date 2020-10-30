@@ -14,14 +14,9 @@ module Admin
       super
 
       if params[:primary_skill_id]
-        skill = Skill.find(params[:primary_skill_id])
-        requested_resource.project_skills.each do |project_skill|
-          if project_skill.skill_id.to_s == params[:primary_skill_id]
-            project_skill.update(primary: true)
-          else
-            project_skill.update(primary: false)
-          end
-        end
+        requested_resource.project_skills.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
+        project_skill = requested_resource.project_skills.find_by(skill_id: params[:primary_skill_id])
+        project_skill.update(primary: true)
       end
 
       requested_resource.sync_to_airtable
