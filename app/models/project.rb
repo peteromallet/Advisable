@@ -11,6 +11,7 @@ class Project < ApplicationRecord
   include Uid
   include StatusMap
   include Airtable::Syncable
+  include Project::Constants
 
   has_many :applications, dependent: :destroy
   has_many :bookings, through: :applications
@@ -26,7 +27,7 @@ class Project < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :sales_person, optional: true
 
-  validates :service_type, inclusion: {in: %w[Assisted Self-Service Consultation]}, allow_nil: true
+  validates :service_type, inclusion: {in: SERVICE_TYPES}, allow_nil: true
   validates :industry_experience_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
   validates :location_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
   validates :likely_to_hire, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true

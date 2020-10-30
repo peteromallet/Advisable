@@ -10,6 +10,18 @@ module Admin
     #     per(10)
     # end
 
+    def update
+      super
+
+      if params[:primary_skill_id]
+        requested_resource.project_skills.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
+        project_skill = requested_resource.project_skills.find_by(skill_id: params[:primary_skill_id])
+        project_skill.update(primary: true)
+      end
+
+      requested_resource.sync_to_airtable
+    end
+
     # Define a custom finder by overriding the `find_resource` method:
     # def find_resource(param)
     #   Project.find_by!(slug: param)
@@ -21,6 +33,7 @@ module Admin
     def resource_params
       params.require(:project).permit(
         *dashboard.permitted_attributes,
+        skill_ids: [],
         goals: [],
         questions: [],
         required_characteristics: [],

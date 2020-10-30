@@ -13,11 +13,18 @@ class ProjectDashboard < Administrate::BaseDashboard
     uid: Field::String,
     name: Field::String,
     sourcing: Field::Boolean,
-    status: Field::String,
+    status: Field::Select.with_options(collection: Project::STATUSES),
+    service_type: Field::Select.with_options(collection: Project::SERVICE_TYPES),
+    sales_status: Field::Select.with_options(collection: Project::SALES_STATUSES),
     description: Field::Text,
     goals: TextArrayField,
+    questions: TextArrayField.with_options({max: 2}),
+    skills: ProjectSkillField,
+    user: Field::BelongsTo,
+    industry_experience_importance: LabelledSelectField.with_options({collection: Project::INDUSTRY_EXPERIENCE_IMPORTANCE}),
+    location_importance: LabelledSelectField.with_options({collection: Project::LOCATION_IMPORTANCE}),
+    likely_to_hire: LabelledSelectField.with_options({collection: Project::LIKELY_TO_HIRE}),
     primary_skill: Field::HasOne.with_options(class_name: Skill),
-    questions: TextArrayField,
     required_characteristics: TextArrayField,
     characteristics: TextArrayField,
     company_description: Field::Text,
@@ -39,15 +46,25 @@ class ProjectDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
-    id
-    name
+    uid
+    airtable_id
     status
-    deposit
-    sourcing
+    sales_status
+    user
+    primary_skill
+    skills
+    industry_experience_importance
+    location_importance
+    likely_to_hire
+    characteristics
+    required_characteristics
+    goals
+    questions
+    company_description
     description
     specialist_description
-    company_description
-    airtable_id
+    service_type
+    deposit
     created_at
     updated_at
     applications
@@ -57,13 +74,21 @@ class ProjectDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    name
     status
-    sourcing
-    description
+    sales_status
+    service_type
+    user
+    skills
+    industry_experience_importance
+    location_importance
+    likely_to_hire
     goals
-    required_characteristics
     characteristics
+    required_characteristics
+    questions
+    company_description
+    description
+    specialist_description
     deposit
   ].freeze
 
