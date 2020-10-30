@@ -11,39 +11,7 @@ class Project < ApplicationRecord
   include Uid
   include StatusMap
   include Airtable::Syncable
-
-  STATUSES = [
-    "Project Created",
-    "Call Scheduled",
-    "Candidate Proposed",
-    "Candidate Accepted",
-    "Brief Confirmed",
-    "Brief Pending Confirmation",
-    "Booking Request Sent",
-    "Proposal Received",
-    "Interview Scheduled",
-    "Interview Completed",
-    "Booking Confirmed",
-    "Candidates Accepted",
-    "Candidates Sourcing",
-    "Project Qualified",
-    "Draft",
-    "Pending Advisable Confirmation"
-  ].freeze
-
-  SERVICE_TYPES = [
-    "Assisted",
-    "Self-Service",
-    "Consultation"
-  ].freeze
-
-  SALES_STATUSES = %w[
-    Open
-    Won
-    Lost
-    Pending
-    Paused
-  ].freeze
+  include Project::Constants
 
   has_many :applications, dependent: :destroy
   has_many :bookings, through: :applications

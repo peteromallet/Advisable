@@ -21,27 +21,9 @@ class ProjectDashboard < Administrate::BaseDashboard
     questions: TextArrayField.with_options({max: 2}),
     skills: ProjectSkillField,
     user: Field::BelongsTo,
-    industry_experience_importance: LabelledSelectField.with_options({
-      collection: {
-        "Not Important" => 0,
-        "Not Sure" => 1,
-        "Important" => 2,
-      }
-    }),
-    location_importance: LabelledSelectField.with_options({
-      collection: {
-        "Not Important" => 0,
-        "Not Sure" => 1,
-        "Important" => 2,
-      }
-    }),
-    likely_to_hire: LabelledSelectField.with_options({
-      collection: {
-        "Not Likely" => 0,
-        "Maybe" => 1,
-        "Very Likely" => 2,
-      }
-    }),
+    industry_experience_importance: LabelledSelectField.with_options({collection: Project::INDUSTRY_EXPERIENCE_IMPORTANCE}),
+    location_importance: LabelledSelectField.with_options({collection: Project::LOCATION_IMPORTANCE}),
+    likely_to_hire: LabelledSelectField.with_options({collection: Project::LIKELY_TO_HIRE}),
     primary_skill: Field::HasOne.with_options(class_name: Skill),
     required_characteristics: TextArrayField,
     characteristics: TextArrayField,
