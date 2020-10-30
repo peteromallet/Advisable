@@ -30,8 +30,6 @@ class Airtable::Specialist < Airtable::Base
   sync_column 'Community Score', to: :community_score
 
   sync_data do |specialist|
-    specialist.ensure_account_exists
-
     if self['Bank Holder Address']
       # sync the bank holder address
       specialist.bank_holder_address =
