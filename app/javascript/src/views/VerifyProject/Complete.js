@@ -1,4 +1,5 @@
 import React from "react";
+import { object, string } from "yup";
 import { Formik, Form } from "formik";
 import { motion } from "framer-motion";
 import { Lock } from "@styled-icons/feather";
@@ -9,6 +10,12 @@ import { useCreateUserFromProjectVerification } from "./queries";
 import MoreSpecialists from "./MoreSpecialists";
 import { alphanumeric } from "../../utilities/generateID";
 import useScrollToTop from "../../hooks/useScrollToTop";
+
+const validationSchema = object().shape({
+  email: string()
+    .required("Please enter your email")
+    .email("Please enter a valid email address"),
+});
 
 function ValidationComplete({ data }) {
   useScrollToTop();
@@ -32,7 +39,15 @@ function ValidationComplete({ data }) {
     });
 
     if (errors) {
-      formik.setStatus("Something went wrong");
+      const errorCode = errors[0].extensions?.code;
+      if (errorCode === "nonCorporateEmail") {
+        formik.setFieldError(
+          "email",
+          "This domain is not allowed, please use a work email address.",
+        );
+      } else {
+        formik.setStatus("Something went wrong");
+      }
     } else {
       const {
         firstName,
@@ -101,7 +116,11 @@ function ValidationComplete({ data }) {
               {previousProject.primaryIndustry.name} space, backed by a no
               questions asked money-back guarantee.
             </Text>
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={handleSubmit}
+              validationSchema={validationSchema}
+            >
               <Form>
                 <Stack spacing="m">
                   <FormField name="email" placeholder="Email address" />
