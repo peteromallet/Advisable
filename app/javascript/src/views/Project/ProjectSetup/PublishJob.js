@@ -30,12 +30,12 @@ export default function PublishJob({ data }) {
   const companyType = user.companyType;
 
   const handlePublish = async () => {
-    if (project.status === "DRAFT") {
-      await publishProject({ variables: { input: { id } } });
-      dataLayer.push({ event: "projectPublished", projectId: id });
+    if (project.status === "PENDING_REVIEW") {
+      history.push(`/projects/${id}/setup/published`);
     }
 
-    history.push(`/projects/${id}/setup/published`);
+    await publishProject({ variables: { input: { id } } });
+    dataLayer.push({ event: "projectPublished", projectId: id });
   };
 
   return (
