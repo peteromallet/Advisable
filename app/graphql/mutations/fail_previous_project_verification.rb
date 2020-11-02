@@ -6,20 +6,16 @@ class Mutations::FailPreviousProjectVerification < Mutations::BaseMutation
 
   def authorized?(previous_project:, reason:)
     return false unless context[:oauth_viewer]
+
     project = PreviousProject.find_by_uid!(previous_project)
     context[:oauth_viewer].can_validate_project?(project)
   end
 
   def resolve(previous_project:, reason:)
     project = PreviousProject.find_by_uid!(previous_project)
-    project.update(
-      validation_status: 'Validation Failed', validation_failed_reason: reason
-    )
-    SetPreviousProjectContactImageJob.perform_later(
-      project.id,
-      context[:oauth_viewer].image
-    )
+    project.update(validation_status: 'Validation Failed', validation_failed_reason: reason)
+    AttachImageJob.perform_later(project, context[:oauth_viewer].image)
 
-    { previous_project: project }
+    {previous_project: project}
   end
 end
