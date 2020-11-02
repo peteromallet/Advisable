@@ -45,7 +45,7 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
     )
     user.save!
     user.sync_to_airtable
-    SetUserImageJob.perform_later(user.id, viewer.image)
+    AttachImageJob.perform_later(user, viewer.image)
     {user: user}
   rescue ActiveRecord::RecordInvalid
     raise unless account.errors.added?(:email, "has already been taken")

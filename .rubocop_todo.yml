@@ -360,14 +360,6 @@ Naming/VariableNumber:
   Exclude:
     - 'app/models/address.rb'
 
-# Offense count: 6
-Security/Open:
-  Exclude:
-    - 'app/jobs/set_previous_project_contact_image_job.rb'
-    - 'app/jobs/set_sales_person_image_job.rb'
-    - 'app/jobs/set_user_image_job.rb'
-    - 'app/services/test_data.rb'
-
 # Offense count: 3
 # Configuration parameters: AllowedChars.
 Style/AsciiComments:

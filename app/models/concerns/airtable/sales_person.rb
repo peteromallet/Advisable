@@ -21,12 +21,13 @@ class Airtable::SalesPerson < Airtable::Base
   private
 
   def sync_image(sales_person)
-    return unless self['Image'].present?
+    return if self['Image'].blank?
+
     attached_image = sales_person.image
     filename = attached_image.attached? ? attached_image.filename.to_s : nil
     airtable_filename = self['Image'].try(:first).try(:[], 'filename')
     return if filename == airtable_filename
-    url = self['Image'].first['url']
-    SetSalesPersonImageJob.perform_later(id, url)
+
+    AttachImageJob.perform_later(sales_person, self['Image'].first['url'])
   end
 end
