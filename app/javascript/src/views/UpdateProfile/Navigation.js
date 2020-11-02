@@ -1,5 +1,11 @@
 import * as React from "react";
-import { User, Award, MapPin, DollarSign } from "@styled-icons/feather";
+import {
+  PersonCircle,
+  Card,
+  Map,
+  Copy,
+  LockClosed,
+} from "@styled-icons/ionicons-outline";
 import Sticky from "../../components/Sticky";
 import { useBreakpoint } from "@advisable/donut";
 
@@ -13,17 +19,20 @@ const Navigation = () => {
     <Layout.Sidebar size="s">
       <Sticky enabled={mobileAndUp} offset={98}>
         <NavigationMenu>
-          <NavigationMenu.Item to="/profile" icon={<User />} exact>
+          <NavigationMenu.Item to="/profile" icon={<PersonCircle />} exact>
             Introduction
           </NavigationMenu.Item>
-          <NavigationMenu.Item to="/profile/references" icon={<Award />}>
+          <NavigationMenu.Item to="/profile/references" icon={<Copy />}>
             Previous Projects
           </NavigationMenu.Item>
-          <NavigationMenu.Item to="/profile/location" icon={<MapPin />}>
+          <NavigationMenu.Item to="/profile/location" icon={<Map />}>
             Location
           </NavigationMenu.Item>
-          <NavigationMenu.Item to="/profile/payments" icon={<DollarSign />}>
+          <NavigationMenu.Item to="/profile/payments" icon={<Card />}>
             Payment Settings
+          </NavigationMenu.Item>
+          <NavigationMenu.Item to="/profile/password" icon={<LockClosed />}>
+            Password
           </NavigationMenu.Item>
         </NavigationMenu>
       </Sticky>

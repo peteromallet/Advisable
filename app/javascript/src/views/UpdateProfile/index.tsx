@@ -5,6 +5,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Navigation from "./Navigation";
 import Profile from "./Profile";
 import Location from "./Location";
+import Password from "./Password";
 import References from "./References";
 import PaymentSettings from "./PaymentSettings";
 
@@ -27,6 +28,7 @@ const UpdateProfile = ({ match }) => {
           <Route path="/profile/location" component={Location} />
           <Route path="/profile/references" component={References} />
           <Route path="/profile/payments" component={PaymentSettings} />
+          <Route path="/profile/password" component={Password} />
           {/* If we are on desktop then redirect user to /profile/introduction
             if their URL is exactly /profile */}
           {!isMobile && (

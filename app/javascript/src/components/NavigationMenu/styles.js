@@ -7,11 +7,12 @@ import { ChevronRight } from "@styled-icons/feather";
 
 export const PrefixIcon = styled.div`
   color: ${theme.colors.neutral500};
+
   svg {
     width: 24px;
     height: 24px;
     stroke-width: 2;
-    margin-right: 8px;
+    margin-right: 12px;
   }
 `;
 
@@ -19,6 +20,7 @@ export const ArrowIconWrapper = styled.div`
   display: none;
   margin-left: auto;
   color: #a3a3a6;
+
   svg {
     width: 20px;
     height: 20px;
@@ -36,6 +38,7 @@ export const StyledNavigationMenuItem = styled(NavLink)`
   border-radius: 20px;
   align-items: center;
   padding-left: 16px;
+  padding-right: 12px;
   margin-bottom: 4px;
   margin-left: -8px;
   color: ${theme.colors.neutral500};
@@ -53,7 +56,6 @@ export const StyledNavigationMenuItem = styled(NavLink)`
       color: ${theme.colors.blue500};
     }
   }
-  padding-right: 12px;
 
   @media (max-width: 900px) {
     height: auto;
