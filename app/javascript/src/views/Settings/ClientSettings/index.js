@@ -6,7 +6,7 @@ import { useBreakpoint } from "@advisable/donut";
 import Sidebar from "./Sidebar";
 import PaymentSettings from "./PaymentSettings";
 import Invoices from "./Invoices";
-import Account from "./Account";
+import Password from "./Password";
 import Invoice from "./Invoices/Invoice";
 
 // Renders the settings view for a client user type.
@@ -24,7 +24,7 @@ const ClientSettings = ({ match }) => {
           <Route path="/settings/payments" component={PaymentSettings} />
           <Route path="/settings/invoices" exact component={Invoices} />
           <Route path="/settings/invoices/:invoice_id" component={Invoice} />
-          <Route path="/settings/account" component={Account} />
+          <Route path="/settings/password" component={Password} />
           {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
           {breakpointS && (
