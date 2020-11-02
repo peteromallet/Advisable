@@ -3,6 +3,8 @@ query {
     ... on Specialist {
       id
       airtableId
+      firstName
+      lastName
       email
       bio
       skills {

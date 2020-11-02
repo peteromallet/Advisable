@@ -29,6 +29,8 @@ const Profile = () => {
   const [profilePhoto, setProfilePhoto] = React.useState(null);
 
   const initialValues = {
+    firstName: get(data, "viewer.firstName"),
+    lastName: get(data, "viewer.lastName"),
     email: get(data, "viewer.email"),
     bio: get(data, "viewer.bio"),
     hourlyRate: get(data, "viewer.hourlyRate") / 100.0,
@@ -47,6 +49,8 @@ const Profile = () => {
 
   const handleSubmit = async (values, formik) => {
     submitUpdate({
+      firstName: values.firstName,
+      lastName: values.lastName,
       email: values.email,
       bio: values.bio,
       hourlyRate: values.hourlyRate * 100,
@@ -102,10 +106,16 @@ const Profile = () => {
               />
             </Box>
             <Box height={1} bg="neutral100" my="l" />
-            <FormField
-              name="email"
-              label="Email"
-            />
+            <Box display="flex">
+              <Box width="50%" paddingRight="xs">
+                <FormField name="firstName" label="First Name" />
+              </Box>
+              <Box width="50%" paddingLeft="xs">
+                <FormField name="lastName" label="Last Name" />
+              </Box>
+            </Box>
+            <Box height={1} bg="neutral100" my="l" />
+            <FormField name="email" label="Email" />
             <Box height={1} bg="neutral100" my="l" />
             <FormField
               as={Textarea}
