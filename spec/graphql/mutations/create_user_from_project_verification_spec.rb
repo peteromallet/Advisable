@@ -71,4 +71,14 @@ RSpec.describe Mutations::CreateUserFromProjectVerification do
       expect(error).to eq('emailTaken')
     end
   end
+
+  context "when no email" do
+    let(:email) { "" }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
+      error = response["errors"].first["extensions"]["code"]
+      expect(error).to eq("emailBlank")
+    end
+  end
 end
