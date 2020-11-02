@@ -55,6 +55,8 @@ test("User can update their profile", async () => {
       mockMutation(
         UPDATE_PROFILE,
         {
+          firstName: "Angela",
+          lastName: "Noelle",
           email: newEmail,
           bio: newBio,
           hourlyRate: 10000,
@@ -66,6 +68,8 @@ test("User can update their profile", async () => {
             __typename: "UpdateProfilePayload",
             specialist: {
               ...specialist,
+              firstName: "Anela",
+              lastName: "Noelle",
               email: newEmail,
               bio: newBio,
               skills: [design, development],
@@ -82,6 +86,12 @@ test("User can update their profile", async () => {
   const email = await screen.findByLabelText(/Email/i)
   user.clear(email)
   user.type(email, newEmail)
+  const firstName = await screen.findByLabelText(/First Name/i)
+  user.clear(firstName)
+  user.type(firstName, "Angela")
+  const lastName = await screen.findByLabelText(/Last Name/i)
+  user.clear(lastName)
+  user.type(lastName, "Noelle")
   const rate = screen.getByLabelText(/hourly rate/i);
   fireEvent.change(rate, { target: { value: "100" } });
   const skills = screen.getByPlaceholderText(/online marketing/i);

@@ -5,6 +5,8 @@ export default gql`
     updateProfile(input: $input) {
       specialist {
         id
+        firstName
+        lastName
         email
         bio
         city

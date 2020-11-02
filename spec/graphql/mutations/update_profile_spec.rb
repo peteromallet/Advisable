@@ -11,7 +11,9 @@ RSpec.describe Mutations::UpdateProfile do
     <<-GRAPHQL
     mutation {
       updateProfile(input: {
-        email: "staging+dwight2@advisable.com",
+        firstName: "Angela",
+        lastName: "Noelle",
+        email: "staging+angela@advisable.com",
         bio: "This is the bio",
         skills: ["#{skill.name}"],
         city: "Dublin",
@@ -19,6 +21,8 @@ RSpec.describe Mutations::UpdateProfile do
         remote: true
       }) {
         specialist {
+          firstName
+          lastName
           email
           bio
           city
@@ -43,9 +47,19 @@ RSpec.describe Mutations::UpdateProfile do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
   end
 
-  it 'updates the email' do
-    email = response['data']['updateProfile']['specialist']['email']
-    expect(email).to eq('staging+dwight2@advisable.com')
+  it "updates first name" do
+    first_name = response["data"]["updateProfile"]["specialist"]["firstName"]
+    expect(first_name).to eq("Angela")
+  end
+
+  it "updates last name" do
+    last_name = response["data"]["updateProfile"]["specialist"]["lastName"]
+    expect(last_name).to eq("Noelle")
+  end
+
+  it "updates the email" do
+    email = response["data"]["updateProfile"]["specialist"]["email"]
+    expect(email).to eq("staging+angela@advisable.com")
   end
 
   it 'updates the bio' do

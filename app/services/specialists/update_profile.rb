@@ -10,7 +10,7 @@ class Specialists::UpdateProfile < ApplicationService
 
   def call
     specialist.assign_attributes(assignable_attributes)
-    update_email
+    update_account
     attach_avatar
     attach_resume
     update_skills
@@ -42,9 +42,8 @@ class Specialists::UpdateProfile < ApplicationService
     )
   end
 
-  def update_email
-    return unless attributes[:email]
-    specialist.account.update(email: attributes[:email])
+  def update_account
+    specialist.account.update(attributes.slice(:email, :first_name, :last_name))
   end
 
   def attach_avatar
