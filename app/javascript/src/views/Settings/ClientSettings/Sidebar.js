@@ -1,7 +1,7 @@
 import React from "react";
 import { padding } from "styled-system";
 import { motion } from "framer-motion";
-import { CreditCard, FileText } from "@styled-icons/feather";
+import { Card, Document, LockClosed } from "@styled-icons/ionicons-outline";
 import NavigationMenu from "../../../components/NavigationMenu";
 import styled from "styled-components";
 import { Text, useBreakpoint } from "@advisable/donut";
@@ -66,17 +66,14 @@ const SettingsSidebar = () => {
           Settings
         </Text>
         <NavigationMenu title="Settings">
-          <NavigationMenu.Item
-            to="/settings/payments"
-            icon={<CreditCard size={20} strokeWidth={2} />}
-          >
+          <NavigationMenu.Item to="/settings/payments" icon={<Card />}>
             Payments
           </NavigationMenu.Item>
-          <NavigationMenu.Item
-            to="/settings/invoices"
-            icon={<FileText size={20} strokeWidth={2} />}
-          >
+          <NavigationMenu.Item to="/settings/invoices" icon={<Document />}>
             Invoices
+          </NavigationMenu.Item>
+          <NavigationMenu.Item to="/settings/password" icon={<LockClosed />}>
+            Password
           </NavigationMenu.Item>
         </NavigationMenu>
       </Sidebar>

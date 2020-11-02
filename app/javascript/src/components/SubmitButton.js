@@ -5,7 +5,7 @@ import { useFormikContext } from "formik";
 // The SubmitButton component is a simple wrapper around the Donut Button component
 // that hooks into the formik state and adds the loading indicator based on the formik
 // isSubmitting state.
-function SubmitButton(props) {
+function SubmitButton({ disableUntilValid, ...props }) {
   const formik = useFormikContext();
 
   const handleClick = (e) => {
@@ -19,6 +19,7 @@ function SubmitButton(props) {
       type="submit"
       onClick={handleClick}
       loading={formik.isSubmitting}
+      disabled={disableUntilValid ? !formik.isValid : null}
       {...props}
     />
   );
