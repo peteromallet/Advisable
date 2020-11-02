@@ -62,11 +62,6 @@ Layout/EmptyComment:
   Exclude:
     - 'app/graphql/types/user.rb'
 
-# Offense count: 148
-# Cop supports --auto-correct.
-Layout/EmptyLineAfterGuardClause:
-  Enabled: false
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Layout/EmptyLineAfterMagicComment:
