@@ -77,6 +77,10 @@ class Project < ApplicationRecord
     characteristics - required_characteristics
   end
 
+  def assisted?
+    service_type == "Assisted"
+  end
+
   # Returns an array of applications that are in the 'hiring pipeline' stages.
   def candidates
     query = applications.not_hidden
