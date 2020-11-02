@@ -48,9 +48,9 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
     AttachImageJob.perform_later(user, viewer.image)
     {user: user}
   rescue ActiveRecord::RecordInvalid
-    if account.errors.added?(:email, "has already been taken")
+    if account.errors.added?(:email, :taken, value: email)
       raise ApiError::InvalidRequest.new("emailTaken", "The email #{email} is already used by another account.")
-    elsif account.errors.added?(:email, "can't be blank")
+    elsif account.errors.added?(:email, :blank)
       raise ApiError::InvalidRequest.new("emailBlank", "Email is required.")
     else
       raise
