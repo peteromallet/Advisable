@@ -3,6 +3,8 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
   argument :primarily_freelance, Boolean, required: false
   argument :hourly_rate, Int, required: false
   argument :number_of_projects, String, required: false
+  argument :first_name, String, required: false
+  argument :last_name, String, required: false
   argument :email, String, required: false
   argument :bio, String, required: false
   argument :skills, [String], required: false
