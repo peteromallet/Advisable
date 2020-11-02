@@ -106,20 +106,16 @@ const Profile = () => {
               />
             </Box>
             <Box height={1} bg="neutral100" my="l" />
-            <FormField
-              name="firstName"
-              label="First Name"
-            />
+            <Box display="flex">
+              <Box width="50%" paddingRight="xs">
+                <FormField name="firstName" label="First Name" />
+              </Box>
+              <Box width="50%" paddingLeft="xs">
+                <FormField name="lastName" label="Last Name" />
+              </Box>
+            </Box>
             <Box height={1} bg="neutral100" my="l" />
-            <FormField
-              name="lastName"
-              label="Last Name"
-            />
-            <Box height={1} bg="neutral100" my="l" />
-            <FormField
-              name="email"
-              label="Email"
-            />
+            <FormField name="email" label="Email" />
             <Box height={1} bg="neutral100" my="l" />
             <FormField
               as={Textarea}
