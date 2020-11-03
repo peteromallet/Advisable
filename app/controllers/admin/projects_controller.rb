@@ -40,8 +40,7 @@ module Admin
       return if params[:primary_skill_id].blank?
 
       resource.project_skills.where(primary: true).update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
-      project_skill = resource.project_skills.find_by(skill_id: params[:primary_skill_id])
-      project_skill.update(primary: true)
+      resource.project_skills.find_by(skill_id: params[:primary_skill_id]).update(primary: true)
     end
 
     # Define a custom finder by overriding the `find_resource` method:
