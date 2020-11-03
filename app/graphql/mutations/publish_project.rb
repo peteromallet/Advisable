@@ -11,7 +11,7 @@ class Mutations::PublishProject < Mutations::BaseMutation
   # TODO: Remove status_map.
   # TODO: Ideally we would have some kind of published_at attribute here that
   # we would rely on instead.
-  ALLOWED_STATUSES = [:draft, "Brief Pending Confirmation"].freeze
+  ALLOWED_STATUSES = ["Draft", "Brief Pending Confirmation"].freeze
 
   def authorized?(id:)
     project = Project.find_by_uid_or_airtable_id!(id)
@@ -33,7 +33,7 @@ class Mutations::PublishProject < Mutations::BaseMutation
 
   def resolve(id:)
     project = Project.find_by_uid_or_airtable_id!(id)
-    project.status = project.assisted? ? "Brief Confirmed" : :pending_review
+    project.status = project.assisted? ? "Brief Confirmed" : "Pending Advisable Confirmation"
     project.sales_status = 'Open'
     project.sourcing = true
     project.sync_to_airtable if project.save

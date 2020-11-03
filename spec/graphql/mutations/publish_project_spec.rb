@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::PublishProject do
-  let(:project) { create(:project, status: :draft) }
-  let(:context) { { current_user: project.user } }
+  let(:project) { create(:project, status: "Draft") }
+  let(:context) { {current_user: project.user} }
 
   let(:query) do
     <<-GRAPHQL
@@ -23,14 +23,14 @@ RSpec.describe Mutations::PublishProject do
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end
 
-  it 'sets the status to pending_review' do
+  it 'sets the status to Pending Advisable Confirmation' do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       project.reload.status
-    }.from(:draft).to(:pending_review)
+    }.from("Draft").to("Pending Advisable Confirmation")
   end
 
   context 'When logged in as another user' do
-    let(:context) { { current_user: create(:user) } }
+    let(:context) { {current_user: create(:user)} }
 
     it 'returns a not authorized error' do
       response = AdvisableSchema.execute(query, context: context)
@@ -40,7 +40,7 @@ RSpec.describe Mutations::PublishProject do
   end
 
   context 'when not logged in' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it 'returns a not authorized error' do
       response = AdvisableSchema.execute(query, context: context)
@@ -50,7 +50,7 @@ RSpec.describe Mutations::PublishProject do
   end
 
   context 'when the project status is not draft' do
-    let(:project) { create(:project, status: :pending_review) }
+    let(:project) { create(:project, status: "Pending Advisable Confirmation") }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)

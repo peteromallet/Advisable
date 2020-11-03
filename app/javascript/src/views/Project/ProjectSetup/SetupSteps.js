@@ -146,7 +146,7 @@ export default function SetupSteps({ data }) {
         })}
         <Route path="/projects/:id/setup" exact>
           <motion.div exit={{}}>
-            {project.status === "PENDING_REVIEW" ? (
+            {project.status === "Pending Advisable Confirmation" ? (
               <Redirect to={`/projects/${id}/setup/published`} />
             ) : (
               <Redirect to={`/projects/${id}/setup/skills`} />

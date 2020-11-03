@@ -34,8 +34,6 @@ class Project < ApplicationRecord
   validates :location_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
   validates :likely_to_hire, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
 
-  map_status status: {draft: 'Draft', pending_review: 'Pending Advisable Confirmation'}
-
   after_update :send_paused_emails, if: -> { saved_change_to_sales_status? && sales_status == "Paused" }
 
   def accepted_terms=(accepted)

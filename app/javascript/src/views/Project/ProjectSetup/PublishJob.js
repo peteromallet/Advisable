@@ -30,11 +30,15 @@ export default function PublishJob({ data }) {
   const companyType = user.companyType;
 
   const handlePublish = async () => {
-    if (project.status === "PENDING_REVIEW") {
+    const response = await publishProject({ variables: { input: { id } } });
+
+    if (
+      response.data.publishProject.project.status ===
+      "Pending Advisable Confirmation"
+    ) {
       history.push(`/projects/${id}/setup/published`);
     }
 
-    await publishProject({ variables: { input: { id } } });
     dataLayer.push({ event: "projectPublished", projectId: id });
   };
 
@@ -189,7 +193,7 @@ export default function PublishJob({ data }) {
         onClick={handlePublish}
         loading={publishProjectResponse.loading}
       >
-        {project.status === "PENDING_REVIEW"
+        {project.status === "Pending Advisable Confirmation"
           ? "Save Changes"
           : "Submit Project"}
       </Button>

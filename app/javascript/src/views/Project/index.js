@@ -19,8 +19,8 @@ import Navigation from "./Navigation";
 
 const ProjectSetup = lazy(() => import("./ProjectSetup"));
 const SETUP_STATUSES = [
-  "DRAFT",
-  "PENDING_REVIEW",
+  "Draft",
+  "Pending Advisable Confirmation",
   "Brief Pending Confirmation",
 ];
 

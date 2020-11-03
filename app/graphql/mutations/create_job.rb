@@ -4,6 +4,7 @@ class Mutations::CreateJob < Mutations::BaseMutation
   def authorized?(**args)
     user = context[:current_user]
     raise ApiError::NotAuthenticated.new if !user
+
     true
   end
 
@@ -14,8 +15,8 @@ class Mutations::CreateJob < Mutations::BaseMutation
       GeocodeUserJob.perform_later(user.id, context[:client_ip])
     end
 
-    project = user.projects.create(status: :draft, service_type: 'Self-Service')
+    project = user.projects.create(status: "Draft", service_type: 'Self-Service')
 
-    { project: project }
+    {project: project}
   end
 end
