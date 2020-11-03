@@ -14,7 +14,7 @@ module Admin
       super
 
       if params[:primary_skill_id]
-        requested_resource.project_skills.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
+        requested_resource.project_skills.where(primary: true).update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
         project_skill = requested_resource.project_skills.find_by(skill_id: params[:primary_skill_id])
         project_skill.update(primary: true)
       end

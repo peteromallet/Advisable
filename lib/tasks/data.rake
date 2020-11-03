@@ -26,20 +26,4 @@ namespace :data do
 
     projects.find_each(&:update_application_counts)
   end
-
-  # Migrates projects from using the primary_skill text column to the
-  # primary_skill association.
-  task migrate_project_primary_skills: :environment do
-    projects =
-      Project.left_outer_joins(:primary_project_skill).where(
-        project_skills: { id: nil }
-      )
-    projects.find_each do |project|
-      next if project[:primary_skill].nil?
-      skill = Skill.find_by_name(project[:primary_skill])
-      next if skill.nil?
-      project.primary_skill = skill
-      project.save
-    end
-  end
 end

@@ -37,7 +37,7 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
     update_skills(project, args)
     update_industries(project, args)
     project.save
-    { previous_project: project }
+    {previous_project: project}
   end
 
   private
@@ -57,7 +57,8 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
   end
 
   def update_description(project, args)
-    return unless args[:description].present?
+    return if args[:description].blank?
+
     if project.draft? || project.validation_status == 'Pending'
       project.description = args[:description]
     else
@@ -66,7 +67,8 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
   end
 
   def update_skills(project, args)
-    return unless args[:skills].present?
+    return if args[:skills].blank?
+
     skills = Skill.where(name: args[:skills])
     project.skills = skills
 
@@ -80,15 +82,15 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
   end
 
   def update_industries(project, args)
-    return unless args[:industries].present?
+    return if args[:industries].blank?
+
     industries = Industry.where(name: args[:industries])
     project.industries = industries
 
     if args[:primary_industry]
       primary_industry = Industry.find_by_name(args[:primary_industry])
-      project.primary_project_industry.try(:update, primary: false)
-      project.project_industries.find_or_create_by(industry: primary_industry)
-        .update(primary: true)
+      project.project_industries.where(primary: true).update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
+      project.project_industries.find_or_create_by(industry: primary_industry).update(primary: true)
     end
   end
 end
