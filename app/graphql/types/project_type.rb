@@ -4,7 +4,7 @@ class Types::ProjectType < Types::BaseType
   # stable and structured status and follow the convention of returning statuses
   # in upper case. This map simply maps statuses from the project model status
   # to their graphql value to allow us to move over one by one.
-  STATUS_VALUES = { draft: 'DRAFT', pending_review: 'PENDING_REVIEW' }
+  STATUS_VALUES = {draft: 'DRAFT', pending_review: 'PENDING_REVIEW'}
 
   field :id, ID, null: false
 
@@ -22,15 +22,6 @@ class Types::ProjectType < Types::BaseType
   field :primary_skill, Types::Skill, null: true
   # Wether or not we are actively searching for candidates
   field :sourcing, Boolean, null: true
-
-  # We are moving away from storing primary skill in the primary_skill text
-  # column. First we check the project_skills association and if one isn't
-  # set then we fall back to finding by the primary_skill text column.
-  def primary_skill
-    skill = object.project_skills.where(primary: true).first.try(:skill)
-    return skill if skill.present?
-    Skill.find_by_name(object[:primary_skill])
-  end
 
   field :sales_person, Types::SalesPersonType, null: true
 
@@ -128,12 +119,12 @@ class Types::ProjectType < Types::BaseType
           amount: object.deposit_owed,
           customer: object.user.stripe_customer_id,
           setup_future_usage: 'off_session',
-          metadata: { payment_type: 'deposit', project: object.uid }
+          metadata: {payment_type: 'deposit', project: object.uid}
         },
-        { idempotency_key: "deposit_#{object.uid}" }
+        {idempotency_key: "deposit_#{object.uid}"}
       )
 
-    object.update_columns(deposit_payment_intent_id: intent.id)
+    object.update_columns(deposit_payment_intent_id: intent.id) # rubocop:disable Rails/SkipsModelValidations
     intent
   end
 
@@ -144,6 +135,7 @@ class Types::ProjectType < Types::BaseType
   def application(**args)
     by_airtable = object.applications.find_by_uid_or_airtable_id(args[:id])
     return by_airtable if by_airtable
+
     object.applications.find(args[:id])
   end
 
@@ -168,7 +160,7 @@ class Types::ProjectType < Types::BaseType
   field :viewer_can_access, Boolean, null: true
 
   def viewer_can_access
-    unless current_user.present?
+    if current_user.blank?
       if object.user.account.has_password?
         ApiError.not_authenticated
       else

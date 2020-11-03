@@ -31,7 +31,7 @@ class Mutations::UpdateProject < Mutations::BaseMutation
     update_primary_skill(project, args[:primary_skill])
     project.save_and_sync!
 
-    { project: project }
+    {project: project}
   end
 
   private
@@ -54,26 +54,21 @@ class Mutations::UpdateProject < Mutations::BaseMutation
   end
 
   def update_skills(project, args)
-    return unless args[:skills].present?
+    return if args[:skills].blank?
+
     skills = Skill.where(name: args[:skills])
     project.skills = skills
 
     if !args[:primary_skill] && skills.length == 1
-      project[:primary_skill] = project.skills.first.name
       project.project_skills.first.update(primary: true)
     end
   end
 
   def update_primary_skill(project, skill_name)
-    return unless skill_name.present?
+    return if skill_name.blank?
+
     primary_skill = Skill.find_by_name(skill_name)
-    # TODO:
-    # For now we still store the primary skill in a text column. This should
-    # be removed in favour of the project_skills association
-    project[:primary_skill] = primary_skill.name
-    project.project_skills.where(primary: true).update(primary: false)
-    project.project_skills.find_or_create_by(skill: primary_skill).update(
-      primary: true
-    )
+    project.project_skills.where(primary: true).update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
+    project.project_skills.find_or_create_by(skill: primary_skill).update(primary: true)
   end
 end
