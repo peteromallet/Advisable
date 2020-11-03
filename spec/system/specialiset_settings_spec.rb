@@ -52,4 +52,16 @@ RSpec.describe 'Specialist settings' do
     click_on 'Submit Project'
     expect(page).to have_content('Thanks for adding the details')
   end
+
+  it 'allows specialist to change their password' do
+    account = create(:account, password: "testing123")
+    specialist = create(:specialist, account: account)
+    authenticate_as specialist
+    visit '/profile/password'
+    fill_in "currentPassword", with: "testing123"
+    fill_in "password", with: "changed123"
+    fill_in "passwordConfirmation", with: "changed123"
+    click_on "Update password"
+    expect(page).to have_content("password has been updated")
+  end
 end
