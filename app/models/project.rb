@@ -8,6 +8,8 @@
 # record. See the app/modals/application.rb for more details.
 #
 class Project < ApplicationRecord
+  self.ignored_columns = [:primary_skill]
+
   include Uid
   include StatusMap
   include Airtable::Syncable
@@ -96,6 +98,7 @@ class Project < ApplicationRecord
     return if sourcing == false
     # If there is still matches left then dont do anything.
     return if applications.matched.any?
+
     accepted = applications.accepted.any?
     update(sourcing: false) if accepted
   end
