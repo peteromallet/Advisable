@@ -63,5 +63,6 @@ RSpec.describe 'Specialist settings' do
     fill_in "passwordConfirmation", with: "changed123"
     click_on "Update password"
     expect(page).to have_content("password has been updated")
+    expect(account.authenticate("changed123")).to be_truthy
   end
 end
