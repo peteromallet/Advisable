@@ -1,42 +1,67 @@
 import React from "react";
 import { Box, Text, Avatar, theme } from "@advisable/donut";
-import { QuoteAltLeft } from "@styled-icons/boxicons-solid";
 
 function Fifth({ review }) {
   const role = review.role;
   const atCompany = review.companyName && `at ${review.companyName}`;
   return (
-    <Box mb="l">
+    <Box>
       <Box display="flex" alignItems="flex-start">
-        <Box display="flex" mr="32px" position="relative">
+        <Box mr="32px">
           <Box width={100} height={100}>
             <Avatar size="xl" name={review.name} url={review.avatar} />
           </Box>
-          <Box zIndex="2" position="absolute" bottom="2px" right="-12px">
-            <QuoteAltLeft
-              size={38}
-              fill="rgba(255,255,255,0.6)"
-              stroke={theme.colors.blue500}
-              strokeWidth={1}
-            />
-          </Box>
         </Box>
-        <Box mt="8px">
-          <Text fontWeight="medium" fontSize="xl" color="neutral900" mb="2xs">
-            {review.name}
-          </Text>
-          <Text color="neutral600" fontSize="l" mb="s">
-            {role} {atCompany}
-          </Text>
-          <Box bg="neutral100" p="l" borderRadius="12px">
-            <Text
-              fontStyle="italic"
-              fontSize="xl"
-              lineHeight="120%"
-              color="neutral800"
-            >
-              &quot;{review.comment}&quot;
+        <Box pt="2xs">
+          <Box display="flex">
+            <Text fontWeight="medium" fontSize="l" color="neutral900" mb="2xs">
+              {review.name}&nbsp;
+              <Text as="span" color="neutral600" fontSize="l">
+                {role} {atCompany}
+              </Text>
             </Text>
+          </Box>
+          <Box bg="neutral100" p="l" pl="2xl" borderRadius="12px">
+            <Box position="relative">
+              <Text
+                fontStyle="italic"
+                fontSize="xl"
+                lineHeight="130%"
+                color="neutral800"
+              >
+                <Text
+                  as="span"
+                  lineHeight="14px"
+                  css={`
+                    font-size: 48px;
+                    color: ${theme.colors.blue400};
+                    position: absolute;
+                    top: 5px;
+                    left: -24px;
+                    opacity: 0.6;
+                    vertical-align: bottom;
+                  `}
+                >
+                  &quot;
+                </Text>
+                {review.comment}
+                <Text
+                  as="span"
+                  lineHeight="12px"
+                  css={`
+                    font-size: 48px;
+                    color: ${theme.colors.blue400};
+                    position: relative;
+                    top: 6px;
+                    right: 4px;
+                    opacity: 0.6;
+                    vertical-align: bottom;
+                  `}
+                >
+                  &quot;
+                </Text>
+              </Text>
+            </Box>
           </Box>
         </Box>
       </Box>

@@ -5,7 +5,7 @@ function Third({ review }) {
   const role = review.role;
   const atCompany = review.companyName && `at ${review.companyName}`;
   return (
-    <Box my="l">
+    <Box>
       <Box display="flex" position="relative" alignItems="flex-start">
         <Box
           display="flex"
