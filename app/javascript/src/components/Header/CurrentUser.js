@@ -15,6 +15,7 @@ const CurrentUser = ({ user, onLogout }) => {
   const handleBlur = () => setOpen(false);
   const handleFocus = () => setOpen(true);
   let isClient = get(viewer, "__typename") === "User";
+  let isAdmin = isClient && viewer?.isAdmin;
 
   React.useEffect(() => {
     if (!Sentry) return;
@@ -44,6 +45,7 @@ const CurrentUser = ({ user, onLogout }) => {
       <CurrentUserDropdown open={open}>
         {user.guild && <a href="/guild">Guild</a>}
         {isClient && <Link to="/settings">Settings</Link>}
+        {isAdmin && <a href="/admin">Admin</a>}
         <a href="#" onClick={onLogout}>
           Logout
         </a>

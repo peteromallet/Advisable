@@ -7,6 +7,7 @@ export const user = (fields = {}) => {
       id: uniqueId("user"),
       firstName: "Test",
       lastName: "Account",
+      isAdmin: false,
       name: "Test Account",
       email: "test@test.com",
       airtableId: "airtableid",
