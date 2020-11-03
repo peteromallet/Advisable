@@ -46,7 +46,7 @@ export default function JobSetup() {
         padding={{ _: "24px", m: "0" }}
         maxWidth={{ _: "100%", m: "680px" }}
       >
-        {!largeScreen && data.project.status === "DRAFT" && (
+        {!largeScreen && data.project.status === "Draft" && (
           <SetupDots
             marginBottom={{ _: "m", m: "l" }}
             justifyContent={{ _: "start", m: "center" }}

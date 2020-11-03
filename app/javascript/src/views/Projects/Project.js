@@ -23,7 +23,7 @@ export default function Project({ project }) {
   const url = `/projects/${project.id}`;
 
   const matches = project.matches;
-  const isDraft = ["DRAFT", "Brief Pending Confirmation"].includes(
+  const isDraft = ["Draft", "Brief Pending Confirmation"].includes(
     project.status,
   );
 
@@ -42,7 +42,7 @@ export default function Project({ project }) {
         {DateTime.fromISO(project.createdAt).toRelative()}
       </Text>
       {isDraft && <Badge variant="orange">Draft</Badge>}
-      {project.status === "PENDING_REVIEW" && (
+      {project.status === "Pending Advisable Confirmation" && (
         <Badge variant="orange">In Review</Badge>
       )}
       {!isDraft && matches.length > 0 && (
