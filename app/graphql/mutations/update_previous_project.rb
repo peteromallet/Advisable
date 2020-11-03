@@ -80,15 +80,15 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
   end
 
   def update_industries(project, args)
-    return unless args[:industries].present?
+    return if args[:industries].blank?
+
     industries = Industry.where(name: args[:industries])
     project.industries = industries
 
     if args[:primary_industry]
       primary_industry = Industry.find_by_name(args[:primary_industry])
-      project.primary_project_industry.try(:update, primary: false)
-      project.project_industries.find_or_create_by(industry: primary_industry)
-        .update(primary: true)
+      project.project_industries.where(primary: true).update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
+      project.project_industries.find_or_create_by(industry: primary_industry).update(primary: true)
     end
   end
 end
