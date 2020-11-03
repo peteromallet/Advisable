@@ -42,6 +42,16 @@ export default function PublishJob({ data }) {
     dataLayer.push({ event: "projectPublished", projectId: id });
   };
 
+  let buttonLabel = "Submit Project";
+
+  if (project.status === "Pending Advisable Confirmation") {
+    buttonLabel = "Save Changes";
+  }
+
+  if (project.status === "Brief Pending Confirmation") {
+    buttonLabel = "Publish Project";
+  }
+
   return (
     <>
       <JobSetupStepHeader mb="xs">Review Project</JobSetupStepHeader>
@@ -193,9 +203,7 @@ export default function PublishJob({ data }) {
         onClick={handlePublish}
         loading={publishProjectResponse.loading}
       >
-        {project.status === "Pending Advisable Confirmation"
-          ? "Save Changes"
-          : "Submit Project"}
+        {buttonLabel}
       </Button>
       <Text fontSize="xs" color="neutral600" lineHeight="s">
         Once you&apos;ve submitted this project, it&apos;ll be sent to the
