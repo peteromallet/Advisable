@@ -11,7 +11,6 @@ class Project < ApplicationRecord
   self.ignored_columns = [:primary_skill]
 
   include Uid
-  include StatusMap
   include Airtable::Syncable
   include Project::Constants
 
