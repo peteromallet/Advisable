@@ -17,7 +17,7 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
         accepted_at: Time.zone.now
       )
       consultation.sync_to_airtable
-      { interview: interview }
+      {interview: interview}
     end
   end
 
@@ -28,7 +28,7 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
     project =
       user.projects.joins(project_skills: :skill).where(
         project_skills: {
-          primary: true, skills: { name: consultation.skill.name }
+          primary: true, skills: {name: consultation.skill.name}
         }
       ).first
     project = create_new_project(consultation) if project.nil?
@@ -43,7 +43,7 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
         sales_status: 'Open',
         status: 'Project Created',
         service_type: 'Consultation',
-        primary_skill: Skill.find_by_name(consultation.skill.name),
+        primary_skill: consultation.skill,
         owner: ENV['CONSULTATION_PROJECT_OWNER'],
         name: "#{consultation.user.company_name} - #{consultation.skill.name}"
       )
@@ -56,14 +56,14 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
       Application.create(
         project: project, status: 'Applied', score: 90, specialist: specialist
       )
-    application.sync_to_airtable({ 'Source' => 'consultation-request' })
+    application.sync_to_airtable({'Source' => 'consultation-request'})
     application
   end
 
   def create_interview(application)
     interview =
       application.interviews.create(
-        { status: 'Call Requested', user: application.project.user }
+        {status: 'Call Requested', user: application.project.user}
       )
     interview.sync_to_airtable
     interview

@@ -53,14 +53,12 @@ class Airtable::Project < Airtable::Base
       project.user = user
     end
 
-    # Still sync the old primary_skill text column for now.
-    project[:primary_skill] = fields['Primary Skill Required']
-
     required_skills = fields['Skills Required'] || []
     required_skills.each do |skill_id|
       skill = ::Skill.find_by_uid_or_airtable_id(skill_id)
       skill = Airtable::Skill.find(skill_id).sync if skill.blank?
       next if skill.nil?
+
       project_skill = project.project_skills.find_by_skill_id(skill.id)
       is_primary = skill.name == fields['Primary Skill Required']
 
