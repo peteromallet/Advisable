@@ -2,6 +2,11 @@ class Types::User < Types::BaseType
   field :id, ID, null: false
   field :airtable_id, String, null: true
   field :name, String, null: true
+  field :is_admin, Boolean, null: false
+
+  def is_admin
+    object.account&.has_permission?('admin')
+  end
 
   def name
     object.account.name
@@ -126,8 +131,10 @@ class Types::User < Types::BaseType
   def location
     city = object.address.city
     return nil if city.nil?
+
     country = ISO3166::Country.new(object.address.country)
     return city if country.nil?
+
     "#{object.address.city}, #{country.name}"
   end
 
