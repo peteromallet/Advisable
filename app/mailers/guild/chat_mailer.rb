@@ -17,7 +17,7 @@ class Guild::ChatMailer < ApplicationMailer
     headers['Message-ID'] = "<#{reply_to}>"
 
     mail(
-      to: @recipient.email,
+      to: @recipient.account.email,
       subject: "New Guild Message from: #{@sender.name}",
       reply_to: reply_to
     )
