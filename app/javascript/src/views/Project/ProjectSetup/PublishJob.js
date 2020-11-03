@@ -26,7 +26,7 @@ export default function PublishJob({ data }) {
 
   const { project } = data;
   const { primarySkill, user } = project;
-  const industry = user.industry.name;
+  const industry = user.industry?.name;
   const companyType = user.companyType;
 
   const handlePublish = async () => {
