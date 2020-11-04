@@ -3,7 +3,7 @@ import { object, string } from "yup";
 import { ArrowRight } from "@styled-icons/feather";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
-import { Card, Text, Stack, Columns } from "@advisable/donut";
+import { Card, Text, Stack, Columns, Error } from "@advisable/donut";
 import FormField from "../../components/FormField";
 import SubmitButton from "../../components/SubmitButton";
 import { useCreateConsultation } from "./queries";
@@ -35,6 +35,8 @@ const CompanyInformation = ({ data }) => {
   };
 
   const handleSubmit = async (values, formik) => {
+    formik.setStatus(null);
+
     const response = await createConsultation({
       variables: {
         input: {
@@ -53,7 +55,11 @@ const CompanyInformation = ({ data }) => {
       const error = response.errors[0]?.extensions?.code;
       if (error === "emailBelongsToFreelancer") {
         formik.setFieldError("email", "This email belongs to a freelancer");
+      } else {
+        formik.setStatus("Something went wrong, please try again.");
       }
+
+      return;
     }
 
     // Continue to the next step and pass the consultation id in the route
@@ -92,19 +98,24 @@ const CompanyInformation = ({ data }) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        <Form>
-          <Stack spacing="m" mb="l">
-            <Columns spacing="s">
-              <FormField name="firstName" label="First Name" />
-              <FormField name="lastName" label="Last Name" />
-            </Columns>
-            <FormField name="email" type="email" label="Email Address" />
-            <FormField name="company" label="Company Name" />
-          </Stack>
-          <SubmitButton suffix={<ArrowRight />} width={["100%", "auto"]}>
-            Continue
-          </SubmitButton>
-        </Form>
+        {(formik) => (
+          <Form>
+            <Stack spacing="m" mb="l">
+              <Columns spacing="s">
+                <FormField name="firstName" label="First Name" />
+                <FormField name="lastName" label="Last Name" />
+              </Columns>
+              <FormField name="email" type="email" label="Email Address" />
+              <FormField name="company" label="Company Name" />
+            </Stack>
+            <SubmitButton suffix={<ArrowRight />} width={["100%", "auto"]}>
+              Continue
+            </SubmitButton>
+            {formik.status ? (
+              <Error marginTop="md">{formik.status}</Error>
+            ) : null}
+          </Form>
+        )}
       </Formik>
     </Card>
   );

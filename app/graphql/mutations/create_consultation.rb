@@ -86,7 +86,8 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
   end
 
   def create_new_user(**args)
-    if Specialist.find_by(account: Account.find_by(email: args[:email]))
+    account = Account.find_by(email: args[:email])
+    if account && Specialist.find_by(account: account)
       raise ApiError::InvalidRequest.new('emailBelongsToFreelancer', 'This email belongs to a freelancer account')
     end
 
