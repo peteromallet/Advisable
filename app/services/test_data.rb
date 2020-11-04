@@ -1,3 +1,4 @@
+# rubocop:disable all
 class TestData
   def self.stock_image
     n = %w[01 02 03 04 05 06 07 08 09 10 11].sample
@@ -9,6 +10,7 @@ class TestData
       a.first_name = attrs.fetch(:first_name)
       a.last_name = attrs.fetch(:last_name)
       a.password = 'testing123'
+      a.permissions = ["admin"]
       a.confirmed_at = 1.hour.ago
     end
 
@@ -193,6 +195,7 @@ class TestData
       a.first_name = 'Michael'
       a.last_name = 'Scott'
       a.password = 'testing123'
+      a.permissions = ["admin"]
       a.confirmed_at = 1.day.ago
     end
 
@@ -352,3 +355,4 @@ class TestData
     project.update_application_counts
   end
 end
+# rubocop:enable all

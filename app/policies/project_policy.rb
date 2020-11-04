@@ -1,12 +1,11 @@
 class ProjectPolicy < BasePolicy
   def is_client
-    return true if record.user == user
-    false
+    record.user == user || is_admin
   end
 
   def can_access_project?
     return true if record.status == "Brief Pending Confirmation"
-    return true if is_admin
-    record.user == user
+
+    is_client
   end
 end

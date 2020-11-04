@@ -1,11 +1,15 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Redirect } from "react-router-dom";
 import { Box, Avatar, Button } from "@advisable/donut";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
 export default function PublishJob({ data }) {
   const { id } = useParams();
-  const { salesPerson } = data.project;
+  const { salesPerson, status } = data.project;
+
+  if (status === "Brief Pending Confirmation") {
+    return <Redirect to={`/projects/${id}/setup`} />;
+  }
 
   return (
     <Box textAlign="center">

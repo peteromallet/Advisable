@@ -19,7 +19,7 @@ javascript:
     function toggleAddButton() {
       const parent = document.querySelector("#TextArray-#{field.attribute}")
       const max = Number(parent.dataset.max);
-      const isMax = parent.querySelectorAll("input").length === max
+      const isMax = max ? parent.querySelectorAll("input").length === max : false
       if (isMax) {
         parent.querySelector(".AddTextArrayValue").style.display = "none"
       } else {

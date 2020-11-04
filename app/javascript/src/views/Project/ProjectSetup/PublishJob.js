@@ -14,6 +14,19 @@ import { PUBLISH_PROJECT } from "./queries";
 import dataLayer from "../../../utilities/dataLayer";
 import { setupProgress } from "./SetupSteps";
 
+function subText(status) {
+  if (status === "Brief Pending Confirmation") {
+    return "Once you've confirmed the details of this project, the Advisable team will immediately start identifying candidates for you.";
+  }
+  return "Once you&apos;ve submitted this project, it&apos;ll be sent to the Advisable team for review.";
+}
+
+function buttonLabel(status) {
+  if (status === "Brief Pending Confirmation") return "Confirm Project";
+  if (status === "Pending Advisable Confirmation") return "Save Changes";
+  return "Submit Project";
+}
+
 export default function PublishJob({ data }) {
   const { id } = useParams();
   const history = useHistory();
@@ -26,16 +39,20 @@ export default function PublishJob({ data }) {
 
   const { project } = data;
   const { primarySkill, user } = project;
-  const industry = user.industry.name;
+  const industry = user.industry?.name;
   const companyType = user.companyType;
 
   const handlePublish = async () => {
-    if (project.status === "DRAFT") {
-      await publishProject({ variables: { input: { id } } });
-      dataLayer.push({ event: "projectPublished", projectId: id });
+    const response = await publishProject({ variables: { input: { id } } });
+
+    if (
+      response.data.publishProject.project.status ===
+      "Pending Advisable Confirmation"
+    ) {
+      history.push(`/projects/${id}/setup/published`);
     }
 
-    history.push(`/projects/${id}/setup/published`);
+    dataLayer.push({ event: "projectPublished", projectId: id });
   };
 
   return (
@@ -189,13 +206,10 @@ export default function PublishJob({ data }) {
         onClick={handlePublish}
         loading={publishProjectResponse.loading}
       >
-        {project.status === "PENDING_REVIEW"
-          ? "Save Changes"
-          : "Submit Project"}
+        {buttonLabel(project.status)}
       </Button>
       <Text fontSize="xs" color="neutral600" lineHeight="s">
-        Once you&apos;ve submitted this project, it&apos;ll be sent to the
-        Advisable team for review.
+        {subText(project.status)}
       </Text>
     </>
   );

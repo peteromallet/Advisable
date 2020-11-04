@@ -11,7 +11,6 @@ class Project < ApplicationRecord
   self.ignored_columns = [:primary_skill]
 
   include Uid
-  include StatusMap
   include Airtable::Syncable
   include Project::Constants
 
@@ -33,8 +32,6 @@ class Project < ApplicationRecord
   validates :industry_experience_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
   validates :location_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
   validates :likely_to_hire, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
-
-  map_status status: {draft: 'Draft', pending_review: 'Pending Advisable Confirmation'}
 
   after_update :send_paused_emails, if: -> { saved_change_to_sales_status? && sales_status == "Paused" }
 
@@ -75,6 +72,10 @@ class Project < ApplicationRecord
 
   def optional_characteristics
     characteristics - required_characteristics
+  end
+
+  def assisted?
+    service_type == "Assisted"
   end
 
   # Returns an array of applications that are in the 'hiring pipeline' stages.
