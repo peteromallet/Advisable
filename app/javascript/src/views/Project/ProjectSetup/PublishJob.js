@@ -14,6 +14,19 @@ import { PUBLISH_PROJECT } from "./queries";
 import dataLayer from "../../../utilities/dataLayer";
 import { setupProgress } from "./SetupSteps";
 
+function subText(status) {
+  if (status === "Brief Pending Confirmation") {
+    return "Once you've confirmed the details of this project, the Advisable team will immediately start identifying candidates for you.";
+  }
+  return "Once you&apos;ve submitted this project, it&apos;ll be sent to the Advisable team for review.";
+}
+
+function buttonLabel(status) {
+  if (status === "Brief Pending Confirmation") return "Confirm Project";
+  if (status === "Pending Advisable Confirmation") return "Save Changes";
+  return "Submit Project";
+}
+
 export default function PublishJob({ data }) {
   const { id } = useParams();
   const history = useHistory();
@@ -41,16 +54,6 @@ export default function PublishJob({ data }) {
 
     dataLayer.push({ event: "projectPublished", projectId: id });
   };
-
-  let buttonLabel = "Submit Project";
-
-  if (project.status === "Pending Advisable Confirmation") {
-    buttonLabel = "Save Changes";
-  }
-
-  if (project.status === "Brief Pending Confirmation") {
-    buttonLabel = "Publish Project";
-  }
 
   return (
     <>
@@ -203,11 +206,10 @@ export default function PublishJob({ data }) {
         onClick={handlePublish}
         loading={publishProjectResponse.loading}
       >
-        {buttonLabel}
+        {buttonLabel(project.status)}
       </Button>
       <Text fontSize="xs" color="neutral600" lineHeight="s">
-        Once you&apos;ve submitted this project, it&apos;ll be sent to the
-        Advisable team for review.
+        {subText(project.status)}
       </Text>
     </>
   );
