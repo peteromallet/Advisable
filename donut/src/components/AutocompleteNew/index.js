@@ -284,6 +284,7 @@ export default function Autocomplete({
       <div ref={inputRef}>
         <Input
           {...props}
+          autoComplete="off"
           value={isOpen ? searchValue : value?.label || ""}
           onBlur={handleBlur}
           onClick={handleClick}
@@ -359,8 +360,9 @@ export default function Autocomplete({
           {value.map((v) => (
             <Tag
               key={v.value}
-              marginBottom="2xs"
+              size="m"
               marginRight="2xs"
+              marginBottom="2xs"
               onRemove={() => removeOption(v.value)}
             >
               {v.label}
