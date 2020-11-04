@@ -11,8 +11,7 @@ class Airtable::ClientContact < Airtable::Base
 
   sync_column 'Title', to: :title
   sync_column 'Project Payment Method', to: :project_payment_method
-  sync_column 'Exceptional Project Payment Terms',
-              to: :exceptional_project_payment_terms
+  sync_column 'Exceptional Project Payment Terms', to: :exceptional_project_payment_terms
   sync_column 'Invoice Name', to: :invoice_name
   sync_column 'Invoice Company Name', to: :invoice_company_name
   sync_column 'Type of Company', to: :company_type
@@ -55,7 +54,16 @@ class Airtable::ClientContact < Airtable::Base
   def sync_budget(user)
     amount = self['Estimated Annual Freelancer Spend (USD)']
     return if amount.nil?
+
     user.budget = amount * 100
+  end
+
+  # After the syncing process has been complete
+  after_sync do |user|
+    if user.account.blank?
+      user.destroy
+      break
+    end
   end
 
   push_data do |user|

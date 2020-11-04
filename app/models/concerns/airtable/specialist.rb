@@ -85,6 +85,11 @@ class Airtable::Specialist < Airtable::Base
 
   # After the syncing process has been complete
   after_sync do |specialist|
+    if specialist.account.blank?
+      specialist.destroy
+      break
+    end
+
     specialist.saved_change_to_application_stage
     # Deteremine wether or not the specialist record was just created for the
     #  first time.
@@ -206,6 +211,7 @@ class Airtable::Specialist < Airtable::Base
       skill = Skill.find_by_uid_or_airtable_id(id)
 
       return handle_duplicate_skill(skill, record) if skill.present?
+
       # otherwise reraise the error, its a different kind of missing record.
       # possibly a country association or something..
       return false
