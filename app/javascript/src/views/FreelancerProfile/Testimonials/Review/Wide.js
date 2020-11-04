@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text, Avatar, theme } from "@advisable/donut";
 
-function Fifth({ review }) {
+function Wide({ review }) {
   const role = review.role;
   const atCompany = review.companyName && `at ${review.companyName}`;
   return (
@@ -13,12 +13,12 @@ function Fifth({ review }) {
           </Box>
         </Box>
         <Box pt="2xs">
-          <Box display="flex">
+          <Box mb="xs">
             <Text fontWeight="medium" fontSize="l" color="neutral900" mb="2xs">
               {review.name}&nbsp;
-              <Text as="span" color="neutral600" fontSize="l">
-                {role} {atCompany}
-              </Text>
+            </Text>
+            <Text color="neutral600" fontSize="l">
+              {role} {atCompany}
             </Text>
           </Box>
           <Box bg="neutral100" p="l" pl="2xl" borderRadius="12px">
@@ -69,4 +69,4 @@ function Fifth({ review }) {
   );
 }
 
-export default Fifth;
+export default Wide;
