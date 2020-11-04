@@ -1,4 +1,4 @@
-RSpec.shared_examples "airtable syncing" do
+RSpec.shared_examples "airtable syncing" do |config = {}|
   let(:factory) { described_class.sync_model.to_s.underscore }
 
   it "has a table_name" do
@@ -49,6 +49,10 @@ RSpec.shared_examples "airtable syncing" do
   end
 
   describe "#sync" do
+    let(:fields) { config[:fields] || {} }
+    let(:active_record_model) { create(factory) }
+    let(:record) { described_class.new(fields, id: active_record_model.airtable_id) }
+
     # Generate a test for each of the column_hash attributes.
     described_class.columns_hash.each do |column, attribute|
       it "syncs the '#{column}' column to the '#{attribute}' attribute" do
@@ -64,8 +68,6 @@ RSpec.shared_examples "airtable syncing" do
     end
 
     it "calls Webhook.process" do
-      active_record_model = create(factory)
-      record = described_class.new({}, id: active_record_model.airtable_id)
       allow(record).to receive(:model).and_return(active_record_model)
       allow(active_record_model).to receive(:save).and_return(true)
       expect(Webhook).to receive(:process).with(active_record_model)
@@ -106,14 +108,17 @@ RSpec.shared_examples "sync airtable column" do |column, config|
 
   def change_value(type)
     return 10 if type == :decimal
+
     "test"
   end
 end
 
 RSpec.shared_examples "sync airtable association" do |column, config|
+  let(:factory) { described_class.sync_model.to_s.underscore }
+  let(:record) { build(factory) }
+  let(:default_fields) { config[:fields] || {} }
+
   it "syncs the '#{column}' column to the #{config[:to]} association" do
-    factory = described_class.sync_model.to_s.underscore
-    record = build(factory)
     record.public_send("#{config[:to]}=", nil)
     record.save(validate: false)
 
@@ -121,9 +126,8 @@ RSpec.shared_examples "sync airtable association" do |column, config|
     association_factory = reflection.class_name.to_s.underscore
     association = create(association_factory)
 
-    airtable = described_class.new({
-      column => [association.airtable_id]
-    }, id: record.airtable_id)
+    fields = default_fields.merge(column => [association.airtable_id])
+    airtable = described_class.new(fields, id: record.airtable_id)
 
     expect(record.public_send(config[:to])).to be_nil
     airtable.sync
@@ -131,8 +135,6 @@ RSpec.shared_examples "sync airtable association" do |column, config|
   end
 
   it "syncs the associated #{config[:to]} if it doesnt exist" do
-    factory = described_class.sync_model.to_s.underscore
-    record = build(factory)
     record.public_send("#{config[:to]}=", nil)
     record.save(validate: false)
 
@@ -142,7 +144,8 @@ RSpec.shared_examples "sync airtable association" do |column, config|
     expect(association_airtable).to receive(:find).and_return(double)
     expect(double).to receive(:sync)
 
-    airtable = described_class.new({column => ["rec_12345"]}, id: record.airtable_id)
+    fields = default_fields.merge(column => ["rec_12345"])
+    airtable = described_class.new(fields, id: record.airtable_id)
     airtable.sync
   end
 end
