@@ -18,7 +18,11 @@ import ProjectRoutes from "./ProjectRoutes";
 import Navigation from "./Navigation";
 
 const ProjectSetup = lazy(() => import("./ProjectSetup"));
-const SETUP_STATUSES = ["DRAFT", "PENDING_REVIEW"];
+const SETUP_STATUSES = [
+  "Draft",
+  "Pending Advisable Confirmation",
+  "Brief Pending Confirmation",
+];
 
 export default function Project() {
   const { id } = useParams();
@@ -39,10 +43,6 @@ export default function Project() {
 
   const { project } = data;
   if (!project.viewerCanAccess) return <AccessDenied />;
-
-  if (project?.status === "Brief Pending Confirmation") {
-    return <Redirect to={`/project_setup/${project.id}`} />;
-  }
 
   if (SETUP_STATUSES.includes(project.status)) {
     return (
