@@ -70,6 +70,7 @@ class Specialist < ApplicationRecord
     return false if bank_holder_name.blank?
     return false if bank_holder_address.blank?
     return false if bank_currency.blank?
+
     true
   end
 
@@ -99,24 +100,15 @@ end
 #  community_invited_to_call_at       :datetime
 #  community_score                    :integer
 #  community_status                   :string
-#  completed_tutorials                :text             default([]), is an Array
-#  confirmation_digest                :string
-#  confirmation_token                 :string
-#  confirmed_at                       :datetime
-#  email                              :string
 #  encrypted_phone_number             :string
 #  encrypted_phone_number_iv          :string
-#  first_name                         :string
 #  guild                              :boolean          default(FALSE)
 #  guild_data                         :jsonb
 #  hourly_rate                        :integer
 #  image                              :jsonb
-#  last_name                          :string
 #  linkedin                           :string
 #  member_of_week_email               :integer
 #  number_of_projects                 :string
-#  password_digest                    :string
-#  permissions                        :text             default([]), is an Array
 #  phone                              :string
 #  pid                                :string
 #  primarily_freelance                :boolean
@@ -124,15 +116,10 @@ end
 #  public_use                         :boolean
 #  ratings                            :jsonb
 #  referrer                           :string
-#  remember_token                     :string
 #  remote                             :boolean
-#  reset_digest                       :string
-#  reset_sent_at                      :datetime
 #  reviews_count                      :integer
-#  test_account                       :boolean
 #  travel_availability                :string
 #  uid                                :string
-#  vat_number                         :string
 #  website                            :string
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null

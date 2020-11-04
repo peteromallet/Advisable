@@ -71,6 +71,7 @@ class User < ApplicationRecord
 
   def stripe_customer_id
     return self[:stripe_customer_id] if self[:stripe_customer_id]
+
     customer = Stripe::Customer.create(email: account.email, name: company_name, metadata: {user_id: uid})
     update_columns(stripe_customer_id: customer.id) # rubocop:disable Rails/SkipsModelValidations
     customer.id
@@ -92,6 +93,7 @@ class User < ApplicationRecord
   # to the company_name column
   def company_name
     return client.name if client.present?
+
     self[:company_name]
   end
 
@@ -119,6 +121,7 @@ class User < ApplicationRecord
     return false if project_payment_method == 'Card' && payment_method.nil?
     return false if invoice_settings[:name].nil?
     return false if accepted_project_payment_terms_at.nil?
+
     true
   end
 
@@ -126,6 +129,7 @@ class User < ApplicationRecord
   # in the past.
   def remove_past_availabililty
     return if availability.nil?
+
     self.availability = availability.select { |time| time > Time.zone.now }
   end
 end
@@ -150,38 +154,24 @@ end
 #  campaign_source                   :string
 #  company_name                      :string
 #  company_type                      :string
-#  completed_tutorials               :text             default([]), is an Array
-#  confirmation_digest               :string
-#  confirmation_token                :string
-#  confirmed_at                      :datetime
 #  contact_status                    :string
-#  email                             :string
 #  exceptional_project_payment_terms :string
 #  fid                               :string
-#  first_name                        :string
 #  gclid                             :string
 #  invoice_company_name              :string
 #  invoice_name                      :string
-#  last_name                         :string
 #  locality_importance               :integer
 #  number_of_freelancers             :string
-#  password_digest                   :string
 #  payments_setup                    :boolean          default(FALSE)
-#  permissions                       :text             default([]), is an Array
 #  pid                               :string
 #  project_payment_method            :string
 #  rejection_reason                  :string
-#  remember_token                    :string
-#  reset_digest                      :string
-#  reset_sent_at                     :datetime
 #  rid                               :string
 #  setup_intent_status               :string
 #  talent_quality                    :string
-#  test_account                      :boolean
 #  time_zone                         :string
 #  title                             :string
 #  uid                               :string
-#  vat_number                        :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
 #  account_id                        :bigint
