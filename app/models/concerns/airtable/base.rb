@@ -125,6 +125,7 @@ class Airtable::Base < Airrecord::Table
         message = "Failed to sync association columns of #{association} on #{record_type} #{id} \n#{association.errors.full_messages}"
         Rails.logger.warn(message)
         report.failed(id, record_type, association.errors.full_messages) if report
+        return nil
       end
 
       self.class.associations.each do |column, options|
@@ -201,6 +202,7 @@ class Airtable::Base < Airrecord::Table
     id = self[column].try(:first)
     # if there is no ID then we are done.
     return unless id
+
     # use rails reflect_on_association metod to find the association class.
     reflection = record.class.reflect_on_association(attribute)
     association_class = reflection.class_name.constantize
