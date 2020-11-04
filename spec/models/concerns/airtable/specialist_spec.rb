@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Airtable::Specialist do
-  include_examples "airtable syncing"
-  include_examples "sync airtable association", "Country", to: :country
+  include_examples "airtable syncing", fields: {"Email Address" => Faker::Internet.email}
+  include_examples "sync airtable association", "Country", to: :country, fields: {"Email Address" => Faker::Internet.email}
 
   include_examples("sync airtable columns to association", {
     association: :account,
@@ -19,6 +19,7 @@ RSpec.describe Airtable::Specialist do
   describe "syncing the application stage" do
     let(:specialist) { create(:specialist, application_stage: nil) }
     let(:airtable) { Airtable::Specialist.new({
+      "Email Address" => "test@airtable.com",
       "Application Stage" => "Applied",
       "Bank Holder Address" => "123 Bacon Street, Egg City, IE, 12345",
     }, id: specialist.airtable_id) }
@@ -61,6 +62,7 @@ RSpec.describe Airtable::Specialist do
   context "when 'Okay To Use Publicly' is Yes" do
     let(:specialist) { create(:specialist, public_use: nil) }
     let(:airtable) { Airtable::Specialist.new({
+      "Email Address" => "test@airtable.com",
       "Okay To Use Publicly" => "Yes",
     }, id: specialist.airtable_id) }
 
@@ -75,6 +77,7 @@ RSpec.describe Airtable::Specialist do
     let(:specialist) { create(:specialist, public_use: nil) }
     let(:airtable) { Airtable::Specialist.new({
       "Okay To Use Publicly" => "No",
+      "Email Address" => "test@airtable.com",
     }, id: specialist.airtable_id) }
 
     it "sets the public_use column to false" do
@@ -87,6 +90,7 @@ RSpec.describe Airtable::Specialist do
   context "when there is a 'Typical Hourly Rate'" do
     let(:specialist) { create(:specialist, hourly_rate: nil) }
     let(:airtable) { Airtable::Specialist.new({
+      "Email Address" => "test@airtable.com",
       "Typical Hourly Rate" => 87,
     }, id: specialist.airtable_id) }
 
@@ -102,6 +106,7 @@ RSpec.describe Airtable::Specialist do
     let(:skill_b) { create(:skill) }
     let(:airtable) {
       Airtable::Specialist.new({
+        "Email Address" => "test@airtable.com",
         "Specialist Skills" => [skill_a.airtable_id, skill_b.airtable_id],
       }, id: specialist.airtable_id)
     }
@@ -117,6 +122,7 @@ RSpec.describe Airtable::Specialist do
     context 'when the skill has not already been synced' do
       let(:airtable) {
         Airtable::Specialist.new({
+          "Email Address" => "test@airtable.com",
           "Specialist Skills" => ["recNewSkill"],
         }, id: specialist.airtable_id)
       }
@@ -319,6 +325,28 @@ RSpec.describe Airtable::Specialist do
         }.to change {
           specialist.reload.skills.first.id
         }.from(skill.id).to(original.id)
+      end
+    end
+  end
+
+  describe "account handling" do
+    let(:specialist) { create(:specialist) }
+    let(:airtable) { Airtable::Specialist.new({"Email Address" => email}, id: specialist.airtable_id) }
+
+    context "when email is present" do
+      let(:email) { "test@airtable.com" }
+      it "creates the specialist" do
+        specialist = airtable.sync
+        expect(specialist.account).not_to be_nil
+      end
+    end
+
+    context "when email is blank" do
+      let(:email) { "" }
+
+      it "does not create a specialist" do
+        specialist = airtable.sync
+        expect(specialist).to be_nil
       end
     end
   end
