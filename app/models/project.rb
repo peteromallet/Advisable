@@ -162,7 +162,6 @@ end
 #  lost_at                          :datetime
 #  name                             :string
 #  owner                            :string
-#  primary_skill                    :string
 #  proposal_received_at             :datetime
 #  proposed_count                   :integer          default(0)
 #  questions                        :text             default([]), is an Array
