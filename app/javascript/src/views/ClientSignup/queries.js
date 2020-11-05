@@ -273,7 +273,7 @@ export const getRequestApplicationReminderOptimisticResponse = (id) => {
       clientApplication: {
         __typename: "ClientApplication",
         id,
-        status: "REMIND",
+        status: "Requested Reminder",
       },
     },
   };
