@@ -4,7 +4,6 @@
 class User < ApplicationRecord
   include Uid
   include SpecialistOrUser
-  include StatusMap
   include Airtable::Syncable
   airtable_class Airtable::ClientContact
   has_many :projects, dependent: :destroy
@@ -52,12 +51,6 @@ class User < ApplicationRecord
   register_tutorial 'RECOMMENDATIONS'
 
   alias_attribute :application_status, :contact_status
-  map_status application_status: {
-               started: 'Application Started',
-               accepted: 'Application Accepted',
-               rejected: 'Application Rejected',
-               remind: 'Requested Reminder'
-             }
 
   def invoice_settings
     {

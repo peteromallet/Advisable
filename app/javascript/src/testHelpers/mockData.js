@@ -401,7 +401,7 @@ export const clientApplication = (fields = {}) => {
       localityImportance: null,
       acceptedGuaranteeTerms: false,
       talentQuality: null,
-      status: "STARTED",
+      status: "Application Started",
       rejectionReason: null,
     },
     fields,

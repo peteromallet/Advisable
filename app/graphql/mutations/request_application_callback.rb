@@ -7,7 +7,7 @@ class Mutations::RequestApplicationCallback < Mutations::BaseMutation
   def authorized?(**args)
     user = User.find_by_uid_or_airtable_id!(args[:id])
 
-    if user.application_status != :accepted
+    if user.application_status != "Application Accepted"
       raise ApiError::InvalidRequest.new(
               'notAccepted',
               'Must be accepted to request a callback'

@@ -219,16 +219,16 @@ export const getAboutPreferencesOptimisticResponse = (
   numberOfFreelancers,
 ) => {
   const { talentQuality } = values;
-  let status = "ACCEPTED";
+  let status = "Application Accepted";
   let rejectionReason = null;
 
   // Might be better to return both reasons
   if (talentQuality === "CHEAP" || talentQuality === "BUDGET") {
-    status = "REJECTED";
+    status = "Application Rejected";
     rejectionReason = "CHEAP_TALENT";
   }
   if (numberOfFreelancers === "0") {
-    status = "REJECTED";
+    status = "Application Rejected";
     rejectionReason = "NOT_HIRING";
   }
 
@@ -273,7 +273,7 @@ export const getRequestApplicationReminderOptimisticResponse = (id) => {
       clientApplication: {
         __typename: "ClientApplication",
         id,
-        status: "REMIND",
+        status: "Requested Reminder",
       },
     },
   };
