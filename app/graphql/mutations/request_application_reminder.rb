@@ -5,7 +5,7 @@ class Mutations::RequestApplicationReminder < Mutations::BaseMutation
 
   def authorized?(id:)
     user = User.find_by_uid_or_airtable_id!(id)
-    if user.application_status != :rejected
+    if user.application_status != "Application Rejected"
       raise ApiError::InvalidRequest.new(
               'notRejected',
               'Application must be rejected to request reminder'
@@ -22,6 +22,6 @@ class Mutations::RequestApplicationReminder < Mutations::BaseMutation
     user.save
     user.sync_to_airtable
 
-    { client_application: user }
+    {client_application: user}
   end
 end

@@ -224,11 +224,11 @@ export const getAboutPreferencesOptimisticResponse = (
 
   // Might be better to return both reasons
   if (talentQuality === "CHEAP" || talentQuality === "BUDGET") {
-    status = "REJECTED";
+    status = "Application Rejected";
     rejectionReason = "CHEAP_TALENT";
   }
   if (numberOfFreelancers === "0") {
-    status = "REJECTED";
+    status = "Application Rejected";
     rejectionReason = "NOT_HIRING";
   }
 
