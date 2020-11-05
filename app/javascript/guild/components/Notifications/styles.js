@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import { Box, theme } from "@advisable/donut";
-import { flex } from "@guild/styles";
+import { flex, breakpoint } from "@guild/styles";
 import ClampLines from "react-clamp-lines";
 
 const { space, colors } = theme;
 
 export const NotificationDropdown = styled(Box)`
   right: 24px;
+  ${breakpoint.smallAndUp} {
+    right: 76px;
+  }
   z-index: 3;
-  top: 74px;
+  top: 68px;
   width: 442px;
-  height: 75vh;
   padding: 24px;
   background: white;
   position: absolute;
@@ -23,7 +25,7 @@ export const NotificationDropdown = styled(Box)`
   pointer-events: ${(props) => (props.open ? "all" : "none")};
   transform: ${(props) => (props.open ? "scale(1)" : "scale(0.7)")};
 
-  ${flex.spaceChildrenVertical(space.s)}
+  ${flex.spaceChildrenVertical(space.m)}
   overflow: scroll;
 `;
 
@@ -31,11 +33,7 @@ export const NotificationItem = styled(Box)`
   display: flex;
   flex-shrink: 0;
   max-width: 392px;
-  height: 118px;
-  background: ${colors.ghostWhite};
   align-items: center;
-
-  /* ${flex.spaceChildrenHorizontal(theme.space.s)} */
 `;
 
 export const CommentNotificationBody = styled(ClampLines)`

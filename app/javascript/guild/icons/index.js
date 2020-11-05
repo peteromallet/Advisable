@@ -104,3 +104,7 @@ export const Camera = asIcon({
   drawn:
     "M9 3h6l2 2h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4l2-2zm3 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12zm0-2a4 4 0 1 1 0-8 4 4 0 0 1 0 8z",
 });
+
+export const Menu = asIcon({
+  drawn: "M18 18v2H6v-2h12zm3-7v2H3v-2h18zm-3-7v2H6V4h12z",
+});
