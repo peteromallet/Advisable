@@ -12,7 +12,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
   def resolve(**args)
     user = User.find_by_uid_or_airtable_id!(args[:id])
 
-    if %i[started].include?(user.application_status)
+    if user.application_status == "Application Started"
       update_assignable_attributes(user, args)
       update_company_name(user, args[:company_name]) if args[:company_name]
       update_industry(user, args[:industry]) if args[:industry]
@@ -45,7 +45,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
 
   def update_assignable_attributes(user, args)
     assignable_attributes.each do |attribute|
-      user.send("#{attribute}=", args[attribute]) if args[attribute]
+      user.public_send("#{attribute}=", args[attribute]) if args[attribute]
     end
   end
 
@@ -61,6 +61,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
 
   def email_blacklisted?(email)
     return if BlacklistedDomain.email_allowed?(email)
+
     ApiError.invalid_request(
       code: 'emailNotAllowed',
       message: 'This email is not allowed'
@@ -69,6 +70,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
 
   def check_existing_account(email)
     return if Account.where(email: email).none?
+
     ApiError.invalid_request(code: 'existingAccount', message: 'This email belongs to an existing account')
   end
 end

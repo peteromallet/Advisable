@@ -34,7 +34,7 @@ RSpec.describe Mutations::Signup do
     expect(user.account.first_name).to eq(first_name)
     expect(user.account.last_name).to eq(last_name)
     expect(user.account.email).to eq(email)
-    expect(user.application_status).to eq(:started)
+    expect(user.application_status).to eq("Application Started")
   end
 
   context 'when a user account already exists with that email' do
@@ -76,7 +76,7 @@ RSpec.describe Mutations::Signup do
           create(
             :user,
             account: create(:account, email: email, password: nil, first_name: 'Michael', last_name: 'Scott'),
-            application_status: :started
+            application_status: "Application Started"
           )
         expect { AdvisableSchema.execute(query) }.not_to change { User.count }
         expect(user.account.reload.first_name).to eq(first_name)
@@ -95,7 +95,7 @@ RSpec.describe Mutations::Signup do
         expect { AdvisableSchema.execute(query) }.not_to change { User.count }
         expect(user.account.reload.first_name).not_to eq(first_name)
         expect(user.account.reload.last_name).not_to eq(last_name)
-        expect(user.reload.application_status).not_to eq(:started)
+        expect(user.reload.application_status).not_to eq("Application Started")
       end
     end
   end

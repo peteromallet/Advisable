@@ -15,9 +15,9 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
         ApiError.invalid_request(code: 'existingAccount', message: 'An account already exists with this email')
       end
 
-      user = User.find_or_create_by(account: account) { |u| u.application_status = :started }
+      user = User.find_or_create_by(account: account) { |u| u.application_status = "Application Started" }
 
-      if user.application_status == :started
+      if user.application_status == "Application Started"
         account.first_name = args[:first_name]
         account.last_name = args[:last_name]
         if account.save && user.save
@@ -37,6 +37,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
 
   def create_client_record(user)
     return if user.client.present?
+
     client = Client.create(domain: user.account.email.split('@').last)
     client.users << user
     client.reload.sync_to_airtable
@@ -44,6 +45,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
 
   def email_blacklisted?(email)
     return if BlacklistedDomain.email_allowed?(email)
+
     ApiError.invalid_request(
       code: 'emailNotAllowed',
       message: 'This email is not allowed'
@@ -52,6 +54,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
 
   def check_existing_specialist_account(email)
     return unless Specialist.exists?(email: email)
+
     ApiError.invalid_request(
       code: 'existingAccount',
       message: 'This email belongs to a specialist account'

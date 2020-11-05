@@ -8,11 +8,8 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
 
   def authorized?(**args)
     user = User.find_by_uid_or_airtable_id!(args[:id])
-    unless %i[started].include?(user.application_status)
-      raise ApiError::InvalidRequest.new(
-              'alreadySubmitted',
-              'Application has already been submitted'
-            )
+    if user.application_status != "Application Started"
+      raise ApiError::InvalidRequest.new('alreadySubmitted', 'Application has already been submitted')
     end
 
     true
@@ -52,18 +49,20 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
     user.sync_to_airtable
     ClientApplicationSubmittedNotificationJob.perform_later(user.id)
 
-    { clientApplication: user }
+    {clientApplication: user}
   end
 
   private
 
   def update_talent_quality(user, talent_quality)
     return unless talent_quality
+
     user.talent_quality = talent_quality.downcase
   end
 
   def update_guarantee_terms(user, accept)
     return if accept.nil?
+
     if accept
       user.accepted_guarantee_terms_at = Time.zone.now
     else
