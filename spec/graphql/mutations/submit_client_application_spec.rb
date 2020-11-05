@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::SubmitClientApplication do
-  let(:user) { create(:user, application_status: :started) }
+  let(:user) { create(:user, application_status: "Application Started") }
   let(:query) do
     <<-GRAPHQL
       mutation {
@@ -26,7 +26,7 @@ RSpec.describe Mutations::SubmitClientApplication do
   it 'Sets the status to accepted' do
     expect { AdvisableSchema.execute(query) }.to change {
       user.reload.application_status
-    }.from(:started).to(:accepted)
+    }.from("Application Started").to(:accepted)
   end
 
   context 'when they select cheap talent' do
@@ -56,7 +56,7 @@ RSpec.describe Mutations::SubmitClientApplication do
 
   context 'when they select not hiring any freelancers' do
     let(:user) do
-      create(:user, application_status: :started, number_of_freelancers: '0')
+      create(:user, application_status: "Application Started", number_of_freelancers: '0')
     end
 
     it 'sets the status to rejected with a reason' do

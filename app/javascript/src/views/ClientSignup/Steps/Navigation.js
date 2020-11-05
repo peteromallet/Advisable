@@ -65,7 +65,8 @@ const Navigation = ({
         setParams(reduce("LOGIN_PAGE"));
       }
       if (emailNotAllowed) setParams(reduce("EMAIL_NOT_ALLOWED"));
-      if (status && status !== "STARTED") setParams(reduce("LAST_STEP"));
+      if (status && status !== "Application Started")
+        setParams(reduce("LAST_STEP"));
       if (
         called &&
         (locationState?.applicationId || applicationId) &&

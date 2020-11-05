@@ -6,7 +6,7 @@ RSpec.describe Mutations::UpdateClientApplication do
   end
 
   it 'Can update the company_name' do
-    user = create(:user, application_status: :started, company_name: 'Before')
+    user = create(:user, application_status: "Application Started", company_name: 'Before')
     query = <<-GRAPHQL
       mutation {
         updateClientApplication(input: {
@@ -26,7 +26,7 @@ RSpec.describe Mutations::UpdateClientApplication do
   end
 
   it 'Doesnt update company name if not provided' do
-    user = create(:user, application_status: :started, company_name: 'Before')
+    user = create(:user, application_status: "Application Started", company_name: 'Before')
     query = <<-GRAPHQL
       mutation {
         updateClientApplication(input: {
@@ -47,7 +47,7 @@ RSpec.describe Mutations::UpdateClientApplication do
   it 'can update industry' do
     design = create(:industry, name: 'Design')
     development = create(:industry, name: 'Development')
-    user = create(:user, application_status: :started, industry: design)
+    user = create(:user, application_status: "Application Started", industry: design)
     query = <<-GRAPHQL
       mutation {
         updateClientApplication(input: {
@@ -68,12 +68,12 @@ RSpec.describe Mutations::UpdateClientApplication do
 
   it 'Can update the number_of_freelancers' do
     user =
-      create(:user, application_status: :started, number_of_freelancers: nil)
+      create(:user, application_status: "Application Started", number_of_freelancers: nil)
     query = <<-GRAPHQL
       mutation {
         updateClientApplication(input: {
           id: "#{user.uid}",
-          numberOfFreelancers: "4-10" 
+          numberOfFreelancers: "4-10"
         }) {
           clientApplication {
             id
@@ -88,12 +88,12 @@ RSpec.describe Mutations::UpdateClientApplication do
   end
 
   it 'Returns an error if the record doesnt save' do
-    user = create(:user, application_status: :started)
+    user = create(:user, application_status: "Application Started")
     query = <<-GRAPHQL
       mutation {
         updateClientApplication(input: {
           id: "#{user.uid}",
-          numberOfFreelancers: "invalid-value" 
+          numberOfFreelancers: "invalid-value"
         }) {
           clientApplication {
             id
@@ -108,7 +108,7 @@ RSpec.describe Mutations::UpdateClientApplication do
   end
 
   it 'Can update the budget' do
-    user = create(:user, application_status: :started, budget: nil)
+    user = create(:user, application_status: "Application Started", budget: nil)
     query = <<-GRAPHQL
       mutation {
         updateClientApplication(input: {
@@ -128,7 +128,7 @@ RSpec.describe Mutations::UpdateClientApplication do
   end
 
   it 'Can update the skills' do
-    user = create(:user, application_status: :started)
+    user = create(:user, application_status: "Application Started")
     skill = create(:skill)
     query = <<-GRAPHQL
       mutation {
