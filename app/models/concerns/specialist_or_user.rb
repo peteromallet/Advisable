@@ -4,7 +4,6 @@ module SpecialistOrUser
   extend ActiveSupport::Concern
 
   included do
-    self.ignored_columns = Account::MIGRATED_COLUMNS
     include Tutorials
     belongs_to :account, dependent: :destroy
   end
@@ -27,30 +26,5 @@ module SpecialistOrUser
     define_singleton_method("#{method}!") do |param|
       public_send(method, param).presence || raise(ActiveRecord::RecordNotFound)
     end
-  end
-
-  # TODO: AccountMigration - columns that we migrated to Account
-  # everything below this is deprecation-ware
-  Account::MIGRATED_COLUMNS.each do |column|
-    define_method(column) do
-      raise unless Rails.env.production?
-
-      Raven.capture_message("Method #{column} called on #{self.class.name} that was meant for Account", backtrace: caller, level: 'debug')
-      account&.public_send(column)
-    end
-
-    define_method("#{column}=") do |param|
-      raise unless Rails.env.production?
-
-      Raven.capture_message("Method #{column}= called on #{self.class.name} that was meant for Account", backtrace: caller, level: 'debug')
-      account&.public_send("#{column}=", param)
-    end
-  end
-
-  def name
-    raise unless Rails.env.production?
-
-    Raven.capture_message("Method called on #{self.class.name} that was meant for Account", backtrace: caller, level: 'debug')
-    account.name
   end
 end
