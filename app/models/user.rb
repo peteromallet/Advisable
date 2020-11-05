@@ -4,7 +4,6 @@
 class User < ApplicationRecord
   include Uid
   include SpecialistOrUser
-  include StatusMap
   include Airtable::Syncable
   airtable_class Airtable::ClientContact
   has_many :projects, dependent: :destroy
