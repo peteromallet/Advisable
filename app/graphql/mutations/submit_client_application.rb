@@ -25,12 +25,12 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
     rejection_reason = nil
 
     if User::TALENT_QUALITY_OPTIONS.first(2).include?(user.talent_quality)
-      application_status = :rejected
+      application_status = "Application Rejected"
       rejection_reason = 'cheap_talent'
     end
 
     if user.number_of_freelancers == '0'
-      application_status = :rejected
+      application_status = "Application Rejected"
       rejection_reason = 'not_hiring'
     end
 
@@ -41,7 +41,7 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
       user.application_accepted_at = Time.zone.now
     end
 
-    if application_status == :rejected
+    if application_status == "Application Rejected"
       user.application_rejected_at = Time.zone.now
     end
 

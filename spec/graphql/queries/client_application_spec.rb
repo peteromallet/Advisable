@@ -33,13 +33,13 @@ RSpec.describe Types::ClientApplicationType do
     end
   end
 
-  context 'when the application_status is rejected' do
-    let(:user) { create(:user, application_status: :rejected) }
+  context 'when the application_status is "Application Rejected"' do
+    let(:user) { create(:user, application_status: "Application Rejected") }
 
-    it 'the status field is REJECTED' do
+    it 'the status field is "Application Rejected"' do
       response = AdvisableSchema.execute(query)
       status = response['data']['clientApplication']['status']
-      expect(status).to eq('REJECTED')
+      expect(status).to eq('Application Rejected')
     end
   end
 end

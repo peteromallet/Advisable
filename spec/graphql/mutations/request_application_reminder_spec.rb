@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::RejectApplication do
-  let(:user) { create(:user, application_status: :rejected) }
+  let(:user) { create(:user, application_status: "Application Rejected") }
 
   let(:query) do
     <<-GRAPHQL
@@ -17,7 +17,7 @@ RSpec.describe Mutations::RejectApplication do
     GRAPHQL
   end
 
-  let(:context) { { current_user: user } }
+  let(:context) { {current_user: user} }
   let(:response) { AdvisableSchema.execute(query, context: context) }
 
   before :each do
@@ -26,7 +26,7 @@ RSpec.describe Mutations::RejectApplication do
 
   it 'sets the application status to remind' do
     expect { response }.to change { user.reload.application_status }.from(
-      :rejected
+      "Application Rejected"
     ).to(:remind)
     expect(user.reload.application_reminder_at).to be_within(5.seconds).of(
       6.months.from_now

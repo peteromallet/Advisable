@@ -49,7 +49,7 @@ RSpec.describe Mutations::SubmitClientApplication do
 
     it 'Sets the status to rejected with a reason' do
       AdvisableSchema.execute(query)
-      expect(user.reload.application_status).to eq(:rejected)
+      expect(user.reload.application_status).to eq("Application Rejected")
       expect(user.reload.rejection_reason).to eq('cheap_talent')
     end
   end
@@ -61,7 +61,7 @@ RSpec.describe Mutations::SubmitClientApplication do
 
     it 'sets the status to rejected with a reason' do
       AdvisableSchema.execute(query)
-      expect(user.reload.application_status).to eq(:rejected)
+      expect(user.reload.application_status).to eq("Application Rejected")
       expect(user.reload.rejection_reason).to eq('not_hiring')
     end
   end

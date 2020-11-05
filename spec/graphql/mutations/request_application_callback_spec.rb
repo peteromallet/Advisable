@@ -37,7 +37,7 @@ RSpec.describe Mutations::RequestApplicationCallback do
   end
 
   context 'when the application status is not accepted' do
-    let(:application_status) { :rejected }
+    let(:application_status) { "Application Rejected" }
 
     it 'returns an error' do
       error = response['errors'][0]['extensions']['code']
