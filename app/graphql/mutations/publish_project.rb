@@ -8,7 +8,6 @@ class Mutations::PublishProject < Mutations::BaseMutation
   # 'Self-Serve' and the user has not yet submitted the project. A project
   # status is 'Brief Pending Confirmation' when the service_type is 'Assisted'
   # and the project has been sent to the client to confirm the details.
-  # TODO: Remove status_map.
   # TODO: Ideally we would have some kind of published_at attribute here that
   # we would rely on instead.
   ALLOWED_STATUSES = ["Draft", "Brief Pending Confirmation"].freeze

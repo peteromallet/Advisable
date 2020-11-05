@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::RequestApplicationCallback do
-  let(:application_status) { :accepted }
+  let(:application_status) { "Application Accepted" }
   let(:user) { create(:user, application_status: application_status) }
 
   let(:query) do
@@ -37,7 +37,7 @@ RSpec.describe Mutations::RequestApplicationCallback do
   end
 
   context 'when the application status is not accepted' do
-    let(:application_status) { :rejected }
+    let(:application_status) { "Application Rejected" }
 
     it 'returns an error' do
       error = response['errors'][0]['extensions']['code']

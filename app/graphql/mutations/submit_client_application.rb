@@ -8,11 +8,8 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
 
   def authorized?(**args)
     user = User.find_by_uid_or_airtable_id!(args[:id])
-    unless %i[started].include?(user.application_status)
-      raise ApiError::InvalidRequest.new(
-              'alreadySubmitted',
-              'Application has already been submitted'
-            )
+    if user.application_status != "Application Started"
+      raise ApiError::InvalidRequest.new('alreadySubmitted', 'Application has already been submitted')
     end
 
     true
@@ -24,27 +21,27 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
     update_talent_quality(user, args[:talent_quality])
     update_guarantee_terms(user, args[:accepted_guarantee_terms])
 
-    application_status = :accepted
+    application_status = "Application Accepted"
     rejection_reason = nil
 
     if User::TALENT_QUALITY_OPTIONS.first(2).include?(user.talent_quality)
-      application_status = :rejected
+      application_status = "Application Rejected"
       rejection_reason = 'cheap_talent'
     end
 
     if user.number_of_freelancers == '0'
-      application_status = :rejected
+      application_status = "Application Rejected"
       rejection_reason = 'not_hiring'
     end
 
     user.application_status = application_status
     user.rejection_reason = rejection_reason
 
-    if application_status == :accepted
+    if application_status == "Application Accepted"
       user.application_accepted_at = Time.zone.now
     end
 
-    if application_status == :rejected
+    if application_status == "Application Rejected"
       user.application_rejected_at = Time.zone.now
     end
 
@@ -52,18 +49,20 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
     user.sync_to_airtable
     ClientApplicationSubmittedNotificationJob.perform_later(user.id)
 
-    { clientApplication: user }
+    {clientApplication: user}
   end
 
   private
 
   def update_talent_quality(user, talent_quality)
     return unless talent_quality
+
     user.talent_quality = talent_quality.downcase
   end
 
   def update_guarantee_terms(user, accept)
     return if accept.nil?
+
     if accept
       user.accepted_guarantee_terms_at = Time.zone.now
     else

@@ -32,7 +32,7 @@ class Types::ClientApplicationType < Types::BaseType
   end
 
   def status
-    object.application_status.try(:upcase)
+    object.application_status
   end
 
   def accepted_guarantee_terms
