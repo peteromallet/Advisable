@@ -26,7 +26,7 @@ RSpec.describe Mutations::SubmitClientApplication do
   it 'Sets the status to accepted' do
     expect { AdvisableSchema.execute(query) }.to change {
       user.reload.application_status
-    }.from("Application Started").to(:accepted)
+    }.from("Application Started").to("Application Accepted")
   end
 
   context 'when they select cheap talent' do

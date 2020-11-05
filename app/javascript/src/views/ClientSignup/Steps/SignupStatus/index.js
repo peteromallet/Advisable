@@ -25,7 +25,7 @@ function SignupStatus() {
     lastName,
   } = data.clientApplication;
 
-  if (status === "ACCEPTED") {
+  if (status === "Application Accepted") {
     return <AcceptedStatus firstName={firstName} lastName={lastName} />;
   } else if (rejectionReason === "NOT_HIRING") {
     return <NotHiringStatus />;

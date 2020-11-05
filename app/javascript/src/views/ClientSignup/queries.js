@@ -219,7 +219,7 @@ export const getAboutPreferencesOptimisticResponse = (
   numberOfFreelancers,
 ) => {
   const { talentQuality } = values;
-  let status = "ACCEPTED";
+  let status = "Application Accepted";
   let rejectionReason = null;
 
   // Might be better to return both reasons
