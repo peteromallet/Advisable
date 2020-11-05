@@ -90,7 +90,7 @@ RSpec.describe Mutations::Signup do
           create(
             :user,
             account: create(:account, email: email, password: nil, first_name: 'Michael', last_name: 'Scott'),
-            application_status: :accepted
+            application_status: "Application Accepted"
           )
         expect { AdvisableSchema.execute(query) }.not_to change { User.count }
         expect(user.account.reload.first_name).not_to eq(first_name)

@@ -21,7 +21,7 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
     update_talent_quality(user, args[:talent_quality])
     update_guarantee_terms(user, args[:accepted_guarantee_terms])
 
-    application_status = :accepted
+    application_status = "Application Accepted"
     rejection_reason = nil
 
     if User::TALENT_QUALITY_OPTIONS.first(2).include?(user.talent_quality)
@@ -37,7 +37,7 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
     user.application_status = application_status
     user.rejection_reason = rejection_reason
 
-    if application_status == :accepted
+    if application_status == "Application Accepted"
       user.application_accepted_at = Time.zone.now
     end
 

@@ -150,7 +150,7 @@ RSpec.describe Mutations::UpdateClientApplication do
 
   context 'if the application_status is accepted' do
     it "Can't update any data" do
-      user = create(:user, application_status: :accepted)
+      user = create(:user, application_status: "Application Accepted")
       query = <<-GRAPHQL
         mutation {
           updateClientApplication(input: {

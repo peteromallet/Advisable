@@ -53,7 +53,6 @@ class User < ApplicationRecord
 
   alias_attribute :application_status, :contact_status
   map_status application_status: {
-               accepted: 'Application Accepted',
                rejected: 'Application Rejected',
                remind: 'Requested Reminder'
              }
