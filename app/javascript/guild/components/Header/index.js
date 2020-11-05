@@ -1,23 +1,21 @@
 import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { useHistory, useLocation } from "react-router-dom";
-import { Box, Link, useBreakpoint } from "@advisable/donut";
+import { Box, Link } from "@advisable/donut";
 import logo from "@advisable-main/components/Header/logo";
 import { useToggle } from "@guild/hooks/useToggle";
-import { Notification, Messages } from "@guild/icons";
-// import SearchBar from "@guild/components/SearchBar";
+import { Notification, Messages, Menu } from "@guild/icons";
 import Notifications from "@guild/components/Notifications";
+import UserMenu from "@guild/components/UserMenu";
 import { NavIcon } from "./styles";
-import Mask from "@guild/components/Mask";
 import { GuildBox } from "@guild/styles";
 import { GUILD_LAST_READ_QUERY } from "./queries";
 import { GUILD_UPDATE_LAST_READ } from "./mutations";
 
 const Header = () => {
   const location = useLocation();
-  const sUp = useBreakpoint("sUp");
   const [notificationsOpen, toggleNotifications] = useToggle();
-  const [maskOpen, toggleMask] = useToggle();
+  const [userMenuOpen, toggleUserMenu] = useToggle();
   const history = useHistory();
 
   const { data: lastReadData } = useQuery(GUILD_LAST_READ_QUERY, {
@@ -35,20 +33,24 @@ const Header = () => {
   });
 
   const handleMessages = () => {
-    if (maskOpen) safeToggleMask();
     history.push("/messages");
   };
 
   const handleNotifications = () => {
-    safeToggleMask();
     toggleNotifications();
+    safeToggleNav();
     handleUpdateLastRead({ readNotifications: true });
   };
 
-  const safeToggleMask = () => {
-    if (notificationsOpen) toggleNotifications();
-    toggleMask();
+  const handleUserMenu = () => {
+    toggleUserMenu();
+    safeToggleNav();
   };
+
+  const safeToggleNav = React.useCallback(() => {
+    if (notificationsOpen) toggleNotifications();
+    if (userMenuOpen) toggleUserMenu();
+  }, [notificationsOpen, userMenuOpen]);
 
   const handleUpdateLastRead = async (input) =>
     await guildUpdateLastRead({ variables: { input } });
@@ -58,6 +60,7 @@ const Header = () => {
   return (
     <>
       <Notifications open={notificationsOpen} />
+      <UserMenu open={userMenuOpen} />
       <Box
         height="58px"
         width="100%"
@@ -72,7 +75,6 @@ const Header = () => {
           <Link to={"/"}>
             <img src={logo} alt="" />
           </Link>
-          {/* <SearchBar handleSubmitSearch={null} /> */}
         </Box>
 
         <GuildBox spaceChildrenHorizontal={24} display="flex">
@@ -83,18 +85,19 @@ const Header = () => {
           >
             <Messages />
           </NavIcon>
-          {sUp && (
-            <NavIcon
-              unread={lastReadData?.viewer?.guildUnreadNotifications}
-              open={notificationsOpen}
-              onClick={handleNotifications}
-            >
-              <Notification />
-            </NavIcon>
-          )}
+          <NavIcon
+            unread={lastReadData?.viewer?.guildUnreadNotifications}
+            open={notificationsOpen}
+            onClick={handleNotifications}
+          >
+            <Notification />
+          </NavIcon>
+          <NavIcon onClick={handleUserMenu} open={userMenuOpen}>
+            <Menu />
+          </NavIcon>
         </GuildBox>
       </Box>
-      <Mask isOpen={maskOpen} toggler={safeToggleMask} />
+      {/* <Mask isOpen={maskOpen} toggler={safeToggleMask} /> */}
     </>
   );
 };

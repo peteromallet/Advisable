@@ -60,6 +60,7 @@ export const StyledTag = styled.div`
   ${border};
 
   font-size: 16px;
+  font-weight: 500;
   max-height: 40px;
   border-radius: 30px;
 

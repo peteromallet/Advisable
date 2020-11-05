@@ -10,6 +10,8 @@ export const GUILD_NOTIFICATIONS_QUERY = gql`
           body
           author {
             name
+            firstName
+            lastName
             avatar
           }
           createdAtTimeAgo
@@ -22,6 +24,9 @@ export const GUILD_NOTIFICATIONS_QUERY = gql`
           id
           author {
             name
+            firstName
+            lastName
+            id
             avatar
           }
           kind
