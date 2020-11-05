@@ -27,14 +27,14 @@ RSpec.describe Mutations::RejectApplication do
   it 'sets the application status to remind' do
     expect { response }.to change { user.reload.application_status }.from(
       "Application Rejected"
-    ).to(:remind)
+    ).to('Requested Reminder')
     expect(user.reload.application_reminder_at).to be_within(5.seconds).of(
       6.months.from_now
     )
   end
 
   context 'when the application status is not rejected' do
-    let(:user) { create(:user, application_status: :remind) }
+    let(:user) { create(:user, application_status: 'Requested Reminder') }
 
     it 'returns an error' do
       error = response['errors'][0]['extensions']['code']

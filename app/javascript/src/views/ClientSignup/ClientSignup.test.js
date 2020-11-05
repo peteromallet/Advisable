@@ -596,7 +596,7 @@ test("Not hiring client application rejection flow", async () => {
             clientApplication: {
               __typename: "ClientApplication",
               id: clientApplication.id,
-              status: "REMIND",
+              status: "Requested Reminder",
             },
           },
         },

@@ -52,9 +52,6 @@ class User < ApplicationRecord
   register_tutorial 'RECOMMENDATIONS'
 
   alias_attribute :application_status, :contact_status
-  map_status application_status: {
-               remind: 'Requested Reminder'
-             }
 
   def invoice_settings
     {
