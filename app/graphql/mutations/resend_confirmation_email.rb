@@ -1,16 +1,12 @@
-class Mutations::ResendConfirmationEmail < GraphQL::Schema::Mutation
-  field :user, Types::User, null: true
-  field :errors, [Types::Error], null: true
+class Mutations::ResendConfirmationEmail < Mutations::BaseMutation
+  field :viewer, Types::ViewerUnion, null: true
+
+  def authorized?
+    requires_current_user!
+  end
 
   def resolve(**args)
-    unless context[:current_user]
-      raise Service::Error.new('You are not authenticated')
-    end
-
-    context[:current_user].send_confirmation_email
-
-    {user: context[:current_user]}
-  rescue Service::Error => e
-    {errors: [e]}
+    current_user.send_confirmation_email
+    {viewer: current_user}
   end
 end

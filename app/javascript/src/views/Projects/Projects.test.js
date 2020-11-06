@@ -1,6 +1,6 @@
 import fields from "../../__mocks__/graphqlFields";
-import { renderRoute } from "test-utils";
-import VIEWER from "../../graphql/queries/viewer";
+import { screen } from "@testing-library/react";
+import { renderRoute, mockQuery, mockViewer } from "test-utils";
 import { GET_PROJECTS } from "./queries";
 import { GET_APPLICATIONS } from "../Applications/queries";
 
@@ -9,92 +9,60 @@ test("Loads the clients projects", async () => {
   const project = fields.project({ primarySkill: skill, matches: [] });
   const user = fields.user({ projects: [project] });
 
-  let { findByText } = renderRoute({
+  renderRoute({
     route: "/projects",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
-        },
-        result: {
-          data: {
-            viewer: user,
-          },
-        },
-      },
-      {
-        request: {
-          query: GET_PROJECTS,
-        },
-        result: {
-          data: {
-            viewer: user,
-          },
-        },
-      },
+      mockViewer(user),
+      mockQuery(GET_PROJECTS, {}, { viewer: user }),
     ],
   });
 
-  let projectTitle = await findByText(skill.name);
-  expect(projectTitle).toBeInTheDocument();
+  await screen.findByText(skill.name);
 });
 
 test("Redirects to specialist dashboard if not logged in as a user", async () => {
   const specialist = fields.specialist();
 
-  const app = renderRoute({
+  renderRoute({
     route: "/projects",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
-        },
-        result: {
-          data: {
-            viewer: specialist,
+      mockViewer(specialist),
+      mockQuery(
+        GET_APPLICATIONS,
+        {},
+        {
+          viewer: {
+            ...specialist,
+            invitations: [],
+            applications: [],
           },
         },
-      },
-      {
-        request: {
-          query: GET_APPLICATIONS,
-        },
-        result: {
-          data: {
-            viewer: {
-              ...specialist,
-              invitations: [],
-              applications: [],
-            },
-          },
-        },
-      },
+      ),
     ],
   });
 
-  const header = await app.findByText(
-    "You have not applied to any projects yet",
-  );
-  expect(header).toBeInTheDocument();
+  await screen.findByText(/you have not applied to any projects/i);
 });
 
 test("Redirects to login page if not logged in", async () => {
-  const app = renderRoute({
+  renderRoute({
+    route: "/projects",
+    graphQLMocks: [mockViewer(null)],
+  });
+
+  await screen.findByText(/welcome back/i);
+});
+
+test("Renders a account confirmation prompt", async () => {
+  const user = fields.user({ confirmed: false, projects: [] });
+
+  renderRoute({
     route: "/projects",
     graphQLMocks: [
-      {
-        request: {
-          query: VIEWER,
-        },
-        result: {
-          data: {
-            viewer: null,
-          },
-        },
-      },
+      mockViewer(user),
+      mockQuery(GET_PROJECTS, {}, { viewer: user }),
     ],
   });
 
-  const header = await app.findByText(/Welcome back/i);
-  expect(header).toBeInTheDocument();
+  await screen.findByText(/please confirm your account/i);
 });

@@ -5,6 +5,7 @@ import { MemoryRouter } from "react-router-dom";
 import { render, configure } from "@testing-library/react";
 import useBreakpoints from "../../../../donut/src/hooks/useBreakpoints";
 import ApplicationProvider from "components/ApplicationProvider";
+import { NotificationsProvider } from "components/Notifications";
 import { MockedProvider } from "@apollo/client/testing";
 import i18n from "./i18next";
 import App from "../App";
@@ -141,7 +142,9 @@ function Providers({ children, route, graphQLMocks }) {
         }}
       >
         <MemoryRouter initialEntries={[route]}>
-          <Elements stripe={mockStripe()}>{children}</Elements>
+          <NotificationsProvider>
+            <Elements stripe={mockStripe()}>{children}</Elements>
+          </NotificationsProvider>
         </MemoryRouter>
       </MockedProvider>
     </I18nextProvider>

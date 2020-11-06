@@ -13,10 +13,16 @@ export default function AccountConfirmationPrompt() {
 
   if (viewer.confirmed) return null;
 
-  function handleResend(e) {
+  async function handleResend(e) {
     e.preventDefault();
-    notifications.notify("Confirmation email has been resent");
-    resend();
+    const { errors } = await resend();
+    if (errors) {
+      notifications.notify("Something went wrong, please try again", {
+        variant: "error",
+      });
+    } else {
+      notifications.notify("Confirmation email has been resent");
+    }
   }
 
   return (
@@ -41,7 +47,7 @@ export default function AccountConfirmationPrompt() {
           </Paragraph>
         </Box>
       </Box>
-      {!data ? (
+      {!data?.resendConfirmationEmail ? (
         <>
           <Box height="1px" bg="neutral200" marginY="lg" />
           <Text fontSize="sm">

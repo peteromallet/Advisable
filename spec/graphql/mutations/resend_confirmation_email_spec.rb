@@ -6,12 +6,11 @@ RSpec.describe Mutations::ResendConfirmationEmail do
   let(:query) do
     <<-GRAPHQL
       mutation {
-        resendConfirmationEmail {
-          user {
-            id
-          }
-          errors {
-            code
+        resendConfirmationEmail(input: {}) {
+          viewer {
+            ... on User {
+              id
+            }
           }
         }
       }
@@ -27,14 +26,13 @@ RSpec.describe Mutations::ResendConfirmationEmail do
   context 'when a user is signed in' do
     it 'returns the user' do
       response = AdvisableSchema.execute(query, context: {current_user: user})
-      user = response['data']['resendConfirmationEmail']['user']
+      user = response['data']['resendConfirmationEmail']['viewer']
       expect(user).to_not be_nil
     end
 
     it 'resends the confirmation email' do
       expect(user).to receive(:send_confirmation_email)
-      response = AdvisableSchema.execute(query, context: {current_user: user})
-      user = response['data']['resendConfirmationEmail']['user']
+      AdvisableSchema.execute(query, context: {current_user: user})
     end
 
     it 'sets the confirmation digest' do
@@ -47,8 +45,8 @@ RSpec.describe Mutations::ResendConfirmationEmail do
   context 'when a user is not logged in' do
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: {current_user: nil})
-      errors = response['data']['resendConfirmationEmail']['errors']
-      expect(errors[0]['code']).to eq('You are not authenticated')
+      errors = response['errors']
+      expect(errors[0]['extensions']['code']).to eq('notAuthenticated')
     end
   end
 end
