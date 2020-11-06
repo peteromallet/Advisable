@@ -10,6 +10,7 @@ import Empty from "./Empty";
 import AccountOnHold from "./AccountOnHold";
 import OpenApplications from "./OpenApplications";
 import ApplicationInvitations from "./ApplicationInvitations";
+import AccountConfirmationPrompt from "components/AccountConfirmationPrompt";
 
 const Applications = () => {
   const history = useHistory();
@@ -49,6 +50,7 @@ const Applications = () => {
 
   return (
     <Box maxWidth="1000px" width="96%" marginX="auto" paddingY="3xl">
+      <AccountConfirmationPrompt />
       {onHold && (
         <Box mb="l">
           <Notice
