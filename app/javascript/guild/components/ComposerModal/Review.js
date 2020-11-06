@@ -8,6 +8,7 @@ import { capitalize } from "@guild/utils";
 import { GuildBox } from "@guild/styles";
 import useProgressSteps from "./useProgressSteps";
 import { StyledTopicable } from "./styles";
+import { StaticImageTiles } from "./Images";
 
 export default function Review({ guildPost, onPublish }) {
   const [updateGuildPost] = useUpdateGuildPostWriteCache();
@@ -105,6 +106,22 @@ export default function Review({ guildPost, onPublish }) {
             </>
           )}
         </GuildBox>
+
+        {!!guildPost.images?.length && (
+          <>
+            <Stack spacing="l">
+              <Text mb="xs" fontSize="l" color="blue900" fontWeight="semibold">
+                Images
+              </Text>
+              <StaticImageTiles images={guildPost.images} />
+              <EditButton
+                to={`/composer/${guildPost.id}/images`}
+                resource="Images"
+              />
+            </Stack>
+            <Box height={1} bg="neutral100" my="l" />
+          </>
+        )}
 
         <Button
           size="l"
