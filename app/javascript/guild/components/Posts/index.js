@@ -21,6 +21,7 @@ const Posts = () => {
   ]);
 
   const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
+    fetchPolicy: "network-only",
     variables: { selectedFilter, selectedTopicsIds: selectedTopicsIds() },
   });
   const { bottomReached } = useScrolledToBottom();
