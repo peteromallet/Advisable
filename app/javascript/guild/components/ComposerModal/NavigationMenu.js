@@ -17,7 +17,9 @@ const SetupMenu = React.memo(function SetupMenu({ guildPost, urlPrefix }) {
   const yourPostComplete = yourPostValidationSchema.isValidSync(guildPost);
 
   const editImagesComplete =
-    isPublished || progressed("EDIT_IMAGES") || guildPost?.images?.length;
+    isPublished ||
+    progressed("EDIT_IMAGES") ||
+    Boolean(guildPost?.images?.length);
 
   const postTypeComplete = isPublished || progressed("EDIT_TYPE");
 
