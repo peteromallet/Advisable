@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, theme } from "@advisable/donut";
+import { rgba } from "polished";
 
 export function SectionHeaderWrapper({ children, ...props }) {
   return (
@@ -16,7 +17,7 @@ export function SectionHeaderText({ children, ...props }) {
       fontSize="xl"
       fontWeight="medium"
       lineHeight="29px"
-      color="neutral600"
+      color={rgba(theme.colors.neutral600, 0.9)}
       {...props}
     >
       {children}
