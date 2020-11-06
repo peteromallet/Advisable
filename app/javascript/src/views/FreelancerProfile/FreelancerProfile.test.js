@@ -93,7 +93,7 @@ test("can filter previous projects by skill and clear filters", async () => {
   await app.findAllByTestId(/industries-filter-tag/i);
   const filterTag = app.getByTestId(`skills-filter-tag-${skill}`);
   fireEvent.click(filterTag);
-  await app.findByText(`Showing ${skill} projects`);
+  await app.findByLabelText(`Showing ${skill} projects`, { exact: false });
   const numOfFilteredCards = app.getAllByTestId("project-card").length;
   expect(numOfFilteredCards).toBe(1);
   await app.findByText(`${skill} project`);
@@ -120,7 +120,10 @@ test("no filtered projects to display", async () => {
   );
   fireEvent.click(skillFilterTag);
   fireEvent.click(industryFilterTag);
-  await app.findByText(`Showing ${skill} projects with ${industry} companies`);
+  await app.findByLabelText(
+    `Showing ${skill} projects with ${industry} companies`,
+  );
+
   await app.findByText("No Projects");
 });
 
@@ -139,7 +142,7 @@ test("can filter previous projects by industry and clear filters", async () => {
   await app.findAllByTestId(/industries-filter-tag/i);
   const filterTag = app.getByTestId(`industries-filter-tag-${industry}`);
   fireEvent.click(filterTag);
-  await app.findByText(`with ${industry} companies`);
+  await app.findByLabelText(`Showing projects with ${industry} companies`);
   const numOfFilteredCards = app.getAllByTestId("project-card").length;
   expect(numOfFilteredCards).toBe(1);
   await app.findByText(`${primarySkill} project`);
@@ -233,7 +236,7 @@ test("can see tablet review", async () => {
   });
   await app.findByText(review.name);
   await app.findByText(`${review.role} at ${review.companyName}`);
-  await app.findByText(`"${review.comment}"`);
+  await app.findByText(review.comment);
 });
 
 test("can see mobile review", async () => {
@@ -246,9 +249,8 @@ test("can see mobile review", async () => {
     graphQLMocks,
   });
   await app.findByText(review.name);
-  await app.findByText(review.role);
-  await app.findByText(review.companyName);
-  await app.findByText(`"${review.comment}"`);
+  await app.findByText(`${review.role} at ${review.companyName}`);
+  await app.findByText(review.comment);
 });
 
 test("edit profile info", async () => {
@@ -306,13 +308,7 @@ test("render profile as a user viewer", async () => {
     graphQLMocks,
   });
 
-  const requestTalkButton = (
-    await app.findByLabelText(/request a talk/i)
-  ).closest("a");
-  expect(requestTalkButton).toHaveAttribute(
-    "href",
-    `/request_consultation/${specialist.id}`,
-  );
+  await app.findAllByLabelText(/request a talk/i);
 });
 
 test("Renders 404 if the specialist isn't found", async () => {
