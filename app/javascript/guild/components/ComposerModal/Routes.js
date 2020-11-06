@@ -3,7 +3,6 @@ import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import CreateGuildPost from "./CreateGuildPost";
 import EditGuildPost from "./EditGuildPost";
 import EditImages from "./EditImages";
-import EditType from "./EditType";
 import EditAudience from "./EditAudience";
 import EditTargeting from "./EditTargeting";
 import Review from "./Review";
@@ -32,10 +31,6 @@ function Routes({ onPublish, selectDataQuery, data = {} }) {
 
       <Route path="*composer/:id/edit">
         <EditGuildPost guildPost={guildPost} />
-      </Route>
-
-      <Route path="*composer/:id/post_type">
-        <EditType guildPost={guildPost} />
       </Route>
 
       <Route path="*composer/:id/images">

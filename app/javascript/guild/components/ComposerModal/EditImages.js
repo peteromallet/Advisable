@@ -12,7 +12,7 @@ export default function EditImages({ guildPost }) {
   const [images, dispatch] = useImageReducer(guildPost?.images);
   const { progress } = useProgressSteps();
 
-  const nextPath = `/composer/${guildPost.id}/post_type`;
+  const nextPath = `/composer/${guildPost.id}/audience`;
 
   const handleContinue = () => {
     progress("EDIT_IMAGES", nextPath);

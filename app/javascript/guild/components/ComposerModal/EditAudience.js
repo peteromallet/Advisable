@@ -58,7 +58,7 @@ export default function EditAudience({ guildPost }) {
           mb="s"
           fontSize="l"
           fontWeight="medium"
-          to={pathWithState(`/composer/${guildPost.id}/post_type`)}
+          to={pathWithState(`/composer/${guildPost.id}/images`)}
         >
           <Box display="inline-block" mr="xxs">
             <ArrowLeft size={20} strokeWidth={2} />
