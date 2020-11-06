@@ -15,6 +15,7 @@ import { Box } from "@advisable/donut";
 import NoProjects from "./NoProjects";
 // Queries
 import { GET_PROFILE } from "./queries";
+import CallToActionBox from "./CallToActionBox";
 
 function FreelancerProfile() {
   useLogoURL("https://advisable.com");
@@ -51,6 +52,7 @@ function FreelancerProfile() {
         <NoProjects data={data} isOwner={isOwner} />
       )}
       {hasReviews && <Testimonials reviews={data.specialist.reviews} />}
+      {!isOwner && <CallToActionBox specialist={data.specialist} />}
     </Box>
   );
 }
