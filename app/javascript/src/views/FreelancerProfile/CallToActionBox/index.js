@@ -34,15 +34,16 @@ function CallToActionBox({ specialist }) {
         <Box mb={!isWidescreen && "m"}>
           <Text
             fontSize={{ _: "l", s: "xl" }}
-            color="blue900"
+            color="blue800"
             fontWeight="medium"
             lineHeight="130%"
             mb="xxs"
           >
-            Would you like to talk to {specialist.firstName}?
+            Interested in collaborating with {specialist.firstName}?
           </Text>
           <Text lineHeight="130%" color="neutral700">
-            Just fill out the form and schedule a talk
+            Enter in your details to request an initial consultation with{" "}
+            {specialist.firstName}.
           </Text>
         </Box>
         <Box ml={isWidescreen && "auto"}>
