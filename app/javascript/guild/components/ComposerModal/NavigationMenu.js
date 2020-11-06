@@ -21,8 +21,6 @@ const SetupMenu = React.memo(function SetupMenu({ guildPost, urlPrefix }) {
     progressed("EDIT_IMAGES") ||
     Boolean(guildPost?.images?.length);
 
-  const postTypeComplete = isPublished || progressed("EDIT_TYPE");
-
   const audienceComplete =
     isPublished ||
     guildPost?.audienceType?.length ||
@@ -49,14 +47,6 @@ const SetupMenu = React.memo(function SetupMenu({ guildPost, urlPrefix }) {
         isDisabled={!editImagesComplete}
       >
         Images
-      </MultistepMenu.Item>
-
-      <MultistepMenu.Item
-        to={pathWithState(`${urlPrefix}/post_type`)}
-        isComplete={postTypeComplete}
-        isDisabled={!postTypeComplete}
-      >
-        Post Type
       </MultistepMenu.Item>
 
       <MultistepMenu.Item

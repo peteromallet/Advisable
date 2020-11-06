@@ -10,6 +10,7 @@ RSpec.describe Mutations::Guild::CreateGuildPost do
       createGuildPost(input: {
         title: "This is a title"
         body: "This is a body"
+        type: "CaseStudy"
       }) {
         guildPost {
           id
@@ -56,8 +57,8 @@ RSpec.describe Mutations::Guild::CreateGuildPost do
         "status" => "draft",
         "body" => "This is a body",
         "title" => "This is a title",
-        "denormalizedType" => "Post",
-        "type" => "General",
+        "denormalizedType" => "CaseStudy",
+        "type" => "Case Study",
         "author" => {"id" => specialist.uid},
       })
     end
