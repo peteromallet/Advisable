@@ -9,8 +9,7 @@ import { useUpdateGuildPostWriteCache } from "./mutations";
 export default function EditGuildPost({ guildPost }) {
   const { navigate } = useLocationStages();
   const [updateGuildPost] = useUpdateGuildPostWriteCache();
-
-  const { body, title, id } = guildPost;
+  const { denormalizedType: type, body, title, id } = guildPost;
 
   const handleUpdate = async (values) => {
     await updateGuildPost({
@@ -24,5 +23,7 @@ export default function EditGuildPost({ guildPost }) {
     navigate(`/composer/${id}/images`);
   };
 
-  return <YourPost onSubmit={handleUpdate} initialValues={{ body, title }} />;
+  return (
+    <YourPost onSubmit={handleUpdate} initialValues={{ type, body, title }} />
+  );
 }

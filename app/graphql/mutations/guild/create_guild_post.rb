@@ -4,6 +4,7 @@ class Mutations::Guild::CreateGuildPost < Mutations::BaseMutation
 
   argument :body, String, required: true
   argument :title, String, required: true
+  argument :type, String, required: true
 
   field :guild_post, Types::Guild::PostInterface, null: true
   field :errors, [Types::Error], null: true
@@ -12,10 +13,11 @@ class Mutations::Guild::CreateGuildPost < Mutations::BaseMutation
     requires_guild_user!
   end
 
-  def resolve(title:, body:)
+  def resolve(title:, body:, type:)
     guild_post = Guild::Post.new(
       title: title,
       body: body,
+      type: type,
       specialist_id: current_user.id
     )
     guild_post.save
