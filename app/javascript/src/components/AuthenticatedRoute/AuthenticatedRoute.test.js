@@ -111,15 +111,3 @@ test("redirects specialists to signup if applicationStage is Started", async () 
   await screen.findByText("Current: /freelancers/signup/preferences");
   await screen.findByText("From: none");
 });
-
-test("renders confirmation pending if account not confirmed", async () => {
-  renderTestCase(
-    mockData.specialist({
-      confirmed: false,
-    }),
-    "/test",
-    <AuthenticatedRoute path="/test" component={View} />,
-  );
-
-  await screen.findByText(/please confirm your account/i);
-});
