@@ -12,7 +12,7 @@ const variants = variant({
       },
     },
     dark: {
-      color: theme.colors.blue900,
+      color: theme.colors.blue800,
       "&:hover": {
         color: theme.colors.blue600,
       },
@@ -47,7 +47,7 @@ const styles = css`
   }
 
   svg {
-    margin:0  4px;
+    margin: 0 4px;
   }
 `;
 

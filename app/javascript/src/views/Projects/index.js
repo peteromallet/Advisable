@@ -8,6 +8,7 @@ import { GET_PROJECTS } from "./queries";
 import ProjectsList from "./ProjectsList";
 import UpdateIndustryModal from "./UpdateIndustryModal";
 import dataLayer from "../../utilities/dataLayer";
+import AccountConfirmationPrompt from "components/AccountConfirmationPrompt";
 
 const Projects = () => {
   const location = useLocation();
@@ -39,6 +40,8 @@ const Projects = () => {
 
   return (
     <Container py="xl">
+      <AccountConfirmationPrompt />
+
       <Text
         mb="l"
         as="h2"
