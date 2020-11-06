@@ -47,7 +47,6 @@ export default function PublishJob({ data }) {
   const handlePublish = async () => {
     const response = await publishProject({ variables: { input: { id } } });
 
-    console.log(response);
     if (response.errors) {
       notifications.notify("Something went wrong, please try again", {
         variant: "error",
