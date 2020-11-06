@@ -7,13 +7,13 @@ import styled, { css } from "styled-components";
 import { theme } from "@advisable/donut";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { DirectUpload } from "@rails/activestorage";
-
 import { GUILD_POST_QUERY } from "@guild/views/Post/queries";
 import {
   useUpdateGuildPostImage,
   useDeleteGuildPostImage,
   CREATE_GUILD_POST_IMAGE,
 } from "./mutations";
+import { StyledCoverPhotoTag } from "@advisable-main/components/PreviousProjectFormModal/styles";
 
 const StyledImageTiles = styled.div`
   width: 100%;
@@ -77,7 +77,7 @@ export const StyledRemovePhotoButton = styled.button`
 `;
 
 const coverPhotoTile = css`
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px ${theme.colors.blue600};
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px ${theme.colors.catalinaBlue100};
 `;
 
 const StyledImageTile = styled.div`
@@ -90,10 +90,14 @@ const StyledImageTile = styled.div`
   background-color: ${theme.colors.neutral100};
   ${(p) => p.isCover && coverPhotoTile};
 
-  &:hover ${StyledRemovePhotoButton} {
-    opacity: 1;
-    transform: scale(1);
-  }
+  ${(props) =>
+    props.selectable &&
+    css`
+      &:hover ${StyledRemovePhotoButton} {
+        opacity: 1;
+        transform: scale(1);
+      }
+    `}
 `;
 
 const StyledNewImageTile = styled.div`
@@ -220,6 +224,7 @@ function Upload({ guildPostId, image, dispatch, onClick }) {
       isCover={image.cover}
       onClick={onClick}
       data-uploading
+      selectable
     >
       <StyledImageTileProgress>
         <StyledImageTileProgressBar percentage={upload.percentage} />
@@ -271,6 +276,7 @@ const PortfolioImage = React.memo(function PortfolioImage({
       image={image.url}
       isCover={image.cover}
       onClick={handleClick}
+      selectable
     >
       <StyledRemovePhotoButton aria-label="Remove image" onClick={handleRemove}>
         <X size={16} strokeWidth={2} />
@@ -359,4 +365,14 @@ function ImageTiles({ images, dispatch, guildPostId }) {
   );
 }
 
-export default ImageTiles;
+const StaticImageTiles = ({ images }) => (
+  <StyledImageTiles>
+    {images.map((image, key) => (
+      <StyledImageTile key={key} image={image.url}>
+        {image.cover && <StyledCoverPhotoTag>COVER IMAGE</StyledCoverPhotoTag>}
+      </StyledImageTile>
+    ))}
+  </StyledImageTiles>
+);
+
+export { ImageTiles, StaticImageTiles };

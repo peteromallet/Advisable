@@ -5,7 +5,7 @@ import CoverPhoto from "@advisable-main/components/PreviousProjectFormModal/Cove
 import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
 import useImageReducer from "./useImageReducer";
 import useProgressSteps from "./useProgressSteps";
-import ImageTiles from "./ImageTiles";
+import { ImageTiles } from "./Images";
 
 export default function EditImages({ guildPost }) {
   const { pathWithState } = useLocationStages();

@@ -42,12 +42,7 @@ const Notifications = ({ open }) => {
           </NotificationItem>
         ))
       ) : (
-        <NotificationItem
-          height="150px"
-          alignItems="center"
-          justifyContent="center"
-          background="ghostWhite"
-        >
+        <NotificationItem alignItems="center" justifyContent="center">
           <Text size="l" color="catalinaBlue100">
             {"No Notifications"}
           </Text>

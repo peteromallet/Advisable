@@ -6,14 +6,16 @@ import ClampLines from "react-clamp-lines";
 const { space, colors } = theme;
 
 export const NotificationDropdown = styled(Box)`
-  right: 24px;
   ${breakpoint.smallAndUp} {
     right: 76px;
+    padding: 24px;
+    width: 442px;
   }
+  right: 0;
+  width: 100%;
+  padding: 8px;
   z-index: 3;
   top: 68px;
-  width: 442px;
-  padding: 24px;
   background: white;
   position: absolute;
   border-radius: 4px;
