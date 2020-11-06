@@ -70,7 +70,7 @@ function EditInfoModal({ modal, specialist }) {
           >
             Edit profile info
           </Text>
-          <Box display={isWidescreen ? "flex" : undefined} mb="l">
+          <Box display={isWidescreen ? "flex" : null} mb="l">
             <Box
               mr={isWidescreen && "s"}
               mb={!isWidescreen && "l"}
