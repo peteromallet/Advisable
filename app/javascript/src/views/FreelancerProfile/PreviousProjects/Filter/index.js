@@ -96,36 +96,49 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
 
   const filtering = skillFilters.length > 0 || industryFilters.length > 0;
 
-  const skillsFilteringStatus = skillFilters.map((skill, index, array) => {
+  let ariaSkillFilterLabel = "";
+  let skillsFilteringStatus = [];
+  skillFilters.forEach((skill, index, array) => {
     const delta = array.length - index;
     const addComma = delta > 2 || (index > 0 && delta === 2);
     const addAnd = delta === 2;
-    return (
-      <Text key={`skill-filter-status-${index}`} as="span" color="neutral700">
+    ariaSkillFilterLabel += `${skill}${addComma ? ", " : ""}${
+      addAnd ? " and " : ""
+    }`;
+    skillsFilteringStatus.push(
+      <React.Fragment key={skill}>
         <Text as="span" fontWeight="medium" color="neutral700">
           {skill}
         </Text>
-        {addComma && ", "}
-        {addAnd && " and "}
-      </Text>
+        {addComma ? ", " : null}
+        {addAnd ? " and " : null}
+      </React.Fragment>,
     );
   });
 
-  const industriesFilteringStatus =
-    industryFilters.length > 0 &&
-    (industryFilters.length === 1 ? (
-      <Text as="span" color="neutral700">
-        with{" "}
-        <Text as="span" fontWeight="medium" color="neutral700">
-          {industryFilters[0]}
-        </Text>{" "}
-        companies
-      </Text>
-    ) : (
-      <Text as="span" color="neutral700">
-        in multiple industries
-      </Text>
-    ));
+  let industriesFilteringStatus = null;
+  let ariaIndustriesFilter = "";
+  if (industryFilters.length > 0) {
+    if (industryFilters.length === 1) {
+      industriesFilteringStatus = (
+        <Text as="span" color="neutral700">
+          with{" "}
+          <Text as="span" fontWeight="medium" color="neutral700">
+            {industryFilters[0]}
+          </Text>{" "}
+          companies
+        </Text>
+      );
+      ariaIndustriesFilter = `with ${industryFilters[0]} companies`;
+    } else {
+      ariaIndustriesFilter = "in multiple industries";
+      industriesFilteringStatus = (
+        <Text as="span" color="neutral700">
+          in multiple industries
+        </Text>
+      );
+    }
+  }
 
   return (
     <StyledFilterCard
@@ -167,7 +180,13 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
               <Box color="neutral700" mr="s" mb="2px">
                 <Info size={18} strokeWidth={2} />
               </Box>
-              <Text mr="auto" color="neutral700" lineHeight="130%" py="xs">
+              <Text
+                mr="auto"
+                color="neutral700"
+                lineHeight="130%"
+                py="xs"
+                aria-label={`Showing ${ariaSkillFilterLabel} projects ${ariaIndustriesFilter}`}
+              >
                 Showing {skillsFilteringStatus} projects{" "}
                 {industriesFilteringStatus}
               </Text>
