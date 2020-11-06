@@ -103,14 +103,19 @@ function PreviousProjects({ data, isOwner }) {
               sectionName="skills"
               sectionTags={state.skillsSection}
               onClick={switchSkillSelection}
-              color={theme.colors.blue500}
-              colorHover={theme.colors.blue500}
-              colorActive={theme.colors.white}
-              colorActiveHover={theme.colors.white}
-              bg={rgba(theme.colors.blue100, 0.6)}
-              bgHover={rgba(theme.colors.blue100, 0.9)}
-              bgActive={theme.colors.neutral800}
-              bgActiveHover={rgba(theme.colors.neutral800, 0.9)}
+              color={rgba("#234EE4", 0.85)}
+              colorHover="#234EE4"
+              colorActive={rgba("#1937A0", 0.85)}
+              colorActiveHover={rgba("#1937A0", 0.85)}
+              bg={theme.colors.neutral50}
+              bgHover={theme.colors.blue50}
+              bgActive="#CCD1F9"
+              bgActiveHover={rgba("#CCD1F9", 0.9)}
+              borderWidth="1px"
+              borderColor="#AAB4F5"
+              borderColorHover="#AAB4F5"
+              borderColorActive="#CCD1F9"
+              borderColorActiveHover={rgba("#CCD1F9", 0.9)}
             />
           )}
           {state.hasIndustries && (
@@ -119,14 +124,19 @@ function PreviousProjects({ data, isOwner }) {
               sectionName="industries"
               sectionTags={state.industriesSection}
               onClick={switchIndustrySelection}
-              color={theme.colors.cyan800}
-              colorHover={theme.colors.cyan800}
-              colorActive={theme.colors.white}
-              colorActiveHover={theme.colors.white}
-              bg={rgba(theme.colors.cyan100, 0.6)}
-              bgHover={rgba(theme.colors.cyan100, 0.9)}
-              bgActive={theme.colors.neutral800}
-              bgActiveHover={rgba(theme.colors.neutral800, 0.9)}
+              color={rgba("#1B7A7D", 0.9)}
+              colorHover="#1B7A7D"
+              colorActive={rgba("#125153", 0.85)}
+              colorActiveHover={rgba("#125153", 0.85)}
+              bg={theme.colors.neutral50}
+              bgHover={theme.colors.cyan50}
+              bgActive="#C3E9EB"
+              bgActiveHover={rgba("#C3E9EB", 0.9)}
+              borderWidth="1px"
+              borderColor="#9DCDCE"
+              borderColorHover="#9DCDCE"
+              borderColorActive="#C3E9EB"
+              borderColorActiveHover={rgba("#C3E9EB", 0.9)}
             />
           )}
         </Filter>

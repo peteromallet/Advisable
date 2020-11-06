@@ -1,4 +1,4 @@
-import setSizeParams from "../setSizeParams";
+import setSizeParams from "./setSizeParams";
 
 const initSectionsWidth = (state) => {
   const { sectionKeys, sections, wrapperWidth } = state;

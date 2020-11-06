@@ -13,12 +13,15 @@ const StyledTag = styled(Box)`
   transition: background-color 0.2s, opacity 0.2s;
   &:hover {
     background-color: ${(props) => props.bgHover};
+    border-color: ${(props) => props.borderColorHover};
   }
   &[data-selected="true"] {
     background-color: ${(props) => props.bgActive};
+    border-color: ${(props) => props.borderColorActive};
   }
   &[data-selected="true"]:hover {
     background-color: ${(props) => props.bgActiveHover};
+    border-color: ${(props) => props.borderColorActiveHover};
   }
 `;
 
@@ -47,6 +50,11 @@ function Tags({
   colorHover,
   colorActive,
   colorActiveHover,
+  borderWidth = 0,
+  borderColor,
+  borderColorHover,
+  borderColorActive,
+  borderColorActiveHover,
   addSectionParams,
   layout = {},
   ...props
@@ -75,9 +83,15 @@ function Tags({
             style={{
               padding: `${item?.py}px ${item?.px}px`,
               margin: `${item?.my}px ${item?.mx}px`,
+              borderWidth: borderWidth,
             }}
             data-testid={`${sectionName}-filter-tag-${tagKey}`}
-            borderRadius="8px"
+            borderRadius="12px"
+            borderStyle="solid"
+            borderColor={borderColor}
+            borderColorHover={borderColorHover}
+            borderColorActive={borderColorActive}
+            borderColorActiveHover={borderColorActiveHover}
             bg={bg}
             bgHover={bgHover}
             bgActive={bgActive}
@@ -127,10 +141,19 @@ function Tags({
 
   return (
     <Wrapper style={{ opacity: rendered ? 1 : 0 }}>
-      <Box px="4px" ml="3px" mt="3px" mb="xxs">
+      <Box
+        position="absolute"
+        bg="neutral50"
+        top="0"
+        left="6px"
+        px="4px"
+        css={`
+          transform: translateY(-130%);
+        `}
+      >
         <Text
           color="neutral500"
-          fontSize="xxs"
+          fontSize={{ _: "2xs", l: "xs" }}
           fontWeight="medium"
           letterSpacing="1px"
           textTransform="uppercase"
