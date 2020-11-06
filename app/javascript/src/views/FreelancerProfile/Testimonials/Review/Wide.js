@@ -7,7 +7,7 @@ function Wide({ review }) {
   return (
     <Box>
       <Box display="flex" alignItems="flex-start">
-        <Box mr="32px">
+        <Box mr="xl">
           <Box width={100} height={100}>
             <Avatar size="xl" name={review.name} url={review.avatar} />
           </Box>
