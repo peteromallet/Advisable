@@ -12,14 +12,7 @@ import useResponsiveRef from "./useResponsiveRef";
 import useChildInjection from "./useChildInjection";
 // Components
 import { Box, Text, StyledCard, Button, theme } from "@advisable/donut";
-
-function arrayToSentence(array) {
-  return (
-    array.slice(0, -2).join(", ") +
-    (array.slice(0, -2).length ? ", " : "") +
-    array.slice(-2).join(" and ")
-  );
-}
+import { ChevronUp, ChevronDown } from "@styled-icons/feather";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -45,22 +38,27 @@ const StyledFilterCard = styled(StyledCard)`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  border: 1px solid #c6c6c6;
 `;
 
-const StyledExpandButton = styled(StyledCard)`
+const StyledExpandButton = styled.button`
   position: absolute;
   cursor: pointer;
   bottom: -16px;
-  background: white;
+  background: ${theme.colors.neutral50};
   display: inline-block;
-  padding: 8px 16px;
+  padding: 6px 16px 6px 8px;
   border-radius: 32px;
+  border: none;
   /* box-shadow: 0 1px 2px rgba(49, 49, 58, 0.1); */
-  box-shadow: 0 1px 6px rgba(49, 49, 58, 0.12);
+  /* box-shadow: 0 1px 4px rgba(49, 49, 58, 0.1); */
   transition: box-shadow 0.2s, bottom 0.2s;
 
   &:hover {
-    box-shadow: 0 1px 10px rgba(49, 49, 58, 0.12);
+    box-shadow: 0 1px 8px rgba(49, 49, 58, 0.12);
+  }
+  &:focus {
+    outline: none;
   }
 `;
 
@@ -98,23 +96,48 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
 
   const filtering = skillFilters.length > 0 || industryFilters.length > 0;
 
-  let output = "";
+  const skillsFilteringStatus = skillFilters.map((skill, index, array) => {
+    const delta = array.length - index;
+    const addComma = delta > 2 || (index > 0 && delta === 2);
+    const addAnd = delta === 2;
+    return (
+      <Text key={`skill-filter-status-${index}`} as="span" color="neutral700">
+        <Text as="span" fontWeight="medium" color="neutral700">
+          {skill}
+        </Text>
+        {addComma && ", "}
+        {addAnd && " and "}
+      </Text>
+    );
+  });
 
-  if (skillFilters.length > 0) {
-    output = `Showing ${arrayToSentence(skillFilters)} projects`;
-  }
-
-  if (industryFilters.length > 0) {
-    if (industryFilters.length === 1) {
-      output += ` with ${industryFilters[0]} companies`;
-    } else {
-      output += " in multiple industries";
-    }
-  }
+  const industriesFilteringStatus =
+    industryFilters.length > 0 &&
+    (industryFilters.length === 1 ? (
+      <Text as="span" color="neutral700">
+        with{" "}
+        <Text as="span" fontWeight="medium" color="neutral700">
+          {industryFilters[0]}
+        </Text>{" "}
+        companies
+      </Text>
+    ) : (
+      <Text as="span" color="neutral700">
+        in multiple industries
+      </Text>
+    ));
 
   return (
-    <StyledFilterCard borderRadius="8px" mb="xl" p="xs" elevation="m">
-      <Box ref={layoutRef} width="100%" pb="6px" display="flex">
+    <StyledFilterCard
+      variant="bordered"
+      borderRadius="12px"
+      mb="2xl"
+      p="xs"
+      pt="s"
+      pb={filtering ? "m" : "s"}
+      elevation="none"
+    >
+      <Box ref={layoutRef} width="100%" pb="2xs" display="flex">
         {sections}
       </Box>
       <AnimatePresence initial={false}>
@@ -134,18 +157,19 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
             <Box
               display="flex"
               alignItems="center"
-              borderRadius="8px"
-              mx="xs"
-              bg={rgba(theme.colors.neutral100, 0.9)}
+              borderRadius="12px"
+              mx="2xs"
+              bg={rgba(theme.colors.neutral200, 0.72)}
               pl="s"
-              py="xxs"
-              pr="xxs"
+              py="2xs"
+              pr="2xs"
             >
-              <Box color="neutral600" mr="s" mb="2px">
+              <Box color="neutral700" mr="s" mb="2px">
                 <Info size={18} strokeWidth={2} />
               </Box>
-              <Text mr="auto" color="neutral600">
-                {output}
+              <Text mr="auto" color="neutral700" lineHeight="130%" py="xs">
+                Showing {skillsFilteringStatus} projects{" "}
+                {industriesFilteringStatus}
               </Text>
               <Button size="s" variant="ghost" onClick={clearFilters}>
                 Clear Filters
@@ -156,9 +180,22 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
       </AnimatePresence>
       {isExapndable && (
         <StyledExpandButton onClick={expandCollapse}>
-          <Text fontSize="xs" color="neutral700">
-            {state.isExpand ? "see less filters" : "see more filters"}
-          </Text>
+          <Box display="flex" alignItems="center" justifyContent="center">
+            <Box mr="xs" color={rgba(theme.colors.neutral600, 0.9)}>
+              {state.isExpand ? (
+                <ChevronUp size={16} strokeWidth={2} />
+              ) : (
+                <ChevronDown size={16} strokeWidth={2} />
+              )}
+            </Box>
+            <Text
+              fontSize="s"
+              color={rgba(theme.colors.neutral600, 0.9)}
+              fontWeight="medium"
+            >
+              {state.isExpand ? "see less filters" : "see more filters"}
+            </Text>
+          </Box>
         </StyledExpandButton>
       )}
     </StyledFilterCard>
