@@ -8,6 +8,7 @@ import {
   Link as RouterLink,
   Redirect,
 } from "react-router-dom";
+import { useNotifications } from "components/Notifications";
 import { Stack, Box, Text, BulletList, Button, Tags } from "@advisable/donut";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 import { PUBLISH_PROJECT } from "./queries";
@@ -31,6 +32,7 @@ export default function PublishJob({ data }) {
   const { id } = useParams();
   const history = useHistory();
   const { t } = useTranslation();
+  const notifications = useNotifications();
   const [publishProject, publishProjectResponse] = useMutation(PUBLISH_PROJECT);
 
   if (!setupProgress(data.project).specialists) {
@@ -45,14 +47,20 @@ export default function PublishJob({ data }) {
   const handlePublish = async () => {
     const response = await publishProject({ variables: { input: { id } } });
 
-    if (
-      response.data.publishProject.project.status ===
-      "Pending Advisable Confirmation"
-    ) {
-      history.push(`/projects/${id}/setup/published`);
-    }
+    if (response.errors) {
+      notifications.notify("Something went wrong, please try again", {
+        variant: "error",
+      });
+    } else {
+      if (
+        response.data.publishProject.project.status ===
+        "Pending Advisable Confirmation"
+      ) {
+        history.push(`/projects/${id}/setup/published`);
+      }
 
-    dataLayer.push({ event: "projectPublished", projectId: id });
+      dataLayer.push({ event: "projectPublished", projectId: id });
+    }
   };
 
   return (
