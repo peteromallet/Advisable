@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack } from "@advisable/donut";
+import { Box, Stack, useBreakpoint } from "@advisable/donut";
 import Review from "./Review";
 import {
   SectionHeaderText,
@@ -7,15 +7,20 @@ import {
 } from "../components/SectionHeader";
 
 function Testimonials({ reviews }) {
+  const isWidescreen = useBreakpoint("sUp");
   const cards = reviews.map((review) => {
     return <Review key={review.id} review={review} />;
   });
   return (
     <Box mb="4xl">
-      <SectionHeaderWrapper divider="neutral200">
+      <SectionHeaderWrapper divider={"neutral200"}>
         <SectionHeaderText>Testimonials</SectionHeaderText>
       </SectionHeaderWrapper>
-      <Stack spacing={80} divider="neutral200" pt="xl">
+      <Stack
+        spacing={isWidescreen ? 80 : 48}
+        divider={"neutral200"}
+        pt={["m", "xl"]}
+      >
         {cards}
       </Stack>
     </Box>
