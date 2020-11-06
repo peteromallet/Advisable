@@ -2,9 +2,19 @@ import React from "react";
 import { Box, Text, theme } from "@advisable/donut";
 import { rgba } from "polished";
 
-export function SectionHeaderWrapper({ children, ...props }) {
+export function SectionHeaderWrapper({ children, divider, ...props }) {
   return (
-    <Box display="flex" alignItems="center" mb="xxs" px="xs" {...props}>
+    <Box
+      display="flex"
+      alignItems="center"
+      mb="xxs"
+      px="xs"
+      pb={divider && "xs"}
+      borderStyle="solid"
+      borderBottomWidth={divider && "1px"}
+      borderColor={divider}
+      {...props}
+    >
       {children}
     </Box>
   );
