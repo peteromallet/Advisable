@@ -36,7 +36,7 @@ function FreelancerProfile() {
     <Box
       maxWidth={["100%", "100%", "100%", "960px"]}
       mx={["12px", "32px", "32px", "auto"]}
-      mb="64px"
+      pb="2xl"
     >
       <AboutSection
         specialist={data.specialist}
