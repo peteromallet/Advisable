@@ -2,12 +2,14 @@ import { gql } from "@apollo/client";
 
 export const RESEND_CONFIRMATION_EMAIL = gql`
   mutation ResendConfirmationEmail {
-    resendConfirmationEmail {
-      user {
-        id
-      }
-      errors {
-        code
+    resendConfirmationEmail(input: {}) {
+      viewer {
+        ... on User {
+          id
+        }
+        ... on Specialist {
+          id
+        }
       }
     }
   }

@@ -187,3 +187,24 @@ test("Redirects to apply if account stage is 'Full Application' and has invitiat
 
   await screen.findByText(/you have been invited/i);
 });
+
+test("Renders a account confirmation prompt", async () => {
+  renderRoute({
+    route: "/projects",
+    graphQLMocks: [
+      mockViewer({ ...specialist, confirmed: false }),
+      mockQuery(
+        GET_APPLICATIONS,
+        {},
+        {
+          viewer: {
+            ...specialist,
+            applications: [],
+          },
+        },
+      ),
+    ],
+  });
+
+  await screen.findByText(/please confirm your account/i);
+});
