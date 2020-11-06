@@ -6,6 +6,7 @@ import IndustryTag from "../IndustryTag";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
 import Review from "components/Review";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
+import { Chunk } from 'editmode-react';
 
 function PreviousProjectDetails({ id }) {
   const { loading, data } = useQuery(GET_PROJECT, {
@@ -61,7 +62,7 @@ function PreviousProjectDetails({ id }) {
         fontWeight="medium"
         letterSpacing="-0.01em"
       >
-        Project description
+        <Chunk identifier='project_description_header'>Project description</Chunk>
       </Text>
       <Paragraph mb="xl">{renderLineBreaks(project.description)}</Paragraph>
       <Box display={["block", "flex"]}>

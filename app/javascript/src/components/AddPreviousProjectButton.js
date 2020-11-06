@@ -10,6 +10,7 @@ import {
   StyledCircle,
   DialogDisclosure,
 } from "@advisable/donut";
+import { Chunk } from 'editmode-react';
 
 const StyledNewProject = styled.button`
   appearance: none;
@@ -49,7 +50,7 @@ export default function AddPreviousProjectButton({ modal, ...props }) {
       <Circle size={40} bg="blue800" mr="s" color="white">
         <Plus size={24} strokeWidth={2} />
       </Circle>
-      <Text color="blue700">Add a previous project</Text>
+      <Text color="blue700"><Chunk identifier='add_a_previous_project_btn'>Add a previous project</Chunk></Text>
     </DialogDisclosure>
   );
 }

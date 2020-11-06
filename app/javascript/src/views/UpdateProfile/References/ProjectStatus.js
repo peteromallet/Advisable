@@ -2,30 +2,31 @@ import React from "react";
 import { Refresh } from "@styled-icons/heroicons-outline";
 import { CheckCircle, Pencil } from "@styled-icons/heroicons-solid";
 import { Tooltip, Badge } from "@advisable/donut";
+import { Chunk } from 'editmode-react'
 
 const STATUSES = {
   Draft: {
     variant: "neutral",
-    label: "Draft",
+    label: <Chunk identifier='draft_badge'>Draft</Chunk>,
     icon: <Pencil />,
-    tooltip: "This project has not been published yet.",
+    tooltip: <Chunk identifier='draft_badge_tooltip'>This project has not been published yet.</Chunk>,
   },
   Pending: {
     variant: "orange",
-    label: "Pending Verification",
+    label: <Chunk identifier='pending_verification_badge'>Pending Verification</Chunk>,
     icon: <Refresh />,
-    tooltip: "This project has not been validated yet.",
+    tooltip: <Chunk identifier='pending_verification_badge_tooltip'>This project has not been validated yet.</Chunk>,
   },
   Validated: {
     variant: "cyan",
-    label: "Verified",
+    label: <Chunk identifier='verified_badge'>Verified</Chunk>,
     icon: <CheckCircle />,
   },
   "Validation Failed": {
     variant: "orange",
-    label: "Pending",
+    label: <Chunk identifier='pending_badge'>Pending</Chunk>,
     icon: <Refresh />,
-    tooltip: "This project has not been validated yet.",
+    tooltip: <Chunk identifier='pending_badge_tooltip'>This project has not been validated yet.</Chunk>,
   },
 };
 

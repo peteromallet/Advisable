@@ -9,6 +9,7 @@ import PreviousProject from "./PreviousProject";
 import NewProject from "../../../components/AddPreviousProjectButton";
 import PREVIOUS_PROJECTS from "./previousProjects";
 import ValidationModal from "./ValidationModal";
+import { Chunk } from 'editmode-react';
 
 export default function PreviousProjectsList({ previousProjects }) {
   const viewer = useViewer();
@@ -58,7 +59,7 @@ export default function PreviousProjectsList({ previousProjects }) {
       />
 
       <Tabs label="Previous projects">
-        <Tabs.Tab title="Published">
+        <Tabs.Tab title={<Chunk identifier='published_tab_title'>Published</Chunk>}>
           <Stack pt="m" spacing="m">
             {published.map((project) => (
               <PreviousProject
@@ -88,11 +89,13 @@ export default function PreviousProjectsList({ previousProjects }) {
 }
 
 function draftsTitle(drafts) {
-  let title = "Drafts";
-  if (drafts.length > 0) {
-    title += ` (${drafts.length})`;
-  }
-  return title;
+  let draftCount = drafts.length ? `(${drafts.length})` : "";
+
+  return (
+    <Chunk identifier='draft_tab_title' variables={{ draft_count: draftCount }}>
+      Drafts {draftCount}
+    </Chunk>
+  );
 }
 
 function filterByDraft(data, draft) {

@@ -41,3 +41,4 @@ jest-coverage
 spec/cypress/videos/*
 stats.json
 .eslintcache
+em.config.json

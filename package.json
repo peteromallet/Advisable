@@ -43,6 +43,7 @@
     "dotenv": "^8.2.0",
     "downshift": "^6.0.6",
     "draft-js": "^0.11.7",
+    "editmode-react": "^3.1.16",
     "file-loader": "^6.1.1",
     "formik": "^2.2.0",
     "framer-motion": "^2.9.1",

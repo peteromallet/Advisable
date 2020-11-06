@@ -20,6 +20,7 @@ import { useUpdatePreviousProject } from "./queries";
 import { projectOverviewValidationSchema } from "./validationSchemas";
 import FormField from "../../components/FormField";
 import useLocationStages from "../../hooks/useLocationStages";
+import { Chunk } from 'editmode-react';
 
 const GOALS = [
   "Generate Leads",
@@ -93,7 +94,7 @@ export default function Overview({ modal, data, skills }) {
                 <Box display="inline-block" mr="xxs">
                   <ArrowLeft size={20} strokeWidth={2} />
                 </Box>
-                Back
+                <Chunk identifier='overview_back_btn'>Back</Chunk>
               </Link>
               <Text
                 mb="xs"
@@ -101,21 +102,24 @@ export default function Overview({ modal, data, skills }) {
                 color="blue900"
                 fontWeight="semibold"
               >
-                Project Overview
+                <Chunk identifier='project_overview_header'>Project Overview</Chunk>
               </Text>
               <Text lineHeight="l" color="neutral600" mb="xl">
-                Tell us a little more about your involvement in this project.
-                Please provide as specific information as possible about the
-                results of this project.
+                <Chunk identifier='project_overview_description'>
+                  Tell us a little more about your involvement in this project.
+                  Please provide as specific information as possible about the results of this project.
+                </Chunk>
               </Text>
               <Stack spacing="l" mb="xl">
                 <Box>
                   <Label mb="xxs" lineHeight="s" htmlFor="description">
-                    Project description
+                    <Chunk identifier='overview_project_description_label'>Project description</Chunk>
                   </Label>
                   <Text fontSize="s" color="neutral700" lineHeight="s" mb="s">
-                    Please describe the problem they had, an overview of the
-                    project, how you approached it and the results you achieved
+                    <Chunk identifier='overview_project_description_description'>
+                      Please describe the problem they had, an overview of the project,
+                      how you approached it and the results you achieved
+                    </Chunk>
                   </Text>
                   <Field
                     as={Textarea}
@@ -135,7 +139,7 @@ export default function Overview({ modal, data, skills }) {
                 </Box>
                 <Box>
                   <Label mb="xs">
-                    What skills did you use for this project?
+                    <Chunk identifier='overview_what_skill_label'>What skills did you use for this project?</Chunk>
                   </Label>
                   <Autocomplete
                     max={5}
@@ -160,7 +164,7 @@ export default function Overview({ modal, data, skills }) {
                     <FormField
                       as={Select}
                       name="primarySkill"
-                      label="Which of these was the primary skill for this project?"
+                      label={<Chunk identifier='overview_primary_skill_label'>Which of these was the primary skill for this project?</Chunk>}
                     >
                       {formik.values.skills.map((skill) => (
                         <option key={skill}>{skill}</option>
@@ -186,14 +190,16 @@ export default function Overview({ modal, data, skills }) {
                       mt="xs"
                       name="goal"
                       error={formik.touched.goal && formik.errors.goal}
-                      placeholder="What was your goal for this project..."
+                      placeholder={<Chunk identifier='overview__what_was_your_goal_label'>What was your goal for this project...</Chunk>}
                     />
                   )}
                   <ErrorMessage mt="xs" name="goal" component={InputError} />
                 </Box>
                 <FormField as={Checkbox} type="checkbox" name="publicUse">
-                  It is okay for Advisable to use anonymised details of this
-                  project publicly to promote me
+                  <Chunk identifier='overview_use_details_in_public'>
+                    It is okay for Advisable to use anonymised details of this
+                    project publicly to promote me
+                  </Chunk>
                 </FormField>
               </Stack>
 
@@ -203,7 +209,7 @@ export default function Overview({ modal, data, skills }) {
                 loading={formik.isSubmitting}
                 suffix={<ArrowRight />}
               >
-                Continue
+                <Chunk identifier='overview_submit_button'>Continue</Chunk>
               </Button>
             </Form>
           )}
@@ -216,15 +222,19 @@ export default function Overview({ modal, data, skills }) {
         display={["none", "none", "none", "block"]}
       >
         <Helper>
-          <Helper.Text heading="What's this for?" mb="l">
-            The Advisable team will review and score the information you provide
-            here in order to decide whether to propose you to clients.
+          <Helper.Text heading={<Chunk identifier='overview_helper_what_is_this'>What&apos;s this for?</Chunk>} mb="l">
+            <Chunk identifier='overview_helper_what_is_this_description'>
+              The Advisable team will review and score the information you provide here
+              in order to decide whether to propose you to clients.
+            </Chunk>
           </Helper.Text>
-          <Helper.Text heading="Who will see this?">
-            This will be seen by potential clients when applying for projects on
-            Advisable. Please provide as specific information as possible about
-            the results of this project. Include URLs and examples of work where
-            possible.
+          <Helper.Text heading={<Chunk identifier='overview_helper_who_will_see_this'>Who will see this?</Chunk>}>
+            <Chunk identifier='overview_helper_who_will_see_this_description'>
+              This will be seen by potential clients when applying for projects on
+              Advisable. Please provide as specific information as possible about
+              the results of this project. Include URLs and examples of work where
+              possible.
+            </Chunk>
           </Helper.Text>
         </Helper>
       </Box>
