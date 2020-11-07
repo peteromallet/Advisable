@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Text, theme } from "@advisable/donut";
 import { truncate } from "lodash-es";
@@ -16,8 +16,14 @@ const StyledBioExpander = styled.span`
 `;
 
 function Biography({ bio }) {
-  const expandable = bio.length > TRUNCATE_LIMIT;
+  const [expandable, setExpandable] = useState(bio.length > TRUNCATE_LIMIT);
   const [expanded, setExpanded] = useState(!expandable);
+
+  useEffect(() => {
+    const isExceededLimit = bio.length > TRUNCATE_LIMIT;
+    setExpandable(isExceededLimit);
+    setExpanded(!isExceededLimit);
+  }, [bio.length]);
 
   return (
     <Text
@@ -33,6 +39,7 @@ function Biography({ bio }) {
           color="blue600"
           onClick={() => setExpanded((e) => !e)}
           paddingLeft="2xs"
+          data-testid="expandCollapseBio"
         >
           {expanded ? "see\u00A0less" : "see\u00A0more"}
         </Text>
