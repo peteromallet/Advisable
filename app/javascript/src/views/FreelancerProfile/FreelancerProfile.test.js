@@ -253,6 +253,20 @@ test("can see mobile review", async () => {
   await app.findByText(review.comment);
 });
 
+test("can see call to action card", async () => {
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+  ];
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  await app.findByText(
+    `Interested in collaborating with ${specialist.firstName}?`,
+  );
+});
+
 test("edit profile info", async () => {
   const graphQLMocks = [
     mockViewer(specialist),
