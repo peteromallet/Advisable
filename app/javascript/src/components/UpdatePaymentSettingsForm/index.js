@@ -80,8 +80,8 @@ const UpdatePaymentSettingsForm = ({
             as={Select}
             name="bankCurrency"
           >
-            {currencies.map((c) => (
-              <option key={c.value} value={c.value}>
+            {currencies.map((c, i) => (
+              <option key={`${c.value}-${i}`} value={c.value}>
                 {c.label}
               </option>
             ))}
