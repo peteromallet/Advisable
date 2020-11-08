@@ -98,8 +98,8 @@ const AddressFields = ({ label, name, formik }) => {
             id={`${name}.country`}
             name={`${name}.country`}
           >
-            {countries.map((c) => (
-              <option key={c.code} value={c.code}>
+            {countries.map((c, i) => (
+              <option key={`${c.code}-${i}`} value={c.code}>
                 {c.name}
               </option>
             ))}
