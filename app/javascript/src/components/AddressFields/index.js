@@ -97,6 +97,7 @@ const AddressFields = ({ label, name, formik }) => {
             error={countryError}
             id={`${name}.country`}
             name={`${name}.country`}
+            data-testid="countryInput"
           >
             {countries.map((c, i) => (
               <option key={`${c.code}-${i}`} value={c.code}>
