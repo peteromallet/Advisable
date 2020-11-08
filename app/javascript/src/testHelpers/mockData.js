@@ -53,6 +53,22 @@ export const country = (fields = {}) => {
       code: "IE",
       name: "Ireland",
       states: ["Dublin", "Cork", "Galway", "Limerick"],
+      currency: currency(),
+    },
+    fields,
+  );
+};
+
+export const bankHolderAddress = (fields = {}) => {
+  return merge(
+    {
+      __typename: "Address",
+      city: "Dublin",
+      country: country().code,
+      line1: "ave Some 123",
+      line2: "",
+      postcode: "02123",
+      state: "",
     },
     fields,
   );
@@ -194,6 +210,10 @@ export const specialist = (fields = {}) => {
       previousProjectsCount: 0,
       guild: false,
       guildCalendlyLink: null,
+      bankCurrency: null,
+      bankHolderAddress: bankHolderAddress(),
+      bankHolderName: null,
+      vatNumber: null,
     },
     fields,
   );
@@ -240,6 +260,17 @@ export const skill = (fields = {}) => {
       name: "Skill",
       goalPlaceholder: null,
       characteristicPlaceholder: null,
+    },
+    fields,
+  );
+};
+
+export const currency = (fields = {}) => {
+  return merge(
+    {
+      __typename: "Currency",
+      isoCode: "USD",
+      name: "United States Dollar",
     },
     fields,
   );
@@ -450,6 +481,7 @@ export default {
   review,
   country,
   project,
+  currency,
   industry,
   invoices,
   interview,
@@ -460,5 +492,6 @@ export default {
   specialistSkill,
   previousProject,
   clientApplication,
+  bankHolderAddress,
   applicationQuestion,
 };
