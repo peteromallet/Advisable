@@ -76,6 +76,7 @@ const UpdatePaymentSettingsForm = ({
           </Box>
           <FormField
             label="Bank account currency"
+            data-testid="bankCurrency"
             marginBottom="m"
             as={Select}
             name="bankCurrency"
