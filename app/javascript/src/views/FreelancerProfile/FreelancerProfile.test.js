@@ -12,6 +12,7 @@ import {
 } from "../../testHelpers/test-utils";
 import { GET_COUNTRIES, GET_PROFILE, UPDATE_PROFILE } from "./queries";
 import GET_PROJECT from "src/components/PreviousProjectDetails/getProject.js";
+import { truncate } from "lodash-es";
 
 let user = generateType.user();
 const skills = ["First skill", "Second skill", "Third skill"].map((name) => {
@@ -265,6 +266,55 @@ test("can see call to action card", async () => {
   await app.findByText(
     `Interested in collaborating with ${specialist.firstName}?`,
   );
+});
+
+test("exceeded the suggested length of bio", async () => {
+  const newLongBio =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Venenatis a condimentum vitae sapien pellentesque habitant morbi. Elementum eu facilisis sed odio morbi quis. Laoreet non curabitur gravida arcu ac. Ipsum consequat nisl vel pretium lectus quam id. Vestibulum mattis ullamcorper velit sed ullamcorper morbi. Facilisi cras fermentum odio eu. Lectus urna duis convallis convallis tellus. Pharetra pharetra massa massa ultricies mi quis hendrerit dolor. Nisl nunc mi ipsum faucibus vitae aliquet.";
+  const truncatedBio = truncate(newLongBio, { length: 280 });
+  const graphQLMocks = [
+    mockViewer(specialist),
+    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(GET_COUNTRIES, {}, { countries }),
+    mockMutation(
+      UPDATE_PROFILE,
+      {
+        city: specialist.city,
+        country: specialist.country.id,
+        bio: newLongBio,
+        linkedin: specialist.linkedin || "",
+        website: specialist.website || "",
+      },
+      {
+        updateProfile: {
+          __typename: "UpdateProfilePayload",
+          specialist: { ...specialist, bio: newLongBio },
+        },
+      },
+    ),
+  ];
+
+  const app = renderRoute({
+    route: `/freelancers/${specialist.id}`,
+    graphQLMocks,
+  });
+  const editInfoButton = await app.findByLabelText(/edit info/i);
+  fireEvent.click(editInfoButton);
+  await app.findByText(/edit profile info/i);
+  fireEvent.change(app.getByLabelText(/about me/i), {
+    target: { value: newLongBio },
+  });
+  await app.findByText("You exceeded the suggested amount of symbols.");
+  await app.findByText(
+    "We highly recommend you to keep biography simple and short.",
+  );
+  await app.findByText("566/280");
+  fireEvent.click(app.getByLabelText(/update/i));
+  await app.findByText(truncatedBio);
+  fireEvent.click(await app.findByTestId("expandCollapseBio"));
+  await app.findByText(newLongBio);
+  fireEvent.click(await app.findByTestId("expandCollapseBio"));
+  await app.findByText(truncatedBio);
 });
 
 test("edit profile info", async () => {
