@@ -15,7 +15,7 @@ export const addressFieldsFragment = gql`
   }
 `;
 
-const GET_DATA = gql`
+export const GET_ADDRESS_FIELDS_DATA = gql`
   query getCountries {
     countries {
       ...AddressFieldsFragment
@@ -26,7 +26,7 @@ const GET_DATA = gql`
 `;
 
 const AddressFields = ({ label, name, formik }) => {
-  const { data, loading } = useQuery(GET_DATA);
+  const { data, loading } = useQuery(GET_ADDRESS_FIELDS_DATA);
   const countries = data?.countries || [];
   const isWidescreen = useBreakpoint("sUp");
 
