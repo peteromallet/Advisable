@@ -24,9 +24,9 @@ const Profile = () => {
   const notifications = useNotifications();
 
   const initialValues = {
-    remote: get(data, "viewer.remote"),
+    remote: get(data, "viewer.remote") || "",
     hourlyRate: get(data, "viewer.hourlyRate") / 100.0,
-    publicUse: get(data, "viewer.publicUse"),
+    publicUse: get(data, "viewer.publicUse") || "",
     skills: (get(data, "viewer.skills") || []).map((s) => s.name),
   };
 
