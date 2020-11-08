@@ -178,6 +178,7 @@ export const specialist = (fields = {}) => {
       },
       publicUse: null,
       website: null,
+      remote: null,
       applicationStage: "Accepted",
       avatar: null,
       coverPhoto: null,
