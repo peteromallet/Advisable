@@ -99,7 +99,9 @@ const UpdatePaymentSettingsForm = ({
             will send you an email where you can securely enter your bank
             account details
           </Text>
-          <Button loading={formik.isSubmitting}>{buttonLabel}</Button>
+          <Button type="submit" loading={formik.isSubmitting}>
+            {buttonLabel}
+          </Button>
         </Form>
       )}
     </Formik>
