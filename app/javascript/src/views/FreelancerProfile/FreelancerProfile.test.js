@@ -308,7 +308,13 @@ test("render profile as a user viewer", async () => {
     graphQLMocks,
   });
 
-  await app.findAllByLabelText(/request a talk/i);
+  const requestTalkButtons = await app.findAllByLabelText(/request a talk/i);
+  requestTalkButtons.forEach((button) => {
+    expect(button.closest("a")).toHaveAttribute(
+      "href",
+      `/request_consultation/${specialist.id}`,
+    );
+  });
 });
 
 test("Renders 404 if the specialist isn't found", async () => {
