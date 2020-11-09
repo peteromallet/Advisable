@@ -10,6 +10,8 @@ gem "pg", ">= 0.18", "< 2.0"
 gem "strong_migrations"
 gem "good_migrations"
 gem "pghero"
+gem "logidze", ">= 1.0.0"
+gem "fx"
 # Use Puma as the app server
 gem "puma", "~> 4.3.6"
 gem "barnes"
