@@ -24,21 +24,33 @@ const Profile = () => {
   const notifications = useNotifications();
 
   const initialValues = {
-    remote: get(data, "viewer.remote") || "",
+    email: get(data, "viewer.email") || "",
+    firstName: get(data, "viewer.firstName"),
+    lastName: get(data, "viewer.lastName"),
+    remote: get(data, "viewer.remote") || true,
     hourlyRate: get(data, "viewer.hourlyRate") / 100.0,
-    publicUse: get(data, "viewer.publicUse") || "",
+    publicUse: get(data, "viewer.publicUse") || false,
     skills: (get(data, "viewer.skills") || []).map((s) => s.name),
   };
 
   const handleSubmit = async (values) => {
     const input = {
+      email: values.email,
+      firstName: values.firstName,
+      lastName: values.lastName,
       hourlyRate: values.hourlyRate * 100,
       remote: values.remote,
       publicUse: values.publicUse,
       skills: values.skills,
     };
-    await updateProfile({ variables: { input } });
-    notifications.notify("Your profile has been updated");
+    const response = await updateProfile({ variables: { input } });
+    if (response.errors) {
+      notifications.notify("Something went wrong, please try again", {
+        variant: "error",
+      });
+    } else {
+      notifications.notify("Your profile has been updated");
+    }
   };
 
   if (loading) {
@@ -59,6 +71,17 @@ const Profile = () => {
             >
               General Settings
             </Text>
+            <Box display="flex">
+              <Box width="50%" paddingRight="xs">
+                <FormField name="firstName" label="First Name" />
+              </Box>
+              <Box width="50%" paddingLeft="xs">
+                <FormField name="lastName" label="Last Name" />
+              </Box>
+            </Box>
+            <Box height={1} bg="neutral100" my="l" />
+            <FormField name="email" label="Email" />
+            <Box height={1} bg="neutral100" my="l" />
             <FormField
               multiple
               max={10}
@@ -78,7 +101,9 @@ const Profile = () => {
               <Text mt="m" size="s" lineHeight="s">
                 You can&apos;t add more than 10 primary skills. If you want to
                 add more skills to your profile, you can do so by{" "}
-                <Link to="/profile/references">adding a previous project.</Link>
+                <Link to="/settings/references">
+                  adding a previous project.
+                </Link>
               </Text>
             )}
             <Box height={1} bg="neutral100" my="l" />

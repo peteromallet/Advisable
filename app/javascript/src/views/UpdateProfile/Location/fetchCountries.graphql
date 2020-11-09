@@ -1,6 +1,0 @@
-{
-  countries {
-    value: id
-    label: name
-  }
-}

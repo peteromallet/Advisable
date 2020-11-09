@@ -6,13 +6,13 @@ import Header from "./components/Header";
 import Loading from "./components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Settings from "./views/Settings";
+import useViewer from "./hooks/useViewer";
 
 const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
 const Applications = lazy(() => import("./views/Applications"));
 const ClientSignup = lazy(() => import("./views/ClientSignup"));
 const FreelancerProjects = lazy(() => import("./views/FreelancerProjects"));
-const UpdateProfile = lazy(() => import("./views/UpdateProfile"));
 const Projects = lazy(() => import("./views/Projects"));
 const Project = lazy(() => import("./views/Project"));
 const Booking = lazy(() => import("./views/Booking"));
@@ -31,6 +31,11 @@ const ProjectSetup = lazy(() => import("./views/ProjectSetup"));
 const FullApplication = lazy(() => import("./views/FullApplication"));
 const Interview = lazy(() => import("./views/Interview"));
 const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
+
+function RedirectToFreelancerProfile() {
+  const viewer = useViewer();
+  return <Redirect to={`/freelancers/${viewer.id}`} />;
+}
 
 const ApplicationRoutes = () => {
   return (
@@ -99,11 +104,6 @@ const ApplicationRoutes = () => {
             path="/clients/:applicationId"
             component={FreelancerActiveApplication}
           />
-          <AuthenticatedRoute
-            specialistOnly
-            path="/profile"
-            component={UpdateProfile}
-          />
           <Route exact path="/invites/:applicationId" component={JobListing} />
           <AuthenticatedRoute
             exact
@@ -116,6 +116,9 @@ const ApplicationRoutes = () => {
             component={ApplicationFlow}
           />
           <AuthenticatedRoute path="/settings" component={Settings} />
+          <AuthenticatedRoute path="/profile">
+            <RedirectToFreelancerProfile />
+          </AuthenticatedRoute>
           <Route component={NotFound} />
         </Switch>
       </Suspense>

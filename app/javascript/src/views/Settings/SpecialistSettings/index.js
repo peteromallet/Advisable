@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Layout from "components/Layout";
 import General from "./General";
+import Password from "./Password";
 import References from "./References";
 import PaymentSettings from "./PaymentSettings";
 import { useBreakpoint } from "@advisable/donut";
@@ -24,6 +25,7 @@ function SpecialistSettings({ match }) {
             path="/settings/payment-settings"
             component={PaymentSettings}
           />
+          <Route path="/settings/password" component={Password} />
           {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
           {breakpointS && (

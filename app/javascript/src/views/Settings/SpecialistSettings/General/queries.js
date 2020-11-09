@@ -5,6 +5,9 @@ const fields = gql`
     id
     name
     remote
+    email
+    firstName
+    lastName
     skills {
       name
     }
