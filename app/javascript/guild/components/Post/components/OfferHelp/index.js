@@ -82,8 +82,8 @@ const OfferHelp = ({ recipient, guildPostId, engagementsCount }) => {
           <GuildBox spaceChildrenHorizontal={34} mb="l">
             <GuildBox display="flex" flexShrink={0}>
               <Avatar
-                as={Link}
-                to={`/profiles/${recipient.id}`}
+                as={Link.External}
+                href={`/freelancers/${recipient.id}`}
                 size={{ _: "l", m: "xxl" }}
                 name={recipient.name}
                 url={recipient.avatar}
