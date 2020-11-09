@@ -3,9 +3,7 @@ class Types::ApplicationType < Types::BaseType
   field :rate, String, null: true
   field :applied_at, String, null: true
   field :airtable_id, String, null: true
-  field :proposed_at,
-        GraphQL::Types::ISO8601DateTime,
-        null: true, method: :proposal_sent_at
+  field :proposed_at, GraphQL::Types::ISO8601DateTime, null: true, method: :proposal_sent_at
   field :featured, Boolean, null: true
   field :hidden, Boolean, null: true
   field :score, Int, null: true
@@ -41,14 +39,14 @@ class Types::ApplicationType < Types::BaseType
     authorize :read
   end
 
+  def tasks
+    object.tasks.active
+  end
+
   # Return the UID for the application id field. Fall back to the actual 'id'
   # for records that don't have a uid
   def id
     object.uid || object.id
-  end
-
-  def project_type
-    object.project_type
   end
 
   def applied_at
@@ -75,6 +73,7 @@ class Types::ApplicationType < Types::BaseType
   # have included in their application
   def has_more_projects
     return false if object.references.empty?
+
     object.previous_projects.count < object.specialist.previous_projects.count
   end
 end

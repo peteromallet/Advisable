@@ -26,9 +26,11 @@ class Task < ApplicationRecord
   include Uid
   include Airtable::Syncable
 
-  validates :estimate_type, inclusion: { in: %w[Hourly Fixed] }, allow_nil: true
+  validates :estimate_type, inclusion: {in: %w[Hourly Fixed]}, allow_nil: true
 
   belongs_to :application
+
+  scope :active, -> { where.not(stage: "Deleted") }
 
   # Returns a collection of tasks that have a due date on a given date.
   def self.due_date(date)
