@@ -2,15 +2,15 @@ import React from "react";
 import { Box, Text, Link, Avatar } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
 
-const NewMember = ({ newMember }) => {
+const FeaturedMember = ({ featuredMember }) => {
   return (
     <GuildBox px="xs" alignItems="center" spaceChildrenHorizontal={24}>
       <GuildBox flexShrink={0}>
         <Avatar
           as={Link}
-          to={`/profiles/${newMember.id}`}
-          name={newMember.name}
-          url={newMember.avatar}
+          to={`/profiles/${featuredMember.id}`}
+          name={featuredMember.name}
+          url={featuredMember.avatar}
           size={"s"}
         />
       </GuildBox>
@@ -22,9 +22,9 @@ const NewMember = ({ newMember }) => {
           fontWeight="medium"
           color="calalinaBlue100"
         >
-          {newMember.name}
+          {featuredMember.name}
         </Text>
-        {newMember.location.length && (
+        {featuredMember.location.length && (
           <Text
             truncate
             fontSize="xs"
@@ -32,15 +32,15 @@ const NewMember = ({ newMember }) => {
             color="neutral700"
             marginBottom="2xs"
           >
-            {newMember.location}
+            {featuredMember.location}
           </Text>
         )}
         <Text fontSize="xs" fontWeight="light" color="neutral500">
-          Joined: {newMember.guildJoinedTimeAgo} ago
+          Joined: {featuredMember.guildJoinedTimeAgo} ago
         </Text>
       </Box>
     </GuildBox>
   );
 };
 
-export default NewMember;
+export default FeaturedMember;

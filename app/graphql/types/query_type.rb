@@ -325,12 +325,9 @@ class Types::QueryType < Types::BaseType
     Guild::Topic.most_used
   end
 
-  field :guild_new_members, [Types::SpecialistType], null: true
+  field :guild_featured_members, [Types::SpecialistType], null: true
 
-  def guild_new_members
-    # Upcoming 6.1 won't support: Specialist.guild.jsonb_order(:guild_data, :guild_joined_date, :desc).limit(10)
-    Specialist.guild.order(
-      Arel.sql("specialists.guild_data -> 'guild_joined_date' desc")
-    ).limit(10)
+  def guild_featured_members
+    Specialist.guild_featured_members.limit(10)
   end
 end
