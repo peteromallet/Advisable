@@ -1,5 +1,5 @@
-import { get } from "lodash-es";
 import React, { useState } from "react";
+import { get } from "lodash-es";
 import { Link } from "react-router-dom";
 import * as Sentry from "@sentry/react";
 import {
@@ -44,7 +44,7 @@ const CurrentUser = ({ user, onLogout }) => {
       </CurrentUserToggle>
       <CurrentUserDropdown open={open}>
         {user.guild && <a href="/guild">Guild</a>}
-        {isClient && <Link to="/settings">Settings</Link>}
+        <Link to="/settings">Settings</Link>
         {isAdmin && <a href="/admin">Admin</a>}
         <a href="#" onClick={onLogout}>
           Logout

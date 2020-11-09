@@ -6,8 +6,9 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    "plugin:react/recommended",
     "eslint-config-prettier",
+    "plugin:react/recommended",
+    "plugin:cypress/recommended",
   ],
   settings: {
     react: {

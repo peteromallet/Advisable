@@ -10,7 +10,14 @@ import { useNotifications } from "components/Notifications";
 
 function ApplyButton({ onClick, loading }) {
   return (
-    <Button onClick={onClick} loading={loading} size="l" width="100%" mb="12px">
+    <Button
+      type="button"
+      onClick={onClick}
+      loading={loading}
+      size="l"
+      width="100%"
+      mb="12px"
+    >
       Apply
     </Button>
   );
