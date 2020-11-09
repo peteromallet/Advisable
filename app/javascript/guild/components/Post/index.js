@@ -120,7 +120,7 @@ const Post = ({ post }) => {
         backgroundColor="aliceBlue"
       >
         <Topics topics={post.guildTopics} />
-        <GuildBox display="flex" spaceChildrenHorizontal={8}>
+        <GuildBox ml="xxs" display="flex" spaceChildrenHorizontal={8}>
           <OfferHelp
             guildPostId={post.id}
             recipient={post.author}
