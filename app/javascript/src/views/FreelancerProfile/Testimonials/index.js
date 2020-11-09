@@ -8,9 +8,11 @@ import {
 
 function Testimonials({ reviews }) {
   const isWidescreen = useBreakpoint("sUp");
-  const cards = reviews.map((review) => {
-    return <Review key={review.id} review={review} />;
-  });
+  const cards = reviews
+    .filter((review) => !!review.comment)
+    .map((review) => {
+      return <Review key={review.id} review={review} />;
+    });
   return (
     <Box mb="4xl">
       <SectionHeaderWrapper divider={"neutral200"}>
