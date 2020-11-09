@@ -1,7 +1,6 @@
 import React from "react";
-import { useBreakpoint } from "@advisable/donut";
+import { Box, useBreakpoint } from "@advisable/donut";
 import HeaderLayout from "@guild/components/Layouts/HeaderLayout";
-import { GuildBox } from "@guild/styles";
 import Posts from "@guild/components/Posts";
 import Topics from "@guild/components/Topics";
 import NewMembers from "@guild/components/NewMembers";
@@ -12,16 +11,22 @@ const Feed = () => {
 
   return (
     <HeaderLayout>
-      <Filters />
-      <GuildBox
-        m={{ _: "s", m: "l" }}
-        display="flex"
-        spaceChildrenHorizontal="24"
-      >
-        {lUp && <Topics />}
-        <Posts />
-        {lUp && <NewMembers />}
-      </GuildBox>
+      <Box paddingY="2xl" paddingX={{ _: "lg", m: "2xl" }} display="flex">
+        {lUp && (
+          <Box width="200px" flexShrink="0">
+            <Topics />
+          </Box>
+        )}
+        <Box width="100%" paddingX={{ _: null, l: "xl" }}>
+          <Filters />
+          <Posts />
+        </Box>
+        {lUp && (
+          <Box width="260px" flexShrink="0">
+            <NewMembers />
+          </Box>
+        )}
+      </Box>
     </HeaderLayout>
   );
 };

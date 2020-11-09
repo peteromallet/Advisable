@@ -1,10 +1,16 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { space, color, typography, system } from "styled-system";
 import theme from "../../theme";
 
 const textTransform = system({
   textTransform: true,
 });
+
+const TextTruncated = css`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 
 export const Text = styled.div`
   ${space};
@@ -24,6 +30,8 @@ export const Text = styled.div`
       color: ${theme.colors.blue800};
     }
   }
+
+  ${(p) => p.$truncate && TextTruncated};
 `;
 
 Text.defaultProps = {

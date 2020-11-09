@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useApolloClient } from "@apollo/client";
 import { useToggle } from "@guild/hooks/useToggle";
-import { Text, DialogDisclosure, useBreakpoint } from "@advisable/donut";
+import { Box, Text, DialogDisclosure, useBreakpoint } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
 import GuildTag from "@guild/components/GuildTag";
 import { Filter as FilterIcon, Add as AddIcon } from "@guild/icons";
@@ -62,31 +62,24 @@ const Filters = () => {
   };
 
   return (
-    <>
+    <Box marginBottom="lg">
       <ComposerModal
         modal={composerModal}
         specialistId={viewer.id}
         onPublish={handlePublishedGuildPost}
       />
-      <GuildBox mt="l" flexCenterBoth>
+      <GuildBox flexCenterBoth>
         <GuildBox
           width="100%"
-          flexBasis={{
-            _: "100%",
-            l: expanded ? "900px" : "640px",
-            xl: expanded ? "75%" : "50%",
-          }}
-          mx={{ _: "s", s: "l" }}
           flexSpaceBetween={!expanded && sUp}
           flexCenterBoth={sUp}
         >
           {!expanded && sUp && (
             <Text
-              as={motion.div}
-              // {...motionAnimations}
-              fontSize="xxl"
+              fontSize="3xl"
               fontWeight="medium"
               color="catalinaBlue100"
+              letterSpacing="-0.02em"
             >
               Posts
             </Text>
@@ -94,12 +87,9 @@ const Filters = () => {
 
           <GuildBox
             as={motion.div}
-            // {...motionAnimations}
-            backgroundColor="white"
             spaceChildrenHorizontal={16}
             flexSpaceBetween={sUp}
             display="flex"
-            p="m"
           >
             {expanded && (
               <GuildBox
@@ -161,7 +151,7 @@ const Filters = () => {
           </GuildBox>
         </GuildBox>
       </GuildBox>
-    </>
+    </Box>
   );
 };
 

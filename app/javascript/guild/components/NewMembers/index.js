@@ -1,7 +1,7 @@
 import React from "react";
 import { GUILD_NEW_MEMBERS_QUERY } from "./queries";
 import { useQuery } from "@apollo/client";
-import { Text } from "@advisable/donut";
+import { Text, Stack } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
 import { useToggle } from "@guild/hooks/useToggle";
 import Loading from "@advisable-main/components/Loading";
@@ -15,34 +15,27 @@ const NewMembers = () => {
   if (loading) return <Loading />;
 
   return (
-    <GuildBox
-      padding="l"
-      backgroundColor="aliceBlue100"
-      spaceChildrenVertical="24"
-      flexShrink={1}
-      alignSelf="flex-start"
-      overflow={"hidden"}
-      width={"275px"}
-    >
+    <GuildBox flexShrink={1} alignSelf="flex-start">
       <Text
-        fontSize="2xl"
+        fontSize="xl"
+        marginBottom="lg"
         fontWeight="medium"
-        letterSpacing="-0.01em"
         color="catalinaBlue100"
+        letterSpacing="-0.02em"
       >
         New Members
       </Text>
 
-      <ShowMore showingMore={moreNewMembers} onToggle={toggleMoreNewMembers} />
-
-      <GuildBox spaceChildrenVertical={24}>
+      <Stack spacing="lg" marginBottom="lg">
         {data?.guildNewMembers?.map(
           (newMember, key) =>
             (moreNewMembers || key < data?.guildNewMembers?.length / 2) && (
               <NewMember key={key} newMember={newMember} />
             ),
         )}
-      </GuildBox>
+      </Stack>
+
+      <ShowMore showingMore={moreNewMembers} onToggle={toggleMoreNewMembers} />
     </GuildBox>
   );
 };

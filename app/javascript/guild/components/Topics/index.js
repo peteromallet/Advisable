@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Text } from "@advisable/donut";
+import { Text, Stack } from "@advisable/donut";
 import { GUILD_TOP_TOPICS_QUERY } from "./queries";
 import { GuildBox } from "@guild/styles";
 import { useToggle } from "@guild/hooks/useToggle";
@@ -15,28 +15,27 @@ const Topics = () => {
   if (loading) return <Loading />;
 
   return (
-    <GuildBox
-      padding="l"
-      backgroundColor="aliceBlue100"
-      spaceChildrenVertical={24}
-      flexShrink={1}
-      alignSelf="flex-start"
-      overflow="hidden"
-      width="275px"
-    >
-      <Text fontSize="xxl" fontWeight="medium" color="catalinaBlue100">
+    <GuildBox flexShrink={1} alignSelf="flex-start">
+      <Text
+        fontSize="xl"
+        marginBottom="md"
+        fontWeight="medium"
+        color="catalinaBlue100"
+        letterSpacing="-0.02em"
+      >
         Topics
       </Text>
-      <ShowMore showingMore={moreTopics} onToggle={toggleMoreTopics} />
 
-      <GuildBox spaceChildrenVertical={20}>
+      <Stack spacing="3xs" marginBottom="lg">
         {data?.guildTopTopics?.nodes?.map(
           (topic, key) =>
             (moreTopics || key < data?.guildTopTopics?.nodes?.length / 2.5) && (
               <Topic key={key} topic={topic} />
             ),
         )}
-      </GuildBox>
+      </Stack>
+
+      <ShowMore showingMore={moreTopics} onToggle={toggleMoreTopics} />
     </GuildBox>
   );
 };
