@@ -10,7 +10,7 @@ gem "pg", ">= 0.18", "< 2.0"
 gem "strong_migrations"
 gem "good_migrations"
 # Use Puma as the app server
-gem "puma", "~> 4.1"
+gem "puma", "~> 4.3.6"
 # Use SCSS for stylesheets
 gem "sass-rails", ">= 6"
 # See https://github.com/rails/execjs#readme for more supported runtimes
