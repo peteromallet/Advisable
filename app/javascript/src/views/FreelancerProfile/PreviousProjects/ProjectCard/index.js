@@ -92,7 +92,7 @@ function Project({ project }) {
           letterSpacing="-0.02em"
           className="projectTitle"
         >
-          {project.primarySkill.name} project
+          {project.primarySkill?.name || project.skills[0].name} project
         </Text>
         <Box
           color="neutral600"
