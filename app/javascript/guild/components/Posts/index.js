@@ -21,11 +21,12 @@ const Posts = () => {
   ]);
 
   const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
+    fetchPolicy: "network-only",
     variables: { selectedFilter, selectedTopicsIds: selectedTopicsIds() },
   });
   const { bottomReached } = useScrolledToBottom();
 
-  /* 
+  /*
     https://www.apollographql.com/docs/react/data/pagination/#cursor-based
     https://graphql-ruby.org/pagination/using_connections.html
   */
@@ -41,7 +42,7 @@ const Posts = () => {
 
         return newNodes.length
           ? {
-              /* 
+              /*
                 Put the new guild posts at the end of the list and update `pageInfo`
                 so we have the new `endCursor` and `hasNextPage` values
               */
