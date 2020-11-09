@@ -50,6 +50,10 @@ const StyledHoverDecoration = styled.div`
 
 function Project({ project }) {
   const dialog = useDialogState();
+  const NUM_OF_SKILL_TAGS = 5;
+  const extraSkills = project.skills.length - NUM_OF_SKILL_TAGS;
+  let skillTags = project.skills.slice(0, NUM_OF_SKILL_TAGS).map((s) => s.name);
+  extraSkills > 0 && skillTags.push(`+${extraSkills}`);
 
   return (
     <>
@@ -122,7 +126,7 @@ function Project({ project }) {
         >
           {project.excerpt}
         </Text>
-        <Tags tags={project.skills.map((s) => s.name)} />
+        <Tags tags={skillTags} />
       </DialogDisclosure>
     </>
   );
