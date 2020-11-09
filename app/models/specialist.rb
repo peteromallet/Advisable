@@ -24,6 +24,8 @@ class Specialist < ApplicationRecord
   include Airtable::Syncable
   include Guild::SpecialistsConcern
 
+  has_logidze
+
   belongs_to :country, optional: true
 
   has_many :reviews, dependent: :destroy
@@ -107,6 +109,7 @@ end
 #  hourly_rate                        :integer
 #  image                              :jsonb
 #  linkedin                           :string
+#  log_data                           :jsonb
 #  member_of_week_email               :integer
 #  number_of_projects                 :string
 #  phone                              :string

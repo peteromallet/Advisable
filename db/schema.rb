@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2020_11_19_092750) do
     t.string "remember_token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "log_data"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["uid"], name: "index_accounts_on_uid", unique: true
   end
@@ -785,6 +786,7 @@ ActiveRecord::Schema.define(version: 2020_11_19_092750) do
     t.datetime "community_invited_to_call_at"
     t.integer "community_score"
     t.integer "member_of_week_email"
+    t.jsonb "log_data"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
@@ -905,6 +907,7 @@ ActiveRecord::Schema.define(version: 2020_11_19_092750) do
     t.datetime "application_rejected_at"
     t.datetime "application_reminder_at"
     t.bigint "account_id"
+    t.jsonb "log_data"
     t.uuid "company_id"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
@@ -1285,4 +1288,14 @@ ActiveRecord::Schema.define(version: 2020_11_19_092750) do
       $function$
   SQL
 
+
+  create_trigger :logidze_on_specialists, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_specialists BEFORE INSERT OR UPDATE ON public.specialists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_users, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_accounts, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
 end
