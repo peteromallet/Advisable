@@ -16,14 +16,15 @@ const StyledBioExpander = styled.span`
 `;
 
 function Biography({ bio }) {
-  const [expandable, setExpandable] = useState(bio.length > TRUNCATE_LIMIT);
+  const length = bio?.length || 0;
+  const [expandable, setExpandable] = useState(length > TRUNCATE_LIMIT);
   const [expanded, setExpanded] = useState(!expandable);
 
   useEffect(() => {
-    const isExceededLimit = bio.length > TRUNCATE_LIMIT;
+    const isExceededLimit = length > TRUNCATE_LIMIT;
     setExpandable(isExceededLimit);
     setExpanded(!isExceededLimit);
-  }, [bio.length]);
+  }, [length]);
 
   return (
     <Text
