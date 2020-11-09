@@ -54,16 +54,20 @@ function PreviousProjectDetails({ id }) {
         </Box>
       </Box>
       <Box height={1} bg="neutral100" mb="l" />
-      <Text
-        mb="xs"
-        fontSize="lg"
-        color="neutral900"
-        fontWeight="medium"
-        letterSpacing="-0.01em"
-      >
-        Project description
-      </Text>
-      <Paragraph mb="xl">{renderLineBreaks(project.description)}</Paragraph>
+      {project.description && (
+        <>
+          <Text
+            mb="xs"
+            fontSize="lg"
+            color="neutral900"
+            fontWeight="medium"
+            letterSpacing="-0.01em"
+          >
+            Project description
+          </Text>
+          <Paragraph mb="xl">{renderLineBreaks(project.description)}</Paragraph>
+        </>
+      )}
       <Box display={["block", "flex"]}>
         <Box width="100%" mb="xl">
           <Text
