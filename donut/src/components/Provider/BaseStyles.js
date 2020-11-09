@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { StyledBackdrop, StyledModalWindowContainer } from "../Modal/styles";
+import { StyledDialogBackdrop, StyledDialog } from "../Modal";
 
 const BACKGROUND = {
   default: "#F8F8F9",
@@ -111,21 +111,21 @@ const BaseStyles = createGlobalStyle`
   }
 
   /* Styling for nested modals */
-  ${StyledBackdrop} {
+  ${StyledDialogBackdrop} {
     z-index: 20;
   }
 
-  ${StyledModalWindowContainer} {
+  ${StyledDialog} {
     z-index: 25;
   }
 
   body > .__reakit-portal > .__reakit-portal {
-    ${StyledBackdrop} {
+    ${StyledDialogBackdrop} {
       z-index: 30;
       opacity: 0.25;
     }
 
-    ${StyledModalWindowContainer} {
+    ${StyledDialog} {
       z-index: 35;
     }
   }
