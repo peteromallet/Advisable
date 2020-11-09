@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Layout from "../../../components/Layout";
+import Layout from "components/Layout";
 import { useBreakpoint } from "@advisable/donut";
 import Sidebar from "./Sidebar";
 import PaymentSettings from "./PaymentSettings";

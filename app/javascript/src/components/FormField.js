@@ -14,7 +14,7 @@ const FormField = ({
   label,
   isRequired,
   as: Component = Input,
-  Widget,
+  widget: Widget,
   prefix,
   suffix,
   labelHint,
@@ -115,7 +115,7 @@ FormField.propTypes = {
   prefix: PropTypes.string,
   suffix: PropTypes.string,
   description: PropTypes.string,
-  Widget: PropTypes.func,
+  widget: PropTypes.func,
 };
 
 export default FormField;

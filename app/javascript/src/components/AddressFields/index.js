@@ -15,7 +15,7 @@ export const addressFieldsFragment = gql`
   }
 `;
 
-const GET_DATA = gql`
+export const GET_ADDRESS_FIELDS_DATA = gql`
   query getCountries {
     countries {
       ...AddressFieldsFragment
@@ -26,7 +26,7 @@ const GET_DATA = gql`
 `;
 
 const AddressFields = ({ label, name, formik }) => {
-  const { data, loading } = useQuery(GET_DATA);
+  const { data, loading } = useQuery(GET_ADDRESS_FIELDS_DATA);
   const countries = data?.countries || [];
   const isWidescreen = useBreakpoint("sUp");
 
@@ -66,7 +66,7 @@ const AddressFields = ({ label, name, formik }) => {
         placeholder="Line 2"
         error={line2Error}
       />
-      <Box display={isWidescreen && "flex"}>
+      <Box display={isWidescreen ? "flex" : null}>
         <Field
           as={Input}
           marginRight="xxs"
@@ -83,7 +83,7 @@ const AddressFields = ({ label, name, formik }) => {
           marginBottom="xxs"
         />
       </Box>
-      <Box mb="xs" display={isWidescreen && "flex"}>
+      <Box mb="xs" display={isWidescreen ? "flex" : null}>
         <Box
           width="100%"
           mb={!isWidescreen && "xxs"}
@@ -97,9 +97,10 @@ const AddressFields = ({ label, name, formik }) => {
             error={countryError}
             id={`${name}.country`}
             name={`${name}.country`}
+            data-testid="countryInput"
           >
-            {countries.map((c) => (
-              <option key={c.code} value={c.code}>
+            {countries.map((c, i) => (
+              <option key={`${c.code}-${i}`} value={c.code}>
                 {c.name}
               </option>
             ))}

@@ -76,12 +76,13 @@ const UpdatePaymentSettingsForm = ({
           </Box>
           <FormField
             label="Bank account currency"
+            data-testid="bankCurrency"
             marginBottom="m"
             as={Select}
             name="bankCurrency"
           >
-            {currencies.map((c) => (
-              <option key={c.value} value={c.value}>
+            {currencies.map((c, i) => (
+              <option key={`${c.value}-${i}`} value={c.value}>
                 {c.label}
               </option>
             ))}
@@ -99,7 +100,9 @@ const UpdatePaymentSettingsForm = ({
             will send you an email where you can securely enter your bank
             account details
           </Text>
-          <Button loading={formik.isSubmitting}>{buttonLabel}</Button>
+          <Button type="submit" loading={formik.isSubmitting}>
+            {buttonLabel}
+          </Button>
         </Form>
       )}
     </Formik>

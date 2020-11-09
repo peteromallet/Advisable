@@ -68,6 +68,11 @@ function VariantSystem({ variantsRange }) {
   const { data } = useQuery(NUM_OF_VARIANTS);
   const activeVariant = data?.variant;
 
+  const updateActiveVariant = useCallback((variant) => {
+    cache.writeQuery({ query: CURRENT_VARIANT, data: { variant } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const variants = useMemo(
     () =>
       range(variantsRange[0], variantsRange[1]).map((num) => (
@@ -90,11 +95,6 @@ function VariantSystem({ variantsRange }) {
 
   const numOfVariants = variants.length;
   const { cache } = useApolloClient();
-
-  const updateActiveVariant = useCallback((variant) => {
-    cache.writeQuery({ query: CURRENT_VARIANT, data: { variant } });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     updateActiveVariant(variantsRange[0]);

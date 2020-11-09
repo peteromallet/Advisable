@@ -22,7 +22,7 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
         <NavItem onClick={onCloseNav} to="/clients">
           Active Projects
         </NavItem>
-        <NavItem onClick={onCloseNav} to="/profile">
+        <NavItem onClick={onCloseNav} to={`/freelancers/${viewer.id}`}>
           Profile
         </NavItem>
         <NavItem onClick={onCloseNav} to="/messages">
@@ -37,6 +37,9 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
                 Guild
               </NavItem>
             )}
+            <NavItem as="a" href="/settings">
+              Settings
+            </NavItem>
             <NavItem as="a" href="#" onClick={onLogout}>
               Logout
             </NavItem>

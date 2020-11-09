@@ -11,6 +11,22 @@ import i18n from "./i18next";
 import App from "../App";
 import createCache from "../apolloCache";
 
+global.IntersectionObserver = class IntersectionObserver {
+  constructor() {}
+  disconnect() {
+    return null;
+  }
+  observe() {
+    return null;
+  }
+  takeRecords() {
+    return null;
+  }
+  unobserve() {
+    return null;
+  }
+};
+
 const TIMEOUT = 30000;
 configure({ asyncUtilTimeout: TIMEOUT });
 
