@@ -4,6 +4,7 @@ import ApplicationProvider from "@advisable-main/components/ApplicationProvider"
 import RootErrorBoundary from "@advisable-main/views/RootErrorBoundary";
 import Loading from "@advisable-main/components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import Header from "@guild/components/Header";
 
 const Feed = lazy(() => import("./views/Feed"));
 const Post = lazy(() => import("./views/Post"));
@@ -13,6 +14,7 @@ const App = () => {
   return (
     <ApplicationProvider>
       <RootErrorBoundary>
+        <Header />
         <Suspense fallback={<Loading />}>
           <Switch>
             <AuthenticatedRoute
