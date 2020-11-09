@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import ExpandableText from "@advisable-main/components/ExpandableText";
 import { useToggle } from "@guild/hooks/useToggle";
@@ -47,8 +47,8 @@ const DirectMessage = ({ count, recipient, guildPostId }) => {
           <GuildBox spaceChildrenHorizontal={34} mb="l">
             <GuildBox display="flex" flexShrink={0}>
               <Avatar
-                as={Link}
-                to={`/profiles/${recipient.id}`}
+                as={Link.External}
+                href={`/freelancers/${recipient.id}`}
                 size={{ _: "l", m: "xxl" }}
                 name={recipient.name}
                 url={recipient.avatar}

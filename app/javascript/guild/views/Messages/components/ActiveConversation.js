@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { css } from "styled-components";
 import { motion } from "framer-motion";
@@ -111,8 +111,8 @@ const ActiveConversation = ({ channelSid }) => {
                   >
                     <Avatar
                       width={"24px"}
-                      as={Link}
-                      to={`/profiles/${other}`}
+                      as={Link.External}
+                      href={`/freelancers/${other}`}
                       size="s"
                       name={otherParticipant.name}
                       url={otherParticipant.avatar}
