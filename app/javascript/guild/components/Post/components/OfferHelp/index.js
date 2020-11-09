@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useMachine } from "@xstate/react";
 import ExpandableText from "@advisable-main/components/ExpandableText";
@@ -13,7 +13,7 @@ import {
   Input,
 } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
-import { StyledModal, ModalClose } from "./styles";
+import { StyledModal, ModalClose } from "@guild/components/Modal/styles";
 import { PhoneCall, MessagesFill } from "@guild/icons";
 import { SubmitButton } from "@guild/components/Buttons/styles";
 import HelpButton from "@guild/components/Post/components/HelpButton";
@@ -38,11 +38,7 @@ const OfferHelp = ({ recipient, guildPostId, engagementsCount }) => {
     send("RESET");
   };
 
-  const [current, send, service] = useMachine(offerMachine);
-  // useEffect(() => {
-  //   const subscription = service.subscribe((state) => console.debug(state));
-  //   return subscription.unsubscribe;
-  // }, [service]);
+  const [current, send] = useMachine(offerMachine);
 
   const handleSubmitMessage = async () => {
     if (!messageBody.length) return;
@@ -170,7 +166,7 @@ const OfferHelp = ({ recipient, guildPostId, engagementsCount }) => {
               )}
             </>
           ) : (
-            /* 
+            /*
               Pending: No offer state selected
             */
             <GuildBox flexCenterBoth mt="xl">

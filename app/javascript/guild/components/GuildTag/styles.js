@@ -40,7 +40,7 @@ const size = variant({
   prop: "size",
   variants: {
     s: {
-      padding: "9.5px 12px",
+      padding: "10px 12px",
     },
     m: {
       padding: "8px 14px",
@@ -60,6 +60,7 @@ export const StyledTag = styled.div`
   ${border};
 
   font-size: 16px;
+  font-weight: 500;
   max-height: 40px;
   border-radius: 30px;
 

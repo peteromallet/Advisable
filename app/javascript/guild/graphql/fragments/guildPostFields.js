@@ -9,12 +9,24 @@ export default gql`
     bodyRaw
     reacted
     reactionsCount
+    status
     commented
     commentsCount
     engagementsCount
     authored
     createdAtTimeAgo
-    coverImage
+    denormalizedType
+    audienceType
+    coverImage {
+      id
+      url
+    }
+    images {
+      id
+      url
+      cover
+      position
+    }
     author {
       id
       name

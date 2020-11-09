@@ -1,70 +1,53 @@
-import React, { useRef, useCallback } from "react";
-import {
-  Card,
-  Text,
-  Avatar,
-  Link,
-  Button,
-  theme,
-  Textarea,
-  Box,
-} from "@advisable/donut";
-import styled from "styled-components";
-import { useParams, useLocation } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import React from "react";
+import { Card, Text, Avatar, Link, theme, Box, Button } from "@advisable/donut";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
-import pluralize from "@advisable-main/utilities/pluralize";
 import HeaderLayout from "@guild/components/Layouts/HeaderLayout";
-import { useToggle } from "@guild/hooks/useToggle";
 import { GuildBox } from "@guild/styles";
-import ShowMore from "@guild/components/ShowMore";
+import { Edit } from "@styled-icons/feather";
 import GuildTag from "@guild/components/GuildTag";
 import { NeedHelp } from "@guild/icons";
-import { GUILD_UPDATE_POST_REACTIONS } from "@guild/components/Post/mutations";
 import OfferHelp from "@guild/components/Post/components/OfferHelp";
-// import { CREATE_GUILD_COMMENT } from "./mutations";
 import { GUILD_POST_QUERY } from "./queries";
 import Topics from "@guild/components/Post/components/Topics";
 import { CoverImage } from "@guild/components/CoverImage";
-import { SubmitButton } from "@guild/components/Buttons/styles";
 import ReactionsButton from "@guild/components/Post/components/ReactionsButton";
-import { truncate } from "lodash-es";
+import useViewer from "@advisable-main/hooks/useViewer";
+import { css } from "styled-components";
+// import { useToggle } from "@guild/hooks/useToggle";
+// import { SubmitButton } from "@guild/components/Buttons/styles";
+// import pluralize from "@advisable-main/utilities/pluralize";
+// import ShowMore from "@guild/components/ShowMore";
+// import { CREATE_GUILD_COMMENT } from "./mutations";
+// import { truncate } from "lodash-es";
 
 const Post = () => {
   const { postId } = useParams();
-  const { state } = useLocation();
-  const [showComments, toggleShowComments] = useToggle(true);
+  const viewer = useViewer();
 
   const { data, loading } = useQuery(GUILD_POST_QUERY, {
     variables: { id: postId },
   });
   const post = data?.guildPost;
 
+  // const { state } = useLocation();
   // const [createGuildComment] = useMutation(CREATE_GUILD_COMMENT);
-
-  const commentsRef = useRef();
-  const commentsEffectRef = useCallback(
-    (node) => {
-      if (!node) return;
-      commentsRef.current = node;
-      if (state?.commentsAnchor) scrollToComments();
-    },
-    [state?.commentsAnchor],
-  );
-
-  const scrollToComments = () => {
-    commentsRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
-  const [guildUpdatePostReactions] = useMutation(GUILD_UPDATE_POST_REACTIONS);
-  const handleUpdatePostReactions = async () => {
-    await guildUpdatePostReactions({
-      variables: { input: { guildPostId: post.id } },
-    });
-  };
+  // const [showComments, toggleShowComments] = useToggle(true);
+  // const commentsRef = useRef();
+  // const commentsEffectRef = useCallback(
+  //   (node) => {
+  //     if (!node) return;
+  //     commentsRef.current = node;
+  //     if (state?.commentsAnchor) scrollToComments();
+  //   },
+  //   [state?.commentsAnchor],
+  // );
+  // const scrollToComments = () => {
+  //   commentsRef.current?.scrollIntoView({
+  //     behavior: "smooth",
+  //   });
+  // };
 
   if (loading) return <Loading />;
 
@@ -77,7 +60,9 @@ const Post = () => {
             maxWidth={theme.breakpoints.l}
             width="100%"
           >
-            {post.coverImage && <CoverImage src={post.coverImage} />}
+            {post.coverImage && (
+              <CoverImage images={post.images} cover={post.coverImage.url} />
+            )}
 
             {/* Header */}
             <GuildBox
@@ -122,12 +107,12 @@ const Post = () => {
                 </Box>
               </GuildBox>
             </GuildBox>
-            {/* post.images.length && post.coverImage  */}
 
             {/* Topics and Interactions */}
             <GuildBox
               px={{ _: "xs", s: "xxl" }}
-              height="58px"
+              py="xs"
+              minHeight="58px"
               flexSpaceBetween
               backgroundColor="#6770f10d"
               alignItems="center"
@@ -158,14 +143,35 @@ const Post = () => {
             </GuildBox>
 
             {/* Post body */}
-            <GuildBox px={{ _: "s", m: "l", l: "80px" }} py="l">
-              <Text size="m" lineHeight="l" color="quartz">
+            <GuildBox px={{ _: "s", m: "l", l: "80px" }} py="3xl">
+              <Text
+                size="m"
+                lineHeight="l"
+                color="quartz"
+                css={css`
+                  white-space: pre-wrap;
+                  white-space: pre-line;
+                `}
+              >
                 {post.body}
               </Text>
+              {viewer.id === post.author.id && (
+                <Box display="flex" justifyContent="flex-end">
+                  <Button
+                    size="s"
+                    as={Link}
+                    to={`/composer/${post.id}/edit`}
+                    variant="subtle"
+                    prefix={<Edit />}
+                  >
+                    Edit Post
+                  </Button>
+                </Box>
+              )}
             </GuildBox>
 
             {/* Comments */}
-            <GuildBox
+            {/* <GuildBox
               ref={commentsEffectRef}
               px="xxl"
               py="m"
@@ -199,10 +205,10 @@ const Post = () => {
               <SubmitButton loading={false} type="submit">
                 Submit
               </SubmitButton>
-            </GuildBox>
+            </GuildBox> */}
 
             {/* Post Comments */}
-            {showComments && post.comments.length > 0 && (
+            {/* {showComments && post.comments?.length > 0 && (
               <GuildBox px="xxl" py="l" spaceChildrenVertical={24}>
                 {post.comments.map((comment, key) => (
                   <GuildBox key={key} spaceChildrenHorizontal={16}>
@@ -248,7 +254,7 @@ const Post = () => {
                   </GuildBox>
                 ))}
               </GuildBox>
-            )}
+            )} */}
           </Card>
         </GuildBox>
       </HeaderLayout>
@@ -256,23 +262,23 @@ const Post = () => {
   );
 };
 
-const StyledCommentsButton = styled(Button)`
-  padding: 6px 14px;
-  border-radius: 15px;
-  height: 29px;
-  background: white;
+// const StyledCommentsButton = styled(Button)`
+//   padding: 6px 14px;
+//   border-radius: 15px;
+//   height: 29px;
+//   background: white;
 
-  &:focus {
-    outline: none;
-    border: none;
-  }
-  svg {
-    margin-left: 12px;
-  }
-  &:hover {
-    background-color: ${theme.colors.lavender} !important;
-  }
-  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.12));
-`;
+//   &:focus {
+//     outline: none;
+//     border: none;
+//   }
+//   svg {
+//     margin-left: 12px;
+//   }
+//   &:hover {
+//     background-color: ${theme.colors.lavender} !important;
+//   }
+//   filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.12));
+// `;
 
 export default Post;

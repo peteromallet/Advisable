@@ -9,8 +9,8 @@ module Guild
       # specialist.follows.where(followable_type: 'ActsAsTaggableOn::Tag')
       acts_as_follower
 
-      has_many :guild_posts, class_name: 'Guild::Post'
-      has_many :guild_comments, class_name: 'Guild::Comment'
+      has_many :guild_posts, class_name: 'Guild::Post', dependent: :destroy
+      has_many :guild_comments, class_name: 'Guild::Comment', dependent: :destroy
       has_many :guild_post_comments,
                -> { published.order(created_at: :desc) },
                through: :guild_posts, source: :comments
@@ -26,7 +26,7 @@ module Guild
 
       jsonb_accessor :guild_data,
                      guild_joined_date: :datetime,
-                     guild_notifications_last_read: [:datetime, {default: Time.at(0)}],
+                     guild_notifications_last_read: [:datetime, {default: Time.zone.at(0)}],
                      guild_calendly_link: [:string]
 
       def touch_guild_notifications_last_read
@@ -36,10 +36,18 @@ module Guild
       def guild_unread_messages
         chat_client = TwilioChat::Client.new(identity: uid)
         chat_client.has_unread_messages?
+      rescue Twilio::REST::RestError => e
+        # https://www.twilio.com/docs/api/errors/20404
+        if e.code == 20404
+          false
+        else
+          raise
+        end
       end
 
       def guild_unread_notifications
         return false unless guild_activity.any?
+
         guild_activity.first.created_at > guild_notifications_last_read
       end
 
@@ -80,6 +88,7 @@ module Guild
 
       def set_guild_joined_date
         return unless guild
+
         self.guild_joined_date ||= Time.current
       end
     end

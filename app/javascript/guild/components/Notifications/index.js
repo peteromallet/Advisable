@@ -52,25 +52,27 @@ const Notifications = ({ open }) => {
   );
 };
 
-const AuthorDetails = ({ authorName, createdAt }) => (
-  <>
+const AuthorDetails = ({ author, createdAt }) => (
+  <GuildBox flexCenterBoth spaceChildrenVertical={8}>
+    <Avatar size="s" name={author.name} url={author.avatar} />
     <Text
       fontSize="xs"
       fontWeight="light"
       letterSpacing="-0.01em"
       color="quartz"
     >
-      {truncate(authorName, { length: 12 })}
+      {truncate(author.firstName || author.name, { length: 12 })}
     </Text>
     <Text
       fontSize="xxs"
       fontWeight="light"
       letterSpacing="-0.01em"
       color="darkGrey"
+      textAlign="center"
     >
       {createdAt} ago
     </Text>
-  </>
+  </GuildBox>
 );
 
 const CommentNotification = ({ author, post, body, id, createdAtTimeAgo }) => (
@@ -112,14 +114,16 @@ const ReactionNotification = ({
   reactionable,
   createdAtTimeAgo,
 }) => (
-  <Box height="54px" display="flex">
+  <Box display="flex">
     <GuildBox
       width="87px"
+      padding="s"
+      flexShrink={0}
       flexDirection="column"
       backgroundColor="ghostWhite"
       flexCenterBoth
     >
-      <AuthorDetails authorName={author.name} createdAt={createdAtTimeAgo} />
+      <AuthorDetails author={author} createdAt={createdAtTimeAgo} />
     </GuildBox>
     <Box
       as={Link}

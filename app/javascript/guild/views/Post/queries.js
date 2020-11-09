@@ -16,16 +16,6 @@ export const GUILD_POST_QUERY = gql`
         firstName
         name
       }
-      comments {
-        id
-        body
-        createdAtTimeAgo
-        author {
-          avatar
-          firstName
-          lastName
-        }
-      }
     }
   }
 `;
