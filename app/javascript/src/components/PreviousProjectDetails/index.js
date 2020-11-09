@@ -106,7 +106,7 @@ function PreviousProjectDetails({ id }) {
           </Box>
         </Box>
       </Box>
-      {project.reviews.length > 0 && (
+      {project.reviews.length > 0 && project.reviews[0]?.comment && (
         <>
           <Box height={1} bg="neutral100" marginBottom="xl" />
           <Review review={project.reviews[0]} />
