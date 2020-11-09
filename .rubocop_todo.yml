@@ -83,14 +83,6 @@ Layout/EmptyLinesAroundAccessModifier:
   Exclude:
     - 'app/policies/guild/post_policy.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, no_empty_lines
-Layout/EmptyLinesAroundBlockBody:
-  Exclude:
-    - 'db/schema.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
@@ -275,13 +267,6 @@ Lint/UselessMethodDefinition:
 # Configuration parameters: IgnoredMethods.
 Metrics/AbcSize:
   Max: 79
-
-# Offense count: 202
-# Configuration parameters: CountComments, CountAsOne, ExcludedMethods.
-# ExcludedMethods: refine
-Metrics/BlockLength:
-  Max: 790
-
 
 # Offense count: 4
 # Configuration parameters: IgnoredMethods.
