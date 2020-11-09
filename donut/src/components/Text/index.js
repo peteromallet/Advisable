@@ -2,7 +2,7 @@ import React from "react";
 import Linkify from "linkifyjs/react";
 import { Text as TextStyles } from "./styles";
 
-const Text = ({ children, autoLink, size, weight, ...rest }) => {
+const Text = ({ children, autoLink, size, weight, truncate, ...rest }) => {
   const linkProps = {
     options: {
       attributes: {
@@ -13,7 +13,12 @@ const Text = ({ children, autoLink, size, weight, ...rest }) => {
   };
 
   return (
-    <TextStyles fontSize={size} fontWeight={weight} {...rest}>
+    <TextStyles
+      fontSize={size}
+      fontWeight={weight}
+      $truncate={truncate}
+      {...rest}
+    >
       {autoLink ? <Linkify {...linkProps}>{children}</Linkify> : children}
     </TextStyles>
   );
