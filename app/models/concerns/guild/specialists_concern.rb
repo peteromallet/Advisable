@@ -23,11 +23,15 @@ module Guild
       before_save :set_guild_joined_date, if: -> { guild_changed? }
 
       scope :guild, -> { where(guild: true) }
-
+      scope :guild_featured_members, lambda {
+                                       guild.jsonb_where_not(:guild_data, guild_featured_member_at: nil).
+                                         guild_data_order(guild_featured_member_at: :desc)
+                                     }
       jsonb_accessor :guild_data,
                      guild_joined_date: :datetime,
                      guild_notifications_last_read: [:datetime, {default: Time.zone.at(0)}],
-                     guild_calendly_link: [:string]
+                     guild_calendly_link: [:string],
+                     guild_featured_member_at: :datetime
 
       def touch_guild_notifications_last_read
         update!(guild_notifications_last_read: Time.current)

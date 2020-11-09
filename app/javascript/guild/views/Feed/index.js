@@ -3,7 +3,7 @@ import { Box, useBreakpoint } from "@advisable/donut";
 import Sticky from "components/Sticky";
 import Posts from "@guild/components/Posts";
 import Topics from "@guild/components/Topics";
-import NewMembers from "@guild/components/NewMembers";
+import FeaturedMembers from "@guild/components/FeaturedMembers";
 import Filters from "@guild/components/Filters";
 
 const Feed = () => {
@@ -26,7 +26,7 @@ const Feed = () => {
         {lUp && (
           <Box width="260px" flexShrink="0">
             <Sticky offset={98} enabled>
-              <NewMembers />
+              <FeaturedMembers />
             </Sticky>
           </Box>
         )}
