@@ -1,7 +1,12 @@
 import React from "react";
 import { padding } from "styled-system";
 import { motion } from "framer-motion";
-import { Award, User, DollarSign } from "@styled-icons/feather";
+import {
+  PersonCircle,
+  Card,
+  Copy,
+  LockClosed,
+} from "@styled-icons/ionicons-outline";
 import NavigationMenu from "../../../components/NavigationMenu";
 import styled from "styled-components";
 import { Text, useBreakpoint } from "@advisable/donut";
@@ -66,23 +71,17 @@ const SettingsSidebar = () => {
           Settings
         </Text>
         <NavigationMenu title="Settings">
-          <NavigationMenu.Item
-            to="/settings/general"
-            icon={<User size={20} strokeWidth={2} />}
-          >
+          <NavigationMenu.Item to="/settings/general" icon={<PersonCircle />}>
             General
           </NavigationMenu.Item>
-          <NavigationMenu.Item
-            to="/settings/references"
-            icon={<Award size={20} strokeWidth={2} />}
-          >
+          <NavigationMenu.Item to="/settings/references" icon={<Copy />}>
             Previous Projects
           </NavigationMenu.Item>
-          <NavigationMenu.Item
-            to="/settings/payment-settings"
-            icon={<DollarSign size={20} strokeWidth={2} />}
-          >
+          <NavigationMenu.Item to="/settings/payment-settings" icon={<Card />}>
             Payment Settings
+          </NavigationMenu.Item>
+          <NavigationMenu.Item to="/settings/password" icon={<LockClosed />}>
+            Password
           </NavigationMenu.Item>
         </NavigationMenu>
       </Sidebar>

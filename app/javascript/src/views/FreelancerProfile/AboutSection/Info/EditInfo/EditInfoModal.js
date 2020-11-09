@@ -12,6 +12,7 @@ import {
   useBreakpoint,
 } from "@advisable/donut";
 import BioLengthWidget from "./BioLengthWiget";
+import { useNotifications } from "src/components/Notifications";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 // Queries
@@ -30,6 +31,7 @@ const validationSchema = object().shape({
 });
 
 function EditInfoModal({ modal, specialist }) {
+  const notifications = useNotifications();
   const [mutate] = useMutation(UPDATE_PROFILE);
   const isWidescreen = useBreakpoint("sUp");
   const initialValues = {
@@ -49,6 +51,8 @@ function EditInfoModal({ modal, specialist }) {
       variables: { input: { ...mutateValues } },
       optimisticResponse,
     });
+
+    notifications.notify("Your profile has been updated");
     modal.hide();
   };
   const countriesQuery = useQuery(GET_COUNTRIES);
