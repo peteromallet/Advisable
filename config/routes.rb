@@ -23,6 +23,12 @@ Rails.application.routes.draw do
     resources :webhook_events
     resources :webhook_configurations
     resources :webhooks, only: %i[index show]
+    namespace :guild do
+      resources :posts
+      resources :posts, as: :post_opportunity
+      resources :posts, as: :post_case_study
+      resources :posts, as: :post_advice_required
+    end
 
     post 'resync', to: 'application#resync', as: :resync if ENV['STAGING']
     get 'login/:gid', to: 'application#login_as', as: :login_as
