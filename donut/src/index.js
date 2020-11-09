@@ -58,7 +58,6 @@ export * from "./components/Select/styles";
 
 export * from "reakit/Dialog";
 export { default as Modal, useModal, useRoutedModal } from "./components/Modal";
-export * from "./components/Modal/styles";
 
 export { default as Button } from "./components/Button";
 export { default as Tooltip } from "./components/Tooltip";

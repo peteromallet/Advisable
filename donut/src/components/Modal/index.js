@@ -16,11 +16,14 @@ export { default as useRoutedModal } from "./useRoutedModal";
 
 export const useModal = useDialogState;
 
-const StyledDialogBackdrop = styled(motion.div)`
-  top: 58px;
+// Z-INDEX FOR MODALS ARE MANAGED INSIDE OF THE BASE STYLES.
+export const StyledDialogBackdrop = styled(motion.div)`
+  top: 0;
+  left: 0;
   right: 0;
   bottom: 0;
-  left: ${(props) => `${props.leftIndent}px`};
+  padding-top: ${(props) => `${props.leftIndent || 32}px`};
+  padding-left: ${(props) => `${props.topIndent || 0}px`};
   z-index: 10;
   position: fixed;
   display: flex;
@@ -29,7 +32,6 @@ const StyledDialogBackdrop = styled(motion.div)`
   background: rgba(245, 246, 251, 0.9);
 
   overflow-y: scroll;
-  padding-top: 32px;
   padding-bottom: 64px;
 
   @media (max-width: 1024px) {
@@ -39,7 +41,7 @@ const StyledDialogBackdrop = styled(motion.div)`
   }
 `;
 
-const StyledDialog = styled(motion.div)`
+export const StyledDialog = styled(motion.div)`
   ${padding};
 
   width: 100%;
@@ -83,8 +85,11 @@ function Modal({
   height,
   loading,
   width = 500,
+  topIndent = 0,
   leftIndent = 0,
   padding = "32px",
+  showCloseButton = true,
+  hideOnClickOutside = true,
 }) {
   return (
     <AnimatePresence>
@@ -92,16 +97,22 @@ function Modal({
         {(backdrop) => (
           <StyledDialogBackdrop
             {...backdrop}
-            style={{
-              pointerEvents: modal.visible ? "all" : "none",
-            }}
+            topIndent={topIndent}
             leftIndent={leftIndent}
             initial={{ opacity: 0 }}
             animate={{
               opacity: modal.visible ? 1 : 0,
             }}
+            style={{
+              pointerEvents: modal.visible ? "all" : "none",
+            }}
           >
-            <Dialog {...modal} aria-label={label} preventBodyScroll={false}>
+            <Dialog
+              {...modal}
+              aria-label={label}
+              preventBodyScroll={false}
+              hideOnClickOutside={hideOnClickOutside}
+            >
               {(dialogProps) =>
                 modal.visible &&
                 !loading && (
@@ -119,11 +130,13 @@ function Modal({
                     }}
                     exit={{ opacity: 0, y: 40 }}
                   >
-                    <Box position="absolute" top="12px" right="12px">
-                      <StyledCloseButton onClick={modal.hide}>
-                        <CloseCircle size="32px" />
-                      </StyledCloseButton>
-                    </Box>
+                    {showCloseButton ? (
+                      <Box position="absolute" top="12px" right="12px">
+                        <StyledCloseButton onClick={modal.hide}>
+                          <CloseCircle size="32px" />
+                        </StyledCloseButton>
+                      </Box>
+                    ) : null}
                     {children}
                   </StyledDialog>
                 )
