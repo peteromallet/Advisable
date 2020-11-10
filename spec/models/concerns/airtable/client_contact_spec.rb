@@ -36,6 +36,24 @@ RSpec.describe Airtable::ClientContact do
     end
   end
 
+  describe "value stripping" do
+    let(:user) { create(:user) }
+    let(:airtable) {
+      Airtable::ClientContact.new({
+      "Email Address" => " test@airtable.com ",
+      "First Name" => " Dwight ",
+      "Last Name" => " Schrute ",
+      "VAT Number" => " 1234 "
+      }, id: user.airtable_id)
+    }
+
+    it "strips email, name, and VAT" do
+      airtable.sync
+      attributes = user.account.reload.attributes.slice("email", "first_name", "last_name", "vat_number").map(&:second)
+      expect(attributes).to match_array(["1234", "Dwight", "Schrute", "test@airtable.com"])
+    end
+  end
+
   describe "push_data" do
     let(:user) { create(:user) }
     let(:airtable) { Airtable::ClientContact.new({}, id: user.airtable_id) }
