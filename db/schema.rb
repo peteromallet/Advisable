@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_27_190419) do
+ActiveRecord::Schema.define(version: 2020_11_05_115641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -626,8 +626,8 @@ ActiveRecord::Schema.define(version: 2020_10_27_190419) do
     t.integer "candidate_count", default: 0
     t.integer "proposed_count", default: 0
     t.integer "hired_count", default: 0
-    t.bigint "sales_person_id"
     t.boolean "sourcing"
+    t.bigint "sales_person_id"
     t.bigint "linkedin_campaign_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["sales_person_id"], name: "index_projects_on_sales_person_id"
@@ -722,8 +722,6 @@ ActiveRecord::Schema.define(version: 2020_10_27_190419) do
   end
 
   create_table "specialists", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
     t.jsonb "image"
     t.string "linkedin"
     t.string "travel_availability"
@@ -738,20 +736,11 @@ ActiveRecord::Schema.define(version: 2020_10_27_190419) do
     t.integer "reviews_count"
     t.text "bio"
     t.string "uid"
-    t.string "email"
-    t.string "password_digest"
-    t.datetime "confirmed_at"
-    t.string "confirmation_digest"
-    t.datetime "reset_sent_at"
-    t.string "reset_digest"
-    t.text "permissions", default: [], array: true
     t.boolean "remote"
     t.string "application_stage"
-    t.text "completed_tutorials", default: [], array: true
     t.string "bank_holder_name"
     t.jsonb "bank_holder_address", default: {}
     t.string "bank_currency"
-    t.string "vat_number"
     t.boolean "primarily_freelance"
     t.string "number_of_projects"
     t.integer "hourly_rate"
@@ -761,21 +750,18 @@ ActiveRecord::Schema.define(version: 2020_10_27_190419) do
     t.string "campaign_name"
     t.string "campaign_source"
     t.string "referrer"
-    t.string "confirmation_token"
     t.decimal "average_score"
     t.integer "project_count"
     t.string "phone"
-    t.boolean "test_account"
     t.boolean "guild", default: false
-    t.string "remember_token"
     t.string "community_status"
-    t.jsonb "guild_data"
     t.boolean "automated_invitations_subscription"
+    t.jsonb "guild_data"
+    t.bigint "account_id"
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
     t.datetime "community_invited_to_call_at"
     t.integer "community_score"
-    t.bigint "account_id"
     t.integer "member_of_week_email"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
@@ -853,35 +839,23 @@ ActiveRecord::Schema.define(version: 2020_10_27_190419) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
     t.string "airtable_id"
     t.text "availability"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "password_digest"
-    t.string "email"
     t.string "uid"
-    t.datetime "confirmed_at"
-    t.string "confirmation_digest"
     t.bigint "country_id"
-    t.string "reset_digest"
-    t.datetime "reset_sent_at"
     t.string "company_name"
-    t.text "permissions", default: [], array: true
     t.string "title"
-    t.text "completed_tutorials", default: [], array: true
     t.string "stripe_customer_id"
     t.string "project_payment_method"
     t.string "invoice_name"
     t.string "invoice_company_name"
-    t.string "vat_number"
     t.jsonb "address"
     t.datetime "accepted_project_payment_terms_at"
     t.string "exceptional_project_payment_terms"
     t.string "stripe_setup_intent_id"
     t.string "setup_intent_status"
-    t.string "confirmation_token"
     t.string "company_type"
     t.bigint "industry_id"
     t.string "campaign_name"
@@ -897,7 +871,6 @@ ActiveRecord::Schema.define(version: 2020_10_27_190419) do
     t.bigint "sales_person_id"
     t.string "contact_status"
     t.string "fid"
-    t.boolean "test_account"
     t.bigint "budget"
     t.integer "locality_importance"
     t.datetime "accepted_guarantee_terms_at"
@@ -907,7 +880,6 @@ ActiveRecord::Schema.define(version: 2020_10_27_190419) do
     t.datetime "application_accepted_at"
     t.datetime "application_rejected_at"
     t.datetime "application_reminder_at"
-    t.string "remember_token"
     t.bigint "account_id"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
