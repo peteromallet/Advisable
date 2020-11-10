@@ -24,8 +24,10 @@ function AcceptedStatus({ firstName, lastName }) {
   const fullName = `${firstName} ${lastName}`;
   const { email, applicationId } = useLocationState();
   const modal = useModal();
-  const utcHour = DateTime.utc().hour;
-  const isWorkingRange = utcHour >= 13 && utcHour < 20;
+  const start = DateTime.fromISO(process.env.WORK_HOURS_START);
+  const end = DateTime.fromISO(process.env.WORK_HOURS_END);
+  const now = DateTime.utc();
+  const isWorkingRange = now >= start && now <= end;
 
   const Navigation = useCallback(() => {
     if (callback)
