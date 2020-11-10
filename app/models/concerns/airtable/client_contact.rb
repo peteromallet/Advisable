@@ -4,10 +4,10 @@ class Airtable::ClientContact < Airtable::Base
 
   sync_with ::User
 
-  sync_column_to_association 'Email Address', association: :account, to: :email
-  sync_column_to_association 'First Name', association: :account, to: :first_name
-  sync_column_to_association 'Last Name', association: :account, to: :last_name
-  sync_column_to_association 'VAT Number', association: :account, to: :vat_number
+  sync_column_to_association 'Email Address', association: :account, to: :email, strip: true
+  sync_column_to_association 'First Name', association: :account, to: :first_name, strip: true
+  sync_column_to_association 'Last Name', association: :account, to: :last_name, strip: true
+  sync_column_to_association 'VAT Number', association: :account, to: :vat_number, strip: true
 
   sync_column 'Title', to: :title
   sync_column 'Project Payment Method', to: :project_payment_method

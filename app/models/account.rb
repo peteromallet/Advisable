@@ -11,6 +11,8 @@ class Account < ApplicationRecord
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
   validates :email, uniqueness: true, presence: true, format: {with: /@/}
 
+  before_validation :strip_email
+
   def specialist_or_user
     specialist || user
   end
@@ -54,6 +56,14 @@ class Account < ApplicationRecord
     self.reset_sent_at = Time.zone.now
     save!
     AccountMailer.reset_password(id: id, token: token).deliver_later
+  end
+
+  private
+
+  def strip_email
+    return if email.blank?
+
+    self.email = email.strip
   end
 end
 
