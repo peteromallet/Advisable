@@ -53,7 +53,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
   end
 
   def check_existing_specialist_account(email)
-    return unless Specialist.exists?(email: email)
+    return unless Account.find_by(email: email)&.specialist
 
     ApiError.invalid_request(
       code: 'existingAccount',

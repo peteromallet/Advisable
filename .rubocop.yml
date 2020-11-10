@@ -38,9 +38,6 @@ Style/AndOr:
   Enabled: true
   EnforcedStyle: always
 
-Style/Send:
-  Enabled: true
-
 Rails/DynamicFindBy:
   Enabled: false
 
