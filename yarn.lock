@@ -12574,6 +12574,13 @@ raw-loader@^4.0.1:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
+react-bottom-scroll-listener@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/react-bottom-scroll-listener/-/react-bottom-scroll-listener-4.1.1.tgz#6c684babb7d9effb48205f62eb9df706f26ccae2"
+  integrity sha512-Qmcu1SuqrlJzZkXPr+AAduelvUy7Drk4hwMAOcVQrl47cGYR2TEkpAJoRQWJ5boCUpNdifhKD5Uuajn8+5lTIQ==
+  dependencies:
+    lodash.debounce "^4.0.8"
+
 react-clamp-lines@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-clamp-lines/-/react-clamp-lines-3.0.2.tgz#01c9767ab0ec2c7e0a5e57ab26d7ffd11e81ffe5"

@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import { Dropdown, NavItem } from "./styles";
 import { LOGOUT } from "./mutations";
 
-const UserMenu = ({ open }) => {
+const UserMenu = ({ open, onToggle }) => {
   const location = useLocation();
   const [logout] = useMutation(LOGOUT, { variables: { input: {} } });
 
@@ -18,8 +18,11 @@ const UserMenu = ({ open }) => {
 
   return (
     <Dropdown display="flex" flexDirection="column" open={open}>
-      <NavItem active={isActiveRoute("/feed")}>
+      <NavItem onClick={onToggle} active={isActiveRoute("/feed")}>
         <Link to="/feed">Feed</Link>
+      </NavItem>
+      <NavItem onClick={onToggle} active={isActiveRoute("/your-posts")}>
+        <Link to="/your-posts">Your Posts</Link>
       </NavItem>
       <NavItem>
         <a href="/">Advisable</a>
