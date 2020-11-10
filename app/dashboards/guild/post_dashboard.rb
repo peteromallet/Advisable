@@ -63,7 +63,6 @@ module Guild
     FORM_ATTRIBUTES = %i[
       specialist
       reactionable_count
-      id
       type
       body
       title
@@ -89,7 +88,7 @@ module Guild
     # across all pages of the admin dashboard.
     #
     def display_resource(post)
-      "Guild::Post - #{post.normalized_type} - #{post.id}"
+      "#{post.normalized_type} - #{post.title.truncate(24)}"
     end
   end
 end
