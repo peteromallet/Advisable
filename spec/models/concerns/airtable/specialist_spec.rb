@@ -136,6 +136,22 @@ RSpec.describe Airtable::Specialist do
     end
   end
 
+  describe "value stripping" do
+    let(:specialist) { create(:specialist) }
+    let(:airtable) { Airtable::Specialist.new({
+      "Email Address" => " test@airtable.com ",
+      "First Name" => " Dwight ",
+      "Last Name" => " Schrute ",
+      "VAT Number" => " 1234 "
+      }, id: specialist.airtable_id) }
+
+    it "strips email, name, and VAT" do
+      airtable.sync
+      attributes = specialist.account.reload.attributes.slice("email", "first_name", "last_name", "vat_number").map(&:second)
+      expect(attributes).to match_array(["1234", "Dwight", "Schrute", "test@airtable.com"])
+    end
+  end
+
   describe "push_data" do
     let(:specialist) { create(:specialist, {
       bio: "bio",
