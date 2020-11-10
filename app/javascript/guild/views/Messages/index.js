@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { css } from "styled-components";
+import React, { useCallback, useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Card, Text, theme, useBreakpoint } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import { ArrowBack } from "@styled-icons/ionicons-outline";
 import { useToggle } from "@guild/hooks/useToggle";
 import { useTwilioChannels } from "@guild/hooks/twilioChat/useTwilioChannels";
-import HeaderLayout from "@guild/components/Layouts/HeaderLayout";
 import SortConversations from "@guild/components/ShowMore";
 import { GuildBox } from "@guild/styles";
 import InboxHeader from "./components/InboxHeader";
@@ -27,13 +27,16 @@ const Messages = () => {
     if (!subscribedChannels.length || activeChannelSid) return;
     const initialChannel = paramsChannelSid || subscribedChannels[0].sid;
     handleSetActive(initialChannel);
-  }, [subscribedChannels]);
+  }, [subscribedChannels, activeChannelSid, handleSetActive, paramsChannelSid]);
 
-  const handleSetActive = (channelSid) => {
-    setActiveChannelSid(channelSid);
-    const pathname = ["/messages", channelSid].filter((x) => x).join("/");
-    history.replace({ pathname });
-  };
+  const handleSetActive = useCallback(
+    (channelSid) => {
+      setActiveChannelSid(channelSid);
+      const pathname = ["/messages", channelSid].filter((x) => x).join("/");
+      history.replace({ pathname });
+    },
+    [history],
+  );
 
   const handleSortConversations = () => {
     const order = sortConversations ? "desc" : "asc";
@@ -42,7 +45,7 @@ const Messages = () => {
   };
 
   return (
-    <HeaderLayout>
+    <>
       <GuildBox
         display="flex"
         justifyContent="center"
@@ -136,7 +139,7 @@ const Messages = () => {
           )}
         </Card>
       </GuildBox>
-    </HeaderLayout>
+    </>
   );
 };
 
