@@ -11,7 +11,7 @@ class Applications::FlexibleInvoice < ApplicationService
         user: application.project.user,
         unit_amount: application.invoice_rate,
         quantity: (application.monthly_limit / 2.0).ceil,
-        description: "50% of monthly limit + #{application.specialist.name}"
+        description: "50% of monthly limit + #{application.specialist.account.name}"
       }
     )
   end
