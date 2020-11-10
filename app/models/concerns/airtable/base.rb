@@ -71,10 +71,10 @@ class Airtable::Base < Airrecord::Table
     # sync_column_to_association allows us to define a mapping from an airtable column
     # to a column on an associated ActiveRecord model.
     # e.g. first_name from Specialist to Account
-    def sync_column_to_association(column, association:, to:)
+    def sync_column_to_association(column, association:, **options)
       @column_associations ||= {}
       @column_associations[association] ||= {}
-      @column_associations[association][column] = to
+      @column_associations[association][column] = options
     end
 
     # sync_data allows us to sync data which might not fit into a direct mapping
@@ -116,8 +116,10 @@ class Airtable::Base < Airrecord::Table
         model.public_send("build_#{association}") if model.public_send(association).blank?
         association = model.public_send(association)
 
-        columns_hash.each do |column, attr|
-          association.public_send("#{attr}=", self[column])
+        columns_hash.each do |column, options|
+          value = self[column]
+          value = value.strip if options[:strip] && value.present?
+          association.public_send("#{options[:to]}=", value)
         end
 
         next if association.save
