@@ -7,7 +7,7 @@ import { theme } from "@advisable/donut";
 const { colors } = theme;
 
 export const StyledModal = styled(GuildBox)`
-  position: absolute;
+  position: fixed;
   top: 20%;
   left: 50%;
   transform: translate(-50%);
@@ -24,14 +24,14 @@ const CloseContainer = styled(GuildBox)`
   position: absolute;
   top: -15px;
   right: -10px;
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
 
   ${breakpoint.smallAndUp} {
-    top: -20px;
-    right: -20px;
-    width: 40px;
-    height: 40px;
+    top: -15px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
   }
   display: flex;
   border-radius: 50%;

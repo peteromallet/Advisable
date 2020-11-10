@@ -8,14 +8,14 @@ export const activeTopicStyle = css`
 `;
 
 export const StyledTopic = styled(GuildBox)`
-  padding: 6px 14px;
-  border-radius: 15px;
+  padding: 12px 12px;
+  margin-left: -8px;
+  border-radius: 20px;
 
   ${({ selected }) => selected && activeTopicStyle}
 
   &:hover {
     cursor: pointer;
-    border-radius: 15px;
     transition: background-color 220ms;
     text-decoration: none;
     ${activeTopicStyle}

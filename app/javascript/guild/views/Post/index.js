@@ -3,7 +3,6 @@ import { Card, Text, Avatar, Link, theme, Box, Button } from "@advisable/donut";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
-import HeaderLayout from "@guild/components/Layouts/HeaderLayout";
 import { GuildBox } from "@guild/styles";
 import { Edit } from "@styled-icons/feather";
 import GuildTag from "@guild/components/GuildTag";
@@ -53,7 +52,7 @@ const Post = () => {
 
   return (
     data && (
-      <HeaderLayout>
+      <>
         <GuildBox display="flex" justifyContent="center" m={{ _: "s", m: "l" }}>
           <Card
             elevation={{ _: "s", m: "m" }}
@@ -257,7 +256,7 @@ const Post = () => {
             )} */}
           </Card>
         </GuildBox>
-      </HeaderLayout>
+      </>
     )
   );
 };
