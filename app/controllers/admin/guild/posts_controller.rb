@@ -1,11 +1,12 @@
 module Admin
   module Guild
     class PostsController < Admin::ApplicationController
+      #
+      # Administrate doesn't do that well w/ STI so we have to override the resource key before updating
+      # Create uses guild_post
+      #
       def resource_params
-        #
-        # Administrate doesn't do that well w/ STI so we have to override the resource key before updating
-        #
-        resource_key = requested_resource.type == "Post" ? "guild_post" : "guild_post_#{requested_resource.type.underscore}"
+        resource_key = request.request_method == "POST" || requested_resource.type == "Post" ? "guild_post" : "guild_post_#{requested_resource.type.underscore}"
         params.require(resource_key).
           permit(dashboard.permitted_attributes).
           transform_values { |v| read_param_value(v) }
