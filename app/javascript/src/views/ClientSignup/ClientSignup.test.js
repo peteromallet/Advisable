@@ -23,6 +23,19 @@ import {
 } from "./queries";
 
 // Mock data
+const WORK_HOURS_START_INITIAL = process.env.WORK_HOURS_START;
+const WORK_HOURS_END_INITIAL = process.env.WORK_HOURS_END;
+
+beforeAll(() => {
+  process.env.WORK_HOURS_START = "14:00:00+01:00";
+  process.env.WORK_HOURS_END = "21:00:00+01:00";
+});
+
+afterAll(() => {
+  process.env.WORK_HOURS_START = WORK_HOURS_START_INITIAL;
+  process.env.WORK_HOURS_END = WORK_HOURS_END_INITIAL;
+});
+
 const skill = mockData.skill();
 const industry = mockData.industry();
 const mockClientApplication = mockData.clientApplication;
