@@ -33,6 +33,10 @@ module Guild
                      guild_calendly_link: [:string],
                      guild_featured_member_at: :datetime
 
+      def guild_your_posts
+        guild_posts.where(status: %w[published draft])
+      end
+
       def touch_guild_notifications_last_read
         update!(guild_notifications_last_read: Time.current)
       end

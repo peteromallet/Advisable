@@ -330,4 +330,15 @@ class Types::QueryType < Types::BaseType
   def guild_featured_members
     Specialist.guild_featured_members.limit(10)
   end
+
+  field :guild_your_posts,
+        Types::Guild::PostInterface.connection_type,
+        null: true, max_page_size: 10 do
+    description "Returns the specialist's guild_posts"
+  end
+
+  def guild_your_posts(**args)
+    requires_guild_user!
+    current_user.guild_your_posts.order(updated_at: :desc)
+  end
 end
