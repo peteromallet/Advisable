@@ -48,7 +48,7 @@ const CreatePostContainer = ({ modal, onPublish }) => {
             <StyledSidebar display={["none", "none", "block"]}>
               <NavigationMenu guildPost={data?.guildPost} />
             </StyledSidebar>
-            <Container maxWidth="1100px" py="l">
+            <Container maxWidth="1000px" py="l">
               <Routes
                 data={data}
                 modal={modal}

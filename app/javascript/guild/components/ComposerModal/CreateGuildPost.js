@@ -6,6 +6,7 @@ import {
   BarChart,
   DocumentText,
 } from "@styled-icons/ionicons-outline";
+import Loader from "components/Loader";
 import { useHistory, useLocation } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { Box, Text, Circle } from "@advisable/donut";
@@ -13,12 +14,12 @@ import { CREATE_GUILD_POST } from "./mutations";
 import { GUILD_POST_QUERY } from "@guild/views/Post/queries";
 import PostType from "./PostType";
 import { PATH_REGEX } from "./useComposerModal";
-import { useUpdateGuildPost } from "./mutations";
+import { useUpdateGuildPostWriteCache } from "./mutations";
 
 export default function CreateGuildPost({ guildPost }) {
   const history = useHistory();
   const location = useLocation();
-  const [updatePost] = useUpdateGuildPost();
+  const [updatePost] = useUpdateGuildPostWriteCache();
   const [createGuildPost] = useMutation(CREATE_GUILD_POST, {
     update(cache, { data }) {
       const { guildPost } = data?.createGuildPost;
@@ -112,7 +113,12 @@ export default function CreateGuildPost({ guildPost }) {
                     color="blue900"
                     marginBottom="lg"
                   >
-                    <HelpBuoy size={40} />
+                    {formik.isSubmitting &&
+                    formik.values.type === "AdviceRequired" ? (
+                      <Loader color="blue900" />
+                    ) : (
+                      <HelpBuoy size={40} />
+                    )}
                   </Circle>
                   <Text
                     fontSize="l"
@@ -140,7 +146,12 @@ export default function CreateGuildPost({ guildPost }) {
                     color="blue900"
                     marginBottom="lg"
                   >
-                    <PeopleCircle size={40} />
+                    {formik.isSubmitting &&
+                    formik.values.type === "Opportunity" ? (
+                      <Loader color="blue900" />
+                    ) : (
+                      <PeopleCircle size={40} />
+                    )}
                   </Circle>
                   <Text
                     fontSize="l"
@@ -168,7 +179,12 @@ export default function CreateGuildPost({ guildPost }) {
                     color="blue900"
                     marginBottom="lg"
                   >
-                    <BarChart size={32} />
+                    {formik.isSubmitting &&
+                    formik.values.type === "CaseStudy" ? (
+                      <Loader color="blue900" />
+                    ) : (
+                      <BarChart size={32} />
+                    )}
                   </Circle>
                   <Text
                     fontSize="l"
@@ -196,7 +212,11 @@ export default function CreateGuildPost({ guildPost }) {
                     color="blue900"
                     marginBottom="lg"
                   >
-                    <DocumentText size={32} />
+                    {formik.isSubmitting && formik.values.type === "Post" ? (
+                      <Loader color="blue900" />
+                    ) : (
+                      <DocumentText size={32} />
+                    )}
                   </Circle>
                   <Text
                     fontSize="l"
