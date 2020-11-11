@@ -49,8 +49,9 @@ export default function CreateGuildPost({ guildPost }) {
           input: { ...values },
         },
       });
+      const guildPost = response.data?.createGuildPost.guildPost;
       history.replace(`${pathPrefix}/composer/${guildPost.id}/type`);
-      return response.data?.createGuildPost.guildPost;
+      return guildPost;
     }
   };
 
@@ -71,7 +72,13 @@ export default function CreateGuildPost({ guildPost }) {
   return (
     <Box display="flex">
       <Box flexGrow={1} width="100%">
-        <Text mb="xs" fontSize="5xl" color="blue900" fontWeight="semibold">
+        <Text
+          mb="xs"
+          fontSize="5xl"
+          color="neutral900"
+          fontWeight="semibold"
+          letterSpacing="-0.03rem"
+        >
           Create a new post
         </Text>
         <Text fontSize="l" mb="xl" lineHeight="l" color="neutral800">
@@ -97,6 +104,7 @@ export default function CreateGuildPost({ guildPost }) {
                   as={PostType}
                   value="AdviceRequired"
                   onChange={(e) => selectHandler(formik, e)}
+                  onClick={(e) => selectHandler(formik, e)}
                 >
                   <Circle
                     size={64}
@@ -124,6 +132,7 @@ export default function CreateGuildPost({ guildPost }) {
                   as={PostType}
                   value="Opportunity"
                   onChange={(e) => selectHandler(formik, e)}
+                  onClick={(e) => selectHandler(formik, e)}
                 >
                   <Circle
                     size={64}
@@ -151,6 +160,7 @@ export default function CreateGuildPost({ guildPost }) {
                   as={PostType}
                   value="CaseStudy"
                   onChange={(e) => selectHandler(formik, e)}
+                  onClick={(e) => selectHandler(formik, e)}
                 >
                   <Circle
                     size={64}
@@ -178,6 +188,7 @@ export default function CreateGuildPost({ guildPost }) {
                   as={PostType}
                   value="Post"
                   onChange={(e) => selectHandler(formik, e)}
+                  onClick={(e) => selectHandler(formik, e)}
                 >
                   <Circle
                     size={64}

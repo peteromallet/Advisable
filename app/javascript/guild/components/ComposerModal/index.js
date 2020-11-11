@@ -12,7 +12,6 @@ export default function ComposerModal({ unstable_finalFocusRef, ...props }) {
     <Dialog
       {...props.modal}
       as={StyledDialog}
-      preventBodyScroll={false}
       hideOnClickOutside={false}
       aria-label="Create Post Modal"
       unstable_finalFocusRef={unstable_finalFocusRef}

@@ -16,7 +16,7 @@ export const StyledMarkdown = styled.div`
 
   h2 {
     font-size: 25px;
-    line-height: 34px;
+    line-height: 28px;
     margin-bottom: 10px;
     letter-spacing: -0.03rem;
     color: ${theme.colors.neutral900};
@@ -24,7 +24,7 @@ export const StyledMarkdown = styled.div`
 
   h3 {
     font-size: 22px;
-    line-height: 34px;
+    line-height: 25px;
     margin-bottom: 10px;
     letter-spacing: -0.02rem;
     color: ${theme.colors.neutral900};
