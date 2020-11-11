@@ -67,9 +67,19 @@ RSpec.describe Mutations::ScheduleInterview do
     expect(interview.reload.call_scheduled_at).to be_within(1.second).of(Time.zone.now)
   end
 
+  it "creates a video call record" do
+    expect { request }.to(change { VideoCall.count }.by(1))
+  end
+
+  context "when a video call already exists for that interview" do
+    it "doesnt create a video call record" do
+      VideoCall.create(interview: interview)
+      expect { request }.not_to(change { VideoCall.count })
+    end
+  end
 
   context 'when the interview is already scheduled' do
-    let(:status) { "Call Scheduled"}
+    let(:status) { "Call Scheduled" }
 
     it 'returns an error' do
       response = request
