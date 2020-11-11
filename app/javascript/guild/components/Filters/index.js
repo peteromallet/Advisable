@@ -147,7 +147,7 @@ const Filters = ({ yourPosts }) => {
                 aria-label="Create a Post"
               >
                 <AddIcon size={20} />
-                {yourPosts && sUp && "Create Post"}
+                {yourPosts && sUp && "New Post"}
               </DialogDisclosure>
             </GuildBox>
           </GuildBox>
