@@ -109,7 +109,7 @@ export default function CreateGuildPost({ guildPost }) {
                 >
                   <Circle
                     size={64}
-                    bg="blue200"
+                    bg="yellow300"
                     color="blue900"
                     marginBottom="lg"
                   >
@@ -159,7 +159,7 @@ export default function CreateGuildPost({ guildPost }) {
                     fontWeight="medium"
                     marginBottom="2xs"
                   >
-                    Opportunity for others
+                    Opportunity
                   </Text>
                   <Text lineHeight="16px" fontSize="xs" color="neutral700">
                     Find another freelancer to work with you on a project
@@ -208,7 +208,7 @@ export default function CreateGuildPost({ guildPost }) {
                 >
                   <Circle
                     size={64}
-                    bg="orange200"
+                    bg="blue200"
                     color="blue900"
                     marginBottom="lg"
                   >

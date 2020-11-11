@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { css } from "styled-components";
 import { Box, Card, Text, Avatar, Link, useBreakpoint } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
 import Topics from "./components/Topics";
 import { NeedHelp } from "@guild/icons";
+import Markdown from "../Markdown";
 import ReactionsButton from "./components/ReactionsButton";
 import { GuildBox } from "@guild/styles";
 import ReadMore from "./components/ReadMore";
@@ -94,17 +94,7 @@ const Post = ({ post }) => {
             maxHeight={bodyMaxHeight}
             ref={bodyRef}
           >
-            <Text
-              fontSize="s"
-              color="quartz"
-              lineHeight="m"
-              css={css`
-                white-space: pre-wrap;
-                white-space: pre-line;
-              `}
-            >
-              {post.body}
-            </Text>
+            <Markdown>{post.body}</Markdown>
             {wrapBody && <ReadMore onReadMore={handleReadMore} />}
           </Box>
         </Box>
