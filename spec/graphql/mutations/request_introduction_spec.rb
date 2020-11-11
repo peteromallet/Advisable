@@ -23,7 +23,7 @@ RSpec.describe Mutations::RequestIntroduction do
     GRAPHQL
   end
 
-  let(:context) { { current_user: application.project.user } }
+  let(:context) { {current_user: application.project.user} }
 
   before :each do
     allow_any_instance_of(Interview).to receive(:sync_to_airtable)
@@ -52,14 +52,14 @@ RSpec.describe Mutations::RequestIntroduction do
   end
 
   it 'returns an error if the user is not logged in' do
-    response = AdvisableSchema.execute(query, context: { current_user: nil })
+    response = AdvisableSchema.execute(query, context: {current_user: nil})
     error = response['errors'][0]['extensions']['code']
     expect(error).to eq('notAuthenticated')
   end
 
   it 'returns an error if the user does not have access' do
     response =
-      AdvisableSchema.execute(query, context: { current_user: create(:user) })
+      AdvisableSchema.execute(query, context: {current_user: create(:user)})
     error = response['errors'][0]['extensions']['code']
     expect(error).to eq('notAuthorized')
   end
@@ -68,15 +68,5 @@ RSpec.describe Mutations::RequestIntroduction do
     AdvisableSchema.execute(query, context: context)
     interview = Interview.last
     expect(interview.call_requested_at).to be_within(1.second).of(Time.zone.now)
-  end
-
-  it 'creates a video call' do
-    expect {
-      AdvisableSchema.execute(query, context: context)
-    }.to change {
-      VideoCall.count
-    }.by(1)
-    interview = Interview.last
-    expect(interview.video_call).to_not be_nil
   end
 end

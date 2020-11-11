@@ -34,6 +34,7 @@ class Mutations::ScheduleInterview < Mutations::BaseMutation
       )
     end
 
+    create_video_call(interview)
     interview.starts_at = args[:starts_at]
     interview.call_scheduled_at = Time.zone.now
     interview.status = "Call Scheduled"
@@ -52,8 +53,15 @@ class Mutations::ScheduleInterview < Mutations::BaseMutation
 
   private
 
+  def create_video_call(interview)
+    return if interview.video_call.present?
+
+    VideoCall.create(interview: interview)
+  end
+
   def update_specialist_number(specialist, number)
     return if specialist.phone == number
+
     specialist.update(phone: number)
     specialist.sync_to_airtable
   end
