@@ -5,11 +5,11 @@ const { colors } = theme;
 export const Dropdown = styled(Box)`
   right: 24px;
   z-index: 3;
+  position: fixed;
   top: 68px;
   width: 200px;
   padding: 12px 0;
   background: white;
-  position: absolute;
   border-radius: 4px;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.5);
   transition: opacity 250ms cubic-bezier(0, 1, 0.4, 1),
