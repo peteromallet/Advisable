@@ -34,8 +34,9 @@ class SpecialistMailer < ApplicationMailer
   def project_paused(project, application)
     @project = project
     @application = application
+    @sales_person = @project.user.sales_person || @project.sales_person
     mail(
-      from: @project.user.sales_person.email_with_name,
+      from: @sales_person.email_with_name,
       to: @application.specialist.account.email,
       subject: "#{@project.primary_skill.name} Project Has Been Paused"
     ) do |format|
