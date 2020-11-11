@@ -18,6 +18,7 @@ const YourPost = ({ onSubmit, initialValues = {} }) => {
     <Box display="flex">
       <Box flexGrow={1} width="100%">
         <Formik
+          validateOnMount
           onSubmit={onSubmit}
           initialValues={yourPostInitialValues}
           validationSchema={yourPostValidationSchema}
@@ -36,7 +37,12 @@ const YourPost = ({ onSubmit, initialValues = {} }) => {
                 value={formik.values.body}
                 onChange={(raw) => formik.setFieldValue("body", raw)}
               />
-              <SubmitButton marginY="3xl" size="l" suffix={<ArrowRight />}>
+              <SubmitButton
+                size="l"
+                marginY="3xl"
+                disableUntilValid
+                suffix={<ArrowRight />}
+              >
                 Continue
               </SubmitButton>
             </Form>

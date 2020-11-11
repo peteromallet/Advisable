@@ -12,7 +12,7 @@ export const StyledToolbar = styled.div`
 
 export const StyledEditor = styled.div`
   .DraftEditor-root {
-    min-height: 200px;
+    min-height: 100px;
   }
 `;
 
