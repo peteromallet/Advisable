@@ -1,6 +1,7 @@
 import React from "react";
+import { darken, rgba } from "polished";
 import styled, { css } from "styled-components";
-import { theme } from "@advisable/donut";
+import { theme, StyledCircle } from "@advisable/donut";
 
 export const StyledRadioOption_Checked = css`
   border: 2px solid ${theme.colors.neutral800};
@@ -15,6 +16,14 @@ export const StyledRadioOption = styled.div`
   border: 2px solid transparent;
   background: ${theme.colors.neutral100};
   ${(p) => p.$checked && StyledRadioOption_Checked};
+
+  &:hover {
+    background: ${darken(0.01, theme.colors.neutral100)};
+
+    ${StyledCircle} {
+      box-shadow: 0 2px 8px ${rgba(theme.colors.neutral900, 0.1)};
+    }
+  }
 
   display: flex;
   align-items: center;
