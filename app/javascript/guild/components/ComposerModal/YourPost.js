@@ -44,13 +44,6 @@ const YourPost = ({ onSubmit, initialValues = {} }) => {
   return (
     <Box display="flex">
       <Box flexGrow={1} width="100%">
-        <Text mb="xs" fontSize="28px" color="blue900" fontWeight="semibold">
-          Your Post
-        </Text>
-        <Text mb="xl" lineHeight="l" color="neutral600">
-          Please add a title, type, and body for your post - this is what people
-          will see when they see your post!
-        </Text>
         <Formik
           onSubmit={onSubmit}
           initialValues={yourPostInitialValues}
@@ -70,33 +63,6 @@ const YourPost = ({ onSubmit, initialValues = {} }) => {
                     value={formik.values.body}
                     onChange={(raw) => formik.setFieldValue("body", raw)}
                   />
-
-                  <Text fontSize="m" fontWeight="medium" color="nuetral800">
-                    Please add the type of post that this is - this should be
-                    the purpose of your post.
-                  </Text>
-                  <GuildBox flexWrap="wrap" wrapChildrenBoth={16}>
-                    {postTypes.map(({ type, desc, icon }, key) => (
-                      <ComposerBoxOption
-                        key={key}
-                        spacing="2xl"
-                        selected={type === formik.values.type}
-                        onClick={() => {
-                          formik.setFieldValue("type", type);
-                        }}
-                      >
-                        <GuildBox
-                          display="flex"
-                          flexDirection="column"
-                          alignItems="center"
-                          spaceChildrenVertical={16}
-                        >
-                          {createElement(icon, { size: 24 })}
-                          <Text>{desc}</Text>
-                        </GuildBox>
-                      </ComposerBoxOption>
-                    ))}
-                  </GuildBox>
                 </Box>
               </Stack>
               <SubmitButton size="l" suffix={<ArrowRight />}>
