@@ -29,6 +29,7 @@ const YourPost = ({ onSubmit, initialValues = {} }) => {
                 as={PostTitle}
                 autoComplete="off"
                 placeholder="Post title"
+                autoFocus
               />
               <Box height="1px" bg="neutral100" marginY="xl" />
               <RichTextEditor
