@@ -10,6 +10,7 @@ import "draft-js/dist/Draft.css";
 
 export default function RichTextEditor({ value, onChange }) {
   const editor = useRef(null);
+  const [focused, setFocused] = useState(false);
   const [editorState, setEditorState] = useState(() => {
     if (!value) return EditorState.createEmpty();
     const contentState = stateFromMarkdown(value);
@@ -68,100 +69,104 @@ export default function RichTextEditor({ value, onChange }) {
 
   return (
     <StyledMarkdown>
-      <Box
-        height="60px"
-        display="flex"
-        alignItems="center"
-        position="fixed"
-        top="0"
-        zIndex="100"
-      >
-        <Button
-          size="xs"
-          type="button"
-          marginRight="2xs"
-          variant={blockType === "header-one" ? "primary" : "subtle"}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            toggleBlockType("header-one");
-          }}
+      {focused ? (
+        <Box
+          height="60px"
+          display="flex"
+          alignItems="center"
+          position="fixed"
+          top="0"
+          zIndex="100"
         >
-          H1
-        </Button>
-        <Button
-          size="xs"
-          type="button"
-          marginRight="2xs"
-          variant={blockType === "header-two" ? "primary" : "subtle"}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            toggleBlockType("header-two");
-          }}
-        >
-          H2
-        </Button>
-        <Button
-          size="xs"
-          type="button"
-          marginRight="2xs"
-          variant={blockType === "header-three" ? "primary" : "subtle"}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            toggleBlockType("header-three");
-          }}
-        >
-          H3
-        </Button>
-        <Button
-          size="xs"
-          type="button"
-          marginRight="2xs"
-          variant={blockType === "unordered-list-item" ? "primary" : "subtle"}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            toggleBlockType("unordered-list-item");
-          }}
-        >
-          <ListUl />
-        </Button>
-        <Button
-          size="xs"
-          type="button"
-          marginRight="2xs"
-          variant={blockType === "ordered-list-item" ? "primary" : "subtle"}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            toggleBlockType("ordered-list-item");
-          }}
-        >
-          <ListOl />
-        </Button>
-        <Button
-          size="xs"
-          type="button"
-          marginRight="2xs"
-          variant={blockType === "blockquote" ? "primary" : "subtle"}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            toggleBlockType("blockquote");
-          }}
-        >
-          <QuoteRight />
-        </Button>
-        <Button
-          size="xs"
-          type="button"
-          variant={currentStyle.has("BOLD") ? "primary" : "subtle"}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            toggleInlineStyle("BOLD");
-          }}
-        >
-          <Bold />
-        </Button>
-      </Box>
+          <Button
+            size="xs"
+            type="button"
+            marginRight="2xs"
+            variant={blockType === "header-one" ? "primary" : "subtle"}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              toggleBlockType("header-one");
+            }}
+          >
+            H1
+          </Button>
+          <Button
+            size="xs"
+            type="button"
+            marginRight="2xs"
+            variant={blockType === "header-two" ? "primary" : "subtle"}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              toggleBlockType("header-two");
+            }}
+          >
+            H2
+          </Button>
+          <Button
+            size="xs"
+            type="button"
+            marginRight="2xs"
+            variant={blockType === "header-three" ? "primary" : "subtle"}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              toggleBlockType("header-three");
+            }}
+          >
+            H3
+          </Button>
+          <Button
+            size="xs"
+            type="button"
+            marginRight="2xs"
+            variant={blockType === "unordered-list-item" ? "primary" : "subtle"}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              toggleBlockType("unordered-list-item");
+            }}
+          >
+            <ListUl />
+          </Button>
+          <Button
+            size="xs"
+            type="button"
+            marginRight="2xs"
+            variant={blockType === "ordered-list-item" ? "primary" : "subtle"}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              toggleBlockType("ordered-list-item");
+            }}
+          >
+            <ListOl />
+          </Button>
+          <Button
+            size="xs"
+            type="button"
+            marginRight="2xs"
+            variant={blockType === "blockquote" ? "primary" : "subtle"}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              toggleBlockType("blockquote");
+            }}
+          >
+            <QuoteRight />
+          </Button>
+          <Button
+            size="xs"
+            type="button"
+            variant={currentStyle.has("BOLD") ? "primary" : "subtle"}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              toggleInlineStyle("BOLD");
+            }}
+          >
+            <Bold />
+          </Button>
+        </Box>
+      ) : null}
       <Editor
         ref={editor}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
         onChange={handleChange}
         editorState={editorState}
         placeholder="Write your post..."
