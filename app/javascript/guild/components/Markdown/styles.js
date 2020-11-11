@@ -44,6 +44,7 @@ export const StyledMarkdown = styled.div`
 
   li {
     margin-left: 1.5rem;
+    margin-bottom: 8px;
   }
 
   blockquote {
