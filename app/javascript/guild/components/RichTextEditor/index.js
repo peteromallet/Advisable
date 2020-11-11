@@ -1,11 +1,12 @@
 import React, { useState, useCallback, useRef } from "react";
-import { Box, Button } from "@advisable/donut";
+import Sticky from "components/Sticky";
 import { QuoteRight } from "@styled-icons/boxicons-solid";
 import { ListOl, ListUl, Bold } from "@styled-icons/boxicons-regular";
 import { Editor, EditorState, RichUtils, getDefaultKeyBinding } from "draft-js";
 import { stateToMarkdown } from "draft-js-export-markdown";
 import { stateFromMarkdown } from "draft-js-import-markdown";
 import { StyledMarkdown } from "../Markdown/styles";
+import { StyledEditor, StyledToolbar, StyledToolbarButton } from "./styles";
 import "draft-js/dist/Draft.css";
 
 export default function RichTextEditor({ value, onChange }) {
@@ -69,110 +70,105 @@ export default function RichTextEditor({ value, onChange }) {
 
   return (
     <StyledMarkdown>
-      {focused ? (
-        <Box
-          height="60px"
-          display="flex"
-          alignItems="center"
-          position="fixed"
-          top="0"
-          zIndex="100"
-        >
-          <Button
+      <Sticky enabled zIndex={100} offset={-51}>
+        <StyledToolbar>
+          <StyledToolbarButton
             size="xs"
             type="button"
             marginRight="2xs"
-            variant={blockType === "header-one" ? "primary" : "subtle"}
+            $active={blockType === "header-one"}
             onMouseDown={(e) => {
               e.preventDefault();
               toggleBlockType("header-one");
             }}
           >
             H1
-          </Button>
-          <Button
+          </StyledToolbarButton>
+          <StyledToolbarButton
             size="xs"
             type="button"
             marginRight="2xs"
-            variant={blockType === "header-two" ? "primary" : "subtle"}
+            $active={blockType === "header-two"}
             onMouseDown={(e) => {
               e.preventDefault();
               toggleBlockType("header-two");
             }}
           >
             H2
-          </Button>
-          <Button
+          </StyledToolbarButton>
+          <StyledToolbarButton
             size="xs"
             type="button"
             marginRight="2xs"
-            variant={blockType === "header-three" ? "primary" : "subtle"}
+            $active={blockType === "header-three"}
             onMouseDown={(e) => {
               e.preventDefault();
               toggleBlockType("header-three");
             }}
           >
             H3
-          </Button>
-          <Button
+          </StyledToolbarButton>
+          <StyledToolbarButton
             size="xs"
             type="button"
             marginRight="2xs"
-            variant={blockType === "unordered-list-item" ? "primary" : "subtle"}
+            $active={blockType === "unordered-list-item"}
             onMouseDown={(e) => {
               e.preventDefault();
               toggleBlockType("unordered-list-item");
             }}
           >
             <ListUl />
-          </Button>
-          <Button
+          </StyledToolbarButton>
+          <StyledToolbarButton
             size="xs"
             type="button"
             marginRight="2xs"
-            variant={blockType === "ordered-list-item" ? "primary" : "subtle"}
+            $active={blockType === "ordered-list-item"}
             onMouseDown={(e) => {
               e.preventDefault();
               toggleBlockType("ordered-list-item");
             }}
           >
             <ListOl />
-          </Button>
-          <Button
+          </StyledToolbarButton>
+          <StyledToolbarButton
             size="xs"
             type="button"
             marginRight="2xs"
-            variant={blockType === "blockquote" ? "primary" : "subtle"}
+            $active={blockType === "blockquote"}
             onMouseDown={(e) => {
               e.preventDefault();
               toggleBlockType("blockquote");
             }}
           >
             <QuoteRight />
-          </Button>
-          <Button
+          </StyledToolbarButton>
+          <StyledToolbarButton
             size="xs"
             type="button"
-            variant={currentStyle.has("BOLD") ? "primary" : "subtle"}
+            $active={currentStyle.has("BOLD")}
             onMouseDown={(e) => {
               e.preventDefault();
               toggleInlineStyle("BOLD");
             }}
           >
             <Bold />
-          </Button>
-        </Box>
-      ) : null}
-      <Editor
-        ref={editor}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        onChange={handleChange}
-        editorState={editorState}
-        placeholder="Write your post..."
-        handleKeyCommand={handleKeyCommand}
-        keyBindingFn={mapKeyToEditorCommand}
-      />
+          </StyledToolbarButton>
+        </StyledToolbar>
+      </Sticky>
+      <StyledEditor>
+        <Editor
+          ref={editor}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          onChange={handleChange}
+          editorState={editorState}
+          placeholder="Write your post..."
+          handleKeyCommand={handleKeyCommand}
+          keyBindingFn={mapKeyToEditorCommand}
+        />
+      </StyledEditor>
     </StyledMarkdown>
   );
 }
