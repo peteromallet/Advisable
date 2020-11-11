@@ -26,10 +26,14 @@ function Routes({ onPublish, selectDataQuery, data = {} }) {
       </Route>
 
       <Route path="*composer/:id" exact>
-        <RedirectToStep step="edit" />
+        <RedirectToStep step="post" />
       </Route>
 
-      <Route path="*composer/:id/edit">
+      <Route path="*composer/:id/type" exact>
+        <CreateGuildPost guildPost={guildPost} />
+      </Route>
+
+      <Route path="*composer/:id/post">
         <EditGuildPost guildPost={guildPost} />
       </Route>
 

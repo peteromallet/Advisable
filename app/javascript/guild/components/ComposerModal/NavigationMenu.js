@@ -35,7 +35,14 @@ const SetupMenu = React.memo(function SetupMenu({ guildPost, urlPrefix }) {
   return (
     <MultistepMenu>
       <MultistepMenu.Item
-        to={pathWithState(`${urlPrefix}/${guildPost?.id ? "edit" : "new"}`)}
+        to={`${urlPrefix}/type`}
+        isComplete={Boolean(guildPost)}
+      >
+        Post Type
+      </MultistepMenu.Item>
+
+      <MultistepMenu.Item
+        to={pathWithState(`${urlPrefix}/post`)}
         isComplete={yourPostComplete}
       >
         Your Post
