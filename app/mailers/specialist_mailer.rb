@@ -32,6 +32,8 @@ class SpecialistMailer < ApplicationMailer
   end
 
   def project_paused(project, application)
+    return if application.applied_at.blank?
+
     @project = project
     @application = application
     @sales_person = @project.user.sales_person || @project.sales_person
