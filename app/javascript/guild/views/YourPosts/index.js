@@ -18,11 +18,12 @@ const YourPosts = () => {
   });
 
   useBottomScrollListener(() => {
-    cursorLoadMore({
-      data,
-      fetchMore,
-      collectionKey: "guildYourPosts",
-    });
+    fetchMore &&
+      cursorLoadMore({
+        data,
+        fetchMore,
+        collectionKey: "guildYourPosts",
+      });
   });
 
   const handleEdit = (postId) => history.push(`composer/${postId}/edit`);
@@ -35,7 +36,6 @@ const YourPosts = () => {
       mt="2xl"
       width={{ _: "100%", s: "85%", l: "70%" }}
       p={{ _: "s", s: "l" }}
-      flexCenterBoth
     >
       <GuildBox spaceChildrenVertical={48}>
         <Filters yourPosts />
@@ -55,15 +55,15 @@ const YourPosts = () => {
             background="white"
             spaceChildrenVertical={16}
             flexCenterBoth
-            p="xl"
+            p="3xl"
           >
             <Text
-              fontSize="xxl"
+              fontSize="xl"
               fontWeight="medium"
               letterSpacing="-0.01em"
               color="catalinaBlue100"
             >
-              You have not created any posts. Add a post here
+              No Results
             </Text>
           </GuildBox>
         )}
