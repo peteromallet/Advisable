@@ -116,7 +116,7 @@ const Post = () => {
               backgroundColor="#6770f10d"
               alignItems="center"
             >
-              <Topics activeStyle topics={post.guildTopics} />
+              <Topics topics={post.guildTopics} />
 
               <GuildBox
                 display="flex"
