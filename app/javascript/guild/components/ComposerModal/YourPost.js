@@ -1,13 +1,14 @@
 import React, { createElement } from "react";
 import { Formik, Form } from "formik";
 import { ArrowRight } from "@styled-icons/feather";
-import { Stack, Box, Text, Textarea } from "@advisable/donut";
+import { Stack, Box, Text } from "@advisable/donut";
 import FormField from "@advisable-main/components/FormField";
 import SubmitButton from "@advisable-main/components/SubmitButton";
 import { yourPostValidationSchema } from "./validationSchemas";
 import { Question, Feedback, Group, BookOpen } from "@guild/icons";
 import { ComposerBoxOption } from "./styles";
 import { GuildBox } from "@guild/styles";
+import RichTextEditor from "../RichTextEditor";
 
 const YourPost = ({ onSubmit, initialValues = {} }) => {
   const yourPostInitialValues = {
@@ -65,15 +66,9 @@ const YourPost = ({ onSubmit, initialValues = {} }) => {
                     placeholder="Add a title..."
                     autoComplete="off"
                   />
-                  <FormField
-                    as={Textarea}
-                    size={"lg"}
-                    minRows={12}
-                    maxRows={20}
-                    label="What's the body of this post?"
-                    name="body"
-                    placeholder="Add text here..."
-                    autoComplete="off"
+                  <RichTextEditor
+                    value={formik.values.body}
+                    onChange={(raw) => formik.setFieldValue("body", raw)}
                   />
 
                   <Text fontSize="m" fontWeight="medium" color="nuetral800">
