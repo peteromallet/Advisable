@@ -11,6 +11,7 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
     application = Application.find_by_uid_or_airtable_id!(args[:application])
     policy = ApplicationPolicy.new(current_user, application)
     return true if policy.write
+
     ApiError.not_authorized('You do not have access to this')
   end
 
@@ -25,7 +26,7 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
     update_application_status(application)
     application.project.update_sourcing
 
-    { interview: interview, application: application }
+    {interview: interview, application: application}
   end
 
   private
@@ -36,11 +37,10 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
         user: application.project.user,
         time_zone: time_zone || current_user.time_zone,
         status: 'Call Requested',
-        call_requested_at: Time.zone.now,
+        call_requested_at: Time.zone.now
       )
 
     interview.sync_to_airtable
-    VideoCall.create(interview: interview)
     interview
   end
 
