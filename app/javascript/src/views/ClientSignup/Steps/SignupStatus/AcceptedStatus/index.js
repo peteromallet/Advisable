@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
+import { DateTime } from "luxon";
 import { Box, useModal, Button, DialogDisclosure } from "@advisable/donut";
 import RequestCallButton from "../RequestCallButton";
 import {
@@ -23,6 +24,10 @@ function AcceptedStatus({ firstName, lastName }) {
   const fullName = `${firstName} ${lastName}`;
   const { email, applicationId } = useLocationState();
   const modal = useModal();
+  const start = DateTime.fromISO(process.env.WORK_HOURS_START);
+  const end = DateTime.fromISO(process.env.WORK_HOURS_END);
+  const now = DateTime.utc();
+  const isWorkingRange = now >= start && now <= end;
 
   const Navigation = useCallback(() => {
     if (callback)
@@ -64,14 +69,16 @@ function AcceptedStatus({ firstName, lastName }) {
           >
             Schedule A Call
           </RequestCallButton>
-          <DialogDisclosure
-            as={Button}
-            loading={called}
-            variant="subtle"
-            {...modal}
-          >
-            Call Me ASAP
-          </DialogDisclosure>
+          {isWorkingRange && (
+            <DialogDisclosure
+              as={Button}
+              loading={called}
+              variant="subtle"
+              {...modal}
+            >
+              Call Me ASAP
+            </DialogDisclosure>
+          )}
           <PhoneModal
             requestApplicationCallback={requestApplicationCallback}
             countryCode={countryCode}

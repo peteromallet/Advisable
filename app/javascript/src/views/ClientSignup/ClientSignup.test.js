@@ -1,3 +1,4 @@
+import { Settings } from "luxon";
 import {
   fireEvent,
   renderRoute,
@@ -22,6 +23,19 @@ import {
 } from "./queries";
 
 // Mock data
+const WORK_HOURS_START_INITIAL = process.env.WORK_HOURS_START;
+const WORK_HOURS_END_INITIAL = process.env.WORK_HOURS_END;
+
+beforeAll(() => {
+  process.env.WORK_HOURS_START = "14:00:00+01:00";
+  process.env.WORK_HOURS_END = "21:00:00+01:00";
+});
+
+afterAll(() => {
+  process.env.WORK_HOURS_START = WORK_HOURS_START_INITIAL;
+  process.env.WORK_HOURS_END = WORK_HOURS_END_INITIAL;
+});
+
 const skill = mockData.skill();
 const industry = mockData.industry();
 const mockClientApplication = mockData.clientApplication;
@@ -144,6 +158,7 @@ const graphQLMocks = [
 ];
 
 test("Successful client application flow and ASAP call", async () => {
+  Settings.now = () => new Date(Date.UTC(2020, 4, 27, 16, 0, 0, 0)).valueOf();
   renderRoute({
     route: "/clients/signup",
     graphQLMocks: [
@@ -248,7 +263,108 @@ test("Successful client application flow and ASAP call", async () => {
   await screen.findByText("Your call is booked");
 });
 
+test("hide 'Call Me ASAP' button outside working hours", async () => {
+  Settings.now = () => new Date(Date.UTC(2020, 4, 27, 0, 0, 0, 0)).valueOf();
+  renderRoute({
+    route: "/clients/signup",
+    graphQLMocks: [
+      ...graphQLMocks,
+      mockMutation(
+        ABOUT_REQUIREMENTS_UPDATE,
+        {
+          id: clientApplication.id,
+          skills: [skill.name],
+          numberOfFreelancers: "1-3",
+          budget: Number(budget) * 100,
+        },
+        {
+          updateClientApplication: {
+            __typename: "UpdateClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              skills: [skill],
+              numberOfFreelancers: "1-3",
+              budget,
+            },
+          },
+        },
+      ),
+      mockMutation(
+        SUBMIT_CLIENT_APPLICATION,
+        {
+          id: clientApplication.id,
+          localityImportance,
+          acceptedGuaranteeTerms,
+          talentQuality,
+        },
+        {
+          submitClientApplication: {
+            __typename: "SubmitClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              localityImportance,
+              acceptedGuaranteeTerms,
+              talentQuality,
+              status: "Application Accepted",
+              rejectionReason: null,
+            },
+          },
+        },
+      ),
+    ],
+  });
+
+  // 0 Step. Start application
+  fireEvent.change(await screen.findByPlaceholderText(/first name/i), {
+    target: { value: clientApplication.firstName },
+  });
+  fireEvent.change(await screen.findByPlaceholderText(/last name/i), {
+    target: { value: clientApplication.lastName },
+  });
+  const emailInput = await screen.findByPlaceholderText(/name@company.com/i);
+  fireEvent.change(emailInput, { target: { value: email } });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 1 Step. About Your Company
+  await screen.findByText("About Your Company");
+  fireEvent.change(screen.getByPlaceholderText(/company name/i), {
+    target: { value: companyName },
+  });
+  const industryInput = await screen.findByPlaceholderText(/company industry/i);
+  fireEvent.click(industryInput);
+  fireEvent.keyDown(industryInput, { key: "ArrowDown" });
+  fireEvent.keyDown(industryInput, { key: "Enter" });
+  fireEvent.change(screen.getByTestId("companyType"), {
+    target: { value: companyType },
+  });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 2 Step. About Your Requirements
+  await screen.findByText("About Your Requirements");
+  const skillsInput = await screen.findByPlaceholderText(/select the skills/i);
+  fireEvent.click(skillsInput);
+  fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
+  fireEvent.keyDown(skillsInput, { key: "Enter" });
+  fireEvent.click(screen.getByLabelText("1–3"));
+  fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 3 Step. About Your Preferences
+  await screen.findByText("About Your Preferences");
+  fireEvent.click(screen.getByLabelText("Not Sure"));
+  fireEvent.click(screen.getByLabelText("No"));
+  fireEvent.click(screen.getByLabelText(/good/i));
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 4 Step. Let's get started
+  await screen.findByText(/we think you might/i);
+  expect(screen.queryByLabelText(/call me/i)).not.toBeInTheDocument();
+});
+
 test("Successful client application flow via query string params", async () => {
+  Settings.now = () => new Date(Date.UTC(2020, 4, 27, 16, 0, 0, 0)).valueOf();
   renderRoute({
     route: `/clients/signup?firstName=${clientApplication.firstName}&lastName=${clientApplication.lastName}&email=${email}`,
     graphQLMocks: [
