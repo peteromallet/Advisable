@@ -9,7 +9,7 @@ module Guild
     # which determines how the attribute is displayed
     # on pages throughout the dashboard.
     ATTRIBUTE_TYPES = {
-      guild_topic_list: Field::String,
+      guild_topic_list: Field::String.with_options(searchable: false),
       specialist: Field::BelongsTo,
       images: Field::HasMany.with_options(class_name: "Guild::PostImage"),
       id: Field::String.with_options(searchable: false),
