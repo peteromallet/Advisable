@@ -30,7 +30,8 @@ function FreelancerProfile() {
   if (isNotFound(error)) return <NotFound />;
 
   const isOwner = viewer?.id === data.specialist.id;
-  const hasReviews = data.specialist.reviews.length > 0;
+  const reviews = data.specialist.reviews.filter((r) => r.comment);
+  const hasReviews = reviews.length > 0;
 
   return (
     <Box
@@ -49,7 +50,7 @@ function FreelancerProfile() {
       {data.specialist.profileProjects.length === 0 && (
         <NoProjects data={data} isOwner={isOwner} />
       )}
-      {hasReviews && <Testimonials reviews={data.specialist.reviews} />}
+      {hasReviews && <Testimonials reviews={reviews} />}
       {!isOwner && <CallToActionBox specialist={data.specialist} />}
     </Box>
   );
