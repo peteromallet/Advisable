@@ -26,7 +26,6 @@ RSpec.describe "guild posts query" do
         type
         title
         body
-        bodyRaw
         reacted
         reactionsCount
         commented

@@ -6,7 +6,6 @@ export default gql`
     type
     title
     body
-    bodyRaw
     reacted
     reactionsCount
     status
