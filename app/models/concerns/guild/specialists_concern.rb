@@ -24,7 +24,8 @@ module Guild
 
       scope :guild, -> { where(guild: true) }
       scope :guild_featured_members, lambda {
-                                       guild.jsonb_where_not(:guild_data, guild_featured_member_at: nil).
+                                       guild.
+                                         where("guild_data->'guild_featured_member_at' IS NOT NULL").
                                          guild_data_order(guild_featured_member_at: :desc)
                                      }
       jsonb_accessor :guild_data,

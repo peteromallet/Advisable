@@ -13,7 +13,7 @@ module Guild
       specialist: Field::BelongsTo,
       images: Field::HasMany.with_options(class_name: "Guild::PostImage"),
       id: Field::String.with_options(searchable: false),
-      type: Field::Select.with_options(searchable: true, collection: ->(_field) { Guild::Post::POST_TYPES }),
+      type: Field::Select.with_options(searchable: false, collection: ->(_field) { Guild::Post::POST_TYPES }),
       body: Field::Text,
       title: Field::String,
       status: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.public_send(field.attribute.to_s.pluralize).keys }),
@@ -23,7 +23,7 @@ module Guild
       updated_at: Field::DateTime,
       audience_notified_at: Field::DateTime,
       engagements_count: Field::Number,
-      audience_type: Field::String.with_options(searchable: true, collection: ->(_field) { Guild::Post::AUDIENCE_TYPES })
+      audience_type: Field::String.with_options(searchable: false, collection: ->(_field) { Guild::Post::AUDIENCE_TYPES })
     }.freeze
 
     # COLLECTION_ATTRIBUTES

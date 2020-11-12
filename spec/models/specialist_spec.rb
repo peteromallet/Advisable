@@ -56,5 +56,20 @@ RSpec.describe Specialist do
         }.to_not change(specialist.reload, :guild_joined_date)
       end
     end
+
+    describe "guild_featured_member_at" do
+      let!(:spe_featured) { create(:specialist, :guild, guild_featured_member_at: Time.current) }
+      let!(:spe_not_featured) { create(:specialist, :guild) }
+      let!(:spe_non_guild) { create(:specialist) }
+
+      subject(:guild_feature_members) {
+        Specialist.guild_featured_members
+      }
+
+      it "only includes guild members who have the respective datetime" do
+        expect(subject.count).to eq(1)
+        expect(subject).to include(spe_featured)
+      end
+    end
   end
 end
