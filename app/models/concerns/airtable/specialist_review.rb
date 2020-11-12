@@ -12,6 +12,7 @@ class Airtable::SpecialistReview < Airtable::Base
   end
 
   push_data do |review|
+    self['Type'] = review.type
     self['Comment'] = review.comment
     self['Skills - Rating'] = review.ratings['skills']
     self['Quality of Work - Rating'] = review.ratings['quality_of_work']
@@ -31,6 +32,7 @@ class Airtable::SpecialistReview < Airtable::Base
   def pull_specialist(review)
     airtable_id = fields['Specialist'].try(:first)
     return unless airtable_id
+
     specialist = ::Specialist.find_by_uid_or_airtable_id(airtable_id)
     specialist = Airtable::Specialist.find(airtable_id).sync if specialist.nil?
     review.specialist = specialist
@@ -43,6 +45,7 @@ class Airtable::SpecialistReview < Airtable::Base
     if fields['Project']
       airtable_id = fields['Project'].try(:first)
       return unless airtable_id
+
       project = ::Project.find_by_uid_or_airtable_id(airtable_id)
       project = Airtable::Project.find(airtable_id).sync if project.nil?
       review.project = project
