@@ -51,7 +51,7 @@ const SetupMenu = React.memo(function SetupMenu({ guildPost, urlPrefix }) {
       <MultistepMenu.Item
         to={pathWithState(`${urlPrefix}/images`)}
         isComplete={editImagesComplete}
-        isDisabled={!editImagesComplete}
+        isDisabled={!yourPostComplete}
       >
         Images
       </MultistepMenu.Item>
@@ -59,7 +59,7 @@ const SetupMenu = React.memo(function SetupMenu({ guildPost, urlPrefix }) {
       <MultistepMenu.Item
         to={pathWithState(`${urlPrefix}/audience`)}
         isComplete={audienceComplete}
-        isDisabled={!audienceComplete}
+        isDisabled={!editImagesComplete}
       >
         Audience
       </MultistepMenu.Item>
@@ -67,14 +67,14 @@ const SetupMenu = React.memo(function SetupMenu({ guildPost, urlPrefix }) {
       <MultistepMenu.Item
         to={pathWithState(`${urlPrefix}/targeting`)}
         isComplete={targetingComplete}
-        isDisabled={!targetingComplete}
+        isDisabled={!audienceComplete}
       >
         Targeting
       </MultistepMenu.Item>
 
       <MultistepMenu.Item
         to={pathWithState(`${urlPrefix}/review`)}
-        isDisabled={true}
+        isDisabled={!targetingComplete}
       >
         Review & Publish
       </MultistepMenu.Item>

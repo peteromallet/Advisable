@@ -1,55 +1,82 @@
-import React, { createElement, useState } from "react";
+import { Formik, Form, Field } from "formik";
+import Loader from "components/Loader";
+import {
+  Business,
+  ColorFilter,
+  Location,
+  HelpCircle,
+} from "@styled-icons/ionicons-outline";
+import React from "react";
 import { useUpdateGuildPostWriteCache } from "./mutations";
 import useLocationStages from "@advisable-main/hooks/useLocationStages";
-import useProgressSteps from "./useProgressSteps";
-import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
-import { Box, Text, Link, Button } from "@advisable/donut";
-import { ComposerBoxOption } from "./styles";
-import { GuildBox } from "@guild/styles";
-import { Question, Building, FileList, MapPinUser } from "@guild/icons";
+import { ArrowLeft } from "@styled-icons/feather";
+import { Circle, Box, Text, Link, Paragraph } from "@advisable/donut";
+import PostType from "./PostType";
 
 /*
   Edits the Post Audience type.
     This is necessary to determine the 'type' of guild topicable that can be added in the next step
 */
 
+const TYPES = [
+  {
+    value: "skills",
+    icon: ColorFilter,
+    title: "Target by skill",
+    description: "Show post to other guild members with particilar skills",
+  },
+  {
+    value: "industries",
+    icon: Business,
+    title: "Target by industry",
+    description: "Show post to other guild members in particular industries",
+  },
+  {
+    value: "locations",
+    icon: Location,
+    title: "Location",
+    description: "Target other Guild members by location",
+  },
+  {
+    value: "none",
+    icon: HelpCircle,
+    title: "Not Sure",
+    description: "Not sure how to target this post",
+  },
+];
+
 export default function EditAudience({ guildPost }) {
-  const [audienceType, setAudienceType] = useState(guildPost?.audienceType);
   const { navigate, pathWithState } = useLocationStages();
-  const { progress } = useProgressSteps();
   const [updateGuildPost] = useUpdateGuildPostWriteCache();
   const nextPath = `/composer/${guildPost.id}/targeting`;
 
-  const handleContinue = () => {
-    progress("EDIT_AUDIENCE");
-    navigate(nextPath);
+  const initialValues = {
+    audienceType: guildPost.audienceType || "",
   };
-  const handleUpdate = async (type) => {
-    setAudienceType(type);
+
+  const handleSubmit = async (values) => {
     await updateGuildPost({
       variables: {
         input: {
           guildPostId: guildPost.id,
-          audienceType: type,
+          ...values,
         },
       },
     });
+
+    navigate(nextPath);
   };
 
-  const audienceTypes = [
-    { type: "skills", desc: "People With A Specific Skill", icon: FileList },
-    {
-      type: "industries",
-      desc: "People In A Certain Industry",
-      icon: Building,
-    },
-    {
-      type: "locations",
-      desc: "People In a Specific Location",
-      icon: MapPinUser,
-    },
-    { type: "none", desc: "Not sure", icon: Question },
-  ];
+  const handleChange = (formik, e) => {
+    formik.setFieldValue(e.target.name, e.target.value);
+    formik.submitForm();
+  };
+
+  const handleClick = (formik, e) => {
+    if (formik.values[e.target.name] === e.target.value) {
+      navigate(nextPath);
+    }
+  };
 
   return (
     <Box display="flex">
@@ -65,46 +92,72 @@ export default function EditAudience({ guildPost }) {
           </Box>
           Back
         </Link>
-        <Text mb="xs" fontSize="28px" color="blue900" fontWeight="semibold">
-          Type of Targeting
+        <Text
+          mb="xs"
+          fontSize="5xl"
+          color="neutral900"
+          fontWeight="medium"
+          letterSpacing="-0.03rem"
+        >
+          Post targeting
         </Text>
-        <Text lineHeight="l" color="neutral600" mb="l">
+        <Paragraph size="lg" mb="l">
           What kind of audience would you like to reach with this post - we’ll
           make sure it reaches the right people.
-        </Text>
+        </Paragraph>
 
-        <GuildBox flexWrap="wrap" wrapChildrenBoth={16}>
-          {audienceTypes.map(({ type, desc, icon }, key) => (
-            <ComposerBoxOption
-              key={key}
-              spacing="2xl"
-              selected={type === audienceType}
-              onClick={() => handleUpdate(type)}
-            >
-              <GuildBox
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                spaceChildrenVertical={16}
+        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+          {(formik) => (
+            <Form>
+              <Box
+                display="grid"
+                gridGap="24px"
+                gridTemplateColumns={{
+                  _: "1fr",
+                  m: "1fr 1fr",
+                  xl: "1fr 1fr 1fr 1fr",
+                }}
               >
-                {createElement(icon, { size: 24 })}
-                <Text>{desc}</Text>
-              </GuildBox>
-            </ComposerBoxOption>
-          ))}
-        </GuildBox>
-
-        <GuildBox mt="xl">
-          <Button
-            size="l"
-            mr="xs"
-            onClick={handleContinue}
-            disabled={!audienceType}
-            suffix={<ArrowRight />}
-          >
-            Continue
-          </Button>
-        </GuildBox>
+                {TYPES.map((type) => (
+                  <Field
+                    name="audienceType"
+                    type="radio"
+                    as={PostType}
+                    key={type.value}
+                    value={type.value}
+                    onChange={(e) => handleChange(formik, e)}
+                    onClick={(e) => handleClick(formik, e)}
+                  >
+                    <Circle
+                      size={64}
+                      bg="white"
+                      color="blue900"
+                      marginBottom="lg"
+                    >
+                      {formik.isSubmitting &&
+                      formik.values.audienceType === type.value ? (
+                        <Loader color="blue900" />
+                      ) : (
+                        <type.icon size={32} />
+                      )}
+                    </Circle>
+                    <Text
+                      fontSize="l"
+                      letterSpacing="-0.02rem"
+                      fontWeight="medium"
+                      marginBottom="2xs"
+                    >
+                      {type.title}
+                    </Text>
+                    <Text lineHeight="16px" fontSize="xs" color="neutral700">
+                      {type.description}
+                    </Text>
+                  </Field>
+                ))}
+              </Box>
+            </Form>
+          )}
+        </Formik>
       </Box>
     </Box>
   );
