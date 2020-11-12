@@ -50,9 +50,11 @@ Rails.application.routes.draw do
   get '/internal/*guild_path', to: 'application#internal'
   post '/projects/send_invites'
   post '/projects/create_linkedin_ad'
+
   get '/accounts/me'
   post '/accounts/user'
   post '/accounts/specialist'
+  post 'zappier_interactor/attach_previous_project_image'
 
   # match every other route to the frontend codebase
   root 'application#frontend'
