@@ -77,7 +77,6 @@ class ProjectDashboard < Administrate::BaseDashboard
     status
     sales_status
     service_type
-    user
     skills
     industry_experience_importance
     location_importance
