@@ -25,9 +25,11 @@ const industries = [
 ].map((name) => mockData.industry({ name }));
 const country = mockData.country();
 const countries = [{ ...country, value: country.id, label: country.name }];
+const review = mockData.review();
 const profileProject = mockData.previousProject({
   primarySkill: skills[0],
   primaryIndustry: industries[0],
+  reviews: [review],
   skills: [skills[0], skills[1]],
   industries: [industries[0], industries[1]],
 });
@@ -38,7 +40,6 @@ const profileProjectAlt = mockData.previousProject({
   industries: [industries[2]],
   clientName: "Test Tech",
 });
-const review = mockData.review();
 const specialist = mockData.specialist({
   name: "John Doe",
   projectSkills: {
