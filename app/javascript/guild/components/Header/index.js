@@ -26,6 +26,8 @@ const StyledHeader = styled(Box)`
   box-shadow: 0 1px 2px ${rgba(theme.colors.neutral900, 0.2)};
 `;
 
+const TWO_MINUTES = 120000;
+
 const Header = () => {
   const location = useLocation();
   const [notificationsOpen, toggleNotifications] = useToggle();
@@ -33,7 +35,7 @@ const Header = () => {
   const history = useHistory();
 
   const { data: lastReadData } = useQuery(GUILD_LAST_READ_QUERY, {
-    pollInterval: 2500,
+    pollInterval: TWO_MINUTES,
   });
 
   const [guildUpdateLastRead] = useMutation(GUILD_UPDATE_LAST_READ, {
