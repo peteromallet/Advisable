@@ -6,6 +6,7 @@ import RecommendationComment from "./RecommendationComment";
 import SpecialistIntroduction from "./SpecialistIntroduction";
 
 export default function ApplicationDetails({ application, project }) {
+  const reviews = application.specialist.reviews.filter((r) => r.comment);
   const hasProposal = application.status === "Proposed";
 
   return (
@@ -18,9 +19,7 @@ export default function ApplicationDetails({ application, project }) {
       {application.previousProjects.length > 0 && (
         <SpecialistProjects projects={application.previousProjects} />
       )}
-      {application.specialist.reviews.length > 0 && (
-        <SpecialistReviews reviews={application.specialist.reviews} />
-      )}
+      {reviews.length > 0 && <SpecialistReviews reviews={reviews} />}
     </>
   );
 }

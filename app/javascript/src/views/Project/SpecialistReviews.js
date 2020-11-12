@@ -3,8 +3,6 @@ import { Box, Stack, Text, Avatar } from "@advisable/donut";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
 
 export default function SpecialistReviews({ reviews }) {
-  const filtered = reviews.filter((r) => r.comment !== null);
-
   return (
     <Box marginBottom="52px">
       <Text
@@ -17,7 +15,7 @@ export default function SpecialistReviews({ reviews }) {
         Testimonials
       </Text>
       <Stack spacing="m">
-        {filtered.map((review) => (
+        {reviews.map((review) => (
           <Box
             key={review.id}
             padding="16px"
