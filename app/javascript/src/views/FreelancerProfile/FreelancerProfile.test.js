@@ -1,4 +1,4 @@
-import { fireEvent } from "@testing-library/react";
+import { screen, fireEvent } from "@testing-library/react";
 import generateType from "../../__mocks__/graphqlFields";
 import {
   mockViewer,
@@ -418,4 +418,28 @@ test("Renders 404 if the specialist isn't found", async () => {
   });
   const status = await app.findByText("404");
   expect(status).toBeInTheDocument();
+});
+
+test("going to /profile when not logged in redirects to the login page", async () => {
+  renderRoute({
+    route: "/profile",
+    graphQLMocks: [mockViewer(null)],
+  });
+
+  await screen.findByText(/welcome back/i);
+});
+
+test("going to /profile when logged in redirects to their profile", async () => {
+  renderRoute({
+    route: "/profile",
+    graphQLMocks: [
+      mockViewer(specialist),
+      mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+      mockQuery(GET_COUNTRIES, {}, { countries }),
+    ],
+  });
+
+  await screen.findByText(specialist.name);
+  await screen.findByText(specialist.bio);
+  await screen.findByText(specialist.location);
 });

@@ -116,9 +116,10 @@ const ApplicationRoutes = () => {
             component={ApplicationFlow}
           />
           <AuthenticatedRoute path="/settings" component={Settings} />
-          <AuthenticatedRoute path="/profile">
-            <RedirectToFreelancerProfile />
-          </AuthenticatedRoute>
+          <AuthenticatedRoute
+            path="/profile"
+            component={RedirectToFreelancerProfile}
+          />
           <Route component={NotFound} />
         </Switch>
       </Suspense>
