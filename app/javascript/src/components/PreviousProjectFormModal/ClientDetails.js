@@ -15,6 +15,7 @@ import Helper from "./Helper";
 import { clientDetailsValidationSchema } from "./validationSchemas";
 import FormField from "../../components/FormField";
 import SubmitButton from "../../components/SubmitButton";
+import { Chunk } from 'editmode-react';
 
 export default function ClientDetails({
   onSubmit,
@@ -35,11 +36,13 @@ export default function ClientDetails({
     <Box display="flex">
       <Box flexGrow={1} width="100%">
         <Text mb="xs" fontSize="28px" color="blue900" fontWeight="semibold">
-          Client Details
+          <Chunk identifier='client_details_header'>Client Details</Chunk>
         </Text>
         <Text mb="xl" lineHeight="l" color="neutral600">
-          Previous projects are one of the most effective ways to validate your
-          skills. Advisable uses them to decide what projects to invite you to.
+          <Chunk identifier='client_details_description'>
+            Previous projects are one of the most effective ways to validate your
+            skills. Advisable uses them to decide what projects to invite you to.
+          </Chunk>
         </Text>
         <Formik
           onSubmit={onSubmit}
@@ -54,14 +57,14 @@ export default function ClientDetails({
                   spacing={isWidescreen ? "s" : "l"}
                 >
                   <FormField
-                    label="Company Name"
+                    label={<Chunk identifier='client_details_company_name_label'>Company Name</Chunk>}
                     name="clientName"
                     placeholder="e.g Acme Inc"
                     autoComplete="off"
                   />
                   <FormField
                     as={Select}
-                    label="Company Type"
+                    label={<Chunk identifier='client_details_company_type_label'>Company Type</Chunk>}
                     name="companyType"
                   >
                     <option>Individual Entrepreneur</option>
@@ -79,18 +82,20 @@ export default function ClientDetails({
                 {formik.values.industries.length > 1 && <PrimaryIndustry />}
                 <FormField as={Checkbox} type="checkbox" name="confidential">
                   <Text color="blue900" fontWeight="medium" mb="2px">
-                    This client is confidential
+                    <Chunk identifier='client_details_confidential'>This client is confidential</Chunk>
                   </Text>
                   <Text fontSize="xs" color="neutral600">
-                    If checked the client&apos;s name will be hidden and the
-                    industry will be named instead. e.g &quot;Financial Services
-                    Company&quot;
+                    <Chunk identifier='client_details_confidential_description'>
+                      If checked the client&apos;s name will be hidden and the
+                      industry will be named instead. e.g &quot;Financial Services
+                      Company&quot;
+                    </Chunk>
                   </Text>
                 </FormField>
               </Stack>
 
               <SubmitButton size="l" suffix={<ArrowRight />}>
-                Continue
+                <Chunk identifier='client_details_submit'>Continue</Chunk>
               </SubmitButton>
             </Form>
           )}
@@ -103,9 +108,10 @@ export default function ClientDetails({
         display={["none", "none", "none", "block"]}
       >
         <Helper>
-          <Helper.Text heading="What's this for?">
-            This data will help us know which similar projects to invite you to
-            in the future.
+          <Helper.Text heading={<Chunk identifier='client_details_helper_what_is_this'>What&apos;s this for?</Chunk>}>
+            <Chunk identifier='client_details_helper_description_what_is_this'>
+              This data will help us know which similar projects to invite you to in the future.
+            </Chunk>
           </Helper.Text>
         </Helper>
       </Box>
@@ -125,7 +131,7 @@ function IndustriesSelection({ industries }) {
         max={3}
         multiple
         error={null}
-        label="What industries does this client work in?"
+        label={<Chunk identifier='client_details_industry_label'>What industries does this client work in?</Chunk>}
         options={industries}
         placeholder="Search for an industry"
         onChange={(industries) => {
@@ -147,7 +153,7 @@ function PrimaryIndustry() {
     <FormField
       {...primaryField}
       as={Select}
-      label="Which of these is the primary industry for this company?"
+      label={<Chunk identifier='client_details_primary_industry_label'>Which of these is the primary industry for this company?</Chunk>}
     >
       {industries.value.map((industry) => (
         <option key={industry}>{industry}</option>

@@ -6,6 +6,7 @@ import Helper from "./Helper";
 import { usePublishPreviousProject } from "./queries";
 import { verificationValidationSchema } from "./validationSchemas";
 import FormField from "../../components/FormField";
+import { Chunk } from 'editmode-react';
 
 const RELATIONSHIPS = [
   "They managed the project",
@@ -60,7 +61,7 @@ export default function Validation({ data, modal, onPublish }) {
                 <Box display="inline-block" mr="xxs">
                   <ArrowLeft size={20} strokeWidth={2} />
                 </Box>
-                Back
+                <Chunk identifier='validation_back_btn'>Back</Chunk>
               </Link>
               <Text
                 mb="xs"
@@ -68,29 +69,30 @@ export default function Validation({ data, modal, onPublish }) {
                 color="blue900"
                 fontWeight="semibold"
               >
-                Validation
+                <Chunk identifier='validation_header'>Validation</Chunk>
               </Text>
               <Text lineHeight="l" color="neutral600" mb="xl">
-                We will need to confirm the details of this project with someone
-                who worked on the project.
+                <Chunk identifier='validation_description'>
+                  We will need to confirm the details of this project with someone who worked on the project.
+                </Chunk>
               </Text>
               <Stack mb="xl" spacing="l">
                 <FormField
                   name="contactName"
-                  label="Contact Name"
+                  label={<Chunk identifier='validation_contact_name_label'>Contact Name</Chunk>}
                   placeholder="Contact Name"
                   autoComplete="off"
                 />
                 <FormField
                   name="contactJobTitle"
-                  label="Contact Job Title"
+                  label={<Chunk identifier='validation_contact_job_title_label'>Contact Job Title</Chunk>}
                   placeholder="Contact Job Title"
                   autoComplete="off"
                 />
                 <FormField
                   as={Select}
                   name="contactRelationship"
-                  label="What was your relationship to them for this project?"
+                  label={<Chunk identifier='validation_contact_relationship_label'>What was your relationship to them for this project?</Chunk>}
                 >
                   {RELATIONSHIPS.map((r) => (
                     <option key={r}>{r}</option>
@@ -99,7 +101,7 @@ export default function Validation({ data, modal, onPublish }) {
               </Stack>
 
               <Button size="l" type="submit" loading={formik.isSubmitting}>
-                Submit Project
+                <Chunk identifier='submit_project_btn'>Submit Project</Chunk>
               </Button>
             </Form>
           )}
@@ -112,9 +114,10 @@ export default function Validation({ data, modal, onPublish }) {
         display={["none", "none", "none", "block"]}
       >
         <Helper>
-          <Helper.Text heading="What's this for?" mb="l">
-            You&apos;ll be given a unique link to share with this reference in
-            order for them to validate this project.
+          <Helper.Text heading={<Chunk identifier='validation_what_is_this_helper_title'>What&apos;s this for?</Chunk>} mb="l">
+            <Chunk identifier='validation_what_is_this_helper_description'>
+              You&apos;ll be given a unique link to share with this reference in order for them to validate this project.
+            </Chunk>
           </Helper.Text>
         </Helper>
       </Box>
