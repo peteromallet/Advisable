@@ -1,5 +1,6 @@
 class GraphqlController < ApplicationController
   protect_from_forgery with: :null_session
+  before_action :require_admin, only: :admin
   skip_before_action :verify_authenticity_token,
                      if: -> { Rails.env.development? }
 
@@ -41,8 +42,12 @@ class GraphqlController < ApplicationController
     render json: result
   end
 
-
   private
+
+  def require_admin
+    return if current_account&.has_permission?("admin")
+    render status: :not_found, json: {error: 'Not Found'}
+  end
 
   # Handle form data, JSON body, or a blank value
   def ensure_hash(ambiguous_param)

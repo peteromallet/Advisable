@@ -7,13 +7,18 @@ class ApplicationController < ActionController::Base
   def frontend
     respond_to(&:html)
   rescue ActionController::UnknownFormat
-    render status: 404, json: {error: 'Not Found'}
+    render status: :not_found, json: {error: 'Not Found'}
   end
 
   def guild
   end
 
   def internal
+    return if current_account&.has_permission?("admin")
+    redirect_to "/"
+  end
+
+  def advisatable
     return if current_account&.has_permission?("admin")
     redirect_to "/"
   end
