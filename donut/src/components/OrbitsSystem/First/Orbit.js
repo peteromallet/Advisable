@@ -81,9 +81,11 @@ export function Orbit({
       layout
       key={index}
       d={`${circle(radius, 3, cx, cy).string}`}
-      stroke={stroke}
-      fill={fill}
+      // stroke={stroke}
+      // fill={fill}
       strokeWidth={strokeWidth}
+      initial={{ fill, stroke }}
+      animate={{ fill, stroke }}
       {...props}
     />
   );
