@@ -1,7 +1,8 @@
 import React from "react";
-import { Card } from "@advisable/donut";
+import { Card, Box } from "@advisable/donut";
 import CoverImage from "./CoverImage";
 import Info from "./Info";
+import Navigation from "./Navigation";
 
 function AboutSection({ specialist, isOwner, viewer }) {
   return (
@@ -9,13 +10,14 @@ function AboutSection({ specialist, isOwner, viewer }) {
       bg="#fff"
       mt={[0, "m"]}
       mx={["-12px", 0]}
-      padding="sm"
-      paddingBottom="l"
       borderRadius={[0, 12]}
-      mb="xl"
+      marginBottom="3xl"
     >
-      <CoverImage coverPhoto={specialist.coverPhoto} isOwner={isOwner} />
-      <Info specialist={specialist} isOwner={isOwner} viewer={viewer} />
+      <Box padding="sm" paddingBottom="l">
+        <CoverImage coverPhoto={specialist.coverPhoto} isOwner={isOwner} />
+        <Info specialist={specialist} isOwner={isOwner} viewer={viewer} />
+      </Box>
+      {specialist.guild && viewer?.guild ? <Navigation /> : null}
     </Card>
   );
 }

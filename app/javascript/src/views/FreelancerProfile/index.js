@@ -1,20 +1,18 @@
 import React from "react";
 // Hooks
 import useLogoURL from "src/components/ApplicationProvider/useLogoURL";
-import { useParams } from "react-router-dom";
+import { useParams, Switch, Route } from "react-router-dom";
 import useViewer from "src/hooks/useViewer";
 import { useQuery } from "@apollo/client";
 // Components
 import NotFound, { isNotFound } from "../NotFound";
-import PreviousProjects from "./PreviousProjects";
 import Loading from "src/components/Loading";
-import Testimonials from "./Testimonials";
 import AboutSection from "./AboutSection";
 import { Box } from "@advisable/donut";
-import NoProjects from "./NoProjects";
+import MainProfile from "./MainProfile";
+import GuildProfile from "./GuildProfile";
 // Queries
 import { GET_PROFILE } from "./queries";
-import CallToActionBox from "./CallToActionBox";
 
 function FreelancerProfile() {
   useLogoURL("https://advisable.com");
@@ -30,28 +28,26 @@ function FreelancerProfile() {
   if (isNotFound(error)) return <NotFound />;
 
   const isOwner = viewer?.id === data.specialist.id;
-  const reviews = data.specialist.reviews.filter((r) => r.comment);
-  const hasReviews = reviews.length > 0;
 
   return (
     <Box
-      maxWidth={["100%", "100%", "100%", "960px"]}
-      mx={["12px", "32px", "32px", "auto"]}
       pb="2xl"
+      mx={["12px", "32px", "32px", "auto"]}
+      maxWidth={["100%", "100%", "100%", "960px"]}
     >
       <AboutSection
         specialist={data.specialist}
         isOwner={isOwner}
         viewer={viewer}
       />
-      {data.specialist.profileProjects.length > 0 && (
-        <PreviousProjects data={data} isOwner={isOwner} />
-      )}
-      {data.specialist.profileProjects.length === 0 && (
-        <NoProjects data={data} isOwner={isOwner} />
-      )}
-      {hasReviews && <Testimonials reviews={reviews} />}
-      {!isOwner && <CallToActionBox specialist={data.specialist} />}
+      <Switch>
+        <Route path="/freelancers/:id/guild">
+          <GuildProfile />
+        </Route>
+        <Route path="/freelancers/:id">
+          <MainProfile isOwner={isOwner} data={data} />
+        </Route>
+      </Switch>
     </Box>
   );
 }

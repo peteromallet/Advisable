@@ -12,6 +12,7 @@ const fields = gql`
     linkedin
     website
     city
+    guild
     country {
       id
     }
