@@ -3,6 +3,7 @@ import { Box } from "@advisable/donut";
 import { withKnobs } from "@storybook/addon-knobs";
 import OrbitsSystem, { Orbit } from "./Second";
 import OrbitsSystemMotion, { Orbit as OrbitMotion } from "./First";
+import FramerTest from "./FramerTest";
 
 export default {
   title: "Content/OrbitsSystem",
@@ -124,4 +125,8 @@ export const CircleMotion = () => {
       </Box>
     </div>
   );
+};
+
+export const FramerTestStory = () => {
+  return <FramerTest />;
 };
