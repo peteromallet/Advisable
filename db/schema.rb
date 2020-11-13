@@ -345,6 +345,15 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
     t.index ["specialist_id"], name: "index_guild_comments_on_specialist_id"
   end
 
+  create_table "guild_post_engagements", force: :cascade do |t|
+    t.bigint "specialist_id"
+    t.uuid "guild_post_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["guild_post_id"], name: "index_guild_post_engagements_on_guild_post_id"
+    t.index ["specialist_id"], name: "index_guild_post_engagements_on_specialist_id"
+  end
+
   create_table "guild_post_images", force: :cascade do |t|
     t.uuid "guild_post_id"
     t.string "uid"
@@ -360,8 +369,8 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
 
   create_table "guild_posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type", default: "Post", null: false
-    t.text "body", null: false
-    t.string "title", null: false
+    t.text "body"
+    t.string "title"
     t.integer "status", default: 0, null: false
     t.integer "comments_count", default: 0, null: false
     t.integer "reactionable_count", default: 0, null: false
@@ -369,6 +378,7 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
     t.jsonb "data", default: {}, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "engagements_count", default: 0
     t.index ["data"], name: "index_guild_posts_on_data", using: :gin
     t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
   end
@@ -624,8 +634,8 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
     t.integer "candidate_count", default: 0
     t.integer "proposed_count", default: 0
     t.integer "hired_count", default: 0
-    t.boolean "sourcing"
     t.bigint "sales_person_id"
+    t.boolean "sourcing"
     t.bigint "linkedin_campaign_id"
     t.datetime "published_at"
     t.index ["client_id"], name: "index_projects_on_client_id"
@@ -756,13 +766,13 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
     t.string "phone"
     t.boolean "guild", default: false
     t.string "community_status"
-    t.boolean "automated_invitations_subscription"
     t.jsonb "guild_data"
-    t.bigint "account_id"
+    t.boolean "automated_invitations_subscription"
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
     t.datetime "community_invited_to_call_at"
     t.integer "community_score"
+    t.bigint "account_id"
     t.integer "member_of_week_email"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
@@ -951,6 +961,8 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
   add_foreign_key "consultations", "users"
   add_foreign_key "guild_comments", "guild_posts", on_delete: :cascade
   add_foreign_key "guild_comments", "specialists", on_delete: :cascade
+  add_foreign_key "guild_post_engagements", "guild_posts"
+  add_foreign_key "guild_post_engagements", "specialists"
   add_foreign_key "guild_post_images", "guild_posts", on_delete: :cascade
   add_foreign_key "guild_posts", "specialists"
   add_foreign_key "guild_reactions", "specialists", on_delete: :cascade

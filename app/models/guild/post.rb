@@ -25,6 +25,9 @@ module Guild
              inverse_of: 'post',
              dependent: :destroy
 
+    has_many :engagements,
+             class_name: 'Guild::PostEngagement', foreign_key: 'guild_post_id', dependent: :destroy, inverse_of: 'post'
+
     enum status: {draft: 0, published: 1, removed: 2}
 
     validates :title, :body, :type, :status, presence: true
@@ -32,7 +35,6 @@ module Guild
     validates :body, length: {maximum: 10_000, minimum: 4}
     validates :audience_type, inclusion: {in: AUDIENCE_TYPES}, allow_nil: true
     jsonb_accessor :data,
-                   engagements_count: [:integer, {default: 0}],
                    audience_type: [:string],
                    audience_notified_at: [:datetime]
 
@@ -46,10 +48,6 @@ module Guild
       else
         type.demodulize.titleize
       end
-    end
-
-    def record_engagement!
-      update(engagements_count: self.engagements_count += 1)
     end
 
     def cover_image
@@ -75,12 +73,13 @@ end
 # Table name: guild_posts
 #
 #  id                 :uuid             not null, primary key
-#  body               :text             not null
+#  body               :text
 #  comments_count     :integer          default(0), not null
 #  data               :jsonb            not null
+#  engagements_count  :integer          default(0)
 #  reactionable_count :integer          default(0), not null
 #  status             :integer          default("draft"), not null
-#  title              :string           not null
+#  title              :string
 #  type               :string           default("Post"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
