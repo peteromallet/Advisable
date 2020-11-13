@@ -14,7 +14,7 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join('tmp', 'caching-dev.txt').exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
@@ -28,9 +28,7 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  if (ngrok_host = ENV.fetch('NGROK_FORWARD_HOST', nil))
-    config.hosts << ngrok_host
-  end
+  config.hosts << /.+\.ngrok\.io/
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :amazon
