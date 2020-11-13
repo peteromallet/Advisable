@@ -54,6 +54,7 @@ export function Orbit({
     cy,
     radius,
   ]);
+
   const pathRef = useRef(null);
   const fillRef = useRef(null);
   const strokeRef = useRef(null);
