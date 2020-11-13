@@ -33,6 +33,7 @@ class Mutations::PublishProject < Mutations::BaseMutation
   def resolve(id:)
     project = Project.find_by_uid_or_airtable_id!(id)
     project.status = project.assisted? ? "Brief Confirmed" : "Pending Advisable Confirmation"
+    project.published_at = Time.zone.now
     project.sales_status = 'Open'
     project.sourcing = true
     project.sync_to_airtable if project.save
