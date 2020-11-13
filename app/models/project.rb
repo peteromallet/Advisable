@@ -165,6 +165,7 @@ end
 #  owner                            :string
 #  proposal_received_at             :datetime
 #  proposed_count                   :integer          default(0)
+#  published_at                     :datetime
 #  questions                        :text             default([]), is an Array
 #  remote                           :boolean
 #  required_characteristics         :text             default([]), is an Array
