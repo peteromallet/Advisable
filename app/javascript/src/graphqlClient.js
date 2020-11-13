@@ -1,6 +1,8 @@
-import { ApolloClient, createHttpLink } from "@apollo/client";
+import { ApolloClient, from, createHttpLink } from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import createCache from "./apolloCache";
+import * as Sentry from "@sentry/react";
 
 const cache = createCache();
 
@@ -23,9 +25,31 @@ const httpLink = createHttpLink({
   uri: "/graphql",
 });
 
+const errorLink = onError(({ graphQLErrors, operation }) => {
+  if (graphQLErrors) {
+    graphQLErrors.forEach(({ message, ...rest }) => {
+      const name = operation.operationName;
+      Sentry.withScope(function (scope) {
+        scope.setContext("error", {
+          message,
+          type: rest.extensions?.type,
+          code: rest.extensions?.code,
+        });
+
+        scope.setContext("query", {
+          name,
+          variables: JSON.stringify(operation.variables),
+        });
+
+        Sentry.captureMessage(`${name} returned error`);
+      });
+    });
+  }
+});
+
 const client = new ApolloClient({
   cache,
-  link: authLink.concat(httpLink),
+  link: from([errorLink, authLink, httpLink]),
   defaultOptions: {
     mutate: {
       errorPolicy: "all",
