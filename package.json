@@ -101,7 +101,7 @@
     "zustand": "^3.1.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.6",
+    "@babel/core": "^7.12.3",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@storybook/addon-docs": "^6.0.28",
     "@storybook/addon-knobs": "^6.0.28",
@@ -113,7 +113,7 @@
     "@types/jest": "^26.0.15",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.2.1",
     "cypress": "^5.3.0",
     "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
