@@ -127,7 +127,6 @@
     "jest-styled-components": "^7.0.3",
     "jest-transform-graphql": "^2.1.0",
     "jest-watch-typeahead": "^0.6.1",
-    "jest-when": "^2.7.2",
     "lint-staged": ">=10.5.1",
     "pixelmatch": "^5.2.1",
     "prettier": "^2.1.2",
