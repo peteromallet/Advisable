@@ -26,7 +26,7 @@ const YourPosts = () => {
       });
   });
 
-  const handleEdit = (postId) => history.push(`composer/${postId}/edit`);
+  const handleEdit = (postId) => history.push(`composer/${postId}/type`);
 
   return loading ? (
     <Loading />
