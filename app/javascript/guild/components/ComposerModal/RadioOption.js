@@ -9,10 +9,15 @@ export const StyledRadioOption_Checked = css`
 
 export const StyledRadioOption = styled.div`
   width: 100%;
+  display: flex;
   position: relative;
   padding: 40px 20px;
   border-radius: 12px;
   text-align: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
   border: 2px solid transparent;
   background: ${theme.colors.neutral100};
   ${(p) => p.$checked && StyledRadioOption_Checked};
@@ -25,11 +30,6 @@ export const StyledRadioOption = styled.div`
     }
   }
 
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-
   input {
     top: 0;
     left: 0;
@@ -40,6 +40,7 @@ export const StyledRadioOption = styled.div`
     opacity: 0;
     width: 100%;
     height: 100%;
+    cursor: pointer;
     appearance: none;
     position: absolute;
   }
