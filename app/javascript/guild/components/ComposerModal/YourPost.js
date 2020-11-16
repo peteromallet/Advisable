@@ -1,13 +1,16 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import { ArrowRight } from "@styled-icons/feather";
-import { Box } from "@advisable/donut";
+import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
+import useLocationStages from "@advisable-main/hooks/useLocationStages";
+import { Box, Link } from "@advisable/donut";
 import SubmitButton from "@advisable-main/components/SubmitButton";
 import { yourPostValidationSchema } from "./validationSchemas";
 import PostTitle from "./PostTitle";
 import RichTextEditor from "../RichTextEditor";
 
-const YourPost = ({ onSubmit, initialValues = {} }) => {
+const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
+  const { pathWithState } = useLocationStages();
+
   const yourPostInitialValues = {
     title: "",
     body: "",
@@ -17,6 +20,17 @@ const YourPost = ({ onSubmit, initialValues = {} }) => {
   return (
     <Box display="flex">
       <Box flexGrow={1} width="100%">
+        <Link
+          mb="s"
+          fontSize="l"
+          fontWeight="medium"
+          to={pathWithState(`/composer/${guildPost.id}/type`)}
+        >
+          <Box display="inline-block" mr="xxs">
+            <ArrowLeft size={20} strokeWidth={2} />
+          </Box>
+          Back
+        </Link>
         <Formik
           validateOnMount
           onSubmit={onSubmit}
