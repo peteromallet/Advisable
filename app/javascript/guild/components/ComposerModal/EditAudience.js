@@ -11,7 +11,7 @@ import { useUpdateGuildPostWriteCache } from "./mutations";
 import useLocationStages from "@advisable-main/hooks/useLocationStages";
 import { ArrowLeft } from "@styled-icons/feather";
 import { Circle, Box, Text, Link, Paragraph } from "@advisable/donut";
-import PostType from "./PostType";
+import RadioOption from "./RadioOption";
 
 /*
   Edits the Post Audience type.
@@ -122,7 +122,7 @@ export default function EditAudience({ guildPost }) {
                   <Field
                     name="audienceType"
                     type="radio"
-                    as={PostType}
+                    as={RadioOption}
                     key={type.value}
                     value={type.value}
                     onChange={(e) => handleChange(formik, e)}
