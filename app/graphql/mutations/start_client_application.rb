@@ -2,6 +2,10 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
   argument :first_name, String, required: true
   argument :last_name, String, required: false
   argument :email, String, required: true
+  argument :rid, String, required: false
+  argument :utm_campaign, String, required: false
+  argument :utm_source, String, required: false
+  argument :utm_medium, String, required: false
 
   field :clientApplication, Types::ClientApplicationType, null: true
 
@@ -17,6 +21,10 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
 
       user = User.find_or_create_by(account: account) do |u|
         u.application_status = "Application Started"
+        u.rid = args[:rid]
+        u.campaign_name = args[:utm_campaign]
+        u.campaign_source = args[:utm_source]
+        u.campaign_medium = args[:utm_medium]
         u.company = Company.new(name: Company.fresh_name_for(''))
         account.permissions << :team_manager
       end
