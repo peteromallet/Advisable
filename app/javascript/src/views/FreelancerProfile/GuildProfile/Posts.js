@@ -13,12 +13,14 @@ export default function GuildProfilePosts() {
   });
 
   const guildPosts = data?.specialist.guildPosts;
+  const hasNextPage = guildPosts?.pageInfo.hasNextPage;
   const endCursor = guildPosts?.pageInfo.endCursor;
   const nodes = guildPosts?.edges.map((edge) => edge.node);
 
   const loadMorePosts = useCallback(() => {
+    if (!hasNextPage) return;
     fetchMore({ variables: { cursor: endCursor } });
-  }, [fetchMore, endCursor]);
+  }, [hasNextPage, fetchMore, endCursor]);
 
   useBottomScrollListener(() => {
     if (guildPosts && !loading) loadMorePosts();
