@@ -11,13 +11,14 @@ export const NotificationDropdown = styled(Box)`
     padding: 24px;
     width: 442px;
   }
+  height: 80%;
   right: 0;
   width: 100%;
   padding: 8px;
   z-index: 3;
   top: 68px;
   background: white;
-  position: absolute;
+  position: fixed;
   border-radius: 4px;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.5);
   transition: opacity 250ms cubic-bezier(0, 1, 0.4, 1),

@@ -21,6 +21,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     city: Field::String,
     guild: Field::Boolean,
     guild_calendly_link: Field::String.with_options(searchable: false),
+    guild_featured_member_at: Field::DateTime,
     airtable_id: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
@@ -45,6 +46,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     country
     guild
     guild_calendly_link
+    guild_featured_member_at
     airtable_id
     created_at
     updated_at
@@ -63,6 +65,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     country
     guild
     guild_calendly_link
+    guild_featured_member_at
     airtable_id
   ].freeze
 

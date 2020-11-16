@@ -76,7 +76,7 @@ const Header = () => {
   return (
     <>
       <Notifications open={notificationsOpen} />
-      <UserMenu open={userMenuOpen} />
+      <UserMenu open={userMenuOpen} onToggle={toggleUserMenu} />
       <StyledHeader bg="slateBlue" px="lg">
         <Box display="flex">
           <Link to={"/"}>

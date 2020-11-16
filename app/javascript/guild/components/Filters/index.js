@@ -12,7 +12,7 @@ import { useComposerModal } from "@guild/components/ComposerModal/useComposerMod
 import ComposerModal from "../ComposerModal";
 import { GUILD_POSTS_QUERY } from "@guild/components/Posts/queries";
 
-const Filters = () => {
+const Filters = ({ yourPosts }) => {
   const sUp = useBreakpoint("sUp");
   const [expanded, toggleExpanded] = useToggle();
   const viewer = useViewer();
@@ -81,7 +81,7 @@ const Filters = () => {
               color="catalinaBlue100"
               letterSpacing="-0.02em"
             >
-              Posts
+              {yourPosts ? "Your Posts" : "Posts"}
             </Text>
           )}
 
@@ -119,7 +119,7 @@ const Filters = () => {
               </GuildBox>
             )}
 
-            {!expanded && (
+            {!expanded && !yourPosts && (
               <GuildTag variant="dark" size={sUp ? "s" : "l"}>
                 {selectedFilter}
               </GuildTag>
@@ -132,9 +132,11 @@ const Filters = () => {
               maxHeight={"34px"}
               flexSpaceBetween
             >
-              <GuildTag button size="s" onClick={toggleExpanded}>
-                <FilterIcon size={24} />
-              </GuildTag>
+              {!yourPosts && (
+                <GuildTag button size="s" onClick={toggleExpanded}>
+                  <FilterIcon size={24} />
+                </GuildTag>
+              )}
 
               <DialogDisclosure
                 button
@@ -145,7 +147,7 @@ const Filters = () => {
                 aria-label="Create a Post"
               >
                 <AddIcon size={20} />
-                {/* {!expanded && sUp && "Create Post"} */}
+                {yourPosts && sUp && "New Post"}
               </DialogDisclosure>
             </GuildBox>
           </GuildBox>

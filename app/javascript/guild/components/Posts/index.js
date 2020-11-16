@@ -1,13 +1,14 @@
 import React from "react";
-import { GUILD_POSTS_QUERY } from "./queries";
 import { useQuery } from "@apollo/client";
-// import Loading from "@advisable-main/components/Loading";
+import { GUILD_POSTS_QUERY } from "./queries";
+import { useBottomScrollListener } from "react-bottom-scroll-listener";
+import Loading from "@advisable-main/components/Loading";
 import Post from "../Post";
 import { GuildBox } from "@guild/styles";
-import { useScrolledToBottom } from "@guild/hooks/useScrolledToBottom";
 import { feedStore } from "@guild/stores/Feed";
 import { Text } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
+import { cursorLoadMore } from "@guild/utils";
 
 const Posts = () => {
   const [
@@ -24,43 +25,20 @@ const Posts = () => {
     fetchPolicy: "network-only",
     variables: { selectedFilter, selectedTopicsIds: selectedTopicsIds() },
   });
-  const { bottomReached } = useScrolledToBottom();
 
-  /*
-    https://www.apollographql.com/docs/react/data/pagination/#cursor-based
-    https://graphql-ruby.org/pagination/using_connections.html
-  */
-  const handleLoadMore = () => {
-    const { guildPosts } = data;
-    fetchMore({
-      variables: {
-        cursor: guildPosts?.pageInfo.endCursor,
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        const newNodes = fetchMoreResult.guildPosts.nodes;
-        const pageInfo = fetchMoreResult.guildPosts.pageInfo;
+  useBottomScrollListener(() => {
+    if (data?.guildPosts && !loading) {
+      cursorLoadMore({
+        data,
+        fetchMore,
+        collectionKey: "guildPosts",
+      });
+    }
+  });
 
-        return newNodes.length
-          ? {
-              /*
-                Put the new guild posts at the end of the list and update `pageInfo`
-                so we have the new `endCursor` and `hasNextPage` values
-              */
-              guildPosts: {
-                __typename: previousResult.guildPosts.__typename,
-                nodes: [...previousResult.guildPosts.nodes, ...newNodes],
-                pageInfo,
-              },
-            }
-          : previousResult;
-      },
-    });
-  };
-
-  // if (loading) return <Loading />;
-  if (bottomReached && data?.guildPosts) handleLoadMore();
-
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <GuildBox
       flexGrow={1}
       width="100%"
