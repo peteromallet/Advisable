@@ -12,7 +12,7 @@ export default function EditGuildPost({ guildPost }) {
   const { denormalizedType: type, body, title, id } = guildPost;
 
   const handleUpdate = async (values) => {
-    await updateGuildPost({
+    const { errors } = await updateGuildPost({
       variables: {
         input: {
           guildPostId: id,
@@ -20,6 +20,7 @@ export default function EditGuildPost({ guildPost }) {
         },
       },
     });
+    if (errors) return { errors };
     navigate(`/composer/${id}/images`);
   };
 
