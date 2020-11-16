@@ -13,7 +13,7 @@ const StyledCoverImage = styled.img`
 `;
 
 const Cover = ({ srcList }) => {
-  const src = useImage({ srcList });
+  const { src } = useImage({ srcList });
   return <StyledCoverImage src={src} />;
 };
 
