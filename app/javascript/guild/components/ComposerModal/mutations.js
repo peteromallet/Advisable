@@ -89,12 +89,14 @@ export const useDeleteGuildPostImage = () =>
 
 export const useUpdateGuildPostWriteCache = () =>
   useMutation(UPDATE_GUILD_POST, {
-    update(cache, { data }) {
-      const guildPost = data.updateGuildPost.guildPost;
-      cache.writeQuery({
-        query: GUILD_POST_QUERY,
-        variables: { id: guildPost.id },
-        data: { guildPost },
-      });
+    update(cache, { data, errors }) {
+      const guildPost = data.updateGuildPost?.guildPost;
+      if (!errors && guildPost) {
+        cache.writeQuery({
+          query: GUILD_POST_QUERY,
+          variables: { id: guildPost.id },
+          data: { guildPost },
+        });
+      }
     },
   });
