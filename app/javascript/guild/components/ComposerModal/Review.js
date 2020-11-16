@@ -25,7 +25,7 @@ export default function Review({ guildPost, onPublish }) {
         },
       },
     });
-    onPublish(data.updateGuildPost.guildPost);
+    onPublish && onPublish(data.updateGuildPost.guildPost);
   };
 
   const guildTopicNames = guildPost?.guildTopics.map((gt) => gt.name);

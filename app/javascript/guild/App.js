@@ -9,6 +9,7 @@ import Header from "@guild/components/Header";
 const Feed = lazy(() => import("./views/Feed"));
 const Post = lazy(() => import("./views/Post"));
 const Messages = lazy(() => import("./views/Messages"));
+const YourPosts = lazy(() => import("./views/YourPosts"));
 
 const App = () => {
   return (
@@ -32,6 +33,11 @@ const App = () => {
               exact
               path={"/messages/:conversationId?"}
               component={Messages}
+            />
+            <AuthenticatedRoute
+              exact
+              path={"/your-posts"}
+              component={YourPosts}
             />
           </Switch>
         </Suspense>

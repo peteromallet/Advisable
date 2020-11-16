@@ -33,7 +33,8 @@ module Guild
     validates :audience_type, inclusion: {in: AUDIENCE_TYPES}, allow_nil: true
     jsonb_accessor :data,
                    engagements_count: [:integer, {default: 0}],
-                   audience_type: [:string]
+                   audience_type: [:string],
+                   audience_notified_at: [:datetime]
 
     before_save :reset_guild_topics, if: :guild_topics_resettable?
 
