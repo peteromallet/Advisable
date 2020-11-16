@@ -58,7 +58,7 @@ const BookingSetup = () => {
   if (loading) return <Loading />;
 
   if (data.application.status === "Working") {
-    return <Redirect to={`/manage/${data.application.airtableId}`} />;
+    return <Redirect to={`/manage/${data.application.id}`} />;
   }
 
   const filteredSteps = STEPS.filter((step) => {

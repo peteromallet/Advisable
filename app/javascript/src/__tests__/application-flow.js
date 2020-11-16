@@ -21,7 +21,7 @@ test("Submitting the overview step continues to the questions step", async () =>
         { id: "rec1234" },
         {
           application: generateTypes.application({
-            airtableId: "rec1234",
+            id: "rec1234",
             status: "Invited To Apply",
             availablity: null,
             questions: [],
@@ -45,7 +45,6 @@ test("Submitting the overview step continues to the questions step", async () =>
             __typename: "UpdateApplicationPayload",
             application: generateTypes.application({
               questions: [],
-              airtableId: "rec1234",
               status: "Invited To Apply",
               availablity: "2 - 4 Weeks",
               introduction: "Introduction",
@@ -99,7 +98,6 @@ test("Submitting a question answer continues to the next question", async () => 
           data: {
             application: generateTypes.application({
               id: "rec1234",
-              airtableId: "rec1234",
               status: "Invited To Apply",
               availablity: null,
               questions: [],
@@ -141,7 +139,6 @@ test("Submitting a question answer continues to the next question", async () => 
                     answer: "This is the first answer",
                   },
                 ],
-                airtableId: "rec1234",
                 status: "Invited To Apply",
                 availablity: "2 - 4 Weeks",
                 introduction: "Introduction",
@@ -196,7 +193,6 @@ test("when submitting the last question answer it continues to the references st
           data: {
             application: generateTypes.application({
               id: "rec1234",
-              airtableId: "rec1234",
               status: "Invited To Apply",
               availablity: null,
               questions: [
@@ -250,7 +246,6 @@ test("when submitting the last question answer it continues to the references st
                     answer: "This is the second answer",
                   },
                 ],
-                airtableId: "rec1234",
                 status: "Invited To Apply",
                 availablity: "2 - 4 Weeks",
                 introduction: "Introduction",

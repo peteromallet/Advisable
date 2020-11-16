@@ -24,7 +24,6 @@ export interface ProjectType {
 
 export interface ApplicationType {
   id: string;
-  airtableId?: string;
   status?: string;
   appliedAt?: string;
   introduction?: string;

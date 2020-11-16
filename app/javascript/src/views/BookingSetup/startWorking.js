@@ -5,7 +5,6 @@ export default gql`
     startWorking(input: $input) {
       application {
         id
-        airtableId
         status
         projectType
         monthlyLimit

@@ -12,7 +12,7 @@ let SideBar = (props) => {
   const isMobile = useMobile();
   const { application } = props;
 
-  const urlPrefix = `/applications/${application.airtableId}/proposal`;
+  const urlPrefix = `/applications/${application.id}/proposal`;
   const ratePath = urlPrefix;
   const projectTypePath = `${urlPrefix}/type`;
   const tasksPath = `${urlPrefix}/tasks`;

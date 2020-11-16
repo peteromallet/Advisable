@@ -4,7 +4,6 @@ export default gql`
   query Application($id: ID!) {
     application(id: $id) {
       id
-      airtableId
       status
       rate
       trialProgram

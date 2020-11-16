@@ -2,7 +2,6 @@ class Types::ApplicationType < Types::BaseType
   field :id, ID, null: false
   field :rate, String, null: true
   field :applied_at, String, null: true
-  field :airtable_id, String, null: true
   field :proposed_at, GraphQL::Types::ISO8601DateTime, null: true, method: :proposal_sent_at
   field :featured, Boolean, null: true
   field :hidden, Boolean, null: true

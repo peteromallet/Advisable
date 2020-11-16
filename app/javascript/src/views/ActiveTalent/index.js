@@ -11,7 +11,7 @@ const ActiveTalent = () => {
   const { data, loading } = useQuery(FETCH_DATA);
 
   const handleClick = (application) => {
-    history.push(`/manage/${application.airtableId}`);
+    history.push(`/manage/${application.id}`);
   };
 
   return (
@@ -19,8 +19,8 @@ const ActiveTalent = () => {
       {loading ? (
         <Loading />
       ) : (
-        <Manage onClick={handleClick} applications={data.viewer.applications} />
-      )}
+          <Manage onClick={handleClick} applications={data.viewer.applications} />
+        )}
     </Container>
   );
 };

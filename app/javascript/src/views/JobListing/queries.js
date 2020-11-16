@@ -6,7 +6,6 @@ export const GET_APPLICATION = gql`
       id
       status
       referralUrl
-      airtableId
       specialist {
         id
         applicationStage

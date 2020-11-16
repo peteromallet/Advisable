@@ -13,7 +13,7 @@ test("User can view an active task", async () => {
   let application = generateTypes.application({
     project,
     specialist,
-    airtableId: "rec1234",
+    id: "rec1234",
     projectType: "Flexible",
     monthlyLimit: 50,
     status: "Working",

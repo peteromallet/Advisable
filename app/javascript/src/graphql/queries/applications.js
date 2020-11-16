@@ -41,10 +41,8 @@ export const getApplicationInvitation = gql`
       id
       status
       referralUrl
-      airtableId
       project {
         id
-        airtableId
         name
         applicationsOpen
         primarySkill {

@@ -31,7 +31,6 @@ const Component = ({ application, onCreate }) => {
         __typename: "Application",
         id: application.id,
         trialProgram: application.trialProgram || false,
-        airtableId: application.airtableId,
         rate: "0",
         status: application.status,
         trialTask: application.trialTask || null,
@@ -57,7 +56,7 @@ const Component = ({ application, onCreate }) => {
     mutate({
       variables: {
         input: {
-          application: application.airtableId,
+          application: application.id,
           id,
         },
       },

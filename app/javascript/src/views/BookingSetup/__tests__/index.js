@@ -20,7 +20,7 @@ test("Renders the project type step if payments are setup", async () => {
   let specialist = generateTypes.specialist({ firstName: "Dennis" });
   let application = generateTypes.application({
     status: "Applied",
-    airtableId: "rec1234",
+    id: "rec1234",
     project,
     specialist,
   });

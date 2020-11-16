@@ -14,7 +14,7 @@ const ClientActions = ({ application }) => {
         as={Link}
         width="100%"
         key="updateApplication"
-        to={`/invites/${application.airtableId}/apply`}
+        to={`/invites/${application.id}/apply`}
       >
         Update Application
       </Button>,
@@ -27,7 +27,7 @@ const ClientActions = ({ application }) => {
         as={Link}
         width="100%"
         key="updateProposal"
-        to={`/applications/${application.airtableId}/proposal`}
+        to={`/applications/${application.id}/proposal`}
       >
         Update Proposal
       </Button>,
@@ -41,7 +41,7 @@ const ClientActions = ({ application }) => {
           as={Link}
           width="100%"
           key="sendProposal"
-          to={`/applications/${application.airtableId}/proposal`}
+          to={`/applications/${application.id}/proposal`}
         >
           Send Proposal
         </Button>,

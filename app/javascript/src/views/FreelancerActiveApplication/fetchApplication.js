@@ -9,7 +9,6 @@ export default gql`
       id
       status
       rate
-      airtableId
       projectType
       monthlyLimit
       trialProgram
