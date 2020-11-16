@@ -1,12 +1,13 @@
 import React, { useCallback } from "react";
 import { useParams } from "react-router";
-import { Stack } from "@advisable/donut";
+import { Stack, Text } from "@advisable/donut";
 import Post from "@guild/components/Post";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { useGuildPosts } from "../queries";
 import Loading from "./Loading";
+import NoPosts from "./NoPosts";
 
-export default function GuildProfilePosts() {
+export default function GuildProfilePosts({ specialist }) {
   const { id } = useParams();
   const { data, loading, fetchMore } = useGuildPosts({
     variables: { id },
@@ -27,13 +28,18 @@ export default function GuildProfilePosts() {
   });
 
   if (loading) return <Loading />;
-  if (nodes.length === 0) return <>No posts</>;
+  if (nodes.length === 0) return <NoPosts specialist={specialist} />;
 
   return (
-    <Stack spacing="lg">
-      {nodes.map((post) => (
-        <Post key={post.id} post={post} />
-      ))}
-    </Stack>
+    <>
+      <Text fontSize="l" fontWeight="medium" marginBottom="md">
+        Posts
+      </Text>
+      <Stack spacing="lg">
+        {nodes.map((post) => (
+          <Post key={post.id} post={post} />
+        ))}
+      </Stack>
+    </>
   );
 }
