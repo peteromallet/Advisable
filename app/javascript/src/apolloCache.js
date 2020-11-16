@@ -1,4 +1,5 @@
 import { InMemoryCache } from "@apollo/client";
+import { relayStylePagination } from "@apollo/client/utilities";
 
 // Apollo 3 introduced the concept of field policies. This is to ensure cached
 // data is updated correctly. For the project characteristics, we use an
@@ -18,6 +19,11 @@ const createCache = () => {
       ],
     },
     typePolicies: {
+      Specialist: {
+        fields: {
+          guildPosts: relayStylePagination(),
+        },
+      },
       PreviousProject: {
         fields: {
           skills: {
