@@ -41,7 +41,9 @@ const errorLink = onError(({ graphQLErrors, operation }) => {
           variables: JSON.stringify(operation.variables),
         });
 
-        Sentry.captureMessage(`${name} returned error`);
+        Sentry.captureMessage(
+          `${name} returned error ${rest.extensions?.code}`,
+        );
       });
     });
   }
