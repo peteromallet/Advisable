@@ -82,6 +82,7 @@ export const project = (fields = {}) => {
     name: "Project",
     currency: "USD",
     viewerCanAccess: true,
+    publishedAt: null,
     primarySkill: skill({ name: "Testing" }),
     questions: ["Question?"],
     applicationsOpen: true,
