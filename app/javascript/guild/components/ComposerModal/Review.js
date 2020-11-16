@@ -69,7 +69,7 @@ export default function Review({ guildPost, onPublish }) {
         </Stack>
 
         <Box mt="l">
-          <EditButton to={`/composer/${guildPost.id}/edit`} resource="Post" />
+          <EditButton to={`/composer/${guildPost.id}/post`} resource="Post" />
           <Box height={1} bg="neutral100" my="l" />
           {guildPost.audienceType !== "none" && (
             <>

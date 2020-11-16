@@ -150,7 +150,7 @@ const Post = () => {
                   <Button
                     size="s"
                     as={Link}
-                    to={`/composer/${post.id}/edit`}
+                    to={`/composer/${post.id}/post`}
                     variant="subtle"
                     prefix={<Edit />}
                   >
