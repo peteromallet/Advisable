@@ -17,6 +17,21 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
     ...initialValues,
   };
 
+  const handleSubmit = async (values, actions) => {
+    const { errors } = await onSubmit(values);
+    if (errors) {
+      /*
+        This is a fallback in case the yup schema does not have parity w/ the server.
+        INVALID_REQUEST response is not keyed by the resepctive attribute name.
+      */
+      errors.forEach(({ message }) => {
+        const errorKey = message[0].toLowerCase();
+        actions.setFieldError(errorKey, message);
+      });
+      actions.setSubmitting(false);
+    }
+  };
+
   return (
     <Box display="flex">
       <Box flexGrow={1} width="100%">
@@ -33,7 +48,7 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
         </Link>
         <Formik
           validateOnMount
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
           initialValues={yourPostInitialValues}
           validationSchema={yourPostValidationSchema}
         >
@@ -56,6 +71,7 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
                 marginY="3xl"
                 disableUntilValid
                 suffix={<ArrowRight />}
+                loading={formik.isSubmitting}
               >
                 Continue
               </SubmitButton>
