@@ -13,7 +13,7 @@ import FileUpload from "../FileUpload";
 import { UPDATE_PROFILE } from "../../queries";
 
 export const StyledAvatarCard = styled(StyledCard)`
-  z-index: 4;
+  z-index: 2;
   position: relative;
   transition: box-shadow 300ms;
   background-color: ${theme.colors.neutral200};
