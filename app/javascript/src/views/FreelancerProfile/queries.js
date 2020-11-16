@@ -1,4 +1,5 @@
-import { gql } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
+import GuildPostFields from "@guild/graphql/fragments/guildPostFields";
 
 const fields = gql`
   fragment SpecialistFields on Specialist {
@@ -131,3 +132,35 @@ export const SET_COVER_PHOTO = gql`
     }
   }
 `;
+
+export const GET_GUILD_POSTS = gql`
+  ${GuildPostFields}
+
+  query profileGuildPosts($id: ID!, $cursor: String) {
+    specialist(id: $id) {
+      id
+      guildPosts(first: 2, after: $cursor) {
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+        nodes {
+          ...GuildPostFields
+          ... on GuildPostAdviceRequired {
+            needHelp
+          }
+          author {
+            id
+            bio
+            location
+            firstName
+          }
+        }
+      }
+    }
+  }
+`;
+
+export function useGuildPosts(opts) {
+  return useQuery(GET_GUILD_POSTS, opts);
+}

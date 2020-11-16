@@ -42,7 +42,7 @@ function FreelancerProfile() {
       />
       <Switch>
         <Route path="/freelancers/:id/guild">
-          <GuildProfile />
+          <GuildProfile specialist={data.specialist} />
         </Route>
         <Route path="/freelancers/:id">
           <MainProfile isOwner={isOwner} data={data} />

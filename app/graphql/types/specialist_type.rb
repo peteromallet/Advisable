@@ -225,6 +225,8 @@ class Types::SpecialistType < Types::BaseType
     description 'Whether or not the specialist is a Guild user'
   end
 
+  field :guild_posts, Types::Guild::PostInterface.connection_type, null: false
+
   field :guild_joined_time_ago, String, null: true do
     description 'The timestamp in words for when the specialist first joined the guild'
   end
