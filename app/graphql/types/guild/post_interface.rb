@@ -24,10 +24,6 @@ module Types::Guild::PostInterface
     description 'The body of the guild post'
   end
 
-  field :body_raw, String, null: true do
-    description 'The serialized draftjs body of the guild post'
-  end
-
   field :status, String, null: true do
     description 'The status of the guild post'
   end
