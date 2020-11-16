@@ -1,19 +1,23 @@
 import React from "react";
 import { Box } from "@advisable/donut";
 import { AnimateSharedLayout } from "framer-motion";
-import OrbitsSystem, { Orbit } from "../Third";
+import OrbitsSystem, { Orbit } from ".";
+
+export default {
+  title: "Content/OrbitsSystem-03",
+};
 
 function FirstPage({ setPage }) {
   return (
     <Box height="50vh" width="50vw">
       <OrbitsSystem
-        increment={80}
-        x={-20}
-        y={50}
+        increment={15}
+        x={60}
+        y={60}
         fill="transparent"
         stroke="red"
-        width="100%"
-        height="100%"
+        offsetX="10px"
+        offsetY="10px"
       >
         <Orbit />
         <Orbit />
@@ -38,13 +42,13 @@ function SecondPage({ setPage }) {
   return (
     <Box height="50vh" width="50vw">
       <OrbitsSystem
-        increment={80}
-        x={600}
-        y={60}
+        increment={15}
+        x={180}
+        y={280}
         fill="transparent"
         stroke="blue"
-        width="100%"
-        height="100%"
+        offsetX="-10px"
+        offsetY="10px"
       >
         <Orbit />
         <Orbit />
@@ -65,7 +69,7 @@ function SecondPage({ setPage }) {
   );
 }
 
-export default function FramerTest() {
+export function FramerTest() {
   const [page, setPage] = React.useState("FIRST");
 
   return (
