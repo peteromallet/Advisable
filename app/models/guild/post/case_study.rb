@@ -12,13 +12,9 @@ end
 # Table name: guild_posts
 #
 #  id                 :uuid             not null, primary key
-#  audience           :integer          default(0), not null
 #  body               :text             not null
-#  body_raw           :text             default(""), not null
-#  commentable        :boolean          default(TRUE), not null
 #  comments_count     :integer          default(0), not null
 #  data               :jsonb            not null
-#  reactionable       :boolean          default(TRUE), not null
 #  reactionable_count :integer          default(0), not null
 #  status             :integer          default("draft"), not null
 #  title              :string           not null

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_05_115641) do
+ActiveRecord::Schema.define(version: 2020_11_12_215842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -359,13 +359,9 @@ ActiveRecord::Schema.define(version: 2020_11_05_115641) do
   create_table "guild_posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type", default: "Post", null: false
     t.text "body", null: false
-    t.text "body_raw", default: "", null: false
     t.string "title", null: false
     t.integer "status", default: 0, null: false
-    t.integer "audience", default: 0, null: false
-    t.boolean "commentable", default: true, null: false
     t.integer "comments_count", default: 0, null: false
-    t.boolean "reactionable", default: true, null: false
     t.integer "reactionable_count", default: 0, null: false
     t.bigint "specialist_id"
     t.jsonb "data", default: {}, null: false
