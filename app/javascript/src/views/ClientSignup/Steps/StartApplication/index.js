@@ -25,12 +25,13 @@ const validationSchema = Yup.object().shape({
 function StartApplication() {
   const [
     startClientApplication,
-    { error, data, client, called },
+    { error, data, client, called, loading },
   ] = useStartClientApplication();
   const location = useLocation();
   const history = useHistory();
   const isMobile = useBreakpoint("m");
   const [applicationId, setApplicationId] = useState();
+  const queryParams = queryString.parse(location.search, { decode: true });
 
   const updateLocationState = useCallback(
     (params) => {
@@ -39,31 +40,48 @@ function StartApplication() {
     [history, location],
   );
 
+  const handleStartApplication = useCallback(
+    async function (values) {
+      updateLocationState({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+      });
+
+      return await startClientApplication({
+        variables: {
+          input: {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            rid: values.rid,
+            utmMedium: values.utmMedium,
+            utmSource: values.utmSource,
+            utmCampaign: values.utmCampaign,
+          },
+        },
+      });
+    },
+    [updateLocationState, startClientApplication],
+  );
+
   // Check query params
   useEffect(() => {
-    const queryStringParams =
-      location.search && queryString.parse(location.search, { decode: true });
-    queryStringParams &&
-      !called &&
+    const { firstName, lastName, email, ...rest } = queryParams;
+    if (!called && firstName && lastName && email) {
       validationSchema
-        .validate(queryStringParams)
+        .validate(queryParams)
         .then(() => {
-          // Valid query params. Start client application
-          startClientApplication({
-            variables: { input: { ...queryStringParams } },
-          });
-          updateLocationState({
-            firstName: queryStringParams.firstName,
-            lastName: queryStringParams.lastName,
-            email: queryStringParams.email,
-          });
+          handleStartApplication(queryParams);
         })
-        .catch((err) => {
-          // Not valid query string params. Clear them
-          console.error("Your query params are not valid", err);
-          history.push(location.pathname);
+        .catch(() => {
+          history.replace({
+            pathname: location.pathname,
+            search: queryString.stringify(rest, { encode: true }),
+          });
         });
-  }, [called, history, location, startClientApplication, updateLocationState]);
+    }
+  }, [queryParams, called, history, location, handleStartApplication]);
 
   // Handle mutation errors
   const errorCodes = error?.graphQLErrors.map((err) => err.extensions?.code);
@@ -81,7 +99,7 @@ function StartApplication() {
     applicationId && prefetchNextStep(applicationId);
   }, [data, client]);
 
-  if (location.search)
+  if (loading)
     return (
       <motion.div exit>
         <Navigation
@@ -99,14 +117,14 @@ function StartApplication() {
     firstName: location.state?.firstName || "",
     lastName: location.state?.lastName || "",
     email: "",
+    rid: queryParams.rid || "",
+    utmMedium: queryParams.utmMedium || "",
+    utmSource: queryParams.utmSource || "",
+    utmCampaign: queryParams.utmCampaign || "",
   };
+
   const handleSubmit = (values) => {
-    updateLocationState({
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-    });
-    startClientApplication({ variables: { input: { ...values } } });
+    handleStartApplication(values);
   };
 
   return (
