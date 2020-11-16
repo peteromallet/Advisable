@@ -19,7 +19,6 @@ test("Rate step continues to the project type step", async () => {
   const specialist = generateTypes.specialist();
   const application = generateTypes.application({
     id: "rec123",
-    airtableId: "rec123",
     status: "Application Accepted",
     tasks: [],
     project,
@@ -63,7 +62,6 @@ test("Project type step continues to the tasks step", async () => {
   const specialist = generateTypes.specialist();
   const application = generateTypes.application({
     id: "rec123",
-    airtableId: "rec123",
     status: "Application Accepted",
     rate: "75",
     tasks: [],

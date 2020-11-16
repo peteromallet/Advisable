@@ -21,7 +21,6 @@ export const GET_APPLICATIONS = gql`
           salesStatus: ["Open"]
         ) {
           id
-          airtableId
           status
           appliedAt
           project {

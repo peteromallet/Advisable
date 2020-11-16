@@ -6,7 +6,7 @@ import Heading from "../../components/Heading";
 import illustration from "./illustration.png";
 
 const Send = ({ application }) => {
-  const proposalUrl = `/applications/${application.airtableId}/proposal`;
+  const proposalUrl = `/applications/${application.id}/proposal`;
 
   return (
     <Card>

@@ -35,7 +35,7 @@ test("Client can resume working with specialist", async () => {
       mockMutation(
         RESUME_WORKING,
         {
-          application: application.airtableId,
+          application: application.id,
           projectType: application.projectType,
         },
         {

@@ -4,8 +4,7 @@ RSpec.describe 'Application flow' do
   before :each do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     # mock the skills endpoint for the add a previous project modal
-    skill =
-      double(Airtable: Skill, id: 'rec_123', fields: { 'Name' => 'Testing' })
+    skill = double(Airtable: Skill, id: 'rec_123', fields: {'Name' => 'Testing'})
     allow(Airtable::Skill).to receive(:active).and_return([skill])
   end
 
@@ -20,7 +19,7 @@ RSpec.describe 'Application flow' do
   end
 
   describe 'Overview step' do
-    it 'Continues to the questions step' do
+    fit 'Continues to the questions step' do
       visit "/invites/#{application.uid}/apply"
       fill_in :introduction, with: 'This is my intro'
       find('label', text: 'Immediately').click
@@ -30,7 +29,7 @@ RSpec.describe 'Application flow' do
 
     context 'when there are no questions' do
       let(:application) do
-        create(:application, { status: 'Invited To Apply', questions: [] })
+        create(:application, {status: 'Invited To Apply', questions: []})
       end
 
       it 'goes to the references step' do
@@ -82,7 +81,7 @@ RSpec.describe 'Application flow' do
     context 'when there are no questions' do
       let(:project) { create(:project, questions: []) }
       let(:application) do
-        create(:application, { project: project, status: 'Invited To Apply' })
+        create(:application, {project: project, status: 'Invited To Apply'})
       end
 
       it 'proceeds to the references step' do

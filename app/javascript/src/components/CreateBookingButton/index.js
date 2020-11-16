@@ -10,7 +10,7 @@ const CreateBookingButton = ({ application }) => {
     <Button
       width="100%"
       prefix={<UserCheck />}
-      onClick={() => history.push(`/book/${application.airtableId}`)}
+      onClick={() => history.push(`/book/${application.id}`)}
     >
       Start working with {application.specialist.firstName}
     </Button>

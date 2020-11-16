@@ -36,7 +36,6 @@ test("Renders the manage view for a specialist", async () => {
           viewer,
           application: generateType.application({
             id: "rec1234",
-            airtableId: "rec1234",
             projectType: "Flexible",
             tasks: [generateType.task({ name: "This is a test task" })],
             project: generateType.project({
@@ -70,7 +69,6 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
             viewer,
             application: generateType.application({
               id: "rec1234",
-              airtableId: "rec1234",
               projectType: "Flexible",
               tasks: [generateType.task({ name: "This is a test task" })],
               project: generateType.project({
@@ -117,7 +115,6 @@ test("Does not render a tutorial video if the user has completed it", async () =
             viewer,
             application: generateType.application({
               id: "rec1234",
-              airtableId: "rec1234",
               projectType: "Flexible",
               tasks: [generateType.task({ name: "This is a test task" })],
               project: generateType.project({
@@ -153,7 +150,6 @@ test("The client can change the project type", async () => {
           viewer,
           application: generateType.application({
             id: "rec1234",
-            airtableId: "rec1234",
             projectType: "Fixed",
             tasks: [generateType.task({ name: "This is a test task" })],
             project: generateType.project({
@@ -175,7 +171,6 @@ test("The client can change the project type", async () => {
             __typename: "SetTypeForProjectPayload",
             application: generateType.application({
               id: "rec1234",
-              airtableId: "rec1234",
               projectType: "Flexible",
               monthlyLimit: 100,
             }),
@@ -213,8 +208,7 @@ test("The client can add a task", async () => {
   const project = generateType.project({ user });
   const specialist = generateType.specialist();
   const application = generateType.application({
-    id: "rec1324",
-    airtableId: "rec1234",
+    id: "rec1234",
     projectType: "Flexible",
     project,
     specialist,
@@ -245,14 +239,7 @@ test("The client can add a task", async () => {
         result: {
           data: {
             viewer,
-            application: generateType.application({
-              id: "rec1234",
-              airtableId: "rec1234",
-              project: generateType.project({
-                user: generateType.user(),
-              }),
-              specialist: generateType.specialist(),
-            }),
+            application
           },
         },
       },

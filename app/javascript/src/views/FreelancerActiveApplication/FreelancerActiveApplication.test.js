@@ -26,8 +26,7 @@ test("Freelancer can create a task", async () => {
   const project = generateTypes.project({ user });
   const specialist = generateTypes.specialist();
   const application = generateTypes.application({
-    id: "rec1324",
-    airtableId: "rec1234",
+    id: "rec1234",
     project,
     specialist,
   });
@@ -209,8 +208,7 @@ test("Freelancer can mark a task as complete", async () => {
   });
 
   const application = generateTypes.application({
-    id: "rec1324",
-    airtableId: "rec1234",
+    id: "rec1234",
     project,
     specialist,
     tasks: [task],

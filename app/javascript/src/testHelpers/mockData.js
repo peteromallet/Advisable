@@ -119,7 +119,6 @@ export const application = (fields = {}) => {
     {
       __typename: "Application",
       id: uniqueId("application"),
-      airtableId: uniqueId("rec"),
       rate: "75",
       score: 90,
       currency: "USD",

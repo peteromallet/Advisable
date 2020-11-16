@@ -5,7 +5,6 @@ export default gql`
     updateApplication(input: $input) {
       application {
         id
-        airtableId
         rate
         projectType
         monthlyLimit

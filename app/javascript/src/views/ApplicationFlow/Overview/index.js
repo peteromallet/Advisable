@@ -11,20 +11,20 @@ import validationSchema from "./validationSchema";
 import StepCard from "../StepCard";
 
 function Overview({ application, history, location }) {
-  const { airtableId } = application;
+  const { id } = application;
   const [mutate] = useMutation(UPDATE_APPLICATION);
 
   const handleSubmit = async (values) => {
     await mutate({
       variables: {
         input: {
-          id: airtableId,
+          id: id,
           ...values,
         },
       },
     });
 
-    history.push(`/invites/${airtableId}/apply/questions`, location.state);
+    history.push(`/invites/${id}/apply/questions`, location.state);
   };
 
   const initialValues = {
