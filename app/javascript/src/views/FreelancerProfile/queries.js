@@ -139,21 +139,23 @@ export const GET_GUILD_POSTS = gql`
   query profileGuildPosts($id: ID!, $cursor: String) {
     specialist(id: $id) {
       id
-      guildPosts(first: 2, after: $cursor) {
+      guildPosts(first: 10, after: $cursor) {
         pageInfo {
           endCursor
           hasNextPage
         }
-        nodes {
-          ...GuildPostFields
-          ... on GuildPostAdviceRequired {
-            needHelp
-          }
-          author {
-            id
-            bio
-            location
-            firstName
+        edges {
+          node {
+            ...GuildPostFields
+            ... on GuildPostAdviceRequired {
+              needHelp
+            }
+            author {
+              id
+              bio
+              location
+              firstName
+            }
           }
         }
       }
