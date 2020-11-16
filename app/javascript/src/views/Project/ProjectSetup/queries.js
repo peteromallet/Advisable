@@ -5,6 +5,7 @@ const projectFields = gql`
     id
     status
     goals
+    publishedAt
     characteristics
     optionalCharacteristics
     requiredCharacteristics

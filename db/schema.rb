@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_215842) do
+ActiveRecord::Schema.define(version: 2020_11_13_143045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -625,6 +625,7 @@ ActiveRecord::Schema.define(version: 2020_11_12_215842) do
     t.boolean "sourcing"
     t.bigint "sales_person_id"
     t.bigint "linkedin_campaign_id"
+    t.datetime "published_at"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["sales_person_id"], name: "index_projects_on_sales_person_id"
     t.index ["user_id"], name: "index_projects_on_user_id"

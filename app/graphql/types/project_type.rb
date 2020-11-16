@@ -53,6 +53,10 @@ class Types::ProjectType < Types::BaseType
   field :company_type, String, null: true
   field :created_at, GraphQL::Types::ISO8601DateTime, null: false
 
+  field :published_at, GraphQL::Types::ISO8601DateTime, null: true do
+    authorize :is_client
+  end
+
   field :industry_experience_importance, Int, null: true do
     description <<~HEREDOC
       How important indusry experience is for this job. Range from 0 - 3.

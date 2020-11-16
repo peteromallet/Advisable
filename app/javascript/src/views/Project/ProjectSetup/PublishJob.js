@@ -44,19 +44,31 @@ export default function PublishJob({ data }) {
   const industry = user.industry?.name;
   const companyType = user.companyType;
 
-  const handlePublish = async () => {
-    const response = await publishProject({ variables: { input: { id } } });
+  const nextStep = () => {
+    history.push(`/projects/${id}/setup/published`);
+  };
 
+  const handlePublish = async () => {
+    // If the project has already been published then just go to the next step.
+    // The user is just making edits.
+    if (project.publishedAt) {
+      nextStep();
+      return;
+    }
+
+    const response = await publishProject({ variables: { input: { id } } });
+    const { status } = response.data.publishProject.project;
     if (response.errors) {
       notifications.notify("Something went wrong, please try again", {
         variant: "error",
       });
     } else {
-      if (
-        response.data.publishProject.project.status ===
-        "Pending Advisable Confirmation"
-      ) {
-        history.push(`/projects/${id}/setup/published`);
+      // The status can come back as 'Brief Confirmed' if the project was an
+      // assisted project. In these cases the redirect in ProjectSetup/index
+      // will handle this case so we only go to next step if the status comes
+      // back as pending advisable confirmation.
+      if (status === "Pending Advisable Confirmation") {
+        nextStep();
       }
 
       dataLayer.push({ event: "projectPublished", projectId: id });
