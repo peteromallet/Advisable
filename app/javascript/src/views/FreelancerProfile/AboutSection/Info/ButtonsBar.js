@@ -5,8 +5,13 @@ import { LinkedinIn } from "@styled-icons/fa-brands";
 import { Link as LinkIcon } from "@styled-icons/feather";
 import EditInfo from "./EditInfo";
 import { Box } from "@advisable/donut";
+import MessageButton from "./MessageButton";
+import useViewer from "../../../../hooks/useViewer";
 
 function ButtonsBar({ isOwner, specialist }) {
+  const viewer = useViewer();
+  const viewerIsGuild = viewer.guild;
+
   return (
     <Box
       display="flex"
@@ -22,9 +27,12 @@ function ButtonsBar({ isOwner, specialist }) {
         <IconLink url={specialist.website} Icon={LinkIcon} strokeWidth={2} />
       )}
       {isOwner && <EditInfo specialist={specialist}>Edit Info</EditInfo>}
-      {!isOwner && (
+      {!isOwner && !viewerIsGuild && (
         <RequestTalkButton id={specialist.id}>Request a talk</RequestTalkButton>
       )}
+      {!isOwner && viewerIsGuild ? (
+        <MessageButton specialist={specialist} />
+      ) : null}
     </Box>
   );
 }
