@@ -78,13 +78,13 @@ const Post = ({ post }) => {
 
         <Box display="flex" flexDirection="column" mt="m">
           <Text
-            as={Link}
+            as={Link.External}
             mb="sm"
             fontSize="xxl"
             fontWeight="medium"
             letterSpacing="-0.01em"
             color="catalinaBlue100"
-            to={`/posts/${post.id}`}
+            href={`/guild/posts/${post.id}`}
           >
             {post.title}
           </Text>
