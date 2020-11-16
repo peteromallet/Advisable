@@ -24,6 +24,10 @@ export default function EditGuildPost({ guildPost }) {
   };
 
   return (
-    <YourPost onSubmit={handleUpdate} initialValues={{ type, body, title }} />
+    <YourPost
+      guildPost={guildPost}
+      onSubmit={handleUpdate}
+      initialValues={{ type, body, title }}
+    />
   );
 }
