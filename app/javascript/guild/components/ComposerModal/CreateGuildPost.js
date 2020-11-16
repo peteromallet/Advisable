@@ -12,7 +12,7 @@ import { useMutation } from "@apollo/client";
 import { Box, Text, Circle } from "@advisable/donut";
 import { CREATE_GUILD_POST } from "./mutations";
 import { GUILD_POST_QUERY } from "@guild/views/Post/queries";
-import PostType from "./PostType";
+import RadioOption from "./RadioOption";
 import { PATH_REGEX } from "./useComposerModal";
 import { useUpdateGuildPostWriteCache } from "./mutations";
 
@@ -102,7 +102,7 @@ export default function CreateGuildPost({ guildPost }) {
                 <Field
                   name="type"
                   type="radio"
-                  as={PostType}
+                  as={RadioOption}
                   value="AdviceRequired"
                   onChange={(e) => selectHandler(formik, e)}
                   onClick={(e) => selectHandler(formik, e)}
@@ -135,7 +135,7 @@ export default function CreateGuildPost({ guildPost }) {
                 <Field
                   name="type"
                   type="radio"
-                  as={PostType}
+                  as={RadioOption}
                   value="Opportunity"
                   onChange={(e) => selectHandler(formik, e)}
                   onClick={(e) => selectHandler(formik, e)}
@@ -168,7 +168,7 @@ export default function CreateGuildPost({ guildPost }) {
                 <Field
                   name="type"
                   type="radio"
-                  as={PostType}
+                  as={RadioOption}
                   value="CaseStudy"
                   onChange={(e) => selectHandler(formik, e)}
                   onClick={(e) => selectHandler(formik, e)}
@@ -201,7 +201,7 @@ export default function CreateGuildPost({ guildPost }) {
                 <Field
                   name="type"
                   type="radio"
-                  as={PostType}
+                  as={RadioOption}
                   value="Post"
                   onChange={(e) => selectHandler(formik, e)}
                   onClick={(e) => selectHandler(formik, e)}
