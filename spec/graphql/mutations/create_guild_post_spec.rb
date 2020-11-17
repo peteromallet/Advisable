@@ -3,13 +3,15 @@ require 'rails_helper'
 RSpec.describe Mutations::Guild::CreateGuildPost do
   let(:specialist) { create(:specialist, :guild) }
   let(:response_keys) { %w[createGuildPost guildPost] }
+  let(:title) { Faker::Lorem.sentence }
+  let(:body) { Faker::Lorem.paragraph }
 
   let(:query) {
     <<-GRAPHQL
     mutation {
       createGuildPost(input: {
-        title: "This is a title"
-        body: "This is a body"
+        title: "#{title}",
+        body: "#{body}",
         type: "CaseStudy"
       }) {
         guildPost {
@@ -55,8 +57,8 @@ RSpec.describe Mutations::Guild::CreateGuildPost do
         "audienceType" => nil,
         "images" => [],
         "status" => "draft",
-        "body" => "This is a body",
-        "title" => "This is a title",
+        "body" => body,
+        "title" => title,
         "denormalizedType" => "CaseStudy",
         "type" => "Case Study",
         "author" => {"id" => specialist.uid},
