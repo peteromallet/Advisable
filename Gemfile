@@ -9,6 +9,7 @@ gem "rails", "~> 6.0", ">= 6.0.3.4"
 gem "pg", ">= 0.18", "< 2.0"
 gem "strong_migrations"
 gem "good_migrations"
+gem "pghero"
 # Use Puma as the app server
 gem "puma", "~> 4.3.6"
 gem "barnes"

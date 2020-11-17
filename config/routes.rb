@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
+    mount PgHero::Engine, at: "pghero", constraints: AdminConstraint.new
 
     resources :applications
     resources :countries
