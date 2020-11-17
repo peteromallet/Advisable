@@ -5,6 +5,7 @@ import ExpandableText from "@advisable-main/components/ExpandableText";
 import useViewer from "@advisable-main/hooks/useViewer";
 import { useToggle } from "@guild/hooks/useToggle";
 import {
+  Box,
   Text,
   Avatar,
   Link,
@@ -80,7 +81,7 @@ const OfferHelp = ({ recipient, guildPostId, engagementsCount }) => {
         >
           <ModalClose onClose={handleToggleOfferModal} />
           <GuildBox spaceChildrenHorizontal={34} mb="l">
-            <GuildBox display="flex" flexShrink={0}>
+            <Box display="flex" flexShrink={0}>
               <Avatar
                 as={Link.External}
                 href={`/freelancers/${recipient.id}`}
@@ -88,12 +89,12 @@ const OfferHelp = ({ recipient, guildPostId, engagementsCount }) => {
                 name={recipient.name}
                 url={recipient.avatar}
               />
-            </GuildBox>
+            </Box>
             <GuildBox spaceChildrenVertical={mUp && 8} alignSelf="center">
               <Text fontSize="xxl" fontWeight="medium" color="catalinaBlue100">
                 {recipient.name}
               </Text>
-              <GuildBox>
+              <Box>
                 {mUp && <Label label="Location" />}
                 <Text
                   fontSize={{ _: "m", m: "l" }}
@@ -103,7 +104,7 @@ const OfferHelp = ({ recipient, guildPostId, engagementsCount }) => {
                 >
                   {recipient.location}
                 </Text>
-              </GuildBox>
+              </Box>
               {mUp && <Bio bio={recipient.bio} />}
             </GuildBox>
           </GuildBox>
@@ -218,7 +219,7 @@ const Label = ({ label }) => (
 );
 
 const Bio = ({ bio }) => (
-  <GuildBox>
+  <Box>
     <Label label="Bio" />
     <ExpandableText
       fontSize="m"
@@ -228,7 +229,7 @@ const Bio = ({ bio }) => (
     >
       {bio}
     </ExpandableText>
-  </GuildBox>
+  </Box>
 );
 
 export default OfferHelp;

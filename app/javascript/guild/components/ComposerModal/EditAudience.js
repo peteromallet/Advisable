@@ -94,7 +94,7 @@ export default function EditAudience({ guildPost }) {
           ))}
         </GuildBox>
 
-        <GuildBox mt="xl">
+        <Box mt="xl">
           <Button
             size="l"
             mr="xs"
@@ -104,7 +104,7 @@ export default function EditAudience({ guildPost }) {
           >
             Continue
           </Button>
-        </GuildBox>
+        </Box>
       </Box>
     </Box>
   );

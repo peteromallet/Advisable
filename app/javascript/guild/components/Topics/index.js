@@ -1,8 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Text, Stack } from "@advisable/donut";
+import { Box, Text, Stack } from "@advisable/donut";
 import { GUILD_TOP_TOPICS_QUERY } from "./queries";
-import { GuildBox } from "@guild/styles";
 import { useToggle } from "@guild/hooks/useToggle";
 import Loading from "@advisable-main/components/Loading";
 import ShowMore from "@guild/components/ShowMore";
@@ -15,7 +14,7 @@ const Topics = () => {
   if (loading) return <Loading />;
 
   return (
-    <GuildBox flexShrink={1} alignSelf="flex-start">
+    <Box flexShrink={1} alignSelf="flex-start">
       <Text
         fontSize="xl"
         marginBottom="md"
@@ -36,7 +35,7 @@ const Topics = () => {
       </Stack>
 
       <ShowMore showingMore={moreTopics} onToggle={toggleMoreTopics} />
-    </GuildBox>
+    </Box>
   );
 };
 

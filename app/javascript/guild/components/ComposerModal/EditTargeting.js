@@ -130,7 +130,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
 
               <Stack spacing="2xl">
                 {guildPost.audienceType !== "none" && (
-                  <GuildBox marginTop="2xl">
+                  <Box marginTop="2xl">
                     <Text
                       marginBottom="12px"
                       size="l"
@@ -164,7 +164,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
                           </StyledTopicable>
                         ))}
                     </GuildBox>
-                  </GuildBox>
+                  </Box>
                 )}
                 <Button
                   marginTop={"xs"}

@@ -73,7 +73,7 @@ export default function Review({ guildPost, onPublish }) {
           </Text>
         </Stack>
 
-        <GuildBox mt="l">
+        <Box mt="l">
           <EditButton to={`/composer/${guildPost.id}/edit`} resource="Post" />
           <Box height={1} bg="neutral100" my="l" />
           {guildPost.audienceType !== "none" && (
@@ -105,7 +105,7 @@ export default function Review({ guildPost, onPublish }) {
               <Box height={1} bg="neutral100" my="l" />
             </>
           )}
-        </GuildBox>
+        </Box>
 
         {!!guildPost.images?.length && (
           <>

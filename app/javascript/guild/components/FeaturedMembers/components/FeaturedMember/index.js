@@ -5,7 +5,7 @@ import { GuildBox } from "@guild/styles";
 const FeaturedMember = ({ featuredMember }) => {
   return (
     <GuildBox px="xs" alignItems="center" spaceChildrenHorizontal={24}>
-      <GuildBox flexShrink={0}>
+      <Box flexShrink={0}>
         <Avatar
           as={Link.External}
           href={`/freelancers/${featuredMember.id}`}
@@ -13,7 +13,7 @@ const FeaturedMember = ({ featuredMember }) => {
           url={featuredMember.avatar}
           size={"s"}
         />
-      </GuildBox>
+      </Box>
       <Box minWidth="0">
         <Text
           truncate

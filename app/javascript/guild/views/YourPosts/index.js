@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import Loading from "@advisable-main/components/Loading";
-import { Text } from "@advisable/donut";
+import { Text, Box } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
 import Post from "@guild/components/Post";
 import { GUILD_YOUR_POSTS_QUERY } from "./queries";
@@ -31,7 +31,7 @@ const YourPosts = () => {
   return loading ? (
     <Loading />
   ) : (
-    <GuildBox
+    <Box
       margin="0 auto"
       mt="2xl"
       width={{ _: "100%", s: "85%", l: "70%" }}
@@ -41,14 +41,14 @@ const YourPosts = () => {
         <Filters yourPosts />
         {data &&
           data.guildYourPosts.nodes.map((post, key) => (
-            <GuildBox key={key} position="relative">
+            <Box key={key} position="relative">
               <StyledStatus onClick={() => handleEdit(post.id)}>
                 {post.status === "draft" ? "Edit Draft" : "Edit"}
               </StyledStatus>
               <StyledYourPost draft={post.status === "draft"}>
                 <Post post={post} />
               </StyledYourPost>
-            </GuildBox>
+            </Box>
           ))}
         {!loading && !data?.guildYourPosts?.nodes?.length && (
           <GuildBox
@@ -68,7 +68,7 @@ const YourPosts = () => {
           </GuildBox>
         )}
       </GuildBox>
-    </GuildBox>
+    </Box>
   );
 };
 

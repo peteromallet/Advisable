@@ -1,8 +1,7 @@
 import React from "react";
 import { GUILD_FEATURED_MEMBERS_QUERY } from "./queries";
 import { useQuery } from "@apollo/client";
-import { Text, Stack } from "@advisable/donut";
-import { GuildBox } from "@guild/styles";
+import { Box, Text, Stack } from "@advisable/donut";
 import { useToggle } from "@guild/hooks/useToggle";
 import Loading from "@advisable-main/components/Loading";
 import ShowMore from "@guild/components/ShowMore";
@@ -15,7 +14,7 @@ const FeaturedMembers = () => {
   if (loading) return <Loading />;
 
   return (
-    <GuildBox flexShrink={1} alignSelf="flex-start">
+    <Box flexShrink={1} alignSelf="flex-start">
       <Text
         fontSize="xl"
         marginBottom="lg"
@@ -40,7 +39,7 @@ const FeaturedMembers = () => {
         showingMore={moreFeaturedMembers}
         onToggle={toggleMoreFeaturedMembers}
       />
-    </GuildBox>
+    </Box>
   );
 };
 
