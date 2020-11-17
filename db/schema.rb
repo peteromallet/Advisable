@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_13_143045) do
+ActiveRecord::Schema.define(version: 2020_11_17_075912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
+  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -144,6 +145,7 @@ ActiveRecord::Schema.define(version: 2020_11_13_143045) do
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
+    t.index ["uid"], name: "index_applications_on_uid"
   end
 
   create_table "auth_providers", force: :cascade do |t|
@@ -706,7 +708,9 @@ ActiveRecord::Schema.define(version: 2020_11_13_143045) do
     t.integer "specialists_count", default: 0
     t.string "characteristic_placeholder"
     t.string "goal_placeholder"
+    t.index ["airtable_id"], name: "index_skills_on_airtable_id"
     t.index ["original_id"], name: "index_skills_on_original_id"
+    t.index ["uid"], name: "index_skills_on_uid"
   end
 
   create_table "specialist_skills", force: :cascade do |t|
@@ -761,7 +765,9 @@ ActiveRecord::Schema.define(version: 2020_11_13_143045) do
     t.integer "community_score"
     t.integer "member_of_week_email"
     t.index ["account_id"], name: "index_specialists_on_account_id"
+    t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
+    t.index ["uid"], name: "index_specialists_on_uid"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
@@ -883,6 +889,7 @@ ActiveRecord::Schema.define(version: 2020_11_13_143045) do
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"
     t.index ["sales_person_id"], name: "index_users_on_sales_person_id"
+    t.index ["uid"], name: "index_users_on_uid"
   end
 
   create_table "video_calls", force: :cascade do |t|
