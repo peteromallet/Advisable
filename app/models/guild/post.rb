@@ -75,7 +75,7 @@ end
 # Table name: guild_posts
 #
 #  id                 :uuid             not null, primary key
-#  body               :text             not null
+#  body               :text
 #  comments_count     :integer          default(0), not null
 #  data               :jsonb            not null
 #  reactionable_count :integer          default(0), not null
