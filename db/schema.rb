@@ -14,7 +14,6 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
-  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -369,8 +368,8 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
 
   create_table "guild_posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type", default: "Post", null: false
-    t.text "body"
-    t.string "title"
+    t.text "body", null: false
+    t.string "title", null: false
     t.integer "status", default: 0, null: false
     t.integer "comments_count", default: 0, null: false
     t.integer "reactionable_count", default: 0, null: false
@@ -634,8 +633,8 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
     t.integer "candidate_count", default: 0
     t.integer "proposed_count", default: 0
     t.integer "hired_count", default: 0
-    t.bigint "sales_person_id"
     t.boolean "sourcing"
+    t.bigint "sales_person_id"
     t.bigint "linkedin_campaign_id"
     t.datetime "published_at"
     t.index ["client_id"], name: "index_projects_on_client_id"
@@ -766,13 +765,13 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
     t.string "phone"
     t.boolean "guild", default: false
     t.string "community_status"
-    t.jsonb "guild_data"
     t.boolean "automated_invitations_subscription"
+    t.jsonb "guild_data"
+    t.bigint "account_id"
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
     t.datetime "community_invited_to_call_at"
     t.integer "community_score"
-    t.bigint "account_id"
     t.integer "member_of_week_email"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
