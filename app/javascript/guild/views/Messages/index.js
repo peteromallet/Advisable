@@ -22,12 +22,18 @@ const Messages = () => {
   const [sortConversations, toggleSortConversations] = useToggle();
   const [activeChannelSid, setActiveChannelSid] = useState(null);
 
-  /* Set initial channel */
+  /* Set the initial channel */
   useEffect(() => {
-    if (!subscribedChannels.length || activeChannelSid) return;
+    if (!subscribedChannels.length || !sUp || activeChannelSid) return;
     const initialChannel = paramsChannelSid || subscribedChannels[0].sid;
     handleSetActive(initialChannel);
-  }, [subscribedChannels, activeChannelSid, handleSetActive, paramsChannelSid]);
+  }, [
+    subscribedChannels,
+    activeChannelSid,
+    handleSetActive,
+    paramsChannelSid,
+    sUp,
+  ]);
 
   const handleSetActive = useCallback(
     (channelSid) => {
